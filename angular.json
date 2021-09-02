@@ -29,6 +29,9 @@
         },
         "@schematics/angular:application": {
           "strict": true
+        },
+        "@schematics/angular:interface": {
+          "type": "interface"
         }
       },
       "root": "",
@@ -48,6 +51,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -92,7 +96,8 @@
               "browserTarget": "smart:build:production"
             },
             "development": {
-              "browserTarget": "smart:build:development"
+              "browserTarget": "smart:build:development",
+              "port": 9527
             }
           },
           "defaultConfiguration": "development"
@@ -115,6 +120,7 @@
               "src/assets"
             ],
             "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
             "scripts": []
