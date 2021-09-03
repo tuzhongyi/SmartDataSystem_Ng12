@@ -1,25 +1,27 @@
-export interface HowellResponse<T> {
+interface HowellResponse<T> {
   FaultCode: number;
   FaultReason: string;
   InnerException: ExceptionData;
   Data: T;
 }
 
-export interface ExceptionData {
+interface ExceptionData {
   Message: string;
   ExceptionType: string;
   InnerException: ExceptionData;
 }
 
-export interface HttpResponse<T> {
+interface HttpResponse<T> {
   data: HowellResponse<T>;
   status: number;
   statusText: string;
 }
 
-export interface Fault {
+interface Fault {
   FaultCode: number;
   FaultReason: string;
   Exception: ExceptionData;
   Id: string;
 }
+
+export { HowellResponse, ExceptionData, HttpResponse, Fault };

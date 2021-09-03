@@ -8,8 +8,8 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { HowellResponse } from '../model/howell-response';
 import { Digest } from './digest';
+import { HowellResponse } from '../model/howell-response.model';
 import { SessionUser } from '../common/tool/session-user';
 
 @Injectable({
@@ -17,7 +17,7 @@ import { SessionUser } from '../common/tool/session-user';
 })
 export class HowellAuthHttpService {
   nc = 0;
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   public postBase64String(
     url: string,
@@ -30,7 +30,7 @@ export class HowellAuthHttpService {
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
-    return this.http.post(url, base64, {
+    return this._http.post(url, base64, {
       headers: head,
       params: params,
       responseType: 'blob',
@@ -48,7 +48,7 @@ export class HowellAuthHttpService {
       'Content-Type': 'text/plain',
       Accept: 'text/plain',
     });
-    return this.http.put<T>(url, base64, {
+    return this._http.put<T>(url, base64, {
       headers: head,
       params: params,
       responseType: 'json',
@@ -57,7 +57,7 @@ export class HowellAuthHttpService {
 
   public getBase64String(url: string, params?: HttpParams): Observable<string> {
     const myHeaders = this.getHttpHeaders('GET', url);
-    return this.http.get(url, {
+    return this._http.get(url, {
       headers: myHeaders,
       params: params,
       responseType: 'text',
@@ -71,7 +71,7 @@ export class HowellAuthHttpService {
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
-    return this.http.get(url, {
+    return this._http.get(url, {
       headers: head,
       params: params,
       responseType: 'blob',
@@ -87,7 +87,7 @@ export class HowellAuthHttpService {
       headers: myHeaders,
       params: params,
     };
-    return this.http.get<R>(url, httpOptions);
+    return this._http.get<R>(url, httpOptions);
   }
 
   public getCache<T = any, R = T>(url: string, params?: HttpParams) {
@@ -97,7 +97,7 @@ export class HowellAuthHttpService {
       headers: myHeaders,
       params: params,
     };
-    return this.http.get<R>(url, httpOptions);
+    return this._http.get<R>(url, httpOptions);
   }
 
   public post<T = any, R = HowellResponse<T>>(
@@ -110,7 +110,7 @@ export class HowellAuthHttpService {
       headers: myHeaders,
       params: params,
     };
-    return this.http.post<R>(url, model, httpOptions);
+    return this._http.post<R>(url, model, httpOptions);
   }
 
   public postString<T = any, R = HowellResponse<T>>(
@@ -125,7 +125,7 @@ export class HowellAuthHttpService {
       params: params,
       'Content-Type': 'text/plain',
     };
-    return this.http.post<R>(url, base64, httpOptions);
+    return this._http.post<R>(url, base64, httpOptions);
   }
 
   public put<T = any, R = HowellResponse<T>>(
@@ -136,7 +136,7 @@ export class HowellAuthHttpService {
     const httpOptions = {
       headers: myHeaders,
     };
-    return this.http.put<R>(url, model, httpOptions);
+    return this._http.put<R>(url, model, httpOptions);
   }
 
   public delete<T = any, R = HowellResponse<T>>(url: string): Observable<R> {
@@ -144,7 +144,7 @@ export class HowellAuthHttpService {
     const httpOptions = {
       headers: myHeaders,
     };
-    return this.http.delete<R>(url, httpOptions);
+    return this._http.delete<R>(url, httpOptions);
   }
 
   public auth(
@@ -154,7 +154,7 @@ export class HowellAuthHttpService {
     const httpOptions = {
       headers: httpHeaders,
     };
-    return this.http.get<any>(url, httpOptions);
+    return this._http.get<any>(url, httpOptions);
   }
 
   downloadFile(
@@ -166,7 +166,7 @@ export class HowellAuthHttpService {
       reportProgress: true,
     });
 
-    this.http.request(req).subscribe((event: any) => {
+    this._http.request(req).subscribe((event: any) => {
       // Via this API, you get access to the raw event stream.
       // Look for download progress events.
       if (event.type === HttpEventType.DownloadProgress) {

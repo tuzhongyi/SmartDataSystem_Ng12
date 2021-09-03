@@ -27,21 +27,21 @@ export class AppInterceptorServiceService implements HttpInterceptor {
   private handleData(
     event: HttpResponse<any> | HttpErrorResponse
   ): Observable<any> {
-    switch (event.status) {
-      case 500:
-        MessageBar.response_Error('操作失败');
-        break;
-      case 503:
-        MessageBar.response_Error('操作失败');
-        break;
-      case 400:
-        MessageBar.response_Error('操作失败');
-        break;
-      case 504:
-        MessageBar.response_Error('操作失败');
-        break;
-      default:
-    }
+    // switch (event.status) {
+    //   case 500:
+    //     MessageBar.response_Error('操作失败');
+    //     break;
+    //   case 503:
+    //     MessageBar.response_Error('操作失败');
+    //     break;
+    //   case 400:
+    //     MessageBar.response_Error('操作失败');
+    //     break;
+    //   case 504:
+    //     MessageBar.response_Error('操作失败');
+    //     break;
+    //   default:
+    // }
 
     return throwError(event);
   }

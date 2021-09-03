@@ -1,13 +1,14 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HowellAuthHttpService } from '../request/howell-auth-http.service';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { Digest } from '../request/digest';
 import { of } from 'rxjs/internal/observable/of';
 import { User } from '../model/user.model';
 import { Router } from '@angular/router';
+import { HowellAuthHttpService } from '../request/howell-auth-http.service';
+import { Digest } from '../request/digest';
+import { SessionUser } from '../common/tool/session-user';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  sessionUser: SessionUser = new SessionUser();
+
   formGroup = new FormGroup({
     uname: new FormControl('pmx'),
     upass: new FormControl('1212'),
@@ -64,6 +67,9 @@ export class LoginComponent implements OnInit {
           .subscribe((result: User) => {
             if (result) {
               console.log(result);
+
+              this.memory('guangzhonglu', 'yxotkccu7rc3ai1h', result.Id);
+
               this._router.navigateByUrl('waste');
               // sessionStorage.setItem('userid', );
             }
@@ -82,5 +88,9 @@ export class LoginComponent implements OnInit {
 
       return of(result as T);
     };
+  }
+  memory(name: string, pwd: string, id: string) {
+    this.sessionUser.name = name;
+    this.sessionUser.pwd = pwd;
   }
 }
