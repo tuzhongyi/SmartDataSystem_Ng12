@@ -1,12 +1,13 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { HowellAuthHttpService } from '../../request/howell-auth-http.service';
+import { HowellAuthHttpService } from '../request/howell-auth-http.service';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs/internal/Observable';
-import { Digest } from '../../request/digest';
+import { Digest } from '../request/digest';
 import { of } from 'rxjs/internal/observable/of';
-import { User } from '../../model/user.model';
+import { User } from '../model/user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,10 @@ export class LoginComponent implements OnInit {
     uname: new FormControl('pmx'),
     upass: new FormControl('1212'),
   });
-  constructor(private httpService: HowellAuthHttpService) {}
+  constructor(
+    private httpService: HowellAuthHttpService,
+    private _router: Router
+  ) {}
 
   ngOnInit(): void {}
 
@@ -60,6 +64,7 @@ export class LoginComponent implements OnInit {
           .subscribe((result: User) => {
             if (result) {
               console.log(result);
+              this._router.navigateByUrl('waste');
               // sessionStorage.setItem('userid', );
             }
           });

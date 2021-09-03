@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WasteComponent } from './waste.component';
+import { AiopComponent } from './aiop.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: WasteComponent,
+    component: AiopComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class WasteRoutingModule {}
+export class AiopRoutingModule {}

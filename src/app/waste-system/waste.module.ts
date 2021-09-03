@@ -3,12 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { WasteRoutingModule } from './waste-routing.module';
 
-
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule,
-    WasteRoutingModule
-  ]
+  imports: [CommonModule, WasteRoutingModule],
 })
-export class WasteModule { }
+export class WasteModule {}
