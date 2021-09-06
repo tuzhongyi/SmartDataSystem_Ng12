@@ -91,13 +91,17 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.conf.ts"
+          },
           "configurations": {
             "production": {
               "browserTarget": "smart:build:production"
             },
             "development": {
               "browserTarget": "smart:build:development",
-              "port": 9527
+              "port": 9527,
+              "open": true
             }
           },
           "defaultConfiguration": "development"
