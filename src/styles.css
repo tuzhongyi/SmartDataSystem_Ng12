@@ -1,4 +1,29 @@
+/*
+ * @Author: pmx 
+ * @Date: 2021-09-06 17:08:22 
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-09-06 17:14:54
+ */
+
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "video.js/dist/video-js.css";
+
+/**
+  默认在 angular.json 中已经配置了 deeppurple-amber.css
+  命名空间:
+    body.mat-typography  
+*/
+/* @import url(@angular/material/prebuilt-themes/deeppurple-amber.css); */
+
+@import url(assets/css/howell.css);
+
+html,
+body {
+  height: 100%;
+  min-width: 1440px;
+  min-height: 810px;
+}
+body {
+  margin: 0;
+}
