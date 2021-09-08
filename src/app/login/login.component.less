@@ -50,11 +50,140 @@
           font-weight: bold;
 
           background-image: linear-gradient(to top, #7f94ff, #fff);
-
           -webkit-background-clip: text;
           background-clip: text;
           -webkit-text-fill-color: transparent;
         }
+      }
+    }
+  }
+  .login-content {
+    width: 33%;
+    height: 42%;
+    // background: red;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(7%, -36%);
+    background-image: url(/assets/img/login-panel.png);
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    &__header {
+      color: white;
+      text-align: center;
+      font-weight: normal;
+      margin-top: 5%;
+      margin-bottom: 2%;
+    }
+    &__line {
+      width: 69%;
+      height: 2px;
+      margin: 0 auto;
+      background-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0),
+        #6997ff,
+        rgba(0, 0, 0, 0)
+      );
+    }
+    .login-form {
+      height: 65%;
+      margin: 2% 0;
+      .form-group {
+        width: 59%;
+        height: 17%;
+        margin: 20px auto 30px;
+        border: 2px solid #5e6ebf;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &__icon {
+          font-size: 20px;
+          color: #cfd7ff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 12%;
+          height: 70%;
+          min-width: 30px;
+          margin-right: 6px;
+          border-right: 2px solid #5e6ebf;
+        }
+        &__item {
+          height: 70%;
+          width: 100%;
+          background: none;
+          border: none;
+          color: #d8f4ff;
+          outline: none;
+          font-size: 18px;
+          font-family: "Source Han Sans CN Normal";
+        }
+        &__button {
+          border: none;
+          width: 100%;
+          height: 100%;
+          background: transparent;
+          background-image: url(/assets/img/login-btn.png);
+          background-size: 100% 100%;
+          background-position: center;
+          background-repeat: no-repeat;
+          font-size: 24px;
+          cursor: pointer;
+
+          transition: background-image 0.15s ease-in-out;
+
+          &:hover {
+            background-image: url(/assets/img/login-btn-hover.png);
+          }
+          &:active {
+            background-image: url(/assets/img/login-btn-active.png);
+          }
+        }
+      }
+      .form-group--checkbox {
+        height: 10%;
+        margin: -11px auto -10px;
+        border: none;
+        & > div {
+          display: flex;
+          align-items: center;
+          position: relative;
+        }
+
+        input[type="checkbox"] {
+          visibility: hidden;
+          margin-right: 10px;
+
+          & + span {
+            color: #5e6ebf;
+          }
+          & ~ label {
+            width: 13px;
+            height: 13px;
+            border: 2px solid #5e6ebf;
+            display: block;
+            position: absolute;
+            border-radius: 4px;
+            cursor: pointer;
+            overflow: hidden;
+          }
+          &:checked ~ label:before {
+            content: "\2714";
+            width: 13px;
+            height: 13px;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            line-height: 13px;
+          }
+        }
+      }
+      .form-group--button {
+        height: 22%;
+        border: none;
       }
     }
   }
