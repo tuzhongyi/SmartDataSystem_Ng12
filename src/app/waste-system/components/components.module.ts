@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GarbageRetentionRankComponent } from './garbage-retention-rank/garbage-retention-rank.component';
+import { GarbageRetentionRankComponent } from './rank/rank.component';
 
 /**
  *  author:pmx

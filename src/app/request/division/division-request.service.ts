@@ -5,12 +5,13 @@ import { PagedList } from 'src/app/model/page-list.model';
 import { DivisionUrl } from '../../url/division.url';
 import { DivisionsParams } from './division-request.params';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { aaa } from '../aaa';
+import { ServiceHelper } from '../service-helper';
+import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DivisionRequestService {
+export class DivisionRequestService implements IRankConverter {
   constructor(private _howellHttpService: HowellAuthHttpService) {}
 
   async list(
@@ -25,6 +26,9 @@ export class DivisionRequestService {
       )
       .toPromise();
     console.log('response', response);
-    return aaa.ResponseProcess(response, Division);
+    return ServiceHelper.ResponseProcess(response, Division);
+  }
+  toRank() {
+    // this.list().
   }
 }

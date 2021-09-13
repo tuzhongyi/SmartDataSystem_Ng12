@@ -20,6 +20,7 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "axios": "^0.21.4",
     "class-transformer": "^0.4.0",
     "rxjs": "~6.6.0",
     "ts-md5": "^1.2.9",
