@@ -8,9 +8,9 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import videojs, { VideoJsPlayer } from 'video.js';
-import { MessageBar } from '../common/tool/message-bar';
 import { AuthorizationService } from '../request/auth/auth-request.service';
-import { UsersUrl } from '../url/users.url';
+
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +34,10 @@ export class LoginComponent implements AfterViewInit {
     ]),
   });
 
-  constructor(private _authorizationService: AuthorizationService) {}
+  constructor(
+    private _authorizationService: AuthorizationService,
+    private _toastr: ToastrService
+  ) {}
 
   ngAfterViewInit() {
     const _this = this;
@@ -81,7 +84,7 @@ export class LoginComponent implements AfterViewInit {
 
   private _checkForm() {
     if (this.formGroup.get('username')?.invalid) {
-      MessageBar.response_warning('请输入账号');
+      this._toastr.warning();
     }
   }
 }

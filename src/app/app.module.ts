@@ -7,6 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptorServiceService } from './request/app-interceptor-service.service';
 
+import { ToastrModule } from 'ngx-toastr';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -14,6 +16,7 @@ import { AppInterceptorServiceService } from './request/app-interceptor-service.
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [
     {
