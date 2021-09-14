@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
+import { RankModel } from '../model/rank.model';
 
 export interface IRankConverter {
-  toRank(): any;
+  toRank(data: any): RankModel;
 }

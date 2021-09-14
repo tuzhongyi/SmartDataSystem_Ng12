@@ -1,7 +1,7 @@
 import { DivisionType } from 'src/app/model/division-type.model';
 
 /**获取区划列表参数 */
-export class DivisionsParams {
+class DivisionParams {
   /**页码[1-n] */
   PageIndex: number = 1;
 
@@ -26,3 +26,5 @@ export class DivisionsParams {
   /**祖辈ID(可选)，返回该ID下的所有子孙区划信息 */
   AncestorId?: string;
 }
+
+export { DivisionParams as DivisionsParams };

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GarbageRetentionRankComponent } from './rank/rank.component';
+import { RankComponent } from './rank/rank.component';
 
 /**
  *  author:pmx
@@ -9,8 +9,8 @@ import { GarbageRetentionRankComponent } from './rank/rank.component';
  *  管理所有组件
  */
 @NgModule({
-  declarations: [GarbageRetentionRankComponent],
+  declarations: [RankComponent],
   imports: [CommonModule],
-  exports: [GarbageRetentionRankComponent],
+  exports: [RankComponent],
 })
 export class ComponentsModule {}

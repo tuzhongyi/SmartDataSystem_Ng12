@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import axios, { AxiosError, AxiosProxyConfig, AxiosRequestConfig } from 'axios';
 import { BaseUser } from 'src/app/url/base.url';
 import { UsersUrl } from 'src/app/url/users.url';
-import { Md5 } from 'ts-md5/dist/md5';
+import { Md5 } from 'ts-md5';
 import { DigestResponse } from './digest-response.class';
 
 @Injectable({
@@ -42,7 +42,7 @@ export class AuthorizationService {
           this._config.headers['Authorization'] =
             this._generateChallengeHeader(challenge);
         }
-        return axios(this._config);
+        return axios(this._config).then((res) => res.data);
       });
     } else {
       // 重复发送 Digest请求,仅仅自增 nc,复用 challenge
@@ -50,15 +50,12 @@ export class AuthorizationService {
         this._config.headers['Authorization'] = this._generateChallengeHeader(
           this._challenge
         );
-        return axios(this._config);
+        return axios(this._config).then((res) => res.data);
       }
       return;
     }
   }
 
-  // private _isAxiosError(cadidate: any): cadidate is AxiosError {
-  //   return cadidate.isAxiosError === true;
-  // }
   private _parseAuthenticateHeader(authenticate: string): DigestResponse {
     let fields_str = authenticate.replace(/Digest\s/i, '');
     let fields_arr = fields_str.split(',');
@@ -71,7 +68,7 @@ export class AuthorizationService {
       if (values) challenge[values[1]] = values[2];
     }
     this._challenge = challenge;
-    console.log(challenge);
+    // console.log(challenge);
     return challenge;
   }
   private _generateChallengeHeader(challenge: DigestResponse) {
@@ -101,7 +98,7 @@ export class AuthorizationService {
     );
 
     const authHeaders = `Digest  username="${this._username}",realm="${realm}",nonce="${nonce}",uri="${uri}",algorithm="MD5",response="${response}",opaque="${opaque}",qop="${qop}",nc="${nc}",cnonce="${cnonce}"`;
-    console.log(authHeaders);
+    // console.log(authHeaders);
     return authHeaders;
   }
 }

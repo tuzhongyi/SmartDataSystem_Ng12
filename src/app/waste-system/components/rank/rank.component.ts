@@ -1,17 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { IBusiness } from 'src/app/business/Ibusiness';
 import { DivisionRequestService } from 'src/app/request/division/division-request.service';
-import { RankBusiness } from './rank/rank.business';
+import { StationParams } from 'src/app/request/station/station-request.params';
+import { StationRequestService } from 'src/app/request/station/station-request.service';
+import { RankBusiness } from './rank.business';
 
 @Component({
-  selector: 'app-garbage-retention-rank',
+  selector: 'app-rank',
   templateUrl: './rank.component.html',
   styleUrls: ['./rank.component.css'],
-  providers: [],
+  providers: [
+    {
+      provide: RankBusiness,
+      useFactory: function (business: IBusiness) {
+        console.log('station', business);
+        return new RankBusiness(business);
+      },
+      deps: [DivisionRequestService],
+    },
+  ],
 })
-export class GarbageRetentionRankComponent implements OnInit {
-  constructor() {}
+export class RankComponent implements OnInit {
+  constructor(private _rankBusiness: RankBusiness) {}
 
   ngOnInit(): void {}
 
-  loadData() {}
+  loadData() {
+    console.log(this._rankBusiness);
+    this._rankBusiness.list();
+  }
 }

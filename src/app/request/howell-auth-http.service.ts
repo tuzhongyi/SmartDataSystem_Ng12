@@ -10,7 +10,6 @@ import {
 } from '@angular/common/http';
 import { Digest } from './digest';
 import { HowellResponse } from '../model/howell-response.model';
-import { SessionUser } from '../common/tool/session-user';
 
 @Injectable({
   providedIn: 'root',
@@ -183,15 +182,15 @@ export class HowellAuthHttpService {
 
   //获取已授权的头部
   getHttpHeaders(method: string, uri: string) {
-    let digest = new Digest(),
-      user = new SessionUser();
+    let digest = new Digest();
+    // user = new SessionUser();
     var challenge = digest.parseServerChallenge();
     this.nc += 1;
     return digest.generateRequestHeader(
       this.nc,
       challenge,
-      user.name,
-      user.pwd,
+      '1',
+      '1',
       method,
       uri
     );

@@ -6,12 +6,12 @@ import { DivisionUrl } from '../../url/division.url';
 import { DivisionsParams } from './division-request.params';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { ServiceHelper } from '../service-helper';
-import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
+import { IBusiness } from 'src/app/business/Ibusiness';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DivisionRequestService implements IRankConverter {
+export class DivisionRequestService implements IBusiness {
   constructor(private _howellHttpService: HowellAuthHttpService) {}
 
   async list(
@@ -27,8 +27,5 @@ export class DivisionRequestService implements IRankConverter {
       .toPromise();
     console.log('response', response);
     return ServiceHelper.ResponseProcess(response, Division);
-  }
-  toRank() {
-    // this.list().
   }
 }
