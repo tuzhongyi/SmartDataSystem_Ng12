@@ -17,6 +17,7 @@ export class DivisionRequestService implements IBusiness {
   async list(
     params: DivisionsParams = new DivisionsParams()
   ): Promise<PagedList<Division>> {
+    debugger;
     params.AncestorId = '310109011000';
     params.DivisionType = 4;
     let response = await this._howellHttpService

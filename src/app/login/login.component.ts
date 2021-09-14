@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-14 14:30:11
+ * @Last Modified time: 2021-09-14 16:59:35
  */
 
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
@@ -46,7 +46,6 @@ export class LoginComponent implements AfterViewInit {
     private _router: Router
   ) {
     this._titleService.setTitle('用户登录');
-    console.log(this._router);
   }
 
   ngAfterViewInit() {

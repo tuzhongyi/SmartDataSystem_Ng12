@@ -1,3 +1,4 @@
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import axios, { AxiosError, AxiosProxyConfig, AxiosRequestConfig } from 'axios';
 import { BaseUser } from 'src/app/url/base.url';
@@ -13,7 +14,7 @@ export class AuthorizationService {
   private _password: string = '';
   private _nc: number = 0;
   private _config: AxiosRequestConfig = {};
-  private _challenge?: DigestResponse;
+  private _challenge: DigestResponse = new DigestResponse();
 
   constructor() {}
   async login(username: string, password: string) {
@@ -35,12 +36,18 @@ export class AuthorizationService {
           // 将 header字符串转成对象
           let challenge = this._parseAuthenticateHeader(authenticateHeader);
 
+          console.log(this._challenge);
+
           if (challenge.realm == '') {
             challenge.realm = '/howell/ver10/data';
           }
 
-          this._config.headers['Authorization'] =
-            this._generateChallengeHeader(challenge);
+          this._config.headers['Authorization'] = this._generateChallengeHeader(
+            challenge,
+            'GET',
+            UsersUrl.login() + '/' + this._username
+          );
+          Object.assign(this._challenge, challenge);
         }
         return axios(this._config).then((res) => res.data);
       });
@@ -48,7 +55,9 @@ export class AuthorizationService {
       // 重复发送 Digest请求,仅仅自增 nc,复用 challenge
       if (this._challenge) {
         this._config.headers['Authorization'] = this._generateChallengeHeader(
-          this._challenge
+          this._challenge,
+          'GET',
+          UsersUrl.login() + '/' + this._username
         );
         return axios(this._config).then((res) => res.data);
       }
@@ -56,6 +65,11 @@ export class AuthorizationService {
     }
   }
 
+  /**
+   *  自成一体的函数，可单独提出去使用
+   * @param authenticate
+   * @returns
+   */
   private _parseAuthenticateHeader(authenticate: string): DigestResponse {
     let fields_str = authenticate.replace(/Digest\s/i, '');
     let fields_arr = fields_str.split(',');
@@ -67,14 +81,15 @@ export class AuthorizationService {
       var values = /([a-zA-Z]+)=\"?([a-zA-Z0-9.@\/\s]+)\"?/.exec(fields_arr[i]);
       if (values) challenge[values[1]] = values[2];
     }
-    this._challenge = challenge;
     // console.log(challenge);
     return challenge;
   }
-  private _generateChallengeHeader(challenge: DigestResponse) {
+  private _generateChallengeHeader(
+    challenge: DigestResponse,
+    method: string,
+    uri: string
+  ) {
     const realm = challenge.realm;
-    const method = 'GET';
-    const uri = UsersUrl.login() + '/' + this._username;
     const nonce = challenge.nonce;
 
     // 范围:[00000000,ffffffff]
@@ -98,7 +113,18 @@ export class AuthorizationService {
     );
 
     const authHeaders = `Digest  username="${this._username}",realm="${realm}",nonce="${nonce}",uri="${uri}",algorithm="MD5",response="${response}",opaque="${opaque}",qop="${qop}",nc="${nc}",cnonce="${cnonce}"`;
-    // console.log(authHeaders);
+    console.log(authHeaders);
     return authHeaders;
+  }
+  public generateHttpHeader(method: string, uri: string) {
+    const authHeader = this._generateChallengeHeader(
+      this._challenge,
+      method,
+      uri
+    );
+    return new HttpHeaders({
+      Authorization: authHeader,
+      'X-WebBrowser-Authentication': 'Forbidden',
+    });
   }
 }

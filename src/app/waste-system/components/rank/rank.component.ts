@@ -13,7 +13,6 @@ import { RankBusiness } from './rank.business';
     {
       provide: RankBusiness,
       useFactory: function (business: IBusiness) {
-        console.log('station', business);
         return new RankBusiness(business);
       },
       deps: [DivisionRequestService],
@@ -26,6 +25,7 @@ export class RankComponent implements OnInit {
   ngOnInit(): void {}
 
   loadData() {
+    debugger;
     console.log(this._rankBusiness);
     this._rankBusiness.list();
   }

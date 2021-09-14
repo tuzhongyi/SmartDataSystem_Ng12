@@ -10,13 +10,17 @@ import {
 } from '@angular/common/http';
 import { Digest } from './digest';
 import { HowellResponse } from '../model/howell-response.model';
+import { AuthorizationService } from './auth/auth-request.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HowellAuthHttpService {
   nc = 0;
-  constructor(private _http: HttpClient) {}
+  constructor(
+    private _http: HttpClient,
+    private _authorizationService: AuthorizationService
+  ) {}
 
   public postBase64String(
     url: string,
@@ -104,7 +108,11 @@ export class HowellAuthHttpService {
     model?: any,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this.getHttpHeaders('POST', url);
+    // const myHeaders = this.getHttpHeaders('POST', url);
+    const myHeaders = this._authorizationService.generateHttpHeader(
+      'POST',
+      url
+    );
     const httpOptions = {
       headers: myHeaders,
       params: params,
