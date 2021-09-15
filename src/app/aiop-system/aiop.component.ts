@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-aiop',
-  templateUrl: './aiop.component.html',
+  template: `<router-outlet></router-outlet> `,
 })
 export class AiopComponent implements OnInit {
   constructor() {}
