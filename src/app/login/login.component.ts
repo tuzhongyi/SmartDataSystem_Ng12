@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-14 16:59:35
+ * @Last Modified time: 2021-09-15 14:35:54
  */
 
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
@@ -16,6 +16,9 @@ import { Title } from '@angular/platform-browser';
 import { AxiosError } from 'axios';
 import { Router } from '@angular/router';
 
+/**
+ *  LoginComponent 需要用到 form 指令，所以必须在 app-routing中声明
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

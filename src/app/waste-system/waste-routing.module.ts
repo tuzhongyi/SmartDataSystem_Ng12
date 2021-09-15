@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { WasteComponent } from './waste.component';
+import { MonitorComponent } from './components/monitor/monitor.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: WasteComponent,
+    redirectTo: 'monitor',
+  },
+  {
+    path: 'monitor',
+    component: MonitorComponent,
   },
 ];
 

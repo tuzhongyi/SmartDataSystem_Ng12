@@ -1,0 +1,51 @@
+.waste-container {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+
+  .waste-header {
+    width: 100%;
+    height: 90px;
+    background-color: cyan;
+    flex-shrink: 0;
+
+    display: flex;
+
+    &__item {
+    }
+  }
+  .waste-body {
+    width: 100%;
+    flex-grow: 1;
+    background-color: violet;
+
+    display: grid;
+    grid-template-columns: [c1] 1fr [c2] 1fr [c3] 1fr [c4] 1fr [c5];
+    grid-template-rows: [r1] 1fr [r2] 1fr [r3] 1fr [r4];
+    grid-template-areas: "a b c" "d e f" "g h i";
+    grid-gap: 10px;
+    .waste-body__item {
+      background-color: blue;
+      font-size: 20px;
+      text-align: center;
+      color: white;
+      &--map {
+        /** 指定位置的三种方式 **/
+
+        // grid-area: 1/2/3/4;
+
+        // grid-row-start: 1;
+        // grid-row-end: 3;
+        // grid-column-start: 2;
+        // grid-column-end: 4;
+
+        grid-row-start: r1;
+        grid-row-end: r3;
+        grid-column-start: c2;
+        grid-column-end: c4;
+      }
+    }
+  }
+}

@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-waste',
-  templateUrl: './waste.component.html',
-  styleUrls: ['./waste.component.css'],
+  template: ` <router-outlet></router-outlet> `,
 })
 export class WasteComponent implements OnInit {
   constructor() {}

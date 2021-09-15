@@ -20,6 +20,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./waste-system/waste.module').then((mod) => mod.WasteModule),
   },
+  {
+    path: 'aiop',
+    loadChildren: () =>
+      import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
+  },
 ];
 
 @NgModule({

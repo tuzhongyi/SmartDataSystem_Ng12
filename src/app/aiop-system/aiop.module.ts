@@ -2,16 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AiopRoutingModule } from './aiop-routing.module';
-import { IndexComponent } from './index.component';
-
+import { AiopComponent } from './aiop.component';
+import { AiopComponentsModule } from './components/components.module';
 
 @NgModule({
-  declarations: [
-    IndexComponent
-  ],
-  imports: [
-    CommonModule,
-    AiopRoutingModule
-  ]
+  declarations: [AiopComponent],
+  imports: [CommonModule, AiopRoutingModule, AiopComponentsModule],
 })
-export class AiopModule { }
+export class AiopModule {}

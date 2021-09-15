@@ -1,16 +1,18 @@
+/*
+ * @Author: pmx
+ * @Date: 2021-09-15 14:43:30
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-09-15 14:45:44
+ */
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RankComponent } from './rank/rank.component';
+import { MonitorComponent } from './monitor/monitor.component';
 
-/**
- *  author:pmx
- *  create time:2021/09/03
- *
- *  管理所有组件
- */
 @NgModule({
-  declarations: [RankComponent],
+  declarations: [RankComponent, MonitorComponent],
   imports: [CommonModule],
-  exports: [RankComponent],
+  exports: [RankComponent, MonitorComponent],
 })
-export class ComponentsModule {}
+export class WasteComponentsModule {}

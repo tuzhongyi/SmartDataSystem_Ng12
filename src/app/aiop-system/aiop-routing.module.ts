@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AiopComponent } from './aiop.component';
+import { HelloComponent } from './components/hello/hello.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AiopComponent,
+    redirectTo: 'hello',
+  },
+  {
+    path: 'hello',
+    component: HelloComponent,
   },
 ];
 
