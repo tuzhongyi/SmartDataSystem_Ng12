@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { WasteRoutingModule } from './waste-routing.module';
 import { WasteComponent } from './waste.component';
-import { WasteComponentsModule } from './components/components.module';
+import { WasteComponentsModule } from './components/waste-components.module';
 
 @NgModule({
   declarations: [WasteComponent],
