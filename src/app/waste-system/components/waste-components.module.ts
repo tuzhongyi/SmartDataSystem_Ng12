@@ -9,11 +9,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RankComponent } from './rank/rank.component';
 import { MonitorComponent } from './monitor/monitor.component';
-import { CommonComponentsModule } from 'src/app/common/components/common-components.module';
+import { HowellModule } from 'src/app/common/howell.module';
 
 @NgModule({
   declarations: [RankComponent, MonitorComponent],
-  imports: [CommonModule, CommonComponentsModule],
+  imports: [CommonModule, HowellModule],
   exports: [RankComponent, MonitorComponent],
 })
 export class WasteComponentsModule {}
