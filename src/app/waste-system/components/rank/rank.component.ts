@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
 import { DivisionRequestService } from 'src/app/request/division/division-request.service';
-import { StationParams } from 'src/app/request/station/station-request.params';
-import { StationRequestService } from 'src/app/request/station/station-request.service';
+import { StationParams } from 'src/app/request/station/garbage-station-request.params';
+import { StationRequestService } from 'src/app/request/station/garbage-station-request.service';
 import { RankBusiness } from './rank.business';
 
 @Component({

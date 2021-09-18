@@ -1,5 +1,7 @@
+import { IParams } from '../IParams.interface';
+
 /**获取垃圾房列表参数 */
-export class StationParams {
+export class StationParams implements IParams {
   /**页码[1-n](可选) */
   PageIndex?: number;
   /**分页大小[1-100](可选) */

@@ -1,117 +1,37 @@
-import { Injectable } from '@angular/core';
-import {
-  Transform,
-  TransformationType,
-  TransformFnParams,
-  Type,
-} from 'class-transformer';
-import { DivisionType } from './division-type.model';
-import { GisType } from './gis-type.model';
+import { Transform } from 'class-transformer';
+import { DivisionType } from '../enum/division-type.enum';
+import { GisArea } from './gis-area.model';
+import { GisPoint } from './gis-point.model';
+import { transformDate } from './transform.model';
 
-/**区划信息 */
-
+/** 区划 */
 export class Division {
-  /**区划ID */
+  /**	String	区划ID	M */
   Id!: string;
-  /**区划名称 */
+  /**	String	区划名称	M */
   Name!: string;
-  /**父区划ID(可选)，如果是根区域节点，则该ID为空 */
+  /**	String	父区划ID，如果是根区域节点，则该ID为空	O */
   ParentId?: string;
-  /**是否为叶节点的区域 */
+  /**	Boolean	是否为叶节点的区域	M */
   IsLeaf!: boolean;
-  /**外部扩展ID(可选)，用于国标区划编码 */
+  /**	String	外部扩展ID，用于国标区划编码	O */
   ExternalId?: string;
-  /**区划完整路径(可选)，含本节点，@进行分割，上级节点在前 */
+  /**	String	区划完整路径，含本节点，@进行分割，上级节点在前	O */
   DivisionPath?: string;
-  /**描述信息(可选) */
+  /**	String	描述信息	O */
   Description?: string;
-  /**人口(可选) */
+  /**	Int32	人口	O */
   Population?: number;
-  /**区划类型，用于图标区分 */
+  /**	Int32	区划类型，用于图标区分	M */
   DivisionType!: DivisionType;
-  /**创建时间 */
+  /**	DateTime	创建时间	M */
   @Transform(transformDate)
-  CreateTime?: Date;
-  /**更新事件 */
+  CreateTime!: Date;
+  /**	DateTime	更新事件	M */
   @Transform(transformDate)
-  UpdateTime?: Date;
-  /**区划中心GIS点位(可选) */
+  UpdateTime!: Date;
+  /**	GisPoint	区划中心GIS点位	O */
   GisPoint?: GisPoint;
-  /**区划GIS点位区域(可选) */
+  /**	GisArea	区划GIS点位区域	O */
   GisArea?: GisArea;
-}
-
-function transformDate(params: TransformFnParams) {
-  if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    return new Date(params.value);
-  } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
-    return (params.value as Date).toISOString();
-  } else if (params.type === TransformationType.CLASS_TO_CLASS) {
-    return new Date(params.value);
-  }
-  return '';
-}
-
-export class GisArea {
-  /**
-   *	GisPoint[]	坐标点	M
-   *
-   * @type {GisPoint[]}
-   * @memberof GisArea
-   */
-  GisPoint?: GisPoint[];
-  /**
-   *	Int32	坐标系类型	M
-   *
-   * @type {number}
-   * @memberof GisArea
-   */
-  GisType?: number;
-}
-export class GisPoint {
-  constructor(point?: number[], type?: GisType) {
-    if (point) {
-      this.Longitude = point[0];
-      this.Latitude = point[1];
-    }
-    if (type) {
-      this.GisType = type;
-    }
-  }
-
-  /**
-   * Double	经度	M
-   *
-   * @type {number}
-   * @memberof GisPoint
-   */
-  Longitude?: number;
-  /**
-   *	Double	纬度	M
-   *
-   * @type {number}
-   * @memberof GisPoint
-   */
-  Latitude?: number;
-  /**
-   *	Double	高度	M
-   *
-   * @type {number}
-   * @memberof GisPoint
-   */
-  Altitude: number = 0;
-  /**
-   *	Int32	楼层	O
-   *
-   * @type {number}
-   * @memberof GisPoint
-   */
-  Floor?: number;
-  /**
-   *	Int32	坐标系类型	O
-   *
-   * @type {number}
-   * @memberof GisPoint
-   */
-  GisType?: GisType;
 }

@@ -4,10 +4,8 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2021-09-14 17:03:13
  */
-import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
-import { RankModel } from 'src/app/model/rank.model';
-import { DivisionRequestService } from 'src/app/request/division/division-request.service';
+import { RankModel } from 'src/app/view-model/rank.model';
 import { IRankConverter } from '../../../Converter/IRankconverter.interface';
 
 export class RankBusiness implements IRankConverter {
@@ -16,11 +14,11 @@ export class RankBusiness implements IRankConverter {
   constructor(private _business: IBusiness) {}
 
   async list() {
-    let data = await this._business.list();
+    let data = await this._business.list<any>();
     console.log(data);
     return data;
   }
-  toRank(data: any): RankModel {
+  toRank<T>(data: T): RankModel {
     return new RankModel();
   }
 }

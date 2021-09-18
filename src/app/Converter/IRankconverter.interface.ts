@@ -1,5 +1,5 @@
-import { RankModel } from '../model/rank.model';
+import { RankModel } from '../view-model/rank.model';
 
 export interface IRankConverter {
-  toRank(data: any): RankModel;
+  toRank<T>(data: T): RankModel;
 }
