@@ -18,7 +18,7 @@ const routes: Routes = [
   {
     path: 'waste',
     loadChildren: () =>
-      import('./waste-system/waste.module').then((mod) => mod.WasteModule),
+      import('./garbage-system/garbage.module').then((mod) => mod.GarbageModule),
   },
   {
     path: 'aiop',

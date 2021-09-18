@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-waste',
   template: ` <router-outlet></router-outlet> `,
 })
-export class WasteComponent implements OnInit {
+export class GarbageComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
