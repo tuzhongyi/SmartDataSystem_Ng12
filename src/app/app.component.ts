@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Injector, LOCALE_ID } from '@angular/core';
+import { getCurrencySymbol, getLocaleCurrencyCode } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -6,4 +7,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'waste';
+  constructor(private injector: Injector) {
+    console.log(injector.get(LOCALE_ID));
+  }
 }
