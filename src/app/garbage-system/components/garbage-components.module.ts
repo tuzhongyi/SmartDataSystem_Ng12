@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-22 10:13:22
+ * @Last Modified time: 2021-09-22 10:14:24
  */
 
 import { NgModule } from '@angular/core';
@@ -16,4 +16,4 @@ import { HowellModule } from 'src/app/common/howell.module';
   imports: [CommonModule, HowellModule],
   exports: [RankComponent, MonitorComponent],
 })
-export class WasteComponentsModule {}
+export class GarbageComponentsModule {}

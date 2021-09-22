@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { WasteRoutingModule } from './garbage-routing.module';
+import { GarbageRoutingModule } from './garbage-routing.module';
 import { GarbageComponent } from './garbage.component';
-import { WasteComponentsModule } from './components/waste-components.module';
+import { GarbageComponentsModule } from './components/garbage-components.module';
 
 @NgModule({
   declarations: [GarbageComponent],
   exports: [],
-  imports: [CommonModule, WasteRoutingModule, WasteComponentsModule],
+  imports: [CommonModule, GarbageRoutingModule, GarbageComponentsModule],
 })
 export class GarbageModule {}
