@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:14
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-22 10:09:58
+ * @Last Modified time: 2021-09-22 10:31:00
  */
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { interval } from 'rxjs';

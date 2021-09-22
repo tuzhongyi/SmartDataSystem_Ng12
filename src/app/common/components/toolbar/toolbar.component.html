@@ -1,26 +1,44 @@
 <div class="toolbar">
-  <div class="toolbar__item">
+  <div class="toolbar__item toolbar__item--m-l-30">
     <img
       class="toolbar__logo"
       src="assets/img/logo.svg"
       alt=""
       title="皓维智能"
     />
-    <span class="toolbar__title">广中路街道</span>
-    <span class="toolbar__des">生活垃圾分类全程监管平台</span>
+    <div class="toolbar__text">
+      <span class="toolbar__title">广中路街道</span>
+      <span class="toolbar__des">生活垃圾分类全程监管平台</span>
+    </div>
   </div>
   <div class="toolbar__item toolbar__item--center">
     <div class="statistic-wrapper">
-      <div>今日收湿垃圾总量</div>
-      <div>00000(吨/日)</div>
+      <div class="statistic-wrapper__title">今日收湿垃圾总量</div>
+      <div class="statistic-wrapper__content">
+        <span class="statistic-wrapper__content__num">12121212</span
+        >&nbsp;&nbsp;(吨/日)
+      </div>
     </div>
     <div class="statistic-wrapper">
-      <div>今日收湿垃圾总量</div>
-      <div>0(吨/日)</div>
+      <div class="statistic-wrapper__title">今日收干垃圾总量</div>
+      <div class="statistic-wrapper__content">
+        <span class="statistic-wrapper__content__num">3453453123</span
+        >&nbsp;&nbsp;(吨/日)
+      </div>
     </div>
   </div>
   <div class="toolbar__item toolbar__item--end">
-    <div>{{ today | date: "HH:mm:ss" }}</div>
-    <div>{{ today | date: "yyyy年MM月dd日EEEE":"OOOO":"zh-CN" }}</div>
+    <div>
+      <div>{{ today | date: "HH:mm:ss" }}</div>
+      <div>{{ today | date: "yyyy年MM月dd日EEEE":"OOOO":"zh-CN" }}</div>
+    </div>
+    <div style="font-family: 'Material-Design-Iconic-Font'">
+      <span>
+        <i class="howell-icon-account"></i>
+      </span>
+      <span>
+        <i class="zmdi-tablet-mac">ss</i>
+      </span>
+    </div>
   </div>
 </div>

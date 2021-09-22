@@ -2,13 +2,13 @@
  * @Author: pmx 
  * @Date: 2021-09-15 16:03:33 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-15 17:29:59
+ * @Last Modified time: 2021-09-22 13:19:46
  */
 
 .toolbar-text() {
   font-weight: bold;
   line-height: 36px;
-  background-image: linear-gradient(to bottom, #7f94ff, #fff);
+  background-image: linear-gradient(to top, #7f94ff, #fff);
 
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -40,6 +40,10 @@
     display: flex;
     align-items: center;
 
+    &--m-l-30 {
+      margin-left: 30px;
+    }
+
     &--center {
       justify-content: center;
       overflow: hidden;
@@ -51,20 +55,43 @@
 
   .toolbar__logo {
   }
-  .toolbar__title {
-    font-size: 36px;
-    .toolbar-text();
+  .toolbar__text {
+    font-weight: bold;
+    line-height: 36px;
+    background-image: linear-gradient(to top, #7f94ff, #fff);
+
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    .toolbar__title {
+      font-size: 36px;
+      margin-left: 20px;
+    }
+    .toolbar__des {
+      font-size: 24px;
+      margin-left: 10px;
+    }
   }
-  .toolbar__des {
-    font-size: 24px;
-    margin-left: 5px;
-    .toolbar-text();
-  }
+
   .statistic-wrapper {
+    color: #d8f4ff;
     font-size: 16px;
     padding: 0 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    max-width: 40%;
+    overflow: hidden;
+
+    &__title {
+    }
+    &__content {
+      display: flex;
+      &__num {
+        font-size: 24px;
+        color: #32f0f7;
+        max-width: 57%;
+        overflow: hidden;
+      }
+    }
   }
 }

@@ -1,5 +1,4 @@
 import { Component, Injector, LOCALE_ID } from '@angular/core';
-import { getCurrencySymbol, getLocaleCurrencyCode } from '@angular/common';
 
 @Component({
   selector: 'app-root',
