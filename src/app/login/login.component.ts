@@ -8,7 +8,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import videojs, { VideoJsPlayer } from 'video.js';
-import { AuthorizationService } from '../request/auth/auth-request.service';
+import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
 import { ToastrService } from 'ngx-toastr';
 

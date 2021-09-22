@@ -9,7 +9,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Digest } from './digest';
-import { HowellResponse } from '../model/howell-response.model';
+import { HowellResponse } from '../../model/howell-response.model';
 import { AuthorizationService } from './auth/auth-request.service';
 
 @Injectable({
@@ -85,7 +85,7 @@ export class HowellAuthHttpService {
     url: string,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this.getHttpHeaders('GET', url);
+    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
@@ -105,7 +105,7 @@ export class HowellAuthHttpService {
 
   public post<T = any, R = HowellResponse<T>>(
     url: string,
-    model?: any,
+    model?: T,
     params?: HttpParams
   ): Observable<R> {
     // const myHeaders = this.getHttpHeaders('POST', url);
@@ -137,17 +137,22 @@ export class HowellAuthHttpService {
 
   public put<T = any, R = HowellResponse<T>>(
     url: string,
-    model: T
+    model: T,
+    params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this.getHttpHeaders('PUT', url);
+    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
     const httpOptions = {
       headers: myHeaders,
+      params: params,
     };
     return this._http.put<R>(url, model, httpOptions);
   }
 
   public delete<T = any, R = HowellResponse<T>>(url: string): Observable<R> {
-    const myHeaders = this.getHttpHeaders('DELETE', url);
+    const myHeaders = this._authorizationService.generateHttpHeader(
+      'DELETE',
+      url
+    );
     const httpOptions = {
       headers: myHeaders,
     };
