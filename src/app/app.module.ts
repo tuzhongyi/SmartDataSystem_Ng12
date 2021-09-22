@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AppInterceptorServiceService } from './request/app-interceptor-service.service';
+import { AppInterceptorServiceService } from './network/request/app-interceptor-service.service';
 
 import { ToastrModule } from 'ngx-toastr';
 
