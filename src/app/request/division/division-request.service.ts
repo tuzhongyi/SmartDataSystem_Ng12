@@ -11,13 +11,12 @@ import { IBusiness } from 'src/app/business/Ibusiness';
 @Injectable({
   providedIn: 'root',
 })
-export class DivisionRequestService implements IBusiness {
+export class DivisionRequestService implements IBusiness<Division> {
   constructor(private _howellHttpService: HowellAuthHttpService) {}
 
   async list(
     params: DivisionsParams = new DivisionsParams()
   ): Promise<PagedList<Division>> {
-    debugger;
     params.AncestorId = '310109011000';
     params.DivisionType = 4;
     let response = await this._howellHttpService
@@ -28,5 +27,11 @@ export class DivisionRequestService implements IBusiness {
       .toPromise();
     console.log('response', response);
     return ServiceHelper.ResponseProcess(response, Division);
+  }
+  get(): Promise<Division> {
+    throw new Error('Method not implemented.');
+  }
+  update(data: Division): Promise<Division> {
+    throw new Error('Method not implemented.');
   }
 }

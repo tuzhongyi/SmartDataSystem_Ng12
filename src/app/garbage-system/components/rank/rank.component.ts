@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
+import { Division } from 'src/app/model/division.model';
 import { DivisionRequestService } from 'src/app/request/division/division-request.service';
-import { StationParams } from 'src/app/request/station/garbage-station-request.params';
-import { StationRequestService } from 'src/app/request/station/garbage-station-request.service';
 import { RankBusiness } from './rank.business';
 
 @Component({
@@ -12,7 +11,7 @@ import { RankBusiness } from './rank.business';
   providers: [
     {
       provide: RankBusiness,
-      useFactory: function (business: IBusiness) {
+      useFactory: function (business: IBusiness<Division>) {
         return new RankBusiness(business);
       },
       deps: [DivisionRequestService],
@@ -27,6 +26,6 @@ export class RankComponent implements OnInit {
   loadData() {
     debugger;
     console.log(this._rankBusiness);
-    this._rankBusiness.list();
+    this._rankBusiness.toRank(this._rankBusiness.list());
   }
 }

@@ -1,12 +1,13 @@
-import { DivisionType } from 'src/app/model/division-type.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { IParams } from '../IParams.interface';
 
 /**获取区划列表参数 */
-class DivisionParams {
+class DivisionParams implements IParams {
   /**页码[1-n] */
-  PageIndex: number = 1;
+  PageIndex?: number = 1;
 
   /**分页大小[1-100] */
-  PageSize: number = 9999;
+  PageSize?: number = 9999;
 
   /**区划ID(可选) */
   Ids?: string[];

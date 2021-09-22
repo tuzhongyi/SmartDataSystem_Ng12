@@ -11,5 +11,5 @@ export interface IBusiness<IData> {
   get(): Promise<IData>;
   update(data: IData): Promise<IData>;
 
-  list<Params extends IParams>(args: Params): Promise<PagedList<IData>>;
+  list<Params extends IParams>(args?: Params): Promise<PagedList<IData>>;
 }
