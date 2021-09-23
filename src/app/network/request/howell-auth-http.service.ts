@@ -9,7 +9,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Digest } from './digest';
-import { HowellResponse } from '../../model/howell-response.model';
+import { HowellResponse } from '../model/howell-response.model';
 import { AuthorizationService } from './auth/auth-request.service';
 
 @Injectable({

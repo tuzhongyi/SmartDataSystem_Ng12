@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
-import { Division } from 'src/app/model/division.model';
+import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/request/division/division-request.service';
 import { RankBusiness } from './rank.business';
 

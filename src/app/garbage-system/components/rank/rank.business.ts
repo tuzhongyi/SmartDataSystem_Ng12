@@ -5,8 +5,8 @@
  * @Last Modified time: 2021-09-14 17:03:13
  */
 import { IBusiness } from 'src/app/business/Ibusiness';
-import { Division } from 'src/app/model/division.model';
-import { GarbageStation } from 'src/app/model/garbage-station.model';
+import { Division } from 'src/app/network/model/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { IRankConverter } from '../../../Converter/IRankconverter.interface';
 

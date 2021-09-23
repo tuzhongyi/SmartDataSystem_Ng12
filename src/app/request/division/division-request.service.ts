@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Division } from 'src/app/model/division.model';
-import { HowellResponse } from 'src/app/model/howell-response.model';
-import { PagedList } from 'src/app/model/page-list.model';
+
+import { Division } from 'src/app/network/model/division.model';
+import { HowellResponse } from 'src/app/network/model/howell-response.model';
+import { PagedList } from 'src/app/network/model/page-list.model';
+
 import { DivisionsParams } from './division-request.params';
+
 import { IBusiness } from 'src/app/business/Ibusiness';
 import { HowellAuthHttpService } from 'src/app/network/request/howell-auth-http.service';
-import { DivisionUrl } from 'src/app/network/request/url/garbage/division.url';
+import { DivisionUrl } from 'src/app/network/url/garbage/division.url';
+
 import { ServiceHelper } from 'src/app/network/request/service-helper';
 
 @Injectable({

@@ -1,0 +1,39 @@
+import { BaseGarbageUrl } from '../base.url';
+import { EventNumberUrl } from './inner/event-number.url';
+import { StatisticUrl } from './inner/statistic.url';
+import { VolumeUrl } from './inner/volume.url';
+
+export class DivisionUrl {
+  static basic() {
+    return `${BaseGarbageUrl}/Divisions`;
+  }
+  static item(id: string) {
+    return `${this.basic()}/${id}`;
+  }
+  static list() {
+    return `${this.basic()}/List`;
+  }
+  static tree() {
+    return `${this.basic()}/Tree`;
+  }
+  static garbagestations(id: string) {
+    return `${this.item(id)}/GarbageStations`;
+  }
+
+  static excels() {
+    return `${this.basic()}/Excels`;
+  }
+
+  static volume(id: string) {
+    return new VolumeUrl(this.item(id));
+  }
+  static eventnumber(id?: string) {
+    let base = id ? this.item(id) : this.basic();
+    return new EventNumberUrl(base);
+  }
+
+  static statistic(id?: string) {
+    let base: string = id ? this.item(id) : this.basic();
+    return new StatisticUrl(base);
+  }
+}

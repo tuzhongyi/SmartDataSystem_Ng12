@@ -1,8 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import axios, { AxiosError, AxiosProxyConfig, AxiosRequestConfig } from 'axios';
-import { BaseUser } from 'src/app/network/request/url/base.url';
-import { UsersUrl } from 'src/app/network/request/url/users.url';
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { UsersUrl } from 'src/app/network/url/users.url';
 import { Md5 } from 'ts-md5';
 import { DigestResponse } from './digest-response.class';
 
