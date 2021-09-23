@@ -1,5 +1,5 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { IParams } from '../IParams.interface';
+import { IParams } from 'src/app/network/request/IParams.interface';
 
 /**获取区划列表参数 */
 class DivisionParams implements IParams {

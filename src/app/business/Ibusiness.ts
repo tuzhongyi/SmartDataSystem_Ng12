@@ -1,4 +1,4 @@
-import { PagedList } from '../model/page-list.model';
+import { PagedList } from '../network/model/page-list.model';
 import { IParams } from '../network/request/IParams.interface';
 /*
  * @Author: pmx
@@ -11,5 +11,5 @@ export interface IBusiness<IData> {
   update(data: IData): Promise<IData>;
   create(data: IData): Promise<IData>;
 
-  list<Params extends IParams>(args?: Params): Promise<PagedList<IData>>;
+  list(args?: IParams): Promise<PagedList<IData>>;
 }

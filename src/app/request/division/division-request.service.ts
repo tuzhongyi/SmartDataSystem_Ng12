@@ -1,18 +1,23 @@
 import { Injectable } from '@angular/core';
-import { Division } from 'src/app/model/division.model';
-import { HowellResponse } from 'src/app/model/howell-response.model';
-import { PagedList } from 'src/app/model/page-list.model';
-import { DivisionUrl } from '../../url/division.url';
+import { Division } from 'src/app/network/model/division.model';
+import { HowellResponse } from 'src/app/network/model/howell-response.model';
+import { PagedList } from 'src/app/network/model/page-list.model';
+
 import { DivisionsParams } from './division-request.params';
-import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { ServiceHelper } from '../service-helper';
+
 import { IBusiness } from 'src/app/business/Ibusiness';
+import { HowellAuthHttpService } from 'src/app/network/request/howell-auth-http.service';
+import { DivisionUrl } from 'src/app/network/url/garbage/division.url';
+import { ServiceHelper } from 'src/app/network/request/service-helper';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DivisionRequestService implements IBusiness<Division> {
   constructor(private _howellHttpService: HowellAuthHttpService) {}
+  create(data: Division): Promise<Division> {
+    throw new Error('Method not implemented.');
+  }
 
   async list(
     params: DivisionsParams = new DivisionsParams()
