@@ -1,4 +1,9 @@
-<div class="toolbar">
+<div
+  class="toolbar"
+  #toolbar
+  (click)="showDropDown = false"
+  (resized)="onResized($event)"
+>
   <div class="toolbar__item toolbar__item--m-l-30">
     <img
       class="toolbar__logo"
@@ -28,17 +33,37 @@
     </div>
   </div>
   <div class="toolbar__item toolbar__item--end">
-    <div>
-      <div>{{ today | date: "HH:mm:ss" }}</div>
-      <div>{{ today | date: "yyyy年MM月dd日EEEE":"OOOO":"zh-CN" }}</div>
+    <div class="toolbar__today">
+      <div class="toolbar__today__time">{{ today | date: "HH:mm:ss" }}</div>
+      <div class="toolbar__today__slash"></div>
+      <div class="toolbar__today__date">
+        {{ today | date: "yyyy 年 M 月  dd 日 EEEE":"OOOO":"zh-CN" }}
+      </div>
     </div>
-    <div style="font-family: 'Material-Design-Iconic-Font'">
-      <span>
+
+    <div class="toolbar__link">
+      <div
+        class="toolbar__link__item toolbar__link__logout"
+        #logout
+        (click)="toggleDropDownHandler($event)"
+      >
         <i class="howell-icon-account"></i>
-      </span>
-      <span>
-        <i class="zmdi-tablet-mac">ss</i>
-      </span>
+      </div>
+
+      <div class="toolbar__link__item toolbar__link__help">
+        <mat-icon aria-hidden="false" aria-label="Example home icon">
+          help
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+
+  <div class="dropdown__menu" #dropdown [class.show]="showDropDown">
+    <div class="dropdown__item">
+      <i class="howell-icon-account"></i> guangzhonglu
+    </div>
+    <div class="dropdown__item">
+      <i class="howell-icon-logout"> </i> 退出登录
     </div>
   </div>
 </div>
