@@ -10,6 +10,6 @@ export interface IBusiness<IData> {
   get(id: string): Promise<IData>;
   update(data: IData): Promise<IData>;
   create(data: IData): Promise<IData>;
-
+  delete(id: string): Promise<IData>;
   list(args?: IParams): Promise<PagedList<IData>>;
 }
