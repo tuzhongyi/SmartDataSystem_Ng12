@@ -1,9 +1,9 @@
-import { IInnerUrl } from '../base.url';
+import { BaseGarbageUrl, IInnerUrl } from '../base.url';
 import { GarbageStationUrl } from './garbage-station.url';
 
 export class SRServiceUrl {
   static basic() {
-    return `${GarbageStationUrl}/SRServers`;
+    return `${BaseGarbageUrl}/SRServers`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;
