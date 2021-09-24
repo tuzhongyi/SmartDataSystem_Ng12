@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
 import { Member } from '../../model/member.model';
 import { PagedList } from '../../model/page-list.model';
@@ -9,7 +10,9 @@ import {
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { IParams } from '../IParams.interface';
 import { GetMembersParams } from './member-request.params';
-
+@Injectable({
+  providedIn: 'root',
+})
 export class MemberRequsetService implements IBusiness<Member> {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Member>;
@@ -43,7 +46,7 @@ export class MemberRequsetService implements IBusiness<Member> {
 
   private _relation?: RelationsService;
   public get relation(): RelationsService {
-    if(!this._relation){
+    if (!this._relation) {
       this._relation = new RelationsService(this.basic);
     }
     return this._relation;
