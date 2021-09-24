@@ -1,12 +1,12 @@
 import { BaseGarbageUrl } from '../base.url';
-import { CameraUrl } from './inner/camera.url';
-import { EventNumberUrl } from './inner/event-number.url';
-import { MemberUrl } from './inner/member.url';
-import { StatisticUrl } from './inner/statistic.url';
-import { TaskUrl } from './inner/task.url';
-import { TrashCanUrl } from './inner/trash-can.url';
-import { TypeUrl } from './inner/type.url';
-import { VolumeUrl } from './inner/volume.url';
+import { CameraInnerUrl } from './inner/camera.url';
+import { EventNumberInnerUrl } from './inner/event-number.url';
+import { MemberInnerUrl } from './inner/member.url';
+import { StatisticInnerUrl } from './inner/statistic.url';
+import { TaskInnerUrl } from './inner/task.url';
+import { TrashCanInnerUrl } from './inner/trash-can.url';
+import { TypeInnerUrl } from './inner/type.url';
+import { VolumeInnerUrl } from './inner/volume.url';
 
 export class GarbageStationUrl {
   static basic() {
@@ -27,30 +27,30 @@ export class GarbageStationUrl {
 
   static camera(id?: string) {
     const base = id ? this.item(id) : this.basic();
-    return new CameraUrl(base);
+    return new CameraInnerUrl(base);
   }
   static trashcan(id?: string) {
     const base = id ? this.item(id) : this.basic();
-    return new TrashCanUrl(base);
+    return new TrashCanInnerUrl(base);
   }
   static statistic(id?: string) {
     const base = id ? this.item(id) : this.basic();
-    return new StatisticUrl(base);
+    return new StatisticInnerUrl(base);
   }
   static eventnumber(id?: string) {
     const base = id ? this.item(id) : this.basic();
-    return new EventNumberUrl(base);
+    return new EventNumberInnerUrl(base);
   }
 
-  static type = new TypeUrl(this.basic());
+  static type = new TypeInnerUrl(this.basic());
 
   static member(id: string) {
-    return new MemberUrl(this.item(id));
+    return new MemberInnerUrl(this.item(id));
   }
   static task(id: string) {
-    return new TaskUrl(this.item(id));
+    return new TaskInnerUrl(this.item(id));
   }
   static volume(id: string) {
-    return new VolumeUrl(this.item(id));
+    return new VolumeInnerUrl(this.item(id));
   }
 }

@@ -1,7 +1,7 @@
 import { BaseGarbageUrl } from '../base.url';
-import { EventNumberUrl } from './inner/event-number.url';
-import { StatisticUrl } from './inner/statistic.url';
-import { VolumeUrl } from './inner/volume.url';
+import { EventNumberInnerUrl } from './inner/event-number.url';
+import { StatisticInnerUrl } from './inner/statistic.url';
+import { VolumeInnerUrl } from './inner/volume.url';
 
 export class DivisionUrl {
   static basic() {
@@ -25,15 +25,15 @@ export class DivisionUrl {
   }
 
   static volume(id: string) {
-    return new VolumeUrl(this.item(id));
+    return new VolumeInnerUrl(this.item(id));
   }
   static eventnumber(id?: string) {
     let base = id ? this.item(id) : this.basic();
-    return new EventNumberUrl(base);
+    return new EventNumberInnerUrl(base);
   }
 
   static statistic(id?: string) {
     let base: string = id ? this.item(id) : this.basic();
-    return new StatisticUrl(base);
+    return new StatisticInnerUrl(base);
   }
 }

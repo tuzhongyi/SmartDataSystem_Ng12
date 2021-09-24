@@ -2,13 +2,13 @@ import { EventNumberComparison } from './garbage-station-number-statistic-compar
 import { StatisticTime } from './statistic-time.model';
 
 /** 网格比较数据 */
-export interface GridCellNumberStatisticComparison {
+export class GridCellNumberStatisticComparison {
   /**	String	区划ID	M */
-  Id: string;
+  Id!: string;
   /**	String	区划名称	M */
-  Name: string;
+  Name!: string;
   /**	StatisticTime	统计时间对象	M */
-  Time: StatisticTime;
+  Time!: StatisticTime;
   /**	EventNumberComparison[]	当日事件数量差量百分比±0%-1000%	O */
   EventNumbers?: EventNumberComparison[];
   /**	Double	差量百分比±0%-1000%	O */

@@ -1,6 +1,6 @@
 import { BaseGarbageUrl } from '../base.url';
-import { EventNumberUrl } from './inner/event-number.url';
-import { StatisticUrl } from './inner/statistic.url';
+import { EventNumberInnerUrl } from './inner/event-number.url';
+import { StatisticInnerUrl } from './inner/statistic.url';
 
 export class GridCellUrl {
   static basic() {
@@ -19,15 +19,15 @@ export class GridCellUrl {
     return `${this.basic()}/Excels`;
   }
 
-  private static _statistic?: StatisticUrl;
-  public static get statistic(): StatisticUrl {
+  private static _statistic?: StatisticInnerUrl;
+  public static get statistic(): StatisticInnerUrl {
     if (!this._statistic) {
-      this._statistic = new StatisticUrl(this.basic());
+      this._statistic = new StatisticInnerUrl(this.basic());
     }
     return this._statistic;
   }
 
   static eventNumber(id: string) {
-    return new EventNumberUrl(this.item(id));
+    return new EventNumberInnerUrl(this.item(id));
   }
 }

@@ -1,5 +1,5 @@
 import { BaseGarbageUrl } from '../base.url';
-import { RelationUrl } from './inner/relation.url';
+import { RelationInnerUrl } from './inner/relation.url';
 
 export class MemberUrl {
   static basic() {
@@ -15,10 +15,10 @@ export class MemberUrl {
     return `${this.basic()}/Excels`;
   }
 
-  private static _relation?: RelationUrl;
-  public static get relation(): RelationUrl {
+  private static _relation?: RelationInnerUrl;
+  public static get relation(): RelationInnerUrl {
     if (!this._relation) {
-      this._relation = new RelationUrl(this.basic());
+      this._relation = new RelationInnerUrl(this.basic());
     }
     return this._relation;
   }

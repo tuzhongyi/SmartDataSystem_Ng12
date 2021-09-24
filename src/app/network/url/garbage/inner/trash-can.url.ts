@@ -1,6 +1,6 @@
 import { IInnerUrl } from '../../base.url';
 
-export class TrashCanUrl implements IInnerUrl {
+export class TrashCanInnerUrl implements IInnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/TrashCans`;

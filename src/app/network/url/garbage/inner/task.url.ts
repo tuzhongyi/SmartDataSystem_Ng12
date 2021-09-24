@@ -1,6 +1,6 @@
 import { IInnerUrl } from '../../base.url';
 
-export class TaskUrl implements IInnerUrl {
+export class TaskInnerUrl implements IInnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Tasks`;

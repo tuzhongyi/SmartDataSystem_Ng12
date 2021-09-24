@@ -1,7 +1,7 @@
 import { IInnerUrl } from '../../base.url';
-import { TrashCanUrl } from './trash-can.url';
+import { TrashCanInnerUrl } from './trash-can.url';
 
-export class CameraUrl implements IInnerUrl {
+export class CameraInnerUrl implements IInnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Cameras`;
@@ -19,6 +19,6 @@ export class CameraUrl implements IInnerUrl {
     return `${this.item(id)}/Files?BeginTime=${begin}&EndTime=${end}`;
   }
   trashcan(id: string) {
-    return new TrashCanUrl(this.item(id));
+    return new TrashCanInnerUrl(this.item(id));
   }
 }

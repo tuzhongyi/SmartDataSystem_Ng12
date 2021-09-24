@@ -1,7 +1,7 @@
 import { IInnerUrl } from '../../base.url';
-import { HistoryUrl } from './history.url';
+import { HistoryInnerUrl } from './history.url';
 
-export class NumberUrl implements IInnerUrl {
+export class NumberInnerUrl implements IInnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Number`;
@@ -14,10 +14,10 @@ export class NumberUrl implements IInnerUrl {
     return `${this.basic()}/Comparison`;
   }
 
-  private _history?: HistoryUrl;
-  public get history(): HistoryUrl {
+  private _history?: HistoryInnerUrl;
+  public get history(): HistoryInnerUrl {
     if (!this._history) {
-      this._history = new HistoryUrl(this.basic());
+      this._history = new HistoryInnerUrl(this.basic());
     }
     return this._history;
   }
