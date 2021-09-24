@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { HowellResponse } from 'src/app/network/model/howell-response.model';
 import { PagedList } from 'src/app/network/model/page-list.model';
@@ -29,6 +28,7 @@ import { DivisionNumberStatistic } from '../../model/division-number-statistic.m
 import { SumEventNumber } from '../../model/sum-event-number.model';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
 import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
@@ -173,11 +173,12 @@ class StatisticNumberService {
     let url = DivisionUrl.statistic().number.list();
     return this.type.paged(url, params);
   }
-  comparison(params:GetDivisionStatisticComparisonParams):Promise<DivisionNumberStatisticComparison[]>{
+  comparison(
+    params: GetDivisionStatisticComparisonParams
+  ): Promise<DivisionNumberStatisticComparison[]> {
     let url = DivisionUrl.statistic().number.comparison();
-    return this.basic.array(url, DivisionNumberStatisticComparison, params)
+    return this.basic.array(url, DivisionNumberStatisticComparison, params);
   }
-
 
   private _history?: StatisticNumberHistoryService;
   public get history(): StatisticNumberHistoryService {
