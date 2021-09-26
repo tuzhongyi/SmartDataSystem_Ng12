@@ -20,18 +20,22 @@
   .waste-body {
     width: 100%;
     flex-grow: 1;
-    // background-color: violet;
+    background-image: url(/assets/img/index.jpg);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    padding: 5px;
+    box-sizing: border-box;
 
     display: grid;
     grid-template-columns: [c1] 1fr [c2] 1fr [c3] 1fr [c4] 1fr [c5];
     grid-template-rows: [r1] 1fr [r2] 1fr [r3] 1fr [r4];
     grid-template-areas: "a b c" "d e f" "g h i";
-    grid-gap: 10px;
     .waste-body__item {
-      // background-color: blue;
       font-size: 20px;
       text-align: center;
       color: white;
+      margin: 5px;
+
       &--map {
         /** 指定位置的三种方式 **/
 

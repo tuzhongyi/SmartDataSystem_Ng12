@@ -47,6 +47,9 @@ export class ToolbarComponent implements OnInit {
 
     this.showDropDownMenu();
   }
+  /**
+   * 如果有滚动条，则必须改成 offsetLeft和offsetParent
+   */
   showDropDownMenu() {
     console.log('show drop down menu');
     if (this.logout && this.dropdown) {
@@ -73,8 +76,9 @@ export class ToolbarComponent implements OnInit {
   }
   onResized(e: ResizedEvent) {
     console.log('resize');
-    this.showDropDownMenu();
-    // if (this.showDropDown) {
-    // }
+
+    if (this.showDropDown) {
+      this.showDropDownMenu();
+    }
   }
 }
