@@ -1,28 +1,51 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  Router,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { SessionStorageService } from 'src/app/global/service/session-storage.service';
 import { UsersUrl } from 'src/app/network/url/users.url';
 import { Md5 } from 'ts-md5';
+import { User } from '../../model/user.model';
 import { DigestResponse } from './digest-response.class';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorizationService {
+export class AuthorizationService implements CanActivate {
   private _username: string = '';
   private _password: string = '';
   private _nc: number = 0;
   private _config: AxiosRequestConfig = {};
   private _challenge: DigestResponse = new DigestResponse();
 
-  constructor() {}
+  constructor(
+    private _sessionStorageService: SessionStorageService,
+    private _router: Router
+  ) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    console.log(route, state);
+    let userResource = this._sessionStorageService.userResource;
+    console.log(userResource);
+    if (userResource && userResource.length > 0) {
+      return true;
+    }
+
+    return this._router.parseUrl('/login');
+  }
   async login(username: string, password: string) {
     this._username = username;
     this._password = password;
+    this._config.url = UsersUrl.login() + '/' + username;
 
     // 第一次发送请求
     if (this._nc == 0) {
-      this._config.url = UsersUrl.login() + '/' + username;
       this._config.headers = {
         'X-Webbrowser-Authentication': 'Forbidden',
       };
@@ -35,20 +58,17 @@ export class AuthorizationService {
           // 将 header字符串转成对象
           let challenge = this._parseAuthenticateHeader(authenticateHeader);
 
-          console.log(this._challenge);
-
-          if (challenge.realm == '') {
-            challenge.realm = '/howell/ver10/data';
-          }
+          console.log('challenge', this._challenge);
 
           this._config.headers['Authorization'] = this._generateChallengeHeader(
             challenge,
             'GET',
-            UsersUrl.login() + '/' + this._username
+            UsersUrl.login() + '/' + username
           );
           Object.assign(this._challenge, challenge);
+          this._sessionStorageService.challenge = challenge;
         }
-        return axios(this._config).then((res) => res.data);
+        return axios(this._config).then((res: AxiosResponse<User>) => res.data);
       });
     } else {
       // 重复发送 Digest请求,仅仅自增 nc,复用 challenge
@@ -111,7 +131,7 @@ export class AuthorizationService {
       `${hash1}:${nonce}:${nc}:${cnonce}:${qop}:${hash2}`
     );
 
-    const authHeaders = `Digest  username="${this._username}",realm="${realm}",nonce="${nonce}",uri="${uri}",algorithm="MD5",response="${response}",opaque="${opaque}",qop="${qop}",nc="${nc}",cnonce="${cnonce}"`;
+    const authHeaders = `Digest username="${this._username}",realm="${realm}",nonce="${nonce}",uri="${uri}",algorithm="MD5",response="${response}",opaque="${opaque}",qop="${qop}",nc="${nc}",cnonce="${cnonce}"`;
     console.log(authHeaders);
     return authHeaders;
   }

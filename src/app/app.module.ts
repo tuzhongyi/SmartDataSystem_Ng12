@@ -16,7 +16,15 @@ import { ToastrModule } from 'ngx-toastr';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      positionClass: 'toast-bottom-right',
+      timeOut: 2000,
+      extendedTimeOut: 2000,
+      closeButton: false,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      tapToDismiss: true,
+    }),
   ],
   providers: [
     {

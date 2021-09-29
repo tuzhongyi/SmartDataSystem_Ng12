@@ -1,5 +1,5 @@
 import { Gender } from 'src/app/enum/gender.enum';
-import { UserResourceRole } from './user.model';
+import { UserResource } from './user.model';
 
 /** 微信用户信息 */
 export interface WeChatUser {
@@ -16,7 +16,7 @@ export interface WeChatUser {
   /**	Int32	性别	O	RW */
   Gender?: Gender;
   /**	ResourceRole[]	资源列表	O	RW */
-  Resources?: UserResourceRole[];
+  Resources?: UserResource[];
   /**	String	服务器ID	O	R */
   ServerId?: string;
   /**	String	描述信息	O	RW */

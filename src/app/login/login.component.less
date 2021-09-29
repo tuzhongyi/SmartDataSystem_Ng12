@@ -61,6 +61,7 @@
     width: 33%;
     height: 42%;
     max-width: 750px;
+    min-height: 320px;
     // background: red;
     position: absolute;
     top: 50%;
@@ -152,33 +153,46 @@
           display: flex;
           align-items: center;
           position: relative;
-        }
 
-        input[type="checkbox"] {
-          visibility: hidden;
-          margin-right: 10px;
-
-          & + span {
-            color: #5e6ebf;
-          }
-          & ~ label {
-            width: 13px;
-            height: 13px;
+          input[type="checkbox"] {
+            margin-right: 10px;
+            width: 15px;
+            height: 15px;
             border: 2px solid #5e6ebf;
-            display: block;
-            position: absolute;
-            border-radius: 4px;
+            appearance: none;
             cursor: pointer;
-            overflow: hidden;
+            &:checked {
+              background-image: url(/assets/img/tick2.svg);
+              background-size: 15px;
+              background-repeat: no-repeat;
+              background-position: center;
+            }
+            //使用伪元素实现打勾效果
+            // & + span {
+            //   color: #5e6ebf;
+            // }
+            // & ~ label {
+            //   width: 13px;
+            //   height: 13px;
+            //   border: 2px solid #5e6ebf;
+            //   display: block;
+            //   position: absolute;
+            //   border-radius: 4px;
+            //   cursor: pointer;
+            //   overflow: hidden;
+            // }
+            // &:checked ~ label:before {
+            //   content: "\2714";
+            //   width: 13px;
+            //   height: 13px;
+            //   display: block;
+            //   color: #ffffff;
+            //   text-align: center;
+            //   line-height: 13px;
+            // }
           }
-          &:checked ~ label:before {
-            content: "\2714";
-            width: 13px;
-            height: 13px;
-            display: block;
-            color: #ffffff;
-            text-align: center;
-            line-height: 13px;
+          input + label {
+            cursor: pointer;
           }
         }
       }
@@ -192,4 +206,25 @@
 
 .video-js {
   background: #050719;
+}
+
+@media screen and (max-width: 800px) {
+  .login-container .login-content {
+    width: 39%;
+  }
+}
+@media screen and (max-width: 860px) {
+  .login-container .login-bg .login-header-wrapper .login-header__title {
+    font-size: 43px;
+  }
+}
+
+@media screen and (max-width: 860px), (max-height: 600px) {
+  .login-container .login-content__header {
+    margin-top: 15px;
+    margin-bottom: 4px;
+  }
+  .login-container .login-content {
+    top: 55%;
+  }
 }

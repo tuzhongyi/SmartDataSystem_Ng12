@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 
 @Component({
   selector: 'app-waste-monitor',

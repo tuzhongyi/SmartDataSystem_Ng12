@@ -4,7 +4,7 @@ import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
 import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from '../../enum/role-user-data.enum';
 import { transformDate } from './transform.model';
-import { UserResourceRole } from './user.model';
+import { UserResource } from './user.model';
 
 /** 角色信息 */
 export class Role {
@@ -53,7 +53,7 @@ export class Role {
   PictureData!: PictureDataRole;
 
   /**	ResourceRole[]	资源列表	O	RW */
-  Resources?: UserResourceRole;
+  Resources?: UserResource;
   /**	String	服务器ID	O	RW */
   ServerId?: string;
 }

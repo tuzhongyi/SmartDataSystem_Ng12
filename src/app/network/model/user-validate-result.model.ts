@@ -2,7 +2,7 @@ import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
 import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
 import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from 'src/app/enum/role-user-data.enum';
-import { UserResourceRole } from './user.model';
+import { UserResource } from './user.model';
 
 /**
  *  用户认证结果
@@ -64,7 +64,7 @@ export class UserNonce {
   PictureData!: PictureDataRole;
 
   /**	ResourceRole[]	资源列表	O	R */
-  Resources?: UserResourceRole[];
+  Resources?: UserResource[];
   /**	String	服务器ID	O	R */
   ServerId?: string;
   /**	Boolean	是否可以分配微信子用户	O	R */

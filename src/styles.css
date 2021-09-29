@@ -2,12 +2,12 @@
  * @Author: pmx 
  * @Date: 2021-09-06 17:08:22 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-22 15:00:23
+ * @Last Modified time: 2021-09-28 10:42:49
  */
 
 /* @import url(bootstrap/dist/css/bootstrap.css); */
 
-@import "video.js/dist/video-js.css";
+@import "~video.js/dist/video-js.css";
 
 /**
   默认在 angular.json 中已经配置了 deeppurple-amber.css
@@ -23,8 +23,8 @@
 html,
 body {
   height: 100%;
-  min-width: 1440px;
-  min-height: 820px;
+  min-width: 800px;
+  min-height: 600px;
   user-select: none;
 }
 body {
@@ -44,4 +44,8 @@ body {
 ::-ms-placeholder {
   color: #cfd7ff;
   opacity: 0.5;
+}
+
+.toast-container .ngx-toastr {
+  pointer-events: none;
 }

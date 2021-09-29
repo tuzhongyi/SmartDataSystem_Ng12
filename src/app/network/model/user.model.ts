@@ -1,5 +1,6 @@
 import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
 import { Role } from './role.model';
 import { transformDate } from './transform.model';
@@ -61,7 +62,7 @@ export class User {
   /**	String	微信OpenID	O	RW */
   OpenId?: string;
   /**	ResourceRole[]	资源列表	O	RW */
-  Resources?: UserResourceRole[];
+  Resources?: UserResource[];
   /**	String	服务器ID	O	R */
   ServerId?: string;
   /**	Boolean	是否可以分配微信子用户	O	R */
@@ -72,18 +73,18 @@ export class User {
   OffEvents?: number[];
 }
 
-export class UserResourceRole {
+export class UserResource {
   /**	String	资源ID	M	R */
   Id!: string;
   /**	String	资源名称	O	R */
   Name?: string;
   /**	Int32	资源类型，1-街道，2-居委，3-厢房，4-行政区	M	R */
-  ResourceType!: any;
+  ResourceType!: UserResourceType;
 
   /**	Int32	资源标签，权限级别	M	R */
   RoleFlags!: number;
   /**	Boolean	开放全部的子节点资源	M	R */
   AllSubResources!: boolean;
   /**	ResourceRole[]	子资源列表	O	R */
-  Resources?: UserResourceRole;
+  Resources?: UserResource;
 }

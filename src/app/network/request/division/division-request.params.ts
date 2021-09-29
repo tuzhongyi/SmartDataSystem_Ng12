@@ -13,12 +13,6 @@ import {
 
 /**获取区划列表参数 */
 export class GetDivisionsParams extends PagedParams implements IParams {
-  /**页码[1-n] */
-  PageIndex: number = 1;
-
-  /**分页大小[1-100] */
-  PageSize: number = 9999;
-
   /**区划ID(可选) */
   Ids?: string[];
 
