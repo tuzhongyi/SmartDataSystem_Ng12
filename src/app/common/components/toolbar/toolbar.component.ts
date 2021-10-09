@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:14
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-23 09:35:25
+ * @Last Modified time: 2021-10-08 16:21:15
  */
 import {
   AfterViewChecked,
@@ -75,7 +75,7 @@ export class ToolbarComponent implements OnInit {
     }
   }
   onResized(e: ResizedEvent) {
-    console.log('resize');
+    // console.log('resize');
 
     if (this.showDropDown) {
       this.showDropDownMenu();

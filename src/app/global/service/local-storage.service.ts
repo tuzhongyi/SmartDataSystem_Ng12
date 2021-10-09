@@ -4,16 +4,13 @@ import { Injectable } from '@angular/core';
  * @Author: pmx
  * @Date: 2021-09-14 14:59:21
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-28 16:33:11
+ * @Last Modified time: 2021-10-08 15:27:39
  */
-import { Md5 } from 'ts-md5';
 @Injectable({
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {
-    console.log(Md5.hashAsciiStr('sdf'));
-  }
+  constructor() {}
 
   set userName(userName: string) {
     localStorage.setItem('userName', userName);

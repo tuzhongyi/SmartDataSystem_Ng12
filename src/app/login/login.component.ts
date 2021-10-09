@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-28 16:20:30
+ * @Last Modified time: 2021-10-09 09:54:43
  */
 
 import {
@@ -25,6 +25,8 @@ import { User, UserResource } from '../network/model/user.model';
 import { LocalStorageService } from '../global/service/local-storage.service';
 import { SessionStorageService } from '../global/service/session-storage.service';
 import { EnumHelper } from '../enum/enum-helper';
+import CryptoJS from 'crypto-js';
+import { CookieService } from 'ngx-cookie-service';
 
 /**
  *  LoginComponent 需要用到 form 指令，
@@ -57,9 +59,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _toastrService: ToastrService,
     private _router: Router,
     private _localStorageService: LocalStorageService,
-    private _sessionStorageService: SessionStorageService
+    private _sessionStorageService: SessionStorageService,
+    private _cookieService: CookieService
   ) {
     this._titleService.setTitle('用户登录');
+
+    // let prefix = CryptoJS.MD5('hello').toString();
+    // console.log(prefix);
+    // let suffix = CryptoJS.MD5('hi').toString();
+    // console.log(suffix);
+
+    // let encoded = btoa(prefix + 'guangzhonglu' + suffix);
+    // console.log(encoded);
+
+    // let decoded = atob(encoded);
+    // console.log(decoded);
   }
 
   ngOnInit() {
@@ -90,17 +104,44 @@ export class LoginComponent implements OnInit, AfterViewInit {
     );
   }
   fillForm() {
-    let autoLogin = this._localStorageService.autoLogin;
-    let savePassWord = this._localStorageService.savePassWord;
+    let autoLogin = false;
+    if (this._cookieService.check('autoLogin')) {
+      autoLogin = JSON.parse(this._cookieService.get('autoLogin'));
+    }
+
+    let savePassWord = false;
+    if (this._cookieService.check('savePassWord')) {
+      savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
+    }
 
     console.log(autoLogin, savePassWord);
-
     this.savePassWord = savePassWord;
     this.autoLogin = autoLogin;
-
     if (savePassWord) {
-      let userName = this._localStorageService.userName;
-      let passWord = this._localStorageService.passWord;
+      let userName = this._cookieService.get('userName');
+      // console.log(userName);
+      userName = atob(userName);
+      // console.log(userName);
+      let res = userName.match(
+        /[a-zA-Z0-9+/=]{32}(?<userName>\w*)[a-zA-Z0-9+/=]{32}/
+      )!;
+      // console.log(res);
+      userName = res.groups!['userName'];
+
+      console.log(userName);
+
+      let passWord = this._cookieService.get('passWord');
+      // console.log(passWord);
+      passWord = atob(passWord);
+      // console.log(passWord);
+      let res2 = passWord.match(
+        /[a-zA-Z0-9+/=]{32}(?<passWord>\w*)[a-zA-Z0-9+/=]{32}/
+      )!;
+      // console.log(res2);
+      passWord = res2.groups!['passWord'];
+
+      console.log(passWord);
+
       this.formGroup.patchValue({
         userName: userName,
         passWord: passWord,
@@ -169,19 +210,56 @@ export class LoginComponent implements OnInit, AfterViewInit {
   private _isAxiosError(cadidate: any): cadidate is AxiosError {
     return cadidate.isAxiosError === true;
   }
+  /**
+   *  保存 cookie,两个小时后过期
+   * @param userId
+   * @param userResource
+   */
   private _storeUserInfo(userId: string, userResource: Array<UserResource>) {
-    // LocalStorage
-    this._localStorageService.savePassWord = this.savePassWord;
-    this._localStorageService.autoLogin = this.autoLogin;
+    let options = {
+      expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
+      path: '/',
+      secure: false,
+    };
+    this._cookieService.set(
+      'savePassWord',
+      JSON.stringify(this.savePassWord),
+      options
+    );
+    this._cookieService.set(
+      'autoLogin',
+      JSON.stringify(this.autoLogin),
+      options
+    );
 
     if (this.savePassWord) {
-      this._localStorageService.userName =
-        this.formGroup.get('userName')!.value;
-      this._localStorageService.passWord =
-        this.formGroup.get('passWord')!.value;
+      let prefix = CryptoJS.MD5(
+        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+      ).toString();
+      let suffix = CryptoJS.MD5(
+        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+      ).toString();
+
+      let userName = btoa(
+        prefix + this.formGroup.get('userName')!.value + suffix
+      );
+      this._cookieService.set('userName', userName, options);
+
+      prefix = CryptoJS.MD5(
+        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+      ).toString();
+      suffix = CryptoJS.MD5(
+        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+      ).toString();
+      let passWord = btoa(
+        prefix + this.formGroup.get('passWord')!.value + suffix
+      );
+
+      this._cookieService.set('passWord', passWord, options);
     } else {
-      this._localStorageService.clear('userName');
-      this._localStorageService.clear('passWord');
+      // this._cookieService.delete('userName');
+      // this._cookieService.delete('passWord');
+      this._cookieService.deleteAll();
     }
 
     // SessionStorage

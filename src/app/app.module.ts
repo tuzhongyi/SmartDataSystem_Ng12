@@ -8,6 +8,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppInterceptorServiceService } from './network/request/app-interceptor-service.service';
 
 import { ToastrModule } from 'ngx-toastr';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,6 +33,7 @@ import { ToastrModule } from 'ngx-toastr';
       useClass: AppInterceptorServiceService,
       multi: true,
     },
+    CookieService,
   ],
   bootstrap: [AppComponent],
   exports: [],

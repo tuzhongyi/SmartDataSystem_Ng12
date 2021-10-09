@@ -30,9 +30,9 @@ export class AuthorizationService implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    console.log(route, state);
+    // console.log(route, state);
     let userResource = this._sessionStorageService.userResource;
-    console.log(userResource);
+    // console.log(userResource);
     if (userResource && userResource.length > 0) {
       return true;
     }
