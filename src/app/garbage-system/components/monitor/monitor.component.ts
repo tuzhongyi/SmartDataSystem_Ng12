@@ -8,6 +8,8 @@ import { LocalStorageService } from 'src/app/global/service/local-storage.servic
   styleUrls: ['./monitor.component.less'],
 })
 export class MonitorComponent implements OnInit {
+  showDropDown = false;
+
   constructor(private _titleService: Title) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
   }

@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { UserResource } from 'src/app/network/model/user.model';
 
 /*
  * @Author: pmx
@@ -12,32 +14,59 @@ import { Injectable } from '@angular/core';
 export class LocalStorageService {
   constructor() {}
 
-  set userName(userName: string) {
-    localStorage.setItem('userName', userName);
+  // 用cookie代替，因为可以手动设置过期时间
+
+  // set userName(userName: string) {
+  //   localStorage.setItem('userName', userName);
+  // }
+  // get userName() {
+  //   return localStorage.getItem('userName') ?? '';
+  // }
+  // set passWord(passWord: string) {
+  //   localStorage.setItem('passWord', passWord);
+  // }
+  // get passWord() {
+  //   return localStorage.getItem('passWord') ?? '';
+  // }
+
+  // set savePassWord(flag: boolean) {
+  //   localStorage.setItem('savePassWord', JSON.stringify(flag));
+  // }
+  // get savePassWord() {
+  //   let flag = localStorage.getItem('savePassWord');
+  //   return flag == null ? false : JSON.parse(flag);
+  // }
+  // set autoLogin(flag: boolean) {
+  //   localStorage.setItem('autoLogin', JSON.stringify(flag));
+  // }
+  // get autoLogin() {
+  //   let flag = localStorage.getItem('autoLogin');
+  //   return flag == null ? false : JSON.parse(flag);
+  // }
+
+  set userId(userId: string) {
+    localStorage.setItem('userId', userId);
   }
-  get userName() {
-    return localStorage.getItem('userName') ?? '';
-  }
-  set passWord(passWord: string) {
-    localStorage.setItem('passWord', passWord);
-  }
-  get passWord() {
-    return localStorage.getItem('passWord') ?? '';
+  get userId() {
+    return localStorage.getItem('userId') ?? '';
   }
 
-  set savePassWord(flag: boolean) {
-    localStorage.setItem('savePassWord', JSON.stringify(flag));
+  set userResource(userResource: Array<UserResource>) {
+    localStorage.setItem('userResouce', JSON.stringify(userResource));
   }
-  get savePassWord() {
-    let flag = localStorage.getItem('savePassWord');
-    return flag == null ? false : JSON.parse(flag);
+  get userResource() {
+    let userResource_str = localStorage.getItem('userResouce');
+
+    return userResource_str == null ? null : JSON.parse(userResource_str);
   }
-  set autoLogin(flag: boolean) {
-    localStorage.setItem('autoLogin', JSON.stringify(flag));
+
+  set userDivisionType(divisionType: DivisionType) {
+    localStorage.setItem('userDivisionType', JSON.stringify(divisionType));
   }
-  get autoLogin() {
-    let flag = localStorage.getItem('autoLogin');
-    return flag == null ? false : JSON.parse(flag);
+  get userDivisionType(): DivisionType {
+    let divisionTypeStr = localStorage.getItem('userDivisionType');
+
+    return divisionTypeStr == null ? null : JSON.parse(divisionTypeStr);
   }
 
   clear(name?: string) {

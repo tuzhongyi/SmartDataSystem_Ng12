@@ -63,17 +63,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _cookieService: CookieService
   ) {
     this._titleService.setTitle('用户登录');
-
-    // let prefix = CryptoJS.MD5('hello').toString();
-    // console.log(prefix);
-    // let suffix = CryptoJS.MD5('hi').toString();
-    // console.log(suffix);
-
-    // let encoded = btoa(prefix + 'guangzhonglu' + suffix);
-    // console.log(encoded);
-
-    // let decoded = atob(encoded);
-    // console.log(decoded);
   }
 
   ngOnInit() {
@@ -114,7 +103,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
     }
 
-    console.log(autoLogin, savePassWord);
+    // console.log(autoLogin, savePassWord);
     this.savePassWord = savePassWord;
     this.autoLogin = autoLogin;
     if (savePassWord) {
@@ -166,26 +155,28 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this._checkForm()) {
       this.disableLogin = true;
       try {
-        console.log(this.formGroup.value);
-        let result: User = await this._authorizationService.login(
+        // console.log(this.formGroup.value);
+        let result: any = await this._authorizationService.login(
           this.formGroup.get('userName')!.value,
           this.formGroup.get('passWord')!.value
         );
-        console.log('登录成功', result);
+        if (result instanceof User) {
+          console.log('登录成功', result);
 
-        this._storeUserInfo(result.Id, result.Resources ?? []);
+          this._storeUserInfo(result.Id, result.Resources ?? []);
 
-        // 区分权限
-        if (result.Role && result.Role.length > 0) {
-          if (result.Role[0].Name == '管理员') {
-            this._router.navigateByUrl('aiop');
-          } else if (result.Role[0].Name == '操作者') {
-            this._router.navigateByUrl('waste');
+          // 区分权限
+          if (result.Role && result.Role.length > 0) {
+            if (result.Role[0].Name == '管理员') {
+              this._router.navigateByUrl('aiop');
+            } else if (result.Role[0].Name == '操作者') {
+              this._router.navigateByUrl('waste');
+            }
           }
         }
       } catch (e: any) {
         if (this._isAxiosError(e)) {
-          console.log(e.toJSON());
+          // console.log(e.toJSON());
           if (e.response?.status == 403) {
             this._toastrService.error('账号或密码错误');
           }
@@ -211,13 +202,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
     return cadidate.isAxiosError === true;
   }
   /**
-   *  保存 cookie,两个小时后过期
+   *  保存 cookie,60分钟后过期
    * @param userId
    * @param userResource
    */
   private _storeUserInfo(userId: string, userResource: Array<UserResource>) {
     let options = {
-      expires: new Date(Date.now() + 2 * 60 * 60 * 1000),
+      expires: new Date(Date.now() + 60 * 60 * 1000),
       path: '/',
       secure: false,
     };
@@ -231,47 +222,41 @@ export class LoginComponent implements OnInit, AfterViewInit {
       JSON.stringify(this.autoLogin),
       options
     );
+    // username
+    let prefix = CryptoJS.MD5(
+      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+    ).toString();
+    let suffix = CryptoJS.MD5(
+      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+    ).toString();
 
-    if (this.savePassWord) {
-      let prefix = CryptoJS.MD5(
-        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-      ).toString();
-      let suffix = CryptoJS.MD5(
-        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-      ).toString();
+    let userName = btoa(
+      prefix + this.formGroup.get('userName')!.value + suffix
+    );
+    this._cookieService.set('userName', userName, options);
 
-      let userName = btoa(
-        prefix + this.formGroup.get('userName')!.value + suffix
-      );
-      this._cookieService.set('userName', userName, options);
-
-      prefix = CryptoJS.MD5(
-        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-      ).toString();
-      suffix = CryptoJS.MD5(
-        ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-      ).toString();
-      let passWord = btoa(
-        prefix + this.formGroup.get('passWord')!.value + suffix
-      );
-
-      this._cookieService.set('passWord', passWord, options);
-    } else {
-      // this._cookieService.delete('userName');
-      // this._cookieService.delete('passWord');
-      this._cookieService.deleteAll();
-    }
+    //password
+    prefix = CryptoJS.MD5(
+      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+    ).toString();
+    suffix = CryptoJS.MD5(
+      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+    ).toString();
+    let passWord = btoa(
+      prefix + this.formGroup.get('passWord')!.value + suffix
+    );
+    this._cookieService.set('passWord', passWord, options);
 
     // SessionStorage
-    this._sessionStorageService.userResource = userResource;
+    this._localStorageService.userResource = userResource;
 
     userResource.sort(function (a, b) {
       return b.ResourceType - a.ResourceType;
     });
 
-    this._sessionStorageService.userResourceType = EnumHelper.Convert(
+    this._localStorageService.userDivisionType = EnumHelper.Convert(
       userResource[0].ResourceType
     );
-    this._sessionStorageService.userId = userId;
+    this._localStorageService.userId = userId;
   }
 }

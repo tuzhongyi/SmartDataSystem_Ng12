@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { SessionStorageService } from 'src/app/global/service/session-storage.service';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -10,19 +11,15 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 })
 export class DivisionListComponent implements OnInit {
   constructor(
-    private _divisiondd: DivisionRequestService,
-    private _sessionStorageService: SessionStorageService
+    private _divisionRequest: DivisionRequestService,
+    private _localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    // divisionId
-    let userResource = this._sessionStorageService.userResource;
+    let userResource = this._localStorageService.userResource;
     if (userResource && userResource.length > 0) {
       let divisionId = userResource[0].Id;
-
-      let p = new GetDivisionsParams();
-      p.ParentId = '310109011000';
-      // this._divisiondd.list(p).then((res) => console.log(res));
+      this._divisionRequest.get(divisionId).then((res) => console.log(res));
     }
   }
 }

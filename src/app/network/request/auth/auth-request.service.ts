@@ -8,6 +8,9 @@ import {
   UrlTree,
 } from '@angular/router';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { plainToClass } from 'class-transformer';
+import { CookieService } from 'ngx-cookie-service';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { SessionStorageService } from 'src/app/global/service/session-storage.service';
 import { UsersUrl } from 'src/app/network/url/users.url';
 import { Md5 } from 'ts-md5';
@@ -22,18 +25,43 @@ export class AuthorizationService implements CanActivate {
   private _password: string = '';
   private _nc: number = 0;
   private _config: AxiosRequestConfig = {};
-  private _challenge: DigestResponse = new DigestResponse();
 
   constructor(
+    private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
+    private _cookieService: CookieService,
     private _router: Router
-  ) {}
+  ) {
+    if (this._cookieService.check('userName')) {
+      let userName = this._cookieService.get('userName');
+      userName = atob(userName);
+      let res = userName.match(
+        /[a-zA-Z0-9+/=]{32}(?<userName>\w*)[a-zA-Z0-9+/=]{32}/
+      )!;
+      userName = res.groups!['userName'];
+
+      this._username = userName;
+    }
+
+    if (this._cookieService.check('passWord')) {
+      let passWord = this._cookieService.get('passWord');
+      passWord = atob(passWord);
+      let res2 = passWord.match(
+        /[a-zA-Z0-9+/=]{32}(?<passWord>\w*)[a-zA-Z0-9+/=]{32}/
+      )!;
+      passWord = res2.groups!['passWord'];
+
+      this._password = passWord;
+    }
+  }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
-    let userResource = this._sessionStorageService.userResource;
+    let challenge = this._sessionStorageService.challenge;
+    let userId = this._localStorageService.userId;
+    let holdCookie = this._cookieService.check('userName');
     // console.log(userResource);
-    if (userResource && userResource.length > 0) {
+    if (challenge && userId && holdCookie) {
       return true;
     }
 
@@ -44,44 +72,32 @@ export class AuthorizationService implements CanActivate {
     this._password = password;
     this._config.url = UsersUrl.login() + '/' + username;
 
-    // 第一次发送请求
-    if (this._nc == 0) {
-      this._config.headers = {
-        'X-Webbrowser-Authentication': 'Forbidden',
-      };
+    this._config.headers = {
+      'X-Webbrowser-Authentication': 'Forbidden',
+    };
 
-      return axios(this._config).catch((error: AxiosError) => {
-        if (error.response?.status == 403) {
-          let headers = error.response.headers;
-          let authenticateHeader = Reflect.get(headers, 'www-authenticate');
+    return axios(this._config).catch((error: AxiosError) => {
+      if (error.response?.status == 403) {
+        let headers = error.response.headers;
+        let authenticateHeader = Reflect.get(headers, 'www-authenticate');
 
-          // 将 header字符串转成对象
-          let challenge = this._parseAuthenticateHeader(authenticateHeader);
+        // 将 header字符串转成对象
+        let challenge = this._parseAuthenticateHeader(authenticateHeader);
 
-          console.log('challenge', this._challenge);
+        console.log('challenge', challenge);
 
-          this._config.headers['Authorization'] = this._generateChallengeHeader(
-            challenge,
-            'GET',
-            UsersUrl.login() + '/' + username
-          );
-          Object.assign(this._challenge, challenge);
-          this._sessionStorageService.challenge = challenge;
-        }
-        return axios(this._config).then((res: AxiosResponse<User>) => res.data);
-      });
-    } else {
-      // 重复发送 Digest请求,仅仅自增 nc,复用 challenge
-      if (this._challenge) {
         this._config.headers['Authorization'] = this._generateChallengeHeader(
-          this._challenge,
+          challenge,
           'GET',
-          UsersUrl.login() + '/' + this._username
+          UsersUrl.login() + '/' + username
         );
-        return axios(this._config).then((res) => res.data);
+        this._sessionStorageService.challenge = challenge;
+        return axios(this._config).then((res: AxiosResponse<User>) =>
+          plainToClass(User, res.data)
+        );
       }
-      return;
-    }
+      return null;
+    });
   }
 
   /**
@@ -132,15 +148,13 @@ export class AuthorizationService implements CanActivate {
     );
 
     const authHeaders = `Digest username="${this._username}",realm="${realm}",nonce="${nonce}",uri="${uri}",algorithm="MD5",response="${response}",opaque="${opaque}",qop="${qop}",nc="${nc}",cnonce="${cnonce}"`;
-    console.log(authHeaders);
+    // console.log('authHeaders', authHeaders);
     return authHeaders;
   }
   public generateHttpHeader(method: string, uri: string) {
-    const authHeader = this._generateChallengeHeader(
-      this._challenge,
-      method,
-      uri
-    );
+    let chanllenge = this._sessionStorageService.challenge;
+    // console.log(chanllenge);
+    const authHeader = this._generateChallengeHeader(chanllenge, method, uri);
     return new HttpHeaders({
       Authorization: authHeader,
       'X-WebBrowser-Authentication': 'Forbidden',

@@ -12,7 +12,7 @@
       title="皓维智能"
     />
     <div class="toolbar__text">
-      <span class="toolbar__title">广中路街道</span>
+      <span class="toolbar__title">{{ divisionTitle }}</span>
       <span class="toolbar__des">生活垃圾分类全程监管平台</span>
     </div>
   </div>
@@ -50,7 +50,10 @@
         <i class="howell-icon-account"></i>
       </div>
 
-      <div class="toolbar__link__item toolbar__link__help">
+      <div
+        class="toolbar__link__item toolbar__link__help"
+        (click)="navigateToHelp()"
+      >
         <mat-icon aria-hidden="false" aria-label="Example home icon">
           help
         </mat-icon>
@@ -60,9 +63,9 @@
 
   <div class="dropdown__menu" #dropdown [class.show]="showDropDown">
     <div class="dropdown__item">
-      <i class="howell-icon-account"></i> guangzhonglu
+      <i class="howell-icon-account"></i> {{ userName }}
     </div>
-    <div class="dropdown__item">
+    <div class="dropdown__item" (click)="logoutHandler()">
       <i class="howell-icon-logout"> </i> 退出登录
     </div>
   </div>

@@ -159,7 +159,8 @@
   display: none;
   padding: 0;
   margin: 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: normal;
   color: #212529;
   text-align: left;
   list-style: none;
@@ -180,12 +181,16 @@
     padding: 4px 8px;
     display: flex;
 
-    &:hover {
-      background-color: #4a8bd0;
-      color: #fff;
-    }
     i {
-      padding-right: 5px;
+      padding-right: 8px;
+      font-size: 1.2rem;
+    }
+    &:not(:first-child) {
+      cursor: pointer;
+      &:hover {
+        background-color: #4a8bd0;
+        color: #fff;
+      }
     }
   }
 }
