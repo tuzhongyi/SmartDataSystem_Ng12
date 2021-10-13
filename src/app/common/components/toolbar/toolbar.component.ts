@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:14
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-08 16:21:15
+ * @Last Modified time: 2021-10-13 13:52:23
  */
 import {
   AfterViewChecked,
@@ -23,6 +23,7 @@ import { SessionStorageService } from 'src/app/global/service/session-storage.se
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { StoreService } from 'src/app/global/service/store.service';
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -49,7 +50,6 @@ export class ToolbarComponent implements OnInit {
     private _render: Renderer2,
     private _sessionStorageService: SessionStorageService,
     private _localStorageService: LocalStorageService,
-
     private _cookieService: CookieService,
     private _router: Router
   ) {
@@ -58,18 +58,17 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     let userResource = this._localStorageService.userResource;
-    // console.log(userResource);
+
     this.divisionTitle = userResource[0]['Name'] ?? '';
     let userName = this._cookieService.get('userName');
-    // console.log(userName);
     userName = atob(userName);
-    // console.log(userName);
+
     let res = userName.match(
       /[a-zA-Z0-9+/=]{32}(?<userName>\w*)[a-zA-Z0-9+/=]{32}/
     )!;
-    // console.log(res);
+
     userName = res.groups!['userName'];
-    // console.log(userName);
+
     this.userName = userName;
   }
   toggleDropDownHandler(e: MouseEvent) {

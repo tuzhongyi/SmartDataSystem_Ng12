@@ -22,7 +22,10 @@ export class GetDivisionsParams extends PagedParams implements IParams {
   /**区划类型(可选) */
   DivisionType?: DivisionType;
 
-  /**父ID(可选) */
+  /**
+   * 父ID(可选)
+   * 获取直接子元素
+   */
   ParentId?: string;
 
   /**区划完整路径(可选)，含本节点，@进行分割，上级节点在前，支持LIKE */

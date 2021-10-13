@@ -8,24 +8,23 @@ import { RankBusiness } from './rank.business';
   selector: 'app-rank',
   templateUrl: './rank.component.html',
   styleUrls: ['./rank.component.css'],
-  providers: [
-    {
-      provide: RankBusiness,
-      useFactory: function (business: IBusiness<Division>) {
-        return new RankBusiness(business);
-      },
-      deps: [DivisionRequestService],
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: RankBusiness,
+  //     useFactory: function (business: IBusiness<Division>) {
+  //       return new RankBusiness(business);
+  //     },
+  //     deps: [DivisionRequestService],
+  //   },
+  // ],
 })
 export class RankComponent implements OnInit {
-  constructor(private _rankBusiness: RankBusiness) {}
-
+  // constructor(private _rankBusiness: RankBusiness) {}
   ngOnInit(): void {}
-
-  loadData() {
-    debugger;
-    console.log(this._rankBusiness);
-    this._rankBusiness.toRank(this._rankBusiness.list());
-  }
+  // loadData() {
+  //   debugger;
+  //   console.log(this._rankBusiness);
+  //   this._rankBusiness.toRank(this._rankBusiness.list());
+  // }
+  loadData() {}
 }

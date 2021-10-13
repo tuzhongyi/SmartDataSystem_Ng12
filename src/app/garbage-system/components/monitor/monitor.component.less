@@ -1,8 +1,8 @@
 /*
  * @Author: pmx 
  * @Date: 2021-09-28 13:20:36 
- * @Last Modified by:   pmx 
- * @Last Modified time: 2021-09-28 13:20:36 
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-10-12 15:54:45
  */
 .waste-container {
   width: 100%;
@@ -17,11 +17,12 @@
   }
   .waste-body {
     width: 100%;
+    height: calc(100% - 90px);
     flex-grow: 1;
     background-image: url(/assets/img/index.jpg);
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    padding: 5px;
+    padding-top: 5px;
     box-sizing: border-box;
 
     display: grid;
@@ -29,15 +30,19 @@
     grid-template-rows: [r1] 1fr [r2] 1fr [r3] 1fr [r4];
     grid-template-areas: "a b c" "d e f" "g h i";
     .waste-body__item {
-      font-size: 20px;
-      text-align: center;
-      color: white;
       margin: 5px;
       border: 1px solid #5c6ebf;
       background-color: rgba(6, 13, 55, 0.7);
       position: relative;
       box-sizing: border-box;
 
+      overflow: hidden;
+      &--none {
+        border: none;
+        & .waste-body__wrapper {
+          background: none !important;
+        }
+      }
       &--map {
         /** 指定位置的三种方式 **/
 

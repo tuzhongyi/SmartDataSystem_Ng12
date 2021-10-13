@@ -1,1 +1,18 @@
-<p>division-list works!</p>
+<div id="division-list">
+  <div class="edge-wrapper list-title">
+    <i class="howell-icon-map5"></i>
+    <span (click)="itemClick(currentDivision)"
+      >&nbsp;{{ currentDivision?.Name }}&nbsp;</span
+    >
+  </div>
+  <div class="list-wrapper small-scrollbar">
+    <div
+      class="list-item edge-wrapper"
+      *ngFor="let division of childDivisions"
+      title="{{ division?.Name }}"
+      (click)="itemClick(division)"
+    >
+      <p>{{ division?.Name }}</p>
+    </div>
+  </div>
+</div>

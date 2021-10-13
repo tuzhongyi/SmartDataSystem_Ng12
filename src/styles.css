@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2021-09-06 17:08:22 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-28 10:42:49
+ * @Last Modified time: 2021-10-13 11:15:58
  */
 
 /* @import url(bootstrap/dist/css/bootstrap.css); */
@@ -48,4 +48,32 @@ body {
 
 .toast-container .ngx-toastr {
   pointer-events: none;
+}
+
+/* 滚动条整体样式*/
+::-webkit-scrollbar {
+  width: 8px;
+  height: 10px;
+}
+.small-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track-piece {
+  /* 内层轨道 */
+  background-color: rgba(50, 131, 229, 0);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: rgba(0, 0, 0, 0);
+}
+::-webkit-scrollbar-thumb {
+  background-color: rgb(117, 134, 224, 0.5);
+  background-clip: padding-box;
+  border-radius: 8px;
+  min-height: 28px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(117, 134, 224, 0.5);
 }

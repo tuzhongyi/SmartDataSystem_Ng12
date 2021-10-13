@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2021-09-15 16:03:33 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-22 17:29:16
+ * @Last Modified time: 2021-10-13 09:29:03
  */
 
 .toolbar-text() {
@@ -57,6 +57,7 @@
   .toolbar__logo {
   }
   .toolbar__text {
+    white-space: nowrap;
     font-weight: bold;
 
     background-image: linear-gradient(to top, #7f94ff, #fff);
@@ -106,6 +107,7 @@
     border-radius: 100px;
     padding: 5px 20px;
     align-items: center;
+    white-space: nowrap;
 
     &__time {
       font-size: 18px;
@@ -192,5 +194,11 @@
         color: #fff;
       }
     }
+  }
+}
+
+@media screen and (max-width: 1330px) {
+  .toolbar .statistic-wrapper {
+    display: none;
   }
 }
