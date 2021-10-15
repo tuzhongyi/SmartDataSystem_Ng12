@@ -9,6 +9,7 @@ export class DivisionListBusiness {
     let data = await this._business.get(id);
     return data;
   }
+  /**获得直接子元素 */
   async listChildDivisions(id: string) {
     let params = new GetDivisionsParams();
     params.ParentId = id;

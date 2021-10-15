@@ -84,7 +84,7 @@ export class AuthorizationService implements CanActivate {
         // 将 header字符串转成对象
         let challenge = this._parseAuthenticateHeader(authenticateHeader);
 
-        console.log('challenge', challenge);
+        // console.log('challenge', challenge);
 
         this._config.headers['Authorization'] = this._generateChallengeHeader(
           challenge,

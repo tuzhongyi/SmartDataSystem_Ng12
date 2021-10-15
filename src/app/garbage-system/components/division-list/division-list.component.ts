@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-11 13:11:58
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-13 13:54:32
+ * @Last Modified time: 2021-10-13 15:21:37
  */
 import { Component, OnInit } from '@angular/core';
 import { IBusiness } from 'src/app/business/Ibusiness';
@@ -44,15 +44,15 @@ export class DivisionListComponent implements OnInit {
     let divisionId = this._storeService.divisionId;
     this.currentDivision = await this._divisionListBusiness.get(divisionId);
 
-    console.log('currentDivision', this.currentDivision);
+    // console.log('currentDivision', this.currentDivision);
 
     this.childDivisions = await this._divisionListBusiness.listChildDivisions(
       divisionId
     );
-    console.log('child divisions ', this.childDivisions);
+    // console.log('child divisions ', this.childDivisions);
   }
   itemClick(division: Division | null) {
-    console.log(division);
+    // console.log(division);
     if (division) {
       this._storeService.divisionId = division.Id;
       this._storeService.divisionType = division.DivisionType;

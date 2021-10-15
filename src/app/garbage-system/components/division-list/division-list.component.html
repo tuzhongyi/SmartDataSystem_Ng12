@@ -1,11 +1,11 @@
-<div id="division-list">
+<div class="division-list">
   <div class="edge-wrapper list-title">
     <i class="howell-icon-map5"></i>
     <span (click)="itemClick(currentDivision)"
       >&nbsp;{{ currentDivision?.Name }}&nbsp;</span
     >
   </div>
-  <div class="list-wrapper small-scrollbar">
+  <div class="list-wrapper">
     <div
       class="list-item edge-wrapper"
       *ngFor="let division of childDivisions"

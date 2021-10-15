@@ -148,6 +148,7 @@ class EventNumbersHistoryService {
     return this.basic.paged(url, EventNumberStatistic, params);
   }
 }
+
 class StatisticService {
   constructor(private basic: BaseRequestService) {}
   private _number?: StatisticNumberService;
