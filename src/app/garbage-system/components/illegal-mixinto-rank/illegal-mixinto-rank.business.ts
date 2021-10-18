@@ -46,6 +46,8 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     params.Ids = ids;
     let data = await this.divisionRequest.statistic.number.list(params);
     console.log(data);
+
+    return data;
   }
   toRank<T>(data: T): RankModel {
     if (data instanceof Division) {

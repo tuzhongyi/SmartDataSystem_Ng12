@@ -14,8 +14,6 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RankComponent implements OnInit {
   @Input() title: string = '';
 
-  @Input() dropLists: Array<Array<DropListModel>> = [];
-
   constructor() {}
   ngOnInit(): void {
     // console.log(this.dropLists);
