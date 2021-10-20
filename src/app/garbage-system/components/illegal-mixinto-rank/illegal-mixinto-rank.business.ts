@@ -6,19 +6,31 @@
  */
 
 import { Injectable } from '@angular/core';
+import { mode } from 'crypto-js';
 import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import {
+  GetGarbageStationsParams,
+  GetGarbageStationStatisticNumbersParams,
+} from 'src/app/network/request/station/garbage-station-request.params';
+import { StationRequestService } from 'src/app/network/request/station/garbage-station-request.service';
+
 import { RankModel } from 'src/app/view-model/rank.model';
 
 @Injectable()
 export class IllegalMixintoRankBusiness implements IRankConverter {
-  constructor(private divisionRequest: DivisionRequestService) {}
+  constructor(
+    private divisionRequest: DivisionRequestService,
+    private stationRequest: StationRequestService
+  ) {}
 
   /**
    *
@@ -28,30 +40,113 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     let data = await this.divisionRequest.get(id);
     return data;
   }
-  /**
-   * 当前区划下后代区划
-   * @param id
-   * @param type
-   * @returns
-   */
-  async listDescendantDivisions(id: string, type: DivisionType) {
-    let params = new GetDivisionsParams();
-    params.AncestorId = id;
-    params.DivisionType = type;
-    let res = await this.divisionRequest.list(params);
-    return res.Data;
+  async stations(divisionId: string) {
+    const stationParams = new GetGarbageStationsParams();
+    stationParams.PageIndex = 1;
+    stationParams.PageSize = 9999;
+    stationParams.DivisionId = divisionId;
+    const res = await this.stationRequest.list(stationParams);
+    console.log(res);
   }
-  async statistic(ids: string[]) {
-    let params = new GetDivisionStatisticNumbersParams();
-    params.Ids = ids;
-    let data = await this.divisionRequest.statistic.number.list(params);
-    console.log(data);
-
-    return data;
-  }
-  toRank<T>(data: T): RankModel {
-    if (data instanceof Division) {
+  async statistic(
+    divisionId: string,
+    divisionType: DivisionType,
+    childType: DivisionType | 'station'
+  ): Promise<
+    DivisionNumberStatistic[] | GarbageStationNumberStatistic[] | null
+  > {
+    if (
+      (divisionType == DivisionType.City ||
+        divisionType == DivisionType.County) &&
+      childType != 'station'
+    ) {
+      const divisionParams = new GetDivisionsParams();
+      divisionParams.AncestorId = divisionId;
+      divisionParams.DivisionType = childType;
+      let res = await this.divisionRequest.list(divisionParams);
+      let ids = res.Data.map((division) => division.Id);
+      const divisionStatisticParams = new GetDivisionStatisticNumbersParams();
+      divisionStatisticParams.Ids = ids;
+      let res2 = await this.divisionRequest.statistic.number.list(
+        divisionStatisticParams
+      );
+      return res2.Data;
     }
-    return new RankModel();
+    if (divisionType == DivisionType.Committees || childType == 'station') {
+      const stationParams = new GetGarbageStationsParams();
+      stationParams.PageIndex = 1;
+      stationParams.PageSize = 9999;
+      stationParams.DivisionId = divisionId;
+      const res = await this.stationRequest.list(stationParams);
+      console.log('垃圾厢房', res);
+      let ids = res.Data.map((item) => item.Id);
+      if (ids.length == 0) return [];
+      let stationStatisticParams =
+        new GetGarbageStationStatisticNumbersParams();
+      stationStatisticParams.Ids = ids;
+      let res2 = await this.stationRequest.statistic.number.list(
+        stationStatisticParams
+      );
+      return res2.Data;
+    }
+    return null;
+  }
+  toRank<T>(data: T[], find: Function): any {
+    // 先提取rank数据
+    let rawData = [];
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      if (item instanceof DivisionNumberStatistic) {
+        let obj = {
+          id: item.Id,
+          name: item.Name,
+          statistic: 0,
+          unit: '起',
+        };
+        let ff = item.TodayEventNumbers?.find((n) => find(n));
+        if (ff) {
+          obj.statistic = ff.DayNumber;
+        }
+        rawData.push(obj);
+      } else if (item instanceof GarbageStationNumberStatistic) {
+        let obj = {
+          id: item.Id,
+          name: item.Name,
+          statistic: 0,
+          unit: '起',
+        };
+        let ff = item.TodayEventNumbers?.find((n) => find(n));
+        if (ff) {
+          obj.statistic = ff.DayNumber;
+        }
+        rawData.push(obj);
+      }
+    }
+    // console.log(rawData);
+    rawData.sort(function (a, b) {
+      return b.statistic - a.statistic;
+    });
+    // console.log(rawData);
+    let temp = rawData.map((item) => {
+      let model = new RankModel();
+      model.id = item.id;
+      model.name = item.name;
+      model.statistic = item.statistic + '';
+      model.unit = item.unit;
+
+      return model;
+    });
+    let len = temp.length;
+    if (len < 6) {
+      for (let i = 0; i < 6 - len; i++) {
+        let model = new RankModel();
+        model.name = '-';
+        model.statistic = '0';
+        model.unit = '起';
+
+        temp.push(model);
+      }
+    }
+    return temp;
   }
 }

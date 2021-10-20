@@ -13,44 +13,44 @@ export class GarbageStationUrl {
     return `${BaseGarbageUrl}/GarbageStations`;
   }
   static item(id: string) {
-    return `${this.basic()}/${id}`;
+    return `${GarbageStationUrl.basic()}/${id}`;
   }
   static list() {
-    return `${this.basic()}/List`;
+    return `${GarbageStationUrl.basic()}/List`;
   }
   static excels() {
-    return `${this.basic()}/Excels`;
+    return `${GarbageStationUrl.basic()}/Excels`;
   }
   static manualcapture(id: string) {
-    return `${this.item(id)}/ManualCapture`;
+    return `${GarbageStationUrl.item(id)}/ManualCapture`;
   }
 
   static camera(id?: string) {
-    const base = id ? this.item(id) : this.basic();
+    const base = id ? GarbageStationUrl.item(id) : GarbageStationUrl.basic();
     return new CameraInnerUrl(base);
   }
   static trashcan(id?: string) {
-    const base = id ? this.item(id) : this.basic();
+    const base = id ? GarbageStationUrl.item(id) : GarbageStationUrl.basic();
     return new TrashCanInnerUrl(base);
   }
   static statistic(id?: string) {
-    const base = id ? this.item(id) : this.basic();
+    const base = id ? GarbageStationUrl.item(id) : GarbageStationUrl.basic();
     return new StatisticInnerUrl(base);
   }
   static eventnumber(id?: string) {
-    const base = id ? this.item(id) : this.basic();
+    const base = id ? GarbageStationUrl.item(id) : this.basic();
     return new EventNumberInnerUrl(base);
   }
 
-  static type = new TypeInnerUrl(this.basic());
+  static type = new TypeInnerUrl(GarbageStationUrl.basic());
 
   static member(id: string) {
-    return new MemberInnerUrl(this.item(id));
+    return new MemberInnerUrl(GarbageStationUrl.item(id));
   }
   static task(id: string) {
-    return new TaskInnerUrl(this.item(id));
+    return new TaskInnerUrl(GarbageStationUrl.item(id));
   }
   static volume(id: string) {
-    return new VolumeInnerUrl(this.item(id));
+    return new VolumeInnerUrl(GarbageStationUrl.item(id));
   }
 }

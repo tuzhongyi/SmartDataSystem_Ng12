@@ -10,6 +10,11 @@ export class NumberInnerUrl implements IInnerUrl {
   list() {
     return `${this.basic()}/List`;
   }
+
+  sum() {
+    return `${this.basic()}/Sum`;
+  }
+
   comparison() {
     return `${this.basic()}/Comparison`;
   }

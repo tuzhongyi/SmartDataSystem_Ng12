@@ -30,34 +30,36 @@ export class DivisionListComponent implements OnInit {
   // 显式声明null类型，表示类实例一定有该属性
   currentDivision: Division | null = null;
   childDivisions: Division[] | null = null;
+  selectedId: string = '';
 
   constructor(
-    private _divisionListBusiness: DivisionListBusiness,
-    private _localStorageService: LocalStorageService,
-    private _storeService: StoreService
+    private divisionListBusiness: DivisionListBusiness,
+    private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
     this.loadData();
   }
   async loadData() {
-    let divisionId = this._storeService.divisionId;
-    this.currentDivision = await this._divisionListBusiness.get(divisionId);
+    let divisionId = this.storeService.divisionId;
+    this.currentDivision = await this.divisionListBusiness.get(divisionId);
 
     // console.log('currentDivision', this.currentDivision);
 
-    this.childDivisions = await this._divisionListBusiness.listChildDivisions(
+    this.childDivisions = await this.divisionListBusiness.listChildDivisions(
       divisionId
     );
     // console.log('child divisions ', this.childDivisions);
   }
   itemClick(division: Division | null) {
     // console.log(division);
-    if (division) {
-      this._storeService.divisionId = division.Id;
-      this._storeService.divisionType = division.DivisionType;
 
-      this._storeService.statusChange.emit();
+    if (division) {
+      this.selectedId = division.Id;
+      this.storeService.divisionId = division.Id;
+      this.storeService.divisionType = division.DivisionType;
+
+      this.storeService.statusChange.emit();
     }
   }
 }

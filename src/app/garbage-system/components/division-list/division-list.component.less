@@ -34,10 +34,37 @@
     background-position: 15px 0, 100% 0, 100% 100%, 0% 100%, 0% 100%, 0% 0%,
       top left, top right, bottom right, bottom left;
     background-size: calc(100% - 15px) 1px, 1px calc(100% - 15px), 15px 15px,
-      calc(100% - 15px) 1px, 1px calc(100% - 15px), 15px 15px, 50% 50%, 50% 50%,
-      50% 50%, 50% 50%;
+      calc(100% - 15px) 1px, 1px calc(100% - 15px), 15px 15px, 51% 51%, 50% 50%,
+      51% 51%, 50% 50%;
     background-repeat: no-repeat;
     background-color: transparent;
+
+    &.selected {
+      background-image: linear-gradient(90deg, #5e6ebe, #5e6ebe),
+        linear-gradient(180deg, #5e6ebe, #5e6ebe),
+        linear-gradient(
+          135deg,
+          transparent 0%,
+          transparent calc(50% - 1px),
+          #5e6ebe 50%,
+          transparent calc(50% + 1px),
+          transparent 100%
+        ),
+        linear-gradient(270deg, #5e6ebe, #5e6ebe),
+        linear-gradient(0deg, #5e6ebe, #5e6ebe),
+        linear-gradient(
+          135deg,
+          transparent 0%,
+          transparent calc(50% - 1px),
+          #5e6ebe 50%,
+          transparent calc(50% + 1px),
+          transparent 100%
+        ),
+        linear-gradient(135deg, transparent calc(15 / 2 * 1.414px), #235fa4 0),
+        linear-gradient(-135deg, transparent 0px, #235fa4 0),
+        linear-gradient(-45deg, transparent calc(15 / 2 * 1.414px), #235fa4 0),
+        linear-gradient(45deg, transparent 0px, #235fa4 0);
+    }
   }
 
   .list-title {
@@ -81,6 +108,8 @@
       cursor: pointer;
       height: 47px;
 
+      padding: 5px;
+      box-sizing: border-box;
       flex-basis: calc(100% / 3 - 5px);
       margin-right: 5px;
       margin-bottom: 5px;
@@ -89,6 +118,10 @@
       justify-content: center;
       align-items: center;
       min-width: 0;
+      &.selected:hover {
+        text-decoration: underline;
+        color: #cfd7ff;
+      }
       &:hover {
         text-decoration: underline;
         color: #6997ff;

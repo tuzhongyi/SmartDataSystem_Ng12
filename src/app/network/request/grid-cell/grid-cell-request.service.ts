@@ -26,7 +26,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class StationRequestService implements IBusiness<GridCell> {
+export class GridCellRequestService implements IBusiness<GridCell> {
   basic: BaseRequestService;
   type: BaseTypeRequestService<GridCell>;
   constructor(private _http: HowellAuthHttpService) {

@@ -4,7 +4,12 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2021-10-14 17:19:21
  */
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  DropListObj,
+  DropListModel,
+  RankModel,
+} from '../../../view-model/rank.model';
 
 @Component({
   selector: 'app-rank',
@@ -14,13 +19,46 @@ import { Component, Input, OnInit } from '@angular/core';
 export class RankComponent implements OnInit {
   @Input() title: string = '';
 
+  @Input() dropList?: Array<DropListObj>;
+
+  @Input() data: Array<RankModel> = [];
+
+  @Output() changeDataSourceEvent = new EventEmitter<string>();
+
   constructor() {}
-  ngOnInit(): void {
-    // console.log(this.dropLists);
+  ngOnInit(): void {}
+  trackByFn(index: number, item: RankModel) {
+    return item.id;
+  }
+
+  toggleDropList(item: DropListObj, $event: Event) {
+    item.status = !item.status;
+    $event.stopPropagation();
+  }
+  /**
+   *
+   * @param option  当前 下拉选项
+   * @param options  当前下拉列表数据源
+   * @param obj 当前 dropList对象
+   */
+  changeDataSource(
+    option: DropListModel,
+    options: DropListModel[],
+    obj: DropListObj,
+    e: Event
+  ) {
+    // console.log(option, options, obj);
+
+    // 确定当前选项在选项数组中的位置
+    let index = options.findIndex((o) => o.id == option.id);
+    if (index !== -1) {
+      if (obj.index == index) return;
+      obj.index = index;
+    }
+
+    this.changeDataSourceEvent.emit(option.id);
+
+    obj.status = false;
+    e.stopPropagation();
   }
 }
-
-export type DropListModel = {
-  id: string;
-  name: string;
-};

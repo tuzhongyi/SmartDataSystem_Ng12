@@ -21,7 +21,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class StationRequestService {
+export class EventRequestService {
   constructor(private _http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
   }

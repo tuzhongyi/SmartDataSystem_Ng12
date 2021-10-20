@@ -8,6 +8,7 @@
   <div class="list-wrapper">
     <div
       class="list-item edge-wrapper"
+      [class.selected]="selectedId == division.Id"
       *ngFor="let division of childDivisions"
       title="{{ division?.Name }}"
       (click)="itemClick(division)"

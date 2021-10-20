@@ -1,21 +1,9 @@
 <div class="illegal-mixinto" (click)="clickHandler()">
-  <app-rank [title]="title">
-    <ng-template ngFor [ngForOf]="dropLists" let-item>
-      <div class="select-item">
-        <div class="select-head" (click)="toggleDropList(item, $event)">
-          <div class="select-item__title">{{ item.data[0].name }}</div>
-          <div class="select-item__button"></div>
-        </div>
-        <ng-container *ngIf="item.status">
-          <div class="select-body">
-            <ng-template ngFor [ngForOf]="item.data" let-item>
-              <div class="select-option">
-                {{ item.name }}
-              </div>
-            </ng-template>
-          </div>
-        </ng-container>
-      </div>
-    </ng-template>
+  <app-rank
+    [title]="title"
+    [dropList]="dropList"
+    [data]="rankData"
+    (changeDataSourceEvent)="changeDataSourceHandler($event)"
+  >
   </app-rank>
 </div>

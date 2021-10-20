@@ -2,82 +2,59 @@
   <div class="rank-head">
     <div class="title">{{ title }}</div>
     <div class="select-group">
-      <ng-content></ng-content>
+      <ng-template ngFor [ngForOf]="dropList" let-item>
+        <div class="select-item">
+          <div class="select-head" (click)="toggleDropList(item, $event)">
+            <div class="select-item__title">
+              {{ item.data[item.index].name }}
+            </div>
+            <div class="select-item__button"></div>
+          </div>
+          <ng-container *ngIf="item.status">
+            <div class="select-body">
+              <ng-template
+                ngFor
+                [ngForOf]="item.data"
+                let-option
+                let-options="ngForOf"
+              >
+                <div
+                  class="select-option"
+                  (click)="changeDataSource(option, options, item, $event)"
+                >
+                  {{ option.name }}
+                </div>
+              </ng-template>
+            </div>
+          </ng-container>
+        </div>
+      </ng-template>
     </div>
   </div>
 
   <div class="rank-wrapper">
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
+    <ng-template
+      ngFor
+      [ngForOf]="data"
+      let-item
+      let-i="index"
+      [ngForTrackBy]="trackByFn"
+    >
+      <div class="rank-item">
+        <div class="rank-prefix">
+          <div
+            class="rank-order"
+            [ngStyle]="{ background: i < 3 ? '#ffba00' : '#7f94ff' }"
+          >
+            {{ i + 1 }}
+          </div>
+          <div class="rank-link">{{ item.name }}</div>
+        </div>
+        <div class="rank-suffix">
+          <div class="rank-num">{{ item.statistic }}</div>
+          <div class="rank-unit">{{ item.unit }}</div>
+        </div>
       </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
-    <div class="rank-item">
-      <div class="rank-prefix">
-        <div class="rank-order">1</div>
-        <div class="rank-link">西渐晚居委会</div>
-      </div>
-      <div class="rank-suffix">
-        <div class="rank-num">43</div>
-        <div class="rank-unit">起</div>
-      </div>
-    </div>
+    </ng-template>
   </div>
 </div>

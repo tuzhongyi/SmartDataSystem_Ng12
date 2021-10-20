@@ -9,6 +9,11 @@ export class EventNumberInnerUrl implements IInnerUrl {
   sum() {
     return `${this.basic()}/Sum`;
   }
+
+  list() {
+    return `${this.basic()}/List`;
+  }
+
   private _history?: HistoryInnerUrl;
   public get history(): HistoryInnerUrl {
     if (!this._history) {

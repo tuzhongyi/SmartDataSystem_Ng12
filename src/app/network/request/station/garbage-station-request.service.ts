@@ -372,16 +372,15 @@ class StatisticNumberService {
     return this.basicType.get(url);
   }
   list(
-    stationId: string,
     params: GetGarbageStationStatisticNumbersParams
   ): Promise<PagedList<GarbageStationNumberStatistic>> {
-    let url = GarbageStationUrl.eventnumber(stationId).history.list();
+    let url = GarbageStationUrl.statistic().number.list();
     return this.basicType.paged(url, params);
   }
   sum(
     params: GetGarbageStationSumEventNumberParams
   ): Promise<SumEventNumber[]> {
-    let url = GarbageStationUrl.eventnumber().sum();
+    let url = GarbageStationUrl.statistic().number.sum();
     return this.basic.array(url, SumEventNumber, params);
   }
   comparison(
