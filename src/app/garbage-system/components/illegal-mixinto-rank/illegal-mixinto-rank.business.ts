@@ -9,7 +9,9 @@ import { Injectable } from '@angular/core';
 import { mode } from 'crypto-js';
 import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
@@ -32,10 +34,6 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     private stationRequest: StationRequestService
   ) {}
 
-  /**
-   *
-   * 当前区划信息
-   */
   async getCurrentDivision(id: string) {
     let data = await this.divisionRequest.get(id);
     return data;
@@ -51,18 +49,18 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
   async statistic(
     divisionId: string,
     divisionType: DivisionType,
-    childType: DivisionType | 'station'
+    childType: UserResourceType
   ): Promise<
     DivisionNumberStatistic[] | GarbageStationNumberStatistic[] | null
   > {
     if (
       (divisionType == DivisionType.City ||
         divisionType == DivisionType.County) &&
-      childType != 'station'
+      childType != UserResourceType.Station
     ) {
       const divisionParams = new GetDivisionsParams();
       divisionParams.AncestorId = divisionId;
-      divisionParams.DivisionType = childType;
+      divisionParams.DivisionType = EnumHelper.Convert(childType);
       let res = await this.divisionRequest.list(divisionParams);
       let ids = res.Data.map((division) => division.Id);
       const divisionStatisticParams = new GetDivisionStatisticNumbersParams();
@@ -72,7 +70,10 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
       );
       return res2.Data;
     }
-    if (divisionType == DivisionType.Committees || childType == 'station') {
+    if (
+      divisionType == DivisionType.Committees ||
+      childType == UserResourceType.Station
+    ) {
       const stationParams = new GetGarbageStationsParams();
       stationParams.PageIndex = 1;
       stationParams.PageSize = 9999;
@@ -91,7 +92,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     }
     return null;
   }
-  toRank<T>(data: T[], find: Function): any {
+  toRank<T>(data: T[], type: EventType): any {
     // 先提取rank数据
     let rawData = [];
     for (let i = 0; i < data.length; i++) {
@@ -103,7 +104,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
           statistic: 0,
           unit: '起',
         };
-        let ff = item.TodayEventNumbers?.find((n) => find(n));
+        let ff = item.TodayEventNumbers?.find((n) => n.EventType == type);
         if (ff) {
           obj.statistic = ff.DayNumber;
         }
@@ -115,7 +116,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
           statistic: 0,
           unit: '起',
         };
-        let ff = item.TodayEventNumbers?.find((n) => find(n));
+        let ff = item.TodayEventNumbers?.find((n) => n.EventType == type);
         if (ff) {
           obj.statistic = ff.DayNumber;
         }

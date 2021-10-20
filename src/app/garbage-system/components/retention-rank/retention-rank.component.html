@@ -1,3 +1,8 @@
 <div class="retention">
-  <!-- <app-rank [title]="title"></app-rank> -->
+  <app-rank
+    [title]="title"
+    [dropList]="dropList"
+    [data]="rankData"
+    (changeDataSourceEvent)="changeDataSourceHandler($event)"
+  ></app-rank>
 </div>

@@ -8,6 +8,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
   DropListModel,
   DropListObj,
+  RankDropListType,
+  RankEventModel,
   RankModel,
 } from 'src/app/view-model/rank.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -18,6 +20,9 @@ import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { User } from 'src/app/network/model/user.model';
 
 @Component({
   selector: 'app-illegal-mixinto-rank',
@@ -33,8 +38,14 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
 
   public dropList: Array<DropListObj> = [];
 
+  // 当前区划id
+  private divisionId: string = '';
+
   // 当前区划类型
   private currentDivisionType: DivisionType = DivisionType.None;
+
+  // 下级资源类型
+  private childDivisionType!: UserResourceType;
 
   // 当前区划
   private currentDivision: Division | null = null;
@@ -46,28 +57,19 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   private rawData: DivisionNumberStatistic[] | GarbageStationNumberStatistic[] =
     [];
 
-  // 当前区划id
-  private divisionId: string = '';
-
-  // 后代区划类型
-  private childDivisionType: DivisionType | 'station' = DivisionType.None;
-
-  /**
-   * id不要用 DivisionType.City  EventType.IllegalDrop 两者会冲突
-   */
   private dropListMap = new Map<DivisionType, Array<DropListModel>>([
     [
       DivisionType.City,
       [
-        { id: 'county', name: '街道' },
-        { id: 'committee', name: '居委会' },
+        { id: UserResourceType.County, name: '街道' },
+        { id: UserResourceType.Committees, name: '居委会' },
       ],
     ],
     [
       DivisionType.County,
       [
-        { id: 'committee', name: '居委会' },
-        { id: 'station', name: '投放点' },
+        { id: UserResourceType.Committees, name: '居委会' },
+        { id: UserResourceType.Station, name: '投放点' },
       ],
     ],
   ]);
@@ -75,10 +77,11 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   // 固定显示的下拉列表
   private dropListSolid: DropListObj = {
     status: false,
+    type: RankDropListType.EventType,
     index: 0,
     data: [
-      { id: 'illegalDrop', name: '乱扔垃圾' },
-      { id: 'mixInto', name: '混合投放' },
+      { id: EventType.IllegalDrop, name: '乱扔垃圾' },
+      { id: EventType.MixedInto, name: '混合投放' },
     ],
   };
 
@@ -99,18 +102,17 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     console.log('destroy');
   }
   changeStatus() {
-    // console.log('change status');
+    console.log('change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
-    if (this.currentDivisionType !== DivisionType.Committees) {
-      this.childDivisionType = this.currentDivisionType + 1;
-    }
+    this.childDivisionType = EnumHelper.GetChildType(this.currentDivisionType);
 
     let divisionDropList = this.dropListMap.get(this.currentDivisionType);
 
     this.dropList = [this.dropListSolid];
     if (divisionDropList) {
       this.dropList.unshift({
+        type: RankDropListType.UserResourceType,
         index: 0,
         status: false,
         data: divisionDropList,
@@ -124,7 +126,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     this.currentDivision = await this.business.getCurrentDivision(
       this.divisionId
     );
-    console.log('当前区划', this.currentDivision);
+    // console.log('当前区划', this.currentDivision);
 
     let data = await this.business.statistic(
       this.divisionId,
@@ -138,10 +140,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     // console.log('rawData', this.rawData);
     this.rankData = this.business.toRank<
       DivisionNumberStatistic | GarbageStationNumberStatistic
-    >(
-      this.rawData,
-      (item: EventNumber) => item.EventType == this.currentEventType
-    );
+    >(this.rawData, this.currentEventType);
     // console.log('rankData', this.rankData);
   }
   toggleDropList(item: DropListObj, $event: Event) {
@@ -151,34 +150,35 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   clickHandler() {
     this.dropList.forEach((list) => (list.status = false));
   }
-  changeDataSourceHandler(type: string) {
-    if (type == 'illegalDrop' || type == 'mixInto') {
-      switch (type) {
-        case 'illegalDrop':
+  changeDataSourceHandler(event: RankEventModel) {
+    console.log(event);
+    let type = event.type;
+    let data = event.data;
+
+    if (type == RankDropListType.EventType) {
+      switch (data.id) {
+        case EventType.IllegalDrop:
           this.currentEventType = EventType.IllegalDrop;
+
           break;
-        case 'mixInto':
+        case EventType.MixedInto:
           this.currentEventType = EventType.MixedInto;
           break;
       }
+      this.title = data.name + '排名';
       this.rankData = this.business.toRank<
         DivisionNumberStatistic | GarbageStationNumberStatistic
-      >(
-        this.rawData,
-        (item: EventNumber) => item.EventType == this.currentEventType
-      );
-      console.log('事件更新', this.rankData);
-    } else if (type == 'county' || type == 'committee' || type == 'station') {
-      console.log('切换区划', type);
-      switch (type) {
-        case 'county':
-          this.childDivisionType = DivisionType.County;
+      >(this.rawData, this.currentEventType);
+    } else if (type == RankDropListType.UserResourceType) {
+      switch (data.id) {
+        case UserResourceType.County:
+          this.childDivisionType = UserResourceType.County;
           break;
-        case 'committee':
-          this.childDivisionType = DivisionType.Committees;
+        case UserResourceType.Committees:
+          this.childDivisionType = UserResourceType.Committees;
           break;
-        case 'station':
-          this.childDivisionType = 'station';
+        case UserResourceType.Station:
+          this.childDivisionType = UserResourceType.Station;
           break;
       }
       this.loadData();

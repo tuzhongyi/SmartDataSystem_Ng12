@@ -9,6 +9,7 @@ import {
   DropListObj,
   DropListModel,
   RankModel,
+  RankEventModel,
 } from '../../../view-model/rank.model';
 
 @Component({
@@ -23,7 +24,7 @@ export class RankComponent implements OnInit {
 
   @Input() data: Array<RankModel> = [];
 
-  @Output() changeDataSourceEvent = new EventEmitter<string>();
+  @Output() changeDataSourceEvent = new EventEmitter<RankEventModel>();
 
   constructor() {}
   ngOnInit(): void {}
@@ -56,7 +57,10 @@ export class RankComponent implements OnInit {
       obj.index = index;
     }
 
-    this.changeDataSourceEvent.emit(option.id);
+    this.changeDataSourceEvent.emit({
+      data: option,
+      type: obj.type,
+    });
 
     obj.status = false;
     e.stopPropagation();
