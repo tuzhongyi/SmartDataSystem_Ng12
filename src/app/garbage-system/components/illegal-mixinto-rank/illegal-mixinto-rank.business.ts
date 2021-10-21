@@ -38,14 +38,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     let data = await this.divisionRequest.get(id);
     return data;
   }
-  async stations(divisionId: string) {
-    const stationParams = new GetGarbageStationsParams();
-    stationParams.PageIndex = 1;
-    stationParams.PageSize = 9999;
-    stationParams.DivisionId = divisionId;
-    const res = await this.stationRequest.list(stationParams);
-    console.log(res);
-  }
+
   async statistic(
     divisionId: string,
     divisionType: DivisionType,

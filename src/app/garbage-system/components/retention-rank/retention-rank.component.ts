@@ -87,7 +87,7 @@ export class RetentionRankComponent implements OnInit {
     this.currentDivision = await this.business.getCurrentDivision(
       this.divisionId
     );
-    console.log('当前区划', this.currentDivision);
+    // console.log('当前区划', this.currentDivision);
 
     let data = await this.business.statistic(
       this.divisionId,
@@ -105,7 +105,7 @@ export class RetentionRankComponent implements OnInit {
     // console.log('rankData', this.rankData);
   }
   changeDataSourceHandler(event: RankEventModel) {
-    console.log(event);
+    // console.log(event);
     let type = event.type;
     let data = event.data;
     if (type == RankDropListType.RetentionType) {

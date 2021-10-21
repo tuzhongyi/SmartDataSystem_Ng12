@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
@@ -18,7 +19,7 @@ import { StationRequestService } from 'src/app/network/request/station/garbage-s
 import { RankModel } from 'src/app/view-model/rank.model';
 
 @Injectable()
-export class RetentionRankBusiness {
+export class RetentionRankBusiness implements IRankConverter {
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: StationRequestService
@@ -28,14 +29,7 @@ export class RetentionRankBusiness {
     let data = await this.divisionRequest.get(id);
     return data;
   }
-  async stations(divisionId: string) {
-    const stationParams = new GetGarbageStationsParams();
-    stationParams.PageIndex = 1;
-    stationParams.PageSize = 9999;
-    stationParams.DivisionId = divisionId;
-    const res = await this.stationRequest.list(stationParams);
-    console.log(res);
-  }
+
   async statistic(
     divisionId: string,
     divisionType: DivisionType,
@@ -150,7 +144,7 @@ export class RetentionRankBusiness {
     return temp;
   }
 
-  transformTime(time: number) {
+  private transformTime(time: number) {
     let hour = Math.floor(time / 60);
     let minute = time - hour * 60;
     let res = hour == 0 ? minute + '分钟' : hour + '小时' + minute + '分钟';
