@@ -111,7 +111,7 @@ export class Language {
       case RetentionType.GarbageTime:
         return '滞留时长';
       case RetentionType.GarbageDropStationNumber:
-        return '滞留点数量';
+        return '滞留数量';
     }
   }
   static UserResourceType(type: UserResourceType) {
