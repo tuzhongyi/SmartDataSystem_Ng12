@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
+import { Language } from 'src/app/global/tool/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
@@ -22,13 +24,16 @@ import { RetentionRankBusiness } from './retention-rank.business';
   styleUrls: ['./retention-rank.component.less'],
   providers: [RetentionRankBusiness],
 })
-export class RetentionRankComponent implements OnInit {
+export class RetentionRankComponent implements OnInit, OnDestroy {
   public title: string = '垃圾滞留时长排名';
 
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
 
   public dropList: Array<DropListObj> = [];
+
+  // 在销毁组件时，取消订阅
+  private subscription: Subscription | null = null;
 
   // 当前区划id
   private divisionId: string = '';
@@ -55,25 +60,38 @@ export class RetentionRankComponent implements OnInit {
     type: RankDropListType.RetentionType,
     index: 0,
     data: [
-      { id: RetentionType.GarbageTime, name: '滞留时长' },
-      { id: RetentionType.GarbageDropStationNumber, name: '滞留点数量' },
+      {
+        id: RetentionType.GarbageTime,
+        name: Language.RetentionType(RetentionType.GarbageTime),
+      },
+      {
+        id: RetentionType.GarbageDropStationNumber,
+        name: Language.RetentionType(RetentionType.GarbageDropStationNumber),
+      },
     ],
   };
 
   constructor(
     private storeService: StoreService,
     private business: RetentionRankBusiness
-  ) {
-    // 区划改变时触发
-    this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    // 区划改变时触发
+    this.subscription = this.storeService.statusChange.subscribe(() => {
+      this.changeStatus();
+    });
     this.changeStatus();
   }
+  ngOnDestroy() {
+    console.log('destroy');
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
+  }
   changeStatus() {
+    console.log('retention change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
     this.childDivisionType = EnumHelper.GetChildType(this.currentDivisionType);

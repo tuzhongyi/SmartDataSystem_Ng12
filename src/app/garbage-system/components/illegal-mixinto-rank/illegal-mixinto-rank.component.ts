@@ -23,6 +23,8 @@ import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-sta
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/user.model';
+import { Language } from 'src/app/global/tool/language';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-illegal-mixinto-rank',
@@ -37,6 +39,9 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   public rankData: RankModel[] = [];
 
   public dropList: Array<DropListObj> = [];
+
+  // 在销毁组件时，取消订阅
+  private subscription: Subscription | null = null;
 
   // 当前区划id
   private divisionId: string = '';
@@ -61,15 +66,27 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     [
       DivisionType.City,
       [
-        { id: UserResourceType.County, name: '街道' },
-        { id: UserResourceType.Committees, name: '居委会' },
+        {
+          id: UserResourceType.County,
+          name: Language.UserResourceType(UserResourceType.County),
+        },
+        {
+          id: UserResourceType.Committees,
+          name: Language.UserResourceType(UserResourceType.Committees),
+        },
       ],
     ],
     [
       DivisionType.County,
       [
-        { id: UserResourceType.Committees, name: '居委会' },
-        { id: UserResourceType.Station, name: '投放点' },
+        {
+          id: UserResourceType.Committees,
+          name: Language.UserResourceType(UserResourceType.Committees),
+        },
+        {
+          id: UserResourceType.Station,
+          name: Language.UserResourceType(UserResourceType.Station),
+        },
       ],
     ],
   ]);
@@ -80,29 +97,38 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     type: RankDropListType.EventType,
     index: 0,
     data: [
-      { id: EventType.IllegalDrop, name: '乱扔垃圾' },
-      { id: EventType.MixedInto, name: '混合投放' },
+      {
+        id: EventType.IllegalDrop,
+        name: Language.EventType(EventType.IllegalDrop),
+      },
+      {
+        id: EventType.MixedInto,
+        name: Language.EventType(EventType.MixedInto),
+      },
     ],
   };
 
   constructor(
     private storeService: StoreService,
     private business: IllegalMixintoRankBusiness
-  ) {
-    // 区划改变时触发
-    this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    // 区划改变时触发
+    this.subscription = this.storeService.statusChange.subscribe(() => {
+      this.changeStatus();
+    });
     this.changeStatus();
   }
   ngOnDestroy() {
     console.log('destroy');
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
   changeStatus() {
-    console.log('change status');
+    console.log('illegalmixinto change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
     this.childDivisionType = EnumHelper.GetChildType(this.currentDivisionType);

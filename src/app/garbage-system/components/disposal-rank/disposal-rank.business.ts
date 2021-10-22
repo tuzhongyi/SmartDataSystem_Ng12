@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
+import { IRankConverter } from 'src/app/converter/IRankconverter.interface';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
@@ -29,7 +29,7 @@ export class DisposalRankBusiness implements IRankConverter {
     stationParams.PageSize = 9999;
     stationParams.DivisionId = divisionId;
     const res = await this.stationRequest.list(stationParams);
-    console.log('垃圾厢房', res);
+    // console.log('垃圾厢房', res);
     let ids = res.Data.map((item) => item.Id);
     if (ids.length == 0) return [];
     let stationStatisticParams = new GetGarbageStationStatisticNumbersParams();

@@ -7,7 +7,7 @@
 
 import { Injectable } from '@angular/core';
 import { mode } from 'crypto-js';
-import { IRankConverter } from 'src/app/Converter/IRankconverter.interface';
+import { IRankConverter } from 'src/app/converter/IRankconverter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -72,7 +72,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
       stationParams.PageSize = 9999;
       stationParams.DivisionId = divisionId;
       const res = await this.stationRequest.list(stationParams);
-      console.log('垃圾厢房', res);
+      // console.log('垃圾厢房', res);
       let ids = res.Data.map((item) => item.Id);
       if (ids.length == 0) return [];
       let stationStatisticParams =

@@ -14,6 +14,7 @@ import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
+import { IllegalStatisticComponent } from './illegal-statistic/illegal-statistic.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
+    IllegalStatisticComponent,
   ],
   imports: [CommonModule, HowellModule],
 })

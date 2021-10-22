@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
@@ -12,11 +13,14 @@ import { DisposalRankBusiness } from './disposal-rank.business';
   styleUrls: ['./disposal-rank.component.less'],
   providers: [DisposalRankBusiness],
 })
-export class DisposalRankComponent implements OnInit {
+export class DisposalRankComponent implements OnInit, OnDestroy {
   public title: string = '小包垃圾处置达标率排名';
 
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
+
+  // 在销毁组件时，取消订阅
+  private subscription: Subscription | null = null;
 
   // 当前区划id
   private divisionId: string = '';
@@ -33,16 +37,23 @@ export class DisposalRankComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private business: DisposalRankBusiness
-  ) {
-    this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.subscription = this.storeService.statusChange.subscribe(() => {
+      this.changeStatus();
+    });
     this.changeStatus();
   }
+  ngOnDestroy() {
+    console.log('destroy');
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
+  }
   changeStatus() {
+    console.log('disposal change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
 
@@ -54,7 +65,7 @@ export class DisposalRankComponent implements OnInit {
     this.currentDivision = await this.business.getCurrentDivision(
       this.divisionId
     );
-    console.log('当前区划', this.currentDivision);
+    // console.log('当前区划', this.currentDivision);
 
     let data = await this.business.statistic(this.divisionId);
 
