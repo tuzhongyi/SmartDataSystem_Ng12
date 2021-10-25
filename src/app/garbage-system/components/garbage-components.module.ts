@@ -14,7 +14,8 @@ import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
-import { IllegalStatisticComponent } from './illegal-statistic/illegal-statistic.component';
+import { IllegalStatisticEChartsComponent } from './illegal-statistic-echarts/illegal-statistic-echarts.component';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -24,8 +25,8 @@ import { IllegalStatisticComponent } from './illegal-statistic/illegal-statistic
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    IllegalStatisticComponent,
+    IllegalStatisticEChartsComponent,
   ],
-  imports: [CommonModule, HowellModule],
+  imports: [CommonModule, AngularResizeEventModule, HowellModule],
 })
 export class GarbageComponentsModule {}

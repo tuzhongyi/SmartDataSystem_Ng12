@@ -9,6 +9,7 @@ import { AppInterceptorServiceService } from './network/request/app-interceptor-
 
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [AppComponent],

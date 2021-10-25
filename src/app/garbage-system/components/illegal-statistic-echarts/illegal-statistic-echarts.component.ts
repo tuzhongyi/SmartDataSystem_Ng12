@@ -1,18 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { IllegalStatisticBusiness } from './illegal-statistic.business';
+import { IllegalStatisticBusiness } from './illegal-statistic-echarts.business';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { EChartsLineModel, LineOption } from 'src/app/view-model/echarts.model';
 
 @Component({
-  selector: 'app-illegal-statistic',
-  templateUrl: './illegal-statistic.component.html',
-  styleUrls: ['./illegal-statistic.component.less'],
+  selector: 'app-illegal-statistic-echarts',
+  templateUrl: './illegal-statistic-echarts.component.html',
+  styleUrls: ['./illegal-statistic-echarts.component.less'],
   providers: [IllegalStatisticBusiness],
 })
-export class IllegalStatisticComponent implements OnInit {
+export class IllegalStatisticEChartsComponent implements OnInit {
+  public lineOption: LineOption = new LineOption();
+  public eChartsLineModel: EChartsLineModel = new EChartsLineModel();
+
   // 当前区划id
   private divisionId: string = '';
 
@@ -26,16 +31,22 @@ export class IllegalStatisticComponent implements OnInit {
 
   private rawData: EventNumberStatistic[] = [];
 
+  @ViewChild('chartContainer') chartContainer?: ElementRef;
+
   constructor(
     private storeService: StoreService,
     private business: IllegalStatisticBusiness
   ) {
-    this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
+    this.lineOption.title.text = '乱扔垃圾统计表';
+    this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
+    console.log(this.lineOption.tooltip);
+    new LineOption().tooltip;
   }
 
   ngOnInit(): void {
+    this.storeService.statusChange.subscribe(() => {
+      this.changeStatus();
+    });
     this.changeStatus();
   }
 
@@ -61,5 +72,12 @@ export class IllegalStatisticComponent implements OnInit {
       this.rawData = data;
     }
     console.log('rawData', this.rawData);
+    this.eChartsLineModel = this.business.toECharts(
+      this.rawData,
+      EventType.IllegalDrop
+    );
+    console.log('eChartsLineModel', this.eChartsLineModel);
   }
 }
+
+new LineOption().tooltip;
