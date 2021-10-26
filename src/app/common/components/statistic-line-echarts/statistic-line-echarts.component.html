@@ -1,3 +1,10 @@
 <div class="statistic-echarts" (resized)="onResized($event)">
-  <div class="chartContainer" id="chartContainer" #chartContainer></div>
+  <div
+    class="chartContainer"
+    id="chartContainer"
+    #chartContainer
+    *ngIf="lineOption && eChartsLineModel"
+  >
+    {{ lineOption.legend | json }}
+  </div>
 </div>

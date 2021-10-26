@@ -6,7 +6,11 @@ import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { IllegalStatisticBusiness } from './illegal-statistic-echarts.business';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { EChartsLineModel, LineOption } from 'src/app/view-model/echarts.model';
+import {
+  EChartsLineModel,
+  EChartsLineOption,
+} from 'src/app/view-model/echarts-line.model';
+import { TooltipComponentOption } from 'echarts';
 
 @Component({
   selector: 'app-illegal-statistic-echarts',
@@ -15,7 +19,7 @@ import { EChartsLineModel, LineOption } from 'src/app/view-model/echarts.model';
   providers: [IllegalStatisticBusiness],
 })
 export class IllegalStatisticEChartsComponent implements OnInit {
-  public lineOption: LineOption = new LineOption();
+  public lineOption: EChartsLineOption = new EChartsLineOption();
   public eChartsLineModel: EChartsLineModel = new EChartsLineModel();
 
   // 当前区划id
@@ -27,6 +31,8 @@ export class IllegalStatisticEChartsComponent implements OnInit {
   // 当前区划
   private currentDivision: Division | null = null;
 
+  private currentType: EventType = EventType.IllegalDrop;
+
   private currentDate = new Date();
 
   private rawData: EventNumberStatistic[] = [];
@@ -36,14 +42,38 @@ export class IllegalStatisticEChartsComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private business: IllegalStatisticBusiness
-  ) {
-    this.lineOption.title.text = '乱扔垃圾统计表';
-    this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
-    console.log(this.lineOption.tooltip);
-    new LineOption().tooltip;
-  }
+  ) {}
 
   ngOnInit(): void {
+    this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
+    this.lineOption.title.text = '乱扔垃圾统计表';
+    this.lineOption.legend.data = ['单位(起)'];
+
+    let xAxisData: Array<string> = [];
+    for (let i = 1; i < 24; i++) {
+      let time = i.toString().padStart(2, '0') + ':00';
+      xAxisData.push(time);
+    }
+    xAxisData.push('23:59');
+
+    this.lineOption.xAxis = {
+      type: 'category',
+      data: xAxisData,
+      axisLine: {
+        onZero: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        color: '#CFD7FE',
+        fontSize: 16,
+        interval: (index: number, value: string) => {
+          return this.lineOption.xAxisInterval.includes(index);
+        },
+      },
+    };
+
     this.storeService.statusChange.subscribe(() => {
       this.changeStatus();
     });
@@ -51,7 +81,7 @@ export class IllegalStatisticEChartsComponent implements OnInit {
   }
 
   changeStatus() {
-    console.log('change status');
+    // console.log('change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
 
@@ -71,13 +101,10 @@ export class IllegalStatisticEChartsComponent implements OnInit {
     if (data) {
       this.rawData = data;
     }
-    console.log('rawData', this.rawData);
+    // console.log('rawData', this.rawData);
     this.eChartsLineModel = this.business.toECharts(
       this.rawData,
-      EventType.IllegalDrop
+      this.currentType
     );
-    console.log('eChartsLineModel', this.eChartsLineModel);
   }
 }
-
-new LineOption().tooltip;

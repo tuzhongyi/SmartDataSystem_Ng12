@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { IEChartsConverter } from 'src/app/converter/IEChartsConverter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
@@ -8,7 +9,7 @@ import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { StationRequestService } from 'src/app/network/request/station/garbage-station-request.service';
-import { EChartsLineModel } from 'src/app/view-model/echarts.model';
+import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
 export class IllegalStatisticBusiness implements IEChartsConverter {
@@ -43,22 +44,54 @@ export class IllegalStatisticBusiness implements IEChartsConverter {
   }
   toECharts<T>(data: T[], type: EventType) {
     let res: number[] = [];
-
+    let max = -1;
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof EventNumberStatistic) {
         let temp = item.EventNumbers.find((n) => n.EventType == type);
-        if (temp) res.push(temp.DeltaNumber || 0);
+        if (temp) {
+          let num = temp.DeltaNumber || 0;
+          res.push(num);
+          if (num > max) {
+            max = num;
+          }
+        }
       }
     }
-    let echartsModel = new EChartsLineModel();
-    echartsModel.seriesData = res;
 
-    for (let i = 0; i < 24; i++) {
-      let time = i.toString().padStart(2, '0') + ':00';
-      echartsModel.xAxisData.push(time);
-    }
-    echartsModel.xAxisData.push('23:59');
+    console.log('max', max);
+    let echartsModel = new EChartsLineModel();
+    echartsModel.seriesLabel = [0, 3, 6, 9, 12, 15, 18, 21];
+    echartsModel.series = [
+      {
+        type: 'line',
+        name: '单位(起)',
+        data: res,
+        areaStyle: {},
+        lineStyle: {
+          width: 4,
+          color: '#7586e0',
+        },
+        itemStyle: {
+          color: '#7586e0',
+        },
+        label: {
+          show: true,
+          // 显示 seriesLabel中的 index 和最大数值的 index
+          formatter: function (params: CallbackDataParams) {
+            if (params.value == max) {
+              return params.value.toString();
+            }
+            return echartsModel.seriesLabel.includes(params.dataIndex)
+              ? params.value.toString()
+              : '';
+          },
+          color: '#fff',
+          fontSize: 16,
+        },
+      },
+    ];
+
     return echartsModel;
   }
 }

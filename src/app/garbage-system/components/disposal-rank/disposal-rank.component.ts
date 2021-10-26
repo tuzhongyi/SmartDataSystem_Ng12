@@ -53,7 +53,7 @@ export class DisposalRankComponent implements OnInit, OnDestroy {
     }
   }
   changeStatus() {
-    console.log('disposal change status');
+    // console.log('disposal change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
 

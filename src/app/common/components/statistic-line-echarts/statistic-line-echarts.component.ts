@@ -3,7 +3,9 @@ import {
   Component,
   ElementRef,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 
@@ -18,6 +20,7 @@ import {
   LegendComponent,
   LegendComponentOption,
   TooltipComponent,
+  TooltipComponentOption,
 } from 'echarts/components';
 import { LineSeriesOption, LinesSeriesOption } from 'echarts/charts';
 import { LineChart } from 'echarts/charts';
@@ -26,10 +29,13 @@ import { CanvasRenderer } from 'echarts/renderers';
 import {
   YAXisComponentOption,
   XAXisComponentOption,
-  TooltipComponentOption,
+  SeriesOption,
 } from 'echarts';
 import { ResizedEvent } from 'angular-resize-event';
-import { EChartsLineModel, LineOption } from 'src/app/view-model/echarts.model';
+import {
+  EChartsLineModel,
+  EChartsLineOption,
+} from 'src/app/view-model/echarts-line.model';
 echarts.use([
   GridComponent,
   TitleComponent,
@@ -55,97 +61,51 @@ type ECOption = echarts.ComposeOption<
   templateUrl: './statistic-line-echarts.component.html',
   styleUrls: ['./statistic-line-echarts.component.less'],
 })
-export class StatisticLineEChartsComponent implements OnInit, AfterViewInit {
+export class StatisticLineEChartsComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   private myChart?: echarts.ECharts;
 
   private options: ECOption = {};
 
   @ViewChild('chartContainer') chartContainer?: ElementRef;
 
-  @Input() lineOption: LineOption = new LineOption();
-  @Input() eChartsLineModel: EChartsLineModel = new EChartsLineModel();
+  @Input() lineOption?: EChartsLineOption;
+  @Input() eChartsLineModel?: EChartsLineModel;
 
   constructor() {}
-
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('change', changes);
+    if (this.myChart) {
+      if ('eChartsLineModel' in changes) {
+        this.options.series = this.eChartsLineModel?.series;
+        this.myChart.setOption(this.options, {
+          notMerge: true,
+        });
+      }
+    }
+  }
   ngOnInit() {
-    let a = [0, 5, 11, 17, 23];
-    this.options = {
-      title: this.lineOption.title,
-      legend: this.lineOption.legend,
-      // tooltip: [this.lineOption.tooltip],
-      grid: {
-        top: '20%',
-        left: 15,
-        right: 15,
-        bottom: 0,
-        containLabel: true,
-      },
-      xAxis: {
-        type: 'category',
-        data: [],
-        axisLine: {
-          onZero: false,
-        },
-        axisTick: {
-          show: false,
-        },
-        axisLabel: {
-          color: '#CFD7FE',
-          fontSize: 16,
-          interval: (index: number, value: string) => {
-            return a.includes(index);
-          },
-        },
-      },
-      yAxis: {
-        type: 'value',
-        axisTick: {
-          show: false,
-        },
-        axisLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        splitLine: {
-          lineStyle: {
-            color: 'rgb(117,134,224,0.3)',
-          },
-        },
-      },
-      series: [
-        {
-          type: 'line',
-          name: '单位(起)',
-
-          data: [],
-          areaStyle: {},
-          lineStyle: {
-            width: 4,
-            color: '#7586e0',
-          },
-          itemStyle: {
-            color: '#7586e0',
-          },
-          label: {
-            show: true,
-            formatter: function (params: any) {
-              return params.value ? params.value : '';
-            },
-            color: '#fff',
-            fontSize: 16,
-          },
-        },
-      ],
-    };
+    // 创建表格，但现在还没有数据
+    if (this.lineOption) {
+      this.options = {
+        title: this.lineOption.title,
+        legend: this.lineOption.legend,
+        tooltip: this.lineOption.tooltip,
+        grid: this.lineOption.grid,
+        xAxis: this.lineOption.xAxis,
+        yAxis: this.lineOption.yAxis,
+        series: [],
+      };
+    }
   }
 
   ngAfterViewInit() {
     if (this.chartContainer) {
       this.myChart = echarts.init(this.chartContainer.nativeElement);
-
-      this.myChart.setOption(this.options);
+      this.myChart.setOption(this.options, {
+        notMerge: true,
+      });
     }
   }
   onResized(e: ResizedEvent) {

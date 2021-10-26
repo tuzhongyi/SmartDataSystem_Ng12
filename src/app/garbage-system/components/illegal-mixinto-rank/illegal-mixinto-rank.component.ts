@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:32
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-15 09:59:04
+ * @Last Modified time: 2021-10-26 09:59:52
  */
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import {
@@ -128,7 +128,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     }
   }
   changeStatus() {
-    console.log('illegalmixinto change status');
+    // console.log('illegalmixinto change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
     this.childDivisionType = EnumHelper.GetChildType(this.currentDivisionType);
