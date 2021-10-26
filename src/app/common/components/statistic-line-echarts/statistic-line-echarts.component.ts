@@ -75,7 +75,7 @@ export class StatisticLineEChartsComponent
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges) {
-    console.log('change', changes);
+    // console.log('change', changes);
     if (this.myChart) {
       if ('eChartsLineModel' in changes) {
         this.options.series = this.eChartsLineModel?.series;
@@ -110,6 +110,23 @@ export class StatisticLineEChartsComponent
   }
   onResized(e: ResizedEvent) {
     if (this.myChart) {
+      // console.log('hello', e);
+      let w = e.newRect.width;
+
+      if (this.lineOption) {
+        if (w < 224) {
+          this.lineOption.legend.show = false;
+          this.myChart.setOption(this.options);
+        } else {
+          this.lineOption.legend.show = true;
+          this.myChart.setOption(this.options);
+        }
+
+        if (w < 175) {
+          this.lineOption.title.textStyle!.width = w;
+          this.myChart.setOption(this.options);
+        }
+      }
       this.myChart.resize();
     }
   }

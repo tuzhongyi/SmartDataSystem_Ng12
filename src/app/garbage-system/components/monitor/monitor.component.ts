@@ -2,10 +2,11 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-15 09:51:24
+ * @Last Modified time: 2021-10-26 14:42:38
  */
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
 
@@ -15,6 +16,9 @@ import { StoreService } from 'src/app/global/service/store.service';
   styleUrls: ['./monitor.component.less'],
 })
 export class MonitorComponent implements OnInit {
+  public illegalDropType: EventType = EventType.IllegalDrop;
+  public mixIntoType: EventType = EventType.MixedInto;
+
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,

@@ -31,10 +31,19 @@
     </div>
     <div class="waste-body__item">
       <div class="waste-body__wrapper">
-        <app-illegal-statistic-echarts></app-illegal-statistic-echarts>
+        <app-event-statistic-echarts
+          [title]="'乱扔垃圾统计表'"
+        ></app-event-statistic-echarts>
       </div>
     </div>
-    <div class="waste-body__item"><div class="waste-body__wrapper"></div></div>
+    <div class="waste-body__item">
+      <div class="waste-body__wrapper">
+        <app-event-statistic-echarts
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></app-event-statistic-echarts>
+      </div>
+    </div>
     <div class="waste-body__item"><div class="waste-body__wrapper"></div></div>
   </div>
 </div>

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-13 14:40:32
+ * @Last Modified time: 2021-10-26 14:37:50
  */
 
 import { NgModule } from '@angular/core';
@@ -14,7 +14,7 @@ import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
-import { IllegalStatisticEChartsComponent } from './illegal-statistic-echarts/illegal-statistic-echarts.component';
+import { EvemtStatisticEChartsComponent } from './event-statistic-echarts/event-statistic-echarts.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
@@ -25,7 +25,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    IllegalStatisticEChartsComponent,
+    EvemtStatisticEChartsComponent,
   ],
   imports: [CommonModule, AngularResizeEventModule, HowellModule],
 })

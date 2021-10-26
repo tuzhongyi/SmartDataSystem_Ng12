@@ -59,7 +59,7 @@ export class IllegalStatisticBusiness implements IEChartsConverter {
       }
     }
 
-    console.log('max', max);
+    // console.log('max', max);
     let echartsModel = new EChartsLineModel();
     echartsModel.seriesLabel = [0, 3, 6, 9, 12, 15, 18, 21];
     echartsModel.series = [

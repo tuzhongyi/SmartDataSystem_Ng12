@@ -1,24 +1,23 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { IllegalStatisticBusiness } from './illegal-statistic-echarts.business';
+import { IllegalStatisticBusiness } from './event-statistic-echarts.business';
 import { EventType } from 'src/app/enum/event-type.enum';
 import {
   EChartsLineModel,
   EChartsLineOption,
 } from 'src/app/view-model/echarts-line.model';
-import { TooltipComponentOption } from 'echarts';
 
 @Component({
-  selector: 'app-illegal-statistic-echarts',
-  templateUrl: './illegal-statistic-echarts.component.html',
-  styleUrls: ['./illegal-statistic-echarts.component.less'],
+  selector: 'app-event-statistic-echarts',
+  templateUrl: './event-statistic-echarts.component.html',
+  styleUrls: ['./event-statistic-echarts.component.less'],
   providers: [IllegalStatisticBusiness],
 })
-export class IllegalStatisticEChartsComponent implements OnInit {
+export class EvemtStatisticEChartsComponent implements OnInit {
   public lineOption: EChartsLineOption = new EChartsLineOption();
   public eChartsLineModel: EChartsLineModel = new EChartsLineModel();
 
@@ -31,13 +30,13 @@ export class IllegalStatisticEChartsComponent implements OnInit {
   // 当前区划
   private currentDivision: Division | null = null;
 
-  private currentType: EventType = EventType.IllegalDrop;
-
   private currentDate = new Date();
 
   private rawData: EventNumberStatistic[] = [];
 
   @ViewChild('chartContainer') chartContainer?: ElementRef;
+  @Input() title: string = '';
+  @Input('type') currentType: EventType = EventType.IllegalDrop;
 
   constructor(
     private storeService: StoreService,
@@ -46,7 +45,7 @@ export class IllegalStatisticEChartsComponent implements OnInit {
 
   ngOnInit(): void {
     this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
-    this.lineOption.title.text = '乱扔垃圾统计表';
+    this.lineOption.title.text = this.title;
     this.lineOption.legend.data = ['单位(起)'];
 
     let xAxisData: Array<string> = [];

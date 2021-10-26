@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-26 09:32:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-26 13:58:08
+ * @Last Modified time: 2021-10-26 14:59:48
  */
 
 import { XAXisComponentOption, YAXisComponentOption } from 'echarts';
@@ -14,7 +14,6 @@ import {
   TooltipComponentOption,
 } from 'echarts/components';
 
-let a = [0, 5, 11, 17, 23];
 // ECharts 通用配置
 export class EChartsCommon {
   constructor() {}
@@ -30,6 +29,7 @@ export class EChartsCommon {
     },
   };
   legend: LegendComponentOption = {
+    selectedMode: false,
     top: '12px',
     right: '0px',
     icon: 'none',
@@ -50,7 +50,7 @@ export class EChartsCommon {
     },
   };
   grid: GridComponentOption = {
-    top: '20%',
+    top: '25%',
     left: 15,
     right: 15,
     bottom: 0,
