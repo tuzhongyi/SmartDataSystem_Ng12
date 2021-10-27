@@ -1,0 +1,110 @@
+<div class="device-state">
+  <div class="device-state__head">
+    <div class="title">{{ title }}</div>
+  </div>
+  <div class="device-state__wrapper">
+    <!-- <div class="device-state__item">
+      <div class="device-state__body">
+        <div
+          class="chart-container"
+          id="chartContainer"
+          #chartContainer
+          (resized)="onResized($event)"
+        ></div>
+        <div class="chart-des">
+          <div class="chart-des__label">系统设备在线比</div>
+          <div class="chart-des__percent">
+            <span class="num">23.34</span><span class="unit">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="device-state__foot">
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="device-state__item">
+      <div class="device-state__body">
+        <div
+          class="chart-container"
+          id="chartContainer"
+          #chartContainer
+          (resized)="onResized($event)"
+        ></div>
+        <div class="chart-des">
+          <div class="chart-des__label">系统设备在线比</div>
+          <div class="chart-des__percent">
+            <span class="num">23.34</span><span class="unit">%</span>
+          </div>
+        </div>
+      </div>
+      <div class="device-state__foot">
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+        <div class="device-state__foot__item">
+          <div class="item-label">全部设备数量</div>
+          <div class="item-num"><span>1234</span></div>
+        </div>
+      </div>
+    </div> -->
+
+    <ng-template ngFor [ngForOf]="deviceStateCountData" let-data>
+      <div class="device-state__item">
+        <div class="device-state__body">
+          <div
+            class="chart-container"
+            id="chartContainer"
+            #chartContainer
+            (resized)="onResized($event)"
+          ></div>
+          <div class="chart-des">
+            <div class="chart-des__label">系统设备在线比</div>
+            <div class="chart-des__percent">
+              <span class="num">{{ data.onLinePercentage }}</span
+              ><span class="unit">{{ data.unit }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="device-state__foot">
+          <!-- <div class="device-state__foot__item">
+            <div class="item-label">全部设备数量</div>
+            <div class="item-num"><span>1234</span></div>
+          </div>
+          <div class="device-state__foot__item">
+            <div class="item-label">全部设备数量</div>
+            <div class="item-num"><span>1234</span></div>
+          </div>
+          <div class="device-state__foot__item">
+            <div class="item-label">全部设备数量</div>
+            <div class="item-num"><span>1234</span></div>
+          </div> -->
+          <div
+            *ngFor="let item of data.deviceStateArr"
+            class="device-state__foot__item"
+          >
+            <div class="item-label">{{ item.label }}</div>
+            <div class="item-num">
+              <span>{{ item.count }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

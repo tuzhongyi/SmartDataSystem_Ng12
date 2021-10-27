@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-26 09:32:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-26 14:59:48
+ * @Last Modified time: 2021-10-27 10:11:08
  */
 
 import { XAXisComponentOption, YAXisComponentOption } from 'echarts';
@@ -27,6 +27,7 @@ export class EChartsCommon {
       fontWeight: 400,
       overflow: 'truncate',
     },
+    top: 0,
   };
   legend: LegendComponentOption = {
     selectedMode: false,
@@ -50,7 +51,6 @@ export class EChartsCommon {
     },
   };
   grid: GridComponentOption = {
-    top: '25%',
     left: 15,
     right: 15,
     bottom: 0,

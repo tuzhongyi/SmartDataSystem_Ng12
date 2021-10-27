@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
-import { IEChartsConverter } from 'src/app/converter/IEChartsConverter.interface';
+import { IStatisticLineEChartsConverter } from 'src/app/converter/IStatisticLineEChartsConverter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Time } from 'src/app/global/tool/time';
@@ -12,7 +12,9 @@ import { StationRequestService } from 'src/app/network/request/station/garbage-s
 import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
-export class IllegalStatisticBusiness implements IEChartsConverter {
+export class IllegalStatisticBusiness
+  implements IStatisticLineEChartsConverter
+{
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: StationRequestService
@@ -43,6 +45,7 @@ export class IllegalStatisticBusiness implements IEChartsConverter {
     return res.Data;
   }
   toECharts<T>(data: T[], type: EventType) {
+    let lineChartData = [];
     let res: number[] = [];
     let max = -1;
     for (let i = 0; i < data.length; i++) {
@@ -91,7 +94,7 @@ export class IllegalStatisticBusiness implements IEChartsConverter {
         },
       },
     ];
-
-    return echartsModel;
+    lineChartData.push(echartsModel);
+    return lineChartData;
   }
 }

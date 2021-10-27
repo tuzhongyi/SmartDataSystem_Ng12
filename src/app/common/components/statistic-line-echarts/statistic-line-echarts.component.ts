@@ -71,14 +71,17 @@ export class StatisticLineEChartsComponent
   @ViewChild('chartContainer') chartContainer?: ElementRef;
 
   @Input() lineOption?: EChartsLineOption;
-  @Input() eChartsLineModel?: EChartsLineModel;
+  @Input() lineChartData?: Array<EChartsLineModel>;
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges) {
-    // console.log('change', changes);
     if (this.myChart) {
-      if ('eChartsLineModel' in changes) {
-        this.options.series = this.eChartsLineModel?.series;
+      if ('lineChartData' in changes) {
+        if (this.lineChartData) {
+          this.lineChartData.forEach((echartsModel) => {
+            this.options.series = [...echartsModel.series];
+          });
+        }
         this.myChart.setOption(this.options, {
           notMerge: true,
         });
@@ -122,10 +125,8 @@ export class StatisticLineEChartsComponent
           this.myChart.setOption(this.options);
         }
 
-        if (w < 175) {
-          this.lineOption.title.textStyle!.width = w;
-          this.myChart.setOption(this.options);
-        }
+        this.lineOption.title.textStyle!.width = w;
+        this.myChart.setOption(this.options);
       }
       this.myChart.resize();
     }

@@ -1,5 +1,6 @@
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
+import { DeviceStateCountType } from 'src/app/enum/device-state-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
@@ -124,6 +125,18 @@ export class Language {
         return '投放点';
       case UserResourceType.City:
         return '行政区';
+      default:
+        return '';
+    }
+  }
+  static DeviceStateCountType(type: DeviceStateCountType) {
+    switch (type) {
+      case DeviceStateCountType.all:
+        return '全部设备数量';
+      case DeviceStateCountType.onLine:
+        return '在线设备数量';
+      case DeviceStateCountType.offLine:
+        return '离线设备数量';
       default:
         return '';
     }

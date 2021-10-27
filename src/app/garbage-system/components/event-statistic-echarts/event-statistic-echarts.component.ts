@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -10,6 +17,7 @@ import {
   EChartsLineModel,
   EChartsLineOption,
 } from 'src/app/view-model/echarts-line.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-event-statistic-echarts',
@@ -17,9 +25,10 @@ import {
   styleUrls: ['./event-statistic-echarts.component.less'],
   providers: [IllegalStatisticBusiness],
 })
-export class EvemtStatisticEChartsComponent implements OnInit {
+export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
   public lineOption: EChartsLineOption = new EChartsLineOption();
-  public eChartsLineModel: EChartsLineModel = new EChartsLineModel();
+
+  public lineChartData: Array<EChartsLineModel> = [];
 
   // 当前区划id
   private divisionId: string = '';
@@ -33,6 +42,9 @@ export class EvemtStatisticEChartsComponent implements OnInit {
   private currentDate = new Date();
 
   private rawData: EventNumberStatistic[] = [];
+
+  // 在销毁组件时，取消订阅
+  private subscription: Subscription | null = null;
 
   @ViewChild('chartContainer') chartContainer?: ElementRef;
   @Input() title: string = '';
@@ -73,10 +85,18 @@ export class EvemtStatisticEChartsComponent implements OnInit {
       },
     };
 
-    this.storeService.statusChange.subscribe(() => {
+    this.subscription = this.storeService.statusChange.subscribe(() => {
       this.changeStatus();
     });
     this.changeStatus();
+  }
+
+  ngOnDestroy() {
+    console.log('destroy');
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 
   changeStatus() {
@@ -101,9 +121,10 @@ export class EvemtStatisticEChartsComponent implements OnInit {
       this.rawData = data;
     }
     // console.log('rawData', this.rawData);
-    this.eChartsLineModel = this.business.toECharts(
+    this.lineChartData = this.business.toECharts(
       this.rawData,
       this.currentType
     );
+    // console.log('lineChartData', this.lineChartData);
   }
 }

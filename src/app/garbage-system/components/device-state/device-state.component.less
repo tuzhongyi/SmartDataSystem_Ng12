@@ -1,0 +1,129 @@
+.device-state {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  .device-state__head {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    max-height: 30px;
+    .title {
+      font-size: 24px;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .device-state__wrapper {
+    height: calc(100% - 30px - 15px);
+    overflow: auto;
+
+    .device-state__item {
+      width: 100%;
+      height: 204px;
+      display: flex;
+      flex-direction: column;
+
+      .device-state__body {
+        // background-color: cyan;
+        flex-grow: 2;
+        min-height: 117px;
+        display: flex;
+        align-items: center;
+        .chart-container {
+          background-color: violet;
+          width: 50%;
+          height: 100%;
+        }
+        .chart-des {
+          background-color: red;
+          width: 50%;
+          height: 100%;
+
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          &__label {
+            color: #cfd7ff;
+            font-size: 18px;
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: center;
+          }
+          &__percent {
+            overflow: hidden;
+            width: 100%;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: center;
+            .num {
+              color: #21e452;
+              font-size: 36px;
+            }
+            .unit {
+              font-size: 26px;
+              color: #cfd7ff;
+            }
+          }
+        }
+      }
+      .device-state__foot {
+        flex-grow: 1;
+        max-height: 82px;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        box-sizing: border-box;
+
+        .device-state__foot__item {
+          height: 100%;
+          background-color: #1d275f;
+          flex-grow: 1;
+
+          &:not(:first-of-type, :last-of-type) {
+            margin: 0 10px;
+          }
+
+          box-sizing: border-box;
+          padding: 10px 5px;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+
+          .item-label {
+            text-align: center;
+            color: #cfd7ff;
+            font-size: 18px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .item-num {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            flex-grow: 1;
+
+            span {
+              color: #21e452;
+              font-size: 24px;
+
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+        }
+      }
+    }
+  }
+}

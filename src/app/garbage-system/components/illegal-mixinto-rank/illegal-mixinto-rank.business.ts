@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-14 15:59:34
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-14 16:55:16
+ * @Last Modified time: 2021-10-27 15:37:28
  */
 
 import { Injectable } from '@angular/core';
@@ -85,7 +85,7 @@ export class IllegalMixintoRankBusiness implements IRankConverter {
     }
     return null;
   }
-  toRank<T>(data: T[], type: EventType): any {
+  toRank<T>(data: T[], type: EventType): RankModel[] {
     // 先提取rank数据
     let rawData = [];
     for (let i = 0; i < data.length; i++) {
