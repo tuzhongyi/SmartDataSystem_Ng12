@@ -17,7 +17,7 @@ export class DeviceStateBusiness implements IDeviceStateConverter {
   async statistic(divisionId: string) {
     const divisionParams = new GetDivisionsParams();
     divisionParams.Ids = [divisionId];
-    divisionParams.Ids = ['310109011002', '310109011003'];
+    // divisionParams.Ids = ['310109011002', '310109011003'];
     let res = await this.divisionRequest.statistic.number.list(divisionParams);
     return res.Data;
   }

@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -7,7 +8,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  QueryList,
   ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -70,7 +73,9 @@ type ECOption = echarts.ComposeOption<
   styleUrls: ['./device-state.component.less'],
   providers: [DeviceStateBusiness],
 })
-export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DeviceStateComponent
+  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked
+{
   public title: string = '设备运行状态';
   public deviceStateCountData: DeviceStateCountModule[] = [];
 
@@ -80,13 +85,15 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
   // 当前区划id
   private divisionId: string = '';
 
-  private myChart?: echarts.ECharts;
+  private myCharts: Array<echarts.ECharts> = [];
   private options: ECOption = {};
 
   // 服务器数据
   private rawData: DivisionNumberStatistic[] = [];
 
-  @ViewChild('chartContainer') chartContainer?: ElementRef;
+  @ViewChildren('chartContainer') chartContainers?: QueryList<
+    ElementRef<HTMLElement>
+  >;
 
   constructor(
     private storeService: StoreService,
@@ -131,32 +138,56 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   ngAfterViewInit() {
-    if (this.chartContainer) {
-      this.myChart = echarts.init(this.chartContainer.nativeElement);
-      this.myChart.setOption(this.options, {
-        notMerge: true,
-      });
+    // if (this.chartContainer) {
+    //   this.myChart = echarts.init(this.chartContainer.nativeElement);
+    //   this.myChart.setOption(this.options, {
+    //     notMerge: true,
+    //   });
+    // }
+  }
+  ngAfterViewChecked() {
+    if (this.chartContainers) {
+      for (let i = 0; i < this.chartContainers.length; i++) {
+        // console.log(container);
+        let chart = this.myCharts[i];
+        if (!chart) {
+          let container = this.chartContainers.get(i)!;
+          chart = echarts.init(container.nativeElement);
+          chart.setOption(this.options, { notMerge: true });
+
+          this.myCharts[i] = chart;
+
+          console.log('create echarts');
+        }
+      }
     }
   }
   changeStatus() {
     this.divisionId = this.storeService.divisionId;
 
     this.loadData();
+
+    this.myCharts.forEach((myChart) => {
+      myChart.clear();
+      myChart.dispose();
+    });
+    this.myCharts = [];
   }
   async loadData() {
     let data = await this.business.statistic(this.divisionId);
     if (data) {
       this.rawData = data;
     }
-    console.log('rawData', this.rawData);
+    // console.log('rawData', this.rawData);
     this.deviceStateCountData = this.business.toDeviceState(this.rawData);
 
-    console.log(this.deviceStateCountData);
+    // console.log(this.deviceStateCountData);
   }
 
   onResized(e: ResizedEvent) {
-    if (this.myChart) {
-      this.myChart.resize();
-    }
+    // if (this.myChart) {
+    //   this.myChart.resize();
+    // }
+    this.myCharts.forEach((myChart) => myChart.resize());
   }
 }
