@@ -17,7 +17,6 @@ import { StoreService } from 'src/app/global/service/store.service';
 import { DeviceStateBusiness } from './device-state.business';
 
 // 按需引入 Echarts
-
 import * as echarts from 'echarts/core';
 import {
   GridComponent,
@@ -157,7 +156,7 @@ export class DeviceStateComponent
 
           this.myCharts[i] = chart;
 
-          console.log('create echarts');
+          // console.log('create echarts');
         }
       }
     }
@@ -185,9 +184,6 @@ export class DeviceStateComponent
   }
 
   onResized(e: ResizedEvent) {
-    // if (this.myChart) {
-    //   this.myChart.resize();
-    // }
     this.myCharts.forEach((myChart) => myChart.resize());
   }
 }

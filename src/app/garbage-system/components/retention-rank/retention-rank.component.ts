@@ -48,7 +48,7 @@ export class RetentionRankComponent implements OnInit, OnDestroy {
   private currentDivision: Division | null = null;
 
   //当前事件类型
-  private currentEventType = RetentionType.GarbageTime;
+  private currentEventType = RetentionType.RetentionTime;
 
   // 服务器数据
   private rawData: DivisionNumberStatistic[] | GarbageStationNumberStatistic[] =
@@ -61,12 +61,12 @@ export class RetentionRankComponent implements OnInit, OnDestroy {
     index: 0,
     data: [
       {
-        id: RetentionType.GarbageTime,
-        name: Language.RetentionType(RetentionType.GarbageTime),
+        id: RetentionType.RetentionTime,
+        name: Language.RetentionType(RetentionType.RetentionTime),
       },
       {
-        id: RetentionType.GarbageDropStationNumber,
-        name: Language.RetentionType(RetentionType.GarbageDropStationNumber),
+        id: RetentionType.RetentionStationNumber,
+        name: Language.RetentionType(RetentionType.RetentionStationNumber),
       },
     ],
   };
@@ -128,11 +128,11 @@ export class RetentionRankComponent implements OnInit, OnDestroy {
     let data = event.data;
     if (type == RankDropListType.RetentionType) {
       switch (data.id) {
-        case RetentionType.GarbageTime:
-          this.currentEventType = RetentionType.GarbageTime;
+        case RetentionType.RetentionTime:
+          this.currentEventType = RetentionType.RetentionTime;
           break;
-        case RetentionType.GarbageDropStationNumber:
-          this.currentEventType = RetentionType.GarbageDropStationNumber;
+        case RetentionType.RetentionStationNumber:
+          this.currentEventType = RetentionType.RetentionStationNumber;
           break;
       }
       this.title = '垃圾' + data.name + '排名';

@@ -10,11 +10,12 @@ import {
   Component,
   ElementRef,
   Input,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { interval } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 
 import zh from '@angular/common/locales/zh';
 import { registerLocaleData } from '@angular/common';
@@ -32,11 +33,13 @@ registerLocaleData(zh, 'zh-CN');
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.less'],
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
   today: number = Date.now();
 
   divisionTitle: string = '';
   userName: string = '';
+
+  private subscription: Subscription | null = null;
 
   @ViewChild('logout') logout!: ElementRef<HTMLDivElement>;
 
@@ -53,7 +56,15 @@ export class ToolbarComponent implements OnInit {
     private _cookieService: CookieService,
     private _router: Router
   ) {
-    interval(1000).subscribe((n) => (this.today = Date.now()));
+    this.subscription = interval(1000).subscribe(
+      (n) => (this.today = Date.now())
+    );
+  }
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
   }
 
   ngOnInit(): void {

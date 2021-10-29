@@ -1,0 +1,29 @@
+<div class="disposal-count">
+  <div class="disposal-count__head">
+    <div class="title">{{ title }}</div>
+    <div class="sub-title">{{ currentItem?.name }}</div>
+    <!-- <button (click)="startIterate()">sdf</button> -->
+  </div>
+  <div class="disposal-count__body">
+    <div
+      class="chart-container"
+      id="chartContainer"
+      #chartContainer
+      (resized)="onResized($event)"
+    ></div>
+    <div class="details">
+      <ng-container *ngIf="currentItem">
+        <ng-template
+          ngFor
+          [ngForOf]="currentItem.disposalCountArray"
+          let-disposalCount
+        >
+          <div class="details__item">
+            <div class="mission-name">{{ disposalCount.label }}</div>
+            <div class="mission-count">{{ disposalCount.count }}</div>
+          </div>
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
+</div>

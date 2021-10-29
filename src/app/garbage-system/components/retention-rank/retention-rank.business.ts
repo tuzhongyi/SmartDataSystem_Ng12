@@ -87,9 +87,9 @@ export class RetentionRankBusiness implements IRankConverter {
           name: item.Name,
           statistic: 0,
         };
-        if (type == RetentionType.GarbageTime) {
+        if (type == RetentionType.RetentionTime) {
           obj.statistic = (item.CurrentGarbageTime ?? 0) >> 0;
-        } else if (type == RetentionType.GarbageDropStationNumber) {
+        } else if (type == RetentionType.RetentionStationNumber) {
           obj.statistic = (item.GarbageDropStationNumber ?? 0) >> 0;
         }
         rawData.push(obj);
@@ -99,9 +99,9 @@ export class RetentionRankBusiness implements IRankConverter {
           name: item.Name,
           statistic: 0,
         };
-        if (type == RetentionType.GarbageTime) {
+        if (type == RetentionType.RetentionTime) {
           obj.statistic = (item.CurrentGarbageTime ?? 0) >> 0;
-        } else if (type == RetentionType.GarbageDropStationNumber) {
+        } else if (type == RetentionType.RetentionStationNumber) {
           obj.statistic = (item.MaxGarbageCount ?? 0) >> 0;
         }
 
@@ -117,9 +117,9 @@ export class RetentionRankBusiness implements IRankConverter {
       let model = new RankModel();
       model.id = item.id;
       model.name = item.name;
-      if (type == RetentionType.GarbageTime) {
+      if (type == RetentionType.RetentionTime) {
         model.statistic = this.transformTime(item.statistic);
-      } else if (type == RetentionType.GarbageDropStationNumber) {
+      } else if (type == RetentionType.RetentionStationNumber) {
         model.statistic = item.statistic + '';
         model.unit = '个';
       }
@@ -132,9 +132,9 @@ export class RetentionRankBusiness implements IRankConverter {
         let model = new RankModel();
         model.name = '-';
         model.statistic = '0';
-        if (type == RetentionType.GarbageTime) {
+        if (type == RetentionType.RetentionTime) {
           model.unit = '分钟';
-        } else if (type == RetentionType.GarbageDropStationNumber) {
+        } else if (type == RetentionType.RetentionStationNumber) {
           model.unit = '个';
         }
 

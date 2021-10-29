@@ -1,0 +1,72 @@
+.disposal-count {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+  &__head {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    max-height: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    .title {
+      font-size: 24px;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sub-title {
+      font-size: 18px;
+      color: #cfd7ff;
+      white-space: nowrap;
+    }
+  }
+  &__body {
+    width: 100%;
+    height: calc(100% - 30px - 15px);
+    // background: red;
+
+    display: flex;
+
+    .chart-container {
+      // background-color: yellow;
+      width: 50%;
+      height: 100%;
+    }
+    .details {
+      // background-color: cyan;
+      width: 50%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      justify-content: space-around;
+      &__item {
+        .mission-name {
+          color: #99aaff;
+          font-size: 16px;
+        }
+        .mission-count {
+          color: #3a93ff;
+          font-size: 24px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1097px) {
+  .disposal-count {
+    &__head {
+      .sub-title {
+        display: none;
+      }
+    }
+  }
+}

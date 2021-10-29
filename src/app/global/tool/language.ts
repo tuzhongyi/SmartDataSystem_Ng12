@@ -1,6 +1,7 @@
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { DeviceStateCountType } from 'src/app/enum/device-state-count.enum';
+import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
@@ -30,11 +31,11 @@ export class Language {
         return '垃圾容量';
       case EventType.GarbageFull:
         return '垃圾满溢';
-      case EventType.GarbageDrop:
+      case EventType.GarbageRetention:
         return '小包垃圾待处置';
-      case EventType.GarbageDropTimeout:
+      case EventType.GarbageRetentionTimeout:
         return '小包垃圾超时待处置';
-      case EventType.GarbageDropHandle:
+      case EventType.GarbageRetentionHandled:
         return '小包垃圾已处置';
       default:
         return '';
@@ -43,11 +44,11 @@ export class Language {
 
   static GarbageDropEventType(type: EventType) {
     switch (type) {
-      case EventType.GarbageDrop:
+      case EventType.GarbageRetention:
         return '待处置';
-      case EventType.GarbageDropTimeout:
+      case EventType.GarbageRetentionTimeout:
         return '超时待处置';
-      case EventType.GarbageDropHandle:
+      case EventType.GarbageRetentionHandled:
         return '已处置';
       default:
         return '';
@@ -109,9 +110,9 @@ export class Language {
   }
   static RetentionType(type: RetentionType) {
     switch (type) {
-      case RetentionType.GarbageTime:
+      case RetentionType.RetentionTime:
         return '滞留时长';
-      case RetentionType.GarbageDropStationNumber:
+      case RetentionType.RetentionStationNumber:
         return '滞留数量';
     }
   }
@@ -137,6 +138,20 @@ export class Language {
         return '在线设备数量';
       case DeviceStateCountType.offLine:
         return '离线设备数量';
+      default:
+        return '';
+    }
+  }
+  static DisposalCountType(type: DisposalCountType) {
+    switch (type) {
+      case DisposalCountType.total:
+        return '全部任务';
+      case DisposalCountType.handled:
+        return '已完成任务';
+      case DisposalCountType.unhandled:
+        return '未完成任务';
+      case DisposalCountType.timeout:
+        return '超时任务';
       default:
         return '';
     }
