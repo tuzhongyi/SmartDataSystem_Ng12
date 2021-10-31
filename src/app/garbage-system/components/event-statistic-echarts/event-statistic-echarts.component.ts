@@ -53,12 +53,13 @@ export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
   constructor(
     private storeService: StoreService,
     private business: IllegalStatisticBusiness
-  ) {}
+  ) { }
 
   ngOnInit(): void {
+
     this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
     this.lineOption.title.text = this.title;
-    this.lineOption.legend.data = ['单位(起)'];
+
 
     let xAxisData: Array<string> = [];
     for (let i = 1; i < 24; i++) {
@@ -125,6 +126,7 @@ export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
       this.rawData,
       this.currentType
     );
+    this.lineOption.legend.data = ['单位(起)'];
     // console.log('lineChartData', this.lineChartData);
   }
 }

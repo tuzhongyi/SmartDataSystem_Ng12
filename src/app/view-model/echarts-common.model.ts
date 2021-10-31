@@ -16,8 +16,9 @@ import {
 
 // ECharts 通用配置
 export class EChartsCommon {
-  constructor() {}
+  constructor() { }
 
+  backgroundColor = "transparent";
   title: TitleComponentOption = {
     text: '',
     textStyle: {

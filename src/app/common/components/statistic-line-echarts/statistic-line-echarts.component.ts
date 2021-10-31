@@ -62,8 +62,7 @@ type ECOption = echarts.ComposeOption<
   styleUrls: ['./statistic-line-echarts.component.less'],
 })
 export class StatisticLineEChartsComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+  implements OnInit, AfterViewInit, OnChanges {
   private myChart?: echarts.ECharts;
 
   private options: ECOption = {};
@@ -73,7 +72,7 @@ export class StatisticLineEChartsComponent
   @Input() lineOption?: EChartsLineOption;
   @Input() lineChartData?: Array<EChartsLineModel>;
 
-  constructor() {}
+  constructor() { }
   ngOnChanges(changes: SimpleChanges) {
     if (this.myChart) {
       if ('lineChartData' in changes) {
@@ -92,6 +91,7 @@ export class StatisticLineEChartsComponent
     // 创建表格，但现在还没有数据
     if (this.lineOption) {
       this.options = {
+        backgroundColor: this.lineOption.backgroundColor,
         title: this.lineOption.title,
         legend: this.lineOption.legend,
         tooltip: this.lineOption.tooltip,

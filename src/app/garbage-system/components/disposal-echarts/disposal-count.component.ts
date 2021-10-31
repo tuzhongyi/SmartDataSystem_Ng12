@@ -22,7 +22,7 @@ import {
   TooltipComponent,
   TooltipComponentOption,
 } from 'echarts/components';
-import { LineSeriesOption, LinesSeriesOption } from 'echarts/charts';
+import { GaugeChart, GaugeSeriesOption, LineSeriesOption, LinesSeriesOption } from 'echarts/charts';
 import { LineChart } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -30,6 +30,7 @@ import {
   YAXisComponentOption,
   XAXisComponentOption,
   SeriesOption,
+  EChartsOption,
 } from 'echarts';
 import { ResizedEvent } from 'angular-resize-event';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -48,6 +49,7 @@ echarts.use([
   LineChart,
   UniversalTransition,
   CanvasRenderer,
+  GaugeChart
 ]);
 
 type ECOption = echarts.ComposeOption<
@@ -60,8 +62,11 @@ type ECOption = echarts.ComposeOption<
   | YAXisComponentOption
   | XAXisComponentOption
   | SeriesOption
+  | GaugeSeriesOption
 >;
 
+
+console.log(echarts.version)
 @Component({
   selector: 'app-disposal-count',
   templateUrl: './disposal-count.component.html',
@@ -69,8 +74,7 @@ type ECOption = echarts.ComposeOption<
   providers: [DisposalCountBusiness],
 })
 export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   public title: string = '垃圾滞留处置情况';
 
   public get currentItem() {
@@ -112,7 +116,7 @@ export class DisposalCountComponent
   constructor(
     private storeService: StoreService,
     private business: DisposalCountBusiness
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.storeService.statusChange.subscribe(() => {
@@ -120,29 +124,70 @@ export class DisposalCountComponent
     });
 
     this.changeStatus();
+
     this.options = {
       series: [
         {
-          name: 'Access From',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          center: ['50%', '50%'],
-          label: {
-            show: false,
-            position: 'center',
+          startAngle: 240,
+          endAngle: -60,
+          radius: "70%",
+          type: 'gauge',
+          progress: {
+            show: true,
+            width: 18,
+            overlap: false,
+            roundCap: false,
+            clip: false,
+            itemStyle: {
+              borderWidth: 8,
+              borderColor: "#3a93ff",
+            },
           },
-          silent: true,
-
-          labelLine: {
+          pointer: {
             show: false,
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            show: false,
+          },
+          axisLine: {
+            lineStyle: {
+              width: 5,
+              color: [[1, "#6b7199"]],
+            },
+          },
+          splitLine: {
+            show: false,
+          },
+          anchor: {
+            show: false,
+
+          },
+          detail: {
+            valueAnimation: true,
+            fontSize: 80,
+            offsetCenter: [0, '70%']
           },
           data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-          ],
-        },
+            {
+              value: 70,
+              name: '处置率',
+              title: {
+                offsetCenter: ["0%", "30%"]
+              },
+              detail: {
+                fontSize: 20,
+                valueAnimation: true,
+                offsetCenter: ["0%", "0%"],
+                formatter: '{value}%'
+              }
+            }
+          ]
+        }
       ],
+
     };
   }
   ngOnDestroy() {
@@ -155,9 +200,9 @@ export class DisposalCountComponent
   ngAfterViewInit() {
     if (this.chartContainer) {
       this.myChart = echarts.init(this.chartContainer.nativeElement);
-      this.myChart.setOption(this.options, {
-        notMerge: true,
-      });
+      this.myChart.clear();
+
+      this.myChart.setOption(this.options)
     }
   }
 
