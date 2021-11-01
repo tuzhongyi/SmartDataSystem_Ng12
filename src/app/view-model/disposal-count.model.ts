@@ -15,7 +15,7 @@ export class DisposalCountModel {
   name: string = '';
 
   // 已处置率
-  handledPercentage: string = '0';
+  handledPercentage: number = 0;
 
   // 处置数量情况
   disposalCountArray: Array<IDisposalCount> = [];

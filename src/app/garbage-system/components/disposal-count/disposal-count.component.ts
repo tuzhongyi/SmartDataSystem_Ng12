@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-01 17:26:37
+ * @Last Modified time: 2021-11-01 21:46:06
  */
 import {
   AfterViewInit,
@@ -27,13 +27,16 @@ import { DisposalCountBusiness } from './disposal-count.business';
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
 
+import {
+  TitleComponent, TitleComponentOption
+} from 'echarts/components';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 
-echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
+echarts.use([TitleComponent, GaugeChart, UniversalTransition, CanvasRenderer]);
 
-type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
+type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
 
 @Component({
   selector: 'app-disposal-count',
@@ -42,8 +45,7 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   providers: [DisposalCountBusiness],
 })
 export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   public title: string = '垃圾滞留处置情况';
 
   public get currentItem() {
@@ -85,7 +87,7 @@ export class DisposalCountComponent
   constructor(
     private storeService: StoreService,
     private business: DisposalCountBusiness
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this.storeService.statusChange.subscribe(() => {
@@ -95,127 +97,93 @@ export class DisposalCountComponent
     this.changeStatus();
 
     this.option = {
+      title: {
+        text: '处置率'
+      },
       series: [
         {
           type: 'gauge',
-          radius: '90%',
+          radius: '100%',
           center: ['50%', '55%'],
+          splitNumber: 10,
           progress: {
-            show: true,
-            width: 10,
+            show: false,
+            width: 8,
             roundCap: true,
             itemStyle: {
               color: '#3a93ff',
             },
           },
           axisLine: {
-            roundCap: true,
             lineStyle: {
-              width: 10,
-              color: [[1, '#6b7199']],
-            },
+              width: 20,
+              color: [
+                [0.3, '#ef6464'],
+                [0.7, '#ffba00'],
+                [1, '#21E452']
+              ]
+            }
           },
-          axisLabel: { color: '#cfd7ff' },
+          axisLabel: {
+            color: 'auto',
+            distance: 35,
+            fontSize: 12
+          },
           splitLine: {
-            distance: 10,
+            show: true,
+            distance: -20,
             length: 10,
             lineStyle: {
-              width: 2,
               color: '#cfd7ff',
-            },
+              width: 2
+            }
           },
           axisTick: {
-            show: false,
+            distance: -20,
+            length: 5,
+            lineStyle: {
+              color: '#cfd7ff',
+              width: 2
+            }
           },
-          anchor: {
-            show: true,
-            showAbove: true,
-            size: 20,
-            itemStyle: {
-              borderWidth: 10,
-              borderColor: '#3da2da',
-            },
-          },
+
           detail: {
-            show: false,
-            fontSize: 30,
             valueAnimation: true,
-            offsetCenter: ['0%', '40%'],
-            formatter: '{value}%',
+            offsetCenter: ['0%', '80%'],
+            formatter: '{a|{value}}{b|%}',
+            rich: {
+              a: {
+                fontSize: 30,
+                fontWeight: 800,
+                fontFamily: 'Arial',
+                color: 'auto',
+                align: 'center',
+                padding: [0, 0, 0, 0]
+              },
+              b: {
+                fontSize: 20,
+                fontWeight: 800,
+                fontFamily: 'Arial',
+                color: 'auto',
+                padding: [0, 0, 0, 0]
+              }
+            },
+            fontWeight: 'normal',
+            color: 'auto'
+          },
+          pointer: {
+            length: '50%',
+            itemStyle: {
+              color: 'auto'
+            }
           },
           data: [
-            {
-              value: 70,
-            },
+
           ],
         },
       ],
     };
 
-    // this.options = {
-    //   series: [
-    //     {
-    //       startAngle: 240,
-    //       endAngle: -60,
-    //       radius: "70%",
-    //       type: 'gauge',
-    //       progress: {
-    //         show: true,
-    //         width: 18,
-    //         overlap: false,
-    //         roundCap: false,
-    //         clip: false,
-    //         itemStyle: {
-    //           borderWidth: 8,
-    //           borderColor: "#3a93ff",
-    //         },
-    //       },
-    //       pointer: {
-    //         show: false,
-    //       },
-    //       axisTick: {
-    //         show: false
-    //       },
-    //       axisLabel: {
-    //         show: false,
-    //       },
-    //       axisLine: {
-    //         lineStyle: {
-    //           width: 5,
-    //           color: [[1, "#6b7199"]],
-    //         },
-    //       },
-    //       splitLine: {
-    //         show: false,
-    //       },
-    //       anchor: {
-    //         show: false,
-
-    //       },
-    //       detail: {
-    //         valueAnimation: true,
-    //         fontSize: 80,
-    //         offsetCenter: [0, '70%']
-    //       },
-    //       data: [
-    //         {
-    //           value: 70,
-    //           name: '处置率',
-    //           title: {
-    //             offsetCenter: ["0%", "30%"]
-    //           },
-    //           detail: {
-    //             fontSize: 20,
-    //             valueAnimation: true,
-    //             offsetCenter: ["0%", "0%"],
-    //             formatter: '{value}%'
-    //           }
-    //         }
-    //       ]
-    //     }
-    //   ],
-
-    // };
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -284,6 +252,7 @@ export class DisposalCountComponent
   startIterate() {
     console.log('startIterate');
     this.startIndex = (this.startIndex + 1) % this.disposalCountData.length;
+
   }
   onResized(e: ResizedEvent) {
     if (this.myChart) {

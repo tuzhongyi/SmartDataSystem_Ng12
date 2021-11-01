@@ -17,7 +17,7 @@ import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
 import { EvemtStatisticEChartsComponent } from './event-statistic-echarts/event-statistic-echarts.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
-import { DisposalCountComponent } from './disposal-echarts/disposal-count.component';
+import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IDisposalCountConverter } from 'src/app/converter/IDisposalCountConverter.interface';
+import { IDisposalCountConverter } from 'src/app/Converter/IDisposalCountConverter.interface';
 import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -25,7 +25,7 @@ export class DisposalCountBusiness implements IDisposalCountConverter {
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: StationRequestService
-  ) {}
+  ) { }
 
   // 当前区划信息
   async getCurrentDivision(id: string) {
@@ -143,6 +143,7 @@ export class DisposalCountBusiness implements IDisposalCountConverter {
             tag: DisposalCountType.timeout,
           },
         ];
+        disposalCountModel.handledPercentage = (handledCount / totalCount) * 100 >> 0;
 
         disposalCountData.push(disposalCountModel);
       }
