@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2021-11-01 16:41:30
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-11-01 17:26:37
+ */
 import {
   AfterViewInit,
   Component,
@@ -6,67 +12,29 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { ResizedEvent } from 'angular-resize-event';
 import { interval, Subscription } from 'rxjs';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
+import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { Division } from 'src/app/network/model/division.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { DisposalCountModel } from 'src/app/view-model/disposal-count.model';
 import { DisposalCountBusiness } from './disposal-count.business';
 
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
-import {
-  GridComponent,
-  GridComponentOption,
-  TitleComponent,
-  TitleComponentOption,
-  LegendComponent,
-  LegendComponentOption,
-  TooltipComponent,
-  TooltipComponentOption,
-} from 'echarts/components';
-import { GaugeChart, GaugeSeriesOption, LineSeriesOption, LinesSeriesOption } from 'echarts/charts';
-import { LineChart } from 'echarts/charts';
+
+import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import {
-  YAXisComponentOption,
-  XAXisComponentOption,
-  SeriesOption,
-  EChartsOption,
-} from 'echarts';
-import { ResizedEvent } from 'angular-resize-event';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { DisposalCountModel } from 'src/app/view-model/disposal-count.model';
 
-echarts.use([
-  GridComponent,
-  TitleComponent,
-  LegendComponent,
-  TooltipComponent,
-  LineChart,
-  UniversalTransition,
-  CanvasRenderer,
-  GaugeChart
-]);
+echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 
-type ECOption = echarts.ComposeOption<
-  | TitleComponentOption
-  | TooltipComponentOption
-  | GridComponentOption
-  | LegendComponentOption
-  | LinesSeriesOption
-  | LineSeriesOption
-  | YAXisComponentOption
-  | XAXisComponentOption
-  | SeriesOption
-  | GaugeSeriesOption
->;
+type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
 
-
-console.log(echarts.version)
 @Component({
   selector: 'app-disposal-count',
   templateUrl: './disposal-count.component.html',
@@ -74,7 +42,8 @@ console.log(echarts.version)
   providers: [DisposalCountBusiness],
 })
 export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   public title: string = '垃圾滞留处置情况';
 
   public get currentItem() {
@@ -88,9 +57,6 @@ export class DisposalCountComponent
 
   // 数据切换
   private swiperSubscription: Subscription | null = null;
-
-  private myChart?: echarts.ECharts;
-  private options: ECOption = {};
 
   // 当前区划id
   private divisionId: string = '';
@@ -111,12 +77,15 @@ export class DisposalCountComponent
 
   private disposalCountData: Array<DisposalCountModel> = [];
 
+  private myChart!: echarts.ECharts;
+  private option!: ECOption;
+
   @ViewChild('chartContainer') chartContainer?: ElementRef<HTMLElement>;
 
   constructor(
     private storeService: StoreService,
     private business: DisposalCountBusiness
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.storeService.statusChange.subscribe(() => {
@@ -125,70 +94,128 @@ export class DisposalCountComponent
 
     this.changeStatus();
 
-    this.options = {
+    this.option = {
       series: [
         {
-          startAngle: 240,
-          endAngle: -60,
-          radius: "70%",
           type: 'gauge',
+          radius: '90%',
+          center: ['50%', '55%'],
           progress: {
             show: true,
-            width: 18,
-            overlap: false,
-            roundCap: false,
-            clip: false,
+            width: 10,
+            roundCap: true,
             itemStyle: {
-              borderWidth: 8,
-              borderColor: "#3a93ff",
+              color: '#3a93ff',
             },
-          },
-          pointer: {
-            show: false,
-          },
-          axisTick: {
-            show: false
-          },
-          axisLabel: {
-            show: false,
           },
           axisLine: {
+            roundCap: true,
             lineStyle: {
-              width: 5,
-              color: [[1, "#6b7199"]],
+              width: 10,
+              color: [[1, '#6b7199']],
             },
           },
+          axisLabel: { color: '#cfd7ff' },
           splitLine: {
+            distance: 10,
+            length: 10,
+            lineStyle: {
+              width: 2,
+              color: '#cfd7ff',
+            },
+          },
+          axisTick: {
             show: false,
           },
           anchor: {
-            show: false,
-
+            show: true,
+            showAbove: true,
+            size: 20,
+            itemStyle: {
+              borderWidth: 10,
+              borderColor: '#3da2da',
+            },
           },
           detail: {
+            show: false,
+            fontSize: 30,
             valueAnimation: true,
-            fontSize: 80,
-            offsetCenter: [0, '70%']
+            offsetCenter: ['0%', '40%'],
+            formatter: '{value}%',
           },
           data: [
             {
               value: 70,
-              name: '处置率',
-              title: {
-                offsetCenter: ["0%", "30%"]
-              },
-              detail: {
-                fontSize: 20,
-                valueAnimation: true,
-                offsetCenter: ["0%", "0%"],
-                formatter: '{value}%'
-              }
-            }
-          ]
-        }
+            },
+          ],
+        },
       ],
-
     };
+
+    // this.options = {
+    //   series: [
+    //     {
+    //       startAngle: 240,
+    //       endAngle: -60,
+    //       radius: "70%",
+    //       type: 'gauge',
+    //       progress: {
+    //         show: true,
+    //         width: 18,
+    //         overlap: false,
+    //         roundCap: false,
+    //         clip: false,
+    //         itemStyle: {
+    //           borderWidth: 8,
+    //           borderColor: "#3a93ff",
+    //         },
+    //       },
+    //       pointer: {
+    //         show: false,
+    //       },
+    //       axisTick: {
+    //         show: false
+    //       },
+    //       axisLabel: {
+    //         show: false,
+    //       },
+    //       axisLine: {
+    //         lineStyle: {
+    //           width: 5,
+    //           color: [[1, "#6b7199"]],
+    //         },
+    //       },
+    //       splitLine: {
+    //         show: false,
+    //       },
+    //       anchor: {
+    //         show: false,
+
+    //       },
+    //       detail: {
+    //         valueAnimation: true,
+    //         fontSize: 80,
+    //         offsetCenter: [0, '70%']
+    //       },
+    //       data: [
+    //         {
+    //           value: 70,
+    //           name: '处置率',
+    //           title: {
+    //             offsetCenter: ["0%", "30%"]
+    //           },
+    //           detail: {
+    //             fontSize: 20,
+    //             valueAnimation: true,
+    //             offsetCenter: ["0%", "0%"],
+    //             formatter: '{value}%'
+    //           }
+    //         }
+    //       ]
+    //     }
+    //   ],
+
+    // };
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -199,10 +226,8 @@ export class DisposalCountComponent
 
   ngAfterViewInit() {
     if (this.chartContainer) {
-      this.myChart = echarts.init(this.chartContainer.nativeElement);
-      this.myChart.clear();
-
-      this.myChart.setOption(this.options)
+      this.myChart = echarts.init(this.chartContainer.nativeElement, 'light');
+      this.myChart.setOption(this.option);
     }
   }
 
@@ -252,7 +277,7 @@ export class DisposalCountComponent
     // startIndex延后到这里重置
     this.startIndex = 0;
 
-    this.swiperSubscription = interval(60 * 1000).subscribe((n) =>
+    this.swiperSubscription = interval(10 * 1000).subscribe((n) =>
       this.startIterate()
     );
   }
