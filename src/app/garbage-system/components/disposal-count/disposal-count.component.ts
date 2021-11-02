@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-01 21:46:06
+ * @Last Modified time: 2021-11-02 10:39:19
  */
 import {
   AfterViewInit,
@@ -27,9 +27,7 @@ import { DisposalCountBusiness } from './disposal-count.business';
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
 
-import {
-  TitleComponent, TitleComponentOption
-} from 'echarts/components';
+import { TitleComponent, TitleComponentOption } from 'echarts/components';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
@@ -45,7 +43,8 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
   providers: [DisposalCountBusiness],
 })
 export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   public title: string = '垃圾滞留处置情况';
 
   public get currentItem() {
@@ -81,13 +80,14 @@ export class DisposalCountComponent
 
   private myChart!: echarts.ECharts;
   private option!: ECOption;
+  private gaugeOption!: GaugeSeriesOption;
 
   @ViewChild('chartContainer') chartContainer?: ElementRef<HTMLElement>;
 
   constructor(
     private storeService: StoreService,
     private business: DisposalCountBusiness
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this.storeService.statusChange.subscribe(() => {
@@ -96,100 +96,92 @@ export class DisposalCountComponent
 
     this.changeStatus();
 
-    this.option = {
-      title: {
-        text: '处置率',
-        // top: '85%',
-        top: "75%",
-        left: '30%',
-        textStyle: {
-          color: '#99aaff',
-        }
+    this.gaugeOption = {
+      type: 'gauge',
+      radius: '100%',
+      center: ['50%', '50%'],
+      splitNumber: 10,
+      progress: {
+        show: false,
+        width: 8,
+        roundCap: true,
+        itemStyle: {
+          color: '#3a93ff',
+        },
       },
-      series: [
-        {
-          type: 'gauge',
-          radius: '100%',
-          center: ['50%', '46%'],
-          splitNumber: 10,
-          progress: {
-            show: false,
-            width: 8,
-            roundCap: true,
-            itemStyle: {
-              color: '#3a93ff',
-            },
-          },
-          axisLine: {
-            lineStyle: {
-              width: 15,
-              color: [
-                [0.3, '#ef6464'],
-                [0.7, '#ffba00'],
-                [1, '#21E452']
-              ]
-            }
-          },
-          axisLabel: {
-            color: 'auto',
-            distance: 30,
-            fontSize: 12
-          },
-          splitLine: {
-            show: true,
-            distance: -15,
-            length: 10,
-            lineStyle: {
-              color: '#99aaff',
-              width: 2
-            }
-          },
-          axisTick: {
-            distance: -15,
-            length: 5,
-            lineStyle: {
-              color: '#99aaff',
-              width: 2
-            }
-          },
-
-          detail: {
-            valueAnimation: true,
-            offsetCenter: ['0%', '75%'],
-            formatter: '{a|{value}}{b|%}',
-            rich: {
-              a: {
-                fontSize: 30,
-                fontWeight: 800,
-                fontFamily: 'Arial',
-                color: 'auto',
-                align: 'center',
-                padding: [0, 0, 0, 0]
-              },
-              b: {
-                fontSize: 20,
-                fontWeight: 800,
-                fontFamily: 'Arial',
-                color: 'auto',
-                padding: [0, 0, 0, 0]
-              }
-            },
-            fontWeight: 'normal',
-            color: 'auto'
-          },
-          pointer: {
-            length: '50%',
-            itemStyle: {
-              color: 'auto'
-            }
-          },
-          data: [
-
+      axisLine: {
+        lineStyle: {
+          width: 15,
+          color: [
+            [0.3, '#ef6464'],
+            [0.7, '#ffba00'],
+            [1, '#21E452'],
           ],
         },
-      ],
+      },
+      axisLabel: {
+        color: 'auto',
+        distance: 30,
+        fontSize: 12,
+      },
+      splitLine: {
+        show: true,
+        distance: -15,
+        length: 10,
+        lineStyle: {
+          color: '#99aaff',
+          width: 2,
+        },
+      },
+      axisTick: {
+        distance: -15,
+        length: 5,
+        lineStyle: {
+          color: '#99aaff',
+          width: 2,
+        },
+      },
+      title: {
+        offsetCenter: ['0%', '115%'],
+        color: 'auto',
+        fontSize: 20,
+        fontWeight: 400,
+      },
+      detail: {
+        valueAnimation: true,
+        offsetCenter: ['5%', '90%'],
+        formatter: '{a|{value}}{b|%}',
+        rich: {
+          a: {
+            fontSize: 30,
+            fontWeight: 400,
+            fontFamily: 'Arial',
+            color: 'auto',
+            align: 'center',
+            padding: [0, 0, 0, 0],
+          },
+          b: {
+            fontSize: 20,
+            fontWeight: 400,
+            fontFamily: 'Arial',
+            color: 'auto',
+            padding: [0, 0, 0, 0],
+          },
+        },
+        fontWeight: 'normal',
+        color: 'auto',
+      },
+      pointer: {
+        length: '50%',
+        itemStyle: {
+          color: 'auto',
+        },
+      },
+      data: [],
     };
-
+    this.option = {
+      series: [this.gaugeOption],
+    };
   }
   ngOnDestroy() {
     if (this.subscription) {
@@ -225,7 +217,7 @@ export class DisposalCountComponent
     this.currentDivision = await this.business.getCurrentDivision(
       this.divisionId
     );
-    console.log('当前区划', this.currentDivision);
+    // console.log('当前区划', this.currentDivision);
 
     let currentDivisionStatistic =
       await this.business.getCurrentDivisionStatistic(this.divisionId);
@@ -240,29 +232,32 @@ export class DisposalCountComponent
     if (data) {
       this.rawData = this.rawData.concat(data);
     }
-    console.log('rawData', this.rawData);
+    // console.log('rawData', this.rawData);
 
     this.disposalCountData = this.business.toDisposalCount<
       DivisionNumberStatistic | GarbageStationNumberStatistic
     >(this.rawData);
 
-    console.log('disposalCountData', this.disposalCountData);
+    // console.log('disposalCountData', this.disposalCountData);
 
     // startIndex延后到这里重置
     this.startIndex = 0;
 
-    console.log(this.currentItem)
+    // console.log(this.currentItem);
 
-    this.myChart.setOption({
-      series: [{
-        type: 'gauge',
-        data: [
-          {
-            value: this.currentItem.handledPercentage
-          }
-        ]
-      }]
-    })
+    // this.myChart.setOption({
+    //   series: [
+    //     {
+    //       type: 'gauge',
+    //       data: [{ name: '处置率', value: this.currentItem.handledPercentage }],
+    //     },
+    //   ],
+    // });
+
+    this.gaugeOption.data = [
+      { name: '处置率', value: this.currentItem.handledPercentage },
+    ];
+    this.myChart.setOption(this.option);
 
     this.swiperSubscription = interval(10 * 1000).subscribe((n) =>
       this.startIterate()
@@ -271,22 +266,71 @@ export class DisposalCountComponent
   startIterate() {
     console.log('startIterate');
     this.startIndex = (this.startIndex + 1) % this.disposalCountData.length;
-    console.log(this.currentItem)
-    this.myChart.setOption({
-      series: [{
-        type: 'gauge',
-        data: [
-          {
-            value: this.currentItem.handledPercentage
-          }
-        ]
-      }]
-    })
 
+    this.gaugeOption.data = [
+      { name: '处置率', value: this.currentItem.handledPercentage },
+    ];
+    this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {
     if (this.myChart) {
       this.myChart.resize();
+      let h = e.newRect.height;
+      let w = e.newRect.width;
+
+      // console.log(e);
+      // if (h < 254) {
+      //   if (this.gaugeOption.title) {
+      //     this.gaugeOption.title.show = false;
+      //   }
+      // } else {
+      //   if (this.gaugeOption.title) {
+      //     this.gaugeOption.title.show = true;
+      //   }
+      // }
+
+      if (w > 134) {
+        if (this.gaugeOption.title) {
+          this.gaugeOption.title.fontSize = 20;
+          this.gaugeOption.title.offsetCenter = ['0%', '115%'];
+        }
+        if (this.gaugeOption.axisLabel) {
+          this.gaugeOption.axisLabel.show = true;
+        }
+        if (this.gaugeOption.detail) {
+          this.gaugeOption.detail.rich!.a.fontSize = 30;
+          this.gaugeOption.detail.rich!.b.fontSize = 20;
+        }
+      } else if (w < 134 && w > 105) {
+        if (this.gaugeOption.title) {
+          this.gaugeOption.title.fontSize = 16;
+          this.gaugeOption.title.offsetCenter = ['0%', '115%'];
+        }
+
+        if (this.gaugeOption.axisLabel) {
+          this.gaugeOption.axisLabel.show = false;
+        }
+        if (this.gaugeOption.detail) {
+          this.gaugeOption.detail.rich!.a.fontSize = 20;
+          this.gaugeOption.detail.rich!.b.fontSize = 16;
+        }
+      } else if (w < 105) {
+        if (this.gaugeOption.title) {
+          this.gaugeOption.title.fontSize = 16;
+          this.gaugeOption.title.offsetCenter = ['0%', '130%'];
+        }
+
+        if (this.gaugeOption.axisLabel) {
+          this.gaugeOption.axisLabel.show = false;
+        }
+        if (this.gaugeOption.detail) {
+          this.gaugeOption.detail.rich!.a.fontSize = 12;
+          this.gaugeOption.detail.rich!.b.fontSize = 12;
+        }
+        // this.myChart.setOption(this.option);
+      }
+
+      this.myChart.setOption(this.option);
     }
   }
 }
