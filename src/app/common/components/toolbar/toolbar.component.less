@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2021-09-15 16:03:33 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-13 15:28:27
+ * @Last Modified time: 2021-11-02 16:35:57
  */
 
 .toolbar-text() {
@@ -128,6 +128,7 @@
     font-family: "Material-Design-Iconic-Font";
     display: flex;
     margin: 0 5px;
+    position: relative;
     &__item {
       width: 32px;
       height: 32px;
@@ -154,6 +155,10 @@
 }
 .dropdown__menu {
   position: absolute;
+
+  right: 0;
+  top: 114%;
+
   z-index: 1000;
   width: 160px;
   box-sizing: border-box;
@@ -184,7 +189,7 @@
     display: flex;
 
     i {
-      padding-right: 8px;
+      padding-right: 2px;
       font-size: 1.2rem;
     }
     &:not(:first-child) {

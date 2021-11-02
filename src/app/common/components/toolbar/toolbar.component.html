@@ -1,7 +1,7 @@
 <div
   class="toolbar"
   #toolbar
-  (click)="showDropDown = false"
+  (click)="showDropDown = false; $event.stopPropagation()"
   (resized)="onResized($event)"
 >
   <div class="toolbar__item toolbar__item--m-l-30">
@@ -58,15 +58,15 @@
           help
         </mat-icon>
       </div>
-    </div>
-  </div>
 
-  <div class="dropdown__menu" #dropdown [class.show]="showDropDown">
-    <div class="dropdown__item">
-      <i class="howell-icon-account"></i> {{ userName }}
-    </div>
-    <div class="dropdown__item" (click)="logoutHandler()">
-      <i class="howell-icon-logout"> </i> 退出登录
+      <div class="dropdown__menu" #dropdown [class.show]="showDropDown">
+        <div class="dropdown__item">
+          <i class="howell-icon-account"></i> {{ userName }}
+        </div>
+        <div class="dropdown__item" (click)="logoutHandler()">
+          <i class="howell-icon-logout"> </i> 退出登录
+        </div>
+      </div>
     </div>
   </div>
 </div>
