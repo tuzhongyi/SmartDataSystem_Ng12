@@ -1,4 +1,7 @@
-import { DeviceStateCountType } from '../enum/device-state-count.enum';
+import {
+  DeviceStateCountType,
+  DeviceStateRatioType,
+} from '../enum/device-state-count.enum';
 
 // 设备数量接口
 export interface IDeviceStateDes {
@@ -7,10 +10,13 @@ export interface IDeviceStateDes {
   // 数量
   count: number;
 
-  tag: DeviceStateCountType;
+  tagCls: string;
 }
 export class DeviceStateCountModule {
-  onLinePercentage: string = '0';
+  onLineRatio: number = 0;
+  state: DeviceStateRatioType = DeviceStateRatioType.good;
+  stateCls: string = '';
+  stateDes: string = '';
   deviceStateArr: Array<IDeviceStateDes> = [];
   unit: string = '%';
   constructor() {}

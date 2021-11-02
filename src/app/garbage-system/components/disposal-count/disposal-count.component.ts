@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-02 10:39:19
+ * @Last Modified time: 2021-11-02 15:58:14
  */
 import {
   AfterViewInit,
@@ -103,10 +103,10 @@ export class DisposalCountComponent
       splitNumber: 10,
       progress: {
         show: false,
-        width: 8,
+        width: 15,
         roundCap: true,
         itemStyle: {
-          color: '#3a93ff',
+          color: 'auto',
         },
       },
       axisLine: {
@@ -151,6 +151,7 @@ export class DisposalCountComponent
         valueAnimation: true,
         offsetCenter: ['5%', '90%'],
         formatter: '{a|{value}}{b|%}',
+
         rich: {
           a: {
             fontSize: 30,

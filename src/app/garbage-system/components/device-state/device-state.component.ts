@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -18,53 +19,17 @@ import { DeviceStateBusiness } from './device-state.business';
 
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
-import {
-  GridComponent,
-  GridComponentOption,
-  TitleComponent,
-  TitleComponentOption,
-  LegendComponent,
-  LegendComponentOption,
-  TooltipComponent,
-  TooltipComponentOption,
-} from 'echarts/components';
-import { LineSeriesOption, LinesSeriesOption } from 'echarts/charts';
-import { LineChart } from 'echarts/charts';
-import { UniversalTransition } from 'echarts/features';
+import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
-import {
-  YAXisComponentOption,
-  XAXisComponentOption,
-  SeriesOption,
-} from 'echarts';
-import { ResizedEvent } from 'angular-resize-event';
-import {
-  EChartsLineModel,
-  EChartsLineOption,
-} from 'src/app/view-model/echarts-line.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { DeviceStateCountModule } from 'src/app/view-model/device-state-count.model';
-echarts.use([
-  GridComponent,
-  TitleComponent,
-  LegendComponent,
-  TooltipComponent,
-  LineChart,
-  UniversalTransition,
-  CanvasRenderer,
-]);
+import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { ResizedEvent } from 'angular-resize-event';
+import { UniversalTransition } from 'echarts/features';
+import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
 
-type ECOption = echarts.ComposeOption<
-  | TitleComponentOption
-  | TooltipComponentOption
-  | GridComponentOption
-  | LegendComponentOption
-  | LinesSeriesOption
-  | LineSeriesOption
-  | YAXisComponentOption
-  | XAXisComponentOption
-  | SeriesOption
->;
+echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
+
+type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
 
 @Component({
   selector: 'app-device-state',
@@ -72,11 +37,14 @@ type ECOption = echarts.ComposeOption<
   styleUrls: ['./device-state.component.less'],
   providers: [DeviceStateBusiness],
 })
-export class DeviceStateComponent
-  implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked
-{
+export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
   public title: string = '设备运行状态';
-  public deviceStateCountData: DeviceStateCountModule[] = [];
+  public deviceStateCountModel: DeviceStateCountModule =
+    new DeviceStateCountModule();
+
+  public get stateRatioColor() {
+    return this.stateColor.get(this.deviceStateCountModel.state);
+  }
 
   // 在销毁组件时，取消订阅
   private subscription: Subscription | null = null;
@@ -84,15 +52,19 @@ export class DeviceStateComponent
   // 当前区划id
   private divisionId: string = '';
 
-  private myCharts: Array<echarts.ECharts> = [];
-  private options: ECOption = {};
+  private myChart?: echarts.ECharts;
+  private option: ECOption = {};
 
   // 服务器数据
   private rawData: DivisionNumberStatistic[] = [];
 
-  @ViewChildren('chartContainer') chartContainers?: QueryList<
-    ElementRef<HTMLElement>
-  >;
+  private stateColor = new Map([
+    [DeviceStateRatioType.bad, '#ef6464'],
+    [DeviceStateRatioType.mild, '#ffba00'],
+    [DeviceStateRatioType.good, '#21e452'],
+  ]);
+
+  @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
 
   constructor(
     private storeService: StoreService,
@@ -106,26 +78,47 @@ export class DeviceStateComponent
     });
     this.changeStatus();
 
-    this.options = {
+    this.option = {
       series: [
         {
-          name: 'Access From',
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: 'center',
+          type: 'gauge',
+          radius: '70%',
+          center: ['50%', '50%'],
+          progress: {
+            show: true,
+            width: 15,
+            itemStyle: {},
           },
-          silent: true,
-
-          labelLine: {
+          axisLine: {
+            show: true,
+            lineStyle: {
+              width: 15,
+              color: [[1, '#6b7199']],
+            },
+          },
+          axisLabel: {
+            show: false,
+            distance: 5,
+          },
+          splitLine: {
             show: false,
           },
-          data: [
-            { value: 1048, name: 'Search Engine' },
-            { value: 735, name: 'Direct' },
-          ],
+          axisTick: {
+            show: false,
+          },
+          title: {
+            offsetCenter: ['0%', '0%'],
+            color: 'auto',
+            fontSize: 18,
+            fontWeight: 800,
+          },
+          detail: {
+            show: false,
+          },
+          pointer: {
+            show: false,
+          },
+          data: [],
         },
       ],
     };
@@ -137,53 +130,79 @@ export class DeviceStateComponent
     }
   }
   ngAfterViewInit() {
-    // if (this.chartContainer) {
-    //   this.myChart = echarts.init(this.chartContainer.nativeElement);
-    //   this.myChart.setOption(this.options, {
-    //     notMerge: true,
-    //   });
-    // }
-  }
-  ngAfterViewChecked() {
-    if (this.chartContainers) {
-      for (let i = 0; i < this.chartContainers.length; i++) {
-        // console.log(container);
-        let chart = this.myCharts[i];
-        if (!chart) {
-          let container = this.chartContainers.get(i)!;
-          chart = echarts.init(container.nativeElement);
-          chart.setOption(this.options, { notMerge: true });
-
-          this.myCharts[i] = chart;
-
-          // console.log('create echarts');
-        }
-      }
+    console.log('chartContainers', this.chartContainer);
+    if (this.chartContainer) {
+      this.myChart = echarts.init(this.chartContainer.nativeElement);
+      this.myChart.setOption(this.option);
     }
   }
   changeStatus() {
     this.divisionId = this.storeService.divisionId;
 
     this.loadData();
-
-    this.myCharts.forEach((myChart) => {
-      myChart.clear();
-      myChart.dispose();
-    });
-    this.myCharts = [];
   }
   async loadData() {
     let data = await this.business.statistic(this.divisionId);
     if (data) {
       this.rawData = data;
     }
-    // console.log('rawData', this.rawData);
-    this.deviceStateCountData = this.business.toDeviceState(this.rawData);
+    console.log('rawData', this.rawData);
+    this.deviceStateCountModel = this.business.toDeviceState(
+      this.rawData
+    ) as DeviceStateCountModule;
 
-    // console.log(this.deviceStateCountData);
+    this.myChart?.setOption({
+      series: [
+        {
+          type: 'gauge',
+          axisLabel: {
+            color: this.stateRatioColor,
+          },
+          data: [
+            {
+              name: this.deviceStateCountModel.stateDes,
+              value: this.deviceStateCountModel.onLineRatio,
+              itemStyle: {
+                color: this.stateRatioColor,
+              },
+              title: {
+                color: this.stateRatioColor,
+              },
+            },
+          ],
+        },
+      ],
+    });
   }
 
   onResized(e: ResizedEvent) {
-    this.myCharts.forEach((myChart) => myChart.resize());
+    if (this.myChart) {
+      this.myChart.resize();
+      let w = e.newRect.width;
+      if (w < 101) {
+        this.myChart.setOption({
+          series: [
+            {
+              type: 'gauge',
+              title: {
+                show: false,
+              },
+            },
+          ],
+        });
+      } else {
+        this.myChart.setOption({
+          series: [
+            {
+              type: 'gauge',
+              title: {
+                show: true,
+              },
+            },
+          ],
+        });
+      }
+    }
+    // this.myCharts.forEach((myChart) => myChart.resize());
   }
 }

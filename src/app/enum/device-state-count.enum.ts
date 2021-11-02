@@ -6,3 +6,10 @@ export enum DeviceStateCountType {
   // 离线设备数量
   offLine = 2,
 }
+
+// 设备状态在线比
+export enum DeviceStateRatioType {
+  bad = 0,
+  mild = 1,
+  good = 2,
+}

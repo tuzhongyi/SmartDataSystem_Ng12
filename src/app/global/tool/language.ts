@@ -1,6 +1,9 @@
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
-import { DeviceStateCountType } from 'src/app/enum/device-state-count.enum';
+import {
+  DeviceStateCountType,
+  DeviceStateRatioType,
+} from 'src/app/enum/device-state-count.enum';
 import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -138,6 +141,18 @@ export class Language {
         return '在线设备数量';
       case DeviceStateCountType.offLine:
         return '离线设备数量';
+      default:
+        return '';
+    }
+  }
+  static DeviceStateRatioType(type: DeviceStateRatioType) {
+    switch (type) {
+      case DeviceStateRatioType.bad:
+        return '严重';
+      case DeviceStateRatioType.mild:
+        return '中度';
+      case DeviceStateRatioType.good:
+        return '正常';
       default:
         return '';
     }

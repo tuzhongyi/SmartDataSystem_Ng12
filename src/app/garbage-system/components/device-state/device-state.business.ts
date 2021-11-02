@@ -1,7 +1,10 @@
 import { isNgContent } from '@angular/compiler';
 import { Injectable } from '@angular/core';
 import { IDeviceStateConverter } from 'src/app/converter/IDeviceStateConverter.interface';
-import { DeviceStateCountType } from 'src/app/enum/device-state-count.enum';
+import {
+  DeviceStateCountType,
+  DeviceStateRatioType,
+} from 'src/app/enum/device-state-count.enum';
 import { Language } from 'src/app/global/tool/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -17,11 +20,13 @@ export class DeviceStateBusiness implements IDeviceStateConverter {
   async statistic(divisionId: string) {
     const divisionParams = new GetDivisionsParams();
     divisionParams.Ids = [divisionId];
-    // divisionParams.Ids = ['310109011002', '310109011003'];
+    // divisionParams.Ids = ['310109011022', '310109011034'];
     let res = await this.divisionRequest.statistic.number.list(divisionParams);
     return res.Data;
   }
-  toDeviceState<T>(data: T[]): DeviceStateCountModule[] {
+  toDeviceState<T>(
+    data: T[]
+  ): DeviceStateCountModule[] | DeviceStateCountModule {
     let len = data.length;
     let res: DeviceStateCountModule[] = [];
 
@@ -41,29 +46,44 @@ export class DeviceStateBusiness implements IDeviceStateConverter {
         } else {
           percent = (onLineCameraNum / totalCameraNum) * 100;
         }
-        deviceStateModel.onLinePercentage =
-          percent == percent >> 0 ? percent.toFixed(0) : percent.toFixed(2);
+        deviceStateModel.onLineRatio = percent >> 0;
+        if (deviceStateModel.onLineRatio < 80) {
+          deviceStateModel.state = DeviceStateRatioType.bad;
+        } else if (
+          deviceStateModel.onLineRatio >= 80 &&
+          deviceStateModel.onLineRatio < 90
+        ) {
+          deviceStateModel.state = DeviceStateRatioType.mild;
+        } else {
+          deviceStateModel.state = DeviceStateRatioType.good;
+        }
+
+        deviceStateModel.stateCls =
+          DeviceStateRatioType[deviceStateModel.state];
+        deviceStateModel.stateDes = Language.DeviceStateRatioType(
+          deviceStateModel.state
+        );
 
         deviceStateModel.deviceStateArr = [
           {
             label: Language.DeviceStateCountType(DeviceStateCountType.all),
             count: totalCameraNum,
-            tag: DeviceStateCountType.all,
+            tagCls: DeviceStateCountType[DeviceStateCountType.all],
           },
           {
             label: Language.DeviceStateCountType(DeviceStateCountType.onLine),
             count: onLineCameraNum,
-            tag: DeviceStateCountType.onLine,
+            tagCls: DeviceStateCountType[DeviceStateCountType.onLine],
           },
           {
             label: Language.DeviceStateCountType(DeviceStateCountType.offLine),
             count: offLineCameraNum,
-            tag: DeviceStateCountType.offLine,
+            tagCls: DeviceStateCountType[DeviceStateCountType.offLine],
           },
         ];
       }
       res.push(deviceStateModel);
     }
-    return res;
+    return res[0];
   }
 }
