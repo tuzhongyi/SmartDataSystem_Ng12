@@ -98,13 +98,19 @@ export class DisposalCountComponent
 
     this.option = {
       title: {
-        text: '处置率'
+        text: '处置率',
+        // top: '85%',
+        top: "75%",
+        left: '30%',
+        textStyle: {
+          color: '#99aaff',
+        }
       },
       series: [
         {
           type: 'gauge',
           radius: '100%',
-          center: ['50%', '55%'],
+          center: ['50%', '46%'],
           splitNumber: 10,
           progress: {
             show: false,
@@ -116,7 +122,7 @@ export class DisposalCountComponent
           },
           axisLine: {
             lineStyle: {
-              width: 20,
+              width: 15,
               color: [
                 [0.3, '#ef6464'],
                 [0.7, '#ffba00'],
@@ -126,30 +132,30 @@ export class DisposalCountComponent
           },
           axisLabel: {
             color: 'auto',
-            distance: 35,
+            distance: 30,
             fontSize: 12
           },
           splitLine: {
             show: true,
-            distance: -20,
+            distance: -15,
             length: 10,
             lineStyle: {
-              color: '#cfd7ff',
+              color: '#99aaff',
               width: 2
             }
           },
           axisTick: {
-            distance: -20,
+            distance: -15,
             length: 5,
             lineStyle: {
-              color: '#cfd7ff',
+              color: '#99aaff',
               width: 2
             }
           },
 
           detail: {
             valueAnimation: true,
-            offsetCenter: ['0%', '80%'],
+            offsetCenter: ['0%', '75%'],
             formatter: '{a|{value}}{b|%}',
             rich: {
               a: {
@@ -245,6 +251,19 @@ export class DisposalCountComponent
     // startIndex延后到这里重置
     this.startIndex = 0;
 
+    console.log(this.currentItem)
+
+    this.myChart.setOption({
+      series: [{
+        type: 'gauge',
+        data: [
+          {
+            value: this.currentItem.handledPercentage
+          }
+        ]
+      }]
+    })
+
     this.swiperSubscription = interval(10 * 1000).subscribe((n) =>
       this.startIterate()
     );
@@ -252,6 +271,17 @@ export class DisposalCountComponent
   startIterate() {
     console.log('startIterate');
     this.startIndex = (this.startIndex + 1) % this.disposalCountData.length;
+    console.log(this.currentItem)
+    this.myChart.setOption({
+      series: [{
+        type: 'gauge',
+        data: [
+          {
+            value: this.currentItem.handledPercentage
+          }
+        ]
+      }]
+    })
 
   }
   onResized(e: ResizedEvent) {
