@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
-import { IStatisticLineEChartsConverter } from 'src/app/Converter/IStatisticLineEChartsConverter.interface';
+import { IStatisticLineEChartsConverter } from 'src/app/converter/IStatisticLineEChartsConverter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Time } from 'src/app/global/tool/time';
@@ -13,11 +13,12 @@ import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
 export class IllegalStatisticBusiness
-  implements IStatisticLineEChartsConverter {
+  implements IStatisticLineEChartsConverter
+{
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: StationRequestService
-  ) { }
+  ) {}
 
   async getCurrentDivision(id: string) {
     let data = await this.divisionRequest.get(id);
