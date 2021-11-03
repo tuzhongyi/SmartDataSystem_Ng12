@@ -121,7 +121,7 @@ export class DisposalCountComponent
       },
       axisLabel: {
         color: 'auto',
-        distance: 30,
+        distance: 26,
         fontSize: 12,
       },
       splitLine: {
@@ -142,14 +142,14 @@ export class DisposalCountComponent
         },
       },
       title: {
-        offsetCenter: ['0%', '115%'],
+        offsetCenter: ['0%', '35%'],
         color: 'auto',
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 400,
       },
       detail: {
         valueAnimation: true,
-        offsetCenter: ['5%', '90%'],
+        offsetCenter: ['5%', '80%'],
         formatter: '{a|{value}}{b|%}',
 
         rich: {
@@ -274,6 +274,7 @@ export class DisposalCountComponent
     this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {
+    console.log(e);
     if (this.myChart) {
       this.myChart.resize();
       let h = e.newRect.height;
@@ -292,20 +293,43 @@ export class DisposalCountComponent
 
       if (w > 134) {
         if (this.gaugeOption.title) {
-          this.gaugeOption.title.fontSize = 20;
-          this.gaugeOption.title.offsetCenter = ['0%', '115%'];
+          this.gaugeOption.title.fontSize = 18;
+          this.gaugeOption.title.show = true;
         }
         if (this.gaugeOption.axisLabel) {
           this.gaugeOption.axisLabel.show = true;
         }
-        if (this.gaugeOption.detail) {
-          this.gaugeOption.detail.rich!.a.fontSize = 30;
-          this.gaugeOption.detail.rich!.b.fontSize = 20;
+
+        if (h > 140) {
+          if (this.gaugeOption.axisLabel) {
+            this.gaugeOption.axisLabel.show = true;
+          }
+          if (this.gaugeOption.detail) {
+            this.gaugeOption.detail.rich!.a.fontSize = 30;
+            this.gaugeOption.detail.rich!.b.fontSize = 20;
+          }
+        } else {
+          if (this.gaugeOption.axisLabel) {
+            this.gaugeOption.axisLabel.show = false;
+          }
+          if (this.gaugeOption.detail) {
+            this.gaugeOption.detail.rich!.a.fontSize = 20;
+            this.gaugeOption.detail.rich!.b.fontSize = 16;
+          }
+        }
+        if (h > 107) {
+          if (this.gaugeOption.title) {
+            this.gaugeOption.title.show = true;
+          }
+        } else {
+          if (this.gaugeOption.title) {
+            this.gaugeOption.title.show = false;
+          }
         }
       } else if (w < 134 && w > 105) {
         if (this.gaugeOption.title) {
-          this.gaugeOption.title.fontSize = 16;
-          this.gaugeOption.title.offsetCenter = ['0%', '115%'];
+          this.gaugeOption.title.fontSize = 15;
+          this.gaugeOption.title.show = true;
         }
 
         if (this.gaugeOption.axisLabel) {
@@ -315,18 +339,26 @@ export class DisposalCountComponent
           this.gaugeOption.detail.rich!.a.fontSize = 20;
           this.gaugeOption.detail.rich!.b.fontSize = 16;
         }
+        if (h > 92) {
+          if (this.gaugeOption.title) {
+            this.gaugeOption.title.show = true;
+          }
+        } else {
+          if (this.gaugeOption.title) {
+            this.gaugeOption.title.show = false;
+          }
+        }
       } else if (w < 105) {
         if (this.gaugeOption.title) {
-          this.gaugeOption.title.fontSize = 16;
-          this.gaugeOption.title.offsetCenter = ['0%', '130%'];
+          this.gaugeOption.title.show = false;
         }
 
         if (this.gaugeOption.axisLabel) {
           this.gaugeOption.axisLabel.show = false;
         }
         if (this.gaugeOption.detail) {
-          this.gaugeOption.detail.rich!.a.fontSize = 12;
-          this.gaugeOption.detail.rich!.b.fontSize = 12;
+          this.gaugeOption.detail.rich!.a.fontSize = 20;
+          this.gaugeOption.detail.rich!.b.fontSize = 16;
         }
         // this.myChart.setOption(this.option);
       }

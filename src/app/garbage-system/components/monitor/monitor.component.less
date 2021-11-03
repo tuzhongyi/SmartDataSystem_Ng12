@@ -26,11 +26,11 @@
     box-sizing: border-box;
 
     display: grid;
-    // grid-template-columns: [c1] 1fr [c2] 1fr [c3] 1fr [c4] 1fr [c5];
-    // grid-template-rows: [r1] 1fr [r2] 1fr [r3] 1fr [r4];
+    grid-template-columns: [c1] 1fr [c2] 1fr [c3] 1fr [c4] 1fr [c5];
+    grid-template-rows: [r1] 1fr [r2] 1fr [r3] 1fr [r4];
 
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    // grid-template-columns: repeat(4, 1fr);
+    // grid-template-rows: repeat(2, 1fr);
 
     grid-template-areas: "a b c" "d e f" "g h i";
     .waste-body__item {
@@ -48,7 +48,7 @@
         }
       }
       &--map {
-        display: none;
+        // display: none;
         /** 指定位置的三种方式 **/
 
         // grid-area: 1/2/3/4;

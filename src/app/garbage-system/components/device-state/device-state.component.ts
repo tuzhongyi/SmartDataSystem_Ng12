@@ -86,13 +86,13 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
           center: ['50%', '50%'],
           progress: {
             show: true,
-            width: 15,
+            width: 10,
             itemStyle: {},
           },
           axisLine: {
             show: true,
             lineStyle: {
-              width: 15,
+              width: 10,
               color: [[1, '#6b7199']],
             },
           },
@@ -110,7 +110,7 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
             offsetCenter: ['0%', '0%'],
             color: 'auto',
             fontSize: 18,
-            fontWeight: 800,
+            fontWeight: 400,
           },
           detail: {
             show: false,
