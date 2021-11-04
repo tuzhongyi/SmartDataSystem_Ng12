@@ -1,16 +1,16 @@
-import { CameraState } from 'src/app/enum/camera-state.enum';
-import { CameraType } from 'src/app/enum/camera-type.enum';
+import { CameraState } from 'src/app/enum/camera_state.enum';
+import { CameraType } from 'src/app/enum/camera_type.enum';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
-} from 'src/app/enum/device-state-count.enum';
-import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { ResourceType } from 'src/app/enum/resource-type.enum';
-import { RetentionType } from 'src/app/enum/retention-type.enum';
-import { StationState } from 'src/app/enum/station-state.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+} from 'src/app/enum/device_state_count.enum';
+import { DisposalCountType } from 'src/app/enum/disposal_count.enum';
+import { DivisionType } from 'src/app/enum/division_type.enum';
+import { EventType } from 'src/app/enum/event_type.enum';
+import { ResourceType } from 'src/app/enum/resource_type.enum';
+import { RetentionType } from 'src/app/enum/retention_type.enum';
+import { StationState } from 'src/app/enum/station_state.enum';
+import { UserResourceType } from 'src/app/enum/user_resource_type.enum';
 
 export class Language {
   static StationState(state: StationState) {

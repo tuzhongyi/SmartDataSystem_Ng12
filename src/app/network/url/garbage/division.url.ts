@@ -1,5 +1,5 @@
 import { BaseGarbageUrl } from '../base.url';
-import { EventNumberInnerUrl } from './inner/event-number.url';
+import { EventNumberInnerUrl } from './inner/event_number.url';
 import { StatisticInnerUrl } from './inner/statistic.url';
 import { VolumeInnerUrl } from './inner/volume.url';
 

@@ -1,8 +1,8 @@
 import { Transform } from 'class-transformer';
-import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
-import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
-import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
-import { UserDataRole } from '../../enum/role-user-data.enum';
+import { PrivacyDataRole } from 'src/app/enum/role_privacy_data.enum';
+import { PictureDataRole } from 'src/app/enum/role_picture_data.enum';
+import { StaticDataRole } from 'src/app/enum/role_static_data.enum';
+import { UserDataRole } from '../../enum/role_user_data.enum';
 import { transformDate } from './transform.model';
 import { UserResource } from './user.model';
 

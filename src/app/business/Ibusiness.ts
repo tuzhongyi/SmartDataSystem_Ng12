@@ -1,4 +1,4 @@
-import { PagedList } from '../network/model/page-list.model';
+import { PagedList } from '../network/model/page_list.model';
 import { IParams } from '../network/request/IParams.interface';
 /*
  * @Author: pmx

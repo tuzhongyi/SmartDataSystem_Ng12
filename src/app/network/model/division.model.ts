@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
-import { DivisionType } from '../../enum/division-type.enum';
-import { GisArea } from './gis-area.model';
-import { GisPoint } from './gis-point.model';
+import { DivisionType } from '../../enum/division_type.enum';
+import { GisArea } from './gis_area.model';
+import { GisPoint } from './gis_point.model';
 import { transformDate } from './transform.model';
 
 /** 区划 */

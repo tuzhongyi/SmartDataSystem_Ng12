@@ -20,10 +20,10 @@ import { interval, Subscription } from 'rxjs';
 import zh from '@angular/common/locales/zh';
 import { registerLocaleData } from '@angular/common';
 import { ResizedEvent } from 'angular-resize-event';
-import { SessionStorageService } from 'src/app/global/service/session-storage.service';
+import { SessionStorageService } from 'src/app/global/service/session_storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/global/service/local_storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
 
 registerLocaleData(zh, 'zh-CN');

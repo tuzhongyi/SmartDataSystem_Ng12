@@ -1,4 +1,4 @@
-import { DeviceStateCountModule } from '../view-model/device-state-count.model';
+import { DeviceStateCountModule } from '../view-model/device_state_count.model';
 
 export interface IDeviceStateConverter {
   toDeviceState<T>(

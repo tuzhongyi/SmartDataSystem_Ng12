@@ -1,5 +1,5 @@
 import { IInnerUrl } from '../../base.url';
-import { GarbageCountInnerUrl } from './garbage-count.url';
+import { GarbageCountInnerUrl } from './garbage_count.url';
 import { NumberInnerUrl } from './number.url';
 
 export class StatisticInnerUrl implements IInnerUrl {

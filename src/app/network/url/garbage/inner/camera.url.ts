@@ -1,5 +1,5 @@
 import { IInnerUrl } from '../../base.url';
-import { TrashCanInnerUrl } from './trash-can.url';
+import { TrashCanInnerUrl } from './trash_can.url';
 
 export class CameraInnerUrl implements IInnerUrl {
   constructor(private base: string) {}
