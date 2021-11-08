@@ -7,9 +7,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AiopRoutingModule } from './aiop_routing.module';
+import { AiopRoutingModule } from './aiop-routing.module';
 import { AiopComponent } from './aiop.component';
-import { AiopComponentsModule } from './components/aiop_components.module';
+import { AiopComponentsModule } from './components/aiop-components.module';
 
 @NgModule({
   declarations: [AiopComponent],

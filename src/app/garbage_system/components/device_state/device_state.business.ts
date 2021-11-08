@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IDeviceStateConverter } from 'src/app/converter/IDeviceStateConverter.interface';
+import { DeviceStateConverter } from 'src/app/Converter/device-state.converter';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
@@ -14,7 +14,7 @@ import {
 } from 'src/app/view-model/device_state_count.model';
 
 @Injectable()
-export class DeviceStateBusiness implements IDeviceStateConverter {
+export class DeviceStateBusiness implements DeviceStateConverter {
   constructor(private divisionRequest: DivisionRequestService) {}
   async statistic(divisionId: string) {
     const divisionParams = new GetDivisionsParams();

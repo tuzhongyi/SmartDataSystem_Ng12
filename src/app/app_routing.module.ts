@@ -28,7 +28,7 @@ const routes: Routes = [
   {
     path: 'aiop',
     loadChildren: () =>
-      import('./aiop_system/aiop.module').then((mod) => mod.AiopModule),
+      import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
     canActivate: [AuthorizationService],
   },
 ];

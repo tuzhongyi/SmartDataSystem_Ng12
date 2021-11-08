@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
- * @Last Modified by:   pmx
- * @Last Modified time: 2021-09-15 16:02:26
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-11-08 22:47:04
  */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -23,4 +23,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AiopRoutingModule {}
+export class AiopRoutingModule { }

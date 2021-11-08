@@ -58,12 +58,11 @@ type ECOption = echarts.ComposeOption<
 
 @Component({
   selector: 'app-statistic-line-echarts',
-  templateUrl: './statistic_line_echarts.component.html',
-  styleUrls: ['./statistic_line_echarts.component.less'],
+  templateUrl: './statistic-line-echarts.component.html',
+  styleUrls: ['./statistic-line-echarts.component.less'],
 })
 export class StatisticLineEChartsComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+  implements OnInit, AfterViewInit, OnChanges {
   private myChart?: echarts.ECharts;
 
   private options: ECOption = {};
@@ -73,7 +72,7 @@ export class StatisticLineEChartsComponent
   @Input() lineOption?: EChartsLineOption;
   @Input() lineChartData?: Array<EChartsLineModel>;
 
-  constructor() {}
+  constructor() { }
   ngOnChanges(changes: SimpleChanges) {
     if (this.myChart) {
       if ('lineChartData' in changes) {
