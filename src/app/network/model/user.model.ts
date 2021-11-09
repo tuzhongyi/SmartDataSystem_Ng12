@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
-import { UserResourceType } from 'src/app/enum/user_resource_type.enum';
-import { UserState } from 'src/app/enum/user_state.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { UserState } from 'src/app/enum/user-state.enum';
 import { Role } from './role.model';
 import { transformDate } from './transform.model';
 export class User {

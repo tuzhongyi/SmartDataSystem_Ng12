@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-08 22:47:22
+ * @Last Modified time: 2021-11-09 09:34:05
  */
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -12,4 +12,4 @@ import { HelloComponent } from './hello/hello.component';
   imports: [CommonModule],
   exports: [HelloComponent],
 })
-export class AiopComponentsModule { }
+export class AiopComponentsModule {}

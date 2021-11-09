@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
-import { CameraUsage } from '../../enum/camera_sage.enum';
-import { OnlineStatus } from '../../enum/online_status.enum';
+import { CameraUsage } from '../../enum/camera-sage.enum';
+import { OnlineStatus } from '../../enum/online-status.enum';
 import { transformDate } from './transform.model';
 
 /** 摄像机 */

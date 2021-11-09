@@ -35,7 +35,7 @@ import { ResizedEvent } from 'angular-resize-event';
 import {
   EChartsLineModel,
   EChartsLineOption,
-} from 'src/app/view-model/echarts_line.model';
+} from 'src/app/view-model/echarts-line.model';
 echarts.use([
   GridComponent,
   TitleComponent,
@@ -62,7 +62,8 @@ type ECOption = echarts.ComposeOption<
   styleUrls: ['./statistic-line-echarts.component.less'],
 })
 export class StatisticLineEChartsComponent
-  implements OnInit, AfterViewInit, OnChanges {
+  implements OnInit, AfterViewInit, OnChanges
+{
   private myChart?: echarts.ECharts;
 
   private options: ECOption = {};
@@ -72,7 +73,7 @@ export class StatisticLineEChartsComponent
   @Input() lineOption?: EChartsLineOption;
   @Input() lineChartData?: Array<EChartsLineModel>;
 
-  constructor() { }
+  constructor() {}
   ngOnChanges(changes: SimpleChanges) {
     if (this.myChart) {
       if ('lineChartData' in changes) {

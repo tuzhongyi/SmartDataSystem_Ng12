@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { MemberType } from '../../enum/member_type.enum';
+import { MemberType } from '../../enum/member-type.enum';
 import { transformDate } from './transform.model';
 
 /** 垃圾房管理人员 */

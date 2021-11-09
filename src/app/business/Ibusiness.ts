@@ -3,8 +3,8 @@ import { IParams } from '../network/request/IParams.interface';
 /*
  * @Author: pmx
  * @Date: 2021-09-14 14:59:24
- * @Last Modified by: zzl
- * @Last Modified time: 2021-09-16 17:15:35
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-11-09 09:36:19
  */
 export interface IBusiness<IData> {
   get(id: string): Promise<IData>;

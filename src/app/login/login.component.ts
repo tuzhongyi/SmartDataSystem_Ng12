@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import videojs, { VideoJsPlayer } from 'video.js';
-import { AuthorizationService } from '../network/request/auth/auth_request.service';
+import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
 import { ToastrService } from 'ngx-toastr';
 
@@ -22,9 +22,9 @@ import { Title } from '@angular/platform-browser';
 import { AxiosError } from 'axios';
 import { Router } from '@angular/router';
 import { User, UserResource } from '../network/model/user.model';
-import { LocalStorageService } from '../global/service/local_storage.service';
-import { SessionStorageService } from '../global/service/session_storage.service';
-import { EnumHelper } from '../enum/enum_helper';
+import { LocalStorageService } from '../global/service/local-storage.service';
+import { SessionStorageService } from '../global/service/session-storage.service';
+import { EnumHelper } from '../enum/enum-helper';
 import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 

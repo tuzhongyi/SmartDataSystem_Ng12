@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { DivisionType } from 'src/app/enum/division_type.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Injectable({
   providedIn: 'root',
