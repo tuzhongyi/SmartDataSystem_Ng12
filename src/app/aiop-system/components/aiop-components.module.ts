@@ -7,9 +7,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HelloComponent } from './hello/hello.component';
+import { HowellModule } from 'src/app/common/howell.module';
+import { MaterialModule } from 'src/app/material.module';
+import { SystemManageComponent } from './system-manage/system-manage.component';
+import { RouterModule } from '@angular/router';
 @NgModule({
-  declarations: [HelloComponent],
-  imports: [CommonModule],
-  exports: [HelloComponent],
+  declarations: [HelloComponent, SystemManageComponent],
+  imports: [CommonModule, HowellModule, MaterialModule, RouterModule],
 })
 export class AiopComponentsModule {}

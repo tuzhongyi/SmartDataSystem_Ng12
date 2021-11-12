@@ -7,6 +7,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HelloComponent } from './components/hello/hello.component';
+import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
+import { SystemManageComponent } from './components/system-manage/system-manage.component';
 
 const routes: Routes = [
   {
@@ -16,6 +18,14 @@ const routes: Routes = [
   {
     path: 'hello',
     component: HelloComponent,
+  },
+  {
+    path: 'system-manage',
+    component: SystemManageComponent,
+  },
+  {
+    path: 'monitor-platform',
+    component: MonitorPlatformComponent,
   },
 ];
 

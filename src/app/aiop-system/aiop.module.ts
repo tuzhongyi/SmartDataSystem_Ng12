@@ -13,6 +13,6 @@ import { AiopComponentsModule } from './components/aiop-components.module';
 
 @NgModule({
   declarations: [AiopComponent],
-  imports: [CommonModule, AiopRoutingModule, AiopComponentsModule],
+  imports: [AiopRoutingModule, AiopComponentsModule],
 })
 export class AiopModule {}

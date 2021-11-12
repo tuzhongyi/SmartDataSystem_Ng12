@@ -13,20 +13,18 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import videojs, { VideoJsPlayer } from 'video.js';
-import { AuthorizationService } from '../network/request/auth/auth-request.service';
-
-import { ToastrService } from 'ngx-toastr';
-
 import { Title } from '@angular/platform-browser';
-import { AxiosError } from 'axios';
 import { Router } from '@angular/router';
-import { User, UserResource } from '../network/model/user.model';
-import { LocalStorageService } from '../global/service/local-storage.service';
-import { SessionStorageService } from '../global/service/session-storage.service';
-import { EnumHelper } from '../enum/enum-helper';
+import { AxiosError } from 'axios';
 import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastrService } from 'ngx-toastr';
+import videojs, { VideoJsPlayer } from 'video.js';
+import { EnumHelper } from '../enum/enum-helper';
+import { LocalStorageService } from '../global/service/local-storage.service';
+import { SessionStorageService } from '../global/service/session-storage.service';
+import { User, UserResource } from '../network/model/user.model';
+import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
 /**
  *  LoginComponent 需要用到 form 指令，

@@ -6,7 +6,7 @@
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from './material.module';
+import { MaterialModule } from '../material.module';
 import { CUSTOM_COMPONENTS } from './components';
 import { CUSTOM_PIPES } from './pipes';
 

@@ -1,31 +1,23 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ElementRef,
-  EventEmitter,
-  Input,
   OnDestroy,
   OnInit,
-  Output,
-  QueryList,
   ViewChild,
-  ViewChildren,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { StoreService } from 'src/app/global/service/store.service';
-import { DeviceStateBusiness } from './device-state.business';
-
+import { ResizedEvent } from 'angular-resize-event';
+import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
-import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
-import { CanvasRenderer } from 'echarts/renderers';
-import { DeviceStateCountModule } from 'src/app/view-model/device-state-count.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { ResizedEvent } from 'angular-resize-event';
 import { UniversalTransition } from 'echarts/features';
+import { CanvasRenderer } from 'echarts/renderers';
+import { Subscription } from 'rxjs';
 import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
+import { StoreService } from 'src/app/global/service/store.service';
+import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DeviceStateCountModule } from 'src/app/view-model/device-state-count.model';
+import { DeviceStateBusiness } from './device-state.business';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 

@@ -5,12 +5,12 @@ import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { RankModel } from 'src/app/view-model/rank.model';
-import { DisposalRankBusiness } from './disposal_rank.business';
+import { DisposalRankBusiness } from './disposal-rank.business';
 
 @Component({
   selector: 'app-disposal-rank',
-  templateUrl: './disposal_rank.component.html',
-  styleUrls: ['./disposal_rank.component.less'],
+  templateUrl: './disposal-rank.component.html',
+  styleUrls: ['./disposal-rank.component.less'],
   providers: [DisposalRankBusiness],
 })
 export class DisposalRankComponent implements OnInit, OnDestroy {

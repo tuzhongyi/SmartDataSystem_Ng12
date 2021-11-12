@@ -13,7 +13,7 @@ import { HowellModule } from 'src/app/common/howell.module';
 import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
-import { DisposalRankComponent } from './disposal_rank/disposal_rank.component';
+import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
 import { EvemtStatisticEChartsComponent } from './event-statistic-echarts/event-statistic-echarts.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
