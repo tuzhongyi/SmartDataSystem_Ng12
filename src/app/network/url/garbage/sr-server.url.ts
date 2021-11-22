@@ -1,4 +1,4 @@
-import { BaseGarbageUrl, IInnerUrl } from '../base.url';
+import { BaseGarbageUrl, InnerUrl } from '../base.url';
 import { GarbageStationUrl } from './garbage-station.url';
 
 export class SRServiceUrl {

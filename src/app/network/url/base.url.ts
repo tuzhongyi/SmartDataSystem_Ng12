@@ -8,7 +8,7 @@ const BaseGarbageUrl = '/api/howell/ver10/aiop_service/garbage_management';
 const BaseUserUrl = '/howell/ver10/data_service/user_system';
 const BaseAiopUrl = '/api/howell/ver10/aiop_service';
 
-export interface IInnerUrl {
+export interface InnerUrl {
   basic(): string;
 }
 

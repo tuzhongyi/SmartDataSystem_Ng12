@@ -1,8 +1,8 @@
-import { IInnerUrl } from '../../base.url';
+import { InnerUrl } from '../../base.url';
 import { GarbageCountInnerUrl } from './garbage_count.url';
 import { NumberInnerUrl } from './number.url';
 
-export class StatisticInnerUrl implements IInnerUrl {
+export class StatisticInnerUrl implements InnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Statistic`;

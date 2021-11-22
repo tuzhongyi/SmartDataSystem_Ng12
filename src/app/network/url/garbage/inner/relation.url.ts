@@ -1,6 +1,6 @@
-import { IInnerUrl } from "../../base.url";
+import { InnerUrl } from "../../base.url";
 
-export class RelationInnerUrl implements IInnerUrl {
+export class RelationInnerUrl implements InnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Members`;

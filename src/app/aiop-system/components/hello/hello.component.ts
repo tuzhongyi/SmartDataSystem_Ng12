@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import axios from 'axios';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TreeSelectMode } from 'src/app/enum/tree-select-mode.enum';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -88,6 +89,7 @@ export class HelloComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
+    debugger;
     let params = new GetDivisionsParams();
     params.PageSize = 99999;
     // params.DivisionType = DivisionType.County;

@@ -1,7 +1,7 @@
-import { IInnerUrl } from '../../base.url';
+import { InnerUrl } from '../../base.url';
 import { TrashCanInnerUrl } from './trash_can.url';
 
-export class CameraInnerUrl implements IInnerUrl {
+export class CameraInnerUrl implements InnerUrl {
   constructor(private base: string) {}
   basic() {
     return `${this.base}/Cameras`;
