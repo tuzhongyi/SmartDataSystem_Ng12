@@ -58,7 +58,8 @@ export class AuthorizationService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
-    let userId = this._localStorageService.userId;
+    let user = this._localStorageService.user;
+    let userId = user.Id;
     let holdCookie = this._cookieService.check('userName');
     // console.log(userResource);
     if (challenge && userId && holdCookie) {

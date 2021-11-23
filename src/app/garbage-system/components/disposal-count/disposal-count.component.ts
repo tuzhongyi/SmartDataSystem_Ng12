@@ -277,7 +277,7 @@ export class DisposalCountComponent
   changeStatus() {
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
-    this.childDivisionType = EnumHelper.GetChildType(this.currentDivisionType);
+    this.childDivisionType = EnumHelper.GetResourceChildType(this.currentDivisionType);
 
     this.loadData();
   }

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:14
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-02 16:30:39
+ * @Last Modified time: 2021-11-23 11:27:24
  */
 import {
   AfterViewChecked,
@@ -34,6 +34,9 @@ registerLocaleData(zh, 'zh-CN');
   styleUrls: ['./toolbar.component.less'],
 })
 export class ToolbarComponent implements OnInit, OnDestroy {
+  @Input()
+  showStatistic: boolean = true;
+
   today: number = Date.now();
 
   divisionTitle: string = '';
@@ -68,9 +71,12 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    let userResource = this._localStorageService.userResource;
+    let user = this._localStorageService.user;
 
-    this.divisionTitle = userResource[0]['Name'] ?? '';
+    if (user.Resources && user.Resources.length > 0) {
+      this.divisionTitle = user.Resources[0].Name ?? '';
+    }
+
     let userName = this._cookieService.get('userName');
     userName = atob(userName);
 

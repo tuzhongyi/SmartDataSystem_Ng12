@@ -8,6 +8,6 @@ import { GarbageComponentsModule } from './components/garbage-components.module'
 @NgModule({
   declarations: [GarbageComponent],
   exports: [],
-  imports: [CommonModule, GarbageRoutingModule, GarbageComponentsModule],
+  imports: [GarbageRoutingModule, GarbageComponentsModule],
 })
 export class GarbageModule {}

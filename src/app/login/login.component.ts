@@ -2,9 +2,10 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-10-09 09:54:43
+ * @Last Modified time: 2021-11-23 11:27:45
  */
 
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import {
   AfterViewInit,
   Component,
@@ -21,6 +22,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import videojs, { VideoJsPlayer } from 'video.js';
 import { EnumHelper } from '../enum/enum-helper';
+import { StaticDataRole } from '../enum/role-static-data.enum';
 import { LocalStorageService } from '../global/service/local-storage.service';
 import { SessionStorageService } from '../global/service/session-storage.service';
 import { User, UserResource } from '../network/model/user.model';
@@ -161,14 +163,14 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (result instanceof User) {
           console.log('登录成功', result);
 
-          this._storeUserInfo(result.Id, result.Resources ?? []);
+          this._storeUserInfo(result, result.Id, result.Resources ?? []);
 
           // 区分权限
           if (result.Role && result.Role.length > 0) {
-            if (result.Role[0].Name == '管理员') {
+            if (result.Role[0].StaticData == StaticDataRole.enabled) {
               this._router.navigateByUrl('aiop');
-            } else if (result.Role[0].Name == '操作者') {
-              this._router.navigateByUrl('waste');
+            } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
+              this._router.navigateByUrl('garbage-system');
             }
           }
         }
@@ -204,7 +206,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
    * @param userId
    * @param userResource
    */
-  private _storeUserInfo(userId: string, userResource: Array<UserResource>) {
+  private _storeUserInfo(
+    user: User,
+    userId: string,
+    userResource: Array<UserResource>
+  ) {
     let options = {
       expires: new Date(Date.now() + 60 * 60 * 1000),
       path: '/',
@@ -245,16 +251,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     );
     this._cookieService.set('passWord', passWord, options);
 
-    // SessionStorage
-    this._localStorageService.userResource = userResource;
-
-    userResource.sort(function (a, b) {
-      return b.ResourceType - a.ResourceType;
-    });
-
-    this._localStorageService.userDivisionType = EnumHelper.Convert(
-      userResource[0].ResourceType
-    );
-    this._localStorageService.userId = userId;
+    this._localStorageService.user = user;
   }
 }

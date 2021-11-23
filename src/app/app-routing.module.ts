@@ -18,7 +18,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'waste',
+    path: 'garbage-system',
     loadChildren: () =>
       import('./garbage-system/garbage.module').then(
         (mod) => mod.GarbageModule

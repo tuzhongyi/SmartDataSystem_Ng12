@@ -2,11 +2,12 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-02 16:41:11
+ * @Last Modified time: 2021-11-23 11:24:35
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ToolbarComponent } from 'src/app/common/components/toolbar/toolbar.component';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -30,12 +31,12 @@ export class MonitorComponent implements OnInit {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
   }
   ngOnInit(): void {
-    // 保存全局区划Id
-    let userResource = this._localStorageService.userResource;
-    let userDivisionType = this._localStorageService.userDivisionType;
+    let user = this._localStorageService.user;
+    if (user.Resources && user.Resources.length > 0) {
+      let userDivisionId = user.Resources[0].Id;
+      let resourceType = user.Resources[0].ResourceType;
+      let userDivisionType = EnumHelper.Convert(resourceType);
 
-    if (userResource && userResource.length > 0) {
-      let userDivisionId = userResource[0].Id;
       this._storeService.divisionId = userDivisionId;
       this._storeService.divisionType = userDivisionType;
     }

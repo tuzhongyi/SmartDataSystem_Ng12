@@ -1,34 +1,22 @@
-<div
-  class="toolbar"
-  #toolbar
-  (click)="showDropDown = false; $event.stopPropagation()"
-  (resized)="onResized($event)"
->
+<div class="toolbar" #toolbar (click)="showDropDown = false; $event.stopPropagation()" (resized)="onResized($event)">
   <div class="toolbar__item toolbar__item--m-l-30">
-    <img
-      class="toolbar__logo"
-      src="assets/img/logo.svg"
-      alt=""
-      title="皓维智能"
-    />
+    <img class="toolbar__logo" src="assets/img/logo.svg" alt="" title="皓维智能" />
     <div class="toolbar__text">
       <span class="toolbar__title">{{ divisionTitle }}</span>
       <span class="toolbar__des">生活垃圾分类全程监管平台</span>
     </div>
   </div>
-  <div class="toolbar__item toolbar__item--center">
+  <div class="toolbar__item toolbar__item--center" *ngIf="showStatistic">
     <div class="statistic-wrapper">
       <div class="statistic-wrapper__title">湿垃圾总量</div>
       <div class="statistic-wrapper__content">
-        <span class="statistic-wrapper__content__num">12121212</span
-        >&nbsp;&nbsp;(吨/日)
+        <span class="statistic-wrapper__content__num">12121212</span>&nbsp;&nbsp;(吨/日)
       </div>
     </div>
     <div class="statistic-wrapper">
       <div class="statistic-wrapper__title">干垃圾总量</div>
       <div class="statistic-wrapper__content">
-        <span class="statistic-wrapper__content__num">3453453123</span
-        >&nbsp;&nbsp;(吨/日)
+        <span class="statistic-wrapper__content__num">3453453123</span>&nbsp;&nbsp;(吨/日)
       </div>
     </div>
   </div>
@@ -37,23 +25,16 @@
       <div class="toolbar__today__time">{{ today | date: "HH:mm:ss" }}</div>
       <div class="toolbar__today__slash"></div>
       <div class="toolbar__today__date">
-        {{ today | date: "yyyy 年 M 月  dd 日 EEEE":"OOOO":"zh-CN" }}
+        {{ today | date: "yyyy 年 M 月 dd 日 EEEE":"OOOO":"zh-CN" }}
       </div>
     </div>
 
     <div class="toolbar__link">
-      <div
-        class="toolbar__link__item toolbar__link__logout"
-        #logout
-        (click)="toggleDropDownHandler($event)"
-      >
+      <div class="toolbar__link__item toolbar__link__logout" #logout (click)="toggleDropDownHandler($event)">
         <i class="howell-icon-account"></i>
       </div>
 
-      <div
-        class="toolbar__link__item toolbar__link__help"
-        (click)="navigateToHelp()"
-      >
+      <div class="toolbar__link__item toolbar__link__help" (click)="navigateToHelp()">
         <mat-icon aria-hidden="false" aria-label="Example home icon">
           help
         </mat-icon>
