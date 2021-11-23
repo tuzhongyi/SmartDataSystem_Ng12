@@ -105,3 +105,11 @@ export class GetDivisionStatisticComparisonParams implements IParams {
   /**	DivisionNumberStatisticV2[]	待比较数据	M */
   Data!: DivisionNumberStatisticV2[];
 }
+export class GetDivisionTreeParams {
+  /**	String[]	区划ID	O */
+  Ids?: string[];
+  /**	String	区划名称，支持LIKE	O */
+  Name?: string;
+  /**	Int32	区划类型，该值必须和Name共同使用，可以只有Name，没有DivisionType，但是不能只有DivisionType没有Name	O */
+  DivisionType?: DivisionType;
+}
