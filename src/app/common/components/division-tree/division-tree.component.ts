@@ -5,7 +5,10 @@ import {
   MatTreeFlatDataSource,
 } from '@angular/material/tree';
 import { DivisionManageBusiness } from 'src/app/aiop-system/components/monitor-platform/division-manage/division-manage.business';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Division } from 'src/app/network/model/division.model';
+import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { DivisionTreeBusiness } from './division-tree.business';
@@ -17,6 +20,9 @@ import { DivisionTreeBusiness } from './division-tree.business';
   providers: [DivisionTreeBusiness],
 })
 export class DivisionTreeComponent {
+  /****** private ********/
+
+  // 保存所有 FlatTreeNode
   private _flatNodeMap = new Map<string, FlatTreeNode>();
 
   private _transformer = (node: NestedTreeNode, level: number) => {
@@ -43,8 +49,10 @@ export class DivisionTreeComponent {
 
   private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
 
+  /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
   dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
+  trackBy = (index: number, node: FlatTreeNode) => node.id;
 
   currentNode: FlatTreeNode | null = null;
 
@@ -73,6 +81,7 @@ export class DivisionTreeComponent {
   ngOnInit() {
     this._business.initialize();
   }
+
   clickNode(node: FlatTreeNode) {
     if (this.currentNode == node) {
       this.currentNode = null;
@@ -82,7 +91,29 @@ export class DivisionTreeComponent {
   }
 
   async loadChildren(node: FlatTreeNode) {
-    await this._business.loadChildren(node.id);
+    // 展开的时候拉数据
+    if (this.treeControl.isExpanded(node)) {
+      await this._business.loadChildren(node.id);
+      console.log('flatNodeMap', this._flatNodeMap);
+    }
+  }
+  addNode(model: DivisionManageModel) {
+    this._business.addNode(this.currentNode, model);
+
     console.log('flatNodeMap', this._flatNodeMap);
+  }
+  deleteNode() {
+    this._business.deleteNode(this.currentNode);
+    if (this.currentNode) {
+      this._flatNodeMap.delete(this.currentNode.id);
+    }
+    console.log('flatNodeMap', this._flatNodeMap);
+  }
+  editNode(model: DivisionManageModel) {
+    this._business.editNode(this.currentNode, model);
+    console.log('flatNodeMap', this._flatNodeMap);
+  }
+  searchNode(condition: string) {
+    this._business.searchNode(condition);
   }
 }

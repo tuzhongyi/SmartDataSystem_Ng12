@@ -1,4 +1,4 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" #tree>
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [trackBy]="trackBy" #tree>
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="clickNode(node)"
         [class.selected]="currentNode && currentNode == node">
         <ng-container *ngIf="node.expandable">

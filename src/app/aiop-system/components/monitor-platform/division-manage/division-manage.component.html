@@ -1,7 +1,15 @@
-<h2>区划列表</h2>
-<button mat-flat-button color="primary"> 添加</button>
-<button mat-flat-button color="primary"> 删除</button>
-<button mat-flat-button color="primary"> 编辑</button>
-<button mat-flat-button color="primary"> 搜索</button>
-
-<app-division-tree></app-division-tree>
+<div class='division-manage'>
+    <div class='division-list'>
+        <h2>区划列表</h2>
+        <button mat-flat-button color="primary" (click)="addNode()"> 添加</button>
+        <button mat-flat-button color="primary" (click)="deleteNode()"> 删除</button>
+        <button mat-flat-button color="primary" (click)="editNode()"> 编辑</button>
+        <button mat-flat-button color="primary" (click)="searchNode()"> 搜索</button>
+        <div class='tree-container'>
+            <app-division-tree #tree></app-division-tree>
+        </div>
+    </div>
+    <div class="division-detail">
+        <h2>区划详情</h2>
+    </div>
+</div>

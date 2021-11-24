@@ -7,8 +7,10 @@ export class NestedTreeNode {
   constructor(
     public id: string,
     public name: string,
-    public divisionType: DivisionType,
+    public description: string = '',
+    public divisionType: DivisionType = DivisionType.City,
     public hasChildren = false,
-    public parentId: string | null = null
+    public parentId: string | null = null,
+    public childrenLoaded = false
   ) {}
 }
