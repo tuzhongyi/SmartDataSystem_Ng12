@@ -1,20 +1,26 @@
+import { Type } from 'class-transformer';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import 'reflect-metadata';
+
 /** 区划树形结构 */
 export class DivisionTree {
   /**	String	根名称，默认：根区划	M */
-  Name!: string;
+  Name: string = '';
   /**	DivisionNode[]	子区划节点	O */
-  Nodes?: DivisionNode[];
+  @Type(() => DivisionNode)
+  Nodes: DivisionNode[] = [];
 }
 /** 区划节点 */
-export interface DivisionNode {
+export class DivisionNode {
   /**	String	区划ID	M */
-  Id: string;
+  Id: string = '';
   /**	String	区划名称	M */
-  Name: string;
+  Name: string = '';
   /**	Int32	区划类型	M */
-  DivisionType: number;
+  DivisionType: DivisionType = DivisionType.None;
   /**	String	描述信息	O */
-  Description?: string;
+  Description: string = '';
   /**	DivisionNode[]	子区划节点	O */
-  Nodes?: DivisionNode[];
+  @Type(() => DivisionNode)
+  Nodes: DivisionNode[] = [];
 }

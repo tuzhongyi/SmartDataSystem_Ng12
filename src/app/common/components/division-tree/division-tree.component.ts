@@ -77,6 +77,14 @@ export class DivisionTreeComponent {
     this._business.dataChange.subscribe((data) => {
       this.dataSource.data = data;
     });
+    this._business.dataShow.subscribe((data) => {
+      data.forEach((id) => {
+        let node = this._flatNodeMap.get(id);
+        if (node) {
+          this.treeControl.expand(node);
+        }
+      });
+    });
   }
   ngOnInit() {
     this._business.initialize();
@@ -93,13 +101,12 @@ export class DivisionTreeComponent {
   async loadChildren(node: FlatTreeNode) {
     // 展开的时候拉数据
     if (this.treeControl.isExpanded(node)) {
-      await this._business.loadChildren(node.id);
+      await this._business.loadChildren(node.id, node.name);
       console.log('flatNodeMap', this._flatNodeMap);
     }
   }
   addNode(model: DivisionManageModel) {
     this._business.addNode(this.currentNode, model);
-
     console.log('flatNodeMap', this._flatNodeMap);
   }
   deleteNode() {
@@ -113,9 +120,17 @@ export class DivisionTreeComponent {
     this._business.editNode(this.currentNode, model);
     console.log('flatNodeMap', this._flatNodeMap);
   }
-  searchNode(condition: string) {
-    // this._business.searchNode(condition);
+  async searchNode(condition: string) {
+    this.treeControl.collapseAll();
+    this.currentNode = null;
+    let res = await this._business.searchNode(condition);
+    // console.log('res', res);
+    // console.log(this._flatNodeMap);
+    // res.forEach((id) => {
+    //   let node = this._flatNodeMap.get(id);
+    //   if (node) {
+    //     this.treeControl.expand(node);
+    //   }
+    // });
   }
 }
-
-console.log('ceshi ');

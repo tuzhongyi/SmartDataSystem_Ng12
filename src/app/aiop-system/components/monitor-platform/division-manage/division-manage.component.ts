@@ -46,7 +46,7 @@ export class DivisionManageComponent implements OnInit {
   }
   searchNode() {
     if (this.tree) {
-      let condition = '长寿路';
+      let condition = '路一';
       this.tree.searchNode(condition);
     }
   }
