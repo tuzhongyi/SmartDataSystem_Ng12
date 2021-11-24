@@ -114,6 +114,8 @@ export class DivisionTreeComponent {
     console.log('flatNodeMap', this._flatNodeMap);
   }
   searchNode(condition: string) {
-    this._business.searchNode(condition);
+    // this._business.searchNode(condition);
   }
 }
+
+console.log('ceshi ');
