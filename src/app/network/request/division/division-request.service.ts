@@ -9,6 +9,7 @@ import {
   GetDivisionStatisticNumbersParams,
   GetDivisionStatisticNumbersParamsV2,
   GetDivisionSumEventNumberParams,
+  GetDivisionTreeParams,
   GetDivisionVolumesParams,
 } from './division-request.params';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
@@ -72,9 +73,13 @@ export class DivisionRequestService implements IBusiness<Division> {
     return this.basic.post(url, BatchResult, batch);
   }
 
-  tree(): Promise<DivisionTree> {
+  tree(params?: GetDivisionTreeParams): Promise<DivisionTree> {
     let url = DivisionUrl.tree();
-    return this.basic.get(url, DivisionTree);
+    if (params) {
+      return this.basic.post(url, DivisionTree, params);
+    } else {
+      return this.basic.get(url, DivisionTree);
+    }
   }
 
   private _volume?: VolumesService;
