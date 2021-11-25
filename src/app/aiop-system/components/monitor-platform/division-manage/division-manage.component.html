@@ -4,9 +4,13 @@
         <button mat-flat-button color="primary" (click)="addNode()"> 添加</button>
         <button mat-flat-button color="primary" (click)="deleteNode()"> 删除</button>
         <button mat-flat-button color="primary" (click)="editNode()"> 编辑</button>
-        <button mat-flat-button color="primary" (click)="searchNode()"> 搜索</button>
+
+        <input type="text" class='search' value="路一" #search> <button mat-flat-button color="primary"
+            (click)="searchNode(search.value)">
+            搜索</button>
         <div class='tree-container'>
             <app-division-tree #tree></app-division-tree>
+            <!-- <app-division-tree2 #tree></app-division-tree2> -->
         </div>
     </div>
     <div class="division-detail">

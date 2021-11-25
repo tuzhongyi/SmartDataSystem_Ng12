@@ -4,7 +4,7 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
-import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
+import { DivisionTree2Component } from 'src/app/common/components/division-tree2/division-tree2.component';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { DivisionManageBusiness } from './division-manage.business';
@@ -15,7 +15,7 @@ import { DivisionManageBusiness } from './division-manage.business';
   providers: [DivisionManageBusiness],
 })
 export class DivisionManageComponent implements OnInit {
-  @ViewChild('tree') tree?: DivisionTreeComponent;
+  @ViewChild('tree') tree?: DivisionTree2Component;
 
   ngOnInit(): void {}
   addNode() {
@@ -44,9 +44,8 @@ export class DivisionManageComponent implements OnInit {
       this.tree.editNode(divisionManageModel);
     }
   }
-  searchNode() {
+  searchNode(condition: string) {
     if (this.tree) {
-      let condition = '路一';
       this.tree.searchNode(condition);
     }
   }
