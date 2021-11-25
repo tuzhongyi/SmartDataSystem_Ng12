@@ -111,12 +111,14 @@ export class DivisionTreeBusiness
     this.dataChange.next(this.dataChange.value);
   }
   async searchNode(condition: string) {
-    let data: DivisionNode[] = await this.searchData(condition);
-    console.log(data);
-
-    await this.iterateTree(data);
-
-    return this._dataToShow;
+    if (condition == '') {
+      this._nestedNodeMap.clear();
+      this.initialize();
+    } else {
+      let data: DivisionNode[] = await this.searchData(condition);
+      console.log(data);
+      await this.iterateTree(data);
+    }
   }
 
   async iterateTree(data: DivisionNode[]) {

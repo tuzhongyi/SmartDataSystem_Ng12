@@ -52,7 +52,7 @@ export class DivisionTreeComponent {
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
   dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
-  trackBy = (index: number, node: FlatTreeNode) => node.id;
+  trackBy = (index: number, node: FlatTreeNode) => node;
 
   currentNode: FlatTreeNode | null = null;
 
@@ -121,10 +121,15 @@ export class DivisionTreeComponent {
     console.log('flatNodeMap', this._flatNodeMap);
   }
   async searchNode(condition: string) {
-    this.treeControl.collapseAll();
-    this.currentNode = null;
-    let res = await this._business.searchNode(condition);
-    // console.log('res', res);
+    // this.treeControl.collapseAll(); this._flatNodeMap.clear();
+
+    console.log(condition);
+    if (condition == '') {
+      this._flatNodeMap.clear();
+      this._business.searchNode(condition);
+    }
+    // this.currentNode = null;
+    // let res = await this._business.searchNode(condition);
     // console.log(this._flatNodeMap);
     // res.forEach((id) => {
     //   let node = this._flatNodeMap.get(id);
@@ -134,3 +139,5 @@ export class DivisionTreeComponent {
     // });
   }
 }
+
+// 路一
