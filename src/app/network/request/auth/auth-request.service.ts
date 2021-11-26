@@ -36,7 +36,7 @@ export class AuthorizationService implements CanActivate {
       let userName = this._cookieService.get('userName');
       userName = atob(userName);
       let res = userName.match(
-        /[a-zA-Z0-9+/=]{32}(?<userName>\w*)[a-zA-Z0-9+/=]{32}/
+        /[a-zA-Z0-9+/=]{32}(?<userName>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
       userName = res.groups!['userName'];
 

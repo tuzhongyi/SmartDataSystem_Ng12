@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-23 11:27:45
+ * @Last Modified time: 2021-11-25 15:39:14
  */
 
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -112,7 +112,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       userName = atob(userName);
       // console.log(userName);
       let res = userName.match(
-        /[a-zA-Z0-9+/=]{32}(?<userName>\w*)[a-zA-Z0-9+/=]{32}/
+        /[a-zA-Z0-9+/=]{32}(?<userName>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
       // console.log(res);
       userName = res.groups!['userName'];
@@ -124,7 +124,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       passWord = atob(passWord);
       // console.log(passWord);
       let res2 = passWord.match(
-        /[a-zA-Z0-9+/=]{32}(?<passWord>\w*)[a-zA-Z0-9+/=]{32}/
+        /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
       // console.log(res2);
       passWord = res2.groups!['passWord'];
@@ -176,11 +176,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         }
       } catch (e: any) {
         if (this._isAxiosError(e)) {
-          // console.log(e.toJSON());
-          if (e.response?.status == 403) {
+          if (e.response?.status == 403 || e.response?.status == 500) {
             this._toastrService.error('账号或密码错误');
           }
         }
+        // this._toastrService.error('账号或密码错误');
       }
       this.disableLogin = false;
     }

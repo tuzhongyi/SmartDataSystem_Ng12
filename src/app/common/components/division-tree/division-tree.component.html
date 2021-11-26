@@ -2,16 +2,18 @@
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="clickNode(node)"
         [class.selected]="currentNode && currentNode == node">
         <ng-container *ngIf="node.expandable">
-            <button mat-icon-button matTreeNodeToggle (click)="loadChildren(node)">
-                <mat-icon>
-                    {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
-                </mat-icon>
+            <button class="tree-select" matTreeNodeToggle (click)="loadChildren(node)">
+                <div class='select' [class.expanded]="treeControl.isExpanded(node)"></div>
             </button>
         </ng-container>
 
         <ng-container *ngIf="!node.expandable">
-            <button mat-icon-button disabled></button>
+            <button class="tree-select" disabled>
+            </button>
         </ng-container>
-        {{ node.name }}
+        <div class="tree-item">
+            <i [class]="node.iconType"></i>
+            {{ node.name }}
+        </div>
     </mat-tree-node>
 </mat-tree>

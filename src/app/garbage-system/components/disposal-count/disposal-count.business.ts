@@ -53,7 +53,7 @@ export class DisposalCountBusiness implements DisposalCountConverter {
     ) {
       const divisionParams = new GetDivisionsParams();
       divisionParams.AncestorId = divisionId;
-      divisionParams.DivisionType = EnumHelper.Convert(childType);
+      divisionParams.DivisionType = EnumHelper.ConvertUserResourceToDivision(childType);
       let res = await this.divisionRequest.list(divisionParams);
 
       // console.log('dd', res);

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
+import { ClassConstructor, plainToClass } from 'class-transformer';
 import { mode } from 'crypto-js';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { DivisionTreeConverter } from 'src/app/converter/division-tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -15,6 +17,7 @@ import {
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
+import { SearchedTreeModel } from 'src/app/view-model/division-tree.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 
@@ -22,12 +25,9 @@ import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 export class DivisionTreeBusiness
   implements DivisionTreeConverter<NestedTreeNode>
 {
-  private _dataToShow: string[] = [];
-  private _divisions: Division[] = [];
   private _nestedNodeMap = new Map<string, NestedTreeNode>();
 
   dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
-  dataShow = new BehaviorSubject<string[]>([]);
 
   constructor(private _divisionRequest: DivisionRequestService) {}
 
@@ -40,20 +40,22 @@ export class DivisionTreeBusiness
   async loadChildren(id: string, name: string) {
     const node = this._nestedNodeMap.get(id);
     // console.log('父节点', node);
-    if (node && !node.childrenLoaded) {
+    if (node) {
       console.log(name + ' load children');
 
       const type = EnumHelper.GetDivisionChildType(node.divisionType);
       let data = await this.loadData(type, node.id);
 
       let res = this.toNestedTree(data);
-      node.childrentChange.value.push(...res);
-      node.childrenLoaded = true;
+
+      // 拉取服务器节点数据，重置节点的子树
+      node.childrenChange.next(res);
       this.dataChange.next(this.dataChange.value);
     }
   }
   addNode(node: FlatTreeNode | null = null, model: DivisionManageModel) {
     let newNode = this._generateFromDivisionManageModel(model);
+
     if (node) {
       // 当前节点是新节点的父节点
       let parentNode = this._nestedNodeMap.get(node.id);
@@ -62,10 +64,8 @@ export class DivisionTreeBusiness
           parentNode.divisionType
         );
         newNode.parentId = parentNode.id;
-
-        parentNode.childrentChange.value.push(newNode);
         parentNode.hasChildren = true;
-        // parentNode.childrenLoaded = true;
+        parentNode.childrenChange.value.push(newNode);
       }
     } else {
       this.dataChange.value.push(newNode);
@@ -80,9 +80,9 @@ export class DivisionTreeBusiness
         // 该节点有没有父节点
         if (currentNode.parentId) {
           let parentNode = this._nestedNodeMap.get(currentNode.parentId)!;
-          let index = parentNode.childrentChange.value.indexOf(currentNode);
+          let index = parentNode.childrenChange.value.indexOf(currentNode);
           if (index != -1) {
-            parentNode.childrentChange.value.splice(index, 1);
+            parentNode.childrenChange.value.splice(index, 1);
           }
         } else {
           let index = this.dataChange.value.indexOf(currentNode);
@@ -92,12 +92,12 @@ export class DivisionTreeBusiness
         }
         this._nestedNodeMap.delete(currentNode.id);
       }
+      this.dataChange.next(this.dataChange.value);
+      console.log('delte nestedNodeMap ', this._nestedNodeMap);
     }
-    console.log('nestedNodeMap ', this._nestedNodeMap);
-    this.dataChange.next(this.dataChange.value);
   }
 
-  editNode(node: FlatTreeNode | null = null, model: DivisionManageModel) {
+  async editNode(node: FlatTreeNode | null = null, model: DivisionManageModel) {
     if (node) {
       node.name = model.name;
       // 当前修改的节点
@@ -105,42 +105,73 @@ export class DivisionTreeBusiness
       if (currentNode) {
         currentNode.name = model.name;
         currentNode.description = model.description;
+
+        let division = await this._divisionRequest.get(currentNode.id);
+        console.log(division);
+        division.Name = currentNode.name;
+        division.Description = currentNode.description;
+        let res = this._divisionRequest.update(division);
+        return res;
       }
     }
-    console.log('nestedNodeMap ', this._nestedNodeMap);
     this.dataChange.next(this.dataChange.value);
+
+    return false;
   }
   async searchNode(condition: string) {
     if (condition == '') {
-      this._nestedNodeMap.clear();
-      this.initialize();
+      let data = await this.loadData();
+      let res = new SearchedTreeModel('success', '操作成功', data);
+      return res;
     } else {
       let data: DivisionNode[] = await this.searchData(condition);
-      console.log(data);
-      await this.iterateTree(data);
+      if (data.length == 0) {
+        let res = new SearchedTreeModel('info', '无匹配结果', data);
+        return res;
+      } else {
+        let res = new SearchedTreeModel('success', '操作成功', data);
+        res.expand = true;
+        return res;
+      }
+    }
+  }
+  async changeData(data: Division[] | DivisionNode[]) {
+    console.log('change data');
+    if (data.length > 0) {
+      this._nestedNodeMap.clear();
+      if (this.isDivision(data)) {
+        // console.log(data);
+        let nodes = this.toNestedTree(data);
+        this.dataChange.next(nodes);
+      } else {
+        let nodes = this.iterateTree(data);
+        this.dataChange.next(nodes);
+      }
+      console.log('search  nestedNodeMap ', this._nestedNodeMap);
     }
   }
 
-  async iterateTree(data: DivisionNode[]) {
+  iterateTree(data: DivisionNode[]) {
+    console.log(data);
+    let res: NestedTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let divisionNode = data[i];
-      console.log('push');
-      await this.loadChildren(divisionNode.Id, divisionNode.Name);
-
-      this._dataToShow.push(divisionNode.Id);
-      this.dataShow.value.push(divisionNode.Id);
-      this.dataShow.next(this.dataShow.value);
-      if (divisionNode.Nodes) {
-        this.iterateTree(divisionNode.Nodes);
+      const node = this._generateFromDivisionNode(divisionNode);
+      res.push(node);
+      if (divisionNode.Nodes && divisionNode.Nodes.length > 0) {
+        let children = this.iterateTree(divisionNode.Nodes);
+        node.childrenChange.value.push(...children);
+        node.hasChildren = true;
       }
     }
+
+    return res;
   }
   async loadData(type: DivisionType = DivisionType.City, id?: string) {
     let params = new GetDivisionsParams();
     params.DivisionType = type;
     if (id) params.ParentId = id;
     let res = await this._divisionRequest.list(params);
-    this._divisions.push(...res.Data);
     return res.Data;
   }
   async searchData(condition: string) {
@@ -158,9 +189,16 @@ export class DivisionTreeBusiness
       if (item instanceof Division) {
         const node = this._generateFromDivision(item);
         res.push(node);
+      } else {
       }
     }
     return res;
+  }
+  toNestedNode(node: FlatTreeNode | null) {
+    if (node) {
+      return this._nestedNodeMap.get(node.id);
+    }
+    return null;
   }
   private _generateFromDivision(division: Division) {
     if (this._nestedNodeMap.has(division.Id)) {
@@ -174,6 +212,8 @@ export class DivisionTreeBusiness
       !division.IsLeaf,
       division.ParentId
     );
+    node.createTime = division.CreateTime;
+    node.updateTime = division.UpdateTime;
 
     this._nestedNodeMap.set(node.id, node);
 
@@ -186,7 +226,6 @@ export class DivisionTreeBusiness
     if (this._nestedNodeMap.has(item.Id)) {
       return this._nestedNodeMap.get(item.Id)!;
     }
-
     const node = new NestedTreeNode(
       item.Id,
       item.Name,
@@ -195,9 +234,7 @@ export class DivisionTreeBusiness
       item.Nodes.length > 0,
       parentId
     );
-
     this._nestedNodeMap.set(node.id, node);
-
     return node;
   }
   private _generateFromDivisionManageModel(model: DivisionManageModel) {
@@ -208,5 +245,12 @@ export class DivisionTreeBusiness
     this._nestedNodeMap.set(node.id, node);
 
     return node;
+  }
+  // type predicates
+  private isDivision(data: Division[] | DivisionNode[]): data is Division[] {
+    if (data[0] instanceof Division) {
+      return true;
+    }
+    return false;
   }
 }

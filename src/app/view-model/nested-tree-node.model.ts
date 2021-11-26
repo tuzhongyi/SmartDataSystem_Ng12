@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DivisionType } from '../enum/division-type.enum';
 
 export class NestedTreeNode {
-  childrentChange = new BehaviorSubject<NestedTreeNode[]>([]);
+  childrenChange = new BehaviorSubject<NestedTreeNode[]>([]);
 
   constructor(
     public id: string,
@@ -12,6 +12,7 @@ export class NestedTreeNode {
     public hasChildren = false,
     public parentId: string | null = null,
     public childrenLoaded = false,
-    public hide = false
+    public createTime: Date = new Date(),
+    public updateTime: Date = new Date()
   ) {}
 }

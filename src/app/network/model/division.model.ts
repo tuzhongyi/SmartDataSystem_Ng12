@@ -11,7 +11,7 @@ export class Division {
   /**	String	区划名称	M */
   Name!: string;
   /**	String	父区划ID，如果是根区域节点，则该ID为空	O */
-  ParentId?: string;
+  ParentId?: string | null;
   /**	Boolean	是否为叶节点的区域	M */
   IsLeaf!: boolean;
   /**	String	外部扩展ID，用于国标区划编码	O */

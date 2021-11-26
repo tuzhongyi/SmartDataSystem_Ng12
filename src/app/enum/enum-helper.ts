@@ -4,7 +4,7 @@ import { UserResourceType } from './user-resource-type.enum';
 export class EnumHelper {
   constructor() {}
 
-  static Convert(type: UserResourceType) {
+  static ConvertUserResourceToDivision(type: UserResourceType) {
     switch (type) {
       case UserResourceType.City:
         return DivisionType.City;
@@ -15,6 +15,18 @@ export class EnumHelper {
       case UserResourceType.Station:
       default:
         return DivisionType.None;
+    }
+  }
+  static ConvertDivisionToUserResource(type: DivisionType) {
+    switch (type) {
+      case DivisionType.City:
+        return UserResourceType.City;
+      case DivisionType.County:
+        return UserResourceType.County;
+      case DivisionType.Committees:
+        return UserResourceType.Committees;
+      default:
+        return UserResourceType.City;
     }
   }
 

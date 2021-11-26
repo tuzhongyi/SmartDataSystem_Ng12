@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-09 09:44:00
+ * @Last Modified time: 2021-11-25 16:19:04
  */
 import {
   AfterViewInit,
@@ -277,7 +277,9 @@ export class DisposalCountComponent
   changeStatus() {
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
-    this.childDivisionType = EnumHelper.GetResourceChildType(this.currentDivisionType);
+    this.childDivisionType = EnumHelper.GetResourceChildType(
+      this.currentDivisionType
+    );
 
     this.loadData();
   }
@@ -350,7 +352,7 @@ export class DisposalCountComponent
     this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {
-    console.log(e);
+    // console.log(e);
     if (this.myChart) {
       this.myChart.resize();
       let h = e.newRect.height;

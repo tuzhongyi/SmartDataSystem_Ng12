@@ -9,7 +9,6 @@ import { AppInterceptorServiceService } from './network/request/app-interceptor-
 
 import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
-import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,8 +19,8 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     HttpClientModule,
     ToastrModule.forRoot({
       positionClass: 'toast-bottom-right',
-      timeOut: 2000,
-      extendedTimeOut: 2000,
+      timeOut: 1500,
+      extendedTimeOut: 1500,
       closeButton: false,
       progressBar: true,
       progressAnimation: 'increasing',

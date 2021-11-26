@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-23 11:24:35
+ * @Last Modified time: 2021-11-26 10:44:27
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -35,7 +35,8 @@ export class MonitorComponent implements OnInit {
     if (user.Resources && user.Resources.length > 0) {
       let userDivisionId = user.Resources[0].Id;
       let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType = EnumHelper.Convert(resourceType);
+      let userDivisionType =
+        EnumHelper.ConvertUserResourceToDivision(resourceType);
 
       this._storeService.divisionId = userDivisionId;
       this._storeService.divisionType = userDivisionType;

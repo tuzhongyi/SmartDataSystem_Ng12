@@ -1,13 +1,12 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   MatTreeFlattener,
   MatTreeFlatDataSource,
 } from '@angular/material/tree';
-import { DivisionManageBusiness } from 'src/app/aiop-system/components/monitor-platform/division-manage/division-manage.business';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { ToastrService } from 'ngx-toastr';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { Division } from 'src/app/network/model/division.model';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
@@ -24,7 +23,6 @@ export class DivisionTreeComponent {
 
   // 保存所有 FlatTreeNode
   private _flatNodeMap = new Map<string, FlatTreeNode>();
-
   private _transformer = (node: NestedTreeNode, level: number) => {
     const existingNode = this._flatNodeMap.get(node.id);
 
@@ -37,17 +35,36 @@ export class DivisionTreeComponent {
       node.name,
       level,
       node.hasChildren,
-      node.parentId
+      node.parentId,
+      this._nodeIconType.get(
+        EnumHelper.ConvertDivisionToUserResource(node.divisionType)
+      )
     );
     this._flatNodeMap.set(node.id, newNode);
     return newNode;
   };
   private _getLevel = (node: FlatTreeNode) => node.level;
   private _isExpandable = (node: FlatTreeNode) => node.expandable;
-  private _getChildren = (node: NestedTreeNode) => node.childrentChange;
+  private _getChildren = (node: NestedTreeNode) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
-
   private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
+  private _condition: string | Symbol = Symbol.for('DIVISION-TREE');
+  // 要屏蔽的搜索字符串
+  private _searchGuards: string[] = ['街道', '居委会'];
+
+  /**
+   *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
+   */
+  private _excludeGuards: string[] = [];
+
+  private _nodeIconType = new Map([
+    [UserResourceType.City, 'howell-icon-earth'],
+    [UserResourceType.County, 'howell-icon-map5'],
+    [UserResourceType.Committees, 'howell-icon-map5'],
+    [UserResourceType.Station, 'howell-icon-garbage'],
+  ]);
+
+  private _selectedNodeId: string = '';
 
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
@@ -56,7 +73,13 @@ export class DivisionTreeComponent {
 
   currentNode: FlatTreeNode | null = null;
 
-  constructor(private _business: DivisionTreeBusiness) {
+  @Output() singleSelectEvent: EventEmitter<string> =
+    new EventEmitter<string>();
+
+  constructor(
+    private _business: DivisionTreeBusiness,
+    private _toastrService: ToastrService
+  ) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -77,14 +100,12 @@ export class DivisionTreeComponent {
     this._business.dataChange.subscribe((data) => {
       this.dataSource.data = data;
     });
-    this._business.dataShow.subscribe((data) => {
-      data.forEach((id) => {
-        let node = this._flatNodeMap.get(id);
-        if (node) {
-          this.treeControl.expand(node);
-        }
-      });
-    });
+
+    this._searchGuards.reduce((previous, current) => {
+      previous.push(...this._generateExclude(current));
+      return previous;
+    }, this._excludeGuards);
+    // console.log('_excludeGuards', this._excludeGuards);
   }
   ngOnInit() {
     this._business.initialize();
@@ -93,51 +114,82 @@ export class DivisionTreeComponent {
   clickNode(node: FlatTreeNode) {
     if (this.currentNode == node) {
       this.currentNode = null;
+      this._selectedNodeId = '';
     } else {
       this.currentNode = node;
+      this._selectedNodeId = node.id;
     }
+    this.singleSelectEvent.emit(this._selectedNodeId);
   }
 
   async loadChildren(node: FlatTreeNode) {
     // 展开的时候拉数据
     if (this.treeControl.isExpanded(node)) {
       await this._business.loadChildren(node.id, node.name);
-      console.log('flatNodeMap', this._flatNodeMap);
+      // console.log('load children flatNodeMap', this._flatNodeMap);
     }
   }
-  addNode(model: DivisionManageModel) {
+  async addNode(model: DivisionManageModel) {
     this._business.addNode(this.currentNode, model);
-    console.log('flatNodeMap', this._flatNodeMap);
   }
-  deleteNode() {
+  async deleteNode() {
     this._business.deleteNode(this.currentNode);
+
     if (this.currentNode) {
       this._flatNodeMap.delete(this.currentNode.id);
+      this.currentNode = null;
+      console.log('delete flatNodeMap', this._flatNodeMap);
     }
-    console.log('flatNodeMap', this._flatNodeMap);
   }
-  editNode(model: DivisionManageModel) {
-    this._business.editNode(this.currentNode, model);
-    console.log('flatNodeMap', this._flatNodeMap);
+  async editNode(model: DivisionManageModel) {
+    let res = await this._business.editNode(this.currentNode, model);
+    if (res) {
+      this._toastrService.success('编辑成功');
+    }
   }
   async searchNode(condition: string) {
-    // this.treeControl.collapseAll(); this._flatNodeMap.clear();
-
-    console.log(condition);
-    if (condition == '') {
-      this._flatNodeMap.clear();
-      this._business.searchNode(condition);
+    if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
+      console.log('输入内容再搜索');
+      return;
     }
-    // this.currentNode = null;
-    // let res = await this._business.searchNode(condition);
-    // console.log(this._flatNodeMap);
-    // res.forEach((id) => {
-    //   let node = this._flatNodeMap.get(id);
-    //   if (node) {
-    //     this.treeControl.expand(node);
-    //   }
-    // });
+    if (this._condition == condition) {
+      console.log('重复搜索相同字段');
+      return;
+    }
+    if (this._excludeGuards.includes(condition)) {
+      this._toastrService.info('关键字不能是: ' + condition);
+      return;
+    }
+
+    this._condition = condition;
+    let res = await this._business.searchNode(condition);
+    this._toastrService[res.type](res.msg);
+
+    if (res.data.length > 0) {
+      // 替换数据前清空
+      this._flatNodeMap.clear();
+      this._business.changeData(res.data);
+      // 如果是重置树，则维持关闭状态,否则打开全部
+      if (res.expand) {
+        this.treeControl.expandAll();
+      }
+    } else {
+      console.log('搜索为空，则保持原状');
+    }
+
+    console.log('search--flatNodeMap', this._flatNodeMap);
+  }
+  private _generateExclude(condition: string) {
+    let res: string[] = [];
+    for (let i = 0; i < condition.length; i++) {
+      let len = condition.length - i;
+      let temp = '';
+      for (let j = 0; j < len; j++) {
+        temp += condition[i + j];
+        res.push(temp);
+      }
+    }
+
+    return res;
   }
 }
-
-// 路一
