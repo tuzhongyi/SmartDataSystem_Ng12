@@ -12,7 +12,6 @@ export class NestedTreeNode {
     public hasChildren = false,
     public parentId: string | null = null,
     public childrenLoaded = false,
-    public createTime: Date = new Date(),
-    public updateTime: Date = new Date()
+    public rawData?: any
   ) {}
 }

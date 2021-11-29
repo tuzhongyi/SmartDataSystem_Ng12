@@ -37,4 +37,15 @@ export class DivisionManageBusiness {
     let res = await this._divisionRequest.delete(id);
     return res;
   }
+  async editDivision(id: string, model: DivisionManageModel) {
+    if (id) {
+      let division = await this._divisionRequest.get(id);
+      division.Name = model.name;
+      division.Description = model.description;
+
+      let res = await this._divisionRequest.update(division);
+      return res;
+    }
+    return false;
+  }
 }

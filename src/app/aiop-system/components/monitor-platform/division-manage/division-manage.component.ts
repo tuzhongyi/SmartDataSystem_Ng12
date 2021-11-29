@@ -37,7 +37,6 @@ export class DivisionManageComponent implements OnInit {
       let des = '';
 
       let divisionManageModel = new DivisionManageModel(id + '', name, des);
-      this.tree.addNode(divisionManageModel);
 
       let res = await this._business.addDivision(
         this._selectedId,
@@ -45,28 +44,37 @@ export class DivisionManageComponent implements OnInit {
       );
       if (res) {
         this._toastrService.success('添加成功');
+        this.tree.addNode(divisionManageModel);
       }
     }
   }
   async deleteNode() {
     if (this.tree) {
-      this.tree.deleteNode();
-
       if (this._selectedId) {
         let res = await this._business.deleteDivision(this._selectedId);
         if (res) {
           this._toastrService.success('删除成功');
+          this.tree.deleteNode();
         }
       }
     }
   }
-  editNode() {
+  async editNode() {
     if (this.tree) {
       let divisionManageModel = new DivisionManageModel();
       divisionManageModel.name = 'modify';
       divisionManageModel.description = 'modify';
 
-      this.tree.editNode(divisionManageModel);
+      if (this._selectedId) {
+        let res = await this._business.editDivision(
+          this._selectedId,
+          divisionManageModel
+        );
+        if (res) {
+          this._toastrService.success('编辑成功');
+          this.tree.editNode(divisionManageModel);
+        }
+      }
     }
   }
   searchNode(condition: string) {

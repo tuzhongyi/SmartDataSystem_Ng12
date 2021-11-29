@@ -27,6 +27,7 @@ export class DivisionTreeComponent {
     const existingNode = this._flatNodeMap.get(node.id);
 
     if (existingNode) {
+      existingNode.name = node.name;
       existingNode.expandable = node.hasChildren;
       return existingNode;
     }
@@ -118,6 +119,7 @@ export class DivisionTreeComponent {
     } else {
       this.currentNode = node;
       this._selectedNodeId = node.id;
+      console.log(this._business.nodeInfo(this.currentNode?.id));
     }
     this.singleSelectEvent.emit(this._selectedNodeId);
   }
@@ -133,18 +135,20 @@ export class DivisionTreeComponent {
     this._business.addNode(this.currentNode, model);
   }
   async deleteNode() {
-    this._business.deleteNode(this.currentNode);
-
     if (this.currentNode) {
+      this._business.deleteNode(this.currentNode.id);
       this._flatNodeMap.delete(this.currentNode.id);
       this.currentNode = null;
+      this._selectedNodeId = '';
+      this.singleSelectEvent.emit(this._selectedNodeId);
       console.log('delete flatNodeMap', this._flatNodeMap);
     }
   }
   async editNode(model: DivisionManageModel) {
-    let res = await this._business.editNode(this.currentNode, model);
-    if (res) {
-      this._toastrService.success('编辑成功');
+    if (this.currentNode) {
+      this.currentNode.name = model.name;
+      this._business.editNode(this.currentNode.id, model);
+      console.log('edit flatNodeMap', this._flatNodeMap);
     }
   }
   async searchNode(condition: string) {
