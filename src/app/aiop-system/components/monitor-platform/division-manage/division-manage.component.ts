@@ -77,9 +77,13 @@ export class DivisionManageComponent implements OnInit {
       }
     }
   }
-  searchNode(condition: string) {
+  async searchNode(condition: string) {
     if (this.tree) {
-      this.tree.searchNode(condition);
+      let res = await this.tree.searchNode(condition);
+      console.log(res);
+      if (res) {
+        this._toastrService[res.type](res.msg);
+      }
     }
   }
   selectNodeHandler(id: string) {

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
+import { SearchedTreeModel } from 'src/app/view-model/division-tree.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { DivisionTreeBusiness } from './division-tree.business';
@@ -154,6 +155,7 @@ export class DivisionTreeComponent {
   async searchNode(condition: string) {
     if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
       console.log('输入内容再搜索');
+      // return new SearchedTreeModel('warning', '输入内容再搜索');
       return;
     }
     if (this._condition == condition) {
@@ -161,13 +163,13 @@ export class DivisionTreeComponent {
       return;
     }
     if (this._excludeGuards.includes(condition)) {
-      this._toastrService.info('关键字不能是: ' + condition);
-      return;
+      // this._toastrService.info('关键字不能是: ' + condition);
+      return new SearchedTreeModel('warning', '关键字不能是: ' + condition);
     }
 
     this._condition = condition;
     let res = await this._business.searchNode(condition);
-    this._toastrService[res.type](res.msg);
+    // this._toastrService[res.type](res.msg);
 
     if (res.data.length > 0) {
       // 替换数据前清空
@@ -181,7 +183,9 @@ export class DivisionTreeComponent {
       console.log('搜索为空，则保持原状');
     }
 
-    console.log('search--flatNodeMap', this._flatNodeMap);
+    // console.log('search--flatNodeMap', this._flatNodeMap);
+
+    return res;
   }
   private _generateExclude(condition: string) {
     let res: string[] = [];

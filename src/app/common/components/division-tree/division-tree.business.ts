@@ -128,7 +128,7 @@ export class DivisionTreeBusiness
     }
   }
   async changeData(data: Division[] | DivisionNode[]) {
-    console.log('change data');
+    // console.log('change data');
     if (data.length > 0) {
       this._nestedNodeMap.clear();
       if (this._isDivision(data)) {
@@ -137,15 +137,14 @@ export class DivisionTreeBusiness
         this.dataChange.next(nodes);
       } else {
         let nodes = this.iterateTree(data);
-        console.log('nodes');
         this.dataChange.next(nodes);
       }
-      console.log('search  nestedNodeMap ', this._nestedNodeMap);
+      // console.log('search  nestedNodeMap ', this._nestedNodeMap);
     }
   }
 
   iterateTree(data: DivisionNode[], parentId: string | null = null) {
-    console.log(data);
+    // console.log(data);
     let res: NestedTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let divisionNode = data[i];
