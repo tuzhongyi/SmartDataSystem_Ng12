@@ -9,10 +9,12 @@
             (click)="searchNode(search.value)">
             搜索</button>
         <div class='tree-container'>
-            <app-division-tree #tree (singleSelectEvent)="selectNodeHandler($event)"></app-division-tree>
+            <app-tree #tree [treeServiceProvider]="treeServiceProvider" [treeSelectModel]="treeSelectModel"
+                (selectTree)="selectTree($event)"></app-tree>
         </div>
     </div>
     <div class="division-detail">
         <h2>区划详情</h2>
+
     </div>
 </div>

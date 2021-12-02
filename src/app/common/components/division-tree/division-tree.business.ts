@@ -3,7 +3,6 @@ import { ClassConstructor, plainToClass } from 'class-transformer';
 import { mode } from 'crypto-js';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
-import { DivisionTreeConverter } from 'src/app/converter/division-tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import {
@@ -17,14 +16,12 @@ import {
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
-import { SearchedTreeModel } from 'src/app/view-model/division-tree.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { SearchedTreeModel } from 'src/app/view-model/tree.model';
 
 @Injectable()
-export class DivisionTreeBusiness
-  implements DivisionTreeConverter<NestedTreeNode>
-{
+export class DivisionTreeBusiness {
   private _nestedNodeMap = new Map<string, NestedTreeNode>();
 
   dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
@@ -209,7 +206,7 @@ export class DivisionTreeBusiness
       !division.IsLeaf,
       division.ParentId
     );
-    node.rawData = division;
+
     this._nestedNodeMap.set(node.id, node);
 
     return node;
@@ -233,7 +230,7 @@ export class DivisionTreeBusiness
       item.Nodes.length > 0,
       parentId
     );
-    node.rawData = item;
+
     this._nestedNodeMap.set(node.id, node);
     return node;
   }

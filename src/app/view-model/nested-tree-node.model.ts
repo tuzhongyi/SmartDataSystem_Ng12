@@ -11,7 +11,6 @@ export class NestedTreeNode {
     public divisionType: DivisionType = DivisionType.City,
     public hasChildren = false,
     public parentId: string | null = null,
-    public childrenLoaded = false,
-    public rawData?: any
+    public childrenLoaded = false
   ) {}
 }

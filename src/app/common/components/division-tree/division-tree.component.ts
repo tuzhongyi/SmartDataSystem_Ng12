@@ -8,9 +8,9 @@ import { ToastrService } from 'ngx-toastr';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
-import { SearchedTreeModel } from 'src/app/view-model/division-tree.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { SearchedTreeModel } from 'src/app/view-model/tree.model';
 import { DivisionTreeBusiness } from './division-tree.business';
 
 @Component({
