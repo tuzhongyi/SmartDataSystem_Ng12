@@ -72,6 +72,7 @@ export class DivisionTreeService implements ServiceInterface {
     } else {
       this.dataChange.value.push(node);
     }
+    this._nestedNodeMap.set(node.id, node);
     this.dataChange.next(this.dataChange.value);
   }
   deleteNode(id: string) {

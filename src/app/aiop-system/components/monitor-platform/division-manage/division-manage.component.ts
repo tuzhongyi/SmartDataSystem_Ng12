@@ -106,7 +106,6 @@ export class DivisionManageComponent implements OnInit {
   async searchNode(condition: string) {
     if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
       this._toastrService.warning('输入内容再搜索');
-      // return new SearchedTreeModel('warning', '输入内容再搜索');
       return;
     }
     if (this._condition == condition) {
@@ -115,6 +114,7 @@ export class DivisionManageComponent implements OnInit {
     }
     if (this._excludeGuards.includes(condition)) {
       this._toastrService.warning('关键字不能是: ' + condition);
+      return;
     }
 
     this._condition = condition;
