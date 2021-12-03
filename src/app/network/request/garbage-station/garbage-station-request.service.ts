@@ -48,7 +48,7 @@ import { SumEventNumber } from '../../model/sum-event-number.model';
 @Injectable({
   providedIn: 'root',
 })
-export class StationRequestService implements IBusiness<GarbageStation> {
+export class GarbageStationRequestService implements IBusiness<GarbageStation> {
   constructor(private _http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
     this.typeBasic = this.basic.type(GarbageStation);

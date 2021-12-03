@@ -94,7 +94,7 @@ export class RetentionRankComponent implements OnInit, OnDestroy {
     // console.log('retention change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
-    this.childDivisionType = EnumHelper.GetResourceChildType(this.currentDivisionType);
+    this.childDivisionType = EnumHelper.GetResourceChildType2(this.currentDivisionType);
 
     this.dropList = [this.dropListSolid];
 

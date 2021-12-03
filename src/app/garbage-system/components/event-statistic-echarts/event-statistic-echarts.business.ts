@@ -8,14 +8,14 @@ import { EventNumberStatistic } from 'src/app/network/model/event-number-statist
 import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { StationRequestService } from 'src/app/network/request/station/garbage-station-request.service';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
 export class IllegalStatisticBusiness implements StatisticLineEChartsConverter {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private stationRequest: StationRequestService
+    private stationRequest: GarbageStationRequestService
   ) {}
 
   async getCurrentDivision(id: string) {

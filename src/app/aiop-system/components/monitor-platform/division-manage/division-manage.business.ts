@@ -9,7 +9,7 @@ import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 export class DivisionManageBusiness {
   constructor(private _divisionRequest: DivisionRequestService) {}
 
-  async addDivision(id: string, model: DivisionManageModel) {
+  async addDivision(parentId: string, model: DivisionManageModel) {
     let division = new Division();
     division.Id = model.id;
     division.Name = model.name;
@@ -19,8 +19,8 @@ export class DivisionManageBusiness {
     division.CreateTime = new Date();
     division.UpdateTime = new Date();
 
-    if (id) {
-      let parent = await this._divisionRequest.get(id);
+    if (parentId) {
+      let parent = await this._divisionRequest.get(parentId);
       division.DivisionType = EnumHelper.GetDivisionChildType(
         parent.DivisionType
       );

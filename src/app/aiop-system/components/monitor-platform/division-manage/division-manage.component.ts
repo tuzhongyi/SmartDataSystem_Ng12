@@ -5,7 +5,6 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { ToastrService } from 'ngx-toastr';
-import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
@@ -15,6 +14,9 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { DivisionManageBusiness } from './division-manage.business';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { TreeConverter } from 'src/app/converter/tree.converter';
+import { UserResource } from 'src/app/network/model/user.model';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   templateUrl: './division-manage.component.html',
@@ -22,10 +24,6 @@ import { TreeConverter } from 'src/app/converter/tree.converter';
   providers: [DivisionManageBusiness],
 })
 export class DivisionManageComponent implements OnInit {
-  private _selectedId: string = '';
-
-  @ViewChild('tree') tree?: TreeComponent;
-
   private _condition: string | Symbol = Symbol.for('DIVISION-TREE');
   // 要屏蔽的搜索字符串
   private _searchGuards: string[] = ['街道', '路居委会'];
@@ -36,9 +34,31 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Division;
-
+  treeServiceProvider = TreeServiceEnum.Station;
   treeSelectModel = TreeSelectEnum.Single;
+  currentNode?: FlatTreeNode;
+  type: UserResourceType = UserResourceType.None;
+
+  get enableAddBtn() {
+    return this.currentNode?.type !== UserResourceType.Committees;
+  }
+  get enableDelBtn() {
+    return (
+      !!this.currentNode &&
+      this.currentNode.type != UserResourceType.None &&
+      this.currentNode.type != UserResourceType.Station
+    );
+  }
+
+  get enableEditBtn() {
+    return (
+      !!this.currentNode &&
+      this.currentNode.type != UserResourceType.None &&
+      this.currentNode.type != UserResourceType.Station
+    );
+  }
+
+  @ViewChild('tree') tree?: TreeComponent;
 
   constructor(
     private _business: DivisionManageBusiness,
@@ -59,46 +79,46 @@ export class DivisionManageComponent implements OnInit {
       let id = (Math.random() * 9999) >> 0;
       let name = id + 'test';
       let des = '';
-
       let model = new DivisionManageModel(id + '', name, des);
-
-      let res = await this._business.addDivision(this._selectedId, model);
+      let parentId = this.currentNode ? this.currentNode.id : '';
+      let res = await this._business.addDivision(parentId, model);
       if (res) {
         this._toastrService.success('添加成功');
-
         const node = this._converter.fromDivisionManage(model);
-        node.parentId = this._selectedId;
-
-        this.tree?.addNode(node);
+        node.parentId = parentId;
+        node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
+        this.tree.addNode(node);
       }
     }
   }
   async deleteNode() {
     if (this.tree) {
-      if (this._selectedId) {
-        let res = await this._business.deleteDivision(this._selectedId);
+      if (this.currentNode?.id) {
+        let res = await this._business.deleteDivision(this.currentNode?.id);
         if (res) {
           this._toastrService.success('删除成功');
-          this.tree?.deleteNode(this._selectedId);
+
+          this.tree?.deleteNode(this.currentNode?.id);
         }
       }
     }
   }
   async editNode() {
     if (this.tree) {
-      if (this._selectedId) {
+      if (this.currentNode?.id) {
         let model = new DivisionManageModel();
-        model.id = this._selectedId;
+        model.id = this.currentNode?.id;
         model.name = 'test';
         model.description = 'modify';
-        let res = await this._business.editDivision(this._selectedId, model);
+        let res = await this._business.editDivision(
+          this.currentNode?.id,
+          model
+        );
         if (res) {
           this._toastrService.success('编辑成功');
 
           const node = this._converter.fromDivisionManage(model);
-
-          // this.tree.editNode(divisionManageModel);
-          this.tree?.editNode(node);
+          this.tree.editNode(node);
         }
       }
     }
@@ -122,7 +142,7 @@ export class DivisionManageComponent implements OnInit {
     if (this.tree) {
       let res = await this.tree.searchNode(condition);
       console.log(res);
-      if (res.length) {
+      if (res && res.length) {
         this._toastrService.success('操作成功');
       } else {
         this._toastrService.warning('无匹配结果');
@@ -130,8 +150,9 @@ export class DivisionManageComponent implements OnInit {
     }
   }
 
-  selectTree(ids: string[]) {
-    this._selectedId = ids[0];
+  selectTree(nodes: FlatTreeNode[]) {
+    this.currentNode = nodes[0];
+    console.log('currentNode', this.currentNode);
   }
 
   private _generateExclude(condition: string) {

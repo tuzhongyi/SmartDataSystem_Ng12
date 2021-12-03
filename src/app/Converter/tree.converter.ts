@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EnumHelper } from '../enum/enum-helper';
 import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { DivisionManageModel } from '../view-model/division-manange.model';
@@ -13,9 +14,10 @@ export class TreeConverter {
       item.Id,
       item.Name,
       item.Description,
-      item.DivisionType,
+      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       item.Nodes.length > 0,
-      parentId
+      parentId,
+      true
     );
     return node;
   }
@@ -25,7 +27,7 @@ export class TreeConverter {
       division.Id,
       division.Name,
       division.Description,
-      division.DivisionType,
+      EnumHelper.ConvertDivisionToUserResource(division.DivisionType),
       !division.IsLeaf,
       division.ParentId
     );

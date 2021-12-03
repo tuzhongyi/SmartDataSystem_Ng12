@@ -4,6 +4,7 @@ import { TreeConverter } from 'src/app/converter/tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import {
   DivisionNode,
   DivisionTree,
@@ -14,6 +15,9 @@ import {
   GetDivisionTreeParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { ServiceInterface } from '../interface/service.interface';
 
@@ -26,6 +30,7 @@ export class DivisionTreeService implements ServiceInterface {
 
   constructor(
     private _divisionRequest: DivisionRequestService,
+    private _stationRequest: GarbageStationRequestService,
     private _converter: TreeConverter
   ) {}
 
@@ -35,19 +40,17 @@ export class DivisionTreeService implements ServiceInterface {
 
   // 拉取最顶层区划
   async initialize() {
-    let data = await this._loadData();
+    let data = await this._loadData(UserResourceType.City);
     let res = this._toNestedTree(data);
     this.dataChange.next(res);
+
+    return res;
   }
 
-  async loadChildren(id: string, name: string) {
-    // console.log('load children', this._nestedNodeMap);
-    const node = this._nestedNodeMap.get(id);
-    // console.log('父节点', node);
-    if (node) {
-      console.log(name + ' load children');
-
-      const type = EnumHelper.GetDivisionChildType(node.divisionType);
+  async loadChildren(flatNode: FlatTreeNode) {
+    const node = this._nestedNodeMap.get(flatNode.id);
+    if (node && !node.childrenLoaded) {
+      const type = EnumHelper.GetResourceChildType(node.type);
       let data = await this._loadData(type, node.id);
       if (data.length) {
         let res = this._toNestedTree(data);
@@ -56,16 +59,18 @@ export class DivisionTreeService implements ServiceInterface {
       } else {
         node.hasChildren = false;
       }
+      node.childrenLoaded = true;
       this.dataChange.next(this.dataChange.value);
+
     }
+    return null;
   }
+
   addNode(node: NestedTreeNode) {
     if (node.parentId) {
       let parentNode = this._nestedNodeMap.get(node.parentId);
       if (parentNode) {
-        node.divisionType = EnumHelper.GetDivisionChildType(
-          parentNode.divisionType
-        );
+        node.type = EnumHelper.GetResourceChildType(parentNode.type);
         parentNode.hasChildren = true;
         parentNode.childrenChange.value.push(node);
       }
@@ -114,7 +119,7 @@ export class DivisionTreeService implements ServiceInterface {
     let nodes: NestedTreeNode[] = [];
 
     if (condition == '') {
-      data = await this._loadData();
+      data = await this._loadData(UserResourceType.City);
     } else {
       data = await this._searchData(condition);
     }
@@ -130,12 +135,19 @@ export class DivisionTreeService implements ServiceInterface {
     return nodes;
   }
 
-  private async _loadData(type: DivisionType = DivisionType.City, id?: string) {
-    let params = new GetDivisionsParams();
-    params.DivisionType = type;
-    if (id) params.ParentId = id;
-    let res = await this._divisionRequest.list(params);
-    return res.Data;
+  private async _loadData(type: UserResourceType, id?: string) {
+    if (type == UserResourceType.None) {
+      return [];
+    } else if (type == UserResourceType.Station) {
+    } else {
+      let params = new GetDivisionsParams();
+      const divisionType = EnumHelper.ConvertUserResourceToDivision(type);
+      params.DivisionType = divisionType;
+      if (id) params.ParentId = id;
+      let res = await this._divisionRequest.list(params);
+      return res.Data;
+    }
+    return [];
   }
 
   private _toNestedTree<T>(data: T[]): NestedTreeNode[] {
@@ -144,7 +156,9 @@ export class DivisionTreeService implements ServiceInterface {
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof Division) {
-        const node = this._converter.fromDivision(item);
+        const node = this._nestedNodeMap.has(item.Id)
+          ? this._nestedNodeMap.get(item.Id)!
+          : this._converter.fromDivision(item);
         this._nestedNodeMap.set(node.id, node);
         res.push(node);
       } else {
@@ -156,7 +170,9 @@ export class DivisionTreeService implements ServiceInterface {
     let res: NestedTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let divisionNode = data[i];
-      const node = this._converter.fromDivisionNode(divisionNode);
+      const node = this._nestedNodeMap.has(divisionNode.Id)
+        ? this._nestedNodeMap.get(divisionNode.Id)!
+        : this._converter.fromDivisionNode(divisionNode);
       node.parentId = parentId;
       this._nestedNodeMap.set(node.id, node);
       res.push(node);
@@ -180,5 +196,13 @@ export class DivisionTreeService implements ServiceInterface {
       return true;
     }
     return false;
+  }
+
+  public async loadStation(id: string) {
+    let params = new GetGarbageStationsParams();
+    params.DivisionId = id;
+
+    let res = await this._stationRequest.list(params);
+    console.log(res);
   }
 }

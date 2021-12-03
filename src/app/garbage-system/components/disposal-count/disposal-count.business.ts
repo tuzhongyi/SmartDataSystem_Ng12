@@ -16,15 +16,15 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParams,
-} from 'src/app/network/request/station/garbage-station-request.params';
-import { StationRequestService } from 'src/app/network/request/station/garbage-station-request.service';
+} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DisposalCountModel } from 'src/app/view-model/disposal-count.model';
 
 @Injectable()
 export class DisposalCountBusiness implements DisposalCountConverter {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private stationRequest: StationRequestService
+    private stationRequest: GarbageStationRequestService
   ) {}
 
   // 当前区划信息

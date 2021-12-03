@@ -30,7 +30,8 @@ export class EnumHelper {
     }
   }
 
-  static GetResourceChildType(type: DivisionType) {
+  // 要改
+  static GetResourceChildType2(type: DivisionType) {
     switch (type) {
       case DivisionType.City:
         return UserResourceType.County;
@@ -39,7 +40,19 @@ export class EnumHelper {
       case DivisionType.Committees:
         return UserResourceType.Station;
       default:
-        throw new Error('this is not divisiontype');
+        throw new Error('this is no divisiontype');
+    }
+  }
+  static GetResourceChildType(type: UserResourceType) {
+    switch (type) {
+      case UserResourceType.City:
+        return UserResourceType.County;
+      case UserResourceType.County:
+        return UserResourceType.Committees;
+      case UserResourceType.Committees:
+        return UserResourceType.Station;
+      default:
+        throw new Error('There Is No UserResourceType');
     }
   }
   static GetDivisionChildType(type: DivisionType) {

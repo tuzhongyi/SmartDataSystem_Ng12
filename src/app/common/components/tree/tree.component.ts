@@ -33,6 +33,10 @@ import { ServiceToken } from './tokens/service.token';
       useClass: StationTreeService,
       multi: true,
     },
+    {
+      provide: DivisionTreeService,
+      useClass: DivisionTreeService,
+    },
   ],
 })
 export class TreeComponent implements OnInit {
@@ -61,9 +65,8 @@ export class TreeComponent implements OnInit {
       level,
       node.hasChildren,
       node.parentId,
-      this._nodeIconType.get(
-        EnumHelper.ConvertDivisionToUserResource(node.divisionType)
-      )
+      this._nodeIconType.get(node.type),
+      node.type
     );
     this._flatNodeMap.set(node.id, newNode);
     return newNode;
@@ -85,8 +88,9 @@ export class TreeComponent implements OnInit {
   @Input('treeSelectModel')
   selectModel = TreeSelectEnum.Single;
 
-  @Output() selectTree: EventEmitter<string[]> = new EventEmitter<string[]>();
+  @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
 
+  // 维持点击状态
   selection!: SelectionModel<FlatTreeNode>;
 
   constructor(private _serviceFactory: ServiceFactory) {
@@ -113,7 +117,9 @@ export class TreeComponent implements OnInit {
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);
     }
-
+    this.selection.changed.subscribe((change) => {
+      this.selectTree.emit(change.added);
+    });
     this._service = this._serviceFactory.createService(this.serviceProvider);
     this._service.dataChange.subscribe((data) => {
       this.dataSource.data = data;
@@ -122,12 +128,10 @@ export class TreeComponent implements OnInit {
   }
   toggleNode(node: FlatTreeNode) {
     this.selection.toggle(node);
-
-    this.selectTree.emit(this.selection.selected.map((node) => node.id));
   }
   loadChildren(node: FlatTreeNode) {
     if (this.treeControl.isExpanded(node)) {
-      this._service.loadChildren(node.id, node.name);
+      this._service.loadChildren(node);
     }
   }
   addNode(node: NestedTreeNode) {
@@ -135,14 +139,23 @@ export class TreeComponent implements OnInit {
   }
   deleteNode(id: string) {
     this._service.deleteNode(id);
+    const node = this._flatNodeMap.get(id);
+    if (node) {
+      this.selection.deselect(node);
+      this._flatNodeMap.delete(id);
+    }
   }
   editNode(node: NestedTreeNode) {
     this._service.editNode(node);
   }
   async searchNode(condition: string) {
     let res = await this._service.searchNode(condition);
-    if (res.length && condition !== '') {
-      this.treeControl.expandAll();
+    if (res.length) {
+      if (condition !== '') {
+        this.treeControl.expandAll();
+      } else {
+        this.treeControl.collapseAll();
+      }
     }
     return res;
   }

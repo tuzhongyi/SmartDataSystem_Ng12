@@ -131,7 +131,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     // console.log('illegalmixinto change status');
     this.divisionId = this.storeService.divisionId;
     this.currentDivisionType = this.storeService.divisionType;
-    this.childDivisionType = EnumHelper.GetResourceChildType(this.currentDivisionType);
+    this.childDivisionType = EnumHelper.GetResourceChildType2(this.currentDivisionType);
 
     let divisionDropList = this.dropListMap.get(this.currentDivisionType);
 

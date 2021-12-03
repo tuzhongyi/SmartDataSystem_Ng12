@@ -1,10 +1,18 @@
 <div class='division-manage'>
     <div class='division-list'>
         <h2>区划列表</h2>
-        <button mat-flat-button color="primary" (click)="addNode()"> 添加</button>
-        <button mat-flat-button color="primary" (click)="deleteNode()"> 删除</button>
-        <button mat-flat-button color="primary" (click)="editNode()"> 编辑</button>
-
+        <button class="btn btn--green" (click)="addNode()" [disabled]="!enableAddBtn">
+            <i class='howell-icon-plus'></i>
+            添加
+        </button>
+        <button class="btn btn--red" (click)="deleteNode()" [disabled]="!enableDelBtn">
+            <i class='howell-icon-delete-bin'></i>
+            删除
+        </button>
+        <button class="btn btn--blue" (click)="editNode()" [disabled]="!enableEditBtn">
+            <i class='howell-icon-move2'></i>
+            编辑
+        </button>
         <input type="text" class='search' #search> <button mat-flat-button color="primary"
             (click)="searchNode(search.value)">
             搜索</button>
