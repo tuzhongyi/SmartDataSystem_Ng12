@@ -34,7 +34,7 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Station;
+  treeServiceProvider = TreeServiceEnum.Division;
   treeSelectModel = TreeSelectEnum.Single;
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
@@ -71,7 +71,7 @@ export class DivisionManageComponent implements OnInit {
     }, this._excludeGuards);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async addNode() {
     if (this.tree) {
@@ -89,6 +89,7 @@ export class DivisionManageComponent implements OnInit {
         node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
         this.tree.addNode(node);
       }
+
     }
   }
   async deleteNode() {
@@ -120,6 +121,8 @@ export class DivisionManageComponent implements OnInit {
           const node = this._converter.fromDivisionManage(model);
           this.tree.editNode(node);
         }
+
+
       }
     }
   }

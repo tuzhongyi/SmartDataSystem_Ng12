@@ -5,10 +5,14 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
+import { BehaviorSubject } from 'rxjs';
+import { TreeConverter } from 'src/app/converter/tree.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { Division } from 'src/app/network/model/division.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { ServiceInterface } from './interface/service.interface';
@@ -76,6 +80,9 @@ export class TreeComponent implements OnInit {
   private _getChildren = (node: NestedTreeNode) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
   private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
+  private dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
+  private _nestedNodeMap = new Map<string, NestedTreeNode>();
+
 
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
@@ -93,7 +100,7 @@ export class TreeComponent implements OnInit {
   // 维持点击状态
   selection!: SelectionModel<FlatTreeNode>;
 
-  constructor(private _serviceFactory: ServiceFactory) {
+  constructor(private _serviceFactory: ServiceFactory, private _converter: TreeConverter) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -110,6 +117,9 @@ export class TreeComponent implements OnInit {
       this.treeControl,
       this._treeFlattener
     );
+
+    this.dataChange.subscribe(data => this.dataSource.data = data)
+
   }
   ngOnInit() {
     if (this.selectModel == TreeSelectEnum.Single) {
@@ -120,25 +130,84 @@ export class TreeComponent implements OnInit {
     this.selection.changed.subscribe((change) => {
       this.selectTree.emit(change.added);
     });
+
     this._service = this._serviceFactory.createService(this.serviceProvider);
-    this._service.dataChange.subscribe((data) => {
-      this.dataSource.data = data;
-    });
-    this._service.initialize();
+
+
+    this.initialize()
+  }
+
+  async initialize() {
+    let data = await this._service.initialize();
+    const nodes = this._converter.iterateToNested(data);
+
+    let res = this._register(nodes) ?? []
+    this.dataChange.next(res)
+
+
+  }
+
+  async loadChildren(node: FlatTreeNode) {
+    if (this.treeControl.isExpanded(node)) {
+      const nestedNode = this._nestedNodeMap.get(node.id);
+      if (nestedNode && !nestedNode.childrenLoaded) {
+        let data = await this._service.loadChildren(nestedNode);
+        if (!data.length) {
+          nestedNode.hasChildren = false;
+        }
+        nestedNode.childrenLoaded = true;
+        const nodes = this._converter.iterateToNested(data);
+        let res = this._register(nodes)
+        nestedNode.childrenChange.next(res)
+        this.dataChange.next(this.dataChange.value)
+      }
+
+    }
   }
   toggleNode(node: FlatTreeNode) {
     this.selection.toggle(node);
   }
-  loadChildren(node: FlatTreeNode) {
-    if (this.treeControl.isExpanded(node)) {
-      this._service.loadChildren(node);
-    }
-  }
+
   addNode(node: NestedTreeNode) {
-    this._service.addNode(node);
+
+    if (node.parentId) {
+      let parentNode = this._nestedNodeMap.get(node.parentId);
+      if (parentNode) {
+        node.type = EnumHelper.GetResourceChildType(parentNode.type);
+        parentNode.hasChildren = true;
+        parentNode.childrenChange.value.push(node);
+      }
+    } else {
+      this.dataChange.value.push(node);
+    }
+    this._nestedNodeMap.set(node.id, node);
+    this.dataChange.next(this.dataChange.value);
+
   }
   deleteNode(id: string) {
-    this._service.deleteNode(id);
+    if (id) {
+      // 当前要删除的节点
+      let currentNode = this._nestedNodeMap.get(id);
+      if (currentNode) {
+        // 该节点有没有父节点
+        if (currentNode.parentId) {
+          let parentNode = this._nestedNodeMap.get(currentNode.parentId)!;
+          let index = parentNode.childrenChange.value.indexOf(currentNode);
+          if (index != -1) {
+            parentNode.childrenChange.value.splice(index, 1);
+            parentNode.hasChildren = parentNode.childrenChange.value.length > 0;
+          }
+        } else {
+          let index = this.dataChange.value.indexOf(currentNode);
+          if (index != -1) {
+            this.dataChange.value.splice(index, 1);
+          }
+        }
+        this._nestedNodeMap.delete(currentNode.id);
+      }
+      this.dataChange.next(this.dataChange.value);
+    }
+
     const node = this._flatNodeMap.get(id);
     if (node) {
       this.selection.deselect(node);
@@ -146,17 +215,91 @@ export class TreeComponent implements OnInit {
     }
   }
   editNode(node: NestedTreeNode) {
-    this._service.editNode(node);
+    let currentNode = this._nestedNodeMap.get(node.id);
+    if (currentNode) {
+      currentNode.name = node.name;
+      currentNode.description = node.description;
+    }
+    this.dataChange.next(this.dataChange.value);
+
   }
   async searchNode(condition: string) {
-    let res = await this._service.searchNode(condition);
-    if (res.length) {
+    let data = await this._service.searchNode(condition);
+
+    let nodes: NestedTreeNode[] = [];
+
+    if (data.length) {
+      this._nestedNodeMap.clear();
+
+      if (this._isDivision(data)) {
+        nodes = this._converter.iterateToNested(data);
+
+      } else {
+        nodes = this._converter.recurseToNested(data)
+      }
+      let res = this._register(nodes)
+      this.dataChange.next(res);
+
       if (condition !== '') {
         this.treeControl.expandAll();
       } else {
         this.treeControl.collapseAll();
       }
     }
+    return nodes;
+
+
+  }
+
+  private _iterateToNested<T>(data: T[]): NestedTreeNode[] {
+    let res: NestedTreeNode[] = new Array<NestedTreeNode>();
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      if (item instanceof Division) {
+        const node = this._nestedNodeMap.has(item.Id)
+          ? this._nestedNodeMap.get(item.Id)!
+          : this._converter.fromDivision(item);
+        this._nestedNodeMap.set(node.id, node);
+        res.push(node);
+      } else {
+      }
+    }
     return res;
   }
+  private _recurseToNested(data: DivisionNode[], parentId: string | null = null) {
+    let res: NestedTreeNode[] = [];
+    for (let i = 0; i < data.length; i++) {
+      let divisionNode = data[i];
+      const node = this._nestedNodeMap.has(divisionNode.Id)
+        ? this._nestedNodeMap.get(divisionNode.Id)!
+        : this._converter.fromDivisionNode(divisionNode);
+      node.parentId = parentId;
+      this._nestedNodeMap.set(node.id, node);
+      res.push(node);
+      if (divisionNode.Nodes && divisionNode.Nodes.length > 0) {
+        let children = this._recurseToNested(divisionNode.Nodes, node.id);
+        node.childrenChange.value.push(...children);
+        node.hasChildren = true;
+      }
+    }
+
+    return res;
+  }
+  private _isDivision(data: Division[] | DivisionNode[]): data is Division[] {
+    if (data[0] instanceof Division) {
+      return true;
+    }
+    return false;
+  }
+  private _register(nodes: NestedTreeNode[]) {
+    return nodes.map(node => {
+      if (this._nestedNodeMap.has(node.id)) {
+        return this._nestedNodeMap.get(node.id)!
+      } else {
+        this._nestedNodeMap.set(node.id, node)
+        return node;
+      }
+    })
+  }
+
 }

@@ -37,4 +37,34 @@ export class TreeConverter {
     const node = new NestedTreeNode(model.id, model.name, model.description);
     return node;
   }
+
+  iterateToNested<T>(data: T[]): NestedTreeNode[] {
+    let res: NestedTreeNode[] = new Array<NestedTreeNode>();
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      if (item instanceof Division) {
+        const node = this.fromDivision(item)
+        res.push(node);
+      } else {
+      }
+    }
+    return res;
+  }
+  recurseToNested(data: DivisionNode[], parentId: string | null = null) {
+    let res: NestedTreeNode[] = [];
+    for (let i = 0; i < data.length; i++) {
+      let divisionNode = data[i];
+      const node = this.fromDivisionNode(divisionNode);
+      node.parentId = parentId;
+      res.push(node);
+      if (divisionNode.Nodes && divisionNode.Nodes.length > 0) {
+        let children = this.recurseToNested(divisionNode.Nodes, node.id);
+        node.childrenChange.value.push(...children);
+        node.hasChildren = true;
+      }
+    }
+
+    return res;
+  }
+
 }
