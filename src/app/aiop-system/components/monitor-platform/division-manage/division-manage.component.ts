@@ -34,7 +34,7 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Division;
+  treeServiceProvider = TreeServiceEnum.Station;
   treeSelectModel = TreeSelectEnum.Single;
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
@@ -144,7 +144,6 @@ export class DivisionManageComponent implements OnInit {
 
     if (this.tree) {
       let res = await this.tree.searchNode(condition);
-      console.log(res);
       if (res && res.length) {
         this._toastrService.success('操作成功');
       } else {

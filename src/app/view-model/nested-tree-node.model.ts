@@ -8,12 +8,12 @@ export class NestedTreeNode {
   childrenChange = new BehaviorSubject<NestedTreeNode[]>([]);
 
   constructor(
-    public id: string,
-    public name: string,
+    public id: string = '',
+    public name: string = '',
     public description: string = '',
     public type: UserResourceType = UserResourceType.None,
     public hasChildren = false,
     public parentId: string | null = null,
-    public childrenLoaded = false
-  ) {}
+    public childrenLoaded = false,
+  ) { }
 }

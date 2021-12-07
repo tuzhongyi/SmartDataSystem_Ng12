@@ -100,7 +100,7 @@ export class TreeComponent implements OnInit {
   // 维持点击状态
   selection!: SelectionModel<FlatTreeNode>;
 
-  constructor(private _serviceFactory: ServiceFactory, private _converter: TreeConverter) {
+  constructor(private _serviceFactory: ServiceFactory,) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -138,9 +138,7 @@ export class TreeComponent implements OnInit {
   }
 
   async initialize() {
-    let data = await this._service.initialize();
-    const nodes = this._converter.iterateToNested(data);
-
+    const nodes = await this._service.initialize();
     let res = this._register(nodes) ?? []
     this.dataChange.next(res)
 
@@ -151,12 +149,8 @@ export class TreeComponent implements OnInit {
     if (this.treeControl.isExpanded(node)) {
       const nestedNode = this._nestedNodeMap.get(node.id);
       if (nestedNode && !nestedNode.childrenLoaded) {
-        let data = await this._service.loadChildren(nestedNode);
-        if (!data.length) {
-          nestedNode.hasChildren = false;
-        }
+        let nodes = await this._service.loadChildren(nestedNode);
         nestedNode.childrenLoaded = true;
-        const nodes = this._converter.iterateToNested(data);
         let res = this._register(nodes)
         nestedNode.childrenChange.next(res)
         this.dataChange.next(this.dataChange.value)
@@ -186,6 +180,7 @@ export class TreeComponent implements OnInit {
   }
   deleteNode(id: string) {
     if (id) {
+      const node = this._flatNodeMap.get(id);
       // 当前要删除的节点
       let currentNode = this._nestedNodeMap.get(id);
       if (currentNode) {
@@ -206,13 +201,16 @@ export class TreeComponent implements OnInit {
         this._nestedNodeMap.delete(currentNode.id);
       }
       this.dataChange.next(this.dataChange.value);
+
+
+
+      if (node) {
+        this.selection.deselect(node);
+        this._flatNodeMap.delete(id);
+      }
     }
 
-    const node = this._flatNodeMap.get(id);
-    if (node) {
-      this.selection.deselect(node);
-      this._flatNodeMap.delete(id);
-    }
+
   }
   editNode(node: NestedTreeNode) {
     let currentNode = this._nestedNodeMap.get(node.id);
@@ -224,20 +222,12 @@ export class TreeComponent implements OnInit {
 
   }
   async searchNode(condition: string) {
-    let data = await this._service.searchNode(condition);
+    this.selection.clear();
+    let nodes: NestedTreeNode[] = await this._service.searchNode(condition);
 
-    let nodes: NestedTreeNode[] = [];
-
-    if (data.length) {
+    if (nodes.length) {
       this._nestedNodeMap.clear();
-
-      if (this._isDivision(data)) {
-        nodes = this._converter.iterateToNested(data);
-
-      } else {
-        nodes = this._converter.recurseToNested(data)
-      }
-      let res = this._register(nodes)
+      let res = this._register(nodes);
       this.dataChange.next(res);
 
       if (condition !== '') {
@@ -247,50 +237,8 @@ export class TreeComponent implements OnInit {
       }
     }
     return nodes;
-
-
   }
 
-  private _iterateToNested<T>(data: T[]): NestedTreeNode[] {
-    let res: NestedTreeNode[] = new Array<NestedTreeNode>();
-    for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-      if (item instanceof Division) {
-        const node = this._nestedNodeMap.has(item.Id)
-          ? this._nestedNodeMap.get(item.Id)!
-          : this._converter.fromDivision(item);
-        this._nestedNodeMap.set(node.id, node);
-        res.push(node);
-      } else {
-      }
-    }
-    return res;
-  }
-  private _recurseToNested(data: DivisionNode[], parentId: string | null = null) {
-    let res: NestedTreeNode[] = [];
-    for (let i = 0; i < data.length; i++) {
-      let divisionNode = data[i];
-      const node = this._nestedNodeMap.has(divisionNode.Id)
-        ? this._nestedNodeMap.get(divisionNode.Id)!
-        : this._converter.fromDivisionNode(divisionNode);
-      node.parentId = parentId;
-      this._nestedNodeMap.set(node.id, node);
-      res.push(node);
-      if (divisionNode.Nodes && divisionNode.Nodes.length > 0) {
-        let children = this._recurseToNested(divisionNode.Nodes, node.id);
-        node.childrenChange.value.push(...children);
-        node.hasChildren = true;
-      }
-    }
-
-    return res;
-  }
-  private _isDivision(data: Division[] | DivisionNode[]): data is Division[] {
-    if (data[0] instanceof Division) {
-      return true;
-    }
-    return false;
-  }
   private _register(nodes: NestedTreeNode[]) {
     return nodes.map(node => {
       if (this._nestedNodeMap.has(node.id)) {

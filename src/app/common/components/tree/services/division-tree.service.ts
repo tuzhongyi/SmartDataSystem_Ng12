@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { TreeConverter } from 'src/app/converter/tree.converter';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -12,8 +14,6 @@ import {
   GetDivisionTreeParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { ServiceInterface } from '../interface/service.interface';
 
@@ -22,7 +22,7 @@ export class DivisionTreeService implements ServiceInterface {
 
   constructor(
     private _divisionRequest: DivisionRequestService,
-    private _stationRequest: GarbageStationRequestService,
+    private _converter: TreeConverter
   ) { }
 
   getName() {
@@ -30,45 +30,51 @@ export class DivisionTreeService implements ServiceInterface {
   }
 
   async initialize() {
-    let data = await this._loadData(UserResourceType.City);
-    return data;
+    let data = await this._loadData(DivisionType.City);
+    let nodes = this._converter.iterateToNested(data);
+    return nodes;
   }
 
   async loadChildren(node: NestedTreeNode) {
     if (node && !node.childrenLoaded) {
-      const type = EnumHelper.GetResourceChildType(node.type);
-      let data = await this._loadData(type, node.id);
-      return data;
+      const divisionType = EnumHelper.ConvertUserResourceToDivision(node.type);
+      const childType = EnumHelper.GetDivisionChildType(divisionType)
+      let data = await this._loadData(childType, node.id);
+
+      const nodes = this._converter.iterateToNested(data)
+      return nodes;
     }
+
     return [];
   }
 
   async searchNode(condition: string) {
     let data: Division[] | DivisionNode[];
+    let nodes: NestedTreeNode[] = [];
+
     if (condition == '') {
-      data = await this._loadData(UserResourceType.City);
+      nodes = await this.initialize();
     } else {
       data = await this._searchData(condition);
+      nodes = this._converter.recurseToNested(data)
     }
 
-    return data;
+
+    return nodes;
   }
 
-  private async _loadData(type: UserResourceType, parentId?: string) {
-    if (type == UserResourceType.None) {
-      return [];
-    } else if (type == UserResourceType.Station) {
-    } else {
-      let params = new GetDivisionsParams();
-      const divisionType = EnumHelper.ConvertUserResourceToDivision(type);
-      params.DivisionType = divisionType;
-      if (parentId) params.ParentId = parentId;
-      let res = await this._divisionRequest.list(params);
+  private async _loadData(type?: DivisionType, parentId?: string) {
 
-      return res.Data;
-    }
-    return [];
+    let params = new GetDivisionsParams();
+    if (type)
+      params.DivisionType = type;
+    if (parentId) params.ParentId = parentId;
+    let res = await this._divisionRequest.list(params);
+
+    return res.Data;
+
   }
+
 
   private async _searchData(condition: string) {
     let params = new GetDivisionTreeParams();
@@ -77,13 +83,34 @@ export class DivisionTreeService implements ServiceInterface {
     return res.Nodes;
   }
 
+  // 给 StationTree用的
+  async getDivision(id: string) {
+    return await this._divisionRequest.get(id)
+  }
+  async getAncestorDivision(division: Division) {
+    let res: Division[] = [];
 
-  public async loadStation(id: string) {
-    let params = new GetGarbageStationsParams();
-    params.DivisionId = id;
 
-    let res = await this._stationRequest.list(params);
-    console.log(res);
+    while (division.ParentId) {
+      let d = await this.getDivision(division.ParentId)
+      res.push(d)
+      division = d;
+    }
+
+    return res;
   }
 
+
+
+  async loadAllData(type?: DivisionType, parentId?: string) {
+
+    let params = new GetDivisionsParams();
+    if (type)
+      params.DivisionType = type;
+    if (parentId) params.ParentId = parentId;
+    let res = await this._divisionRequest.list(params);
+
+    return res.Data;
+
+  }
 }
