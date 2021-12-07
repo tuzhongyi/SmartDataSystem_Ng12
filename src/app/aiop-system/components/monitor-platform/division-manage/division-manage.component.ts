@@ -39,8 +39,9 @@ export class DivisionManageComponent implements OnInit {
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
 
+
   get enableAddBtn() {
-    return this.currentNode?.type !== UserResourceType.Committees;
+    return !this.currentNode || this.currentNode?.type == UserResourceType.City || this.currentNode?.type == UserResourceType.County;
   }
   get enableDelBtn() {
     return (
@@ -153,6 +154,7 @@ export class DivisionManageComponent implements OnInit {
   }
 
   selectTree(nodes: FlatTreeNode[]) {
+
     this.currentNode = nodes[0];
     console.log('currentNode', this.currentNode);
   }

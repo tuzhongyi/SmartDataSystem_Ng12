@@ -83,17 +83,22 @@ export class StationTreeService {
       }, divisions)
 
 
-      console.log(divisions)
+      console.log('厢房所在区划', divisions)
 
 
       // 合并 Division 和 Station
       let result = [...divisions, ...allStations]
 
-      console.log(result)
-      let res = this._converter.buildNestedTree(result)
+      stationNodes = this._converter.buildNestedTree(result)
 
+      console.log(stationNodes)
 
-      console.log(res)
+      // 将 stationNodes 和  divisionNodes 合并
+
+      let merged = this._converter.mergeNestedTree(divisionNodes, stationNodes);
+      console.log(merged)
+
+      res = merged
 
     } else {
       res = divisionNodes;
@@ -116,10 +121,12 @@ export class StationTreeService {
 
     return res.Data
   }
+  // 测试拉取所有数据后生成树结构
   private async _loadAll() {
     let data = await this._divisionTreeService.loadAllData();
     const res = this._converter.buildNestedTree(data)
     console.log('所有节点', res)
     return res;
   }
+
 }

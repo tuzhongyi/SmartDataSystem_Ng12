@@ -102,6 +102,7 @@ export class DivisionTreeService implements ServiceInterface {
 
 
 
+  // 拉取所有数据，测试用
   async loadAllData(type?: DivisionType, parentId?: string) {
 
     let params = new GetDivisionsParams();

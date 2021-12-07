@@ -128,9 +128,11 @@ export class TreeConverter {
           if (m.has(node.parentId)) {
             // 当前已经有 parentNode 记录
             let parentNode = m.get(node.parentId)!;
+            parentNode.hasChildren = true;
             parentNode.childrenChange.value.push(node)
           } else if (hanged.has(node.parentId)) {
             let parentNode = hanged.get(node.parentId)!;
+            parentNode.hasChildren = true;
             parentNode.childrenChange.value.push(node)
 
           } else {
@@ -145,6 +147,20 @@ export class TreeConverter {
     }
 
     return res;
+  }
+
+  mergeNestedTree(first: NestedTreeNode[], second: NestedTreeNode[]) {
+    for (let i = 0; i < first.length; i++) {
+      let first_item = first[i];
+      let second_item = second.find(item => item.id == first_item.id)
+      if (second_item) {
+        this.mergeNestedTree(first_item.childrenChange.value, second_item.childrenChange.value)
+      } else {
+        second.push(first_item)
+      }
+    }
+
+    return second;
   }
 
 
