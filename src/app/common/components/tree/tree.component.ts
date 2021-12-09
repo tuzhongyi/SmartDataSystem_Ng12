@@ -86,7 +86,6 @@ export class TreeComponent implements OnInit {
   private _nestedNodeMap = new Map<string, NestedTreeNode>();
   private _currentNode: FlatTreeNode | null = null;
 
-
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
   dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
@@ -102,18 +101,16 @@ export class TreeComponent implements OnInit {
 
   selection!: SelectionModel<FlatTreeNode>;
 
-
-
   highLight = (node: FlatTreeNode) => {
     if (this.selectModel == TreeSelectEnum.Single) {
-      return this.selection.isSelected(node)
+      return this.selection.isSelected(node);
     } else if (this.selectModel == TreeSelectEnum.Multiple) {
-      return this._currentNode && this._currentNode.id == node.id
+      return this._currentNode && this._currentNode.id == node.id;
     }
-    return false
-  }
+    return false;
+  };
 
-  constructor(private _serviceFactory: ServiceFactory,) {
+  constructor(private _serviceFactory: ServiceFactory) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -131,8 +128,7 @@ export class TreeComponent implements OnInit {
       this._treeFlattener
     );
 
-    this.dataChange.subscribe(data => this.dataSource.data = data)
-
+    this.dataChange.subscribe((data) => (this.dataSource.data = data));
   }
   ngOnInit() {
     if (this.selectModel == TreeSelectEnum.Single) {
@@ -146,16 +142,13 @@ export class TreeComponent implements OnInit {
 
     this._service = this._serviceFactory.createService(this.serviceProvider);
 
-
-    this.initialize()
-
+    this.initialize();
   }
 
   async initialize() {
     const nodes = await this._service.initialize();
-    let res = this._register(nodes) ?? []
-    this.dataChange.next(res)
-
+    let res = this._register(nodes) ?? [];
+    this.dataChange.next(res);
   }
 
   async loadChildren(node: FlatTreeNode) {
@@ -163,14 +156,14 @@ export class TreeComponent implements OnInit {
       const nestedNode = this._nestedNodeMap.get(node.id);
       if (nestedNode && !nestedNode.childrenLoaded) {
         let nodes = await this._service.loadChildren(nestedNode);
+        // console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
-        let res = this._register(nodes)
-        nestedNode.childrenChange.next(res)
+        let res = this._register(nodes);
+        nestedNode.childrenChange.next(res);
         this.dataChange.next(this.dataChange.value);
 
-        this._checkAllDescendants(node)
+        this._checkAllDescendants(node);
       }
-
     }
   }
   singleSelectNode(node: FlatTreeNode) {
@@ -182,38 +175,40 @@ export class TreeComponent implements OnInit {
     this._currentNode = node;
 
     // 更改后代节点状态
-    this._checkAllDescendants(node)
+    this._checkAllDescendants(node);
 
     // 更改父节点状态
     this._checkAllParentsSelection(node);
-
   }
   /**
    *  当前节点的所有后代节点部分被选中，但不能全被选中，则显示 indetermindate状态
-   * @param node 
-   * @returns 
+   * @param node
+   * @returns
    */
   descendantsPartiallySelected(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
-    const result = descendants.some(child => this.selection.isSelected(child))
-    return result && !this.descendantAllSelected(node)
+    const result = descendants.some((child) =>
+      this.selection.isSelected(child)
+    );
+    return result && !this.descendantAllSelected(node);
   }
   /**
-   * 
-   * @param node 
-   * @returns 
+   *
+   * @param node
+   * @returns
    * @description 当前节点所有后代节点都被选中
    */
   descendantAllSelected(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
-    const descAllSelected = descendants.length > 0 && descendants.every(child => this.selection.isSelected(child))
-    return descAllSelected
+    const descAllSelected =
+      descendants.length > 0 &&
+      descendants.every((child) => this.selection.isSelected(child));
+    return descAllSelected;
   }
 
   /***增，删，改，查节点 */
 
   addNode(node: NestedTreeNode) {
-
     if (node.parentId) {
       let parentNode = this._nestedNodeMap.get(node.parentId);
       if (parentNode) {
@@ -226,7 +221,6 @@ export class TreeComponent implements OnInit {
     }
     this._nestedNodeMap.set(node.id, node);
     this.dataChange.next(this.dataChange.value);
-
   }
   deleteNode(id: string) {
     if (id) {
@@ -252,15 +246,11 @@ export class TreeComponent implements OnInit {
       }
       this.dataChange.next(this.dataChange.value);
 
-
-
       if (node) {
         this.selection.deselect(node);
         this._flatNodeMap.delete(id);
       }
     }
-
-
   }
   editNode(node: NestedTreeNode) {
     let currentNode = this._nestedNodeMap.get(node.id);
@@ -269,7 +259,6 @@ export class TreeComponent implements OnInit {
       currentNode.description = node.description;
     }
     this.dataChange.next(this.dataChange.value);
-
   }
   async searchNode(condition: string) {
     this.selection.clear();
@@ -290,25 +279,27 @@ export class TreeComponent implements OnInit {
   }
 
   private _register(nodes: NestedTreeNode[]) {
-    return nodes.map(node => {
+    return nodes.map((node) => {
       if (this._nestedNodeMap.has(node.id)) {
-        return this._nestedNodeMap.get(node.id)!
+        return this._nestedNodeMap.get(node.id)!;
       } else {
-        this._nestedNodeMap.set(node.id, node)
+        this._nestedNodeMap.set(node.id, node);
         return node;
       }
-    })
+    });
   }
   private _checkAllDescendants(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
 
     /**
-   * 如果当前节点选中，则所有子节点被选中
-   * 如果当前节点取消选中，则所有子节点取消选中
-   */
+     * 如果当前节点选中，则所有子节点被选中
+     * 如果当前节点取消选中，则所有子节点取消选中
+     */
 
-    if (descendants.length > 0) {
-      this.selection.isSelected(node) ? this.selection.select(...descendants) : this.selection.deselect(...descendants)
+    if (descendants.length > 0 && this.selection.isMultipleSelection()) {
+      this.selection.isSelected(node)
+        ? this.selection.select(...descendants)
+        : this.selection.deselect(...descendants);
     }
   }
 
@@ -316,24 +307,26 @@ export class TreeComponent implements OnInit {
     let parent: FlatTreeNode | null = this._getParentNode(node);
     while (parent) {
       this._checkRootNodeSelection(parent);
-      parent = this._getParentNode(parent)
+      parent = this._getParentNode(parent);
     }
   }
   /**
-   * 
-   * @param node 
+   *
+   * @param node
    * @description 节点从选中状态变成未选中状态，条件是任意后代节点未选中
    * @description 节点从未选中状态变成选中状态，条件是所有后代节点都选中
    */
   private _checkRootNodeSelection(node: FlatTreeNode) {
     const nodeSelected = this.selection.isSelected(node);
     const descendants = this.treeControl.getDescendants(node);
-    const descAllSelected = descendants.length > 0 && descendants.every(child => this.selection.isSelected(child))
+    const descAllSelected =
+      descendants.length > 0 &&
+      descendants.every((child) => this.selection.isSelected(child));
 
     if (nodeSelected && !descAllSelected) {
-      this.selection.deselect(node)
+      this.selection.deselect(node);
     } else if (!nodeSelected && descAllSelected) {
-      this.selection.select(node)
+      this.selection.select(node);
     }
   }
   private _getParentNode(node: FlatTreeNode) {
@@ -343,6 +336,4 @@ export class TreeComponent implements OnInit {
 
     return null;
   }
-
-
 }
