@@ -7,8 +7,7 @@
   <mat-tree-node
     *matTreeNodeDef="let node"
     matTreeNodePadding
-    (click)="toggleNode(node)"
-    [class.selected]="selection.isSelected(node)"
+    [class.high-light]="highLight(node)"
   >
     <ng-container *ngIf="node.expandable">
       <button
@@ -26,9 +25,23 @@
     <ng-container *ngIf="!node.expandable">
       <button class="tree-select" disabled></button>
     </ng-container>
-    <div class="tree-item">
-      <i [class]="node.iconType"></i>
-      {{ node.name }}
-    </div>
+
+    <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
+      <div (click)="singleSelectNode(node)">
+        <i [class]="node.iconType"></i>
+        {{ node.name }}
+      </div>
+    </ng-template>
+
+    <ng-template [ngIf]="selectModel == TreeSelectEnum.Multiple">
+      <mat-checkbox
+        (change)="multipleSelectNode(node)"
+        [checked]="selection.isSelected(node)"
+        [indeterminate]="descendantsPartiallySelected(node)"
+      >
+        <i [class]="node.iconType"></i>
+        {{ node.name }}
+      </mat-checkbox>
+    </ng-template>
   </mat-tree-node>
 </mat-tree>

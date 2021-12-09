@@ -44,6 +44,8 @@ import { ServiceToken } from './tokens/service.token';
   ],
 })
 export class TreeComponent implements OnInit {
+  TreeSelectEnum = TreeSelectEnum;
+
   /***************private  *********************/
   private _service!: ServiceInterface;
 
@@ -82,6 +84,7 @@ export class TreeComponent implements OnInit {
   private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
   private dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
   private _nestedNodeMap = new Map<string, NestedTreeNode>();
+  private _currentNode: FlatTreeNode | null = null;
 
 
   /****** public ********/
@@ -97,8 +100,18 @@ export class TreeComponent implements OnInit {
 
   @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
 
-  // 维持点击状态
   selection!: SelectionModel<FlatTreeNode>;
+
+
+
+  highLight = (node: FlatTreeNode) => {
+    if (this.selectModel == TreeSelectEnum.Single) {
+      return this.selection.isSelected(node)
+    } else if (this.selectModel == TreeSelectEnum.Multiple) {
+      return this._currentNode && this._currentNode.id == node.id
+    }
+    return false
+  }
 
   constructor(private _serviceFactory: ServiceFactory,) {
     this._treeFlattener = new MatTreeFlattener(
@@ -128,20 +141,20 @@ export class TreeComponent implements OnInit {
       this.selection = new SelectionModel<FlatTreeNode>(true);
     }
     this.selection.changed.subscribe((change) => {
-      this.selectTree.emit(change.added);
+      this.selectTree.emit(change.source.selected);
     });
 
     this._service = this._serviceFactory.createService(this.serviceProvider);
 
 
     this.initialize()
+
   }
 
   async initialize() {
     const nodes = await this._service.initialize();
     let res = this._register(nodes) ?? []
     this.dataChange.next(res)
-
 
   }
 
@@ -153,14 +166,51 @@ export class TreeComponent implements OnInit {
         nestedNode.childrenLoaded = true;
         let res = this._register(nodes)
         nestedNode.childrenChange.next(res)
-        this.dataChange.next(this.dataChange.value)
+        this.dataChange.next(this.dataChange.value);
+
+        this._checkAllDescendants(node)
       }
 
     }
   }
-  toggleNode(node: FlatTreeNode) {
+  singleSelectNode(node: FlatTreeNode) {
     this.selection.toggle(node);
   }
+  multipleSelectNode(node: FlatTreeNode) {
+    // 处理当前节点
+    this.selection.toggle(node);
+    this._currentNode = node;
+
+    // 更改后代节点状态
+    this._checkAllDescendants(node)
+
+    // 更改父节点状态
+    this._checkAllParentsSelection(node);
+
+  }
+  /**
+   *  当前节点的所有后代节点部分被选中，但不能全被选中，则显示 indetermindate状态
+   * @param node 
+   * @returns 
+   */
+  descendantsPartiallySelected(node: FlatTreeNode) {
+    const descendants = this.treeControl.getDescendants(node);
+    const result = descendants.some(child => this.selection.isSelected(child))
+    return result && !this.descendantAllSelected(node)
+  }
+  /**
+   * 
+   * @param node 
+   * @returns 
+   * @description 当前节点所有后代节点都被选中
+   */
+  descendantAllSelected(node: FlatTreeNode) {
+    const descendants = this.treeControl.getDescendants(node);
+    const descAllSelected = descendants.length > 0 && descendants.every(child => this.selection.isSelected(child))
+    return descAllSelected
+  }
+
+  /***增，删，改，查节点 */
 
   addNode(node: NestedTreeNode) {
 
@@ -249,5 +299,50 @@ export class TreeComponent implements OnInit {
       }
     })
   }
+  private _checkAllDescendants(node: FlatTreeNode) {
+    const descendants = this.treeControl.getDescendants(node);
+
+    /**
+   * 如果当前节点选中，则所有子节点被选中
+   * 如果当前节点取消选中，则所有子节点取消选中
+   */
+
+    if (descendants.length > 0) {
+      this.selection.isSelected(node) ? this.selection.select(...descendants) : this.selection.deselect(...descendants)
+    }
+  }
+
+  private _checkAllParentsSelection(node: FlatTreeNode) {
+    let parent: FlatTreeNode | null = this._getParentNode(node);
+    while (parent) {
+      this._checkRootNodeSelection(parent);
+      parent = this._getParentNode(parent)
+    }
+  }
+  /**
+   * 
+   * @param node 
+   * @description 节点从选中状态变成未选中状态，条件是任意后代节点未选中
+   * @description 节点从未选中状态变成选中状态，条件是所有后代节点都选中
+   */
+  private _checkRootNodeSelection(node: FlatTreeNode) {
+    const nodeSelected = this.selection.isSelected(node);
+    const descendants = this.treeControl.getDescendants(node);
+    const descAllSelected = descendants.length > 0 && descendants.every(child => this.selection.isSelected(child))
+
+    if (nodeSelected && !descAllSelected) {
+      this.selection.deselect(node)
+    } else if (!nodeSelected && descAllSelected) {
+      this.selection.select(node)
+    }
+  }
+  private _getParentNode(node: FlatTreeNode) {
+    if (node.parentId) {
+      return this._flatNodeMap.get(node.parentId)!;
+    }
+
+    return null;
+  }
+
 
 }

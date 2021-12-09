@@ -34,7 +34,7 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Station;
+  treeServiceProvider = TreeServiceEnum.Division;
   treeSelectModel = TreeSelectEnum.Single;
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
@@ -156,7 +156,7 @@ export class DivisionManageComponent implements OnInit {
   selectTree(nodes: FlatTreeNode[]) {
 
     this.currentNode = nodes[0];
-    console.log('currentNode', this.currentNode);
+    console.log('nodes', nodes);
   }
 
   private _generateExclude(condition: string) {

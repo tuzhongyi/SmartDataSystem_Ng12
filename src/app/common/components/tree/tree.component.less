@@ -36,3 +36,26 @@ button.tree-select {
   margin: 0;
   border-radius: 5px;
 }
+
+::ng-deep .mat-checkbox-inner-container {
+  width: 14px;
+  height: 14px;
+  .mat-checkbox-background {
+    background: transparent !important;
+
+    .mat-checkbox-checkmark-path {
+      stroke-width: 4px;
+    }
+    .mat-checkbox-mixedmark {
+      width: 6px;
+      height: 6px;
+      border-radius: 0;
+    }
+  }
+
+  .mat-checkbox-frame {
+    border-color: #7586e0;
+  }
+}
+
+//mat-checkbox-indeterminate
