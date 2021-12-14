@@ -8,7 +8,11 @@ export class ServiceCache<T extends IData> {
 
   constructor(private key: string, private service: IBusiness<T>) {}
   load() {
-    return this.cache.get(this.key) as T[];
+    try {
+      return this.cache.get(this.key) as T[];
+    } catch (error) {
+      return [];
+    }
   }
   save(data: T[]) {
     this.cache.set(this.key, data);
