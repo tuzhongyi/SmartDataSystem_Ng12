@@ -2,7 +2,7 @@
  * @Author: zzl
  * @Date: 2021-09-16 10:05:08
  * @Last Modified by: zzl
- * @Last Modified time: 2021-12-14 13:15:16
+ * @Last Modified time: 2021-12-14 14:36:27
  */
 import { Injectable } from '@angular/core';
 import { PagedList, Page } from 'src/app/network/model/page_list.model';
@@ -46,7 +46,6 @@ import { GarbageStationNumberStatisticComparison } from '../../model/garbage-sta
 import { SumEventNumber } from '../../model/sum-event-number.model';
 import { Cache, ServiceCache } from '../cache/service.cache';
 
-@Cache(GarbageStationUrl.basic())
 @Injectable({
   providedIn: 'root',
 })
@@ -54,7 +53,9 @@ export class GarbageStationRequestService implements IBusiness<GarbageStation> {
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
     this.typeBasic = this.basic.type(GarbageStation);
+    this.cache = new ServiceCache(GarbageStationUrl.basic(), this);
   }
+  cache: ServiceCache<GarbageStation>;
 
   private basic: BaseRequestService;
   private typeBasic: BaseTypeRequestService<GarbageStation>;
@@ -147,10 +148,6 @@ export class GarbageStationRequestService implements IBusiness<GarbageStation> {
     }
     return this._statistic;
   }
-}
-
-export interface GarbageStationRequestService {
-  cache: ServiceCache<GarbageStation>;
 }
 
 class CamerasService {

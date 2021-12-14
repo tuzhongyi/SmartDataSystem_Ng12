@@ -6,12 +6,14 @@ import { AppCache } from './app-cache';
 export class ServiceCache<T extends IData> {
   cache = new AppCache(1000 * 60 * 30);
 
-  constructor(private key: string, private service: IBusiness<T>) {}
+  constructor(private key: string, private service: IBusiness<T>) {
+    this.save([]);
+  }
   load() {
     try {
       return this.cache.get(this.key) as T[];
     } catch (error) {
-      return [];
+      return new Array();
     }
   }
   save(data: T[]) {
@@ -93,10 +95,9 @@ export class ServiceCache<T extends IData> {
 }
 
 export function Cache(key: string) {
-  return function <T extends IData>(target: Function) {
-    target.prototype.cache = new ServiceCache(
-      key,
-      target as unknown as IBusiness<T>
-    );
+  return function (target: Function) {
+    if (!target.prototype.cache) {
+      target.prototype.cache = new ServiceCache(key, target.prototype);
+    }
   };
 }

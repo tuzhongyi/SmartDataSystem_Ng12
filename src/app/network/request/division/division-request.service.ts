@@ -32,18 +32,35 @@ import { DivisionNumberStatisticComparison } from '../../model/division-number-s
 import { Injectable } from '@angular/core';
 import { Cache, ServiceCache } from '../cache/service.cache';
 
-@Cache(DivisionUrl.basic())
 @Injectable({
   providedIn: 'root',
 })
 export class DivisionRequestService implements IBusiness<Division> {
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
-    this.type = this.basic.type(Division);
+  constructor(private _http: HowellAuthHttpService) {}
+
+  private _cache?: ServiceCache<Division>;
+  public get cache(): ServiceCache<Division> {
+    if (!this._cache) {
+      this._cache = new ServiceCache(DivisionUrl.basic(), this);
+    }
+    return this._cache;
   }
 
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Division>;
+  private _basic?: BaseRequestService;
+  public get basic(): BaseRequestService {
+    if (!this._basic) {
+      this._basic = new BaseRequestService(this._http);
+    }
+    return this._basic;
+  }
+  private _type?: BaseTypeRequestService<Division>;
+  public get type(): BaseTypeRequestService<Division> {
+    if (!this._type) {
+      this._type = this.basic.type(Division);
+    }
+    return this._type;
+  }
+
   create(data: Division): Promise<Division> {
     let url = DivisionUrl.basic();
     return this.type.post(url, data);
@@ -109,9 +126,7 @@ export class DivisionRequestService implements IBusiness<Division> {
   }
 }
 
-export interface DivisionRequestService {
-  cache: ServiceCache<Division>;
-}
+export interface DivisionRequestService {}
 
 @Cache(DivisionUrl.volume('ID').basic())
 class VolumesService {
