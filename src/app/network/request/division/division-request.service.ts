@@ -30,12 +30,14 @@ import { SumEventNumber } from '../../model/sum-event-number.model';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
 import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
 import { Injectable } from '@angular/core';
+import { Cache, ServiceCache } from '../cache/service.cache';
 
+@Cache(DivisionUrl.basic())
 @Injectable({
   providedIn: 'root',
 })
 export class DivisionRequestService implements IBusiness<Division> {
-  constructor(private _http: HowellAuthHttpService) {
+  constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Division);
   }
@@ -106,6 +108,12 @@ export class DivisionRequestService implements IBusiness<Division> {
     return this._statistic;
   }
 }
+
+export interface DivisionRequestService {
+  cache: ServiceCache<Division>;
+}
+
+@Cache(DivisionUrl.volume('ID').basic())
 class VolumesService {
   constructor(private basic: BaseRequestService) {}
 
@@ -117,6 +125,7 @@ class VolumesService {
     return this._history;
   }
 }
+@Cache(DivisionUrl.volume('ID').history.basic())
 class VolumesHistoryService {
   constructor(private basic: BaseRequestService) {}
   list(
@@ -127,6 +136,7 @@ class VolumesHistoryService {
     return this.basic.paged(url, GarbageVolume, params);
   }
 }
+@Cache(DivisionUrl.eventnumber().basic())
 class EventNumbersService {
   constructor(private basic: BaseRequestService) {}
 
