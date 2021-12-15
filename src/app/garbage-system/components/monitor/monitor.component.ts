@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-26 10:44:27
+ * @Last Modified time: 2021-12-15 14:50:31
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -44,8 +44,5 @@ export class MonitorComponent implements OnInit {
   }
   clickMonitor() {
     console.log('click monitor');
-    if (this.toolbar) {
-      this.toolbar.showDropDown = false;
-    }
   }
 }
