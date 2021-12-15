@@ -33,16 +33,12 @@ registerLocaleData(zh, 'zh-CN');
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.less'],
 })
-export class ToolbarComponent implements OnInit, OnDestroy {
+export class ToolbarComponent implements OnInit {
   @Input()
   showStatistic: boolean = true;
 
-  today: number = Date.now();
-
   divisionTitle: string = '';
   userName: string = '';
-
-  private subscription: Subscription | null = null;
 
   @ViewChild('logout') logout!: ElementRef<HTMLDivElement>;
 
@@ -58,17 +54,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     private _localStorageService: LocalStorageService,
     private _cookieService: CookieService,
     private _router: Router
-  ) {
-    this.subscription = interval(1000).subscribe(
-      (n) => (this.today = Date.now())
-    );
-  }
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
-  }
+  ) {}
 
   ngOnInit(): void {
     let user = this._localStorageService.user;

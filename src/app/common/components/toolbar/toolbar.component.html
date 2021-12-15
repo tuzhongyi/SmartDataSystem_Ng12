@@ -1,4 +1,4 @@
-<div class="toolbar" #toolbar (click)="showDropDown = false; $event.stopPropagation()" (resized)="onResized($event)">
+<!-- <div class="toolbar" #toolbar (click)="showDropDown = false; $event.stopPropagation()" (resized)="onResized($event)">
   <div class="toolbar__item toolbar__item--m-l-30">
     <img class="toolbar__logo" src="assets/img/logo.svg" alt="" title="皓维智能" />
     <div class="toolbar__text">
@@ -21,13 +21,8 @@
     </div>
   </div>
   <div class="toolbar__item toolbar__item--end">
-    <div class="toolbar__today">
-      <div class="toolbar__today__time">{{ today | date: "HH:mm:ss" }}</div>
-      <div class="toolbar__today__slash"></div>
-      <div class="toolbar__today__date">
-        {{ today | date: "yyyy 年 M 月 dd 日 EEEE":"OOOO":"zh-CN" }}
-      </div>
-    </div>
+
+    <app-time></app-time>
 
     <div class="toolbar__link">
       <div class="toolbar__link__item toolbar__link__logout" #logout (click)="toggleDropDownHandler($event)">
@@ -50,4 +45,19 @@
       </div>
     </div>
   </div>
+</div> -->
+
+<div class="app-toolbar">
+
+  <mat-toolbar>
+
+    <app-account-info></app-account-info>
+
+    <div class='spacer'>
+      士大夫
+      <ng-content></ng-content>
+    </div>
+    <app-time></app-time>
+    <app-account-operation></app-account-operation>
+  </mat-toolbar>
 </div>

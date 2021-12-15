@@ -1,9 +1,9 @@
-/*
- * @Author: pmx 
- * @Date: 2021-09-15 16:03:33 
- * @Last Modified by: pmx
- * @Last Modified time: 2021-11-02 16:35:57
- */
+// /*
+//  * @Author: pmx
+//  * @Date: 2021-09-15 16:03:33
+//  * @Last Modified by: pmx
+//  * @Last Modified time: 2021-12-14 16:56:46
+//  */
 
 .toolbar-text() {
   font-weight: bold;
@@ -101,29 +101,6 @@
       }
     }
   }
-  .toolbar__today {
-    display: flex;
-    background-color: #2d3559;
-    border-radius: 100px;
-    padding: 5px 20px;
-    align-items: center;
-    white-space: nowrap;
-
-    &__time {
-      font-size: 18px;
-    }
-    &__slash {
-      width: 1px;
-      height: 20px;
-      margin: 0 10px;
-      background-color: #8692d3;
-    }
-    &__date {
-      color: #d0d7ff;
-      font-size: 16px;
-      font-weight: normal;
-    }
-  }
   .toolbar__link {
     font-family: "Material-Design-Iconic-Font";
     display: flex;
@@ -205,5 +182,17 @@
 @media screen and (max-width: 1330px) {
   .toolbar .statistic-wrapper {
     display: none;
+  }
+}
+
+@import url(/src/assets/less/toolbar.less);
+.app-toolbar {
+  width: 100%;
+  height: 100%;
+
+  .spacer {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
   }
 }
