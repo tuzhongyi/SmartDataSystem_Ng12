@@ -2,22 +2,12 @@
  * @Author: pmx 
  * @Date: 2021-09-06 17:08:22 
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-15 10:15:11
+ * @Last Modified time: 2021-12-15 13:45:48
  */
 
-/* @import url(bootstrap/dist/css/bootstrap.css); */
-
-@import "~video.js/dist/video-js.css";
-
-/**
-  默认在 angular.json 中已经配置了 deeppurple-amber.css
-  命名空间:
-    body.mat-typography  
-*/
-/* @import url(@angular/material/prebuilt-themes/deeppurple-amber.css); */
-
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import url(assets/css/howell.css);
-
+@import "~video.js/dist/video-js.css";
 @import "~ngx-toastr/toastr";
 
 html,
@@ -85,4 +75,9 @@ input:-webkit-autofill {
   transition-delay: 99999s;
   -webkit-transition: color 99999s, background-color 99999s;
   transition: color 99999s, background-color 99999s;
+}
+
+// 加权
+app-root {
+  @import url(assets/less/index.less);
 }

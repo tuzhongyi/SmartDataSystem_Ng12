@@ -1,60 +1,7 @@
-<!-- <div class="toolbar" #toolbar (click)="showDropDown = false; $event.stopPropagation()" (resized)="onResized($event)">
-  <div class="toolbar__item toolbar__item--m-l-30">
-    <img class="toolbar__logo" src="assets/img/logo.svg" alt="" title="皓维智能" />
-    <div class="toolbar__text">
-      <span class="toolbar__title">{{ divisionTitle }}</span>
-      <span class="toolbar__des">生活垃圾分类全程监管平台</span>
-    </div>
-  </div>
-  <div class="toolbar__item toolbar__item--center" *ngIf="showStatistic">
-    <div class="statistic-wrapper">
-      <div class="statistic-wrapper__title">湿垃圾总量</div>
-      <div class="statistic-wrapper__content">
-        <span class="statistic-wrapper__content__num">12121212</span>&nbsp;&nbsp;(吨/日)
-      </div>
-    </div>
-    <div class="statistic-wrapper">
-      <div class="statistic-wrapper__title">干垃圾总量</div>
-      <div class="statistic-wrapper__content">
-        <span class="statistic-wrapper__content__num">3453453123</span>&nbsp;&nbsp;(吨/日)
-      </div>
-    </div>
-  </div>
-  <div class="toolbar__item toolbar__item--end">
-
-    <app-time></app-time>
-
-    <div class="toolbar__link">
-      <div class="toolbar__link__item toolbar__link__logout" #logout (click)="toggleDropDownHandler($event)">
-        <i class="howell-icon-account"></i>
-      </div>
-
-      <div class="toolbar__link__item toolbar__link__help" (click)="navigateToHelp()">
-        <mat-icon aria-hidden="false" aria-label="Example home icon">
-          help
-        </mat-icon>
-      </div>
-
-      <div class="dropdown__menu" #dropdown [class.show]="showDropDown">
-        <div class="dropdown__item">
-          <i class="howell-icon-account"></i> {{ userName }}
-        </div>
-        <div class="dropdown__item" (click)="logoutHandler()">
-          <i class="howell-icon-logout"> </i> 退出登录
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
 <div class="app-toolbar">
-
   <mat-toolbar>
-
     <app-account-info></app-account-info>
-
     <div class='spacer'>
-      士大夫
       <ng-content></ng-content>
     </div>
     <app-time></app-time>
