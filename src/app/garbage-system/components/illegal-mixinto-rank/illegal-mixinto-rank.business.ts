@@ -35,7 +35,7 @@ export class IllegalMixintoRankBusiness implements RankConverter {
   ) {}
 
   async getCurrentDivision(id: string) {
-    let data = await this.divisionRequest.get(id);
+    let data = await this.divisionRequest.cache.get(id);
     return data;
   }
 
@@ -53,8 +53,9 @@ export class IllegalMixintoRankBusiness implements RankConverter {
     ) {
       const divisionParams = new GetDivisionsParams();
       divisionParams.AncestorId = divisionId;
-      divisionParams.DivisionType = EnumHelper.ConvertUserResourceToDivision(childType);
-      let res = await this.divisionRequest.list(divisionParams);
+      divisionParams.DivisionType =
+        EnumHelper.ConvertUserResourceToDivision(childType);
+      let res = await this.divisionRequest.cache.list(divisionParams);
       let ids = res.Data.map((division) => division.Id);
       const divisionStatisticParams = new GetDivisionStatisticNumbersParams();
       divisionStatisticParams.Ids = ids;

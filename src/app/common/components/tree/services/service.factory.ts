@@ -1,13 +1,16 @@
 import { Inject, Injectable } from '@angular/core';
+import { IServiceFactory } from 'src/app/common/interfaces/service-factory.interface';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
-import { ServiceInterface } from '../interface/service.interface';
-import { ServiceToken } from '../tokens/service.token';
+import { TreeServiceInterface } from '../interface/tree-service.interface';
+import { TreeServiceToken } from '../tokens/service.token';
 
 @Injectable()
-export class ServiceFactory {
-  constructor(@Inject(ServiceToken) private _services: ServiceInterface[]) {}
+export class ServiceFactory implements IServiceFactory {
+  constructor(
+    @Inject(TreeServiceToken) private _services: TreeServiceInterface[]
+  ) {}
 
-  createService(name: TreeServiceEnum): ServiceInterface {
-    return this._services.filter((item) => item.getName() === name)[0];
+  createService(name: TreeServiceEnum): TreeServiceInterface {
+    return this._services.find((item) => item.getName() === name)!;
   }
 }

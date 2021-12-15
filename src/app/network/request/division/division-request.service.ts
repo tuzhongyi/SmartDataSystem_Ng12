@@ -1,5 +1,4 @@
 import { Division } from 'src/app/network/model/division.model';
-import { HowellResponse } from 'src/app/network/model/howell-response.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 
 import {
@@ -13,8 +12,7 @@ import {
   GetDivisionVolumesParams,
 } from './division-request.params';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { ServiceHelper } from '../service-helper';
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { AbstractService } from 'src/app/business/Ibusiness';
 import { DivisionUrl } from '../../url/garbage/division.url';
 import {
   BaseRequestService,
@@ -30,37 +28,22 @@ import { SumEventNumber } from '../../model/sum-event-number.model';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
 import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
 import { Injectable } from '@angular/core';
-import { Cache, ServiceCache } from '../cache/service.cache';
+import { Cache } from '../cache/service.cache';
+import { DivisionCache } from '../cache/division-service.cache';
 
+@DivisionCache(DivisionUrl.basic())
 @Injectable({
   providedIn: 'root',
 })
-export class DivisionRequestService implements IBusiness<Division> {
-  constructor(private _http: HowellAuthHttpService) {}
-
-  private _cache?: ServiceCache<Division>;
-  public get cache(): ServiceCache<Division> {
-    if (!this._cache) {
-      this._cache = new ServiceCache(DivisionUrl.basic(), this);
-    }
-    return this._cache;
+export class DivisionRequestService extends AbstractService<Division> {
+  constructor(_http: HowellAuthHttpService) {
+    super();
+    this.basic = new BaseRequestService(_http);
+    this.type = this.basic.type(Division);
   }
 
-  private _basic?: BaseRequestService;
-  public get basic(): BaseRequestService {
-    if (!this._basic) {
-      this._basic = new BaseRequestService(this._http);
-    }
-    return this._basic;
-  }
-  private _type?: BaseTypeRequestService<Division>;
-  public get type(): BaseTypeRequestService<Division> {
-    if (!this._type) {
-      this._type = this.basic.type(Division);
-    }
-    return this._type;
-  }
-
+  private basic: BaseRequestService;
+  private type: BaseTypeRequestService<Division>;
   create(data: Division): Promise<Division> {
     let url = DivisionUrl.basic();
     return this.type.post(url, data);
@@ -125,8 +108,6 @@ export class DivisionRequestService implements IBusiness<Division> {
     return this._statistic;
   }
 }
-
-export interface DivisionRequestService {}
 
 @Cache(DivisionUrl.volume('ID').basic())
 class VolumesService {

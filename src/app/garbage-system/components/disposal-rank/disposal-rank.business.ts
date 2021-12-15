@@ -17,7 +17,7 @@ export class DisposalRankBusiness implements RankConverter {
   ) {}
 
   async getCurrentDivision(id: string) {
-    let data = await this.divisionRequest.get(id);
+    let data = await this.divisionRequest.cache.get(id);
     return data;
   }
 

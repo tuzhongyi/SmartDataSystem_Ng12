@@ -9,8 +9,8 @@ export interface IData {
 /*
  * @Author: pmx
  * @Date: 2021-09-14 14:59:24
- * @Last Modified by: pmx
- * @Last Modified time: 2021-11-09 09:36:19
+ * @Last Modified by: zzl
+ * @Last Modified time: 2021-12-14 15:58:10
  */
 export interface IBusiness<T extends IData> {
   cache: ServiceCache<T>;
@@ -19,4 +19,15 @@ export interface IBusiness<T extends IData> {
   create(data: T): Promise<T>;
   delete(id: string): Promise<T>;
   list(args?: IParams): Promise<PagedList<T>>;
+}
+
+export abstract class AbstractService<T extends IData> implements IBusiness<T> {
+  abstract get(id: string): Promise<T>;
+  abstract update(data: T): Promise<T>;
+  abstract create(data: T): Promise<T>;
+  abstract delete(id: string): Promise<T>;
+  abstract list(args?: IParams): Promise<PagedList<T>>;
+}
+export interface AbstractService<T extends IData> {
+  cache: ServiceCache<T>;
 }

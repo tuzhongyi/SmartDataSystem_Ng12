@@ -19,7 +19,7 @@ export class IllegalStatisticBusiness implements StatisticLineEChartsConverter {
   ) {}
 
   async getCurrentDivision(id: string) {
-    let data = await this.divisionRequest.get(id);
+    let data = await this.divisionRequest.cache.get(id);
     return data;
   }
   async statistic(

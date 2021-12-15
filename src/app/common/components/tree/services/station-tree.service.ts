@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { dataTool } from 'echarts';
 import { BehaviorSubject } from 'rxjs';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -12,11 +11,11 @@ import { GetGarbageStationsParams } from 'src/app/network/request/garbage-statio
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
-import { ServiceInterface } from '../interface/service.interface';
+import { TreeServiceInterface } from '../interface/tree-service.interface';
 import { DivisionTreeService } from './division-tree.service';
 
 @Injectable()
-export class StationTreeService {
+export class StationTreeService implements TreeServiceInterface {
   constructor(
     private _divisionTreeService: DivisionTreeService,
     private _stationRequest: GarbageStationRequestService,
@@ -30,55 +29,24 @@ export class StationTreeService {
     return res;
   }
   async loadChildren(node: NestedTreeNode) {
-    // let nodes = await this._divisionTreeService.loadChildren(node);
-    // if (node.type == UserResourceType.County) {
-    //  同步串行加载 最慢
-    // for (let i = 0; i < nodes.length; i++) {
-    //   let committee = nodes[i];
-    //   console.log('居委会', committee);
-    //   let data = await this._loadData(committee.id);
-    //   console.log('垃圾厢房', data);
-    //   let stations = this._converter.iterateToNested(data);
-    //   committee.childrenChange.value.push(...stations);
-    //   if (stations.length > 0) {
-    //     committee.hasChildren = true;
-    //     committee.childrenLoaded = true;
-    //   }
-    // }
-    /** 同步并行加载 仍然很慢 */
-    // console.log('所有居委会', nodes);
-    // let all = [];
-    // for (let i = 0; i < nodes.length; i++) {
-    //   let committee = nodes[i];
-    //   all.push(this._loadData(committee.id));
-    // }
-    // await Promise.all(all).then((res) => {
-    //   console.log('所有垃圾厢房', res);
-    //   res.forEach((data, index) => {
-    //     if (data.length != 0) {
-    //       let stations = this._converter.iterateToNested(data);
-    //       let committee = nodes[index];
-    //       committee.childrenChange.value.push(...stations);
-    //       committee.hasChildren = true;
-    //       committee.childrenLoaded = true;
-    //     }
-    //   });
-    // });
-    // }
-
-    /** 速度最快，但每个居委会强制 hasChildren */
     if (node.type == UserResourceType.Committees) {
       // 拉取居委会厢房信息
 
       let data = await this._loadData(node.id);
       let nodes = this._converter.iterateToNested(data);
+
       return nodes;
     } else {
       let nodes = await this._divisionTreeService.loadChildren(node);
-      if (node.type == UserResourceType.County) {
-        nodes.forEach((node) => (node.hasChildren = true));
-      }
+      nodes.forEach((item) => {
+        const divisionType = EnumHelper.ConvertUserResourceToDivision(
+          item.type
+        );
 
+        divisionType == DivisionType.Committees
+          ? (item.hasChildren = true)
+          : '';
+      });
       return nodes;
     }
   }

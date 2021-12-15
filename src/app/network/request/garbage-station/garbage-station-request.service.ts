@@ -21,7 +21,7 @@ import {
   GetGarbageStationTrashCansParams,
   GetGarbageStationVolumesParams,
 } from './garbage-station-request.params';
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { AbstractService, IBusiness } from 'src/app/business/Ibusiness';
 import {
   GarbageStation,
   GarbageStationType,
@@ -49,13 +49,13 @@ import { Cache, ServiceCache } from '../cache/service.cache';
 @Injectable({
   providedIn: 'root',
 })
-export class GarbageStationRequestService implements IBusiness<GarbageStation> {
+@Cache(GarbageStationUrl.basic())
+export class GarbageStationRequestService extends AbstractService<GarbageStation> {
   constructor(_http: HowellAuthHttpService) {
+    super();
     this.basic = new BaseRequestService(_http);
     this.typeBasic = this.basic.type(GarbageStation);
-    this.cache = new ServiceCache(GarbageStationUrl.basic(), this);
   }
-  cache: ServiceCache<GarbageStation>;
 
   private basic: BaseRequestService;
   private typeBasic: BaseTypeRequestService<GarbageStation>;

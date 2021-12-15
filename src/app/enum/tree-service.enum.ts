@@ -1,4 +1,4 @@
 export enum TreeServiceEnum {
-  Division = 0,
-  Station = 1,
+  Division = '0',
+  Station = '1',
 }

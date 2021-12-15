@@ -39,12 +39,9 @@ export class DivisionManageComponent implements OnInit {
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
 
+
   get enableAddBtn() {
-    return (
-      !this.currentNode ||
-      this.currentNode?.type == UserResourceType.City ||
-      this.currentNode?.type == UserResourceType.County
-    );
+    return !this.currentNode || this.currentNode?.type == UserResourceType.City || this.currentNode?.type == UserResourceType.County;
   }
   get enableDelBtn() {
     return (
@@ -75,7 +72,7 @@ export class DivisionManageComponent implements OnInit {
     }, this._excludeGuards);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async addNode() {
     if (this.tree) {
@@ -93,6 +90,7 @@ export class DivisionManageComponent implements OnInit {
         node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
         this.tree.addNode(node);
       }
+
     }
   }
   async deleteNode() {
@@ -124,6 +122,8 @@ export class DivisionManageComponent implements OnInit {
           const node = this._converter.fromDivisionManage(model);
           this.tree.editNode(node);
         }
+
+
       }
     }
   }
@@ -154,8 +154,9 @@ export class DivisionManageComponent implements OnInit {
   }
 
   selectTree(nodes: FlatTreeNode[]) {
+
     this.currentNode = nodes[0];
-    console.log('nodes', nodes);
+    console.log('currentNode', this.currentNode);
   }
 
   private _generateExclude(condition: string) {

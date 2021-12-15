@@ -6,7 +6,7 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
-import { TreeConverter } from 'src/app/converter/tree.converter';
+
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
@@ -15,39 +15,24 @@ import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
-import { ServiceInterface } from './interface/service.interface';
+import { TreeServiceInterface } from './interface/tree-service.interface';
+
 import { DivisionTreeService } from './services/division-tree.service';
 import { ServiceFactory } from './services/service.factory';
 import { StationTreeService } from './services/station-tree.service';
-import { ServiceToken } from './tokens/service.token';
+import { TreeProviders } from './tokens/service.token';
 
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.less'],
-  providers: [
-    ServiceFactory,
-    {
-      provide: ServiceToken,
-      useClass: DivisionTreeService,
-      multi: true,
-    },
-    {
-      provide: ServiceToken,
-      useClass: StationTreeService,
-      multi: true,
-    },
-    {
-      provide: DivisionTreeService,
-      useClass: DivisionTreeService,
-    },
-  ],
+  providers: [ServiceFactory, TreeProviders],
 })
 export class TreeComponent implements OnInit {
   TreeSelectEnum = TreeSelectEnum;
 
   /***************private  *********************/
-  private _service!: ServiceInterface;
+  private _service!: TreeServiceInterface;
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],

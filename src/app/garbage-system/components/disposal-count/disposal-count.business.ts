@@ -29,7 +29,7 @@ export class DisposalCountBusiness implements DisposalCountConverter {
 
   // 当前区划信息
   async getCurrentDivision(id: string) {
-    let data = await this.divisionRequest.get(id);
+    let data = await this.divisionRequest.cache.get(id);
     return data;
   }
 
@@ -53,8 +53,9 @@ export class DisposalCountBusiness implements DisposalCountConverter {
     ) {
       const divisionParams = new GetDivisionsParams();
       divisionParams.AncestorId = divisionId;
-      divisionParams.DivisionType = EnumHelper.ConvertUserResourceToDivision(childType);
-      let res = await this.divisionRequest.list(divisionParams);
+      divisionParams.DivisionType =
+        EnumHelper.ConvertUserResourceToDivision(childType);
+      let res = await this.divisionRequest.cache.list(divisionParams);
 
       // console.log('dd', res);
       let ids = res.Data.map((division) => division.Id);

@@ -1,7 +1,8 @@
+import { IService } from 'src/app/common/interfaces/service.interface';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 
-export interface ServiceInterface {
+export interface TreeServiceInterface extends IService {
   getName(): TreeServiceEnum;
 
   initialize(): Promise<NestedTreeNode[]>;

@@ -15,15 +15,14 @@ import {
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
-import { ServiceInterface } from '../interface/service.interface';
+import { TreeServiceInterface } from '../interface/tree-service.interface';
 
 @Injectable()
-export class DivisionTreeService implements ServiceInterface {
-
+export class DivisionTreeService implements TreeServiceInterface {
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _converter: TreeConverter
-  ) { }
+  ) {}
 
   getName() {
     return TreeServiceEnum.Division;
@@ -38,10 +37,10 @@ export class DivisionTreeService implements ServiceInterface {
   async loadChildren(node: NestedTreeNode) {
     if (node && !node.childrenLoaded) {
       const divisionType = EnumHelper.ConvertUserResourceToDivision(node.type);
-      const childType = EnumHelper.GetDivisionChildType(divisionType)
+      const childType = EnumHelper.GetDivisionChildType(divisionType);
       let data = await this._loadData(childType, node.id);
 
-      const nodes = this._converter.iterateToNested(data)
+      const nodes = this._converter.iterateToNested(data);
       return nodes;
     }
 
@@ -56,25 +55,20 @@ export class DivisionTreeService implements ServiceInterface {
       nodes = await this.initialize();
     } else {
       data = await this._searchData(condition);
-      nodes = this._converter.recurseToNested(data)
+      nodes = this._converter.recurseToNested(data);
     }
-
 
     return nodes;
   }
 
   private async _loadData(type?: DivisionType, parentId?: string) {
-
     let params = new GetDivisionsParams();
-    if (type)
-      params.DivisionType = type;
+    if (type) params.DivisionType = type;
     if (parentId) params.ParentId = parentId;
-    let res = await this._divisionRequest.list(params);
+    let res = await this._divisionRequest.cache.list(params);
 
     return res.Data;
-
   }
-
 
   private async _searchData(condition: string) {
     let params = new GetDivisionTreeParams();
@@ -85,33 +79,27 @@ export class DivisionTreeService implements ServiceInterface {
 
   // 给 StationTree用的
   async getDivision(id: string) {
-    return await this._divisionRequest.get(id)
+    return await this._divisionRequest.cache.get(id);
   }
   async getAncestorDivision(division: Division) {
     let res: Division[] = [];
 
-
     while (division.ParentId) {
-      let d = await this.getDivision(division.ParentId)
-      res.push(d)
+      let d = await this.getDivision(division.ParentId);
+      res.push(d);
       division = d;
     }
 
     return res;
   }
 
-
-
   // 拉取所有数据，测试用
   async loadAllData(type?: DivisionType, parentId?: string) {
-
     let params = new GetDivisionsParams();
-    if (type)
-      params.DivisionType = type;
+    if (type) params.DivisionType = type;
     if (parentId) params.ParentId = parentId;
-    let res = await this._divisionRequest.list(params);
+    let res = await this._divisionRequest.cache.list(params);
 
     return res.Data;
-
   }
 }

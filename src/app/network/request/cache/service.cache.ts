@@ -1,6 +1,6 @@
 import { IBusiness, IData } from 'src/app/business/Ibusiness';
-import { PagedList } from '../../model/page_list.model';
-import { IParams } from '../IParams.interface';
+import { Page, PagedList } from '../../model/page_list.model';
+import { IParams, PagedParams } from '../IParams.interface';
 import { AppCache } from './app-cache';
 
 export class ServiceCache<T extends IData> {
@@ -8,12 +8,14 @@ export class ServiceCache<T extends IData> {
 
   constructor(private key: string, private service: IBusiness<T>) {
     this.save([]);
+    this.all();
   }
+  allLoaded = false;
   load() {
     try {
       return this.cache.get(this.key) as T[];
     } catch (error) {
-      return new Array();
+      return new Array<T>();
     }
   }
   save(data: T[]) {
@@ -92,12 +94,55 @@ export class ServiceCache<T extends IData> {
       return x;
     });
   }
+
+  protected getPaged(datas: T[], params?: PagedParams): PagedList<T> {
+    let index = 1;
+    let size = 999;
+    if (params) {
+      if (params.PageIndex) {
+        index = params.PageIndex;
+      }
+      if (params.PageSize) {
+        size = params.PageSize;
+      }
+    }
+    let count = datas.length;
+
+    let start = (index - 1) * size;
+    let paged = datas.splice(start, size);
+
+    let page = {
+      PageIndex: index,
+      PageSize: size,
+      PageCount: Math.ceil(count / size),
+      RecordCount: paged.length,
+      TotalRecordCount: count,
+    };
+    return {
+      Page: page,
+      Data: paged,
+    };
+  }
 }
 
 export function Cache(key: string) {
-  return function (target: Function) {
+  return function (this: any, target: Function) {
     if (!target.prototype.cache) {
-      target.prototype.cache = new ServiceCache(key, target.prototype);
+      // new ServiceCache(key, this);
+      console.log('Cache', this);
+      Object.defineProperty(target.prototype, 'cache', {
+        get() {
+          if (!this._cache) {
+            this._cache = new ServiceCache(key, this);
+          }
+          return this._cache;
+        },
+        set() {},
+      });
+      // target.prototype.cache = function () {
+      //   console.log('cache', this);
+      //   return;
+      // };
     }
   };
 }
