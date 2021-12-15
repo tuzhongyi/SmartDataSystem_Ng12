@@ -44,12 +44,12 @@ import { Member } from '../../model/member.model';
 import { GarbageTask } from '../../model/garbage-task.model';
 import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
 import { SumEventNumber } from '../../model/sum-event-number.model';
-import { Cache, ServiceCache } from '../cache/service.cache';
+import { Cache } from '../cache/cache';
 
 @Injectable({
   providedIn: 'root',
 })
-@Cache(GarbageStationUrl.basic())
+@Cache(GarbageStationUrl.basic(), GarbageStation)
 export class GarbageStationRequestService extends AbstractService<GarbageStation> {
   constructor(_http: HowellAuthHttpService) {
     super();

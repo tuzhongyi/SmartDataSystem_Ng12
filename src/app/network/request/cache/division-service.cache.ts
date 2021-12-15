@@ -10,30 +10,30 @@ export class DivisionServiceCache extends ServiceCache<Division> {
     super(key, service);
   }
   async list(args?: GetDivisionsParams): Promise<PagedList<Division>> {
-    let result = new Array<Division>();
-    let datas = this.load();
+    let paged: PagedList<Division>;
+    let datas = await this.all();
     if (args) {
       if (args.ParentId) {
-        let data = datas.filter((x) => x.ParentId === args.ParentId);
-        result = [...result, ...data];
-      } else if (args.AncestorId) {
-        let data = this.getAllChildren(args.AncestorId, datas);
-        result = [...result, ...data];
-      } else if (args.DivisionType) {
-        let data = datas.filter((x) => x.DivisionType === args.DivisionType);
-        result = [...result, ...data];
-      } else if (args.Name) {
-        let data = datas.filter((x) => x.Name.includes(args.Name!));
-        result = [...result, ...data];
-      } else if (args.Ids) {
-        let data = datas.filter((x) => args.Ids?.includes(x.Id));
-        result = [...result, ...data];
+        datas = datas.filter((x) => x.ParentId === args.ParentId);
+      }
+      if (args.AncestorId) {
+        datas = this.getAllChildren(args.AncestorId, datas);
+      }
+      if (args.DivisionType) {
+        datas = datas.filter((x) => x.DivisionType === args.DivisionType);
+      }
+      if (args.Name) {
+        datas = datas.filter((x) => x.Name.includes(args.Name!));
+      }
+      if (args.Ids) {
+        datas = datas.filter((x) => args.Ids?.includes(x.Id));
       } else {
       }
-      return this.getPaged(result, args);
+      paged = this.getPaged(datas, args);
     } else {
-      return this.getPaged(datas);
+      paged = this.getPaged(datas);
     }
+    return paged;
   }
 
   getAncestor(ancestorId: string, datas: Division[]) {
@@ -59,26 +59,4 @@ export class DivisionServiceCache extends ServiceCache<Division> {
   getParent(parentId: string, datas: Division[]) {
     return datas.find((x) => x.Id === parentId);
   }
-}
-
-export function DivisionCache(key: string) {
-  return function (this: any, target: Function) {
-    if (!target.prototype.cache) {
-      // new ServiceCache(key, this);
-      console.log('Cache', this);
-      Object.defineProperty(target.prototype, 'cache', {
-        get() {
-          if (!this._cache) {
-            this._cache = new DivisionServiceCache(key, this);
-          }
-          return this._cache;
-        },
-        set() {},
-      });
-      // target.prototype.cache = function () {
-      //   console.log('cache', this);
-      //   return;
-      // };
-    }
-  };
 }

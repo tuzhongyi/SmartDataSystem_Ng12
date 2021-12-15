@@ -10,7 +10,6 @@ export class ServiceCache<T extends IData> {
     this.save([]);
     this.all();
   }
-  allLoaded = false;
   load() {
     try {
       return this.cache.get(this.key) as T[];
@@ -123,26 +122,4 @@ export class ServiceCache<T extends IData> {
       Data: paged,
     };
   }
-}
-
-export function Cache(key: string) {
-  return function (this: any, target: Function) {
-    if (!target.prototype.cache) {
-      // new ServiceCache(key, this);
-      console.log('Cache', this);
-      Object.defineProperty(target.prototype, 'cache', {
-        get() {
-          if (!this._cache) {
-            this._cache = new ServiceCache(key, this);
-          }
-          return this._cache;
-        },
-        set() {},
-      });
-      // target.prototype.cache = function () {
-      //   console.log('cache', this);
-      //   return;
-      // };
-    }
-  };
 }

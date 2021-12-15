@@ -13,7 +13,7 @@ export class DivisionListBusiness {
   async listChildDivisions(id: string) {
     let params = new GetDivisionsParams();
     params.ParentId = id;
-    let res = await this._business.list(params);
+    let res = await this._business.cache.list(params);
     return res.Data;
   }
 }

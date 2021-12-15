@@ -114,13 +114,13 @@ export class StationTreeService implements TreeServiceInterface {
   private async _loadData(id: string) {
     let params = new GetGarbageStationsParams();
     params.DivisionId = id;
-    let res = await this._stationRequest.list(params);
+    let res = await this._stationRequest.cache.list(params);
     return res.Data;
   }
   private async _searchData(condition: string) {
     let params = new GetGarbageStationsParams();
     params.Name = condition;
-    let res = await this._stationRequest.list(params);
+    let res = await this._stationRequest.cache.list(params);
 
     return res.Data;
   }

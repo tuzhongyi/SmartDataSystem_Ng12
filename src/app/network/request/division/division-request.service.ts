@@ -28,10 +28,9 @@ import { SumEventNumber } from '../../model/sum-event-number.model';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
 import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
 import { Injectable } from '@angular/core';
-import { Cache } from '../cache/service.cache';
-import { DivisionCache } from '../cache/division-service.cache';
+import { Cache } from '../cache/cache';
 
-@DivisionCache(DivisionUrl.basic())
+@Cache(DivisionUrl.basic(), Division)
 @Injectable({
   providedIn: 'root',
 })

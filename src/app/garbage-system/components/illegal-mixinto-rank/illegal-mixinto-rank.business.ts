@@ -72,7 +72,7 @@ export class IllegalMixintoRankBusiness implements RankConverter {
       stationParams.PageIndex = 1;
       stationParams.PageSize = 9999;
       stationParams.DivisionId = divisionId;
-      const res = await this.stationRequest.list(stationParams);
+      const res = await this.stationRequest.cache.list(stationParams);
       // console.log('垃圾厢房', res);
       let ids = res.Data.map((item) => item.Id);
       if (ids.length == 0) return [];
