@@ -280,7 +280,7 @@ export class DisposalCountComponent
     const resourceType = EnumHelper.ConvertDivisionToUserResource(
       this.currentDivisionType
     );
-    this.childDivisionType = EnumHelper.GetResourceChildType2(
+    this.childDivisionType = EnumHelper.GetResourceChildTypeByDivisionType(
       this.currentDivisionType
     );
 

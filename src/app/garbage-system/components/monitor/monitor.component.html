@@ -20,7 +20,9 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-illegal-mixinto-rank></app-illegal-mixinto-rank>
+        <app-illegal-mixinto-rank
+          (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
+        ></app-illegal-mixinto-rank>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -56,6 +58,6 @@
   </div>
 </div>
 
-<app-window [Model]="window.device">
-  <ng-container *ngIf="window.device.show"> </ng-container>
+<app-window [Model]="window.record">
+  <ng-container *ngIf="window.record.show"> </ng-container>
 </app-window>

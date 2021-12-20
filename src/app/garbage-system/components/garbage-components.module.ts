@@ -18,6 +18,7 @@ import { EvemtStatisticEChartsComponent } from './event-statistic-echarts/event-
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
+import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,11 @@ import { DisposalCountComponent } from './disposal-count/disposal-count.componen
     DeviceStateComponent,
     DisposalCountComponent,
   ],
-  imports: [CommonModule, AngularResizeEventModule, HowellModule],
+  imports: [
+    CommonModule,
+    AngularResizeEventModule,
+    HowellModule,
+    MaterialModule,
+  ],
 })
 export class GarbageComponentsModule {}
