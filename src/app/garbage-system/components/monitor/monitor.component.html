@@ -59,5 +59,7 @@
 </div>
 
 <app-window [Model]="window.record">
-  <ng-container *ngIf="window.record.show"> </ng-container>
+  <ng-container *ngIf="window.record.show">
+    <app-event-record-details></app-event-record-details>
+  </ng-container>
 </app-window>

@@ -19,6 +19,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 import { MaterialModule } from 'src/app/material.module';
+import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { MaterialModule } from 'src/app/material.module';
     EvemtStatisticEChartsComponent,
     DeviceStateComponent,
     DisposalCountComponent,
+    EventRecordDetailsComponent,
   ],
   imports: [
     CommonModule,
