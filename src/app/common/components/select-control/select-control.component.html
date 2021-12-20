@@ -1,0 +1,40 @@
+<div class="select-group">
+  <div class="select-item">
+    <div class="select-head" (click)="toggle($event)">
+      <div class="select-item__title">
+        {{ selected.language }}
+      </div>
+      <div class="select-item__button"></div>
+    </div>
+    <ng-container *ngIf="opened">
+      <div class="select-body">
+        <ng-container *ngFor="let item of data">
+          <div class="select-option" (click)="select($event, item)">
+            {{ item.language }}
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<!-- <div class="select">
+<div class="select-head" [matMenuTriggerFor]="menu">
+  <div class="select-item__title">
+    {{ selected.language }}
+  </div>
+  <div class="select-item__button"></div>
+</div>
+<mat-menu #menu="matMenu" xPosition="before">
+  <ng-container *ngFor="let item of data">
+    <button mat-menu-item (click)="select($event, item)">
+      {{ item.language }}
+    </button>
+  </ng-container>
+</mat-menu>
+</div> -->
+
+<!-- <mat-select [value]="1" style="width: 100%">
+  <mat-option *ngFor="let item of data" [value]="item.value">
+    {{ item.language }}
+  </mat-option>
+</mat-select> -->

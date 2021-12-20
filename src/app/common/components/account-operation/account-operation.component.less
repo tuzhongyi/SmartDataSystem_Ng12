@@ -1,6 +1,7 @@
 .app-account-operation {
   display: flex;
   margin: 0 5px;
+
   .operation-item {
     width: 32px;
     height: 32px;
@@ -14,5 +15,27 @@
     align-items: center;
     justify-content: center;
     margin: 0 5px;
+  }
+}
+
+// 和 app-root是兄弟元素
+&~.cdk-overlay-container {
+  .cdk-overlay-pane {
+    .mat-menu-panel {
+      .mat-menu-content {
+        .mat-menu-item {
+
+
+          &:not(:first-child) {
+            cursor: pointer;
+
+            &:hover {
+              background-color: #4a8bd0;
+              color: #fff;
+            }
+          }
+        }
+      }
+    }
   }
 }

@@ -9,31 +9,36 @@ export class DivisionServiceCache extends ServiceCache<Division> {
   constructor(key: string, service: IBusiness<Division>) {
     super(key, service);
   }
+
   async list(args?: GetDivisionsParams): Promise<PagedList<Division>> {
-    let paged: PagedList<Division>;
-    let datas = await this.all();
-    if (args) {
-      if (args.ParentId) {
-        datas = datas.filter((x) => x.ParentId === args.ParentId);
-      }
-      if (args.AncestorId) {
-        datas = this.getAllChildren(args.AncestorId, datas);
-      }
-      if (args.DivisionType) {
-        datas = datas.filter((x) => x.DivisionType === args.DivisionType);
-      }
-      if (args.Name) {
-        datas = datas.filter((x) => x.Name.includes(args.Name!));
-      }
-      if (args.Ids) {
-        datas = datas.filter((x) => args.Ids?.includes(x.Id));
-      } else {
-      }
-      paged = this.getPaged(datas, args);
-    } else {
-      paged = this.getPaged(datas);
-    }
-    return paged;
+    return new Promise((reject) => {
+      this.wait(() => {
+        let paged: PagedList<Division>;
+        let datas = this.load();
+        if (args) {
+          if (args.ParentId) {
+            datas = datas.filter((x) => x.ParentId === args.ParentId);
+          }
+          if (args.AncestorId) {
+            datas = this.getAllChildren(args.AncestorId, datas);
+          }
+          if (args.DivisionType) {
+            datas = datas.filter((x) => x.DivisionType === args.DivisionType);
+          }
+          if (args.Name) {
+            datas = datas.filter((x) => x.Name.includes(args.Name!));
+          }
+          if (args.Ids) {
+            datas = datas.filter((x) => args.Ids?.includes(x.Id));
+          } else {
+          }
+          paged = this.getPaged(datas, args);
+        } else {
+          paged = this.getPaged(datas);
+        }
+        reject(paged);
+      });
+    });
   }
 
   getAncestor(ancestorId: string, datas: Division[]) {

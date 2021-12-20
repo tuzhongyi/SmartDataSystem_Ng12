@@ -1,8 +1,12 @@
 <div class="retention">
-  <app-rank
-    [title]="title"
-    [dropList]="dropList"
-    [data]="rankData"
-    (changeDataSourceEvent)="changeDataSourceHandler($event)"
-  ></app-rank>
+  <div class="retention__head">
+    <div class="title">{{ title }}</div>
+    <div class="select-group">
+      <app-select-control
+        [data]="retentionTypes"
+        (selectedEvent)="onRetentionTypeSelected($event)"
+      ></app-select-control>
+    </div>
+  </div>
+  <app-rank [title]="title" [data]="rankData"></app-rank>
 </div>

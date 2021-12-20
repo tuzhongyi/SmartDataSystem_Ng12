@@ -1,9 +1,18 @@
-<div class="illegal-mixinto" (click)="clickHandler()">
-  <app-rank
-    [title]="title"
-    [dropList]="dropList"
-    [data]="rankData"
-    (changeDataSourceEvent)="changeDataSourceHandler($event)"
-  >
+<div class="illegal-mixinto">
+  <div class="rank-head">
+    <div class="title">{{ title }}</div>
+
+    <div class="select-group">
+      <app-select-control
+        [data]="resourceTypes"
+        (selectedEvent)="onResourceTypeSelected($event)"
+      ></app-select-control>
+      <app-select-control
+        [data]="eventTypes"
+        (selectedEvent)="onEventTypeSelected($event)"
+      ></app-select-control>
+    </div>
+  </div>
+  <app-rank [data]="rankData" (itemClickedEvent)="onItemClicked($event)">
   </app-rank>
 </div>

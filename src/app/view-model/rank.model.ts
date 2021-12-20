@@ -1,3 +1,6 @@
+import { EventType } from '../enum/event-type.enum';
+import { UserResourceType } from '../enum/user-resource-type.enum';
+
 export type DropListModel = {
   id: number;
   name: string;
@@ -15,6 +18,7 @@ export class RankModel {
   id: string = '';
   name: string = '';
   statistic: string = '';
+  value: number = 0;
   unit?: string = '';
 }
 
@@ -27,4 +31,14 @@ export enum RankDropListType {
   EventType = 0,
   UserResourceType = 1,
   RetentionType = 2,
+}
+
+export enum RankResourceType {
+  Committees = UserResourceType.Committees,
+  County = UserResourceType.County,
+  Station = UserResourceType.Station,
+}
+export enum RankEventType {
+  IllegalDrop = EventType.IllegalDrop,
+  MixedInto = EventType.MixedInto,
 }

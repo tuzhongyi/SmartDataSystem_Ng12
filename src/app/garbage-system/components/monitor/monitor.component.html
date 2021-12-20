@@ -35,12 +35,17 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts>
+        <app-event-statistic-echarts
+          [title]="'乱扔垃圾统计表'"
+        ></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts [title]="'混合投放统计表'" [type]="mixIntoType"></app-event-statistic-echarts>
+        <app-event-statistic-echarts
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -50,3 +55,7 @@
     </div>
   </div>
 </div>
+
+<app-window [Model]="window.device">
+  <ng-container *ngIf="window.device.show"> </ng-container>
+</app-window>

@@ -18,13 +18,10 @@ import {
   styleUrls: ['./rank.component.less'],
 })
 export class RankComponent implements OnInit {
-  @Input() title: string = '';
-
-  @Input() dropList?: Array<DropListObj>;
-
   @Input() data: Array<RankModel> = [];
 
-  @Output() changeDataSourceEvent = new EventEmitter<RankEventModel>();
+  @Output()
+  itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
 
   constructor() {}
   ngOnInit(): void {}
@@ -32,37 +29,7 @@ export class RankComponent implements OnInit {
     return item.id;
   }
 
-  toggleDropList(item: DropListObj, $event: Event) {
-    item.status = !item.status;
-    $event.stopPropagation();
-  }
-  /**
-   *
-   * @param option  当前 下拉选项
-   * @param options  当前下拉列表数据源
-   * @param obj 当前 dropList对象
-   */
-  changeDataSource(
-    option: DropListModel,
-    options: DropListModel[],
-    obj: DropListObj,
-    e: Event
-  ) {
-    // console.log(option, options, obj);
-
-    // 确定当前选项在选项数组中的位置
-    let index = options.findIndex((o) => o.id == option.id);
-    if (index !== -1) {
-      if (obj.index == index) return;
-      obj.index = index;
-    }
-
-    this.changeDataSourceEvent.emit({
-      data: option,
-      type: obj.type,
-    });
-
-    obj.status = false;
-    e.stopPropagation();
+  itemClick(event: Event, model: RankModel) {
+    this.itemClickedEvent.emit(model);
   }
 }

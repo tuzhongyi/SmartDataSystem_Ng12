@@ -26,7 +26,14 @@ import { TreeProviders } from './tokens/service.token';
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.less'],
-  providers: [ServiceFactory, TreeProviders],
+  providers: [
+    ServiceFactory,
+    ...TreeProviders,
+    {
+      provide: DivisionTreeService,
+      useClass: DivisionTreeService,
+    },
+  ],
 })
 export class TreeComponent implements OnInit {
   TreeSelectEnum = TreeSelectEnum;

@@ -11,11 +11,13 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
+import { WindowBussiness } from './business/window.business';
 
 @Component({
   selector: 'app-waste-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.less'],
+  providers: [WindowBussiness],
 })
 export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
@@ -26,7 +28,8 @@ export class MonitorComponent implements OnInit {
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: StoreService
+    private _storeService: StoreService,
+    public window: WindowBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
   }

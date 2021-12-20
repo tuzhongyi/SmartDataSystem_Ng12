@@ -5,11 +5,23 @@ import { AppCache } from './app-cache';
 
 export class ServiceCache<T extends IData> {
   cache = new AppCache(1000 * 60 * 30);
+  loaded = false;
 
   constructor(private key: string, private service: IBusiness<T>) {
     this.save([]);
     this.all();
   }
+
+  protected wait(reject: () => void, timeout = 100) {
+    setTimeout(() => {
+      if (this.loaded) {
+        reject();
+      } else {
+        this.wait(reject, timeout);
+      }
+    }, timeout);
+  }
+
   load() {
     try {
       return this.cache.get(this.key) as T[];
@@ -76,6 +88,7 @@ export class ServiceCache<T extends IData> {
     }
     return this.service.list().then((x) => {
       this.cache.set(this.key, x.Data);
+      this.loaded = true;
       return x.Data;
     });
   }
