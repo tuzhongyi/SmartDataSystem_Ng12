@@ -9,7 +9,7 @@ export function Cache<T>(key: string, type?: ClassConstructor<T>) {
   return function (this: any, target: Function) {
     if (!target.prototype.cache) {
       // new ServiceCache(key, this);
-      console.log('Cache', this);
+      // console.log('Cache', this);
       Object.defineProperty(target.prototype, 'cache', {
         get() {
           if (!this._cache) {

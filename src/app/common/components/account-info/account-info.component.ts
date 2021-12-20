@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 
 @Component({
@@ -14,9 +15,22 @@ export class AccountInfoComponent implements OnInit {
 
   ngOnInit(): void {
     let user = this._localStorageService.user;
-
     if (user.Resources && user.Resources.length > 0) {
       this.title = user.Resources[0].Name ?? '';
+    }
+
+    if (user.Role && user.Role.length > 0) {
+      let role = user.Role[0];
+      if (
+        role.PictureData &&
+        role.PrivacyData &&
+        role.UserData &&
+        role.StaticData
+      ) {
+        // console.log('当前是管理员');
+        this.title = this.desc;
+        this.desc = '';
+      }
     }
   }
 }

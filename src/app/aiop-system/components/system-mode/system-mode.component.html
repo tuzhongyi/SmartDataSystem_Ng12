@@ -1,13 +1,17 @@
-<div class="mode-container">
-    <div class="mode-header">
+<div class="system-mode">
+    <div class="system-mode-header">
         <app-toolbar></app-toolbar>
     </div>
 
-    <div class='mode-body'>
-        <a href="/aiop/aiop-manage/monitor-platform">监督平台</a>
-        <a href="/aiop/aiop-manage/garbage-events">垃圾事件</a>
-        <a href="/aiop/aiop-manage/station-status">厢房状态</a>
-        <a href="/aiop/aiop-manage/system-setting">系统设置</a>
+    <div class='system-mode-body'>
+        <ng-container *ngFor="let mode of config">
+            <div class="item" (click)="navigate(mode.path)">
+                <div class="item-icon">
+                    <i [class]="mode.icon"></i>
+                </div>
+                <div class="item-title">{{mode.title}}</div>
+            </div>
+        </ng-container>
     </div>
 
 </div>

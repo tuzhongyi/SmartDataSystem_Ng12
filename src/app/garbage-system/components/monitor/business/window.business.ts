@@ -10,7 +10,7 @@ class RecordWindowViewModel extends WindowViewModel {}
 @Injectable()
 export class WindowBussiness {
   constructor() {
-    this.record.show = true;
+    
   }
   device = new DeviceWindowViewModel();
   record = new RecordWindowViewModel();
