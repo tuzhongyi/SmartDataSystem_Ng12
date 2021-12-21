@@ -1,7 +1,18 @@
-<div>
-
-    <div class="mode-header">
-        <app-toolbar></app-toolbar>
+<div class="aiop-manage">
+    <div class="aiop-manage-header">
+        <mat-toolbar>
+            <div>
+                <img src="/assets/img/logo.png" alt="">
+            </div>
+            <div class='spacer'>
+            </div>
+            <app-header-nav></app-header-nav>
+            <app-time></app-time>
+            <app-account-operation></app-account-operation>
+        </mat-toolbar>
     </div>
+    <div class="aiop-manage-body">
+        <router-outlet></router-outlet>
+    </div>
+
 </div>
-<router-outlet></router-outlet>

@@ -1,0 +1,9 @@
+<div class="app-header-nav">
+
+    <div class="item" *ngFor="let mode of  config" (click)="navigate(mode.path)">
+        <div class="item-icon">
+            <i [class]="mode.icon"></i>
+        </div>
+        <div class="item-title">{{mode.title}}</div>
+    </div>
+</div>

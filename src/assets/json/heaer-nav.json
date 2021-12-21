@@ -1,0 +1,27 @@
+{
+    "$schema": "./system-mode.schema.json",
+    "data": [
+      {
+        "title": "监督平台",
+        "icon": "howell-icon-cam-all1",
+        "path": "/aiop/aiop-manage/monitor-platform"
+      },
+      {
+        "title": "垃圾事件",
+        "icon": "howell-icon-system",
+        "path": "/aiop/aiop-manage/garbage-events"
+      },
+      
+      {
+        "title": "系统设置",
+        "icon": "howell-icon-setting",
+        "path": "/aiop/aiop-manage/system-setting"
+      },
+      {
+        "title": "返回首页",
+        "icon": "howell-icon-home",
+        "path": "/aiop/system-mode"
+      }
+    ]
+  }
+  

@@ -1,8 +1,14 @@
 <div class="monitor-container" (click)="clickMonitor()">
   <div class="monitor-header">
-    <app-toolbar>
-      <app-total-waste></app-total-waste>
-    </app-toolbar>
+    <mat-toolbar>
+      <app-account-info></app-account-info>
+      <div class='spacer'>
+        <app-total-waste></app-total-waste>
+      </div>
+      <app-time></app-time>
+      <app-account-operation></app-account-operation>
+    </mat-toolbar>
+
   </div>
   <div class="monitor-body">
     <div class="monitor-body__item monitor-body__item--none">
@@ -20,9 +26,8 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-illegal-mixinto-rank
-          (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
-        ></app-illegal-mixinto-rank>
+        <app-illegal-mixinto-rank (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)">
+        </app-illegal-mixinto-rank>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -37,17 +42,12 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts
-          [title]="'乱扔垃圾统计表'"
-        ></app-event-statistic-echarts>
+        <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts
-          [title]="'混合投放统计表'"
-          [type]="mixIntoType"
-        ></app-event-statistic-echarts>
+        <app-event-statistic-echarts [title]="'混合投放统计表'" [type]="mixIntoType"></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">

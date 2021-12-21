@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-25 15:39:14
+ * @Last Modified time: 2021-12-21 14:02:08
  */
 
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
@@ -161,7 +161,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
           this.formGroup.get('passWord')!.value
         );
         if (result instanceof User) {
-          console.log('登录成功', result);
+          // console.log('登录成功', result);
 
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
 

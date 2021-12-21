@@ -2,11 +2,10 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-15 14:50:31
+ * @Last Modified time: 2021-12-21 11:05:05
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { ToolbarComponent } from 'src/app/common/components/toolbar/toolbar.component';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
@@ -23,8 +22,6 @@ import { WindowBussiness } from './business/window.business';
 export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
-
-  @ViewChild(ToolbarComponent) toolbar?: ToolbarComponent;
 
   constructor(
     private _titleService: Title,

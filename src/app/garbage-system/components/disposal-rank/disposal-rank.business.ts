@@ -39,7 +39,6 @@ export class DisposalRankBusiness
 
   async load(): Promise<RankModel[]> {
     let data = await this.getData(this.storeService.divisionId);
-    debugger;
     while (data.length < 6) {
       let item = new GarbageStationNumberStatistic();
       item.Name = '-';
