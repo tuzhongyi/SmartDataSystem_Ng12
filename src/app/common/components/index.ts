@@ -7,6 +7,7 @@ import { TabTitleComponent } from './tab-title/tab-title.component';
 import { TimeComponent } from './time/time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
+import { VideoControlComponent } from './video-control/video-control.component';
 import { WindowComponent } from './window/window.component';
 
 export const CUSTOM_COMPONENTS = [
@@ -20,4 +21,5 @@ export const CUSTOM_COMPONENTS = [
   SelectControlComponent,
   TabTitleComponent,
   HeaderNavComponent,
+  VideoControlComponent,
 ];

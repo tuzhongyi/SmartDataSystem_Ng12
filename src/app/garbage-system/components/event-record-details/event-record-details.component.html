@@ -5,7 +5,13 @@
       animationDuration="0ms"
       [color]="'transparent'"
     >
-      <mat-tab label="事件"> Content 1 </mat-tab>
+      <mat-tab label="事件">
+        <app-video-control
+          [url]="
+            'ws://garbage01.51hws.com:8800/ws/video/howellps/live/00310101031111111000153000000000/1/2/live.H265?user=howell&password=123456'
+          "
+        ></app-video-control>
+      </mat-tab>
       <mat-tab label="总图表"> Content 2 </mat-tab>
       <mat-tab label="细分图表"> Content 3 </mat-tab>
       <mat-tab label="数据比较"> Content 4 </mat-tab>
