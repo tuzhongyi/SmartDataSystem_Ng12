@@ -2,13 +2,14 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-22 15:40:01
+ * @Last Modified time: 2021-12-21 16:10:01
  */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiopComponent } from './aiop.component';
 import { AiopManageComponent } from './components/aiop-manage/aiop-manage.component';
-import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
+import { IllegalDropComponent } from './components/garbage-events/illegal-drop/illegal-drop.component';
+import { GarbageEventsComponent } from './components/garbage-events/index/garbage-events.component';
 import { DivisionManageComponent } from './components/monitor-platform/division-manage/division-manage.component';
 import { MonitorPlatformComponent } from './components/monitor-platform/index/monitor-platform.component';
 import { StationStatusComponent } from './components/station-status/station-status.component';
@@ -49,6 +50,16 @@ const routes: Routes = [
       {
         path: 'garbage-events',
         component: GarbageEventsComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'illegal-drop',
+          },
+          {
+            path: 'illegal-drop',
+            component: IllegalDropComponent,
+          },
+        ],
       },
       {
         path: 'station-status',

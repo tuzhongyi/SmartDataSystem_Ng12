@@ -4,7 +4,6 @@ import {
   InjectionToken,
   ReflectiveInjector,
 } from '@angular/core';
-import { TreeServiceToken } from '../tokens/service.token';
 import { IService } from './service.interface';
 
 export interface IServiceFactory {
