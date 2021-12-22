@@ -11,17 +11,18 @@ export class BaseRequestService {
     let response = await this.http.get(url).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
-  async put<T>(url: string, type: ClassConstructor<T>, model: T) {
+  async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {
     let data = classToPlain(model) as T;
     let response = await this.http.put(url, data).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
-  async post<T>(url: string, type: ClassConstructor<T>, model?: T): Promise<T>;
   async post<T>(
     url: string,
     type: ClassConstructor<T>,
     params?: IParams
   ): Promise<T>;
+  async post<T>(url: string, type: ClassConstructor<T>, model?: T): Promise<T>;
+
   async post<T>(url: string, type: ClassConstructor<T>, args?: T | IParams) {
     let data = classToPlain(args) as T | IParams;
     let response = await this.http.post(url, data).toPromise();

@@ -1,7 +1,6 @@
 import { HowellUrl } from 'src/app/view-model/howell-url';
 
-export class VideoSimpleModel {
-  title?: string;
+export class VideoModel {
   // 链接地址
   host?: string;
   // 端口号
@@ -9,7 +8,7 @@ export class VideoSimpleModel {
   // 摄像机id
   deviceId?: string;
   // 通道号
-  slot?: string;
+  slot?: number;
   // 用户名
   username?: string;
   // 密码
@@ -17,21 +16,20 @@ export class VideoSimpleModel {
   // 模式
   mode?: VideoMode;
   // 开始时间
-  beginTime?: string;
+  beginTime?: Date;
   // 结束时间
-  endTime?: string;
+  endTime?: Date;
   constructor(
     options?:
       | {
-          title?: string;
           host?: string;
           deviceId?: string;
-          slot?: string;
+          slot?: number;
           userName?: string;
           password?: string;
           mode?: VideoMode;
-          beginTime?: string;
-          endTime?: string;
+          beginTime?: Date;
+          endTime?: Date;
         }
       | string
   ) {
@@ -39,7 +37,6 @@ export class VideoSimpleModel {
       if (typeof options === 'string') {
         this.fromString(options);
       } else {
-        this.title = options.title;
         this.host = options.host;
         this.deviceId = options.deviceId;
         this.slot = options.slot;
@@ -66,7 +63,7 @@ export class VideoSimpleModel {
 
     this.mode = nodes[3] as VideoMode;
     this.deviceId = nodes[4];
-    this.slot = nodes[5];
+    this.slot = parseInt(nodes[5]);
 
     switch (this.mode) {
       case VideoMode.live:
@@ -74,8 +71,8 @@ export class VideoSimpleModel {
       case VideoMode.vod:
         let interval = nodes[7];
         let times = interval.split('_');
-        this.beginTime = times[0];
-        this.endTime = times[1];
+        this.beginTime = new Date(times[0]);
+        this.endTime = new Date(times[1]);
         break;
 
       default:
@@ -85,8 +82,14 @@ export class VideoSimpleModel {
 
   toString() {
     let url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/1/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
-    if (this.mode === VideoMode.vod) {
-      url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/1/${this.beginTime}_${this.endTime}/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
+    if (this.mode === VideoMode.vod && this.beginTime && this.endTime) {
+      url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${
+        this.deviceId
+      }/${
+        this.slot
+      }/1/${this.beginTime.toISOString()}_${this.endTime.toISOString()}/${
+        this.mode
+      }.mp4?user=${this.username}&password=${this.password}`;
     }
     return url;
   }

@@ -1,7 +1,7 @@
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 
 /** 用户自定义标签信息 */
-class UserLabel {
+export class UserLabel {
   /**	String	标签ID，同类型的标签ID必须唯一	M	RW */
   LabelId!: string;
   /**	String	标签名称	O	RW */

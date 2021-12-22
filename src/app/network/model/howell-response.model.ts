@@ -26,11 +26,11 @@ interface HttpResponse<T> {
   statusText: string;
 }
 
-interface Fault {
-  FaultCode: number;
-  FaultReason: string;
-  Exception: ExceptionData;
-  Id: string;
+class Fault {
+  FaultCode!: number;
+  FaultReason!: string;
+  Exception?: ExceptionData;
+  Id?: string;
 }
 
 export { HowellResponse, ExceptionData, HttpResponse, Fault };

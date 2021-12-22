@@ -12,7 +12,7 @@ import { plainToClass } from 'class-transformer';
 import { CookieService } from 'ngx-cookie-service';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { SessionStorageService } from 'src/app/global/service/session-storage.service';
-import { UsersUrl } from 'src/app/network/url/users.url';
+import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { Md5 } from 'ts-md5';
 import { User } from '../../model/user.model';
 import { DigestResponse } from './digest-response.class';
@@ -71,7 +71,7 @@ export class AuthorizationService implements CanActivate {
   async login(username: string, password: string) {
     this._username = username;
     this._password = password;
-    this._config.url = UsersUrl.login() + '/' + username;
+    this._config.url = UserUrl.login(username);
 
     this._config.headers = {
       'X-Webbrowser-Authentication': 'Forbidden',
@@ -90,7 +90,7 @@ export class AuthorizationService implements CanActivate {
         this._config.headers['Authorization'] = this._generateChallengeHeader(
           challenge,
           'GET',
-          UsersUrl.login() + '/' + username
+          UserUrl.login(username)
         );
         this._sessionStorageService.challenge = challenge;
         return axios(this._config).then((res: AxiosResponse<User>) =>

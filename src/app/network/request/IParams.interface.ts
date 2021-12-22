@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { transformDate } from '../model/transform.model';
 
 export interface IParams {}
-export class PagedParams {
+export class PagedParams implements IParams {
   /**页码[1-n](可选) */
   PageIndex?: number = 1;
   /**分页大小[1-100](可选) */
