@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractService } from 'src/app/business/Ibusiness';
+import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 import { Fault } from '../../model/howell-response.model';
 import { PagedList } from '../../model/page_list.model';
@@ -49,11 +50,20 @@ export class UserRequestService {
     let url = UserUrl.item(id);
     return this.basic.delete(url, Fault);
   }
+
   list(
     params: GetUsersParams = new GetUsersParams()
   ): Promise<PagedList<User>> {
     let url = UserUrl.list();
     return this.type.paged(url, params);
+  }
+
+  private _config?: ConfigService;
+  public get config(): ConfigService {
+    if (!this._config) {
+      this._config = new ConfigService(this.basic);
+    }
+    return this._config;
   }
 
   private _role?: RolesService;
@@ -78,6 +88,20 @@ export class UserRequestService {
       this._password = new PasswordsService(this.basic);
     }
     return this._password;
+  }
+}
+
+class ConfigService {
+  constructor(private basic: BaseRequestService) {}
+
+  get(userId: string, type: UserConfigType): Promise<string> {
+    let url = UserUrl.config(userId).item(type);
+    return this.basic.http.getBase64String(url).toPromise();
+  }
+
+  update(userId: string, type: UserConfigType, base64: string): Promise<Fault> {
+    let url = UserUrl.config(userId).item(type);
+    return this.basic.http.putBase64String<Fault>(url, base64).toPromise();
   }
 }
 

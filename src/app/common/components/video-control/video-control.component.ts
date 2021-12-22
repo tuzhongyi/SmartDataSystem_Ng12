@@ -10,6 +10,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { UserConfigType } from 'src/app/enum/user-config-type.enum';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { SessionStorageService } from 'src/app/global/service/session-storage.service';
+import { StoreService } from 'src/app/global/service/store.service';
+import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { VideoModel } from './video.model';
 
 @Component({
@@ -54,7 +59,11 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
     return this._player;
   }
 
-  constructor(private sanitizer: DomSanitizer, private userService: User) {}
+  constructor(
+    private sanitizer: DomSanitizer,
+    private local: LocalStorageService,
+    private userService: UserRequestService
+  ) {}
 
   ngAfterViewInit(): void {
     debugger;
@@ -71,11 +80,11 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
 
   playing = false;
 
-  _ruleState: boolean;
+  _ruleState: boolean = false;
   async loadRuleState() {
     try {
-      const strRule = await this.userDalService.getUserConfig(
-        this.userId,
+      const strRule = await this.userService.config.get(
+        this.local.user.Id,
         UserConfigType.VideoRuleState
       );
       if (strRule) {
@@ -85,18 +94,15 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
       console.log('getRuleState error');
     }
   }
-  saveRuleState(state: boolean) {
-    const saveDB = async (userId) => {
-      const fault = await this.userDalService.editUserConfig(
-        userId,
-        UserConfigType.VideoRuleState,
-        state.toString()
-      );
-      if (fault && fault.FaultCode === 0) {
-        this._ruleState = state;
-      }
-    };
-    saveDB(this.userId);
+  async saveRuleState(state: boolean) {
+    const fault = await this.userService.config.update(
+      this.local.user.Id,
+      UserConfigType.VideoRuleState,
+      state.toString()
+    );
+    if (fault && fault.FaultCode === 0) {
+      this._ruleState = state;
+    }
   }
 
   eventRegist() {
