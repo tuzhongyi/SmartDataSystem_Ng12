@@ -2,12 +2,22 @@
   width: 100%;
   height: 100%;
   display: flex;
-  .platform-nav {
+  &-nav {
     width: 300px;
     background-color: #10152da8;
+    display: none;
   }
-  .platform-main {
+  &-main {
     background-color: #0c1127;
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    .main-bread-crumb {
+      height: 52px;
+      background-color: cyan;
+    }
+    .main-content {
+      flex-grow: 1;
+    }
   }
 }

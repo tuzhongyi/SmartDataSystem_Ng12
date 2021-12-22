@@ -1,3 +1,15 @@
 <div class="illegal-drop">
-    <app-table></app-table>
+    <div class="illegal-drop-header">
+        <div>
+            <div>导航</div>
+            <button (click)="show=!show">显示</button>
+        </div>
+        <div *ngIf="show">hshdfh</div>
+    </div>
+    <div class="illegal-drop-main">
+        <app-table></app-table>
+    </div>
+    <div class='illegal-drop-footer'>
+        pagination
+    </div>
 </div>
