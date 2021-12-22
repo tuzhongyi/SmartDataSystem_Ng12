@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { classToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
@@ -55,7 +56,8 @@ export class UserRequestService {
     params: GetUsersParams = new GetUsersParams()
   ): Promise<PagedList<User>> {
     let url = UserUrl.list();
-    return this.type.paged(url, params);
+    let data = classToPlain(params);
+    return this.type.paged(url, data);
   }
 
   private _config?: ConfigService;
@@ -127,7 +129,8 @@ class LabelsService {
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
-    return this.basic.post(url, PagedList, params);
+    let data = classToPlain(params);
+    return this.basic.post(url, PagedList, data);
   }
 
   get(id: string, type: UserLabelType): Promise<UserLabel> {
@@ -153,11 +156,13 @@ class PasswordsService {
 
   random(userId: string, params: RandomUserPaswordParams): Promise<String> {
     let url = UserUrl.password(userId).random();
-    return this.basic.post(url, String, params);
+    let data = classToPlain(params);
+    return this.basic.post(url, String, data);
   }
 
   change(userId: string, params: ChangeUserPasswordParams) {
     let url = UserUrl.password(userId).change();
-    return this.basic.post(url, User, params);
+    let data = classToPlain(params);
+    return this.basic.post(url, User, data);
   }
 }

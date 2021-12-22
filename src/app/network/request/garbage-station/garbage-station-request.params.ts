@@ -9,7 +9,7 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
-import { transformDate } from '../../model/transform.model';
+import { transformDateTime } from '../../model/transform.model';
 import {
   IntervalParams,
   IParams,
@@ -114,7 +114,7 @@ export class GetGarbageStationStatisticNumbersParams
 }
 export class GetGarbageStationStatisticGarbageCountsParams implements IParams {
   /**	Date	日期	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   Date!: Date;
   /**	String[]	垃圾房ID列表	M */
   GarbageStationIds!: string[];

@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { CameraUsage } from '../../enum/camera-sage.enum';
 import { OnlineStatus } from '../../enum/online-status.enum';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 摄像机 */
 export class Camera {
@@ -12,10 +12,10 @@ export class Camera {
   /**	Int32	摄像机用途	M */
   CameraUsage!: CameraUsage;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	String	垃圾桶房	M */
   GarbageStationId!: string;
@@ -33,7 +33,7 @@ export class Camera {
   /**	String	垃圾满溢照片路径	O */
   GarbageFullImageUrl?: string;
   /**	DateTime	垃圾满溢时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   GarbageFullTime?: Date;
   /**	Boolean	是否满溢	O */
   IsFull?: boolean;
@@ -42,7 +42,7 @@ export class Camera {
   /**	String	照片URL或ID	O */
   ImageUrl?: string;
   /**	DateTime	照片时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   ImageTime?: Date;
   /**	Int32	场景变换：0-正常，1-稍微偏移，2-严重偏移	O */
   SceneChange?: number;

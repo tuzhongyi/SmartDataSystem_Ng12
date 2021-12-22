@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { MemberType } from '../../enum/member-type.enum';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 垃圾房管理人员 */
 export class Member {
@@ -23,9 +23,9 @@ export class Member {
   /**	String	所属网格ID 	O */
   GridCellId?: string;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
 }

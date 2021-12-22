@@ -3,7 +3,7 @@ import { Gender } from 'src/app/enum/gender.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
 import { Role } from './role.model';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 export class User {
   /// <signature>
   /// <summary>User</summary>
@@ -47,13 +47,13 @@ export class User {
   /**	String	描述信息	O	RW */
   Note?: string;
   /**	DateTime	过期时间	M	RW */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   ExpiredTime!: Date;
   /**	DateTime	创建时间	M	R */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新时间	M	R */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	Int32	0-正常	M	R */
   State!: UserState;

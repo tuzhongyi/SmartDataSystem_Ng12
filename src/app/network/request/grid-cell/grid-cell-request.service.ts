@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { classToPlain } from 'class-transformer';
 import { IBusiness } from 'src/app/business/Ibusiness';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
@@ -26,7 +27,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class GridCellRequestService implements IBusiness<GridCell> {
+export class GridCellRequestService {
   basic: BaseRequestService;
   type: BaseTypeRequestService<GridCell>;
   constructor(private _http: HowellAuthHttpService) {
@@ -49,9 +50,10 @@ export class GridCellRequestService implements IBusiness<GridCell> {
     let url = GridCellUrl.basic();
     return this.type.post(url, data);
   }
-  list(args: GetGridCellsParams): Promise<PagedList<GridCell>> {
+  list(params: GetGridCellsParams): Promise<PagedList<GridCell>> {
     let url = GridCellUrl.list();
-    return this.type.paged(url, args);
+    let data = classToPlain(params);
+    return this.type.paged(url, data);
   }
 
   garbageStations(id: string, request: BatchRequest): Promise<BatchResult> {
@@ -92,7 +94,8 @@ class EventNumbersHistoryService {
     params: GetGridCellEventNumbersParams
   ): Promise<PagedList<EventNumberStatistic>> {
     let url = GridCellUrl.eventNumber(gridCellId).history.list();
-    return this.basic.paged(url, EventNumberStatistic, params);
+    let data = classToPlain(params);
+    return this.basic.paged(url, EventNumberStatistic, data);
   }
 }
 class StatisticService {
@@ -112,14 +115,16 @@ class StatisticNumberService {
     params: GetGridCellStatisticNumbersParams
   ): Promise<PagedList<GridCellNumberStatistic>> {
     let url = GridCellUrl.statistic.number.list();
-    return this.basic.paged(url, GridCellNumberStatistic, params);
+    let data = classToPlain(params);
+    return this.basic.paged(url, GridCellNumberStatistic, data);
   }
 
   comparison(
     params: GetGridCellStatisticComparisonParams
   ): Promise<GridCellNumberStatisticComparison[]> {
     let url = GridCellUrl.statistic.number.comparison();
-    return this.basic.array(url, GridCellNumberStatisticComparison, params);
+    let data = classToPlain(params);
+    return this.basic.array(url, GridCellNumberStatisticComparison, data);
   }
 
   private _history?: StatisticNumberHistoryService;
@@ -136,6 +141,7 @@ class StatisticNumberHistoryService {
     params: GetGridCellStatisticNumbersParamsV2
   ): Promise<GridCellNumberStatisticV2[]> {
     let url = GridCellUrl.statistic.number.history.list();
-    return this.basic.array(url, GridCellNumberStatisticV2, params);
+    let data = classToPlain(params);
+    return this.basic.array(url, GridCellNumberStatisticV2, data);
   }
 }

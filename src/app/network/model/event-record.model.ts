@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
 import { ResourceType } from '../../enum/resource-type.enum';
 import { Point } from './point.model';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
 
 /** 事件基础类型 */
@@ -10,7 +10,7 @@ export class EventRecord {
   /**	String	事件ID	M */
   Id!: string;
   /**	DateTime	事件时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EventTime!: Date;
   /**	Int32	事件类型	M */
   EventType!: EventType;
@@ -109,7 +109,7 @@ class GarbageFullEventData {
   /**	String	区划名称	O */
   DivisionName?: string;
   /**	DateTime	第一次满溢时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   FullTime!: Date;
   /**	String[]	图片ID、图片地址列表	O */
   ImageUrls?: string[];
@@ -141,10 +141,10 @@ class GarbageDropEventRData {
   /**	String	网格单元名称	O */
   GridCellName?: string;
   /**	DateTime	落地时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   DropTime!: Date;
   /**	DateTime	处置时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   HandleTime?: Date;
   /**	Boolean	小包垃圾落地是否已处置	M */
   IsHandle!: boolean;

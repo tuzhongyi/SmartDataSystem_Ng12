@@ -5,7 +5,7 @@ import { Camera } from './camera.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { TimeRange } from './time-range.model';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 import { TrashCan } from './trash-can.model';
 
 /** 垃圾房、投放点 */
@@ -19,10 +19,10 @@ export class GarbageStation {
   /**	String	描述信息	O */
   Description?: string;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	GisPoint	GIS点位	O */
   GisPoint?: GisPoint;
@@ -35,7 +35,7 @@ export class GarbageStation {
   /**	Boolean	干垃圾满溢	O */
   DryFull?: boolean;
   /**	DateTime	干垃圾满溢时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   DryFullTime?: Date;
   /**	Double	干垃圾容积，单位：L	O */
   DryVolume?: number;
@@ -44,7 +44,7 @@ export class GarbageStation {
   /**	Boolean	湿垃圾满溢	O */
   WetFull?: boolean;
   /**	DateTime	湿垃圾满溢时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   WetFullTime?: Date;
   /**	Double	湿垃圾容积，单位：L	O */
   WetVolume?: number;
@@ -92,10 +92,10 @@ export class GarbageStationType {
   /**	CameraSlot[]	摄像机插槽列表	O */
   CameraSlots?: CameraSlot[];
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
 }
 /** 垃圾投放窗口 */

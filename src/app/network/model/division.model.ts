@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { DivisionType } from '../../enum/division-type.enum';
 import { GisArea } from './gis-area.model';
 import { GisPoint } from './gis-point.model';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 区划 */
 export class Division {
@@ -25,10 +25,10 @@ export class Division {
   /**	Int32	区划类型，用于图标区分	M */
   DivisionType!: DivisionType;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	GisPoint	区划中心GIS点位	O */
   GisPoint?: GisPoint;

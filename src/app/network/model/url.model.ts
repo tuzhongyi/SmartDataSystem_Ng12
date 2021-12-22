@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /**
  *  视频Url地址
@@ -10,9 +10,9 @@ import { transformDate } from './transform.model';
  *  QueryString中的user，password请使用用户登录的用户名密码，此处示例中的用户名密码不一定是实际项目中的用户名密码
  *
  */
-export interface Url {
+export class VideoUrl {
   /**	String	Url地址	M */
-  Url: string;
+  Url!: string;
   /**	String	用户名	O */
   Username?: string;
   /**	String	密码	O */
@@ -39,7 +39,7 @@ export class CameraPictureUrl {
   /**	String	图片URL地址	O */
   Url?: string;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	String	摄像机ID	M */
   CameraId!: string;

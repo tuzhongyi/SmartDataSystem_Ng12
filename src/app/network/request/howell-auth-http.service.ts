@@ -27,7 +27,10 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<Blob> {
-    const myHeaders = this.getHttpHeaders('POST', url);
+    const myHeaders = this._authorizationService.generateHttpHeader(
+      'POST',
+      url
+    );
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
@@ -45,7 +48,7 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<T> {
-    const myHeaders = this.getHttpHeaders('PUT', url);
+    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'text/plain',
@@ -58,17 +61,8 @@ export class HowellAuthHttpService {
     });
   }
 
-  public getBase64String(url: string, params?: HttpParams): Observable<string> {
-    const myHeaders = this.getHttpHeaders('GET', url);
-    return this._http.get(url, {
-      headers: myHeaders,
-      params: params,
-      responseType: 'text',
-    });
-  }
-
   public getStream(url: string, params?: HttpParams): Observable<Blob> {
-    const myHeaders = this.getHttpHeaders('GET', url);
+    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
@@ -91,6 +85,15 @@ export class HowellAuthHttpService {
       params: params,
     };
     return this._http.get<R>(url, httpOptions);
+  }
+
+  public getBase64String(url: string, params?: HttpParams): Observable<string> {
+    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
+    const httpOptions = {
+      headers: myHeaders,
+      params: params,
+    };
+    return this._http.get<string>(url, httpOptions);
   }
 
   public getCache<T = any, R = T>(url: string, params?: HttpParams) {

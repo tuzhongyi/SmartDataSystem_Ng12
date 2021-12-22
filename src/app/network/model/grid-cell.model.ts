@@ -2,7 +2,7 @@ import { Transform } from 'class-transformer';
 import { CellType } from '../../enum/cell-type.enum';
 import { GisArea } from './gis-area.model';
 import { GisPoint } from './gis-point.model';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 网格单元信息 */
 export class GridCell {
@@ -25,10 +25,10 @@ export class GridCell {
   /**	Int32	类型，用于图标区分	M */
   CellType!: CellType;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	GisPoint	网格中心GIS点位	O */
   GisPoint?: GisPoint;

@@ -2,6 +2,7 @@
   <iframe
     #iframe
     [src]="src"
+    (load)="onLoad($event)"
     class="video-control selected fill-height fill-width"
   ></iframe>
 </div>

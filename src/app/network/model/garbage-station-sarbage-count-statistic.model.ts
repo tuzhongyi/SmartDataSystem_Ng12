@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 垃圾房的垃圾堆数量统计信息 */
 export class GarbageStationGarbageCountStatistic {
@@ -8,10 +8,10 @@ export class GarbageStationGarbageCountStatistic {
   /**	String	垃圾房名称	M */
   Name!: string;
   /**	DateTime	开始时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   BeginTime!: Date;
   /**	DateTime	结束时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EndTime!: Date;
   /**	Int32	垃圾堆数量	M */
   GarbageCount!: number;

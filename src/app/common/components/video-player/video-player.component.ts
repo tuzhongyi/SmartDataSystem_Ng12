@@ -3,26 +3,22 @@ import {
   Component,
   ElementRef,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { SessionStorageService } from 'src/app/global/service/session-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { VideoModel } from './video.model';
 
 @Component({
-  selector: 'app-video-control',
-  templateUrl: './video-control.component.html',
-  styleUrls: ['./video-control.component.less'],
+  selector: 'app-video-player',
+  templateUrl: './video-player.component.html',
+  styleUrls: ['./video-player.component.less'],
 })
-export class VideoControlComponent implements OnDestroy, AfterViewInit {
+export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input()
   url?: string;
 
@@ -51,8 +47,7 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
 
   private _player?: WSPlayerProxy;
   private get player(): WSPlayerProxy | undefined {
-    console.log('get player');
-    if (!this.iframe) return undefined;
+    if (!this.iframe || !this.iframe.nativeElement.src) return undefined;
     if (!this._player) {
       this._player = new WSPlayerProxy(this.iframe.nativeElement);
     }
@@ -64,9 +59,8 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
     private local: LocalStorageService,
     private userService: UserRequestService
   ) {}
-
-  ngAfterViewInit(): void {
-    debugger;
+  ngAfterViewInit(): void {}
+  ngOnInit(): void {
     if (this.model) {
       this.url = this.model.toString();
     }
@@ -76,7 +70,18 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
       this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
     }
   }
-  ngOnDestroy(): void {}
+
+  onLoad(event: Event) {
+    this.loadRuleState().then(() => {
+      this.eventRegist();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.registHandle) {
+      clearTimeout(this.registHandle);
+    }
+  }
 
   playing = false;
 
@@ -105,8 +110,10 @@ export class VideoControlComponent implements OnDestroy, AfterViewInit {
     }
   }
 
+  registHandle?: NodeJS.Timer;
+
   eventRegist() {
-    setTimeout(() => {
+    this.registHandle = setTimeout(() => {
       if (this.player) {
         this.player.getPosition = (val: any) => {
           if (val >= 1) {

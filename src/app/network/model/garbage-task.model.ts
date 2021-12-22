@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
 
 /** 垃圾任务 */
@@ -17,10 +17,10 @@ export class GarbageTask {
   /**	String	目的地地址	M */
   DestinationAddress!: string;
   /**	DateTime	任务发布时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	预计完成时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EstimatedTime!: Date;
   /**	String	任务发布用户ID	M */
   PublisherId!: string;
@@ -31,7 +31,7 @@ export class GarbageTask {
   /**	Boolean	是否已完成	M */
   IsFinished!: boolean;
   /**	DateTime	处置完成时间	O */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   FinishTime?: Date;
   /**	String	处置描述	O */
   FinishDescription?: string;

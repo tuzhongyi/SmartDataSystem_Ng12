@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 垃圾容量 */
 export class GarbageVolume {
@@ -28,9 +28,9 @@ export class GarbageVolume {
   /**	Double	当前湿垃圾容量百分比，[0,1] ，只有垃圾房信息中含有该值	M */
   WetVolumePercent!: number;
   /**	DateTime	开始时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   BeginTime!: Date;
   /**	DateTime	结束时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EndTime!: Date;
 }

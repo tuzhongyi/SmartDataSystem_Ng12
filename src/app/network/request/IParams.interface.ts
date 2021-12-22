@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { transformDate } from '../model/transform.model';
+import { transformDateTime } from '../model/transform.model';
 
 export interface IParams {}
 export class PagedParams implements IParams {
@@ -10,17 +10,17 @@ export class PagedParams implements IParams {
 }
 export class IntervalParams {
   /**	DateTime	开始时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   BeginTime!: Date;
   /**	DateTime	结束时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EndTime!: Date;
 }
 export class PagedIntervalParams extends PagedParams {
   /**	DateTime	开始时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   BeginTime!: Date;
   /**	DateTime	结束时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   EndTime!: Date;
 }

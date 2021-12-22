@@ -1,7 +1,7 @@
 import { Transform } from 'class-transformer';
 import { CanType } from '../../enum/can-type.enum';
 import { LidState } from '../../enum/lid-state.enum';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 
 /** 垃圾桶 */
 export class TrashCan {
@@ -18,10 +18,10 @@ export class TrashCan {
   /**	Double	当前容积，单位：L	O */
   CurrentVolume?: number;
   /**	DateTime	创建时间	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新事件	M */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**	String	垃圾桶房	M */
   GarbageStationId!: string;

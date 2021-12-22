@@ -3,7 +3,7 @@ import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
 import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
 import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from '../../enum/role-user-data.enum';
-import { transformDate } from './transform.model';
+import { transformDateTime } from './transform.model';
 import { UserResource } from './user.model';
 
 /** 角色信息 */
@@ -13,10 +13,10 @@ export class Role {
   /**	String	角色名称	M	RW */
   Name!: string;
   /**	DateTime	创建时间	M	R */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   CreateTime!: Date;
   /**	DateTime	更新时间	M	R */
-  @Transform(transformDate)
+  @Transform(transformDateTime)
   UpdateTime!: Date;
   /**
    *	Int32	隐私数据显示
