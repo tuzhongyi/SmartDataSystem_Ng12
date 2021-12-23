@@ -1,4 +1,36 @@
+/*
+ * @Author: pmx
+ * @Date: 2021-12-23 16:17:25
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-12-23 16:31:43
+ *
+ *
+ *
+ *　 ┏┓   　   ┏┓
+ *　┏┛┻━━━━━━━━┛┻┓
+ *　┃　　　　　　 ┃
+ *　┃　　　━　　　┃ ++ + + +
+ *  |  ████━████ ┃
+ *　┃　　　　　　 ┃ +
+ *　┃　　　┻　　　┃
+ *　┃　　　　　　 ┃ + +
+ *　┗━┓　　　  ┏━┛
+ *　　　┃　　　┃
+ *　　　┃　　　┃ + + + +
+ *　　　┃　　　┃
+ *　　　┃　　　┃ +  神兽保佑
+ *　　　┃　　　┃    代码无bug
+ *　　　┃　　　┃　　+
+ *　　　┃　 　　┗━━━┓ + +
+ *　　　┃ 　　　　　 ┣┓
+ *　　　┃ 　　　　　┏┛
+ *　　　┗┓┓┏━━━┳┓┏┛ + + + +
+ *　　　　┃┫┫　┃┫┫
+ *　　　　┗┻┛　┗┻┛+ + + +
+ *
+ */
 import { Injectable } from '@angular/core';
+import { IConverter } from '../common/interfaces/converter.interface';
 import { DivisionType } from '../enum/division-type.enum';
 import { EnumHelper } from '../enum/enum-helper';
 import { UserResourceType } from '../enum/user-resource-type.enum';
@@ -8,54 +40,38 @@ import { GarbageStation } from '../network/model/garbage-station.model';
 import { DivisionManageModel } from '../view-model/division-manange.model';
 import { NestedTreeNode } from '../view-model/nested-tree-node.model';
 
+type TreeSourceModel =
+  | DivisionNode
+  | Division
+  | DivisionManageModel
+  | GarbageStation;
 @Injectable({
   providedIn: 'root',
 })
-export class TreeConverter {
-  fromDivisionNode(item: DivisionNode, parentId: string | null = null) {
-    const node = new NestedTreeNode(
-      item.Id,
-      item.Name,
-      item.Description,
-      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
-      item.Nodes.length > 0,
-      parentId,
-      true
-    );
-    return node;
+export class TreeConverter implements IConverter<any, NestedTreeNode> {
+  Convert(source: TreeSourceModel) {
+    if (source instanceof DivisionNode) {
+      return this._fromDivisionNode(source);
+    } else if (source instanceof Division) {
+      return this._fromDivision(source);
+    } else if (source instanceof DivisionManageModel) {
+      return this._fromDivisionManage(source);
+    } else if (source instanceof GarbageStation) {
+      return this._fromGarbageStation(source);
+    }
+    throw new Error('Error');
   }
-
-  fromDivision(item: Division) {
-    const node = new NestedTreeNode(
-      item.Id,
-      item.Name,
-      item.Description,
-      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
-      !item.IsLeaf,
-      item.ParentId
-    );
-    return node;
-  }
-  fromDivisionManage(model: DivisionManageModel) {
-    const node = new NestedTreeNode(model.id, model.name, model.description);
-    return node;
-  }
-  fromGarbageStation(item: GarbageStation) {
-    const node = new NestedTreeNode(item.Id, item.Name, item.Description, UserResourceType.Station, false, item.DivisionId);
-    return node;
-  }
-
 
   iterateToNested<T>(data: T[]): NestedTreeNode[] {
     let res: NestedTreeNode[] = new Array<NestedTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof Division) {
-        const node = this.fromDivision(item)
+        const node = this._fromDivision(item);
         res.push(node);
       } else if (item instanceof GarbageStation) {
-        const node = this.fromGarbageStation(item);
-        res.push(node)
+        const node = this._fromGarbageStation(item);
+        res.push(node);
       }
     }
     return res;
@@ -65,7 +81,7 @@ export class TreeConverter {
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof DivisionNode) {
-        const node = this.fromDivisionNode(item);
+        const node = this._fromDivisionNode(item);
         node.parentId = parentId;
         res.push(node);
         if (item.Nodes && item.Nodes.length > 0) {
@@ -74,7 +90,6 @@ export class TreeConverter {
           node.hasChildren = true;
         }
       }
-
     }
 
     return res;
@@ -87,40 +102,34 @@ export class TreeConverter {
     let m = new Map<string, NestedTreeNode>();
 
     // 暂时没有父节点的节点
-    let hanged = new Map<string, NestedTreeNode>();// 暂存区
+    let hanged = new Map<string, NestedTreeNode>(); // 暂存区
 
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       let node: NestedTreeNode | null = null;
 
-
-
       if (item instanceof Division) {
         if (m.has(item.Id)) {
-          node = m.get(item.Id)!
+          node = m.get(item.Id)!;
         } else {
-          node = this.fromDivision(item);
-          m.set(node.id, node)
+          node = this._fromDivision(item);
+          m.set(node.id, node);
         }
-
-
       } else if (item instanceof GarbageStation) {
         if (m.has(item.Id)) {
-          node = m.get(item.Id)!
-        }
-        else {
-          node = this.fromGarbageStation(item);
-          m.set(node.id, node)
+          node = m.get(item.Id)!;
+        } else {
+          node = this._fromGarbageStation(item);
+          m.set(node.id, node);
         }
       }
 
       if (node) {
-
         // 动态用Map,静态用Array
         for (let h of hanged.values()) {
           if (h.parentId == node.id) {
             node.childrenChange.value.push(h);
-            hanged.delete(h.id)
+            hanged.delete(h.id);
           }
         }
 
@@ -129,19 +138,18 @@ export class TreeConverter {
             // 当前已经有 parentNode 记录
             let parentNode = m.get(node.parentId)!;
             parentNode.hasChildren = true;
-            parentNode.childrenChange.value.push(node)
+            parentNode.childrenChange.value.push(node);
           } else if (hanged.has(node.parentId)) {
             let parentNode = hanged.get(node.parentId)!;
             parentNode.hasChildren = true;
-            parentNode.childrenChange.value.push(node)
-
+            parentNode.childrenChange.value.push(node);
           } else {
             // parentNode还没有创建
-            hanged.set(node.id, node)
+            hanged.set(node.id, node);
           }
         } else {
           // 跟区划
-          res.push(node)
+          res.push(node);
         }
       }
     }
@@ -152,16 +160,61 @@ export class TreeConverter {
   mergeNestedTree(first: NestedTreeNode[], second: NestedTreeNode[]) {
     for (let i = 0; i < first.length; i++) {
       let first_item = first[i];
-      let second_item = second.find(item => item.id == first_item.id)
+      let second_item = second.find((item) => item.id == first_item.id);
       if (second_item) {
-        this.mergeNestedTree(first_item.childrenChange.value, second_item.childrenChange.value)
+        this.mergeNestedTree(
+          first_item.childrenChange.value,
+          second_item.childrenChange.value
+        );
       } else {
-        second.push(first_item)
+        second.push(first_item);
       }
     }
 
     return second;
   }
 
+  /******************* private *****************************/
+  private _fromDivisionNode(
+    item: DivisionNode,
+    parentId: string | null = null
+  ) {
+    const node = new NestedTreeNode(
+      item.Id,
+      item.Name,
+      item.Description,
+      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
+      item.Nodes.length > 0,
+      parentId,
+      true
+    );
+    return node;
+  }
 
+  private _fromDivision(item: Division) {
+    const node = new NestedTreeNode(
+      item.Id,
+      item.Name,
+      item.Description,
+      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
+      !item.IsLeaf,
+      item.ParentId
+    );
+    return node;
+  }
+  private _fromDivisionManage(model: DivisionManageModel) {
+    const node = new NestedTreeNode(model.id, model.name, model.description);
+    return node;
+  }
+  private _fromGarbageStation(item: GarbageStation) {
+    const node = new NestedTreeNode(
+      item.Id,
+      item.Name,
+      item.Description,
+      UserResourceType.Station,
+      false,
+      item.DivisionId
+    );
+    return node;
+  }
 }

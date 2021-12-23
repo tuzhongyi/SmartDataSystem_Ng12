@@ -7,7 +7,7 @@
         <div *ngIf="show">hshdfh</div>
     </div>
     <div class="illegal-drop-main">
-        <app-table></app-table>
+        <app-table [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-table>
     </div>
     <div class='illegal-drop-footer'>
         pagination

@@ -39,9 +39,12 @@ export class DivisionManageComponent implements OnInit {
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
 
-
   get enableAddBtn() {
-    return !this.currentNode || this.currentNode?.type == UserResourceType.City || this.currentNode?.type == UserResourceType.County;
+    return (
+      !this.currentNode ||
+      this.currentNode?.type == UserResourceType.City ||
+      this.currentNode?.type == UserResourceType.County
+    );
   }
   get enableDelBtn() {
     return (
@@ -72,7 +75,7 @@ export class DivisionManageComponent implements OnInit {
     }, this._excludeGuards);
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   async addNode() {
     if (this.tree) {
@@ -85,12 +88,11 @@ export class DivisionManageComponent implements OnInit {
       let res = await this._business.addDivision(parentId, model);
       if (res) {
         this._toastrService.success('添加成功');
-        const node = this._converter.fromDivisionManage(model);
+        const node = this._converter.Convert(model);
         node.parentId = parentId;
         node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
         this.tree.addNode(node);
       }
-
     }
   }
   async deleteNode() {
@@ -119,11 +121,9 @@ export class DivisionManageComponent implements OnInit {
         if (res) {
           this._toastrService.success('编辑成功');
 
-          const node = this._converter.fromDivisionManage(model);
+          const node = this._converter.Convert(model);
           this.tree.editNode(node);
         }
-
-
       }
     }
   }
@@ -154,7 +154,6 @@ export class DivisionManageComponent implements OnInit {
   }
 
   selectTree(nodes: FlatTreeNode[]) {
-
     this.currentNode = nodes[0];
     console.log('currentNode', this.currentNode);
   }

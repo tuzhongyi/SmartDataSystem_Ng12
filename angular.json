@@ -96,7 +96,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "proxyConfig": "src/proxy.conf.ts"
+            "proxyConfig": "proxy.conf.ts"
           },
           "configurations": {
             "production": {
