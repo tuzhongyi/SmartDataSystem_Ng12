@@ -1,4 +1,5 @@
 ﻿@import url(../fonts/howell.font/howell.font.css);
+
 @font-face {
   font-family: "Source Han Sans CN Normal";
   src: url("Source Han Sans CN Normal.ttf") format("truetype");
@@ -49,12 +50,10 @@ a:hover {
 .select2-container--default .select2-selection--multiple,
 .bootstrap-tagsinput,
 .footable .pagination li a,
-.select2-container--default
-  .select2-selection--single
-  .select2-selection__rendered,
+.select2-container--default .select2-selection--single .select2-selection__rendered,
 .ms-container .ms-selectable li.ms-elem-selectable,
 .ms-container .ms-selection li.ms-elem-selection,
-.jsgrid-row > .jsgrid-cell,
+.jsgrid-row>.jsgrid-cell,
 .page-item .page-link,
 .page-item.disabled .page-link,
 .minimal-faq .card .card-header,
@@ -68,7 +67,7 @@ a:hover {
   color: #fff;
 }
 
-.card > .card-body.align-self-center {
+.card>.card-body.align-self-center {
   display: inline-grid;
 }
 
@@ -249,6 +248,7 @@ a:hover {
 }
 
 @media (max-height: 975px) {
+
   .row.row-span-0,
   .card.row-span-0 {
     height: 105px;
@@ -319,6 +319,7 @@ a:hover {
 }
 
 @media (max-height: 950px) {
+
   .row.row-span-0,
   .card.row-span-0 {
     height: 100px;
@@ -401,28 +402,29 @@ a:hover {
   font-weight: 500;
   font-size: 24px;
 }
+
 /*.nav-pills.howell {
     margin-left:-1rem;
 }*/
 
-.nav-pills.howell > li.active > a,
-.nav-pills.howell > li.active > a:hover,
-.nav-pills.howell > li.active > a:focus {
+.nav-pills.howell>li.active>a,
+.nav-pills.howell>li.active>a:hover,
+.nav-pills.howell>li.active>a:focus {
   background-color: transparent;
 }
 
-.nav.howell > li > a:hover,
-.nav.howell > li > a {
+.nav.howell>li>a:hover,
+.nav.howell>li>a {
   color: #fff;
   opacity: 0.8;
   background-color: transparent;
 }
 
-.nav.howell > li > a:hover {
+.nav.howell>li>a:hover {
   opacity: 0.5;
 }
 
-.nav.howell > li > a:focus {
+.nav.howell>li>a:focus {
   opacity: 1;
 }
 
@@ -435,23 +437,21 @@ hr,
 ul.wysihtml5-toolbar,
 .select2-container--default .select2-selection--single,
 .select2-container--default .select2-selection--multiple,
-.select2-container--default
-  .select2-selection--multiple
-  .select2-selection__choice,
+.select2-container--default .select2-selection--multiple .select2-selection__choice,
 .bootstrap-tagsinput,
 .ms-container .ms-selectable li.ms-elem-selectable,
 .ms-container .ms-selection li.ms-elem-selection,
 .ms-container .ms-list,
-.wizard-content .wizard.wizard-circle > .steps .step,
+.wizard-content .wizard.wizard-circle>.steps .step,
 .modal-footer,
 .modal-header,
-.jsgrid-header-row > .jsgrid-header-cell,
-.jsgrid-edit-row > .jsgrid-cell,
-.jsgrid-filter-row > .jsgrid-cell,
+.jsgrid-header-row>.jsgrid-header-cell,
+.jsgrid-edit-row>.jsgrid-cell,
+.jsgrid-filter-row>.jsgrid-cell,
 .jsgrid-grid-body,
 .jsgrid-grid-header,
-.jsgrid-header-row > .jsgrid-header-cell,
-.jsgrid-insert-row > .jsgrid-cell,
+.jsgrid-header-row>.jsgrid-header-cell,
+.jsgrid-insert-row>.jsgrid-cell,
 .fixed-table-container,
 .page-item .page-link,
 .page-item.disabled .page-link,
@@ -543,10 +543,10 @@ ul.wysihtml5-toolbar,
   border: 0px;
 }
 
-input[type="button" i],
-input[type="submit" i],
-input[type="reset" i],
-input[type="file" i]::-webkit-file-upload-button,
+input[type="button"i],
+input[type="submit"i],
+input[type="reset"i],
+input[type="file"i]::-webkit-file-upload-button,
 button {
   background-color: black;
   color: white;
@@ -556,6 +556,7 @@ button {
 .flip-container {
   perspective: 1000;
 }
+
 /* flip the pane when hovered */
 .flip-container.edit .flipper,
 .flip-container.edit .flipper {
@@ -645,7 +646,7 @@ body.login2 .login-wrapper .social-login {
   /*border-bottom: 1px solid #cccccc;*/
 }
 
-body.login2 .login-wrapper .social-login > .btn {
+body.login2 .login-wrapper .social-login>.btn {
   width: 49%;
   margin: 0;
 }
@@ -671,7 +672,7 @@ body.login2 .login-wrapper .social-login .twitter:hover {
 }
 
 .nav-pills .nav-link.active,
-.show > .nav-pills .nav-link {
+.show>.nav-pills .nav-link {
   background-color: transparent;
 }
 
@@ -684,13 +685,13 @@ body.login2 .login-wrapper .social-login .twitter:hover {
   font-size: 24px;
 }
 
-.topbar .top-navbar .navbar-nav > .nav-item > .nav-link {
+.topbar .top-navbar .navbar-nav>.nav-item>.nav-link {
   font-size: 24px;
   vertical-align: middle;
   line-height: 55px;
 }
 
-.topbar .top-navbar .navbar-nav > .nav-item > .nav-link > i {
+.topbar .top-navbar .navbar-nav>.nav-item>.nav-link>i {
   margin-right: 5px;
 }
 
@@ -762,19 +763,19 @@ body.login2 .login-wrapper .social-login .twitter:hover {
         border-color: #80bdff;
     }*/
 
-.input-group > .input-group-addon {
+.input-group>.input-group-addon {
   border: 1px solid rgba(120, 130, 140, 1);
 }
 
-.input-group > .input-group-addon:first-child {
+.input-group>.input-group-addon:first-child {
   border-right: none;
 }
 
-.input-group > .input-group-addon:last-child {
+.input-group>.input-group-addon:last-child {
   border-left: none;
 }
 
-.fileinput.input-group > .btn-file {
+.fileinput.input-group>.btn-file {
   border-top-right-radius: 0.25rem;
   border-bottom-right-radius: 0.25rem;
 }
@@ -819,11 +820,11 @@ body.login2 .login-wrapper .social-login .twitter:hover {
     0 4px 23px 0 rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(23, 105, 255, 0.2);
 }
 
-.navbar > .navbar-header {
+.navbar>.navbar-header {
   width: auto;
 }
 
-.navbar > .navbar-header > .navbar-brand {
+.navbar>.navbar-header>.navbar-brand {
   font-size: 25px;
 }
 
@@ -840,19 +841,23 @@ body.login2 .login-wrapper .social-login .twitter:hover {
   /* 内层轨道 */
   background-color: #6c6e7148;
 }
+
 ::-webkit-scrollbar-corner {
   background-color: rgba(0, 0, 0, 0);
 }
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 5px;
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: #1c1e25;
   background-clip: padding-box;
   border-radius: 8px;
   min-height: 28px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #1c1e25;
 }
@@ -892,7 +897,7 @@ body.login2 .login-wrapper .social-login .twitter:hover {
   }
 }
 
-.grid-stack > .grid-stack-item > .grid-stack-item-content {
+.grid-stack>.grid-stack-item>.grid-stack-item-content {
   border-color: #3e4e56;
 }
 
@@ -907,16 +912,18 @@ body.login2 .login-wrapper .social-login .twitter:hover {
 
 .btn-info.active,
 .btn-info:active,
-.show > .btn-info.dropdown-toggle {
+.show>.btn-info.dropdown-toggle {
   background-color: #1971bd;
   background-image: none;
   border-color: #1971bd;
 }
+
 .dropdown-item:focus,
 .dropdown-item:hover {
   background-color: #4a8bd0;
   color: #fff;
 }
+
 .dropdown-item {
   padding: 4.5px 1rem;
   font-size: 14px;
@@ -939,46 +946,34 @@ body.login2 .login-wrapper .social-login .twitter:hover {
   font-size: 19px;
 }
 
-.navbar
-  .navbar-collapse
-  .navbar-nav
-  .nav-item
-  .nav-link
-  .howell-icon-camera-passenger-flow {
+.navbar .navbar-collapse .navbar-nav .nav-item .nav-link .howell-icon-camera-passenger-flow {
   font-size: 29px;
 }
 
-.navbar
-  .navbar-collapse
-  .navbar-nav
-  .nav-item
-  .nav-link
-  .howell-icon-camera-group-passenger-flow {
+.navbar .navbar-collapse .navbar-nav .nav-item .nav-link .howell-icon-camera-group-passenger-flow {
   font-size: 29px;
 }
 
-.navbar
-  .navbar-collapse
-  .navbar-nav
-  .nav-item
-  .dropdown-menu
-  .howell-icon-chart-line {
+.navbar .navbar-collapse .navbar-nav .nav-item .dropdown-menu .howell-icon-chart-line {
   font-size: 20px;
   margin-left: -2px;
 }
 
-[type="checkbox"].filled-in:checked.chk-col-transparent + label:after {
+[type="checkbox"].filled-in:checked.chk-col-transparent+label:after {
   border: 2px solid #5a5a5a;
   background-color: transparent;
 }
+
 .dropdown-item {
   padding: 8px 1rem;
   color: #abb8ca;
 }
+
 .more-drop-down ul li {
   padding-bottom: 5px;
   padding-left: 15px;
 }
+
 .more-drop-down ul li label {
   font-size: 14px;
   color: #abb8ca !important;
@@ -988,7 +983,7 @@ body.login2 .login-wrapper .social-login .twitter:hover {
   content: none !important;
 }
 
-[type="checkbox"].filled-in:checked.chk-col-light-sky + label:after {
+[type="checkbox"].filled-in:checked.chk-col-light-sky+label:after {
   border: 2px solid #1e88e5;
   background-color: #1e88e5;
 }
@@ -1019,12 +1014,10 @@ body.login2 .login-wrapper img {
 @font-face {
   font-family: "Glyphicons Halflings";
   src: url("fonts/glyphicons-halflings-regular.eot");
-  src: url("fonts/glyphicons-halflings-regular.eot?#iefix")
-      format("embedded-opentype"),
+  src: url("fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"),
     url("fonts/glyphicons-halflings-regular.woff") format("woff"),
     url("fonts/glyphicons-halflings-regular.ttf") format("truetype"),
-    url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular")
-      format("svg");
+    url("fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
 }
 
 .glyphicon {
@@ -1046,6 +1039,7 @@ body.login2 .login-wrapper img {
 .glyphicon-arrow-left:before {
   content: "\e091";
 }
+
 /* [type="checkbox"].filled-in:checked + label:before {
         border-right: 2px solid #5a5a5a !important;
         border-bottom: 2px solid #5a5a5a !important;
@@ -1089,6 +1083,7 @@ body.login2 .login-wrapper img {
 .data-list-bottom-bar .clear-btn {
   cursor: pointer;
 }
+
 .data-list .list-group-item:first-child {
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
@@ -1147,6 +1142,7 @@ body.login2 .login-wrapper img {
   background-color: #424952;
   color: white;
 }
+
 /* .data-list.bind .list-group-item .have-item{
         color: rgb(40, 167, 69);
     } */
@@ -1168,7 +1164,7 @@ body.login2 .login-wrapper img {
   border-radius: 10px;
 }
 
-.dot > label {
+.dot>label {
   font-size: xx-small;
 }
 
@@ -1187,7 +1183,7 @@ body.login2 .login-wrapper img {
 /* 列表样式 end */
 
 /* 搜索框 start */
-.input-group > .input-group-append > .input-group-text {
+.input-group>.input-group-append>.input-group-text {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -1217,11 +1213,12 @@ body.login2 .login-wrapper img {
   border: 1px solid rgba(120, 130, 140, 1);
 }
 
-.input-group-append > .input-group-text:hover {
+.input-group-append>.input-group-text:hover {
   background: #1e88e5;
   border: 1px solid #1e88e5;
   cursor: pointer;
 }
+
 /* 搜索框 end */
 
 .no-scroll {
@@ -1237,6 +1234,7 @@ body.login2 .login-wrapper img {
   color: rgb(158, 162, 169);
   background: #383f48;
 }
+
 .customvtab .tabs-vertical li .nav-link.active,
 .customvtab .tabs-vertical li .nav-link:focus {
   border: 0px;
@@ -1245,12 +1243,14 @@ body.login2 .login-wrapper img {
   color: white;
   background: #383f48;
 }
+
 .vtabs .tabs-vertical li .nav-link {
   padding: 12px 10px;
   margin-bottom: 0px;
   border-radius: 0;
   color: rgb(158, 162, 169);
 }
+
 .fill-height {
   height: 100%;
 }
@@ -1258,16 +1258,20 @@ body.login2 .login-wrapper img {
 .fill-width {
   width: 100%;
 }
+
 .p-r-8 {
   padding-right: 8px;
 }
+
 .p-l-8 {
   padding-left: 8px;
 }
+
 .row-form {
   margin-right: -8px;
   margin-left: -8px;
 }
+
 .tran-input-label {
   font-weight: bold;
   line-height: 35px;
@@ -1292,4 +1296,58 @@ body.login2 .login-wrapper img {
 
 .pull-right {
   float: right;
+}
+
+
+
+.blue-text {
+  color: #3184e3
+}
+
+.sky-blue-text2 {
+  color: #6997ff
+}
+
+.sky-blue-text {
+  color: #7586e0
+}
+
+.light-blue-text {
+  color: #cfd7ff
+}
+
+.red-text {
+  color: #fd2f2d;
+}
+
+.light-cyan-text {
+  color: #d8f4ff;
+}
+
+.cyan-text {
+  color: #32F0F7;
+}
+
+.green-text {
+  color: #21E452;
+}
+
+.gray-text {
+  color: gray;
+}
+
+.gray-text2 {
+  color: #8c98a7;
+}
+
+.orange-text {
+  color: #ffba00;
+}
+
+.light-purple-text {
+  color: #ca98f9;
+}
+
+.powder-red-text {
+  color: #ef6464;
 }

@@ -1,0 +1,36 @@
+.number-card {
+  background-image: url(/assets/img/hint-card.png);
+  width: 168px;
+  height: 71px;
+  cursor: pointer;
+
+  &:hover {
+    background-image: url(/assets/img/hint-card-hover.png);
+
+    .value {
+      text-decoration: underline;
+      color: #6997ff;
+    }
+  }
+
+
+  .number-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+
+    .title {
+      color: white;
+      font-size: 16px;
+    }
+
+    .value {
+      font-size: 24px;
+      line-height: 26px;
+
+    }
+  }
+}

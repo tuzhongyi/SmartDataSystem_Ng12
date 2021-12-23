@@ -21,6 +21,7 @@ import { DisposalCountComponent } from './disposal-count/disposal-count.componen
 import { MaterialModule } from 'src/app/material.module';
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { MediaControlComponent } from './media-control/media-control.component';
+import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MediaControlComponent } from './media-control/media-control.component';
     DisposalCountComponent,
     EventRecordDetailsComponent,
     MediaControlComponent,
+    StatisticCardComponent,
   ],
   imports: [
     CommonModule,

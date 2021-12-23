@@ -11,7 +11,6 @@ class RecordWindowViewModel extends WindowViewModel {}
 class VideoWindowViewModel extends WindowViewModel {
   constructor(private stationService: GarbageStationRequestService) {
     super();
-    this.test();
   }
   style = {
     width: '64%',

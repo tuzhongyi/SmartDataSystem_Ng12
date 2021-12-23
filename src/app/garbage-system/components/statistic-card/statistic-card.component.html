@@ -1,0 +1,8 @@
+<div class="number-card">
+  <div *ngIf="model" class="number-card-content">
+    <div class="title">
+      {{ model.title }}
+    </div>
+    <div class="value" [ngClass]="model.class">{{ model.value }}</div>
+  </div>
+</div>

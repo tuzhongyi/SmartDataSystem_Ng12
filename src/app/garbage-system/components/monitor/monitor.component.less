@@ -15,6 +15,7 @@
     width: 100%;
     height: 90px;
   }
+
   .monitor-body {
     width: 100%;
     height: calc(100% - 90px);
@@ -32,7 +33,8 @@
     // grid-template-columns: repeat(4, 1fr);
     // grid-template-rows: repeat(2, 1fr);
 
-    grid-template-areas: "a b c" "d e f" "g h i";
+    grid-template-areas: "a b c""d e f""g h i";
+
     .monitor-body__item {
       margin: 5px;
       border: 1px solid #5c6ebf;
@@ -41,12 +43,15 @@
       box-sizing: border-box;
 
       overflow: hidden;
+
       &--none {
         border: none;
+
         & .monitor-body__wrapper {
           background: none !important;
         }
       }
+
       &--map {
         // display: none;
         /** 指定位置的三种方式 **/
@@ -62,6 +67,14 @@
         grid-row-end: r3;
         grid-column-start: c2;
         grid-column-end: c4;
+
+        .statistic-card-group {
+          display: flex;
+          justify-content: space-between;
+          padding: 20px;
+        }
+
+
       }
 
       .monitor-body__wrapper {

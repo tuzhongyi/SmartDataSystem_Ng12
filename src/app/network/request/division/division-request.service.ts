@@ -185,7 +185,7 @@ class StatisticNumberService {
     return this.type.get(url);
   }
   list(
-    params: GetDivisionStatisticNumbersParams
+    params: GetDivisionStatisticNumbersParams = new GetDivisionStatisticNumbersParams()
   ): Promise<PagedList<DivisionNumberStatistic>> {
     let url = DivisionUrl.statistic().number.list();
     let data = classToPlain(params);

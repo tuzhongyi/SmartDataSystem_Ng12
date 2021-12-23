@@ -16,7 +16,13 @@
       </div>
     </div>
     <div class="monitor-body__item monitor-body__item--map">
-      <div class="monitor-body__wrapper"></div>
+      <div class="monitor-body__wrapper">
+        <div *ngIf="statisticCardList" class="statistic-card-group">
+          <ng-container *ngFor="let item of statisticCardList">
+            <app-statistic-card [model]="item"></app-statistic-card>
+          </ng-container>
+        </div>
+      </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">

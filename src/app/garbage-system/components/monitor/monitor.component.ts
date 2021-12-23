@@ -10,25 +10,34 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
+import { StatisticCardViewModel } from '../statistic-card/statistic-card.model';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
+import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
 
 @Component({
   selector: 'app-waste-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.less'],
-  providers: [WindowBussiness, MonitorEventTriggerBusiness],
+  providers: [
+    WindowBussiness,
+    MonitorEventTriggerBusiness,
+    StatisticCardBussiness,
+  ],
 })
 export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
+
+  statisticCardList?: StatisticCardViewModel[];
 
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
     private _storeService: StoreService,
     public window: WindowBussiness,
-    public trigger: MonitorEventTriggerBusiness
+    public trigger: MonitorEventTriggerBusiness,
+    private statisticCardBussiness: StatisticCardBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
   }
@@ -43,6 +52,11 @@ export class MonitorComponent implements OnInit {
       this._storeService.divisionId = userDivisionId;
       this._storeService.divisionType = userDivisionType;
     }
+
+    let promise = this.statisticCardBussiness.load();
+    promise.then((x) => {
+      this.statisticCardList = x;
+    });
   }
   clickMonitor() {
     console.log('click monitor');

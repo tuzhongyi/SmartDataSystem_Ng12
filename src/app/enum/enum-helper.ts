@@ -77,6 +77,10 @@ export class Enum {
     this.obj = obj;
   }
 
+  getName(value: any) {
+    return this.obj[value];
+  }
+
   getKeys() {
     let keys = Object.keys(this.obj);
     let count = keys.length / 2;
