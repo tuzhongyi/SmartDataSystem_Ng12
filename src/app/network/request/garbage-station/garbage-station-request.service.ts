@@ -45,6 +45,7 @@ import { GarbageTask } from '../../model/garbage-task.model';
 import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
 import { SumEventNumber } from '../../model/sum-event-number.model';
 import { Cache } from '../cache/cache';
+import { ServiceHelper } from '../service-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -244,18 +245,20 @@ class CamerasFilesService {
   }
 
   private basicType: BaseTypeRequestService<RecordFileUrl>;
-  download(
-    params: CameraDownloadFileParams,
-    percent: (percent: number) => void,
-    completely: (completely: boolean) => void
-  ): void {
+  async download(
+    params: CameraDownloadFileParams
+    // percent: (percent: number) => void,
+    // completely: (completely: boolean) => void
+  ): Promise<RecordFileUrl> {
     let data = classToPlain(params);
     let url = GarbageStationUrl.camera(params.GarbageStationId).files(
       params.CameraId,
       data.BeginTime,
       data.EndTime
     );
-    this.basic.http.downloadFile(url, percent, completely);
+    return await this.basic.post(url, RecordFileUrl, params);
+
+    // this.basic.http.downloadFile(url, percent, completely);
   }
   upload(params: CameraUploadFileParams): Promise<RecordFileUrl> {
     let data = classToPlain(params);

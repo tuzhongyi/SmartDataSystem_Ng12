@@ -18,7 +18,7 @@ export class WindowComponent implements OnInit {
   @Input()
   CloseButton = true;
 
-  private _Style: any = {
+  private _style: any = {
     width: '80%',
     height: '80%',
     position: 'absolute',
@@ -26,12 +26,12 @@ export class WindowComponent implements OnInit {
     top: '50%',
     left: '50%',
   };
-  public get Style(): any {
-    return this._Style;
+  public get style(): any {
+    return this._style;
   }
   @Input()
-  public set Style(v: any) {
-    this._Style = Object.assign(this._Style, v);
+  public set style(v: any) {
+    this._style = Object.assign(this._style, v);
   }
 
   @Output()

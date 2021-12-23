@@ -1,3 +1,4 @@
+import { Flags } from 'src/app/common/tools/flags';
 import { CameraState } from 'src/app/enum/camera_state.enum';
 import { CameraType } from 'src/app/enum/camera_type.enum';
 import {
@@ -10,89 +11,141 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import language from './language.json';
 
 export class Language {
   static StationState(state: StationState) {
     switch (state) {
       case StationState.Full:
-        return '满溢';
+        return Language.json.full;
       case StationState.Error:
-        return '异常';
+        return Language.json.error;
       default:
-        return '正常';
+        return Language.json.normal;
+    }
+  }
+
+  static TimeUnit(unit: TimeUnit) {
+    switch (unit) {
+      case TimeUnit.Hour:
+        return Language.json.Date.day + Language.json.report;
+      case TimeUnit.Day:
+        return Language.json.Date.month + Language.json.report;
+      default:
+        return '';
+    }
+  }
+
+  static StationStateFlags(flags: Flags<StationState>) {
+    if (flags.contains(StationState.Error)) {
+      return Language.StationState(StationState.Error);
+    } else if (flags.contains(StationState.Full)) {
+      return Language.StationState(StationState.Full);
+    } else {
+      return Language.StationState(0);
+    }
+  }
+
+  static CameraType(type: CameraType) {
+    switch (type) {
+      case CameraType.Gun:
+        return Language.json.CameraType.Gun;
+      case CameraType.Ball:
+        return Language.json.CameraType.Ball;
+      case CameraType.HalfBall:
+        return Language.json.CameraType.HalfBall;
+      case CameraType.AIO:
+        return Language.json.CameraType.AIO;
+      default:
+        return '';
     }
   }
 
   static EventType(type: EventType) {
     switch (type) {
       case EventType.IllegalDrop:
-        return '乱丢垃圾';
+        return Language.json.EventType.IllegalDrop;
       case EventType.MixedInto:
-        return '混合投放';
+        return Language.json.EventType.MixedInto;
       case EventType.GarbageVolume:
-        return '垃圾容量';
+        return Language.json.EventType.GarbageVolume;
       case EventType.GarbageFull:
-        return '垃圾满溢';
-      case EventType.GarbageRetention:
-        return '小包垃圾待处置';
-      case EventType.GarbageRetentionTimeout:
-        return '小包垃圾超时待处置';
-      case EventType.GarbageRetentionHandled:
-        return '小包垃圾已处置';
+        return Language.json.EventType.GarbageFull;
+      case EventType.GarbageDrop:
+        return Language.json.EventType.GarbageDrop;
+      case EventType.GarbageDropTimeout:
+        return Language.json.EventType.GarbageDropTimeout;
+      case EventType.GarbageDropHandle:
+        return Language.json.EventType.GarbageDropHandle;
       default:
         return '';
     }
   }
 
-  static GarbageDropEventType(type: EventType) {
+  static GarbageDropEventType(type: EventType, isTimeout?: boolean) {
     switch (type) {
-      case EventType.GarbageRetention:
-        return '待处置';
-      case EventType.GarbageRetentionTimeout:
-        return '超时待处置';
-      case EventType.GarbageRetentionHandled:
-        return '已处置';
+      case EventType.GarbageDrop:
+        return Language.json.wait + Language.json.handle;
+      case EventType.GarbageDropTimeout:
+        return (
+          Language.json.timeout + Language.json.wait + Language.json.handle
+        );
+
+      case EventType.GarbageDropHandle:
+        if (isTimeout) {
+          return Language.json.timeout + Language.json.handle;
+        } else {
+          return Language.json.did + Language.json.handle;
+        }
+      // case EventType.GarbageDropTimeoutHandle:
+      //   return Language.json.timeout + Language.json.handle;
       default:
         return '';
     }
   }
-  static CameraType(type: CameraType) {
+
+  static GarbageDropEventTypeClassName(type: EventType, isTimeout?: boolean) {
     switch (type) {
-      case CameraType.Gun:
-        return '枪机';
-      case CameraType.Ball:
-        return '球机';
-      case CameraType.HalfBall:
-        return '半球';
-      case CameraType.AIO:
-        return '一体机';
+      case EventType.GarbageDrop:
+        return 'orange-text';
+      case EventType.GarbageDropTimeout:
+        return 'powder-red-text';
+      case EventType.GarbageDropHandle:
+        if (isTimeout) {
+          return 'sky-blue-text2';
+        } else {
+          return 'green-text';
+        }
+
       default:
         return '';
     }
   }
+
   static CameraState(state: CameraState) {
     switch (state) {
       case CameraState.DeviceError:
-        return '设备故障';
+        return Language.json.device + Language.json.fault;
       case CameraState.PlatformError:
-        return '平台故障';
-
+        return Language.json.platform + Language.json.fault;
       default:
         return '';
     }
   }
+
   static ResourceType(type: ResourceType) {
     switch (type) {
       case ResourceType.Camera:
-        return '监控点';
+        return Language.json.monitor + Language.json.point;
       case ResourceType.EncodeDevice:
-        return '编码设备';
-      case ResourceType.IoTSensor:
-        return '物联网传感器';
-      case ResourceType.GarbageStation:
-        return '垃圾房';
+        return Language.json.encode + Language.json.device;
 
+      case ResourceType.IoTSensor:
+        return Language.json.IoT + Language.json.sensor;
+      case ResourceType.GarbageStation:
+        return Language.json.garbage + Language.json.room;
       default:
         return '';
     }
@@ -100,17 +153,55 @@ export class Language {
   static DivisionType(type: DivisionType) {
     switch (type) {
       case DivisionType.Province:
-        return '省';
+        return Language.json.DivisionType.Province;
       case DivisionType.City:
-        return '行政区划';
+        return Language.json.DivisionType.City;
       case DivisionType.County:
-        return '街道';
+        return Language.json.DivisionType.County;
       case DivisionType.Committees:
-        return '居委会';
+        return Language.json.DivisionType.Committees;
+      default:
+        throw new Error(type.toString());
+    }
+  }
+
+  static Time(time: Date | number) {
+    let result = '';
+    if (typeof time === 'number') {
+      const hours = parseInt((time / 60).toString());
+      const minutes = parseInt((Math.ceil(time) % 60).toString());
+
+      result = hours ? hours + Language.json.Time.hour : '';
+      result += minutes ? minutes + Language.json.Time.minute : '';
+    } else {
+      if (time.getHours() > 0) {
+        result = `${time.getHours()}${Language.json.Time.hour}${result}`;
+      }
+      let minutes = time.getMinutes();
+      if (time.getSeconds() > 0) {
+        minutes++;
+      }
+      result = `${result}${minutes}${Language.json.Time.minute}`;
+    }
+
+    return result;
+  }
+
+  static DisposalCountType(type: DisposalCountType) {
+    switch (type) {
+      case DisposalCountType.total:
+        return '全部任务';
+      case DisposalCountType.handled:
+        return '已完成任务';
+      case DisposalCountType.unhandled:
+        return '未完成任务';
+      case DisposalCountType.timeout:
+        return '超时任务';
       default:
         return '';
     }
   }
+
   static RetentionType(type: RetentionType) {
     switch (type) {
       case RetentionType.RetentionTime:
@@ -133,6 +224,7 @@ export class Language {
         return '';
     }
   }
+
   static DeviceStateCountType(type: DeviceStateCountType) {
     switch (type) {
       case DeviceStateCountType.all:
@@ -145,6 +237,7 @@ export class Language {
         return '';
     }
   }
+
   static DeviceStateRatioType(type: DeviceStateRatioType) {
     switch (type) {
       case DeviceStateRatioType.bad:
@@ -157,18 +250,6 @@ export class Language {
         return '';
     }
   }
-  static DisposalCountType(type: DisposalCountType) {
-    switch (type) {
-      case DisposalCountType.total:
-        return '全部任务';
-      case DisposalCountType.handled:
-        return '已完成任务';
-      case DisposalCountType.unhandled:
-        return '未完成任务';
-      case DisposalCountType.timeout:
-        return '超时任务';
-      default:
-        return '';
-    }
-  }
+
+  static json = language;
 }

@@ -9,11 +9,11 @@ import { GetPreviewUrlParams, GetVodUrlParams } from './sr-request.params';
 @Injectable({
   providedIn: 'root',
 })
-export class UserRequestService {
+export class SRRequestService {
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
   }
-  basic: BaseRequestService;
+  private basic: BaseRequestService;
 
   preview(params: GetPreviewUrlParams) {
     let url = SRServiceUrl.preview();

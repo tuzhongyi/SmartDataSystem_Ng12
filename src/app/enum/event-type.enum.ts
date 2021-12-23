@@ -18,13 +18,13 @@ export enum EventType {
   /**
    *	垃圾滞留(垃圾未投放入垃圾厢)	5
    */
-  GarbageRetention = 5,
+  GarbageDrop = 5,
   /**
    *	垃圾滞留超时(摄像机监控期间仍然在地上)	6
    */
-  GarbageRetentionTimeout = 6,
+  GarbageDropTimeout = 6,
   /**
    *	垃圾滞留已处置(摄像机监控期间，落地垃圾消失)	7
    */
-  GarbageRetentionHandled = 7,
+  GarbageDropHandle = 7,
 }

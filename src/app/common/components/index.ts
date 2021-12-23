@@ -11,6 +11,7 @@ import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoMultControlComponent } from './video-mult-control/video-mult-control.component';
 import { WindowComponent } from './window/window.component';
+import { ImageControlComponent } from './image-control/image-control.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -26,4 +27,5 @@ export const CUSTOM_COMPONENTS = [
   VideoPlayerComponent,
   TableComponent,
   VideoMultControlComponent,
+  ImageControlComponent,
 ];

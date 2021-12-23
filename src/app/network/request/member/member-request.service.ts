@@ -13,7 +13,7 @@ import { GetMembersParams } from './member-request.params';
 @Injectable({
   providedIn: 'root',
 })
-export class MemberRequsetService implements IBusiness<Member> {
+export class MemberRequsetService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Member>;
   constructor(private _http: HowellAuthHttpService) {

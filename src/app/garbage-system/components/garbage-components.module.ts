@@ -20,6 +20,7 @@ import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 import { MaterialModule } from 'src/app/material.module';
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
+import { MediaControlComponent } from './media-control/media-control.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { EventRecordDetailsComponent } from './event-record-details/event-record
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsComponent,
+    MediaControlComponent,
   ],
   imports: [
     CommonModule,
