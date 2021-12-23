@@ -1,0 +1,6 @@
+<div *ngIf="camera" class="image-control">
+  <div *ngIf="camera.OnlineStatus != OnlineStatus.Online" class="error">
+    NO SIGNAL
+  </div>
+  <img [src]="src" (error)="onError($event)" [title]="camera.Name" />
+</div>

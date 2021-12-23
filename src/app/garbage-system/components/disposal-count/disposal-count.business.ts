@@ -114,13 +114,13 @@ export class DisposalCountBusiness implements DisposalCountConverter {
           let len = item.TodayEventNumbers.length;
           for (let i = 0; i < len; i++) {
             let eventNumer = item.TodayEventNumbers[i];
-            if (eventNumer.EventType == EventType.GarbageRetention) {
+            if (eventNumer.EventType == EventType.GarbageDrop) {
               totalCount = eventNumer.DayNumber;
             }
-            if (eventNumer.EventType == EventType.GarbageRetentionHandled) {
+            if (eventNumer.EventType == EventType.GarbageDropHandle) {
               handledCount = eventNumer.DayNumber;
             }
-            if (eventNumer.EventType == EventType.GarbageRetentionTimeout) {
+            if (eventNumer.EventType == EventType.GarbageDropTimeout) {
               timeoutCount = eventNumer.DayNumber;
             }
           }
