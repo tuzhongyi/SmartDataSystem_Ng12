@@ -56,7 +56,7 @@ export class IllegalDropRecordConverter
     model.ImageUrl = item.ImageUrl ? PicturesUrl.jpg(item.ImageUrl) : '';
     model.ResourceName = item.ResourceName ?? '';
     model.StationName = item.Data.StationName;
-    model.recordTime = item.EventTime.toString();
+    model.EventTime = item.EventTime.toString();
 
     return model;
   }

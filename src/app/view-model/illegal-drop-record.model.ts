@@ -5,6 +5,6 @@ export class IllegalDropRecordModel {
     public StationName: string = '',
     public CountyName: string = '',
     public CommitteeName: string = '',
-    public recordTime: string = ''
+    public EventTime: string = ''
   ) {}
 }

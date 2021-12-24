@@ -5,6 +5,7 @@ import { Time } from 'src/app/global/tool/time';
 import { Division } from 'src/app/network/model/division.model';
 import { IllegalDropEventRecord } from 'src/app/network/model/event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
@@ -12,6 +13,8 @@ import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.m
 
 @Injectable()
 export class IllegalDropRecordBusiness {
+  private _divisionMap = new Map<string, Division>();
+
   constructor(
     private _eventRequestService: EventRequestService,
     private _divisionRequest: DivisionRequestService,
@@ -25,48 +28,85 @@ export class IllegalDropRecordBusiness {
     params.EndTime = Time.endTime(new Date());
 
     let res = await this._eventRequestService.record.IllegalDrop.list(params);
+    console.log(res);
 
-    // let model = this._converter.Convert(res.Data[0]);
-    // let division = await this.getDivision(res.Data[0].Data.DivisionId!);
-    // model.CommitteeName = division.Name;
+    let data: IllegalDropRecordModel[] = res.Data.map((v) =>
+      this._converter.Convert(v)
+    );
 
-    // let parentDivison = await this.getParentDivision(division)!;
-    // model.CountyName = parentDivison!.Name;
+    console.log('data', data);
+    let committeeIds = this._getDivisionIds(res.Data);
 
-    // console.log('sdfdsf', model);
-    let data: any = await res.Data.map(async (v) => {
-      let model = this._converter.Convert(v);
+    console.time();
+    let commitees = await this._getGroupDivisions(committeeIds); // 速度: default: 2.337890625 ms
+    console.timeEnd();
+
+    commitees.forEach((division) => this._register(division));
+
+    console.log(this._divisionMap);
+
+    let countys = await this._getParentDivisions(commitees);
+    console.log(countys);
+  }
+
+  private _getDivisionIds(data: IllegalDropEventRecord[]) {
+    let divisionIds: string[] = [];
+    for (let i = 0; i < data.length; i++) {
+      let v = data[i];
       if (v.Data.DivisionId) {
-        let division = await this.getDivision(v.Data.DivisionId);
-        console.log(division);
+        if (!divisionIds.includes(v.Data.DivisionId))
+          divisionIds.push(v.Data.DivisionId);
       }
-      return model;
-    });
-    console.log('converted', data);
-
-    try {
-      console.log('sdfsdf');
-      throw new Error();
-    } catch (e) {
-      console.log('44444');
     }
-
-    console.log(99999);
-
-    // let division = await this.getDivision(res.Data[0].Data.DivisionId!);
-    // console.log(division);
-    // console.log(await this.getParentDivision(division));
+    return divisionIds;
   }
-
-  async getDivision(divisionId: string) {
-    return await this._divisionRequest.cache.get(divisionId);
+  /**
+   *
+   * @param divisionIds
+   * @description 拉取一组 Division信息
+   */
+  private async _getGroupDivisions(divisionIds: string[]) {
+    let params = new GetDivisionsParams();
+    params.Ids = divisionIds;
+    let res = await this._divisionRequest.cache.list(params);
+    console.log('group', res);
+    return res.Data;
   }
-  async getParentDivision(division: Division) {
-    if (division.ParentId) {
-      let parent = await this.getDivision(division.ParentId);
-      return parent;
+  /**
+   *
+   * @param divisionId
+   * @returns
+   * @description 获取单个 Division 信息
+   */
+  private async _getDivision(divisionId: string) {
+    let division = await this._divisionRequest.cache.get(divisionId);
+    return division;
+  }
+  /**
+   *
+   * @param division
+   * @returns
+   * @description 获取父 Division 信息
+   */
+  private async _getParentDivisions(divisions: Division[]) {
+    let ids: string[] = [];
+    for (let i = 0; i < divisions.length; i++) {
+      let division = divisions[i];
+      if (division.ParentId) {
+        ids.push(division.ParentId);
+      }
     }
-
-    return null;
+    let res = await this._getGroupDivisions(ids);
+    return res;
+    // if (division.ParentId) {
+    //   let parent = await this._getDivision(division.ParentId);
+    //   return parent;
+    // }
+    // return null;
+  }
+  private _register(division: Division) {
+    if (!this._divisionMap.has(division.Id)) {
+      this._divisionMap.set(division.Id, division);
+    }
   }
 }
