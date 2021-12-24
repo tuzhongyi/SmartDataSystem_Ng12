@@ -1,12 +1,23 @@
 .mat-table {
-  background-color: rgba(117, 134, 224, 0.15);
   .mat-header-row {
+    background-color: #414b83;
+    height: 70px;
     .mat-header-cell {
       color: white;
       font-size: 24px;
     }
   }
   .mat-row {
+    height: 58px;
+    background-color: #1b2242;
+    &:hover {
+      background-color: #3d5492;
+      height: 80px;
+      cursor: pointer;
+    }
+    &.selected {
+      background-color: #6086e1;
+    }
     .mat-cell {
       color: #cfd7ff;
       font-size: 18px;

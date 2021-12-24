@@ -2,14 +2,15 @@
     <div class="illegal-drop-header">
         <div>
             <div>导航</div>
-            <button (click)="show=!show">显示</button>
+            <button (click)="show=!show">显示 </button>
         </div>
         <div *ngIf="show">hshdfh</div>
     </div>
     <div class="illegal-drop-main">
-        <app-table [dataSource]="dataSource" [displayedColumns]="displayedColumns"></app-table>
+        <app-table [data]="data" [displayedColumns]="displayedColumns"></app-table>
     </div>
     <div class='illegal-drop-footer'>
-        pagination
+        <button (click)="prev()">前页</button>
+        <button (click)="next()">后页</button>
     </div>
 </div>

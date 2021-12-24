@@ -1,3 +1,3 @@
 export interface IConverter<T, R> {
-  Convert(input: T, ...args: any[]): R;
+  Convert(source: T, ...res: any[]): R;
 }

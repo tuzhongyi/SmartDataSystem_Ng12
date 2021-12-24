@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-26 14:26:27
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-28 14:38:44
+ * @Last Modified time: 2021-12-24 10:04:46
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -14,8 +14,8 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [CUSTOM_COMPONENTS, CUSTOM_PIPES],
-  imports: [CommonModule, MaterialModule, AngularResizeEventModule],
   exports: [CUSTOM_COMPONENTS, CUSTOM_PIPES],
+  imports: [CommonModule, MaterialModule, AngularResizeEventModule],
   providers: [],
 })
 export class HowellModule {}

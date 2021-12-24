@@ -1,7 +1,7 @@
 <mat-table [dataSource]="dataSource">
     <ng-container *ngFor="let column of displayedColumns" [matColumnDef]="column">
         <mat-header-cell *matHeaderCellDef>
-            {{column}}
+            图片
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
             {{row[column]}}

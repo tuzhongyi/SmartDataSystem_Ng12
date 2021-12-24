@@ -11,9 +11,9 @@ export class DivisionManageBusiness {
 
   async addDivision(parentId: string, model: DivisionManageModel) {
     let division = new Division();
-    division.Id = model.id;
-    division.Name = model.name;
-    division.Description = model.description;
+    division.Id = model.Id;
+    division.Name = model.Name;
+    division.Description = model.Description;
 
     division.IsLeaf = false;
     division.CreateTime = new Date();
@@ -40,8 +40,8 @@ export class DivisionManageBusiness {
   async editDivision(id: string, model: DivisionManageModel) {
     if (id) {
       let division = await this._divisionRequest.get(id);
-      division.Name = model.name;
-      division.Description = model.description;
+      division.Name = model.Name;
+      division.Description = model.Description;
 
       let res = await this._divisionRequest.update(division);
       return res;

@@ -111,9 +111,9 @@ export class DivisionManageComponent implements OnInit {
     if (this.tree) {
       if (this.currentNode?.id) {
         let model = new DivisionManageModel();
-        model.id = this.currentNode?.id;
-        model.name = 'test';
-        model.description = 'modify';
+        model.Id = this.currentNode?.id;
+        model.Name = 'test';
+        model.Description = 'modify';
         let res = await this._business.editDivision(
           this.currentNode?.id,
           model

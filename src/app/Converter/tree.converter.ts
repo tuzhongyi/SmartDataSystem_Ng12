@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-12-23 16:17:25
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-23 16:31:43
+ * @Last Modified time: 2021-12-24 13:56:26
  *
  *
  *
@@ -31,7 +31,6 @@
  */
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
-import { DivisionType } from '../enum/division-type.enum';
 import { EnumHelper } from '../enum/enum-helper';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { DivisionNode } from '../network/model/division-tree.model';
@@ -45,11 +44,14 @@ type TreeSourceModel =
   | Division
   | DivisionManageModel
   | GarbageStation;
+
 @Injectable({
   providedIn: 'root',
 })
-export class TreeConverter implements IConverter<any, NestedTreeNode> {
-  Convert(source: TreeSourceModel) {
+export class TreeConverter
+  implements IConverter<TreeSourceModel, NestedTreeNode>
+{
+  Convert(source: TreeSourceModel, ...res: any[]): NestedTreeNode {
     if (source instanceof DivisionNode) {
       return this._fromDivisionNode(source);
     } else if (source instanceof Division) {
@@ -59,29 +61,27 @@ export class TreeConverter implements IConverter<any, NestedTreeNode> {
     } else if (source instanceof GarbageStation) {
       return this._fromGarbageStation(source);
     }
-    throw new Error('Error');
+    throw new Error('Method not implemented.');
   }
 
-  iterateToNested<T>(data: T[]): NestedTreeNode[] {
+  iterateToNested<T extends TreeSourceModel>(data: T[]): NestedTreeNode[] {
     let res: NestedTreeNode[] = new Array<NestedTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      if (item instanceof Division) {
-        const node = this._fromDivision(item);
-        res.push(node);
-      } else if (item instanceof GarbageStation) {
-        const node = this._fromGarbageStation(item);
-        res.push(node);
-      }
+      const node = this.Convert(item);
+      res.push(node);
     }
     return res;
   }
-  recurseToNested<T>(data: T[], parentId: string | null = null) {
+  recurseToNested<T extends TreeSourceModel>(
+    data: T[],
+    parentId: string | null = null
+  ) {
     let res: NestedTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof DivisionNode) {
-        const node = this._fromDivisionNode(item);
+        const node = this.Convert(item);
         node.parentId = parentId;
         res.push(node);
         if (item.Nodes && item.Nodes.length > 0) {
@@ -94,7 +94,7 @@ export class TreeConverter implements IConverter<any, NestedTreeNode> {
 
     return res;
   }
-  buildNestedTree<T>(data: T[]) {
+  buildNestedTree<T extends TreeSourceModel>(data: T[]) {
     // 最终根节点树
     let res: NestedTreeNode[] = [];
 
@@ -108,20 +108,11 @@ export class TreeConverter implements IConverter<any, NestedTreeNode> {
       let item = data[i];
       let node: NestedTreeNode | null = null;
 
-      if (item instanceof Division) {
-        if (m.has(item.Id)) {
-          node = m.get(item.Id)!;
-        } else {
-          node = this._fromDivision(item);
-          m.set(node.id, node);
-        }
-      } else if (item instanceof GarbageStation) {
-        if (m.has(item.Id)) {
-          node = m.get(item.Id)!;
-        } else {
-          node = this._fromGarbageStation(item);
-          m.set(node.id, node);
-        }
+      if (m.has(item.Id)) {
+        node = m.get(item.Id)!;
+      } else {
+        node = this.Convert(item);
+        m.set(node.id, node);
       }
 
       if (node) {
@@ -203,7 +194,7 @@ export class TreeConverter implements IConverter<any, NestedTreeNode> {
     return node;
   }
   private _fromDivisionManage(model: DivisionManageModel) {
-    const node = new NestedTreeNode(model.id, model.name, model.description);
+    const node = new NestedTreeNode(model.Id, model.Name, model.Description);
     return node;
   }
   private _fromGarbageStation(item: GarbageStation) {

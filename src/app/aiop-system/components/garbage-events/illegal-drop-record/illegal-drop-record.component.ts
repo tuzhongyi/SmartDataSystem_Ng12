@@ -1,6 +1,7 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { IllegalDropBusiness } from './illegal-drop.business';
+import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
 
 export interface PeriodicElement {
   name: string;
@@ -23,17 +24,29 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 @Component({
-  selector: 'app-illegal-drop',
-  templateUrl: './illegal-drop.component.html',
-  styleUrls: ['./illegal-drop.component.less'],
-  providers: [IllegalDropBusiness],
+  selector: 'app-illegal-drop-record',
+  templateUrl: './illegal-drop-record.component.html',
+  styleUrls: ['./illegal-drop-record.component.less'],
+  providers: [IllegalDropRecordBusiness],
 })
-export class IllegalDropComponent implements OnInit {
+export class IllegalDropRecordComponent implements OnInit {
   show = false;
   displayedColumns: string[] = ['position', 'weight', 'symbol', 'name'];
-  dataSource = new MatTableDataSource<any>(ELEMENT_DATA);
-  constructor(private _business: IllegalDropBusiness) {}
+  data = ELEMENT_DATA;
+
+  pageIndex = 1;
+  pageSize = 9;
+
+  constructor(private _business: IllegalDropRecordBusiness) {}
   ngOnInit(): void {
-    this._business.loadData();
+    this._business.loadData(this.pageIndex);
+  }
+  prev() {
+    this.pageIndex--;
+    this._business.loadData(this.pageIndex);
+  }
+  next() {
+    this.pageIndex++;
+    this._business.loadData(this.pageIndex);
   }
 }
