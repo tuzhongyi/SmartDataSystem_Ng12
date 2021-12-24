@@ -44,6 +44,15 @@ export class IllegalDropRecordBusiness {
     });
     console.log('converted', data);
 
+    try {
+      console.log('sdfsdf');
+      throw new Error();
+    } catch (e) {
+      console.log('44444');
+    }
+
+    console.log(99999);
+
     // let division = await this.getDivision(res.Data[0].Data.DivisionId!);
     // console.log(division);
     // console.log(await this.getParentDivision(division));
