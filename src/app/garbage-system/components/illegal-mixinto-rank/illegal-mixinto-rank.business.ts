@@ -97,7 +97,7 @@ export class IllegalMixintoRankBusiness
     let children = await this.getChildren(divisionId);
     let params = new GetDivisionStatisticNumbersParams();
     params.Ids = children.Data.map((x) => x.Id);
-    let list = await this.divisionRequest.statistic.number.list(params);
+    let list = await this.divisionRequest.statistic.number.cache.list(params);
     return list.Data;
   }
   async loadByStation(divisionId: string) {

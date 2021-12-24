@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { interval } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Injectable({
@@ -23,6 +24,23 @@ export class StoreService {
     return this._divisionType;
   }
 
-  constructor() {}
-  
+  interval = new EventEmitter();
+  private intervalHandle?: NodeJS.Timer;
+  runInterval(interval: number = 1000 * 60 * 1) {
+    this.intervalHandle = setInterval(() => {
+      this.interval.emit();
+    }, interval);
+  }
+  stopInterval() {
+    if (this.intervalHandle) {
+      clearInterval(this.intervalHandle);
+    }
+  }
+
+  constructor() {
+    this.interval.subscribe(() => {
+      this.statusChange.emit();
+    });
+    this.runInterval();
+  }
 }

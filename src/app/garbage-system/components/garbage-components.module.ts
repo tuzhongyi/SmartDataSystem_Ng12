@@ -6,7 +6,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { RankComponent } from '../../common/components/rank/rank.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { HowellModule } from 'src/app/common/howell.module';

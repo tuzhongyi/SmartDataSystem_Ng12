@@ -111,7 +111,6 @@ export class DivisionRequestService extends AbstractService<Division> {
   }
 }
 
-@Cache(DivisionUrl.volume('ID').basic())
 class VolumesService {
   constructor(private basic: BaseRequestService) {}
 
@@ -123,7 +122,6 @@ class VolumesService {
     return this._history;
   }
 }
-@Cache(DivisionUrl.volume('ID').history.basic())
 class VolumesHistoryService {
   constructor(private basic: BaseRequestService) {}
   list(
@@ -135,7 +133,6 @@ class VolumesHistoryService {
     return this.basic.paged(url, GarbageVolume, data);
   }
 }
-@Cache(DivisionUrl.eventnumber().basic())
 class EventNumbersService {
   constructor(private basic: BaseRequestService) {}
 
@@ -175,8 +172,10 @@ class StatisticService {
     return this._number;
   }
 }
-class StatisticNumberService {
+@Cache(DivisionUrl.statistic().number.basic(), DivisionNumberStatistic)
+class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
   constructor(private basic: BaseRequestService) {
+    super();
     this.type = basic.type(DivisionNumberStatistic);
   }
   type: BaseTypeRequestService<DivisionNumberStatistic>;

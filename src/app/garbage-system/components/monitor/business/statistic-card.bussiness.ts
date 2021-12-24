@@ -30,7 +30,7 @@ export class StatisticCardBussiness
     return array;
   }
   async getData(...args: any): Promise<DivisionNumberStatistic> {
-    let data = await this.divisionService.statistic.number.list();
+    let data = await this.divisionService.statistic.number.cache.list();
     return data.Data[0];
   }
 }

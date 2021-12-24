@@ -1,7 +1,9 @@
 import { ClassConstructor } from 'class-transformer';
+import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
 import { Division } from '../../model/division.model';
 import { GarbageStation } from '../../model/garbage-station.model';
 import { DivisionServiceCache } from './division-service.cache';
+import { DivisionStatisticServiceCache } from './division-statistic-service.cache';
 import { GarbageStationServiceCache } from './garbage-station-service.cache';
 import { ServiceCache } from './service.cache';
 
@@ -20,6 +22,9 @@ export function Cache<T>(key: string, type?: ClassConstructor<T>) {
                   break;
                 case GarbageStation.name:
                   this._cache = new GarbageStationServiceCache(key, this);
+                  break;
+                case DivisionNumberStatistic.name:
+                  this._cache = new DivisionStatisticServiceCache(key, this);
                   break;
                 default:
                   this._cache = new ServiceCache(key, this);

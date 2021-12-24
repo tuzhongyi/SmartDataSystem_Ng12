@@ -3,13 +3,23 @@ import { Page, PagedList } from '../../model/page_list.model';
 import { IParams, PagedParams } from '../IParams.interface';
 import { AppCache } from './app-cache';
 
-export class ServiceCache<T extends IData> {
-  cache = new AppCache(1000 * 60 * 30);
+export interface IServiceCache {
+  cache: AppCache;
+}
+
+export class ServiceCache<T extends IData> implements IServiceCache {
+  cache: AppCache;
   loaded = false;
 
-  constructor(private key: string, private service: IBusiness<T>) {
+  constructor(
+    protected key: string,
+    protected service: IBusiness<T>,
+    timeout = 1000 * 60 * 30,
+    init = true
+  ) {
+    this.cache = new AppCache(timeout);
     this.save([]);
-    this.all();
+    if (init) this.all();
   }
 
   protected wait(reject: () => void, timeout = 100) {
@@ -26,6 +36,7 @@ export class ServiceCache<T extends IData> {
     try {
       return this.cache.get(this.key) as T[];
     } catch (error) {
+      this.save([]);
       return new Array<T>();
     }
   }
@@ -37,7 +48,7 @@ export class ServiceCache<T extends IData> {
   }
 
   update(data: T): Promise<T> {
-    return this.service.update(data).then((result) => {
+    return this.service.update!(data).then((result) => {
       let datas = this.load();
       let index = datas.findIndex((x) => x.Id === result.Id);
       if (index >= 0) {
@@ -48,7 +59,7 @@ export class ServiceCache<T extends IData> {
     });
   }
   create(data: T): Promise<T> {
-    return this.service.create(data).then((result) => {
+    return this.service.create!(data).then((result) => {
       let datas = this.load();
       datas.push(result);
       this.save(datas);
@@ -56,7 +67,7 @@ export class ServiceCache<T extends IData> {
     });
   }
   delete(id: string): Promise<T> {
-    return this.service.delete(id).then((result) => {
+    return this.service.delete!(id).then((result) => {
       let datas = this.load();
       let index = datas.findIndex((x) => x.Id == id);
       if (index >= 0) {
@@ -67,7 +78,7 @@ export class ServiceCache<T extends IData> {
     });
   }
   list(args?: IParams): Promise<PagedList<T>> {
-    return this.service.list(args).then((result) => {
+    return this.service.list!(args).then((result) => {
       let datas = this.load();
       result.Data.forEach((item) => {
         let index = datas.findIndex((x) => x.Id === item.Id);
@@ -86,7 +97,7 @@ export class ServiceCache<T extends IData> {
     if (datas && datas.length > 0) {
       return datas;
     }
-    return this.service.list().then((x) => {
+    return this.service.list!().then((x) => {
       this.cache.set(this.key, x.Data);
       this.loaded = true;
       return x.Data;
@@ -99,7 +110,7 @@ export class ServiceCache<T extends IData> {
     if (result) {
       return result;
     }
-    return this.service.get(id).then((x) => {
+    return this.service.get!(id).then((x) => {
       let datas = this.load();
       datas.push(x);
       this.save(datas);
