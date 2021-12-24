@@ -368,8 +368,13 @@ class StatisticService {
     return this._garbageCount;
   }
 }
-class StatisticNumberService {
+@Cache(
+  GarbageStationUrl.statistic().number.basic(),
+  GarbageStationNumberStatistic
+)
+class StatisticNumberService extends AbstractService<GarbageStationNumberStatistic> {
   constructor(private basic: BaseRequestService) {
+    super();
     this.basicType = basic.type(GarbageStationNumberStatistic);
   }
   private basicType: BaseTypeRequestService<GarbageStationNumberStatistic>;

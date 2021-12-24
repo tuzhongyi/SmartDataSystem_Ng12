@@ -45,7 +45,9 @@ export class RetentionRankBusiness
 
     let params = new GetDivisionStatisticNumbersParams();
     params.Ids = divisions.Data.map((x) => x.Id);
-    let response = await this.divisionRequest.statistic.number.list(params);
+    let response = await this.divisionRequest.statistic.number.cache.list(
+      params
+    );
     return response.Data;
   }
   Converter: IConverter<DivisionNumberStatistic[], RankModel[]> =
@@ -93,7 +95,7 @@ export class RetentionRankBusiness
   //     let ids = res.Data.map((division) => division.Id);
   //     const divisionStatisticParams = new GetDivisionStatisticNumbersParams();
   //     divisionStatisticParams.Ids = ids;
-  //     let res2 = await this.divisionRequest.statistic.number.list(
+  //     let res2 = await this.divisionRequest.statistic.number.cache.list(
   //       divisionStatisticParams
   //     );
   //     return res2.Data;
@@ -113,7 +115,7 @@ export class RetentionRankBusiness
   //     let stationStatisticParams =
   //       new GetGarbageStationStatisticNumbersParams();
   //     stationStatisticParams.Ids = ids;
-  //     let res2 = await this.stationRequest.statistic.number.list(
+  //     let res2 = await this.stationRequest.statistic.number,cache.list(
   //       stationStatisticParams
   //     );
   //     return res2.Data;

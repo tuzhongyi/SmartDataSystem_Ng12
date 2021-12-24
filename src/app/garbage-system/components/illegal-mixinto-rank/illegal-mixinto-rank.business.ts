@@ -104,7 +104,7 @@ export class IllegalMixintoRankBusiness
     let params = new GetGarbageStationStatisticNumbersParams();
     params.DivisionId = divisionId;
     params.PageSize = 999;
-    let list = await this.stationRequest.statistic.number.list(params);
+    let list = await this.stationRequest.statistic.number.cache.list(params);
     return list.Data;
   }
 }

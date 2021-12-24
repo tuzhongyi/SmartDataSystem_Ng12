@@ -62,7 +62,7 @@ export class DisposalCountBusiness implements DisposalCountConverter {
       // console.log(ids);
       const divisionStatisticParams = new GetDivisionStatisticNumbersParams();
       divisionStatisticParams.Ids = ids;
-      let res2 = await this.divisionRequest.statistic.number.list(
+      let res2 = await this.divisionRequest.statistic.number.cache.list(
         divisionStatisticParams
       );
       return res2.Data;
@@ -82,7 +82,7 @@ export class DisposalCountBusiness implements DisposalCountConverter {
       let stationStatisticParams =
         new GetGarbageStationStatisticNumbersParams();
       stationStatisticParams.Ids = ids;
-      let res2 = await this.stationRequest.statistic.number.list(
+      let res2 = await this.stationRequest.statistic.number.cache.list(
         stationStatisticParams
       );
       return res2.Data;

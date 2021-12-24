@@ -53,7 +53,9 @@ export class DisposalRankBusiness
     let stations = await this.getStations(divisionId);
     let params = new GetGarbageStationStatisticNumbersParams();
     params.Ids = stations.map((x) => x.Id);
-    let response = await this.stationRequest.statistic.number.list(params);
+    let response = await this.stationRequest.statistic.number.cache.list(
+      params
+    );
     return response.Data;
   }
 
@@ -75,7 +77,7 @@ export class DisposalRankBusiness
   //   if (ids.length == 0) return [];
   //   let stationStatisticParams = new GetGarbageStationStatisticNumbersParams();
   //   stationStatisticParams.Ids = ids;
-  //   let res2 = await this.stationRequest.statistic.number.list(
+  //   let res2 = await this.stationRequest.statistic.number.cache.list(
   //     stationStatisticParams
   //   );
   //   return res2.Data;
