@@ -6,7 +6,7 @@
  */
 
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RankComponent } from '../../common/components/rank/rank.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { HowellModule } from 'src/app/common/howell.module';
@@ -22,6 +22,7 @@ import { MaterialModule } from 'src/app/material.module';
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { MediaControlComponent } from './media-control/media-control.component';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
+import { MapControlComponent } from './map-control/map-control.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { StatisticCardComponent } from './statistic-card/statistic-card.componen
     EventRecordDetailsComponent,
     MediaControlComponent,
     StatisticCardComponent,
+    MapControlComponent,
   ],
   imports: [
     CommonModule,

@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
@@ -31,7 +31,7 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
   @Input()
   name: string = '';
 
-  src: any;
+  src?: SafeResourceUrl;
 
   getSrc(webUrl: string, url: string, cameraName?: string) {
     let result = webUrl + '?url=' + base64encode(url);
