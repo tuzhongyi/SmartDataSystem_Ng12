@@ -8,6 +8,7 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
 
 @Injectable()
 export class IllegalDropRecordBusiness {
@@ -20,15 +21,28 @@ export class IllegalDropRecordBusiness {
     let params = new GetEventRecordsParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize ?? 9;
-    let beginTime = Time.beginTime(new Date());
-    let endTime = Time.endTime(new Date());
-    params.BeginTime = beginTime;
-    params.EndTime = endTime;
+    params.BeginTime = Time.beginTime(new Date());
+    params.EndTime = Time.endTime(new Date());
 
     let res = await this._eventRequestService.record.IllegalDrop.list(params);
-    console.log(res);
 
-    this._converter.Convert(res.Data);
+    // let model = this._converter.Convert(res.Data[0]);
+    // let division = await this.getDivision(res.Data[0].Data.DivisionId!);
+    // model.CommitteeName = division.Name;
+
+    // let parentDivison = await this.getParentDivision(division)!;
+    // model.CountyName = parentDivison!.Name;
+
+    // console.log('sdfdsf', model);
+    let data: any = await res.Data.map(async (v) => {
+      let model = this._converter.Convert(v);
+      if (v.Data.DivisionId) {
+        let division = await this.getDivision(v.Data.DivisionId);
+        console.log(division);
+      }
+      return model;
+    });
+    console.log('converted', data);
 
     // let division = await this.getDivision(res.Data[0].Data.DivisionId!);
     // console.log(division);

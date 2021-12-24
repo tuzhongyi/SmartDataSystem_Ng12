@@ -1,10 +1,10 @@
 export class IllegalDropRecordModel {
   constructor(
-    public imgUrl: string,
-    public resourceName: string,
-    public stationName: string,
-    public committeeName: string,
-    public county: string,
-    public recordTime: string
+    public ImageUrl: string = '',
+    public ResourceName: string = '',
+    public StationName: string = '',
+    public CountyName: string = '',
+    public CommitteeName: string = '',
+    public recordTime: string = ''
   ) {}
 }
