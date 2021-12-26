@@ -100,7 +100,6 @@ export class IllegalDropRecordComponent implements OnInit {
     let res = await this._business.loadData(--this.pageIndex);
   }
   async next() {
-    this.pageIndex++;
     let res = await this._business.loadData(++this.pageIndex);
   }
 }

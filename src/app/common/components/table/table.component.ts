@@ -18,9 +18,12 @@ export class TableComponent implements OnInit {
   @Input()
   displayedColumns: string[] = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     // console.log(this.columns, this.displayedColumns);
+  }
+  clickRow(row: any) {
+    console.log(row)
   }
 }
