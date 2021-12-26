@@ -11,7 +11,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { CookieService } from 'ngx-cookie-service';
 
 import zh from '@angular/common/locales/zh';
-import { registerLocaleData } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -39,6 +39,7 @@ registerLocaleData(zh, 'zh-CN');
       multi: true,
     },
     CookieService,
+    DatePipe,
   ],
   bootstrap: [AppComponent],
   exports: [],

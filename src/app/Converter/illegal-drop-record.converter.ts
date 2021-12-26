@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-12-24 11:21:22
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-24 16:22:02
+ * @Last Modified time: 2021-12-26 13:14:24
  *
  *　 ┏┓   　   ┏┓
  *　┏┛┻━━━━━━━━┛┻┓
@@ -31,7 +31,8 @@ import { IConverter } from '../common/interfaces/converter.interface';
 import { IllegalDropEventRecord } from '../network/model/event-record.model';
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
 import { PicturesUrl } from '../network/url/aiop/Medium/Pictures/pictures.url';
-import { Subject } from 'rxjs';
+import { mode } from 'crypto-js';
+import { DatePipe } from '@angular/common';
 
 type IllegalDropRecordSourceModel = IllegalDropEventRecord;
 
@@ -41,7 +42,7 @@ type IllegalDropRecordSourceModel = IllegalDropEventRecord;
 export class IllegalDropRecordConverter
   implements IConverter<IllegalDropRecordSourceModel, IllegalDropRecordModel>
 {
-  constructor() {}
+  constructor(private _datePipe: DatePipe) {}
   Convert(source: IllegalDropRecordSourceModel) {
     if (source instanceof IllegalDropEventRecord) {
       return this._fromIllegalDropEventRecord(source);
@@ -53,10 +54,14 @@ export class IllegalDropRecordConverter
   private _fromIllegalDropEventRecord(item: IllegalDropEventRecord) {
     let model = new IllegalDropRecordModel();
 
+    model.EventId = item.EventId;
     model.ImageUrl = item.ImageUrl ? PicturesUrl.jpg(item.ImageUrl) : '';
     model.ResourceName = item.ResourceName ?? '';
     model.StationName = item.Data.StationName;
-    model.EventTime = item.EventTime.toString();
+    model.CommitteeName = item.Data.DivisionName ?? '';
+    model.CommitteeId = item.Data.DivisionId ?? '';
+    model.EventTime =
+      this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
 
     return model;
   }

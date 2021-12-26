@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { PeriodicElement } from 'src/app/aiop-system/components/garbage-events/illegal-drop-record/illegal-drop-record.component';
+import { DomSanitizer } from '@angular/platform-browser';
+import { TableModel } from 'src/app/view-model/table.model';
 
 @Component({
   selector: 'app-table',
@@ -9,16 +10,17 @@ import { PeriodicElement } from 'src/app/aiop-system/components/garbage-events/i
 })
 export class TableComponent implements OnInit {
   @Input()
-  data: PeriodicElement[] = [];
+  dataSource: any[] = [];
+
+  @Input()
+  columns: TableModel[] = [];
 
   @Input()
   displayedColumns: string[] = [];
 
-  dataSource = new MatTableDataSource<any>();
-
   constructor() {}
 
   ngOnInit(): void {
-    this.dataSource.data = this.data;
+    // console.log(this.columns, this.displayedColumns);
   }
 }

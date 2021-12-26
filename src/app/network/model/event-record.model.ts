@@ -8,7 +8,7 @@ import { CameraImageUrl } from './url.model';
 /** 事件基础类型 */
 export class EventRecord {
   /**	String	事件ID	M */
-  Id!: string;
+  EventId!: string;
   /**	DateTime	事件时间	M */
   @Transform(transformDateTime)
   EventTime!: Date;

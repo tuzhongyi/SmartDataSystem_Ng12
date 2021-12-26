@@ -2,7 +2,7 @@ import { MediumUrl } from '../medium.url';
 
 export class PicturesUrl extends MediumUrl {
   static get basic(): string {
-    return `${super.basic}/Medium`;
+    return `${super.basic}/Pictures`;
   }
   static get binary() {
     return `${this.basic}/Binary`;

@@ -1,5 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, from, Subject } from 'rxjs';
+import { reduce } from 'rxjs/operators';
 import { IllegalDropRecordConverter } from 'src/app/converter/illegal-drop-record.converter';
 import { Time } from 'src/app/global/tool/time';
 import { Division } from 'src/app/network/model/division.model';
@@ -15,6 +17,8 @@ import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.m
 export class IllegalDropRecordBusiness {
   private _divisionMap = new Map<string, Division>();
 
+  public _dataStream = new Subject<PagedList<IllegalDropRecordModel>>();
+
   constructor(
     private _eventRequestService: EventRequestService,
     private _divisionRequest: DivisionRequestService,
@@ -27,35 +31,86 @@ export class IllegalDropRecordBusiness {
     params.BeginTime = Time.beginTime(new Date());
     params.EndTime = Time.endTime(new Date());
 
-    let res = await this._eventRequestService.record.IllegalDrop.list(params);
-    console.log(res);
+    let records = await this._eventRequestService.record.IllegalDrop.list(
+      params
+    );
+    // console.log('records', records);
 
-    let data: IllegalDropRecordModel[] = res.Data.map((v) =>
+    // 缺少 街道信息
+    let data: IllegalDropRecordModel[] = records.Data.map((v) =>
       this._converter.Convert(v)
     );
 
-    console.log('data', data);
-    let committeeIds = this._getDivisionIds(res.Data);
+    // console.log('data', data);
+    await this._getDivisionInfo(records.Data);
 
-    console.time();
-    let commitees = await this._getGroupDivisions(committeeIds); // 速度: default: 2.337890625 ms
-    console.timeEnd();
+    // console.log(this._divisionMap);
+
+    data.forEach((v) => {
+      let committee = this._divisionMap.get(v.CommitteeId);
+      if (committee) {
+        if (committee.ParentId) {
+          let county = this._divisionMap.get(committee.ParentId);
+          if (county) {
+            v.CountyName = county.Name;
+          }
+        }
+      }
+    });
+
+    let res: PagedList<IllegalDropRecordModel> = {
+      Page: records.Page,
+      Data: data,
+    };
+
+    this._dataStream.next(res);
+    return res;
+  }
+
+  private async _getDivisionInfo(data: IllegalDropEventRecord[]) {
+    let committeeIds = this._extractDivisionIds(data);
+    console.time('居委会用时');
+    let commitees = await this._getGroupDivisions(committeeIds);
+    console.timeEnd('居委会用时');
+    // console.log('居委会', commitees);
 
     commitees.forEach((division) => this._register(division));
 
-    console.log(this._divisionMap);
+    let countyIds = this._extractDivisionIds(commitees, true);
+    console.time('街道用时');
+    let counties = await this._getGroupDivisions(countyIds);
+    console.timeEnd('街道用时');
+    // console.log('街道', counties);
 
-    let countys = await this._getParentDivisions(commitees);
-    console.log(countys);
+    counties.forEach((division) => this._register(division));
   }
 
-  private _getDivisionIds(data: IllegalDropEventRecord[]) {
+  private _extractDivisionIds(
+    data: IllegalDropEventRecord[] | Division[],
+    fromParent: boolean = false
+  ) {
     let divisionIds: string[] = [];
+
     for (let i = 0; i < data.length; i++) {
       let v = data[i];
-      if (v.Data.DivisionId) {
-        if (!divisionIds.includes(v.Data.DivisionId))
-          divisionIds.push(v.Data.DivisionId);
+      let id: string = '';
+
+      if (v instanceof IllegalDropEventRecord) {
+        if (v.Data.DivisionId) {
+          id = v.Data.DivisionId;
+        }
+      } else if (v instanceof Division) {
+        if (fromParent) {
+          if (v.ParentId) {
+            id = v.ParentId;
+          }
+        } else {
+          id = v.Id;
+        }
+        // id = (!fromParent && v.Id) || (fromParent && v.ParentId) || '';
+      }
+      if (id && !divisionIds.includes(id)) {
+        divisionIds.push(id);
       }
     }
     return divisionIds;
@@ -68,42 +123,13 @@ export class IllegalDropRecordBusiness {
   private async _getGroupDivisions(divisionIds: string[]) {
     let params = new GetDivisionsParams();
     params.Ids = divisionIds;
+    // console.time();
     let res = await this._divisionRequest.cache.list(params);
-    console.log('group', res);
+    // console.timeEnd();
     return res.Data;
   }
-  /**
-   *
-   * @param divisionId
-   * @returns
-   * @description 获取单个 Division 信息
-   */
-  private async _getDivision(divisionId: string) {
-    let division = await this._divisionRequest.cache.get(divisionId);
-    return division;
-  }
-  /**
-   *
-   * @param division
-   * @returns
-   * @description 获取父 Division 信息
-   */
-  private async _getParentDivisions(divisions: Division[]) {
-    let ids: string[] = [];
-    for (let i = 0; i < divisions.length; i++) {
-      let division = divisions[i];
-      if (division.ParentId) {
-        ids.push(division.ParentId);
-      }
-    }
-    let res = await this._getGroupDivisions(ids);
-    return res;
-    // if (division.ParentId) {
-    //   let parent = await this._getDivision(division.ParentId);
-    //   return parent;
-    // }
-    // return null;
-  }
+
+  // 本地缓存
   private _register(division: Division) {
     if (!this._divisionMap.has(division.Id)) {
       this._divisionMap.set(division.Id, division);

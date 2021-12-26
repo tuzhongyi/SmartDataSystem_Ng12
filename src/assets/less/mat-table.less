@@ -1,26 +1,45 @@
 .mat-table {
+  font-family: "Source Han Sans CN Normal";
+  background-color: #1b2242;
   .mat-header-row {
     background-color: #414b83;
     height: 70px;
+    border-bottom-color: rgba(0, 0, 0, 0.3);
     .mat-header-cell {
       color: white;
       font-size: 24px;
     }
   }
   .mat-row {
-    height: 58px;
+    padding: 4px 0;
+    box-sizing: border-box;
     background-color: #1b2242;
+    cursor: pointer;
     &:hover {
       background-color: #3d5492;
-      height: 80px;
-      cursor: pointer;
+      border-bottom-color: rgba(0, 0, 0, 0.3);
     }
     &.selected {
       background-color: #6086e1;
+      border-bottom-color: rgba(0, 0, 0, 0.3);
     }
     .mat-cell {
       color: #cfd7ff;
       font-size: 18px;
+
+      img {
+        width: 100%;
+      }
     }
   }
+}
+
+mat-row,
+mat-header-row,
+mat-footer-row,
+th.mat-header-cell,
+td.mat-cell,
+td.mat-footer-cell {
+  border-bottom-width: 2px;
+  border-bottom-color: rgba(0, 0, 0, 0);
 }

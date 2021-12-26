@@ -7,7 +7,7 @@
         <div *ngIf="show">hshdfh</div>
     </div>
     <div class="illegal-drop-main">
-        <app-table [data]="data" [displayedColumns]="displayedColumns"></app-table>
+        <app-table [dataSource]="dataSource" [columns]="columns" [displayedColumns]="displayedColumns"></app-table>
     </div>
     <div class='illegal-drop-footer'>
         <button (click)="prev()">前页</button>

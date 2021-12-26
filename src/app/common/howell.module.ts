@@ -2,9 +2,9 @@
  * @Author: pmx
  * @Date: 2021-09-26 14:26:27
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-24 10:04:46
+ * @Last Modified time: 2021-12-26 13:09:36
  */
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material.module';
 import { CUSTOM_COMPONENTS } from './components';
