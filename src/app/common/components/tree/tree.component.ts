@@ -8,7 +8,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
+import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
@@ -36,7 +36,7 @@ import { TreeProviders } from './tokens/service.token';
   ],
 })
 export class TreeComponent implements OnInit {
-  TreeSelectEnum = TreeSelectEnum;
+  TreeSelectEnum = SelectEnum;
 
   /***************private  *********************/
   private _service!: TreeServiceInterface;
@@ -87,16 +87,16 @@ export class TreeComponent implements OnInit {
   serviceProvider = TreeServiceEnum.Division;
 
   @Input('treeSelectModel')
-  selectModel = TreeSelectEnum.Single;
+  selectModel = SelectEnum.Single;
 
   @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
 
   selection!: SelectionModel<FlatTreeNode>;
 
   highLight = (node: FlatTreeNode) => {
-    if (this.selectModel == TreeSelectEnum.Single) {
+    if (this.selectModel == SelectEnum.Single) {
       return this.selection.isSelected(node);
-    } else if (this.selectModel == TreeSelectEnum.Multiple) {
+    } else if (this.selectModel == SelectEnum.Multiple) {
       return this._currentNode && this._currentNode.id == node.id;
     }
     return false;
@@ -123,7 +123,7 @@ export class TreeComponent implements OnInit {
     this.dataChange.subscribe((data) => (this.dataSource.data = data));
   }
   ngOnInit() {
-    if (this.selectModel == TreeSelectEnum.Single) {
+    if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);

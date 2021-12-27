@@ -7,7 +7,6 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -17,6 +16,7 @@ import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResource } from 'src/app/network/model/user.model';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { SelectEnum } from 'src/app/enum/select.enum';
 
 @Component({
   templateUrl: './division-manage.component.html',
@@ -35,7 +35,7 @@ export class DivisionManageComponent implements OnInit {
 
   /*****public ********/
   treeServiceProvider = TreeServiceEnum.Station;
-  treeSelectModel = TreeSelectEnum.Single;
+  treeSelectModel = SelectEnum.Single;
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;
 

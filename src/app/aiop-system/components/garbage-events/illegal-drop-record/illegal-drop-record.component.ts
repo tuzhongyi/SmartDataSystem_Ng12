@@ -3,15 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
-import { TableModel } from 'src/app/view-model/table.model';
+import {
+  TableCellEvent,
+  TableColumnModel,
+} from 'src/app/view-model/table.model';
 import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { columns } from './columns';
+import { SelectEnum } from 'src/app/enum/select.enum';
 
 @Component({
   selector: 'app-illegal-drop-record',
@@ -20,72 +18,34 @@ export interface PeriodicElement {
   providers: [IllegalDropRecordBusiness, DatePipe],
 })
 export class IllegalDropRecordComponent implements OnInit {
+  /**private */
+  private _pageIndex = 1;
+  private _pageSize = 9;
+  private _pagedList: PagedList<IllegalDropRecordModel> = new PagedList();
+
+  /**public */
   show = false;
-
-  columns: TableModel[] = [
-    {
-      columnDef: 'ImageUrl',
-      header: '图片',
-      cell: (element: IllegalDropRecordModel) =>
-        `<img src=${element.ImageUrl}/>`,
-      style: {},
-      cls: ['pic'],
-    },
-    {
-      columnDef: 'ResourceName',
-      header: '资源名称',
-      cell: (element: IllegalDropRecordModel) => `${element.ResourceName}`,
-    },
-    {
-      columnDef: 'StationName',
-      header: '投放点',
-      cell: (element: IllegalDropRecordModel) => `${element.StationName}`,
-    },
-    {
-      columnDef: 'CountyName',
-      header: '街道',
-      cell: (element: IllegalDropRecordModel) => `${element.CountyName}`,
-    },
-    {
-      columnDef: 'CommitteeName',
-      header: '居委会',
-      cell: (element: IllegalDropRecordModel) => `${element.CommitteeName}`,
-    },
-
-    {
-      columnDef: 'EventTime',
-      header: '上报时间',
-      cell: (element: IllegalDropRecordModel) => `${element.EventTime}`,
-    },
-    {
-      columnDef: 'Operation',
-      header: '操作',
-      cell: (element: IllegalDropRecordModel) => `
-      <i class='howell-icon-video '/>
-      <i class='howell-icon-picturedownload'/>
-      <i class='howell-icon-videodownload'/>
-      `,
-    },
-  ];
-  displayedColumns: string[] = this.columns.map((column) => column.columnDef);
-  pagedList: PagedList<IllegalDropRecordModel> = new PagedList();
-
   dataSource: IllegalDropRecordModel[] = [];
+  columns: TableColumnModel[] = [...columns];
+  displayedColumns: string[] = this.columns.map((column) => column.columnDef);
+  // .concat([
+  //   'ImageUrl',
+  //   'ResourceName',
+  //   'StationName',
+  //   'CountyName',
+  //   'CommitteeName',
+  //   'EventTime',
+  // ]);
+  tableSelectModel = SelectEnum.Single;
 
-  pageIndex = 1;
-  pageSize = 9;
-
-  constructor(
-    private _business: IllegalDropRecordBusiness,
-    private _sanitizer: DomSanitizer
-  ) {
-    this.pagedList.Data = [];
-    this.dataSource = this.pagedList.Data;
+  constructor(private _business: IllegalDropRecordBusiness) {
+    this._pagedList.Data = [];
+    this.dataSource = this._pagedList.Data;
 
     this._business._dataStream.subscribe(
       (res: PagedList<IllegalDropRecordModel>) => {
         this.dataSource = res.Data;
-        this.pagedList = res;
+        this._pagedList = res;
       }
     );
   }
@@ -94,12 +54,24 @@ export class IllegalDropRecordComponent implements OnInit {
     this.initialize();
   }
   async initialize() {
-    let res = await this._business.loadData(this.pageIndex);
+    let res = await this._business.loadData(this._pageIndex);
   }
   async prev() {
-    let res = await this._business.loadData(--this.pageIndex);
+    let res = await this._business.loadData(--this._pageIndex);
   }
   async next() {
-    let res = await this._business.loadData(++this.pageIndex);
+    let res = await this._business.loadData(++this._pageIndex);
+  }
+  selectTableRow(row: IllegalDropRecordModel[]) {
+    console.log('row', row);
+  }
+  selectTableCell(cell: TableCellEvent) {
+    console.log('cell', cell);
+    if (
+      cell.column.columnDef == 'ImageUrl' ||
+      cell.column.columnDef == 'Operation'
+    ) {
+      cell.event.stopPropagation();
+    }
   }
 }

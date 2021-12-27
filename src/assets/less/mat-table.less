@@ -8,6 +8,11 @@
     .mat-header-cell {
       color: white;
       font-size: 24px;
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
   .mat-row {
@@ -15,20 +20,29 @@
     box-sizing: border-box;
     background-color: #1b2242;
     cursor: pointer;
-    &:hover {
+    &:hover:not(.high-light) {
       background-color: #3d5492;
       border-bottom-color: rgba(0, 0, 0, 0.3);
     }
-    &.selected {
-      background-color: #6086e1;
+    &.high-light {
+      background: linear-gradient(
+        to right,
+        rgb(117, 134, 224),
+        rgb(50, 134, 229)
+      );
       border-bottom-color: rgba(0, 0, 0, 0.3);
     }
     .mat-cell {
       color: #cfd7ff;
       font-size: 18px;
 
-      img {
-        width: 100%;
+      span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        img {
+          width: 100%;
+        }
       }
     }
   }
@@ -42,4 +56,10 @@ td.mat-cell,
 td.mat-footer-cell {
   border-bottom-width: 2px;
   border-bottom-color: rgba(0, 0, 0, 0);
+}
+
+mat-cell:last-of-type,
+mat-header-cell:last-of-type,
+mat-footer-cell:last-of-type {
+  justify-content: flex-end;
 }
