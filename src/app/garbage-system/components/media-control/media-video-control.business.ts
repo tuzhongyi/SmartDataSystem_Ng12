@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  VideoMode,
+  PlayMode,
   VideoModel,
 } from 'src/app/common/components/video-player/video.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -26,7 +26,7 @@ export class MediaVideoControlBussiness
   subscription?: ISubscription | undefined;
   async load(
     camera: Camera,
-    mode: VideoMode,
+    mode: PlayMode,
     streamType: StreamType
   ): Promise<VideoModel> {
     let data = await this.getData(camera, mode, streamType);
@@ -36,16 +36,16 @@ export class MediaVideoControlBussiness
 
   async getData(
     camera: Camera,
-    mode: VideoMode,
+    mode: PlayMode,
     streamType: StreamType = StreamType.sub
   ): Promise<VideoUrl> {
     switch (mode) {
-      case VideoMode.live:
+      case PlayMode.live:
         let params1 = new GetPreviewUrlParams();
         params1.CameraId = camera.Id;
         params1.StreamType = streamType;
         return this.srService.preview(params1);
-      case VideoMode.vod:
+      case PlayMode.vod:
         let params2 = new GetVodUrlParams();
         params2.CameraId = camera.Id;
         params2.StreamType = streamType;

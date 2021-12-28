@@ -14,6 +14,7 @@ import { WindowComponent } from './window/window.component';
 import { ImageControlComponent } from './image-control/image-control.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TableSelectComponent } from './table-select/table-select.component';
+import { VideoWindowComponent } from './video-window/video-window.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -32,4 +33,5 @@ export const CUSTOM_COMPONENTS = [
   ImageControlComponent,
   PaginatorComponent,
   TableSelectComponent,
+  VideoWindowComponent,
 ];

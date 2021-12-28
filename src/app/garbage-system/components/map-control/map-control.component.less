@@ -26,9 +26,7 @@
 
 .map-bar {
   position: relative;
-  bottom: 82px;
-  margin: 10px;
-
+  bottom: 10px;
 
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -90,25 +88,64 @@
 
 .map-bar.video-list {
   background-color: rgba(0, 0, 0, 0.3);
-  position: relative;
-  right: 0;
-  bottom: 130px;
-  float: right;
-  padding: 10px 0;
+  position: absolute;
+  right: 10px;
 
   max-width: 640px;
   overflow-x: auto;
   overflow-y: hidden;
-  height: 110px;
+  height: 100px;
+  padding: 10px;
+  padding-bottom: 0;
 
-}
+  .carousel {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    top: 50%;
+    transform: translate(0, -50%);
+    z-index: 1;
 
-.map-bar.video-list ul {
-  list-style-type: none;
-  clear: both;
-  display: inline-flex;
-  padding-inline-start: 0;
-  padding: 0 10px;
+    &.prev {
+      left: 10px;
+    }
+
+    &.next {
+      right: 10px;
+    }
+
+    .carousel-control-prev,
+    .carousel-control-next {
+      background-color: #000000dd;
+      width: 30px;
+      height: 30px;
+      margin-top: 26px;
+      z-index: 4;
+      border-radius: 50%;
+    }
+
+  }
+
+  &>.list {
+    width: 100%;
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    ul {
+      list-style-type: none;
+      clear: both;
+      display: inline-flex;
+
+      margin-block-start: 0px;
+      margin-block-end: 0px;
+      padding-inline-start: 0;
+    }
+  }
+
+
+
+
 }
 
 .map-bar.video-list .video {

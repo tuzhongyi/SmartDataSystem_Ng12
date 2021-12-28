@@ -6,6 +6,7 @@ import { GarbageStation } from '../../model/garbage-station.model';
 import { DivisionServiceCache } from './division-service.cache';
 import { DivisionStatisticServiceCache } from './division-statistic-service.cache';
 import { GarbageStationServiceCache } from './garbage-station-service.cache';
+import { GarbageStationStatisticServiceCache } from './garbage-station-statistic-service.cache';
 import { ServiceCache } from './service.cache';
 
 export function Cache<T>(key: string, type?: ClassConstructor<T>) {
@@ -28,7 +29,10 @@ export function Cache<T>(key: string, type?: ClassConstructor<T>) {
                   this._cache = new DivisionStatisticServiceCache(key, this);
                   break;
                 case GarbageStationNumberStatistic.name:
-                  this._cache = new GarbageStationServiceCache(key, this);
+                  this._cache = new GarbageStationStatisticServiceCache(
+                    key,
+                    this
+                  );
                   break;
                 default:
                   this._cache = new ServiceCache(key, this);

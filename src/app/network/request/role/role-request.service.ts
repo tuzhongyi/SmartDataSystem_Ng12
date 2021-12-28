@@ -14,7 +14,7 @@ import { PagedParams } from '../IParams.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class UserRequestService {
+export class RoleRequestService {
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
   }

@@ -1,23 +1,33 @@
+import { StreamType } from 'src/app/enum/stream-type.enum';
 import { HowellUrl } from 'src/app/view-model/howell-url';
 
 export class VideoModel {
-  // 链接地址
+  /** 链接地址 */
   host?: string;
-  // 端口号
+
+  /** 端口号 */
   port?: number;
-  // 摄像机id
+
+  /** 摄像机id */
   deviceId?: string;
-  // 通道号
+
+  /** 通道号 */
   slot?: number;
-  // 用户名
+  /** 码流 */
+  stream?: StreamType;
+  /** 用户名 */
   username?: string;
-  // 密码
+
+  /** 密码 */
   password?: string;
-  // 模式
-  mode?: VideoMode;
-  // 开始时间
+
+  /** 模式 */
+  mode?: PlayMode;
+
+  /** 开始时间 */
   beginTime?: Date;
-  // 结束时间
+
+  /** 结束时间 */
   endTime?: Date;
   constructor(
     options?:
@@ -25,9 +35,10 @@ export class VideoModel {
           host?: string;
           deviceId?: string;
           slot?: number;
+          stream?: StreamType;
           userName?: string;
           password?: string;
-          mode?: VideoMode;
+          mode?: PlayMode;
           beginTime?: Date;
           endTime?: Date;
         }
@@ -45,6 +56,7 @@ export class VideoModel {
         this.mode = options.mode;
         this.beginTime = options.beginTime;
         this.endTime = options.endTime;
+        this.stream = options.stream;
       }
     }
   }
@@ -61,14 +73,15 @@ export class VideoModel {
     let uri = str.substr(str.indexOf(url.Authority) + url.Authority.length + 1);
     let nodes = uri.split('/');
 
-    this.mode = nodes[3] as VideoMode;
+    this.mode = nodes[3] as PlayMode;
     this.deviceId = nodes[4];
     this.slot = parseInt(nodes[5]);
+    this.stream = parseInt(nodes[6]);
 
     switch (this.mode) {
-      case VideoMode.live:
+      case PlayMode.live:
         break;
-      case VideoMode.vod:
+      case PlayMode.vod:
         let interval = nodes[7];
         let times = interval.split('_');
         this.beginTime = new Date(times[0]);
@@ -81,13 +94,13 @@ export class VideoModel {
   }
 
   toString() {
-    let url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/1/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
-    if (this.mode === VideoMode.vod && this.beginTime && this.endTime) {
+    let url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/${this.stream}/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
+    if (this.mode === PlayMode.vod && this.beginTime && this.endTime) {
       url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${
         this.deviceId
-      }/${
-        this.slot
-      }/1/${this.beginTime.toISOString()}_${this.endTime.toISOString()}/${
+      }/${this.slot}/${
+        this.stream
+      }/${this.beginTime.toISOString()}_${this.endTime.toISOString()}/${
         this.mode
       }.mp4?user=${this.username}&password=${this.password}`;
     }
@@ -95,7 +108,7 @@ export class VideoModel {
   }
 }
 
-export enum VideoMode {
+export enum PlayMode {
   live = 'live',
   vod = 'vod',
 }

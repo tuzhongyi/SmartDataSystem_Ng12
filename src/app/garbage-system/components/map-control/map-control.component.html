@@ -25,3 +25,26 @@
     异常
   </li>
 </ul>
+
+<div class="map-bar video-list" *ngIf="display.videoList">
+  <div class="carousel prev" *ngIf="display.videoControl">
+    <a class="carousel-control-prev" #video_list_prev>
+      <div class="howell-icon-arrowleftbold blue-text arrow-wrap"></div>
+    </a>
+  </div>
+  <div class="list">
+    <ul class="ul">
+      <ng-container *ngFor="let camera of cameras">
+        <!-- [ngClass]="{'error': camera.CameraState>0}" -->
+        <li class="video" (click)="onCameraClicked(camera)">
+          <app-image-control [camera]="camera"></app-image-control>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="carousel next" *ngIf="display.videoControl">
+    <a class="carousel-control-next" #video_list_next>
+      <div class="howell-icon-arrowrightbold blue-text arrow-wrap"></div>
+    </a>
+  </div>
+</div>

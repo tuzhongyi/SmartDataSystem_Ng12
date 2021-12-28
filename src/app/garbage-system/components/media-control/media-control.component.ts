@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {
-  VideoMode,
+  PlayMode,
   VideoModel,
 } from 'src/app/common/components/video-player/video.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -40,7 +40,7 @@ export class MediaControlComponent
       this.title = this.camera.Name;
       let promise = this.business.load(
         this.camera,
-        VideoMode.live,
+        PlayMode.live,
         StreamType.sub
       );
       let img = MediumRequestService.jpg(this.camera.ImageUrl);

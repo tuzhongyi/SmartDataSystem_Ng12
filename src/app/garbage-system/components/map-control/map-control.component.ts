@@ -1,25 +1,89 @@
 import {
+  AfterViewInit,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
+  ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { AMapBusiness } from './business/amap.business';
-import { MapControlBusiness } from './business/map-control.bussiness';
-
+import { AMapBusiness } from './amap.business';
+declare var $: any;
 @Component({
   selector: 'app-map-control',
   templateUrl: './map-control.component.html',
   styleUrls: ['./map-control.component.less'],
-  providers: [MapControlBusiness, AMapBusiness],
+  providers: [AMapBusiness],
 })
-export class MapControlComponent implements OnInit, OnDestroy {
+export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('iframe')
   element?: ElementRef;
+
+  //#region video_list_prev
+  prev?: ElementRef;
+  @ViewChild('video_list_prev')
+  set video_list_prev(element: ElementRef | undefined) {
+    this.prev = element;
+    if (this.prev) {
+      this.elementInit();
+      this.prev.nativeElement.onclick = () => {
+        $('.ul')[0].onwheel({ deltaY: -1 });
+      };
+    }
+  }
+  get video_list_prev(): ElementRef | undefined {
+    return this.prev;
+  }
+  //#endregion
+
+  //#region video_list_next
+  next?: ElementRef;
+  @ViewChild('video_list_next')
+  set video_list_next(element: ElementRef | undefined) {
+    this.next = element;
+    if (this.next) {
+      this.elementInit();
+      this.next.nativeElement.onclick = () => {
+        $('.ul')[0].onwheel({ deltaY: 1 });
+      };
+    }
+  }
+  get video_list_next(): ElementRef | undefined {
+    return this.next;
+  }
+  //#endregion
+
+  elementInit() {
+    $('.ul').each(function (index: number, element: HTMLElement) {
+      if (!element.onwheel) {
+        element.onwheel = function (event) {
+          const table = $(element).parents('.list');
+          const right = $(element).width() - table[0].offsetWidth;
+          if (table.scrollLeft() <= right && event.deltaY > 0) {
+            // 禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）
+            if (event.preventDefault) {
+              event.preventDefault();
+            }
+            const left = table.scrollLeft() + 50;
+            table.scrollLeft(left);
+          }
+          if (table.scrollLeft() >= 0 && event.deltaY < 0) {
+            // 禁止事件默认行为（此处禁止鼠标滚轮行为关联到"屏幕滚动条上下移动"行为）
+            if (event.preventDefault) {
+              event.preventDefault();
+            }
+            const left = table.scrollLeft() - 50;
+            table.scrollLeft(left);
+          }
+        };
+      }
+    });
+  }
 
   src?: SafeResourceUrl;
 
@@ -35,9 +99,10 @@ export class MapControlComponent implements OnInit, OnDestroy {
 
   constructor(
     private sanitizer: DomSanitizer,
-    private bussiness: MapControlBusiness,
+    private changeDetectorRef: ChangeDetectorRef,
     private amap: AMapBusiness
   ) {}
+  ngAfterViewInit(): void {}
 
   //#region wait
   loadHandle?: NodeJS.Timer;
@@ -71,9 +136,12 @@ export class MapControlComponent implements OnInit, OnDestroy {
   display = {
     status: true,
     videoList: false,
+    videoControl: false,
   };
 
   pointCount = 0;
+
+  cameras: Camera[] = [];
 
   //#region template event
   onLoad(event: Event) {
@@ -87,10 +155,19 @@ export class MapControlComponent implements OnInit, OnDestroy {
   onPointDoubleClicked(station: GarbageStation) {
     this.display.status = false;
     this.display.videoList = true;
+    this.cameras = station.Cameras ?? [];
+    this.display.videoControl = this.cameras.length > 5;
+    this.changeDetectorRef.detectChanges();
   }
   onMapClicked() {
     this.display.status = true;
     this.display.videoList = false;
   }
   //#endregion
+
+  onCameraClicked(camera: Camera) {
+    console.log(camera);
+  }
+
+  setPointStatus() {}
 }
