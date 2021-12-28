@@ -58,7 +58,11 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": ["src/assets/js/base64.js", "src/assets/js/WSPlayer_Proxy.js"]
+            "scripts": [
+              "src/assets/js/base64.js",
+              "src/assets/js/WSPlayer_Proxy.js",
+              "src/assets/js/jquery/jquery-1.10.2.min.js"
+            ]
           },
           "configurations": {
             "production": {
