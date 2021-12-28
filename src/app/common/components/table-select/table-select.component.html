@@ -1,0 +1,5 @@
+<div class="table-select">
+    <ng-template ngFor [ngForOf]="config" let-item>
+        <div class="item" [attr.type]="item.type" (click)="clickItem(item.type)">{{item.title}}</div>
+    </ng-template>
+</div>

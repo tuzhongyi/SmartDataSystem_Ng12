@@ -12,6 +12,8 @@ import { VideoPlayerComponent } from './video-player/video-player.component';
 import { VideoMultControlComponent } from './video-mult-control/video-mult-control.component';
 import { WindowComponent } from './window/window.component';
 import { ImageControlComponent } from './image-control/image-control.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { TableSelectComponent } from './table-select/table-select.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -28,4 +30,6 @@ export const CUSTOM_COMPONENTS = [
   TableComponent,
   VideoMultControlComponent,
   ImageControlComponent,
+  PaginatorComponent,
+  TableSelectComponent,
 ];

@@ -12,7 +12,7 @@
             (selectTableCell)="selectTableCell($event)"></app-table>
     </div>
     <div class='illegal-drop-footer'>
-        <button (click)="prev()">前页</button>
-        <button (click)="next()">后页</button>
+        <app-table-select (tableSelectEvent)="tableSelect($event)"></app-table-select>
+        <app-paginator></app-paginator>
     </div>
 </div>

@@ -10,9 +10,10 @@ export class TableColumnModel {
   ) {}
 }
 
+// 暂时只有一种类型
 export type TableCellModel = IllegalDropRecordModel;
 
 export interface TableCellEvent {
   column: TableColumnModel;
-  event: Event;
+  event: PointerEvent;
 }

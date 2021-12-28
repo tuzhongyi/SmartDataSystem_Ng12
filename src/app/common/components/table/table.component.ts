@@ -61,4 +61,26 @@ export class TableComponent implements OnInit {
       event,
     } as TableCellEvent);
   }
+  selectAll() {
+    console.log('全选');
+    this.selection.select(...this.dataSource);
+  }
+  selectReverse() {
+    // 仅会发生两次 data change
+
+    // let res: TableCellModel[] = [];
+    // this.dataSource.forEach((data) => {
+    //   if (!this.selection.isSelected(data)) {
+    //     res.push(data);
+    //   }
+    // });
+    // this.selection.clear();
+    // this.selection.select(...res);
+
+    // 发生 dataSource.length 次 data change
+    this.dataSource.forEach((data) => this.selection.toggle(data));
+  }
+  selectCancel() {
+    this.selection.clear();
+  }
 }

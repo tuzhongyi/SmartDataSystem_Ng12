@@ -19,9 +19,12 @@
     }
   }
   &-footer {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     height: 42px;
-    background-color: cyan;
+    overflow: hidden;
+    border-top: 1px solid #7586e0;
   }
 }
 
@@ -36,7 +39,6 @@
   height: 36px;
 }
 
-// :not(.high-light)
 ::ng-deep .mat-table .mat-row:hover .mat-cell span.picture {
   width: 120px;
   height: 96px;

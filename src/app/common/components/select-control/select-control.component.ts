@@ -1,9 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2021-09-15 16:02:14
- * @Last Modified by: pmx
- * @Last Modified time: 2021-12-15 14:52:03
- */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from './select-control.model';
 
