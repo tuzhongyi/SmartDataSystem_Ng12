@@ -105,9 +105,12 @@
     top: 50%;
     transform: translate(0, -50%);
     z-index: 1;
+    display: flex;
+
+
 
     &.prev {
-      left: 10px;
+      left: 20px;
     }
 
     &.next {
@@ -116,13 +119,24 @@
 
     .carousel-control-prev,
     .carousel-control-next {
-      background-color: #000000dd;
+      background-color: rgba(0, 0, 0, 0.3);
       width: 30px;
       height: 30px;
-      margin-top: 26px;
       z-index: 4;
       border-radius: 50%;
+      cursor: pointer;
+      align-items: center;
+
+      display: flex;
+      justify-content: center;
+      align-self: center;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 1);
+      }
     }
+
+
 
   }
 

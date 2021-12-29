@@ -15,6 +15,7 @@ import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { VideoWindowViewModel } from './video-window.model';
 
 declare var $: any;
 
@@ -24,12 +25,14 @@ declare var $: any;
   styleUrls: ['./video-window.component.css'],
 })
 export class VideoWindowComponent implements OnInit, OnDestroy {
-  ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
-  }
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  @Input()
+  model?: VideoModel;
+
+  @Input()
+  window: VideoWindowViewModel = new VideoWindowViewModel();
+
+  ngOnDestroy(): void {}
+  ngOnInit(): void {}
 }
 
 enum DirectionEnum {

@@ -11,6 +11,20 @@
             'ws://garbage01.51hws.com:8800/ws/video/howellps/live/00310101031111111000153000000000/1/2/live.H265?user=howell&password=123456'
           "
         ></app-video-player> -->
+
+        <div>
+          <label class="pull-left first">日期：</label>
+          <input
+            type="text"
+            #dtp
+            DateTimePicker
+            [format]="'yyyy-MM-dd'"
+            [value]="date"
+            (changeDate)="changeDate($event)"
+            style="width: calc(100% - 82px)"
+            class="custom form-control m-l-10"
+          />
+        </div>
       </mat-tab>
       <mat-tab label="总图表"> Content 2 </mat-tab>
       <mat-tab label="细分图表"> Content 3 </mat-tab>

@@ -1,4 +1,4 @@
-<div *ngIf="camera" class="image-control">
+<div *ngIf="camera" class="image-control" (click)="onClick($event)">
   <div *ngIf="camera.OnlineStatus != OnlineStatus.Online" class="error">
     NO SIGNAL
   </div>

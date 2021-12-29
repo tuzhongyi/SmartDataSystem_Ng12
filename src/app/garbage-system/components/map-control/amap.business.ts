@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { Flags } from 'src/app/common/tools/flags';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -93,10 +94,10 @@ export class AMapBusiness {
 
   createMapClient(iframe: HTMLIFrameElement) {
     this.mapClient = new CesiumMapClient(iframe);
-    this.mapClient.Events.OnLoaded = () => {
+    let start = new Date();
+    this.mapClient.Events.OnLoaded = async () => {
       this.init();
       this.mapController = this.mapClient!.DataController;
-      this.mapController.Point.List(this.storeService.divisionId);
       this.mapClient!.Events.OnElementsDoubleClicked = (elements) => {
         if (elements && elements.length > 0) {
           this.onPointDoubleClicked(
@@ -110,6 +111,8 @@ export class AMapBusiness {
 
       this.loadDivision(this.storeService.divisionId);
     };
+    let end = new Date();
+    console.log(new Date(end.getTime() - start.getTime()));
   }
 
   loadDivision(divisionId: string) {

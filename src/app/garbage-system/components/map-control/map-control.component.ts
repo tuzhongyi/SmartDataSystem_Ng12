@@ -3,8 +3,10 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -21,6 +23,7 @@ declare var $: any;
   providers: [AMapBusiness],
 })
 export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
+  //#region ViewChild
   @ViewChild('iframe')
   element?: ElementRef;
 
@@ -56,6 +59,12 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   get video_list_next(): ElementRef | undefined {
     return this.next;
   }
+  //#endregion
+  //#endregion
+
+  //#region Output
+  @Output()
+  VideoPlay: EventEmitter<Camera> = new EventEmitter();
   //#endregion
 
   elementInit() {
@@ -166,7 +175,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#endregion
 
   onCameraClicked(camera: Camera) {
-    console.log(camera);
+    this.VideoPlay.emit(camera);
   }
 
   setPointStatus() {}

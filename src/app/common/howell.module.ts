@@ -11,10 +11,11 @@ import { CUSTOM_COMPONENTS } from './components';
 import { CUSTOM_PIPES } from './pipes';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { CUSTOM_DIRECTIVES } from './directives';
 
 @NgModule({
-  declarations: [CUSTOM_COMPONENTS, CUSTOM_PIPES],
-  exports: [CUSTOM_COMPONENTS, CUSTOM_PIPES],
+  declarations: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
+  exports: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
   imports: [CommonModule, MaterialModule, AngularResizeEventModule],
   providers: [],
 })

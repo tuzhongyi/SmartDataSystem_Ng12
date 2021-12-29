@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
@@ -16,6 +16,9 @@ export class ImageControlComponent implements OnInit {
 
   src: string = '';
 
+  @Output()
+  click: EventEmitter<Camera> = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {
@@ -26,5 +29,10 @@ export class ImageControlComponent implements OnInit {
 
   onError(event: Event) {
     (event.target as HTMLImageElement).src = MediumRequestService.default;
+  }
+
+  onClick(event: Event) {
+    this.click.emit(this.camera);
+    event.stopPropagation();
   }
 }

@@ -106,6 +106,13 @@ export class VideoModel {
     }
     return url;
   }
+
+  static fromUrl(url: string, username?: string, password?: string) {
+    let model = new VideoModel(url);
+    model.username = username;
+    model.password = password;
+    return model;
+  }
 }
 
 export enum PlayMode {

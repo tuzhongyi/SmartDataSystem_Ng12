@@ -36,8 +36,11 @@
     <ul class="ul">
       <ng-container *ngFor="let camera of cameras">
         <!-- [ngClass]="{'error': camera.CameraState>0}" -->
-        <li class="video" (click)="onCameraClicked(camera)">
-          <app-image-control [camera]="camera"></app-image-control>
+        <li class="video">
+          <app-image-control
+            [camera]="camera"
+            (click)="onCameraClicked($event)"
+          ></app-image-control>
         </li>
       </ng-container>
     </ul>

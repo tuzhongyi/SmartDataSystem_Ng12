@@ -11,6 +11,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { StoreService } from 'src/app/global/service/store.service';
 import { StatisticCardViewModel } from '../statistic-card/statistic-card.model';
+import { MapControlBusiness } from './business/map-control.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
 import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
@@ -23,6 +24,7 @@ import { WindowBussiness } from './business/window.business';
     WindowBussiness,
     MonitorEventTriggerBusiness,
     StatisticCardBussiness,
+    MapControlBusiness,
   ],
 })
 export class MonitorComponent implements OnInit {
@@ -37,6 +39,7 @@ export class MonitorComponent implements OnInit {
     private _storeService: StoreService,
     public window: WindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
+    public map: MapControlBusiness,
     private statisticCardBussiness: StatisticCardBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
@@ -57,8 +60,5 @@ export class MonitorComponent implements OnInit {
     promise.then((x) => {
       this.statisticCardList = x;
     });
-  }
-  clickMonitor() {
-    console.log('click monitor');
   }
 }

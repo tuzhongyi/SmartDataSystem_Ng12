@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
+import { StreamType } from 'src/app/enum/stream-type.enum';
 import { VideoUrl } from '../../model/url.model';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
 import { BaseRequestService } from '../base-request.service';
@@ -15,9 +16,24 @@ export class SRRequestService {
   }
   private basic: BaseRequestService;
 
-  preview(params: GetPreviewUrlParams) {
+  preview(cameraId: string, stream?: StreamType): Promise<VideoUrl>;
+  preview(params: GetPreviewUrlParams): Promise<VideoUrl>;
+
+  preview(
+    args: GetPreviewUrlParams | string,
+    stream: StreamType = StreamType.sub
+  ) {
     let url = SRServiceUrl.preview();
-    let data = classToPlain(params);
+    let data: any;
+    if (args instanceof GetPreviewUrlParams) {
+      data = classToPlain(args);
+    } else {
+      let params = new GetPreviewUrlParams();
+      params.CameraId = args;
+      params.StreamType = stream;
+      data = classToPlain(params);
+    }
+
     return this.basic.post(url, VideoUrl, data);
   }
 

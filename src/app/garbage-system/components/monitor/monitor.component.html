@@ -1,4 +1,4 @@
-<div class="monitor-container" (click)="clickMonitor()">
+<div class="monitor-container">
   <div class="monitor-header">
     <mat-toolbar>
       <app-account-info></app-account-info>
@@ -83,3 +83,5 @@
     <app-media-control [camera]="window.video.camera"></app-media-control>
   </ng-container>
 </app-window>
+
+<app-video-window [model]="map.videoModel"></app-video-window>

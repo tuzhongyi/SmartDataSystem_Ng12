@@ -1351,3 +1351,21 @@ body.login2 .login-wrapper img {
 .powder-red-text {
   color: #ef6464;
 }
+
+input[type="text"] {
+  min-height: 34px;
+  color: #cfd7ff;
+  border: 1px solid #5e6ebf;
+  font-size: 18px;
+  border-radius: unset;
+  background-color: #1d233b;
+}
+
+input[type="text"]:focus-visible {
+  outline: none;
+}
+
+input[type="text"]:focus {
+  background-color: #0d1f38;
+  border: 1px solid #3a93ff;
+}

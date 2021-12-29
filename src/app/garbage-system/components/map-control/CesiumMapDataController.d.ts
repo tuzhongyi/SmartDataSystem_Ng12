@@ -34,6 +34,23 @@ declare namespace CesiumDataController {
     Create: (villageId: string, pointId: string, point: Point) => boolean;
     Update: (villageId: string, pointId: string, point: Point) => boolean;
     Remove: (villageId: string, pointId: string) => boolean;
+
+    Asyn: AsynPointController;
+  }
+  class AsynPointController {
+    GetIds: (villageId: string, callback: (current: string[]) => void) => void;
+    List: (
+      villageId: string,
+      callback: (points: Dictionary<Point>) => void
+    ) => void;
+    Get: (
+      villageId: string,
+      pointId: string,
+      callback: (point: Point) => void
+    ) => void;
+    Create: (villageId: string, pointId: string, point: Point) => boolean;
+    Update: (villageId: string, pointId: string, point: Point) => boolean;
+    Remove: (villageId: string, pointId: string) => boolean;
   }
 
   namespace CallbackType {
@@ -53,61 +70,61 @@ declare namespace CesiumDataController {
   }
 
   enum ElementType {
-    Village = "village", //小区
-    Building = "building", //建筑物
-    Floor = "floor", //楼层
-    Entrance = "entrance", //出入口
-    Camera = "camera", //摄像机
-    Annunciator = "annunciator", //报警器
-    Sensor = "sensor", //传感器
-    ElevatorShaft = "elevatorShaft", //电梯井
-    Elevator = "elevator", //电梯
-    ParkingLot = "parkingLot", //停车场
-    MissionPoint = "missionPoint", //巡更点
-    Person = "person", //人
-    Vehicle = "vehicle", //车
-    Shape = "shape", //面结构,
-    Polyline = "polyline", //多线段
-    Ellipse = "ellipse", //圆球
-    WaterQuality = "waterQuality", //水质
-    DumpingCamera = "dumpingCamera", //垃圾倾倒检测
-    GarbageClassificationCamera = "garbageClassificationCamera", //垃圾分类
+    Village = 'village', //小区
+    Building = 'building', //建筑物
+    Floor = 'floor', //楼层
+    Entrance = 'entrance', //出入口
+    Camera = 'camera', //摄像机
+    Annunciator = 'annunciator', //报警器
+    Sensor = 'sensor', //传感器
+    ElevatorShaft = 'elevatorShaft', //电梯井
+    Elevator = 'elevator', //电梯
+    ParkingLot = 'parkingLot', //停车场
+    MissionPoint = 'missionPoint', //巡更点
+    Person = 'person', //人
+    Vehicle = 'vehicle', //车
+    Shape = 'shape', //面结构,
+    Polyline = 'polyline', //多线段
+    Ellipse = 'ellipse', //圆球
+    WaterQuality = 'waterQuality', //水质
+    DumpingCamera = 'dumpingCamera', //垃圾倾倒检测
+    GarbageClassificationCamera = 'garbageClassificationCamera', //垃圾分类
   }
 
   enum ShapeType {
-    Building = "building", //建筑物
-    Entrance = "entrance", //出入口
-    Stairway = "stairway", //楼梯
-    Elevator = "elevator", //电梯
-    Escalator = "escalator", //自动扶梯
-    ParkingLot = "parkingLot", //停车场
-    ParkingSpace = "parkingSpace", //停车位
-    Shop = "shop", //购物
-    Restaurant = "restaurant", //餐厅、饭店
-    Recreation = "recreation", //娱乐
-    Room = "room", //普通房间
-    SpecialRoom = "specialRoom", //专用房间（如：机房、配电间等）
-    Toilet = "toilet", //厕所
-    ServiceCenter = "serviceCenter", //服务中心
-    Office = "office", //办公室
-    Wall = "wall", //墙
-    Road = "road", //道路
-    Water = "water", //水池等
-    Grass = "grass", //绿化
-    Floor = "floor",
-    Other = "other", //其他
+    Building = 'building', //建筑物
+    Entrance = 'entrance', //出入口
+    Stairway = 'stairway', //楼梯
+    Elevator = 'elevator', //电梯
+    Escalator = 'escalator', //自动扶梯
+    ParkingLot = 'parkingLot', //停车场
+    ParkingSpace = 'parkingSpace', //停车位
+    Shop = 'shop', //购物
+    Restaurant = 'restaurant', //餐厅、饭店
+    Recreation = 'recreation', //娱乐
+    Room = 'room', //普通房间
+    SpecialRoom = 'specialRoom', //专用房间（如：机房、配电间等）
+    Toilet = 'toilet', //厕所
+    ServiceCenter = 'serviceCenter', //服务中心
+    Office = 'office', //办公室
+    Wall = 'wall', //墙
+    Road = 'road', //道路
+    Water = 'water', //水池等
+    Grass = 'grass', //绿化
+    Floor = 'floor',
+    Other = 'other', //其他
   }
 
   //模型类型
   enum ModelType {
-    Json = "json",
-    Glb = "glb",
-    Image = "img",
+    Json = 'json',
+    Glb = 'glb',
+    Image = 'img',
   }
   //报警等级
   enum AlarmColor {
-    red = "red",
-    orange = "orange",
+    red = 'red',
+    orange = 'orange',
   }
 
   enum ViewMode {
@@ -116,9 +133,9 @@ declare namespace CesiumDataController {
     birld = 2,
   }
   enum InnerElementType {
-    Point = "Point",
-    Polyline = "Polyline",
-    Ellipsoid = "Ellipsoid",
+    Point = 'Point',
+    Polyline = 'Polyline',
+    Ellipsoid = 'Ellipsoid',
   }
 
   /**
@@ -517,16 +534,16 @@ declare namespace CesiumDataController {
   }
 
   enum ImageResource {
-    arcProgress = "arc-progress",
+    arcProgress = 'arc-progress',
   }
 
   // 路径规划类型
   enum RoutingType {
     // 驾车
-    Driving = "driving",
+    Driving = 'driving',
     // 步行
-    Walking = "walking",
+    Walking = 'walking',
     // 骑行
-    Riding = "riding",
+    Riding = 'riding',
   }
 }
