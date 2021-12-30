@@ -1,3 +1,9 @@
 ﻿.datetimepicker .datetimepicker-hours .table-condensed .hour legend {
-    color:white;
+  color: white;
+}
+
+.datetimepicker {
+  position: absolute;
+  z-index: 10001;
+  display: none;
 }

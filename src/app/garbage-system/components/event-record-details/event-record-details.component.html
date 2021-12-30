@@ -16,10 +16,9 @@
           <label class="pull-left first">日期：</label>
           <input
             type="text"
-            #dtp
             DateTimePicker
             [format]="'yyyy-MM-dd'"
-            [value]="date"
+            [date]="date"
             (changeDate)="changeDate($event)"
             style="width: calc(100% - 82px)"
             class="custom form-control m-l-10"

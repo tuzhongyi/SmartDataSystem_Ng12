@@ -22,7 +22,7 @@ export class DateTimePickerDirective
 {
   private ele: HTMLInputElement;
   @Input('format') format = 'yyyy-mm-dd';
-  @Input('defaultVal') value: Date = new Date();
+  @Input('date') date: Date = new Date();
   // @Input('changeDate') changeDate: (val: any) => void;
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;
   @Input('minView') minView: DateTimePickerView = DateTimePickerView.month;
@@ -34,7 +34,8 @@ export class DateTimePickerDirective
     this.ele = e.nativeElement;
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.reInit(this.startView, this.minView, this.format, this.value);
+    // console.log(changes);
+    // this.reInit(this.startView, this.minView, this.format, this.value);
   }
   ngOnDestroy(): void {
     $(this.ele).datetimepicker('remove');
@@ -44,38 +45,33 @@ export class DateTimePickerDirective
     $(this.ele).datetimepicker('update');
   }
   ngAfterContentInit() {
-    let test = $(this.ele);
-    console.log(test);
-    $(this.ele)
-      .datetimepicker({
-        format: this.format,
-        weekStart: 1,
-        autoclose: true,
-        startView: this.startView,
-        minView: this.minView,
-        forceParse: false,
-        language: 'zh-CN',
-        initialDate: this.value,
-      })
-      .on('changeDate', (ev: { date?: Date }) => {
-        this.changeDate.emit(ev.date);
-      })
-      .on('show', (ev: any) => {
-        const dayDom = $('.datetimepicker-days');
-        dayDom.find('.week-tr').removeClass('week-tr');
-      });
-    $(this.ele).val(
-      this.value instanceof Date
-        ? formatDate(this.value, this.format, 'en')
-        : this.value
-    );
+    // $(this.ele)
+    //   .datetimepicker({
+    //     format: this.format,
+    //     weekStart: 1,
+    //     autoclose: true,
+    //     startView: this.startView,
+    //     minView: this.minView,
+    //     forceParse: false,
+    //     language: 'zh-CN',
+    //     initialDate: this.value,
+    //   })
+    //   .on('changeDate', (ev: { date?: Date }) => {
+    //     this.changeDate.emit(ev.date);
+    //   })
+    //   .on('show', (ev: any) => {
+    //     const dayDom = $('.datetimepicker-days');
+    //     dayDom.find('.week-tr').removeClass('week-tr');
+    //   });
+    // $(this.ele).val(formatDate(this.value, this.format, 'en'));
+    this.reInit(this.startView, this.minView, this.format, this.date);
   }
 
   reInit(
     startView: number,
     minView: number,
     format: string,
-    defaultVal: Date,
+    value: Date,
     week?: boolean
   ) {
     $(this.ele).val('');
@@ -92,7 +88,7 @@ export class DateTimePickerDirective
           minView: minView,
           language: 'zh-CN',
           forceParse: false,
-          initialDate: defaultVal,
+          initialDate: formatDate(value, format, 'en'),
         })
         .on('changeDate', (ev: { date: Date }) => {
           this.changeDate.emit(ev.date);
@@ -127,7 +123,7 @@ export class DateTimePickerDirective
             });
           });
         });
-      const week_ = OneWeekDate(new Date(defaultVal));
+      const week_ = OneWeekDate(new Date(value));
       $(this.ele).val(
         `${formatDate(week_.monday, 'yyyy年MM月dd日', 'en')} 至 ${formatDate(
           week_.sunday,
@@ -145,20 +141,16 @@ export class DateTimePickerDirective
           minView: minView,
           language: 'zh-CN',
           forceParse: false,
-          initialDate: defaultVal,
+          initialDate: formatDate(value, format, 'en'),
         })
         .on('changeDate', (ev: { date: Date | undefined }) => {
-          if (this.changeDate) this.changeDate.emit(ev.date);
+          this.changeDate.emit(ev.date);
         })
         .on('show', (ev: any) => {
           const dayDom = $('.datetimepicker-days');
           dayDom.find('.week-tr').removeClass('week-tr');
         });
-      $(this.ele).val(
-        this.value instanceof Date
-          ? formatDate(this.value, this.format, 'en')
-          : this.value
-      );
+      $(this.ele).val(formatDate(value, this.format, 'en'));
     }
   }
 }

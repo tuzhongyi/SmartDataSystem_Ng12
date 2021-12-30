@@ -1649,8 +1649,8 @@
           yyyy: date.getUTCFullYear(),
           // month
           m: date.getUTCMonth() + 1,
-          M: dates[language].monthsShort[date.getUTCMonth()],
-          MM: dates[language].months[date.getUTCMonth()],
+          M: date.getUTCMonth() + 1,//dates[language].monthsShort[date.getUTCMonth()],
+          MM: (date.getUTCMonth() + 1) < 10 ? "0" + (date.getUTCMonth() + 1) : (date.getUTCMonth() + 1),//dates[language].months[date.getUTCMonth()],
           // day
           d: date.getUTCDate(),
           D: dates[language].daysShort[date.getUTCDay()],
