@@ -1,6 +1,7 @@
 .paginator-outer-container {
   display: flex;
   color: #cfd7ff;
+  font-size: 14px;
   .paginator-container {
     display: flex;
     align-items: center;
@@ -13,12 +14,36 @@
       display: flex;
       align-items: baseline;
       margin-right: 8px;
+      .mat-select {
+        width: 60px;
+        background-color: #fff;
+        margin-left: 5px;
+        .mat-select-trigger {
+          .mat-select-value {
+            // color: #cfd7ff;
+          }
+        }
+      }
     }
     .paginator-range-actions {
       display: flex;
       align-items: center;
       .paginator-range-label {
-        margin: 0 32px 0 24px;
+        margin: 0 32px 0 10px;
+        display: flex;
+        .label-item {
+          margin: 0 5px;
+          &:first-child {
+            margin-left: 0;
+          }
+          &:last-child {
+            margin-right: 0;
+          }
+        }
+        .count {
+        }
+        .total {
+        }
       }
       .mat-button {
         background: #1f2e57;
@@ -39,8 +64,14 @@
         }
 
         &.mat-button-disabled {
-          color: currentColor;
           cursor: not-allowed;
+
+          span {
+            color: gray;
+          }
+          svg {
+            fill: gray;
+          }
         }
       }
     }

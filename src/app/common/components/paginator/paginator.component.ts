@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2021-12-30 15:27:11
+ * @Last Modified by: pmx
+ * @Last Modified time: 2021-12-30 15:51:51
+ */
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -7,6 +13,7 @@ import {
   Optional,
   ViewEncapsulation,
 } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
 import {
   MatPaginatorDefaultOptions,
   MAT_PAGINATOR_DEFAULT_OPTIONS,
@@ -21,18 +28,24 @@ import { PaginatorIntl } from './paginator-intl';
   host: { class: 'paginator' },
   providers: [PaginatorIntl],
   exportAs: 'paginator',
-  // changeDetection: ChangeDetectionStrategy.OnPush,
-  // encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
 })
-export class PaginatorComponent {
+export class PaginatorComponent extends _MatPaginatorBase<MatPaginatorDefaultOptions> {
+  color: ThemePalette = 'primary';
+  count: number = 0;
   constructor(
-    intl: PaginatorIntl,
+    public intl: PaginatorIntl,
     changeDetectorRef: ChangeDetectorRef,
     @Optional()
     @Inject(MAT_PAGINATOR_DEFAULT_OPTIONS)
     defaults?: MatPaginatorDefaultOptions
   ) {
-    console.log(intl instanceof PaginatorIntl);
-    // super(intl, changeDetectorRef, defaults);
+    super(intl, changeDetectorRef, defaults);
   }
+  // override ngOnInit(): void {
+  //   super.ngOnInit();
+  //   console.log('on init');
+  //   console.log(this._intl);
+  // }
 }
