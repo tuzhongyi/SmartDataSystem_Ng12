@@ -22,9 +22,21 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    height: 42px;
+    height: 50px;
     overflow: hidden;
     border-top: 1px solid #7586e0;
+    padding: 0 20px;
+    box-sizing: border-box;
+    .footer-item {
+      display: flex;
+      align-items: center;
+
+      .select-hint {
+        margin-right: 10px;
+        font-size: 14px;
+        color: #cfd7ff;
+      }
+    }
   }
 }
 
@@ -51,7 +63,6 @@
   padding-right: 5px;
 }
 
-// :not(.high-light)
 ::ng-deep .mat-table .mat-row .mat-cell span.operate i:hover {
   color: #fff;
 }

@@ -22,11 +22,7 @@ import { TableComponent } from 'src/app/common/components/table/table.component'
 export class IllegalDropRecordComponent implements OnInit {
   /**private */
   private _pageIndex = 1;
-  private _pageSize = 9;
   private _pagedList: PagedList<IllegalDropRecordModel> = new PagedList();
-
-  // 当前表格选中状态
-  private _tableSelectState: TableSelectStateEnum = TableSelectStateEnum.Cancel;
 
   /**public */
   show = false;
@@ -34,6 +30,8 @@ export class IllegalDropRecordComponent implements OnInit {
   columns: TableColumnModel[] = [...columns];
   displayedColumns: string[] = this.columns.map((column) => column.columnDef);
   tableSelectModel = SelectEnum.Multiple;
+
+  selectedRows: IllegalDropRecordModel[] = [];
 
   @ViewChild(TableComponent) table?: TableComponent;
 
@@ -63,6 +61,7 @@ export class IllegalDropRecordComponent implements OnInit {
   }
   selectTableRow(row: IllegalDropRecordModel[]) {
     console.log('row', row);
+    this.selectedRows = row;
   }
   selectTableCell({ column, event }: TableCellEvent) {
     if (column.columnDef == 'ImageUrl' || column.columnDef == 'Operation') {

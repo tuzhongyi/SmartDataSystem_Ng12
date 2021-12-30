@@ -12,7 +12,14 @@
             (selectTableCell)="selectTableCell($event)"></app-table>
     </div>
     <div class='illegal-drop-footer'>
-        <app-table-select (tableSelectEvent)="tableSelect($event)"></app-table-select>
-        <app-paginator></app-paginator>
+        <div class="footer-item">
+            <app-table-select (tableSelectEvent)="tableSelect($event)"></app-table-select>
+        </div>
+        <div class="footer-item">
+            <div class="select-hint">
+                已选择: {{selectedRows.length}}
+            </div>
+            <app-paginator></app-paginator>
+        </div>
     </div>
 </div>

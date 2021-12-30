@@ -42,7 +42,7 @@ export class TableComponent implements OnInit {
   constructor(public sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    console.log(this.selectModel);
+    // console.log(this.selectModel);
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<TableCellModel>();
     } else {
