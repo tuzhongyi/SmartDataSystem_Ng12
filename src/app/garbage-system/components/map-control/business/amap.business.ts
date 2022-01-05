@@ -17,6 +17,9 @@ export class AMapBusiness {
   ) {
     this.storeService.interval.subscribe((x) => {
       this.init();
+      if (this.labelVisibility) {
+        this.setLabelVisibility(true);
+      }
     });
   }
 
@@ -24,21 +27,6 @@ export class AMapBusiness {
   private mapController?: CesiumDataController.Controller;
 
   labelVisibility = false;
-  set LabelVisibility(val: boolean) {
-    this.labelVisibility = val;
-    if (this.mapClient) {
-      if (val) {
-        this.mapClient.Label.Show();
-        this.setLabel(this.source.all);
-      } else {
-        this.mapClient.Label.Hide();
-        this.StationVisibilityByLabel = true;
-      }
-    }
-  }
-  get LabelVisibility() {
-    return this.labelVisibility;
-  }
 
   // 当显示垃圾落地时长的时候，是否显示其他厢房
   private stationVisibilityByLabel = true;
@@ -81,23 +69,16 @@ export class AMapBusiness {
       this.source.all = x;
       this.setPointStatus(this.source.all);
     });
-
-    if (this.LabelVisibility) {
-      this.setLabel(this.source.all).then(() => {
-        this.StationVisibilityByLabel = this.StationVisibilityByLabel;
-        setTimeout(() => {
-          this.StationVisibilityByLabel = this.StationVisibilityByLabel;
-        }, 4 * 1000);
-      });
-    }
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
     this.mapClient = new CesiumMapClient(iframe);
-    let start = new Date();
     this.mapClient.Events.OnLoaded = async () => {
       this.init();
       this.mapController = this.mapClient!.DataController;
+      this.mapController.Point.Asyn.List(this.storeService.divisionId, (x) => {
+        console.log(x);
+      });
       this.mapClient!.Events.OnElementsDoubleClicked = (elements) => {
         if (elements && elements.length > 0) {
           this.onPointDoubleClicked(
@@ -110,9 +91,9 @@ export class AMapBusiness {
       };
 
       this.loadDivision(this.storeService.divisionId);
+
+      this.setContentMenu();
     };
-    let end = new Date();
-    console.log(new Date(end.getTime() - start.getTime()));
   }
 
   loadDivision(divisionId: string) {
@@ -241,6 +222,112 @@ export class AMapBusiness {
         }
       }
     }
+  }
+
+  setPointVisibility(value: boolean) {
+    this.source.all.forEach((x) => {
+      if (this.source.labels[x.Id]) return;
+      this.mapClient!.Point.SetVisibility(x.Id, value);
+    });
+  }
+
+  setLabelVisibility(value: boolean) {
+    this.labelVisibility = value;
+    if (this.mapClient) {
+      if (value) {
+        this.mapClient.Label.Show();
+        this.setLabel(this.source.all);
+      } else {
+        this.mapClient.Label.Hide();
+      }
+    }
+  }
+
+  menuEvents = {
+    illegalDropClicked: new EventEmitter(),
+    mixedIntoClicked: new EventEmitter(),
+    garbageCountClicked: new EventEmitter(),
+    stationInformationClicked: new EventEmitter(),
+  };
+
+  setContentMenu() {
+    if (!this.mapClient) return;
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="howell-icon-nolittering" style="font-size: 18px"></i> ${Language.json.EventType.IllegalDrop}${Language.json.record}`,
+      async (id: string) => {
+        this.onMapClicked();
+
+        let station = this.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.stationService.cache.get(id);
+          this.source.all.push(station);
+        }
+        this.menuEvents.illegalDropClicked.emit(station);
+      },
+      0
+    );
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="howell-icon-mixlittering" style="font-size: 18px"></i> ${Language.json.EventType.MixedInto}${Language.json.record}`,
+      async (id: string) => {
+        this.onMapClicked();
+
+        let station = this.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.stationService.cache.get(id);
+          this.source.all.push(station);
+        }
+        this.menuEvents.mixedIntoClicked.emit(station);
+      },
+      1
+    );
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="howell-icon-garbagebags" style="font-size: 18px"></i> ${Language.json.small}${Language.json.garbage}${Language.json.stay}`,
+      async (id: string) => {
+        this.onMapClicked();
+
+        let station = this.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.stationService.cache.get(id);
+          this.source.all.push(station);
+        }
+        this.menuEvents.garbageCountClicked.emit(station);
+      },
+      2
+    );
+
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="howell-icon-Subsystem" style="font-size: 18px"></i> ${Language.json.station}${Language.json.info}`,
+      async (id: string) => {
+        this.onMapClicked();
+        const status = document.getElementsByClassName(
+          'map-bar status'
+        )[0] as HTMLElement;
+        if (status) {
+          status['style'].display = 'none';
+        }
+        let station = this.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.stationService.cache.get(id);
+          this.source.all.push(station);
+        }
+        this.menuEvents.stationInformationClicked.emit(station);
+      },
+      3
+    );
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="howell-icon-video" style="font-size: 18px"></i> ${Language.json.station}${Language.json.video}`,
+      async (id: string) => {
+        let station = this.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.stationService.cache.get(id);
+          this.source.all.push(station);
+        }
+        this.pointDoubleClicked.emit(station);
+      },
+      4
+    );
+
+    this.mapClient.ContextMenu.Enable();
   }
 }
 

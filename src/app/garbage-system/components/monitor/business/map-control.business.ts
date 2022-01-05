@@ -17,4 +17,10 @@ export class MapControlBusiness {
       this.videoModel = VideoModel.fromUrl(url.Url, url.Username, url.Password);
     }
   }
+
+  showPatrol = true;
+
+  async patrol() {
+    this.showPatrol = true;
+  }
 }

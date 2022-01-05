@@ -38,6 +38,7 @@ import { classToPlain } from 'class-transformer';
 export class DivisionRequestService extends AbstractService<Division> {
   constructor(_http: HowellAuthHttpService) {
     super();
+    console.log('DivisionRequestService');
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Division);
   }

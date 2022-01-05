@@ -14,13 +14,16 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { AMapBusiness } from './amap.business';
+import { VisibilityModel } from 'src/app/view-model/visibility.model';
+import { AMapBusiness } from './business/amap.business';
+import { MapListPanelBusiness } from './business/map-list-panel.business';
+import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
   templateUrl: './map-control.component.html',
   styleUrls: ['./map-control.component.less'],
-  providers: [AMapBusiness],
+  providers: [AMapBusiness, MapListPanelBusiness, PointInfoPanelBusiness],
 })
 export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region ViewChild
@@ -65,6 +68,10 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region Output
   @Output()
   VideoPlay: EventEmitter<Camera> = new EventEmitter();
+
+  @Output()
+  patrol: EventEmitter<void> = new EventEmitter();
+
   //#endregion
 
   elementInit() {
@@ -109,7 +116,9 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
-    private amap: AMapBusiness
+    private amap: AMapBusiness,
+    public panel: MapListPanelBusiness,
+    public info: PointInfoPanelBusiness
   ) {}
   ngAfterViewInit(): void {}
 
@@ -127,13 +136,21 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#endregion
 
   ngOnInit(): void {
+    this.panel.init();
+
     let src = this.amap.getSrc();
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
     this.amap.pointDoubleClicked.subscribe((x) => {
       this.onPointDoubleClicked(x);
+      this.info.station = undefined;
     });
     this.amap.mapClicked.subscribe(() => {
       this.onMapClicked();
+      this.info.station = undefined;
+    });
+    this.amap.menuEvents.stationInformationClicked.subscribe((x) => {
+      this.info.station = x;
+      this.display.status = false;
     });
   }
   ngOnDestroy(): void {
@@ -142,11 +159,20 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  display = {
-    status: true,
-    videoList: false,
-    videoControl: false,
+  onLabelDisplay = (value: boolean) => {
+    if (!value) {
+      this.display.label.station.state = true;
+    }
+    this.amap.setLabelVisibility(value);
   };
+  onLabelStationDisplay = (value: boolean) => {
+    this.amap.setPointVisibility(value);
+  };
+
+  display: MapControlDisplay = new MapControlDisplay({
+    current: this.onLabelDisplay,
+    station: this.onLabelStationDisplay,
+  });
 
   pointCount = 0;
 
@@ -178,5 +204,51 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     this.VideoPlay.emit(camera);
   }
 
-  setPointStatus() {}
+  Button1Clicked() {
+    this.patrol.emit();
+  }
+  Button2Clicked() {}
+  Button3Clicked() {
+    this.display.label.current = !this.display.label.current;
+  }
+  Button4Clicked() {
+    this.display.label.station.state = !this.display.label.station.state;
+  }
+}
+
+class MapControlDisplay {
+  constructor(
+    private events: {
+      current: (state: boolean) => void;
+      station: (state: boolean) => void;
+    }
+  ) {}
+  status = true;
+  videoList = false;
+  videoControl = false;
+  label: MapControlLabelDisplay = new MapControlLabelDisplay(this.events);
+}
+
+class MapControlLabelDisplay {
+  constructor(
+    private events: {
+      current: (state: boolean) => void;
+      station: (state: boolean) => void;
+    }
+  ) {
+    this.station.onChange.subscribe((x) => {
+      events.station(x);
+    });
+  }
+
+  private _current: boolean = false;
+  public get current(): boolean {
+    return this._current;
+  }
+  public set current(v: boolean) {
+    this._current = v;
+    this.events.current(this._current);
+  }
+
+  station: VisibilityModel = new VisibilityModel(true);
 }

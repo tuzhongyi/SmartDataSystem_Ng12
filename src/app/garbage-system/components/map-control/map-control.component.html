@@ -51,3 +51,71 @@
     </a>
   </div>
 </div>
+
+<app-map-list-panel
+  class="map-bar list-panel"
+  [dataSource]="panel.datasource"
+  (OnItemClicked)="panel.onItemCliced($event)"
+  (OnSearching)="panel.onSearch($event)"
+></app-map-list-panel>
+
+<div class="map-bar btn-list">
+  <div
+    class="btn hw-link-tooltip"
+    (click)="Button1Clicked()"
+    title="投放点巡检"
+  >
+    <div class="inner">
+      <i class="howell-icon-refresh"></i>
+    </div>
+  </div>
+  <div class="btn" (click)="Button2Clicked()" style="display: none">
+    <div class="inner" style="line-height: 26px">vs</div>
+  </div>
+  <div
+    class="btn"
+    (click)="Button3Clicked()"
+    [ngStyle]="{
+      'background-color': display.label.current ? '#2bcf38' : '#2d76ce'
+    }"
+    title="小包垃圾滞留时长"
+  >
+    <div class="inner">
+      <i class="howell-icon-garbagebags"></i>
+      <!-- <i [ngClass]="LabelVisibility ? 'howell-icon-residual': 'howell-icon-recyclable'"></i> -->
+      <!-- <i *ngIf="!LabelVisibility" class="howell-icon-zoomout"></i>       -->
+    </div>
+  </div>
+  <div
+    class="btn"
+    (click)="Button4Clicked()"
+    *ngIf="display.label.current"
+    title="未有垃圾滞留投放点显示/隐藏"
+    [ngStyle]="{
+      'background-color': display.label.station.state ? '#2bcf38' : '#2d76ce'
+    }"
+  >
+    <div class="inner" style="line-height: 26px">
+      <i class="howell-icon-garbage" style="line-height: 30px"></i>
+    </div>
+  </div>
+</div>
+
+<!-- 
+  [dataSource]="this.childrenOfList"
+  (OnVisibilityChanged)="OnPanelVisibilityChanged($event)"
+  (OnItemClicked)="OnPanelItemClicked($event)"
+  (OnItemDoubleClicked)="OnPanelItemDoubleClicked($event)"
+  (OnItemHover)="OnPanelItemHover($event)"
+  (OnSearching)="OnSearching($event)" -->
+
+<app-point-info-panel
+  class="map-bar info-panel"
+  *ngIf="info.station"
+  [GarbageStation]="info.station"
+></app-point-info-panel>
+
+<!-- (StateClickedEvent)="onPanelStateClicked($event)"
+(GarbageCountClickedEvent)="onPanelGarbageCountClicked($event)"
+(IllegalDropClickedEvent)="onPanelIllegalDropClicked($event)"
+(MixedIntoClickedEvent)="onPanelMixedIntoClicked($event)" -->

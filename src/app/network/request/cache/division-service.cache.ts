@@ -12,9 +12,8 @@ export class DivisionServiceCache extends ServiceCache<Division> {
 
   async list(args?: GetDivisionsParams): Promise<PagedList<Division>> {
     return new Promise((reject) => {
-      this.wait(() => {
+      this.wait((datas: Division[]) => {
         let paged: PagedList<Division>;
-        let datas = this.load();
         if (args) {
           if (args.ParentId) {
             datas = datas.filter((x) => x.ParentId === args.ParentId);
