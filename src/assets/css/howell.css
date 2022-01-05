@@ -1353,7 +1353,6 @@ body.login2 .login-wrapper img {
 }
 
 input[type="text"] {
-  min-height: 34px;
   color: #cfd7ff;
   border: 1px solid #5e6ebf;
   font-size: 18px;

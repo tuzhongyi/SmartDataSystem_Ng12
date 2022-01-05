@@ -1,0 +1,15 @@
+<div class="search-wrap">
+  <input
+    type="text"
+    #input
+    [placeholder]="placeholder"
+    class="custom form-control"
+    (focus)="focus($event)"
+    [(ngModel)]="searctText"
+  />
+  <!-- [formControl]="searchInput" -->
+  <!-- [(ngModel)]="searctText" -->
+  <button type="button" #searchBtn>
+    <i class="mdi mdi-magnify"></i>
+  </button>
+</div>

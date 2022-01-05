@@ -38,11 +38,13 @@
 .map-bar.status {
   line-height: 16px;
 
-  float: left;
+
   list-style: none;
   position: absolute;
   bottom: 10px;
-  right: -79px;
+  right: 50px;
+  width: 50px;
+  padding: 0;
 }
 
 .map-bar.status li {
@@ -222,15 +224,16 @@
 
 .map-bar.list-panel {
   position: absolute;
-  bottom: 8px;
-  left: 0px;
+  bottom: 20px;
+  left: 10px;
 }
 
 .map-bar.btn-list {
   position: absolute;
-  bottom: 8px;
-  left: 42px;
+  bottom: 20px;
+  left: 52px;
   z-index: 0;
+  display: flex;
 }
 
 .map-bar.btn-list .btn {
@@ -238,8 +241,8 @@
   margin-right: 6px;
   bottom: 0px;
   left: 0px;
-  width: 36px;
-  height: 32px;
+  width: 32px;
+  height: 28px;
   background-color: #2d76ce;
   cursor: pointer;
   clip-path: polygon(25% 0%,
@@ -248,7 +251,7 @@
       75% 100%,
       25% 100%,
       0% 50%);
-  padding: 1px;
+  padding: 2px;
 
 }
 
@@ -263,10 +266,12 @@
       25% 100%,
       0% 50%);
   color: white;
-  line-height: 28px;
+  line-height: 27px;
   opacity: 0.8;
   font-size: 18px;
-
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .map-bar.btn-list .btn:hover .inner {
@@ -300,4 +305,13 @@
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
+}
+
+
+
+.map-bar.info-panel {
+  right: 10px;
+  bottom: 10px;
+  position: absolute;
+  z-index: 1;
 }

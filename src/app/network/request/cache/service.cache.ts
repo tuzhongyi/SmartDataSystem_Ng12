@@ -18,14 +18,16 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     init = true
   ) {
     this.cache = new AppCache(timeout);
-    this.save([]);
-    if (init) this.all();
+    if (init) {
+      this.all();
+    }
   }
 
-  protected wait(reject: () => void, timeout = 100) {
+  protected wait(reject: (t: T[]) => void, timeout = 100) {
     setTimeout(() => {
       if (this.loaded) {
-        reject();
+        let data = this.load();
+        reject(data);
       } else {
         this.wait(reject, timeout);
       }
@@ -33,12 +35,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   }
 
   load() {
-    try {
-      return this.cache.get(this.key) as T[];
-    } catch (error) {
-      this.save([]);
-      return new Array<T>();
-    }
+    return this.cache.get(this.key) as T[];
   }
   save(data: T[]) {
     this.cache.set(this.key, data);
@@ -98,23 +95,32 @@ export class ServiceCache<T extends IData> implements IServiceCache {
       return datas;
     }
     return this.service.list!().then((x) => {
-      this.cache.set(this.key, x.Data);
-      this.loaded = true;
-      return x.Data;
+      try {
+        this.save(x.Data);
+        return x.Data;
+      } finally {
+        this.loaded = true;
+      }
     });
   }
 
   async get(id: string): Promise<T> {
-    let data = this.load();
-    let result = data.find((x) => x.Id === id);
-    if (result) {
-      return result;
-    }
-    return this.service.get!(id).then((x) => {
-      let datas = this.load();
-      datas.push(x);
-      this.save(datas);
-      return x;
+    return new Promise((reject) => {
+      this.wait((data) => {
+        let result = data.find((x) => x.Id === id);
+        if (result) {
+          reject(result);
+        }
+        this.service.get(id).then((x) => {
+          let datas = this.load();
+          let index = datas.findIndex((x) => x.Id == id);
+          if (index < 0) {
+            datas.push(x);
+            this.save(datas);
+          }
+          reject(x);
+        });
+      });
     });
   }
 

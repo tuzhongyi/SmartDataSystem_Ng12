@@ -1,0 +1,30 @@
+<div class="panel" *ngIf="visibility">
+  <div class="background">
+    <div class="inner">
+      <div class="data-list">
+        <ng-container *ngFor="let item of dataSource">
+          <div
+            class="item"
+            [title]="item.Name"
+            (mouseover)="itemHover(item)"
+            (click)="itemClick(item)"
+            (dblclick)="itemDoubleClick(item)"
+          >
+            {{ item.Name }}
+          </div>
+        </ng-container>
+      </div>
+      <div class="search">
+        <app-input-search
+          (search)="search($event)"
+          [placeholder]="'投放点名称'"
+        ></app-input-search>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="btn" (click)="ButtonClick()" title="区域菜单栏">
+  <div class="inner">
+    <i class="howell-icon-ul"></i>
+  </div>
+</div>

@@ -12,11 +12,17 @@ import { CUSTOM_PIPES } from './pipes';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { CUSTOM_DIRECTIVES } from './directives';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
   exports: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
-  imports: [CommonModule, MaterialModule, AngularResizeEventModule],
+  imports: [
+    CommonModule,
+    MaterialModule,
+    AngularResizeEventModule,
+    FormsModule,
+  ],
   providers: [],
 })
 export class HowellModule {}

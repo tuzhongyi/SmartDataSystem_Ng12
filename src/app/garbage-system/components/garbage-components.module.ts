@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
- * @Last Modified by: pmx
- * @Last Modified time: 2021-11-09 09:47:19
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-01-05 14:55:30
  */
 
 import { NgModule } from '@angular/core';
@@ -23,6 +23,9 @@ import { EventRecordDetailsComponent } from './event-record-details/event-record
 import { MediaControlComponent } from './media-control/media-control.component';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { MapControlComponent } from './map-control/map-control.component';
+import { MapListPanelComponent } from './map-control/map-list-panel/map-list-panel.component';
+import { PointInfoPanelComponent } from './map-control/point-info-panel/point-info-panel.component';
+import { PatrolControlComponent } from './patrol-control/patrol-control.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +42,9 @@ import { MapControlComponent } from './map-control/map-control.component';
     MediaControlComponent,
     StatisticCardComponent,
     MapControlComponent,
+    MapListPanelComponent,
+    PointInfoPanelComponent,
+    PatrolControlComponent,
   ],
   imports: [
     CommonModule,

@@ -12,7 +12,7 @@ import {
 import { formatDate } from '@angular/common';
 import { OneWeekDate } from '../tools/tool';
 
-import $ from 'jquery';
+declare let $: any;
 
 @Directive({
   selector: '[DateTimePicker]',
