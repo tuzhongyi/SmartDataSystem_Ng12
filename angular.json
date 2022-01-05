@@ -107,6 +107,7 @@
               "browserTarget": "smart:build:production"
             },
             "development": {
+              "host": "127.0.0.1",
               "browserTarget": "smart:build:development",
               "port": 9527,
               "open": true

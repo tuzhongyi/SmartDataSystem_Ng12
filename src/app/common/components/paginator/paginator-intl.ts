@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 
-// @Injectable()
+@Injectable()
 export class PaginatorIntl extends MatPaginatorIntl {
   itemsPerPageLabel: string = '每页:';
 
@@ -12,15 +12,9 @@ export class PaginatorIntl extends MatPaginatorIntl {
   firstPageLabel: string = '第一页';
 
   lastPageLabel: string = '最后一页';
+  name: string = 'pmx';
 
-  getCountLabel: (count: number, length: number) => string = (
-    count: number,
-    length: number
-  ) => {
-    return `当前数量:${count} 总数量:${length}`;
-  };
   constructor() {
     super();
-    console.log('hello');
   }
 }

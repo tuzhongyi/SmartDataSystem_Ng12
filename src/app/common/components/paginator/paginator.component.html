@@ -1,47 +1,49 @@
-<!-- <div class="paginator-outer-container">
+<div class="paginator-outer-container">
     <div class="paginator-container">
         <div class="paginator-page-size" *ngIf="!hidePageSize">
             <div class="paginator-page-size-label">
-                {{_intl.itemsPerPageLabel}}
+                {{intl.itemsPerPageLabel}}
             </div>
 
-            <mat-form-field *ngIf="_displayedPageSizeOptions.length > 1" [color]="color"
-                class="paginator-page-size-select">
-                <mat-select [value]="pageSize" [disabled]="disabled" [aria-label]="_intl.itemsPerPageLabel"
-                    (selectionChange)="_changePageSize($event.value)">
-                    <mat-option *ngFor="let pageSizeOption of _displayedPageSizeOptions" [value]="pageSizeOption">
-                        {{pageSizeOption}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+
+            <mat-select *ngIf="_displayedPageSizeOptions.length > 1" [value]="pageSize" [disabled]="disabled"
+                [aria-label]="intl.itemsPerPageLabel" (selectionChange)="_changePageSize($event.value)">
+                <mat-option *ngFor="let pageSizeOption of _displayedPageSizeOptions" [value]="pageSizeOption">
+                    {{pageSizeOption}}
+                </mat-option>
+            </mat-select>
 
             <div class="paginator-page-size-value" *ngIf="_displayedPageSizeOptions.length <= 1">{{pageSize}}</div>
         </div>
 
         <div class="paginator-range-actions">
             <div class="paginator-range-label">
-                {{_intl.getRangeLabel(pageIndex, pageSize, length)}}
+                <div class="label-item count">当前数量:{{count}}</div>
+                <div class="label-item total">总数量:{{length}}</div>
+                <div class='label-item'>
+                    {{intl.getRangeLabel(pageIndex, pageSize, length)}}
+                </div>
             </div>
 
             <button mat-button type="button" class="paginator-navigation-first" (click)="firstPage()"
-                [matTooltip]="_intl.firstPageLabel" [matTooltipDisabled]="_previousButtonsDisabled()"
+                [matTooltip]="intl.firstPageLabel" [matTooltipDisabled]="_previousButtonsDisabled()"
                 [matTooltipPosition]="'above'" [disabled]="_previousButtonsDisabled()" *ngIf="showFirstLastButtons">
                 <svg class="paginator-icon" viewBox="0 0 30 30" focusable="false">
                     <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
                 </svg>
             </button>
             <button mat-button type="button" class="paginator-navigation-previous" (click)="previousPage()"
-                [matTooltip]="_intl.previousPageLabel" [matTooltipDisabled]="_previousButtonsDisabled()"
+                [matTooltip]="intl.previousPageLabel" [matTooltipDisabled]="_previousButtonsDisabled()"
                 [matTooltipPosition]="'above'" [disabled]="_previousButtonsDisabled()">
                 <mat-icon>chevron_left</mat-icon>
             </button>
             <button mat-button type="button" class="paginator-navigation-next" (click)="nextPage()"
-                [matTooltip]="_intl.nextPageLabel" [matTooltipDisabled]="_nextButtonsDisabled()"
+                [matTooltip]="intl.nextPageLabel" [matTooltipDisabled]="_nextButtonsDisabled()"
                 [matTooltipPosition]="'above'" [disabled]="_nextButtonsDisabled()">
                 <mat-icon>chevron_right</mat-icon>
             </button>
             <button mat-button type="button" class="paginator-navigation-last" (click)="lastPage()"
-                [matTooltip]="_intl.lastPageLabel" [matTooltipDisabled]="_nextButtonsDisabled()"
+                [matTooltip]="intl.lastPageLabel" [matTooltipDisabled]="_nextButtonsDisabled()"
                 [matTooltipPosition]="'above'" [disabled]="_nextButtonsDisabled()" *ngIf="showFirstLastButtons">
                 <svg class="paginator-icon" viewBox="0 0 30 30" focusable="false">
                     <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
@@ -49,4 +51,4 @@
             </button>
         </div>
     </div>
-</div> -->
+</div>
