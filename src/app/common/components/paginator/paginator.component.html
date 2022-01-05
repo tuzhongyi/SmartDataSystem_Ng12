@@ -16,9 +16,9 @@
             <div class="paginator-page-size-value" *ngIf="_displayedPageSizeOptions.length <= 1">{{pageSize}}</div>
         </div>
 
-        <div class="paginator-range-actions">
+        <div class="paginator-range-actions" #actionContainer>
             <div class="paginator-range-label">
-                <div class="label-item count">当前数量:{{count}}</div>
+                <div class="label-item count">当前数量:{{currentCount}}</div>
                 <div class="label-item total">总数量:{{length}}</div>
                 <div class='label-item'>
                     {{intl.getRangeLabel(pageIndex, pageSize, length)}}
@@ -37,7 +37,12 @@
                 [matTooltipPosition]="'above'" [disabled]="_previousButtonsDisabled()">
                 <mat-icon>chevron_left</mat-icon>
             </button>
-            <button mat-button type="button" class="paginator-navigation-next" (click)="nextPage()"
+
+            <button mat-button type="button">1</button>
+            <button mat-button type="button">2</button>
+
+            <ng-container #buttonContainer></ng-container>
+            <button mat-button type="button" class="paginator-navigation-next" #nextPageNode (click)="nextPage()"
                 [matTooltip]="intl.nextPageLabel" [matTooltipDisabled]="_nextButtonsDisabled()"
                 [matTooltipPosition]="'above'" [disabled]="_nextButtonsDisabled()">
                 <mat-icon>chevron_right</mat-icon>

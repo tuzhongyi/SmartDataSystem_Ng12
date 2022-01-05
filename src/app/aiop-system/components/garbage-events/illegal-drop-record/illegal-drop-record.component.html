@@ -19,7 +19,7 @@
             <div class="select-hint">
                 已选择: {{selectedRows.length}}
             </div>
-            <app-paginator [length]="100" [pageSize]="30" [pageSizeOptions]="[5,10,30,100]"
+            <app-paginator [length]="100" [pageSize]="10" [currentCount]="10" [pageSizeOptions]="[5,10,30,100]"
                 [showFirstLastButtons]="true"></app-paginator>
         </div>
     </div>
