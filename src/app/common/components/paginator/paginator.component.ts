@@ -23,13 +23,12 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { MatButton } from '@angular/material/button';
-import { ThemePalette } from '@angular/material/core';
 import {
   MatPaginatorDefaultOptions,
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   _MatPaginatorBase,
 } from '@angular/material/paginator';
-import { TimeComponent } from '../time/time.component';
+import { off } from 'process';
 import { PaginatorIntl } from './paginator-intl';
 
 @Component({
@@ -46,20 +45,23 @@ export class PaginatorComponent
   extends _MatPaginatorBase<MatPaginatorDefaultOptions>
   implements AfterViewInit
 {
+  @Input()
+  get pagerCount(): number {
+    return this._pagerCount;
+  }
+  set pagerCount(value: number) {
+    this._pagerCount =
+      value <= 0 ? this.getNumberOfPages() : value < 3 ? 3 : value;
+  }
+  private _pagerCount = this.getNumberOfPages(); // 在 updatePageRange 中重新赋值
+
   @Input() currentCount = 0;
-  @ViewChild('actionContainer')
-  actionContainer?: ElementRef;
 
-  @ViewChild('nextPageNode')
-  nextPageNode?: MatButton;
-
-  @ViewChild('buttonContainer', { read: ViewContainerRef })
-  buttonContainer?: ViewContainerRef;
+  public pagers: number[] = [];
+  public showFirst: boolean = false;
+  public showLast: boolean = false;
 
   constructor(
-    private _injector: Injector,
-    private _renderer: Renderer2,
-    private resolver: ComponentFactoryResolver,
     public intl: PaginatorIntl,
     changeDetectorRef: ChangeDetectorRef,
     @Optional()
@@ -72,19 +74,84 @@ export class PaginatorComponent
     super.ngOnInit();
   }
   ngAfterViewInit(): void {
-    console.log(this.buttonContainer);
-    let div = this._renderer.createElement('div');
-    div.innerHTML = '4';
-    const factory: ComponentFactory<MatButton> =
-      this.resolver.resolveComponentFactory(MatButton);
-    let componentRef = this.buttonContainer?.createComponent(
-      factory,
-      0,
-      this._injector,
-      [[div]]
-    );
-    console.log(componentRef);
+    this.updatePageRange();
   }
 
-  private _createButton(index: number) {}
+  swipePage(pageIndex: number) {
+    this.pageIndex = pageIndex;
+    this.updatePageRange();
+  }
+  firstPage() {
+    super.firstPage();
+    this.updatePageRange();
+  }
+  lastPage() {
+    super.lastPage();
+    this.updatePageRange();
+  }
+  previousPage() {
+    super.previousPage();
+    this.updatePageRange();
+  }
+  nextPage() {
+    super.nextPage();
+    this.updatePageRange();
+  }
+  previousGroup() {
+    this.pageIndex -= this.pagerCount - 2;
+    this.updatePageRange();
+  }
+  nextGroup() {
+    this.pageIndex += this.pagerCount - 2;
+    this.updatePageRange();
+  }
+  updatePageRange() {
+    console.log('pageIndex', this.pageIndex);
+    this.pagers = [];
+    this.showFirst = false;
+    this.showLast = false;
+    if (this.pagerCount <= 0) {
+      this.pagerCount = this.getNumberOfPages();
+    }
+
+    let halfPagerCount = Math.ceil((this.pagerCount - 1) / 2); //2
+
+    // console.log('halfPagerCount', halfPagerCount);
+
+    if (this.getNumberOfPages() > this.pagerCount) {
+      if (this.pageIndex + 1 > 1 + halfPagerCount) {
+        this.showFirst = true;
+      }
+      if (this.pageIndex + 1 < this.getNumberOfPages() - halfPagerCount) {
+        this.showLast = true;
+      }
+    }
+
+    if (this.showFirst && !this.showLast) {
+      let startPage = this.getNumberOfPages() - (this.pagerCount - 2);
+      for (let i = startPage; i < this.getNumberOfPages(); i++) {
+        this.pagers.push(i);
+      }
+    } else if (!this.showFirst && this.showLast) {
+      for (let i = 2; i < this.pagerCount; i++) {
+        this.pagers.push(i);
+      }
+    } else if (this.showFirst && this.showLast) {
+      // 去掉首尾后分半
+      let offset = Math.floor((this.pagerCount - 2) / 2); //1
+
+      // 注意 pageIndex从0开始计数
+      for (
+        let i = this.pageIndex + 1 - offset;
+        i <= this.pageIndex + 1 + offset;
+        i++
+      ) {
+        this.pagers.push(i);
+      }
+    } else {
+      for (let i = 2; i < this.getNumberOfPages(); i++) {
+        this.pagers.push(i);
+      }
+    }
+  }
 }
