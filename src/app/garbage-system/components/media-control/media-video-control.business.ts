@@ -15,26 +15,44 @@ import {
   GetVodUrlParams,
 } from 'src/app/network/request/sr/sr-request.params';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
-import { MediaControlConverter } from './media-control.converter';
+import {
+  MediaControlConverter,
+  MediaControlSource,
+} from '../../../converter/media-control.converter';
+import { MediaControlViewModel } from './media-control.model';
 
 @Injectable()
 export class MediaVideoControlBussiness
-  implements IBusiness<VideoUrl, VideoModel>
+  implements IBusiness<MediaControlSource, MediaControlViewModel>
 {
   constructor(private srService: SRRequestService) {}
-  Converter: IConverter<VideoUrl, VideoModel> = new MediaControlConverter();
+
+  Converter: IConverter<MediaControlSource, MediaControlViewModel> =
+    new MediaControlConverter();
   subscription?: ISubscription | undefined;
   async load(
     camera: Camera,
     mode: PlayMode,
     streamType: StreamType
-  ): Promise<VideoModel> {
+  ): Promise<MediaControlViewModel> {
     let data = await this.getData(camera, mode, streamType);
     let result = this.Converter.Convert(data);
     return result;
   }
 
   async getData(
+    camera: Camera,
+    mode: PlayMode,
+    streamType: StreamType = StreamType.sub
+  ): Promise<MediaControlSource> {
+    let result = {
+      camera: camera,
+      url: await this.getVideoUrl(camera, mode, streamType),
+    };
+    return result;
+  }
+
+  async getVideoUrl(
     camera: Camera,
     mode: PlayMode,
     streamType: StreamType = StreamType.sub

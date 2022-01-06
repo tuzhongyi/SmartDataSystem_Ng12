@@ -11,6 +11,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -18,6 +19,7 @@ import { VisibilityModel } from 'src/app/view-model/visibility.model';
 import { AMapBusiness } from './business/amap.business';
 import { MapListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
+import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -176,7 +178,11 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
 
   pointCount = 0;
 
-  cameras: Camera[] = [];
+  images: ImageControlModel[] = [];
+
+  imageConverter = new ImageControlArrayConverter();
+
+  selected: Selected = {};
 
   //#region template event
   onLoad(event: Event) {
@@ -188,10 +194,13 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
 
   //#region map event regist
   onPointDoubleClicked(station: GarbageStation) {
+    this.selected.station = station;
     this.display.status = false;
     this.display.videoList = true;
-    this.cameras = station.Cameras ?? [];
-    this.display.videoControl = this.cameras.length > 5;
+    this.images = station.Cameras
+      ? this.imageConverter.Convert(station.Cameras)
+      : [];
+    this.display.videoControl = this.images.length > 5;
     this.changeDetectorRef.detectChanges();
   }
   onMapClicked() {
@@ -200,8 +209,13 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   //#endregion
 
-  onCameraClicked(camera: Camera) {
-    this.VideoPlay.emit(camera);
+  onCameraClicked(image: ImageControlModel) {
+    if (this.selected.station) {
+      let camera = this.selected.station.Cameras?.find(
+        (x) => x.Id === image.id
+      );
+      this.VideoPlay.emit(camera);
+    }
   }
 
   Button1Clicked() {
@@ -251,4 +265,8 @@ class MapControlLabelDisplay {
   }
 
   station: VisibilityModel = new VisibilityModel(true);
+}
+
+interface Selected {
+  station?: GarbageStation;
 }

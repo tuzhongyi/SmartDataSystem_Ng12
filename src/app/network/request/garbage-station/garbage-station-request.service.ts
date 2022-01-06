@@ -178,8 +178,8 @@ class CamerasService {
     return this.basicType.delete(url);
   }
   list(
-    stationId: string,
-    params: GetGarbageStationCamerasParams = new GetGarbageStationCamerasParams()
+    params: GetGarbageStationCamerasParams = new GetGarbageStationCamerasParams(),
+    stationId?: string
   ): Promise<PagedList<Camera>> {
     let url = GarbageStationUrl.camera(stationId).list();
     return this.basicType.paged(url, params);

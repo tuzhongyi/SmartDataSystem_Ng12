@@ -9,7 +9,7 @@ import { TimeComponent } from './time/time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
-import { VideoMultControlComponent } from './video-mult-control/video-mult-control.component';
+
 import { WindowComponent } from './window/window.component';
 import { ImageControlComponent } from './image-control/image-control.component';
 import { PaginatorComponent } from './paginator/paginator.component';
@@ -17,6 +17,8 @@ import { TableSelectComponent } from './table-select/table-select.component';
 import { VideoWindowComponent } from './video-window/video-window.component';
 import { InputSearchComponent } from './input-search/input-search.component';
 import { PatrolControlComponent } from '../../garbage-system/components/patrol-control/patrol-control.component';
+import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
+import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -31,10 +33,11 @@ export const CUSTOM_COMPONENTS = [
   HeaderNavComponent,
   VideoPlayerComponent,
   TableComponent,
-  VideoMultControlComponent,
   ImageControlComponent,
   PaginatorComponent,
   TableSelectComponent,
   VideoWindowComponent,
   InputSearchComponent,
+  ImageVideoControlComponent,
+  ImageVideoMultControlComponent,
 ];

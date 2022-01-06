@@ -1,0 +1,10 @@
+<div class="image-video-mult-control">
+  <ng-container *ngFor="let item of models">
+    <div
+      class="item"
+      [ngStyle]="{ width: 100 / sqrt + '%', height: 100 / sqrt + '%' }"
+    >
+      <app-image-video-control [model]="item"></app-image-video-control>
+    </div>
+  </ng-container>
+</div>

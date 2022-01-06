@@ -1,6 +1,11 @@
-<div *ngIf="camera" class="image-control" (click)="onClick($event)">
-  <div *ngIf="camera.OnlineStatus != OnlineStatus.Online" class="error">
-    NO SIGNAL
-  </div>
-  <img [src]="src" (error)="onError($event)" [title]="camera.Name" />
+<div *ngIf="model" class="image-control" (click)="onClick($event)">
+  <div *ngIf="model.status != OnlineStatus.Online" class="error">NO SIGNAL</div>
+  <!-- <img [src]="model.src" (error)="onError($event)" [title]="model.name" /> -->
+  <div
+    class="img"
+    [title]="model.name"
+    [ngStyle]="{
+      backgroundImage: 'url(' + model.src + '), url(' + model.onerror + ')'
+    }"
+  ></div>
 </div>

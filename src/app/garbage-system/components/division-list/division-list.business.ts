@@ -14,6 +14,9 @@ export class DivisionListBusiness {
     let params = new GetDivisionsParams();
     params.ParentId = id;
     let res = await this._business.cache.list(params);
-    return res.Data;
+
+    return res.Data.sort((a, b) => {
+      return a.Name.localeCompare(b.Name);
+    });
   }
 }

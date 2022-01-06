@@ -1,0 +1,8 @@
+<div class="image-video-control" *ngIf="model">
+  <div class="image-video-control-image" *ngIf="!playing">
+    <app-image-control [model]="model.image"></app-image-control>
+  </div>
+  <div class="image-video-control-video" *ngIf="playing">
+    <app-video-player [model]="model.video"> </app-video-player>
+  </div>
+</div>

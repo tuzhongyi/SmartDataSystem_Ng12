@@ -1,13 +1,13 @@
+import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
-import { VideoUrl } from 'src/app/network/model/url.model';
 
 export class MediaControlViewModel {
-  constructor(img: string, video?: VideoModel) {
-    this.img = img;
+  constructor(img?: ImageControlModel, video?: VideoModel) {
+    this.image = img;
     this.video = video;
   }
 
-  img: string;
+  image?: ImageControlModel;
 
   video?: VideoModel;
 }

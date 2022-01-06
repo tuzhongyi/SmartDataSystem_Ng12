@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { CameraUsage } from '../../enum/camera-sage.enum';
 import { CanType } from '../../enum/can-type.enum';
 import { Camera } from './camera.model';
@@ -7,6 +7,7 @@ import { Member } from './member.model';
 import { TimeRange } from './time-range.model';
 import { transformDateTime } from './transform.model';
 import { TrashCan } from './trash-can.model';
+import 'reflect-metadata';
 
 /** 垃圾房、投放点 */
 export class GarbageStation {
@@ -31,6 +32,7 @@ export class GarbageStation {
   /**	TrashCan[]	垃圾桶列表	O */
   TrashCans?: TrashCan[];
   /**	Camera[]	摄像机列表	O */
+  @Type(() => Camera)
   Cameras?: Camera[];
   /**	Boolean	干垃圾满溢	O */
   DryFull?: boolean;

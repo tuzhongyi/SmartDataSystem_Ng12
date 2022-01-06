@@ -15,7 +15,7 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
     return new Promise((reject) => {
       this.wait(() => {
         let paged: PagedList<GarbageStation>;
-        let datas = this.load();
+        let datas = this.load() as GarbageStation[];
         if (args) {
           if (args.Ids) {
             datas = datas.filter((x) => args.Ids?.includes(x.Id));

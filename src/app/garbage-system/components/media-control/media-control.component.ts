@@ -7,10 +7,9 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { VideoUrl } from 'src/app/network/model/url.model';
 import { MediaVideoControlBussiness } from './media-video-control.business';
 import { MediaControlViewModel } from './media-control.model';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { MediaControlSource } from '../../../converter/media-control.converter';
 
 @Component({
   selector: 'app-media-control',
@@ -19,12 +18,12 @@ import { MediumRequestService } from 'src/app/network/request/medium/medium-requ
   providers: [MediaVideoControlBussiness],
 })
 export class MediaControlComponent
-  implements OnInit, IComponent<VideoUrl, VideoModel>
+  implements OnInit, IComponent<MediaControlSource, MediaControlViewModel>
 {
   constructor(bussiness: MediaVideoControlBussiness) {
     this.business = bussiness;
   }
-  business: IBusiness<VideoUrl, VideoModel>;
+  business: IBusiness<MediaControlSource, MediaControlViewModel>;
 
   title?: string;
 
@@ -43,9 +42,8 @@ export class MediaControlComponent
         PlayMode.live,
         StreamType.sub
       );
-      let img = MediumRequestService.jpg(this.camera.ImageUrl);
       promise.then((x) => {
-        this.model = new MediaControlViewModel(img);
+        this.model = x;
       });
     }
   }

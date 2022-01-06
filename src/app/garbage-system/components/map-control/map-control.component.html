@@ -34,11 +34,11 @@
   </div>
   <div class="list">
     <ul class="ul">
-      <ng-container *ngFor="let camera of cameras">
+      <ng-container *ngFor="let image of images">
         <!-- [ngClass]="{'error': camera.CameraState>0}" -->
         <li class="video">
           <app-image-control
-            [camera]="camera"
+            [model]="image"
             (click)="onCameraClicked($event)"
           ></app-image-control>
         </li>

@@ -1,11 +1,22 @@
-<div class="patrol-control">
+<div class="patrol-control" *ngIf="model">
   <div class="patrol-control-header">
     <div>投放点巡检</div>
-    <div>title</div>
+    <div>{{ model.title }}</div>
     <div>按钮</div>
   </div>
   <div class="patrol-control-content">
-    <div>图片</div>
+    <!-- <div>
+      <ng-container *ngFor="let media of model.media">
+        <div
+          class="item"
+          [ngStyle]="{ width: 100 / sqrt + '%', height: 100 / sqrt + '%' }"
+        >
+          <app-image-video-control [model]="media"></app-image-video-control>
+        </div>
+      </ng-container>
+    </div> -->
+    <app-image-video-mult-control [models]="model.media">
+    </app-image-video-mult-control>
   </div>
   <div class="patrol-control-footer">
     <div>状态</div>
