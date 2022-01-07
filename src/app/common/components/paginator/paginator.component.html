@@ -1,27 +1,7 @@
 <div class="paginator-outer-container">
     <div class="paginator-container">
-        <div class="paginator-page-size" *ngIf="!hidePageSize">
-            <div class="paginator-page-size-label">
-                {{intl.itemsPerPageLabel}}
-            </div>
 
-
-            <mat-select *ngIf="_displayedPageSizeOptions.length > 1" [value]="pageSize" [disabled]="disabled"
-                [aria-label]="intl.itemsPerPageLabel" (selectionChange)="_changePageSize($event.value)">
-                <mat-option *ngFor="let pageSizeOption of _displayedPageSizeOptions" [value]="pageSizeOption">
-                    {{pageSizeOption}}
-                </mat-option>
-            </mat-select>
-
-            <div class="paginator-page-size-value" *ngIf="_displayedPageSizeOptions.length <= 1">{{pageSize}}</div>
-        </div>
-
-        <div class="paginator-range-actions" #actionContainer>
-            <div class="paginator-range-label">
-                <div class="label-item count">当前数量:{{currentCount}}</div>
-                <div class="label-item total">总数量:{{length}}</div>
-
-            </div>
+        <div class="paginator-range-actions">
 
             <button mat-button type="button" class="paginator-navigation-first" (click)="firstPage()"
                 [matTooltip]="intl.firstPageLabel" [matTooltipDisabled]="_previousButtonsDisabled()"
@@ -70,6 +50,20 @@
                     <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
                 </svg>
             </button>
+            <div class="jump-to">
+                <span class='jump-to-label'> 跳至</span>
+
+                <input type="number" class="jump-to-input" [(ngModel)]="jumpToIndex" (keypress)="validateInput($event)"
+                    (keydown.enter)="operateJump()" />
+
+                <!-- <div contenteditable class=" jump-to-div" #editableDiv [textContent]="jumpToIndex"
+                    (keyup)="editableKeyUp($event)" (keydown)="editableKeyDown($event)" (keydown.enter)="operateJump()">
+                </div> -->
+
+                <span class='jump-to-label'>页</span>
+
+                <div class="jump-to-button" #ToBtn (click)="operateJump()">确定</div>
+            </div>
         </div>
     </div>
 </div>

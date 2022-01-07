@@ -5,19 +5,24 @@
  * @Last Modified time: 2021-12-30 15:51:51
  */
 import {
+  AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
   ComponentFactory,
   ComponentFactoryResolver,
+  DoCheck,
   ElementRef,
   Inject,
   Injector,
   Input,
+  NgZone,
+  OnChanges,
   OnInit,
   Optional,
   Renderer2,
+  SimpleChanges,
   ViewChild,
   ViewContainerRef,
   ViewEncapsulation,
@@ -28,7 +33,8 @@ import {
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   _MatPaginatorBase,
 } from '@angular/material/paginator';
-import { off } from 'process';
+import { ToastrService } from 'ngx-toastr';
+import { fromEvent } from 'rxjs';
 import { PaginatorIntl } from './paginator-intl';
 
 @Component({
@@ -43,8 +49,18 @@ import { PaginatorIntl } from './paginator-intl';
 })
 export class PaginatorComponent
   extends _MatPaginatorBase<MatPaginatorDefaultOptions>
-  implements AfterViewInit
+  implements AfterViewInit, OnChanges
 {
+  @Input()
+  override get pageIndex() {
+    return super.pageIndex;
+  }
+  override set pageIndex(value: number) {
+    // console.log('set pageIndex');
+    super.pageIndex = value;
+
+    this.updatePageRange();
+  }
   @Input()
   get pagerCount(): number {
     return this._pagerCount;
@@ -53,17 +69,20 @@ export class PaginatorComponent
     this._pagerCount =
       value <= 0 ? this.getNumberOfPages() : value < 3 ? 3 : value;
   }
+
+  /***************** private ************************/
   private _pagerCount = this.getNumberOfPages(); // 在 updatePageRange 中重新赋值
 
-  @Input() currentCount = 0;
-
+  /***************** public ************************/
   public pagers: number[] = [];
   public showFirst: boolean = false;
   public showLast: boolean = false;
+  public jumpToIndex: string = '';
 
   constructor(
+    private _toastrService: ToastrService,
     public intl: PaginatorIntl,
-    changeDetectorRef: ChangeDetectorRef,
+    private changeDetectorRef: ChangeDetectorRef,
     @Optional()
     @Inject(MAT_PAGINATOR_DEFAULT_OPTIONS)
     defaults?: MatPaginatorDefaultOptions
@@ -77,36 +96,45 @@ export class PaginatorComponent
     this.updatePageRange();
   }
 
+  // 长度改变后，重新生成
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('length' in changes) {
+      this.updatePageRange();
+    }
+  }
   swipePage(pageIndex: number) {
+    let previousPageIndex = this.pageIndex;
     this.pageIndex = pageIndex;
-    this.updatePageRange();
+
+    this.page.emit({
+      previousPageIndex,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      length: this.length,
+    });
   }
-  firstPage() {
-    super.firstPage();
-    this.updatePageRange();
-  }
-  lastPage() {
-    super.lastPage();
-    this.updatePageRange();
-  }
-  previousPage() {
-    super.previousPage();
-    this.updatePageRange();
-  }
-  nextPage() {
-    super.nextPage();
-    this.updatePageRange();
-  }
+
   previousGroup() {
+    let previousPageIndex = this.pageIndex;
     this.pageIndex -= this.pagerCount - 2;
-    this.updatePageRange();
+    this.page.emit({
+      previousPageIndex,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      length: this.length,
+    });
   }
   nextGroup() {
+    let previousPageIndex = this.pageIndex;
     this.pageIndex += this.pagerCount - 2;
-    this.updatePageRange();
+    this.page.emit({
+      previousPageIndex,
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      length: this.length,
+    });
   }
   updatePageRange() {
-    console.log('pageIndex', this.pageIndex);
     this.pagers = [];
     this.showFirst = false;
     this.showLast = false;
@@ -152,6 +180,34 @@ export class PaginatorComponent
       for (let i = 2; i < this.getNumberOfPages(); i++) {
         this.pagers.push(i);
       }
+    }
+
+    // 由于更改 pagers 是在 afterViewInit之后，需要手动更新视图
+    this.changeDetectorRef.detectChanges();
+  }
+  validateInput(e: KeyboardEvent) {
+    return /\d/.test(e.key);
+  }
+
+  operateJump() {
+    // console.log('operateJump');
+    console.log(this.jumpToIndex);
+    console.log(this.getNumberOfPages());
+    let index = +this.jumpToIndex;
+    if (index == 0 || index > this.getNumberOfPages()) {
+      this._toastrService.error('无效的页码', '', {
+        positionClass: 'toast-top-right',
+      });
+      return;
+    } else {
+      let previousPageIndex = this.pageIndex;
+      this.pageIndex = index - 1;
+      this.page.emit({
+        previousPageIndex,
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        length: this.length,
+      });
     }
   }
 }

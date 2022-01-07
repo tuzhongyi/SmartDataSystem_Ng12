@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
 import {
   TableCellEvent,
@@ -12,6 +12,7 @@ import { columns } from './columns';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { TableComponent } from 'src/app/common/components/table/table.component';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-illegal-drop-record',
@@ -22,7 +23,8 @@ import { TableComponent } from 'src/app/common/components/table/table.component'
 export class IllegalDropRecordComponent implements OnInit {
   /**private */
   private _pageIndex = 1;
-  private _pagedList: PagedList<IllegalDropRecordModel> = new PagedList();
+  private _pageSize = 3;
+  public page: Page | null = null;
 
   /**public */
   show = false;
@@ -36,13 +38,12 @@ export class IllegalDropRecordComponent implements OnInit {
   @ViewChild(TableComponent) table?: TableComponent;
 
   constructor(private _business: IllegalDropRecordBusiness) {
-    this._pagedList.Data = [];
-    this.dataSource = this._pagedList.Data;
+    this.dataSource = [];
 
     this._business._dataStream.subscribe(
       (res: PagedList<IllegalDropRecordModel>) => {
         this.dataSource = res.Data;
-        this._pagedList = res;
+        this.page = res.Page;
       }
     );
   }
@@ -51,16 +52,11 @@ export class IllegalDropRecordComponent implements OnInit {
     this.initialize();
   }
   async initialize() {
-    let res = await this._business.loadData(this._pageIndex);
+    let res = await this._business.loadData(this._pageIndex, this._pageSize);
   }
-  async prev() {
-    let res = await this._business.loadData(--this._pageIndex);
-  }
-  async next() {
-    let res = await this._business.loadData(++this._pageIndex);
-  }
+
   selectTableRow(row: IllegalDropRecordModel[]) {
-    console.log('row', row);
+    // console.log('row', row);
     this.selectedRows = row;
   }
   selectTableCell({ column, event }: TableCellEvent) {
@@ -100,5 +96,10 @@ export class IllegalDropRecordComponent implements OnInit {
           throw new TypeError('类型错误');
       }
     }
+  }
+  pageEvent(pageInfo: PageEvent) {
+    // console.log(pageInfo);
+    this._pageIndex = pageInfo.pageIndex + 1;
+    this._business.loadData(this._pageIndex);
   }
 }

@@ -34,7 +34,7 @@ export class IllegalDropRecordBusiness {
     let records = await this._eventRequestService.record.IllegalDrop.list(
       params
     );
-    // console.log('records', records);
+    // console.log('records', records.Page);
 
     // 缺少 街道信息
     let data: IllegalDropRecordModel[] = records.Data.map((v) =>
@@ -69,17 +69,17 @@ export class IllegalDropRecordBusiness {
 
   private async _getDivisionInfo(data: IllegalDropEventRecord[]) {
     let committeeIds = this._extractDivisionIds(data);
-    console.time('居委会用时');
+    // console.time('居委会用时');
     let commitees = await this._getGroupDivisions(committeeIds);
-    console.timeEnd('居委会用时');
+    // console.timeEnd('居委会用时');
     // console.log('居委会', commitees);
 
     commitees.forEach((division) => this._register(division));
 
     let countyIds = this._extractDivisionIds(commitees, true);
-    console.time('街道用时');
+    // console.time('街道用时');
     let counties = await this._getGroupDivisions(countyIds);
-    console.timeEnd('街道用时');
+    // console.timeEnd('街道用时');
     // console.log('街道', counties);
 
     counties.forEach((division) => this._register(division));

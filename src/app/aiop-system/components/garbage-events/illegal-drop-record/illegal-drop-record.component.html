@@ -15,12 +15,19 @@
         <div class="footer-item">
             <app-table-select (tableSelectEvent)="tableSelect($event)"></app-table-select>
         </div>
+
         <div class="footer-item">
-            <div class="select-hint">
-                已选择: {{selectedRows.length}}
+            <div class="footer-info">
+                <div class="info-item">
+                    已选择: {{selectedRows.length}}
+                </div>
+                <div class="info-item">当前数量: {{ page && page.RecordCount}}</div>
+                <div class="info-item">总数量: {{page && page.TotalRecordCount}}</div>
             </div>
-            <app-paginator [length]="1000" [pageSize]="10" [currentCount]="10" [pagerCount]="10"
-                [pageSizeOptions]="[5,10,30,100]" [showFirstLastButtons]="true"></app-paginator>
+
+            <app-paginator *ngIf="page" [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="2"
+                [showFirstLastButtons]="true" (page)="pageEvent($event)">
+            </app-paginator>
         </div>
     </div>
 </div>

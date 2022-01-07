@@ -77,6 +77,14 @@ input:-webkit-autofill {
   transition: color 99999s, background-color 99999s;
 }
 
+input[type="number"] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  -moz-appearance: textfield;
+}
 // 加权
 app-root {
   @import url(assets/less/index.less);

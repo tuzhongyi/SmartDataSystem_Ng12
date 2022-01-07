@@ -1,5 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -14,7 +22,7 @@ import {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.less'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, OnChanges {
   private selection!: SelectionModel<TableCellModel>;
 
   @Input()
@@ -51,6 +59,14 @@ export class TableComponent implements OnInit {
     this.selection.changed.subscribe((change) => {
       this.selectTableRow.emit(change.source.selected);
     });
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    // 新数据替换
+    if ('dataSource' in changes) {
+      if (this.selection) {
+        this.selection.clear();
+      }
+    }
   }
   clickRow(row: TableCellModel) {
     this.selection.toggle(row);
