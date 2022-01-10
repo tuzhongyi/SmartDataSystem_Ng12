@@ -57,7 +57,8 @@
                     (keydown.enter)="operateJump()" />
 
                 <!-- <div contenteditable class=" jump-to-div" #editableDiv [textContent]="jumpToIndex"
-                    (keyup)="editableKeyUp($event)" (keydown)="editableKeyDown($event)" (keydown.enter)="operateJump()">
+                    style="ime-mode:disabled" (keydown)="validateDiv($event)" (keyup)="excludeHan($event)"
+                    (keydown.enter)="operateJump()">
                 </div> -->
 
                 <span class='jump-to-label'>页</span>

@@ -1,6 +1,9 @@
 import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
+/**
+ *  如果要配置 style 属性，则需要配合 Domsanitizer，有副作用
+ */
 export const columns: TableColumnModel[] = [
   {
     columnDef: 'ImageUrl',

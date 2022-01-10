@@ -37,6 +37,8 @@ import { ToastrService } from 'ngx-toastr';
 import { fromEvent } from 'rxjs';
 import { PaginatorIntl } from './paginator-intl';
 
+export type Constructor<T> = new (...args: any[]) => T;
+
 @Component({
   selector: 'app-paginator',
   templateUrl: './paginator.component.html',
@@ -57,9 +59,9 @@ export class PaginatorComponent
   }
   override set pageIndex(value: number) {
     // console.log('set pageIndex');
+    if (this.pageIndex == value) return;
     super.pageIndex = value;
-
-    this.updatePageRange();
+    this._updatePageRange(this.pageIndex);
   }
   @Input()
   get pagerCount(): number {
@@ -71,7 +73,7 @@ export class PaginatorComponent
   }
 
   /***************** private ************************/
-  private _pagerCount = this.getNumberOfPages(); // 在 updatePageRange 中重新赋值
+  private _pagerCount = 5; // 不能小于等于0，但可以超出 max pager count
 
   /***************** public ************************/
   public pagers: number[] = [];
@@ -93,13 +95,14 @@ export class PaginatorComponent
     super.ngOnInit();
   }
   ngAfterViewInit(): void {
-    this.updatePageRange();
+    this._updatePageRange(this.pageIndex);
   }
 
   // 长度改变后，重新生成
   ngOnChanges(changes: SimpleChanges): void {
     if ('length' in changes) {
-      this.updatePageRange();
+      // console.log('change length');
+      this._updatePageRange(this.pageIndex);
     }
   }
   swipePage(pageIndex: number) {
@@ -112,29 +115,18 @@ export class PaginatorComponent
       pageSize: this.pageSize,
       length: this.length,
     });
+    this._updatePageRange(this.pageIndex);
   }
 
   previousGroup() {
-    let previousPageIndex = this.pageIndex;
-    this.pageIndex -= this.pagerCount - 2;
-    this.page.emit({
-      previousPageIndex,
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize,
-      length: this.length,
-    });
+    this.swipePage(this.pageIndex - (this.pagerCount - 2));
   }
   nextGroup() {
-    let previousPageIndex = this.pageIndex;
-    this.pageIndex += this.pagerCount - 2;
-    this.page.emit({
-      previousPageIndex,
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize,
-      length: this.length,
-    });
+    this.swipePage(this.pageIndex + (this.pagerCount - 2));
   }
-  updatePageRange() {
+  private _updatePageRange(pageIndex: number) {
+    // console.log('pagers', this.getNumberOfPages());
+
     this.pagers = [];
     this.showFirst = false;
     this.showLast = false;
@@ -142,18 +134,21 @@ export class PaginatorComponent
       this.pagerCount = this.getNumberOfPages();
     }
 
-    let halfPagerCount = Math.ceil((this.pagerCount - 1) / 2); //2
+    let halfPagerCount = (this.pagerCount - 1) / 2;
 
     // console.log('halfPagerCount', halfPagerCount);
 
     if (this.getNumberOfPages() > this.pagerCount) {
-      if (this.pageIndex + 1 > 1 + halfPagerCount) {
+      if (pageIndex + 1 > 1 + halfPagerCount) {
         this.showFirst = true;
       }
-      if (this.pageIndex + 1 < this.getNumberOfPages() - halfPagerCount) {
+      if (pageIndex + 1 < this.getNumberOfPages() - halfPagerCount) {
         this.showLast = true;
       }
     }
+
+    // console.log('show first', this.showFirst);
+    // console.log('show last', this.showLast);
 
     if (this.showFirst && !this.showLast) {
       let startPage = this.getNumberOfPages() - (this.pagerCount - 2);
@@ -169,11 +164,7 @@ export class PaginatorComponent
       let offset = Math.floor((this.pagerCount - 2) / 2); //1
 
       // 注意 pageIndex从0开始计数
-      for (
-        let i = this.pageIndex + 1 - offset;
-        i <= this.pageIndex + 1 + offset;
-        i++
-      ) {
+      for (let i = pageIndex + 1 - offset; i <= pageIndex + 1 + offset; i++) {
         this.pagers.push(i);
       }
     } else {
@@ -200,14 +191,7 @@ export class PaginatorComponent
       });
       return;
     } else {
-      let previousPageIndex = this.pageIndex;
-      this.pageIndex = index - 1;
-      this.page.emit({
-        previousPageIndex,
-        pageIndex: this.pageIndex,
-        pageSize: this.pageSize,
-        length: this.length,
-      });
+      this.swipePage(index - 1);
     }
   }
 }

@@ -26,8 +26,8 @@ export class IllegalDropRecordBusiness {
   ) {}
   async loadData(pageIndex: number, pageSize?: number) {
     let params = new GetEventRecordsParams();
-    params.PageIndex = pageIndex;
-    params.PageSize = pageSize ?? 9;
+    params.PageIndex = Math.max(pageIndex, 1);
+    params.PageSize = pageSize ? pageSize : 9; // 排除 undefined 和 0
     params.BeginTime = Time.beginTime(new Date());
     params.EndTime = Time.endTime(new Date());
 

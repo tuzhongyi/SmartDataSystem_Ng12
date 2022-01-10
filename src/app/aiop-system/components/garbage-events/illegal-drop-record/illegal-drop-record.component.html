@@ -25,9 +25,12 @@
                 <div class="info-item">总数量: {{page && page.TotalRecordCount}}</div>
             </div>
 
-            <app-paginator *ngIf="page" [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="2"
-                [showFirstLastButtons]="true" (page)="pageEvent($event)">
+            <!-- MatPaginator 的pageIndex是从0开始-->
+            <app-paginator *ngIf="page" [length]="page.TotalRecordCount" [pageSize]="page.PageSize"
+                [pagerCount]="pagerCount" [pageIndex]="pageIndex -1" [showFirstLastButtons]="true"
+                (page)="pageEvent($event)">
             </app-paginator>
         </div>
     </div>
 </div>
+<!-- -->
