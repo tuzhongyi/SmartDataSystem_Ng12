@@ -6,7 +6,7 @@ export class ImageControlModel {
     name: string,
     src: string,
     onerror: string,
-    status: OnlineStatus = OnlineStatus.Online
+    status: OnlineStatus = OnlineStatus.Offline
   ) {
     this.id = id;
     this.name = name;
@@ -18,5 +18,5 @@ export class ImageControlModel {
   src: string;
   id: string;
   onerror: string;
-  status: OnlineStatus;
+  status: OnlineStatus = OnlineStatus.Offline;
 }

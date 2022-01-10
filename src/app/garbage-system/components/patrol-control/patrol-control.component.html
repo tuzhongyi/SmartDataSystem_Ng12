@@ -1,26 +1,48 @@
-<div class="patrol-control" *ngIf="model">
+<div class="patrol-control" *ngIf="selected">
   <div class="patrol-control-header">
-    <div>投放点巡检</div>
-    <div>{{ model.title }}</div>
-    <div>按钮</div>
+    <div class="title">
+      <div>投放点巡检</div>
+      <div class="spinner-border spinner-border-sm green-text"></div>
+    </div>
+    <div
+      class="name"
+      [ngClass]="{
+        'green-text': selected.status == OnlineStatus.Online,
+        'red-text': selected.status == OnlineStatus.Offline
+      }"
+    >
+      {{ selected.title }}
+    </div>
+    <div class="operation">
+      <div class="interval"></div>
+      <div class="reflush" (click)="onreflush()">
+        <i class="howell-icon-restore text-white"></i>
+      </div>
+      <div class="fullscreen" (click)="onfullscreen()">
+        <i class="mdi mdi-fullscreen text-white"></i>
+      </div>
+      <div class="close" (click)="onclose()">
+        <i class="howell-icon-Close alert-window-close-btn text-white"></i>
+      </div>
+    </div>
   </div>
   <div class="patrol-control-content">
-    <!-- <div>
-      <ng-container *ngFor="let media of model.media">
-        <div
-          class="item"
-          [ngStyle]="{ width: 100 / sqrt + '%', height: 100 / sqrt + '%' }"
-        >
-          <app-image-video-control [model]="media"></app-image-video-control>
-        </div>
-      </ng-container>
-    </div> -->
-    <app-image-video-mult-control [models]="model.media">
+    <app-image-video-mult-control [models]="selected.media">
     </app-image-video-mult-control>
   </div>
   <div class="patrol-control-footer">
-    <div>状态</div>
-    <div>操作</div>
-    <div>页数</div>
+    <div class="status">状态</div>
+    <div class="operation">
+      <div
+        class="howell-icon-arrowleftbold arrow-wrap"
+        (click)="prev($event)"
+      ></div>
+      <div class=""></div>
+      <div
+        class="howell-icon-arrowrightbold arrow-wrap"
+        (click)="next($event)"
+      ></div>
+    </div>
+    <div class="paged">{{ index + 1 }}/{{ models ? models.length : 0 }}</div>
   </div>
 </div>

@@ -6,12 +6,12 @@ import { MediumRequestService } from '../network/request/medium/medium-request.s
 export class ImageControlConverter
   implements IConverter<Camera, ImageControlModel>
 {
-  Convert(source: Camera): ImageControlModel {
+  Convert(source: Camera, onerror = true): ImageControlModel {
     return new ImageControlModel(
       source.Id,
       source.Name,
       MediumRequestService.jpg(source.ImageUrl),
-      MediumRequestService.default,
+      onerror ? MediumRequestService.default : '',
       source.OnlineStatus
     );
   }

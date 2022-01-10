@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { url } from 'inspector';
+import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { MediaControlConverter } from 'src/app/converter/media-control.converter';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -11,7 +13,6 @@ import { VideoUrl } from 'src/app/network/model/url.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
-import { MediaControlViewModel } from '../media-control/media-control.model';
 
 import { PatrolControlModel } from './patrol-control.model';
 
@@ -74,17 +75,21 @@ class PatrolControlConverter
   implements IConverter<GarbageStation, PatrolControlModel>
 {
   private converter = {
-    media: new MediaControlConverter(),
+    image: new ImageControlConverter(),
   };
 
   Convert(source: GarbageStation): PatrolControlModel {
     let model = new PatrolControlModel();
     model.title = source.Name;
+
     model.media = [];
     if (source.Cameras) {
       for (let i = 0; i < source.Cameras.length; i++) {
         const camera = source.Cameras[i];
-        let media = this.converter.media.Convert(camera);
+        model.status = camera.OnlineStatus ?? OnlineStatus.Offline;
+        let img = this.converter.image.Convert(camera, false);
+        let media = new ImageVideoControlModel(camera.Id);
+        media.image = img;
         model.media.push(media);
       }
     }

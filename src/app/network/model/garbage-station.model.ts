@@ -8,6 +8,8 @@ import { TimeRange } from './time-range.model';
 import { transformDateTime } from './transform.model';
 import { TrashCan } from './trash-can.model';
 import 'reflect-metadata';
+import { StationState } from 'src/app/enum/station-state.enum';
+import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
 
 /** 垃圾房、投放点 */
 export class GarbageStation {
@@ -53,7 +55,7 @@ export class GarbageStation {
   /**	Double	最大湿垃圾容积，单位：L	M */
   MaxWetVolume!: number;
   /**	Int32	垃圾房状态	M */
-  StationState!: number;
+  StationState!: StationState;
   /**	Int32	评级	O */
   Grade?: number;
   /**	TimeRange[]	计数时间段	O */
@@ -61,7 +63,7 @@ export class GarbageStation {
   /**	String	地址	O */
   Address?: string;
   /**	Int32	垃圾投放点类型	O */
-  DumpPointType?: number;
+  DumpPointType?: DumpPointType;
   /**	Int32[]	停用的事件号列表	O */
   DisableEventTypes?: number;
   /**	String	所属网格单元ID	O */

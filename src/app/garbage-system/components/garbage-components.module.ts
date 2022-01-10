@@ -20,12 +20,12 @@ import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 import { MaterialModule } from 'src/app/material.module';
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
-import { MediaControlComponent } from './media-control/media-control.component';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { MapControlComponent } from './map-control/map-control.component';
 import { MapListPanelComponent } from './map-control/map-list-panel/map-list-panel.component';
 import { PointInfoPanelComponent } from './map-control/point-info-panel/point-info-panel.component';
 import { PatrolControlComponent } from './patrol-control/patrol-control.component';
+import { MediaControlComponent } from './media-control/media-control.component';
 
 @NgModule({
   declarations: [
@@ -39,10 +39,10 @@ import { PatrolControlComponent } from './patrol-control/patrol-control.componen
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsComponent,
-    MediaControlComponent,
     StatisticCardComponent,
     MapControlComponent,
     MapListPanelComponent,
+    MediaControlComponent,
     PointInfoPanelComponent,
     PatrolControlComponent,
   ],

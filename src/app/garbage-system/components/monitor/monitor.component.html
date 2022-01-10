@@ -16,18 +16,18 @@
       </div>
     </div>
     <div class="monitor-body__item monitor-body__item--map">
-      <div class="monitor-body__wrapper" *ngIf="!map.showPatrol">
+      <div class="monitor-body__wrapper">
         <div *ngIf="statisticCardList" class="statistic-card-group">
           <ng-container *ngFor="let item of statisticCardList">
             <app-statistic-card [model]="item"></app-statistic-card>
           </ng-container>
         </div>
         <div class="map-control">
-          <app-map-control (patrol)="map.patrol()"></app-map-control>
+          <app-map-control (patrol)="map.onpatrol()"></app-map-control>
         </div>
       </div>
-      <div class="monitor-body__wrapper" *ngIf="map.showPatrol">
-        <app-patrol-control></app-patrol-control>
+      <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
+        <app-patrol-control (close)="patrol.onclose()"></app-patrol-control>
       </div>
     </div>
     <div class="monitor-body__item">

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import {
   PlayMode,
   VideoModel,
@@ -6,6 +7,7 @@ import {
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
@@ -15,41 +17,23 @@ import {
   GetVodUrlParams,
 } from 'src/app/network/request/sr/sr-request.params';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
-import {
-  MediaControlConverter,
-  MediaControlSource,
-} from '../../../converter/media-control.converter';
-import { MediaControlViewModel } from './media-control.model';
 
 @Injectable()
 export class MediaVideoControlBussiness
-  implements IBusiness<MediaControlSource, MediaControlViewModel>
+  implements IBusiness<Camera, ImageVideoControlModel>
 {
   constructor(private srService: SRRequestService) {}
+  Converter: IConverter<Camera, ImageVideoControlModel> =
+    new MediaVideoControlConverter();
 
-  Converter: IConverter<MediaControlSource, MediaControlViewModel> =
-    new MediaControlConverter();
   subscription?: ISubscription | undefined;
-  async load(
-    camera: Camera,
-    mode: PlayMode,
-    streamType: StreamType
-  ): Promise<MediaControlViewModel> {
-    let data = await this.getData(camera, mode, streamType);
-    let result = this.Converter.Convert(data);
+  async load(camera: Camera): Promise<ImageVideoControlModel> {
+    let result = this.Converter.Convert(camera);
     return result;
   }
 
-  async getData(
-    camera: Camera,
-    mode: PlayMode,
-    streamType: StreamType = StreamType.sub
-  ): Promise<MediaControlSource> {
-    let result = {
-      camera: camera,
-      url: await this.getVideoUrl(camera, mode, streamType),
-    };
-    return result;
+  async getData(camera: Camera): Promise<Camera> {
+    return camera;
   }
 
   async getVideoUrl(
@@ -72,5 +56,18 @@ export class MediaVideoControlBussiness
       default:
         throw new Error('video mode error');
     }
+  }
+}
+
+class MediaVideoControlConverter
+  implements IConverter<Camera, ImageVideoControlModel>
+{
+  private converter = {
+    image: new ImageControlConverter(),
+  };
+  Convert(source: Camera, ...res: any[]): ImageVideoControlModel {
+    let model = new ImageVideoControlModel(source.Id);
+    model.image = this.converter.image.Convert(source);
+    return model;
   }
 }

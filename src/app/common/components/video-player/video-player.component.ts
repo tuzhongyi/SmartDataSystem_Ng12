@@ -2,15 +2,21 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
+import { wait } from '../../tools/tool';
 import { VideoModel } from './video.model';
 
 @Component({
@@ -18,7 +24,9 @@ import { VideoModel } from './video.model';
   templateUrl: './video-player.component.html',
   styleUrls: ['./video-player.component.less'],
 })
-export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
+export class VideoPlayerComponent
+  implements OnDestroy, OnInit, AfterViewInit, OnChanges
+{
   @Input()
   url?: string;
 
@@ -30,6 +38,21 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
 
   @Input()
   name: string = '';
+  @Output()
+  destroy: EventEmitter<VideoModel> = new EventEmitter();
+
+  @Output()
+  onStoping: EventEmitter<void> = new EventEmitter();
+  @Output()
+  onPlaying: EventEmitter<void> = new EventEmitter();
+  @Output()
+  getPosition: EventEmitter<number> = new EventEmitter();
+  @Output()
+  onButtonClicked: EventEmitter<ButtonName> = new EventEmitter();
+  @Output()
+  onViewerDoubleClicked: EventEmitter<void> = new EventEmitter();
+  @Output()
+  onRuleStateChanged: EventEmitter<boolean> = new EventEmitter();
 
   src?: SafeResourceUrl;
 
@@ -47,7 +70,8 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
 
   private _player?: WSPlayerProxy;
   private get player(): WSPlayerProxy | undefined {
-    if (!this.iframe || !this.iframe.nativeElement.src) return undefined;
+    if (!this.iframe || !this.iframe.nativeElement.contentWindow)
+      return undefined;
     if (!this._player) {
       this._player = new WSPlayerProxy(this.iframe.nativeElement);
     }
@@ -59,21 +83,42 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
     private local: LocalStorageService,
     private userService: UserRequestService
   ) {}
-  ngAfterViewInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    this.load();
+  }
+  ngAfterViewInit(): void {
+    this.load();
+  }
   ngOnInit(): void {
-    if (this.model) {
-      this.url = this.model.toString();
-    }
+    this.load();
+  }
 
-    if (this.url) {
-      let src = this.getSrc(this.webUrl, this.url, this.name);
-      this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
+  loaded = false;
+
+  load() {
+    if (!this.loaded) {
+      if (this.model) {
+        this.url = this.model.toString();
+      }
+
+      if (this.url) {
+        let src = this.getSrc(this.webUrl, this.url, this.name);
+        this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
+        this.loaded = true;
+      }
     }
   }
 
   onLoad(event: Event) {
     this.loadRuleState().then(() => {
-      this.eventRegist();
+      wait(
+        () => {
+          return !!this.player;
+        },
+        () => {
+          this.eventRegist();
+        }
+      );
     });
   }
 
@@ -81,6 +126,7 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
     if (this.registHandle) {
       clearTimeout(this.registHandle);
     }
+    this.destroy.emit(this.model);
   }
 
   playing = false;
@@ -96,7 +142,7 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
         this._ruleState = JSON.parse(strRule);
       }
     } catch (ex) {
-      console.log('getRuleState error');
+      console.warn('loadRuleState error', ex);
     }
   }
   async saveRuleState(state: boolean) {
@@ -109,30 +155,122 @@ export class VideoPlayerComponent implements OnDestroy, OnInit, AfterViewInit {
       this._ruleState = state;
     }
   }
+  stream: StreamType = StreamType.main;
+  async loadSteam() {
+    try {
+      let result = await this.userService.config.get(
+        this.local.user.Id,
+        UserConfigType.VideoStream
+      );
+      if (result) {
+        this.stream = JSON.parse(result);
+      }
+    } catch (ex) {
+      console.warn('loadSteam error', ex);
+    }
+  }
 
   registHandle?: NodeJS.Timer;
 
   eventRegist() {
-    this.registHandle = setTimeout(() => {
-      if (this.player) {
-        this.player.getPosition = (val: any) => {
-          if (val >= 1) {
-            this.playing = false;
+    if (this.player) {
+      this.player.getPosition = (val: any) => {
+        if (val >= 1) {
+          this.playing = false;
+        }
+      };
+      this.player.onPlaying = () => {
+        setTimeout(() => {
+          if (this._ruleState !== undefined && this.player) {
+            this.changeRuleState(this._ruleState);
           }
-        };
-        this.player.onPlaying = () => {
-          setTimeout(() => {
-            if (this._ruleState !== undefined && this.player) {
-              this.player.changeRuleState(this._ruleState);
-            }
-          }, 1000);
-        };
-        this.player.onRuleStateChanged = (state: boolean) => {
-          this.saveRuleState(state);
-        };
-      } else {
-        this.eventRegist();
-      }
-    }, 100);
+        }, 1000);
+        this.onPlaying.emit();
+      };
+      this.player.onRuleStateChanged = (state: boolean) => {
+        this.saveRuleState(state);
+        this.onRuleStateChanged.emit(state);
+      };
+      this.player.onStoping = () => {
+        this.onStoping.emit();
+      };
+      this.player.getPosition = (value: number) => {
+        this.getPosition.emit(value);
+      };
+      this.player.onButtonClicked = (btn: ButtonName) => {
+        this.onButtonClicked.emit(btn);
+      };
+      this.player.onViewerDoubleClicked = () => {
+        this.onViewerDoubleClicked.emit();
+      };
+    }
+  }
+
+  async stop() {
+    if (this.player) {
+      return this.player.stop();
+    }
+    return;
+  }
+
+  download(filename: string, type: string) {
+    if (this.player) {
+      this.player.download(filename, type);
+    }
+  }
+  resize(width: number, height: number) {
+    if (this.player) {
+      this.player.resize(width, height);
+    }
+  }
+  fullScreen() {
+    if (this.player) {
+      this.player.fullScreen();
+    }
+  }
+  frame() {
+    if (this.player) {
+      this.player.frame();
+    }
+  }
+  resume() {
+    if (this.player) {
+      this.player.resume();
+    }
+  }
+  speedResume() {
+    if (this.player) {
+      this.player.speedResume();
+    }
+  }
+  pause() {
+    if (this.player) {
+      this.player.pause();
+    }
+  }
+  capturePicture() {
+    if (this.player) {
+      this.player.capturePicture();
+    }
+  }
+  slow() {
+    if (this.player) {
+      this.player.slow();
+    }
+  }
+  fast() {
+    if (this.player) {
+      this.player.fast();
+    }
+  }
+  changeRuleState(state: boolean) {
+    if (this.player) {
+      this.player.changeRuleState(state);
+    }
+  }
+  seek(value: number) {
+    if (this.player) {
+      this.player.seek(value);
+    }
   }
 }

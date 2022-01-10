@@ -3,10 +3,14 @@ import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GetPreviewUrlParams } from 'src/app/network/request/sr/sr-request.params';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
+import { PatrolControlBusiness } from './patrol-control.business';
 
 @Injectable()
 export class MapControlBusiness {
-  constructor(private srService: SRRequestService) {}
+  constructor(
+    private patrol: PatrolControlBusiness,
+    private srService: SRRequestService
+  ) {}
   videoModel?: VideoModel;
   webUrl?: string;
 
@@ -18,9 +22,7 @@ export class MapControlBusiness {
     }
   }
 
-  showPatrol = true;
-
-  async patrol() {
-    this.showPatrol = true;
+  async onpatrol() {
+    this.patrol.show = true;
   }
 }

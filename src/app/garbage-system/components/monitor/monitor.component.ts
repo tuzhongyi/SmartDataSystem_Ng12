@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
- * @Last Modified by: pmx
- * @Last Modified time: 2021-12-21 11:05:05
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-01-10 16:08:27
  */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -13,6 +13,7 @@ import { StoreService } from 'src/app/global/service/store.service';
 import { StatisticCardViewModel } from '../statistic-card/statistic-card.model';
 import { MapControlBusiness } from './business/map-control.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
+import { PatrolControlBusiness } from './business/patrol-control.business';
 import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
 
@@ -25,6 +26,7 @@ import { WindowBussiness } from './business/window.business';
     MonitorEventTriggerBusiness,
     StatisticCardBussiness,
     MapControlBusiness,
+    PatrolControlBusiness,
   ],
 })
 export class MonitorComponent implements OnInit {
@@ -40,6 +42,7 @@ export class MonitorComponent implements OnInit {
     public window: WindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
     public map: MapControlBusiness,
+    public patrol: PatrolControlBusiness,
     private statisticCardBussiness: StatisticCardBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');

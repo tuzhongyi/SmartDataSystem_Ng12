@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import {
   PlayMode,
   VideoModel,
@@ -8,8 +9,6 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { MediaVideoControlBussiness } from './media-video-control.business';
-import { MediaControlViewModel } from './media-control.model';
-import { MediaControlSource } from '../../../converter/media-control.converter';
 
 @Component({
   selector: 'app-media-control',
@@ -18,19 +17,19 @@ import { MediaControlSource } from '../../../converter/media-control.converter';
   providers: [MediaVideoControlBussiness],
 })
 export class MediaControlComponent
-  implements OnInit, IComponent<MediaControlSource, MediaControlViewModel>
+  implements OnInit, IComponent<Camera, ImageVideoControlModel>
 {
   constructor(bussiness: MediaVideoControlBussiness) {
     this.business = bussiness;
   }
-  business: IBusiness<MediaControlSource, MediaControlViewModel>;
+  business: IBusiness<Camera, ImageVideoControlModel>;
 
   title?: string;
 
   @Input()
   camera?: Camera;
 
-  model?: MediaControlViewModel;
+  model?: ImageVideoControlModel;
 
   img?: string;
 

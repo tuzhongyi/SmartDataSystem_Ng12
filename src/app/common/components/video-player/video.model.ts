@@ -3,16 +3,16 @@ import { HowellUrl } from 'src/app/view-model/howell-url';
 
 export class VideoModel {
   /** 链接地址 */
-  host?: string;
+  host: string = '';
 
   /** 端口号 */
-  port?: number;
+  port: number = 80;
 
   /** 摄像机id */
-  deviceId?: string;
+  deviceId: string = '';
 
   /** 通道号 */
-  slot?: number;
+  slot: number = 0;
   /** 码流 */
   stream?: StreamType;
   /** 用户名 */
@@ -22,7 +22,7 @@ export class VideoModel {
   password?: string;
 
   /** 模式 */
-  mode?: PlayMode;
+  mode: PlayMode = PlayMode.live;
 
   /** 开始时间 */
   beginTime?: Date;
@@ -32,13 +32,13 @@ export class VideoModel {
   constructor(
     options?:
       | {
-          host?: string;
-          deviceId?: string;
-          slot?: number;
+          host: string;
+          deviceId: string;
+          slot: number;
           stream?: StreamType;
           userName?: string;
           password?: string;
-          mode?: PlayMode;
+          mode: PlayMode;
           beginTime?: Date;
           endTime?: Date;
         }
@@ -93,7 +93,12 @@ export class VideoModel {
     }
   }
 
-  toString() {
+  toString(stream?: StreamType) {
+    this.stream = stream;
+
+    if (!this.stream) {
+      this.stream = StreamType.sub;
+    }
     let url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/${this.stream}/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
     if (this.mode === PlayMode.vod && this.beginTime && this.endTime) {
       url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${

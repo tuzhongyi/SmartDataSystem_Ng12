@@ -23,7 +23,7 @@ declare class WSPlayerProxy {
   getPosition: (value: number) => void;
   onButtonClicked: (btn: ButtonName) => void;
   /** 双击全屏 返回值：是否触发全屏 */
-  onViewerDoubleClicked: () => boolean;
+  onViewerDoubleClicked: () => void;
   onRuleStateChanged: (state: boolean) => void;
 }
 

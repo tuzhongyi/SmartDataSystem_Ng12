@@ -15,7 +15,7 @@ import { ImageControlModel } from 'src/app/common/components/image-control/image
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { VisibilityModel } from 'src/app/view-model/visibility.model';
+import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { AMapBusiness } from './business/amap.business';
 import { MapListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
@@ -163,7 +163,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onLabelDisplay = (value: boolean) => {
     if (!value) {
-      this.display.label.station.state = true;
+      this.display.label.station.value = true;
     }
     this.amap.setLabelVisibility(value);
   };
@@ -226,7 +226,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     this.display.label.current = !this.display.label.current;
   }
   Button4Clicked() {
-    this.display.label.station.state = !this.display.label.station.state;
+    this.display.label.station.value = !this.display.label.station.value;
   }
 }
 
@@ -264,7 +264,7 @@ class MapControlLabelDisplay {
     this.events.current(this._current);
   }
 
-  station: VisibilityModel = new VisibilityModel(true);
+  station = new ChangeControlModel(true);
 }
 
 interface Selected {

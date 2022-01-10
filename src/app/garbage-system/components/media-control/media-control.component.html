@@ -3,13 +3,7 @@
     <div class="title">{{ title }}</div>
   </div>
   <div class="content" *ngIf="model">
-    <div *ngIf="model.video">
-      <app-video-player [model]="model.video"></app-video-player>
-    </div>
-    <div>
-      <app-image-control [model]="model.image"></app-image-control>
-      <!-- <img [src]="model.img" /> -->
-    </div>
+    <app-image-video-control [model]="model"></app-image-video-control>
   </div>
   <div class="content" *ngIf="img"></div>
 </div>

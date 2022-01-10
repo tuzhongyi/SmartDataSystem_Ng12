@@ -4,7 +4,15 @@
       class="item"
       [ngStyle]="{ width: 100 / sqrt + '%', height: 100 / sqrt + '%' }"
     >
-      <app-image-video-control [model]="item"></app-image-video-control>
+      <app-image-video-control
+        [ngClass]="{
+          fulled: item.fulled
+        }"
+        [model]="item"
+        [fulled]="item.fulled"
+        (fullscreen)="onfullscreen($event)"
+        (play)="onplay($event)"
+      ></app-image-video-control>
     </div>
   </ng-container>
 </div>

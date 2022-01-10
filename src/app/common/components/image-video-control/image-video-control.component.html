@@ -1,8 +1,30 @@
 <div class="image-video-control" *ngIf="model">
-  <div class="image-video-control-image" *ngIf="!playing">
+  <div class="image-video-control-image" *ngIf="display.image">
     <app-image-control [model]="model.image"></app-image-control>
   </div>
-  <div class="image-video-control-video" *ngIf="playing">
-    <app-video-player [model]="model.video"> </app-video-player>
+  <div class="image-video-control-video" *ngIf="display.video">
+    <app-video-player
+      [model]="model.video"
+      (destroy)="onVideoDestroy($event)"
+      (onStoping)="stop()"
+    >
+    </app-video-player>
+  </div>
+
+  <div class="operation">
+    <div
+      class="howell-icon-play"
+      *ngIf="display.operation.play"
+      (click)="playClicked($event)"
+    ></div>
+    <div
+      class="mdi"
+      *ngIf="display.operation.fullscreen"
+      [ngClass]="{
+        'mdi-fullscreen': !model.fulled,
+        'mdi-fullscreen-exit': model.fulled
+      }"
+      (click)="fullscreenClicked($event)"
+    ></div>
   </div>
 </div>
