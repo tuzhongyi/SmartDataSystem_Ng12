@@ -182,8 +182,8 @@ export class PaginatorComponent
 
   operateJump() {
     // console.log('operateJump');
-    console.log(this.jumpToIndex);
-    console.log(this.getNumberOfPages());
+    // console.log(this.jumpToIndex);
+    // console.log(this.getNumberOfPages());
     let index = +this.jumpToIndex;
     if (index == 0 || index > this.getNumberOfPages()) {
       this._toastrService.error('无效的页码', '', {

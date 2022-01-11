@@ -56,6 +56,17 @@ export class IllegalDropRecordConverter
 
     model.EventId = item.EventId;
     model.ImageUrl = item.ImageUrl ? PicturesUrl.jpg(item.ImageUrl) : '';
+    var image = new Image();
+    try {
+      image.src = model.ImageUrl;
+      image.onerror = function () {
+        model.ImageUrl = '/assets/img/timg-pic.jpg';
+        return;
+      };
+    } catch (e) {
+      console.log('eee', e);
+    }
+
     model.ResourceName = item.ResourceName ?? '';
     model.StationName = item.Data.StationName;
     model.CommitteeName = item.Data.DivisionName ?? '';
