@@ -4,6 +4,7 @@
 
     <div class="select-group">
       <app-select-control
+        *ngIf="resourceTypeDisplay"
         [data]="resourceTypes"
         (selectedEvent)="onResourceTypeSelected($event)"
       ></app-select-control>

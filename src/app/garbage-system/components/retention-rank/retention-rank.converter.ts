@@ -9,13 +9,16 @@ export class RetentionRankConverter
   Convert(input: DivisionNumberStatistic[], type: RetentionType): RankModel[] {
     let array = [];
     for (let i = 0; i < input.length; i++) {
-      const item = this.itemConvert(input[i], type);
+      const item = this.divisionConvert(input[i], type);
       array.push(item);
     }
     return array;
   }
 
-  itemConvert(input: DivisionNumberStatistic, type: RetentionType): RankModel {
+  divisionConvert(
+    input: DivisionNumberStatistic,
+    type: RetentionType
+  ): RankModel {
     let obj = new RankModel();
     obj.name = input.Name;
     obj.id = input.Id;

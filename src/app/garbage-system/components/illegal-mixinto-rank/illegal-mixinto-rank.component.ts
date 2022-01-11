@@ -56,6 +56,8 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
 
   eventType: EventType = EventType.IllegalDrop;
 
+  resourceTypeDisplay: boolean = true;
+
   @Output()
   itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
 
@@ -102,10 +104,14 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     this.business.subscription.destroy();
   }
   async loadData() {
+    this.resourceTypeDisplay =
+      this.storeService.divisionType !== DivisionType.Committees;
     this.title = Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
       this.storeService.divisionId,
-      this.resourceType,
+      this.storeService.divisionType === DivisionType.Committees
+        ? UserResourceType.Station
+        : this.resourceType,
       this.eventType
     );
   }

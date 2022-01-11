@@ -30,9 +30,9 @@ import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { IllegalDropEventRecord } from '../network/model/event-record.model';
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
-import { PicturesUrl } from '../network/url/aiop/Medium/Pictures/pictures.url';
 import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
+import { MediumRequestService } from '../network/request/medium/medium-request.service';
 
 type IllegalDropRecordSourceModel = IllegalDropEventRecord;
 
@@ -55,7 +55,9 @@ export class IllegalDropRecordConverter
     let model = new IllegalDropRecordModel();
 
     model.EventId = item.EventId;
-    model.ImageUrl = item.ImageUrl ? PicturesUrl.jpg(item.ImageUrl) : '';
+    model.ImageUrl = item.ImageUrl
+      ? MediumRequestService.jpg(item.ImageUrl)
+      : '';
     var image = new Image();
     try {
       image.src = model.ImageUrl;

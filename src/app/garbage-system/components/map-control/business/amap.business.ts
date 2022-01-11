@@ -1,6 +1,5 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
-import { async } from '@angular/core/testing';
 import { Flags } from 'src/app/common/tools/flags';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -20,6 +19,9 @@ export class AMapBusiness {
       if (this.labelVisibility) {
         this.setLabelVisibility(true);
       }
+    });
+    this.storeService.statusChange.subscribe((x) => {
+      this.divisionSelect(this.storeService.divisionId);
     });
   }
 
@@ -62,23 +64,34 @@ export class AMapBusiness {
 
     return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
-
+  loaded = false;
   init() {
     let promise = this.stationService.cache.all();
     promise.then((x) => {
       this.source.all = x;
       this.setPointStatus(this.source.all);
+      if (this.mapClient) {
+        this.source.all.forEach((x) => {
+          if (this.mapController) {
+            this.mapController.Village.Point.Asyn.Get(
+              x.DivisionId!,
+              x.Id,
+              (point) => {
+                this.source.points[point.id] = point;
+              }
+            );
+          }
+        });
+      }
     });
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
     this.mapClient = new CesiumMapClient(iframe);
     this.mapClient.Events.OnLoaded = async () => {
-      this.init();
       this.mapController = this.mapClient!.DataController;
-      this.mapController.Point.Asyn.List(this.storeService.divisionId, (x) => {
-        console.log(x);
-      });
+      this.init();
+
       this.mapClient!.Events.OnElementsDoubleClicked = (elements) => {
         if (elements && elements.length > 0) {
           this.onPointDoubleClicked(
@@ -100,6 +113,20 @@ export class AMapBusiness {
     if (this.mapClient) {
       this.mapClient.Village.Select(divisionId, true);
       this.mapClient.Viewer.Focus(divisionId);
+    }
+  }
+
+  divisionSelect(divisionId: string) {
+    if (this.mapClient) {
+      this.mapClient.Village.Select(divisionId, false);
+      this.mapClient.Viewer.Focus(divisionId);
+    }
+  }
+
+  pointSelect(stationId: string) {
+    if (this.mapClient) {
+      let point = this.source.points[stationId];
+      this.mapClient.Viewer.MoveTo(point.position);
     }
   }
 

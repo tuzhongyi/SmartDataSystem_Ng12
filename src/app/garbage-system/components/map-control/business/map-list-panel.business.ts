@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -55,19 +55,24 @@ export class MapListPanelBusiness
     );
   }
 
+  itemSelected: EventEmitter<MapListPanelType> = new EventEmitter();
+
   async onItemCliced(item: MapListItem<MapListPanelType>) {
+    let data: MapListPanelType = item.Data;
     switch (item.type) {
       case MapListItemType.Division:
-        this.loadByDivision(item.Data as Division);
+        data = await this.loadByDivision(item.Data as Division);
         break;
       case MapListItemType.GarbageStation:
         break;
       case MapListItemType.Parent:
-        this.loadByParent(item.Data as Division);
+        data = await this.loadByParent(item.Data as Division);
         break;
       default:
         break;
     }
+
+    this.itemSelected.emit(data);
   }
 
   async loadByDivision(division: Division) {
@@ -75,6 +80,7 @@ export class MapListPanelBusiness
     let parentItem = this.createParentItem(division);
     source.unshift(parentItem);
     this.datasource = source;
+    return division;
   }
   async loadByParent(division: Division) {
     let parent = await this.divisionService.cache.get(division.ParentId!);
@@ -84,6 +90,7 @@ export class MapListPanelBusiness
       source.unshift(parentItem);
     }
     this.datasource = source;
+    return parent;
   }
 
   async loadDivision(parentId: string) {

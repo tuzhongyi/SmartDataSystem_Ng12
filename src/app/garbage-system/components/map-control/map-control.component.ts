@@ -20,6 +20,7 @@ import { AMapBusiness } from './business/amap.business';
 import { MapListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
+import { Division } from 'src/app/network/model/division.model';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -106,7 +107,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   src?: SafeResourceUrl;
 
   private get iframe(): HTMLIFrameElement | undefined {
-    if (this.element && this.element.nativeElement) {
+    if (this.element && this.element.nativeElement.contentWindow) {
       let _iframe = this.element.nativeElement as HTMLIFrameElement;
       if (_iframe.contentWindow) {
         return _iframe;
@@ -153,6 +154,14 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     this.amap.menuEvents.stationInformationClicked.subscribe((x) => {
       this.info.station = x;
       this.display.status = false;
+    });
+    this.panel.itemSelected.subscribe((x) => {
+      if (x instanceof Division) {
+        this.amap.divisionSelect(x.Id);
+      } else if (x instanceof GarbageStation) {
+        this.amap.pointSelect(x.Id);
+      } else {
+      }
     });
   }
   ngOnDestroy(): void {

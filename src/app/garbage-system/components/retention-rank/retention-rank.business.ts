@@ -26,7 +26,11 @@ import { RetentionRankConverter } from './retention-rank.converter';
 
 @Injectable()
 export class RetentionRankBusiness
-  implements IBusiness<DivisionNumberStatistic[], RankModel[]>
+  implements
+    IBusiness<
+      Array<DivisionNumberStatistic | GarbageStationNumberStatistic>,
+      RankModel[]
+    >
 {
   retentionType?: RetentionType;
 
@@ -38,7 +42,21 @@ export class RetentionRankBusiness
     private storeService: StoreService,
     public subscription: SubscriptionService
   ) {}
-  async getData(divisionId: string): Promise<DivisionNumberStatistic[]> {
+  async getData(
+    divisionId: string,
+    divisionType: DivisionType
+  ): Promise<DivisionNumberStatistic[] | GarbageStationNumberStatistic[]> {
+    switch (divisionType) {
+      case DivisionType.City:
+      case DivisionType.County:
+        return this.getByDivision(divisionId);
+
+      default:
+        return this.getByGarbageStation(divisionId);
+    }
+  }
+
+  async getByDivision(divisionId: string) {
     let divisionParams = new GetDivisionsParams();
     divisionParams.AncestorId = divisionId;
     let divisions = await this.divisionRequest.cache.list(divisionParams);
@@ -50,16 +68,38 @@ export class RetentionRankBusiness
     );
     return response.Data;
   }
-  Converter: IConverter<DivisionNumberStatistic[], RankModel[]> =
-    new RetentionRankConverter();
+
+  async getByGarbageStation(divisionId: string) {
+    let params = new GetGarbageStationStatisticNumbersParams();
+    params.DivisionId = divisionId;
+    let response = await this.stationRequest.statistic.number.cache.list(
+      params
+    );
+    return response.Data;
+  }
+
+  Converter: IConverter<
+    DivisionNumberStatistic[] | GarbageStationNumberStatistic[],
+    RankModel[]
+  > = new RetentionRankConverter();
   async load(retentionType?: RetentionType): Promise<RankModel[]> {
     try {
-      if (retentionType) this.retentionType = retentionType;
-      let data = await this.getData(this.storeService.divisionId);
+      if (retentionType != undefined) this.retentionType = retentionType;
+      let data = await this.getData(
+        this.storeService.divisionId,
+        this.storeService.divisionType
+      );
       while (data.length < 6) {
-        let item = new DivisionNumberStatistic();
-        item.Name = '-';
-        data.push(item);
+        let item: DivisionNumberStatistic | GarbageStationNumberStatistic;
+        if (this.storeService.divisionType == DivisionType.Committees) {
+          item = new GarbageStationNumberStatistic();
+          item.Name = '-';
+          (data as GarbageStationNumberStatistic[]).push(item);
+        } else {
+          item = new DivisionNumberStatistic();
+          item.Name = '-';
+          (data as DivisionNumberStatistic[]).push(item);
+        }
       }
       let result = this.Converter.Convert(data, retentionType);
       return result.sort((a, b) => {
