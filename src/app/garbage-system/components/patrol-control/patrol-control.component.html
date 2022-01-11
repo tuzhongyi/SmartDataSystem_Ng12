@@ -2,19 +2,31 @@
   <div class="patrol-control-header">
     <div class="title">
       <div>投放点巡检</div>
-      <div class="spinner-border spinner-border-sm green-text"></div>
+      <div
+        class="spinner-border green-text"
+        [ngClass]="{
+          'spinner-border': manualCaptureing,
+          circle: !manualCaptureing
+        }"
+      ></div>
     </div>
     <div
       class="name"
       [ngClass]="{
-        'green-text': selected.status == OnlineStatus.Online,
-        'red-text': selected.status == OnlineStatus.Offline
+        'green-text': selected.status.online == OnlineStatus.Online,
+        'red-text': selected.status.online == OnlineStatus.Offline
       }"
     >
       {{ selected.title }}
     </div>
     <div class="operation">
-      <div class="interval"></div>
+      <div class="interval">
+        <app-select-control
+          [data]="interval.times"
+          (selectedEvent)="timeSelect($event)"
+        >
+        </app-select-control>
+      </div>
       <div class="reflush" (click)="onreflush()">
         <i class="howell-icon-restore text-white"></i>
       </div>
@@ -22,7 +34,7 @@
         <i class="mdi mdi-fullscreen text-white"></i>
       </div>
       <div class="close" (click)="onclose()">
-        <i class="howell-icon-Close alert-window-close-btn text-white"></i>
+        <i class="howell-icon-Close"></i>
       </div>
     </div>
   </div>
@@ -31,13 +43,41 @@
     </app-image-video-mult-control>
   </div>
   <div class="patrol-control-footer">
-    <div class="status">状态</div>
+    <div class="status light-blue-text">
+      <div class="">
+        <i class="howell-icon-nolittering sky-blue-text2"></i
+        ><label class="">{{ selected.status.illegalDrop }}</label>
+      </div>
+      <div class="">
+        <i class="howell-icon-mixlittering sky-blue-text2"></i
+        ><label class="">{{ selected.status.mixedInto }}</label>
+      </div>
+      <div class="" *ngIf="selected.status.stationState">
+        <i class="howell-icon-fullgarbage sky-blue-text2"></i
+        ><label [class]="selected.status.stationState.class">{{
+          selected.status.stationState.language
+        }}</label>
+      </div>
+    </div>
     <div class="operation">
       <div
         class="howell-icon-arrowleftbold arrow-wrap"
         (click)="prev($event)"
       ></div>
-      <div class=""></div>
+
+      <div
+        class="arrow-wrap howell-icon-play center"
+        title="播放"
+        *ngIf="!interval.runing"
+        (click)="run()"
+      ></div>
+      <div
+        class="arrow-wrap mdi mdi-stop center"
+        title="停止"
+        *ngIf="interval.runing"
+        (click)="stop()"
+      ></div>
+
       <div
         class="howell-icon-arrowrightbold arrow-wrap"
         (click)="next($event)"

@@ -3,7 +3,17 @@ import { WindowViewModel } from 'src/app/common/components/window/window.model';
 
 @Injectable()
 export class PatrolControlBusiness extends WindowViewModel {
+  fullscreen = false;
+  constructor() {
+    super();
+  }
+
   onclose() {
     this.show = false;
+    this.fullscreen = false;
+  }
+
+  onfullscreen() {
+    this.fullscreen = !this.fullscreen;
   }
 }

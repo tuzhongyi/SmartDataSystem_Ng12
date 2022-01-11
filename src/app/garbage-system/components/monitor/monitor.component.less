@@ -69,6 +69,13 @@
         grid-column-end: c4;
         position: relative;
 
+        &.fullscreen {
+          position: absolute;
+          width: calc(100% - 10px);
+          height: calc(100% - 110px);
+          z-index: 1;
+        }
+
         .statistic-card-group {
           display: flex;
           justify-content: space-between;

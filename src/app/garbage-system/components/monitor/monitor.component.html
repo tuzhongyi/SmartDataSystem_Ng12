@@ -15,7 +15,10 @@
         <app-division-list></app-division-list>
       </div>
     </div>
-    <div class="monitor-body__item monitor-body__item--map">
+    <div
+      class="monitor-body__item monitor-body__item--map"
+      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+    >
       <div class="monitor-body__wrapper">
         <div *ngIf="statisticCardList" class="statistic-card-group">
           <ng-container *ngFor="let item of statisticCardList">
@@ -27,7 +30,10 @@
         </div>
       </div>
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <app-patrol-control (close)="patrol.onclose()"></app-patrol-control>
+        <app-patrol-control
+          (close)="patrol.onclose()"
+          (fullscreen)="patrol.onfullscreen()"
+        ></app-patrol-control>
       </div>
     </div>
     <div class="monitor-body__item">

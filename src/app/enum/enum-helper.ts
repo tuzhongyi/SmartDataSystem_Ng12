@@ -1,4 +1,6 @@
+import { Flags } from '../common/tools/flags';
 import { DivisionType } from './division-type.enum';
+import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
@@ -67,6 +69,15 @@ export class EnumHelper {
         return DivisionType.Community;
       default:
         throw new Error('this is not divisiontype');
+    }
+  }
+  static GetClass(flags: Flags<StationState>) {
+    if (flags.contains(StationState.Error)) {
+      return 'powder-red-text';
+    } else if (flags.contains(StationState.Full)) {
+      return 'orange-text';
+    } else {
+      return 'green-text';
     }
   }
 }
