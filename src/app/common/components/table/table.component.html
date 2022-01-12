@@ -1,8 +1,10 @@
 <div class='container'>
-  <mat-table [dataSource]="dataSource">
-    <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+  <mat-table [dataSource]="dataSource" matSort>
+    <ng-container *ngFor="let column of columns;let index" [matColumnDef]="column.columnDef">
       <mat-header-cell *matHeaderCellDef>
-        <span [class]="column.cls"> {{ column.header }}</span>
+        <ng-container>
+          <span [class]="column.cls" mat-sort-header> {{ column.header }}</span>
+        </ng-container>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" (click)="clickCell(column,$event)">
         <span [innerHtml]="column.cell(row)" [style]="column.style" [class]="column.cls"></span>

@@ -1,4 +1,4 @@
-import { TimePipe } from './howell-time.pipe';
-import { EscapeHtmlPipe } from './keep-html.pipe';
+import { HowellTimePipe } from './howell-time.pipe';
+import { KeepHtmlPipe } from './keep-html.pipe';
 
-export const CUSTOM_PIPES = [TimePipe, EscapeHtmlPipe];
+export const CUSTOM_PIPES = [HowellTimePipe, KeepHtmlPipe];

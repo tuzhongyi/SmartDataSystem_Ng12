@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'howelltime',
+  name: 'howellTime',
 })
-export class TimePipe implements PipeTransform {
+export class HowellTimePipe implements PipeTransform {
   transform(time: number) {
     let hour = Math.floor(time / 60);
     let minute = time - hour * 60;
