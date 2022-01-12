@@ -1,4 +1,4 @@
-import { BaseAiopUrl, BaseGarbageUrl } from '../../base.url';
+import { BaseAiopUrl } from '../../base.url';
 import { PictureInnerUrl } from './picture.url';
 
 export class MediumUrl {
