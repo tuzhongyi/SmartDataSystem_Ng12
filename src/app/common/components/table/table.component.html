@@ -1,9 +1,9 @@
 <div class='container'>
-  <mat-table [dataSource]="dataSource" matSort>
+  <mat-table [dataSource]="dataSource" matSort (matSortChange)="sortChange($event)">
     <ng-container *ngFor="let column of columns;let index" [matColumnDef]="column.columnDef">
       <mat-header-cell *matHeaderCellDef>
         <ng-container>
-          <span [class]="column.cls" mat-sort-header> {{ column.header }}</span>
+          <span [class]="column.cls" mat-sort-header> {{ column.header }} <i class="howell-icon-arrow-top"></i></span>
         </ng-container>
       </mat-header-cell>
       <mat-cell *matCellDef="let row" (click)="clickCell(column,$event)">

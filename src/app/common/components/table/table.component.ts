@@ -99,4 +99,7 @@ export class TableComponent implements OnInit, OnChanges {
   selectCancel() {
     this.selection.clear();
   }
+  sortChange(e: any) {
+    console.log(e);
+  }
 }

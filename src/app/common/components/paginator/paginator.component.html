@@ -56,11 +56,6 @@
                 <input type="number" class="jump-to-input" [(ngModel)]="jumpToIndex" (keypress)="validateInput($event)"
                     (keydown.enter)="operateJump()" />
 
-                <!-- <div contenteditable class=" jump-to-div" #editableDiv [textContent]="jumpToIndex"
-                    style="ime-mode:disabled" (keydown)="validateDiv($event)" (keyup)="excludeHan($event)"
-                    (keydown.enter)="operateJump()">
-                </div> -->
-
                 <span class='jump-to-label'>页</span>
 
                 <div class="jump-to-button" #ToBtn (click)="operateJump()">确定</div>
