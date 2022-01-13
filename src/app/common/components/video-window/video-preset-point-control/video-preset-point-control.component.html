@@ -1,0 +1,25 @@
+<div class="preset-list">
+  <div
+    class="li preset"
+    [class.selected]="selected === item"
+    (click)="onitemclicked(item)"
+    *ngFor="let item of datas"
+  >
+    <div>{{ item.name }}</div>
+    <div class="set" *ngIf="selected === item">
+      <div
+        title="调用"
+        href="javascript:void(0)"
+        class="mdi mdi-redo"
+        (click)="ondo(item)"
+      ></div>
+      <div
+        title="设置"
+        class="howell-icon-settingoutline"
+        (click)="onset(item)"
+      ></div>
+      <!-- <a *ngIf="i.isSet" href="javascript:void(0)" class="howell-icon-Close"
+                (click)="presetUserControl(viewModel.PTZ.reset.clear,i.no,viewModel.PTZ.speed)"></a> -->
+    </div>
+  </div>
+</div>

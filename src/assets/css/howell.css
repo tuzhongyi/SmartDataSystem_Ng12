@@ -1352,7 +1352,8 @@ body.login2 .login-wrapper img {
   color: #ef6464;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="number"] {
   color: #cfd7ff;
   border: 1px solid #5e6ebf;
   font-size: 18px;

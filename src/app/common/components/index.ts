@@ -20,6 +20,10 @@ import { PatrolControlComponent } from '../../garbage-system/components/patrol-c
 import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
 import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
 import { SortHeaderComponent } from './sort-header/sort-header.component';
+import { VideoSettingControlComponent } from './video-window/video-setting-control/video-setting-control.component';
+import { VideoPresetPointControlComponent } from './video-window/video-preset-point-control/video-preset-point-control.component';
+import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
+import { TimeControlComponent } from './time-control/time-control.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -42,4 +46,8 @@ export const CUSTOM_COMPONENTS = [
   ImageVideoControlComponent,
   ImageVideoMultControlComponent,
   SortHeaderComponent,
+  VideoSettingControlComponent,
+  VideoPresetPointControlComponent,
+  VideoPlaybackSettingControlComponent,
+  TimeControlComponent,
 ];

@@ -156,7 +156,7 @@ export class VideoPlayerComponent
     }
   }
   stream: StreamType = StreamType.main;
-  async loadSteam() {
+  async loadStream() {
     try {
       let result = await this.userService.config.get(
         this.local.user.Id,

@@ -16,6 +16,7 @@ import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.bu
 import { PatrolControlBusiness } from './business/patrol-control.business';
 import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
+import { VideoWindowBusiness } from './business/windows/video-window.business';
 
 @Component({
   selector: 'app-waste-monitor',
@@ -27,6 +28,7 @@ import { WindowBussiness } from './business/window.business';
     StatisticCardBussiness,
     MapControlBusiness,
     PatrolControlBusiness,
+    VideoWindowBusiness,
   ],
 })
 export class MonitorComponent implements OnInit {
@@ -43,6 +45,7 @@ export class MonitorComponent implements OnInit {
     public trigger: MonitorEventTriggerBusiness,
     public map: MapControlBusiness,
     public patrol: PatrolControlBusiness,
+    public video: VideoWindowBusiness,
     private statisticCardBussiness: StatisticCardBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');

@@ -1,0 +1,42 @@
+<div class="video-playback-setting">
+  <div class="video-playback-setting-datetime">
+    <div class="datetime">
+      <label>日期：</label>
+      <div
+        class="input-group date datepicker"
+        data-date-autoclose="true"
+        data-date-format="dd.mm.yyyy"
+        data-date-start-view="2"
+      >
+        <input
+          type="text"
+          DateTimePicker
+          [format]="'yyyy-MM-dd'"
+          [date]="date"
+          (changeDate)="changeDate($event)"
+          class="date"
+        />
+      </div>
+    </div>
+    <div action="#" class="datetime">
+      <label>开始时间：</label>
+
+      <app-time-control [time]="time.begin"></app-time-control>
+    </div>
+    <div action="#" class="datetime">
+      <label>结束时间：</label>
+      <div class="input-group bootstrap-timepicker">
+        <app-time-control [time]="time.end"></app-time-control>
+      </div>
+    </div>
+  </div>
+  <div class="btns">
+    <button class="btn full-green custom">
+      <span style="font-size: 14px; vertical-align: super"
+        >开始回放</span
+      ></button
+    ><button class="btn btn-download custom">
+      <span style="font-size: 14px; vertical-align: super">下载视频</span>
+    </button>
+  </div>
+</div>

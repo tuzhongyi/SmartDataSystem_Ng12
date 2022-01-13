@@ -7,3 +7,8 @@
   z-index: 10001;
   display: none;
 }
+
+.datetimepicker.dropdown-menu {
+
+  background-color: #0c1729;
+}

@@ -1,0 +1,161 @@
+<div class="video-setting">
+  <div class="video-setting-1">
+    <div class="video-setting-ptz">
+      <div
+        class="btn-i"
+        title="左上"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.up_left, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-left-top"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="上"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.up, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-top"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="右上"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.up_right, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-right-top"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="左"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.left, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-left"></i>
+      </div>
+      <div class="btn-i" title="还原">
+        <i class="howell-icon-restore"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="右"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.right, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-right"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="左下"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.down_left, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-left-down"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="下"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.down, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-down"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="右下"
+        (mouseup)="direction(model.PTZ.direction.stop, model.PTZ.speed)"
+        (mousedown)="direction(model.PTZ.direction.down_right, model.PTZ.speed)"
+      >
+        <i class="howell-icon-arrow-right-down"></i>
+      </div>
+    </div>
+    <div class="video-setting-other">
+      <div
+        class="btn-i"
+        title="镜头-"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.zoom_in, model.PTZ.speed)"
+      >
+        <i class="howell-icon-zoom-decrease"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="镜头+"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.zoom_out, model.PTZ.speed)"
+      >
+        <i class="howell-icon-zoom-increase"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="聚焦-"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.unfar, model.PTZ.speed)"
+      >
+        <i class="howell-icon-focus-farness"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="聚焦+"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.far, model.PTZ.speed)"
+      >
+        <i class="howell-icon-focus-nearness"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="光圈-"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.halo_off, model.PTZ.speed)"
+      >
+        <i class="howell-icon-aperture-decrease"></i>
+      </div>
+      <div
+        class="btn-i"
+        title="光圈+"
+        (mouseup)="len(model.PTZ.len.stop, model.PTZ.speed)"
+        (mousedown)="len(model.PTZ.len.halo_on, model.PTZ.speed)"
+      >
+        <i class="howell-icon-aperture-increase"></i>
+      </div>
+    </div>
+  </div>
+  <div class="video-setting-stream">
+    <div
+      class="btn-i"
+      title="主码流"
+      [ngStyle]="{ color: stream == StreamType.main ? '#a6e8ff' : '#69adff' }"
+      (click)="onstream(1)"
+    >
+      <i class="mdi mdi-quality-high"></i>
+    </div>
+    <div
+      class="btn-i"
+      title="子码流"
+      [ngStyle]="{ color: stream == StreamType.sub ? '#a6e8ff' : '#69adff' }"
+      (click)="onstream(2)"
+    >
+      <i class="howell-icon-video-loss"></i>
+    </div>
+  </div>
+  <div class="video-setting-speed">
+    <mat-slider
+      min="1"
+      max="7"
+      step="1"
+      [value]="model.PTZ.speed"
+      (input)="speed($event)"
+    ></mat-slider>
+    <input
+      matInput
+      type="number"
+      max="7"
+      min="1"
+      [(ngModel)]="model.PTZ.speed"
+    />
+  </div>
+  <div class="video-setting-preset-point-list">
+    <app-video-preset-point-control [datas]="model.PTZ.presetControl">
+    </app-video-preset-point-control>
+  </div>
+</div>

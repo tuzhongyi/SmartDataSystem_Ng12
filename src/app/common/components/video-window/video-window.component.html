@@ -1,15 +1,28 @@
-<app-window [Model]="window">
-  <ng-container *ngIf="window">
+<app-window [Model]="window" [style]="window.style" [CloseButton]="false">
+  <ng-container *ngIf="window.show">
     <div class="video-window">
       <div class="video-window-header">
-        <div class="title"></div>
-        <div class="operation"></div>
+        <div class="title">标题</div>
+        <div class="operation">
+          <div class="mode" (click)="modechange()">
+            <i class="howell-icon-replay"></i>
+          </div>
+          <div class="close" (click)="onclose()">
+            <i class="howell-icon-Close alert-window-close-btn"></i>
+          </div>
+        </div>
       </div>
-      <div class="video-window-content">
-        <div class="video"></div>
+      <div class="video-window-content preview" *ngIf="mode === PlayMode.live">
+        <div class="video">视频</div>
         <div class="controls">
-          <div></div>
-          <div></div>
+          <app-video-setting-control> </app-video-setting-control>
+        </div>
+      </div>
+      <div class="video-window-content playback" *ngIf="mode === PlayMode.vod">
+        <div class="video">视频</div>
+        <div class="controls">
+          <app-video-playback-setting-control>
+          </app-video-playback-setting-control>
         </div>
       </div>
     </div>

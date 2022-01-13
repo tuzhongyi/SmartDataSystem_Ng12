@@ -25,8 +25,11 @@
             <app-statistic-card [model]="item"></app-statistic-card>
           </ng-container>
         </div>
-        <div class="map-control">
-          <app-map-control (patrol)="map.onpatrol()"></app-map-control>
+        <div class="map-control" *ngIf="false">
+          <app-map-control
+            (patrol)="map.onpatrol()"
+            (VideoPlay)="map.onvideoplay($event)"
+          ></app-map-control>
         </div>
       </div>
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
@@ -93,4 +96,4 @@
   </ng-container>
 </app-window>
 
-<app-video-window [model]="map.videoModel"></app-video-window>
+<app-video-window [model]="video.model" [window]="video"></app-video-window>

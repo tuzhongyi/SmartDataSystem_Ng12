@@ -1,0 +1,53 @@
+.preset-list::-webkit-scrollbar {
+  width: 5px;
+}
+
+
+.preset-list {
+  border: 2px solid #616ABF;
+  height: calc(100% - 4px - 48px - 30px - 100px);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.preset-list div {
+  width: calc(100% - 5px);
+  color: rgb(216, 244, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preset-list .set {
+  width: 40px;
+  display: flex;
+  justify-content: space-around;
+
+  &>div:hover {
+    color: white;
+  }
+}
+
+
+.preset-list .li:hover {
+  background-color: rgba(47, 117, 202, 0.6);
+  cursor: pointer;
+}
+
+.preset-list .li.selected {
+  background-color: rgba(47, 117, 202, 0.6);
+  justify-content: space-between;
+}
+
+.preset-list div {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.preset.li .i-a {
+  display: none;
+}
+
+.preset.li:hover .i-a {
+  display: block;
+}
