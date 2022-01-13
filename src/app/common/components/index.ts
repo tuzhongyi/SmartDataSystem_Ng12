@@ -19,6 +19,7 @@ import { InputSearchComponent } from './input-search/input-search.component';
 import { PatrolControlComponent } from '../../garbage-system/components/patrol-control/patrol-control.component';
 import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
 import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
+import { SortHeaderComponent } from './sort-header/sort-header.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -40,4 +41,5 @@ export const CUSTOM_COMPONENTS = [
   InputSearchComponent,
   ImageVideoControlComponent,
   ImageVideoMultControlComponent,
+  SortHeaderComponent,
 ];

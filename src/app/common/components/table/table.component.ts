@@ -1,4 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
+import { outputAst } from '@angular/compiler';
 import {
   Component,
   EventEmitter,
@@ -8,6 +9,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -37,11 +39,14 @@ export class TableComponent implements OnInit, OnChanges {
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
 
-  @Output() selectTableRow: EventEmitter<any> =
-    new EventEmitter<TableCellModel>();
+  @Output() selectTableRow: EventEmitter<TableCellModel[]> = new EventEmitter<
+    TableCellModel[]
+  >();
 
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
+
+  @Output() sortTableHeader: EventEmitter<Sort> = new EventEmitter<Sort>();
 
   highLight = (model: TableCellModel) => {
     return this.selection.isSelected(model);
@@ -82,24 +87,13 @@ export class TableComponent implements OnInit, OnChanges {
     this.selection.select(...this.dataSource);
   }
   selectReverse() {
-    // 仅会发生两次 data change
-
-    // let res: TableCellModel[] = [];
-    // this.dataSource.forEach((data) => {
-    //   if (!this.selection.isSelected(data)) {
-    //     res.push(data);
-    //   }
-    // });
-    // this.selection.clear();
-    // this.selection.select(...res);
-
-    // 发生 dataSource.length 次 data change
     this.dataSource.forEach((data) => this.selection.toggle(data));
   }
   selectCancel() {
     this.selection.clear();
   }
-  sortChange(e: any) {
-    console.log(e);
+  sortChange(sort: Sort) {
+    console.log(sort);
+    this.sortTableHeader.emit(sort);
   }
 }

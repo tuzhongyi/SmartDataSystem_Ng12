@@ -16,21 +16,25 @@ export const columns: TableColumnModel[] = [
     columnDef: 'ResourceName',
     header: '资源名称',
     cell: (element: IllegalDropRecordModel) => `${element.ResourceName}`,
+    sortHeader: true,
   },
   {
     columnDef: 'StationName',
     header: '投放点',
     cell: (element: IllegalDropRecordModel) => `${element.StationName}`,
+    sortHeader: true,
   },
   {
     columnDef: 'CountyName',
     header: '街道',
     cell: (element: IllegalDropRecordModel) => `${element.CountyName}`,
+    sortHeader: true,
   },
   {
     columnDef: 'CommitteeName',
     header: '居委会',
     cell: (element: IllegalDropRecordModel) => `${element.CommitteeName}`,
+    sortHeader: true,
   },
 
   {

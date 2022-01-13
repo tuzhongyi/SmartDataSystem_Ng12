@@ -15,7 +15,8 @@
         "@schematics/angular:component": {
           "skipTests": true,
           "skipImport": true,
-          "style": "less"
+          "style": "less",
+          "prefix": "howell"
         },
         "@schematics/angular:directive": {
           "skipTests": true

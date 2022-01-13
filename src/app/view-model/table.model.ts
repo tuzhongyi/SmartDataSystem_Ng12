@@ -5,6 +5,7 @@ export class TableColumnModel {
     public columnDef: string = '',
     public header: string,
     public cell: (element: any) => string,
+    public sortHeader?: boolean,
     public style?: Partial<CSSStyleDeclaration>,
     public cls?: Array<string>
   ) {}
