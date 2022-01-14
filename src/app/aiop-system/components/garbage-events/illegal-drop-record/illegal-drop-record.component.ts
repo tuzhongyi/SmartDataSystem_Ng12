@@ -130,24 +130,25 @@ export class IllegalDropRecordComponent implements OnInit {
   sortTableHeader(sort: Sort) {
     if (!sort.active || sort.direction == '') {
       this._sortedDataSource = Array.from(this._dataSource);
-      return;
-    }
-    let isAsc = sort.direction == 'asc';
+    } else {
+      let isAsc = sort.direction == 'asc';
 
-    this._sortedDataSource.sort((a, b) => {
-      switch (sort.active) {
-        case 'ResourceName':
-          return this._compare(a.ResourceName, b.ResourceName, isAsc);
-        case 'StationName':
-          return this._compare(a.StationName, b.StationName, isAsc);
-        case 'CountyName':
-          return this._compare(a.CountyName, b.CountyName, isAsc);
-        case 'CommitteeName':
-          return this._compare(a.CommitteeName, b.CommitteeName, isAsc);
-        default:
-          return 0;
-      }
-    });
+      this._sortedDataSource.sort((a, b) => {
+        switch (sort.active) {
+          case 'ResourceName':
+            return this._compare(a.ResourceName, b.ResourceName, isAsc);
+          case 'StationName':
+            return this._compare(a.StationName, b.StationName, isAsc);
+          case 'CountyName':
+            return this._compare(a.CountyName, b.CountyName, isAsc);
+          case 'CommitteeName':
+            return this._compare(a.CommitteeName, b.CommitteeName, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
+
     this.dataSubject.next(this._sortedDataSource);
   }
   private _compare(a: string, b: string, isAsc: boolean) {
