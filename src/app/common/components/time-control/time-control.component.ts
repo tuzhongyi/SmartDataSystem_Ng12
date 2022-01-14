@@ -33,26 +33,39 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     wait(
       () => {
-        return !!(this.hour && this.minute && this.second);
+        return !!this.hour;
       },
       () => {
-        this.wheel();
+        this.wheel(this.hour!.nativeElement);
+      }
+    );
+    wait(
+      () => {
+        return !!this.minute;
+      },
+      () => {
+        this.wheel(this.minute!.nativeElement);
+      }
+    );
+    wait(
+      () => {
+        return !!this.second;
+      },
+      () => {
+        this.wheel(this.second!.nativeElement);
       }
     );
   }
 
   ngOnInit(): void {}
 
-  wheel() {
-    $('.time-control.time').each(function (
-      index: number,
-      element: HTMLElement
-    ) {
+  wheel(element: HTMLInputElement) {
+    $(element).each((index: number, element: HTMLElement) => {
       if (!element.onwheel) {
-        element.onwheel = function (this: any, event: any) {
+        element.onwheel = (event: any) => {
           event.preventDefault();
 
-          let $this = $(this);
+          let $this = $(event.currentTarget);
           let $inc = parseFloat($this.attr('step'));
           let $max = parseFloat($this.attr('max'));
           let $min = parseFloat($this.attr('min'));
@@ -62,15 +75,30 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
           if (isNaN($currVal)) {
             $currVal = 0.0;
           }
+          let value = 0;
 
           // Increment or decrement numeric based on scroll distance
           if (event.deltaY > 0) {
             if ($currVal + $inc <= $max) {
-              $this.val(TimeModel.format($currVal + $inc));
+              value = $currVal + $inc;
             }
           } else {
             if ($currVal - $inc >= $min) {
-              $this.val(TimeModel.format($currVal - $inc));
+              value = $currVal - $inc;
+            }
+          }
+          let view = TimeControlComponent.format(value);
+          // $this.val(view);
+          let input = event.currentTarget as HTMLInputElement;
+
+          let array = ['hour', 'minute', 'second'];
+
+          for (let i = 0; i < array.length; i++) {
+            const element = array[i];
+            if (input.classList.contains(array[i])) {
+              this.time[array[i]].value = value;
+              this.time[array[i]].view = view;
+              break;
             }
           }
         };
@@ -84,5 +112,12 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
       let int = parseInt(value);
       (e.target as HTMLInputElement).value = TimeModel.format(int);
     }
+  }
+
+  private static format(num: number) {
+    if (num < 10) {
+      return `0${num}`;
+    }
+    return num.toString();
   }
 }

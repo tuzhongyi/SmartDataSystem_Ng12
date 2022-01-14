@@ -7,6 +7,8 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -16,6 +18,8 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { VideoWindowViewModel } from './video-window.model';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 declare var $: any;
 
@@ -24,23 +28,85 @@ declare var $: any;
   templateUrl: './video-window.component.html',
   styleUrls: ['./video-window.component.less'],
 })
-export class VideoWindowComponent implements OnInit, OnDestroy {
+export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
   PlayMode = PlayMode;
-  mode: PlayMode = PlayMode.vod;
+
+  @Input()
+  title: string = '';
+  @Input()
+  mode: PlayMode = PlayMode.live;
 
   @Input()
   model?: VideoModel;
+
+  preview?: VideoModel;
+  playback?: VideoModel;
+
   @Input()
   window: VideoWindowViewModel = new VideoWindowViewModel();
 
-  ngOnDestroy(): void {}
-  ngOnInit(): void {}
+  @Output()
+  download: EventEmitter<IntervalParams> = new EventEmitter();
 
+  ngOnDestroy(): void {
+    this.playback = undefined;
+    this.preview = undefined;
+  }
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.model && this.model) {
+      debugger;
+      this.model.mode = this.mode;
+      switch (this.mode) {
+        case PlayMode.live:
+          this.preview = this.model;
+
+          break;
+        case PlayMode.vod:
+          this.playback = this.model;
+
+          break;
+
+        default:
+          break;
+      }
+    }
+  }
   onclose() {
     this.window.show = false;
   }
 
   modechange() {
     this.mode = this.mode == PlayMode.live ? PlayMode.vod : PlayMode.live;
+    if (this.model) {
+      this.model.mode = this.mode;
+    }
+    this.preview = undefined;
+    this.playback = undefined;
+    if (this.mode === PlayMode.live) {
+      this.preview = this.model;
+    }
+  }
+
+  ondownload(interval: IntervalParams) {
+    this.download.emit(interval);
+  }
+  onplayback(interval: IntervalParams) {
+    debugger;
+    if (this.model) {
+      this.model.beginTime = interval.BeginTime;
+      this.model.endTime = interval.EndTime;
+      let url = this.model.toString(StreamType.main);
+      let model = VideoModel.fromUrl(url);
+      this.playback = model;
+    }
+  }
+  onstreamchange(stream: StreamType) {
+    if (this.model) {
+      this.model.stream = stream;
+      let url = this.model.toString(stream);
+      let model = VideoModel.fromUrl(url);
+      this.preview = model;
+    }
   }
 }

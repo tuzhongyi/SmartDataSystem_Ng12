@@ -2,7 +2,7 @@
   <ng-container *ngIf="window.show">
     <div class="video-window">
       <div class="video-window-header">
-        <div class="title">标题</div>
+        <div class="title">{{ title }}</div>
         <div class="operation">
           <div class="mode" (click)="modechange()">
             <i class="howell-icon-replay"></i>
@@ -13,15 +13,23 @@
         </div>
       </div>
       <div class="video-window-content preview" *ngIf="mode === PlayMode.live">
-        <div class="video">视频</div>
+        <div class="video">
+          <app-video-player [model]="preview"></app-video-player>
+        </div>
         <div class="controls">
-          <app-video-setting-control> </app-video-setting-control>
+          <app-video-setting-control (streamChange)="onstreamchange($event)">
+          </app-video-setting-control>
         </div>
       </div>
       <div class="video-window-content playback" *ngIf="mode === PlayMode.vod">
-        <div class="video">视频</div>
+        <div class="video">
+          <app-video-player [model]="playback"></app-video-player>
+        </div>
         <div class="controls">
-          <app-video-playback-setting-control>
+          <app-video-playback-setting-control
+            (download)="ondownload($event)"
+            (playback)="onplayback($event)"
+          >
           </app-video-playback-setting-control>
         </div>
       </div>

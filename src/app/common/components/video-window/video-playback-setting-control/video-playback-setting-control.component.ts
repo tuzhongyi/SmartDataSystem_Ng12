@@ -1,10 +1,13 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { TimeModel } from '../../time-control/time-control.model';
 
 @Component({
@@ -38,14 +41,47 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
-    this.time.begin = new TimeModel(
-      parseInt(this.time.end.hour),
-      parseInt(this.time.end.minute) - 5,
-      parseInt(this.time.end.second)
-    );
+    let temp = this.time.end.toDate();
+    temp.setMinutes(temp.getMinutes() - 5);
+    this.time.begin = new TimeModel(temp);
   }
 
   changeDate(date: Date) {
     this.date = date;
+  }
+
+  @Output()
+  playback: EventEmitter<IntervalParams> = new EventEmitter();
+  @Output()
+  download: EventEmitter<IntervalParams> = new EventEmitter();
+
+  getParams() {
+    let begin = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      this.date.getDate(),
+      this.time.begin.hour.value,
+      this.time.begin.minute.value,
+      this.time.begin.second.value
+    );
+    let end = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      this.date.getDate(),
+      this.time.end.hour.value,
+      this.time.end.minute.value,
+      this.time.end.second.value
+    );
+    let params = new IntervalParams();
+    params.BeginTime = begin;
+    params.EndTime = end;
+    return params;
+  }
+
+  playbackclick() {
+    this.playback.emit(this.getParams());
+  }
+  downloadclick() {
+    this.download.emit(this.getParams());
   }
 }

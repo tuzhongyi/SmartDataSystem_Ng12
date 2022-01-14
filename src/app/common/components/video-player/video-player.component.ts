@@ -84,6 +84,9 @@ export class VideoPlayerComponent
     private userService: UserRequestService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes.model && !changes.model.firstChange) {
+      this.loaded = false;
+    }
     this.load();
   }
   ngAfterViewInit(): void {
@@ -204,6 +207,12 @@ export class VideoPlayerComponent
         this.onViewerDoubleClicked.emit();
       };
     }
+  }
+
+  play(model: VideoModel) {
+    this.model = model;
+    this.loaded = false;
+    this.load();
   }
 
   async stop() {

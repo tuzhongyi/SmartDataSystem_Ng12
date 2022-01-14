@@ -25,7 +25,7 @@
             <app-statistic-card [model]="item"></app-statistic-card>
           </ng-container>
         </div>
-        <div class="map-control" *ngIf="false">
+        <div class="map-control">
           <app-map-control
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
@@ -96,4 +96,9 @@
   </ng-container>
 </app-window>
 
-<app-video-window [model]="video.model" [window]="video"></app-video-window>
+<app-video-window
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
+  (download)="video.ondownload($event)"
+></app-video-window>

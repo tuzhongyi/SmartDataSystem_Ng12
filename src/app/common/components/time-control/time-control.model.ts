@@ -1,4 +1,6 @@
 export class TimeModel {
+  [key: string]: any;
+
   constructor(time?: Date);
   constructor(hour: number, minute: number, second: number);
   constructor(time?: Date | number, minute?: number, second?: number) {
@@ -6,18 +8,35 @@ export class TimeModel {
       time = new Date();
     }
     if (time instanceof Date) {
-      this.hour = TimeModel.format(time.getHours());
-      this.minute = TimeModel.format(time.getMinutes());
-      this.second = TimeModel.format(time.getSeconds());
+      this.hour = new ViewValue(
+        time.getHours(),
+        TimeModel.format(time.getHours())
+      );
+      this.minute = new ViewValue(
+        time.getMinutes(),
+        TimeModel.format(time.getMinutes())
+      );
+      this.second = new ViewValue(
+        time.getSeconds(),
+        TimeModel.format(time.getSeconds())
+      );
     } else {
-      this.hour = TimeModel.format(time);
-      this.minute = TimeModel.format(minute!);
-      this.second = TimeModel.format(second!);
+      this.hour = new ViewValue(time, TimeModel.format(time));
+      this.minute = new ViewValue(minute!, TimeModel.format(minute!));
+      this.second = new ViewValue(second!, TimeModel.format(second!));
     }
   }
-  hour: string = '00';
-  minute: string = '00';
-  second: string = '00';
+  hour: ViewValue<number> = new ViewValue(0, '00');
+  minute: ViewValue<number> = new ViewValue(0, '00');
+  second: ViewValue<number> = new ViewValue(0, '00');
+
+  toDate() {
+    let date = new Date();
+    date.setHours(this.hour.value);
+    date.setMinutes(this.minute.value);
+    date.setSeconds(this.second.value);
+    return date;
+  }
 
   static format(num: number) {
     if (num < 10) {
@@ -25,4 +44,13 @@ export class TimeModel {
     }
     return num.toString();
   }
+}
+
+class ViewValue<T> {
+  constructor(value: T, view: string) {
+    this.view = view;
+    this.value = value;
+  }
+  view: string;
+  value: T;
 }

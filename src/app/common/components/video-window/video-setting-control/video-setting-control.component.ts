@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
@@ -38,6 +46,16 @@ export class VideoSettingControlComponent implements OnInit {
       console.warn('loadSteam error', ex);
     }
   }
+  async saveStream(stream: StreamType) {
+    const fault = await this.userService.config.update(
+      this.local.user.Id,
+      UserConfigType.VideoStream,
+      stream.toString()
+    );
+    if (fault && fault.FaultCode === 0) {
+      this.stream = stream;
+    }
+  }
 
   loadPreset() {
     this.model.PTZ.presetControl = new Array();
@@ -50,6 +68,9 @@ export class VideoSettingControlComponent implements OnInit {
 
   @Input()
   model: VideoSettingControlViewModel = new VideoSettingControlViewModel();
+
+  @Output()
+  streamChange: EventEmitter<StreamType> = new EventEmitter();
 
   ngOnInit(): void {
     this.loadStream();
@@ -66,5 +87,10 @@ export class VideoSettingControlComponent implements OnInit {
     }
   }
 
-  onstream(stream: StreamType) {}
+  async onstream(stream: StreamType) {
+    this.stream = stream;
+    await this.saveStream(stream).then((x) => {
+      this.streamChange.emit(stream);
+    });
+  }
 }

@@ -94,8 +94,9 @@ export class VideoModel {
   }
 
   toString(stream?: StreamType) {
-    this.stream = stream;
-
+    if (stream) {
+      this.stream = stream;
+    }
     if (!this.stream) {
       this.stream = StreamType.sub;
     }
@@ -114,8 +115,8 @@ export class VideoModel {
 
   static fromUrl(url: string, username?: string, password?: string) {
     let model = new VideoModel(url);
-    model.username = username;
-    model.password = password;
+    if (username) model.username = username;
+    if (password) model.password = password;
     return model;
   }
 }
