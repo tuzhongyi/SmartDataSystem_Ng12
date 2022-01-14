@@ -55,7 +55,8 @@ export class IllegalDropRecordComponent implements OnInit {
 
     this._business._dataStream.subscribe(
       (res: PagedList<IllegalDropRecordModel>) => {
-        this.sortedDataSource = this.dataSource = res.Data;
+        this.dataSource = res.Data;
+        this.sortedDataSource = Array.from(this.dataSource);
         this.page = res.Page;
       }
     );
@@ -66,7 +67,7 @@ export class IllegalDropRecordComponent implements OnInit {
   }
   async initialize() {
     await this._business.loadData(this.pageIndex, this._pageSize);
-    console.log('吼吼吼');
+    // console.log('吼吼吼');
   }
 
   selectTableRow(row: IllegalDropRecordModel[]) {
@@ -120,7 +121,7 @@ export class IllegalDropRecordComponent implements OnInit {
   }
   sortTableHeader(sort: Sort) {
     if (!sort.active || sort.direction == '') {
-      this.sortedDataSource = this.dataSource;
+      this.sortedDataSource = Array.from(this.dataSource);
       return;
     }
     let isAsc = sort.direction == 'asc';
@@ -140,7 +141,7 @@ export class IllegalDropRecordComponent implements OnInit {
       }
     });
     this.sortedDataSource = Array.from(this.sortedDataSource);
-    console.log(this.sortedDataSource);
+    // console.log(this.sortedDataSource);
   }
   private _compare(a: string, b: string, isAsc: boolean) {
     if (this._localeCompareSupportsLocales()) {

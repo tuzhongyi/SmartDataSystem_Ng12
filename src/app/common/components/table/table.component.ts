@@ -93,7 +93,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.selection.clear();
   }
   sortChange(sort: Sort) {
-    console.log(sort);
+    // console.log(sort);
     this.sortTableHeader.emit(sort);
   }
 }
