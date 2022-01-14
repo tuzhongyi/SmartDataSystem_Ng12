@@ -7,9 +7,9 @@
         <div *ngIf="show">hshdfh</div>
     </div>
     <div class="illegal-drop-main">
-        <app-table [dataSource]="sortedDataSource" [columns]="columns" [displayedColumns]="displayedColumns"
+        <app-table [dataSubject]="dataSubject" [columns]="columns" [displayedColumns]="displayedColumns"
             [tableSelectModel]="tableSelectModel" (selectTableRow)="selectTableRow($event)"
-            (selectTableCell)="selectTableCell($event)" (sortTableHeader)="sortTableHeader($event)" z></app-table>
+            (selectTableCell)="selectTableCell($event)" (sortTableHeader)="sortTableHeader($event)"></app-table>
     </div>
     <div class='illegal-drop-footer'>
         <div class="footer-item">

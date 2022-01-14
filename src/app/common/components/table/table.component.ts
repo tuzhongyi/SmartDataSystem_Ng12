@@ -1,6 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { outputAst } from '@angular/compiler';
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -8,10 +9,12 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
+import { BehaviorSubject } from 'rxjs';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import {
   TableCellEvent,
@@ -24,11 +27,15 @@ import {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.less'],
 })
-export class TableComponent implements OnInit, OnChanges {
+export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   private selection!: SelectionModel<TableCellModel>;
 
-  @Input()
   dataSource: TableCellModel[] = [];
+
+  @Input()
+  dataSubject = new BehaviorSubject<TableCellModel[]>([]);
+
+  @ViewChild(MatTable) table!: MatTable<any>;
 
   @Input()
   columns: TableColumnModel[] = [];
@@ -65,13 +72,15 @@ export class TableComponent implements OnInit, OnChanges {
       this.selectTableRow.emit(change.source.selected);
     });
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    // 新数据替换
-    if ('dataSource' in changes) {
+  ngOnChanges(changes: SimpleChanges): void {}
+  ngAfterViewInit(): void {
+    this.dataSubject.subscribe((data) => {
+      this.dataSource = data;
+      this.table.renderRows();
       if (this.selection) {
         this.selection.clear();
       }
-    }
+    });
   }
   clickRow(row: TableCellModel) {
     this.selection.toggle(row);

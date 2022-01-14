@@ -1,5 +1,6 @@
 <div class='container'>
-  <mat-table [dataSource]="dataSource" matSort [matSortDisableClear]="false" (matSortChange)="sortChange($event)">
+  <mat-table [dataSource]="dataSource" matSort [matSortDisableClear]="false" (matSortChange)="sortChange($event)"
+    #table>
     <ng-container *ngFor="let column of columns;let index" [matColumnDef]="column.columnDef">
       <mat-header-cell *matHeaderCellDef>
         <ng-container>
