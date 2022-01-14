@@ -75,6 +75,7 @@ export class IllegalDropRecordComponent implements OnInit {
     this.selectedRows = row;
   }
   selectTableCell({ column, event }: TableCellEvent) {
+    console.log(column, event);
     // 特殊处理
     if (column.columnDef == 'ImageUrl' || column.columnDef == 'Operation') {
       // console.log(event);
@@ -83,7 +84,7 @@ export class IllegalDropRecordComponent implements OnInit {
       let flag = path.some((el) => {
         if (el instanceof HTMLElement) {
           return (
-            el.nodeName.toLocaleLowerCase() == 'span' &&
+            el.nodeName.toLocaleLowerCase() == 'div' &&
             (el.classList.contains('picture') ||
               el.classList.contains('operate'))
           );
@@ -91,6 +92,7 @@ export class IllegalDropRecordComponent implements OnInit {
         return false;
       });
       if (flag) {
+        console.log('自定义处理');
         event.stopPropagation();
       }
     }

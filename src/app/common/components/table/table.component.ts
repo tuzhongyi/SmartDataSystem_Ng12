@@ -77,6 +77,7 @@ export class TableComponent implements OnInit, OnChanges {
     this.selection.toggle(row);
   }
   clickCell(column: TableColumnModel, event: Event) {
+    console.log('click cell');
     this.selectTableCell.emit({
       column,
       event,
