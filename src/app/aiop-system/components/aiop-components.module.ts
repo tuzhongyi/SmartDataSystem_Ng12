@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-24 10:13:29
+ * @Last Modified time: 2022-01-17 13:34:59
  */
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -13,7 +13,6 @@ import { SystemModeComponent } from './system-mode/system-mode.component';
 import { AiopManageComponent } from './aiop-manage/aiop-manage.component';
 import { MonitorPlatformComponent } from './monitor-platform/index/monitor-platform.component';
 import { DivisionManageComponent } from './monitor-platform/division-manage/division-manage.component';
-import { IllegalDropRecordComponent } from './garbage-events/illegal-drop-record/illegal-drop-record.component';
 import { GarbageEventsComponent } from './garbage-events/index/garbage-events.component';
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { GarbageEventsComponent } from './garbage-events/index/garbage-events.co
     MonitorPlatformComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
-    IllegalDropRecordComponent,
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule],
   providers: [],

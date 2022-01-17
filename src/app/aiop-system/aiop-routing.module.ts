@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiopComponent } from './aiop.component';
 import { AiopManageComponent } from './components/aiop-manage/aiop-manage.component';
-import { IllegalDropRecordComponent } from './components/garbage-events/illegal-drop-record/illegal-drop-record.component';
+import { IllegalDropRecordComponent } from '../common/components/illegal-drop-record/illegal-drop-record.component';
 import { GarbageEventsComponent } from './components/garbage-events/index/garbage-events.component';
 import { DivisionManageComponent } from './components/monitor-platform/division-manage/division-manage.component';
 import { MonitorPlatformComponent } from './components/monitor-platform/index/monitor-platform.component';
