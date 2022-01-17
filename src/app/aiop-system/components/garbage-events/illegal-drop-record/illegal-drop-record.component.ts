@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -20,6 +21,7 @@ import { TableComponent } from 'src/app/common/components/table/table.component'
 import { PageEvent } from '@angular/material/paginator';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { Sort } from '@angular/material/sort';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-illegal-drop-record',
@@ -31,13 +33,15 @@ export class IllegalDropRecordComponent implements OnInit {
   /**private */
 
   private _pageSize = 9;
-  public page: Page | null = null;
+
+  private _dataSource: IllegalDropRecordModel[] = []; // 表格数据源
+  private _sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
 
   /**public */
   show = false;
-  dataSource: IllegalDropRecordModel[] = []; // 表格数据源
+  public page: Page | null = null;
 
-  sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
+  dataSubject = new BehaviorSubject<IllegalDropRecordModel[]>([]);
 
   columns: TableColumnModel[] = [...columns]; // 表格列配置详情
   displayedColumns: string[] = this.columns.map((column) => column.columnDef); // 表格列 id
@@ -51,13 +55,15 @@ export class IllegalDropRecordComponent implements OnInit {
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
   constructor(private _business: IllegalDropRecordBusiness) {
-    this.sortedDataSource = this.dataSource = [];
+    this._sortedDataSource = this._dataSource = [];
 
     this._business._dataStream.subscribe(
       (res: PagedList<IllegalDropRecordModel>) => {
-        this.dataSource = res.Data;
-        this.sortedDataSource = Array.from(this.dataSource);
+        this._dataSource = res.Data;
+        this._sortedDataSource = Array.from(this._dataSource);
         this.page = res.Page;
+
+        this.dataSubject.next(this._dataSource);
       }
     );
   }
@@ -123,27 +129,27 @@ export class IllegalDropRecordComponent implements OnInit {
   }
   sortTableHeader(sort: Sort) {
     if (!sort.active || sort.direction == '') {
-      this.sortedDataSource = Array.from(this.dataSource);
-      return;
-    }
-    let isAsc = sort.direction == 'asc';
+      this._sortedDataSource = Array.from(this._dataSource);
+    } else {
+      let isAsc = sort.direction == 'asc';
 
-    this.sortedDataSource.sort((a, b) => {
-      switch (sort.active) {
-        case 'ResourceName':
-          return this._compare(a.ResourceName, b.ResourceName, isAsc);
-        case 'StationName':
-          return this._compare(a.StationName, b.StationName, isAsc);
-        case 'CountyName':
-          return this._compare(a.CountyName, b.CountyName, isAsc);
-        case 'CommitteeName':
-          return this._compare(a.CommitteeName, b.CommitteeName, isAsc);
-        default:
-          return 0;
-      }
-    });
-    this.sortedDataSource = Array.from(this.sortedDataSource);
-    // console.log(this.sortedDataSource);
+      this._sortedDataSource.sort((a, b) => {
+        switch (sort.active) {
+          case 'ResourceName':
+            return this._compare(a.ResourceName, b.ResourceName, isAsc);
+          case 'StationName':
+            return this._compare(a.StationName, b.StationName, isAsc);
+          case 'CountyName':
+            return this._compare(a.CountyName, b.CountyName, isAsc);
+          case 'CommitteeName':
+            return this._compare(a.CommitteeName, b.CommitteeName, isAsc);
+          default:
+            return 0;
+        }
+      });
+    }
+
+    this.dataSubject.next(this._sortedDataSource);
   }
   private _compare(a: string, b: string, isAsc: boolean) {
     if (this._localeCompareSupportsLocales()) {
