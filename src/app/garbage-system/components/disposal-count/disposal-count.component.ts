@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-25 16:19:04
+ * @Last Modified time: 2022-01-17 13:15:04
  */
 import {
   AfterViewInit,
@@ -64,7 +64,6 @@ export class DisposalCountComponent
   ngOnInit(): void {
     this.business.subscription.subscription =
       this.storeService.statusChange.subscribe((x) => {
-        debugger;
         this.loadData();
       });
     this.loadData();
