@@ -2,7 +2,7 @@
   <div class="disposal-count__head">
     <div class="title" [title]="title">{{ title }}</div>
     <div class="sub-title">
-      {{ currentItem?.name }}
+      {{ data?.name }}
     </div>
   </div>
   <div class="disposal-count__body">
@@ -13,10 +13,10 @@
       (resized)="onResized($event)"
     ></div>
     <div class="details">
-      <ng-container *ngIf="currentItem">
+      <ng-container *ngIf="data">
         <ng-template
           ngFor
-          [ngForOf]="currentItem.disposalCountArray"
+          [ngForOf]="data.disposalCountArray"
           let-disposalCount
         >
           <div class="details__item">

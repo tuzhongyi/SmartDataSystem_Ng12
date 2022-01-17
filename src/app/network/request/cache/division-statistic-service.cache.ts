@@ -27,7 +27,9 @@ export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberSt
       if (data) {
         return data;
       }
-    } catch (error) {}
+    } catch (error) {
+      console.warn(error);
+    }
     return super.get(id);
   }
 

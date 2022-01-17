@@ -4,6 +4,27 @@ import { GetGarbageStationsParams } from '../garbage-station/garbage-station-req
 import { ServiceCache } from './service.cache';
 
 export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
+  async get(id: string): Promise<GarbageStation> {
+    return new Promise((reject) => {
+      this.wait((data) => {
+        let result = data.find((x) => x.Id === id);
+        if (result) {
+          reject(result);
+        }
+        this.service.get(id).then((x) => {
+          let datas = this.load();
+          if (!datas) datas = [];
+          let index = datas.findIndex((x) => x.Id == id);
+          if (index < 0) {
+            datas.push(x);
+            this.save(datas);
+          }
+          reject(x);
+        });
+      });
+    });
+  }
+
   async list(
     args?: GetGarbageStationsParams
   ): Promise<PagedList<GarbageStation>> {

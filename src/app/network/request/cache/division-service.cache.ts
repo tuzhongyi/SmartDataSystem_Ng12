@@ -10,6 +10,27 @@ export class DivisionServiceCache extends ServiceCache<Division> {
     super(key, service);
   }
 
+  async get(id: string): Promise<Division> {
+    return new Promise((reject) => {
+      this.wait((data) => {
+        let result = data.find((x) => x.Id === id);
+        if (result) {
+          reject(result);
+        }
+        this.service.get(id).then((x) => {
+          let datas = this.load();
+          if (!datas) datas = [];
+          let index = datas.findIndex((x) => x.Id == id);
+          if (index < 0) {
+            datas.push(x);
+            this.save(datas);
+          }
+          reject(x);
+        });
+      });
+    });
+  }
+
   async list(args?: GetDivisionsParams): Promise<PagedList<Division>> {
     return new Promise((reject) => {
       this.wait((datas: Division[]) => {

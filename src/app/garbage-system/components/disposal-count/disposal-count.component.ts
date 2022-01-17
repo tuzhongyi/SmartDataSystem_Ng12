@@ -8,6 +8,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Input,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -47,36 +48,7 @@ export class DisposalCountComponent
 {
   public title: string = '垃圾滞留处置情况';
 
-  public get currentItem() {
-    return this.disposalCountData[this.startIndex];
-  }
-  // 遍历数组开始序号
-  private startIndex: number = 0;
-
-  // 在销毁组件时，取消订阅
-  private subscription: Subscription | null = null;
-
-  // 数据切换
-  private swiperSubscription: Subscription | null = null;
-
-  // 当前区划id
-  private divisionId: string = '';
-
-  // 当前区划类型
-  private currentDivisionType: DivisionType = DivisionType.None;
-
-  // 下级资源类型
-  private childDivisionType!: UserResourceType;
-
-  // 当前区划
-  private currentDivision: Division | null = null;
-
-  // 服务器数据
-  private rawData: Array<
-    DivisionNumberStatistic | GarbageStationNumberStatistic
-  > = [];
-
-  private disposalCountData: Array<DisposalCountModel> = [];
+  data?: DisposalCountModel;
 
   private myChart!: echarts.ECharts;
   private option!: ECOption;
@@ -85,16 +57,17 @@ export class DisposalCountComponent
   @ViewChild('chartContainer') chartContainer?: ElementRef<HTMLElement>;
 
   constructor(
-    private storeService: StoreService,
-    private business: DisposalCountBusiness
+    private business: DisposalCountBusiness,
+    private storeService: StoreService
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
-
-    this.changeStatus();
+    this.business.subscription.subscription =
+      this.storeService.statusChange.subscribe((x) => {
+        debugger;
+        this.loadData();
+      });
+    this.loadData();
 
     this.gaugeOption = {
       type: 'gauge',
@@ -261,9 +234,8 @@ export class DisposalCountComponent
     };
   }
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
+    if (this.business.subscription) {
+      this.business.subscription.destroy();
     }
   }
 
@@ -274,84 +246,17 @@ export class DisposalCountComponent
     }
   }
 
-  changeStatus() {
-    this.divisionId = this.storeService.divisionId;
-    this.currentDivisionType = this.storeService.divisionType;
-    const resourceType = EnumHelper.ConvertDivisionToUserResource(
-      this.currentDivisionType
-    );
-    this.childDivisionType = EnumHelper.GetResourceChildTypeByDivisionType(
-      this.currentDivisionType
-    );
-
-    this.loadData();
-  }
-
   async loadData() {
-    // 每次拉取数据先重置状态
-    this.rawData = [];
-
-    if (this.swiperSubscription) {
-      this.swiperSubscription.unsubscribe();
-      this.swiperSubscription = null;
-    }
-
-    this.currentDivision = await this.business.getCurrentDivision(
-      this.divisionId
+    let type = EnumHelper.ConvertDivisionToUserResource(
+      this.storeService.divisionType
     );
-    // console.log('当前区划', this.currentDivision);
 
-    let currentDivisionStatistic =
-      await this.business.getCurrentDivisionStatistic(this.divisionId);
+    this.data = await this.business.load(this.storeService.divisionId, type);
+    // this.gaugeOption.data = [
+    //   { name: '处置率', value: this.data.handledPercentage },
+    // ];
 
-    this.rawData.push(currentDivisionStatistic);
-
-    let data = await this.business.statistic(
-      this.divisionId,
-      this.currentDivisionType,
-      this.childDivisionType
-    );
-    if (data) {
-      this.rawData = this.rawData.concat(data);
-    }
-    // console.log('rawData', this.rawData);
-
-    this.disposalCountData = this.business.toDisposalCount<
-      DivisionNumberStatistic | GarbageStationNumberStatistic
-    >(this.rawData);
-
-    // console.log('disposalCountData', this.disposalCountData);
-
-    // startIndex延后到这里重置
-    this.startIndex = 0;
-
-    // console.log(this.currentItem);
-
-    // this.myChart.setOption({
-    //   series: [
-    //     {
-    //       type: 'gauge',
-    //       data: [{ name: '处置率', value: this.currentItem.handledPercentage }],
-    //     },
-    //   ],
-    // });
-
-    this.gaugeOption.data = [
-      { name: '处置率', value: this.currentItem.handledPercentage },
-    ];
-    this.myChart.setOption(this.option);
-
-    this.swiperSubscription = interval(10 * 1000).subscribe((n) =>
-      this.startIterate()
-    );
-  }
-  startIterate() {
-    console.log('startIterate');
-    this.startIndex = (this.startIndex + 1) % this.disposalCountData.length;
-
-    this.gaugeOption.data = [
-      { name: '处置率', value: this.currentItem.handledPercentage },
-    ];
+    (this.option.series! as any)[0].data[0].value = this.data.handledPercentage;
     this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {

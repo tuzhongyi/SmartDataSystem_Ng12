@@ -154,8 +154,31 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
             {
               name: this.deviceStateCountModel.stateDes,
               value: this.deviceStateCountModel.onLineRatio,
+              // itemStyle: {
+              //   color: this.stateRatioColor,
+              // },
               itemStyle: {
-                color: this.stateRatioColor,
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: 100 / this.deviceStateCountModel.onLineRatio,
+                  y2: 0,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#ef6464', // 0% 处的颜色
+                    },
+                    {
+                      offset: 0.5,
+                      color: '#ffba00', // 100% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: '#21e452', // 100% 处的颜色
+                    },
+                  ],
+                },
               },
               title: {
                 color: this.stateRatioColor,
