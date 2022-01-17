@@ -1,4 +1,4 @@
-<!-- <div class="monitor-container">
+<div class="monitor-container">
   <div class="monitor-header">
     <mat-toolbar>
       <app-account-info></app-account-info>
@@ -15,17 +15,28 @@
         <app-division-list></app-division-list>
       </div>
     </div>
-    <div class="monitor-body__item monitor-body__item--map" [ngClass]="{ fullscreen: patrol.fullscreen == true }">
+    <div
+      class="monitor-body__item monitor-body__item--map"
+      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+    >
       <div class="monitor-body__wrapper">
         <div *ngIf="statisticCardList" class="statistic-card-group">
           <ng-container *ngFor="let item of statisticCardList">
             <app-statistic-card [model]="item"></app-statistic-card>
           </ng-container>
         </div>
-       
+        <div class="map-control" *ngIf="false">
+          <app-map-control
+            (patrol)="map.onpatrol()"
+            (VideoPlay)="map.onvideoplay($event)"
+          ></app-map-control>
+        </div>
       </div>
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <app-patrol-control (close)="patrol.onclose()" (fullscreen)="patrol.onfullscreen()"></app-patrol-control>
+        <app-patrol-control
+          (close)="patrol.onclose()"
+          (fullscreen)="patrol.onfullscreen()"
+        ></app-patrol-control>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -35,7 +46,9 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-illegal-mixinto-rank (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)">
+        <app-illegal-mixinto-rank
+          (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
+        >
         </app-illegal-mixinto-rank>
       </div>
     </div>
@@ -51,12 +64,17 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts>
+        <app-event-statistic-echarts
+          [title]="'乱扔垃圾统计表'"
+        ></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-event-statistic-echarts [title]="'混合投放统计表'" [type]="mixIntoType"></app-event-statistic-echarts>
+        <app-event-statistic-echarts
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></app-event-statistic-echarts>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -78,7 +96,10 @@
   </ng-container>
 </app-window>
 
-<app-video-window [model]="video.model" [window]="video" [title]="video.title" (download)="video.ondownload($event)">
-</app-video-window> -->
-
-<app-illegal-drop-record></app-illegal-drop-record>
+<app-video-window
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
+  (download)="video.ondownload($event)"
+>
+</app-video-window>
