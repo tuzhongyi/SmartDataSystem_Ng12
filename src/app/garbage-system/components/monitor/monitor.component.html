@@ -85,7 +85,7 @@
   </div>
 </div>
 
-<app-window [Model]="window.record">
+<app-window [Model]="window.record" [style]="window.record.style">
   <ng-container *ngIf="window.record.show">
     <app-event-record-details></app-event-record-details>
   </ng-container>

@@ -7,7 +7,17 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 class DeviceWindowViewModel extends WindowViewModel {
   onlineStatus?: OnlineStatus;
 }
-class RecordWindowViewModel extends WindowViewModel {}
+class RecordWindowViewModel extends WindowViewModel {
+  style = {
+    height: '83%',
+    transform: 'translate(-50%, -45%)',
+  };
+
+  constructor() {
+    super();
+    this.show = true;
+  }
+}
 class VideoWindowViewModel extends WindowViewModel {
   constructor(private stationService: GarbageStationRequestService) {
     super();

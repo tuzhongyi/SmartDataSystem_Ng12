@@ -1,5 +1,7 @@
+import { IModel } from './model.interface';
+
 /** 地理信息坐标点 */
-export class GisPoint {
+export class GisPoint implements IModel {
   /**	Double	经度	M */
   Longitude!: number;
   /**	Double	纬度	M */

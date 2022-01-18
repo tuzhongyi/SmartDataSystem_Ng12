@@ -1369,3 +1369,23 @@ input[type="text"]:focus {
   background-color: #0d1f38;
   border: 1px solid #3a93ff;
 }
+
+
+.hw-blue-btn {
+  width: 76px;
+  height: 34px;
+  cursor: pointer;
+  background-color: unset;
+  border: unset;
+  background-image: url(/assets/img/blue-btn.png);
+  background-size: 100% 100%;
+}
+
+.hw-cyan-m-btn {
+  width: 46px;
+  cursor: pointer;
+  height: 34px;
+  background-color: unset;
+  border: unset;
+  background-image: url(/assets/img/cyan-m-btn.png);
+}

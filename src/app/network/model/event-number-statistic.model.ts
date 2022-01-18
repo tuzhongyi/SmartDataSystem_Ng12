@@ -1,9 +1,10 @@
 import { Transform } from 'class-transformer';
 import { EventNumber } from './event-number.model';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 事件统计信息 */
-export class EventNumberStatistic {
+export class EventNumberStatistic implements IModel {
   /**	EventNumber[]	事件数量	M */
   EventNumbers!: EventNumber[];
   /**	DateTime	开始时间	M */

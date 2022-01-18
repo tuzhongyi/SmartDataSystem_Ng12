@@ -5,9 +5,10 @@ import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from '../../enum/role-user-data.enum';
 import { transformDateTime } from './transform.model';
 import { UserResource } from './user.model';
+import { IModel } from './model.interface';
 
 /** 角色信息 */
-export class Role {
+export class Role implements IModel {
   /**	String	唯一标识符	M	R */
   Id!: string;
   /**	String	角色名称	M	RW */

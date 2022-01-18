@@ -4,6 +4,7 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { StoreService } from 'src/app/global/service/store.service';
 import { Language } from 'src/app/global/tool/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GetDivisionStatisticNumbersParams } from 'src/app/network/request/division/division-request.params';
@@ -17,21 +18,21 @@ export class StatisticCardBussiness
 {
   constructor(
     private divisionService: DivisionRequestService,
-    private garbageStationService: GarbageStationRequestService
+    private garbageStationService: GarbageStationRequestService,
+    private storeService: StoreService
   ) {}
   Converter = new StatisticCardConverter();
   subscription?: ISubscription | undefined;
   async load(...args: any): Promise<StatisticCardViewModel[]> {
-    let data = await this.getData();
+    let data = await this.getData(this.storeService.divisionId);
     let array = this.Converter.Convert(data);
     let stations = await this.garbageStationService.cache.all();
     let count = this.Converter.createGarbageStation(stations.length);
     array.unshift(count);
     return array;
   }
-  async getData(...args: any): Promise<DivisionNumberStatistic> {
-    let data = await this.divisionService.statistic.number.cache.list();
-    return data.Data[0];
+  getData(divisionId: string): Promise<DivisionNumberStatistic> {
+    return this.divisionService.statistic.number.cache.get(divisionId);
   }
 }
 
@@ -68,7 +69,7 @@ class StatisticCardConverter
     card.title =
       Language.json.garbage + Language.json.stay + Language.json.station;
     card.value = input.GarbageDropStationNumber ?? 0;
-    card.class = 'sky-blue-text2';
+    card.class = 'green-text';
     return card;
   }
   createFullStation(input: DivisionNumberStatistic) {

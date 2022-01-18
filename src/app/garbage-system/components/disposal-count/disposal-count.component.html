@@ -21,7 +21,17 @@
         >
           <div class="details__item">
             <div class="mission-name">{{ disposalCount.label }}</div>
-            <div class="mission-count">{{ disposalCount.count }}</div>
+            <div
+              class="mission-count"
+              [ngClass]="{
+                'sky-blue-text2': disposalCount.tag === DisposalCountType.total,
+                'orange-text': disposalCount.tag === DisposalCountType.timeout,
+                'powder-red-text':
+                  disposalCount.tag === DisposalCountType.unhandled
+              }"
+            >
+              {{ disposalCount.count }}
+            </div>
           </div>
         </ng-template>
       </ng-container>

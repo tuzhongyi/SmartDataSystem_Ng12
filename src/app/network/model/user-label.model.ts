@@ -1,7 +1,8 @@
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
+import { IModel } from './model.interface';
 
 /** 用户自定义标签信息 */
-export class UserLabel {
+export class UserLabel implements IModel {
   /**	String	标签ID，同类型的标签ID必须唯一	M	RW */
   LabelId!: string;
   /**	String	标签名称	O	RW */

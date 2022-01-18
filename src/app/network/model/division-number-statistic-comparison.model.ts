@@ -1,8 +1,9 @@
 import { EventNumberComparison } from './garbage-station-number-statistic-comparison.model';
+import { IModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
 /** 区划比较数据 */
-export class DivisionNumberStatisticComparison {
+export class DivisionNumberStatisticComparison implements IModel {
   /**	String	区划ID	M */
   Id!: string;
   /**	String	区划名称	M */

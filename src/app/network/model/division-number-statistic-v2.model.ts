@@ -1,8 +1,9 @@
 import { EventNumber } from './event-number.model';
+import { IModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
 /** 区划的数量统计信息 */
-export class DivisionNumberStatisticV2 {
+export class DivisionNumberStatisticV2 implements IModel {
   /**	String	区划ID	M */
   Id!: string;
   /**	String	区划名称	M */

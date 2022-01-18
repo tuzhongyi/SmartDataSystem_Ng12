@@ -1,10 +1,10 @@
 import { IllegalDropRecordModel } from './illegal-drop-record.model';
 
-export class TableColumnModel {
+export class TableColumnModel<T = any> {
   constructor(
     public columnDef: string = '',
     public header: string,
-    public cell: (element: any) => string,
+    public cell: (element: T) => string,
     public sortHeader?: boolean,
     public style?: Partial<CSSStyleDeclaration>,
     public cls?: Array<string>

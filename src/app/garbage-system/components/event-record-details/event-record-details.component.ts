@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Component({
   selector: 'app-event-record-details',
@@ -8,6 +9,9 @@ import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.d
 })
 export class EventRecordDetailsComponent implements OnInit {
   DateTimePickerView = DateTimePickerView;
+
+  type: EventType = EventType.IllegalDrop;
+
   constructor() {}
 
   ngOnInit(): void {}
@@ -16,4 +20,8 @@ export class EventRecordDetailsComponent implements OnInit {
   changeDate(date: Date) {
     this.date = date;
   }
+
+  display = {
+    filter: true,
+  };
 }

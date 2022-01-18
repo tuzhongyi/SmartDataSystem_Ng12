@@ -1,10 +1,11 @@
 import { Transform } from 'class-transformer';
 import { CanType } from '../../enum/can-type.enum';
 import { LidState } from '../../enum/lid-state.enum';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 垃圾桶 */
-export class TrashCan {
+export class TrashCan implements IModel {
   /**	String	垃圾桶ID	M */
   Id!: string;
   /**	String	垃圾桶名称	O */

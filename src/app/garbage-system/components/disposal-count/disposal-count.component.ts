@@ -32,6 +32,7 @@ import { TitleComponent, TitleComponentOption } from 'echarts/components';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
+import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 
 echarts.use([TitleComponent, GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -46,6 +47,7 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
 export class DisposalCountComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  DisposalCountType = DisposalCountType;
   public title: string = '垃圾滞留处置情况';
 
   data?: DisposalCountModel;

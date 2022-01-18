@@ -1,9 +1,10 @@
 import { Transform } from 'class-transformer';
 import { MemberType } from '../../enum/member-type.enum';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 垃圾房管理人员 */
-export class Member {
+export class Member implements IModel {
   /**	String	成员ID	M */
   Id!: string;
   /**	String	姓名	M */

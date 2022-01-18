@@ -1,12 +1,13 @@
 import { Transform } from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
 import { ResourceType } from '../../enum/resource-type.enum';
+import { IModel } from './model.interface';
 import { Point } from './point.model';
 import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
 
 /** 事件基础类型 */
-export class EventRecord {
+export class EventRecord implements IModel {
   /**	String	事件ID	M */
   EventId!: string;
   /**	DateTime	事件时间	M */
@@ -42,7 +43,9 @@ class EventRecordData<T> extends EventRecord {
 }
 
 /** 乱丢垃圾事件 */
-export class IllegalDropEventRecord extends EventRecordData<IllegalDropEventData> {}
+export class IllegalDropEventRecord
+  extends EventRecordData<IllegalDropEventData>
+  implements IModel {}
 /** */
 interface IllegalDropEventData {
   /**	String	垃圾房ID	M */
@@ -71,7 +74,9 @@ export interface EventDataObject {
 }
 
 /** 混合投放事件 */
-export class MixedIntoEventRecord extends EventRecordData<MixedIntoEventData> {}
+export class MixedIntoEventRecord
+  extends EventRecordData<MixedIntoEventData>
+  implements IModel {}
 /** */
 interface MixedIntoEventData {
   /**	String	垃圾房ID	M */
@@ -97,7 +102,9 @@ interface MixedIntoEventData {
  * Data	GarbageFullEventData	事件数据	M
  *
  * */
-export class GarbageFullEventRecord extends EventRecordData<GarbageFullEventData> {}
+export class GarbageFullEventRecord
+  extends EventRecordData<GarbageFullEventData>
+  implements IModel {}
 /** */
 class GarbageFullEventData {
   /**	String	垃圾房ID	M */
@@ -125,7 +132,9 @@ class GarbageFullEventData {
  *  小包垃圾落地事件
  *  Data	GarbageDropEventData	事件数据	M
  */
-export class GarbageDropEventRecord extends EventRecordData<GarbageDropEventRData> {}
+export class GarbageDropEventRecord
+  extends EventRecordData<GarbageDropEventRData>
+  implements IModel {}
 /** */
 class GarbageDropEventRData {
   /**	String	垃圾房ID	M */

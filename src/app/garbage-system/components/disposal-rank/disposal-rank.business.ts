@@ -22,7 +22,6 @@ export class DisposalRankBusiness
   implements IBusiness<GarbageStationNumberStatistic[], RankModel[]>
 {
   constructor(
-    private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
     public subscription: SubscriptionService,
     private storeService: StoreService

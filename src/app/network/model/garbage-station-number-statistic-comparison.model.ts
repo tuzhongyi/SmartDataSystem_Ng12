@@ -1,8 +1,9 @@
 import { EventType } from '../../enum/event-type.enum';
+import { IModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
 /** 垃圾房比较数据 */
-export class GarbageStationNumberStatisticComparison {
+export class GarbageStationNumberStatisticComparison implements IModel {
   /**	String	垃圾房ID	M */
   Id!: string;
   /**	String	垃圾房名称	M */

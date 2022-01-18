@@ -25,6 +25,8 @@ import { VideoPresetPointControlComponent } from './video-window/video-preset-po
 import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
 import { TimeControlComponent } from './time-control/time-control.component';
 import { IllegalDropRecordComponent } from './illegal-drop-record/illegal-drop-record.component';
+import { EventRecordTableComponent } from './tables/event-record-table/event-record-table.component';
+import { Table_COMPONENTS } from './tables/table-component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -52,4 +54,5 @@ export const CUSTOM_COMPONENTS = [
   VideoPlaybackSettingControlComponent,
   TimeControlComponent,
   IllegalDropRecordComponent,
+  ...Table_COMPONENTS,
 ];

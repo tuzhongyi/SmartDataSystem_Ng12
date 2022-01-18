@@ -1,3 +1,5 @@
+import { IModel } from './model.interface';
+
 /** 分页信息 */
 export interface Page {
   /**	Int32	页码 1.2.3 …..	M */
@@ -13,7 +15,7 @@ export interface Page {
   /** */
 }
 /** 分页数据 */
-export class PagedList<T> {
+export class PagedList<T> implements IModel {
   /**	Page	分页信息	M */
   Page!: Page;
   /**	T[]	数据内容，T为任何需要的类型	M */

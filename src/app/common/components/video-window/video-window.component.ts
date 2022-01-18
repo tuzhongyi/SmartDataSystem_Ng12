@@ -55,7 +55,6 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
   ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && this.model) {
-      debugger;
       this.model.mode = this.mode;
       switch (this.mode) {
         case PlayMode.live:
@@ -92,7 +91,6 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
     this.download.emit(interval);
   }
   onplayback(interval: IntervalParams) {
-    debugger;
     if (this.model) {
       this.model.beginTime = interval.BeginTime;
       this.model.endTime = interval.EndTime;

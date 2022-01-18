@@ -1,8 +1,9 @@
 import { Transform } from 'class-transformer';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 垃圾容量 */
-export class GarbageVolume {
+export class GarbageVolume implements IModel {
   /**	Double	当天总数量，单位：L	M */
   DayVolume!: number;
   /**	Double	当天干垃圾容量，单位：L	M */

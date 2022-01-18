@@ -2,6 +2,7 @@ import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
 import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
 import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from 'src/app/enum/role-user-data.enum';
+import { IModel } from './model.interface';
 import { UserResource } from './user.model';
 
 /**
@@ -10,7 +11,7 @@ import { UserResource } from './user.model';
  * @export
  * @class UserValidateResult
  */
-export class UserValidateResult {
+export class UserValidateResult implements IModel {
   /**	Boolean	随机数过期	O	R */
   NonceExpired?: boolean;
   /**	Boolean	方法是否有效	O	R */
@@ -24,7 +25,7 @@ export class UserValidateResult {
  *
  * @class UserNonce
  */
-export class UserNonce {
+export class UserNonce implements IModel {
   /**	String	随机数	M	R */
   Nonce!: string;
   /**	String	用户唯一标识符	O	R */

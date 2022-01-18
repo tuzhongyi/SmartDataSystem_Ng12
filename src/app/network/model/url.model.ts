@@ -1,4 +1,5 @@
 import { Transform } from 'class-transformer';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /**
@@ -10,7 +11,7 @@ import { transformDateTime } from './transform.model';
  *  QueryString中的user，password请使用用户登录的用户名密码，此处示例中的用户名密码不一定是实际项目中的用户名密码
  *
  */
-export class VideoUrl {
+export class VideoUrl implements IModel {
   /**	String	Url地址	M */
   Url!: string;
   /**	String	用户名	O */
@@ -31,7 +32,7 @@ export interface CameraImageUrl {
 }
 
 /** 摄像机照片信息 */
-export class CameraPictureUrl {
+export class CameraPictureUrl implements IModel {
   /**	Boolean	抓图结果，True：成功	M */
   Result!: boolean;
   /**	String	图片ID	O */
@@ -47,7 +48,7 @@ export class CameraPictureUrl {
   CameraName?: string;
 }
 /** 录像文件Url */
-export class RecordFileUrl {
+export class RecordFileUrl implements IModel {
   /**	Boolean	结果，True：成功	M */
   Result!: boolean;
   /**	String	图片URL地址	M */

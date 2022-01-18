@@ -2,9 +2,10 @@ import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
+import { IModel } from './model.interface';
 import { Role } from './role.model';
 import { transformDateTime } from './transform.model';
-export class User {
+export class User implements IModel {
   /// <signature>
   /// <summary>User</summary>
   /// <field name='Id' type='String'>唯一标识符 M</field>
@@ -73,7 +74,7 @@ export class User {
   OffEvents?: number[];
 }
 
-export class UserResource {
+export class UserResource implements IModel {
   /**	String	资源ID	M	R */
   Id!: string;
   /**	String	资源名称	O	R */

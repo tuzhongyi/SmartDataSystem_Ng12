@@ -10,6 +10,7 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
         let result = data.find((x) => x.Id === id);
         if (result) {
           reject(result);
+          return;
         }
         this.service.get(id).then((x) => {
           let datas = this.load();

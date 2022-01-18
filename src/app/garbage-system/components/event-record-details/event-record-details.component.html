@@ -1,18 +1,41 @@
 <app-tab-title [title]="'垃圾落地'">
-  <div>
-    <mat-tab-group
-      [disableRipple]="true"
-      animationDuration="0ms"
-      [color]="'transparent'"
-    >
-      <mat-tab label="事件">
-        <!-- <app-video-player
+  <div class="event-record-details">
+    <div class="event-record-details-header">
+      <div class="header-item right">
+        <div class="operation">
+          <input
+            type="text"
+            formControlName="SearchText"
+            placeholder="输入关键字"
+            class=""
+          />
+          <button type="button" class="hw-blue-btn search">
+            <i class="mdi mdi-magnify"></i>
+            查询
+          </button>
+          <button type="button" class="hw-blue-btn">
+            <i class="mdi mdi-menu-down"></i>
+          </button>
+          <button class="hw-cyan-m-btn">
+            <i class="mdi mdi-filter-outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="event-record-details-content">
+      <mat-tab-group
+        [disableRipple]="true"
+        animationDuration="0ms"
+        [color]="'transparent'"
+      >
+        <mat-tab label="事件">
+          <!-- <app-video-player
           [url]="
             'ws://garbage01.51hws.com:8800/ws/video/howellps/live/00310101031111111000153000000000/1/2/live.H265?user=howell&password=123456'
           "
         ></app-video-player> -->
 
-        <div>
+          <!-- <div>
           <label class="pull-left first">日期：</label>
           <input
             type="text"
@@ -29,11 +52,31 @@
         </div>
         <div>
           <input type="number" />
-        </div>
-      </mat-tab>
-      <mat-tab label="总图表"> Content 2 </mat-tab>
-      <mat-tab label="细分图表"> Content 3 </mat-tab>
-      <mat-tab label="数据比较"> Content 4 </mat-tab>
-    </mat-tab-group>
+        </div> -->
+
+          <div class="table-filter" *ngIf="display.filter">
+            <div>
+              <label>开始时间</label>
+            </div>
+            <div>
+              <label>开始时间</label>
+            </div>
+            <div>
+              <label>开始时间</label>
+            </div>
+            <div><label>开始时间</label></div>
+            <div><label>开始时间</label></div>
+          </div>
+          <div class="table-content" [class.filter]="display.filter">
+            <!-- <app-illegal-drop-record></app-illegal-drop-record> -->
+            <howell-event-record-table [type]="type">
+            </howell-event-record-table>
+          </div>
+        </mat-tab>
+        <mat-tab label="总图表"> Content 2 </mat-tab>
+        <mat-tab label="细分图表"> Content 3 </mat-tab>
+        <mat-tab label="数据比较"> Content 4 </mat-tab>
+      </mat-tab-group>
+    </div>
   </div>
 </app-tab-title>

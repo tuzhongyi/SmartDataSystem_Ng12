@@ -1,8 +1,9 @@
 import { Gender } from 'src/app/enum/gender.enum';
+import { IModel } from './model.interface';
 import { UserResource } from './user.model';
 
 /** 微信用户信息 */
-export interface WeChatUser {
+export class WeChatUser implements IModel {
   /**	String	用户ID	O	RW */
   Id?: string;
   /**	String	微信OpenID	O	RW */

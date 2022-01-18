@@ -10,9 +10,10 @@ import { TrashCan } from './trash-can.model';
 import 'reflect-metadata';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
+import { IModel } from './model.interface';
 
 /** 垃圾房、投放点 */
-export class GarbageStation {
+export class GarbageStation implements IModel {
   /**	String	垃圾房ID	M */
   Id!: string;
   /**	String	垃圾房名称	M */

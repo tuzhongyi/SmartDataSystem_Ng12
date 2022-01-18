@@ -1,9 +1,10 @@
 import { Type } from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import 'reflect-metadata';
+import { IModel } from './model.interface';
 
 /** 区划树形结构 */
-export class DivisionTree {
+export class DivisionTree implements IModel {
   /**	String	根名称，默认：根区划	M */
   Name: string = '';
   /**	DivisionNode[]	子区划节点	O */

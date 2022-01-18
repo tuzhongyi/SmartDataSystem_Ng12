@@ -1,0 +1,86 @@
+.event-record-details {
+  height: 100%;
+  position: relative;
+
+  .event-record-details-header {
+    height: calc(72px + 44px);
+    width: 100%;
+    z-index: 2;
+    pointer-events: none;
+    position: absolute;
+
+
+    .header-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &.right {
+        justify-content: flex-end;
+        height: 72px;
+      }
+    }
+
+    .operation {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 34px;
+      width: 500px;
+      pointer-events: all;
+
+      input {
+        width: 300px;
+        height: 30px;
+        line-height: 30px;
+      }
+
+      button {
+        width: 46px;
+        height: 34px;
+        font-size: 16px;
+
+        &.search {
+          width: 76px;
+        }
+      }
+    }
+  }
+
+
+  .event-record-details-content {
+    height: 100%;
+
+    .table-filter {
+      height: 34px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+
+    .table-content {
+      height: 100%;
+
+      &.filter {
+        height: calc(100% - 44px)
+      }
+    }
+
+  }
+}
+
+.mat-tab-group,
+::ng-deep .mat-tab-body-wrapper {
+  height: 100%;
+}
+
+::ng-deep .mat-tab-labels {
+  align-items: center;
+}
+
+
+::ng-deep .event-record-details-content .mat-table .mat-row {
+  padding: 0;
+}

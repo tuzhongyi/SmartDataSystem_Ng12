@@ -3,6 +3,7 @@
   height: 100%;
   padding: 15px 20px;
   box-sizing: border-box;
+
   &__head {
     margin-right: 10px;
     margin-bottom: 10px;
@@ -11,6 +12,7 @@
 
     display: flex;
     justify-content: space-between;
+
     .title {
       font-size: 24px;
       color: #fff;
@@ -19,12 +21,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .sub-title {
       font-size: 18px;
       color: #cfd7ff;
       white-space: nowrap;
     }
   }
+
   &__body {
     width: 100%;
     height: calc(100% - 30px - 15px);
@@ -37,24 +41,28 @@
       width: 50%;
       height: 100%;
     }
+
     .details {
       // background-color: cyan;
       width: 50%;
       height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
+
+      text-align: left;
       overflow: auto;
       justify-content: space-between;
+      padding-left: 70px;
+
       &__item {
         flex-shrink: 1;
+
         .mission-name {
           color: #99aaff;
           font-size: 16px;
         }
+
         .mission-count {
-          color: #3a93ff;
           font-size: 24px;
           cursor: pointer;
         }

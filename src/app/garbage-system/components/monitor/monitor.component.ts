@@ -62,6 +62,10 @@ export class MonitorComponent implements OnInit {
       this._storeService.divisionType = userDivisionType;
     }
 
+    this._storeService.statusChange.subscribe(async (x) => {
+      this.statisticCardList = await this.statisticCardBussiness.load();
+    });
+
     let promise = this.statisticCardBussiness.load();
     promise.then((x) => {
       this.statisticCardList = x;

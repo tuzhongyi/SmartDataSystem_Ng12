@@ -18,6 +18,7 @@ export class IllegalMixintoRankConverter
       if (numbers) {
         model.value = numbers.DayNumber;
       }
+      model.unit = '起';
       model.statistic = model.value.toString();
     }
     return model;
