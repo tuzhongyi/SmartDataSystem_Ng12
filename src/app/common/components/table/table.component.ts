@@ -35,7 +35,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input()
   dataSubject = new BehaviorSubject<TableCellModel[]>([]);
 
-  @ViewChild(MatTable) table!: MatTable<any>;
+  @ViewChild('table') table!: MatTable<any>;
 
   @Input()
   columns: TableColumnModel[] = [];

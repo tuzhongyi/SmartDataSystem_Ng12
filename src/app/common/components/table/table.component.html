@@ -1,6 +1,6 @@
 <div class='container'>
-  <mat-table [dataSource]="dataSource" matSort [matSortDisableClear]="false" (matSortChange)="sortChange($event)"
-    #table>
+  <mat-table style="position:sticky;top:0" [dataSource]="dataSource" matSort [matSortDisableClear]="false"
+    (matSortChange)="sortChange($event)">
     <ng-container *ngFor="let column of columns;let index" [matColumnDef]="column.columnDef">
       <mat-header-cell *matHeaderCellDef>
         <ng-container>
@@ -10,13 +10,20 @@
             }}</div>
         </ng-container>
       </mat-header-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true "></mat-header-row>
+  </mat-table>
+
+
+  <mat-table style="height:calc(100% - 70px);overflow: auto;" class="bold-scrollbar" [dataSource]="dataSource" matSort
+    [matSortDisableClear]="false" (matSortChange)="sortChange($event)" #table>
+    <ng-container *ngFor="let column of columns;let index" [matColumnDef]="column.columnDef">
+
       <mat-cell *matCellDef="let row" (click)="clickCell(column,$event)">
         <div [innerHtml]="column.cell(row)" [style]="column.style" [class]="column.cls"></div>
       </mat-cell>
     </ng-container>
 
-
-    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns" (click)="clickRow(row)"
       [class.high-light]="highLight(row)">
     </mat-row>
