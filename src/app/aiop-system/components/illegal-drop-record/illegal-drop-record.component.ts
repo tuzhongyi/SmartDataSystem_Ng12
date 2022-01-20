@@ -3,6 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
+import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
+import { TableComponent } from 'src/app/common/components/table/table.component';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
@@ -11,8 +13,6 @@ import {
   TableColumnModel,
   TableCellEvent,
 } from 'src/app/view-model/table.model';
-import { PaginatorComponent } from '../paginator/paginator.component';
-import { TableComponent } from '../table/table.component';
 import { columns } from './columns';
 import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
 

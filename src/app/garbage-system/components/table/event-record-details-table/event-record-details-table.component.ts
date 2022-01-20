@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { columns } from 'src/app/aiop-system/components/garbage-events/illegal-drop-record/columns';
+import { columns } from 'src/app/aiop-system/components/illegal-drop-record/columns';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 @Component({

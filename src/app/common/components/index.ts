@@ -16,7 +16,6 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { TableSelectComponent } from './table-select/table-select.component';
 import { VideoWindowComponent } from './video-window/video-window.component';
 import { InputSearchComponent } from './input-search/input-search.component';
-import { PatrolControlComponent } from '../../garbage-system/components/patrol-control/patrol-control.component';
 import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
 import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
 import { SortHeaderComponent } from './sort-header/sort-header.component';
@@ -24,8 +23,6 @@ import { VideoSettingControlComponent } from './video-window/video-setting-contr
 import { VideoPresetPointControlComponent } from './video-window/video-preset-point-control/video-preset-point-control.component';
 import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
 import { TimeControlComponent } from './time-control/time-control.component';
-import { IllegalDropRecordComponent } from './illegal-drop-record/illegal-drop-record.component';
-import { EventRecordTableComponent } from './tables/event-record-table/event-record-table.component';
 import { Table_COMPONENTS } from './tables/table-component';
 
 export const CUSTOM_COMPONENTS = [
@@ -53,6 +50,5 @@ export const CUSTOM_COMPONENTS = [
   VideoPresetPointControlComponent,
   VideoPlaybackSettingControlComponent,
   TimeControlComponent,
-  IllegalDropRecordComponent,
   ...Table_COMPONENTS,
 ];
