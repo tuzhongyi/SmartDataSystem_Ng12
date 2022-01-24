@@ -17,8 +17,8 @@ export class MonitorEventTriggerBusiness {
 export class DeviceStateEventTrigger {
   constructor(private window: WindowBussiness) {}
   onclick(args: IDeviceStateDes) {
-    this.window.deivce.status = args.status;
-    this.window.deivce.show = true;
+    this.window.device.status = args.status;
+    this.window.device.show = true;
   }
 }
 

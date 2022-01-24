@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { Language } from 'src/app/global/tool/language';
 import { WindowViewModel } from './window.model';
 
 @Component({
@@ -7,6 +9,7 @@ import { WindowViewModel } from './window.model';
   styleUrls: ['./window.component.css'],
 })
 export class WindowComponent implements OnInit {
+  Language = Language;
   @Input()
   Model: WindowViewModel = {
     show: false,
@@ -36,6 +39,9 @@ export class WindowComponent implements OnInit {
 
   @Output()
   OnClosing: EventEmitter<boolean> = new EventEmitter();
+
+  @Input()
+  status?: OnlineStatus;
 
   constructor() {}
 

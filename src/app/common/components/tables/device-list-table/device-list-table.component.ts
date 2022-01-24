@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -26,7 +26,7 @@ export class DeviceListTableComponent
   width = ['15%', '20%', '10%', '15%', '15%', '15%'];
 
   @Input()
-  status?: OnlineStatus;
+  filter?: DeviceListTableFilter = {};
 
   datas: DeviceViewModel[] = [];
   page?: Page;
@@ -37,20 +37,34 @@ export class DeviceListTableComponent
   @Input()
   business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
+  @Input()
+  load?: EventEmitter<DeviceListTableFilter>;
+
   constructor(business: DeviceListTableBusiness) {
     this.business = business;
   }
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize);
+    this.loadData(1, this.pageSize, this.filter);
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.filter = x;
+        this.loadData(1, this.pageSize, this.filter);
+      });
+    }
   }
 
-  loadData(index: number, size: number, show = true) {
+  loadData(
+    index: number,
+    size: number,
+    filter?: DeviceListTableFilter,
+    show = true
+  ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, this.status);
+    let promise = this.business.load(params, filter);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -63,11 +77,23 @@ export class DeviceListTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize);
+    this.loadData(page.pageIndex + 1, this.pageSize, this.filter);
   }
   onerror(e: Event) {
     if (e.target) {
       (e.target as HTMLImageElement).src = MediumRequestService.default;
     }
   }
+
+  search(name: string) {
+    if (this.filter) {
+      this.filter.name = name;
+    }
+    this.loadData(1, this.pageSize, this.filter);
+  }
+}
+
+export interface DeviceListTableFilter {
+  status?: OnlineStatus;
+  name?: string;
 }

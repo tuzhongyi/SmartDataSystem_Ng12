@@ -1,0 +1,13 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title [title]="Language.json.camera">
+      <div class="device-list-table-window-header">
+        <app-input-search (search)="onsearch($event)"> </app-input-search>
+      </div>
+    </app-tab-title>
+    <div class="device-list-table-window-content">
+      <howell-device-list-table [filter]="filter" [load]="load">
+      </howell-device-list-table>
+    </div>
+  </ng-container>
+</app-window>

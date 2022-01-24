@@ -29,6 +29,7 @@ import { MediaControlComponent } from './media-control/media-control.component';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { FormsModule } from '@angular/forms';
 import { EventRecordDetailsTableComponent } from './event-record-details/event-record-details-table/event-record-details-table.component';
+import { DeviceListTableWindowComponent } from './windows/device-list-table-window/device-list-table-window.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { EventRecordDetailsTableComponent } from './event-record-details/event-r
     MediaControlComponent,
     PointInfoPanelComponent,
     PatrolControlComponent,
+    DeviceListTableWindowComponent,
   ],
   imports: [
     CommonModule,

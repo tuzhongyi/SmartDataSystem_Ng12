@@ -115,14 +115,12 @@
   </ng-container>
 </app-window>
 
-<app-window [Model]="window.deivce" [style]="window.deivce.style">
-  <ng-container *ngIf="window.deivce.show">
-    <app-tab-title [title]="'摄像机'">
-      <howell-device-list-table [status]="window.deivce.status">
-      </howell-device-list-table>
-    </app-tab-title>
-  </ng-container>
-</app-window>
+<howell-device-list-table-window
+  [Model]="window.device"
+  [style]="window.device.style"
+  [status]="window.device.status"
+>
+</howell-device-list-table-window>
 
 <app-window [Model]="window.full" [style]="window.full.style">
   <ng-container *ngIf="window.full.show"> </ng-container>

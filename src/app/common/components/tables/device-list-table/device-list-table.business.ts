@@ -16,6 +16,7 @@ import { GetGarbageStationCamerasParams } from 'src/app/network/request/garbage-
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { DeviceListTableFilter } from './device-list-table.component';
 import { DeviceViewModel } from './device.model';
 
 @Injectable()
@@ -33,9 +34,9 @@ export class DeviceListTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,
-    status?: OnlineStatus
+    filter?: DeviceListTableFilter
   ): Promise<PagedList<DeviceViewModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, status);
+    let data = await this.getData(this.storeService.divisionId, page, filter);
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -49,11 +50,14 @@ export class DeviceListTableBusiness
   getData(
     divisionId: string,
     page: PagedParams,
-    status?: OnlineStatus
+    filter?: DeviceListTableFilter
   ): Promise<PagedList<Camera>> {
     let params = new GetGarbageStationCamerasParams();
     params = Object.assign(params, page);
-    params.OnlineStatus = status;
+    if (filter) {
+      params.OnlineStatus = filter.status;
+      params.Name = filter.name;
+    }
     params.DivisionIds = [divisionId];
     return this.stationService.camera.list(params);
   }

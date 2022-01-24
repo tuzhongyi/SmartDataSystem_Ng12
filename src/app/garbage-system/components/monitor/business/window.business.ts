@@ -15,7 +15,7 @@ export class WindowBussiness {
   constructor(
     public record: RecordWindowBusiness,
     public media: MediaWindowBusiness,
-    public deivce: DeviceWindowBusiness,
+    public device: DeviceWindowBusiness,
     public full: GarbageStationFullWindowBusiness,
     public drop: GarbageStationDropWindowBusiness,
     public station: GarbageStationInfoWindowBusiness
