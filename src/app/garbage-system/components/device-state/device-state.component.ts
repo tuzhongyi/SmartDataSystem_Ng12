@@ -129,7 +129,7 @@ export class DeviceStateComponent
     }
   }
   ngAfterViewInit() {
-    console.log('chartContainers', this.chartContainer);
+    // console.log('chartContainers', this.chartContainer);
     if (this.chartContainer) {
       this.myChart = echarts.init(this.chartContainer.nativeElement);
       this.myChart.setOption(this.option);

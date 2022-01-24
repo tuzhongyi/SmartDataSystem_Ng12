@@ -17,11 +17,10 @@
 
     .operation {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
 
-
-      &>div {
+      & > div {
         margin: 0 5px;
         cursor: pointer;
       }
@@ -30,7 +29,6 @@
         color: red;
       }
     }
-
   }
 
   .video-window-content {
@@ -40,7 +38,6 @@
     align-items: center;
 
     .video {
-
       border: 2px solid #3283e5;
       background-color: black;
       width: calc(100% - 180px - 10px - 4px);

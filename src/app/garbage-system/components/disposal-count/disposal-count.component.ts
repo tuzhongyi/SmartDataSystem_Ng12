@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-17 13:15:04
+ * @Last Modified time: 2022-01-24 10:50:05
  */
 import {
   AfterViewInit,
@@ -80,7 +80,7 @@ export class DisposalCountComponent
         width: 15,
         roundCap: true,
         itemStyle: {
-          color: 'auto',
+          color: 'inherit',
         },
       },
       axisLine: {
@@ -94,7 +94,7 @@ export class DisposalCountComponent
         },
       },
       axisLabel: {
-        color: 'auto',
+        color: 'inherit',
         distance: 26,
         fontSize: 12,
       },
@@ -117,7 +117,7 @@ export class DisposalCountComponent
       },
       title: {
         offsetCenter: ['0%', '35%'],
-        color: 'auto',
+        color: 'inherit',
         fontSize: 18,
         fontWeight: 400,
       },
@@ -131,7 +131,7 @@ export class DisposalCountComponent
             fontSize: 30,
             fontWeight: 400,
             fontFamily: 'Arial',
-            color: 'auto',
+            color: 'inherit',
             align: 'center',
             padding: [0, 0, 0, 0],
           },
@@ -139,17 +139,17 @@ export class DisposalCountComponent
             fontSize: 20,
             fontWeight: 400,
             fontFamily: 'Arial',
-            color: 'auto',
+            color: 'inherit',
             padding: [0, 0, 0, 0],
           },
         },
         fontWeight: 'normal',
-        color: 'auto',
+        color: 'inherit',
       },
       pointer: {
         length: '50%',
         itemStyle: {
-          color: 'auto',
+          color: 'inherit',
         },
       },
       data: [],
@@ -213,7 +213,7 @@ export class DisposalCountComponent
             width: 50,
             height: 14,
             fontSize: 50,
-            color: 'auto',
+            color: 'inherit',
             rich: {
               a: {
                 color: 'white',
