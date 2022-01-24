@@ -34,6 +34,10 @@
   "Suffix":{
     "event":"起"
   },
+  "OnlineStatus":{
+    "online":"在线",
+    "Offline":"离线"
+  },
   "division":"行政区划",
   "today":"今日",
   "event":"事件",

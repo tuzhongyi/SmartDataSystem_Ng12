@@ -1,18 +1,18 @@
-export class MapListItem<T> {
-    constructor(id: string, name: string, type: MapListItemType, data: T) {
-        this.Id = id;
-        this.Name = name;
-        this.type = type;
-        this.Data = data;
-    }
-    Id: string;
-    Name: string;
-    type: MapListItemType;
-    Data: T;
+export class ListItem<T> {
+  constructor(id: string, name: string, type: ListItemType, data: T) {
+    this.Id = id;
+    this.Name = name;
+    this.type = type;
+    this.Data = data;
+  }
+  Id: string;
+  Name: string;
+  type: ListItemType;
+  Data: T;
 }
 
-export enum MapListItemType {
-    Parent,
-    Division,
-    GarbageStation
+export enum ListItemType {
+  Parent,
+  Division,
+  GarbageStation,
 }

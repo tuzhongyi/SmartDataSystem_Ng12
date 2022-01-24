@@ -1545,21 +1545,32 @@
         setters_order = ['hh', 'h', 'ii', 'i', 'ss', 's', 'yyyy', 'yy', 'M', 'MM', 'm', 'mm', 'D', 'DD', 'd', 'dd', 'H', 'HH', 'p', 'P'],
         setters_map = {
           hh: function (d, v) {
+            return d.setUTCHours(v == 12 ? 0 : v);
             return d.setUTCHours(v);
           },
           h: function (d, v) {
+            return d.setUTCHours(v == 12 ? 0 : v);
             return d.setUTCHours(v);
           },
           HH: function (d, v) {
+
+            return d.setUTCHours(v);
             return d.setUTCHours(v == 12 ? 0 : v);
           },
           H: function (d, v) {
+            return d.setUTCHours(v);
             return d.setUTCHours(v == 12 ? 0 : v);
           },
           ii: function (d, v) {
             return d.setUTCMinutes(v);
           },
           i: function (d, v) {
+            return d.setUTCMinutes(v);
+          },
+          mm: function (d, v) {
+            return d.setUTCMinutes(v);
+          },
+          m: function (d, v) {
             return d.setUTCMinutes(v);
           },
           ss: function (d, v) {
@@ -1648,7 +1659,7 @@
           yy: date.getUTCFullYear().toString().substring(2),
           yyyy: date.getUTCFullYear(),
           // month
-          m: date.getUTCMonth() + 1,
+
           M: date.getUTCMonth() + 1,//dates[language].monthsShort[date.getUTCMonth()],
           MM: (date.getUTCMonth() + 1) < 10 ? "0" + (date.getUTCMonth() + 1) : (date.getUTCMonth() + 1),//dates[language].months[date.getUTCMonth()],
           // day
@@ -1658,6 +1669,10 @@
           p: (dates[language].meridiem.length == 2 ? dates[language].meridiem[date.getUTCHours() < 12 ? 0 : 1] : ''),
           // hour
           h: date.getUTCHours(),
+          H: date.getUTCHours(),
+          HH: date.getUTCHours(),
+          m: date.getUTCMinutes(),
+          mm: date.getUTCMinutes(),
           // minute
           i: date.getUTCMinutes(),
           // second
@@ -1665,7 +1680,7 @@
         };
 
         if (dates[language].meridiem.length == 2) {
-          val.H = (val.h % 12 == 0 ? 12 : val.h % 12);
+          val.h = (val.h % 12 == 0 ? 12 : val.h % 12);
         }
         else {
           val.H = val.h;

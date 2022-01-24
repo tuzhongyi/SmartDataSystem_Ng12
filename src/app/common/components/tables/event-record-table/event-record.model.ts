@@ -3,6 +3,7 @@ import { EventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { SelectItem } from '../../select-control/select-control.model';
 
 export class EventRecordViewModel extends EventRecord {
   /** */
@@ -13,18 +14,21 @@ export class EventRecordViewModel extends EventRecord {
   County?: Division;
   /** */
   City?: Division;
+
   imageSrc: string = '';
 
   DateFormatter: string = '';
 }
 
 export class EventRecordFilter {
-  constructor(interval: IntervalParams) {
-    this.interval = interval;
+  constructor(begin: Date, end: Date) {
+    this.begin = begin;
+    this.end = end;
   }
-  interval: IntervalParams;
-  divisionId?: string;
-  stationId?: string;
-  cameraId?: string;
-  cameraName?: string;
+  begin: Date;
+  end: Date;
+  division?: SelectItem;
+  station?: SelectItem;
+  camera?: SelectItem;
+  text?: string;
 }

@@ -27,8 +27,8 @@ export class DateTimePickerDirective
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;
   @Input('minView') minView: DateTimePickerView = DateTimePickerView.month;
 
-  @Output('changeDate')
-  changeDate: EventEmitter<Date> = new EventEmitter();
+  @Output('change')
+  change: EventEmitter<Date> = new EventEmitter();
 
   constructor(e: ElementRef) {
     this.ele = e.nativeElement;
@@ -91,7 +91,7 @@ export class DateTimePickerDirective
           initialDate: formatDate(value, format, 'en'),
         })
         .on('changeDate', (ev: { date: Date }) => {
-          this.changeDate.emit(ev.date);
+          this.change.emit(ev.date);
           const week_ = OneWeekDate(ev.date);
           $(this.ele).val(
             `${formatDate(
@@ -144,7 +144,7 @@ export class DateTimePickerDirective
           initialDate: formatDate(value, format, 'en'),
         })
         .on('changeDate', (ev: { date: Date | undefined }) => {
-          this.changeDate.emit(ev.date);
+          this.change.emit(ev.date);
         })
         .on('show', (ev: any) => {
           const dayDom = $('.datetimepicker-days');

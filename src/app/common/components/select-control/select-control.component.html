@@ -1,17 +1,17 @@
 <div class="select-group">
   <div class="select-item">
     <div class="select-head" (click)="toggle($event)">
-      <div class="select-item__title">
-        {{ selected.language }}
-      </div>
+      <div class="select-item__title" [innerHtml]="selected.language"></div>
       <div class="select-item__button"></div>
     </div>
     <ng-container *ngIf="opened">
       <div class="select-body">
         <ng-container *ngFor="let item of data">
-          <div class="select-option" (click)="select($event, item)">
-            {{ item.language }}
-          </div>
+          <div
+            class="select-option"
+            (click)="onselect($event, item)"
+            [innerHtml]="item.language"
+          ></div>
         </ng-container>
       </div>
     </ng-container>

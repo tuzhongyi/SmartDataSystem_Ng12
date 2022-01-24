@@ -14,15 +14,16 @@
         <div class="chart-des">
           <div class="chart-des__label">系统设备在线比</div>
           <div class="chart-des__ratio" [style.color]="stateRatioColor">
-            <span class="num">{{ deviceStateCountModel.onLineRatio }}</span
-            ><span class="unit">{{ deviceStateCountModel.unit }}</span>
+            <span class="num">{{ model.onLineRatio }}</span
+            ><span class="unit">{{ model.unit }}</span>
           </div>
         </div>
       </div>
       <div class="device-state__foot">
         <div
-          *ngFor="let item of deviceStateCountModel.deviceStateArr"
+          *ngFor="let item of model.deviceStateArr"
           class="device-state__foot__item"
+          (click)="onclick(item)"
         >
           <div class="item-label">{{ item.label }}</div>
           <div class="item-num" [ngClass]="item.tagCls">

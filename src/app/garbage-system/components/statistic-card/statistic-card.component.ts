@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 
@@ -10,18 +10,19 @@ import { StatisticCardViewModel } from './statistic-card.model';
   selector: 'app-statistic-card',
   templateUrl: './statistic-card.component.html',
   styleUrls: ['./statistic-card.component.less'],
-  providers: [StatisticCardBussiness],
 })
 export class StatisticCardComponent implements OnInit {
-  constructor(business: StatisticCardBussiness) {
-    this.business = business;
-  }
+  constructor() {}
 
-  @Input()
-  business: IBusiness<IModel, StatisticCardViewModel[]>;
+  @Output()
+  Click: EventEmitter<StatisticCardViewModel> = new EventEmitter();
 
   ngOnInit(): void {}
 
   @Input()
   model?: StatisticCardViewModel;
+
+  onclick() {
+    this.Click.emit(this.model);
+  }
 }

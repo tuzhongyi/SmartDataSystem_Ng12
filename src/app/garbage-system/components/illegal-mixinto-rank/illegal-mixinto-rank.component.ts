@@ -59,7 +59,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   resourceTypeDisplay: boolean = true;
 
   @Output()
-  itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
+  itemClickedEvent: EventEmitter<IllegalMixintoRankArgs> = new EventEmitter();
 
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
@@ -117,7 +117,11 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   }
 
   onItemClicked(model: RankModel) {
-    this.itemClickedEvent.emit(model);
+    this.itemClickedEvent.emit({
+      model: model,
+      resourceType: this.resourceType,
+      eventType: this.eventType,
+    });
   }
 
   onResourceTypeSelected(item: SelectItem) {
@@ -130,4 +134,10 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     this.eventType = item.value;
     this.loadData();
   }
+}
+
+export interface IllegalMixintoRankArgs {
+  model: RankModel;
+  resourceType: UserResourceType;
+  eventType: EventType;
 }

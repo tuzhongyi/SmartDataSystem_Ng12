@@ -15,9 +15,13 @@ export type DropListObj = {
 
 // 排行榜视图数据
 export class RankModel {
+  constructor(type?: EventType) {
+    this.type = type;
+  }
   id: string = '';
   name: string = '';
   statistic: string = '';
+  type?: EventType;
   value: number = 0;
   unit?: string = '';
 }

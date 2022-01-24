@@ -1,5 +1,5 @@
 <div class="number-card">
-  <div *ngIf="model" class="number-card-content">
+  <div *ngIf="model" class="number-card-content" (click)="onclick()">
     <div class="title">
       {{ model.title }}
     </div>

@@ -17,7 +17,7 @@ import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { AMapBusiness } from './business/amap.business';
-import { MapListPanelBusiness } from './business/map-list-panel.business';
+import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { Division } from 'src/app/network/model/division.model';
@@ -26,7 +26,7 @@ declare var $: any;
   selector: 'app-map-control',
   templateUrl: './map-control.component.html',
   styleUrls: ['./map-control.component.less'],
-  providers: [AMapBusiness, MapListPanelBusiness, PointInfoPanelBusiness],
+  providers: [AMapBusiness, ListPanelBusiness, PointInfoPanelBusiness],
 })
 export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#region ViewChild
@@ -120,7 +120,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     private sanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
     private amap: AMapBusiness,
-    public panel: MapListPanelBusiness,
+    public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness
   ) {}
   ngAfterViewInit(): void {}

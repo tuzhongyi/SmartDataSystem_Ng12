@@ -2,8 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
@@ -13,10 +15,16 @@ import * as echarts from 'echarts/core';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { Subscription } from 'rxjs';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { DeviceStateCountModule } from 'src/app/view-model/device-state-count.model';
+import { IModel } from 'src/app/network/model/model.interface';
+import {
+  DeviceStateCountModel,
+  IDeviceStateDes,
+} from 'src/app/view-model/device-state-count.model';
 import { DeviceStateBusiness } from './device-state.business';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
@@ -29,26 +37,25 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   styleUrls: ['./device-state.component.less'],
   providers: [DeviceStateBusiness],
 })
-export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DeviceStateComponent
+  implements
+    IComponent<IModel, DeviceStateCountModel>,
+    OnInit,
+    OnDestroy,
+    AfterViewInit
+{
+  @Output()
+  Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
+
   public title: string = '设备运行状态';
-  public deviceStateCountModel: DeviceStateCountModule =
-    new DeviceStateCountModule();
+  public model: DeviceStateCountModel = new DeviceStateCountModel();
 
   public get stateRatioColor() {
-    return this.stateColor.get(this.deviceStateCountModel.state);
+    return this.stateColor.get(this.model.state);
   }
-
-  // 在销毁组件时，取消订阅
-  private subscription: Subscription | null = null;
-
-  // 当前区划id
-  private divisionId: string = '';
 
   private myChart?: echarts.ECharts;
   private option: ECOption = {};
-
-  // 服务器数据
-  private rawData: DivisionNumberStatistic[] = [];
 
   private stateColor = new Map([
     [DeviceStateRatioType.bad, '#ef6464'],
@@ -58,17 +65,18 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(
-    private storeService: StoreService,
-    private business: DeviceStateBusiness
-  ) {}
+  constructor(business: DeviceStateBusiness) {
+    this.business = business;
+  }
+  business: IBusiness<IModel, DeviceStateCountModel>;
 
   ngOnInit(): void {
-    // 区划改变时触发
-    this.subscription = this.storeService.statusChange.subscribe(() => {
-      this.changeStatus();
-    });
-    this.changeStatus();
+    if (this.business.subscription) {
+      this.business.subscription.subscribe(() => {
+        this.loadData();
+      });
+    }
+    this.loadData();
 
     this.option = {
       series: [
@@ -116,9 +124,8 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
     };
   }
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
+    if (this.business.subscription) {
+      this.business.subscription.destroy();
     }
   }
   ngAfterViewInit() {
@@ -128,20 +135,8 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
       this.myChart.setOption(this.option);
     }
   }
-  changeStatus() {
-    this.divisionId = this.storeService.divisionId;
-
-    this.loadData();
-  }
   async loadData() {
-    let data = await this.business.statistic(this.divisionId);
-    if (data) {
-      this.rawData = data;
-    }
-    console.log('rawData', this.rawData);
-    this.deviceStateCountModel = this.business.toDeviceState(
-      this.rawData
-    ) as DeviceStateCountModule;
+    this.model = await this.business.load();
 
     this.myChart?.setOption({
       series: [
@@ -152,8 +147,8 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
           },
           data: [
             {
-              name: this.deviceStateCountModel.stateDes,
-              value: this.deviceStateCountModel.onLineRatio,
+              name: this.model.stateDes,
+              value: this.model.onLineRatio,
               // itemStyle: {
               //   color: this.stateRatioColor,
               // },
@@ -162,7 +157,7 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
                   type: 'linear',
                   x: 0,
                   y: 0,
-                  x2: 100 / this.deviceStateCountModel.onLineRatio,
+                  x2: 100 / this.model.onLineRatio,
                   y2: 0,
                   colorStops: [
                     {
@@ -219,5 +214,9 @@ export class DeviceStateComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
     // this.myCharts.forEach((myChart) => myChart.resize());
+  }
+
+  onclick(args: IDeviceStateDes) {
+    this.Click.emit(args);
   }
 }

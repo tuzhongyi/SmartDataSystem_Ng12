@@ -8,6 +8,7 @@ import {
 import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
@@ -248,6 +249,22 @@ export class Language {
         return '正常';
       default:
         return '';
+    }
+  }
+
+  static OnlineStatus(status?: OnlineStatus) {
+    if (status) {
+      switch (status as OnlineStatus) {
+        case OnlineStatus.Online:
+          return Language.json.OnlineStatus.online;
+        case OnlineStatus.Offline:
+          return Language.json.OnlineStatus.Offline;
+
+        default:
+          return Language.json.normal;
+      }
+    } else {
+      return Language.json.normal;
     }
   }
 

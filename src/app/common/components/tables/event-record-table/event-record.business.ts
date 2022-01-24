@@ -50,7 +50,6 @@ export class EventRecordBusiness
     page: PagedParams,
     opts: EventRecordFilter
   ): Promise<PagedList<EventRecordViewModel>> {
-    debugger;
     let data = await this.getData(type, page, opts);
     let models = await this.Converter.Convert(data, {
       station: (id: string) => {
@@ -83,19 +82,19 @@ export class EventRecordBusiness
   getParams(page: PagedParams, opts: EventRecordFilter) {
     let params = new GetEventRecordsParams();
     params = Object.assign(params, page);
-    params.BeginTime = opts.interval.BeginTime;
-    params.EndTime = opts.interval.EndTime;
-    if (opts.divisionId) {
-      params.DivisionIds = [opts.divisionId];
+    params.BeginTime = opts.begin;
+    params.EndTime = opts.end;
+    if (opts.division) {
+      params.DivisionIds = [opts.division.key];
     }
-    if (opts.stationId) {
-      params.StationIds = [opts.stationId];
+    if (opts.station) {
+      params.StationIds = [opts.station.key];
     }
-    if (opts.cameraId) {
-      params.ResourceIds = [opts.cameraId];
+    if (opts.camera) {
+      params.ResourceIds = [opts.camera.key];
     }
-    if (opts.cameraName) {
-      params.ResourceName = opts.cameraName;
+    if (opts.text) {
+      params.ResourceName = opts.text;
     }
     return params;
   }

@@ -1,82 +1,75 @@
-<app-tab-title [title]="'垃圾落地'">
-  <div class="event-record-details">
-    <div class="event-record-details-header">
-      <div class="header-item right">
-        <div class="operation">
-          <input
-            type="text"
-            formControlName="SearchText"
-            placeholder="输入关键字"
-            class=""
-          />
-          <button type="button" class="hw-blue-btn search">
-            <i class="mdi mdi-magnify"></i>
-            查询
-          </button>
-          <button type="button" class="hw-blue-btn">
-            <i class="mdi mdi-menu-down"></i>
-          </button>
-          <button class="hw-cyan-m-btn">
-            <i class="mdi mdi-filter-outline"></i>
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="event-record-details-content">
+<div class="event-record-details">
+  <app-tab-title [title]="title">
+    <div class="event-record-details-content" [ngClass]="{ table: index == 0 }">
       <mat-tab-group
         [disableRipple]="true"
         animationDuration="0ms"
         [color]="'transparent'"
+        [selectedIndex]="index"
+        (selectedIndexChange)="indexChange($event)"
       >
         <mat-tab label="事件">
-          <!-- <app-video-player
-          [url]="
-            'ws://garbage01.51hws.com:8800/ws/video/howellps/live/00310101031111111000153000000000/1/2/live.H265?user=howell&password=123456'
-          "
-        ></app-video-player> -->
-
-          <!-- <div>
-          <label class="pull-left first">日期：</label>
-          <input
-            type="text"
-            DateTimePicker
-            [format]="'yyyy-MM-dd'"
-            [date]="date"
-            (changeDate)="changeDate($event)"
-            style="width: calc(100% - 82px)"
-            class="custom form-control m-l-10"
-          />
-        </div>
-        <div>
-          <app-input-search [placeholder]="'投放点名称'"></app-input-search>
-        </div>
-        <div>
-          <input type="number" />
-        </div> -->
-
-          <div class="table-filter" *ngIf="display.filter">
-            <div>
+          <!-- <app-illegal-drop-record></app-illegal-drop-record> -->
+          <!-- <div class="table-filter" *ngIf="display.filter">
+            <div class="filter-item">
               <label>开始时间</label>
+              <input
+                type="text"
+                DateTimePicker
+                [format]="'yyyy-MM-dd HH:mm'"
+                [startView]="DateTimePickerView.day"
+                [minView]="DateTimePickerView.hour"
+                [date]="filter.begin"
+                (change)="changeBegin($event)"
+                class=""
+              />
             </div>
-            <div>
+            <div class="filter-item">
               <label>开始时间</label>
+              <input
+                type="text"
+                DateTimePicker
+                [format]="'yyyy-MM-dd HH:mm'"
+                [startView]="DateTimePickerView.day"
+                [minView]="DateTimePickerView.hour"
+                [date]="filter.end"
+                (change)="changeEnd($event)"
+                class=""
+              />
             </div>
-            <div>
-              <label>开始时间</label>
+            <div class="filter-item">
+              <label>行政区</label>
+              <input type="text" />
             </div>
-            <div><label>开始时间</label></div>
-            <div><label>开始时间</label></div>
+            <div class="filter-item">
+              <label>投放点</label>
+              <input type="text" />
+            </div>
+            <div class="filter-item">
+              <label>摄像机</label>
+              <input type="text" />
+            </div>
           </div>
           <div class="table-content" [class.filter]="display.filter">
-            <!-- <app-illegal-drop-record></app-illegal-drop-record> -->
-            <howell-event-record-table [type]="type">
+            
+            <howell-event-record-table
+              [type]="type"
+              [filter]="filter"
+              [search]="searchEvent"
+              [count]="recordCount"
+            >
             </howell-event-record-table>
-          </div>
+          </div> -->
+          <howell-event-record-details-table
+            [type]="type"
+            [count]="recordCount"
+          >
+          </howell-event-record-details-table>
         </mat-tab>
         <mat-tab label="总图表"> Content 2 </mat-tab>
         <mat-tab label="细分图表"> Content 3 </mat-tab>
         <mat-tab label="数据比较"> Content 4 </mat-tab>
       </mat-tab-group>
     </div>
-  </div>
-</app-tab-title>
+  </app-tab-title>
+</div>

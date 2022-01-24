@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { DownloadBusiness } from 'src/app/common/business/download.business';
 import {
   PlayMode,
   VideoModel,
 } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
-import { WindowViewModel } from 'src/app/common/components/window/window.model';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
@@ -18,7 +19,7 @@ import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 
 @Injectable()
-export class VideoWindowBusiness
+export class VideoControlWindowBusiness
   extends VideoWindowViewModel
   implements IBusiness<VideoUrl, VideoModel>
 {
@@ -37,7 +38,8 @@ export class VideoWindowBusiness
 
   constructor(
     private srService: SRRequestService,
-    private stationService: GarbageStationRequestService
+    private stationService: GarbageStationRequestService,
+    private download: DownloadBusiness
   ) {
     super();
   }
@@ -76,25 +78,7 @@ export class VideoWindowBusiness
 
   ondownload(args: IntervalParams) {
     if (!this.camera || !this.garbageStation) return;
-    const interval = args.EndTime.getTime() - args.BeginTime.getTime();
 
-    if (interval > 5 * 60 * 1000) {
-      args.EndTime.setTime(args.BeginTime.getTime() + 5 * 1000 * 60);
-    }
-    let params = new CameraDownloadFileParams();
-    params.CameraId = this.camera.Id;
-    params.BeginTime = args.BeginTime;
-    params.EndTime = args.EndTime;
-    params.GarbageStationId = this.garbageStation.Id;
-    const response = this.stationService.camera.file.download(params);
-    response.then((data) => {
-      if (data && data.Url) {
-        const a = document.createElement('a');
-        a.href = data.Url;
-        a.click();
-        document.body.appendChild(a);
-        document.body.removeChild(a);
-      }
-    });
+    this.download.video(this.garbageStation.Id, this.camera.Id, args);
   }
 }

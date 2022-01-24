@@ -10,7 +10,7 @@ import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 
-import { WindowComponent } from './window/window.component';
+import { WindowComponent } from './window-control/window.component';
 import { ImageControlComponent } from './image-control/image-control.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { TableSelectComponent } from './table-select/table-select.component';
@@ -24,6 +24,8 @@ import { VideoPresetPointControlComponent } from './video-window/video-preset-po
 import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
 import { TimeControlComponent } from './time-control/time-control.component';
 import { Table_COMPONENTS } from './tables/table-component';
+import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
+import { IllegalDropRecordComponent } from 'src/app/aiop-system/components/illegal-drop-record/illegal-drop-record.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -51,4 +53,5 @@ export const CUSTOM_COMPONENTS = [
   VideoPlaybackSettingControlComponent,
   TimeControlComponent,
   ...Table_COMPONENTS,
+  VideoDownloadPanelComponent,
 ];

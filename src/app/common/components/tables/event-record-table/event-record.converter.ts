@@ -53,20 +53,20 @@ export class EventRecordConverter
 {
   async Convert(
     source: EventRecordType,
-    get: {
+    getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
     }
   ): Promise<EventRecordViewModel> {
     let model = new EventRecordViewModel();
     model = Object.assign(model, source);
-    model.GarbageStation = await get.station(source.Data.StationId);
+    model.GarbageStation = await getter.station(source.Data.StationId);
     if (source.Data.DivisionId) {
-      model.Committees = await get.division(source.Data.DivisionId);
+      model.Committees = await getter.division(source.Data.DivisionId);
       if (model.Committees.ParentId) {
-        model.County = await get.division(model.Committees.ParentId);
+        model.County = await getter.division(model.Committees.ParentId);
         if (model.County.ParentId) {
-          model.City = await get.division(model.County.ParentId);
+          model.City = await getter.division(model.County.ParentId);
         }
       }
     }

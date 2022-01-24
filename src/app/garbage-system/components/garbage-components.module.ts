@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: zzl
- * @Last Modified time: 2022-01-05 14:55:30
+ * @Last Modified time: 2022-01-19 15:48:21
  */
 
 import { NgModule } from '@angular/core';
@@ -26,6 +26,9 @@ import { MapListPanelComponent } from './map-control/map-list-panel/map-list-pan
 import { PointInfoPanelComponent } from './map-control/point-info-panel/point-info-panel.component';
 import { PatrolControlComponent } from './patrol-control/patrol-control.component';
 import { MediaControlComponent } from './media-control/media-control.component';
+import { DownloadBusiness } from 'src/app/common/business/download.business';
+import { FormsModule } from '@angular/forms';
+import { EventRecordDetailsTableComponent } from './event-record-details/event-record-details-table/event-record-details-table.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +41,7 @@ import { MediaControlComponent } from './media-control/media-control.component';
     EvemtStatisticEChartsComponent,
     DeviceStateComponent,
     DisposalCountComponent,
+    EventRecordDetailsTableComponent,
     EventRecordDetailsComponent,
     StatisticCardComponent,
     MapControlComponent,
@@ -51,6 +55,8 @@ import { MediaControlComponent } from './media-control/media-control.component';
     AngularResizeEventModule,
     HowellModule,
     MaterialModule,
+    FormsModule,
   ],
+  providers: [DownloadBusiness],
 })
 export class GarbageComponentsModule {}

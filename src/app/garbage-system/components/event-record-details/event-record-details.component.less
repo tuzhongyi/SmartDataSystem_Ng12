@@ -1,86 +1,60 @@
 .event-record-details {
   height: 100%;
   position: relative;
-
-  .event-record-details-header {
-    height: calc(72px + 44px);
-    width: 100%;
-    z-index: 2;
-    pointer-events: none;
-    position: absolute;
+  font-size: 18px;
+  color: #cfd7ff;
 
 
-    .header-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
-      &.right {
-        justify-content: flex-end;
-        height: 72px;
-      }
+
+
+
+
+
+
+  .tab-table {
+    margin-top: -55px;
+  }
+
+  ::ng-deep {
+
+    .tabs {
+      margin-top: -72px;
     }
 
-    .operation {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      height: 34px;
-      width: 500px;
-      pointer-events: all;
-
-      input {
-        width: 300px;
-        height: 30px;
-        line-height: 30px;
-      }
-
-      button {
-        width: 46px;
-        height: 34px;
-        font-size: 16px;
-
-        &.search {
-          width: 76px;
-        }
-      }
+    .mat-tab-group,
+    .mat-tab-body-wrapper {
+      height: 100%;
     }
+
+  }
+
+
+  ::ng-deep .mat-tab-labels {
+    align-items: center;
+  }
+
+
+  ::ng-deep .event-record-details-content .mat-table .mat-row {
+    padding: 0;
   }
 
 
   .event-record-details-content {
     height: 100%;
 
-    .table-filter {
-      height: 34px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
+    &.table {
+      height: calc(100% + 72px);
 
+      ::ng-deep {
 
-    .table-content {
-      height: 100%;
+        .mat-tab-body-wrapper {
+          pointer-events: none;
+          margin-top: -72px;
 
-      &.filter {
-        height: calc(100% - 44px)
+        }
       }
     }
-
   }
-}
 
-.mat-tab-group,
-::ng-deep .mat-tab-body-wrapper {
-  height: 100%;
-}
-
-::ng-deep .mat-tab-labels {
-  align-items: center;
-}
-
-
-::ng-deep .event-record-details-content .mat-table .mat-row {
-  padding: 0;
 }

@@ -1,0 +1,87 @@
+<div class="device-list-table">
+  <!-- <div class="device-list-table-header">
+        <div>
+            <div>导航</div>
+            <button (click)="show=!show">显示 </button>
+        </div>
+        <div *ngIf="show">hshdfh</div>
+    </div> -->
+  <div class="device-list-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <td [ngStyle]="{ width: width[0] }">图片</td>
+          <td [ngStyle]="{ width: width[1] }">名称</td>
+          <td [ngStyle]="{ width: width[2] }">状态</td>
+          <td [ngStyle]="{ width: width[3] }">投放点</td>
+          <td [ngStyle]="{ width: width[4] }">街道</td>
+          <td [ngStyle]="{ width: width[5] }">居委会</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr *ngFor="let item of datas">
+            <td [ngStyle]="{ width: width[0] }">
+              <div class="img">
+                <img
+                  width="100%"
+                  height="100%"
+                  (error)="onerror($event)"
+                  [src]="item.imageSrc"
+                />
+              </div>
+            </td>
+            <td [ngStyle]="{ width: width[1] }">{{ item.Name }}</td>
+            <td [ngStyle]="{ width: width[2] }">
+              <span
+                [ngClass]="{
+                  'green-text': item.OnlineStatus === OnlineStatus.Online,
+                  'powder-red-text': item.OnlineStatus === OnlineStatus.Offline
+                }"
+              >
+                {{ Language.OnlineStatus(item.OnlineStatus) }}</span
+              >
+            </td>
+            <td [ngStyle]="{ width: width[3] }">
+              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+            </td>
+            <td [ngStyle]="{ width: width[4] }">
+              {{ item.County ? item.County.Name : "" }}
+            </td>
+            <td [ngStyle]="{ width: width[5] }">
+              {{ item.Committees ? item.Committees.Name : "" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="device-list-table-main-footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="0"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

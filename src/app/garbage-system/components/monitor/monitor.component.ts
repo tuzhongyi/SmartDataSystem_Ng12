@@ -16,26 +16,36 @@ import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.bu
 import { PatrolControlBusiness } from './business/patrol-control.business';
 import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
-import { VideoWindowBusiness } from './business/windows/video-window.business';
+import { DeviceWindowBusiness } from './business/windows/device-window.business';
+import { RecordWindowBusiness } from './business/windows/event-record-window.business';
+import { MediaWindowBusiness } from './business/windows/media-window.business';
+import { GarbageStationDropWindowBusiness } from './business/windows/station-drop-window.business';
+import { GarbageStationFullWindowBusiness } from './business/windows/station-full-window.business';
+import { GarbageStationInfoWindowBusiness } from './business/windows/station-info-window.business';
+import { VideoControlWindowBusiness } from './business/windows/video-control-window.business';
 
 @Component({
   selector: 'app-waste-monitor',
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.less'],
   providers: [
-    WindowBussiness,
     MonitorEventTriggerBusiness,
     StatisticCardBussiness,
     MapControlBusiness,
     PatrolControlBusiness,
-    VideoWindowBusiness,
+    VideoControlWindowBusiness,
+    RecordWindowBusiness,
+    MediaWindowBusiness,
+    DeviceWindowBusiness,
+    GarbageStationFullWindowBusiness,
+    GarbageStationDropWindowBusiness,
+    GarbageStationInfoWindowBusiness,
+    WindowBussiness,
   ],
 })
 export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
-
-  statisticCardList?: StatisticCardViewModel[];
 
   constructor(
     private _titleService: Title,
@@ -43,10 +53,11 @@ export class MonitorComponent implements OnInit {
     private _storeService: StoreService,
     public window: WindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
+
     public map: MapControlBusiness,
     public patrol: PatrolControlBusiness,
-    public video: VideoWindowBusiness,
-    private statisticCardBussiness: StatisticCardBussiness
+    public video: VideoControlWindowBusiness,
+    public statistic: StatisticCardBussiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
   }
@@ -62,13 +73,6 @@ export class MonitorComponent implements OnInit {
       this._storeService.divisionType = userDivisionType;
     }
 
-    this._storeService.statusChange.subscribe(async (x) => {
-      this.statisticCardList = await this.statisticCardBussiness.load();
-    });
-
-    let promise = this.statisticCardBussiness.load();
-    promise.then((x) => {
-      this.statisticCardList = x;
-    });
+    this.statistic.loading.emit();
   }
 }

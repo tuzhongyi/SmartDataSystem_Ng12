@@ -24,6 +24,21 @@ export class StoreService {
     return this._divisionType;
   }
 
+  statistic = {
+    illegalDrop: 0,
+    mixedInto: 0,
+    full: 0,
+    station: {
+      count: 0,
+      drop: 0,
+    },
+    device: {
+      count: 0,
+      online: 0,
+      offline: 0,
+    },
+  };
+
   interval = new EventEmitter();
   private intervalHandle?: NodeJS.Timer;
   runInterval(interval: number = 1000 * 60 * 1) {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { MapListItem } from './map-list-item';
+import { ListItem } from './map-list-item';
 
 @Component({
   selector: 'app-map-list-panel',
@@ -12,20 +12,20 @@ export class MapListPanelComponent implements OnInit {
   visibility: boolean = false;
 
   @Input()
-  dataSource: Array<MapListItem<Division | GarbageStation>> = [];
+  dataSource: Array<ListItem<Division | GarbageStation>> = [];
 
-  standBySearching: Array<MapListItem<Division | GarbageStation>> = [];
+  standBySearching: Array<ListItem<Division | GarbageStation>> = [];
 
   @Output()
-  OnItemClicked: EventEmitter<MapListItem<Division | GarbageStation>> =
+  OnItemClicked: EventEmitter<ListItem<Division | GarbageStation>> =
     new EventEmitter();
 
   @Output()
-  OnItemDoubleClicked: EventEmitter<MapListItem<Division | GarbageStation>> =
+  OnItemDoubleClicked: EventEmitter<ListItem<Division | GarbageStation>> =
     new EventEmitter();
 
   @Output()
-  OnItemHover: EventEmitter<MapListItem<Division | GarbageStation>> =
+  OnItemHover: EventEmitter<ListItem<Division | GarbageStation>> =
     new EventEmitter();
 
   @Output()
@@ -44,19 +44,19 @@ export class MapListPanelComponent implements OnInit {
     this.visibility = !this.visibility;
   }
 
-  itemClick(item: MapListItem<Division | GarbageStation>) {
+  itemClick(item: ListItem<Division | GarbageStation>) {
     if (this.OnItemClicked) {
       this.OnItemClicked.emit(item);
     }
   }
 
-  itemDoubleClick(item: MapListItem<Division | GarbageStation>) {
+  itemDoubleClick(item: ListItem<Division | GarbageStation>) {
     if (this.OnItemDoubleClicked) {
       this.OnItemDoubleClicked.emit(item);
     }
   }
 
-  itemHover(item: MapListItem<Division | GarbageStation>) {
+  itemHover(item: ListItem<Division | GarbageStation>) {
     if (this.OnItemHover) {
       this.OnItemHover.emit(item);
     }

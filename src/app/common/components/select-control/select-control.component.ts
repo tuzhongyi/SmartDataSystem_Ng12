@@ -22,7 +22,7 @@ export class SelectControlComponent implements OnInit {
   data?: SelectItem[];
 
   @Output()
-  selectedEvent: EventEmitter<SelectItem> = new EventEmitter();
+  select: EventEmitter<SelectItem> = new EventEmitter();
 
   selected: SelectItem = new SelectItem();
 
@@ -32,10 +32,10 @@ export class SelectControlComponent implements OnInit {
     this.opened = !this.opened;
     event.stopPropagation();
   }
-  select(event: Event, item: SelectItem) {
+  onselect(event: Event, item: SelectItem) {
     if (this.selected === item) return;
     this.selected = item;
     this.opened = false;
-    this.selectedEvent.emit(item);
+    this.select.emit(item);
   }
 }

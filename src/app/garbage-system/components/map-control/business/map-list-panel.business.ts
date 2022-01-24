@@ -8,38 +8,37 @@ import { GetDivisionsParams } from 'src/app/network/request/division/division-re
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { MapListItem, MapListItemType } from '../map-list-panel/map-list-item';
+import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
 import {
-  MapListPanelConverter,
-  MapListPanelType,
+  ListPanelConverter,
+  ListPanelType,
 } from '../converter/map-list-panel.converter';
 
 @Injectable()
-export class MapListPanelBusiness
-  implements
-    IBusiness<Array<MapListPanelType>, MapListItem<MapListPanelType>[]>
+export class ListPanelBusiness
+  implements IBusiness<Array<ListPanelType>, ListItem<ListPanelType>[]>
 {
-  datasource: MapListItem<MapListPanelType>[] = [];
+  datasource: ListItem<ListPanelType>[] = [];
 
   constructor(
     private storeService: StoreService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
   ) {}
-  Converter: IConverter<MapListPanelType[], MapListItem<MapListPanelType>[]> =
-    new MapListPanelConverter();
+  Converter: IConverter<ListPanelType[], ListItem<ListPanelType>[]> =
+    new ListPanelConverter();
 
   async load(
     parentId: string,
     parentType: DivisionType
-  ): Promise<MapListItem<MapListPanelType>[]> {
+  ): Promise<ListItem<ListPanelType>[]> {
     let data = await this.getData(parentId, parentType);
     return this.Converter.Convert(data);
   }
   async getData(
     parentId: string,
     parentType: DivisionType
-  ): Promise<MapListPanelType[]> {
+  ): Promise<ListPanelType[]> {
     switch (parentType) {
       case DivisionType.Committees:
         return this.loadGarbageStation(parentId);
@@ -55,17 +54,17 @@ export class MapListPanelBusiness
     );
   }
 
-  itemSelected: EventEmitter<MapListPanelType> = new EventEmitter();
+  itemSelected: EventEmitter<ListPanelType> = new EventEmitter();
 
-  async onItemCliced(item: MapListItem<MapListPanelType>) {
-    let data: MapListPanelType = item.Data;
+  async onItemCliced(item: ListItem<ListPanelType>) {
+    let data: ListPanelType = item.Data;
     switch (item.type) {
-      case MapListItemType.Division:
+      case ListItemType.Division:
         data = await this.loadByDivision(item.Data as Division);
         break;
-      case MapListItemType.GarbageStation:
+      case ListItemType.GarbageStation:
         break;
-      case MapListItemType.Parent:
+      case ListItemType.Parent:
         data = await this.loadByParent(item.Data as Division);
         break;
       default:
@@ -108,12 +107,7 @@ export class MapListPanelBusiness
   }
 
   createParentItem(division: Division) {
-    return new MapListItem(
-      division.Id,
-      '上一级',
-      MapListItemType.Parent,
-      division
-    );
+    return new ListItem(division.Id, '上一级', ListItemType.Parent, division);
   }
 
   async onSearch(text: string) {

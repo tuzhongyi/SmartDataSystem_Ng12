@@ -1,27 +1,48 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { EventRecordFilter } from 'src/app/common/components/tables/event-record-table/event-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { StoreService } from 'src/app/global/service/store.service';
+import { Language } from 'src/app/global/tool/language';
+import { Page } from 'src/app/network/model/page_list.model';
 
 @Component({
   selector: 'app-event-record-details',
   templateUrl: './event-record-details.component.html',
   styleUrls: ['./event-record-details.component.less'],
 })
-export class EventRecordDetailsComponent implements OnInit {
-  DateTimePickerView = DateTimePickerView;
+export class EventRecordDetailsComponent implements OnInit, OnChanges {
+  Language = Language;
 
-  type: EventType = EventType.IllegalDrop;
+  title: string = '';
 
-  constructor() {}
+  @Input()
+  type: EventType = EventType.MixedInto;
 
-  ngOnInit(): void {}
+  @Input()
+  recordCount: number = 0;
 
-  date: Date = new Date();
-  changeDate(date: Date) {
-    this.date = date;
+  @Input()
+  index = 0;
+
+  constructor(private storeService: StoreService) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.type) {
+      this.title = Language.EventType(this.type);
+    }
   }
 
-  display = {
-    filter: true,
-  };
+  ngOnInit(): void {}
+  indexChange(index: number) {
+    this.index = index;
+  }
 }

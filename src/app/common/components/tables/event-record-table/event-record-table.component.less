@@ -29,75 +29,39 @@
     flex-grow: 1;
     overflow: auto;
 
-    .my-table {
-      // background-color: rgb(162, 0, 255);
-      height: 900px;
+    ::ng-deep {
+      .body {
+        height: calc(100% - 70px - 50px);
+      }
     }
-  }
 
-  &-footer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-    height: 50px;
-    border-top: 1px solid #7586e0;
-    padding: 0 20px;
-    box-sizing: border-box;
-    overflow: auto;
 
-    .footer-item {
+    &-footer {
       display: flex;
-      align-items: center;
-      flex-shrink: 0;
+      justify-content: flex-end;
+      width: 100%;
+      height: 50px;
+      border-top: 1px solid #7586e0;
+      padding: 0 20px;
+      box-sizing: border-box;
+      overflow: auto;
 
-      .footer-info {
+      .footer-item {
         display: flex;
+        align-items: center;
+        flex-shrink: 0;
 
-        .info-item {
-          margin: 10px;
-          font-size: 14px;
-          color: #cfd7ff;
+        .footer-info {
+          display: flex;
+
+          .info-item {
+            margin: 10px;
+            font-size: 14px;
+            color: #cfd7ff;
+          }
         }
       }
     }
   }
-}
 
-
-
-::ng-deep .mat-table .mat-header-row .mat-header-cell div.operate {
-  padding-right: 30px;
-}
-
-::ng-deep .mat-table .mat-row .mat-cell div.picture {
-  display: flex;
-  align-items: center;
-  width: 70px;
-  height: 50px;
-  flex-grow: 0;
-
-  & img {
-    width: 100%;
-  }
-}
-
-::ng-deep .mat-table .mat-row:hover .mat-cell div.picture {
-  width: 120px;
-  height: 96px;
-}
-
-::ng-deep .mat-table .mat-row .mat-cell div.operate {
-  color: #7586e0;
-}
-
-::ng-deep .mat-table .mat-row .mat-cell div.operate i {
-  padding-right: 5px;
-}
-
-::ng-deep .mat-table .mat-row .mat-cell div.operate i:hover {
-  color: #fff;
-}
-
-::ng-deep .mat-table .mat-row.high-light .mat-cell div.operate i {
-  color: #cfd7ff;
 }

@@ -3,10 +3,15 @@
     <div class="title">{{ title }}</div>
     <div class="select-group">
       <app-select-control
+        style="min-width: 106px"
         [data]="retentionTypes"
-        (selectedEvent)="onRetentionTypeSelected($event)"
+        (select)="onRetentionTypeSelected($event)"
       ></app-select-control>
     </div>
   </div>
-  <app-rank [title]="title" [data]="rankData"></app-rank>
+  <app-rank
+    [title]="title"
+    [data]="rankData"
+    (itemClickedEvent)="onclick($event)"
+  ></app-rank>
 </div>

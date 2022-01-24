@@ -16,7 +16,7 @@ export class ImageControlComponent implements OnInit {
   model?: ImageControlModel;
 
   @Output()
-  click: EventEmitter<ImageControlModel> = new EventEmitter();
+  Click: EventEmitter<ImageControlModel> = new EventEmitter();
 
   constructor() {}
 
@@ -29,7 +29,7 @@ export class ImageControlComponent implements OnInit {
   }
 
   onClick(event: Event) {
-    this.click.emit(this.model);
+    this.Click.emit(this.model);
     event.stopPropagation();
   }
 }

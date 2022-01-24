@@ -4,13 +4,15 @@
 
     <div class="select-group">
       <app-select-control
+        style="min-width: 92px"
         *ngIf="resourceTypeDisplay"
         [data]="resourceTypes"
-        (selectedEvent)="onResourceTypeSelected($event)"
+        (select)="onResourceTypeSelected($event)"
       ></app-select-control>
       <app-select-control
+        style="min-width: 106px"
         [data]="eventTypes"
-        (selectedEvent)="onEventTypeSelected($event)"
+        (select)="onEventTypeSelected($event)"
       ></app-select-control>
     </div>
   </div>

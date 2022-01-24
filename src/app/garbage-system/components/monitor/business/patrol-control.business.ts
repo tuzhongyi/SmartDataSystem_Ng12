@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { WindowViewModel } from 'src/app/common/components/window/window.model';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 
 @Injectable()
 export class PatrolControlBusiness extends WindowViewModel {

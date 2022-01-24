@@ -20,7 +20,7 @@
         </tr>
       </thead>
     </table>
-    <div class="body">
+    <div class="event-record-table-main-body body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas">
@@ -42,12 +42,24 @@
             <td [ngStyle]="{ width: width[5] }">{{ item.DateFormatter }}</td>
             <td [ngStyle]="{ width: width[6] }">
               <div>
-                <button class="td-icon p-t-10 p-b-10" title="播放视频">
-                  <i class="howell-icon-video td-icon"></i></button
-                ><button class="td-icon p-t-10 p-b-10" title="下载图片">
-                  <i class="howell-icon-picturedownload td-icon"></i></button
-                ><button class="td-icon p-t-10 p-b-10" title="下载视频">
-                  <i class="howell-icon-videodownload td-icon"></i>
+                <button
+                  class="icon-button"
+                  title="播放视频"
+                  (click)="playvideo(item)"
+                >
+                  <i class="howell-icon-video"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载图片"
+                  (click)="downloadImage(item)"
+                >
+                  <i class="howell-icon-picturedownload"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载视频"
+                  (click)="downloadVideo(item)"
+                >
+                  <i class="howell-icon-videodownload"></i>
                 </button>
               </div>
             </td>
@@ -55,24 +67,40 @@
         </tbody>
       </table>
     </div>
-  </div>
-  <div class="event-record-table-footer" *ngIf="page">
-    <div class="footer-item">
-      <div class="footer-info">
-        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
-      </div>
+    <div class="event-record-table-main-footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
 
-      <!-- MatPaginator 的pageIndex是从0开始-->
-      <app-paginator
-        [length]="page.TotalRecordCount"
-        [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="page.PageCount - 1"
-        [showFirstLastButtons]="true"
-        (page)="pageEvent($event)"
-      >
-      </app-paginator>
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
     </div>
   </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
 </div>
+<app-window [Model]="panel" [style]="panel.style">
+  <ng-container *ngIf="panel.show">
+    <howell-video-download-panel
+      [business]="panel"
+      (download)="panel.download($event)"
+      (cancel)="panel.cancel()"
+    >
+    </howell-video-download-panel>
+  </ng-container>
+</app-window>
