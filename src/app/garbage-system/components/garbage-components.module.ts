@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
- * @Last Modified by: zzl
- * @Last Modified time: 2022-01-19 15:48:21
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-01-25 10:31:28
  */
 
 import { NgModule } from '@angular/core';
@@ -30,6 +30,7 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { FormsModule } from '@angular/forms';
 import { EventRecordDetailsTableComponent } from './event-record-details/event-record-details-table/event-record-details-table.component';
 import { DeviceListTableWindowComponent } from './windows/device-list-table-window/device-list-table-window.component';
+import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { DeviceListTableWindowComponent } from './windows/device-list-table-wind
     PointInfoPanelComponent,
     PatrolControlComponent,
     DeviceListTableWindowComponent,
+    EventStatisticComponent,
   ],
   imports: [
     CommonModule,

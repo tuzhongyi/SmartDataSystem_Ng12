@@ -9,6 +9,12 @@
     "#cda819",
     "#32a487"
   ],
+   "grid": {
+    "left": 20,
+    "right":20,
+    "bottom":0,
+    "containLabel":true
+  },
   "backgroundColor": "rgba(6,13,57,1)",
   "textStyle": {},
   "title": {
@@ -16,10 +22,11 @@
       "color": "#ffffff",
       "fontSize": "24",
       "fontFamily": "Source Han Sans CN Normal",
-      "fontWeight": "normal"
+      "fontWeight": "normal",
+      "overflow": "truncate"
     },
     "subtextStyle": {
-      "color": "#ffffff"
+      "color": "inherit"
     }
   },
   "line": {
@@ -324,6 +331,7 @@
     }
   },
   "legend": {
+    "icon":"none",
     "textStyle": {
       "color": "inherit",
       "fontSize": 12
@@ -340,7 +348,7 @@
         "width": 1
       },
       "label": {
-        "backgroundColor": "#cccccc"
+        "backgroundColor": "rgb(110,112,121)"
       }
     }
   },

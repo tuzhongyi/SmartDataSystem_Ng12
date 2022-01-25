@@ -14,3 +14,6 @@ export class EChartsLineModel {
 export class EChartsLineOption extends EChartsCommon {
   xAxisInterval: Array<number> = [];
 }
+
+// 重构后的数据结构
+export class EChartsLineModelV2 {}

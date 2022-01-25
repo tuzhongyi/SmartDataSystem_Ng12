@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-12-30 15:27:11
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-30 15:51:51
+ * @Last Modified time: 2022-01-25 13:25:26
  */
 import {
   AfterViewChecked,
@@ -100,6 +100,7 @@ export class PaginatorComponent
 
   // 长度改变后，重新生成
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
     if ('length' in changes) {
       // console.log('change length');
       this._updatePageRange(this.pageIndex);
