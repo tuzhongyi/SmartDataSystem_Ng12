@@ -25,24 +25,17 @@ export class DeviceListTableWindowComponent
     super();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.status) {
-      debugger;
-      this.filter.status = this.status;
-      this.load.emit(this.filter);
-    }
+    this.load.emit();
   }
 
   ngOnInit(): void {}
 
-  load: EventEmitter<DeviceListTableFilter> = new EventEmitter();
-
-  filter: DeviceListTableFilter = {};
+  load: EventEmitter<string> = new EventEmitter();
 
   @Input()
   status?: OnlineStatus;
 
   onsearch(text: string) {
-    this.filter.name = text;
-    this.load.emit(this.filter);
+    this.load.emit(text);
   }
 }

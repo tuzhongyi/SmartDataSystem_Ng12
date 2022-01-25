@@ -26,7 +26,7 @@ export class DeviceListTableComponent
   width = ['15%', '20%', '10%', '15%', '15%', '15%'];
 
   @Input()
-  filter?: DeviceListTableFilter = {};
+  status?: OnlineStatus;
 
   datas: DeviceViewModel[] = [];
   page?: Page;
@@ -38,18 +38,17 @@ export class DeviceListTableComponent
   business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
   @Input()
-  load?: EventEmitter<DeviceListTableFilter>;
+  load?: EventEmitter<string>;
 
   constructor(business: DeviceListTableBusiness) {
     this.business = business;
   }
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize, this.filter);
+    this.loadData(1, this.pageSize, this.status);
     if (this.load) {
-      this.load.subscribe((x) => {
-        this.filter = x;
-        this.loadData(1, this.pageSize, this.filter);
+      this.load.subscribe((name) => {
+        this.loadData(1, this.pageSize, this.status, name);
       });
     }
   }
@@ -57,14 +56,15 @@ export class DeviceListTableComponent
   loadData(
     index: number,
     size: number,
-    filter?: DeviceListTableFilter,
+    status?: OnlineStatus,
+    name?: string,
     show = true
   ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, filter);
+    let promise = this.business.load(params, status, name);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -77,7 +77,7 @@ export class DeviceListTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.filter);
+    this.loadData(page.pageIndex + 1, this.pageSize, this.status);
   }
   onerror(e: Event) {
     if (e.target) {
@@ -86,10 +86,7 @@ export class DeviceListTableComponent
   }
 
   search(name: string) {
-    if (this.filter) {
-      this.filter.name = name;
-    }
-    this.loadData(1, this.pageSize, this.filter);
+    this.loadData(1, this.pageSize, this.status, name);
   }
 }
 

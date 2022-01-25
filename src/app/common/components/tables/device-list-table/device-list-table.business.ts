@@ -34,9 +34,15 @@ export class DeviceListTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,
-    filter?: DeviceListTableFilter
+    status?: OnlineStatus,
+    name?: string
   ): Promise<PagedList<DeviceViewModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, filter);
+    let data = await this.getData(
+      this.storeService.divisionId,
+      page,
+      status,
+      name
+    );
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -50,14 +56,13 @@ export class DeviceListTableBusiness
   getData(
     divisionId: string,
     page: PagedParams,
-    filter?: DeviceListTableFilter
+    status?: OnlineStatus,
+    name?: string
   ): Promise<PagedList<Camera>> {
     let params = new GetGarbageStationCamerasParams();
     params = Object.assign(params, page);
-    if (filter) {
-      params.OnlineStatus = filter.status;
-      params.Name = filter.name;
-    }
+    params.OnlineStatus = status;
+    params.Name = name;
     params.DivisionIds = [divisionId];
     return this.stationService.camera.list(params);
   }
@@ -80,6 +85,7 @@ class DevicePagedConverter
 
     for (let i = 0; i < source.Data.length; i++) {
       let item = await this.converter.item.Convert(source.Data[i], getter);
+
       array.push(item);
     }
 
@@ -100,7 +106,9 @@ class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
   ): Promise<DeviceViewModel> {
     let model = new DeviceViewModel();
     model = Object.assign(model, source);
+
     model.GarbageStation = await getter.station(source.GarbageStationId);
+
     if (model.GarbageStation && model.GarbageStation.DivisionId) {
       model.Committees = await getter.division(model.GarbageStation.DivisionId);
       if (model.Committees.ParentId) {

@@ -27,7 +27,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     }, time);
   }
 
-  protected wait(reject: (t: T[]) => void, timeout = 100) {
+  protected wait(reject: (t: T[]) => void, timeout = 1) {
     setTimeout(() => {
       if (this.loaded) {
         let data = this.load();
