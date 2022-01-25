@@ -10,13 +10,15 @@
     "#32a487"
   ],
    "grid": {
-    "left": 20,
-    "right":20,
+    "left": 15,
+    "right":15,
     "bottom":0,
     "containLabel":true
   },
   "backgroundColor": "rgba(6,13,57,1)",
-  "textStyle": {},
+  "textStyle": {
+   
+  },
   "title": {
     "textStyle": {
       "color": "#ffffff",
@@ -33,7 +35,7 @@
     "label": {
       "show": true,
       "color": "#fff",
-      "fontSize": "16"
+      "fontSize": "14"
     },
     "itemStyle": {
       "borderWidth": 1
@@ -331,14 +333,20 @@
     }
   },
   "legend": {
+    "selectedMode": false,
     "icon":"none",
+    "top":"10%",
+    "left":"80%",
     "textStyle": {
       "color": "inherit",
       "fontSize": 12
     }
   },
   "tooltip": {
+    "mainType": "tooltip",
+    "trigger": "axis",
     "axisPointer": {
+      "type":"cross",
       "lineStyle": {
         "color": "#cccccc",
         "width": 1

@@ -66,18 +66,11 @@ export class EventStatisticComponent
 
   options: EChartOptions = {
     legend: {
-      right: 0,
-      top: 20,
-      selectedMode: false,
       formatter: function () {
         return '单位(起)';
       },
     },
-    tooltip: {
-      axisPointer: {
-        type: 'cross',
-      },
-    },
+    tooltip: {},
     title: {
       text: this.title,
     },
@@ -143,21 +136,22 @@ export class EventStatisticComponent
     });
     res.unshift(0);
 
-    // console.log(res);
+    let max = Math.max(...res);
 
     this.merge = {
       series: [
         {
           type: 'line',
-          name: 'Hello',
+          name: '单位(起)',
           data: res,
           areaStyle: {},
           label: {
-            formatter: (params: any) => {
+            formatter: (params: CallbackDataParams) => {
+              if (params.value == max) return params.value.toString();
               if (params.dataIndex % this._seriesStep !== 0) {
                 return '';
               }
-              return params.value;
+              return params.value.toString();
             },
           },
         },
