@@ -17,7 +17,7 @@ import { GetDivisionsParams } from 'src/app/network/request/division/division-re
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { ListPanelBusiness } from '../../map-control/business/map-list-panel.business';
+import { ListPanelBusiness } from '../map-control/business/map-list-panel.business';
 import { EventRecordDetailsTableOpts } from './event-record-details-table.component';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
 

@@ -1414,3 +1414,9 @@ input[type="text"]:focus {
 .icon-button:hover {
   color: white;
 }
+
+abbr[title],
+abbr[data-original-title] {
+  cursor: help;
+  border-bottom: 1px dotted #999;
+}

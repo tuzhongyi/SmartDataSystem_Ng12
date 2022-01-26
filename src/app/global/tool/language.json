@@ -77,5 +77,6 @@
   "behavior":"行为",
   "max":"最大",
   "video":"视频",
-  "camera":"摄像机"
+  "camera":"摄像机",
+  "state":"状态"
 }

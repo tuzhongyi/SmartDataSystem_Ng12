@@ -1,0 +1,17 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title
+      [title]="
+        Language.json.garbage + Language.json.stay + Language.json.station
+      "
+    >
+      <div class="garbage-drop-station-table-window-header">
+        <app-input-search (search)="onsearch($event)"> </app-input-search>
+      </div>
+    </app-tab-title>
+    <div class="garbage-drop-station-table-window-content">
+      <howell-garbage-drop-station-table [load]="load">
+      </howell-garbage-drop-station-table>
+    </div>
+  </ng-container>
+</app-window>
