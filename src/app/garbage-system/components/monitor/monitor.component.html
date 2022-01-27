@@ -111,7 +111,7 @@
 >
 </app-video-window>
 
-<app-window [Model]="window.record" [style]="window.record.style">
+<!-- <app-window [Model]="window.record" [style]="window.record.style">
   <ng-container *ngIf="window.record.show">
     <app-event-record-details
       [recordCount]="window.record.count"
@@ -119,9 +119,17 @@
     >
     </app-event-record-details>
   </ng-container>
-</app-window>
+</app-window> -->
+<howell-event-record-window
+  *ngIf="window.record.show"
+  [Model]="window.record"
+  [style]="window.record.style"
+  [type]="window.record.type"
+>
+</howell-event-record-window>
 
 <howell-device-list-window
+  *ngIf="window.device.show"
   [Model]="window.device"
   [style]="window.device.style"
   [status]="window.device.status"
@@ -129,17 +137,22 @@
 </howell-device-list-window>
 
 <howell-garbage-drop-station-window
+  *ngIf="window.drop.show"
   [Model]="window.drop"
   [style]="window.drop.style"
 >
 </howell-garbage-drop-station-window>
 
 <howell-garbage-full-station-window
+  *ngIf="window.full.show"
   [Model]="window.full"
   [style]="window.full.style"
 >
 </howell-garbage-full-station-window>
 
-<app-window [Model]="window.station" [style]="window.station.style">
-  <ng-container *ngIf="window.station.show"> </ng-container>
-</app-window>
+<howell-garbage-station-window
+  *ngIf="window.station.show"
+  [Model]="window.station"
+  [style]="window.station.style"
+>
+</howell-garbage-station-window>

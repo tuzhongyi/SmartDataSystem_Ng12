@@ -3,10 +3,12 @@ import {
   IConverter,
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
+import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import {
   EventRecord,
+  GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
 } from 'src/app/network/model/event-record.model';
@@ -15,7 +17,10 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import { EventRecordViewModel } from './event-record.model';
 
-export type EventRecordType = MixedIntoEventRecord | IllegalDropEventRecord;
+export type EventRecordType =
+  | MixedIntoEventRecord
+  | IllegalDropEventRecord
+  | GarbageFullEventRecord;
 
 export class EventRecordPagedConverter
   implements
@@ -51,7 +56,25 @@ export class EventRecordPagedConverter
 export class EventRecordConverter
   implements IPromiseConverter<EventRecordType, EventRecordViewModel>
 {
-  async Convert(
+  converter = {
+    station: new GarbageStationConverter(),
+  };
+
+  Convert(
+    source: EventRecordType,
+    getter: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+    }
+  ): Promise<EventRecordViewModel> {
+    if (source instanceof GarbageFullEventRecord) {
+      return this.fromGarbageFull(source, getter);
+    } else {
+      return this.fromEventRecord(source, getter);
+    }
+  }
+
+  async fromEventRecord(
     source: EventRecordType,
     getter: {
       station: (id: string) => Promise<GarbageStation>;
@@ -60,16 +83,11 @@ export class EventRecordConverter
   ): Promise<EventRecordViewModel> {
     let model = new EventRecordViewModel();
     model = Object.assign(model, source);
-    model.GarbageStation = await getter.station(source.Data.StationId);
-    if (source.Data.DivisionId) {
-      model.Committees = await getter.division(source.Data.DivisionId);
-      if (model.Committees.ParentId) {
-        model.County = await getter.division(model.Committees.ParentId);
-        if (model.County.ParentId) {
-          model.City = await getter.division(model.County.ParentId);
-        }
-      }
-    }
+    let station = await getter.station(source.Data.StationId);
+    model.GarbageStation = await this.converter.station.Convert(
+      station,
+      getter.division
+    );
 
     model.imageSrc = MediumRequestService.jpg(source.ImageUrl);
 
@@ -79,6 +97,22 @@ export class EventRecordConverter
       'en'
     );
 
+    return model;
+  }
+
+  async fromGarbageFull(
+    source: GarbageFullEventRecord,
+    getter: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+    }
+  ) {
+    let model = await this.fromEventRecord(source, getter);
+    if (source.Data.CameraImageUrls && source.Data.CameraImageUrls.length > 0) {
+      model.imageSrc = MediumRequestService.jpg(
+        source.Data.CameraImageUrls[0].ImageUrl
+      );
+    }
     return model;
   }
 }

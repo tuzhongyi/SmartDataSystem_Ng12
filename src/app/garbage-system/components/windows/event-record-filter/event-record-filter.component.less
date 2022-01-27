@@ -1,0 +1,91 @@
+.event-record-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 34px;
+  margin-bottom: 10px;
+
+  .filter-item {
+    height: 100%;
+    width: calc(20% - 10px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &>span {
+      width: 72px;
+      margin-right: 5px;
+      color: #cfd7ff;
+      font-size: 18px;
+    }
+
+    &>input,
+    &>.input,
+    &>select,
+    &>button {
+      width: calc(100% - 72px);
+    }
+
+    &>input {
+      height: calc(100% - 2px);
+      width: calc(100% - 72px - 12px - 10px);
+    }
+
+    &>button {
+      text-align: left;
+      color: #cfd7ff;
+      border: 1px solid #5e6ebf;
+      font-size: 18px;
+      border-radius: unset;
+      background-color: #1d233b;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+      height: 100%;
+
+      &:active,
+      &:focus,
+      &:target,
+      &[aria-expanded*="true"] {
+        border-color: #3a93ff;
+      }
+
+      ::ng-deep &>.mat-button-wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+      }
+    }
+
+    &.select {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+
+}
+
+
+::ng-deep {
+  .cdk-overlay-container {
+    z-index: 10000;
+
+    .cdk-overlay-pane {
+      max-height: 230px;
+
+
+      .mat-menu-item {
+        margin: 0;
+      }
+
+      .mat-menu-panel {
+        border: 1px solid #3a93ff !important;
+      }
+    }
+  }
+}

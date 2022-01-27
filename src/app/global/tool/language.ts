@@ -175,14 +175,20 @@ export class Language {
       result = hours ? hours + Language.json.Time.hour : '';
       result += minutes ? minutes + Language.json.Time.minute : '';
     } else {
-      if (time.getHours() > 0) {
-        result = `${time.getHours()}${Language.json.Time.hour}${result}`;
+      let t = new Date(time.getTime());
+      let offset = t.getTimezoneOffset() / 60;
+      t.setHours(t.getHours() + offset);
+
+      if (t.getHours() > 0) {
+        result = `${t.getHours()}${Language.json.Time.hour}${result}`;
       }
-      let minutes = time.getMinutes();
-      if (time.getSeconds() > 0) {
+      let minutes = t.getMinutes();
+      if (t.getSeconds() > 0) {
         minutes++;
       }
-      result = `${result}${minutes}${Language.json.Time.minute}`;
+      if (minutes > 0) {
+        result = `${result}${minutes}${Language.json.Time.minute}`;
+      }
     }
 
     return result;

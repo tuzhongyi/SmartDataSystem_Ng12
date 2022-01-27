@@ -1,1 +1,42 @@
-<p>event-record-window works!</p>
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title [title]="Language.EventType(type)">
+      <div class="garbage-full-station-table-window-header">
+        <div class="operation" *ngIf="index === Index.record">
+          <howell-event-record-operation
+            (filter)="record.filter.display()"
+            (search)="record.filter.search($event)"
+          >
+          </howell-event-record-operation>
+        </div>
+      </div>
+    </app-tab-title>
+    <div class="garbage-full-station-table-window-content">
+      <mat-tab-group
+        [disableRipple]="true"
+        animationDuration="0ms"
+        [color]="'transparent'"
+        [selectedIndex]="index"
+        (selectedIndexChange)="indexChange($event)"
+      >
+        <mat-tab label="事件">
+          <howell-event-record-filter
+            *ngIf="record.filter.show"
+            (filter)="record.filter.onfilter($event)"
+          >
+          </howell-event-record-filter>
+          <div class="event-record-table" [class.filter]="record.filter.show">
+            <howell-event-record-table
+              [type]="type"
+              [load]="record.filter.load"
+            >
+            </howell-event-record-table>
+          </div>
+        </mat-tab>
+        <mat-tab label="总图表"> Content 2 </mat-tab>
+        <mat-tab label="细分图表"> Content 3 </mat-tab>
+        <mat-tab label="数据比较"> Content 4 </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-container>
+</app-window>

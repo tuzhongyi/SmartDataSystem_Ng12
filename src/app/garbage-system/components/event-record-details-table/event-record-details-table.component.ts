@@ -44,18 +44,8 @@ export class EventRecordDetailsTableComponent
   listTypes: SelectItem[] = [];
   constructor(business: EventRecordDetailsTableBusiness) {
     this.business = business;
-    let now = new Date();
-    let begin = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    let end = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate(),
-      23,
-      59,
-      59
-    );
 
-    this.filter = new EventRecordFilter(begin, end);
+    this.filter = new EventRecordFilter();
 
     let typeEnum = new Enum(ListType);
     this.listTypes = typeEnum.toArray().map((x) => {

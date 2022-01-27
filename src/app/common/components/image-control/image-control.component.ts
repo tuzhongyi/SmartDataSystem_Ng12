@@ -15,6 +15,9 @@ export class ImageControlComponent implements OnInit {
   @Input()
   model?: ImageControlModel;
 
+  @Input()
+  nosignal = true;
+
   @Output()
   Click: EventEmitter<ImageControlModel> = new EventEmitter();
 

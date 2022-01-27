@@ -19,7 +19,10 @@
             <td [ngStyle]="{ width: width[0] }">
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
-                  <app-image-control [model]="img"></app-image-control>
+                  <app-image-control
+                    [nosignal]="false"
+                    [model]="img"
+                  ></app-image-control>
 
                   <!-- [src]="item.imageSrc" -->
                 </div>
@@ -29,10 +32,22 @@
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
             <td [ngStyle]="{ width: width[2] }">
-              {{ item.County ? item.County.Name : "" }}
+              {{
+                item.GarbageStation
+                  ? item.GarbageStation.County
+                    ? item.GarbageStation.County.Name
+                    : ""
+                  : ""
+              }}
             </td>
             <td [ngStyle]="{ width: width[3] }">
-              {{ item.Committees ? item.Committees.Name : "" }}
+              {{
+                item.GarbageStation
+                  ? item.GarbageStation.Committees
+                    ? item.GarbageStation.Committees.Name
+                    : ""
+                  : ""
+              }}
             </td>
             <td [ngStyle]="{ width: width[4] }">
               {{

@@ -1,0 +1,101 @@
+<div class="event-record-filter">
+  <div class="filter-item">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd HH:mm'"
+      [startView]="DateTimePickerView.day"
+      [minView]="DateTimePickerView.hour"
+      [date]="filter.begin"
+      (change)="changeBegin($event)"
+      class=""
+    />
+  </div>
+  <div class="filter-item">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd HH:mm'"
+      [startView]="DateTimePickerView.day"
+      [minView]="DateTimePickerView.hour"
+      [date]="filter.end"
+      (change)="changeEnd($event)"
+      class=""
+    />
+  </div>
+  <div class="filter-item select">
+    <span>行政区</span>
+    <!-- <app-select-control
+      class="division-select input"
+      [data]="model.divisions"
+    ></app-select-control> -->
+    <!-- <select name="" id="">
+      <option [value]="item" *ngFor="let item of model.divisions">
+        {{ item.language }}
+      </option>
+    </select> -->
+    <button
+      mat-button
+      [matMenuTriggerFor]="divisions"
+      [disabled]="!model.divisions || model.divisions.length === 0"
+      disableRipple="true"
+    >
+      <div>
+        {{ filter.division ? filter.division.language : "请选择" }}
+      </div>
+      <i class="mdi mdi-menu-down"></i>
+    </button>
+    <mat-menu #divisions>
+      <menu
+        mat-menu-item
+        *ngFor="let item of model.divisions"
+        (click)="ondivision(item)"
+        >{{ item.language }}</menu
+      >
+    </mat-menu>
+  </div>
+  <div class="filter-item">
+    <span>投放点</span>
+    <button
+      mat-button
+      [matMenuTriggerFor]="stations"
+      [disabled]="!model.stations || model.stations.length === 0"
+      disableRipple="true"
+    >
+      <div>
+        {{ filter.station ? filter.station.language : "请选择" }}
+      </div>
+      <i class="mdi mdi-menu-down"></i>
+    </button>
+    <mat-menu #stations>
+      <menu
+        mat-menu-item
+        *ngFor="let item of model.stations"
+        (click)="onstation(item)"
+        >{{ item.language }}</menu
+      >
+    </mat-menu>
+  </div>
+  <div class="filter-item">
+    <span>摄像机</span>
+    <button
+      mat-button
+      [matMenuTriggerFor]="cameras"
+      [disabled]="!model.cameras || model.cameras.length === 0"
+      disableRipple="true"
+    >
+      <div>{{ filter.camera ? filter.camera.language : "请选择" }}</div>
+      <div><i class="mdi mdi-menu-down"></i></div>
+    </button>
+    <mat-menu #cameras>
+      <menu
+        mat-menu-item
+        *ngFor="let item of model.cameras"
+        (click)="oncamera(item)"
+        >{{ item.language }}</menu
+      >
+    </mat-menu>
+  </div>
+</div>

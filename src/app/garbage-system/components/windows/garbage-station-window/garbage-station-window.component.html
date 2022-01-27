@@ -1,0 +1,37 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title [title]="Language.json.station">
+      <div class="garbage-station-window-header">
+        <div class="operation" *ngIf="index === Index.station">
+          <app-input-search (search)="station.onsearch($event)">
+          </app-input-search>
+        </div>
+        <div class="operation" *ngIf="index === Index.record">
+          <howell-event-record-operation
+            (filter)="record.filter.display()"
+            (search)="record.filter.search($event)"
+          >
+          </howell-event-record-operation>
+        </div>
+      </div>
+    </app-tab-title>
+    <div class="garbage-station-window-content">
+      <mat-tab-group
+        [disableRipple]="true"
+        animationDuration="0ms"
+        [color]="'transparent'"
+        [selectedIndex]="index"
+        (selectedIndexChange)="indexChange($event)"
+      >
+        <mat-tab label="列表">
+          <howell-garbage-station-table [load]="station.load">
+          </howell-garbage-station-table>
+        </mat-tab>
+        <mat-tab label="小包垃圾滞留"> </mat-tab>
+        <mat-tab label="总图表"> </mat-tab>
+        <mat-tab label="细分图表"> </mat-tab>
+        <mat-tab label="报警事件处置"> </mat-tab>
+      </mat-tab-group>
+    </div>
+  </ng-container>
+</app-window>

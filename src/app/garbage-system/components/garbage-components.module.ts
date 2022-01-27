@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
- * @Last Modified by: pmx
- * @Last Modified time: 2022-01-25 10:31:28
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-01-27 14:53:06
  */
 
 import { NgModule } from '@angular/core';
@@ -33,6 +33,10 @@ import { DeviceListWindowComponent } from './windows/device-list-window/device-l
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { GarbageDropStationWindowComponent } from './windows/garbage-drop-station-window/garbage-drop-station-window.component';
 import { GarbageFullStationWindowComponent } from './windows/garbage-full-station-window/garbage-full-station-window.component';
+import { EventRecordWindowComponent } from './windows/event-record-window/event-record-window.component';
+import { EventRecordOperationComponent } from './windows/event-record-operation/event-record-operation.component';
+import { EventRecordFilterComponent } from './windows/event-record-filter/event-record-filter.component';
+import { GarbageStationWindowComponent } from './windows/garbage-station-window/garbage-station-window.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +60,10 @@ import { GarbageFullStationWindowComponent } from './windows/garbage-full-statio
     DeviceListWindowComponent,
     GarbageDropStationWindowComponent,
     GarbageFullStationWindowComponent,
+    GarbageStationWindowComponent,
+    EventRecordOperationComponent,
+    EventRecordFilterComponent,
+    EventRecordWindowComponent,
     EventStatisticComponent,
   ],
   imports: [

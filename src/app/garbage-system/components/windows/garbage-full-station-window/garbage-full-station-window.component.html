@@ -2,8 +2,17 @@
   <ng-container *ngIf="Model.show">
     <app-tab-title [title]="Language.json.station + Language.json.state">
       <div class="garbage-full-station-table-window-header">
-        <app-input-search (search)="onlistsearch($event)" *ngIf="index === 0">
-        </app-input-search>
+        <div class="operation" *ngIf="index === Index.station">
+          <app-input-search (search)="station.onsearch($event)">
+          </app-input-search>
+        </div>
+        <div class="operation" *ngIf="index === Index.record">
+          <howell-event-record-operation
+            (filter)="record.filter.display()"
+            (search)="record.filter.search($event)"
+          >
+          </howell-event-record-operation>
+        </div>
       </div>
     </app-tab-title>
     <div class="garbage-full-station-table-window-content">
@@ -15,11 +24,22 @@
         (selectedIndexChange)="indexChange($event)"
       >
         <mat-tab label="列表">
-          <howell-garbage-full-station-table [load]="load">
+          <howell-garbage-full-station-table [load]="station.load">
           </howell-garbage-full-station-table>
         </mat-tab>
         <mat-tab label="事件">
-          <howell-event-record-table [type]="type"> </howell-event-record-table>
+          <howell-event-record-filter
+            *ngIf="record.filter.show"
+            (filter)="record.filter.onfilter($event)"
+          >
+          </howell-event-record-filter>
+          <div class="event-record-table" [class.filter]="record.filter.show">
+            <howell-event-record-table
+              [type]="type"
+              [load]="record.filter.load"
+            >
+            </howell-event-record-table>
+          </div>
         </mat-tab>
       </mat-tab-group>
     </div>

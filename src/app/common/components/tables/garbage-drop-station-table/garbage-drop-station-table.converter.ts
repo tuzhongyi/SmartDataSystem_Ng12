@@ -1,4 +1,5 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
@@ -46,6 +47,7 @@ export class GarbageDropStationTableConverter
 {
   converter = {
     image: new ImageControlArrayConverter(),
+    station: new GarbageStationConverter(),
   };
 
   async Convert(
@@ -57,20 +59,18 @@ export class GarbageDropStationTableConverter
   ): Promise<GarbageDropStationTableModel> {
     let model = new GarbageDropStationTableModel();
     model.GarbageCount = source.GarbageCount ?? 0;
-    let now = new Date();
-    let offset = now.getTimezoneOffset() / 60;
+
     if (source.CurrentGarbageTime) {
       model.GarbageDuration = new Date(source.CurrentGarbageTime * 1000);
-      model.GarbageDuration.setHours(model.GarbageDuration.getHours() + offset);
     }
     if (source.MaxGarbageTime) {
       model.MaxGarbageDuration = new Date(source.MaxGarbageTime * 1000);
-      model.MaxGarbageDuration.setHours(
-        model.MaxGarbageDuration.getHours() + offset
-      );
     }
-    model.GarbageStation = await getter.station(source.Id);
-
+    let station = await getter.station(source.Id);
+    model.GarbageStation = await this.converter.station.Convert(
+      station,
+      getter.division
+    );
     if (model.GarbageStation) {
       model.members = model.GarbageStation.Members ?? [];
 
@@ -78,18 +78,6 @@ export class GarbageDropStationTableConverter
         model.images = this.converter.image.Convert(
           model.GarbageStation.Cameras
         );
-      }
-
-      if (model.GarbageStation.DivisionId) {
-        model.Committees = await getter.division(
-          model.GarbageStation.DivisionId
-        );
-        if (model.Committees.ParentId) {
-          model.County = await getter.division(model.Committees.ParentId);
-          if (model.County.ParentId) {
-            model.City = await getter.division(model.County.ParentId);
-          }
-        }
       }
     }
     return model;

@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -39,47 +40,16 @@ export class EventRecordTableComponent
   @Input()
   business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
 
-  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
-
-  begin: Date = new Date();
-  end: Date = new Date();
-
-  private _filter?: EventRecordFilter;
-  public get filter(): EventRecordFilter {
-    if (!this._filter) {
-      this.filter = new EventRecordFilter(this.begin, this.end);
-    }
-    return this._filter!;
-  }
   @Input()
-  public set filter(v: EventRecordFilter) {
-    this._filter = v;
-  }
-
-  private _search?: EventEmitter<EventRecordFilter>;
-  public get search(): EventEmitter<EventRecordFilter> | undefined {
-    return this._search;
-  }
-  @Input()
-  public set search(v: EventEmitter<EventRecordFilter> | undefined) {
-    this._search = v;
-    if (this._search) {
-      this._search.subscribe((x) => {
-        this.filter = x;
-        this.loadData(1, this.pageSize, false).then((x) => {
-          if (this.page && this.page.PageCount > 1) {
-            this.loadData(this.page.PageCount, this.pageSize);
-          }
-        });
-      });
-    }
-  }
-
-  @Input()
-  count: number = 0;
+  filter: EventRecordFilter;
 
   @Input()
   type: EventType = EventType.IllegalDrop;
+
+  @Input()
+  load?: EventEmitter<EventRecordFilter>;
+
+  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
 
   constructor(
     business: EventRecordBusiness,
@@ -88,39 +58,38 @@ export class EventRecordTableComponent
   ) {
     super();
     this.business = business;
-    let now = new Date();
-    this.begin = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    this.filter = new EventRecordFilter();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-
-    if (changes.count && changes.count.firstChange) {
-      this.page = this.getPaged(this.count, this.pageSize);
-      if (this.page) {
-        this.loadData(this.page.PageCount, this.pageSize);
-      }
+    if (changes.load && changes.load.firstChange && this.load) {
+      this.load.subscribe((x) => {
+        this.filter = x;
+        this.loadData(-1, this.pageSize, this.filter);
+      });
     }
   }
 
-  async ngOnInit() {}
-
-  async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize);
+  async ngOnInit() {
+    this.loadData(-1, this.pageSize, this.filter);
   }
 
-  loadData(index: number, size: number, show = true) {
+  async pageEvent(page: PageEvent) {
+    this.loadData(page.pageIndex + 1, this.pageSize, this.filter);
+  }
+
+  loadData(index: number, size: number, filter: EventRecordFilter) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(this.type, params, this.filter);
+    let promise = this.business.load(this.type, params, filter);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
       this.page = paged.Page;
-      if (show) {
-        this.datas = paged.Data;
-      }
+
+      this.datas = paged.Data;
     });
     return promise;
   }

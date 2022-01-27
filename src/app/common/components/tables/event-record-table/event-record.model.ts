@@ -4,16 +4,11 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { SelectItem } from '../../select-control/select-control.model';
+import { GarbageStationModel } from '../garbage-station-table/garbage-station.model';
 
 export class EventRecordViewModel extends EventRecord {
   /** */
-  GarbageStation?: GarbageStation;
-  /** */
-  Committees?: Division;
-  /** */
-  County?: Division;
-  /** */
-  City?: Division;
+  GarbageStation?: GarbageStationModel;
 
   imageSrc: string = '';
 
@@ -21,9 +16,19 @@ export class EventRecordViewModel extends EventRecord {
 }
 
 export class EventRecordFilter {
-  constructor(begin: Date, end: Date) {
-    this.begin = begin;
-    this.end = end;
+  constructor(begin?: Date, end?: Date) {
+    let now = new Date();
+    if (begin) {
+      this.begin = begin;
+    } else {
+      this.begin = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
+    if (end) {
+      this.end = end;
+    } else {
+      this.end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+      this.end.setMilliseconds(-1);
+    }
   }
   begin: Date;
   end: Date;

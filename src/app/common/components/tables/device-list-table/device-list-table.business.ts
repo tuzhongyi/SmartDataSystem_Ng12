@@ -5,6 +5,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -97,6 +98,9 @@ class DevicePagedConverter
 }
 
 class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
+  converter = {
+    station: new GarbageStationConverter(),
+  };
   async Convert(
     source: Camera,
     getter: {
@@ -107,17 +111,11 @@ class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
     let model = new DeviceViewModel();
     model = Object.assign(model, source);
 
-    model.GarbageStation = await getter.station(source.GarbageStationId);
-
-    if (model.GarbageStation && model.GarbageStation.DivisionId) {
-      model.Committees = await getter.division(model.GarbageStation.DivisionId);
-      if (model.Committees.ParentId) {
-        model.County = await getter.division(model.Committees.ParentId);
-        if (model.County.ParentId) {
-          model.City = await getter.division(model.County.ParentId);
-        }
-      }
-    }
+    let station = await getter.station(source.GarbageStationId);
+    model.GarbageStation = await this.converter.station.Convert(
+      station,
+      getter.division
+    );
 
     model.imageSrc = MediumRequestService.jpg(source.ImageUrl);
     return model;

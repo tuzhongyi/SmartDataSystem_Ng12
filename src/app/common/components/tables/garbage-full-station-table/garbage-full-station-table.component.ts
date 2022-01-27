@@ -2,8 +2,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
+  SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -27,7 +29,7 @@ export class GarbageFullStationTableComponent
   extends TableAbstractComponent<GarbageFullStationTableModel>
   implements
     IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
-    OnDestroy,
+    OnChanges,
     OnInit
 {
   width = ['25%', '15%', '15%', '15%', '15%', '15%'];
@@ -35,9 +37,7 @@ export class GarbageFullStationTableComponent
     super();
     this.business = business;
   }
-  ngOnDestroy(): void {
-    this.name = undefined;
-  }
+
   @Input()
   business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
 
@@ -51,8 +51,11 @@ export class GarbageFullStationTableComponent
 
   ngOnInit(): void {
     this.loadData(1, this.pageSize);
-    if (this.load) {
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((name) => {
+        this.name = name;
         this.loadData(1, this.pageSize, name);
       });
     }
@@ -63,7 +66,7 @@ export class GarbageFullStationTableComponent
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, status, name);
+    let promise = this.business.load(params, name);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;

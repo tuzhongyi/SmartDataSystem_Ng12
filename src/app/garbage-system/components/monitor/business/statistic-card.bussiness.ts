@@ -106,7 +106,7 @@ class StatisticCardConverter
   }
 
   createGarbageStation(count: number) {
-    let card = new StatisticCardViewModel(StatisticType.stationCount);
+    let card = new StatisticCardViewModel(StatisticType.stationCount, count);
     card.title =
       Language.json.garbage + Language.json.station + Language.json.number;
     card.value = count;
@@ -115,7 +115,7 @@ class StatisticCardConverter
   }
 
   createRetentionStation(input: DivisionNumberStatistic) {
-    let card = new StatisticCardViewModel(StatisticType.stationDrop);
+    let card = new StatisticCardViewModel(StatisticType.stationDrop, input);
     card.title =
       Language.json.garbage + Language.json.stay + Language.json.station;
     card.value = input.GarbageDropStationNumber ?? 0;
@@ -123,7 +123,7 @@ class StatisticCardConverter
     return card;
   }
   createFullStation(input: DivisionNumberStatistic) {
-    let card = new StatisticCardViewModel(StatisticType.stationFull);
+    let card = new StatisticCardViewModel(StatisticType.stationFull, input);
     card.title =
       Language.json.did +
       Language.json.full +
@@ -137,7 +137,7 @@ class StatisticCardConverter
     input: DivisionNumberStatistic,
     type: { event: EventType; statistic: StatisticType }
   ) {
-    let card = new StatisticCardViewModel(type.statistic);
+    let card = new StatisticCardViewModel(type.statistic, input);
     if (input.TodayEventNumbers) {
       let number = input.TodayEventNumbers.find(
         (x) => x.EventType === type.event

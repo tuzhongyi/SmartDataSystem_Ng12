@@ -1,0 +1,24 @@
+.garbage-full-station-table-window-header {
+  height: 34px;
+}
+
+.garbage-full-station-table-window-content {
+  height: calc(100%);
+  margin-top: -72px;
+  pointer-events: none;
+
+  .event-record-table {
+    height: 100%;
+
+    &.filter {
+      height: calc(100% - 44px);
+    }
+  }
+
+
+  ::ng-deep {
+    .mat-tab-label {
+      pointer-events: all;
+    }
+  }
+}

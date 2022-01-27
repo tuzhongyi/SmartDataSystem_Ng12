@@ -74,6 +74,8 @@ export class EventRecordBusiness
         return this.eventService.record.IllegalDrop.list(params);
       case EventType.MixedInto:
         return this.eventService.record.MixedInto.list(params);
+      case EventType.GarbageFull:
+        return this.eventService.record.GarbageFull.list(params);
       default:
         throw new Event('error event type');
     }

@@ -58,7 +58,7 @@ export class RetentionRankBusiness
 
   async getByDivision(divisionId: string) {
     let divisionParams = new GetDivisionsParams();
-    divisionParams.AncestorId = divisionId;
+    divisionParams.ParentId = divisionId;
     let divisions = await this.divisionRequest.cache.list(divisionParams);
 
     let params = new GetDivisionStatisticNumbersParams();

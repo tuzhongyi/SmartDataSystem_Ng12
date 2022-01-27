@@ -49,10 +49,22 @@
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
             <td [ngStyle]="{ width: width[4] }">
-              {{ item.County ? item.County.Name : "" }}
+              {{
+                item.GarbageStation
+                  ? item.GarbageStation.County
+                    ? item.GarbageStation.County.Name
+                    : ""
+                  : ""
+              }}
             </td>
             <td [ngStyle]="{ width: width[5] }">
-              {{ item.Committees ? item.Committees.Name : "" }}
+              {{
+                item.GarbageStation
+                  ? item.GarbageStation.Committees
+                    ? item.GarbageStation.Committees.Name
+                    : ""
+                  : ""
+              }}
             </td>
           </tr>
         </tbody>

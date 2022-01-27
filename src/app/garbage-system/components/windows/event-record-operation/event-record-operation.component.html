@@ -1,0 +1,14 @@
+<div class="event-record-operation">
+  <input type="text" placeholder="输入关键字" class="" [(ngModel)]="text" />
+  <button type="button" class="hw-blue-btn search" (click)="onsearch()">
+    <i class="mdi mdi-magnify"></i>
+    查询
+  </button>
+  <app-select-control
+    class="list-type-select"
+    [data]="listTypes"
+  ></app-select-control>
+  <button class="hw-cyan-m-btn" (click)="onfilter()">
+    <i class="mdi mdi-filter-outline"></i>
+  </button>
+</div>
