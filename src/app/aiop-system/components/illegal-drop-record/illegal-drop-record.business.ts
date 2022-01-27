@@ -16,7 +16,7 @@ import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.m
 @Injectable()
 export class IllegalDropRecordBusiness {
   private _divisionMap = new Map<string, Division>();
-
+  private _date = new Date();
   public _dataStream = new Subject<PagedList<IllegalDropRecordModel>>();
 
   constructor(
@@ -24,13 +24,14 @@ export class IllegalDropRecordBusiness {
     private _divisionRequest: DivisionRequestService,
     private _converter: IllegalDropRecordConverter
   ) {}
-  async loadData(pageIndex: number, pageSize?: number) {
+  async loadData(pageIndex: number, endTime: Date, pageSize?: number) {
     let params = new GetEventRecordsParams();
     params.PageIndex = Math.max(pageIndex, 1);
     params.PageSize = pageSize ? pageSize : 9; // 排除 undefined 和 0
     params.BeginTime = Time.beginTime(new Date());
-    params.EndTime = Time.endTime(new Date());
+    params.EndTime = endTime;
 
+    console.log('params', params);
     let records = await this._eventRequestService.record.IllegalDrop.list(
       params
     );

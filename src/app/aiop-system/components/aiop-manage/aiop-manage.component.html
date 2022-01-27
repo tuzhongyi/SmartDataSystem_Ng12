@@ -12,7 +12,19 @@
         </mat-toolbar>
     </div>
     <div class="aiop-manage-body">
-        <router-outlet></router-outlet>
+        <nav class="sindenav">
+            <p>监管平台</p>
+            <p> <a [routerLink]="['/aiop/aiop-manage/monitor-platform/division-manage']">区划管理</a></p>
+            <p> <a [routerLink]="['/aiop/aiop-manage/monitor-platform/deploy-map']">地图布控</a></p>
+            <p> <a [routerLink]="['/aiop/aiop-manage/monitor-platform/garbage-station-manage']">垃圾厢房管理</a></p>
+        </nav>
+        <main class='sindenav-main'>
+            <div>面包屑</div>
+            <div class="sindenav-content">
+                <router-outlet></router-outlet>
+            </div>
+
+        </main>
     </div>
 
 </div>

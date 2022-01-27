@@ -4,6 +4,6 @@ import { Component } from '@angular/core';
   templateUrl: './aiop-manage.component.html',
   styleUrls: ['./aiop-manage.component.less'],
 })
-export class AiopManageComponent {
+export class AiopSystemManageComponent {
   constructor() {}
 }

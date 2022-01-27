@@ -7,15 +7,9 @@
         <div *ngIf="show">hshdfh</div>
     </div> -->
   <div class="illegal-drop-main">
-    <app-table
-      [dataSubject]="dataSubject"
-      [columns]="columns"
-      [displayedColumns]="displayedColumns"
-      [tableSelectModel]="tableSelectModel"
-      (selectTableRow)="selectTableRow($event)"
-      (selectTableCell)="selectTableCell($event)"
-      (sortTableHeader)="sortTableHeader($event)"
-    ></app-table>
+    <app-table [dataSubject]="dataSubject" [columns]="columns" [displayedColumns]="displayedColumns"
+      [tableSelectModel]="tableSelectModel" (selectTableRow)="selectTableRow($event)"
+      (selectTableCell)="selectTableCell($event)" (sortTableHeader)="sortTableHeader($event)"></app-table>
   </div>
   <div class="illegal-drop-footer">
     <div class="footer-item">
@@ -31,15 +25,8 @@
       </div>
 
       <!-- MatPaginator 的pageIndex是从0开始-->
-      <app-paginator
-        *ngIf="page"
-        [length]="page.TotalRecordCount"
-        [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="page.PageCount - 1"
-        [showFirstLastButtons]="true"
-        (page)="pageEvent($event)"
-      >
+      <app-paginator *ngIf="page" [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="pagerCount"
+        [pageIndex]="page.PageCount - 1" [showFirstLastButtons]="true" (page)="pageEvent($event)">
       </app-paginator>
     </div>
   </div>

@@ -30,6 +30,8 @@ export class IllegalDropRecordComponent implements OnInit {
   private _dataSource: IllegalDropRecordModel[] = []; // 表格数据源
   private _sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
 
+  private _endTime = new Date();
+
   /**public */
   show = false;
   public page: Page | null = null;
@@ -65,7 +67,11 @@ export class IllegalDropRecordComponent implements OnInit {
     this.initialize();
   }
   async initialize() {
-    await this._business.loadData(this.pageIndex, this._pageSize);
+    await this._business.loadData(
+      this.pageIndex,
+      this._endTime,
+      this._pageSize
+    );
     // console.log('吼吼吼');
   }
 
@@ -115,10 +121,10 @@ export class IllegalDropRecordComponent implements OnInit {
     }
   }
   pageEvent(pageInfo: PageEvent) {
-    console.log(pageInfo);
+    // console.log(pageInfo);
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
-    this._business.loadData(this.pageIndex);
+    this._business.loadData(this.pageIndex, this._endTime);
   }
   sortTableHeader(sort: Sort) {
     if (!sort.active || sort.direction == '') {
