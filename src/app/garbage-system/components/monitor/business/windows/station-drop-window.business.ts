@@ -3,6 +3,9 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 
 @Injectable()
 export class GarbageStationDropWindowBusiness extends WindowViewModel {
+  constructor() {
+    super();
+  }
   divisionId?: string;
 
   style = {

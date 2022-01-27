@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -9,6 +15,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { TableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import { DeviceViewModel } from './device.model';
 
@@ -19,20 +26,14 @@ import { DeviceViewModel } from './device.model';
   providers: [DeviceListTableBusiness],
 })
 export class DeviceListTableComponent
-  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit
+  extends TableAbstractComponent<DeviceViewModel>
+  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
 {
   OnlineStatus = OnlineStatus;
-  Language = Language;
   width = ['15%', '20%', '10%', '15%', '15%', '15%'];
 
   @Input()
-  status?: OnlineStatus;
-
-  datas: DeviceViewModel[] = [];
-  page?: Page;
-
-  loading = false;
-  pageSize = 9;
+  filter: DeviceListTableFilter = {};
 
   @Input()
   business: IBusiness<IModel, PagedList<DeviceViewModel>>;
@@ -41,14 +42,19 @@ export class DeviceListTableComponent
   load?: EventEmitter<string>;
 
   constructor(business: DeviceListTableBusiness) {
+    super();
     this.business = business;
+  }
+  ngOnDestroy(): void {
+    this.filter = {};
   }
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize, this.status);
+    this.loadData(1, this.pageSize, this.filter.status);
     if (this.load) {
       this.load.subscribe((name) => {
-        this.loadData(1, this.pageSize, this.status, name);
+        this.filter.name = name;
+        this.loadData(1, this.pageSize, this.filter.status, this.filter.name);
       });
     }
   }
@@ -77,7 +83,12 @@ export class DeviceListTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.status);
+    this.loadData(
+      page.pageIndex + 1,
+      this.pageSize,
+      this.filter.status,
+      this.filter.name
+    );
   }
   onerror(e: Event) {
     if (e.target) {
@@ -86,7 +97,8 @@ export class DeviceListTableComponent
   }
 
   search(name: string) {
-    this.loadData(1, this.pageSize, this.status, name);
+    this.filter.name = name;
+    this.loadData(1, this.pageSize, this.filter.status, name);
   }
 }
 

@@ -15,35 +15,53 @@
         <app-division-list></app-division-list>
       </div>
     </div>
-    <div class="monitor-body__item monitor-body__item--map" [ngClass]="{ fullscreen: patrol.fullscreen == true }">
+    <div
+      class="monitor-body__item monitor-body__item--map"
+      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+    >
       <div class="monitor-body__wrapper">
         <div *ngIf="statistic.cards" class="statistic-card-group">
           <ng-container *ngFor="let item of statistic.cards">
-            <app-statistic-card [model]="item" (Click)="statistic.onclick(item)"></app-statistic-card>
+            <app-statistic-card
+              [model]="item"
+              (Click)="statistic.onclick(item)"
+            ></app-statistic-card>
           </ng-container>
         </div>
         <div class="map-control" *ngIf="false">
-          <app-map-control (patrol)="map.onpatrol()" (VideoPlay)="map.onvideoplay($event)"></app-map-control>
+          <app-map-control
+            (patrol)="map.onpatrol()"
+            (VideoPlay)="map.onvideoplay($event)"
+          ></app-map-control>
         </div>
       </div>
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <app-patrol-control (close)="patrol.onclose()" (fullscreen)="patrol.onfullscreen()"></app-patrol-control>
+        <app-patrol-control
+          (close)="patrol.onclose()"
+          (fullscreen)="patrol.onfullscreen()"
+        ></app-patrol-control>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-device-state (Click)="trigger.deviceState.onclick($event)"></app-device-state>
+        <app-device-state
+          (Click)="trigger.deviceState.onclick($event)"
+        ></app-device-state>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-illegal-mixinto-rank (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)">
+        <app-illegal-mixinto-rank
+          (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
+        >
         </app-illegal-mixinto-rank>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-retention-rank (Click)="trigger.retentionRank.onclick($event)"></app-retention-rank>
+        <app-retention-rank
+          (Click)="trigger.retentionRank.onclick($event)"
+        ></app-retention-rank>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -54,7 +72,9 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
-        <howell-event-statistic [title]="'乱扔垃圾统计表'"></howell-event-statistic>
+        <howell-event-statistic
+          [title]="'乱扔垃圾统计表'"
+        ></howell-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -63,7 +83,10 @@
           [title]="'混合投放统计表'"
           [type]="mixIntoType"
         ></app-event-statistic-echarts> -->
-        <howell-event-statistic [title]="'混合投放统计表'" [type]="mixIntoType"></howell-event-statistic>
+        <howell-event-statistic
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></howell-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -80,26 +103,42 @@
   </ng-container>
 </app-window>
 
-<app-video-window [model]="video.model" [window]="video" [title]="video.title" (download)="video.ondownload($event)">
+<app-video-window
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
+  (download)="video.ondownload($event)"
+>
 </app-video-window>
 
 <app-window [Model]="window.record" [style]="window.record.style">
   <ng-container *ngIf="window.record.show">
-    <app-event-record-details [recordCount]="window.record.count" [type]="window.record.type">
+    <app-event-record-details
+      [recordCount]="window.record.count"
+      [type]="window.record.type"
+    >
     </app-event-record-details>
   </ng-container>
 </app-window>
 
-<howell-device-list-table-window [Model]="window.device" [style]="window.device.style" [status]="window.device.status">
-</howell-device-list-table-window>
+<howell-device-list-window
+  [Model]="window.device"
+  [style]="window.device.style"
+  [status]="window.device.status"
+>
+</howell-device-list-window>
 
-<app-window [Model]="window.full" [style]="window.full.style">
-  <ng-container *ngIf="window.full.show"> </ng-container>
-</app-window>
+<howell-garbage-drop-station-window
+  [Model]="window.drop"
+  [style]="window.drop.style"
+>
+</howell-garbage-drop-station-window>
 
-<app-window [Model]="window.drop" [style]="window.drop.style">
-  <ng-container *ngIf="window.drop.show"> </ng-container>
-</app-window>
+<howell-garbage-full-station-window
+  [Model]="window.full"
+  [style]="window.full.style"
+>
+</howell-garbage-full-station-window>
 
 <app-window [Model]="window.station" [style]="window.station.style">
   <ng-container *ngIf="window.station.show"> </ng-container>

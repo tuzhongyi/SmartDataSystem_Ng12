@@ -28,9 +28,11 @@ import { PatrolControlComponent } from './patrol-control/patrol-control.componen
 import { MediaControlComponent } from './media-control/media-control.component';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { FormsModule } from '@angular/forms';
-import { EventRecordDetailsTableComponent } from './event-record-details/event-record-details-table/event-record-details-table.component';
-import { DeviceListTableWindowComponent } from './windows/device-list-table-window/device-list-table-window.component';
+import { EventRecordDetailsTableComponent } from './event-record-details-table/event-record-details-table.component';
+import { DeviceListWindowComponent } from './windows/device-list-window/device-list-window.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
+import { GarbageDropStationWindowComponent } from './windows/garbage-drop-station-window/garbage-drop-station-window.component';
+import { GarbageFullStationWindowComponent } from './windows/garbage-full-station-window/garbage-full-station-window.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { EventStatisticComponent } from './event-statistic/event-statistic.compo
     MediaControlComponent,
     PointInfoPanelComponent,
     PatrolControlComponent,
-    DeviceListTableWindowComponent,
+    DeviceListWindowComponent,
+    GarbageDropStationWindowComponent,
+    GarbageFullStationWindowComponent,
     EventStatisticComponent,
   ],
   imports: [

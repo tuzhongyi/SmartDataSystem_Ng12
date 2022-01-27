@@ -13,11 +13,11 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 
 @Component({
-  selector: 'howell-device-list-table-window',
-  templateUrl: './device-list-table-window.component.html',
-  styleUrls: ['./device-list-table-window.component.less'],
+  selector: 'howell-device-list-window',
+  templateUrl: './device-list-window.component.html',
+  styleUrls: ['./device-list-window.component.less'],
 })
-export class DeviceListTableWindowComponent
+export class DeviceListWindowComponent
   extends WindowComponent
   implements OnInit, OnChanges
 {
@@ -25,6 +25,7 @@ export class DeviceListTableWindowComponent
     super();
   }
   ngOnChanges(changes: SimpleChanges): void {
+    this.filter.status = this.status;
     this.load.emit();
   }
 
@@ -34,6 +35,7 @@ export class DeviceListTableWindowComponent
 
   @Input()
   status?: OnlineStatus;
+  filter: DeviceListTableFilter = {};
 
   onsearch(text: string) {
     this.load.emit(text);

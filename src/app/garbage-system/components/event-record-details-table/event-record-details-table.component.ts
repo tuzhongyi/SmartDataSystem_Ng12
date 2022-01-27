@@ -15,7 +15,7 @@ import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Language } from 'src/app/global/tool/language';
 import { IModel } from 'src/app/network/model/model.interface';
-import { ListPanelBusiness } from '../../map-control/business/map-list-panel.business';
+import { ListPanelBusiness } from '../map-control/business/map-list-panel.business';
 import { EventRecordDetailsTableBusiness } from './event-record-details-table.business';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
 

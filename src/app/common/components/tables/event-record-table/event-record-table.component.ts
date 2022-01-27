@@ -14,6 +14,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { TableAbstractComponent } from '../table-abstract.component';
 import { EventRecordBusiness } from './event-record.business';
 import { EventRecordFilter, EventRecordViewModel } from './event-record.model';
 import { VideoDownloadPanelBusiness } from './video-download-panel.business';
@@ -29,6 +30,7 @@ import { VideoDownloadPanelBusiness } from './video-download-panel.business';
   ],
 })
 export class EventRecordTableComponent
+  extends TableAbstractComponent<EventRecordViewModel>
   implements
     IComponent<IModel, PagedList<EventRecordViewModel>>,
     OnInit,
@@ -38,8 +40,6 @@ export class EventRecordTableComponent
   business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
 
   width = ['15%', '15%', '15%', '12%', '15%', '18%'];
-
-  loading = false;
 
   begin: Date = new Date();
   end: Date = new Date();
@@ -75,39 +75,18 @@ export class EventRecordTableComponent
     }
   }
 
-  page?: Page;
-
-  getPaged(count: number, size: number): Page {
-    let current = size % count;
-    if (current === 0) {
-      current = size;
-    }
-
-    let page = {
-      PageSize: size,
-      PageCount: Math.ceil(count / size),
-      PageIndex: Math.ceil(count / size),
-      RecordCount: current,
-      TotalRecordCount: count,
-    };
-    return page;
-  }
-
-  datas?: EventRecordViewModel[];
-
   @Input()
   count: number = 0;
 
   @Input()
   type: EventType = EventType.IllegalDrop;
 
-  pageSize = 9;
-
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
     public panel: VideoDownloadPanelBusiness
   ) {
+    super();
     this.business = business;
     let now = new Date();
     this.begin = new Date(now.getFullYear(), now.getMonth(), now.getDate());
