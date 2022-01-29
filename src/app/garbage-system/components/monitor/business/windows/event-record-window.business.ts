@@ -6,6 +6,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 export class RecordWindowBusiness extends WindowViewModel {
   style = {
     height: '83.5%',
+    width: '90%',
     transform: 'translate(-50%, -44.5%)',
   };
 

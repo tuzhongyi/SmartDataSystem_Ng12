@@ -1,0 +1,62 @@
+.garbage-station-statistic-table {
+  height: 100%;
+
+  &-main {
+    height: 100%;
+
+    .body table {
+      table-layout: auto;
+    }
+
+    .value {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+
+      .mdi {
+        width: 16px;
+      }
+
+      &.long {
+        width: 100%;
+
+        span:first-child {
+          width: 102px;
+        }
+      }
+
+      &.shot {
+        span:first-child {
+          width: 27px;
+        }
+      }
+
+      span:first-child {
+        width: 55px;
+      }
+
+      .differ {
+        display: inline-block;
+        width: 51px;
+        text-align: right;
+      }
+    }
+
+
+
+
+    ::ng-deep {
+      .body {
+        height: calc(100% - 70px - 50px);
+      }
+
+      .mat-sort-header-arrow {
+        color: white;
+      }
+
+      .mat-sort-header-stem {
+        display: none;
+      }
+    }
+  }
+}

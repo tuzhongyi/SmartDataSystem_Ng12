@@ -19,7 +19,7 @@ export class GarbageStationWindowComponent
   implements OnInit
 {
   @Input()
-  index = GarbageStationWindowIndex.station;
+  index = GarbageStationWindowIndex.general;
 
   Index = GarbageStationWindowIndex;
 

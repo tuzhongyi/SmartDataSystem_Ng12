@@ -133,10 +133,10 @@ class GarbageFullEventData {
  *  Data	GarbageDropEventData	事件数据	M
  */
 export class GarbageDropEventRecord
-  extends EventRecordData<GarbageDropEventRData>
+  extends EventRecordData<GarbageDropEventData>
   implements IModel {}
 /** */
-class GarbageDropEventRData {
+export class GarbageDropEventData {
   /**	String	垃圾房ID	M */
   StationId!: string;
   /**	String	垃圾房名称	M */
@@ -165,4 +165,26 @@ class GarbageDropEventRData {
   HandleImageUrls?: CameraImageUrl[];
   /**	CameraImageUrl[]	滞留的图片ID、图片地址列表	O */
   TimeoutImageUrls?: CameraImageUrl[];
+  /**	Boolean	处置人员是否已处置	O */
+  Processed?: boolean;
+  /**	String	处置人员名称	O */
+  ProcessorName?: string;
+  /**	String	处置人员ID	O */
+  ProcessorId?: string;
+  /**	String	手机号码	O */
+  ProcessorMobileNo?: string;
+  /**	DateTime	处置时间	O */
+  @Transform(transformDateTime)
+  ProcessTime?: Date;
+  /**	String	处置描述	O */
+  ProcessDescription?: string;
+  /**	String	小区ID	O */
+  CommunityId?: string;
+  /**	String	小区名称	O */
+  CommunityName?: string;
+  /**	String	工单号	O */
+  RecordNo?: string;
+
+  /**	String	滞留时间	O */
+  TakeMinutes?: number;
 }

@@ -3,6 +3,7 @@ import { EventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { ImageControlModel } from '../../image-control/image-control.model';
 import { SelectItem } from '../../select-control/select-control.model';
 import { GarbageStationModel } from '../garbage-station-table/garbage-station.model';
 
@@ -13,6 +14,8 @@ export class EventRecordViewModel extends EventRecord {
   imageSrc: string = '';
 
   DateFormatter: string = '';
+
+  images: ImageControlModel[] = [];
 }
 
 export class EventRecordFilter {
@@ -36,4 +39,5 @@ export class EventRecordFilter {
   station?: SelectItem;
   camera?: SelectItem;
   text?: string;
+  community?: SelectItem;
 }

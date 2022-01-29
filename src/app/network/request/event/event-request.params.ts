@@ -35,3 +35,37 @@ export class GetEventRecordsParams
   /**	String	网格名称，支持LIKE	O */
   GridCellName?: string;
 }
+
+export class GetGarbageDropEventRecordsParams
+  extends PagedIntervalParams
+  implements IParams
+{
+  /**	String[]	所属区划ID列表	O */
+  DivisionIds?: string[];
+  /**	String[]	垃圾房ID列表	O */
+  StationIds?: string[];
+  /**	String[]	资源ID列表	O */
+  ResourceIds?: string[];
+  /**	String	区划名称，支持LIKE	O */
+  DivisionName?: string;
+  /**	String	垃圾房名称，支持LIKE	O */
+  StationName?: string;
+  /**	String	资源名称，支持LIKE	O */
+  ResourceName?: string;
+  /**	Boolean	是否倒序时间排列	O */
+  Desc?: boolean;
+  /**	String[]	所属网格ID列表	O */
+  GridCellIds?: string[];
+  /**	String	网格名称，支持LIKE	O */
+  GridCellName?: string;
+  /**	Boolean	是否已处置	O */
+  IsHandle?: boolean;
+  /**	Boolean	是否已滞留	O */
+  IsTimeout?: boolean;
+  /**	String[]	所属小区ID列表	O */
+  CommunityIds?: string[];
+  /**	String	小区名称，支持LIKE	O */
+  CommunityName?: string;
+  /**	String	工单号，支持LIKE	O */
+  RecordNo?: string;
+}

@@ -10,6 +10,7 @@ export class GarbageStationDropWindowBusiness extends WindowViewModel {
 
   style = {
     height: '83.5%',
+    width: '90%',
     transform: 'translate(-50%, -44.5%)',
   };
 }

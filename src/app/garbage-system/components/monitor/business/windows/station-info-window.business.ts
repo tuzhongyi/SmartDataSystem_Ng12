@@ -5,6 +5,12 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   style = {
     height: '83.5%',
+    width: '90%',
     transform: 'translate(-50%, -44.5%)',
   };
+
+  constructor() {
+    super();
+    this.show = true;
+  }
 }

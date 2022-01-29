@@ -421,7 +421,7 @@ class StatisticNumberHistoryService {
   list(
     params: GetGarbageStationStatisticNumbersParamsV2
   ): Promise<GarbageStationNumberStatisticV2[]> {
-    let url = GarbageStationUrl.statistic().garbagecount.history.list();
+    let url = GarbageStationUrl.statistic().number.history.list();
     return this.basicType.array(url, params);
   }
 }

@@ -4,10 +4,12 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import {
   EventRecord,
+  GarbageDropEventRecord,
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
@@ -58,6 +60,7 @@ export class EventRecordConverter
 {
   converter = {
     station: new GarbageStationConverter(),
+    image: new ImageControlConverter(),
   };
 
   Convert(
@@ -108,10 +111,12 @@ export class EventRecordConverter
     }
   ) {
     let model = await this.fromEventRecord(source, getter);
-    if (source.Data.CameraImageUrls && source.Data.CameraImageUrls.length > 0) {
-      model.imageSrc = MediumRequestService.jpg(
-        source.Data.CameraImageUrls[0].ImageUrl
-      );
+    if (source.Data.CameraImageUrls && model.GarbageStation) {
+      for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
+        const url = source.Data.CameraImageUrls[i];
+        let image = this.converter.image.Convert(url);
+        model.images.push(image);
+      }
     }
     return model;
   }

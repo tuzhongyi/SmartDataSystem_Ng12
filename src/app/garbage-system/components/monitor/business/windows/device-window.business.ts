@@ -6,6 +6,7 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 export class DeviceWindowBusiness extends WindowViewModel {
   style = {
     height: '83%',
+    width: '90%',
     transform: 'translate(-50%, -45%)',
   };
   status?: OnlineStatus;

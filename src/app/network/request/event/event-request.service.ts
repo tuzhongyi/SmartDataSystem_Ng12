@@ -17,6 +17,7 @@ import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   GetEventInfosParams,
   GetEventRecordsParams,
+  GetGarbageDropEventRecordsParams,
 } from './event-request.params';
 
 @Injectable({
@@ -167,7 +168,7 @@ class RecordsGarbageDropService {
   type: BaseTypeRequestService<GarbageDropEventRecord>;
 
   list(
-    params: GetEventRecordsParams
+    params: GetGarbageDropEventRecordsParams
   ): Promise<PagedList<GarbageDropEventRecord>> {
     let url = EventUrl.record.garbagedrop.list();
     return this.type.paged(url, params);
