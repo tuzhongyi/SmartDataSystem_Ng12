@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Exclude, Transform } from 'class-transformer';
 import { transformDateTime } from '../model/transform.model';
 
 export interface IParams {}
@@ -15,6 +15,45 @@ export class IntervalParams {
   /**	DateTime	结束时间	M */
   @Transform(transformDateTime)
   EndTime!: Date;
+
+  static allMonth(date: Date) {
+    let params = new IntervalParams();
+    params.BeginTime = new Date(date.getFullYear(), date.getMonth(), 1);
+    let next = new Date(params.BeginTime.getTime());
+    next.setMonth(next.getMonth() + 1);
+    next.setMilliseconds(-1);
+    params.EndTime = next;
+    return params;
+  }
+  static allDay(date: Date) {
+    let params = new IntervalParams();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    params.BeginTime = new Date(year, month, day);
+    let next = new Date(params.BeginTime.getTime());
+    next.setDate(next.getDate() + 1);
+    next.setMilliseconds(-1);
+    params.EndTime = next;
+    return params;
+  }
+  static allWeek(date: Date) {
+    let params = new IntervalParams();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let day = date.getDate();
+    let weekDay = date.getDay();
+
+    let begin = new Date(year, month, day);
+    begin.setDate(begin.getDate() - weekDay);
+    begin.toISOString;
+    params.BeginTime = begin;
+    let next = new Date(begin.getTime());
+    next.setDate(next.getDate() + 7);
+    next.setMilliseconds(-1);
+    params.EndTime = next;
+    return params;
+  }
 }
 export class PagedIntervalParams extends PagedParams {
   /**	DateTime	开始时间	M */

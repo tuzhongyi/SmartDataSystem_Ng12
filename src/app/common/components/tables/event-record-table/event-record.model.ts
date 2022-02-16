@@ -18,23 +18,13 @@ export class EventRecordViewModel extends EventRecord {
   images: ImageControlModel[] = [];
 }
 
-export class EventRecordFilter {
-  constructor(begin?: Date, end?: Date) {
-    let now = new Date();
-    if (begin) {
-      this.begin = begin;
-    } else {
-      this.begin = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    }
-    if (end) {
-      this.end = end;
-    } else {
-      this.end = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-      this.end.setMilliseconds(-1);
-    }
+export class EventRecordFilter extends IntervalParams {
+  constructor() {
+    super();
+    let interval = IntervalParams.allDay(new Date());
+    this.BeginTime = interval.BeginTime;
+    this.EndTime = interval.EndTime;
   }
-  begin: Date;
-  end: Date;
   division?: SelectItem;
   station?: SelectItem;
   camera?: SelectItem;

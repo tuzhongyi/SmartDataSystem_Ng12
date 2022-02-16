@@ -23,10 +23,6 @@ export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
 }
 
 export class GarbageDropRecordFilter extends EventRecordFilter {
-  constructor(begin?: Date, end?: Date) {
-    super(begin, end);
-  }
-
   IsHandle?: boolean;
   IsTimeout?: boolean;
 }

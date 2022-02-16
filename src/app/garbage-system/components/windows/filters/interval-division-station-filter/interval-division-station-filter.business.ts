@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import {
   IConverter,
@@ -13,15 +14,15 @@ import { GetDivisionsParams } from 'src/app/network/request/division/division-re
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { EventRecordFilterConverter } from './event-record-filter.converter';
+import { EventRecordFilterConverter } from './interval-division-station-filter.converter';
 import {
-  EventRecordSourceModel,
-  EventRecordSourceOpts,
-} from './event-record-source.model';
+  DivisionStationFilteModel,
+  DivisionStationFilterOpts,
+} from './interval-division-station-filter.model';
 
 @Injectable()
 export class EventRecordFilterBusiness
-  implements IBusiness<string, EventRecordSourceModel>
+  implements IBusiness<string, DivisionStationFilteModel>
 {
   constructor(
     private storeService: StoreService,
@@ -29,11 +30,13 @@ export class EventRecordFilterBusiness
     private stationService: GarbageStationRequestService
   ) {}
 
-  Converter: IConverter<string, EventRecordSourceModel> =
+  Converter: IConverter<string, DivisionStationFilteModel> =
     new EventRecordFilterConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
-  async load(opts: EventRecordSourceOpts): Promise<EventRecordSourceModel> {
+  async load(
+    opts: DivisionStationFilterOpts
+  ): Promise<DivisionStationFilteModel> {
     let divisions: Division[];
     let stations: GarbageStation[];
     let cameras: Camera[] = [];
@@ -66,6 +69,7 @@ export class EventRecordFilterBusiness
     divisions = divisions.sort((a, b) => {
       return a.Name.localeCompare(b.Name);
     });
+
     stations = stations.sort((a, b) => {
       return a.Name.localeCompare(b.Name);
     });
@@ -74,6 +78,16 @@ export class EventRecordFilterBusiness
     });
 
     let model = this.Converter.Convert('', divisions, stations, cameras);
+
+    model.divisions.unshift(
+      new SelectItem({ language: '请选择', key: '', value: undefined })
+    );
+    model.stations.unshift(
+      new SelectItem({ language: '请选择', key: '', value: undefined })
+    );
+    model.cameras.unshift(
+      new SelectItem({ language: '请选择', key: '', value: undefined })
+    );
 
     return model;
   }
@@ -84,14 +98,18 @@ export class EventRecordFilterBusiness
   async getDivisions(parentId: string) {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
-    let response = await this.divisionService.list(params);
+    let response = await this.divisionService.cache.list(params);
     return response.Data;
+  }
+
+  async getDivision(id: string) {
+    return await this.divisionService.cache.get(id);
   }
 
   async getStation(divisionId: string) {
     let params = new GetGarbageStationsParams();
     params.DivisionId = divisionId;
-    let response = await this.stationService.list(params);
+    let response = await this.stationService.cache.list(params);
     return response.Data;
   }
 }

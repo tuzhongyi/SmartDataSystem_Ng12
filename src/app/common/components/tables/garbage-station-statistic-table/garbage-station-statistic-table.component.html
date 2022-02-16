@@ -100,7 +100,7 @@
                     }"
                   ></i
                 ></span>
-                <span class="differ">
+                <span class="differ long">
                   <label>{{
                     Math.abs(item.AvgGarbageTimeTd.differ).toFixed(2)
                   }}</label> </span
@@ -121,7 +121,7 @@
                     }"
                   ></i
                 ></span>
-                <span class="differ">
+                <span class="differ long">
                   <label>{{
                     Math.abs(item.MaxGarbageTimeTd.differ).toFixed(2)
                   }}</label> </span
@@ -142,7 +142,7 @@
                     }"
                   ></i
                 ></span>
-                <span class="differ">
+                <span class="differ long">
                   <label>{{
                     Math.abs(item.GarbageDurationTd.differ).toFixed(2)
                   }}</label> </span
@@ -164,7 +164,7 @@
                   ></i></span
                 ><span class="differ">
                   <label *ngIf="item.IllegalDropTd.differ != 0">{{
-                    Math.abs(item.IllegalDropTd.differ).toFixed(2)
+                    Math.abs(item.IllegalDropTd.differ).toFixed(0)
                   }}</label>
                 </span>
               </div>
@@ -184,7 +184,7 @@
                   ></i></span
                 ><span class="differ">
                   <label *ngIf="item.MixedIntoTd.differ != 0">{{
-                    Math.abs(item.MixedIntoTd.differ).toFixed(2)
+                    Math.abs(item.MixedIntoTd.differ).toFixed(0)
                   }}</label>
                 </span>
               </div>

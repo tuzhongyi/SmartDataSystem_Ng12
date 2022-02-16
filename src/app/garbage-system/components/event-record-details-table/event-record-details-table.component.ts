@@ -93,12 +93,12 @@ export class EventRecordDetailsTableComponent
 
   changeBegin(date: Date) {
     if (this.filter) {
-      this.filter.begin = date;
+      this.filter.BeginTime = date;
     }
   }
   changeEnd(date: Date) {
     if (this.filter) {
-      this.filter.end = date;
+      this.filter.EndTime = date;
     }
   }
 

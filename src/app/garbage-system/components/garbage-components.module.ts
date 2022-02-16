@@ -35,8 +35,10 @@ import { GarbageDropStationWindowComponent } from './windows/garbage-drop-statio
 import { GarbageFullStationWindowComponent } from './windows/garbage-full-station-window/garbage-full-station-window.component';
 import { EventRecordWindowComponent } from './windows/event-record-window/event-record-window.component';
 import { EventRecordOperationComponent } from './windows/event-record-operation/event-record-operation.component';
-import { EventRecordFilterComponent } from './windows/event-record-filter/event-record-filter.component';
+import { EventRecordFilterComponent } from './windows/filters/interval-division-station-filter/interval-division-station-filter.component';
 import { GarbageStationWindowComponent } from './windows/garbage-station-window/garbage-station-window.component';
+import { GarbageStationWindowGeneralComponent } from './windows/garbage-station-window/tab-items/garbage-drop-record-general/garbage-station-window-general.component';
+import { IntervalFilterComponent } from './windows/filters/interval-filter/interval-filter.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,8 @@ import { GarbageStationWindowComponent } from './windows/garbage-station-window/
     EventRecordFilterComponent,
     EventRecordWindowComponent,
     EventStatisticComponent,
+    GarbageStationWindowGeneralComponent,
+    IntervalFilterComponent,
   ],
   imports: [
     CommonModule,

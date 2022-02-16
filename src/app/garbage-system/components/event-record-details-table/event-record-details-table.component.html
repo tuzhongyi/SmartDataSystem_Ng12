@@ -32,7 +32,7 @@
           [format]="'yyyy-MM-dd HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
-          [date]="filter.begin"
+          [date]="filter.BeginTime"
           (change)="changeBegin($event)"
           class=""
         />
@@ -45,7 +45,7 @@
           [format]="'yyyy-MM-dd HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
-          [date]="filter.end"
+          [date]="filter.EndTime"
           (change)="changeEnd($event)"
           class=""
         />

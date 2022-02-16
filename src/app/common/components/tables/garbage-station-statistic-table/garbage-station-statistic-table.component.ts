@@ -1,13 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Language } from 'src/app/global/tool/language';
 import { IModel } from 'src/app/network/model/model.interface';
+
 import { OrderModel } from 'src/app/view-model/order.model';
-import { EventRecordFilter } from '../event-record-table/event-record.model';
+import { SelectItem } from '../../select-control/select-control.model';
 import { GarbageStationStatisticTableBusiness } from './garbage-station-statistic-table.business';
 import { GarbageStationStatisticModel } from './garbage-station-statistic.model';
 
@@ -21,11 +29,15 @@ import { GarbageStationStatisticModel } from './garbage-station-statistic.model'
   providers: [GarbageStationStatisticTableBusiness],
 })
 export class GarbageStationStatisticTableComponent
-  implements IComponent<IModel, GarbageStationStatisticModel[]>, OnInit
+  implements
+    IComponent<IModel, GarbageStationStatisticModel[]>,
+    OnInit,
+    OnChanges
 {
   constructor(business: GarbageStationStatisticTableBusiness) {
     this.business = business;
   }
+
   Language = Language;
   Math = Math;
   width = ['17%', '13%', '16%', '16%', '16%', '13%', '9%'];
@@ -34,19 +46,32 @@ export class GarbageStationStatisticTableComponent
     this.loadData();
   }
 
+  @Input()
+  unit: TimeUnit = TimeUnit.Day;
+
+  @Input()
+  date: Date = new Date();
+
+  /** 居委会 */
+  committees: SelectItem[] = [];
+  /** 居委会 */
+  county: SelectItem[] = [];
+
   business: IBusiness<IModel, GarbageStationStatisticModel[]>;
 
   datas?: GarbageStationStatisticModel[];
 
   order: OrderModel = new OrderModel('GarbageRatio', OrderType.Asc);
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      (changes.date && !changes.date.firstChange) ||
+      (changes.unit && !changes.unit.firstChange)
+    ) {
+      this.loadData();
+    }
+  }
   async loadData() {
-    let filter = new EventRecordFilter();
-
-    let datas = await this.business.load(
-      { BeginTime: filter.begin, EndTime: filter.end },
-      TimeUnit.Day
-    );
+    let datas = await this.business.load(this.date, this.unit);
     datas = datas.sort((a, b) => {
       switch (this.order.type) {
         case OrderType.Asc:
@@ -62,13 +87,19 @@ export class GarbageStationStatisticTableComponent
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
-    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    // return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+    if (typeof a === 'string' && typeof b === 'string') {
+      return isAsc ? a.localeCompare(b) : b.localeCompare(a);
+    } else if (typeof a === 'number' && typeof b === 'number') {
+      return isAsc ? a - b : b - a;
+    }
+    return 0;
   }
 
   sortData(sort: Sort) {
     if (this.datas) {
+      const isAsc = sort.direction === 'asc';
       this.datas = this.datas.sort((a, b) => {
-        const isAsc = sort.direction === 'asc';
         return this.compare(a[sort.active], b[sort.active], isAsc);
       });
     }

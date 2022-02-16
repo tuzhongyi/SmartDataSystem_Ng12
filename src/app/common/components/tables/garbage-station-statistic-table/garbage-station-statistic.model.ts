@@ -27,6 +27,6 @@ export class GarbageStationStatisticTd {
 }
 
 export class GarbageStationStatisticTableSource {
-  today?: GarbageStationNumberStatisticV2[];
-  yesterday?: GarbageStationNumberStatisticV2[];
+  current?: GarbageStationNumberStatisticV2[];
+  before?: GarbageStationNumberStatisticV2[];
 }

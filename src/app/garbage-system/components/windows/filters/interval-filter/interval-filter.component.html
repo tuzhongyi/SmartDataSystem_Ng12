@@ -1,0 +1,28 @@
+<div class="interval-filter">
+  <div class="filter-item">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd'"
+      [startView]="DateTimePickerView.month"
+      [minView]="DateTimePickerView.month"
+      [date]="model.BeginTime"
+      (change)="changeBegin($event)"
+      class=""
+    />
+  </div>
+  <div class="filter-item">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd'"
+      [startView]="DateTimePickerView.month"
+      [minView]="DateTimePickerView.month"
+      [date]="model.EndTime"
+      (change)="changeEnd($event)"
+      class=""
+    />
+  </div>
+</div>

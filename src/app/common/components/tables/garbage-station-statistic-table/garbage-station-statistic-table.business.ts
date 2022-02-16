@@ -44,29 +44,75 @@ export class GarbageStationStatisticTableBusiness
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async load(
-    duration: IntervalParams,
+    date: Date,
     unit: TimeUnit
   ): Promise<GarbageStationStatisticModel[]> {
-    let data = await this.getData(this.storeService.divisionId, duration, unit);
+    let data = await this.getData(this.storeService.divisionId, date, unit);
     let model = this.Converter.Convert(data);
     return model;
   }
   async getData(
     divisionId: string,
-    duration: IntervalParams,
+    date: Date,
     unit: TimeUnit
   ): Promise<GarbageStationStatisticTableSource> {
+    switch (unit) {
+      case TimeUnit.Month:
+        return this.getDataByMonth(divisionId, date);
+      case TimeUnit.Week:
+        return this.getDataByWeek(divisionId, date);
+      case TimeUnit.Day:
+      default:
+        return this.getDataByDay(divisionId, date);
+    }
+  }
+
+  async getDataByDay(divisionId: string, date: Date) {
     let source = new GarbageStationStatisticTableSource();
-    source.today = await this.getHistory(divisionId, duration, unit);
-    let begin = new Date(duration.BeginTime);
-    begin.setDate(begin.getDate() - 1);
-    let end = new Date(duration.EndTime);
-    end.setDate(end.getDate() - 1);
+    let duration: IntervalParams = IntervalParams.allDay(date);
+    let unit = TimeUnit.Day;
+    source.current = await this.getHistory(divisionId, duration, unit);
+    let end = new Date(duration.BeginTime.getTime());
+    end.setMilliseconds(-1);
+    let begin = new Date(end.getFullYear(), end.getMonth(), end.getDate());
     let yesterday: IntervalParams = {
       BeginTime: begin,
       EndTime: end,
     };
-    source.yesterday = await this.getHistory(divisionId, yesterday, unit);
+    source.before = await this.getHistory(divisionId, yesterday, unit);
+    return source;
+  }
+
+  async getDataByWeek(divisionId: string, date: Date) {
+    let source = new GarbageStationStatisticTableSource();
+    let duration: IntervalParams = IntervalParams.allWeek(date);
+    let unit = TimeUnit.Week;
+    source.current = await this.getHistory(divisionId, duration, unit);
+    let end = new Date(duration.BeginTime.getTime());
+    end.setMilliseconds(-1);
+    let begin = new Date(duration.BeginTime.getTime());
+    begin.setDate(begin.getDate() - 7);
+
+    let beofre: IntervalParams = {
+      BeginTime: begin,
+      EndTime: end,
+    };
+    source.before = await this.getHistory(divisionId, beofre, unit);
+    return source;
+  }
+  async getDataByMonth(divisionId: string, date: Date) {
+    let source = new GarbageStationStatisticTableSource();
+    let duration: IntervalParams = IntervalParams.allMonth(date);
+    let unit = TimeUnit.Month;
+    source.current = await this.getHistory(divisionId, duration, unit);
+    let end = new Date(duration.BeginTime.getTime());
+    end.setMilliseconds(-1);
+    let begin = new Date(end.getFullYear(), end.getMonth(), 1);
+    let before: IntervalParams = {
+      BeginTime: begin,
+      EndTime: end,
+    };
+    source.before = await this.getHistory(divisionId, before, unit);
     return source;
   }
 

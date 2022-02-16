@@ -5,55 +5,54 @@ import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.d
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
-import { EventRecordFilterBusiness } from './event-record-filter.business';
+import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
-  EventRecordSourceModel,
-  EventRecordSourceOpts,
-} from './event-record-source.model';
+  DivisionStationFilteModel,
+  DivisionStationFilterOpts,
+} from './interval-division-station-filter.model';
 
 @Component({
-  selector: 'howell-event-record-filter',
-  templateUrl: './event-record-filter.component.html',
-  styleUrls: ['./event-record-filter.component.less'],
+  selector: 'interval-division-station-filter',
+  templateUrl: './interval-division-station-filter.component.html',
+  styleUrls: ['./interval-division-station-filter.component.less'],
   providers: [EventRecordFilterBusiness],
 })
 export class EventRecordFilterComponent
-  implements IComponent<IModel, EventRecordSourceModel>, OnInit
+  implements IComponent<IModel, DivisionStationFilteModel>, OnInit
 {
   @Output('filter')
   filterEvent: EventEmitter<EventRecordFilter> = new EventEmitter();
-
   DateTimePickerView = DateTimePickerView;
   constructor(business: EventRecordFilterBusiness) {
     this.business = business;
 
     this.filter = new EventRecordFilter();
   }
-  business: IBusiness<IModel, EventRecordSourceModel>;
+  business: IBusiness<IModel, DivisionStationFilteModel>;
 
   async ngOnInit() {
     this.model = await this.business.load();
   }
 
-  model: EventRecordSourceModel = new EventRecordSourceModel();
+  model: DivisionStationFilteModel = new DivisionStationFilteModel();
 
   filter: EventRecordFilter;
 
   changeBegin(date: Date) {
     if (this.filter) {
-      this.filter.begin = date;
+      this.filter.BeginTime = date;
       this.filterEvent.emit(this.filter);
     }
   }
   changeEnd(date: Date) {
     if (this.filter) {
-      this.filter.end = date;
+      this.filter.EndTime = date;
       this.filterEvent.emit(this.filter);
     }
   }
 
   async ondivision(item: SelectItem) {
-    let opts: EventRecordSourceOpts = {
+    let opts: DivisionStationFilterOpts = {
       divisionId: item.key,
     };
     this.model = await this.business.load(opts);
@@ -63,7 +62,7 @@ export class EventRecordFilterComponent
     this.filterEvent.emit(this.filter);
   }
   async onstation(item: SelectItem) {
-    let opts: EventRecordSourceOpts = {
+    let opts: DivisionStationFilterOpts = {
       divisionId: this.filter.division!.key,
       stationId: item.key,
     };

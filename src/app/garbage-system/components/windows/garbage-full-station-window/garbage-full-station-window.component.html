@@ -28,11 +28,11 @@
           </howell-garbage-full-station-table>
         </mat-tab>
         <mat-tab label="事件">
-          <howell-event-record-filter
+          <interval-division-station-filter
             *ngIf="record.filter.show"
             (filter)="record.filter.onfilter($event)"
           >
-          </howell-event-record-filter>
+          </interval-division-station-filter>
           <div class="event-record-table" [class.filter]="record.filter.show">
             <howell-event-record-table
               [type]="type"

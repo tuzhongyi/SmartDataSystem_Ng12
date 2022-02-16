@@ -3,10 +3,10 @@ import { SelectItemConverter } from 'src/app/converter/select-item.converter';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { EventRecordSourceModel } from './event-record-source.model';
+import { DivisionStationFilteModel } from './interval-division-station-filter.model';
 
 export class EventRecordFilterConverter
-  implements IConverter<string, EventRecordSourceModel>
+  implements IConverter<string, DivisionStationFilteModel>
 {
   converter = {
     item: new SelectItemConverter(),
@@ -17,8 +17,8 @@ export class EventRecordFilterConverter
     divisions?: Division[],
     stations?: GarbageStation[],
     cameras?: Camera[]
-  ): EventRecordSourceModel {
-    let model = new EventRecordSourceModel();
+  ): DivisionStationFilteModel {
+    let model = new DivisionStationFilteModel();
 
     if (divisions) {
       model.divisions = divisions.map((x) => {

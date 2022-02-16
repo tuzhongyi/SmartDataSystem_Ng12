@@ -21,10 +21,10 @@ export class GarbageStationStatisticArrayConverter
   Convert(
     source: GarbageStationStatisticTableSource
   ): GarbageStationStatisticModel[] {
-    return source.today!.map((x) => {
+    return source.current!.map((x) => {
       return this.converter.item.Convert(
         x,
-        source.yesterday!.find((y) => y.Id === x.Id)
+        source.before?.find((y) => y.Id === x.Id)
       );
     });
   }
@@ -36,7 +36,7 @@ export class GarbageStationStatisticConverter
 {
   Convert(
     today: GarbageStationNumberStatisticV2,
-    yesterday?: GarbageStationNumberStatisticV2
+    before?: GarbageStationNumberStatisticV2
   ): GarbageStationStatisticModel {
     let model = new GarbageStationStatisticModel();
     model = Object.assign(model, today);
@@ -78,38 +78,30 @@ export class GarbageStationStatisticConverter
         }
       }
     }
-    if (yesterday) {
-      if (yesterday.GarbageRatio) {
+    if (before) {
+      if (before.GarbageRatio) {
         model.GarbageRatioTd.differ =
-          model.GarbageRatioTd.value - yesterday.GarbageRatio;
-      }
-      if (yesterday.AvgGarbageTime && model.AvgGarbageTimeTd.value !== 0) {
-        model.AvgGarbageTimeTd.differ =
-          ((model.AvgGarbageTimeTd.value - yesterday.AvgGarbageTime) /
-            model.AvgGarbageTimeTd.value) *
-          100;
-        // model.AvgGarbageTimeTd.differ =
-        //   100 -
-        //   (yesterday.AvgGarbageTime /
-        //     (model.AvgGarbageTimeTd.value + yesterday.AvgGarbageTime)) *
-        //     100;
-      }
-      if (yesterday.MaxGarbageTime && model.MaxGarbageTimeTd.value !== 0) {
-        model.MaxGarbageTimeTd.differ =
-          ((model.MaxGarbageTimeTd.value - yesterday.MaxGarbageTime) /
-            model.MaxGarbageTimeTd.value) *
-          100;
-      }
-      if (yesterday.GarbageDuration && model.GarbageDurationTd.value !== 0) {
-        model.GarbageDurationTd.differ =
-          ((model.GarbageDurationTd.value - yesterday.GarbageDuration) /
-            model.GarbageDurationTd.value) *
-          100;
+          model.GarbageRatioTd.value - before.GarbageRatio;
       }
 
-      if (yesterday.EventNumbers) {
-        for (let i = 0; i < yesterday.EventNumbers.length; i++) {
-          const item = yesterday.EventNumbers[i];
+      model.AvgGarbageTimeTd.differ = this.getQoQ(
+        model.AvgGarbageTimeTd.value,
+        before.AvgGarbageTime
+      );
+
+      model.MaxGarbageTimeTd.differ = this.getQoQ(
+        model.MaxGarbageTimeTd.value,
+        before.MaxGarbageTime
+      );
+
+      model.GarbageDurationTd.differ = this.getQoQ(
+        model.GarbageDurationTd.value,
+        before.GarbageDuration
+      );
+
+      if (before.EventNumbers) {
+        for (let i = 0; i < before.EventNumbers.length; i++) {
+          const item = before.EventNumbers[i];
           switch (item.EventType) {
             case EventType.IllegalDrop:
               model.IllegalDropTd.differ =
@@ -129,5 +121,16 @@ export class GarbageStationStatisticConverter
 
     EventType.MixedInto;
     return model;
+  }
+
+  /** 环比 */
+  getQoQ(current: number, before?: number) {
+    if (before) {
+      return ((current - before) / before) * 100;
+    }
+    if (current === 0) {
+      return 0;
+    }
+    return 100;
   }
 }

@@ -84,8 +84,8 @@ export class EventRecordBusiness
   getParams(page: PagedParams, opts: EventRecordFilter) {
     let params = new GetEventRecordsParams();
     params = Object.assign(params, page);
-    params.BeginTime = opts.begin;
-    params.EndTime = opts.end;
+    params.BeginTime = opts.BeginTime;
+    params.EndTime = opts.EndTime;
     if (opts.division) {
       params.DivisionIds = [opts.division.key];
     }

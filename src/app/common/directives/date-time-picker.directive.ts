@@ -26,6 +26,7 @@ export class DateTimePickerDirective
   // @Input('changeDate') changeDate: (val: any) => void;
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;
   @Input('minView') minView: DateTimePickerView = DateTimePickerView.month;
+  @Input('week') week: boolean = false;
 
   @Output('change')
   change: EventEmitter<Date> = new EventEmitter();
@@ -36,6 +37,13 @@ export class DateTimePickerDirective
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
     // this.reInit(this.startView, this.minView, this.format, this.value);
+    this.reInit(
+      this.startView,
+      this.minView,
+      this.format,
+      this.date,
+      this.week
+    );
   }
   ngOnDestroy(): void {
     $(this.ele).datetimepicker('remove');

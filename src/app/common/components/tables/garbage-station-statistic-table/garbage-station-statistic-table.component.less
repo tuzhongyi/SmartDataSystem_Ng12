@@ -21,7 +21,8 @@
         width: 100%;
 
         span:first-child {
-          width: 102px;
+          width: 115px;
+          white-space: nowrap;
         }
       }
 
@@ -32,13 +33,18 @@
       }
 
       span:first-child {
-        width: 55px;
+        width: 60px;
+        white-space: nowrap;
       }
 
       .differ {
         display: inline-block;
-        width: 51px;
+        width: 30px;
         text-align: right;
+
+        &.long {
+          width: 60px;
+        }
       }
     }
 
