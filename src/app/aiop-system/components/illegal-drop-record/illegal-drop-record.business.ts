@@ -31,7 +31,7 @@ export class IllegalDropRecordBusiness {
     params.BeginTime = Time.beginTime(new Date());
     params.EndTime = endTime;
 
-    console.log('params', params);
+    // console.log('params', params);
     let records = await this._eventRequestService.record.IllegalDrop.list(
       params
     );

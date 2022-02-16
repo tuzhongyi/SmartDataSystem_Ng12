@@ -1,6 +1,8 @@
 .aiop-manage {
   width: 100%;
   height: 100%;
+  background-color: #0c1127;
+
   &-header {
     width: 100%;
     height: 90px;
@@ -11,11 +13,40 @@
     display: flex;
 
     .sindenav {
-      width: 300px;
-      background-color: #10152da8;
+      width: 296px;
+      padding-top: 20px;
+      padding-left: 15px;
+      box-sizing: border-box;
+      background-image: linear-gradient(
+        to right,
+        rgba(127, 148, 255, 0) 0%,
+        rgba(127, 148, 255, 0.1) 100%
+      );
+
+      display: flex;
+      flex-direction: column;
+      .collapse-content {
+        flex-grow: 1;
+        overflow: hidden;
+      }
+      .collapse-btn {
+        cursor: pointer;
+        flex-shrink: 0;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        align-self: center;
+        justify-content: flex-start;
+        i {
+          align-self: center;
+          color: #68adfd;
+          font-size: 28px;
+          font-weight: bold;
+          padding-left: 20px;
+        }
+      }
     }
-    .sindenav-main {
-      background-color: #0c1127;
+    .sindenav-content {
       flex-grow: 1;
     }
   }
