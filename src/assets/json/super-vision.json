@@ -1,11 +1,10 @@
 {
   "$schema": "./sidenav.schema.json",
-  "id":"super-vision.json",
   "data": [
     {
       "title": "监管平台",
       "id": "supervise-platform",
-      "path":"/aiop/aiop-manage/super-vision/supervise-platform",
+      "path": "/aiop/aiop-manage/super-vision/supervise-platform",
       "children": [
         {
           "title": "区划管理",

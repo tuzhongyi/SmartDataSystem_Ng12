@@ -21,6 +21,11 @@ import { SystemSettingComponent } from './system-setting/system-setting.componen
 import { SuperVisionComponent } from './super-vision/super-vision.component';
 import { RegionManageComponent } from './region-manage/region-manage.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { CameraManageComponent } from './camera-manage/camera-manage.component';
+import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
+import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
+import { AiModelListComponent } from './ai-model-list/ai-model-list.component';
+import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -35,6 +40,11 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     SuperVisionComponent,
     RegionManageComponent,
     SidenavComponent,
+    CameraManageComponent,
+    EncodeDeviceManageComponent,
+    CameraModelManageComponent,
+    AiModelListComponent,
+    AiCameraEventsComponent,
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule],
   providers: [],

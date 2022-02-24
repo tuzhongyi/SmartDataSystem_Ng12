@@ -28,6 +28,49 @@
           "path": "/aiop/aiop-manage/system-setting/region/region-manage"
         }
       ]
+    },
+    {
+      "title": "设备管理",
+      "id": "device",
+      "children": [
+        {
+          "title": "监控点",
+          "id": "camera-manage",
+          "path": "/aiop/aiop-manage/system-setting/device/camera-manage"
+        },
+        {
+          "title": "编码器",
+          "id": "encode-device-manage",
+          "path": "/aiop/aiop-manage/system-setting/device/encode-device-manage"
+        },
+        {
+          "title": "监控点模型",
+          "id": "camera-model-manage",
+          "path": "/aiop/aiop-manage/system-setting/device/camera-model-manage"
+        }
+      ]
+    },
+    {
+      "title": "AI模型",
+      "id": "ai",
+      "children": [
+        {
+          "title": "AI模型列表",
+          "id": "ai-model-list",
+          "path": "/aiop/aiop-manage/system-setting/ai/ai-model-list"
+        }
+      ]
+    },
+    {
+      "title": "事件",
+      "id": "ai-events",
+      "children": [
+        {
+          "title": "AI模型列表",
+          "id": "ai-camera-events",
+          "path": "/aiop/aiop-manage/system-setting/ai-events/ai-camera-events"
+        }
+      ]
     }
   ]
 }

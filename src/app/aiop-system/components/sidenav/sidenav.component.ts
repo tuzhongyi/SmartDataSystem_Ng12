@@ -64,7 +64,7 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
           Object.assign(this.groups, mode.groups);
           import(`src/assets/json/${mode.groups['first']}.json`).then(
             (config) => {
-              console.log('config', config.data);
+              // console.log('config', config.data);
 
               this.models = config.data;
             }

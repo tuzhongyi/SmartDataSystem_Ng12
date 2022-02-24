@@ -21,6 +21,11 @@ import { ProxyManageComponent } from './components/proxy-manage/proxy-manage.com
 import { SystemSettingComponent } from './components/system-setting/system-setting.component';
 import { SuperVisionComponent } from './components/super-vision/super-vision.component';
 import { RegionManageComponent } from './components/region-manage/region-manage.component';
+import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
+import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
+import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
+import { AiModelListComponent } from './components/ai-model-list/ai-model-list.component';
+import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 
 const routes: Routes = [
   {
@@ -127,6 +132,45 @@ const routes: Routes = [
               {
                 path: 'region-manage',
                 component: RegionManageComponent,
+              },
+            ],
+          },
+          {
+            path: 'device',
+            children: [
+              {
+                path: 'camera-manage',
+                component: CameraManageComponent,
+              },
+              {
+                path: 'encode-device-manage',
+                component: EncodeDeviceManageComponent,
+              },
+              {
+                path: 'camera-model-manage',
+                component: CameraModelManageComponent,
+              },
+              {
+                path: '',
+                redirectTo: 'camera-manage',
+              },
+            ],
+          },
+          {
+            path: 'ai',
+            children: [
+              {
+                path: 'ai-model-list',
+                component: AiModelListComponent,
+              },
+            ],
+          },
+          {
+            path: 'ai-events',
+            children: [
+              {
+                path: 'ai-camera-events',
+                component: AiCameraEventsComponent,
               },
             ],
           },
