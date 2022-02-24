@@ -130,7 +130,6 @@ export class TreeComponent implements OnInit {
     });
   }
   ngOnInit() {
-    debugger;
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
