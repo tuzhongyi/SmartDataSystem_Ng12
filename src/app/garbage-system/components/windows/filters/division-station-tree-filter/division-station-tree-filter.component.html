@@ -1,6 +1,6 @@
 <div class="division-station-tree-filter">
   <div class="selected">
-    <input type="text" #selected [value]="current ? current.name : ''" />
+    <label>{{ current ? current.name : "请选择" }}</label>
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
   </div>
   <div class="tree" [ngStyle]="style">

@@ -13,6 +13,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { StoreService } from 'src/app/global/service/store.service';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 
 @Component({
@@ -29,8 +30,11 @@ export class DivisionStationTreeFilterComponent
   @Output()
   select: EventEmitter<string> = new EventEmitter();
 
+  @Input()
+  station?: GarbageStation;
+
   @ViewChild('selected')
-  input?: ElementRef<HTMLInputElement>;
+  input?: ElementRef<HTMLLabelElement>;
 
   treeServiceProvider = TreeServiceEnum.Station;
   treeSelectModel = SelectEnum.Single;
@@ -51,8 +55,7 @@ export class DivisionStationTreeFilterComponent
           return !!this.input && this.input.nativeElement.offsetHeight > 0;
         },
         () => {
-          this.style.top =
-            (this.input!.nativeElement as HTMLInputElement).offsetHeight + 'px';
+          this.style.top = this.input!.nativeElement.offsetHeight + 'px';
         }
       );
     }
