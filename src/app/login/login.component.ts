@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AxiosError } from 'axios';
 import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';

@@ -2,14 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-system-setting',
-  templateUrl: './system-setting.component.html',
-  styleUrls: ['./system-setting.component.less']
+  template: '<router-outlet></router-outlet>',
+  styleUrls: ['./system-setting.component.less'],
 })
 export class SystemSettingComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

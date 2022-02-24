@@ -12,19 +12,14 @@
         </mat-toolbar>
     </div>
     <div class="aiop-manage-body">
-        <div class="sindenav" [@growShrink]="state">
-            <div class="collapse-content">
-                <howell-sidenav></howell-sidenav>
-            </div>
-            <div class="collapse-btn" (click)="toggle()">
-                <i class="material-icons">arrow_back </i>
-            </div>
+        <div class="sidenav">
+            <howell-sidenav></howell-sidenav>
         </div>
-        <main class='sindenav-content'>
+        <main class='sidenav-content'>
             <div>面包屑</div>
-            <!-- <div class="sindenav-content">
+            <div class="sindenav-content">
                 <router-outlet></router-outlet>
-            </div> -->
+            </div>
 
         </main>
     </div>

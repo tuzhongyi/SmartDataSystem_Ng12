@@ -1,0 +1,33 @@
+{
+  "$schema": "./sidenav.schema.json",
+  "data": [
+    {
+      "title": "平台",
+      "id": "platform",
+      "path": "/aiop/aiop-manage/system-setting/platform",
+      "children": [
+        {
+          "title": "平台管理",
+          "id": "platform-manage",
+          "path": "/aiop/aiop-manage/system-setting/platform/platform-manage"
+        },
+        {
+          "title": "流转服务管理",
+          "id": "proxy-manage",
+          "path": "/aiop/aiop-manage/system-setting/platform/proxy-manage"
+        }
+      ]
+    },
+    {
+      "title": "区域",
+      "id": "region",
+      "children": [
+        {
+          "title": "区域管理",
+          "id": "region-manage",
+          "path": "/aiop/aiop-manage/system-setting/region/region-manage"
+        }
+      ]
+    }
+  ]
+}

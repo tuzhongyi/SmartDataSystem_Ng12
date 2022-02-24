@@ -13,20 +13,28 @@ import { AIOPSystemModeComponent } from './system-mode/system-mode.component';
 import { AiopSystemManageComponent } from './aiop-manage/aiop-manage.component';
 import { DivisionManageComponent } from './division-manage/division-manage.component';
 import { IllegalDropRecordComponent } from './illegal-drop-record/illegal-drop-record.component';
-import { MonitorPlatformComponent } from './monitor-platform/monitor-platform.component';
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
+import { PlatformManageComponent } from './platform-manage/platform-manage.component';
+import { SystemSettingComponent } from './system-setting/system-setting.component';
+import { SuperVisionComponent } from './super-vision/super-vision.component';
+import { RegionManageComponent } from './region-manage/region-manage.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
     AiopSystemManageComponent,
-    MonitorPlatformComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
     IllegalDropRecordComponent,
     DeployMapComponent,
     GarbageStationManageComponent,
+    SystemSettingComponent,
+    PlatformManageComponent,
+    SuperVisionComponent,
+    RegionManageComponent,
+    SidenavComponent,
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule],
   providers: [],

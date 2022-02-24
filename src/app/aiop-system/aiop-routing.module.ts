@@ -13,11 +13,14 @@ import { IllegalDropRecordComponent } from './components/illegal-drop-record/ill
 import { DivisionManageComponent } from './components/division-manage/division-manage.component';
 import { StationStatusComponent } from './components/station-status/station-status.component';
 import { AIOPSystemModeComponent } from './components/system-mode/system-mode.component';
-import { SystemSettingComponent } from './components/system-setting/system-setting.component';
-import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
 import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
+import { PlatformManageComponent } from './components/platform-manage/platform-manage.component';
+import { ProxyManageComponent } from './components/proxy-manage/proxy-manage.component';
+import { SystemSettingComponent } from './components/system-setting/system-setting.component';
+import { SuperVisionComponent } from './components/super-vision/super-vision.component';
+import { RegionManageComponent } from './components/region-manage/region-manage.component';
 
 const routes: Routes = [
   {
@@ -34,27 +37,37 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'monitor-platform',
+        redirectTo: 'super-vision',
       },
       {
-        path: 'monitor-platform',
-        component: MonitorPlatformComponent,
+        path: 'super-vision',
+        component: SuperVisionComponent,
+
         children: [
           {
             path: '',
-            redirectTo: 'division-manage',
+            redirectTo: 'supervise-platform',
           },
           {
-            path: 'division-manage',
-            component: DivisionManageComponent,
-          },
-          {
-            path: 'deploy-map',
-            component: DeployMapComponent,
-          },
-          {
-            path: 'garbage-station-manage',
-            component: GarbageStationManageComponent,
+            path: 'supervise-platform',
+            children: [
+              {
+                path: '',
+                redirectTo: 'division-manage',
+              },
+              {
+                path: 'division-manage',
+                component: DivisionManageComponent,
+              },
+              {
+                path: 'deploy-map',
+                component: DeployMapComponent,
+              },
+              {
+                path: 'garbage-station-manage',
+                component: GarbageStationManageComponent,
+              },
+            ],
           },
         ],
       },
@@ -64,21 +77,60 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'illegal-drop-record',
+            redirectTo: 'events',
           },
           {
-            path: 'illegal-drop-record',
-            component: IllegalDropRecordComponent,
+            path: 'events',
+            children: [
+              {
+                path: '',
+                redirectTo: 'illegal-drop-record',
+              },
+              {
+                path: 'illegal-drop-record',
+                component: IllegalDropRecordComponent,
+              },
+            ],
           },
         ],
       },
       {
-        path: 'station-status',
-        component: StationStatusComponent,
-      },
-      {
         path: 'system-setting',
         component: SystemSettingComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'platform',
+          },
+          {
+            path: 'platform',
+            children: [
+              { path: '', redirectTo: 'platform-manage' },
+              {
+                path: 'platform-manage',
+                component: PlatformManageComponent,
+              },
+              {
+                path: 'proxy-manage',
+                component: ProxyManageComponent,
+              },
+            ],
+          },
+          {
+            path: 'region',
+            children: [
+              {
+                path: '',
+                redirectTo: 'region-manage',
+              },
+
+              {
+                path: 'region-manage',
+                component: RegionManageComponent,
+              },
+            ],
+          },
+        ],
       },
     ],
   },

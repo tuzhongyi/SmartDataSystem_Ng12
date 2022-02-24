@@ -29,24 +29,34 @@ button.tree-select {
   border-radius: 5px;
 }
 
-::ng-deep .mat-checkbox-inner-container {
-  width: 14px;
-  height: 14px;
-  .mat-checkbox-background {
-    background: transparent !important;
+::ng-deep .mat-checkbox {
+  flex-grow: 1;
 
-    .mat-checkbox-checkmark-path {
-      stroke-width: 4px;
-    }
-    .mat-checkbox-mixedmark {
-      width: 6px;
-      height: 6px;
-      border-radius: 0;
-    }
-  }
+  label.mat-checkbox-layout {
+    width: 100%;
 
-  .mat-checkbox-frame {
-    border-color: #7586e0;
+    .mat-checkbox-inner-container {
+      margin: 0;
+      margin-right: 8px;
+      width: 14px;
+      height: 14px;
+      .mat-checkbox-background {
+        background: transparent !important;
+
+        .mat-checkbox-checkmark-path {
+          stroke-width: 4px;
+        }
+        .mat-checkbox-mixedmark {
+          width: 6px;
+          height: 6px;
+          border-radius: 0;
+        }
+      }
+
+      .mat-checkbox-frame {
+        border-color: #7586e0;
+      }
+    }
   }
 }
 

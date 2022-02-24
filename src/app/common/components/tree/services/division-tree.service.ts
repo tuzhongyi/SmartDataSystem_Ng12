@@ -26,7 +26,7 @@ export class DivisionTreeService implements TreeServiceInterface {
 
   getName() {
     return TreeServiceEnum.Division;
-  }
+  } 
 
   async initialize() {
     let data = await this._loadData(DivisionType.City);

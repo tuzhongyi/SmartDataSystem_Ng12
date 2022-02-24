@@ -1,0 +1,28 @@
+{
+  "$schema": "./sidenav.schema.json",
+  "id":"super-vision.json",
+  "data": [
+    {
+      "title": "监管平台",
+      "id": "supervise-platform",
+      "path":"/aiop/aiop-manage/super-vision/supervise-platform",
+      "children": [
+        {
+          "title": "区划管理",
+          "id": "division-manage",
+          "path": "/aiop/aiop-manage/super-vision/supervise-platform/division-manage"
+        },
+        {
+          "title": "地图布控",
+          "id": "deploy-map",
+          "path": "/aiop/aiop-manage/super-vision/supervise-platform/deploy-map"
+        },
+        {
+          "title": "垃圾厢房管理",
+          "id": "garbage-station-manage",
+          "path": "/aiop/aiop-manage/super-vision/supervise-platform/garbage-station-manage"
+        }
+      ]
+    }
+  ]
+}

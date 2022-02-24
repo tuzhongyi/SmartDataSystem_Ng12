@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import Config from 'src/assets/json/heaer-nav.json';
+import Config from 'src/assets/json/header-nav.json';
 
 @Component({
   selector: 'app-header-nav',

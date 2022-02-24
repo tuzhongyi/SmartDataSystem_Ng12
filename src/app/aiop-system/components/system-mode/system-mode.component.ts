@@ -3,7 +3,6 @@ import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import Config from 'src/assets/json/system-mode.json';
 
-// console.log(systemModeConfig);
 @Component({
   selector: 'app-system-mode',
   templateUrl: './system-mode.component.html',

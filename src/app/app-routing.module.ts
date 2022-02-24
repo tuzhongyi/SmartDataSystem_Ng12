@@ -30,6 +30,10 @@ const routes: Routes = [
       import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
     canActivate: [AuthorizationService],
   },
+  // {
+  //   path: '**',
+  //   redirectTo: 'login',
+  // },
 ];
 
 @NgModule({

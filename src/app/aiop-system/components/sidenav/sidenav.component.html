@@ -1,0 +1,21 @@
+<div class="howell-sidenav" [@growShrink]="state">
+    <div class='sidenav-list'>
+        <nav *ngFor="let model of models;let i=index">
+            <button class='btn' [class]="{grow:state=='grow',shrink:state=='shrink'}"
+                [class.selected]="model.id == groups.second">
+                <a [routerLink]="[model.path]">
+                    <i class=" howell-icon-device2"></i>
+                    <span *ngIf="state=='grow'">{{model.title}}</span>
+                </a>
+            </button>
+            <ul (click)="navigate($event)" *ngIf="state=='grow' && model.id == groups.second">
+                <li *ngFor=" let node of model.children" [class.selected]="node.id == groups.third">
+                    <a [routerLink]="[node.path]"> {{node.title}} </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="sidenav-btn" (click)="toggle()">
+        <i class="material-icons">{{state=='grow' ? 'arrow_back' :'density_medium'}} </i>
+    </div>
+</div>

@@ -27,7 +27,6 @@ import { Table_COMPONENTS } from './tables/table-component';
 import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
 import { IllegalDropRecordComponent } from 'src/app/aiop-system/components/illegal-drop-record/illegal-drop-record.component';
 import { LineChartComponent } from './line-chart/line-chart.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -57,5 +56,4 @@ export const CUSTOM_COMPONENTS = [
   ...Table_COMPONENTS,
   VideoDownloadPanelComponent,
   LineChartComponent,
-  SidenavComponent,
 ];

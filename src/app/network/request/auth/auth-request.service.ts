@@ -59,10 +59,9 @@ export class AuthorizationService implements CanActivate {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
     let user = this._localStorageService.user;
-    let userId = user.Id;
     let holdCookie = this._cookieService.check('userName');
     // console.log(userResource);
-    if (challenge && userId && holdCookie) {
+    if (challenge && user && user.Id && holdCookie) {
       return true;
     }
 

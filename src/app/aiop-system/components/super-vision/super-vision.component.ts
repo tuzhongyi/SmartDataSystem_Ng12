@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-garbage-events',
+  selector: 'howell-super-vision',
   template: '<router-outlet></router-outlet>',
-  styleUrls: ['./garbage-events.component.less'],
+  styleUrls: ['./super-vision.component.less'],
 })
-export class GarbageEventsComponent implements OnInit {
+export class SuperVisionComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

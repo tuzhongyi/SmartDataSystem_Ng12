@@ -1,0 +1,17 @@
+{
+  "$schema": "./sidenav.schema.json",
+  "data": [
+    {
+      "title": "事件",
+      "id": "events",
+      "path": "/aiop/aiop-manage/garbage-events/events",
+      "children": [
+        {
+          "title": "垃圾落地",
+          "id": "illegal-drop-record",
+          "path": "/aiop/aiop-manage/garbage-events/events/illegal-drop-record"
+        }
+      ]
+    }
+  ]
+}

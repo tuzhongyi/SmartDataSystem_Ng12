@@ -1,24 +1,9 @@
-<mat-tree
-  [dataSource]="dataSource"
-  [treeControl]="treeControl"
-  [trackBy]="trackBy"
-  #tree
->
-  <mat-tree-node
-    *matTreeNodeDef="let node"
-    matTreeNodePadding
-    [class.high-light]="highLight(node)"
-  >
+<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [trackBy]="trackBy" #tree>
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [class.high-light]="highLight(node)">
     <ng-container *ngIf="node.expandable">
-      <button
-        class="tree-select"
-        matTreeNodeToggle
-        (click)="loadChildren(node)"
-      >
-        <div
-          class="select"
-          [class.expanded]="treeControl.isExpanded(node)"
-        ></div>
+      <button class="tree-select" matTreeNodeToggle (click)="loadChildren(node)"
+        [style.margin-left.px]="node.level==0 ?10:0">
+        <div class="select" [class.expanded]="treeControl.isExpanded(node)"></div>
       </button>
     </ng-container>
 
@@ -27,18 +12,15 @@
     </ng-container>
 
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
-      <div (click)="singleSelectNode(node)">
+      <div (click)="singleSelectNode(node)" style="flex-grow:1">
         <i [class]="node.iconType"></i>
         {{ node.name }}
       </div>
     </ng-template>
 
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Multiple">
-      <mat-checkbox
-        (change)="multipleSelectNode(node)"
-        [checked]="selection.isSelected(node)"
-        [indeterminate]="descendantsPartiallySelected(node)"
-      >
+      <mat-checkbox (change)="multipleSelectNode(node)" [checked]="selection.isSelected(node)"
+        [indeterminate]="descendantsPartiallySelected(node)">
         <i [class]="node.iconType"></i>
         {{ node.name }}
       </mat-checkbox>
