@@ -12,6 +12,17 @@ export function transformDateTime(params: TransformFnParams) {
     return '';
   }
 }
+export function transformDate(params: TransformFnParams) {
+  if (params.type === TransformationType.PLAIN_TO_CLASS) {
+    return new Date(params.value);
+  } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
+    return formatDate(params.value as Date, 'yyyy-MM-dd', 'en');
+  } else if (params.type === TransformationType.CLASS_TO_CLASS) {
+    return new Date(params.value);
+  } else {
+    return '';
+  }
+}
 export function transformTime(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
     return new Date(params.value);

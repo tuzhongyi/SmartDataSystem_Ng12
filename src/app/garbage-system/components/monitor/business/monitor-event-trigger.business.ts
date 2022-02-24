@@ -4,6 +4,7 @@ import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { IllegalMixintoRankArgs } from '../../illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from '../../retention-rank/retention-rank.component';
+import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 import { WindowBussiness } from './window.business';
 
 @Injectable()
@@ -12,6 +13,8 @@ export class MonitorEventTriggerBusiness {
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window);
+  risposalCount = new RisposalCountEventTrigger(this.window);
+  risposalRank = new RisposalRankEventTrigger(this.window);
 }
 
 export class DeviceStateEventTrigger {
@@ -49,5 +52,20 @@ class IllegalMixintoRankEventTrigger {
         break;
     }
     this.window.record.show = true;
+  }
+}
+class RisposalCountEventTrigger {
+  constructor(private window: WindowBussiness) {}
+  ontask() {
+    this.window.station.index = GarbageStationWindowIndex.record;
+    this.window.station.show = true;
+  }
+}
+class RisposalRankEventTrigger {
+  constructor(private window: WindowBussiness) {}
+  onItemClicked(item: RankModel) {
+    this.window.station.index = GarbageStationWindowIndex.stay;
+    console.log(item.data);
+    this.window.station.show = true;
   }
 }

@@ -8,9 +8,11 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
@@ -352,5 +354,10 @@ export class DisposalCountComponent
 
       this.myChart.setOption(this.option);
     }
+  }
+  @Output()
+  task: EventEmitter<void> = new EventEmitter();
+  taskClick() {
+    this.task.emit();
   }
 }

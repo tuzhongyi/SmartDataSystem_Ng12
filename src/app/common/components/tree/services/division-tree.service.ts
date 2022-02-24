@@ -26,10 +26,10 @@ export class DivisionTreeService implements TreeServiceInterface {
 
   getName() {
     return TreeServiceEnum.Division;
-  } 
+  }
 
-  async initialize() {
-    let data = await this._loadData(DivisionType.City);
+  async initialize(type: DivisionType = DivisionType.City) {
+    let data = await this._loadData(type);
     let nodes = this._converter.iterateToNested(data);
     return nodes;
   }

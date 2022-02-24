@@ -7,7 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class SwitchComponent implements OnInit {
   @Output() onChanged: EventEmitter<boolean> = new EventEmitter();
 
-  @Input() on = false;
+  @Input() on: boolean = false;
   constructor() {}
 
   ngOnInit() {}

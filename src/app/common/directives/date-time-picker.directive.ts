@@ -31,19 +31,24 @@ export class DateTimePickerDirective
   @Output('change')
   change: EventEmitter<Date> = new EventEmitter();
 
+  changing = false;
+
   constructor(e: ElementRef) {
     this.ele = e.nativeElement;
   }
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
     // this.reInit(this.startView, this.minView, this.format, this.value);
-    this.reInit(
-      this.startView,
-      this.minView,
-      this.format,
-      this.date,
-      this.week
-    );
+    if (this.changing == false) {
+      this.reInit(
+        this.startView,
+        this.minView,
+        this.format,
+        this.date,
+        this.week
+      );
+    }
+    this.changing = false;
   }
   ngOnDestroy(): void {
     $(this.ele).datetimepicker('remove');
@@ -52,28 +57,7 @@ export class DateTimePickerDirective
   set setStartDate(val: string | Date) {
     $(this.ele).datetimepicker('update');
   }
-  ngAfterContentInit() {
-    // $(this.ele)
-    //   .datetimepicker({
-    //     format: this.format,
-    //     weekStart: 1,
-    //     autoclose: true,
-    //     startView: this.startView,
-    //     minView: this.minView,
-    //     forceParse: false,
-    //     language: 'zh-CN',
-    //     initialDate: this.value,
-    //   })
-    //   .on('changeDate', (ev: { date?: Date }) => {
-    //     this.changeDate.emit(ev.date);
-    //   })
-    //   .on('show', (ev: any) => {
-    //     const dayDom = $('.datetimepicker-days');
-    //     dayDom.find('.week-tr').removeClass('week-tr');
-    //   });
-    // $(this.ele).val(formatDate(this.value, this.format, 'en'));
-    this.reInit(this.startView, this.minView, this.format, this.date);
-  }
+  ngAfterContentInit() {}
 
   reInit(
     startView: number,
@@ -83,8 +67,6 @@ export class DateTimePickerDirective
     week?: boolean
   ) {
     $(this.ele).val('');
-    let test = $(this.ele);
-    console.log(test);
     $(this.ele).datetimepicker('remove').off('changeDate').off('show');
     if (week) {
       $(this.ele)
@@ -96,10 +78,11 @@ export class DateTimePickerDirective
           minView: minView,
           language: 'zh-CN',
           forceParse: false,
-          initialDate: formatDate(value, format, 'en'),
+          initialDate: value,
         })
         .on('changeDate', (ev: { date: Date }) => {
           this.change.emit(ev.date);
+          this.changing = true;
           const week_ = OneWeekDate(ev.date);
           $(this.ele).val(
             `${formatDate(
@@ -149,10 +132,11 @@ export class DateTimePickerDirective
           minView: minView,
           language: 'zh-CN',
           forceParse: false,
-          initialDate: formatDate(value, format, 'en'),
+          initialDate: value,
         })
         .on('changeDate', (ev: { date: Date | undefined }) => {
           this.change.emit(ev.date);
+          this.changing = true;
         })
         .on('show', (ev: any) => {
           const dayDom = $('.datetimepicker-days');

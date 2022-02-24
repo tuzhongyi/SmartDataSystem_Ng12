@@ -6,6 +6,7 @@ import {
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -89,6 +90,9 @@ export class TreeComponent implements OnInit {
   @Input('treeSelectModel')
   selectModel = SelectEnum.Single;
 
+  @Input()
+  divisionType?: DivisionType;
+
   @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
 
   selection!: SelectionModel<FlatTreeNode>;
@@ -120,9 +124,13 @@ export class TreeComponent implements OnInit {
       this._treeFlattener
     );
 
-    this.dataChange.subscribe((data) => (this.dataSource.data = data));
+    this.dataChange.subscribe((data) => {
+      console.log(data);
+      this.dataSource.data = data;
+    });
   }
   ngOnInit() {
+    debugger;
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
@@ -138,7 +146,7 @@ export class TreeComponent implements OnInit {
   }
 
   async initialize() {
-    const nodes = await this._service.initialize();
+    const nodes = await this._service.initialize(this.divisionType);
     let res = this._register(nodes) ?? [];
     this.dataChange.next(res);
   }

@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -13,6 +14,10 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../image-control/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
@@ -83,5 +88,12 @@ export class GarbageDropStationTableComponent
     if (e.target) {
       (e.target as HTMLImageElement).src = MediumRequestService.default;
     }
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  imageClick(item: GarbageDropStationTableModel, img: ImageControlModel) {
+    let array = new ImageControlModelArray(item.images, img.index);
+    this.image.emit(array);
   }
 }

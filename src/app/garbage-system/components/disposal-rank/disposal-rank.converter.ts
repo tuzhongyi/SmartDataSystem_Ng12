@@ -12,7 +12,7 @@ export class DisposalRankConverter
   }
 
   itemConvert(input: GarbageStationNumberStatistic): RankModel {
-    let item = new RankModel();
+    let item = new RankModel(input);
     item.id = input.Id;
     item.name = input.Name;
     item.unit = '分';

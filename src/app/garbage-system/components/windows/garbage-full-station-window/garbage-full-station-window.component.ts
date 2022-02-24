@@ -5,9 +5,18 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record-table/event-record.model';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from 'src/app/common/components/image-control/image-control.model';
+import {
+  EventRecordFilter,
+  EventRecordViewModel,
+} from 'src/app/common/components/tables/event-record-table/event-record.model';
+import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { ToolService } from 'src/app/common/tools/tool';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -49,6 +58,12 @@ export class GarbageFullStationWindowComponent
   }
 
   showfilter() {}
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  onimage(item: ImageControlModelArray) {
+    this.image.emit(item);
+  }
 }
 export enum GarbageFullStationWindowIndex {
   station = 0,

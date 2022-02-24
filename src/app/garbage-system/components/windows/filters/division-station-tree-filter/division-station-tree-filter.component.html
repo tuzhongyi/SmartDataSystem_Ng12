@@ -1,0 +1,14 @@
+<div class="division-station-tree-filter">
+  <div class="selected">
+    <input type="text" #selected [value]="current ? current.name : ''" />
+    <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
+  </div>
+  <div class="tree" [ngStyle]="style">
+    <app-tree
+      [treeServiceProvider]="treeServiceProvider"
+      [treeSelectModel]="treeSelectModel"
+      [divisionType]="type"
+      (selectTree)="selectTree($event)"
+    ></app-tree>
+  </div>
+</div>

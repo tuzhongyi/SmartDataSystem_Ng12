@@ -3,5 +3,8 @@
     <div class="title">{{ title }}</div>
   </div>
 
-  <app-rank [data]="rankData"></app-rank>
+  <app-rank
+    [data]="rankData"
+    (itemClickedEvent)="onItemClicked($event)"
+  ></app-rank>
 </div>

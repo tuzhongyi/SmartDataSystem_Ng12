@@ -24,7 +24,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       this.sqrt = Math.ceil(Math.sqrt(this.models.length));
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
-        this.models.push(new ImageVideoControlModel(''));
+        this.models.push(new ImageVideoControlModel('', ''));
       }
     }
   }
@@ -34,7 +34,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       this.sqrt = Math.ceil(Math.sqrt(this.models.length));
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
-        this.models.push(new ImageVideoControlModel(''));
+        this.models.push(new ImageVideoControlModel('', ''));
       }
     }
   }

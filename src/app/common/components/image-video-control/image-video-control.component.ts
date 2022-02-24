@@ -9,7 +9,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
+import { wait } from '../../tools/tool';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { ImageVideoControlBusiness } from './image-video-control.business';
@@ -22,6 +24,8 @@ import { ImageVideoControlModel } from './image-video-control.model';
   providers: [ImageVideoControlBusiness],
 })
 export class ImageVideoControlComponent implements OnInit, OnChanges {
+  OnlineStatus = OnlineStatus;
+
   playing = false;
 
   display = {
@@ -39,11 +43,19 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Input()
   model?: ImageVideoControlModel;
 
+  @Input()
+  operation: boolean = false;
+
+  @Input()
+  draw: boolean = false;
+
   @ViewChild(VideoPlayerComponent)
   player?: VideoPlayerComponent;
 
   @Output()
-  play: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Output()
+  onstop: EventEmitter<boolean> = new EventEmitter();
 
   @Output()
   fullscreen: EventEmitter<ImageVideoControlModel> = new EventEmitter();
@@ -72,25 +84,49 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     if (this.model) {
       if (!this.model.video) {
         this.business.load(this.model.cameraId, PlayMode.live).then((x) => {
-          if (this.model) {
-            this.model.video = x;
-            this.model.videoChanged = () => {
-              if (this.player) this.player.stop();
-            };
-            this.playing = true;
-          }
+          this.play(x);
         });
       }
     }
+  }
 
-    this.play.emit(this.model);
+  preview(cameraId: string) {
+    this.display.image = false;
+    this.display.video = true;
+    this.business.load(cameraId, PlayMode.live).then((x) => {
+      this.play(x);
+    });
+  }
+  playback(cameraId: string, interval: IntervalParams) {
+    this.display.image = false;
+    this.display.video = true;
+    this.business.load(cameraId, PlayMode.vod, interval).then((x) => {
+      this.play(x);
+    });
+  }
+  play(video: VideoModel) {
+    if (this.model) {
+      this.model.video = video;
+      this.model.videoChanged = (x) => {
+        if (this.player) {
+          debugger;
+          if (!x) this.player.stop();
+        }
+      };
+      this.onplay.emit(this.model);
+      this.playing = true;
+    }
   }
 
   stop() {
+    if (this.model) {
+      this.model.video = undefined;
+    }
     this.playing = false;
     this.display.image = true;
     this.display.video = false;
     this.display.operation.play = true;
+    this.onstop.emit(this.playing);
   }
 
   fullscreenClicked(event: Event) {

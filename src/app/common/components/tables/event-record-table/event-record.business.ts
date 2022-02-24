@@ -58,6 +58,9 @@ export class EventRecordBusiness
       division: (id: string) => {
         return this.divisionService.cache.get(id);
       },
+      camera: (stationId: string, cameraId: string) => {
+        return this.stationService.camera.get(stationId, cameraId);
+      },
     });
 
     return models;

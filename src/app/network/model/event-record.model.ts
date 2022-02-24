@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
 import { ResourceType } from '../../enum/resource-type.enum';
+import { EventRule } from './event-rule';
 import { IModel } from './model.interface';
 import { Point } from './point.model';
 import { transformDateTime } from './transform.model';
@@ -62,6 +63,8 @@ interface IllegalDropEventData {
   GridCellId?: string;
   /**	String	网格单元名称	O */
   GridCellName?: string;
+  /**	EventRule[]	事件规则	O */
+  Rules?: EventRule[];
 }
 /** 事件目标 */
 export interface EventDataObject {

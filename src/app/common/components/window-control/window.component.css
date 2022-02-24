@@ -4,6 +4,9 @@
   top: 10px;
   cursor: pointer;
   z-index: 9;
+  height: 30px;
+  display: flex;
+  align-items: center;
 }
 
 .custom-form-wrap {

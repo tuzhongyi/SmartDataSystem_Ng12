@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -19,6 +26,9 @@ import { DisposalRankBusiness } from './disposal-rank.business';
 export class DisposalRankComponent
   implements OnInit, OnDestroy, IComponent<IModel, RankModel[]>
 {
+  @Output()
+  itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
+
   public title: string = '小包垃圾处置达标率排名';
 
   // 处理后的排行榜数据
@@ -40,5 +50,9 @@ export class DisposalRankComponent
   }
   async loadData() {
     this.rankData = await this.business.load();
+  }
+
+  onItemClicked(model: RankModel) {
+    this.itemClickedEvent.emit(model);
   }
 }

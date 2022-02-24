@@ -29,6 +29,30 @@
     flex-grow: 1;
     overflow: auto;
 
+    .img-list {
+      display: flex;
+      align-items: center;
+      height: 36px;
+
+      .img {
+        width: 44px;
+        margin-right: 10px;
+
+        app-image-control {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    .body table tbody tr.zoom:hover .img-list {
+      height: 80px;
+
+      .img {
+        width: 100px
+      }
+    }
+
     ::ng-deep {
       .body {
         height: calc(100% - 70px - 50px);

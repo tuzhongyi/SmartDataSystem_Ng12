@@ -4,16 +4,19 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { EventRecordBusiness } from '../event-record-table/event-record.business';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../image-control/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
 import {
@@ -95,5 +98,12 @@ export class GarbageDropRecordTableComponent
       this.datas = paged.Data;
     });
     return promise;
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  imageClick(item: GarbageDropRecordViewModel, img: ImageControlModel) {
+    let array = new ImageControlModelArray(item.images, img.index);
+    this.image.emit(array);
   }
 }

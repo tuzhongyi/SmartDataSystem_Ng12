@@ -4,7 +4,13 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from 'src/app/common/components/image-control/image-control.model';
+import { EventRecordViewModel } from 'src/app/common/components/tables/event-record-table/event-record.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
@@ -45,6 +51,12 @@ export class EventRecordWindowComponent
 
   indexChange(index: number) {
     this.index = index;
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  onimage(model: ImageControlModelArray) {
+    this.image.emit(model);
   }
 }
 

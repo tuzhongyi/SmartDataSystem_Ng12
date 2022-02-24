@@ -29,6 +29,7 @@
             <howell-event-record-table
               [type]="type"
               [load]="record.filter.load"
+              (image)="onimage($event)"
             >
             </howell-event-record-table>
           </div>

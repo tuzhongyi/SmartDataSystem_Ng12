@@ -43,12 +43,17 @@ export class WindowComponent implements OnInit {
   @Input()
   status?: OnlineStatus;
 
+  @Input()
+  manualClose = false;
+
   constructor() {}
 
   ngOnInit() {}
 
   closeButtonClick() {
-    this.Model.show = false;
+    if (this.manualClose === false) {
+      this.Model.show = false;
+    }
     this.OnClosing.emit(true);
   }
 }

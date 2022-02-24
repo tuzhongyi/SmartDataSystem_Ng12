@@ -54,6 +54,20 @@ export class IntervalParams {
     params.EndTime = next;
     return params;
   }
+
+  static beforeAndAfter(date: Date, seconds: number = 30) {
+    let params = new IntervalParams();
+
+    let begin = new Date(date.getTime());
+    begin.setSeconds(begin.getSeconds() - seconds);
+    params.BeginTime = new Date(begin.getTime());
+
+    let end = new Date(date.getTime());
+    end.setSeconds(end.getSeconds() + seconds);
+    params.EndTime = end;
+
+    return params;
+  }
 }
 export class PagedIntervalParams extends PagedParams {
   /**	DateTime	开始时间	M */

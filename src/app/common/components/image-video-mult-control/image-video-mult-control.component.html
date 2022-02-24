@@ -11,7 +11,8 @@
         [model]="item"
         [fulled]="item.fulled"
         (fullscreen)="onfullscreen($event)"
-        (play)="onplay($event)"
+        (onplay)="onplay($event)"
+        [operation]="true"
       ></app-image-video-control>
     </div>
   </ng-container>

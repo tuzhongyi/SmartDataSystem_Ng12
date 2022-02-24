@@ -24,17 +24,24 @@
         (selectedIndexChange)="indexChange($event)"
       >
         <mat-tab label="列表">
-          <howell-garbage-station-table [load]="station.load">
+          <howell-garbage-station-table
+            [load]="station.load"
+            (image)="onimage($event)"
+          >
           </howell-garbage-station-table>
         </mat-tab>
-        <mat-tab label="小包垃圾滞留"> </mat-tab>
+        <mat-tab label="小包垃圾滞留">
+          <howell-garbage-station-window-stay>
+          </howell-garbage-station-window-stay>
+        </mat-tab>
         <mat-tab label="总图表">
           <howell-garbage-station-window-general>
           </howell-garbage-station-window-general>
         </mat-tab>
         <mat-tab label="细分图表"> </mat-tab>
         <mat-tab label="报警事件处置">
-          <howell-garbage-drop-record-table> </howell-garbage-drop-record-table>
+          <howell-garbage-drop-record-table (image)="onimage($event)">
+          </howell-garbage-drop-record-table>
         </mat-tab>
       </mat-tab-group>
     </div>

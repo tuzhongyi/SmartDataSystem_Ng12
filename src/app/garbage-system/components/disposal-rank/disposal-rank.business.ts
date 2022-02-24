@@ -38,15 +38,16 @@ export class DisposalRankBusiness
 
   async load(): Promise<RankModel[]> {
     let data = await this.getData(this.storeService.divisionId);
-    while (data.length < 6) {
-      let item = new GarbageStationNumberStatistic();
-      item.Name = '-';
-      data.push(item);
-    }
     let result = this.Converter.Convert(data);
-    return result.sort((a, b) => {
+    result = result.sort((a, b) => {
       return a.value - b.value;
     });
+    while (result.length < 6) {
+      let item = new RankModel(undefined);
+      item.name = '-';
+      result.push(item);
+    }
+    return result;
   }
   async getData(divisionId: string): Promise<GarbageStationNumberStatistic[]> {
     let stations = await this.getStations(divisionId);

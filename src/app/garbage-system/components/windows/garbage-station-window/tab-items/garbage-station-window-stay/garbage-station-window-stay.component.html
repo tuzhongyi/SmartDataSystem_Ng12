@@ -1,0 +1,36 @@
+<div class="garbage-station-window-stay">
+  <div class="header">
+    <div class="title">小包垃圾滞留</div>
+    <div class="filter">
+      <div class="division-station">
+        <howell-division-station-tree-filter></howell-division-station-tree-filter>
+      </div>
+      <div class="datetime">
+        <input
+          type="text"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日'"
+          [date]="date"
+          (change)="changeDate($event)"
+          class="date"
+          readonly="readonly"
+        />
+        <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="statistic"></div>
+    <div class="state">
+      <img src="/assets/img/tooltip-luodi.png" />
+    </div>
+    <div>
+      <howell-line-zoom-chart
+        [stationId]="'310109009002001000'"
+        [date]="date"
+        [unit]="unit"
+      >
+      </howell-line-zoom-chart>
+    </div>
+  </div>
+</div>

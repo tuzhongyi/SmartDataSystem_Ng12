@@ -7,7 +7,12 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from 'src/app/common/components/image-control/image-control.model';
 import { DeviceListTableFilter } from 'src/app/common/components/tables/device-list-table/device-list-table.component';
+import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -21,6 +26,9 @@ export class DeviceListWindowComponent
   extends WindowComponent
   implements OnInit, OnChanges
 {
+  @Input()
+  status?: OnlineStatus;
+
   constructor() {
     super();
   }
@@ -33,11 +41,14 @@ export class DeviceListWindowComponent
 
   load: EventEmitter<string> = new EventEmitter();
 
-  @Input()
-  status?: OnlineStatus;
   filter: DeviceListTableFilter = {};
 
   onsearch(text: string) {
     this.load.emit(text);
+  }
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  onimage(model: ImageControlModelArray) {
+    this.image.emit(model);
   }
 }

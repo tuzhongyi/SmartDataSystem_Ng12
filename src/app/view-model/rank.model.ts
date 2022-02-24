@@ -14,10 +14,12 @@ export type DropListObj = {
 };
 
 // 排行榜视图数据
-export class RankModel {
-  constructor(type?: EventType) {
+export class RankModel<T = any> {
+  constructor(data: T, type?: EventType) {
+    this.data = data;
     this.type = type;
   }
+  data: T;
   id: string = '';
   name: string = '';
   statistic: string = '';

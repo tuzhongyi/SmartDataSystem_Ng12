@@ -6,6 +6,7 @@ import {
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -100,6 +101,7 @@ class DevicePagedConverter
 class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
   converter = {
     station: new GarbageStationConverter(),
+    image: new ImageControlConverter(),
   };
   async Convert(
     source: Camera,
@@ -117,7 +119,8 @@ class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
       getter.division
     );
 
-    model.imageSrc = MediumRequestService.jpg(source.ImageUrl);
+    model.image = this.converter.image.Convert(source);
+
     return model;
   }
 }

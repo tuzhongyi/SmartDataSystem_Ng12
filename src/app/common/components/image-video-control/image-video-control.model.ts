@@ -3,11 +3,13 @@ import { ImageControlModel } from '../image-control/image-control.model';
 import { VideoModel } from '../video-player/video.model';
 
 export class ImageVideoControlModel {
-  constructor(cameraId: string) {
+  constructor(stationId: string, cameraId: string) {
+    this.stationId = stationId;
     this.cameraId = cameraId;
   }
   fulled = false;
   cameraId: string;
+  stationId: string;
   image?: ImageControlModel;
 
   private _video?: VideoModel;

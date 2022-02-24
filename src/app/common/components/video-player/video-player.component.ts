@@ -84,6 +84,7 @@ export class VideoPlayerComponent
     private userService: UserRequestService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
+    debugger;
     if (changes.model && !changes.model.firstChange) {
       this.loaded = false;
     }
@@ -99,6 +100,7 @@ export class VideoPlayerComponent
   loaded = false;
 
   load() {
+    debugger;
     if (!this.loaded) {
       if (this.model) {
         this.url = this.model.toString();

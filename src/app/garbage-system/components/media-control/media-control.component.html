@@ -1,9 +1,69 @@
 <div class="video-control">
   <div class="header">
-    <div class="title">{{ title }}</div>
+    <div class="title">
+      <div>{{ title }}</div>
+      <div
+        class="spinner-border green-text"
+        [ngClass]="{
+          'spinner-border': manualCaptureing,
+          circle: !manualCaptureing
+        }"
+      ></div>
+    </div>
+    <div class="operation">
+      <label class="" *ngIf="display.object">目标信息</label>
+      <hw-switch
+        *ngIf="display.object"
+        (onChanged)="ondrawchange($event)"
+        [on]="draw"
+      ></hw-switch>
+      <div
+        *ngIf="display.download.video"
+        title="下载视频"
+        (click)="onvideodownload()"
+      >
+        <i class="howell-icon-videodownload sky-blue-text"></i>
+      </div>
+      <div
+        *ngIf="display.download.image"
+        title="下载图片"
+        (click)="onimagedownload()"
+      >
+        <i class="howell-icon-picturedownload sky-blue-text"></i>
+      </div>
+      <div *ngIf="display.preview" title="查看预览" (click)="onpreview($event)">
+        <i class="howell-icon-video sky-blue-text"></i>
+      </div>
+      <div
+        *ngIf="display.playback"
+        title="查看回放"
+        (click)="onplayback($event)"
+      >
+        <i class="howell-icon-video sky-blue-text"></i>
+      </div>
+    </div>
   </div>
-  <div class="content" *ngIf="model">
-    <app-image-video-control [model]="model"></app-image-video-control>
+  <div class="content" *ngIf="datas.length > 0">
+    <app-image-video-control
+      [model]="current"
+      [draw]="draw"
+      (onplay)="onplayed($event)"
+      (onstop)="onstoped($event)"
+    ></app-image-video-control>
+    <div class="page" *ngIf="datas.length > 1 && playing === false">
+      <div class="prev">
+        <div
+          class="howell-icon-arrowleftbold blue-text arrow-wrap"
+          (click)="onprev()"
+        ></div>
+      </div>
+      <div class="next">
+        <div
+          class="howell-icon-arrowrightbold blue-text arrow-wrap"
+          (click)="onnext()"
+        ></div>
+      </div>
+    </div>
   </div>
   <div class="content" *ngIf="img"></div>
 </div>

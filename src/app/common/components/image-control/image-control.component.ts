@@ -1,6 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
+import { EventDataObject } from 'src/app/network/model/event-record.model';
+import { EventRule } from 'src/app/network/model/event-rule';
+import { Point } from 'src/app/network/model/point.model';
+import { Size } from 'src/app/network/model/size.model';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import { ImageControlModel } from './image-control.model';
 
@@ -9,7 +24,7 @@ import { ImageControlModel } from './image-control.model';
   templateUrl: './image-control.component.html',
   styleUrls: ['./image-control.component.less'],
 })
-export class ImageControlComponent implements OnInit {
+export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   OnlineStatus = OnlineStatus;
 
   @Input()
@@ -21,7 +36,127 @@ export class ImageControlComponent implements OnInit {
   @Output()
   Click: EventEmitter<ImageControlModel> = new EventEmitter();
 
+  @ViewChild('canvas')
+  canvas?: ElementRef;
+
+  @Input('draw')
+  isDraw = false;
+
   constructor() {}
+  ngAfterViewInit(): void {
+    if (this.isDraw) {
+      this.draw();
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.model) {
+      if (this.model) {
+        this.image.backgroundImage = `url(${this.model.src})`;
+        let img = document.createElement('img');
+        img.src = this.model.src;
+        img.onerror = () => {
+          if (this.model) {
+            this.image.backgroundImage += `, url(${this.model.onerror})`;
+          }
+        };
+
+        if (this.isDraw) {
+          this.draw();
+        }
+      }
+    }
+    if (changes.isDraw) {
+      if (this.isDraw) this.draw();
+      else {
+        this.clear();
+      }
+    }
+  }
+
+  draw() {
+    if (this.canvas && this.model) {
+      let canvas = this.canvas.nativeElement as HTMLCanvasElement;
+      let ctx = canvas.getContext('2d')!;
+
+      let size: Size = {
+        Width: canvas.offsetWidth,
+        Height: canvas.offsetHeight,
+      };
+      ctx.clearRect(0, 0, size.Width, size.Height);
+      canvas.width = size.Width;
+      canvas.height = size.Height;
+
+      this.initRules(ctx, size, this.model.rules);
+      this.initObjects(ctx, size, this.model.polygon);
+    }
+  }
+  clear() {
+    if (this.canvas) {
+      let canvas = this.canvas.nativeElement as HTMLCanvasElement;
+      let ctx = canvas.getContext('2d')!;
+      let size: Size = {
+        Width: canvas.offsetWidth,
+        Height: canvas.offsetHeight,
+      };
+      ctx.clearRect(0, 0, size.Width, size.Height);
+    }
+  }
+
+  initObjects(
+    ctx: CanvasRenderingContext2D,
+    size: Size,
+    objects?: EventDataObject[]
+  ) {
+    if (objects) {
+      for (let i = 0; i < objects.length; i++) {
+        const obj = objects[i];
+        let text = `${obj.Id} ${obj.Confidence}%`;
+        ctx.font = '18px Source Han Sans CN Normal';
+        ctx.fillStyle = 'red';
+        ctx.fillText(
+          text,
+          obj.Polygon[0].X * size.Width,
+          obj.Polygon[0].Y * size.Height
+        );
+        this.drawRectangle(ctx, size, obj.Polygon, 'red');
+      }
+    }
+  }
+  initRules(ctx: CanvasRenderingContext2D, size: Size, rules?: EventRule[]) {
+    if (rules) {
+      for (let i = 0; i < rules.length; i++) {
+        const rule = rules[i];
+
+        if (rule.Polygon) {
+          this.drawRectangle(ctx, size, rule.Polygon, 'blue');
+        }
+      }
+    }
+  }
+
+  drawRectangle(
+    ctx: CanvasRenderingContext2D,
+    size: Size,
+    polygon: Point[],
+    color: string
+  ) {
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = color;
+
+    ctx.moveTo(polygon[0].X * size.Width, polygon[0].Y * size.Height);
+    for (let i = 1; i < polygon.length; i++) {
+      const point = polygon[i];
+      ctx.lineTo(point.X * size.Width, point.Y * size.Height);
+    }
+
+    ctx.closePath();
+    ctx.stroke();
+  }
+
+  image = {
+    backgroundImage: '',
+  };
 
   ngOnInit(): void {}
 

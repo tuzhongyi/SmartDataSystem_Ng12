@@ -25,8 +25,9 @@ import { VideoPlaybackSettingControlComponent } from './video-window/video-playb
 import { TimeControlComponent } from './time-control/time-control.component';
 import { Table_COMPONENTS } from './tables/table-component';
 import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
-import { IllegalDropRecordComponent } from 'src/app/aiop-system/components/illegal-drop-record/illegal-drop-record.component';
-import { LineChartComponent } from './line-chart/line-chart.component';
+import { CHART_COMPONENTS } from './charts/chart-component';
+import { SwitchComponent } from './switch/switch.component';
+import { SidenavComponent } from 'src/app/aiop-system/components/sidenav/sidenav.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -55,5 +56,6 @@ export const CUSTOM_COMPONENTS = [
   TimeControlComponent,
   ...Table_COMPONENTS,
   VideoDownloadPanelComponent,
-  LineChartComponent,
+  SwitchComponent,
+  ...CHART_COMPONENTS,
 ];

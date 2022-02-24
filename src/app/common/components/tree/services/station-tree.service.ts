@@ -24,8 +24,8 @@ export class StationTreeService implements TreeServiceInterface {
   getName() {
     return TreeServiceEnum.Station;
   }
-  async initialize() {
-    let res = await this._divisionTreeService.initialize();
+  async initialize(type: DivisionType = DivisionType.City) {
+    let res = await this._divisionTreeService.initialize(type);
     return res;
   }
   async loadChildren(node: NestedTreeNode) {

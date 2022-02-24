@@ -24,7 +24,10 @@
         (selectedIndexChange)="indexChange($event)"
       >
         <mat-tab label="列表">
-          <howell-garbage-full-station-table [load]="station.load">
+          <howell-garbage-full-station-table
+            [load]="station.load"
+            (image)="onimage($event)"
+          >
           </howell-garbage-full-station-table>
         </mat-tab>
         <mat-tab label="事件">
@@ -37,6 +40,7 @@
             <howell-event-record-table
               [type]="type"
               [load]="record.filter.load"
+              (image)="onimage($event)"
             >
             </howell-event-record-table>
           </div>

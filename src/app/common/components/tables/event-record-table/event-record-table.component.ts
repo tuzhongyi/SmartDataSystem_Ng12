@@ -13,8 +13,12 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../image-control/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { EventRecordBusiness } from './event-record.business';
 import { EventRecordFilter, EventRecordViewModel } from './event-record.model';
@@ -102,11 +106,23 @@ export class EventRecordTableComponent
     this.panel.show = true;
   }
   downloadImage(model: EventRecordViewModel) {
-    this.download.image(
-      model.imageSrc,
-      model.ResourceName ?? '',
-      model.EventTime
-    );
+    if (model.images && model.images.length > 0) {
+      this.download.image(
+        model.images[0].src,
+        model.ResourceName ?? '',
+        model.EventTime
+      );
+    }
   }
-  playvideo(model: EventRecordViewModel) {}
+  playvideo(model: EventRecordViewModel) {
+    let array = new ImageControlModelArray(model.images, 0, true);
+    this.image.emit(array);
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  imageClick(item: EventRecordViewModel, img: ImageControlModel) {
+    let array = new ImageControlModelArray(item.images, img.index);
+    this.image.emit(array);
+  }
 }

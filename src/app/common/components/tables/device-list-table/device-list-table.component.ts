@@ -4,6 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
+  Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -15,6 +16,10 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../image-control/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import { DeviceViewModel } from './device.model';
@@ -99,6 +104,13 @@ export class DeviceListTableComponent
   search(name: string) {
     this.filter.name = name;
     this.loadData(1, this.pageSize, this.filter.status, name);
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  imageClick(item: DeviceViewModel) {
+    let img = new ImageControlModelArray([item.image], 0);
+    this.image.emit(img);
   }
 }
 

@@ -66,7 +66,9 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-disposal-rank></app-disposal-rank>
+        <app-disposal-rank
+          (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
+        ></app-disposal-rank>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -91,17 +93,13 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-disposal-count></app-disposal-count>
+        <app-disposal-count
+          (task)="trigger.risposalCount.ontask()"
+        ></app-disposal-count>
       </div>
     </div>
   </div>
 </div>
-
-<app-window [Model]="window.media" [style]="window.media.style">
-  <ng-container *ngIf="window.media.show">
-    <app-media-control [camera]="window.media.camera"></app-media-control>
-  </ng-container>
-</app-window>
 
 <app-video-window
   [model]="video.model"
@@ -125,6 +123,7 @@
   [Model]="window.record"
   [style]="window.record.style"
   [type]="window.record.type"
+  (image)="window.record.onimage($event)"
 >
 </howell-event-record-window>
 
@@ -133,6 +132,7 @@
   [Model]="window.device"
   [style]="window.device.style"
   [status]="window.device.status"
+  (image)="window.device.onimage($event)"
 >
 </howell-device-list-window>
 
@@ -140,6 +140,7 @@
   *ngIf="window.drop.show"
   [Model]="window.drop"
   [style]="window.drop.style"
+  (image)="window.drop.onimage($event)"
 >
 </howell-garbage-drop-station-window>
 
@@ -147,6 +148,7 @@
   *ngIf="window.full.show"
   [Model]="window.full"
   [style]="window.full.style"
+  (image)="window.full.onimage($event)"
 >
 </howell-garbage-full-station-window>
 
@@ -154,5 +156,25 @@
   *ngIf="window.station.show"
   [Model]="window.station"
   [style]="window.station.style"
+  [index]="window.station.index"
+  (image)="window.station.onimage($event)"
 >
 </howell-garbage-station-window>
+
+<app-window
+  [Model]="window.media"
+  [style]="window.media.style"
+  [manualClose]="true"
+  (OnClosing)="window.media.onclosing()"
+>
+  <ng-container *ngIf="window.media.show">
+    <app-media-control
+      [autoplay]="window.media.autoplay"
+      [model]="window.media.camera"
+      [index]="window.media.index"
+      [stop]="window.media.closing"
+      (played)="window.media.onplay()"
+      (stoped)="window.media.onstop()"
+    ></app-media-control>
+  </ng-container>
+</app-window>

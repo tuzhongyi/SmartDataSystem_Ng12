@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
@@ -12,6 +13,10 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../image-control/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationTableBusiness } from './garbage-station-table.business';
 import { GarbageStationTableModel } from './garbage-station-table.model';
@@ -72,5 +77,12 @@ export class GarbageStationTableComponent
 
   async pageEvent(page: PageEvent) {
     this.loadData(page.pageIndex + 1, this.pageSize, this.name);
+  }
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  imageClick(item: GarbageStationTableModel, img: ImageControlModel) {
+    let array = new ImageControlModelArray(item.images, img.index);
+    this.image.emit(array);
   }
 }

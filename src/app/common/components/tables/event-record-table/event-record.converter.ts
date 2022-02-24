@@ -6,6 +6,8 @@ import {
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import {
   EventRecord,
@@ -16,8 +18,12 @@ import {
 } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
-import { EventRecordViewModel } from './event-record.model';
+import {
+  CameraImageUrlModel,
+  EventRecordViewModel,
+} from './event-record.model';
 
 export type EventRecordType =
   | MixedIntoEventRecord
@@ -40,6 +46,7 @@ export class EventRecordPagedConverter
     get: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
   ): Promise<PagedList<EventRecordViewModel>> {
     let array: EventRecordViewModel[] = [];
@@ -68,10 +75,13 @@ export class EventRecordConverter
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
   ): Promise<EventRecordViewModel> {
     if (source instanceof GarbageFullEventRecord) {
       return this.fromGarbageFull(source, getter);
+    } else if (source instanceof IllegalDropEventRecord) {
+      return this.fromIllegalDrop(source, getter);
     } else {
       return this.fromEventRecord(source, getter);
     }
@@ -82,6 +92,7 @@ export class EventRecordConverter
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
   ): Promise<EventRecordViewModel> {
     let model = new EventRecordViewModel();
@@ -92,14 +103,39 @@ export class EventRecordConverter
       getter.division
     );
 
-    model.imageSrc = MediumRequestService.jpg(source.ImageUrl);
+    let img: CameraImageUrl = {
+      CameraId: source.ResourceId ?? '',
+      CameraName: source.ResourceName,
+      ImageUrl: source.ImageUrl ?? '',
+    };
+    let url = new CameraImageUrlModel(img);
+    url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+    let image = this.converter.image.Convert(url, true, source.EventTime);
+
+    model.images = [image];
 
     model.DateFormatter = formatDate(
       source.EventTime,
       'yyyy-MM-dd HH:mm:dd',
       'en'
     );
+    EventType.IllegalDrop;
+    return model;
+  }
 
+  async fromIllegalDrop(
+    source: IllegalDropEventRecord,
+    getter: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
+    }
+  ) {
+    let model = await this.fromEventRecord(source, getter);
+    if (model.images && model.images.length > 0) {
+      model.images[0].polygon = source.Data.Objects;
+      model.images[0].rules = source.Data.Rules;
+    }
     return model;
   }
 
@@ -108,13 +144,17 @@ export class EventRecordConverter
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
   ) {
     let model = await this.fromEventRecord(source, getter);
+    model.images = [];
     if (source.Data.CameraImageUrls && model.GarbageStation) {
       for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
-        const url = source.Data.CameraImageUrls[i];
-        let image = this.converter.image.Convert(url);
+        const url = new CameraImageUrlModel(source.Data.CameraImageUrls[i]);
+        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+        let image = this.converter.image.Convert(url, true, source.EventTime);
+        image.index = i;
         model.images.push(image);
       }
     }

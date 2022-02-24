@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Expose, Transform } from 'class-transformer';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
@@ -22,13 +22,13 @@ export class VideoUrl implements IModel {
   WebUrl?: string;
 }
 /** 摄像机照片地址 */
-export interface CameraImageUrl {
+export class CameraImageUrl {
   /**	String	摄像机ID	M */
-  CameraId: string;
+  CameraId!: string;
   /**	String	摄像机名称	O */
   CameraName?: string;
   /**	String	照片地址	M */
-  ImageUrl: string;
+  ImageUrl!: string;
 }
 
 /** 摄像机照片信息 */

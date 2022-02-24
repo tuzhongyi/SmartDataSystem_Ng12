@@ -78,7 +78,7 @@ export class PatrolControlConverter
           online = camera.OnlineStatus ?? OnlineStatus.Offline;
         }
         let img = this.converter.image.Convert(camera, false);
-        let media = new ImageVideoControlModel(camera.Id);
+        let media = new ImageVideoControlModel(source.Id, camera.Id);
         media.image = img;
         model.media.push(media);
       }

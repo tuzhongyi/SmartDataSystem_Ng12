@@ -19,7 +19,7 @@ export class RetentionRankConverter
     input: DivisionNumberStatistic,
     type: RetentionType
   ): RankModel {
-    let obj = new RankModel();
+    let obj = new RankModel(input);
     obj.name = input.Name;
     obj.id = input.Id;
 

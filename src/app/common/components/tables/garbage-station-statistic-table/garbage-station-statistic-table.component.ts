@@ -83,7 +83,6 @@ export class GarbageStationStatisticTableComponent
       }
     });
     this.datas = datas;
-    console.log(this.datas);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

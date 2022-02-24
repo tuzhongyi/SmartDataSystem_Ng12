@@ -73,7 +73,6 @@ export class GarbageDropStationTableConverter
     );
     if (model.GarbageStation) {
       model.members = model.GarbageStation.Members ?? [];
-
       if (model.GarbageStation.Cameras) {
         model.images = this.converter.image.Convert(
           model.GarbageStation.Cameras

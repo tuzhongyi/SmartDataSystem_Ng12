@@ -2,11 +2,13 @@ import { formatDate } from '@angular/common';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { Language } from 'src/app/global/tool/language';
+import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordConverter } from '../event-record-table/event-record.converter';
+import { CameraImageUrlModel } from '../event-record-table/event-record.model';
 import { GarbageDropRecordViewModel } from './garbage-drop-record.model';
 
 export class GarbageDropEventRecordPagedConverter
@@ -25,6 +27,7 @@ export class GarbageDropEventRecordPagedConverter
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (id: string) => Promise<Camera>;
     }
   ): Promise<PagedList<GarbageDropRecordViewModel>> {
     let array: GarbageDropRecordViewModel[] = [];
@@ -53,6 +56,7 @@ export class GarbageDropEventRecordConverter
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
   ): Promise<GarbageDropRecordViewModel> {
     let model = new GarbageDropRecordViewModel();
@@ -81,22 +85,33 @@ export class GarbageDropEventRecordConverter
 
     if (source.Data.DropImageUrls) {
       for (let i = 0; i < source.Data.DropImageUrls.length; i++) {
-        const url = source.Data.DropImageUrls[i];
-        let image = this.converter.image.Convert(url);
+        let url = new CameraImageUrlModel(source.Data.DropImageUrls[i]);
+        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+        let image = this.converter.image.Convert(
+          url,
+          true,
+          source.Data.DropTime
+        );
         model.images.push(image);
       }
     }
     if (source.Data.TimeoutImageUrls) {
       for (let i = 0; i < source.Data.TimeoutImageUrls.length; i++) {
-        const url = source.Data.TimeoutImageUrls[i];
-        let image = this.converter.image.Convert(url);
+        let url = new CameraImageUrlModel(source.Data.TimeoutImageUrls[i]);
+        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+        let image = this.converter.image.Convert(url, true, source.EventTime);
         model.images.push(image);
       }
     }
     if (source.Data.HandleImageUrls) {
       for (let i = 0; i < source.Data.HandleImageUrls.length; i++) {
-        const url = source.Data.HandleImageUrls[i];
-        let image = this.converter.image.Convert(url);
+        let url = new CameraImageUrlModel(source.Data.HandleImageUrls[i]);
+        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+        let image = this.converter.image.Convert(
+          url,
+          true,
+          source.Data.HandleTime
+        );
         model.images.push(image);
       }
     }

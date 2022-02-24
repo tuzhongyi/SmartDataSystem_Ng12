@@ -10,7 +10,7 @@ export class IllegalMixintoRankConverter
   implements IConverter<IllegalMixintoDataResource[], RankModel[]>
 {
   itemConvert(input: IllegalMixintoDataResource, type: EventType): RankModel {
-    let model = new RankModel(type);
+    let model = new RankModel(input, type);
     model.id = input.Id;
     model.name = input.Name;
     if (input.TodayEventNumbers) {

@@ -6,7 +6,11 @@
       </div>
     </app-tab-title>
     <div class="device-list-table-window-content">
-      <howell-device-list-table [filter]="filter" [load]="load">
+      <howell-device-list-table
+        [filter]="filter"
+        [load]="load"
+        (image)="onimage($event)"
+      >
       </howell-device-list-table>
     </div>
   </ng-container>

@@ -7,17 +7,25 @@ import { IntervalParams } from 'src/app/network/request/IParams.interface';
 @Injectable()
 export class DownloadBusiness {
   constructor(private stationService: GarbageStationRequestService) {}
-
-  video(stationId: string, cameraId: string, args: IntervalParams) {
-    const interval = args.EndTime.getTime() - args.BeginTime.getTime();
-
-    if (interval > 5 * 60 * 1000) {
-      args.EndTime.setTime(args.BeginTime.getTime() + 5 * 1000 * 60);
+  video(stationId: string, cameraId: string, args: IntervalParams): void;
+  video(stationId: string, cameraId: string, args: Date): void;
+  video(stationId: string, cameraId: string, args: IntervalParams | Date) {
+    let duration: IntervalParams;
+    if (args instanceof Date) {
+      duration = IntervalParams.beforeAndAfter(args);
+    } else {
+      duration = args;
+      const interval =
+        duration.EndTime.getTime() - duration.BeginTime.getTime();
+      if (interval > 5 * 60 * 1000) {
+        duration.EndTime.setTime(duration.BeginTime.getTime() + 5 * 1000 * 60);
+      }
     }
+
     let params = new CameraDownloadFileParams();
     params.CameraId = cameraId;
-    params.BeginTime = args.BeginTime;
-    params.EndTime = args.EndTime;
+    params.BeginTime = duration.BeginTime;
+    params.EndTime = duration.EndTime;
     params.GarbageStationId = stationId;
     const response = this.stationService.camera.file.download(params);
     response.then((data) => {

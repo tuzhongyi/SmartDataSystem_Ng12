@@ -1,4 +1,6 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { timer } from 'rxjs';
+import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import {
   PlayMode,
@@ -10,8 +12,10 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { VideoUrl } from 'src/app/network/model/url.model';
+import { CameraImageUrl, VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
@@ -20,26 +24,40 @@ import { SRRequestService } from 'src/app/network/request/sr/sr-request.service'
 
 @Injectable()
 export class MediaVideoControlBussiness
-  implements IBusiness<Camera, ImageVideoControlModel>
+  implements
+    IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
-  constructor(private srService: SRRequestService) {}
-  Converter: IConverter<Camera, ImageVideoControlModel> =
-    new MediaVideoControlConverter();
+  constructor(
+    private srService: SRRequestService,
+    private stationService: GarbageStationRequestService
+  ) {}
+  manualCaptureEvent: EventEmitter<boolean> = new EventEmitter();
+
+  Converter: IConverter<
+    Array<Camera | ImageControlModel>,
+    ImageVideoControlModel[]
+  > = new MediaVideoControlArrayConverter();
 
   subscription?: ISubscription | undefined;
-  async load(camera: Camera): Promise<ImageVideoControlModel> {
-    let result = this.Converter.Convert(camera);
-    return result;
+  async load(
+    source: Array<Camera | ImageControlModel>
+  ): Promise<ImageVideoControlModel[]> {
+    let model = this.Converter.Convert(source);
+
+    return model;
   }
 
-  async getData(camera: Camera): Promise<Camera> {
+  async getData(
+    camera: Array<Camera | ImageControlModel>
+  ): Promise<Array<Camera | ImageControlModel>> {
     return camera;
   }
 
   async getVideoUrl(
     camera: Camera,
     mode: PlayMode,
-    streamType: StreamType = StreamType.sub
+    streamType: StreamType = StreamType.sub,
+    interval?: IntervalParams
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.live:
@@ -49,25 +67,93 @@ export class MediaVideoControlBussiness
         return this.srService.preview(params1);
       case PlayMode.vod:
         let params2 = new GetVodUrlParams();
+        params2 = Object.assign(params2, interval);
         params2.CameraId = camera.Id;
         params2.StreamType = streamType;
-
         return this.srService.playback(params2);
       default:
         throw new Error('video mode error');
     }
   }
+
+  manualCapture(stationId: string, models: ImageVideoControlModel[]) {
+    this.manualCaptureEvent.emit(true);
+    return timer(1000)
+      .toPromise()
+      .then((x) => {
+        return this.stationService.manualCapture(stationId).then((urls) => {
+          try {
+            if (models) {
+              for (let i = 0; i < models.length; i++) {
+                for (let j = 0; j < urls.length; j++) {
+                  const url = urls[j];
+                  if (
+                    url.CameraId == models[i].cameraId &&
+                    url.Result &&
+                    models[i].image &&
+                    url.Id
+                  ) {
+                    models[i].image!.src = MediumRequestService.jpg(url.Id);
+                  }
+                }
+              }
+            }
+            return models;
+          } finally {
+            this.manualCaptureEvent.emit(false);
+          }
+        });
+      });
+  }
+}
+
+class MediaVideoControlArrayConverter
+  implements
+    IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+{
+  converter = {
+    item: new MediaVideoControlConverter(),
+  };
+  Convert(
+    source: (Camera | ImageControlModel)[],
+    onerror = true
+  ): ImageVideoControlModel[] {
+    let array: ImageVideoControlModel[] = [];
+    for (let i = 0; i < source.length; i++) {
+      let model: ImageVideoControlModel;
+      let item = source[i];
+      if (item instanceof Camera) {
+        model = this.converter.item.Convert(item, onerror);
+      } else {
+        model = this.converter.item.Convert(item, onerror, item.eventTime);
+      }
+
+      array.push(model);
+    }
+    return array;
+  }
 }
 
 class MediaVideoControlConverter
-  implements IConverter<Camera, ImageVideoControlModel>
+  implements IConverter<Camera | ImageControlModel, ImageVideoControlModel>
 {
   private converter = {
     image: new ImageControlConverter(),
   };
-  Convert(source: Camera, ...res: any[]): ImageVideoControlModel {
-    let model = new ImageVideoControlModel(source.Id);
-    model.image = this.converter.image.Convert(source);
+  Convert(
+    source: Camera | ImageControlModel,
+    onerror = true,
+    eventTime?: Date
+  ): ImageVideoControlModel {
+    let model: ImageVideoControlModel;
+    if (source instanceof Camera) {
+      model = new ImageVideoControlModel(source.GarbageStationId, source.Id);
+      model.image = this.converter.image.Convert(source, onerror, eventTime);
+    } else {
+      model = new ImageVideoControlModel(source.stationId, source.id);
+      model.image = source;
+    }
+
     return model;
   }
 }

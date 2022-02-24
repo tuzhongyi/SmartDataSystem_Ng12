@@ -1,6 +1,12 @@
 <div class="image-video-control" *ngIf="model">
   <div class="image-video-control-image" *ngIf="display.image">
-    <app-image-control [model]="model.image"></app-image-control>
+    <app-image-control
+      [model]="model.image"
+      [draw]="draw"
+      [nosignal]="
+        model.image ? model.image.status == OnlineStatus.Offline : false
+      "
+    ></app-image-control>
   </div>
   <div class="image-video-control-video" *ngIf="display.video">
     <app-video-player
@@ -11,7 +17,7 @@
     </app-video-player>
   </div>
 
-  <div class="operation">
+  <div class="operation" *ngIf="operation">
     <div
       class="howell-icon-play"
       *ngIf="display.operation.play"

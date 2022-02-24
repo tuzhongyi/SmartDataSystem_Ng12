@@ -10,7 +10,10 @@
       </div>
     </app-tab-title>
     <div class="garbage-drop-station-table-window-content">
-      <howell-garbage-drop-station-table [load]="load">
+      <howell-garbage-drop-station-table
+        [load]="load"
+        (image)="onimage($event)"
+      >
       </howell-garbage-drop-station-table>
     </div>
   </ng-container>
