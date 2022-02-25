@@ -97,6 +97,9 @@ export class TreeComponent implements OnInit {
 
   selection!: SelectionModel<FlatTreeNode>;
 
+  @Input()
+  depth: number = 0;
+
   highLight = (node: FlatTreeNode) => {
     if (this.selectModel == SelectEnum.Single) {
       return this.selection.isSelected(node);
@@ -125,7 +128,6 @@ export class TreeComponent implements OnInit {
     );
 
     this.dataChange.subscribe((data) => {
-      console.log(data);
       this.dataSource.data = data;
     });
   }
@@ -145,9 +147,16 @@ export class TreeComponent implements OnInit {
   }
 
   async initialize() {
-    const nodes = await this._service.initialize(this.divisionType);
-    let res = this._register(nodes) ?? [];
-    this.dataChange.next(res);
+    const nodes = await this._service.initialize(this.divisionType, this.depth);
+    this.dataChange.next(nodes);
+
+    this._register(nodes);
+
+    for (let flatNode of this._flatNodeMap.values()) {
+      if (flatNode.level < this.depth) {
+        this.treeControl.expand(flatNode);
+      }
+    }
   }
 
   async loadChildren(node: FlatTreeNode) {
@@ -155,17 +164,19 @@ export class TreeComponent implements OnInit {
       const nestedNode = this._nestedNodeMap.get(node.id);
       if (nestedNode && !nestedNode.childrenLoaded) {
         let nodes = await this._service.loadChildren(nestedNode);
-        // console.log('chidren', nodes);
+        console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
-        let res = this._register(nodes);
-        nestedNode.childrenChange.next(res);
+        this._register(nodes);
+        nestedNode.childrenChange.next(nodes);
         this.dataChange.next(this.dataChange.value);
-
         this._checkAllDescendants(node);
       }
+    } else {
+      // this.treeControl.collapseDescendants(node);
     }
   }
   singleSelectNode(node: FlatTreeNode) {
+    console.log(node.level);
     this.selection.toggle(node);
   }
   multipleSelectNode(node: FlatTreeNode) {
@@ -265,8 +276,8 @@ export class TreeComponent implements OnInit {
 
     if (nodes.length) {
       this._nestedNodeMap.clear();
-      let res = this._register(nodes);
-      this.dataChange.next(res);
+      this._register(nodes);
+      this.dataChange.next(nodes);
 
       if (condition !== '') {
         this.treeControl.expandAll();
@@ -278,14 +289,15 @@ export class TreeComponent implements OnInit {
   }
 
   private _register(nodes: NestedTreeNode[]) {
-    return nodes.map((node) => {
-      if (this._nestedNodeMap.has(node.id)) {
-        return this._nestedNodeMap.get(node.id)!;
-      } else {
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      if (!this._nestedNodeMap.has(node.id)) {
         this._nestedNodeMap.set(node.id, node);
-        return node;
+
+        let children = node.childrenChange.value;
+        this._register(children);
       }
-    });
+    }
   }
   private _checkAllDescendants(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);

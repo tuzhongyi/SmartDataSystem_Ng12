@@ -172,7 +172,7 @@ const routes: Routes = [
                 path: 'ai-camera-events',
                 component: AiCameraEventsComponent,
               },
-            ],
+            ], 
           },
         ],
       },

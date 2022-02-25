@@ -54,12 +54,12 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private _router: Router) {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
-        console.log('router', e);
+        // console.log('router', e);
         let reg =
           /(?<=\/aiop\/aiop-manage\/)(?<first>[\w-]*)\/(?<second>[\w-]*)\/(?<third>[\w-]*)(?=\/?)$/;
 
         let mode = e.urlAfterRedirects.match(reg);
-        console.log('mode: ', mode);
+        // console.log('mode: ', mode);
         if (mode && mode.groups) {
           Object.assign(this.groups, mode.groups);
           import(`src/assets/json/${mode.groups['first']}.json`).then(

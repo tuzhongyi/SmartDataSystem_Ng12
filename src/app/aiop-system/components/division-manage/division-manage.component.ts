@@ -35,7 +35,7 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Station;
+  treeServiceProvider = TreeServiceEnum.Division;
   treeSelectModel = SelectEnum.Single;
   currentNode?: FlatTreeNode;
   type: UserResourceType = UserResourceType.None;

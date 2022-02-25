@@ -28,12 +28,28 @@ export class DivisionTreeService implements TreeServiceInterface {
     return TreeServiceEnum.Division;
   }
 
-  async initialize(type: DivisionType = DivisionType.City) {
+  async initialize(type: DivisionType = DivisionType.City, level = 0) {
     let data = await this._loadData(type);
     let nodes = this._converter.iterateToNested(data);
+
+    let res = await this._recurseByLevel(nodes, level < 0 ? 0 : level);
+    console.log('res', res);
     return nodes;
   }
 
+  private async _recurseByLevel(nodes: NestedTreeNode[], level: number) {
+    if (level == 0) return;
+    for (let j = 0; j < nodes.length; j++) {
+      let node = nodes[j];
+      let children = await this.loadChildren(node);
+      node.childrenChange.next(children);
+      node.childrenLoaded = true;
+
+      this._recurseByLevel(children, level - 1);
+    }
+
+    return nodes;
+  }
   async loadChildren(node: NestedTreeNode) {
     if (node && !node.childrenLoaded) {
       const divisionType = EnumHelper.ConvertUserResourceToDivision(node.type);

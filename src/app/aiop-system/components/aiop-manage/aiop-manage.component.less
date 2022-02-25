@@ -19,8 +19,14 @@
         rgba(216, 244, 255, 0.1) 100%
       );
     }
-    .sidenav-content {
+    .sidenav-main {
       flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      .sidenav-content {
+        flex-grow: 1;
+        overflow: hidden;
+      }
     }
   }
 }
