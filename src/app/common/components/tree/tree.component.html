@@ -12,7 +12,10 @@
     </ng-container>
 
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
-      <div (click)="singleSelectNode(node)" style="flex-grow:1">
+      <div (click)="singleSelectNode(node)" style="flex-grow:1;overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+  ">
         <i [class]="node.iconType"></i>
         {{ node.name }}
       </div>

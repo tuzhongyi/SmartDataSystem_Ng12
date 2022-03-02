@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { param } from 'jquery';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -28,27 +29,30 @@ export class DivisionTreeService implements TreeServiceInterface {
     return TreeServiceEnum.Division;
   }
 
-  async initialize(type: DivisionType = DivisionType.City, level = 0) {
+  async initialize(type: DivisionType = DivisionType.City) {
     let data = await this._loadData(type);
     let nodes = this._converter.iterateToNested(data);
+    nodes.forEach((item) => {
+      const divisionType = EnumHelper.ConvertUserResourceToDivision(item.type);
 
-    let res = await this._recurseByLevel(nodes, level < 0 ? 0 : level);
-    console.log('res', res);
+      divisionType == DivisionType.Committees ? (item.hasChildren = true) : '';
+    });
+
     return nodes;
   }
 
-  private async _recurseByLevel(nodes: NestedTreeNode[], level: number) {
+  async recurseByLevel(nodes: NestedTreeNode[], level: number) {
+    console.log('_recurseByLevel');
     if (level == 0) return;
     for (let j = 0; j < nodes.length; j++) {
       let node = nodes[j];
-      let children = await this.loadChildren(node);
-      node.childrenChange.next(children);
-      node.childrenLoaded = true;
-
-      this._recurseByLevel(children, level - 1);
+      if (node.hasChildren) {
+        let children = await this.loadChildren(node);
+        node.childrenChange.next(children);
+        node.childrenLoaded = true;
+        await this.recurseByLevel(children, level - 1);
+      }
     }
-
-    return nodes;
   }
   async loadChildren(node: NestedTreeNode) {
     if (node && !node.childrenLoaded) {
@@ -77,8 +81,14 @@ export class DivisionTreeService implements TreeServiceInterface {
     return nodes;
   }
 
-  private async _loadData(type?: DivisionType, parentId?: string) {
+  private async _loadData(
+    type?: DivisionType,
+    parentId?: string,
+    ids?: string[]
+  ) {
     let params = new GetDivisionsParams();
+    if (ids) params.Ids = ids;
+    // params.Ids = ['310316000000'];
     if (type) params.DivisionType = type;
     if (parentId) params.ParentId = parentId;
     let res = await this._divisionRequest.cache.list(params);

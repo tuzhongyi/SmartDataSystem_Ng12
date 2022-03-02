@@ -64,7 +64,7 @@ export class TreeConverter
     throw new Error('Method not implemented.');
   }
 
-  iterateToNested<T extends TreeSourceModel>(data: T[]): NestedTreeNode[] {
+  iterateToNested<T extends Array<TreeSourceModel>>(data: T): NestedTreeNode[] {
     let res: NestedTreeNode[] = new Array<NestedTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];

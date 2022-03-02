@@ -6,7 +6,12 @@ import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 export interface TreeServiceInterface extends IService {
   getName(): TreeServiceEnum;
 
-  initialize(type?: DivisionType, level?: number): Promise<NestedTreeNode[]>;
+  initialize(type?: DivisionType): Promise<NestedTreeNode[]>;
+
+  recurseByLevel(
+    nodes: NestedTreeNode[],
+    level?: number,
+  ): Promise<void>;
 
   loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
 
