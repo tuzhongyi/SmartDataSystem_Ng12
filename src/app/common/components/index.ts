@@ -28,8 +28,7 @@ import { VideoDownloadPanelComponent } from './panels/video-download-panel/video
 import { CHART_COMPONENTS } from './charts/chart-component';
 import { SwitchComponent } from './switch/switch.component';
 import { SidenavComponent } from 'src/app/aiop-system/components/sidenav/sidenav.component';
-import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
-import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
+import { TreeComponent2 } from './tree/tree2.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -60,6 +59,5 @@ export const CUSTOM_COMPONENTS = [
   VideoDownloadPanelComponent,
   SwitchComponent,
   ...CHART_COMPONENTS,
-  GarbageDropDurationPanelComponent,
-  GarbageDropEventPanelComponent,
+  TreeComponent2,
 ];
