@@ -21,16 +21,14 @@ import { TreeServiceInterface } from './interface/tree-service.interface';
 import { DivisionTreeService } from './services/division-tree.service';
 import { ServiceFactory } from './services/service.factory';
 import { StationTreeService } from './services/station-tree.service';
-import { TreeService } from './services/tree.service';
 import { TreeProviders } from './tokens/service.token';
 
 @Component({
-  selector: 'app-tree',
+  selector: 'app-tree2',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.less'],
   providers: [
     ServiceFactory,
-    TreeService,
     ...TreeProviders,
     {
       provide: DivisionTreeService,
@@ -38,8 +36,11 @@ import { TreeProviders } from './tokens/service.token';
     },
   ],
 })
-export class TreeComponent implements OnInit {
+export class TreeComponent2 implements OnInit {
   TreeSelectEnum = SelectEnum;
+
+  /***************private  *********************/
+  private _service!: TreeServiceInterface;
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],
@@ -84,23 +85,20 @@ export class TreeComponent implements OnInit {
   trackBy = (index: number, node: FlatTreeNode) => node;
 
   @Input('treeServiceProvider')
-  serviceProvider = TreeServiceEnum.Division; // 区划树 or 厢房树
+  serviceProvider = TreeServiceEnum.Division;
 
   @Input('treeSelectModel')
   selectModel = SelectEnum.Single;
 
   @Input()
-  divisionType?: DivisionType; // 废弃
-
-  @Input()
-  resourceType: UserResourceType = UserResourceType.City; // 顶层根节点的类型
+  divisionType?: DivisionType;
 
   @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
 
   selection!: SelectionModel<FlatTreeNode>;
 
   @Input()
-  depth: number = 0; // 初始化树的深度
+  depth: number = 2;
 
   highLight = (node: FlatTreeNode) => {
     if (this.selectModel == SelectEnum.Single) {
@@ -111,7 +109,7 @@ export class TreeComponent implements OnInit {
     return false;
   };
 
-  constructor(private _service: TreeService) {
+  constructor(private _serviceFactory: ServiceFactory) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -143,18 +141,20 @@ export class TreeComponent implements OnInit {
       this.selectTree.emit(change.source.selected);
     });
 
-    this._service.model = this.serviceProvider;
+    this._service = this._serviceFactory.createService(this.serviceProvider);
 
     this.initialize();
   }
 
   async initialize() {
-    const nodes = await this._service.initialize(
-      this.resourceType,
-      this.depth < 0 ? 0 : this.depth
-    );
-    this._register(nodes);
+    const nodes = await this._service.initialize(this.divisionType);
     this.dataChange.next(nodes);
+
+    await this._service.recurseByLevel(nodes, this.depth < 0 ? 0 : this.depth);
+    this.dataChange.next(nodes);
+
+    this._register(nodes);
+
     for (let flatNode of this._flatNodeMap.values()) {
       if (flatNode.level < this.depth) {
         this.treeControl.expand(flatNode);
@@ -167,7 +167,7 @@ export class TreeComponent implements OnInit {
       const nestedNode = this._nestedNodeMap.get(node.id);
       if (nestedNode && !nestedNode.childrenLoaded) {
         let nodes = await this._service.loadChildren(nestedNode);
-        // console.log('chidren', nodes);
+        console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
         this._register(nodes);
         nestedNode.childrenChange.next(nodes);

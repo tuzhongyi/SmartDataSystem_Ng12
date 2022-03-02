@@ -8,11 +8,6 @@ import { AuthorizationService } from './network/request/auth/auth-request.servic
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full',
-  },
-  {
     path: 'login',
     component: LoginComponent,
   },
@@ -30,10 +25,11 @@ const routes: Routes = [
       import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
     canActivate: [AuthorizationService],
   },
-  // {
-  //   path: '**',
-  //   redirectTo: 'login',
-  // },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({

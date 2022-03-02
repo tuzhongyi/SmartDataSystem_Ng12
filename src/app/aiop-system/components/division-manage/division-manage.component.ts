@@ -17,7 +17,6 @@ import { UserResource } from 'src/app/network/model/user.model';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './division-manage.component.html',
