@@ -149,7 +149,7 @@ export class TreeComponent implements OnInit {
   async initialize() {
     const nodes = await this._service.initialize(this.divisionType, this.depth);
     this.dataChange.next(nodes);
-
+    console.log(nodes);
     this._register(nodes);
 
     for (let flatNode of this._flatNodeMap.values()) {

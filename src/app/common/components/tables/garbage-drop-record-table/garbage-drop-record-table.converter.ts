@@ -85,7 +85,10 @@ export class GarbageDropEventRecordConverter
 
     if (source.Data.DropImageUrls) {
       for (let i = 0; i < source.Data.DropImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(source.Data.DropImageUrls[i]);
+        let url = new CameraImageUrlModel(
+          source.Data.DropImageUrls[i],
+          source.Data.StationId
+        );
         url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
         let image = this.converter.image.Convert(
           url,
@@ -97,7 +100,10 @@ export class GarbageDropEventRecordConverter
     }
     if (source.Data.TimeoutImageUrls) {
       for (let i = 0; i < source.Data.TimeoutImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(source.Data.TimeoutImageUrls[i]);
+        let url = new CameraImageUrlModel(
+          source.Data.TimeoutImageUrls[i],
+          source.Data.StationId
+        );
         url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
         let image = this.converter.image.Convert(url, true, source.EventTime);
         model.images.push(image);
@@ -105,7 +111,10 @@ export class GarbageDropEventRecordConverter
     }
     if (source.Data.HandleImageUrls) {
       for (let i = 0; i < source.Data.HandleImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(source.Data.HandleImageUrls[i]);
+        let url = new CameraImageUrlModel(
+          source.Data.HandleImageUrls[i],
+          source.Data.StationId
+        );
         url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
         let image = this.converter.image.Convert(
           url,

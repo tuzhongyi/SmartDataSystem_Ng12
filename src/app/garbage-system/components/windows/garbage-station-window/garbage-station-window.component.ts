@@ -6,6 +6,8 @@ import {
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
@@ -26,6 +28,13 @@ export class GarbageStationWindowComponent
 {
   @Input()
   index = GarbageStationWindowIndex.general;
+  @Input()
+  stationId?: string;
+
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  chartdblclick: EventEmitter<GarbageStationGarbageCountStatistic> = new EventEmitter();
 
   Index = GarbageStationWindowIndex;
 
@@ -42,10 +51,12 @@ export class GarbageStationWindowComponent
     this.index = index;
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   onimage(item: ImageControlModelArray) {
     this.image.emit(item);
+  }
+
+  onstaydblclick(item: GarbageStationGarbageCountStatistic) {
+    this.chartdblclick.emit(item);
   }
 }
 

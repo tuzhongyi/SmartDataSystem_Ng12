@@ -65,6 +65,7 @@ class RisposalRankEventTrigger {
   constructor(private window: WindowBussiness) {}
   onItemClicked(item: RankModel) {
     this.window.station.index = GarbageStationWindowIndex.stay;
+    this.window.station.stationId = item.id;
     console.log(item.data);
     this.window.station.show = true;
   }

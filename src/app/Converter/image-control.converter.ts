@@ -39,7 +39,7 @@ export class ImageControlConverter
     } else {
       return new ImageControlModel(
         source.CameraId,
-        source.Camera.GarbageStationId,
+        source.StationId,
         source.CameraName ?? '',
         MediumRequestService.jpg(source.ImageUrl),
         onerror ? MediumRequestService.default : '',

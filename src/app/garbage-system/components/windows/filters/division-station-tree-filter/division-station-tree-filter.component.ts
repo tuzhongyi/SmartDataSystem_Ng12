@@ -4,8 +4,11 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
@@ -22,7 +25,7 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
   styleUrls: ['./division-station-tree-filter.component.less'],
 })
 export class DivisionStationTreeFilterComponent
-  implements OnInit, AfterViewInit
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
   type: DivisionType;
@@ -41,6 +44,8 @@ export class DivisionStationTreeFilterComponent
 
   current?: FlatTreeNode;
 
+  expand = true;
+
   style = {
     top: '0',
   };
@@ -48,6 +53,13 @@ export class DivisionStationTreeFilterComponent
   constructor(private store: StoreService) {
     this.type = store.divisionType;
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.station && this.station) {
+      this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
+    }
+  }
+  ngOnDestroy(): void {}
+
   ngAfterViewInit(): void {
     if (this.input) {
       wait(
@@ -55,10 +67,13 @@ export class DivisionStationTreeFilterComponent
           return !!this.input && this.input.nativeElement.offsetHeight > 0;
         },
         () => {
-          this.style.top = this.input!.nativeElement.offsetHeight + 'px';
+          this.style.top = this.input!.nativeElement.offsetHeight + 5 + 'px';
         }
       );
     }
+    window.addEventListener('click', () => {
+      this.expand = false;
+    });
   }
 
   ngOnInit(): void {}
@@ -69,5 +84,10 @@ export class DivisionStationTreeFilterComponent
       this.current = node;
       this.select.emit(node.id);
     }
+  }
+
+  onclick(event: Event) {
+    this.expand = !this.expand;
+    event.cancelBubble = true;
   }
 }

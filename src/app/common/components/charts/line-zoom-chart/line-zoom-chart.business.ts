@@ -9,24 +9,32 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import {
+  GetEventRecordsParams,
+  GetGarbageDropEventRecordsParams,
+} from 'src/app/network/request/event/event-request.params';
+import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import {
   GetGarbageStationStatisticGarbageCountsParams,
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { LineZoomChartConverter } from './line-zoom-chart.converter';
-import { LineZoomChartModel } from './line-zoom-chart.model';
+import {
+  LineZoomChartModel,
+  LineZoomChartSource,
+} from './line-zoom-chart.model';
 
 @Injectable()
 export class LineZoomChartBusiness
-  implements
-    IBusiness<GarbageStationGarbageCountStatistic[], LineZoomChartModel>
+  implements IBusiness<LineZoomChartSource, LineZoomChartModel>
 {
-  constructor(private stationService: GarbageStationRequestService) {}
-  Converter: IConverter<
-    GarbageStationGarbageCountStatistic[],
-    LineZoomChartModel
-  > = new LineZoomChartConverter();
+  constructor(
+    private stationService: GarbageStationRequestService,
+    private eventService: EventRequestService
+  ) {}
+  Converter: IConverter<LineZoomChartSource, LineZoomChartModel> =
+    new LineZoomChartConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async load(
@@ -42,11 +50,30 @@ export class LineZoomChartBusiness
     stationId: string,
     date: Date,
     unit: TimeUnit
-  ): Promise<GarbageStationGarbageCountStatistic[]> {
+  ): Promise<LineZoomChartSource> {
+    let count = await this.getCount(stationId, date);
+    let statistic = await this.getRecord(stationId, date);
+    return {
+      count: count,
+      record: statistic,
+    };
+  }
+
+  getCount(stationId: string, date: Date) {
     let params = new GetGarbageStationStatisticGarbageCountsParams();
 
     params.GarbageStationIds = [stationId];
     params.Date = date;
     return this.stationService.statistic.garbageCount.history.list(params);
+  }
+
+  async getRecord(stationId: string, date: Date) {
+    let params = new GetEventRecordsParams();
+    let interval = IntervalParams.allDay(date);
+    params = Object.assign(params, interval);
+    params.StationIds = [stationId];
+    let paged = await this.eventService.record.IllegalDrop.list(params);
+
+    return paged.Data;
   }
 }

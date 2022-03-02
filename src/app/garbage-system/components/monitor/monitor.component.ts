@@ -18,6 +18,8 @@ import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
 import { DeviceWindowBusiness } from './business/windows/device-window.business';
 import { RecordWindowBusiness } from './business/windows/event-record-window.business';
+import { MediaMultipleWindowBusiness } from './business/windows/media-multiple-window.business';
+import { MediaSingleWindowBusiness } from './business/windows/media-single-window.business';
 import { MediaWindowBusiness } from './business/windows/media-window.business';
 import { GarbageStationDropWindowBusiness } from './business/windows/station-drop-window.business';
 import { GarbageStationFullWindowBusiness } from './business/windows/station-full-window.business';
@@ -35,6 +37,8 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     PatrolControlBusiness,
     VideoControlWindowBusiness,
     RecordWindowBusiness,
+    MediaSingleWindowBusiness,
+    MediaMultipleWindowBusiness,
     MediaWindowBusiness,
     DeviceWindowBusiness,
     GarbageStationFullWindowBusiness,

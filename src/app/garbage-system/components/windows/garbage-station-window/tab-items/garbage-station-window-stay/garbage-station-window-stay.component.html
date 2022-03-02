@@ -3,7 +3,10 @@
     <div class="title">小包垃圾滞留</div>
     <div class="filter">
       <div class="division-station">
-        <howell-division-station-tree-filter></howell-division-station-tree-filter>
+        <howell-division-station-tree-filter
+          (select)="onstationselect($event)"
+          [station]="model ? model.station : undefined"
+        ></howell-division-station-tree-filter>
       </div>
       <div class="datetime">
         <input
@@ -24,11 +27,14 @@
     <div class="state">
       <img src="/assets/img/tooltip-luodi.png" />
     </div>
-    <div>
+    <div class="chart">
       <howell-line-zoom-chart
-        [stationId]="'310109009002001000'"
+        [stationId]="stationId"
         [date]="date"
         [unit]="unit"
+        [load]="chartLoad"
+        (image)="onimage($event)"
+        (ondblclick)="onchartdblclick($event)"
       >
       </howell-line-zoom-chart>
     </div>

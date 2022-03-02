@@ -1,0 +1,17 @@
+<app-window [Model]="Model" [style]="style">
+  <div class="media-multiple-window" *ngIf="!!model">
+    <div class="media-multiple-window-header">
+      {{ model.station ? model.station.Name : "" }}
+    </div>
+    <div class="media-multiple-window-content">
+      <app-image-video-mult-control [models]="model.medias">
+      </app-image-video-mult-control>
+    </div>
+    <div class="media-multiple-window-footer">
+      <div class="">
+        垃圾堆数 <label class="orange-text">{{ model.garbageCount }}</label> 堆
+      </div>
+      <div class="">{{ formatDate(model.date, "yyyy-MM-dd HH:mm") }}</div>
+    </div>
+  </div>
+</app-window>

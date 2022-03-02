@@ -1,55 +1,39 @@
-export interface IChartOption {}
-export class LineZoomOption implements IChartOption {
-  xAxisLine: string[] = [];
-  xAxisBar: string[] = [];
-  lineData: Array<number | string> = [];
-  lineDataB: Array<number | string> = [];
-  barDataB: Array<{
-    value: number;
-    itemStyle: {
-      color: string;
-    };
-    label: {
-      show: boolean;
-      formatter: any;
-      rich: any;
-    };
-    emphasis: any;
-  }> = [];
+import {
+  GarbageDropEventRecord,
+  IllegalDropEventRecord,
+} from 'src/app/network/model/event-record.model';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { ImageControlModel } from '../../image-control/image-control.model';
+import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
 
-  barData: Array<{
-    value: number;
-    itemStyle: {
-      color: string;
-    };
-    label: {
-      show: boolean;
-      formatter: any;
-      rich: any;
-    };
-    emphasis: any;
-  }> = [];
-  itemClick?: (param: {
-    event: {
-      offsetX: number;
-      offsetY: number;
-    };
-    name: string;
-    seriesId: string;
-    seriesName: string;
-  }) => void;
-  dbitemClick?: (keyVal: string) => void;
-  dataZoomClick?: (param: {
-    batch: Array<{ start: number; end: number }>;
-  }) => void;
-  visualMapPieces = new Array();
-}
+export type LineZoomChartSource = {
+  count?: GarbageStationGarbageCountStatistic[];
+  record?: IllegalDropEventRecord[];
+};
 
 export class LineZoomChartModel {
-  data: TimeData[] = [];
+  count: TimeData<GarbageStationGarbageCountStatistic>[] = [];
+  record: ImageTimeData<IllegalDropEventRecord>[] = [];
 }
 
-interface TimeData {
+export interface TimeData<T> {
   time: Date;
-  value: number;
+  value: T;
+  index?: number;
+}
+
+export interface ImageTimeData<T> extends TimeData<T> {
+  image: ImageControlModel;
+}
+
+export class LineZoomLinePanel {
+  model = new GarbageDropDurationPanelModel();
+  display = false;
+  position = { x: '0px', y: '0px' };
+}
+
+export class LineZoomScatterPanel {
+  model!: ImageControlModel;
+  display = false;
+  position = { x: '0px', y: '0px' };
 }

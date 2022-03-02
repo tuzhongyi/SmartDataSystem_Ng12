@@ -41,6 +41,7 @@ import { GarbageStationWindowGeneralComponent } from './windows/garbage-station-
 import { IntervalFilterComponent } from './windows/filters/interval-filter/interval-filter.component';
 import { GarbageStationWindowStayComponent } from './windows/garbage-station-window/tab-items/garbage-station-window-stay/garbage-station-window-stay.component';
 import { FILTER_COMPONENTS } from './windows/filters/filter.module';
+import { MediaMultipleWindowComponent } from './windows/media-multiple-window/media-multiple-window.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +72,7 @@ import { FILTER_COMPONENTS } from './windows/filters/filter.module';
     EventStatisticComponent,
     GarbageStationWindowGeneralComponent,
     GarbageStationWindowStayComponent,
+    MediaMultipleWindowComponent,
     IntervalFilterComponent,
     ...FILTER_COMPONENTS,
   ],

@@ -33,11 +33,13 @@ export class EventRecordFilter extends IntervalParams {
 }
 
 export class CameraImageUrlModel extends CameraImageUrl {
-  constructor(url: CameraImageUrl) {
+  constructor(url: CameraImageUrl, stationId: string) {
     super();
     this.CameraId = url.CameraId;
     this.CameraName = url.CameraName;
     this.ImageUrl = url.ImageUrl;
+    this.StationId = stationId;
   }
+  StationId: string;
   Camera!: Camera;
 }

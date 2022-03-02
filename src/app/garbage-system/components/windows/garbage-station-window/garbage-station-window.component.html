@@ -31,7 +31,11 @@
           </howell-garbage-station-table>
         </mat-tab>
         <mat-tab label="小包垃圾滞留">
-          <howell-garbage-station-window-stay>
+          <howell-garbage-station-window-stay
+            [stationId]="stationId"
+            (image)="onimage($event)"
+            (ondblclick)="onstaydblclick($event)"
+          >
           </howell-garbage-station-window-stay>
         </mat-tab>
         <mat-tab label="总图表">

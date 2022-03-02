@@ -108,7 +108,7 @@ export class EventRecordConverter
       CameraName: source.ResourceName,
       ImageUrl: source.ImageUrl ?? '',
     };
-    let url = new CameraImageUrlModel(img);
+    let url = new CameraImageUrlModel(img, source.Data.StationId);
     url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
     let image = this.converter.image.Convert(url, true, source.EventTime);
 
@@ -151,7 +151,10 @@ export class EventRecordConverter
     model.images = [];
     if (source.Data.CameraImageUrls && model.GarbageStation) {
       for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
-        const url = new CameraImageUrlModel(source.Data.CameraImageUrls[i]);
+        const url = new CameraImageUrlModel(
+          source.Data.CameraImageUrls[i],
+          source.Data.StationId
+        );
         url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
         let image = this.converter.image.Convert(url, true, source.EventTime);
         image.index = i;

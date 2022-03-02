@@ -22,9 +22,9 @@ export class DeviceWindowBusiness extends WindowViewModel {
   };
   status?: OnlineStatus;
   onimage(model: ImageControlModelArray) {
-    this.media.camera = model.models;
-    this.media.index = model.index;
-    this.media.autoplay = model.autoplay;
-    this.media.show = true;
+    this.media.single.camera = model.models;
+    this.media.single.index = model.index;
+    this.media.single.autoplay = model.autoplay;
+    this.media.single.show = true;
   }
 }

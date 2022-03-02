@@ -41,15 +41,6 @@ export let option = {
       height: '10%',
     },
   ],
-  toolbox: {
-    feature: {
-      dataZoom: {
-        yAxisIndex: 'none',
-      },
-      restore: {},
-      saveAsImage: {},
-    },
-  },
   xAxis: {
     type: 'category',
     boundaryGap: false,
@@ -61,6 +52,8 @@ export let option = {
     show: false,
     type: 'value',
     boundaryGap: [0, '100%'],
+    max: 1.1,
+    min: -0.1,
   },
   dataZoom: [
     {
@@ -92,6 +85,14 @@ export let option = {
       symbol: 'emptyCircle',
       symbolSize: 8,
       data: [],
+    },
+    {
+      symbolSize: 15,
+      data: [],
+      type: 'scatter',
+      symbol: 'image://assets/img/arrow-tag.png',
+      symbolKeepAspect: true,
+      select: {},
     },
   ],
 };

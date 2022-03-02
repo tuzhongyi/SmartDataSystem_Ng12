@@ -157,24 +157,33 @@
   [Model]="window.station"
   [style]="window.station.style"
   [index]="window.station.index"
+  [stationId]="window.station.stationId"
   (image)="window.station.onimage($event)"
+  (chartdblclick)="window.station.onchartdblclick($event)"
 >
 </howell-garbage-station-window>
 
 <app-window
-  [Model]="window.media"
-  [style]="window.media.style"
+  [Model]="window.media.single"
+  [style]="window.media.single.style"
   [manualClose]="true"
-  (OnClosing)="window.media.onclosing()"
+  (OnClosing)="window.media.single.onclosing()"
 >
-  <ng-container *ngIf="window.media.show">
+  <ng-container *ngIf="window.media.single.show">
     <app-media-control
-      [autoplay]="window.media.autoplay"
-      [model]="window.media.camera"
-      [index]="window.media.index"
-      [stop]="window.media.closing"
-      (played)="window.media.onplay()"
-      (stoped)="window.media.onstop()"
+      [autoplay]="window.media.single.autoplay"
+      [model]="window.media.single.camera"
+      [index]="window.media.single.index"
+      [stop]="window.media.single.closing"
+      (played)="window.media.single.onplay()"
+      (stoped)="window.media.single.onstop()"
     ></app-media-control>
   </ng-container>
 </app-window>
+
+<howell-media-multiple-window
+  *ngIf="window.media.multiple.show"
+  [Model]="window.media.multiple"
+  [style]="window.media.multiple.style"
+  [statistic]="window.media.multiple.statistic"
+></howell-media-multiple-window>
