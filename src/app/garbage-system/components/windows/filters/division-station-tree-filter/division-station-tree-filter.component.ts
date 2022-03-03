@@ -12,9 +12,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -28,7 +29,7 @@ export class DivisionStationTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
-  type: DivisionType;
+  type: UserResourceType;
 
   @Output()
   select: EventEmitter<string> = new EventEmitter();
@@ -51,7 +52,7 @@ export class DivisionStationTreeFilterComponent
   };
 
   constructor(private store: StoreService) {
-    this.type = store.divisionType;
+    this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.station && this.station) {

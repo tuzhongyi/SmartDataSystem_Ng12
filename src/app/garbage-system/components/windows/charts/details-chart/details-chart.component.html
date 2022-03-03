@@ -1,0 +1,59 @@
+<div class="garbage-station-window-details">
+  <div class="garbage-station-window-details-header">
+    <div class="filter">
+      <div class="filter-item">
+        <span>选择时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="dateTimePickerConfig.format"
+          [startView]="dateTimePickerConfig.view"
+          [minView]="dateTimePickerConfig.view"
+          [week]="dateTimePickerConfig.week"
+          [date]="date"
+          (change)="changeDate($event)"
+          class=""
+        />
+      </div>
+      <div class="filter-item">
+        <howell-division-filter
+          [type]="DivisionType.County"
+          (select)="onCountySelected($event)"
+        >
+        </howell-division-filter>
+      </div>
+      <div class="filter-item">
+        <howell-division-filter
+          [type]="DivisionType.Committees"
+          [parentId]="county ? county.Id : undefined"
+          (select)="onCommitteesSelected($event)"
+        >
+        </howell-division-filter>
+      </div>
+      <div class="filter-item">
+        <howell-garbage-station-filter
+          [divisionId]="committees ? committees.Id : undefined"
+          (select)="onStationSelected($event)"
+        >
+        </howell-garbage-station-filter>
+      </div>
+      <button class="hw-blue-btn search">查询</button>
+      <button class="hw-blue-btn excel">导出</button>
+      <button class="hw-blue-btn csv">CSV</button>
+    </div>
+    <div class="selection">
+      <app-select-control
+        class="list-type-select"
+        [data]="units"
+        (select)="ontimeunit($event)"
+      ></app-select-control>
+    </div>
+  </div>
+  <div class="garbage-station-window-details-content">
+    <howell-line-chart
+      [theme]="theme"
+      [options]="options"
+      [merge]="merge"
+    ></howell-line-chart>
+  </div>
+</div>

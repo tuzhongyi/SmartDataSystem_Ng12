@@ -23,7 +23,43 @@
     </div>
   </div>
   <div class="content">
-    <div class="statistic"></div>
+    <div class="statistic" *ngIf="!!model">
+      <div class="statistic-item">
+        <div class="light-blue-text statistic-item-title">达标率</div>
+        <div class="statistic-item-value">
+          <div class="statistic-item-value-number">{{ model.garde }}</div>
+          <div class="blue-text statistic-item-value-unit">分</div>
+        </div>
+      </div>
+      <div class="statistic-item">
+        <div class="light-blue-text statistic-item-title">平均滞留时长</div>
+        <div
+          class="statistic-item-value"
+          [innerHTML]="model.avgDropDuration"
+        ></div>
+      </div>
+      <div class="statistic-item">
+        <div class="light-blue-text statistic-item-title">最大滞留时长</div>
+        <div
+          class="statistic-item-value"
+          [innerHTML]="model.maxDropDuration"
+        ></div>
+      </div>
+      <div class="statistic-item">
+        <div class="light-blue-text statistic-item-title">总滞留时长</div>
+        <div
+          class="statistic-item-value"
+          [innerHTML]="model.countDropDuration"
+        ></div>
+      </div>
+      <div class="statistic-item">
+        <div class="light-blue-text statistic-item-title">垃圾落地</div>
+        <div class="statistic-item-value">
+          <div class="statistic-item-value-number">{{ model.eventCount }}</div>
+          <div class="blue-text statistic-item-value-unit">起</div>
+        </div>
+      </div>
+    </div>
     <div class="state">
       <img src="/assets/img/tooltip-luodi.png" />
     </div>

@@ -87,6 +87,7 @@ export class LineZoomChartComponent
   }
 
   data?: LineZoomChartModel;
+  xAxisData: Array<TimeString> = [];
 
   ngOnInit(): void {}
   loaded = false;
@@ -128,6 +129,13 @@ export class LineZoomChartComponent
                 let data = this.data.count.find((x) => x.index == index);
                 if (data) {
                   this.ondblclick.emit(data.value);
+                } else {
+                  let xData = this.xAxisData[index];
+                  let statistic = new GarbageStationGarbageCountStatistic();
+                  statistic.BeginTime = xData.date;
+                  statistic.GarbageCount = 0;
+                  statistic.Id = this.stationId ?? '';
+                  this.ondblclick.emit(statistic);
                 }
               }
             });
@@ -193,8 +201,6 @@ export class LineZoomChartComponent
     }
   }
 
-  xAxisData: Array<string> = [];
-
   optionProcess(model: LineZoomChartModel, option: any) {
     let begin = new Date(
       this.date.getFullYear(),
@@ -203,14 +209,14 @@ export class LineZoomChartComponent
       9
     );
     let minutes = 12 * 60;
-    let date = new Array();
+    this.xAxisData = [];
     let counts = new Array();
     let records = new Array();
     for (let i = 0, offset = { count: 0, record: 0 }; i < minutes; i++) {
       let now = new Date(begin.getTime());
       now.setMinutes(i);
-      let formatter = formatDate(now, 'H:mm', 'en');
-      date.push(formatter);
+
+      this.xAxisData.push(new TimeString(now));
       if (
         model.count &&
         model.count[offset.count] &&
@@ -229,12 +235,13 @@ export class LineZoomChartComponent
         model.record[offset.record].time.getTime() === now.getTime()
       ) {
         model.record[offset.record].index = i;
+        let formatter = formatDate(now, 'H:mm', 'en');
         records.push([formatter, -0.1]);
         offset.record++;
       }
     }
 
-    option.xAxis.data = date;
+    option.xAxis.data = this.xAxisData;
     option.series[0].data = counts;
 
     option.series[1].data = records;
@@ -254,5 +261,16 @@ export class LineZoomChartComponent
 
   onEventPanelClicked(model: ImageControlModel) {
     this.image.emit(model);
+  }
+}
+
+class TimeString extends Date {
+  constructor(date: Date) {
+    super(date);
+    this.date = date;
+  }
+  date: Date;
+  toString() {
+    return formatDate(this.date, 'H:mm', 'en');
   }
 }

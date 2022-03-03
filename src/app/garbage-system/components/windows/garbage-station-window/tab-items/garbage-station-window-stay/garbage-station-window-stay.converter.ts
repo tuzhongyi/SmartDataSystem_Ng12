@@ -24,16 +24,16 @@ export class GarbageStationWindowStayConverter
   ): Promise<GarbageStationWindowStayModel> {
     let model = new GarbageStationWindowStayModel();
     if (source.AvgGarbageTime) {
-      model.avgDropDuration = Language.Time(source.AvgGarbageTime);
+      model.avgDropDuration = this.htmlFormat(source.AvgGarbageTime);
     }
     if (source.MaxGarbageTime) {
-      model.maxDropDuration = Language.Time(source.MaxGarbageTime);
+      model.maxDropDuration = this.htmlFormat(source.MaxGarbageTime);
     }
-    if (source.Garde) {
-      model.garde = source.Garde.toFixed(2);
+    if (source.GarbageRatio) {
+      model.garde = source.GarbageRatio.toFixed(2);
     }
     if (source.GarbageDuration) {
-      model.countDropDuration = Language.Time(source.GarbageDuration);
+      model.countDropDuration = this.htmlFormat(source.GarbageDuration);
     }
 
     model.station = await getter.station(source.Id);
@@ -42,14 +42,27 @@ export class GarbageStationWindowStayConverter
       for (let i = 0; i < source.EventNumbers.length; i++) {
         const number = source.EventNumbers[i];
         switch (number.EventType) {
-          case EventType.GarbageDrop:
-            model.eventCount;
+          case EventType.IllegalDrop:
+            model.eventCount = number.DayNumber;
             break;
           default:
             break;
         }
       }
     }
+
     return model;
+  }
+
+  htmlFormat(minutes: number) {
+    const hour = parseInt((minutes / 60).toString());
+    const minute = parseInt((Math.ceil(minutes) % 60).toString());
+    let m = `<div class="statistic-item-value-number">${minute}</div><div class="blue-text statistic-item-value-unit">分钟</div>`;
+    let h = `<div class="statistic-item-value-number">${hour}</div><div class="blue-text statistic-item-value-unit">小时</div>`;
+    let result = m;
+    if (hour > 0) {
+      result = h + m;
+    }
+    return result;
   }
 }

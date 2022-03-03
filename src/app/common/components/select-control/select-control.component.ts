@@ -28,8 +28,11 @@ export class SelectControlComponent implements OnInit, OnChanges {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
         this.load.subscribe((x) => {
-          if (this.data && this.data.length > 0) {
+          if (x) {
+            this.selected = x;
+          } else if (this.data && this.data.length > 0) {
             this.selected = this.data[0];
+          } else {
           }
         });
       }

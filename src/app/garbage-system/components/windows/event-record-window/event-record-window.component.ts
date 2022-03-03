@@ -14,6 +14,7 @@ import { EventRecordViewModel } from 'src/app/common/components/tables/event-rec
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
+import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details.business';
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 
 @Component({
@@ -23,6 +24,7 @@ import { EventRecordWindowRecordBusiness } from './business/event-record-window-
   providers: [
     EventRecordOperationFilterBusiness,
     EventRecordWindowRecordBusiness,
+    EventRecordWindowDetailsBusiness,
   ],
 })
 export class EventRecordWindowComponent
@@ -37,7 +39,10 @@ export class EventRecordWindowComponent
 
   Index = EventRecordWindowIndex;
 
-  constructor(public record: EventRecordWindowRecordBusiness) {
+  constructor(
+    public record: EventRecordWindowRecordBusiness,
+    public details: EventRecordWindowDetailsBusiness
+  ) {
     super();
   }
 

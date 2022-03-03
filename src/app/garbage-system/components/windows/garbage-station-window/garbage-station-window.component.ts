@@ -11,6 +11,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
+import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/details-chart.business';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -20,6 +21,7 @@ import { GarbageStationWindowStationBusiness } from './business/garbage-station-
     GarbageStationWindowStationBusiness,
     EventRecordOperationFilterBusiness,
     GarbageStationWindowRecordBusiness,
+    GarbageStationWindowDetailsBusiness,
   ],
 })
 export class GarbageStationWindowComponent
@@ -40,7 +42,8 @@ export class GarbageStationWindowComponent
 
   constructor(
     public station: GarbageStationWindowStationBusiness,
-    public record: GarbageStationWindowRecordBusiness
+    public record: GarbageStationWindowRecordBusiness,
+    public details: GarbageStationWindowDetailsBusiness
   ) {
     super();
   }

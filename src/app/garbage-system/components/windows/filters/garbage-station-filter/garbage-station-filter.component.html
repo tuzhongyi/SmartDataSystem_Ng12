@@ -1,0 +1,9 @@
+<div class="garbage-station-filter">
+  <span>投放点</span>
+  <app-select-control
+    class="list-type-select"
+    [data]="items"
+    [load]="loading"
+    (select)="onselected($event)"
+  ></app-select-control>
+</div>

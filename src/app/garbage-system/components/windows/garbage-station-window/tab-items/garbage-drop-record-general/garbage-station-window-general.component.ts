@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import {
+  DateTimePickerConfig,
+  DateTimePickerView,
+} from 'src/app/common/directives/date-time-picker.directive';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 
 @Component({
@@ -72,10 +75,4 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
         break;
     }
   }
-}
-
-class DateTimePickerConfig {
-  view: DateTimePickerView = DateTimePickerView.month;
-  week = false;
-  format = 'yyyy-MM-dd';
 }

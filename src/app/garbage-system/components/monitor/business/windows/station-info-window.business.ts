@@ -24,6 +24,8 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
 
   constructor(private media: MediaWindowBusiness) {
     super();
+    this.show = true;
+    this.index = GarbageStationWindowIndex.details;
   }
   onimage(model: ImageControlModelArray) {
     this.media.single.camera = model.models;

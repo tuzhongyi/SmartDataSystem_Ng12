@@ -39,10 +39,6 @@ export class GarbageStationWindowStayComponent
 
   unit: TimeUnit = TimeUnit.Hour;
 
-  treeServiceProvider = TreeServiceEnum.Station;
-  treeSelectModel = SelectEnum.Single;
-  divisionType = DivisionType.County;
-
   model?: GarbageStationWindowStayModel;
 
   chartLoad: EventEmitter<void> = new EventEmitter();

@@ -35,7 +35,9 @@
           </div>
         </mat-tab>
         <mat-tab label="总图表"> Content 2 </mat-tab>
-        <mat-tab label="细分图表"> Content 3 </mat-tab>
+        <mat-tab label="细分图表">
+          <howell-details-chart [business]="details"> </howell-details-chart>
+        </mat-tab>
         <mat-tab label="数据比较"> Content 4 </mat-tab>
       </mat-tab-group>
     </div>

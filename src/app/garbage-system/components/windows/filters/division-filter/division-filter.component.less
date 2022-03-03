@@ -1,0 +1,35 @@
+.division-filter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  white-space: nowrap;
+
+  &>* {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .list-type-select {
+    border: 1px solid #5e6ebf;
+    font-size: 18px;
+    height: 32px;
+    width: 250px;
+
+    ::ng-deep .select-item {
+      .select-head {
+        justify-content: space-between;
+      }
+
+      .select-body {
+        left: -1px;
+
+        .select-option {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+}

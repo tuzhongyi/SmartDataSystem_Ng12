@@ -1,0 +1,9 @@
+<div class="division-filter">
+  <span>{{ title ?? "" }}</span>
+  <app-select-control
+    class="list-type-select"
+    [data]="items"
+    [load]="loading"
+    (select)="onselected($event)"
+  ></app-select-control>
+</div>

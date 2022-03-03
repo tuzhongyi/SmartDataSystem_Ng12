@@ -171,3 +171,9 @@ export enum DateTimePickerView {
   /** 4 or 'decade' for the 10-year overview. Useful for date-of-birth datetimepickers. */
   decade = 4,
 }
+
+export class DateTimePickerConfig {
+  view: DateTimePickerView = DateTimePickerView.month;
+  week = false;
+  format = 'yyyy-MM-dd';
+}
