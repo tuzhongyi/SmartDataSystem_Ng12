@@ -1,21 +1,17 @@
 import {
   IConverter,
-  IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import {
-  GarbageDropEventRecord,
   IllegalDropEventRecord,
 } from 'src/app/network/model/event-record.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { CameraImageUrlModel } from '../../tables/event-record-table/event-record.model';
+import { ImageTimeData, TimeData } from '../chart.model';
 import {
-  ImageTimeData,
   LineZoomChartModel,
-  LineZoomChartSource,
-  TimeData,
+  LineZoomChartSource
 } from './line-zoom-chart.model';
 
 export class LineZoomChartConverter

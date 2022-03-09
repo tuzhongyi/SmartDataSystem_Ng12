@@ -25,13 +25,42 @@
         justify-content: flex-start;
         align-items: center;
 
+        &>span{
+          color: #cfd7ff;
+          font-size: 18px;
+          margin-right: 10px;
+        }
+        &>input{
+          height: 32px;
+        }
       }
+
     }
 
     .selection {
       display: flex;
       justify-content: flex-end;
       align-items: center;
+
+      &>*{
+        margin-left: 10px;
+        &:first-child{
+          margin-left: 0;
+        }
+      }
+      
+      .list-type-select {
+        border: 1px solid #5e6ebf;
+        padding: 0 10px;
+        height: 32px;
+
+        ::ng-deep{
+        .select-group{
+          width:calc(100% + 20px) ;
+          margin:0 -10px;
+        }
+      }
+      }
     }
   }
 

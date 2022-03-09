@@ -32,10 +32,10 @@ export class EventRecordWindowComponent
   implements OnInit, OnDestroy
 {
   @Input()
-  type = EventType.GarbageFull;
+  type = EventType.IllegalDrop;
 
   @Input()
-  index = EventRecordWindowIndex.record;
+  index = EventRecordWindowIndex.details;
 
   Index = EventRecordWindowIndex;
 
@@ -44,6 +44,7 @@ export class EventRecordWindowComponent
     public details: EventRecordWindowDetailsBusiness
   ) {
     super();
+    this.details.eventType = this.type;
   }
 
   load: EventEmitter<string> = new EventEmitter();

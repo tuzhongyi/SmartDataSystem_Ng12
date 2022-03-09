@@ -105,23 +105,23 @@ export class LineZoomChartComponent
         if (this.loaded == false) {
           this.loaded = true;
           if (this.echarts) {
-            this.myChart = echarts.init(this.echarts.nativeElement, 'dark');
-            this.myChart.on('click', 'series.line', (trigger: any) => {
+            this.chart = echarts.init(this.echarts.nativeElement, 'dark');
+            this.chart.on('click', 'series.line', (trigger: any) => {
               this.showLinePanel(trigger);
             });
-            this.myChart.on('click', 'series.scatter', (trigger: any) => {
+            this.chart.on('click', 'series.scatter', (trigger: any) => {
               this.showScatterPanel(trigger);
             });
 
-            this.myChart.getZr().on('click', () => {
+            this.chart.getZr().on('click', () => {
               this.panel.line.display = false;
               this.panel.scatter.display = false;
             });
-            this.myChart.getZr().on('dblclick', (params: any) => {
-              if (this.myChart && this.data) {
+            this.chart.getZr().on('dblclick', (params: any) => {
+              if (this.chart && this.data) {
                 console.log(params);
                 let pointInPixel = [params.offsetX, params.offsetY];
-                let grid = this.myChart.convertFromPixel(
+                let grid = this.chart.convertFromPixel(
                   { seriesIndex: 0 },
                   pointInPixel
                 );
@@ -249,13 +249,13 @@ export class LineZoomChartComponent
     return option;
   }
 
-  myChart?: echarts.ECharts;
+  chart?: echarts.ECharts;
 
   setOption(data: LineZoomChartModel, opt: any) {
-    if (this.myChart) {
-      this.myChart.resize();
+    if (this.chart) {
+      this.chart.resize();
       let option = this.optionProcess(data, opt);
-      this.myChart.setOption(option);
+      this.chart.setOption(option);
     }
   }
 

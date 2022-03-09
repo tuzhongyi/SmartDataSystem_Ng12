@@ -1,10 +1,12 @@
 import {
-  GarbageDropEventRecord,
   IllegalDropEventRecord,
 } from 'src/app/network/model/event-record.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { ImageControlModel } from '../../image-control/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
+import { ImageTimeData, TimeData } from '../chart.model';
+
+
 
 export type LineZoomChartSource = {
   count?: GarbageStationGarbageCountStatistic[];
@@ -14,16 +16,6 @@ export type LineZoomChartSource = {
 export class LineZoomChartModel {
   count: TimeData<GarbageStationGarbageCountStatistic>[] = [];
   record: ImageTimeData<IllegalDropEventRecord>[] = [];
-}
-
-export interface TimeData<T> {
-  time: Date;
-  value: T;
-  index?: number;
-}
-
-export interface ImageTimeData<T> extends TimeData<T> {
-  image: ImageControlModel;
 }
 
 export class LineZoomLinePanel {

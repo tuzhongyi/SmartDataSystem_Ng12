@@ -16,6 +16,7 @@ export class RecordWindowBusiness extends WindowViewModel {
     private stationService: GarbageStationRequestService
   ) {
     super();
+    this.show = true;
   }
   style = {
     height: '83.5%',

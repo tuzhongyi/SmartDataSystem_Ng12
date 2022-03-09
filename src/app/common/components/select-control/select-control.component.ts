@@ -25,6 +25,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
   select: EventEmitter<SelectItem> = new EventEmitter();
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
+    debugger;
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
         this.load.subscribe((x) => {
@@ -38,13 +39,8 @@ export class SelectControlComponent implements OnInit, OnChanges {
       }
     }
     if (changes.data) {
-      if (
-        !changes.data.previousValue ||
-        changes.data.previousValue.length === 0
-      ) {
-        if (this.data && this.data.length > 0) {
-          this.selected = this.data[0];
-        }
+      if (this.data && this.data.length > 0) {
+        this.selected = this.data[0];
       }
     }
   }

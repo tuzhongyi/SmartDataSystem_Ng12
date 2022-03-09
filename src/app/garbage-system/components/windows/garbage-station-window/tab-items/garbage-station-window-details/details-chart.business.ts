@@ -15,10 +15,10 @@ import { GarbageStationWindowDetailsConverter } from './details-chart.converter'
 
 @Injectable()
 export class GarbageStationWindowDetailsBusiness
-  implements IBusiness<GarbageStationNumberStatisticV2, number[]>
+  implements IBusiness<GarbageStationNumberStatisticV2[], number[]>
 {
   constructor(private stationService: GarbageStationRequestService) {}
-  Converter: IConverter<GarbageStationNumberStatisticV2, number[]> =
+  Converter: IConverter<GarbageStationNumberStatisticV2[], number[]> =
     new GarbageStationWindowDetailsConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
@@ -46,12 +46,11 @@ export class GarbageStationWindowDetailsBusiness
     stationId: string,
     interval: IntervalParams,
     unit: TimeUnit
-  ): Promise<GarbageStationNumberStatisticV2> {
+  ): Promise<GarbageStationNumberStatisticV2[]> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
     params = Object.assign(params, interval);
     params.GarbageStationIds = [stationId];
     params.TimeUnit = unit;
-    let datas = await this.stationService.statistic.number.history.list(params);
-    return datas[0];
+    return this.stationService.statistic.number.history.list(params);    
   }
 }

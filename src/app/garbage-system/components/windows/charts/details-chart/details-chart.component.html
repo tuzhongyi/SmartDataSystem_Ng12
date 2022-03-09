@@ -6,16 +6,16 @@
         <input
           type="text"
           DateTimePicker
-          [format]="dateTimePickerConfig.format"
-          [startView]="dateTimePickerConfig.view"
-          [minView]="dateTimePickerConfig.view"
-          [week]="dateTimePickerConfig.week"
+          [format]="config.dateTimePicker.format"
+          [startView]="config.dateTimePicker.view"
+          [minView]="config.dateTimePicker.view"
+          [week]="config.dateTimePicker.week"
           [date]="date"
           (change)="changeDate($event)"
           class=""
         />
       </div>
-      <div class="filter-item">
+      <div class="filter-item" *ngIf="userResourceType === UserResourceType.City">
         <howell-division-filter
           [type]="DivisionType.County"
           (select)="onCountySelected($event)"
@@ -47,13 +47,20 @@
         [data]="units"
         (select)="ontimeunit($event)"
       ></app-select-control>
+      <app-select-control
+        class="list-type-select"
+        [data]="charts"
+        (select)="onchartselected($event)"
+      ></app-select-control>
     </div>
   </div>
   <div class="garbage-station-window-details-content">
-    <howell-line-chart
-      [theme]="theme"
-      [options]="options"
-      [merge]="merge"
+    <howell-line-chart *ngIf="chartType === ChartType.line"
+      [theme]="config.line.theme"
+      [options]="config.line.options"
+      [merge]="config.line.merge"
     ></howell-line-chart>
+    <howell-bar-chart *ngIf="chartType === ChartType.bar" [data]="data" [unit]="unit" [date]="date">
+      </howell-bar-chart>
   </div>
 </div>
