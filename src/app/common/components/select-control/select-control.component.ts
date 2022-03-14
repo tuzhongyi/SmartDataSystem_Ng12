@@ -24,8 +24,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Output()
   select: EventEmitter<SelectItem> = new EventEmitter();
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
-    debugger;
+  ngOnChanges(changes: SimpleChanges): void {    
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
         this.load.subscribe((x) => {

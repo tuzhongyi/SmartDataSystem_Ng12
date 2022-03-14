@@ -5,17 +5,8 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import * as echarts from 'echarts/core';
-import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
-import {
-  EChartsOption,
-  GridComponentOption,
-  LegendComponentOption,
-  LineSeriesOption,
-  TitleComponentOption,
-  TooltipComponentOption,
-} from 'echarts';
-import { CallbackDataParams, XAXisOption } from 'echarts/types/dist/shared';
+
+import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { IModel } from 'src/app/network/model/model.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -35,15 +26,9 @@ import { ChartType } from 'src/app/enum/chart-type.enum';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { TimeData } from 'src/app/common/components/charts/chart.model';
 import { Language } from 'src/app/global/tool/language';
+import { ChartConfig, DetailsChartLoadOpts } from './details-chart.option';
 
-type EChartOptions = echarts.ComposeOption<
-  | TitleComponentOption
-  | GridComponentOption
-  | LegendComponentOption
-  | LineSeriesOption
-  | TooltipComponentOption
-  | XAXisOption
->;
+
 
 @Component({
   selector: 'howell-details-chart',
@@ -51,8 +36,7 @@ type EChartOptions = echarts.ComposeOption<
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, TimeData<IModel>[]>, OnChanges
-{
+  implements OnInit, IComponent<IModel, TimeData<IModel>[]>, OnChanges {
   @Input()
   business!: IBusiness<IModel, TimeData<IModel>[]>;
   @Input()
@@ -65,11 +49,12 @@ export class DetailsChartComponent
   units: SelectItem[] = [];
 
   ChartType = ChartType;
-  chartType: ChartType = ChartType.line;
+  chartType: ChartType = ChartType.bar;
   charts: SelectItem[] = [];
 
   config = {
-    line: new LineConfig(this.unit, this.date),
+    line: new ChartConfig(this.unit, this.date),
+    bar: new ChartConfig(this.unit, this.date),
     dateTimePicker: new DateTimePickerConfig(),
   };
 
@@ -115,22 +100,52 @@ export class DetailsChartComponent
       this.data.unshift(first);
     }
     console.log(this.data);
-    this.config.line.options = this.config.line.getOption(this.unit, this.date);
-    this.config.line.merge = {
-      series: [
-        {
-          type: 'line',
-          name: '单位(起)',
-          data: this.data.map((x) => x.value),
-          areaStyle: {},
-          label: {
-            formatter: (params: CallbackDataParams) => {
-              return params.value.toString();
+    switch (this.chartType) {
+      case ChartType.line:
+        this.config.line.options = this.config.line.getOption(this.unit, this.date);
+        this.config.line.merge = {
+          series: [
+            {
+              type: 'line',
+              name: '单位(起)',
+              data: this.data.map((x) => x.value),
+              areaStyle: {},
+              label: {
+                formatter: (params: CallbackDataParams) => {
+                  return params.value.toString();
+                },
+              },
             },
-          },
-        },
-      ],
-    };
+          ],
+        };
+        break;
+      case ChartType.bar:
+        this.config.bar.options = this.config.bar.getOption(this.unit, this.date);
+        this.config.bar.merge = {
+          series: [
+            {
+              type: 'bar',
+              name: '单位(起)',
+              data: this.data.map((x) => x.value),
+              label: {
+                show: true,
+                position: 'top',
+                color: "#7d90bc",
+                fontSize: "16px",
+                textBorderWidth: 0,
+                formatter: (params: CallbackDataParams) => {
+                  return params.value.toString();
+                },
+              },
+            },
+          ],
+        };
+        break;
+
+      default:
+        break;
+    }
+
   }
 
   changeDate(date: Date) {
@@ -221,87 +236,10 @@ export class DetailsChartComponent
   onchartselected(item: SelectItem) {
     this.chartType = item.value;
   }
-}
 
-export interface DetailsChartLoadOpts {
-  stationId: string;
-  date: Date;
-  unit: TimeUnit;
-}
-class LineConfig {
-  constructor(unit: TimeUnit, date: Date) {
-    this.options = this.getOption(unit, date);
-  }
-
-  theme: EChartsTheme = EChartsTheme.adsame;
-
-  getOption(unit: TimeUnit, date: Date): EChartOptions {
-    let x = this.getX(unit, date);
-    return {
-      legend: {
-        formatter: function () {
-          return '单位(起)';
-        },
-      },
-      title: {
-        show: false,
-      },
-      tooltip: {},
-      xAxis: x,
-      yAxis: {
-        type: 'value',
-      },
-    };
-  }
-
-  options: EChartOptions;
-
-  merge: EChartOptions = {};
-
-  getX(unit: TimeUnit, date: Date): XAXisOption | undefined {
-    let interval: IntervalParams;
-    switch (unit) {
-      case TimeUnit.Hour:
-        return {
-          mainType: 'xAxis',
-          type: 'category',
-
-          data: [
-            ...Array.from(
-              { length: 25 },
-              (v, i) => i.toString().padStart(2, '0') + ':00'
-            ),
-          ],
-        };
-      case TimeUnit.Month:
-        interval = IntervalParams.allMonth(date);
-
-        return {
-          mainType: 'xAxis',
-          type: 'category',
-
-          data: [
-            ...Array.from(
-              {
-                length:
-                  interval.EndTime.getDate() - interval.BeginTime.getDate() + 1,
-              },
-              (v, i) => (i + 1).toString() + '日'
-            ),
-          ],
-        };
-      case TimeUnit.Week:
-        interval = IntervalParams.allWeek(date);
-
-        return {
-          mainType: 'xAxis',
-          type: 'category',
-
-          data: [...Array.from({ length: 7 }, (v, i) => Language.Week(i + 1))],
-        };
-      default:
-        break;
-    }
-    return undefined;
+  search() {
+    this.loadData();
   }
 }
+
+

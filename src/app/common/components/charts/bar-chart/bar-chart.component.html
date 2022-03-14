@@ -1,6 +1,5 @@
-<div class="bar-chart">
-    <div class="bar-chart-content">
-      <div #echarts class="echarts"></div>
-      <!-- <div class="height98 fill-width p-r-20" [options]="option" EChartLine></div> -->
+<div class="line-chart" (resized)="onResized($event)">
+    <div class="chart-container" style="height:100%" id="chartContainer" #chartContainer echarts [options]="options" [theme]="theme"
+        [loading]="true" [merge]="merge">
     </div>
 </div>

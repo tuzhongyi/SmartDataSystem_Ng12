@@ -10,7 +10,8 @@ import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-s
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
-import { DetailsChartLoadOpts } from '../../../charts/details-chart/details-chart.component';
+import { DetailsChartLoadOpts } from '../../../charts/details-chart/details-chart.option';
+
 import { GarbageStationWindowDetailsConverter } from './details-chart.converter';
 
 @Injectable()

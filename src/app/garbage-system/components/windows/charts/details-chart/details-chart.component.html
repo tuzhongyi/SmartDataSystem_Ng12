@@ -37,7 +37,7 @@
         >
         </howell-garbage-station-filter>
       </div>
-      <button class="hw-blue-btn search">查询</button>
+      <button class="hw-blue-btn search" (click)="search()">查询</button>
       <button class="hw-blue-btn excel">导出</button>
       <button class="hw-blue-btn csv">CSV</button>
     </div>
@@ -60,7 +60,11 @@
       [options]="config.line.options"
       [merge]="config.line.merge"
     ></howell-line-chart>
-    <howell-bar-chart *ngIf="chartType === ChartType.bar" [data]="data" [unit]="unit" [date]="date">
-      </howell-bar-chart>
+    <howell-bar-chart
+    *ngIf="chartType === ChartType.bar"
+    [theme]="config.bar.theme"
+      [options]="config.bar.options"
+      [merge]="config.bar.merge"
+    ></howell-bar-chart>
   </div>
 </div>

@@ -11,8 +11,7 @@ import { EventNumberStatistic } from 'src/app/network/model/event-number-statist
 import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
-import { DetailsChartLoadOpts } from '../../charts/details-chart/details-chart.component';
-import { GarbageStationWindowDetailsBusiness } from '../../garbage-station-window/tab-items/garbage-station-window-details/details-chart.business';
+import { DetailsChartLoadOpts } from '../../charts/details-chart/details-chart.option';
 import { GarbageStationWindowDetailsFilter } from '../../garbage-station-window/tab-items/garbage-station-window-details/details-chart.converter';
 
 @Injectable()
@@ -33,6 +32,7 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
   eventType:EventType=EventType.IllegalDrop;
 
   async load(opts: DetailsChartLoadOpts): Promise<TimeData<number>[]> {
+    debugger;
     let interval: IntervalParams = new IntervalParams();
     switch (opts.unit) {
       case TimeUnit.Hour:
@@ -50,7 +50,7 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     }
     let data = await this.getData(opts.stationId, interval, opts.unit);
     let filter  = this.getFilter(this.eventType)
-    let model = this.Converter.Convert(data, filter);
+    let model = this.Converter.Convert(data, this.eventType);
     return model;
   }
 
