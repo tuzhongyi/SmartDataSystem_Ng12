@@ -4,6 +4,7 @@ import { UserResourceType } from "src/app/enum/user-resource-type.enum";
 export interface DetailsChartLoadOptions {
     stationId?: string;
     divisionId?:string;
-    date: Date;
+    begin: Date;
+    end:Date;
     unit: TimeUnit;
   }

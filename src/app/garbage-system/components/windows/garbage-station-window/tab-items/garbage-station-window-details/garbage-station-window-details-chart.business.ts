@@ -31,20 +31,8 @@ export class GarbageStationWindowDetailsBusiness
   loading?: EventEmitter<void> | undefined;
   async load(opts: DetailsChartLoadOptions): Promise<number[]> {
     let interval: IntervalParams = new IntervalParams();
-    switch (opts.unit) {
-      case TimeUnit.Hour:
-      case TimeUnit.Day:
-        interval = IntervalParams.allDay(opts.date);
-        break;
-      case TimeUnit.Week:
-        interval = IntervalParams.allWeek(opts.date);
-        break;
-      case TimeUnit.Month:
-        interval = IntervalParams.allMonth(opts.date);
-        break;
-      default:
-        break;
-    }
+    interval.BeginTime = opts.begin;
+    interval.EndTime = opts.end;
     let type = opts.stationId?UserResourceType.Station : UserResourceType.None;
     let id = opts.stationId??opts.divisionId;
     if(!id){

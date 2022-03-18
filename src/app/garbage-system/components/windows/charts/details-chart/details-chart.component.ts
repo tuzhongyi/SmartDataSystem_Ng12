@@ -9,7 +9,7 @@ import {
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { IModel } from 'src/app/network/model/model.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness, IExportBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import {
   DateTimePickerConfig,
@@ -29,6 +29,8 @@ import { Language } from 'src/app/global/tool/language';
 import { ChartConfig } from './details-chart.option';
 import { DetailsChartLoadOptions } from './details-chart.model';
 import { wait } from 'src/app/common/tools/tool';
+import { HowellExcel, IExcelValue } from 'src/app/common/tools/hw-excel';
+import { formatDate } from '@angular/common';
 
 
 
@@ -44,20 +46,20 @@ export class DetailsChartComponent
   @Input()
   eventType?: EventType;
   @Input()
-  stationId?: string;
+  station?: GarbageStation;
 
 
 
-  private _divisionId?: string;
-  public get divisionId(): string | undefined {
-    if (this._divisionId) {
-      return this._divisionId;
+  private _division?: Division;
+  public get division(): Division | undefined {
+    if (this._division) {
+      return this._division;
     }
     if (this.committees) {
-      return this.committees.Id
+      return this.committees
     }
     else if (this.county) {
-      return this.county.Id;
+      return this.county;
     }
     else {
       return undefined;
@@ -65,8 +67,8 @@ export class DetailsChartComponent
   }
 
   @Input()
-  public set divisionId(v: string | undefined) {
-    this._divisionId = v;
+  public set division(v: Division | undefined) {
+    this._division = v;
   }
 
 
@@ -108,7 +110,7 @@ export class DetailsChartComponent
     this.initUnits();
     this.initCharts();
     wait(()=>{
-      return !!this.stationId || !!this.divisionId
+      return !!this.station || !!this.division
     },()=>{
       this.loadData();
     })
@@ -118,12 +120,13 @@ export class DetailsChartComponent
 
 
   async loadData() {
-
+    let interval = this.getInterval();
     this.options = {
-      stationId: this.stationId,
+      stationId: this.station?.Id,
       unit: this.unit,
-      date: this.date,
-      divisionId: this.stationId ? undefined : this.divisionId
+      begin: interval.params.BeginTime,
+      end:interval.params.EndTime,
+      divisionId: this.station ? undefined : this.division?.Id
     };
     console.log(this.options)
     this.data = await this.business.load(this.options);
@@ -269,10 +272,8 @@ export class DetailsChartComponent
     this.committees = division;
   }
 
-  onStationSelected(station?: GarbageStation) {
-    if (station) {
-      this.stationId = station.Id;
-    }
+  onStationSelected(station?: GarbageStation) {    
+      this.station = station;    
   }
 
   onchartselected(item: SelectItem) {
@@ -283,6 +284,91 @@ export class DetailsChartComponent
   search() {
     this.loadData();
   }
+
+  private getTitle(){
+    let unit = Language.TimeUnit(this.unit)
+    let type = this.eventType? Language.EventType(this.eventType) : "";
+    let name = this.getName();
+   
+    let interval = this.getInterval();
+
+
+    return `${interval.language} ${name} ${type} ${unit}`
+  }
+  private getName(){
+    return this.station?this.station.Name :this.division?this.division.Name:"";    
+  }
+  private getInterval(){
+    let interval = {
+      params:new IntervalParams(),
+      language:""
+    } 
+    switch (this.unit) {
+      case TimeUnit.Hour:
+      case TimeUnit.Day:
+        interval.params = IntervalParams.allDay(this.date);
+        interval.language  = Language.Date(this.date);
+        break;
+      case TimeUnit.Week:
+        interval.params = IntervalParams.allWeek(this.date);
+        interval.language = Language.Duration(interval.params.BeginTime, interval.params.EndTime)
+        break;
+      case TimeUnit.Month:
+        interval.params = IntervalParams.allMonth(this.date);
+        interval.language = Language.Duration(interval.params.BeginTime, interval.params.EndTime)
+        break;
+      default:
+        break;
+    }
+    return interval;
+  }
+
+  exportExcel(){
+    let excel = new HowellExcel();
+    let title = this.getTitle();
+    let datas = this.convert(this.data)
+    
+    excel.setData(datas)
+    excel.save(title);
+  }
+  convert<T>(datas:TimeData<T>[]){
+    let array:IExcelValue[] = [];
+    let titles = ["序号","日期","时间",this.getName()]
+    
+    array.push(...this.convertTitles(titles))
+    let index = 0
+    let columnDatas = datas.map(x=>{
+      return {
+        column:++index,
+        value:x.value as unknown as number
+      }
+    })
+    for (let i = 0; i < columnDatas.length; i++) {
+      const column = columnDatas[i];
+      array.push({
+        ...column,
+        row:i+2,        
+      })
+    }
+    return array;
+  }
+  convertTitles(titles:string[])
+  {
+    let array:IExcelValue[] = [];
+    for (let i = 0; i < titles.length; i++) {
+      const title = titles[i];
+      array.push({
+        row:1,
+        column:i+1,
+        value:title
+      })
+    }
+    return array;
+  }
+  
 }
+
+
+
 
 

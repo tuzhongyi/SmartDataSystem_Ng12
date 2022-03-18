@@ -52,21 +52,9 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
   eventType:EventType=EventType.IllegalDrop;
 
   async load(opts: DetailsChartLoadOptions): Promise<TimeData<number>[]> {    
-    let interval: IntervalParams = new IntervalParams();
-    switch (opts.unit) {
-      case TimeUnit.Hour:
-      case TimeUnit.Day:
-        interval = IntervalParams.allDay(opts.date);
-        break;
-      case TimeUnit.Week:
-        interval = IntervalParams.allWeek(opts.date);
-        break;
-      case TimeUnit.Month:
-        interval = IntervalParams.allMonth(opts.date);
-        break;
-      default:
-        break;
-    }
+        let interval = new IntervalParams()
+    interval.BeginTime = opts.begin;
+    interval.EndTime = opts.end;
     let type = opts.stationId?UserResourceType.Station : UserResourceType.None;
     let id = opts.stationId??opts.divisionId;
     if(!id){
