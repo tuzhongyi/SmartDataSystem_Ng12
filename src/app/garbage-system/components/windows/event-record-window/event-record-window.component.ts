@@ -2,9 +2,11 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   ImageControlModel,
@@ -14,7 +16,7 @@ import { EventRecordViewModel } from 'src/app/common/components/tables/event-rec
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
-import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details.business';
+import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 
 @Component({
@@ -29,8 +31,7 @@ import { EventRecordWindowRecordBusiness } from './business/event-record-window-
 })
 export class EventRecordWindowComponent
   extends WindowComponent
-  implements OnInit, OnDestroy
-{
+  implements OnInit, OnDestroy, OnChanges {
   @Input()
   type = EventType.IllegalDrop;
 
@@ -46,10 +47,15 @@ export class EventRecordWindowComponent
     super();
     this.details.eventType = this.type;
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.type) {
+      this.details.eventType = this.type;
+    }
+  }
 
   load: EventEmitter<string> = new EventEmitter();
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnDestroy(): void {
     this.index = 0;

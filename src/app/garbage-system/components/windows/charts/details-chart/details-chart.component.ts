@@ -26,7 +26,9 @@ import { ChartType } from 'src/app/enum/chart-type.enum';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { TimeData } from 'src/app/common/components/charts/chart.model';
 import { Language } from 'src/app/global/tool/language';
-import { ChartConfig, DetailsChartLoadOpts } from './details-chart.option';
+import { ChartConfig } from './details-chart.option';
+import { DetailsChartLoadOptions } from './details-chart.model';
+import { wait } from 'src/app/common/tools/tool';
 
 
 
@@ -41,8 +43,36 @@ export class DetailsChartComponent
   business!: IBusiness<IModel, TimeData<IModel>[]>;
   @Input()
   eventType?: EventType;
-
+  @Input()
   stationId?: string;
+
+
+
+  private _divisionId?: string;
+  public get divisionId(): string | undefined {
+    if (this._divisionId) {
+      return this._divisionId;
+    }
+    if (this.committees) {
+      return this.committees.Id
+    }
+    else if (this.county) {
+      return this.county.Id;
+    }
+    else {
+      return undefined;
+    }
+  }
+
+  @Input()
+  public set divisionId(v: string | undefined) {
+    this._divisionId = v;
+  }
+
+
+
+  options?: DetailsChartLoadOptions
+
   date: Date = new Date();
 
   unit: TimeUnit = TimeUnit.Hour;
@@ -77,17 +107,26 @@ export class DetailsChartComponent
   async ngOnInit() {
     this.initUnits();
     this.initCharts();
-    this.loadData();
+    wait(()=>{
+      return !!this.stationId || !!this.divisionId
+    },()=>{
+      this.loadData();
+    })
+    
   }
 
+
+
   async loadData() {
-    if (!this.stationId) return;
-    let opts: DetailsChartLoadOpts = {
+
+    this.options = {
       stationId: this.stationId,
       unit: this.unit,
       date: this.date,
+      divisionId: this.stationId ? undefined : this.divisionId
     };
-    this.data = await this.business.load(opts);
+    console.log(this.options)
+    this.data = await this.business.load(this.options);
     if (this.unit === TimeUnit.Hour) {
       let first: TimeData<IModel> = {
         time: new Date(
@@ -127,6 +166,7 @@ export class DetailsChartComponent
               type: 'bar',
               name: '单位(起)',
               data: this.data.map((x) => x.value),
+              barWidth:"32px",
               label: {
                 show: true,
                 position: 'top',
@@ -201,13 +241,7 @@ export class DetailsChartComponent
     );
   }
   initCharts() {
-    this.charts.push(
-      new SelectItem({
-        key: ChartType.line.toString(),
-        value: ChartType.line,
-        language: '折线图',
-      })
-    );
+    
     this.charts.push(
       new SelectItem({
         key: ChartType.bar.toString(),
@@ -215,26 +249,35 @@ export class DetailsChartComponent
         language: '柱状图',
       })
     );
+    this.charts.push(
+      new SelectItem({
+        key: ChartType.line.toString(),
+        value: ChartType.line,
+        language: '折线图',
+      })
+    );
   }
 
   county?: Division;
   committees?: Division;
 
-  onCountySelected(division: Division) {
+  onCountySelected(division?: Division) {
     this.county = division;
   }
 
-  onCommitteesSelected(division: Division) {
+  onCommitteesSelected(division?: Division) {
     this.committees = division;
   }
 
-  onStationSelected(station: GarbageStation) {
-    this.stationId = station.Id;
-    this.loadData();
+  onStationSelected(station?: GarbageStation) {
+    if (station) {
+      this.stationId = station.Id;
+    }
   }
 
   onchartselected(item: SelectItem) {
     this.chartType = item.value;
+    this.loadData()
   }
 
   search() {

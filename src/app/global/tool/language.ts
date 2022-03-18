@@ -41,7 +41,7 @@ export class Language {
 
   static Week(day:number){
     let name = ["日","一","二","三","四","五","六", "日"];
-    return `星期${name[day]}`
+    return `周${name[day]}`
   }
 
 

@@ -20,41 +20,32 @@ export class SelectControlComponent implements OnInit, OnChanges {
 
   @Input()
   load?: EventEmitter<any>;
-
   @Output()
   select: EventEmitter<SelectItem> = new EventEmitter();
+  @Input()
+  cannull:boolean = false;
+
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {    
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
         this.load.subscribe((x) => {
-          if (x) {
-            this.selected = x;
-          } else if (this.data && this.data.length > 0) {
-            this.selected = this.data[0];
-          } else {
-          }
+          if (x) {            
+            this.onselect(x)
+          } 
         });
-      }
-    }
-    if (changes.data) {
-      if (this.data && this.data.length > 0) {
-        this.selected = this.data[0];
       }
     }
   }
 
   ngOnInit(): void {
-    if (this.data && this.data.length > 0) {
-      if (!this.selected) {
-        this.selected = this.data[0];
-        this.select.emit(this.selected);
-      }
-    }
-
     window.addEventListener('click', () => {
       this.opened = false;
     });
+    if(this.data && this.data.length > 0 && !this.load){
+      
+      this.onselect(this.data[0])
+    }
   }
 
   selected?: SelectItem;
@@ -65,10 +56,17 @@ export class SelectControlComponent implements OnInit, OnChanges {
     this.opened = !this.opened;
     event.stopPropagation();
   }
-  onselect(event: Event, item: SelectItem) {
+  onselect(item: SelectItem, event?: Event) {
     if (this.selected === item) return;
     this.selected = item;
     this.opened = false;
     this.select.emit(item);
+  }
+
+  clear(event:Event){
+    this.selected = undefined;
+    event.cancelBubble = true;
+    this.opened = false;
+    this.select.emit(undefined);
   }
 }

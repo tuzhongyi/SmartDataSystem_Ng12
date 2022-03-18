@@ -24,13 +24,15 @@ export class DivisionFilterComponent
   parentId?: string;
   @Output()
   select: EventEmitter<Division> = new EventEmitter();
+  @Input()
+  default: boolean = false;
 
   title?: string;
   items: SelectItem[] = [];
 
   business: IBusiness<IModel, SelectItem[]>;
 
-  loading: EventEmitter<Division | undefined> = new EventEmitter();
+  loading: EventEmitter<SelectItem | undefined> = new EventEmitter();
 
   constructor(business: DivisionFilterBusiness) {
     this.business = business;
@@ -39,10 +41,21 @@ export class DivisionFilterComponent
   async ngOnInit() {
     this.items = await this.business.load(this.type, this.parentId);
     this.title = Language.DivisionType(this.type);
-    this.loading.emit();
+    if (this.default) {
+      let first: SelectItem | undefined = undefined;
+      if (this.items && this.items.length > 0) {
+        this.loading.emit(this.items[0]);
+      }
+
+    }
   }
 
   onselected(selected: SelectItem) {
-    this.select.emit(selected.value);
+    if (selected) {
+      this.select.emit(selected.value);
+    }
+    else {
+      this.select.emit()
+    }
   }
 }

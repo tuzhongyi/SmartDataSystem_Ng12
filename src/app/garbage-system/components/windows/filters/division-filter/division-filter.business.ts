@@ -16,7 +16,7 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 export class DivisionFilterBusiness
   implements IBusiness<Division[], SelectItem[]>
 {
-  constructor(private divisionService: DivisionRequestService) {}
+  constructor(private divisionService: DivisionRequestService) { }
   Converter: IConverter<Division[], SelectItem[]> =
     new DivisionFilterConverter();
   subscription?: ISubscription | undefined;
@@ -26,7 +26,7 @@ export class DivisionFilterBusiness
     parentId?: string
   ): Promise<SelectItem[]> {
     let data = await this.getData(divisionType, parentId);
-    debugger;
+    ;
     let model = this.Converter.Convert(data);
     return model;
   }

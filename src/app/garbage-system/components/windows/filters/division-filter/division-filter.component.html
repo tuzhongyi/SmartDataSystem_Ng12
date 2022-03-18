@@ -4,6 +4,7 @@
     class="list-type-select"
     [data]="items"
     [load]="loading"
+    [cannull]="!default"
     (select)="onselected($event)"
   ></app-select-control>
 </div>

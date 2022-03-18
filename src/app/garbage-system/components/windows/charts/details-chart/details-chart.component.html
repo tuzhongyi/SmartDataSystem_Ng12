@@ -17,7 +17,17 @@
       </div>
       <div class="filter-item" *ngIf="userResourceType === UserResourceType.City">
         <howell-division-filter
+          [type]="DivisionType.City"
+          [default]="userResourceType === UserResourceType.City"
+          (select)="onCountySelected($event)"
+          
+        >
+        </howell-division-filter>
+      </div>
+      <div class="filter-item">
+        <howell-division-filter
           [type]="DivisionType.County"
+          [default]="userResourceType === UserResourceType.County"
           (select)="onCountySelected($event)"
         >
         </howell-division-filter>

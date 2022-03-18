@@ -3,16 +3,19 @@
     <div class="select-head" (click)="toggle($event)">
       <div
         class="select-item__title"
-        [innerHtml]="selected ? selected.language : ''"
+        [innerHtml]="selected ? selected.language : '请选择'"
       ></div>
+      <div class="select-item__controls">
+      <div *ngIf="cannull && !!selected" class="clear howell-icon-Close" (click)="clear($event)"></div>
       <div class="select-item__button"></div>
+    </div>
     </div>
     <ng-container *ngIf="opened">
       <div class="select-body">
         <ng-container *ngFor="let item of data">
           <div
             class="select-option"
-            (click)="onselect($event, item)"
+            (click)="onselect(item, $event)"
             [innerHtml]="item.language"
           ></div>
         </ng-container>

@@ -12,6 +12,7 @@ import {
 import { XAXisOption } from "echarts/types/dist/shared";
 import { IntervalParams } from "src/app/network/request/IParams.interface";
 import { Language } from "src/app/global/tool/language";
+import { UserResourceType } from "src/app/enum/user-resource-type.enum";
 
 type EChartOptions = echarts.ComposeOption<
   | TitleComponentOption
@@ -23,11 +24,7 @@ type EChartOptions = echarts.ComposeOption<
   | XAXisOption
 >;
 
-export interface DetailsChartLoadOpts {
-    stationId: string;
-    date: Date;
-    unit: TimeUnit;
-  }
+
  export class ChartConfig {
     constructor(unit: TimeUnit, date: Date) {
       this.options = this.getOption(unit, date);

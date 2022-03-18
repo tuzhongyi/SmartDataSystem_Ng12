@@ -33,6 +33,19 @@
       color: #cfd7ff;
       font-size: 18px;
     }
+ .select-item__controls{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   .clear{
+     display: none;
+
+     &:hover{
+       color: white;
+     }
+   }
+   
+ }
 
     .select-item__button {
       width: 0;
@@ -85,6 +98,10 @@
         background-color: #1e90ff;
       }
     }
+  }
+
+  &:hover .select-head .select-item__controls .clear{
+    display: block;
   }
 }
 
