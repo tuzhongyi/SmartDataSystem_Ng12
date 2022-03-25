@@ -34,7 +34,7 @@ export class TreeService {
     private _stationRequest: GarbageStationRequestService,
     private _converter: TreeConverter
   ) {
-    console.log('tree service');
+    // console.log('tree service');
   }
 
   async initialize(
@@ -72,7 +72,7 @@ export class TreeService {
       });
     } catch (e) {}
 
-    console.log(this._nestedNodeMap);
+    // console.log(this._nestedNodeMap);
 
     return nodes;
   }

@@ -1,8 +1,9 @@
 <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [trackBy]="trackBy" #tree>
-  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [class.high-light]="highLight(node)">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding [matTreeNodePaddingIndent]="20"
+    [class.high-light]="highLight(node)">
     <ng-container *ngIf="node.expandable">
       <button class="tree-select" matTreeNodeToggle (click)="loadChildren(node)"
-        [style.margin-left.px]="node.level==0 ?10:0">
+        [style.margin-left.px]="node.level==0 ?0:0">
         <div class="select" [class.expanded]="treeControl.isExpanded(node)"></div>
       </button>
     </ng-container>
