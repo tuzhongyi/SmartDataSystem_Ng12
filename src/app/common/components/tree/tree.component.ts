@@ -64,7 +64,8 @@ export class TreeComponent implements OnInit {
       node.hasChildren,
       node.parentId,
       this._nodeIconType.get(node.type),
-      node.type
+      node.type,
+      node.data
     );
     this._flatNodeMap.set(node.id, newNode);
     return newNode;

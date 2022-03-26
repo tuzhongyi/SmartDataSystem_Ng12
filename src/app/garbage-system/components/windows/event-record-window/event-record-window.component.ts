@@ -45,12 +45,8 @@ export class EventRecordWindowComponent
     public details: EventRecordWindowDetailsBusiness
   ) {
     super();
-    this.details.eventType = this.type;
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.type) {
-      this.details.eventType = this.type;
-    }
   }
 
   load: EventEmitter<string> = new EventEmitter();

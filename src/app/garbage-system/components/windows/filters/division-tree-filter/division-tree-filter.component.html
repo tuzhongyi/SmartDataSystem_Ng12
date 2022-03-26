@@ -1,4 +1,4 @@
-<div class="division-station-tree-filter">
+<div class="division-tree-filter">
   <div class="selected" (click)="onclick($event)">
     <label #selected>{{ current ? current.name : "请选择" }}</label>
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
@@ -6,7 +6,12 @@
 
   <div class="tree" [class.right]="align == HorizontalAlign.right" [class.left]="align == HorizontalAlign.left"
     [ngStyle]="style" *ngIf="expand">
-    <app-tree [treeServiceProvider]="treeServiceProvider" [treeSelectModel]="treeSelectModel" [resourceType]="type"
-      (selectTree)="selectTree($event)" [depth]="1"></app-tree>
+    <app-tree
+      [treeServiceProvider]="treeServiceProvider"
+      [treeSelectModel]="treeSelectModel"
+      [resourceType]="type"
+      (selectTree)="selectTree($event)"
+      [depth]="1"
+    ></app-tree>
   </div>
 </div>

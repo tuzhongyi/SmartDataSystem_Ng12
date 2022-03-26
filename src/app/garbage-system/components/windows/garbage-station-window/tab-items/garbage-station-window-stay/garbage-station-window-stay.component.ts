@@ -65,8 +65,8 @@ export class GarbageStationWindowStayComponent
       this.chartLoad.emit();
     }
   }
-  onstationselect(stationId: string) {
-    this.stationId = stationId;
+  onstationselect(station: GarbageStation) {
+    this.stationId = station.Id;
     this.loadData(this.stationId, this.date);
     this.chartLoad.emit();
   }

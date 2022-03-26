@@ -13,30 +13,31 @@ import {
 } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
-
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
+import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 
 @Component({
-  selector: 'howell-division-station-tree-filter',
-  templateUrl: './division-station-tree-filter.component.html',
-  styleUrls: ['./division-station-tree-filter.component.less'],
+  selector: 'howell-division-tree-filter',
+  templateUrl: './division-tree-filter.component.html',
+  styleUrls: ['./division-tree-filter.component.less'],
 })
-export class DivisionStationTreeFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+export class DivisionTreeFilterComponent
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input()
   type: UserResourceType;
 
   @Output()
-  select: EventEmitter<GarbageStation> = new EventEmitter();
+  select: EventEmitter<Division> = new EventEmitter();
 
   @Input()
-  station?: GarbageStation;
+  division?: Division;
 
   @ViewChild('selected')
   input?: ElementRef<HTMLLabelElement>;
@@ -44,26 +45,28 @@ export class DivisionStationTreeFilterComponent
   @Input()
   align: HorizontalAlign = HorizontalAlign.right;
 
-  treeServiceProvider = TreeServiceEnum.Station;
+  treeServiceProvider = TreeServiceEnum.Division;
   treeSelectModel = SelectEnum.Single;
 
   current?: FlatTreeNode;
 
-  expand = true;
+  expand = false;
 
   style = {
     top: '0',
   };
+
   HorizontalAlign = HorizontalAlign;
+
   constructor(private store: StoreService) {
     this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.station && this.station) {
-      this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3, undefined, undefined, undefined, undefined, this.station);
+    if (changes.division && this.division) {
+      this.current = new FlatTreeNode(this.division.Id, this.division.Name, 3, undefined, undefined, undefined, undefined, this.division);
     }
   }
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   ngAfterViewInit(): void {
     if (this.input) {
@@ -81,8 +84,7 @@ export class DivisionStationTreeFilterComponent
     });
   }
 
-  ngOnInit(): void {    
-  }
+  ngOnInit(): void {}
 
   selectTree(nodes: FlatTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {

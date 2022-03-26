@@ -7,6 +7,8 @@ import {
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { StoreService } from 'src/app/global/service/store.service';
+import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GetDivisionVolumesParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -20,28 +22,34 @@ import { EventRecordWindowDetailsConverter } from './event-record-window-details
 
 @Injectable()
 export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberStatistic[], TimeData<number>[]>{
-  constructor(private stationService:GarbageStationRequestService, private divisionService:DivisionRequestService ){
+  constructor(
+    private stationService: GarbageStationRequestService,
+    private divisionService: DivisionRequestService,
+    private store: StoreService
+  ) {
 
   }
   Converter: IConverter<EventNumberStatistic[], TimeData<number>[]> = new EventRecordWindowDetailsConverter();
-  
-  async getData(id:string, type:UserResourceType, interval:IntervalParams, unit:TimeUnit): Promise<EventNumberStatistic[]> {
+
+  async getData(id: string, type: UserResourceType, interval: IntervalParams, unit: TimeUnit): Promise<EventNumberStatistic[]> {
     switch (type) {
       case UserResourceType.Station:
-        return this.getStationData(id, interval, unit);    
+        return this.getStationData(id, interval, unit);
       default:
         return this.getDivisionData(id, interval, unit);
     }
   }
 
-  async getStationData(stationId:string, interval:IntervalParams, unit:TimeUnit){
+  division?: Division
+
+  async getStationData(stationId: string, interval: IntervalParams, unit: TimeUnit) {
     let params = new GetGarbageStationVolumesParams()
     params = Object.assign(params, interval)
     params.TimeUnit = unit;
-      let paged = await this.stationService.eventNumber.history.list(stationId, params)
-      return paged.Data;
+    let paged = await this.stationService.eventNumber.history.list(stationId, params)
+    return paged.Data;
   }
-  async getDivisionData(divisionId:string, interval:IntervalParams, unit:TimeUnit){
+  async getDivisionData(divisionId: string, interval: IntervalParams, unit: TimeUnit) {
     let params = new GetDivisionVolumesParams()
     params = Object.assign(params, interval)
     params.TimeUnit = unit;
@@ -49,24 +57,28 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     return paged.Data;
   }
 
-  eventType:EventType=EventType.IllegalDrop;
+  async loadDefault() {
+    this.division = await this.divisionService.cache.get(this.store.divisionId);
+  }
 
-  async load(opts: DetailsChartLoadOptions): Promise<TimeData<number>[]> {    
-        let interval = new IntervalParams()
+  async load(opts: DetailsChartLoadOptions): Promise<TimeData<number>[]> {
+    this.loadDefault()
+
+    let interval = new IntervalParams()
     interval.BeginTime = opts.begin;
     interval.EndTime = opts.end;
-    let type = opts.stationId?UserResourceType.Station : UserResourceType.None;
-    let id = opts.stationId??opts.divisionId;
-    if(!id){
+    let type = opts.stationId ? UserResourceType.Station : UserResourceType.None;
+    let id = opts.stationId ?? opts.divisionId;
+    if (!id) {
       throw new Error("GarbageStationWindowDetailsBusiness id is undefined")
     }
-    let data = await this.getData(id, type, interval, opts.unit);    
-    let model = this.Converter.Convert(data, this.eventType);
+
+    let data = await this.getData(id, type, interval, opts.unit);
+    let model = this.Converter.Convert(data, opts.type);
     return model;
   }
 
-  getFilter(eventType:EventType)
-  {
+  getFilter(eventType: EventType) {
     switch (eventType) {
       case EventType.MixedInto:
         return GarbageStationWindowDetailsFilter.MixedIntoEvent;

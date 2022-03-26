@@ -177,7 +177,8 @@ export class TreeConverter
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       item.Nodes.length > 0,
       parentId,
-      true
+      true,
+      item
     );
     return node;
   }
@@ -189,12 +190,14 @@ export class TreeConverter
       item.Description,
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       !item.IsLeaf,
-      item.ParentId
+      item.ParentId,
+      undefined,
+      item
     );
     return node;
   }
   private _fromDivisionManage(model: DivisionManageModel) {
-    const node = new NestedTreeNode(model.Id, model.Name, model.Description);
+    const node = new NestedTreeNode(model.Id, model.Name, model.Description, undefined, undefined, undefined, undefined, model);
     return node;
   }
   private _fromGarbageStation(item: GarbageStation) {
@@ -204,7 +207,9 @@ export class TreeConverter
       item.Description,
       UserResourceType.Station,
       false,
-      item.DivisionId
+      item.DivisionId,
+      undefined,
+      item
     );
     return node;
   }

@@ -9,7 +9,7 @@ import {
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { IModel } from 'src/app/network/model/model.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IBusiness, IExportBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import {
   DateTimePickerConfig,
@@ -31,7 +31,7 @@ import { DetailsChartLoadOptions } from './details-chart.model';
 import { wait } from 'src/app/common/tools/tool';
 import { HowellExcel, IExcelValue } from 'src/app/common/tools/hw-excel';
 import { formatDate } from '@angular/common';
-
+import { HorizontalAlign } from 'src/app/enum/direction.enum';
 
 
 @Component({
@@ -44,32 +44,37 @@ export class DetailsChartComponent
   @Input()
   business!: IBusiness<IModel, TimeData<IModel>[]>;
   @Input()
-  eventType?: EventType;
+  eventType: EventType = EventType.IllegalDrop;
   @Input()
   station?: GarbageStation;
+  
 
-
-
-  private _division?: Division;
-  public get division(): Division | undefined {
-    if (this._division) {
-      return this._division;
-    }
-    if (this.committees) {
-      return this.committees
-    }
-    else if (this.county) {
-      return this.county;
-    }
-    else {
-      return undefined;
-    }
-  }
+  treeAlign = HorizontalAlign.left
 
   @Input()
-  public set division(v: Division | undefined) {
-    this._division = v;
-  }
+  division?:Division
+
+
+  // private _division?: Division;
+  // public get division(): Division | undefined {
+  //   if (this._division) {
+  //     return this._division;
+  //   }
+  //   if (this.committees) {
+  //     return this.committees
+  //   }
+  //   else if (this.county) {
+  //     return this.county;
+  //   }
+  //   else {
+  //     return undefined;
+  //   }
+  // }
+
+  // @Input()
+  // public set division(v: Division | undefined) {
+  //   this._division = v;
+  // }
 
 
 
@@ -109,12 +114,12 @@ export class DetailsChartComponent
   async ngOnInit() {
     this.initUnits();
     this.initCharts();
-    wait(()=>{
+    wait(() => {
       return !!this.station || !!this.division
-    },()=>{
+    }, () => {
       this.loadData();
     })
-    
+
   }
 
 
@@ -125,23 +130,24 @@ export class DetailsChartComponent
       stationId: this.station?.Id,
       unit: this.unit,
       begin: interval.params.BeginTime,
-      end:interval.params.EndTime,
-      divisionId: this.station ? undefined : this.division?.Id
+      end: interval.params.EndTime,
+      divisionId: this.station ? undefined : this.division?.Id,
+      type: this.eventType
     };
     console.log(this.options)
     this.data = await this.business.load(this.options);
-    if (this.unit === TimeUnit.Hour) {
-      let first: TimeData<IModel> = {
-        time: new Date(
-          this.date.getFullYear(),
-          this.date.getMonth(),
-          this.date.getDate()
-        ),
-        value: 0,
-      };
-      this.data.unshift(first);
-    }
-    console.log(this.data);
+    // if (this.unit === TimeUnit.Hour) {
+    //   let first: TimeData<IModel> = {
+    //     time: new Date(
+    //       this.date.getFullYear(),
+    //       this.date.getMonth(),
+    //       this.date.getDate()
+    //     ),
+    //     value: 0,
+    //   };
+    //   this.data.unshift(first);
+    // }
+    // console.log(this.data);
     switch (this.chartType) {
       case ChartType.line:
         this.config.line.options = this.config.line.getOption(this.unit, this.date);
@@ -169,7 +175,7 @@ export class DetailsChartComponent
               type: 'bar',
               name: '单位(起)',
               data: this.data.map((x) => x.value),
-              barWidth:"32px",
+              barWidth: "32px",
               label: {
                 show: true,
                 position: 'top',
@@ -184,7 +190,6 @@ export class DetailsChartComponent
           ],
         };
         break;
-
       default:
         break;
     }
@@ -244,7 +249,7 @@ export class DetailsChartComponent
     );
   }
   initCharts() {
-    
+
     this.charts.push(
       new SelectItem({
         key: ChartType.bar.toString(),
@@ -261,19 +266,9 @@ export class DetailsChartComponent
     );
   }
 
-  county?: Division;
-  committees?: Division;
 
-  onCountySelected(division?: Division) {
-    this.county = division;
-  }
-
-  onCommitteesSelected(division?: Division) {
-    this.committees = division;
-  }
-
-  onStationSelected(station?: GarbageStation) {    
-      this.station = station;    
+  onStationSelected(station?: GarbageStation) {
+    this.station = station;
   }
 
   onchartselected(item: SelectItem) {
@@ -285,29 +280,29 @@ export class DetailsChartComponent
     this.loadData();
   }
 
-  private getTitle(){
-    let unit = Language.TimeUnit(this.unit)
-    let type = this.eventType? Language.EventType(this.eventType) : "";
+  private getTitle() {
+    debugger;
+    let type = Language.EventType(this.eventType);
     let name = this.getName();
-   
+
     let interval = this.getInterval();
 
 
-    return `${interval.language} ${name} ${type} ${unit}`
+    return `${interval.language} ${name} ${type}`
   }
-  private getName(){
-    return this.station?this.station.Name :this.division?this.division.Name:"";    
+  private getName() {
+    return this.station ? this.station.Name : this.division ? this.division.Name : "";
   }
-  private getInterval(){
+  private getInterval() {
     let interval = {
-      params:new IntervalParams(),
-      language:""
-    } 
+      params: new IntervalParams(),
+      language: ""
+    }
     switch (this.unit) {
       case TimeUnit.Hour:
       case TimeUnit.Day:
         interval.params = IntervalParams.allDay(this.date);
-        interval.language  = Language.Date(this.date);
+        interval.language = Language.Date(this.date);
         break;
       case TimeUnit.Week:
         interval.params = IntervalParams.allWeek(this.date);
@@ -323,49 +318,91 @@ export class DetailsChartComponent
     return interval;
   }
 
-  exportExcel(){
+  exportExcel() {
     let excel = new HowellExcel();
     let title = this.getTitle();
-    let datas = this.convert(this.data)
-    
+
+    let datas = this.convert(title, this.data)
+
     excel.setData(datas)
     excel.save(title);
   }
-  convert<T>(datas:TimeData<T>[]){
-    let array:IExcelValue[] = [];
-    let titles = ["序号","日期","时间",this.getName()]
-    
+  convert<T>(title: string, datas: TimeData<T>[]) {
+    let offset = 0
+    let array: IExcelValue[] = [{
+      row: 1,
+      column: 2,
+      value: title
+    }];
+    offset++;
+    let titles = ["序号", "日期", "时间", this.getName()]
+
     array.push(...this.convertTitles(titles))
+    offset++;
     let index = 0
-    let columnDatas = datas.map(x=>{
-      return {
-        column:++index,
-        value:x.value as unknown as number
-      }
+    let count = 0;
+    let columnDatas = datas.map(x => {
+      count += x.value as unknown as number
+      return [
+        {
+          column: 1,
+          value: ++index
+        },
+        {
+          column: 2,
+          value: formatDate(x.time, "yyyy年MM月dd日", "en")
+        },
+        {
+          column: 3,
+          value: formatDate(x.time, "HH:mm", "en")
+        },
+        {
+          column: 4,
+          value: x.value as unknown as number
+        }]
     })
+    let row = offset;
     for (let i = 0; i < columnDatas.length; i++) {
-      const column = columnDatas[i];
-      array.push({
-        ...column,
-        row:i+2,        
+      const columns = columnDatas[i];
+      row = i + 1 + offset
+      columns.forEach(column => {
+        array.push({
+          ...column,
+          row: row
+        })
       })
     }
+    row++;
+    array.push(...[{
+      column: 1,
+      row: row,
+      value: "合计"
+    }, {
+      column: 4,
+      row: row,
+      value: count
+    }])
     return array;
   }
-  convertTitles(titles:string[])
-  {
-    let array:IExcelValue[] = [];
+  convertTitles(titles: string[]) {
+    let array: IExcelValue[] = [];
     for (let i = 0; i < titles.length; i++) {
       const title = titles[i];
       array.push({
-        row:1,
-        column:i+1,
-        value:title
+        row: 2,
+        column: i + 1,
+        value: title
       })
     }
     return array;
   }
-  
+
+
+  ondivisionselect(division: Division) {
+    this.division = division;
+    this.loadData()
+  }
+
 }
 
 

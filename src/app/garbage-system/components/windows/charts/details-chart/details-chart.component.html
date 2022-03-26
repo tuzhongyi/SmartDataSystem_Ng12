@@ -15,7 +15,7 @@
           class=""
         />
       </div>
-      <div class="filter-item" *ngIf="userResourceType === UserResourceType.City">
+      <!-- <div class="filter-item" *ngIf="userResourceType === UserResourceType.City">
         <howell-division-filter
           [type]="DivisionType.City"
           [default]="userResourceType === UserResourceType.City"
@@ -40,13 +40,23 @@
         >
         </howell-division-filter>
       </div>
+       -->
+      <div class="filter-item">
+        <span>行政区</span>
+        <howell-division-tree-filter
+        (select)="ondivisionselect($event)"
+        [align]="treeAlign"
+        [division]="division"
+      ></howell-division-tree-filter>
+      </div>
       <div class="filter-item">
         <howell-garbage-station-filter
-          [divisionId]="committees ? committees.Id : undefined"
+          [divisionId]="division? division.Id : undefined"
           (select)="onStationSelected($event)"
         >
         </howell-garbage-station-filter>
       </div>
+      
       <button class="hw-blue-btn search" (click)="search()">查询</button>
       <button class="hw-blue-btn excel" (click)="exportExcel()">导出</button>
       <button class="hw-blue-btn csv">CSV</button>

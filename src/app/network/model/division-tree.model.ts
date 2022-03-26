@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import 'reflect-metadata';
 import { IModel } from './model.interface';
+import { Division } from './division.model';
 
 /** 区划树形结构 */
 export class DivisionTree implements IModel {
@@ -12,7 +13,7 @@ export class DivisionTree implements IModel {
   Nodes: DivisionNode[] = [];
 }
 /** 区划节点 */
-export class DivisionNode {
+export class DivisionNode extends Division {
   /**	String	区划ID	M */
   Id: string = '';
   /**	String	区划名称	M */

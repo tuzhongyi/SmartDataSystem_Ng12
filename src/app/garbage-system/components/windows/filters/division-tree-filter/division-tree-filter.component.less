@@ -1,15 +1,22 @@
-.division-station-tree-filter {
+.division-tree-filter {
   position: relative;
   overflow: visible;
+  
+  width: 250px;
 
   .selected {
+    height: 32px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
-    cursor: pointer;
+    border: 1px solid #5e6ebf;
+    font-size: 18px;
+    border-radius: unset;
+    background-color: #1d233b;
+    padding: 0 5px;
 
     label {
-      font-size: 24px;
+      font-size: 18px;
       color: #cfd7ff;
     }
   }
@@ -19,12 +26,13 @@
     height: 320px;
     overflow: auto;
     position: absolute;
-    top: 20px;
+    top: 20px;    
     padding: 10px;
     border: 1px solid #194076;
     background: #0c1127;
     z-index: 1;
 
+    
     &.right{
       right:0;
     }

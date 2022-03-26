@@ -13,7 +13,7 @@ export class EventRecordWindowDetailsConverter implements IConverter<EventNumber
           count = event.DeltaNumber??0;
         }
         return {
-          time:x.BeginTime,
+          time:x.EndTime,
           value:count
         }
       })
