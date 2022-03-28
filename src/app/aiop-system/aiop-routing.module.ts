@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-27 10:47:24
+ * @Last Modified time: 2022-03-28 14:01:19
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -39,6 +39,7 @@ const routes: Routes = [
   {
     path: 'aiop-manage',
     component: AiopSystemManageComponent,
+
     children: [
       {
         path: '',
@@ -55,6 +56,7 @@ const routes: Routes = [
           },
           {
             path: 'supervise-platform',
+
             children: [
               {
                 path: '',
@@ -63,14 +65,23 @@ const routes: Routes = [
               {
                 path: 'division-manage',
                 component: DivisionManageComponent,
+                data: {
+                  breadcrumb: '区划管理',
+                },
               },
               {
                 path: 'deploy-map',
                 component: DeployMapComponent,
+                data: {
+                  breadcrumb: '地图布控',
+                },
               },
               {
                 path: 'garbage-station-manage',
                 component: GarbageStationManageComponent,
+                data: {
+                  breadcrumb: '垃圾厢房管理',
+                },
               },
             ],
           },
@@ -94,6 +105,9 @@ const routes: Routes = [
               {
                 path: 'illegal-drop-record',
                 component: IllegalDropRecordComponent,
+                data: {
+                  breadcrumb: '垃圾落地',
+                },
               },
             ],
           },
@@ -172,7 +186,7 @@ const routes: Routes = [
                 path: 'ai-camera-events',
                 component: AiCameraEventsComponent,
               },
-            ], 
+            ],
           },
         ],
       },

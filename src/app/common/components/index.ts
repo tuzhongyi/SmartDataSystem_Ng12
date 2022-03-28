@@ -31,6 +31,7 @@ import { SidenavComponent } from 'src/app/aiop-system/components/sidenav/sidenav
 import { TreeComponent2 } from './tree/tree2.component';
 import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
 import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -64,4 +65,5 @@ export const CUSTOM_COMPONENTS = [
   TreeComponent2,
   GarbageDropDurationPanelComponent,
   GarbageDropEventPanelComponent,
+  BreadcrumbComponent,
 ];

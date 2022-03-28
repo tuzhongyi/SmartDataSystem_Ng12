@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-26 14:26:27
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-24 15:04:29
+ * @Last Modified time: 2022-03-28 11:21:02
  */
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -16,11 +16,12 @@ import { FormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 
-import Adsame from 'src/assets/theme/adsame.json';
+import Adsame from 'src/assets/echart-theme/adsame.json';
 
 //内置主题
 import 'echarts/theme/shine.js';
 import 'echarts/theme/vintage.js';
+import { RouterModule } from '@angular/router';
 
 echarts.registerTheme('adsame', Adsame);
 

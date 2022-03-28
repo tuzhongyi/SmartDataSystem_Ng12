@@ -1,0 +1,10 @@
+<ul>
+    <li>
+        <a (click)="navigate('/aiop/system-mode')">首页</a>
+    </li>
+    <li *ngFor=" let breadcrumb of breadcrumbs |async">
+        <a (click)="navigate(breadcrumb.url)"> {{breadcrumb.label}}</a>
+
+    </li>
+
+</ul>
