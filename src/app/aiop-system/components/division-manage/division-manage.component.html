@@ -1,28 +1,45 @@
-<div class='division-manage'>
-    <div class='division-list'>
-        <h2>区划列表</h2>
-        <button class="btn btn--green" (click)="addNode()" [disabled]="!enableAddBtn">
-            <i class='howell-icon-plus'></i>
-            添加
-        </button>
-        <button class="btn btn--red" (click)="deleteNode()" [disabled]="!enableDelBtn">
-            <i class='howell-icon-delete-bin'></i>
-            删除
-        </button>
-        <button class="btn btn--blue" (click)="editNode()" [disabled]="!enableEditBtn">
-            <i class='howell-icon-move2'></i>
-            编辑
-        </button>
-        <input type="text" class='search' #search> <button mat-flat-button color="primary"
-            (click)="searchNode(search.value)">
-            搜索</button>
-        <div class='tree-container'>
-            <app-tree #tree [treeServiceProvider]="treeServiceProvider" [treeSelectModel]="treeSelectModel"
-                (selectTree)="selectTree($event)"></app-tree>
-        </div>
+<div class="division-manage">
+  <div class="division-list">
+    <h2>区划列表</h2>
+    <button
+      class="btn btn--green"
+      (click)="addNode()"
+      [disabled]="!enableAddBtn"
+    >
+      <i class="howell-icon-plus"></i>
+      添加
+    </button>
+    <button
+      class="btn btn--red"
+      (click)="deleteNode()"
+      [disabled]="!enableDelBtn"
+    >
+      <i class="howell-icon-delete-bin"></i>
+      删除
+    </button>
+    <button
+      class="btn btn--blue"
+      (click)="editNode()"
+      [disabled]="!enableEditBtn"
+    >
+      <i class="howell-icon-move2"></i>
+      编辑
+    </button>
+    <input type="text" class="search" #search />
+    <button mat-flat-button color="primary" (click)="searchNode(search.value)">
+      搜索
+    </button>
+    <div class="tree-container">
+      <!-- <app-tree
+        #tree
+        [treeServiceProvider]="treeServiceProvider"
+        [treeSelectModel]="treeSelectModel"
+        (selectTree)="selectTree($event)"
+      ></app-tree> -->
+      <howell-tree-old></howell-tree-old>
     </div>
-    <div class="division-detail">
-        <h2>区划详情</h2>
-
-    </div>
+  </div>
+  <div class="division-detail">
+    <h2>区划详情</h2>
+  </div>
 </div>
