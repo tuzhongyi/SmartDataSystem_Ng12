@@ -1,0 +1,92 @@
+.event-record-count-table {
+    width: 100%;
+    height: 100%;
+    // border: 3px solid violet;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+  
+    table {
+      width: 100%;
+  
+      th {
+        text-align: left;
+  
+        &.center {
+          text-align: center;
+        }
+      }
+    }
+  
+  
+    &-header {
+      // background-color: rgb(0, 255, 85);
+    }
+  
+    &-main {
+      // background-color: red;
+      flex-basis: 0;
+      flex-grow: 1;
+      overflow: auto;
+  
+      .img-list {
+        display: flex;
+        align-items: center;
+        height: 36px;
+  
+        .img {
+          width: 44px;
+          margin-right: 10px;
+  
+          app-image-control {
+            width: 100%;
+            height: 100%;
+          }
+        }
+      }
+  
+      .body table tbody tr.zoom:hover .img-list {
+        height: 80px;
+  
+        .img {
+          width: 100px
+        }
+      }
+  
+      ::ng-deep {
+        .body {
+          height: calc(100% - 70px);
+        }
+      }
+  
+  
+      &-footer {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        height: 50px;
+        border-top: 1px solid #7586e0;
+        padding: 0 20px;
+        box-sizing: border-box;
+        overflow: auto;
+  
+        .footer-item {
+          display: flex;
+          align-items: center;
+          flex-shrink: 0;
+  
+          .footer-info {
+            display: flex;
+  
+            .info-item {
+              margin: 10px;
+              font-size: 14px;
+              color: #cfd7ff;
+            }
+          }
+        }
+      }
+    }
+  
+  }
+  

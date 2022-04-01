@@ -69,6 +69,6 @@ export class GarbageStationWindowDetailsBusiness
     params = Object.assign(params, interval)
     params.DivisionIds = [divisionId]
     params.TimeUnit = unit;
-    return this.divisionService.statistic.number.history.list(divisionId, params);
+    return this.divisionService.statistic.number.history.list(params);
   }
 }

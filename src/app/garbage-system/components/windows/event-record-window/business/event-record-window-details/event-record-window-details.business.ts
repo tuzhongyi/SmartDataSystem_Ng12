@@ -57,21 +57,19 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     return paged.Data;
   }
 
-  async loadDefault() {
-    this.division = await this.divisionService.cache.get(this.store.divisionId);
+  async loadDefault(divisionId:string) {
+    this.division = await this.divisionService.cache.get(divisionId);
   }
 
   async load(opts: DetailsChartLoadOptions): Promise<TimeData<number>[]> {
-    this.loadDefault()
+    let divisionId = this.store.divisionId
+    this.loadDefault(divisionId)
 
     let interval = new IntervalParams()
     interval.BeginTime = opts.begin;
     interval.EndTime = opts.end;
     let type = opts.stationId ? UserResourceType.Station : UserResourceType.None;
-    let id = opts.stationId ?? opts.divisionId;
-    if (!id) {
-      throw new Error("GarbageStationWindowDetailsBusiness id is undefined")
-    }
+    let id = opts.stationId ?? opts.divisionId ?? divisionId;   
 
     let data = await this.getData(id, type, interval, opts.unit);
     let model = this.Converter.Convert(data, opts.type);

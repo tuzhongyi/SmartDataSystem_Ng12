@@ -210,10 +210,9 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
 class StatisticNumberHistoryService {
   constructor(private basic: BaseRequestService) {}
   list(
-    divisionId: string,
     params: GetDivisionStatisticNumbersParamsV2
   ): Promise<DivisionNumberStatisticV2[]> {
-    let url = DivisionUrl.volume(divisionId).history.list();
+    let url = DivisionUrl.statistic().number.history.list();
     let data = classToPlain(params);
     return this.basic.array(url, DivisionNumberStatisticV2, data);
   }

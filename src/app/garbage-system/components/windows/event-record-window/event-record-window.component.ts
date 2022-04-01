@@ -36,7 +36,7 @@ export class EventRecordWindowComponent
   type = EventType.IllegalDrop;
 
   @Input()
-  index = EventRecordWindowIndex.details;
+  index = EventRecordWindowIndex.comparison;
 
   Index = EventRecordWindowIndex;
 
@@ -72,7 +72,7 @@ export enum EventRecordWindowIndex {
   /** 事件 */
   record = 0,
   /** 总图表 */
-  general = 1,
+  count = 1,
   /** 细分图表 */
   details = 2,
   /** 数据比较 */

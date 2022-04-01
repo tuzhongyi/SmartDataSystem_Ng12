@@ -29,9 +29,12 @@ import { Language } from 'src/app/global/tool/language';
 import { ChartConfig } from './details-chart.option';
 import { DetailsChartLoadOptions } from './details-chart.model';
 import { wait } from 'src/app/common/tools/tool';
-import { HowellExcel, IExcelValue } from 'src/app/common/tools/hw-excel';
+
 import { formatDate } from '@angular/common';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
+import { ExportExcelConverter } from './details-chart-export.converter';
+import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
+import { ExportBusiness } from 'src/app/common/business/export.business';
 
 
 @Component({
@@ -47,12 +50,12 @@ export class DetailsChartComponent
   eventType: EventType = EventType.IllegalDrop;
   @Input()
   station?: GarbageStation;
-  
+
 
   treeAlign = HorizontalAlign.left
 
   @Input()
-  division?:Division
+  division?: Division
 
 
   // private _division?: Division;
@@ -102,7 +105,8 @@ export class DetailsChartComponent
 
   DivisionType = DivisionType;
 
-  constructor(public local: LocalStorageService) {
+  constructor(public local: LocalStorageService,
+    private exports: ExportBusiness) {
     if (local.user.Resources && local.user.Resources.length > 0) {
       this.userResourceType = local.user.Resources[0].ResourceType;
     }
@@ -112,6 +116,7 @@ export class DetailsChartComponent
   }
 
   async ngOnInit() {
+
     this.initUnits();
     this.initCharts();
     wait(() => {
@@ -281,7 +286,6 @@ export class DetailsChartComponent
   }
 
   private getTitle() {
-    debugger;
     let type = Language.EventType(this.eventType);
     let name = this.getName();
 
@@ -318,83 +322,18 @@ export class DetailsChartComponent
     return interval;
   }
 
+  converter = new ExportExcelConverter()
+
+
   exportExcel() {
-    let excel = new HowellExcel();
     let title = this.getTitle();
-
-    let datas = this.convert(title, this.data)
-
-    excel.setData(datas)
-    excel.save(title);
+    let headers = ["序号", "日期", "时间", this.getName()]
+    this.exports.excel(title, headers, this.data, this.converter)
   }
-  convert<T>(title: string, datas: TimeData<T>[]) {
-    let offset = 0
-    let array: IExcelValue[] = [{
-      row: 1,
-      column: 2,
-      value: title
-    }];
-    offset++;
-    let titles = ["序号", "日期", "时间", this.getName()]
-
-    array.push(...this.convertTitles(titles))
-    offset++;
-    let index = 0
-    let count = 0;
-    let columnDatas = datas.map(x => {
-      count += x.value as unknown as number
-      return [
-        {
-          column: 1,
-          value: ++index
-        },
-        {
-          column: 2,
-          value: formatDate(x.time, "yyyy年MM月dd日", "en")
-        },
-        {
-          column: 3,
-          value: formatDate(x.time, "HH:mm", "en")
-        },
-        {
-          column: 4,
-          value: x.value as unknown as number
-        }]
-    })
-    let row = offset;
-    for (let i = 0; i < columnDatas.length; i++) {
-      const columns = columnDatas[i];
-      row = i + 1 + offset
-      columns.forEach(column => {
-        array.push({
-          ...column,
-          row: row
-        })
-      })
-    }
-    row++;
-    array.push(...[{
-      column: 1,
-      row: row,
-      value: "合计"
-    }, {
-      column: 4,
-      row: row,
-      value: count
-    }])
-    return array;
-  }
-  convertTitles(titles: string[]) {
-    let array: IExcelValue[] = [];
-    for (let i = 0; i < titles.length; i++) {
-      const title = titles[i];
-      array.push({
-        row: 2,
-        column: i + 1,
-        value: title
-      })
-    }
-    return array;
+  exportCSV() {
+    let title = this.getTitle();
+    let headers = ["序号", "日期", "时间", this.getName()]
+    this.exports.csv(title, headers, this.data, this.converter);
   }
 
 

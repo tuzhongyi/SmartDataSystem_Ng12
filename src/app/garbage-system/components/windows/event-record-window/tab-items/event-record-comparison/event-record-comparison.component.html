@@ -1,0 +1,44 @@
+<div class="event-record-comparison">
+    <div class="event-record-comparison-header">
+        <div class="filter">
+            <div class="filter-item">
+                <span>选择时间</span>
+                <input type="text" DateTimePicker [format]="dateFormat" [date]="date" (change)="changeDate($event)"
+                    class="" />
+            </div>
+            <div class="filter-item">
+                <span>行政区</span>
+                <howell-division-station-tree-mult-filter></howell-division-station-tree-mult-filter>
+            </div>
+            <button class="hw-blue-btn search" (click)="search()">
+                <i class="mdi mdi-magnify"></i> 查询
+            </button>
+            <button class="hw-blue-btn excel" (click)="exportExcel()">
+                <i class="howell-icon-export"></i> 导出
+            </button>
+            <button class="hw-blue-btn csv" (click)="exportCSV()">
+                <i class="howell-icon-export"></i> CSV
+            </button>
+        </div>
+        <div class="selection">
+            <app-select-control class="list-type-select" [data]="units" (select)="ontimeunit($event)">
+            </app-select-control>
+            <app-select-control class="list-type-select" [data]="chartTypes" (select)="oncharttype($event)">
+            </app-select-control>
+            
+        </div>
+    </div>
+    <div class="event-record-comparison-content">
+        <howell-line-chart *ngIf="chartType === ChartType.line"
+      [theme]="config.line.theme"
+      [options]="config.line.options"
+      [merge]="config.line.merge"
+    ></howell-line-chart>
+    <howell-bar-chart
+    *ngIf="chartType === ChartType.bar"
+    [theme]="config.bar.theme"
+      [options]="config.bar.options"
+      [merge]="config.bar.merge"
+    ></howell-bar-chart>
+    </div>
+</div>

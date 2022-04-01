@@ -240,7 +240,7 @@ export class Language {
       case UserResourceType.County:
         return '街道';
       case UserResourceType.Committees:
-        return '居委';
+        return '居委会';
       case UserResourceType.Station:
         return '投放点';
       case UserResourceType.City:

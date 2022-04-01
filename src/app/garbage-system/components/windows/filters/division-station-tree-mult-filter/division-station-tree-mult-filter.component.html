@@ -1,0 +1,17 @@
+<div class="division-station-tree-filter">
+  <mat-chip-list #chipList aria-label="Fruit selection"
+  [aria-orientation]="'horizontal'"
+  >
+    <mat-chip *ngFor="let fruit of fruits" (removed)="remove(fruit)">
+      {{fruit}}
+      <button matChipRemove>
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-list>
+  <div class="tree" [class.right]="align == HorizontalAlign.right" [class.left]="align == HorizontalAlign.left"
+    *ngIf="expand">
+    <app-tree [treeServiceProvider]="treeServiceProvider" [treeSelectModel]="treeSelectModel" [resourceType]="userType"
+      (selectTree)="selectTree($event)" [depth]="1"></app-tree>
+  </div>
+</div>
