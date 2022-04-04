@@ -5,7 +5,7 @@ import { Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableComponent } from 'src/app/common/components/table/table.component';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
@@ -40,7 +40,7 @@ export class IllegalDropRecordComponent implements OnInit {
 
   columns: TableColumnModel[] = [...columns]; // 表格列配置详情
   displayedColumns: string[] = this.columns.map((column) => column.columnDef); // 表格列 id
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = TreeSelectEnum.Multiple;
 
   selectedRows: IllegalDropRecordModel[] = [];
   pageIndex = 0;

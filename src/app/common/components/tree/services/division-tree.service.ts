@@ -19,11 +19,11 @@ import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { TreeServiceInterface } from '../interface/tree-service.interface';
 
 @Injectable()
-export class DivisionTreeService implements TreeServiceInterface {
+export class DivisionTreeService {
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _converter: TreeConverter
-  ) {}
+  ) { }
 
   getName() {
     return TreeServiceEnum.Division;

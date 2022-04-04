@@ -1,6 +1,6 @@
 <div class="division-manage">
   <div class="division-list">
-    <h2>区划列表</h2>
+    <!-- <h2>区划列表</h2>
     <button
       class="btn btn--green"
       (click)="addNode()"
@@ -28,15 +28,14 @@
     <input type="text" class="search" #search />
     <button mat-flat-button color="primary" (click)="searchNode(search.value)">
       搜索
-    </button>
+    </button> -->
+    <button (click)="changeType()">Change</button>
     <div class="tree-container">
-      <!-- <app-tree
+      <app-tree
         #tree
-        [treeServiceProvider]="treeServiceProvider"
-        [treeSelectModel]="treeSelectModel"
+        [treeServiceModel]="treeServiceModel"
         (selectTree)="selectTree($event)"
-      ></app-tree> -->
-      <howell-tree-old></howell-tree-old>
+      ></app-tree>
     </div>
   </div>
   <div class="division-detail">

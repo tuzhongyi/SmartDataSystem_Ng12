@@ -5,7 +5,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -17,20 +17,20 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 })
 export class DivisionStationTreeMultFilterComponent implements OnInit {
 
-  
+
   constructor() { }
   HorizontalAlign = HorizontalAlign;
-  align:HorizontalAlign = HorizontalAlign.left;
+  align: HorizontalAlign = HorizontalAlign.left;
   expand = true;
   userType = UserResourceType.County;
-  treeServiceProvider:TreeServiceEnum = TreeServiceEnum.Division;
-  treeSelectModel:SelectEnum=SelectEnum.Multiple
+  treeServiceModel: TreeServiceEnum = TreeServiceEnum.Division;
+  treeSelectModel: TreeSelectEnum = TreeSelectEnum.Multiple
 
   fruits: string[] = [];
 
 
   ngOnInit(): void {
-    
+
   }
 
 

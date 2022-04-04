@@ -15,7 +15,7 @@ import { Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import {
   TableCellEvent,
   TableCellModel,
@@ -44,7 +44,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   displayedColumns: string[] = [];
 
   @Input('tableSelectModel')
-  selectModel = SelectEnum.Single;
+  selectModel = TreeSelectEnum.Single;
 
   @Output() selectTableRow: EventEmitter<TableCellModel[]> = new EventEmitter<
     TableCellModel[]
@@ -63,7 +63,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     // console.log(this.selectModel);
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == TreeSelectEnum.Single) {
       this.selection = new SelectionModel<TableCellModel>();
     } else {
       this.selection = new SelectionModel<TableCellModel>(true);

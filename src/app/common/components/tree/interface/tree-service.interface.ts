@@ -1,19 +1,16 @@
-import { IService } from 'src/app/common/interfaces/service.interface';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 
-export interface TreeServiceInterface extends IService {
-  getName(): TreeServiceEnum;
+export interface TreeServiceInterface {
 
-  initialize(type?: DivisionType): Promise<NestedTreeNode[]>;
+  initialize(type: UserResourceType, depth: number): Promise<NestedTreeNode[]>;
 
-  recurseByLevel(
-    nodes: NestedTreeNode[],
-    level?: number,
-  ): Promise<void>;
+  // recurseByLevel(
+  //   nodes: NestedTreeNode[],
+  //   level?: number,
+  // ): Promise<void>;
 
-  loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
+  // loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
 
-  searchNode(condition: string): Promise<NestedTreeNode[]>;
+  // searchNode(condition: string): Promise<NestedTreeNode[]>;
 }

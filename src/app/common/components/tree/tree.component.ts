@@ -1,15 +1,14 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
@@ -19,27 +18,19 @@ import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
 import { TreeServiceInterface } from './interface/tree-service.interface';
 
 import { DivisionTreeService } from './services/division-tree.service';
-import { ServiceFactory } from './services/service.factory';
 import { StationTreeService } from './services/station-tree.service';
 import { TreeService } from './services/tree.service';
-import { TreeProviders } from './tokens/service.token';
 
 @Component({
   selector: 'app-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.less'],
   providers: [
-    ServiceFactory,
     TreeService,
-    ...TreeProviders,
-    {
-      provide: DivisionTreeService,
-      useClass: DivisionTreeService,
-    },
   ],
 })
 export class TreeComponent implements OnInit {
-  TreeSelectEnum = SelectEnum;
+  TreeSelectEnum = TreeSelectEnum;
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],
@@ -65,7 +56,7 @@ export class TreeComponent implements OnInit {
       node.parentId,
       this._nodeIconType.get(node.type),
       node.type,
-      node.data
+      node.rawData
     );
     this._flatNodeMap.set(node.id, newNode);
     return newNode;
@@ -82,37 +73,75 @@ export class TreeComponent implements OnInit {
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
   dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
+  // 一定要返回对象
   trackBy = (index: number, node: FlatTreeNode) => node;
 
-  @Input('treeServiceProvider')
-  serviceProvider = TreeServiceEnum.Division; // 区划树 or 厢房树
+  selection!: SelectionModel<FlatTreeNode>;// 保存选中节点
 
-  @Input('treeSelectModel')
-  selectModel = SelectEnum.Single;
-
-  @Input()
-  divisionType?: DivisionType; // 废弃
-
-  @Input()
-  resourceType: UserResourceType = UserResourceType.City; // 顶层根节点的类型
-
-  @Output() selectTree: EventEmitter<any> = new EventEmitter<any>();
-
-  selection!: SelectionModel<FlatTreeNode>;
-
-  @Input()
-  depth: number = 0; // 初始化树的深度
-
+  // 高亮显示选中节点
   highLight = (node: FlatTreeNode) => {
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == TreeSelectEnum.Single) {
       return this.selection.isSelected(node);
-    } else if (this.selectModel == SelectEnum.Multiple) {
+    } else if (this.selectModel == TreeSelectEnum.Multiple) {
       return this._currentNode && this._currentNode.id == node.id;
     }
     return false;
   };
 
-  constructor(private _service: TreeService) {
+  // 请求数据的深度
+  private _depth: number = 0;
+
+  @Input()
+  set depth(val: number) {
+    if (val < 0) {
+      val = 0
+    }
+    this._depth = val;
+  }
+  get depth() {
+    return this._depth
+  }
+
+
+  // 展示数据的深度，一般等于 depth
+  private _showDepth: number = 0;
+
+  @Input()
+  set showDepth(val: number) {
+    if (val < 0) {
+      val = 0
+    }
+    this._showDepth = val;
+  }
+  get showDepth() {
+    return this._showDepth
+  }
+
+  // 强制最大深度节点为叶节点
+  @Input()
+  depthIsEnd = false;
+
+  @Input('treeServiceModel')
+  serviceModel = TreeServiceEnum.Division; // 区划树或厢房树
+
+  @Input('treeSelectModel')
+  selectModel = TreeSelectEnum.Single;// 单选或多选
+
+  private _userResourceType: UserResourceType = UserResourceType.City;
+  @Input()
+  set resourceType(type: UserResourceType) {
+    if (type !== UserResourceType.None) {
+      this._userResourceType = type
+    }
+  }
+  get resourceType() {
+    return this._userResourceType
+  }
+
+  @Output() selectTree: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
+
+
+  constructor(private _treeService: TreeService) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -133,9 +162,14 @@ export class TreeComponent implements OnInit {
     this.dataChange.subscribe((data) => {
       this.dataSource.data = data;
     });
+
+    this._nestedNodeMap = this._treeService.nestedNodeMap;
   }
   ngOnInit() {
-    if (this.selectModel == SelectEnum.Single) {
+
+    console.log('树类型: ', this.serviceModel)
+
+    if (this.selectModel == TreeSelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);
@@ -144,39 +178,72 @@ export class TreeComponent implements OnInit {
       this.selectTree.emit(change.source.selected);
     });
 
-    this._service.model = this.serviceProvider;
+    this._treeService.model = this.serviceModel;
+    this._treeService.depthIsEnd = this.depthIsEnd
+    if (this.showDepth == 0)
+      this.showDepth = this.depth;
 
-    this.initialize();
+
+    this._initialize();
   }
 
-  async initialize() {
-    const nodes = await this._service.initialize(
+  private async _initialize() {
+    this._flatNodeMap.clear();
+    // this.treeControl.collapseAll();
+
+    const nodes = await this._treeService.initialize(
       this.resourceType,
-      this.depth < 0 ? 0 : this.depth
+      this.depth
     );
-    this._register(nodes);
+    console.log('树节点: ', nodes)
+    // this._register(nodes);
     this.dataChange.next(nodes);
-    for (let flatNode of this._flatNodeMap.values()) {
-      if (flatNode.level < this.depth) {
-        this.treeControl.expand(flatNode);
+
+
+    this._expandNodeRecursively(nodes)
+
+  }
+  private _expandNodeRecursively(nodes: NestedTreeNode[]) {
+    if (this.showDepth <= 0) return
+
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      let flatNode = this._flatNodeMap.get(node.id);
+      if (flatNode && flatNode.level < this.showDepth) {
+        this.treeControl.expand(flatNode)
+        this._expandNodeRecursively(node.childrenChange.value)
+      } else {
+        console.log('break', node)
+        break;
       }
     }
+
   }
 
+
+
+  changeTreeConfig(type: UserResourceType, depth?: number) {
+    if (type == UserResourceType.None) return;
+
+    this.resourceType = type;
+    if (depth) {
+      this.depth = depth
+    }
+    this._initialize()
+  }
   async loadChildren(node: FlatTreeNode) {
     if (this.treeControl.isExpanded(node)) {
       const nestedNode = this._nestedNodeMap.get(node.id);
       if (nestedNode && !nestedNode.childrenLoaded) {
-        let nodes = await this._service.loadChildren(nestedNode);
-        // console.log('chidren', nodes);
+        let nodes = await this._treeService.loadChildren(nestedNode);
+        // // console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
-        this._register(nodes);
         nestedNode.childrenChange.next(nodes);
         this.dataChange.next(this.dataChange.value);
         this._checkAllDescendants(node);
       }
     } else {
-      // this.treeControl.collapseDescendants(node);
+      this.treeControl.collapseDescendants(node);
     }
   }
   singleSelectNode(node: FlatTreeNode) {
@@ -275,34 +342,24 @@ export class TreeComponent implements OnInit {
     this.dataChange.next(this.dataChange.value);
   }
   async searchNode(condition: string) {
-    this.selection.clear();
-    let nodes: NestedTreeNode[] = await this._service.searchNode(condition);
+    // this.selection.clear();
+    // let nodes: NestedTreeNode[] = await this._treeService.searchNode(condition);
 
-    if (nodes.length) {
-      this._nestedNodeMap.clear();
-      this._register(nodes);
-      this.dataChange.next(nodes);
+    // if (nodes.length) {
+    //   this._nestedNodeMap.clear();
+    //   this._register(nodes);
+    //   this.dataChange.next(nodes);
 
-      if (condition !== '') {
-        this.treeControl.expandAll();
-      } else {
-        this.treeControl.collapseAll();
-      }
-    }
-    return nodes;
+    //   if (condition !== '') {
+    //     this.treeControl.expandAll();
+    //   } else {
+    //     this.treeControl.collapseAll();
+    //   }
+    // }
+    // return nodes;
   }
 
-  private _register(nodes: NestedTreeNode[]) {
-    for (let i = 0; i < nodes.length; i++) {
-      let node = nodes[i];
-      if (!this._nestedNodeMap.has(node.id)) {
-        this._nestedNodeMap.set(node.id, node);
 
-        let children = node.childrenChange.value;
-        this._register(children);
-      }
-    }
-  }
   private _checkAllDescendants(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
 

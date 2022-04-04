@@ -4,9 +4,19 @@
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
   </div>
 
-  <div class="tree" [class.right]="align == HorizontalAlign.right" [class.left]="align == HorizontalAlign.left"
-    [ngStyle]="style" *ngIf="expand">
-    <app-tree [treeServiceProvider]="treeServiceProvider" [treeSelectModel]="treeSelectModel" [resourceType]="type"
-      (selectTree)="selectTree($event)" [depth]="1"></app-tree>
+  <div
+    class="tree"
+    [class.right]="align == HorizontalAlign.right"
+    [class.left]="align == HorizontalAlign.left"
+    [ngStyle]="style"
+    *ngIf="expand"
+  >
+    <app-tree
+      [treeServiceModel]="treeServiceModel"
+      [treeSelectModel]="treeSelectModel"
+      [resourceType]="type"
+      (selectTree)="selectTree($event)"
+      [depth]="1"
+    ></app-tree>
   </div>
 </div>

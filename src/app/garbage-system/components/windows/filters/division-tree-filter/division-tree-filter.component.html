@@ -4,10 +4,15 @@
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
   </div>
 
-  <div class="tree" [class.right]="align == HorizontalAlign.right" [class.left]="align == HorizontalAlign.left"
-    [ngStyle]="style" *ngIf="expand">
+  <div
+    class="tree"
+    [class.right]="align == HorizontalAlign.right"
+    [class.left]="align == HorizontalAlign.left"
+    [ngStyle]="style"
+    *ngIf="expand"
+  >
     <app-tree
-      [treeServiceProvider]="treeServiceProvider"
+      [treeServiceModel]="treeServiceModel"
       [treeSelectModel]="treeSelectModel"
       [resourceType]="type"
       (selectTree)="selectTree($event)"

@@ -14,7 +14,7 @@ import {
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -28,8 +28,7 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
   styleUrls: ['./division-tree-filter.component.less'],
 })
 export class DivisionTreeFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges
-{
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @Input()
   type: UserResourceType;
 
@@ -45,8 +44,8 @@ export class DivisionTreeFilterComponent
   @Input()
   align: HorizontalAlign = HorizontalAlign.right;
 
-  treeServiceProvider = TreeServiceEnum.Division;
-  treeSelectModel = SelectEnum.Single;
+  treeServiceModel = TreeServiceEnum.Division;
+  treeSelectModel = TreeSelectEnum.Single;
 
   current?: FlatTreeNode;
 
@@ -66,7 +65,7 @@ export class DivisionTreeFilterComponent
       this.current = new FlatTreeNode(this.division.Id, this.division.Name, 3, undefined, undefined, undefined, undefined, this.division);
     }
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 
   ngAfterViewInit(): void {
     if (this.input) {
@@ -84,7 +83,7 @@ export class DivisionTreeFilterComponent
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   selectTree(nodes: FlatTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {

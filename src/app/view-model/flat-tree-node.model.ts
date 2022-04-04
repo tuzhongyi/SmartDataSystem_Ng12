@@ -4,7 +4,7 @@ import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
 import { UserResource } from '../network/model/user.model';
 
-export class FlatTreeNode<T = any> {
+export class FlatTreeNode {
   constructor(
     public id: string,
     public name: string,
@@ -13,6 +13,6 @@ export class FlatTreeNode<T = any> {
     public parentId: string | null = null,
     public iconType: string = 'howell-icon-map5',
     public type: UserResourceType = UserResourceType.None,
-    public data?:T
-  ) {}
+    public data?: any,
+  ) { }
 }

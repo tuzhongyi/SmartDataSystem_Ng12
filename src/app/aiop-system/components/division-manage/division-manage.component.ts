@@ -16,7 +16,7 @@ import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResource } from 'src/app/network/model/user.model';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -35,10 +35,10 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceProvider = TreeServiceEnum.Division;
-  treeSelectModel = SelectEnum.Single;
+  treeServiceModel = TreeServiceEnum.Station;
+  treeSelectModel = TreeSelectEnum.Single;
   currentNode?: FlatTreeNode;
-  type: UserResourceType = UserResourceType.None;
+  resourceType: UserResourceType = UserResourceType.City;
 
   get enableAddBtn() {
     return (
@@ -76,7 +76,7 @@ export class DivisionManageComponent implements OnInit {
     }, this._excludeGuards);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   async addNode() {
     if (this.tree) {
@@ -129,29 +129,29 @@ export class DivisionManageComponent implements OnInit {
     }
   }
   async searchNode(condition: string) {
-    if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
-      this._toastrService.warning('输入内容再搜索');
-      return;
-    }
-    if (this._condition == condition) {
-      this._toastrService.warning('重复搜索相同字段');
-      return;
-    }
-    if (this._excludeGuards.includes(condition)) {
-      this._toastrService.warning('关键字不能是: ' + condition);
-      return;
-    }
+    // if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
+    //   this._toastrService.warning('输入内容再搜索');
+    //   return;
+    // }
+    // if (this._condition == condition) {
+    //   this._toastrService.warning('重复搜索相同字段');
+    //   return;
+    // }
+    // if (this._excludeGuards.includes(condition)) {
+    //   this._toastrService.warning('关键字不能是: ' + condition);
+    //   return;
+    // }
 
-    this._condition = condition;
+    // this._condition = condition;
 
-    if (this.tree) {
-      let res = await this.tree.searchNode(condition);
-      if (res && res.length) {
-        this._toastrService.success('操作成功');
-      } else {
-        this._toastrService.warning('无匹配结果');
-      }
-    }
+    // if (this.tree) {
+    //   let res = await this.tree.searchNode(condition);
+    //   if (res && res.length) {
+    //     this._toastrService.success('操作成功');
+    //   } else {
+    //     this._toastrService.warning('无匹配结果');
+    //   }
+    // }
   }
 
   selectTree(nodes: FlatTreeNode[]) {
@@ -159,6 +159,15 @@ export class DivisionManageComponent implements OnInit {
     console.log('currentNode', this.currentNode);
   }
 
+  changeType() {
+    try {
+      this.resourceType = EnumHelper.GetResourceChildType(this.resourceType)
+
+    } catch (e) {
+
+    }
+    this.tree?.changeTreeConfig(this.resourceType)
+  }
   private _generateExclude(condition: string) {
     let res: string[] = [];
     for (let i = 0; i < condition.length; i++) {

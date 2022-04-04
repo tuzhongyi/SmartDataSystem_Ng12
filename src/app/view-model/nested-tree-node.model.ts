@@ -15,6 +15,6 @@ export class NestedTreeNode<T = any> {
     public hasChildren = false,
     public parentId: string | null = null,
     public childrenLoaded = false,
-    public data?:T
+    public rawData?: T
   ) { }
 }

@@ -9,7 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
@@ -37,7 +37,7 @@ import { TreeProviders } from './tokens/service.token';
   ],
 })
 export class TreeOldComponent implements OnInit {
-  TreeSelectEnum = SelectEnum;
+  TreeSelectEnum = TreeSelectEnum;
 
   /***************private  *********************/
   private _service!: TreeServiceInterface;
@@ -66,7 +66,7 @@ export class TreeOldComponent implements OnInit {
       node.parentId,
       this._nodeIconType.get(node.type),
       node.type,
-      node.data
+      node.rawData
     );
     this._flatNodeMap.set(node.id, newNode);
     return newNode;
@@ -89,7 +89,7 @@ export class TreeOldComponent implements OnInit {
   serviceProvider = TreeServiceEnum.Division;
 
   @Input('treeSelectModel')
-  selectModel = SelectEnum.Single;
+  selectModel = TreeSelectEnum.Single;
 
   @Input()
   divisionType?: DivisionType;
@@ -102,9 +102,9 @@ export class TreeOldComponent implements OnInit {
   depth: number = 2;
 
   highLight = (node: FlatTreeNode) => {
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == TreeSelectEnum.Single) {
       return this.selection.isSelected(node);
-    } else if (this.selectModel == SelectEnum.Multiple) {
+    } else if (this.selectModel == TreeSelectEnum.Multiple) {
       return this._currentNode && this._currentNode.id == node.id;
     }
     return false;
@@ -133,7 +133,7 @@ export class TreeOldComponent implements OnInit {
     });
   }
   ngOnInit() {
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == TreeSelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);
