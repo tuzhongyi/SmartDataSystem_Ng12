@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TimeData } from 'src/app/common/components/charts/chart.model';
+import { ITimeData } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import {
   IConverter,
@@ -10,7 +10,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { GetDivisionVolumesParams } from 'src/app/network/request/division/division-request.params';
+import { GetDivisionEventNumbersParams, GetDivisionVolumesParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
 import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -21,7 +21,7 @@ import { GarbageStationWindowDetailsFilter } from '../../../garbage-station-wind
 import { EventRecordWindowDetailsConverter } from './event-record-window-details.converter';
 
 @Injectable()
-export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberStatistic[], TimeData<number>[]>{
+export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberStatistic[], ITimeData<number>[]>{
   constructor(
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService,
@@ -29,28 +29,28 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
   ) {
 
   }
-  Converter: IConverter<EventNumberStatistic[], TimeData<number>[]> = new EventRecordWindowDetailsConverter();
+  Converter: IConverter<EventNumberStatistic[], ITimeData<number>[]> = new EventRecordWindowDetailsConverter();
 
   async getData(id: string, type: UserResourceType, interval: IntervalParams, unit: TimeUnit): Promise<EventNumberStatistic[]> {
     switch (type) {
       case UserResourceType.Station:
-        return this.getStationData(id, interval, unit);
+        return this.getDataByStation(id, interval, unit);
       default:
-        return this.getDivisionData(id, interval, unit);
+        return this.getDataByDivision(id, interval, unit);
     }
   }
 
   division?: Division
 
-  async getStationData(stationId: string, interval: IntervalParams, unit: TimeUnit) {
+  async getDataByStation(stationId: string, interval: IntervalParams, unit: TimeUnit) {
     let params = new GetGarbageStationVolumesParams()
     params = Object.assign(params, interval)
     params.TimeUnit = unit;
     let paged = await this.stationService.eventNumber.history.list(stationId, params)
     return paged.Data;
   }
-  async getDivisionData(divisionId: string, interval: IntervalParams, unit: TimeUnit) {
-    let params = new GetDivisionVolumesParams()
+  async getDataByDivision(divisionId: string, interval: IntervalParams, unit: TimeUnit) {
+    let params = new GetDivisionEventNumbersParams()
     params = Object.assign(params, interval)
     params.TimeUnit = unit;
     let paged = await this.divisionService.eventNumber.history.list(divisionId, params)
@@ -61,7 +61,7 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     this.division = await this.divisionService.cache.get(divisionId);
   }
 
-  async load(opts: DetailsChartLoadOptions): Promise<TimeData<number>[]> {
+  async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[]> {
     let divisionId = this.store.divisionId
     this.loadDefault(divisionId)
 

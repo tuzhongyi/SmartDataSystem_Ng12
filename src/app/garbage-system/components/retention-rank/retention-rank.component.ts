@@ -50,11 +50,11 @@ export class RetentionRankComponent
   ngOnInit(): void {
     let _enum = new Enum(RetentionType);
     this.retentionTypes = _enum.toArray((x) => {
-      return new SelectItem({
-        key: x,
-        value: x,
-        language: Language.RetentionType(x),
-      });
+      return new SelectItem(
+        x,
+        x,
+        Language.RetentionType(x),
+      );
     });
 
     // 区划改变时触发

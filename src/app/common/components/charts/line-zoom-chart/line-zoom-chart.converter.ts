@@ -8,7 +8,7 @@ import {
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { CameraImageUrlModel } from '../../tables/event-record-table/event-record.model';
-import { ImageTimeData, TimeData } from '../chart.model';
+import { ImageTimeData, ITimeData } from '../chart.model';
 import {
   LineZoomChartModel,
   LineZoomChartSource
@@ -79,14 +79,14 @@ export class LineZoomChartDropDurationConverter
   implements
     IConverter<
       GarbageStationGarbageCountStatistic[],
-      TimeData<GarbageStationGarbageCountStatistic>[]
+      ITimeData<GarbageStationGarbageCountStatistic>[]
     >
 {
   Convert(
     source: GarbageStationGarbageCountStatistic[],
     ...res: any[]
-  ): TimeData<GarbageStationGarbageCountStatistic>[] {
-    let datas: TimeData<GarbageStationGarbageCountStatistic>[] = [];
+  ): ITimeData<GarbageStationGarbageCountStatistic>[] {
+    let datas: ITimeData<GarbageStationGarbageCountStatistic>[] = [];
     for (let i = 0; i < source.length; i++) {
       const item = source[i];
       datas.push({

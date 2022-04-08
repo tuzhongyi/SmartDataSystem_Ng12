@@ -12,12 +12,12 @@ import { User, UserResource } from 'src/app/network/model/user.model';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() {}
+  constructor() { }
 
   set user(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
   }
-  get user() {
+  get user(): User {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }

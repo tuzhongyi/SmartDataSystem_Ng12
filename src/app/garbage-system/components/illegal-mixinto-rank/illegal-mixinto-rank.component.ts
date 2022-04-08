@@ -66,32 +66,32 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   constructor(
     public business: IllegalMixintoRankBusiness,
     private storeService: StoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     let child = EnumHelper.GetResourceChildTypeByDivisionType(
       this.storeService.divisionType
     );
     this.resourceTypes = [
-      new SelectItem({
-        key: child.toString(),
-        value: child,
-        language: Language.UserResourceType(child),
-      }),
-      new SelectItem({
-        key: UserResourceType.Station.toString(),
-        value: UserResourceType.Station,
-        language: Language.UserResourceType(UserResourceType.Station),
-      }),
+      new SelectItem(
+        child.toString(),
+        child,
+        Language.UserResourceType(child),
+      ),
+      new SelectItem(
+        UserResourceType.Station.toString(),
+        UserResourceType.Station,
+        Language.UserResourceType(UserResourceType.Station),
+      ),
     ];
 
     let eventTypeEnum = new Enum(RankEventType);
     this.eventTypes = eventTypeEnum.toArray((x) => {
-      return new SelectItem({
-        key: x,
-        value: x,
-        language: Language.EventType(x),
-      });
+      return new SelectItem(
+        x,
+        x,
+        Language.EventType(x),
+      );
     });
 
     // 区划改变时触发

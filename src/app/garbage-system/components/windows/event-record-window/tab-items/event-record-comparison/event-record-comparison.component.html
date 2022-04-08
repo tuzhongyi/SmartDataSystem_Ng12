@@ -7,8 +7,15 @@
                     class="" />
             </div>
             <div class="filter-item">
+                <span>类型</span>
+                <app-select-control class="list-type-select" [data]="userTypes" (select)="onusertype($event)">
+                </app-select-control>
+            </div>
+            <div class="filter-item">
                 <span>行政区</span>
-                <howell-division-station-tree-mult-filter></howell-division-station-tree-mult-filter>
+                <howell-division-station-tree-mult-filter class="tree" [userType]="userType"
+                    (onselect)="onTreeSelect($event)">
+                </howell-division-station-tree-mult-filter>
             </div>
             <button class="hw-blue-btn search" (click)="search()">
                 <i class="mdi mdi-magnify"></i> 查询
@@ -25,20 +32,13 @@
             </app-select-control>
             <app-select-control class="list-type-select" [data]="chartTypes" (select)="oncharttype($event)">
             </app-select-control>
-            
+
         </div>
     </div>
     <div class="event-record-comparison-content">
-        <howell-line-chart *ngIf="chartType === ChartType.line"
-      [theme]="config.line.theme"
-      [options]="config.line.options"
-      [merge]="config.line.merge"
-    ></howell-line-chart>
-    <howell-bar-chart
-    *ngIf="chartType === ChartType.bar"
-    [theme]="config.bar.theme"
-      [options]="config.bar.options"
-      [merge]="config.bar.merge"
-    ></howell-bar-chart>
+        <howell-line-chart *ngIf="chartType === ChartType.line" [theme]="config.line.theme"
+            [options]="config.line.options" [merge]="config.line.merge"></howell-line-chart>
+        <howell-bar-chart *ngIf="chartType === ChartType.bar" [theme]="config.bar.theme" [options]="config.bar.options"
+            [merge]="config.bar.merge"></howell-bar-chart>
     </div>
 </div>

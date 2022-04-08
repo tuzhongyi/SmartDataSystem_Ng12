@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { CameraState } from 'src/app/enum/camera_state.enum';
 import { CameraType } from 'src/app/enum/camera_type.enum';
+import { ChartType } from 'src/app/enum/chart-type.enum';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
@@ -42,17 +43,16 @@ export class Language {
     }
   }
 
-  static Week(day:number){
-    let name = ["日","一","二","三","四","五","六", "日"];
+  static Week(day: number) {
+    let name = ["日", "一", "二", "三", "四", "五", "六", "日"];
     return `周${name[day]}`
   }
 
-  static Date(date:Date)
-  {
+  static Date(date: Date) {
     return formatDate(date, "yyyy年MM月dd日", "en")
   }
 
-  static Duration(begin:Date, end:Date){
+  static Duration(begin: Date, end: Date) {
     return `${Language.Date(begin)} 至 ${Language.Date(end)}`
   }
 
@@ -289,6 +289,17 @@ export class Language {
       }
     } else {
       return Language.json.normal;
+    }
+  }
+
+  static ChartType(type: ChartType) {
+    switch (type) {
+      case ChartType.bar:
+        return "柱状图"
+      case ChartType.line:
+        return "折线图"
+      default:
+        return ""
     }
   }
 

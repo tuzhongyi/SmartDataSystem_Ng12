@@ -28,7 +28,7 @@ export class EventRecordFilterBusiness
     private storeService: StoreService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
-  ) {}
+  ) { }
 
   Converter: IConverter<string, DivisionStationFilteModel> =
     new EventRecordFilterConverter();
@@ -80,13 +80,13 @@ export class EventRecordFilterBusiness
     let model = this.Converter.Convert('', divisions, stations, cameras);
 
     model.divisions.unshift(
-      new SelectItem({ language: '请选择', key: '', value: undefined })
+      new SelectItem('', undefined, '请选择')
     );
     model.stations.unshift(
-      new SelectItem({ language: '请选择', key: '', value: undefined })
+      new SelectItem('', undefined, '请选择')
     );
     model.cameras.unshift(
-      new SelectItem({ language: '请选择', key: '', value: undefined })
+      new SelectItem('', undefined, '请选择')
     );
 
     return model;

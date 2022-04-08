@@ -1,10 +1,8 @@
 export class SelectItem {
-  constructor(opts?: { key: string; value: any; language?: string }) {
-    if (opts) {
-      this.key = opts.key;
-      this.value = opts.value;
-      this.language = opts.language ?? '';
-    }
+  constructor(key?: string, value?: any, language?: string) {
+    this.key = key ?? "";
+    this.value = value ?? undefined;
+    this.language = language ?? '';
   }
   key: string = '';
   value!: any;

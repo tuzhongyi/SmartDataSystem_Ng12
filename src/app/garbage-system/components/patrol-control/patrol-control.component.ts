@@ -32,16 +32,16 @@ export class PatrolControlComponent implements OnInit {
   @Output()
   fullscreen: EventEmitter<void> = new EventEmitter();
 
-  constructor(private business: PatrolControlBusiness) {}
+  constructor(private business: PatrolControlBusiness) { }
 
   async ngOnInit() {
     for (let i = 1; i <= 4; i++) {
       let time = 30 * i;
-      let item = new SelectItem({
-        key: time.toString(),
-        value: time,
-        language: time + 's',
-      });
+      let item = new SelectItem(
+        time.toString(),
+        time,
+        time + 's',
+      );
       this.interval.times.push(item);
     }
 

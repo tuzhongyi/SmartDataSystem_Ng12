@@ -30,8 +30,8 @@ export class EventRecordCountComponent implements OnInit {
 
   constructor(private local: LocalStorageService, private exports: ExportBusiness) {
 
-    if (local.user.DefaultResource) {
-      this.userType = local.user.DefaultResource.ResourceType;
+    if (local.user.Resources && local.user.Resources.length > 0) {
+      this.userType = local.user.Resources[0].ResourceType;
     }
   }
 
@@ -49,47 +49,47 @@ export class EventRecordCountComponent implements OnInit {
 
   initUnits() {
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Day.toString(),
-        value: TimeUnit.Day,
-        language: '日报表',
-      })
+      new SelectItem(
+        TimeUnit.Day.toString(),
+        TimeUnit.Day,
+        '日报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Week.toString(),
-        value: TimeUnit.Week,
-        language: '周报表',
-      })
+      new SelectItem(
+        TimeUnit.Week.toString(),
+        TimeUnit.Week,
+        '周报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Month.toString(),
-        value: TimeUnit.Month,
-        language: '月报表',
-      })
+      new SelectItem(
+        TimeUnit.Month.toString(),
+        TimeUnit.Month,
+        '月报表',
+      )
     );
   }
   initUserResourceType() {
-    if (this.local.user.DefaultResource) {
-      if (this.local.user.DefaultResource.ResourceType == UserResourceType.City) {
+    if (this.local.user.Resources && this.local.user.Resources.length > 0) {
+      if (this.local.user.Resources[0].ResourceType == UserResourceType.City) {
         this.userTypes.push(
-          new SelectItem({
-            key: UserResourceType.County.toString(),
-            value: UserResourceType.County,
-            language: Language.UserResourceType(UserResourceType.County)
-          })
+          new SelectItem(
+            UserResourceType.County.toString(),
+            UserResourceType.County,
+            Language.UserResourceType(UserResourceType.County)
+          )
         )
       }
     }
 
     for (let i = UserResourceType.Committees; i <= UserResourceType.Station; i++) {
       this.userTypes.push(
-        new SelectItem({
-          key: i.toString(),
-          value: i,
-          language: Language.UserResourceType(i)
-        })
+        new SelectItem(
+          i.toString(),
+          i,
+          Language.UserResourceType(i)
+        )
       )
     }
   }

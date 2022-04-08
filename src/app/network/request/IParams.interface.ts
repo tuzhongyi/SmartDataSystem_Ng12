@@ -1,7 +1,8 @@
 import { Exclude, Transform } from 'class-transformer';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { transformDateTime } from '../model/transform.model';
 
-export interface IParams {}
+export interface IParams { }
 export class PagedParams implements IParams {
   /**页码[1-n](可选) */
   PageIndex?: number = 1;
@@ -15,6 +16,20 @@ export class IntervalParams {
   /**	DateTime	结束时间	M */
   @Transform(transformDateTime)
   EndTime!: Date;
+
+  static TimeUnit(unit: TimeUnit, date: Date) {
+    switch (unit) {
+      case TimeUnit.Month:
+        return IntervalParams.allMonth(date)
+      case TimeUnit.Week:
+        return IntervalParams.allWeek(date)
+      case TimeUnit.Hour:
+      case TimeUnit.Day:
+      default:
+        return IntervalParams.allDay(date);
+    }
+  }
+
 
   static allMonth(date: Date) {
     let params = new IntervalParams();

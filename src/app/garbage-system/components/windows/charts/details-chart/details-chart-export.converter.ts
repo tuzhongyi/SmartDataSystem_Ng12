@@ -1,10 +1,10 @@
 import { formatDate } from "@angular/common";
-import { TimeData } from "src/app/common/components/charts/chart.model";
+import { ITimeData } from "src/app/common/components/charts/chart.model";
 import { IConverter } from "src/app/common/interfaces/converter.interface";
 import { HowellExportModel } from "src/app/common/tools/exports/hw-export.model";
 
-export class ExportExcelConverter implements IConverter<TimeData<any>[], HowellExportModel>{
-    Convert(source: TimeData<any>[]): HowellExportModel {
+export class ExportExcelConverter implements IConverter<ITimeData<any>[], HowellExportModel>{
+    Convert(source: ITimeData<any>[]): HowellExportModel {
         let model = new HowellExportModel();
         
 

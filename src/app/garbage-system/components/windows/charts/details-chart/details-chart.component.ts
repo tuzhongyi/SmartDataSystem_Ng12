@@ -24,7 +24,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
-import { TimeData } from 'src/app/common/components/charts/chart.model';
+import { ITimeData } from 'src/app/common/components/charts/chart.model';
 import { Language } from 'src/app/global/tool/language';
 import { ChartConfig } from './details-chart.option';
 import { DetailsChartLoadOptions } from './details-chart.model';
@@ -43,9 +43,9 @@ import { ExportBusiness } from 'src/app/common/business/export.business';
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, TimeData<IModel>[]>, OnChanges {
+  implements OnInit, IComponent<IModel, ITimeData<IModel>[]>, OnChanges {
   @Input()
-  business!: IBusiness<IModel, TimeData<IModel>[]>;
+  business!: IBusiness<IModel, ITimeData<IModel>[]>;
   @Input()
   eventType: EventType = EventType.IllegalDrop;
   @Input()
@@ -98,7 +98,7 @@ export class DetailsChartComponent
     dateTimePicker: new DateTimePickerConfig(),
   };
 
-  data: TimeData<IModel>[] = [];
+  data: ITimeData<IModel>[] = [];
 
   userResourceType: UserResourceType = UserResourceType.None;
   UserResourceType = UserResourceType;
@@ -232,42 +232,42 @@ export class DetailsChartComponent
 
   initUnits() {
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Hour.toString(),
-        value: TimeUnit.Hour,
-        language: '日报表',
-      })
+      new SelectItem(
+        TimeUnit.Hour.toString(),
+        TimeUnit.Hour,
+        '日报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Week.toString(),
-        value: TimeUnit.Week,
-        language: '周报表',
-      })
+      new SelectItem(
+        TimeUnit.Week.toString(),
+        TimeUnit.Week,
+        '周报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Month.toString(),
-        value: TimeUnit.Month,
-        language: '月报表',
-      })
+      new SelectItem(
+        TimeUnit.Month.toString(),
+        TimeUnit.Month,
+        '月报表',
+      )
     );
   }
   initCharts() {
 
     this.charts.push(
-      new SelectItem({
-        key: ChartType.bar.toString(),
-        value: ChartType.bar,
-        language: '柱状图',
-      })
+      new SelectItem(
+        ChartType.bar.toString(),
+        ChartType.bar,
+        '柱状图',
+      )
     );
     this.charts.push(
-      new SelectItem({
-        key: ChartType.line.toString(),
-        value: ChartType.line,
-        language: '折线图',
-      })
+      new SelectItem(
+        ChartType.line.toString(),
+        ChartType.line,
+        '折线图',
+      )
     );
   }
 

@@ -25,29 +25,29 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
 
   initUnits() {
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Hour.toString(),
-        value: TimeUnit.Hour,
-        language: '日报表',
-      })
+      new SelectItem(
+        TimeUnit.Hour.toString(),
+        TimeUnit.Hour,
+        '日报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Week.toString(),
-        value: TimeUnit.Week,
-        language: '周报表',
-      })
+      new SelectItem(
+        TimeUnit.Week.toString(),
+        TimeUnit.Week,
+        '周报表',
+      )
     );
     this.units.push(
-      new SelectItem({
-        key: TimeUnit.Month.toString(),
-        value: TimeUnit.Month,
-        language: '月报表',
-      })
+      new SelectItem(
+        TimeUnit.Month.toString(),
+        TimeUnit.Month,
+        '月报表',
+      )
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   changeDate(date: Date) {
     this.date = date;
