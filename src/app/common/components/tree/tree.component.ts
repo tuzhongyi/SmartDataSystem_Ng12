@@ -241,6 +241,16 @@ export class TreeComponent implements OnInit {
 
   }
 
+  toggleSelect(ids: string[]) {
+    this.selection.clear();
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i];
+      let flatNode = this._flatNodeMap.get(id);
+      if (flatNode) {
+        this.selection.toggle(flatNode)
+      }
+    }
+  }
   changeTreeConfig(type: UserResourceType, depth?: number) {
     if (type == UserResourceType.None) return;
 
