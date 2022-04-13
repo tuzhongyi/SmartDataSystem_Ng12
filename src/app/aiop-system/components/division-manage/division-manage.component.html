@@ -33,8 +33,12 @@
     <div class="tree-container">
       <app-tree
         #tree
+        [depth]="1"
+        [showDepth]="1"
+        [defaultIds]="['310101013000', '310101002002', '310101002003']"
+        [treeSelectModel]="treeSelectModel"
         [treeServiceModel]="treeServiceModel"
-        (selectTree)="selectTree($event)"
+        (selectTreeNode)="selectTreeNode($event)"
       ></app-tree>
     </div>
   </div>

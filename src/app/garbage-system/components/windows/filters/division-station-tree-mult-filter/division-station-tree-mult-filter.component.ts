@@ -15,8 +15,8 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges {
   @Input()
   userType = UserResourceType.County;
-@Output()
-onselect:EventEmitter<string[]> = new EventEmitter()
+  @Output()
+  onselect: EventEmitter<string[]> = new EventEmitter()
   constructor() { }
 
   HorizontalAlign = HorizontalAlign;
@@ -26,7 +26,7 @@ onselect:EventEmitter<string[]> = new EventEmitter()
   treeServiceModel: TreeServiceEnum = TreeServiceEnum.Division;
   treeSelectModel: TreeSelectEnum = TreeSelectEnum.Multiple
 
-  selected: Array<Division|GarbageStation> = [];
+  selected: Array<Division | GarbageStation> = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userType) {
@@ -40,13 +40,13 @@ onselect:EventEmitter<string[]> = new EventEmitter()
   }
 
   ngOnInit(): void {
-    window.addEventListener("click", ()=>{
+    window.addEventListener("click", () => {
       this.expand = false;
     })
   }
 
 
-  remove(item: Division|GarbageStation): void {
+  remove(item: Division | GarbageStation): void {
     const index = this.selected.indexOf(item);
 
     if (index >= 0) {
@@ -54,16 +54,16 @@ onselect:EventEmitter<string[]> = new EventEmitter()
     }
   }
 
-  onpanelclick(event:Event){
+  onpanelclick(event: Event) {
     event.cancelBubble = true;
   }
-  onchiplistclicked(event:Event){
-    this.expand = !this.expand;    
+  onchiplistclicked(event: Event) {
+    this.expand = !this.expand;
     event.cancelBubble = true;
   }
 
 
-  selectTree(nodes: FlatTreeNode[]) {
+  selectTreeNode(nodes: FlatTreeNode[]) {
     this.selected = [];
     let ids = []
     for (let i = 0; i < nodes.length; i++) {

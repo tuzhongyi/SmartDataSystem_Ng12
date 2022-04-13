@@ -10,7 +10,7 @@ export interface TreeServiceInterface {
   //   level?: number,
   // ): Promise<void>;
 
-  // loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
+  loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
 
   // searchNode(condition: string): Promise<NestedTreeNode[]>;
 }

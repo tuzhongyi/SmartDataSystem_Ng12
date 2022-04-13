@@ -154,9 +154,8 @@ export class DivisionManageComponent implements OnInit {
     // }
   }
 
-  selectTree(nodes: FlatTreeNode[]) {
+  selectTreeNode(nodes: FlatTreeNode[]) {
     this.currentNode = nodes[0];
-    console.log('currentNode', this.currentNode);
   }
 
   changeType() {

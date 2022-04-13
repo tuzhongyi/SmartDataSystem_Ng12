@@ -85,7 +85,7 @@ export class DivisionTreeFilterComponent
 
   ngOnInit(): void { }
 
-  selectTree(nodes: FlatTreeNode[]) {
+  selectTreeNode(nodes: FlatTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.current = node;

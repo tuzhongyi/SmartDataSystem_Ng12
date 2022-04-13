@@ -56,9 +56,10 @@ export class TreeService implements TreeServiceInterface {
     if (depth < 0) return [];
     let data = await this._loadData(type);
     let nodes = this._converter.iterateToNested(data);
-    console.log('资源类型: ', type);
-    console.log('深度: ', depth);
-    console.log('节点: ', nodes)
+
+    // console.log('资源类型: ', type);
+    // console.log('深度: ', depth);
+    // console.log('节点: ', nodes)
     if (
       type == UserResourceType.Committees &&
       this.model == TreeServiceEnum.Station
@@ -70,7 +71,7 @@ export class TreeService implements TreeServiceInterface {
     }
 
     this._register(nodes);
-    console.log(this.nestedNodeMap)
+    // console.log(this.nestedNodeMap)
 
     if (depth == 0 && this.depthIsEnd) {
       nodes.forEach((node) => {

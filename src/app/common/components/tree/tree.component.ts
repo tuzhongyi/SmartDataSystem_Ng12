@@ -83,7 +83,10 @@ export class TreeComponent implements OnInit {
     if (this.selectModel == TreeSelectEnum.Single) {
       return this.selection.isSelected(node);
     } else if (this.selectModel == TreeSelectEnum.Multiple) {
+      // 仅当前点击的高亮，其他节点状态通过checkbox体现
       return this._currentNode && this._currentNode.id == node.id;
+
+      // return this.selection.isSelected(node);// 所有选中的都高亮
     }
     return false;
   };
@@ -104,7 +107,7 @@ export class TreeComponent implements OnInit {
 
 
   // 展示数据的深度，一般等于 depth
-  private _showDepth: number = 0;
+  private _showDepth: number = -1;
 
   @Input()
   set showDepth(val: number) {
@@ -138,7 +141,22 @@ export class TreeComponent implements OnInit {
     return this._userResourceType
   }
 
-  @Output() selectTree: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
+  private _defaultIds: string[] = []
+  @Input()
+  set defaultIds(ids: string[]) {
+    if (this.selectModel == TreeSelectEnum.Single) {
+      if (ids.length > 0)
+        this._defaultIds = [ids[0]]
+    } else if (this.selectModel == TreeSelectEnum.Multiple) {
+      this._defaultIds = ids;
+    }
+
+  }
+  get defaultIds() {
+    return this._defaultIds;
+  }
+
+  @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
   constructor(private _treeService: TreeService) {
@@ -161,6 +179,7 @@ export class TreeComponent implements OnInit {
 
     this.dataChange.subscribe((data) => {
       this.dataSource.data = data;
+
     });
 
     this._nestedNodeMap = this._treeService.nestedNodeMap;
@@ -175,12 +194,15 @@ export class TreeComponent implements OnInit {
       this.selection = new SelectionModel<FlatTreeNode>(true);
     }
     this.selection.changed.subscribe((change) => {
-      this.selectTree.emit(change.source.selected);
+      console.log('selected nodes: ', this.selection.selected)
+      this.selectTreeNode.emit(change.source.selected);
     });
 
     this._treeService.model = this.serviceModel;
     this._treeService.depthIsEnd = this.depthIsEnd
-    if (this.showDepth == 0)
+
+    // 如果showDepth没有设置或者比depth大，则用depth的值
+    if (this.showDepth == -1 || this.showDepth > this.depth)
       this.showDepth = this.depth;
 
 
@@ -195,10 +217,9 @@ export class TreeComponent implements OnInit {
       this.resourceType,
       this.depth
     );
-    console.log('树节点: ', nodes)
-    // this._register(nodes);
+    // console.log('树节点: ', nodes)
     this.dataChange.next(nodes);
-
+    this._setDefaultNodes()
 
     this._expandNodeRecursively(nodes)
 
@@ -213,14 +234,12 @@ export class TreeComponent implements OnInit {
         this.treeControl.expand(flatNode)
         this._expandNodeRecursively(node.childrenChange.value)
       } else {
-        console.log('break', node)
+        // console.log('break', node)
         break;
       }
     }
 
   }
-
-
 
   changeTreeConfig(type: UserResourceType, depth?: number) {
     if (type == UserResourceType.None) return;
@@ -241,16 +260,17 @@ export class TreeComponent implements OnInit {
         nestedNode.childrenChange.next(nodes);
         this.dataChange.next(this.dataChange.value);
         this._checkAllDescendants(node);
+        this._setDefaultNodes()
       }
     } else {
       this.treeControl.collapseDescendants(node);
     }
   }
   singleSelectNode(node: FlatTreeNode) {
-    console.log(node.level);
     this.selection.toggle(node);
   }
   multipleSelectNode(node: FlatTreeNode) {
+
     // 处理当前节点
     this.selection.toggle(node);
     this._currentNode = node;
@@ -262,7 +282,7 @@ export class TreeComponent implements OnInit {
     this._checkAllParentsSelection(node);
   }
   /**
-   *  当前节点的所有后代节点部分被选中，但不能全被选中，则显示 indetermindate状态
+   *  当前节点的所有后代节点部分被选中，但不能全被选中，则显示 indetermindate 状态(优先级比checked状态低)
    * @param node
    * @returns
    */
@@ -271,21 +291,9 @@ export class TreeComponent implements OnInit {
     const result = descendants.some((child) =>
       this.selection.isSelected(child)
     );
-    return result && !this.descendantAllSelected(node);
+    return result && !this._descendantAllSelected(node);
   }
-  /**
-   *
-   * @param node
-   * @returns
-   * @description 当前节点所有后代节点都被选中
-   */
-  descendantAllSelected(node: FlatTreeNode) {
-    const descendants = this.treeControl.getDescendants(node);
-    const descAllSelected =
-      descendants.length > 0 &&
-      descendants.every((child) => this.selection.isSelected(child));
-    return descAllSelected;
-  }
+
 
   /***增，删，改，查节点 */
 
@@ -359,6 +367,40 @@ export class TreeComponent implements OnInit {
     // return nodes;
   }
 
+
+  private _setDefaultNodes() {
+    let len = this.defaultIds.length;
+    if (len == 0) return;
+    let res: string[] = [];
+    for (let i = 0; i < len; i++) {
+      let id = this.defaultIds[i];
+
+      let node = this._flatNodeMap.get(id);
+      if (node) {
+        console.log(node)
+        this.selection.select(node)
+      } else {
+        res.push(id)
+      }
+    }
+    this.defaultIds = res;
+
+    console.log(this.defaultIds)
+
+  }
+  /**
+  *
+  * @param node
+  * @returns
+  * @description 当前节点所有后代节点都被选中
+  */
+  private _descendantAllSelected(node: FlatTreeNode) {
+    const descendants = this.treeControl.getDescendants(node);
+    const descAllSelected =
+      descendants.length > 0 &&
+      descendants.every((child) => this.selection.isSelected(child));
+    return descAllSelected;
+  }
 
   private _checkAllDescendants(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
