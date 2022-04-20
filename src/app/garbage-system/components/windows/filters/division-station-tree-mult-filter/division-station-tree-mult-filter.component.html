@@ -1,17 +1,19 @@
 <div class="division-station-tree-filter">
-  <mat-chip-list #chipList aria-label="Fruit selection"
-  [aria-orientation]="'horizontal'" (click)="onchiplistclicked($event)"
-  >
+  <mat-chip-list #chipList aria-label="Fruit selection" [aria-orientation]="'horizontal'"
+    (click)="onchiplistclicked($event)">
+    <span *ngIf="!selected || selected.length == 0">请选择</span>    
     <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
       {{ item.Name }}
       <button matChipRemove>
         <mat-icon>cancel</mat-icon>
-       </button>
+      </button>
     </mat-chip>
   </mat-chip-list>
-  <div class="tree" (click)="onpanelclick($event)" [class.right]="align == HorizontalAlign.right" [class.left]="align == HorizontalAlign.left"
-    *ngIf="expand">
-    <app-tree [treeServiceModel]="treeServiceModel" [treeSelectModel]="treeSelectModel" [resourceType]="userType"
-      (selectTreeNode)="selectTreeNode($event)"></app-tree>
+  <div class="tree" (click)="onpanelclick($event)" [class.right]="align == HorizontalAlign.right"
+    [class.left]="align == HorizontalAlign.left" *ngIf="expand">
+    <app-tree #tree [treeServiceModel]="config.tree.treeServiceModel" [depth]="config.tree.depth"
+      [depthIsEnd]="config.tree.depthIsEnd" [showDepth]="config.tree.showDepth"
+      [treeSelectModel]="config.tree.treeSelectModel" [resourceType]="config.tree.userType"
+      (selectTreeNode)="selectTree($event)" [defaultIds]="selectedIds"></app-tree>
   </div>
 </div>

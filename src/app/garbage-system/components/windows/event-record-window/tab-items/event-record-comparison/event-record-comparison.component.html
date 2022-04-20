@@ -11,7 +11,7 @@
                 <app-select-control class="list-type-select" [data]="userTypes" (select)="onusertype($event)">
                 </app-select-control>
             </div>
-            <div class="filter-item">
+            <div class="filter-item tree">
                 <span>行政区</span>
                 <howell-division-station-tree-mult-filter class="tree" [userType]="userType"
                     (onselect)="onTreeSelect($event)">
@@ -32,13 +32,14 @@
             </app-select-control>
             <app-select-control class="list-type-select" [data]="chartTypes" (select)="oncharttype($event)">
             </app-select-control>
-
         </div>
     </div>
     <div class="event-record-comparison-content">
-        <howell-line-chart *ngIf="chartType === ChartType.line" [theme]="config.line.theme"
+        <howell-line-chart *ngIf="chartType === ChartType.line && config.line" [theme]="config.line.theme"
             [options]="config.line.options" [merge]="config.line.merge"></howell-line-chart>
-        <howell-bar-chart *ngIf="chartType === ChartType.bar" [theme]="config.bar.theme" [options]="config.bar.options"
+
+        <howell-bar-chart *ngIf="chartType === ChartType.bar && config.bar" [theme]="config.bar.theme" 
+        [options]="config.bar.options"
             [merge]="config.bar.merge"></howell-bar-chart>
     </div>
 </div>

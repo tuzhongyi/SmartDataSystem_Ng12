@@ -1,4 +1,4 @@
 export enum ChartType{
-    line,
-    bar
+    line = "line",
+    bar = "bar"
 }

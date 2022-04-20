@@ -30,12 +30,12 @@ export class LineChartComponent implements OnInit, OnChanges {
   }
   onResized(e: ResizedEvent) {
     let w = e.newRect.width;
-    this.merge = {
-      title: {
+    if (this.merge) {
+      this.merge.title = {
         textStyle: {
           width: w,
         },
-      },
-    };
+      }
+    }
   }
 }

@@ -1,23 +1,24 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { ITimeData } from "src/app/common/components/charts/chart.model";
+import { ITimeData, ITimeDataList } from "src/app/common/components/charts/chart.model";
 import { IBusiness } from "src/app/common/interfaces/bussiness.interface";
-import { IConverter } from "src/app/common/interfaces/converter.interface";
+import { IConverter, IPromiseConverter } from "src/app/common/interfaces/converter.interface";
 import { ISubscription } from "src/app/common/interfaces/subscribe.interface";
 import { StatisticToTimeDataConverter } from "src/app/Converter/statistic-to-timedata.converter";
 import { EventType } from "src/app/enum/event-type.enum";
 import { TimeUnit } from "src/app/enum/time-unit.enum";
 import { UserResourceType } from "src/app/enum/user-resource-type.enum";
-import { EventNumberStatistic } from "src/app/network/model/event-number-statistic.model";
+import { Division } from "src/app/network/model/division.model";
+import { GarbageStation } from "src/app/network/model/garbage-station.model";
 import { GetDivisionEventNumbersParams } from "src/app/network/request/division/division-request.params";
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationEventNumbersParams } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
 import { IntervalParams } from "src/app/network/request/IParams.interface";
-import { EventRecordComparisonOptions } from "./EventRecordComparison.model";
+import { EventRecordComparisonOptions, EventNumberStatisticArray } from "./EventRecordComparison.model";
 
 @Injectable()
 export class EventRecordComparisonBusiness
-    implements IBusiness<Array<EventNumberStatistic[]>, ITimeData<number>[][]>
+    implements IBusiness<Array<EventNumberStatisticArray>, ITimeDataList<number>[]>
 {
     constructor(
         private stationService: GarbageStationRequestService,
@@ -25,21 +26,21 @@ export class EventRecordComparisonBusiness
     ) {
 
     }
-    Converter: IConverter<Array<EventNumberStatistic[]>, ITimeData<number>[][]> = new EventRecordComparisonConverter();
+    Converter: IConverter<Array<EventNumberStatisticArray>, ITimeDataList<number>[]> = new EventRecordComparisonConverter();
     subscription?: ISubscription | undefined;
     loading?: EventEmitter<void> | undefined;
-    async load(opts: EventRecordComparisonOptions): Promise<ITimeData<number>[][]> {
+    async load(opts: EventRecordComparisonOptions): Promise<ITimeDataList<number>[]> {
 
         let interval = IntervalParams.TimeUnit(opts.unit, opts.date);
         let unit = TimeUnit.Day;
         if (opts.unit == TimeUnit.Day || opts.unit === TimeUnit.Hour) {
             unit = TimeUnit.Hour;
         }
-        let data = await this.getData(opts.userType, opts.ids, unit, interval, opts.eventType)
-        let model = this.Converter.Convert(data)
+        let data = await this.getData(opts.userType, opts.ids, unit, interval)
+        let model = this.Converter.Convert(data, opts.eventType)
         return model;
     }
-    async getData(type: UserResourceType, ids: string[], unit: TimeUnit, interval: IntervalParams, eventType: EventType) {
+    async getData(type: UserResourceType, ids: string[], unit: TimeUnit, interval: IntervalParams) {
         if (type === UserResourceType.Station) {
             return this.getDataByStation(ids, unit, interval)
         }
@@ -53,11 +54,16 @@ export class EventRecordComparisonBusiness
         params.BeginTime = interval.BeginTime;
         params.EndTime = interval.EndTime;
         params.TimeUnit = unit;
-        let result = new Array<EventNumberStatistic[]>();
+        let result = new Array<EventNumberStatisticArray>();
         for (let i = 0; i < ids.length; i++) {
             const id = ids[i];
             let paged = await this.stationService.eventNumber.history.list(id, params)
-            result.push(paged.Data)
+            let array = new EventNumberStatisticArray();
+            array.Id = id;
+            array.datas = paged.Data;
+            let station = await this.stationService.cache.get(id);
+            array.Name = station.Name
+            result.push(array);
         }
         return result;
 
@@ -67,11 +73,16 @@ export class EventRecordComparisonBusiness
         params.BeginTime = interval.BeginTime;
         params.EndTime = interval.EndTime;
         params.TimeUnit = unit;
-        let result = new Array<EventNumberStatistic[]>()
+        let result = new Array<EventNumberStatisticArray>()
         for (let i = 0; i < ids.length; i++) {
             const id = ids[i];
             let paged = await this.divisionService.eventNumber.history.list(id, params)
-            result.push(paged.Data);
+            let array = new EventNumberStatisticArray();
+            array.Id = id;
+            array.datas = paged.Data;
+            let division = await this.divisionService.cache.get(id);
+            array.Name = division.Name;
+            result.push(array);
         }
         return result;
     }
@@ -80,16 +91,26 @@ export class EventRecordComparisonBusiness
 
 
 class EventRecordComparisonConverter
-    implements IConverter<Array<EventNumberStatistic[]>, ITimeData<number>[][]>{
+    implements IConverter<Array<EventNumberStatisticArray>, ITimeDataList<number>[]>{
 
     converter = {
         item: new StatisticToTimeDataConverter()
     }
 
-    Convert(source: Array<EventNumberStatistic[]>, eventType: EventType)
-        : ITimeData<number>[][] {
+    Convert(
+        source: Array<EventNumberStatisticArray>,
+        eventType: EventType)
+        : ITimeDataList<number>[] {
         let array = source.map(x => {
-            return this.converter.item.Convert(x, eventType)
+
+
+            let datas = this.converter.item.Convert(x.datas, eventType)
+            let result: ITimeDataList<number> = {
+                id: x.Id,
+                name: x.Name,
+                datas: datas
+            };
+            return result;
         })
         return array;
     }

@@ -34,7 +34,7 @@
         </mat-tab>
         <mat-tab label="数据比较">
           <ng-container *ngIf="index===Index.comparison">
-            <howell-event-record-comparison></howell-event-record-comparison>
+            <howell-event-record-comparison [eventType]="type"></howell-event-record-comparison>
           </ng-container>
         </mat-tab>
       </mat-tab-group>

@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
+import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-filter.model';
 
 @Component({
   selector: 'howell-division-station-tree-mult-filter',
@@ -17,24 +20,45 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   userType = UserResourceType.County;
   @Output()
   onselect: EventEmitter<string[]> = new EventEmitter()
-  constructor() { }
+  constructor(private local: LocalStorageService) { }
 
+  @ViewChild("tree")
+  tree?: TreeComponent;
   HorizontalAlign = HorizontalAlign;
   align: HorizontalAlign = HorizontalAlign.left;
-  expand = true;
-
-  treeServiceModel: TreeServiceEnum = TreeServiceEnum.Division;
-  treeSelectModel: TreeSelectEnum = TreeSelectEnum.Multiple
+  expand = false;
 
   selected: Array<Division | GarbageStation> = [];
+  selectedIds: string[] = [];
+  config = new DivisionStationTreeFilterConfig();
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(changes: SimpleChanges): void {    
     if (changes.userType) {
       if (this.userType === UserResourceType.Station) {
-        this.treeServiceModel = TreeServiceEnum.Station;
+        this.config.tree.treeServiceModel = TreeServiceEnum.Station;
       }
       else {
-        this.treeServiceModel = TreeServiceEnum.Division;
+        this.config.tree.treeServiceModel = TreeServiceEnum.Division;
+      }
+      switch (this.userType) {
+        case UserResourceType.Committees:
+          this.config.tree.depth = 1;
+          this.config.tree.showDepth = 0;
+          this.config.tree.depthIsEnd = true;
+          break;
+        case UserResourceType.County:
+        case UserResourceType.City:
+          this.config.tree.depth = 0;
+          this.config.tree.showDepth = 0;
+          this.config.tree.depthIsEnd = true;
+          break;
+        case UserResourceType.Station:          
+          this.config.tree.depth = 0;
+          this.config.tree.showDepth = 0;
+          this.config.tree.depthIsEnd = false;
+          break;
+        default:
+          break;
       }
     }
   }
@@ -45,13 +69,16 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
     })
   }
 
-
   remove(item: Division | GarbageStation): void {
     const index = this.selected.indexOf(item);
-
     if (index >= 0) {
       this.selected.splice(index, 1);
     }
+    this.selectedIds = this.selected.map(x => x.Id)
+    if (this.tree) {
+      this.tree.toggleSelect(this.selectedIds);
+    }
+    this.onselect.emit(this.selectedIds)
   }
 
   onpanelclick(event: Event) {
@@ -63,16 +90,16 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   }
 
 
-  selectTreeNode(nodes: FlatTreeNode[]) {
+  selectTree(nodes: FlatTreeNode[]) {
     this.selected = [];
-    let ids = []
+    this.selectedIds = []
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.selected.push(node.data);
-      ids.push(node.id)
+      this.selectedIds.push(node.id)
       // this.current = node;
       // this.select.emit(node.data);
     }
-    this.onselect.emit(ids)
+    this.onselect.emit(this.selectedIds)
   }
 }

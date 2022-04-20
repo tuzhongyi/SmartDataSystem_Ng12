@@ -155,7 +155,11 @@ export class DetailsChartComponent
     // console.log(this.data);
     switch (this.chartType) {
       case ChartType.line:
-        this.config.line.options = this.config.line.getOption(this.unit, this.date);
+        this.config.line.options = this.config.line.getOption(this.unit, this.date, {
+          formatter: function () {
+            return '单位(起)'
+          },
+        });
         this.config.line.merge = {
           series: [
             {
@@ -173,7 +177,11 @@ export class DetailsChartComponent
         };
         break;
       case ChartType.bar:
-        this.config.bar.options = this.config.bar.getOption(this.unit, this.date);
+        this.config.bar.options = this.config.bar.getOption(this.unit, this.date, {
+          formatter: function () {
+            return '单位(起)'
+          },
+        });
         this.config.bar.merge = {
           series: [
             {

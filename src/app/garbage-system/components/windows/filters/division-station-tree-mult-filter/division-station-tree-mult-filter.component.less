@@ -5,26 +5,31 @@
     height: 100%;
 
     
-  
-    ::ng-deep{
-        .mat-chip-list{
+
+
+    ::ng-deep {
+        .mat-chip-list-wrapper span {
+            padding-left: 10px;
+            color: #cfd7ff;
+            font-size: 18px;
+        }
+        .mat-chip-list {
             display: flex;
             justify-content: flex-start;
             align-items: center;
             flex-wrap: nowrap;
-            white-space:nowrap;
-            overflow: hidden;                
-            width: 250px;
+            white-space: nowrap;
+            overflow: hidden;
             background-color: #1d233b;
             border: 1px solid #5e6ebf;
-            padding: 0 10px;
             height: 32px;
 
-            .mat-chip-list-wrapper{
+            .mat-chip-list-wrapper {
                 flex-wrap: nowrap;
             }
         }
-        .mat-standard-chip{
+
+        .mat-standard-chip {
             background-color: rgb(69, 75, 112);
             color: #eaedff;
             font-size: 14px;
@@ -33,11 +38,12 @@
             padding: 5px 10px 5px 10px;
             border-radius: 3px;
         }
+
     }
 
     .tree {
         width: 300px;
-        height: 320px;
+        max-height: 320px;
         overflow: auto;
         position: absolute;
         top: 35px;
@@ -45,13 +51,19 @@
         border: 1px solid #194076;
         background: #0c1127;
         z-index: 1;
-    
-        &.right{
-          right:0;
+
+        &.right {
+            right: 0;
         }
-        &.left{
-          left:0;
+
+        &.left {
+            left: 0;
         }
-      }
-  }
-  
+
+        ::ng-deep {
+            .mat-tree {
+                padding-left: 0;
+            }
+        }
+    }
+}

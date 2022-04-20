@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import { ITimeData } from 'src/app/common/components/charts/chart.model';
+import { ITimeData, ITimeDataList } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -15,7 +16,7 @@ import { Language } from 'src/app/global/tool/language';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
-import { ChartConfig } from '../../../charts/details-chart/details-chart.option';
+import { ChartConfig, EChartOptions } from '../../../charts/details-chart/details-chart.option';
 import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
 
@@ -26,7 +27,7 @@ import { EventRecordComparisonOptions } from './EventRecordComparison.model';
   providers: [EventRecordComparisonBusiness]
 })
 export class EventRecordComparisonComponent
-  implements OnInit, IComponent<IModel, ITimeData<number>[][]> {
+  implements OnInit, IComponent<IModel, ITimeDataList<number>[]> {
   @Input()
   date: Date = new Date();
   @Input()
@@ -44,7 +45,7 @@ export class EventRecordComparisonComponent
     }
 
   }
-  business: IBusiness<IModel, ITimeData<number>[][]>;
+  business: IBusiness<IModel, ITimeDataList<number>[]>;
   userTypes: SelectItem[] = [];
   DateTimePickerView = DateTimePickerView;
   dateFormat = "yyyy年MM月dd日";
@@ -53,17 +54,25 @@ export class EventRecordComparisonComponent
   chartType: ChartType = ChartType.bar;
   chartTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
-  config = {
-    line: new ChartConfig(this.unit, this.date),
-    bar: new ChartConfig(this.unit, this.date),
-  };
-  datas?: ITimeData<number>[][]
+  config: EventRecordComparisonComponentConfig = {}
+  datas?: ITimeDataList<number>[]
   selectIds?: string[]
+  echartsLegend: LegendComponentOption = {
+    show: true,
+    right: "50px",
+    icon: "",
+    orient: "vertical",
+    textStyle: {
+      fontSize: 16
+    }
+  }
 
   ngOnInit(): void {
     this.initUnits();
     this.initChartTypes();
     this.initUserTypes();
+
+    
   }
 
   initUnits() {
@@ -134,7 +143,7 @@ export class EventRecordComparisonComponent
   }
 
   async loadData() {
-    if (!this.selectIds) return;
+    if (!this.selectIds || this.selectIds.length <= 0) return;
     let opts: EventRecordComparisonOptions = {
       userType: this.userType,
       eventType: this.eventType,
@@ -143,16 +152,32 @@ export class EventRecordComparisonComponent
       ids: this.selectIds
     }
     this.datas = await this.business.load(opts);
-    this.load.emit();    
+    this.load.emit();
+
+    let merge: EChartOptions = this.getEChartsMerge(this.chartType, this.datas);
+    this.config.line = undefined;
+    this.config.bar = undefined;
     switch (this.chartType) {
       case ChartType.line:
-        this.config.line.options = this.config.line.getOption(this.unit, this.date);
-        this.config.line.merge = {
-          series: this.datas.map(data => {
+        this.config.line = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        break;
+      case ChartType.bar:
+        this.config.bar = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        break;
+      default:
+        break;
+    }
+  }
+
+  getEChartsMerge(type: ChartType, datas: ITimeDataList<number>[]): EChartOptions {
+    switch (type) {
+      case ChartType.line:
+        return {
+          series: datas.map((data, i) => {
             return {
               type: 'line',
-              name: '单位(起)',
-              data: data.map((x) => x.value),
+              name: data.name,
+              data: data.datas.map((x) => x.value),
               areaStyle: {},
               label: {
                 formatter: (params: CallbackDataParams) => {
@@ -162,20 +187,20 @@ export class EventRecordComparisonComponent
             }
           })
         };
-        break;
       case ChartType.bar:
-        this.config.bar.options = this.config.bar.getOption(this.unit, this.date);
-        this.config.bar.merge = {
-          series: this.datas.map(data => {
+      default:
+        return {
+          series: datas.map((data, i) => {
             return {
               type: 'bar',
-              name: '单位(起)',
-              data: data.map((x) => x.value),
-              barWidth: "32px",
+              name: data.name,
+              data: data.datas.map((x) => x.value),
+              barWidth: "15px",
+              barMinHeight: 5,
               label: {
                 show: true,
                 position: 'top',
-                color: "#7d90bc",
+                color: ChartConfig.color[i],
                 fontSize: "16px",
                 textBorderWidth: 0,
                 formatter: (params: CallbackDataParams) => {
@@ -183,23 +208,22 @@ export class EventRecordComparisonComponent
                 },
               },
             }
-          }
-          ),
-        };
-        break;
-      default:
-        break;
+          }),
+        }
     }
   }
+
 
   changeDate(date: Date) {
     this.date = date;
   }
   ontimeunit(item: SelectItem) {
     this.unit = item.value;
+    this.loadData();
   }
   oncharttype(item: SelectItem) {
     this.chartType = item.value;
+    this.loadData();
   }
   onusertype(item: SelectItem) {
     this.userType = item.value;
@@ -208,7 +232,6 @@ export class EventRecordComparisonComponent
 
 
   onTreeSelect(ids: string[]) {
-    debugger;
     this.selectIds = ids;
   }
 
@@ -223,5 +246,8 @@ export class EventRecordComparisonComponent
 
 }
 
-
+interface EventRecordComparisonComponentConfig {
+  line?: ChartConfig,
+  bar?: ChartConfig
+}
 

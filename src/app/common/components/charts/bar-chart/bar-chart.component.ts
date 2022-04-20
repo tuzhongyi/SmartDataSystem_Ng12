@@ -21,21 +21,21 @@ export class BarChartComponent implements OnInit, OnChanges {
   @Input() theme: string = '';
   @Input() options: EChartsOption = {};
   @Input() merge: EChartsOption = {};
+  
+  constructor() { }
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log('changes', changes);
+    
   }
   onResized(e: ResizedEvent) {
     let w = e.newRect.width;
-    this.merge = {
-      title: {
+    if (this.merge) {
+      this.merge.title = {
         textStyle: {
           width: w,
         },
-      },
-    };
+      }
+    }
   }
 }
