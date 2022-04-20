@@ -20,6 +20,7 @@ import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import videojs, { VideoJsPlayer } from 'video.js';
+import { RoutePath } from '../app-routing.path';
 import { EnumHelper } from '../enum/enum-helper';
 import { StaticDataRole } from '../enum/role-static-data.enum';
 import { LocalStorageService } from '../global/service/local-storage.service';
@@ -167,9 +168,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
           // 区分权限
           if (result.Role && result.Role.length > 0) {
             if (result.Role[0].StaticData == StaticDataRole.enabled) {
-              this._router.navigateByUrl('aiop');
+              this._router.navigateByUrl(RoutePath.aiop);
             } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
-              this._router.navigateByUrl('garbage-system');
+              this._router.navigateByUrl(RoutePath.garbage_system);
             }
           }
         }

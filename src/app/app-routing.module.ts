@@ -5,19 +5,20 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthorizationService } from './network/request/auth/auth-request.service';
+import { RoutePath } from './app-routing.path';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: RoutePath.login,
     pathMatch: 'full',
   },
   {
-    path: 'login',
+    path: RoutePath.login,
     component: LoginComponent,
   },
   {
-    path: 'garbage-system',
+    path: RoutePath.garbage_system,
     loadChildren: () =>
       import('./garbage-system/garbage.module').then(
         (mod) => mod.GarbageModule
@@ -25,7 +26,7 @@ const routes: Routes = [
     canActivate: [AuthorizationService],
   },
   {
-    path: 'aiop',
+    path: RoutePath.aiop,
     loadChildren: () =>
       import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
     canActivate: [AuthorizationService],
