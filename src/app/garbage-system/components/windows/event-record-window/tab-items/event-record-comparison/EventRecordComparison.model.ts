@@ -18,9 +18,3 @@ export type EventRecordType = IllegalDropEventRecord | MixedIntoEventRecord | Ga
 
 export type NumberStatisticV2 = GarbageStationNumberStatisticV2|DivisionNumberStatisticV2
 
-
-export class EventNumberStatisticArray{
-    Id:string = ""
-    Name:string = ""
-    datas:EventNumberStatistic[] = []
-}

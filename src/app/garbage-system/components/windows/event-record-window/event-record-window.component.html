@@ -16,7 +16,7 @@
             <interval-division-station-filter *ngIf="record.filter.show" (filter)="record.filter.onfilter($event)">
             </interval-division-station-filter>
             <div class="event-record-table" [class.filter]="record.filter.show">
-              <howell-event-record-table [type]="type" [load]="record.filter.load" (image)="onimage($event)">
+              <howell-event-record-table [type]="type" [load]="record.filter.load" (image)="onimage($event)" [filter]="filter">
               </howell-event-record-table>
             </div>
           </ng-container>

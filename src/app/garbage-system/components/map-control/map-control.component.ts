@@ -29,6 +29,26 @@ declare var $: any;
   providers: [AMapBusiness, ListPanelBusiness, PointInfoPanelBusiness],
 })
 export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
+
+  //#region Output
+  @Output()
+  VideoPlay: EventEmitter<Camera> = new EventEmitter();
+  @Output()
+  patrol: EventEmitter<void> = new EventEmitter();
+  // 垃圾落地记录
+  @Output()  
+  illegalDropClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  // 混合投放记录
+  @Output()  
+  mixedIntoClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  // 小包垃圾滞留
+  @Output()
+  garbageCountClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  // 垃圾滞留投放点
+  @Output()  
+  garbageRetentionClicked:EventEmitter<GarbageStation> = new EventEmitter();
+
+  //#endregion
   //#region ViewChild
   @ViewChild('iframe')
   element?: ElementRef;
@@ -68,14 +88,6 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#endregion
   //#endregion
 
-  //#region Output
-  @Output()
-  VideoPlay: EventEmitter<Camera> = new EventEmitter();
-
-  @Output()
-  patrol: EventEmitter<void> = new EventEmitter();
-
-  //#endregion
 
   elementInit() {
     $('.ul').each(function (index: number, element: HTMLElement) {
@@ -122,8 +134,8 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     private amap: AMapBusiness,
     public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness
-  ) {}
-  ngAfterViewInit(): void {}
+  ) { }
+  ngAfterViewInit(): void { }
 
   //#region wait
   loadHandle?: NodeJS.Timer;
@@ -155,6 +167,16 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
       this.info.station = x;
       this.display.status = false;
     });
+    this.amap.menuEvents.illegalDropClicked.subscribe(x=>{
+      this.illegalDropClicked.emit(x)
+    });
+    this.amap.menuEvents.mixedIntoClicked.subscribe(x=>{
+      this.mixedIntoClicked.emit(x)
+    });
+    this.amap.menuEvents.garbageCountClicked.subscribe(x=>{
+      this.garbageCountClicked.emit(x);
+    });
+
     this.panel.itemSelected.subscribe((x) => {
       if (x instanceof Division) {
         this.amap.divisionSelect(x.Id);
@@ -230,12 +252,25 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   Button1Clicked() {
     this.patrol.emit();
   }
-  Button2Clicked() {}
+  Button2Clicked() { }
   Button3Clicked() {
     this.display.label.current = !this.display.label.current;
   }
   Button4Clicked() {
     this.display.label.station.value = !this.display.label.station.value;
+  }
+
+  onPointInfoPanelGarbageRetentionClickedEvent(station:GarbageStation){
+    this.garbageRetentionClicked.emit(station);
+  }
+  onPointInfoPanelIllegalDropClickedEvent(station:GarbageStation){
+    this.illegalDropClicked.emit(station);
+  }
+  onPointInfoPanelMixedIntoClickedEvent(station:GarbageStation){
+    this.mixedIntoClicked.emit(station);
+  }
+  onPointInfoPanelStateClickedEvent(station:GarbageStation){
+
   }
 }
 
@@ -245,7 +280,7 @@ class MapControlDisplay {
       current: (state: boolean) => void;
       station: (state: boolean) => void;
     }
-  ) {}
+  ) { }
   status = true;
   videoList = false;
   videoControl = false;

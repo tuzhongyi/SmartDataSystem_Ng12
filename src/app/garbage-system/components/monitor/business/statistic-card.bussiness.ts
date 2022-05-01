@@ -32,6 +32,11 @@ export class StatisticCardBussiness
     this.storeService.statusChange.subscribe(async (x) => {
       this.cards = await this.load();
     });
+    this.storeService.interval.subscribe(x => {
+      this.load().then(cards => {
+        this.cards = cards;
+      })
+    })
   }
 
   cards: StatisticCardViewModel[] = [];
@@ -62,9 +67,11 @@ export class StatisticCardBussiness
   onclick(model: StatisticCardViewModel) {
     switch (model.type) {
       case StatisticType.stationCount:
-        this.window.station.show = true;
+        this.window.station.stationId = undefined;
+        this.window.station.show = true;        
         break;
       case StatisticType.stationDrop:
+        this.window.drop.divisionId = undefined;
         this.window.drop.show = true;
         break;
       case StatisticType.stationFull:
@@ -73,11 +80,15 @@ export class StatisticCardBussiness
       case StatisticType.illegalDropRecord:
         this.window.record.type = EventType.IllegalDrop;
         this.window.record.count = model.value;
+        this.window.record.stationId = undefined;
+        this.window.record.divisionId = undefined;
         this.window.record.show = true;
         break;
       case StatisticType.mixedIntoRecord:
         this.window.record.type = EventType.MixedInto;
         this.window.record.count = model.value;
+        this.window.record.stationId = undefined;
+        this.window.record.divisionId = undefined;
         this.window.record.show = true;
         break;
       default:

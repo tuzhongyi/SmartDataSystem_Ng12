@@ -14,6 +14,7 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import language from './language.json';
@@ -30,6 +31,23 @@ export class Language {
     }
   }
 
+  static StatisticType(type: StatisticType) {
+    switch (type) {
+      case StatisticType.avgGarbageTime:
+        return Language.json.StatisticType.AvgGarbageTime;
+      case StatisticType.maxGarbageTime:
+        return Language.json.StatisticType.MaxGarbageTime;
+      case StatisticType.garbageDuration:
+        return Language.json.StatisticType.GarbageDuration;
+      case StatisticType.illegalDrop:
+        return Language.EventType(EventType.IllegalDrop);
+      case StatisticType.mixedInto:
+        return Language.EventType(EventType.MixedInto);
+      case StatisticType.garde:
+      default:
+        return Language.json.StatisticType.Garde;
+    }
+  }
 
 
   static TimeUnit(unit: TimeUnit) {
@@ -184,14 +202,17 @@ export class Language {
     }
   }
 
-  static Time(time: Date | number) {
+  static Time(time: Date | number, full = true) {
     let result = '';
     if (typeof time === 'number') {
       const hours = parseInt((time / 60).toString());
       const minutes = parseInt((Math.ceil(time) % 60).toString());
 
       result = hours ? hours + Language.json.Time.hour : '';
-      result += minutes ? minutes + Language.json.Time.minute : '';
+
+      if (full || !result) {
+        result += minutes ? minutes + Language.json.Time.minute : '';
+      }
     } else {
       let t = new Date(time.getTime());
       let offset = t.getTimezoneOffset() / 60;
@@ -200,15 +221,19 @@ export class Language {
       if (t.getHours() > 0) {
         result = `${t.getHours()}${Language.json.Time.hour}${result}`;
       }
-      let minutes = t.getMinutes();
-      if (t.getSeconds() > 0) {
-        minutes++;
-      }
-      if (minutes > 0) {
-        result = `${result}${minutes}${Language.json.Time.minute}`;
+      if (full || !result) {
+        let minutes = t.getMinutes();
+        if (t.getSeconds() > 0) {
+          minutes++;
+        }
+        if (minutes > 0) {
+          result = `${result}${minutes}${Language.json.Time.minute}`;
+        }
       }
     }
-
+    if (!result) {
+      result = `0${Language.json.Time.minute}`
+    }
     return result;
   }
 

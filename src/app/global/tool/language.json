@@ -38,6 +38,12 @@
     "online":"在线",
     "Offline":"离线"
   },
+  "StatisticType":{
+    "Garde":"达标率",
+    "AvgGarbageTime":"平均落地时长",
+    "MaxGarbageTime":"最大落地时长",
+    "GarbageDuration":"总落地时长"
+  },
   "division":"行政区划",
   "today":"今日",
   "event":"事件",
@@ -78,5 +84,8 @@
   "max":"最大",
   "video":"视频",
   "camera":"摄像机",
-  "state":"状态"
+  "state":"状态",
+  "garde":"达标率",
+  "avg":"平均",
+  "duration":"时长"
 }

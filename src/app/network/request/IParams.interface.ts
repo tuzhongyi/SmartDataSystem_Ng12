@@ -17,12 +17,12 @@ export class IntervalParams {
   @Transform(transformDateTime)
   EndTime!: Date;
 
-  static TimeUnit(unit: TimeUnit, date: Date) {
+  static TimeUnit(unit: TimeUnit, date: Date, firstDay = 0) {
     switch (unit) {
       case TimeUnit.Month:
         return IntervalParams.allMonth(date)
       case TimeUnit.Week:
-        return IntervalParams.allWeek(date)
+        return IntervalParams.allWeek(date, firstDay)
       case TimeUnit.Hour:
       case TimeUnit.Day:
       default:
@@ -52,12 +52,12 @@ export class IntervalParams {
     params.EndTime = next;
     return params;
   }
-  static allWeek(date: Date) {
+  static allWeek(date: Date, firstDay = 0) {
     let params = new IntervalParams();
     let year = date.getFullYear();
     let month = date.getMonth();
     let day = date.getDate();
-    let weekDay = date.getDay();
+    let weekDay = date.getDay() - firstDay;
 
     let begin = new Date(year, month, day);
     begin.setDate(begin.getDate() - weekDay);

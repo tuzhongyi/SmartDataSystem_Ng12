@@ -11,7 +11,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
-import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details-chart.business';
+import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -29,7 +29,7 @@ export class GarbageStationWindowComponent
   implements OnInit
 {
   @Input()
-  index = GarbageStationWindowIndex.general;
+  index = GarbageStationWindowIndex.station;
   @Input()
   stationId?: string;
 

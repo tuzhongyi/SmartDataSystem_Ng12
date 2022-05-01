@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from "@angular/core";
-import { ITimeData, ITimeDataList } from "src/app/common/components/charts/chart.model";
+import { ITimeData, ITimeDataGroup } from "src/app/common/components/charts/chart.model";
 import { IBusiness } from "src/app/common/interfaces/bussiness.interface";
 import { IConverter, IPromiseConverter } from "src/app/common/interfaces/converter.interface";
 import { ISubscription } from "src/app/common/interfaces/subscribe.interface";
@@ -8,17 +8,17 @@ import { EventType } from "src/app/enum/event-type.enum";
 import { TimeUnit } from "src/app/enum/time-unit.enum";
 import { UserResourceType } from "src/app/enum/user-resource-type.enum";
 import { Division } from "src/app/network/model/division.model";
-import { GarbageStation } from "src/app/network/model/garbage-station.model";
 import { GetDivisionEventNumbersParams } from "src/app/network/request/division/division-request.params";
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationEventNumbersParams } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
 import { IntervalParams } from "src/app/network/request/IParams.interface";
-import { EventRecordComparisonOptions, EventNumberStatisticArray } from "./EventRecordComparison.model";
+import { EventNumberStatisticGroup } from "src/app/view-model/event-number-statistic-group.model";
+import { EventRecordComparisonOptions } from "./EventRecordComparison.model";
 
 @Injectable()
 export class EventRecordComparisonBusiness
-    implements IBusiness<Array<EventNumberStatisticArray>, ITimeDataList<number>[]>
+    implements IBusiness<Array<EventNumberStatisticGroup>, ITimeDataGroup<number>[]>
 {
     constructor(
         private stationService: GarbageStationRequestService,
@@ -26,10 +26,10 @@ export class EventRecordComparisonBusiness
     ) {
 
     }
-    Converter: IConverter<Array<EventNumberStatisticArray>, ITimeDataList<number>[]> = new EventRecordComparisonConverter();
+    Converter: IConverter<Array<EventNumberStatisticGroup>, ITimeDataGroup<number>[]> = new EventRecordComparisonConverter();
     subscription?: ISubscription | undefined;
     loading?: EventEmitter<void> | undefined;
-    async load(opts: EventRecordComparisonOptions): Promise<ITimeDataList<number>[]> {
+    async load(opts: EventRecordComparisonOptions): Promise<ITimeDataGroup<number>[]> {
 
         let interval = IntervalParams.TimeUnit(opts.unit, opts.date);
         let unit = TimeUnit.Day;
@@ -54,11 +54,11 @@ export class EventRecordComparisonBusiness
         params.BeginTime = interval.BeginTime;
         params.EndTime = interval.EndTime;
         params.TimeUnit = unit;
-        let result = new Array<EventNumberStatisticArray>();
+        let result = new Array<EventNumberStatisticGroup>();
         for (let i = 0; i < ids.length; i++) {
             const id = ids[i];
             let paged = await this.stationService.eventNumber.history.list(id, params)
-            let array = new EventNumberStatisticArray();
+            let array = new EventNumberStatisticGroup();
             array.Id = id;
             array.datas = paged.Data;
             let station = await this.stationService.cache.get(id);
@@ -73,11 +73,11 @@ export class EventRecordComparisonBusiness
         params.BeginTime = interval.BeginTime;
         params.EndTime = interval.EndTime;
         params.TimeUnit = unit;
-        let result = new Array<EventNumberStatisticArray>()
+        let result = new Array<EventNumberStatisticGroup>()
         for (let i = 0; i < ids.length; i++) {
             const id = ids[i];
             let paged = await this.divisionService.eventNumber.history.list(id, params)
-            let array = new EventNumberStatisticArray();
+            let array = new EventNumberStatisticGroup();
             array.Id = id;
             array.datas = paged.Data;
             let division = await this.divisionService.cache.get(id);
@@ -91,23 +91,23 @@ export class EventRecordComparisonBusiness
 
 
 class EventRecordComparisonConverter
-    implements IConverter<Array<EventNumberStatisticArray>, ITimeDataList<number>[]>{
+    implements IConverter<Array<EventNumberStatisticGroup>, ITimeDataGroup<number>[]>{
 
     converter = {
         item: new StatisticToTimeDataConverter()
     }
 
     Convert(
-        source: Array<EventNumberStatisticArray>,
+        source: Array<EventNumberStatisticGroup>,
         eventType: EventType)
-        : ITimeDataList<number>[] {
+        : ITimeDataGroup<number>[] {
         let array = source.map(x => {
 
 
             let datas = this.converter.item.Convert(x.datas, eventType)
-            let result: ITimeDataList<number> = {
-                id: x.Id,
-                name: x.Name,
+            let result: ITimeDataGroup<number> = {
+                Id: x.Id,
+                Name: x.Name,
                 datas: datas
             };
             return result;

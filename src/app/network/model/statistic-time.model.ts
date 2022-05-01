@@ -1,5 +1,7 @@
+import { Exclude } from "class-transformer";
+
 /** 统计时间 */
-export interface StatisticTime {
+export class StatisticTime {
   /**	Int32	年	O */
   Year?: number;
   /**	Int32	月	O */
@@ -8,4 +10,10 @@ export interface StatisticTime {
   Day?: number;
   /**	Int32	第几周	O */
   Week?: number;
+  
+  static toDate(time:StatisticTime) {
+    return new Date(time.Year || 0, time.Month || 0, time.Day || 0)
+  }
+
+  
 }

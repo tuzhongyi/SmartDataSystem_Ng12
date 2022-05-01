@@ -6,6 +6,7 @@ import {
 import { EventRecordViewModel } from 'src/app/common/components/tables/event-record-table/event-record.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { MediaWindowBusiness } from './media-window.business';
 
@@ -16,7 +17,6 @@ export class RecordWindowBusiness extends WindowViewModel {
     private stationService: GarbageStationRequestService
   ) {
     super();
-    this.show = true;
   }
   style = {
     height: '83.5%',

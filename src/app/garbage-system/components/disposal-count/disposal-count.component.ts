@@ -70,6 +70,9 @@ export class DisposalCountComponent
       this.storeService.statusChange.subscribe((x) => {
         this.loadData();
       });
+      this.storeService.interval.subscribe(x=>{
+        this.loadData();
+      })
     this.loadData();
 
     this.gaugeOption = {

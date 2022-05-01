@@ -14,3 +14,4 @@ export class EventNumberStatistic implements IModel {
   @Transform(transformDateTime)
   EndTime!: Date;
 }
+

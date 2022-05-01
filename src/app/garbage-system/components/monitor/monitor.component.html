@@ -28,10 +28,13 @@
             ></app-statistic-card>
           </ng-container>
         </div>
-        <div class="map-control" *ngIf="false">
+        <div class="map-control">
           <app-map-control
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
+            (illegalDropClicked)="map.onIllegalDropClicked($event)"
+            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
+            (garbageCountClicked)="map.onGarbageCountClicked($event)"
           ></app-map-control>
         </div>
       </div>
@@ -123,6 +126,7 @@
   [Model]="window.record"
   [style]="window.record.style"
   [type]="window.record.type"
+  [stationId]="window.record.stationId"
   (image)="window.record.onimage($event)"
 >
 </howell-event-record-window>

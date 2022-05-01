@@ -5,11 +5,13 @@ import {
   IConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionEventNumbersParams, GetDivisionVolumesParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
@@ -17,7 +19,6 @@ import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartLoadOptions } from '../../../charts/details-chart/details-chart.model';
-import { GarbageStationWindowDetailsFilter } from '../../../garbage-station-window/tab-items/garbage-station-window-details/garbage-station-window-details-chart.converter';
 import { EventRecordWindowDetailsConverter } from './event-record-window-details.converter';
 
 @Injectable()
@@ -40,7 +41,8 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     }
   }
 
-  division?: Division
+  division?: Division;
+  station?: GarbageStation;
 
   async getDataByStation(stationId: string, interval: IntervalParams, unit: TimeUnit) {
     let params = new GetGarbageStationVolumesParams()
@@ -57,7 +59,7 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     return paged.Data;
   }
 
-  async loadDefault(divisionId:string) {
+  async loadDefault(divisionId: string) {
     this.division = await this.divisionService.cache.get(divisionId);
   }
 
@@ -69,7 +71,7 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
     interval.BeginTime = opts.begin;
     interval.EndTime = opts.end;
     let type = opts.stationId ? UserResourceType.Station : UserResourceType.None;
-    let id = opts.stationId ?? opts.divisionId ?? divisionId;   
+    let id = opts.stationId ?? opts.divisionId ?? divisionId;
 
     let data = await this.getData(id, type, interval, opts.unit);
     let model = this.Converter.Convert(data, opts.type);
@@ -79,13 +81,12 @@ export class EventRecordWindowDetailsBusiness implements IBusiness<EventNumberSt
   getFilter(eventType: EventType) {
     switch (eventType) {
       case EventType.MixedInto:
-        return GarbageStationWindowDetailsFilter.MixedIntoEvent;
+        return StatisticType.mixedInto;
       case EventType.IllegalDrop:
       default:
-        return GarbageStationWindowDetailsFilter.IllegalDropEvent
+        return StatisticType.illegalDrop;
     }
   }
-
 
 }
 

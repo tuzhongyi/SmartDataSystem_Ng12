@@ -100,6 +100,9 @@ export class EventStatisticComponent
     this.subscription = this._storeService.statusChange.subscribe(() => {
       this._changeData();
     });
+    this._storeService.interval.subscribe(x=>{
+      this._changeData();
+    })
     this._changeData();
     this.options.title = {
       text: this.title,

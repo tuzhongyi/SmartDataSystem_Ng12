@@ -52,10 +52,7 @@ export class StoreService {
     }
   }
 
-  constructor() {
-    this.interval.subscribe(() => {
-      this.statusChange.emit();
-    });
+  constructor() {    
     this.runInterval();
   }
 }

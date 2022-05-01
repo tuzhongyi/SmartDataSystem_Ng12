@@ -7,45 +7,44 @@
           </app-input-search>
         </div>
         <div class="operation" *ngIf="index === Index.record">
-          <howell-event-record-operation
-            (filter)="record.filter.display()"
-            (search)="record.filter.search($event)"
-          >
+          <howell-event-record-operation (filter)="record.filter.display()" (search)="record.filter.search($event)">
           </howell-event-record-operation>
         </div>
       </div>
     </app-tab-title>
     <div class="garbage-station-window-content">
-      <mat-tab-group
-        [disableRipple]="true"
-        animationDuration="0ms"
-        [color]="'transparent'"
-        [selectedIndex]="index"
-        (selectedIndexChange)="indexChange($event)"
-      >
+      <mat-tab-group [disableRipple]="true" animationDuration="0ms" [color]="'transparent'" [selectedIndex]="index"
+        (selectedIndexChange)="indexChange($event)">
         <mat-tab label="列表">
-          <howell-garbage-station-table
-            [load]="station.load"
-            (image)="onimage($event)"
-          >
-          </howell-garbage-station-table>
+          <ng-container *ngIf="index==Index.station">
+            <howell-garbage-station-table [load]="station.load" (image)="onimage($event)">
+            </howell-garbage-station-table>
+          </ng-container>
         </mat-tab>
         <mat-tab label="小包垃圾滞留">
-          <howell-garbage-station-window-stay
-            [stationId]="stationId"
-            (image)="onimage($event)"
-            (ondblclick)="onstaydblclick($event)"
-          >
-          </howell-garbage-station-window-stay>
+          <ng-container *ngIf="index==Index.stay">
+            <howell-garbage-station-window-stay [stationId]="stationId" (image)="onimage($event)"
+              (ondblclick)="onstaydblclick($event)">
+            </howell-garbage-station-window-stay>
+          </ng-container>
         </mat-tab>
         <mat-tab label="总图表">
-          <howell-garbage-station-window-general>
-          </howell-garbage-station-window-general>
+          <ng-container *ngIf="index==Index.general">
+            <howell-garbage-station-window-general>
+            </howell-garbage-station-window-general>
+          </ng-container>
         </mat-tab>
-        <mat-tab label="细分图表"> </mat-tab>
+        <mat-tab label="细分图表">
+          <ng-container *ngIf="index==Index.details">
+            <howell-garbage-station-window-details>
+            </howell-garbage-station-window-details>
+          </ng-container>
+        </mat-tab>
         <mat-tab label="报警事件处置">
-          <howell-garbage-drop-record-table (image)="onimage($event)">
-          </howell-garbage-drop-record-table>
+          <ng-container *ngIf="index==Index.record">
+            <howell-garbage-drop-record-table (image)="onimage($event)">
+            </howell-garbage-drop-record-table>
+          </ng-container>
         </mat-tab>
       </mat-tab-group>
     </div>

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import { ITimeData, ITimeDataList } from 'src/app/common/components/charts/chart.model';
+import { ITimeData, ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -27,7 +27,7 @@ import { EventRecordComparisonOptions } from './EventRecordComparison.model';
   providers: [EventRecordComparisonBusiness]
 })
 export class EventRecordComparisonComponent
-  implements OnInit, IComponent<IModel, ITimeDataList<number>[]> {
+  implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]> {
   @Input()
   date: Date = new Date();
   @Input()
@@ -45,7 +45,7 @@ export class EventRecordComparisonComponent
     }
 
   }
-  business: IBusiness<IModel, ITimeDataList<number>[]>;
+  business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   userTypes: SelectItem[] = [];
   DateTimePickerView = DateTimePickerView;
   dateFormat = "yyyy年MM月dd日";
@@ -55,7 +55,7 @@ export class EventRecordComparisonComponent
   chartTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
   config: EventRecordComparisonComponentConfig = {}
-  datas?: ITimeDataList<number>[]
+  datas?: ITimeDataGroup<number>[]
   selectIds?: string[]
   echartsLegend: LegendComponentOption = {
     show: true,
@@ -169,14 +169,14 @@ export class EventRecordComparisonComponent
     }
   }
 
-  getEChartsMerge(type: ChartType, datas: ITimeDataList<number>[]): EChartOptions {
+  getEChartsMerge(type: ChartType, datas: ITimeDataGroup<number>[]): EChartOptions {
     switch (type) {
       case ChartType.line:
         return {
           series: datas.map((data, i) => {
             return {
               type: 'line',
-              name: data.name,
+              name: data.Name,
               data: data.datas.map((x) => x.value),
               areaStyle: {},
               label: {
@@ -193,7 +193,7 @@ export class EventRecordComparisonComponent
           series: datas.map((data, i) => {
             return {
               type: 'bar',
-              name: data.name,
+              name: data.Name,
               data: data.datas.map((x) => x.value),
               barWidth: "15px",
               barMinHeight: 5,
@@ -241,7 +241,11 @@ export class EventRecordComparisonComponent
   exportExcel() {
 
   }
-  exportCSV() { }
+  exportCSV() {
+    // let title = this.getTitle();
+    // let headers = ["序号", "日期", "时间", this.getName()]
+    // this.exports.csv(title, headers, this.datas, this.converter);
+   }
 
 
 }

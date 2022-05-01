@@ -50,7 +50,7 @@ export class PointInfoPanelComponent implements OnInit {
   StateClickedEvent: EventEmitter<GarbageStation> = new EventEmitter();
 
   @Output()
-  GarbageCountClickedEvent: EventEmitter<GarbageStation> = new EventEmitter();
+  GarbageRetentionClickedEvent: EventEmitter<GarbageStation> = new EventEmitter();
 
   @Output()
   IllegalDropClickedEvent: EventEmitter<GarbageStation> = new EventEmitter();
@@ -66,7 +66,7 @@ export class PointInfoPanelComponent implements OnInit {
     // this.GarbageStation.Members
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onGarbageStationChanged(station: GarbageStation) {
     let flags = new Flags(station.StationState);
@@ -106,13 +106,15 @@ export class PointInfoPanelComponent implements OnInit {
             ? '100'
             : (statistic.GarbageRatio ?? 0).toFixed(2);
 
-        let hour = Math.floor(statistic.CurrentGarbageTime ?? 0 / 60);
-        let minute = Math.ceil(statistic.CurrentGarbageTime ?? 0 % 60);
+        // let hour = Math.floor(statistic.CurrentGarbageTime ?? 0 / 60);
+        // let minute = Math.ceil(statistic.CurrentGarbageTime ?? 0 % 60);
 
-        this.GarbageInterval = hour ? hour + Language.json.Time.hour : '';
-        this.GarbageInterval = this.GarbageInterval
-          ? this.GarbageInterval
-          : minute + Language.json.Time.minute;
+        // this.GarbageInterval = hour ? hour + Language.json.Time.hour : '';
+        // this.GarbageInterval = this.GarbageInterval
+        //   ? this.GarbageInterval
+        //   : minute + Language.json.Time.minute;
+
+        this.GarbageInterval = Language.Time(statistic.CurrentGarbageTime ?? 0, false);
 
         if (statistic.TodayEventNumbers) {
           for (let i = 0; i < statistic.TodayEventNumbers.length; i++) {
@@ -143,10 +145,10 @@ export class PointInfoPanelComponent implements OnInit {
     className: 'normal',
   };
 
-  onGarbageCountClicked() {
+  onGarbageRetentionClicked() {
     if (this.GarbageCount <= 0) return;
-    if (this.GarbageCountClickedEvent) {
-      this.GarbageCountClickedEvent.emit(this.GarbageStation);
+    if (this.GarbageRetentionClickedEvent) {
+      this.GarbageRetentionClickedEvent.emit(this.GarbageStation);
     }
   }
   onIllegalDropClicked() {

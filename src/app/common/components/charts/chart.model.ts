@@ -1,3 +1,4 @@
+import { ItemModel } from "src/app/view-model/item.model";
 import { ImageControlModel } from "../image-control/image-control.model";
 
 export interface ITimeData<T> {
@@ -9,8 +10,6 @@ export interface ImageTimeData<T> extends ITimeData<T> {
   image: ImageControlModel;
 }
 
-export interface ITimeDataList<T> {
-  datas: ITimeData<T>[],
-  id: string,
-  name: string
+export interface ITimeDataGroup<T> extends ItemModel {
+  datas: ITimeData<T>[]
 }

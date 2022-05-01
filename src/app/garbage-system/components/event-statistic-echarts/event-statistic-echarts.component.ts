@@ -87,6 +87,9 @@ export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
     this.subscription = this.storeService.statusChange.subscribe(() => {
       this.changeStatus();
     });
+    this.storeService.interval.subscribe(x=>{
+      this.changeStatus();
+    })
     this.changeStatus();
   }
 

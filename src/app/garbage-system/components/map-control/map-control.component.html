@@ -113,6 +113,10 @@
   class="map-bar info-panel"
   *ngIf="info.station"
   [GarbageStation]="info.station"
+  (GarbageRetentionClickedEvent)="onPointInfoPanelGarbageRetentionClickedEvent($event)"
+  (IllegalDropClickedEvent)="onPointInfoPanelIllegalDropClickedEvent($event)"
+  (MixedIntoClickedEvent)="onPointInfoPanelMixedIntoClickedEvent($event)"
+  (StateClickedEvent)="onPointInfoPanelStateClickedEvent($event)"
 ></app-point-info-panel>
 
 <!-- (StateClickedEvent)="onPanelStateClicked($event)"

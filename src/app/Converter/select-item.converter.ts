@@ -1,16 +1,13 @@
 import { SelectItem } from '../common/components/select-control/select-control.model';
 import { IConverter } from '../common/interfaces/converter.interface';
-import { IModel } from '../network/model/model.interface';
+import { IItemModel } from '../view-model/item.model';
 
-interface SelectItemSource extends IModel {
-  Id: string;
-  Name: string;
-}
+
 
 export class SelectItemConverter
-  implements IConverter<SelectItemSource, SelectItem>
+  implements IConverter<IItemModel, SelectItem>
 {
-  Convert(source: SelectItemSource, ...res: any[]): SelectItem {
+  Convert(source: IItemModel, ...res: any[]): SelectItem {
     let item = new SelectItem();
     item.language = source.Name;
     item.key = source.Id;

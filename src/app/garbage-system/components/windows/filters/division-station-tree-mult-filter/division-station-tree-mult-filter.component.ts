@@ -32,7 +32,7 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   selectedIds: string[] = [];
   config = new DivisionStationTreeFilterConfig();
 
-  ngOnChanges(changes: SimpleChanges): void {    
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.userType) {
       if (this.userType === UserResourceType.Station) {
         this.config.tree.treeServiceModel = TreeServiceEnum.Station;
@@ -52,9 +52,17 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
           this.config.tree.showDepth = 0;
           this.config.tree.depthIsEnd = true;
           break;
-        case UserResourceType.Station:          
-          this.config.tree.depth = 0;
-          this.config.tree.showDepth = 0;
+        case UserResourceType.Station:
+          let depth = 0;
+          let showDepth = 0;
+          if (this.local.user.Resources && this.local.user.Resources.length > 0) {
+            if (this.local.user.Resources[0].ResourceType == UserResourceType.County) {
+              depth = 1;
+              showDepth = 1
+            }
+          }
+          this.config.tree.depth = depth;
+          this.config.tree.showDepth = showDepth;
           this.config.tree.depthIsEnd = false;
           break;
         default:

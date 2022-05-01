@@ -15,6 +15,7 @@ export class AMapBusiness {
     private stationService: GarbageStationRequestService
   ) {
     this.storeService.interval.subscribe((x) => {
+      debugger;
       this.init();
       if (this.labelVisibility) {
         this.setLabelVisibility(true);

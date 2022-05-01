@@ -35,6 +35,9 @@ export class PatrolControlBusiness
     storeService.statusChange.subscribe((x) => {
       this.load();
     });
+    storeService.interval.subscribe(x => {
+      this.load();
+    })
   }
   Converter: IConverter<GarbageStation[], PatrolControlModel[]> =
     new PatrolArrayControlConverter();

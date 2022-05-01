@@ -1,0 +1,117 @@
+.garbage-station-window-details {
+    height: 100%;
+    width: 100%;
+  
+    &-header {
+      height: 35px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+  
+      .filter {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+  
+        &>* {
+          margin-right: 10px;
+        }
+  
+  
+        &-item {
+          white-space: nowrap;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          width: 300px;
+  
+          &.tree{
+            width: calc(250px + 54px + 24px);
+          }
+  
+          &>span {
+            color: #cfd7ff;
+            font-size: 18px;
+            margin-right: 10px;
+          }
+  
+          &>input {
+            height: 32px;
+          }
+  
+          .tree {
+            ::ng-deep {
+              .division-station-tree-filter {
+                width: 250px;
+              }
+  
+            }
+  
+          }
+  
+          .list-type-select {
+            width: 250px;
+            background-color: #1d233b;
+  
+            ::ng-deep {
+              .select-head {
+                display: flex;
+                justify-content: space-between;
+              }
+  
+              .select-option {
+                width: 100%;
+                max-width: 100%;
+              }
+  
+  
+  
+            }
+          }
+  
+          ::ng-deep {
+            .division-station-tree-filter .selected label {
+              font-size: 18px;
+            }
+          }
+  
+        }
+  
+      }
+  
+      .selection {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+  
+        &>* {
+          margin-left: 10px;
+  
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+  
+      }
+  
+  
+      .list-type-select {
+        border: 1px solid #5e6ebf;
+        padding: 0 10px;
+        height: 32px;
+  
+        ::ng-deep {
+          .select-group {
+            width: calc(100% + 20px);
+            margin: 0 -10px;
+          }
+        }
+      }
+  
+    }
+  
+    &-content {
+      height: calc(100% - 35px - 10px);
+    }
+  }

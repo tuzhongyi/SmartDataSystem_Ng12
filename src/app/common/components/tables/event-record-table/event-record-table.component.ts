@@ -12,6 +12,7 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -19,6 +20,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../image-control/image-control.model';
+import { SelectItem } from '../../select-control/select-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { EventRecordBusiness } from './event-record.business';
 import { EventRecordFilter, EventRecordViewModel } from './event-record.model';
@@ -37,23 +39,19 @@ import { VideoDownloadPanelBusiness } from './video-download-panel.business';
 export class EventRecordTableComponent
   extends TableAbstractComponent<EventRecordViewModel>
   implements
-    IComponent<IModel, PagedList<EventRecordViewModel>>,
-    OnInit,
-    OnChanges
-{
-  @Input()
-  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
+  IComponent<IModel, PagedList<EventRecordViewModel>>,
+  OnInit,
+  OnChanges {
 
+  @Input()
+  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;  
+  @Input()
+  type: EventType = EventType.IllegalDrop;
+  @Input()
+  load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
 
-  @Input()
-  type: EventType = EventType.IllegalDrop;
-
-  @Input()
-  load?: EventEmitter<EventRecordFilter>;
-
-  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
 
   constructor(
     business: EventRecordBusiness,
@@ -62,13 +60,17 @@ export class EventRecordTableComponent
   ) {
     super();
     this.business = business;
-
     this.filter = new EventRecordFilter();
   }
+  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
+
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((x) => {
-        this.filter = x;
+        if (x) {
+          this.filter = x;
+        }
         this.loadData(-1, this.pageSize, this.filter);
       });
     }
