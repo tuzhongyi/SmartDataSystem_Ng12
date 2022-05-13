@@ -1,5 +1,5 @@
 import { ItemModel } from "src/app/view-model/item.model";
-import { ImageControlModel } from "../image-control/image-control.model";
+import { ImageControlModel } from "../../../view-model/image-control.model";
 
 export interface ITimeData<T> {
   time: Date;

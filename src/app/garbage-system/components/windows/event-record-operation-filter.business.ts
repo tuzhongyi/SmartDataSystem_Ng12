@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record-table/event-record.model';
+import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 
 @Injectable()
 export class EventRecordOperationFilterBusiness {

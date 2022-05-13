@@ -16,7 +16,7 @@ import { PagedParams } from 'src/app/network/request/IParams.interface';
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from '../../image-control/image-control.model';
+} from '../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
 import {

@@ -1,0 +1,35 @@
+<div class="event-record-list">
+
+  <div class="event-record-list-main">
+    <div class="event-record-list-main-body">
+      <ng-container *ngFor="let item of datas">
+        <howell-event-record-card></howell-event-record-card>
+      </ng-container>
+    </div>
+    <div class="event-record-list-main-footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1" [showFirstLastButtons]="true" (page)="pageEvent($event)">
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+<app-window [Model]="panel" [style]="panel.style">
+  <ng-container *ngIf="panel.show">
+    <howell-video-download-panel [business]="panel" (download)="panel.download($event)" (cancel)="panel.cancel()">
+    </howell-video-download-panel>
+  </ng-container>
+</app-window>

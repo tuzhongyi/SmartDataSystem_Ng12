@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { Camera } from 'src/app/network/model/camera.model';
 

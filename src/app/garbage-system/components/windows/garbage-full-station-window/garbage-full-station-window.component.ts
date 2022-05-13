@@ -1,26 +1,14 @@
 import {
   Component,
   EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import {
-  ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
-import {
-  EventRecordFilter,
-  EventRecordViewModel,
-} from 'src/app/common/components/tables/event-record-table/event-record.model';
-import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
+} from 'src/app/view-model/image-control.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { ToolService } from 'src/app/common/tools/tool';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/global/tool/language';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { GarbageFullStationWindowRecordBusiness } from './business/garbage-full-station-window-record.business';
 import { GarbageFullStationWindowStationBusiness } from './business/garbage-full-station-window-station.business';

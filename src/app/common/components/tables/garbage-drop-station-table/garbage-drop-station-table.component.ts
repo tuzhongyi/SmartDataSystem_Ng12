@@ -17,7 +17,7 @@ import { MediumRequestService } from 'src/app/network/request/medium/medium-requ
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from '../../image-control/image-control.model';
+} from '../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';

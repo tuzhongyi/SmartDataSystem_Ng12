@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';

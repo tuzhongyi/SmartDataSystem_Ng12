@@ -5,18 +5,11 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
-import { ImageControlModel } from '../../image-control/image-control.model';
+import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { SelectItem } from '../../select-control/select-control.model';
-import { GarbageStationModel } from '../garbage-station-table/garbage-station.model';
+import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 
-export class EventRecordViewModel extends EventRecord {
-  /** */
-  GarbageStation?: GarbageStationModel;
 
-  DateFormatter: string = '';
-
-  images: ImageControlModel[] = [];
-}
 
 export class EventRecordFilter extends IntervalParams {
   constructor() {

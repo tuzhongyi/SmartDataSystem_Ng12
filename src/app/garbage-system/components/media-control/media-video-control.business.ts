@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { timer } from 'rxjs';
-import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import {
   PlayMode,

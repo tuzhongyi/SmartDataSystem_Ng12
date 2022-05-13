@@ -48,4 +48,7 @@ export class MapControlBusiness {
   onGarbageRetentionClicked(station: GarbageStation) {
     this.window.drop.show = true
   }
+  onGarbageFullClicked(station: GarbageStation) {
+    this.window.full.show = true;
+  }
 }

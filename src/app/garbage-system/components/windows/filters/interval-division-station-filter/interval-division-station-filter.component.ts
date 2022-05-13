@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record-table/event-record.model';
+import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';

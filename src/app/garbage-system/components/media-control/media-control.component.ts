@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { classToClass } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlComponent } from 'src/app/common/components/image-video-control/image-video-control.component';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import {

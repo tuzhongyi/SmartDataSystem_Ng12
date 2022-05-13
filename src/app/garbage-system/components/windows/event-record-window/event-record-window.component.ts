@@ -9,18 +9,16 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { EventRecordFilter, EventRecordViewModel } from 'src/app/common/components/tables/event-record-table/event-record.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 import { EventRecordWindowBusiness } from './event-record-window.business';
+import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 
 @Component({
   selector: 'howell-event-record-window',

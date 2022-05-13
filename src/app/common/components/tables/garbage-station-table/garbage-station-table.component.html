@@ -19,11 +19,8 @@
             <td [ngStyle]="{ width: width[0] }">
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
-                  <app-image-control
-                    [nosignal]="false"
-                    [model]="img"
-                    (Click)="imageClick(item, img)"
-                  ></app-image-control>
+                  <app-image-control [nosignal]="false" [model]="img" (Click)="imageClick(item, img)">
+                  </app-image-control>
 
                   <!-- [src]="item.imageSrc" -->
                 </div>
@@ -34,27 +31,27 @@
             </td>
             <td [ngStyle]="{ width: width[3] }">
               {{
-                item.GarbageStation
-                  ? item.GarbageStation.Committees
-                    ? item.GarbageStation.Committees.Name
-                    : ""
-                  : ""
+              item.GarbageStation
+              ? item.GarbageStation.Committees
+              ? item.GarbageStation.Committees.Name
+              : ""
+              : ""
               }}
             </td>
             <td [ngStyle]="{ width: width[3] }">
               {{
-                item.GarbageStation
-                  ? item.GarbageStation.Committees
-                    ? item.GarbageStation.Committees.Name
-                    : ""
-                  : ""
+              item.GarbageStation
+              ? item.GarbageStation.Committees
+              ? item.GarbageStation.Committees.Name
+              : ""
+              : ""
               }}
             </td>
             <td [ngStyle]="{ width: width[4] }">
               {{
-                item.GarbageStation
-                  ? Language.StationState(item.GarbageStation.StationState)
-                  : ""
+              item.GarbageStation
+              ? Language.StationState(item.GarbageStation.StationState)
+              : ""
               }}
             </td>
             <td [ngStyle]="{ width: width[5] }"></td>
@@ -72,14 +69,8 @@
           </div>
         </div>
 
-        <app-paginator
-          [length]="page.TotalRecordCount"
-          [pageSize]="page.PageSize"
-          [pagerCount]="5"
-          [pageIndex]="0"
-          [showFirstLastButtons]="true"
-          (page)="pageEvent($event)"
-        >
+        <app-paginator [length]="page?page.TotalRecordCount:0" [pageSize]="page?page.PageSize:0" [pagerCount]="5"
+          [pageIndex]="0" [showFirstLastButtons]="true" (page)="pageEvent($event)">
         </app-paginator>
       </div>
     </div>

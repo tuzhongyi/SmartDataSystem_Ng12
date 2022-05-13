@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionType } from 'src/app/enum/division-type.enum';

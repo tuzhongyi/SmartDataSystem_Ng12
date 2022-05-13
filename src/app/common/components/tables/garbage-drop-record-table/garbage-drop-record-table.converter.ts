@@ -7,8 +7,8 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { EventRecordConverter } from '../event-record-table/event-record.converter';
-import { CameraImageUrlModel } from '../event-record-table/event-record.model';
+import { EventRecordConverter } from '../event-record/event-record.converter';
+import { CameraImageUrlModel } from '../event-record/event-record.model';
 import { GarbageDropRecordViewModel } from './garbage-drop-record.model';
 
 export class GarbageDropEventRecordPagedConverter

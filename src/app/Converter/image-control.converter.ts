@@ -1,10 +1,9 @@
-import { ImageControlModel } from '../common/components/image-control/image-control.model';
-import { CameraImageUrlModel } from '../common/components/tables/event-record-table/event-record.model';
+import { ImageControlModel } from '../view-model/image-control.model';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { OnlineStatus } from '../enum/online-status.enum';
 import { Camera } from '../network/model/camera.model';
-import { CameraImageUrl } from '../network/model/url.model';
 import { MediumRequestService } from '../network/request/medium/medium-request.service';
+import { CameraImageUrlModel } from '../common/components/tables/event-record/event-record.model';
 
 export class ImageControlConverter
   implements IConverter<Camera | CameraImageUrlModel, ImageControlModel>

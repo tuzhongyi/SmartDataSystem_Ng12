@@ -1,0 +1,29 @@
+<div class="event-record-card">
+    <div class="event-record-card-header">
+        <div class="event-record-card-header-left">
+            <span>{{ model?model.name:"" }}</span>
+        </div>
+        <div class="event-record-card-header-right">
+            <div class="operation">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div>
+                    {{ model?model.time:"" }}
+                </div>
+            </div>
+            <div class="time"></div>
+        </div>
+    </div>
+    <div class="event-record-card-body">
+        <app-image-control></app-image-control>
+    </div>
+    <div class="event-record-card-footer">
+        <div class="event-record-card-footer-left">
+            {{ model? model.parent? model.parent.Name :"" : "" }}
+        </div>
+        <div class="event-record-card-footer-right">
+            {{ model? model.station? model.station.Name :"" : "" }}
+        </div>
+    </div>
+</div>

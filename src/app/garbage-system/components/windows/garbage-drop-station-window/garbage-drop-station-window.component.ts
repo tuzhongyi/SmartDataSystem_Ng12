@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';

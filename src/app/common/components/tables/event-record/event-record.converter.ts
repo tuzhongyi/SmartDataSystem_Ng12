@@ -1,17 +1,13 @@
 import { formatDate } from '@angular/common';
 import {
-  IConverter,
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import {
-  EventRecord,
-  GarbageDropEventRecord,
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
@@ -19,10 +15,9 @@ import {
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
   CameraImageUrlModel,
-  EventRecordViewModel,
 } from './event-record.model';
 
 export type EventRecordType =

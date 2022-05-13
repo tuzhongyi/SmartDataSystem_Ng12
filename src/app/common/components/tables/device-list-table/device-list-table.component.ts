@@ -19,7 +19,7 @@ import { MediumRequestService } from 'src/app/network/request/medium/medium-requ
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from '../../image-control/image-control.model';
+} from '../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import { DeviceViewModel } from './device.model';

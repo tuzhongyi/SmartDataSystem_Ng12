@@ -12,39 +12,36 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../image-control/image-control.model';
-import { SelectItem } from '../../select-control/select-control.model';
-import { TableAbstractComponent } from '../table-abstract.component';
-import { EventRecordBusiness } from './event-record.business';
-import { EventRecordFilter, EventRecordViewModel } from './event-record.model';
-import { VideoDownloadPanelBusiness } from './video-download-panel.business';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { ImageControlModel, ImageControlModelArray } from '../../../../../view-model/image-control.model';
+import { TableAbstractComponent } from '../../table-abstract.component';
+import { EventRecordBusiness } from '../event-record.business';
+import { EventRecordFilter } from '../event-record.model';
+import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
 
 @Component({
-  selector: 'howell-event-record-table',
-  templateUrl: './event-record-table.component.html',
-  styleUrls: ['../table.less', './event-record-table.component.less'],
+  selector: 'howell-event-record-list',
+  templateUrl: './event-record-list.component.html',
+  styleUrls: ['../../table.less', './event-record-list.component.less'],
   providers: [
     EventRecordBusiness,
     DownloadBusiness,
     VideoDownloadPanelBusiness,
   ],
 })
-export class EventRecordTableComponent
+export class EventRecordListComponent
   extends TableAbstractComponent<EventRecordViewModel>
   implements
   IComponent<IModel, PagedList<EventRecordViewModel>>,
   OnInit,
   OnChanges {
+  width: string[] = [];
 
   @Input()
-  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;  
+  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
   @Input()
   type: EventType = EventType.IllegalDrop;
   @Input()
@@ -62,8 +59,6 @@ export class EventRecordTableComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
-
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {

@@ -18,6 +18,8 @@
             <div class="event-record-table" [class.filter]="record.filter.show">
               <howell-event-record-table [type]="type" [load]="record.filter.load" (image)="onimage($event)" [filter]="filter">
               </howell-event-record-table>
+              <!-- <howell-event-record-card [type]="type" [load]="record.filter.load" (image)="onimage($event)" [filter]="filter">
+              </howell-event-record-card> -->
             </div>
           </ng-container>
         </mat-tab>

@@ -2,11 +2,9 @@ import {
   GarbageDropEventData,
   GarbageDropEventRecord,
 } from 'src/app/network/model/event-record.model';
-import { ImageControlModel } from '../../image-control/image-control.model';
-import {
-  EventRecordFilter,
-  EventRecordViewModel,
-} from '../event-record-table/event-record.model';
+import { ImageControlModel } from '../../../../view-model/image-control.model';
+import { EventRecordFilter } from '../event-record/event-record.model';
+
 
 export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
   images: ImageControlModel[] = [];

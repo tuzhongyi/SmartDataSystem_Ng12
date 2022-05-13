@@ -7,7 +7,7 @@ import {
 } from 'src/app/network/model/event-record.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { CameraImageUrlModel } from '../../tables/event-record-table/event-record.model';
+import { CameraImageUrlModel } from '../../tables/event-record/event-record.model';
 import { ImageTimeData, ITimeData } from '../chart.model';
 import {
   LineZoomChartModel,

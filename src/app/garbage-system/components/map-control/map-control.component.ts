@@ -11,7 +11,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -36,17 +36,19 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output()
   patrol: EventEmitter<void> = new EventEmitter();
   // 垃圾落地记录
-  @Output()  
+  @Output()
   illegalDropClicked: EventEmitter<GarbageStation> = new EventEmitter();
   // 混合投放记录
-  @Output()  
+  @Output()
   mixedIntoClicked: EventEmitter<GarbageStation> = new EventEmitter();
   // 小包垃圾滞留
   @Output()
   garbageCountClicked: EventEmitter<GarbageStation> = new EventEmitter();
   // 垃圾滞留投放点
-  @Output()  
-  garbageRetentionClicked:EventEmitter<GarbageStation> = new EventEmitter();
+  @Output()
+  garbageRetentionClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output()
+  garbageFullClicked: EventEmitter<GarbageStation> = new EventEmitter();
 
   //#endregion
   //#region ViewChild
@@ -167,13 +169,13 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
       this.info.station = x;
       this.display.status = false;
     });
-    this.amap.menuEvents.illegalDropClicked.subscribe(x=>{
+    this.amap.menuEvents.illegalDropClicked.subscribe(x => {
       this.illegalDropClicked.emit(x)
     });
-    this.amap.menuEvents.mixedIntoClicked.subscribe(x=>{
+    this.amap.menuEvents.mixedIntoClicked.subscribe(x => {
       this.mixedIntoClicked.emit(x)
     });
-    this.amap.menuEvents.garbageCountClicked.subscribe(x=>{
+    this.amap.menuEvents.garbageCountClicked.subscribe(x => {
       this.garbageCountClicked.emit(x);
     });
 
@@ -260,17 +262,17 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     this.display.label.station.value = !this.display.label.station.value;
   }
 
-  onPointInfoPanelGarbageRetentionClickedEvent(station:GarbageStation){
+  onPointInfoPanelGarbageRetentionClickedEvent(station: GarbageStation) {
     this.garbageRetentionClicked.emit(station);
   }
-  onPointInfoPanelIllegalDropClickedEvent(station:GarbageStation){
+  onPointInfoPanelIllegalDropClickedEvent(station: GarbageStation) {
     this.illegalDropClicked.emit(station);
   }
-  onPointInfoPanelMixedIntoClickedEvent(station:GarbageStation){
+  onPointInfoPanelMixedIntoClickedEvent(station: GarbageStation) {
     this.mixedIntoClicked.emit(station);
   }
-  onPointInfoPanelStateClickedEvent(station:GarbageStation){
-
+  onPointInfoPanelStateClickedEvent(station: GarbageStation) {
+    this.garbageFullClicked.emit(station)
   }
 }
 

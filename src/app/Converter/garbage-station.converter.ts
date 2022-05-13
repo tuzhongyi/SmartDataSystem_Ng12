@@ -1,7 +1,7 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GarbageStationModel } from '../common/components/tables/garbage-station-table/garbage-station.model';
+import { GarbageStationModel } from '../view-model/garbage-station.model';
 
 export class GarbageStationConverter
   implements IPromiseConverter<GarbageStation, GarbageStationModel>

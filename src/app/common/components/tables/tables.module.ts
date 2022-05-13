@@ -1,6 +1,7 @@
 import { DeviceListTableComponent } from './device-list-table/device-list-table.component';
 import { EventRecordCountTableComponent } from './event-record-count-table/event-record-count-table.component';
-import { EventRecordTableComponent } from './event-record-table/event-record-table.component';
+import { EventRecordTableComponent } from './event-record/event-record-table/event-record-table.component';
+
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
 import { GarbageDropStationTableComponent } from './garbage-drop-station-table/garbage-drop-station-table.component';
 import { GarbageFullStationTableComponent } from './garbage-full-station-table/garbage-full-station-table.component';

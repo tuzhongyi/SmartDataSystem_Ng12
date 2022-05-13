@@ -10,7 +10,7 @@ import {
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { DeviceListTableFilter } from 'src/app/common/components/tables/device-list-table/device-list-table.component';
 import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';

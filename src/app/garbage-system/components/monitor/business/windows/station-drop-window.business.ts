@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
+} from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { MediaWindowBusiness } from './media-window.business';
 

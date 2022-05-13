@@ -1,5 +1,5 @@
-import { ImageControlModel } from '../../image-control/image-control.model';
-import { GarbageStationModel } from './garbage-station.model';
+import { ImageControlModel } from '../../../../view-model/image-control.model';
+import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 
 export class GarbageStationTableModel {
   GarbageStation?: GarbageStationModel;

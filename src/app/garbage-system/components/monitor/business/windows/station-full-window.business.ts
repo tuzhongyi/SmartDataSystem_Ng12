@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import {
-  ImageControlModel,
   ImageControlModelArray,
-} from 'src/app/common/components/image-control/image-control.model';
-import { EventRecordViewModel } from 'src/app/common/components/tables/event-record-table/event-record.model';
+} from 'src/app/view-model/image-control.model';
+
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { MediaWindowBusiness } from './media-window.business';
 

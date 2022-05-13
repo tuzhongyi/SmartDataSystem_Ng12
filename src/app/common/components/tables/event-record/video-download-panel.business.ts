@@ -3,16 +3,13 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import {
   IConverter,
-  IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { CameraUsage } from 'src/app/enum/camera-sage.enum';
-import { StationState } from 'src/app/enum/station-state.enum';
-import { MixedIntoEventRecord } from 'src/app/network/model/event-record.model';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { VideoDownloader } from '../../panels/video-download-panel/video-downloader.model';
 import { WindowViewModel } from '../../window-control/window.model';
-import { EventRecordViewModel } from './event-record.model';
+
 
 @Injectable()
 export class VideoDownloadPanelBusiness

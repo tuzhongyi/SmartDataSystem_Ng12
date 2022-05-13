@@ -29,7 +29,7 @@ import { Language } from 'src/app/global/tool/language';
 import {
   ImageControlModel,
   ImageControlModelArray,
-} from '../../image-control/image-control.model';
+} from '../../../../view-model/image-control.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 @Component({
   selector: 'howell-line-zoom-chart',

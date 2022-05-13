@@ -1,5 +1,5 @@
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
-import { ImageControlModel } from '../image-control/image-control.model';
+import { ImageControlModel } from '../../../view-model/image-control.model';
 import { VideoModel } from '../video-player/video.model';
 
 export class ImageVideoControlModel {

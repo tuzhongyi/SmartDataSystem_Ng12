@@ -17,7 +17,7 @@ import {
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { OrderModel } from 'src/app/view-model/order.model';
-import { GarbageStationModel } from '../garbage-station-table/garbage-station.model';
+import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 import { GarbageStationStatisticArrayConverter } from './garbage-station-statistic.converter';
 import {
   GarbageStationStatisticModel,

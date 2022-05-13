@@ -23,7 +23,7 @@ import { VideoSettingControlComponent } from './video-window/video-setting-contr
 import { VideoPresetPointControlComponent } from './video-window/video-preset-point-control/video-preset-point-control.component';
 import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
 import { TimeControlComponent } from './time-control/time-control.component';
-import { Table_COMPONENTS } from './tables/table-component';
+import { Table_COMPONENTS } from './tables/tables.module';
 import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
 import { CHART_COMPONENTS } from './charts/chart-component';
 import { SwitchComponent } from './switch/switch.component';
@@ -31,6 +31,7 @@ import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duratio
 import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TreeOldComponent } from './tree-old/tree-old.component';
+import { CARD_COMPONENTS } from './cards/cards.module';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -57,6 +58,7 @@ export const CUSTOM_COMPONENTS = [
   VideoPresetPointControlComponent,
   VideoPlaybackSettingControlComponent,
   TimeControlComponent,
+  ...CARD_COMPONENTS,
   ...Table_COMPONENTS,
   VideoDownloadPanelComponent,
   SwitchComponent,

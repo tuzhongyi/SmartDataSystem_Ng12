@@ -1,4 +1,4 @@
-import { ImageControlModel } from 'src/app/common/components/image-control/image-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { Camera } from 'src/app/network/model/camera.model';

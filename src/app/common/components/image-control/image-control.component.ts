@@ -17,7 +17,7 @@ import { EventRule } from 'src/app/network/model/event-rule';
 import { Point } from 'src/app/network/model/point.model';
 import { Size } from 'src/app/network/model/size.model';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
-import { ImageControlModel } from './image-control.model';
+import { ImageControlModel } from '../../../view-model/image-control.model';
 
 @Component({
   selector: 'app-image-control',
