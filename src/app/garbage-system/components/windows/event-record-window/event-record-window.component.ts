@@ -19,6 +19,7 @@ import { EventRecordWindowDetailsBusiness } from './business/event-record-window
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 import { EventRecordWindowBusiness } from './event-record-window.business';
 import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
+import { ListType } from '../event-record-operation/event-record-operation.component';
 
 @Component({
   selector: 'howell-event-record-window',
@@ -42,7 +43,8 @@ export class EventRecordWindowComponent
   stationId?: string;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-
+  @Input()
+  listType = ListType.table;
 
 
 
@@ -55,8 +57,8 @@ export class EventRecordWindowComponent
   }
 
   filter: EventRecordFilter = new EventRecordFilter()
-
   Index = EventRecordWindowIndex;
+  ListType = ListType;
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.stationId) {
@@ -82,6 +84,10 @@ export class EventRecordWindowComponent
 
   onimage(model: ImageControlModelArray) {
     this.image.emit(model);
+  }
+
+  onTypeChange(type: ListType) {
+    this.listType = type;
   }
 }
 

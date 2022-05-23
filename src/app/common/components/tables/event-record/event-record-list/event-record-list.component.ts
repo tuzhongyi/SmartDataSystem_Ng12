@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -9,7 +10,6 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -17,10 +17,12 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModel, ImageControlModelArray } from '../../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../../table-abstract.component';
+import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
+import { ListAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
+import { EventRecordListConverter } from './event-record-list.converter';
 
 @Component({
   selector: 'howell-event-record-list',
@@ -33,25 +35,24 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
   ],
 })
 export class EventRecordListComponent
-  extends TableAbstractComponent<EventRecordViewModel>
+  extends ListAbstractComponent<EventRecordViewModel, EventRecordCardModel>
   implements
   IComponent<IModel, PagedList<EventRecordViewModel>>,
   OnInit,
   OnChanges {
-  width: string[] = [];
+  converter = new EventRecordListConverter();
 
-  @Input()
-  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
   @Input()
   type: EventType = EventType.IllegalDrop;
   @Input()
   load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
-
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
   constructor(
-    business: EventRecordBusiness,
+    public business: EventRecordBusiness,
     private download: DownloadBusiness,
     public panel: VideoDownloadPanelBusiness
   ) {
@@ -59,6 +60,8 @@ export class EventRecordListComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
+
+  width: string[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
@@ -86,11 +89,19 @@ export class EventRecordListComponent
 
     let promise = this.business.load(this.type, params, filter);
     this.loading = true;
-    promise.then((paged) => {
+    promise.then(async (paged) => {
       this.loading = false;
       this.page = paged.Page;
 
       this.datas = paged.Data;
+      this.list = await this.converter.Convert(this.datas, {
+        division: (id: string) => {
+          return this.business.getDivision(id);
+        },
+        img: (id: string) => {
+          return this.business.getImage(id)
+        }
+      })
     });
     return promise;
   }
@@ -116,10 +127,32 @@ export class EventRecordListComponent
     this.image.emit(array);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: EventRecordViewModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);
+  }
+
+  onCardPlayVideo(model: EventRecordCardModel) {
+    if (model.source) {
+      this.playvideo(model.source);
+    }
+  }
+  onCardDownloadImage(model: EventRecordCardModel) {
+    if (model.source) {
+      this.downloadImage(model.source);
+    }
+  }
+  onCardDownloadVideo(model: EventRecordCardModel) {
+    if (model.source) {
+      this.downloadVideo(model.source);
+    }
+  }
+  onCardClick(model: EventRecordCardModel) {
+    if (model.source) {
+      let vm = (model.source as EventRecordViewModel);
+      if (vm.images && vm.images.length > 0) {
+        this.imageClick(model.source, vm.images[0]);
+      }
+    }
   }
 }

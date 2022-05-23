@@ -2,8 +2,16 @@
 
   <div class="event-record-list-main">
     <div class="event-record-list-main-body">
-      <ng-container *ngFor="let item of datas">
-        <howell-event-record-card></howell-event-record-card>
+      <ng-container *ngFor="let item of list">
+        <div class="event-record-list-item">
+        <howell-event-record-card [model]="item"
+        (cardClick)="onCardClick($event)"
+        (playVideo)="onCardPlayVideo($event)"
+        (downloadImage)="onCardDownloadImage($event)"
+        (downloadVideo)="onCardDownloadVideo($event)"
+
+        ></howell-event-record-card>
+        </div>
       </ng-container>
     </div>
     <div class="event-record-list-main-footer" *ngIf="page">

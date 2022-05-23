@@ -15,6 +15,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import {
   PagedParams,
 } from 'src/app/network/request/IParams.interface';
+import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
   EventRecordPagedConverter,
@@ -25,14 +26,14 @@ import { EventRecordFilter } from './event-record.model';
 @Injectable()
 export class EventRecordBusiness
   implements
-    IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>
+  IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>
 {
   constructor(
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService,
     public subscription: SubscriptionService
-  ) {}
+  ) { }
   Converter: IPromiseConverter<
     PagedList<EventRecordType>,
     PagedList<EventRecordViewModel>
@@ -95,5 +96,13 @@ export class EventRecordBusiness
       params.ResourceName = opts.text;
     }
     return params;
+  }
+
+  getDivision(id: string) {
+    return this.divisionService.cache.get(id)
+  }
+
+  getImage(id: string) {
+    return MediumRequestService.jpg(id)
   }
 }

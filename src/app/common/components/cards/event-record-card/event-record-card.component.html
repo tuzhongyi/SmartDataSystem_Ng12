@@ -1,29 +1,44 @@
-<div class="event-record-card">
+<div class="event-record-card" (click)="onCardClick($event)">
     <div class="event-record-card-header">
         <div class="event-record-card-header-left">
-            <span>{{ model?model.name:"" }}</span>
+            <span>{{ model.name }}</span>
         </div>
         <div class="event-record-card-header-right">
             <div class="operation">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div>
-                    {{ model?model.time:"" }}
-                </div>
+                <button
+                  class="icon-button"
+                  title="播放视频"
+                  (click)="onPlayVideo($event)"
+                >
+                  <i class="howell-icon-video"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载图片"
+                  (click)="onDownloadImage($event)"
+                >
+                  <i class="howell-icon-picturedownload"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载视频"
+                  (click)="onDownloadVideo($event)"
+                >
+                  <i class="howell-icon-videodownload"></i>
+                </button>
             </div>
-            <div class="time"></div>
+            <div class="time">
+                {{ dateFormat }}
+            </div>
         </div>
     </div>
-    <div class="event-record-card-body">
-        <app-image-control></app-image-control>
+    <div class="event-record-card-body">        
+        <img [src]="model.img">
     </div>
     <div class="event-record-card-footer">
         <div class="event-record-card-footer-left">
-            {{ model? model.parent? model.parent.Name :"" : "" }}
+            {{ model.parent? model.parent.Name :"" }}
         </div>
         <div class="event-record-card-footer-right">
-            {{ model? model.station? model.station.Name :"" : "" }}
+            {{ model.station? model.station.Name :"" }}
         </div>
     </div>
 </div>

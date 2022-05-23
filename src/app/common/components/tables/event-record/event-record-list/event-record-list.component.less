@@ -1,22 +1,9 @@
-.event-record-table {
+.event-record-list {
   width: 100%;
   height: 100%;
   // border: 3px solid violet;
   overflow: auto;
   display: flex;
-  flex-direction: column;
-
-  table {
-    width: 100%;
-
-    th {
-      text-align: left;
-
-      &.center {
-        text-align: center;
-      }
-    }
-  }
 
 
   &-header {
@@ -29,34 +16,14 @@
     flex-grow: 1;
     overflow: auto;
 
-    .img-list {
+    &-body {
       display: flex;
-      align-items: center;
-      height: 36px;
-
-      .img {
-        width: 44px;
-        margin-right: 10px;
-
-        app-image-control {
-          width: 100%;
-          height: 100%;
-        }
-      }
-    }
-
-    .body table tbody tr.zoom:hover .img-list {
-      height: 80px;
-
-      .img {
-        width: 100px
-      }
-    }
-
-    ::ng-deep {
-      .body {
-        height: calc(100% - 70px - 50px);
-      }
+      justify-content: flex-start;
+      align-content: flex-start;
+      width: calc(100% - 5px * 2);
+      height: calc(100% - 50px);
+      padding: 5px;
+      flex-wrap: wrap;
     }
 
 
@@ -69,6 +36,7 @@
       padding: 0 20px;
       box-sizing: border-box;
       overflow: auto;
+
 
       .footer-item {
         display: flex;
@@ -88,4 +56,9 @@
     }
   }
 
+  &-item {
+    width: calc(100% / 5 - 4px);
+    height: calc(100% / 3 - 4px);
+    padding: 2px;
+  }
 }

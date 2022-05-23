@@ -1,5 +1,6 @@
 import { DeviceListTableComponent } from './device-list-table/device-list-table.component';
 import { EventRecordCountTableComponent } from './event-record-count-table/event-record-count-table.component';
+import { EventRecordListComponent } from './event-record/event-record-list/event-record-list.component';
 import { EventRecordTableComponent } from './event-record/event-record-table/event-record-table.component';
 
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
@@ -10,6 +11,7 @@ import { GarbageStationTableComponent } from './garbage-station-table/garbage-st
 
 export const Table_COMPONENTS = [
   EventRecordTableComponent,
+  EventRecordListComponent,
   DeviceListTableComponent,
   GarbageDropStationTableComponent,
   GarbageFullStationTableComponent,

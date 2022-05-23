@@ -46,6 +46,10 @@ export class EventRecordOperationComponent implements OnInit {
   onfilter() {
     this.filter.emit();
   }
+
+  onListTypeSelect(item: SelectItem){    
+    this.typeChange.emit(item.value)
+  }
 }
 
 export enum ListType {

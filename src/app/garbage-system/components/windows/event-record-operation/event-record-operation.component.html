@@ -7,6 +7,7 @@
   <app-select-control
     class="list-type-select"
     [data]="listTypes"
+    (select)="onListTypeSelect($event)"
   ></app-select-control>
   <button class="hw-cyan-m-btn" (click)="onfilter()">
     <i class="mdi mdi-filter-outline"></i>

@@ -1,5 +1,6 @@
 import { Language } from 'src/app/global/tool/language';
 import { Page } from 'src/app/network/model/page_list.model';
+import { IConverter, IPromiseConverter } from '../../interfaces/converter.interface';
 
 export abstract class TableAbstractComponent<T> {
   abstract width: Array<string>;
@@ -25,4 +26,11 @@ export abstract class TableAbstractComponent<T> {
     };
     return page;
   }
+}
+
+export abstract class ListAbstractComponent<TData, TSource>
+  extends TableAbstractComponent<TData>{
+  pageSize = 15;
+  list: TSource[] = [];
+  abstract converter: IConverter<TData[], TSource[]> | IPromiseConverter<TData[], TSource[]>;
 }
