@@ -1,32 +1,61 @@
-.mat-flat-button {
-  margin: 10px;
-}
+// .mat-flat-button {
+//   margin: 10px;
+// }
 
 .division-manage {
   display: flex;
   flex-wrap: nowrap;
   width: 100%;
   height: 100%;
+  color: white;
 
   .division-list {
-    width: 350px;
-    overflow: auto;
+    @w: 320;
+    @p: 20;
+    @b: 2;
+    @cw:@w - 2 * @p - 2 * @b; // content width
 
+    width: unit(@w, px);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    background: rgba(36, 72, 165, 0.05);
+    border: unit(@b, px) rgba(117, 134, 224, 0.15) solid;
+    padding: unit(@p, px);
+
+    margin-right: 20px;
+
+    h2 {
+      margin: 0;
+      margin-bottom: 20px;
+    }
+    .btns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      // border: 1px solid yellow;
+      margin-bottom: 10px;
+    }
     .btn {
-      width: 76px;
+      @bw: 76;
+      width: unit(@bw, px);
       height: 34px;
       cursor: pointer;
       background-color: unset;
       border: unset;
       font-size: 16px;
 
-      margin: 0 5px;
+      @n: floor((@cw / @bw));
 
-      &:first-of-type {
-        margin-left: 0;
+      &:nth-child(@{n}n) {
+        margin-bottom: 5px;
       }
-      &:last-of-type {
-        margin-left: 0;
+
+      &:last-child {
+        margin-bottom: 0;
       }
 
       @selectors: red, green, blue;
@@ -47,21 +76,65 @@
       });
     }
 
-    .search {
-      height: 30px;
+    .search-wrapper {
+      flex-shrink: 0;
+      height: 34px;
       background-color: transparent;
       outline-color: currentColor;
       border: 1px solid #5e6ebf;
       color: white;
       font-size: 18px;
+      transition: all 0.5s;
+      position: relative;
+      margin-bottom: 20px;
+
+      &:focus-within {
+        background-color: #0d1f38;
+        border: 1px solid #3a93ff;
+      }
+
+      .search {
+        outline: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+        padding: 0;
+        padding-left: 12px;
+        padding-right: 30px;
+        background: transparent;
+        box-sizing: border-box;
+        background: transparent;
+      }
+      .search-icon {
+        position: absolute;
+        right: 6px;
+        top: 50%;
+        transform: translate(0, -50%);
+        color: #7f94ff;
+        font-size: 20px;
+        cursor: pointer;
+
+        &:hover {
+          color: #3a93ff;
+        }
+      }
     }
+
     .tree-container {
-      height: 600px;
+      flex-grow: 1;
       overflow: auto;
-      padding-left: 10px;
     }
   }
   .division-detail {
     flex-grow: 1;
+    background: rgba(36, 72, 165, 0.05);
+    border: 2px rgba(117, 134, 224, 0.15) solid;
+    padding: 20px;
+  }
+  .division-detail {
+    h2 {
+      margin: 0;
+      margin-bottom: 20px;
+    }
   }
 }

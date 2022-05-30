@@ -1,41 +1,49 @@
 <div class="division-manage">
   <div class="division-list">
-    <!-- <h2>区划列表</h2>
-    <button
-      class="btn btn--green"
-      (click)="addNode()"
-      [disabled]="!enableAddBtn"
-    >
-      <i class="howell-icon-plus"></i>
-      添加
-    </button>
-    <button
-      class="btn btn--red"
-      (click)="deleteNode()"
-      [disabled]="!enableDelBtn"
-    >
-      <i class="howell-icon-delete-bin"></i>
-      删除
-    </button>
-    <button
-      class="btn btn--blue"
-      (click)="editNode()"
-      [disabled]="!enableEditBtn"
-    >
-      <i class="howell-icon-move2"></i>
-      编辑
-    </button>
-    <input type="text" class="search" #search />
-    <button mat-flat-button color="primary" (click)="searchNode(search.value)">
-      搜索
-    </button> -->
-    <button (click)="changeType()">Change</button>
+    <h2>区划列表</h2>
+
+    <div class="btns">
+      <button
+        class="btn btn--green"
+        (click)="addNode()"
+        [disabled]="!enableAddBtn"
+      >
+        <i class="howell-icon-plus"></i>
+        添加
+      </button>
+      <button
+        class="btn btn--red"
+        (click)="deleteNode()"
+        [disabled]="!enableDelBtn"
+      >
+        <i class="howell-icon-delete-bin"></i>
+        删除
+      </button>
+      <button
+        class="btn btn--blue"
+        (click)="editNode()"
+        [disabled]="!enableEditBtn"
+      >
+        <i class="howell-icon-move2"></i>
+        编辑
+      </button>
+    </div>
+
+    <div class="search-wrapper">
+      <input
+        type="text"
+        class="search"
+        maxLength="15"
+        placeholder="名称"
+        #search
+        (click)="searchNode(search.value)"
+      />
+      <i class="material-icons search-icon">search</i>
+    </div>
+
     <div class="tree-container">
       <app-tree
         #tree
-        [depth]="1"
-        [showDepth]="1"
-        [defaultIds]="['310101013000', '310101002002', '310101002003']"
         [treeSelectModel]="treeSelectModel"
         [treeServiceModel]="treeServiceModel"
         (selectTreeNode)="selectTreeNode($event)"
@@ -44,5 +52,13 @@
   </div>
   <div class="division-detail">
     <h2>区划详情</h2>
+
+    <form>
+      <div class="form-group">
+        <label for=""> 区划ID </label>
+        <span>*</span>
+        <input type="text" />
+      </div>
+    </form>
   </div>
 </div>
