@@ -12,4 +12,5 @@ export class GarbageStationManageComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }
