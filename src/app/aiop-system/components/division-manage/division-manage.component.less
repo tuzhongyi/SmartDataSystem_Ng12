@@ -1,7 +1,3 @@
-// .mat-flat-button {
-//   margin: 10px;
-// }
-
 .division-manage {
   display: flex;
   flex-wrap: nowrap;
@@ -10,12 +6,12 @@
   color: white;
 
   .division-list {
-    @w: 320;
-    @p: 20;
-    @b: 2;
+    @w: 320px;
+    @p: 20px;
+    @b: 2px;
     @cw:@w - 2 * @p - 2 * @b; // content width
 
-    width: unit(@w, px);
+    width: @w;
     box-sizing: border-box;
     overflow: hidden;
 
@@ -23,8 +19,8 @@
     flex-direction: column;
 
     background: rgba(36, 72, 165, 0.05);
-    border: unit(@b, px) rgba(117, 134, 224, 0.15) solid;
-    padding: unit(@p, px);
+    border: @b rgba(117, 134, 224, 0.15) solid;
+    padding: @p;
 
     margin-right: 20px;
 
@@ -36,19 +32,18 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      // border: 1px solid yellow;
       margin-bottom: 10px;
     }
     .btn {
-      @bw: 76;
-      width: unit(@bw, px);
+      @bw: 76px;
+      width: @bw;
       height: 34px;
       cursor: pointer;
       background-color: unset;
       border: unset;
       font-size: 16px;
 
-      @n: floor((@cw / @bw));
+      @n: floor((unit(@cw) / unit(@bw)));
 
       &:nth-child(@{n}n) {
         margin-bottom: 5px;
@@ -130,11 +125,86 @@
     background: rgba(36, 72, 165, 0.05);
     border: 2px rgba(117, 134, 224, 0.15) solid;
     padding: 20px;
+    padding-right: 0;
   }
   .division-detail {
+    min-width: 400px;
+    display: flex;
+    flex-direction: column;
     h2 {
       margin: 0;
       margin-bottom: 20px;
+      flex-shrink: 0;
+    }
+    .form {
+      width: 100%;
+      box-sizing: border-box;
+      overflow: auto;
+      .form-group {
+        width: 70%;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        .title {
+          margin-bottom: 5px;
+        }
+        .form-label {
+          color: #eaedff;
+          font-size: 18px;
+          font-weight: bold;
+          line-height: 35px;
+        }
+        .form-icon {
+          color: #fc4b6c;
+          vertical-align: sub;
+        }
+        .form-control {
+          width: 100%;
+          color: #cfd7ff;
+          border: 1px solid #5e6ebf;
+          font-size: 18px;
+          border-radius: unset;
+          background-color: #1d233b;
+          box-sizing: border-box;
+          outline: none;
+          &:focus {
+            background-color: #0d1f38;
+            border: 1px solid #3a93ff;
+          }
+        }
+        .form-input {
+          height: 34px;
+          padding: 0;
+          padding-left: 12px;
+        }
+        .form-textarea {
+          resize: none;
+          padding: 0;
+          padding: 4px 12px 0px;
+        }
+        .btns {
+          .btn {
+            width: 46px;
+            height: 34px;
+            cursor: pointer;
+            background-color: unset;
+            border: unset;
+            font-size: 16px;
+
+            &:not(:last-child) {
+              margin-right: 10px;
+            }
+          }
+          .btn--green {
+            background-image: url(/assets/img/green-m-btn.png);
+          }
+          .btn--gray {
+            background: #0c1127;
+            border: 1px solid rgba(94, 110, 191, 0.5);
+            color: rgba(207, 215, 255, 0.5);
+          }
+        }
+      }
     }
   }
 }
