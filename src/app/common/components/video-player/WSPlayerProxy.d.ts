@@ -1,5 +1,5 @@
-declare var base64encode: (str: string) => string;
-declare var utf16to8: (str: string) => string;
+// declare var base64encode: (str: string) => string;
+// declare var utf16to8: (str: string) => string;
 declare class WSPlayerProxy {
   constructor(iframe: string | HTMLIFrameElement);
   /** 全屏状态 */

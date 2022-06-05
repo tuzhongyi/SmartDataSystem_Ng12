@@ -8,6 +8,7 @@ import { PagedList } from '../../model/page_list.model';
 import { Role } from '../../model/role.model';
 import { UserLabel } from '../../model/user-label.model';
 import { User } from '../../model/user.model';
+import { PasswordUrl } from '../../url/garbage/password.url';
 import { UserUrl } from '../../url/garbage/user.url';
 import {
   BaseRequestService,
@@ -94,7 +95,7 @@ export class UserRequestService {
 }
 
 class ConfigService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
@@ -125,7 +126,7 @@ class RolesService {
 }
 
 class LabelsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
@@ -152,7 +153,7 @@ class LabelsService {
 }
 
 class PasswordsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   random(userId: string, params: RandomUserPaswordParams): Promise<String> {
     let url = UserUrl.password(userId).random();
@@ -165,4 +166,27 @@ class PasswordsService {
     let data = classToPlain(params);
     return this.basic.post(url, User, data);
   }
+
+  private _check?: PasswordCheckService;
+  public get check(): PasswordCheckService {
+    if (!this._check) {
+      this._check = new PasswordCheckService(this.basic);
+    }
+    return this._check;
+  }  
+}
+
+class PasswordCheckService {
+  constructor(private basic: BaseRequestService) { }
+
+  mobileNo(mobileNo: string):Promise<Fault> {
+    let url = PasswordUrl.checkMobileNo(mobileNo);
+    return this.basic.get(url, Fault)
+  }
+
+  code(mobileNo?: string) {
+    let url = PasswordUrl.checkCode(mobileNo);
+    return this.basic.http.getBase64String(url).toPromise();
+  }
+
 }

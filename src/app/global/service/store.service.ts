@@ -8,6 +8,11 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 export class StoreService {
   statusChange = new EventEmitter();
 
+  password?: string;
+
+  HideButton:boolean = false;
+  HideTitlebar:boolean = false;
+
   private _divisionId: string = '';
   private _divisionType: DivisionType = DivisionType.None;
 
@@ -52,7 +57,7 @@ export class StoreService {
     }
   }
 
-  constructor() {    
+  constructor() {
     this.runInterval();
   }
 }

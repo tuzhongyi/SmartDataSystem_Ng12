@@ -23,8 +23,10 @@ import videojs, { VideoJsPlayer } from 'video.js';
 import { RoutePath } from '../app-routing.path';
 import { EnumHelper } from '../enum/enum-helper';
 import { StaticDataRole } from '../enum/role-static-data.enum';
+import { UserResourceType } from '../enum/user-resource-type.enum';
 import { LocalStorageService } from '../global/service/local-storage.service';
 import { SessionStorageService } from '../global/service/session-storage.service';
+import { StoreService } from '../global/service/store.service';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
@@ -60,7 +62,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
-    private _cookieService: CookieService
+    private _cookieService: CookieService,
+    private _storeService:StoreService
   ) {
     this._titleService.setTitle('用户登录');
   }
@@ -170,8 +173,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
             if (result.Role[0].StaticData == StaticDataRole.enabled) {
               this._router.navigateByUrl(RoutePath.aiop);
             } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
-              this._router.navigateByUrl(RoutePath.garbage_system);
+              if (result.Resources &&
+                result.Resources.length > 0 &&
+                result.Resources[0].ResourceType === UserResourceType.Committees) {
+                this._router.navigateByUrl(RoutePath.garbage_system_committees);
+              }
+              else {
+                this._router.navigateByUrl(RoutePath.garbage_system);
+              }
             }
+          }
+          else if (result.Resources &&
+            result.Resources.length > 0 &&
+            result.Resources[0].ResourceType === UserResourceType.Committees) {
+            this._router.navigateByUrl(RoutePath.garbage_system_committees);
+          }
+          else{
+
           }
         }
       } catch (e: any) {
@@ -252,5 +270,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this._cookieService.set('passWord', passWord, options);
 
     this._localStorageService.user = user;
+    this._storeService.password = passWord;
   }
 }

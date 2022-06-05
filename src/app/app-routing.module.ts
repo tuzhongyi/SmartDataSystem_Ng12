@@ -18,6 +18,12 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: RoutePath.aiop,
+    loadChildren: () =>
+      import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
+    canActivate: [AuthorizationService],
+  },
+  {
     path: RoutePath.garbage_system,
     loadChildren: () =>
       import('./garbage-system/garbage.module').then(
@@ -26,11 +32,13 @@ const routes: Routes = [
     canActivate: [AuthorizationService],
   },
   {
-    path: RoutePath.aiop,
+    path: RoutePath.garbage_system_committees,
     loadChildren: () =>
-      import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
+      import('./garbage-system/committees/garbage-committees.module').then(
+        (mod) => mod.GarbageCommitteesModule
+      ),
     canActivate: [AuthorizationService],
-  },
+  }
   // {
   //   path: '**',
   //   redirectTo: 'login',

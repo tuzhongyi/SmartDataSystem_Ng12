@@ -5,10 +5,10 @@ import { MonitorComponent } from './components/monitor/monitor.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'monitor',
+    redirectTo: 'index',
   },
   {
-    path: 'monitor',
+    path: 'index',
     component: MonitorComponent,
   },
 ];

@@ -18,27 +18,7 @@
     <div
       class="monitor-body__item monitor-body__item--map"
       [ngClass]="{ fullscreen: patrol.fullscreen == true }"
-    >
-      <div class="monitor-body__wrapper">
-        <div *ngIf="statistic.cards" class="statistic-card-group">
-          <ng-container *ngFor="let item of statistic.cards">
-            <app-statistic-card
-              [model]="item"
-              (Click)="statistic.onclick(item)"
-            ></app-statistic-card>
-          </ng-container>
-        </div>
-        <div class="map-control">
-          <app-map-control
-            (patrol)="map.onpatrol()"
-            (VideoPlay)="map.onvideoplay($event)"
-            (illegalDropClicked)="map.onIllegalDropClicked($event)"
-            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
-            (garbageCountClicked)="map.onGarbageCountClicked($event)"
-            (garbageFullClicked)="map.onGarbageFullClicked($event)"
-          ></app-map-control>
-        </div>
-      </div>
+    >      
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
         <app-patrol-control
           (close)="patrol.onclose()"

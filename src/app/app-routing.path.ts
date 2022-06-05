@@ -1,5 +1,6 @@
 export enum RoutePath {
     login = "login",
+    aiop = "aiop",
     garbage_system = "waste-regulation",//'garbage-system',
-    aiop = "aiop"
+    garbage_system_committees = "waste-regulation-committees"
 }

@@ -6,7 +6,6 @@
  */
 
 import { BaseUserUrl } from '../base.url';
-import { UserInnerUrl } from './inner/user.url';
 
 export class PasswordUrl {
   static basic() {
