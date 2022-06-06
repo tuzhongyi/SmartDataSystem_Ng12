@@ -56,8 +56,9 @@ export class TreeComponent implements OnInit {
       nestNode.parentId,
       this._nodeIconType.get(nestNode.type),
       nestNode.type,
+      nestNode.rawData
     );
-    flatNode.rawData = nestNode.rawData;
+    // flatNode.rawData = nestNode.rawData;
 
     this._flatNodeMap.set(nestNode.id, flatNode);
     return flatNode;
