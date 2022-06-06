@@ -11,6 +11,7 @@ import 'reflect-metadata';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
 import { IModel } from './model.interface';
+import { StationType } from 'src/app/enum/station-type.enum';
 
 /** 垃圾房、投放点 */
 export class GarbageStation implements IModel {
@@ -19,7 +20,7 @@ export class GarbageStation implements IModel {
   /**	String	垃圾房名称	M */
   Name!: string;
   /**	Int32	垃圾房类型	M */
-  StationType!: number;
+  StationType!: StationType;
   /**	String	描述信息	O */
   Description?: string;
   /**	DateTime	创建时间	M */
