@@ -26,6 +26,7 @@ import { EncodeDeviceManageComponent } from './encode-device-manage/encode-devic
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
 import { AiModelListComponent } from './ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -46,9 +47,9 @@ import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.com
     AiModelListComponent,
     AiCameraEventsComponent,
   ],
-  imports: [CommonModule, HowellModule, MaterialModule, RouterModule],
+  imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
   providers: [],
 })
 export class AiopComponentsModule {
-  constructor(private _injector: Injector) {}
+  constructor(private _injector: Injector) { }
 }

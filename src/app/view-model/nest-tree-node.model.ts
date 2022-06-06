@@ -4,8 +4,8 @@ import { UserResourceType } from '../enum/user-resource-type.enum';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
 
-export class NestedTreeNode<T = any> {
-  childrenChange = new BehaviorSubject<NestedTreeNode[]>([]);
+export class NestTreeNode<T = any> {
+  childrenChange = new BehaviorSubject<NestTreeNode[]>([]);
 
   constructor(
     public id: string = '',
@@ -15,6 +15,7 @@ export class NestedTreeNode<T = any> {
     public hasChildren = false,
     public parentId: string | null = null,
     public childrenLoaded = false,
+    public parentNode: NestTreeNode | null = null,
     public rawData?: T
   ) { }
 }

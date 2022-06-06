@@ -10,12 +10,12 @@
     [matTreeNodePaddingIndent]="20"
     [class.high-light]="highLight(node)"
   >
+    <!-- 下拉箭头 -->
     <ng-container *ngIf="node.expandable">
       <button
         class="tree-select"
         matTreeNodeToggle
         (click)="loadChildren(node)"
-        [style.margin-left.px]="node.level == 0 ? 0 : 0"
       >
         <div
           class="select"
@@ -24,11 +24,12 @@
       </button>
     </ng-container>
 
-    <!-- 占位符 -->
+    <!-- 下拉箭头 -->
     <ng-container *ngIf="!node.expandable">
       <button class="tree-select" disabled></button>
     </ng-container>
 
+    <!-- 单选模式 -->
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
       <div
         (click)="singleSelectNode(node)"
@@ -44,6 +45,7 @@
       </div>
     </ng-template>
 
+    <!-- 多选模式 -->
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Multiple">
       <mat-checkbox
         (change)="multipleSelectNode(node)"

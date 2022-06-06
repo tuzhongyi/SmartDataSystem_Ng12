@@ -1,16 +1,16 @@
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
 export interface TreeServiceInterface {
 
-  initialize(type: UserResourceType, depth: number): Promise<NestedTreeNode[]>;
+  initialize(type: UserResourceType, depth: number): Promise<NestTreeNode[]>;
 
   // recurseByLevel(
   //   nodes: NestedTreeNode[],
   //   level?: number,
   // ): Promise<void>;
 
-  loadChildren(node: NestedTreeNode): Promise<NestedTreeNode[]>;
+  loadChildren(node: NestTreeNode): Promise<NestTreeNode[]>;
 
   // searchNode(condition: string): Promise<NestedTreeNode[]>;
 }

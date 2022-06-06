@@ -37,7 +37,7 @@ import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
 import { DivisionManageModel } from '../view-model/division-manange.model';
-import { NestedTreeNode } from '../view-model/nested-tree-node.model';
+import { NestTreeNode } from '../view-model/nest-tree-node.model';
 
 type TreeSourceModel =
   | DivisionNode
@@ -49,9 +49,9 @@ type TreeSourceModel =
   providedIn: 'root',
 })
 export class TreeConverter
-  implements IConverter<TreeSourceModel, NestedTreeNode>
+  implements IConverter<TreeSourceModel, NestTreeNode>
 {
-  Convert(source: TreeSourceModel, ...res: any[]): NestedTreeNode {
+  Convert(source: TreeSourceModel, ...res: any[]): NestTreeNode {
     if (source instanceof DivisionNode) {
       return this._fromDivisionNode(source);
     } else if (source instanceof Division) {
@@ -64,8 +64,8 @@ export class TreeConverter
     throw new Error('Method not implemented.');
   }
 
-  iterateToNested<T extends Array<TreeSourceModel>>(data: T): NestedTreeNode[] {
-    let res: NestedTreeNode[] = new Array<NestedTreeNode>();
+  iterateToNested<T extends Array<TreeSourceModel>>(data: T): NestTreeNode[] {
+    let res: NestTreeNode[] = new Array<NestTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       const node = this.Convert(item);
@@ -77,7 +77,7 @@ export class TreeConverter
     data: T[],
     parentId: string | null = null
   ) {
-    let res: NestedTreeNode[] = [];
+    let res: NestTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof DivisionNode) {
@@ -96,17 +96,17 @@ export class TreeConverter
   }
   buildNestedTree<T extends TreeSourceModel>(data: T[]) {
     // 最终根节点树
-    let res: NestedTreeNode[] = [];
+    let res: NestTreeNode[] = [];
 
     // 所有树节点
-    let m = new Map<string, NestedTreeNode>();
+    let m = new Map<string, NestTreeNode>();
 
     // 暂时没有父节点的节点
-    let hanged = new Map<string, NestedTreeNode>(); // 暂存区
+    let hanged = new Map<string, NestTreeNode>(); // 暂存区
 
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      let node: NestedTreeNode | null = null;
+      let node: NestTreeNode | null = null;
 
       if (m.has(item.Id)) {
         node = m.get(item.Id)!;
@@ -148,7 +148,7 @@ export class TreeConverter
     return res;
   }
 
-  mergeNestedTree(first: NestedTreeNode[], second: NestedTreeNode[]) {
+  mergeNestedTree(first: NestTreeNode[], second: NestTreeNode[]) {
     for (let i = 0; i < first.length; i++) {
       let first_item = first[i];
       let second_item = second.find((item) => item.id == first_item.id);
@@ -170,7 +170,7 @@ export class TreeConverter
     item: DivisionNode,
     parentId: string | null = null
   ) {
-    const node = new NestedTreeNode(
+    const node = new NestTreeNode(
       item.Id,
       item.Name,
       item.Description,
@@ -178,30 +178,28 @@ export class TreeConverter
       item.Nodes.length > 0,
       parentId,
       true,
-      item
     );
     return node;
   }
 
   private _fromDivision(item: Division) {
-    const node = new NestedTreeNode(
+    const node = new NestTreeNode<Division>(
       item.Id,
       item.Name,
       item.Description,
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       !item.IsLeaf,
       item.ParentId,
-      undefined,
-      item
     );
+    node.rawData = item;
     return node;
   }
   private _fromDivisionManage(model: DivisionManageModel) {
-    const node = new NestedTreeNode(model.Id, model.Name, model.Description, undefined, undefined, undefined, undefined, model);
+    const node = new NestTreeNode(model.Id, model.Name, model.Description, undefined, undefined, undefined, undefined);
     return node;
   }
   private _fromGarbageStation(item: GarbageStation) {
-    const node = new NestedTreeNode(
+    const node = new NestTreeNode(
       item.Id,
       item.Name,
       item.Description,
@@ -209,7 +207,6 @@ export class TreeConverter
       false,
       item.DivisionId,
       undefined,
-      item
     );
     return node;
   }

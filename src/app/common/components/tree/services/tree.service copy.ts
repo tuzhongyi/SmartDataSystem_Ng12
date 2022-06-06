@@ -12,13 +12,13 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from '../interface/tree-service.interface';
 import { DivisionTreeService } from './division-tree.service';
 
 @Injectable()
 export class TreeService {
-  private _nestedNodeMap = new Map<string, NestedTreeNode>();
+  private _nestedNodeMap = new Map<string, NestTreeNode>();
   private _model = TreeServiceEnum.Station;
 
   public set model(val: TreeServiceEnum) {
@@ -76,7 +76,7 @@ export class TreeService {
     return nodes;
   }
 
-  private _register(nodes: NestedTreeNode[]) {
+  private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
       if (!this._nestedNodeMap.has(node.id)) {
@@ -85,8 +85,8 @@ export class TreeService {
     }
   }
 
-  async loadChildren(node: NestedTreeNode) {
-    let children: NestedTreeNode[] = [];
+  async loadChildren(node: NestTreeNode) {
+    let children: NestTreeNode[] = [];
 
     let data = await this._loadData(
       EnumHelper.GetResourceChildType(node.type),
@@ -104,12 +104,12 @@ export class TreeService {
     return children;
   }
   async searchNode(condition: string) {
-    let res: NestedTreeNode[] = [];
+    let res: NestTreeNode[] = [];
 
     let divisionNodes = await this._divisionTreeService.searchNode(condition);
     console.log('区划结果', divisionNodes);
 
-    let stationNodes: NestedTreeNode[] = [];
+    let stationNodes: NestTreeNode[] = [];
 
     if (condition != '') {
       let data = await this._searchData(condition);

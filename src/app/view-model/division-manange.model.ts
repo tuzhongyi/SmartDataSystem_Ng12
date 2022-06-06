@@ -3,5 +3,7 @@ export class DivisionManageModel {
     public Id: string = '',
     public Name: string = '',
     public Description: string = ''
-  ) {}
+  ) { }
 }
+
+

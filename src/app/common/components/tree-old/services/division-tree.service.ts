@@ -15,7 +15,7 @@ import {
   GetDivisionTreeParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from '../interface/tree-service.interface';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class DivisionTreeService implements TreeServiceInterface {
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _converter: TreeConverter
-  ) {}
+  ) { }
 
   getName() {
     return TreeServiceEnum.Division;
@@ -41,7 +41,7 @@ export class DivisionTreeService implements TreeServiceInterface {
     return nodes;
   }
 
-  async recurseByLevel(nodes: NestedTreeNode[], level: number) {
+  async recurseByLevel(nodes: NestTreeNode[], level: number) {
     console.log('_recurseByLevel');
     if (level == 0) return;
     for (let j = 0; j < nodes.length; j++) {
@@ -54,7 +54,7 @@ export class DivisionTreeService implements TreeServiceInterface {
       }
     }
   }
-  async loadChildren(node: NestedTreeNode) {
+  async loadChildren(node: NestTreeNode) {
     if (node && !node.childrenLoaded) {
       const divisionType = EnumHelper.ConvertUserResourceToDivision(node.type);
       const childType = EnumHelper.GetDivisionChildType(divisionType);
@@ -69,7 +69,7 @@ export class DivisionTreeService implements TreeServiceInterface {
 
   async searchNode(condition: string) {
     let data: Division[] | DivisionNode[];
-    let nodes: NestedTreeNode[] = [];
+    let nodes: NestTreeNode[] = [];
 
     if (condition == '') {
       nodes = await this.initialize();

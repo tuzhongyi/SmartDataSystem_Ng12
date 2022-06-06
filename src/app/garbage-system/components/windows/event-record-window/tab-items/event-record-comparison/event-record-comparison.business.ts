@@ -3,7 +3,7 @@ import { ITimeData, ITimeDataGroup } from "src/app/common/components/charts/char
 import { IBusiness } from "src/app/common/interfaces/bussiness.interface";
 import { IConverter, IPromiseConverter } from "src/app/common/interfaces/converter.interface";
 import { ISubscription } from "src/app/common/interfaces/subscribe.interface";
-import { StatisticToTimeDataConverter } from "src/app/Converter/statistic-to-timedata.converter";
+import { StatisticToTimeDataConverter } from "src/app/converter/statistic-to-timedata.converter";
 import { EventType } from "src/app/enum/event-type.enum";
 import { TimeUnit } from "src/app/enum/time-unit.enum";
 import { UserResourceType } from "src/app/enum/user-resource-type.enum";

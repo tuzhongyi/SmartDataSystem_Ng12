@@ -10,7 +10,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from '../interface/tree-service.interface';
 import { DivisionTreeService } from './division-tree.service';
 
@@ -21,7 +21,7 @@ export class StationTreeService implements TreeServiceInterface {
     private _divisionTreeService: DivisionTreeService,
     private _stationRequest: GarbageStationRequestService,
     private _converter: TreeConverter
-  ) {}
+  ) { }
   getName() {
     return TreeServiceEnum.Station;
   }
@@ -29,7 +29,7 @@ export class StationTreeService implements TreeServiceInterface {
     let res = await this._divisionTreeService.initialize(type);
     return res;
   }
-  async recurseByLevel(nodes: NestedTreeNode[], level: number) {
+  async recurseByLevel(nodes: NestTreeNode[], level: number) {
     console.log(this.count++);
     if (level == 0) return;
     for (let j = 0; j < nodes.length; j++) {
@@ -44,7 +44,7 @@ export class StationTreeService implements TreeServiceInterface {
       }
     }
   }
-  async loadChildren(node: NestedTreeNode) {
+  async loadChildren(node: NestTreeNode) {
     if (node.type == UserResourceType.Committees) {
       // 拉取居委会厢房信息
 
@@ -68,12 +68,12 @@ export class StationTreeService implements TreeServiceInterface {
     }
   }
   async searchNode(condition: string) {
-    let res: NestedTreeNode[] = [];
+    let res: NestTreeNode[] = [];
 
     let divisionNodes = await this._divisionTreeService.searchNode(condition);
     console.log('区划结果', divisionNodes);
 
-    let stationNodes: NestedTreeNode[] = [];
+    let stationNodes: NestTreeNode[] = [];
 
     if (condition != '') {
       let data = await this._searchData(condition);

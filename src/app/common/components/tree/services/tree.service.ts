@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
-import { param } from 'jquery';
-import { BehaviorSubject } from 'rxjs';
 import { TreeConverter } from 'src/app/converter/tree.converter';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from '../interface/tree-service.interface';
-import { DivisionTreeService } from './division-tree.service';
 
 @Injectable()
 export class TreeService implements TreeServiceInterface {
 
   private _model = TreeServiceEnum.Division;
 
-  public nestedNodeMap = new Map<string, NestedTreeNode>();
+  public nestedNodeMap = new Map<string, NestTreeNode>();
   public depthIsEnd = false;
 
   public set model(val: TreeServiceEnum) {
@@ -38,6 +31,7 @@ export class TreeService implements TreeServiceInterface {
     private _converter: TreeConverter
   ) {
   }
+  // 设置区划等级和子区划深度
   async initialize(
     type: UserResourceType = UserResourceType.City,
     depth: number = 0,
@@ -49,9 +43,9 @@ export class TreeService implements TreeServiceInterface {
 
   private async _getDataRecursively(type: UserResourceType = UserResourceType.City,
     depth: number = 0,) {
-    if (this.model == TreeServiceEnum.Division && (type !== UserResourceType.City && type !== UserResourceType.County && type !== UserResourceType.Committees)) {
-      return [];
-    }
+    // if (this.model == TreeServiceEnum.Division && (type !== UserResourceType.City && type !== UserResourceType.County && type !== UserResourceType.Committees)) {
+    //   return [];
+    // }
 
     if (depth < 0) return [];
     let data = await this._loadData(type);
@@ -60,6 +54,8 @@ export class TreeService implements TreeServiceInterface {
     // console.log('资源类型: ', type);
     // console.log('深度: ', depth);
     // console.log('节点: ', nodes)
+
+    // 厢房树需要给居委会添加子节点
     if (
       type == UserResourceType.Committees &&
       this.model == TreeServiceEnum.Station
@@ -73,6 +69,7 @@ export class TreeService implements TreeServiceInterface {
     this._register(nodes);
     // console.log(this.nestedNodeMap)
 
+    // 手动关闭最下层节点
     if (depth == 0 && this.depthIsEnd) {
       nodes.forEach((node) => {
         node.hasChildren = false;
@@ -86,28 +83,27 @@ export class TreeService implements TreeServiceInterface {
       );
 
       children.forEach((child) => {
-
-
         let parentId = child.parentId;
-
         if (parentId) {
           let parentNode = this.nestedNodeMap.get(parentId);
           if (parentNode) {
             // console.log(parentNode.name)
+            child.parentNode = parentNode;
             parentNode.childrenLoaded = true;
             parentNode.childrenChange.value.push(child);
           }
         }
       });
-    } catch (e) { }
-
-
+    } catch (e) {
+      // 当 GetResourceChildType 没有下一级时报错，自动退出
+      // console.log(e)
+    }
     return nodes;
   }
 
-  async loadChildren(node: NestedTreeNode) {
+  async loadChildren(node: NestTreeNode) {
 
-    let children: NestedTreeNode[] = [];
+    let children: NestTreeNode[] = [];
 
     try {
       let data = await this._loadData(
@@ -115,6 +111,8 @@ export class TreeService implements TreeServiceInterface {
         node.id
       );
       children = this._converter.iterateToNested(data);
+      children.forEach(child => child.parentNode = node);
+
       this._register(children);
       if (
         node.type == UserResourceType.County &&
@@ -162,7 +160,7 @@ export class TreeService implements TreeServiceInterface {
   }
 
 
-  private _register(nodes: NestedTreeNode[]) {
+  private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
       if (!this.nestedNodeMap.has(node.id)) {

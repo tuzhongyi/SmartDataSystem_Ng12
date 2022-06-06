@@ -14,7 +14,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from './interface/tree-service.interface';
 
 import { DivisionTreeService } from './services/division-tree.service';
@@ -40,39 +40,40 @@ export class TreeComponent implements OnInit {
   ]);
 
   private _flatNodeMap = new Map<string, FlatTreeNode>();
-  private _transformer = (node: NestedTreeNode, level: number) => {
-    const existingNode = this._flatNodeMap.get(node.id);
+  private _transformer = (nestNode: NestTreeNode, level: number) => {
+    const existingNode = this._flatNodeMap.get(nestNode.id);
 
     if (existingNode) {
-      existingNode.name = node.name;
-      existingNode.expandable = node.hasChildren;
+      existingNode.name = nestNode.name;
+      existingNode.expandable = nestNode.hasChildren;
       return existingNode;
     }
-    const newNode = new FlatTreeNode(
-      node.id,
-      node.name,
+    const flatNode = new FlatTreeNode(
+      nestNode.id,
+      nestNode.name,
       level,
-      node.hasChildren,
-      node.parentId,
-      this._nodeIconType.get(node.type),
-      node.type,
-      node.rawData
+      nestNode.hasChildren,
+      nestNode.parentId,
+      this._nodeIconType.get(nestNode.type),
+      nestNode.type,
     );
-    this._flatNodeMap.set(node.id, newNode);
-    return newNode;
+    flatNode.rawData = nestNode.rawData;
+
+    this._flatNodeMap.set(nestNode.id, flatNode);
+    return flatNode;
   };
   private _getLevel = (node: FlatTreeNode) => node.level;
   private _isExpandable = (node: FlatTreeNode) => node.expandable;
-  private _getChildren = (node: NestedTreeNode) => node.childrenChange;
+  private _getChildren = (node: NestTreeNode<any>) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
-  private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
-  private dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
-  private _nestedNodeMap = new Map<string, NestedTreeNode>();
+  private _treeFlattener: MatTreeFlattener<NestTreeNode, FlatTreeNode>;
+  private dataChange = new BehaviorSubject<NestTreeNode[]>([]);
+  private _nestedNodeMap = new Map<string, NestTreeNode>();
   private _currentNode: FlatTreeNode | null = null;
 
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
-  dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
+  dataSource: MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>;
   // 一定要返回对象
   trackBy = (index: number, node: FlatTreeNode) => node;
 
@@ -130,6 +131,7 @@ export class TreeComponent implements OnInit {
   @Input('treeSelectModel')
   selectModel = TreeSelectEnum.Single;// 单选或多选
 
+  // 最高区划等级
   private _userResourceType: UserResourceType = UserResourceType.City;
   @Input()
   set resourceType(type: UserResourceType) {
@@ -141,16 +143,12 @@ export class TreeComponent implements OnInit {
     return this._userResourceType
   }
 
+  // 默认选中列表
   private _defaultIds: string[] = []
   @Input()
   set defaultIds(ids: string[]) {
-    if (this.selectModel == TreeSelectEnum.Single) {
-      if (ids.length > 0)
-        this._defaultIds = [ids[0]]
-    } else if (this.selectModel == TreeSelectEnum.Multiple) {
-      this._defaultIds = ids;
-    }
-
+    // 排除空字符串
+    this._defaultIds = ids.filter(id => id);
   }
   get defaultIds() {
     return this._defaultIds;
@@ -172,7 +170,7 @@ export class TreeComponent implements OnInit {
       this._isExpandable
     );
 
-    this.dataSource = new MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>(
+    this.dataSource = new MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>(
       this.treeControl,
       this._treeFlattener
     );
@@ -186,7 +184,7 @@ export class TreeComponent implements OnInit {
   }
   ngOnInit() {
 
-    console.log('树类型: ', this.serviceModel)
+    // console.log('树类型: ', this.serviceModel)
 
     if (this.selectModel == TreeSelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
@@ -194,7 +192,7 @@ export class TreeComponent implements OnInit {
       this.selection = new SelectionModel<FlatTreeNode>(true);
     }
     this.selection.changed.subscribe((change) => {
-      console.log('selected nodes: ', this.selection.selected)
+      // console.log('选中节点 ', this.selection.selected)
       this.selectTreeNode.emit(change.source.selected);
     });
 
@@ -211,20 +209,25 @@ export class TreeComponent implements OnInit {
 
   private async _initialize() {
     this._flatNodeMap.clear();
-    // this.treeControl.collapseAll();
+    this.treeControl.collapseAll();
 
     const nodes = await this._treeService.initialize(
       this.resourceType,
       this.depth
     );
     // console.log('树节点: ', nodes)
+
     this.dataChange.next(nodes);
+
+    // 设置预选节点
     this._setDefaultNodes()
 
+    // 展开树
     this._expandNodeRecursively(nodes)
 
   }
-  private _expandNodeRecursively(nodes: NestedTreeNode[]) {
+  // 根据 showDepth 自动展开
+  private _expandNodeRecursively(nodes: NestTreeNode[]) {
     if (this.showDepth <= 0) return
 
     for (let i = 0; i < nodes.length; i++) {
@@ -263,15 +266,19 @@ export class TreeComponent implements OnInit {
   async loadChildren(node: FlatTreeNode) {
     if (this.treeControl.isExpanded(node)) {
       const nestedNode = this._nestedNodeMap.get(node.id);
+      // 仅拉取子节点数据一次
       if (nestedNode && !nestedNode.childrenLoaded) {
         let nodes = await this._treeService.loadChildren(nestedNode);
         // // console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
         nestedNode.childrenChange.next(nodes);
         this.dataChange.next(this.dataChange.value);
+
+        // 多选的时候
         this._checkAllDescendants(node);
-        this._setDefaultNodes()
+
       }
+      this._setDefaultNodes()
     } else {
       this.treeControl.collapseDescendants(node);
     }
@@ -307,7 +314,7 @@ export class TreeComponent implements OnInit {
 
   /***增，删，改，查节点 */
 
-  addNode(node: NestedTreeNode) {
+  addNode(node: NestTreeNode) {
     if (node.parentId) {
       let parentNode = this._nestedNodeMap.get(node.parentId);
       if (parentNode) {
@@ -351,7 +358,7 @@ export class TreeComponent implements OnInit {
       }
     }
   }
-  editNode(node: NestedTreeNode) {
+  editNode(node: NestTreeNode) {
     let currentNode = this._nestedNodeMap.get(node.id);
     if (currentNode) {
       currentNode.name = node.name;
@@ -379,23 +386,41 @@ export class TreeComponent implements OnInit {
 
 
   private _setDefaultNodes() {
+    if (this.defaultIds.length == 0) return;
+    if (this.selectModel == TreeSelectEnum.Single) {
+      this.defaultIds.length = 1;
+    }
+
     let len = this.defaultIds.length;
-    if (len == 0) return;
+
     let res: string[] = [];
     for (let i = 0; i < len; i++) {
-      let id = this.defaultIds[i];
-
-      let node = this._flatNodeMap.get(id);
-      if (node) {
-        console.log(node)
-        this.selection.select(node)
-      } else {
-        res.push(id)
+      let id = this.defaultIds.shift();// 会改变数组长度
+      if (id) {
+        let node = this._flatNodeMap.get(id);
+        if (node) {
+          // 最顶层节点，则直接选中状态
+          if (node.parentId == null) {
+            this.selection.select(node)
+          } else {
+            // 上层节点为打开状态,否则没有打开树，就抛选中事件不合逻辑
+            let parentNode = this._flatNodeMap.get(node.parentId);
+            if (parentNode && this.treeControl.isExpanded(parentNode)) {
+              this.selection.select(node)
+            } else {
+              res.push(id)
+            }
+          }
+        } else {
+          // 还没有拉取到该节点
+          res.push(id)
+        }
       }
     }
+    // 循环结束后，留下的都是没有匹配到的节点
     this.defaultIds = res;
 
-    console.log(this.defaultIds)
+    console.log('defaultIds', this.defaultIds)
 
   }
   /**

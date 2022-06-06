@@ -15,7 +15,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { NestedTreeNode } from 'src/app/view-model/nested-tree-node.model';
+import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeServiceInterface } from './interface/tree-service.interface';
 
 import { DivisionTreeService } from './services/division-tree.service';
@@ -50,7 +50,7 @@ export class TreeOldComponent implements OnInit {
   ]);
 
   private _flatNodeMap = new Map<string, FlatTreeNode>();
-  private _transformer = (node: NestedTreeNode, level: number) => {
+  private _transformer = (node: NestTreeNode, level: number) => {
     const existingNode = this._flatNodeMap.get(node.id);
 
     if (existingNode) {
@@ -73,16 +73,16 @@ export class TreeOldComponent implements OnInit {
   };
   private _getLevel = (node: FlatTreeNode) => node.level;
   private _isExpandable = (node: FlatTreeNode) => node.expandable;
-  private _getChildren = (node: NestedTreeNode) => node.childrenChange;
+  private _getChildren = (node: NestTreeNode) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
-  private _treeFlattener: MatTreeFlattener<NestedTreeNode, FlatTreeNode>;
-  private dataChange = new BehaviorSubject<NestedTreeNode[]>([]);
-  private _nestedNodeMap = new Map<string, NestedTreeNode>();
+  private _treeFlattener: MatTreeFlattener<NestTreeNode, FlatTreeNode>;
+  private dataChange = new BehaviorSubject<NestTreeNode[]>([]);
+  private _nestedNodeMap = new Map<string, NestTreeNode>();
   private _currentNode: FlatTreeNode | null = null;
 
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
-  dataSource: MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>;
+  dataSource: MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>;
   trackBy = (index: number, node: FlatTreeNode) => node;
 
   @Input('treeServiceProvider')
@@ -123,7 +123,7 @@ export class TreeOldComponent implements OnInit {
       this._isExpandable
     );
 
-    this.dataSource = new MatTreeFlatDataSource<NestedTreeNode, FlatTreeNode>(
+    this.dataSource = new MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>(
       this.treeControl,
       this._treeFlattener
     );
@@ -222,7 +222,7 @@ export class TreeOldComponent implements OnInit {
 
   /***增，删，改，查节点 */
 
-  addNode(node: NestedTreeNode) {
+  addNode(node: NestTreeNode) {
     if (node.parentId) {
       let parentNode = this._nestedNodeMap.get(node.parentId);
       if (parentNode) {
@@ -266,7 +266,7 @@ export class TreeOldComponent implements OnInit {
       }
     }
   }
-  editNode(node: NestedTreeNode) {
+  editNode(node: NestTreeNode) {
     let currentNode = this._nestedNodeMap.get(node.id);
     if (currentNode) {
       currentNode.name = node.name;
@@ -276,7 +276,7 @@ export class TreeOldComponent implements OnInit {
   }
   async searchNode(condition: string) {
     this.selection.clear();
-    let nodes: NestedTreeNode[] = await this._service.searchNode(condition);
+    let nodes: NestTreeNode[] = await this._service.searchNode(condition);
 
     if (nodes.length) {
       this._nestedNodeMap.clear();
@@ -292,7 +292,7 @@ export class TreeOldComponent implements OnInit {
     return nodes;
   }
 
-  private _register(nodes: NestedTreeNode[]) {
+  private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
       if (!this._nestedNodeMap.has(node.id)) {
