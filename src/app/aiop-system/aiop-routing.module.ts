@@ -31,6 +31,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'system-mode',
+    pathMatch: "full"
   },
   {
     path: 'system-mode',
@@ -44,6 +45,7 @@ const routes: Routes = [
       {
         path: '',
         redirectTo: 'super-vision',
+        pathMatch: 'full'
       },
       {
         path: 'super-vision',
@@ -52,7 +54,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'supervise-platform',
+            redirectTo: 'supervise-platform', pathMatch: 'full'
           },
           {
             path: 'supervise-platform',
@@ -60,7 +62,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'division-manage',
+                redirectTo: 'division-manage', pathMatch: 'full'
               },
               {
                 path: 'division-manage',
@@ -93,14 +95,14 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'events',
+            redirectTo: 'events', pathMatch: 'full'
           },
           {
             path: 'events',
             children: [
               {
                 path: '',
-                redirectTo: 'illegal-drop-record',
+                redirectTo: 'illegal-drop-record', pathMatch: 'full'
               },
               {
                 path: 'illegal-drop-record',
@@ -119,12 +121,12 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            redirectTo: 'platform',
+            redirectTo: 'platform', pathMatch: 'full'
           },
           {
             path: 'platform',
             children: [
-              { path: '', redirectTo: 'platform-manage' },
+              { path: '', redirectTo: 'platform-manage', pathMatch: 'full' },
               {
                 path: 'platform-manage',
                 component: PlatformManageComponent,
@@ -140,7 +142,7 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'region-manage',
+                redirectTo: 'region-manage', pathMatch: 'full'
               },
 
               {
@@ -166,7 +168,7 @@ const routes: Routes = [
               },
               {
                 path: '',
-                redirectTo: 'camera-manage',
+                redirectTo: 'camera-manage', pathMatch: 'full'
               },
             ],
           },
@@ -198,4 +200,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AiopRoutingModule {}
+export class AiopRoutingModule { }

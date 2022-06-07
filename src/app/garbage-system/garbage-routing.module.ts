@@ -6,6 +6,7 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: 'index',
+    pathMatch: 'full'
   },
   {
     path: 'index',
@@ -17,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class GarbageRoutingModule {}
+export class GarbageRoutingModule { }

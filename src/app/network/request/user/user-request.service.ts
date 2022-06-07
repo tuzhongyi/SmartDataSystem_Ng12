@@ -131,7 +131,7 @@ class LabelsService {
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
     let data = classToPlain(params);
-    return this.basic.post(url, PagedList, data);
+    return this.basic.post<PagedList<UserLabel>>(url, PagedList, data);
   }
 
   get(id: string, type: UserLabelType): Promise<UserLabel> {
@@ -173,13 +173,13 @@ class PasswordsService {
       this._check = new PasswordCheckService(this.basic);
     }
     return this._check;
-  }  
+  }
 }
 
 class PasswordCheckService {
   constructor(private basic: BaseRequestService) { }
 
-  mobileNo(mobileNo: string):Promise<Fault> {
+  mobileNo(mobileNo: string): Promise<Fault> {
     let url = PasswordUrl.checkMobileNo(mobileNo);
     return this.basic.get(url, Fault)
   }

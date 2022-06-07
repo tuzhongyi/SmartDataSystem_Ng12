@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
     private _cookieService: CookieService,
-    private _storeService:StoreService
+    private _storeService: StoreService
   ) {
     this._titleService.setTitle('用户登录');
   }
@@ -160,8 +160,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       try {
         // console.log(this.formGroup.value);
         let result: any = await this._authorizationService.login(
-          this.formGroup.get('userName')!.value,
-          this.formGroup.get('passWord')!.value
+          this.formGroup.get('userName')?.value ?? '',
+          this.formGroup.get('passWord')?.value ?? ''
         );
         if (result instanceof User) {
           // console.log('登录成功', result);
@@ -188,7 +188,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             result.Resources[0].ResourceType === UserResourceType.Committees) {
             this._router.navigateByUrl(RoutePath.garbage_system_committees);
           }
-          else{
+          else {
 
           }
         }
