@@ -8,19 +8,14 @@ export class FlatTreeNode {
   constructor(
     public id: string,
     public name: string,
-    public level: number,
+    public level: number = 0,
+    public description: string = '',
     public expandable = false,
     public parentId: string | null = null,
     public iconType: string = 'howell-icon-map5',
     public type: UserResourceType = UserResourceType.None,
-    // public parentNode: FlatTreeNode | null = null,
-
-    public data?: any,
+    public parentNode: FlatTreeNode | null = null,
+    public rawData?: any,
   ) { }
-  setData<T>(data: T) {
-    this.data = data;
-  }
-  getData<T>() {
-    return this.data as T;
-  }
+
 }

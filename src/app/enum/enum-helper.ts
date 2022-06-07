@@ -4,7 +4,7 @@ import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
-  constructor() {}
+  constructor() { }
 
   static ConvertUserResourceToDivision(type: UserResourceType) {
     switch (type) {
@@ -32,7 +32,7 @@ export class EnumHelper {
     }
   }
 
-  // 要改
+
   static GetResourceChildTypeByDivisionType(type: DivisionType) {
     switch (type) {
       case DivisionType.City:
@@ -47,6 +47,8 @@ export class EnumHelper {
   }
   static GetResourceChildType(type: UserResourceType) {
     switch (type) {
+      case UserResourceType.None:
+        return UserResourceType.City;
       case UserResourceType.City:
         return UserResourceType.County;
       case UserResourceType.County:

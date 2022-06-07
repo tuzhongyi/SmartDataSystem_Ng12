@@ -171,6 +171,7 @@
             border: 1px solid #3a93ff;
           }
           &[disabled] {
+            opacity: 0.7;
             border-color: rgba(94, 110, 191, 0.5);
           }
         }
@@ -199,11 +200,22 @@
           }
           .btn--green {
             background-image: url(/assets/img/green-m-btn.png);
+            &:hover {
+              background-image: url(/assets/img/green-m-btn-hover.png);
+            }
+            &:focus {
+              background-image: url(/assets/img/green-m-btn-focus.png);
+            }
           }
           .btn--gray {
             background: #0c1127;
             border: 1px solid rgba(94, 110, 191, 0.5);
             color: rgba(207, 215, 255, 0.5);
+
+            &:hover {
+              border: 1px solid rgb(94, 110, 191);
+              color: #eaedff;
+            }
           }
         }
       }

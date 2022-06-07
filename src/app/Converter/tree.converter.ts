@@ -179,11 +179,12 @@ export class TreeConverter
       parentId,
       true,
     );
+    node.rawData = item;
     return node;
   }
 
   private _fromDivision(item: Division) {
-    const node = new NestTreeNode<Division>(
+    const node = new NestTreeNode(
       item.Id,
       item.Name,
       item.Description,
@@ -194,8 +195,9 @@ export class TreeConverter
     node.rawData = item;
     return node;
   }
-  private _fromDivisionManage(model: DivisionManageModel) {
-    const node = new NestTreeNode(model.Id, model.Name, model.Description, undefined, undefined, undefined, undefined);
+  private _fromDivisionManage(item: DivisionManageModel) {
+    const node = new NestTreeNode(item.Id, item.Name, item.Description);
+    node.rawData = item;
     return node;
   }
   private _fromGarbageStation(item: GarbageStation) {
@@ -206,8 +208,8 @@ export class TreeConverter
       UserResourceType.Station,
       false,
       item.DivisionId,
-      undefined,
     );
+    node.rawData = item;
     return node;
   }
 }

@@ -62,6 +62,7 @@ export class TreeOldComponent implements OnInit {
       node.id,
       node.name,
       level,
+      '',
       node.hasChildren,
       node.parentId,
       this._nodeIconType.get(node.type),

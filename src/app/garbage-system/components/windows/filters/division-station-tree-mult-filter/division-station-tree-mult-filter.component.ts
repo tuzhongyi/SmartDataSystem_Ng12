@@ -103,7 +103,7 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
     this.selectedIds = []
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      this.selected.push(node.data);
+      this.selected.push(node.rawData);
       this.selectedIds.push(node.id)
       // this.current = node;
       // this.select.emit(node.data);

@@ -262,14 +262,14 @@ export class Language {
   }
   static UserResourceType(type: UserResourceType) {
     switch (type) {
+      case UserResourceType.City:
+        return '行政区';
       case UserResourceType.County:
         return '街道';
       case UserResourceType.Committees:
         return '居委会';
       case UserResourceType.Station:
         return '投放点';
-      case UserResourceType.City:
-        return '行政区';
       default:
         return '';
     }

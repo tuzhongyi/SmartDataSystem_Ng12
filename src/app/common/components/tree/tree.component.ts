@@ -52,20 +52,25 @@ export class TreeComponent implements OnInit {
       nestNode.id,
       nestNode.name,
       level,
+      nestNode.description,
       nestNode.hasChildren,
       nestNode.parentId,
       this._nodeIconType.get(nestNode.type),
       nestNode.type,
-      nestNode.rawData
     );
-    // flatNode.rawData = nestNode.rawData;
+
+    if (nestNode.parentId) {
+      let parentFlatNode = this._flatNodeMap.get(nestNode.parentId) ?? null;
+      flatNode.parentNode = parentFlatNode;
+    }
+    flatNode.rawData = nestNode.rawData;
 
     this._flatNodeMap.set(nestNode.id, flatNode);
     return flatNode;
   };
   private _getLevel = (node: FlatTreeNode) => node.level;
   private _isExpandable = (node: FlatTreeNode) => node.expandable;
-  private _getChildren = (node: NestTreeNode<any>) => node.childrenChange;
+  private _getChildren = (node: NestTreeNode) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
   private _treeFlattener: MatTreeFlattener<NestTreeNode, FlatTreeNode>;
   private dataChange = new BehaviorSubject<NestTreeNode[]>([]);
@@ -154,6 +159,8 @@ export class TreeComponent implements OnInit {
   get defaultIds() {
     return this._defaultIds;
   }
+  // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
+  @Input() holdStatus: boolean = false;
 
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
@@ -285,9 +292,22 @@ export class TreeComponent implements OnInit {
     }
   }
   singleSelectNode(node: FlatTreeNode) {
+
+    if (this.holdStatus) {
+      if (this.selection.isSelected(node)) {
+        return;
+      }
+    }
+
     this.selection.toggle(node);
   }
   multipleSelectNode(node: FlatTreeNode) {
+    if (this.holdStatus) {
+      if (this.selection.isSelected(node)) {
+        return;
+      }
+    }
+
 
     // 处理当前节点
     this.selection.toggle(node);

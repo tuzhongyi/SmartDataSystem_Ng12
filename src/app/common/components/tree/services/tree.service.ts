@@ -155,7 +155,7 @@ export class TreeService implements TreeServiceInterface {
     let params = new GetGarbageStationsParams();
     if (divisionId) params.DivisionId = divisionId;
     let res = await this._stationRequest.cache.list(params);
-    console.log('station: ', res)
+    // console.log('station: ', res)
     return res.Data;
   }
 

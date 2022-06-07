@@ -60,7 +60,8 @@ export class DivisionStationTreeFilterComponent
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.station && this.station) {
-      this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3, undefined, undefined, undefined, undefined, this.station);
+      this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
+      this.current.rawData = this.station
     }
   }
   ngOnDestroy(): void { }
@@ -88,7 +89,7 @@ export class DivisionStationTreeFilterComponent
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.current = node;
-      this.select.emit(node.data);
+      this.select.emit(node.rawData);
     }
   }
 
