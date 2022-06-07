@@ -135,7 +135,8 @@ export class DivisionManageComponent implements OnInit {
   }
   deleteBtnClick() {
     MessageBar.confirm('sdf', function () { })
-    // MessageBar.response_Error('sdf')
+    // MessageBar.response_Error('')
+    // this._toastrService.error('操作失败')
   }
 
   // 点击树节点

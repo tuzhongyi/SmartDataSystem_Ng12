@@ -1,9 +1,9 @@
-declare var $: any;
+import "jquery-toast-plugin";
 
 export class MessageBar {
   static response_success(text?: string) {
     $.toast({
-      heading: text ? text : "操作成功",
+      text: text ? text : "操作成功",
       position: "bottom-right",
       loaderBg: "#ff6849",
       icon: "success",
@@ -13,18 +13,18 @@ export class MessageBar {
   }
   static response_Error(text?: string) {
     $.toast({
-      heading: text ? text : "操作失败",
+      text: text ? text : "操作失败",
       position: "bottom-right",
       loaderBg: "#e6294b",
       icon: "error",
-      hideAfter: 3500,
+      hideAfter: 35000,
       stack: 6,
     });
   }
 
   static response_warning(text?: string) {
     $.toast({
-      heading: text ? text : "正在操作中...",
+      text: text ? text : "正在操作中...",
       position: "bottom-right",
       loaderBg: "#ffb22b",
       icon: "warning",
