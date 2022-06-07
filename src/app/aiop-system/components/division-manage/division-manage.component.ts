@@ -15,7 +15,6 @@ import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import $ from 'jquery';
 
-console.log($)
 
 @Component({
   templateUrl: './division-manage.component.html',
@@ -136,6 +135,7 @@ export class DivisionManageComponent implements OnInit {
   }
   deleteBtnClick() {
     MessageBar.confirm('sdf', function () { })
+    // MessageBar.response_Error('sdf')
   }
 
   // 点击树节点
