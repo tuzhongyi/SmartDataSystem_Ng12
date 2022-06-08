@@ -1,5 +1,9 @@
 <div class="division-manage">
-  <ng-container> </ng-container>
+  <ng-container *ngIf="showDialog">
+    <howell-confirm-dialog
+      (dialogMsg)="dialogMsgEvent($event)"
+    ></howell-confirm-dialog>
+  </ng-container>
   <div class="division-list">
     <h2>区划列表</h2>
 
@@ -113,13 +117,13 @@
 
       <div class="form-group">
         <div class="btns" [hidden]="state == FormState.none">
-          <button class="btn btn--green" type="button" (click)="onSubmit()">
+          <button class="btn hw-green-m-btn" type="button" (click)="onSubmit()">
             <i class="howell-icon-Check"></i>
           </button>
           <!--
             type不能为reset,否则先调用 本类的onReset()，然后调用 FormGroupDirective内部 reset()
           -->
-          <button class="btn btn--gray" type="button" (click)="onReset()">
+          <button class="btn hw-gray-m-btn" type="button" (click)="onReset()">
             <i class="howell-icon-Close"></i>
           </button>
         </div>

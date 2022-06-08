@@ -14,6 +14,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import $ from 'jquery';
+import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 
 
 @Component({
@@ -47,6 +48,7 @@ export class DivisionManageComponent implements OnInit {
   state: FormState = FormState.none;
   addPlaceHolder = '';
   holdStatus = false;
+  showDialog = false;
 
 
   get title() {
@@ -134,9 +136,15 @@ export class DivisionManageComponent implements OnInit {
     this._updateForm();
   }
   deleteBtnClick() {
-    MessageBar.confirm('sdf', function () { })
-    // MessageBar.response_Error('')
-    // this._toastrService.error('操作失败')
+    this.showDialog = true;
+  }
+  async dialogMsgEvent(status: ConfirmDialogEnum) {
+    this.showDialog = false;
+    if (status == ConfirmDialogEnum.confirm) {
+      this._deleteNode()
+    } else if (status == ConfirmDialogEnum.cancel) {
+
+    }
   }
 
   // 点击树节点
@@ -154,7 +162,6 @@ export class DivisionManageComponent implements OnInit {
     this.addPlaceHolder = '';
     this._updateForm();
 
-    console.log(this.myForm.value)
   }
 
   onSubmit() {
@@ -222,15 +229,16 @@ export class DivisionManageComponent implements OnInit {
       let name = this.Name.value
       let des = this.Description.value
       let model = new DivisionManageModel(id + '', name, des);
-      let parentId = this.currentNode ? this.currentNode.id : null;
-      let res = true;//await this._business.addDivision(parentId, model);
+      let parentId = this.currentNode ? this.currentNode.id : '';
+      let res = await this._business.addDivision(parentId, model);
       if (res) {
-        // this._toastrService.success('添加成功');
+        this._toastrService.success('添加成功');
         const node = this._converter.Convert(model);
         node.parentId = parentId;
-        node.type = EnumHelper.GetResourceChildType(this.resourceType);
-        // node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
+        node.type = EnumHelper.ConvertDivisionToUserResource(res.DivisionType);
         this.tree.addNode(node);
+
+        this.onReset();
       }
     }
   }
@@ -242,25 +250,25 @@ export class DivisionManageComponent implements OnInit {
       let des = this.Description.value
       let model = new DivisionManageModel(id + '', name, des);
 
-      let res = true;//await this._business.editDivision(id,model);
+      let res = await this._business.editDivision(id, model);
       if (res) {
         this._toastrService.success('编辑成功');
         const node = this._converter.Convert(model);
         this.tree.editNode(node);
+        this.onReset();
       }
     }
   }
-  async deleteNode() {
-    // if (this.tree) {
-    //   if (this.currentNode?.id) {
-    //     let res = await this._business.deleteDivision(this.currentNode?.id);
-    //     if (res) {
-    //       this._toastrService.success('删除成功');
-
-    //       this.tree?.deleteNode(this.currentNode?.id);
-    //     }
-    //   }
-    // }
+  private async _deleteNode() {
+    if (this.tree) {
+      if (this.currentNode?.id) {
+        let res = await this._business.deleteDivision(this.currentNode?.id);
+        if (res) {
+          this._toastrService.success('删除成功');
+          this.tree.deleteNode(this.currentNode.id);
+        }
+      }
+    }
   }
 
   async searchNode(condition: string) {

@@ -4,6 +4,7 @@
   width: 100%;
   height: 100%;
   color: white;
+  position: relative;
 
   .division-list {
     @w: 320px;
@@ -42,6 +43,7 @@
       background-color: unset;
       border: unset;
       font-size: 16px;
+      border-radius: 0;
 
       @n: floor((unit(@cw) / unit(@bw)));
 
@@ -190,31 +192,11 @@
             width: 46px;
             height: 34px;
             cursor: pointer;
-            background-color: unset;
-            border: unset;
             font-size: 16px;
+            border-radius: 0;
 
             &:not(:last-child) {
               margin-right: 10px;
-            }
-          }
-          .btn--green {
-            background-image: url(/assets/img/green-m-btn.png);
-            &:hover {
-              background-image: url(/assets/img/green-m-btn-hover.png);
-            }
-            &:focus {
-              background-image: url(/assets/img/green-m-btn-focus.png);
-            }
-          }
-          .btn--gray {
-            background: #0c1127;
-            border: 1px solid rgba(94, 110, 191, 0.5);
-            color: rgba(207, 215, 255, 0.5);
-
-            &:hover {
-              border: 1px solid rgb(94, 110, 191);
-              color: #eaedff;
             }
           }
         }

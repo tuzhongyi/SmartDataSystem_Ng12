@@ -32,6 +32,7 @@ import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-pane
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TreeOldComponent } from './tree-old/tree-old.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -66,5 +67,6 @@ export const CUSTOM_COMPONENTS = [
   GarbageDropDurationPanelComponent,
   GarbageDropEventPanelComponent,
   BreadcrumbComponent,
-  TreeOldComponent
+  TreeOldComponent,
+  ConfirmDialogComponent
 ];
