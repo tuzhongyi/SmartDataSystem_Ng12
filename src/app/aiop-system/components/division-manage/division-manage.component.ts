@@ -7,13 +7,11 @@ import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
-import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Language } from 'src/app/global/tool/language';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
-import { MessageBar } from 'src/app/common/tools/message-bar';
-import $ from 'jquery';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 
 
@@ -122,21 +120,24 @@ export class DivisionManageComponent implements OnInit {
 
   addBtnClick() {
     if (this.state == FormState.add) return
-    console.log('add')
     this.holdStatus = true;
     this.addPlaceHolder = '请填写数字';
     this.state = FormState.add;
     this._updateForm();
+    console.log('add')
   }
   editBtnClick() {
     if (this.state == FormState.edit) return
-    console.log('edit')
     this.holdStatus = true;
     this.state = FormState.edit;
     this._updateForm();
+    console.log('edit')
+
   }
   deleteBtnClick() {
     this.showDialog = true;
+    console.log('delete')
+
   }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showDialog = false;
@@ -206,7 +207,7 @@ export class DivisionManageComponent implements OnInit {
       if (this.currentNode) {
         this.myForm.reset();
         this.myForm.patchValue({
-          ParentName: this.currentNode.parentNode?.name ?? ''
+          ParentName: this.currentNode.name ?? ''
         })
       }
     } else if (this.state == FormState.edit) {
@@ -255,6 +256,11 @@ export class DivisionManageComponent implements OnInit {
         this._toastrService.success('编辑成功');
         const node = this._converter.Convert(model);
         this.tree.editNode(node);
+        // 提交成功后，更新数据
+        if (this.currentNode) {
+          this.currentNode.name = name;
+          this.currentNode.description = des;
+        }
         this.onReset();
       }
     }

@@ -147,14 +147,14 @@ export class TreeService implements TreeServiceInterface {
     let params = new GetDivisionsParams();
     params.DivisionType = divisionType;
     if (parentId) params.ParentId = parentId;
-    let res = await this._divisionRequest.cache.list(params);
+    let res = await this._divisionRequest.list(params);
     return res.Data;
   }
 
   private async _loadStation(divisionId?: string) {
     let params = new GetGarbageStationsParams();
     if (divisionId) params.DivisionId = divisionId;
-    let res = await this._stationRequest.cache.list(params);
+    let res = await this._stationRequest.list(params);
     // console.log('station: ', res)
     return res.Data;
   }

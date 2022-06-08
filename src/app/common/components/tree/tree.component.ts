@@ -162,6 +162,8 @@ export class TreeComponent implements OnInit {
   // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
   @Input() holdStatus: boolean = false;
 
+  @Output() holdStatusChange = new EventEmitter<boolean>();
+
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
@@ -296,6 +298,8 @@ export class TreeComponent implements OnInit {
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;
+      } else {
+        this.holdStatusChange.emit(false)
       }
     }
 
