@@ -1,0 +1,35 @@
+<div class="playback-config">
+  <div class="playback-config-header">回放时间</div>
+  <div class="light-blue-text playback-config-content">
+    <div class="item">
+      <div class="title">日期：</div>
+      <div>
+        <input
+          type="text"
+          DateTimePicker
+          [date]="date"
+          (change)="changeDate($event)"
+          class="custom form-control"
+        />
+      </div>
+    </div>
+    <div class="item">
+      <div class="title">开始时间：</div>
+      <div class="bootstrap-timepicker">
+        <input #begin type="text" class="custom form-control" />
+      </div>
+    </div>
+    <div class="item">
+      <div class="title">结束时间：</div>
+      <div class="bootstrap-timepicker">
+        <input #end type="text" class="custom form-control" />
+      </div>
+    </div>
+
+    <div class="operation">
+      <button class="hw-green-btn" style="margin-right: 20px" (click)="ok()">
+        开始回放</button
+      ><button class="hw-gray-m-btn" (click)="cancel()">取消</button>
+    </div>
+  </div>
+</div>

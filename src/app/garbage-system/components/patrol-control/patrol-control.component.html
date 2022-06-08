@@ -1,6 +1,6 @@
 <div class="patrol-control" *ngIf="selected">
   <div class="patrol-control-header">
-    <div class="title">
+    <div class="title" [class.hide]="!config.title">
       <div>投放点巡检</div>
       <div
         class="spinner-border green-text"
@@ -20,12 +20,20 @@
       {{ selected.title }}
     </div>
     <div class="operation">
-      <div class="interval">
+      <div class="interval" [class.hide]="!config.interval">
         <app-select-control
           [data]="interval.times"
           (select)="timeSelect($event)"
         >
         </app-select-control>
+      </div>
+      <div
+        class="playback"
+        (click)="openplayback()"
+        *ngIf="!!playing"
+        [class.hide]="!config.playback"
+      >
+        <i class="howell-icon-film text-white"></i>
       </div>
       <div class="reflush" (click)="onreflush()">
         <i class="howell-icon-restore text-white"></i>
@@ -33,17 +41,23 @@
       <div class="fullscreen" (click)="onfullscreen()">
         <i class="mdi mdi-fullscreen text-white"></i>
       </div>
-      <div class="close" (click)="onclose()">
+      <div class="close" (click)="onclose()" [class.none]="!config.close">
         <i class="howell-icon-Close"></i>
       </div>
     </div>
   </div>
   <div class="patrol-control-content">
-    <app-image-video-mult-control [models]="selected.media">
+    <app-image-video-mult-control
+      [models]="selected.media"
+      [operation]="config.operation"
+      [playback]="toPlayback"
+      (onplayed)="onvideoplayed($event)"
+      (onstoped)="onvideostoped($event)"
+    >
     </app-image-video-mult-control>
   </div>
   <div class="patrol-control-footer">
-    <div class="status light-blue-text">
+    <div class="status light-blue-text" [class.hide]="!config.status">
       <div class="">
         <i class="howell-icon-nolittering sky-blue-text2"></i
         ><label class="">{{ selected.status.illegalDrop }}</label>
@@ -69,12 +83,14 @@
         class="arrow-wrap howell-icon-play center"
         title="播放"
         *ngIf="!interval.runing"
+        [class.hide]="!config.stop"
         (click)="run()"
       ></div>
       <div
         class="arrow-wrap mdi mdi-stop center"
         title="停止"
         *ngIf="interval.runing"
+        [class.hide]="!config.stop"
         (click)="stop()"
       ></div>
 
@@ -86,3 +102,13 @@
     <div class="paged">{{ index + 1 }}/{{ models ? models.length : 0 }}</div>
   </div>
 </div>
+
+<app-window [Model]="playback" [style]="playback.styles">
+  <ng-container *ngIf="playback.show">
+    <app-playback-config
+      (OnOKClicked)="playback.ok($event)"
+      (OnCancelClicked)="playback.cancel()"
+    >
+    </app-playback-config>
+  </ng-container>
+</app-window>

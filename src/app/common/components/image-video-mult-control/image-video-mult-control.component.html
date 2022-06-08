@@ -12,7 +12,9 @@
         [fulled]="item.fulled"
         (fullscreen)="onfullscreen($event)"
         (onplay)="onplay($event)"
-        [operation]="true"
+        (onstop)="onstop($event)"
+        [operation]="operation"
+        [playback]="playback"
       ></app-image-video-control>
     </div>
   </ng-container>

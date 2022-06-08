@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
+import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
+import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
-import { IllegalMixintoRankArgs } from '../../components/illegal-mixinto-rank/illegal-mixinto-rank.component';
-import { RetentionRankArgs } from '../../components/retention-rank/retention-rank.component';
-import { GarbageStationWindowIndex } from '../../components/windows/garbage-station-window/garbage-station-window.component';
+
 import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()
@@ -57,16 +58,16 @@ class IllegalMixintoRankEventTrigger {
 class RisposalCountEventTrigger {
   constructor(private window: CommitteesWindowBussiness) {}
   ontask() {
-    this.window.station.index = GarbageStationWindowIndex.record;
-    this.window.station.show = true;
+    this.window.stationInfo.index = GarbageStationWindowIndex.record;
+    this.window.stationInfo.show = true;
   }
 }
 class RisposalRankEventTrigger {
   constructor(private window: CommitteesWindowBussiness) {}
   onItemClicked(item: RankModel) {
-    this.window.station.index = GarbageStationWindowIndex.stay;
-    this.window.station.stationId = item.id;
+    this.window.stationInfo.index = GarbageStationWindowIndex.stay;
+    this.window.stationInfo.stationId = item.id;
     console.log(item.data);
-    this.window.station.show = true;
+    this.window.stationInfo.show = true;
   }
 }

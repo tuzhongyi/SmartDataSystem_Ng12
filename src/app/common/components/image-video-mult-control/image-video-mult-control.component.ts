@@ -4,9 +4,15 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
-import { ImageVideoControlModel } from '../image-video-control/image-video-control.model';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import {
+  ImageVideoControlModel,
+  ImageVideoControlOperation,
+  PlaybackInterval,
+} from '../image-video-control/image-video-control.model';
 
 @Component({
   selector: 'app-image-video-mult-control',
@@ -16,9 +22,21 @@ import { ImageVideoControlModel } from '../image-video-control/image-video-contr
 export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   @Input()
   models?: ImageVideoControlModel[];
-  sqrt = 1;
+  @Input()
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
+  @Input()
+  playback?: EventEmitter<PlaybackInterval>;
+
+  @Output()
+  onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Output()
+  onstoped: EventEmitter<ImageVideoControlModel> = new EventEmitter();
 
   constructor() {}
+
+  sqrt = 1;
+  played?: ImageVideoControlModel;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.models && this.models) {
       this.sqrt = Math.ceil(Math.sqrt(this.models.length));
@@ -43,12 +61,15 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
     item.fulled = !item.fulled;
   }
 
-  played?: ImageVideoControlModel;
-
   onplay(item: ImageVideoControlModel) {
     if (this.played) {
       this.played.video = undefined;
     }
     this.played = item;
+    this.onplayed.emit(this.played);
+  }
+  onstop(playing: boolean) {
+    this.onstoped.emit(this.played);
+    this.played = undefined;
   }
 }

@@ -30,6 +30,9 @@ export class ImageVideoControlBusiness
     interval?: IntervalParams
   ): Promise<VideoModel> {
     let stream = await this.loadSteam();
+    if (!stream) {
+      stream = mode == PlayMode.live ? StreamType.sub : StreamType.main;
+    }
     let url = await this.getData(cameraId, mode, stream, interval);
     return this.Converter.Convert(url);
   }

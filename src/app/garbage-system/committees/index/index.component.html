@@ -1,9 +1,11 @@
-<!-- <div class="monitor-container">
+<div class="monitor-container">
   <div class="monitor-header" *ngIf="!HideTitlebar">
     <mat-toolbar>
       <app-account-info></app-account-info>
       <div class="spacer">
-        <app-total-waste></app-total-waste>
+        <howell-message-bar
+          [Notify]="business.messageBar.notify"
+        ></howell-message-bar>
       </div>
       <app-time></app-time>
       <app-account-operation *ngIf="!HideButton"></app-account-operation>
@@ -12,25 +14,27 @@
   <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
     <div class="monitor-body__item monitor-body__item--none">
       <div class="monitor-body__wrapper">
-        <app-division-list></app-division-list>
+        <app-committees-navication
+          [Committees]="navication.committees"
+          [Stations]="navication.stations"
+          [StationSelected]="navication.selected"
+          (OnStationClicked)="navication.onStationClicked($event)"
+          (OnCommitteesInfoClicked)="navication.onCommitteesInfoClicked($event)"
+        ></app-committees-navication>
       </div>
     </div>
     <div
       class="monitor-body__item monitor-body__item--map"
       [ngClass]="{ fullscreen: patrol.fullscreen == true }"
     >
-      <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
+      <div class="monitor-body__wrapper patrol">
         <app-patrol-control
+          [id]="navication.selected ? navication.selected.Id : ''"
+          [config]="patrol.config"
           (close)="patrol.onclose()"
           (fullscreen)="patrol.onfullscreen()"
+          (onselected)="patrol.onselected($event)"
         ></app-patrol-control>
-      </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-device-state
-          (Click)="trigger.deviceState.onclick($event)"
-        ></app-device-state>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -42,6 +46,13 @@
       </div>
     </div>
     <div class="monitor-body__item">
+      <div class="monitor-body__wrapper padding">
+        <app-station-information
+          [Station]="navication.selected"
+        ></app-station-information>
+      </div>
+    </div>
+    <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-retention-rank
           (Click)="trigger.retentionRank.onclick($event)"
@@ -49,37 +60,57 @@
       </div>
     </div>
     <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-disposal-rank
-          (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
-        ></app-disposal-rank>
+      <div class="monitor-body__wrapper padding">
+        <app-committees-statistic
+          [Committees]="navication.committees"
+          (OnAllDeviceCountClicked)="
+            business.statistic.OnAllDeviceCountClicked()
+          "
+          (OnOnlineDeviceCountClicked)="
+            business.statistic.OnOnlineDeviceCountClicked()
+          "
+          (OnOfflineDeviceCountClicked)="
+            business.statistic.OnOfflineDeviceCountClicked()
+          "
+          (OnGarbageStationCountClicked)="
+            business.statistic.OnGarbageStationCountClicked()
+          "
+          (OnGarbageDropEventCountClicked)="
+            business.statistic.OnGarbageDropEventCountClicked()
+          "
+          (OnGarbageFullEventCountClicked)="
+            business.statistic.OnGarbageFullEventCountClicked()
+          "
+          (OnIllegalDropEventCountClicked)="
+            business.statistic.OnIllegalDropEventCountClicked()
+          "
+          (OnMixedIntoEventCountClicked)="
+            business.statistic.OnMixedIntoEventCountClicked()
+          "
+        ></app-committees-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <howell-event-statistic
-          [title]="'乱扔垃圾统计表'"
-        ></howell-event-statistic>
+      <div class="monitor-body__wrapper padding">
+        <app-task-table
+          [Committees]="navication.committees"
+          (OnItemClicked)="business.taskTable.onItemClicked($event)"
+        ></app-task-table>
       </div>
     </div>
     <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <howell-event-statistic
-          [title]="'混合投放统计表'"
-          [type]="mixIntoType"
-        ></howell-event-statistic>
-      </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-disposal-count
-          (task)="trigger.risposalCount.ontask()"
-        ></app-disposal-count>
+      <div class="monitor-body__wrapper padding">
+        <app-histroy-table
+          [Committees]="navication.committees"
+          [Type]="business.historyTable.Type"
+          (OnPictureClicked)="business.historyTable.OnPictureClicked($event)"
+          (OnVideoClicked)="business.historyTable.OnVideoClicked($event)"
+        ></app-histroy-table>
       </div>
     </div>
   </div>
 </div>
-
+<!-- 
 <app-video-window
   [model]="video.model"
   [window]="video"

@@ -1420,3 +1420,17 @@ abbr[data-original-title] {
   cursor: help;
   border-bottom: 1px dotted #999;
 }
+
+.hw-gray-m-btn {
+  width: 46px;
+  color: rgb(207, 215, 255, 0.5);
+  height: 34px;
+  border: 1px solid rgb(94, 110, 191, 0.5);
+  background: #0c1127;
+  cursor: pointer;
+}
+
+.hw-gray-m-btn:hover {
+  border: 1px solid rgb(94, 110, 191);
+  color: #eaedff;
+}

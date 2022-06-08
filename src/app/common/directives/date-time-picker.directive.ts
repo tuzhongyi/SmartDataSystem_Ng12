@@ -21,7 +21,7 @@ export class DateTimePickerDirective
   implements AfterContentInit, OnDestroy, OnChanges
 {
   private ele: HTMLInputElement;
-  @Input('format') format = 'yyyy-mm-dd';
+  @Input('format') format = 'yyyy-MM-dd';
   @Input('date') date: Date = new Date();
   // @Input('changeDate') changeDate: (val: any) => void;
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;

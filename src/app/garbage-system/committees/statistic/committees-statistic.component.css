@@ -1,0 +1,78 @@
+.statistic {
+  height: 100%;
+  width: 100%;
+}
+
+.statistic .header {
+  font-size: 24px;
+  color: white
+}
+
+.statistic-item {
+  width: 107px;
+  height: 80px;
+  background-color: #1D275F;
+  cursor: pointer;
+}
+
+.statistic-item>.background {
+  background: linear-gradient(to left, #7a8de6, #7a8de6) left top no-repeat, linear-gradient(to bottom, #7a8de6, #7a8de6) left top no-repeat, linear-gradient(to left, #7a8de6, #7a8de6) right top no-repeat, linear-gradient(to bottom, #7a8de6, #7a8de6) right top no-repeat, linear-gradient(to left, #7a8de6, #7a8de6) left bottom no-repeat, linear-gradient(to bottom, #7a8de6, #7a8de6) left bottom no-repeat, linear-gradient(to left, #7a8de6, #7a8de6) right bottom no-repeat, linear-gradient(to left, #7a8de6, #7a8de6) right bottom no-repeat;
+  background-size: 1px 8px, 8px 1px, 1px 8px, 8px 1px !important;
+  margin: -1px;
+
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+}
+
+.statistic-item:hover>.background {
+  background: linear-gradient(to left, #fff, #fff) left top no-repeat, linear-gradient(to bottom, #fff, #fff) left top no-repeat, linear-gradient(to left, #fff, #fff) right top no-repeat, linear-gradient(to bottom, #fff, #fff) right top no-repeat, linear-gradient(to left, #fff, #fff) left bottom no-repeat, linear-gradient(to bottom, #fff, #fff) left bottom no-repeat, linear-gradient(to left, #fff, #fff) right bottom no-repeat, linear-gradient(to left, #fff, #fff) right bottom no-repeat;
+}
+
+
+.statistic-item>.background>.inner {
+  padding: 10px 5px 10px 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+}
+
+.statistic-item>.background>.inner>* {
+  margin: 0;
+}
+
+.statistic-item>.background>.inner>.title {
+  font-weight: 400;
+  font-size: 18px;
+}
+
+.statistic-item>.background>.inner>.value {
+  font-weight: 400;
+  font-size: 24px;
+}
+
+.statistic-item>.inner>.title {}
+
+.statistic-item:hover>.inner>.text-center {
+  text-decoration: underline;
+}
+
+.statistic .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: calc(100% - 62px);
+}
+
+.statistic .content .row {
+  justify-content: space-around;
+  display: flex;
+  margin: 0 -15px;
+}
+
+
+.blue-parting-line {
+  width: 100%;
+  height: 1px;
+  background-image: linear-gradient(to right, rgb(0, 0, 0, 0), #6997ff, rgb(0, 0, 0, 0));
+}

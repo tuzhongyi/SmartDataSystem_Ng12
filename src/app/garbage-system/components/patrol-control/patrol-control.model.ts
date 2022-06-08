@@ -1,4 +1,7 @@
-import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
+import {
+  ImageVideoControlModel,
+  ImageVideoControlOperation,
+} from 'src/app/common/components/image-video-control/image-video-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { Flags } from 'src/app/common/tools/flags';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -45,4 +48,15 @@ export class PatrolIntervalControl {
   time: number = 30;
   runing = false;
   handle?: NodeJS.Timer;
+}
+
+export class PatrolControlConfig {
+  title: boolean = true;
+  interval: boolean = true;
+  close: boolean = true;
+  status: boolean = true;
+  stop: boolean = true;
+  autoplay: boolean = true;
+  playback: boolean = false;
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
 }

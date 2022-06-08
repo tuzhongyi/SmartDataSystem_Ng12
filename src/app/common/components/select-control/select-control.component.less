@@ -12,7 +12,7 @@
   cursor: pointer;
   margin: 0 5px;
   position: relative;
-  width: calc(100% - 10px);
+  width: calc(100%);
 
   &:first-child {
     margin-left: 0;
@@ -33,24 +33,26 @@
       color: #cfd7ff;
       font-size: 18px;
     }
- .select-item__controls{
-   display: flex;
-   justify-content: space-between;
-   align-items: center;
-   .clear{
-     display: none;
 
-     &:hover{
-       color: white;
-     }
-   }
-   
- }
+    .select-item__controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .clear {
+        display: none;
+
+        &:hover {
+          color: white;
+        }
+      }
+
+    }
 
     .select-item__button {
       width: 0;
       height: 0;
-      margin-top: 10px;
+      margin-top: 5px;
       margin-left: 5px;
       border-width: 5px 4px;
       border-style: solid;
@@ -92,7 +94,7 @@
       padding-top: 3px;
       cursor: pointer;
 
-      &:first-child{
+      &:first-child {
         padding-top: 0;
       }
 
@@ -103,7 +105,7 @@
     }
   }
 
-  &:hover .select-head .select-item__controls .clear{
+  &:hover .select-head .select-item__controls .clear {
     display: block;
   }
 }

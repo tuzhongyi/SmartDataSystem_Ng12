@@ -15,7 +15,11 @@ import { wait } from '../../tools/tool';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { ImageVideoControlBusiness } from './image-video-control.business';
-import { ImageVideoControlModel } from './image-video-control.model';
+import {
+  ImageVideoControlModel,
+  ImageVideoControlOperation,
+  PlaybackInterval,
+} from './image-video-control.model';
 
 @Component({
   selector: 'app-image-video-control',
@@ -24,10 +28,27 @@ import { ImageVideoControlModel } from './image-video-control.model';
   providers: [ImageVideoControlBusiness],
 })
 export class ImageVideoControlComponent implements OnInit, OnChanges {
+  @Input()
+  fulled = false;
+  @Input()
+  model?: ImageVideoControlModel;
+  @Input()
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
+  @Input()
+  draw: boolean = false;
+  @Input()
+  playback?: EventEmitter<PlaybackInterval>;
+
+  @Output()
+  onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Output()
+  onstop: EventEmitter<boolean> = new EventEmitter();
+  @Output()
+  fullscreen: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+
+  constructor(private business: ImageVideoControlBusiness) {}
   OnlineStatus = OnlineStatus;
-
   playing = false;
-
   display = {
     operation: {
       play: false,
@@ -36,31 +57,9 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     image: true,
     video: false,
   };
-
-  @Input()
-  fulled = false;
-
-  @Input()
-  model?: ImageVideoControlModel;
-
-  @Input()
-  operation: boolean = false;
-
-  @Input()
-  draw: boolean = false;
-
   @ViewChild(VideoPlayerComponent)
   player?: VideoPlayerComponent;
 
-  @Output()
-  onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-  @Output()
-  onstop: EventEmitter<boolean> = new EventEmitter();
-
-  @Output()
-  fullscreen: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-
-  constructor(private business: ImageVideoControlBusiness) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && this.model) {
       this.display.image = true;
@@ -72,9 +71,28 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
           this.model.image.status == OnlineStatus.Online;
       }
     }
+    if (changes.operation) {
+      this.display.operation.fullscreen = this.operation.fullscreen;
+      this.display.operation.play = this.operation.play;
+    }
+    if (changes.playback && changes.playback.firstChange && this.playback) {
+      if (this.playback.length > 0) {
+        this.playback.unsubscribe();
+      }
+      this.playback.subscribe((x) => {
+        this.stop();
+        if (this.model) {
+          this.model.videoChanged = undefined;
+        }
+        this.onplayback(x.CameraId, x);
+      });
+    }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.display.operation.fullscreen = this.operation.fullscreen;
+    this.display.operation.play = this.operation.play;
+  }
 
   playClicked(event: Event) {
     this.display.image = false;
@@ -97,7 +115,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       this.play(x);
     });
   }
-  playback(cameraId: string, interval: IntervalParams) {
+  onplayback(cameraId: string, interval: IntervalParams) {
     this.display.image = false;
     this.display.video = true;
     this.business.load(cameraId, PlayMode.vod, interval).then((x) => {

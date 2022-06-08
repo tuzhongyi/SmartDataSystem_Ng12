@@ -76,6 +76,11 @@ export class GarbageStation implements IModel {
   Members?: Member[];
   /**	String	IMEI串号	O */
   IMEI?: string;
+
+  /**	String	小区名称	O */
+  CommunityName?: string;
+  /**	String	小区ID	O */
+  CommunityId?: string;
 }
 
 /** 垃圾相关参数 */

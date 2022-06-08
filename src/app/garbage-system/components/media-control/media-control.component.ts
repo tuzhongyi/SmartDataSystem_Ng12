@@ -206,7 +206,7 @@ export class MediaControlComponent
       let interval = IntervalParams.beforeAndAfter(
         this.current.image.eventTime
       );
-      this.player.playback(this.current.cameraId, interval);
+      this.player.onplayback(this.current.cameraId, interval);
     }
     this.display.playback = false;
     this.display.preview = true;

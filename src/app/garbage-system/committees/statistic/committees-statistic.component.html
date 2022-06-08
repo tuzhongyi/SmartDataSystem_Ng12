@@ -1,0 +1,110 @@
+<div class="statistic">
+  <div class="header">数据统计</div>
+  <div class="content">
+    <div class="row">
+      <div class="statistic-item" (click)="AllDeviceCountClicked($event)">
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">全部设备</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 blue-text value">
+              {{ view.CameraCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="statistic-item" (click)="OnlineDeviceCountClicked($event)">
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">在线设备</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 green-text value">
+              {{ view.OnlineCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="statistic-item" (click)="OfflineDeviceCountClicked($event)">
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">离线设备</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 red-text value">
+              {{ view.OfflineCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistic-item" (click)="GarbageStationCountClicked($event)">
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">投放点</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 sky-blue-text2 value">
+              {{ view.StationCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="statistic-item"
+        (click)="IllegalDropEventCountClicked($event)"
+      >
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">
+              {{ Language.json.EventType.IllegalDrop }}
+            </div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 powder-red-text value">
+              {{ view.IllegalDropCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="statistic-item" (click)="MixedIntoEventCountClicked($event)">
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">混合投放</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 light-purple-text value">
+              {{ view.MixedIntoCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="statistic-item"
+        (click)="GarbageDropEventCountClicked($event)"
+      >
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">滞留投放点</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 sky-blue-text2 value">
+              {{ view.StationDropCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="statistic-item"
+        (click)="GarbageFullEventCountClicked($event)"
+      >
+        <div class="background">
+          <div class="inner">
+            <div class="light-blue-text title text-center">满溢投放点</div>
+            <div class="blue-parting-line"></div>
+            <div class="text-center m-b-0 m-t-5 orange-text value">
+              {{ view.StationFullCount }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

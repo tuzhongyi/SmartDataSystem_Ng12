@@ -1,11 +1,12 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { AuthorizationService } from "src/app/network/request/auth/auth-request.service";
-import { CommitteesIndexComponent } from "./index/index.component";
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Routes, RouterModule } from '@angular/router';
+import { AuthorizationService } from 'src/app/network/request/auth/auth-request.service';
+import { CommitteesIndexComponent } from './index/index.component';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: CommitteesIndexComponent,
     canActivate: [AuthorizationService],
   },

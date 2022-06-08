@@ -1,0 +1,19 @@
+<div
+  *ngIf="Notify"
+  class="committees-toolbar-notify"
+  [ngClass]="{
+    normal: Notify.status == NotifyStatus.normal,
+    remind: Notify.status == NotifyStatus.remind,
+    warning: Notify.status == NotifyStatus.warning,
+    event: Notify.onClick
+  }"
+>
+  <div class="notify-header"></div>
+  <div class="notify-content-background">
+    <div
+      class="notify-content"
+      [innerHtml]="Notify.text"
+      (click)="notifyClick($event)"
+    ></div>
+  </div>
+</div>

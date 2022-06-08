@@ -43,6 +43,7 @@ import { GarbageStationWindowStayComponent } from './windows/garbage-station-win
 import { GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS } from './windows/filters/garbage-system-window-filter.module';
 import { MediaMultipleWindowComponent } from './windows/media-multiple-window/media-multiple-window.component';
 import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-window.module';
+import { PlaybackConfigComponent } from './patrol-control/playback-config/playback-config.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,10 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapListPanelComponent,
     MediaControlComponent,
     PointInfoPanelComponent,
+
     PatrolControlComponent,
+    PlaybackConfigComponent,
+
     EventRecordOperationComponent,
     EventRecordFilterComponent,
     EventStatisticComponent,
@@ -80,5 +84,37 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     FormsModule,
   ],
   providers: [DownloadBusiness],
+  exports: [
+    MaterialModule,
+    HowellModule,
+    RankComponent,
+    MonitorComponent,
+    DivisionListComponent,
+    IllegalMixintoRankComponent,
+    RetentionRankComponent,
+    DisposalRankComponent,
+    EvemtStatisticEChartsComponent,
+    DeviceStateComponent,
+    DisposalCountComponent,
+    EventRecordDetailsTableComponent,
+    EventRecordDetailsComponent,
+    StatisticCardComponent,
+    MapControlComponent,
+    MapListPanelComponent,
+    MediaControlComponent,
+    PointInfoPanelComponent,
+
+    PatrolControlComponent,
+    PlaybackConfigComponent,
+
+    EventRecordOperationComponent,
+    EventRecordFilterComponent,
+    EventStatisticComponent,
+    GarbageStationWindowGeneralComponent,
+    GarbageStationWindowStayComponent,
+    IntervalFilterComponent,
+    ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
+    ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
+  ],
 })
 export class GarbageComponentsModule {}

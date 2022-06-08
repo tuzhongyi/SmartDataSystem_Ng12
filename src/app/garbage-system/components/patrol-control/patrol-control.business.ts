@@ -17,6 +17,7 @@ import {
   GetGarbageStationStatisticNumbersParams,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 import { PatrolArrayControlConverter } from './patrol-control.converter';
@@ -35,9 +36,9 @@ export class PatrolControlBusiness
     storeService.statusChange.subscribe((x) => {
       this.load();
     });
-    storeService.interval.subscribe(x => {
+    storeService.interval.subscribe((x) => {
       this.load();
-    })
+    });
   }
   Converter: IConverter<GarbageStation[], PatrolControlModel[]> =
     new PatrolArrayControlConverter();
@@ -71,6 +72,7 @@ export class PatrolControlBusiness
                     media.image &&
                     url.Id
                   ) {
+                    media.fulled = false;
                     media.image.src = MediumRequestService.jpg(url.Id);
                   }
                 });
@@ -84,8 +86,11 @@ export class PatrolControlBusiness
       });
   }
 
-  getVideoUrl(camera: Camera) {
+  getPreview(camera: Camera) {
     return this.srService.preview(camera.Id);
+  }
+  getPlayback(model: PatrolControlModel, interval: IntervalParams) {
+    return this.srService.playback(model.id, interval);
   }
 
   async statistic(stationIds: string[]) {
