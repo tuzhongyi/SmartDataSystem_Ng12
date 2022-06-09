@@ -1,10 +1,5 @@
 .hw-tree-list {
-  @w: 320px;
-  @p: 20px;
-  @b: 2px;
-  @cw:@w - 2 * @p - 2 * @b; // content width
-
-  width: @w;
+  width: 320px;
   box-sizing: border-box;
   overflow: hidden;
 
@@ -12,9 +7,10 @@
   flex-direction: column;
 
   background: rgba(36, 72, 165, 0.05);
-  border: @b rgba(117, 134, 224, 0.15) solid;
-  padding: @p;
+  border: 2px rgba(117, 134, 224, 0.15) solid;
+  padding: 20px;
   margin-right: 20px;
+  flex-shrink: 0;
 
   .tree-container {
     flex-grow: 1;

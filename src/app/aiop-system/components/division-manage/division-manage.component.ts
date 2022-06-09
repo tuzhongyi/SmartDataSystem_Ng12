@@ -13,6 +13,7 @@ import { Language } from 'src/app/global/tool/language';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { Deduplication } from 'src/app/global/tool/deduplication';
 
 
 @Component({
@@ -105,12 +106,11 @@ export class DivisionManageComponent implements OnInit {
   constructor(
     private _business: DivisionManageBusiness,
     private _toastrService: ToastrService,
-    private _converter: TreeConverter
+    private _converter: TreeConverter,
   ) {
-    this._searchGuards.reduce((previous, current) => {
-      previous.push(...this._generateExclude(current));
-      return previous;
-    }, this._excludeGuards);
+
+    this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
+
   }
 
   ngOnInit(): void {
@@ -278,7 +278,6 @@ export class DivisionManageComponent implements OnInit {
   }
 
   async searchEventHandler(condition: string) {
-
     if (this._condition == condition && this._condition != '') {
       this._toastrService.warning('重复搜索相同字段');
       return;

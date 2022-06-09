@@ -2,16 +2,10 @@
   <div class="hw-tree-list">
     <div class="hw-title">区划列表</div>
     <div class="search-wrapper">
-      <div class="hw-search">
-        <input
-          type="text"
-          class="hw-search-bar"
-          maxLength="15"
-          placeholder="名称"
-          #search
-        />
-        <i class="material-icons hw-search-icon">search</i>
-      </div>
+      <howell-simple-search
+        placeHolder="名称"
+        (searchEvent)="searchTree($event)"
+      ></howell-simple-search>
     </div>
 
     <div class="tree-container">
@@ -31,11 +25,12 @@
           删除
         </button>
       </div>
+
       <div class="search-wrapper">
-        <div class="hw-search">
-          <input type="text" class="hw-search-bar" placeholder="名称" #search />
-          <i class="material-icons hw-search-icon">search</i>
-        </div>
+        <howell-simple-search
+          placeHolder="名称"
+          (searchEvent)="searchTable($event)"
+        ></howell-simple-search>
       </div>
     </div>
     <div class="hw-table-container">
