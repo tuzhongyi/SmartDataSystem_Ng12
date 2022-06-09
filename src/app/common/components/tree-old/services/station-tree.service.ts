@@ -49,7 +49,7 @@ export class StationTreeService implements TreeServiceInterface {
       // 拉取居委会厢房信息
 
       let data = await this._loadData(node.id);
-      let nodes = this._converter.iterateToNested(data);
+      let nodes = this._converter.iterateToNestTreeNode(data);
       nodes.forEach((node) => (node.hasChildren = false));
 
       return nodes;
@@ -111,7 +111,7 @@ export class StationTreeService implements TreeServiceInterface {
       // 合并 Division 和 Station
       let result = [...divisions, ...allStations];
 
-      stationNodes = this._converter.buildNestedTree(result);
+      stationNodes = this._converter.buildNestNodeTree(result);
 
       console.log(stationNodes);
 
@@ -144,7 +144,7 @@ export class StationTreeService implements TreeServiceInterface {
   // 测试拉取所有数据后生成树结构
   private async _loadAll() {
     let data = await this._divisionTreeService.loadAllData();
-    const res = this._converter.buildNestedTree(data);
+    const res = this._converter.buildNestNodeTree(data);
     console.log('所有节点', res);
     return res;
   }

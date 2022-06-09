@@ -3,7 +3,8 @@ import { TreeConverter } from 'src/app/converter/tree.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
+import { DivisionTree } from 'src/app/network/model/division-tree.model';
+import { GetDivisionsParams, GetDivisionTreeParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
@@ -49,7 +50,7 @@ export class TreeService implements TreeServiceInterface {
 
     if (depth < 0) return [];
     let data = await this._loadData(type);
-    let nodes = this._converter.iterateToNested(data);
+    let nodes = this._converter.iterateToNestTreeNode(data);
 
     // console.log('资源类型: ', type);
     // console.log('深度: ', depth);
@@ -110,7 +111,7 @@ export class TreeService implements TreeServiceInterface {
         EnumHelper.GetResourceChildType(node.type),
         node.id
       );
-      children = this._converter.iterateToNested(data);
+      children = this._converter.iterateToNestTreeNode(data);
       children.forEach(child => child.parentNode = node);
 
       this._register(children);
@@ -121,12 +122,26 @@ export class TreeService implements TreeServiceInterface {
         children.forEach((node) => (node.hasChildren = true));
       }
 
-      console.log('children: ', children)
+      // console.log('children: ', children)
     } catch (e) {
 
     }
     return children;
   }
+  async searchNode(condition: string) {
+    let nodes: NestTreeNode[] = []
+    if (condition == '') {
+      nodes = await this.initialize();
+    } else {
+      let data = await this._searchData(condition);
+      nodes = this._converter.recurseToNestTreeNode(data);
+      console.log(nodes)
+    }
+    console.log('search result: ', nodes)
+    return [];
+
+  }
+
 
   private async _loadData(type: UserResourceType, divisionId?: string) {
     switch (type) {
@@ -157,6 +172,14 @@ export class TreeService implements TreeServiceInterface {
     let res = await this._stationRequest.list(params);
     // console.log('station: ', res)
     return res.Data;
+  }
+
+
+  private async _searchData(condition: string) {
+    let params = new GetDivisionTreeParams();
+    params.Name = condition;
+    let res: DivisionTree = await this._divisionRequest.tree(params);
+    return res.Nodes;
   }
 
 

@@ -392,21 +392,20 @@ export class TreeComponent implements OnInit {
     this.dataChange.next(this.dataChange.value);
   }
   async searchNode(condition: string) {
-    // this.selection.clear();
-    // let nodes: NestedTreeNode[] = await this._treeService.searchNode(condition);
+    this.selection.clear();
+    let nodes: NestTreeNode[] = []
+    nodes = await this._treeService.searchNode(condition);
 
-    // if (nodes.length) {
-    //   this._nestedNodeMap.clear();
-    //   this._register(nodes);
-    //   this.dataChange.next(nodes);
+    if (nodes.length) {
+      this.dataChange.next(nodes);
 
-    //   if (condition !== '') {
-    //     this.treeControl.expandAll();
-    //   } else {
-    //     this.treeControl.collapseAll();
-    //   }
-    // }
-    // return nodes;
+      if (condition !== '') {
+        this.treeControl.expandAll();
+      } else {
+        this.treeControl.collapseAll();
+      }
+    }
+    return nodes;
   }
 
 

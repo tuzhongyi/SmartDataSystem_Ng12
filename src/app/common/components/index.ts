@@ -33,6 +33,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { TreeOldComponent } from './tree-old/tree-old.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { SimpleSearchComponent } from './simple-search/simple-search.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -68,5 +69,6 @@ export const CUSTOM_COMPONENTS = [
   GarbageDropEventPanelComponent,
   BreadcrumbComponent,
   TreeOldComponent,
-  ConfirmDialogComponent
+  ConfirmDialogComponent,
+  SimpleSearchComponent
 ];

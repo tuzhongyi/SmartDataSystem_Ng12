@@ -31,7 +31,7 @@ export class DivisionTreeService {
 
   async initialize(type: DivisionType = DivisionType.City) {
     let data = await this._loadData(type);
-    let nodes = this._converter.iterateToNested(data);
+    let nodes = this._converter.iterateToNestTreeNode(data);
     nodes.forEach((item) => {
       const divisionType = EnumHelper.ConvertUserResourceToDivision(item.type);
 
@@ -60,7 +60,7 @@ export class DivisionTreeService {
       const childType = EnumHelper.GetDivisionChildType(divisionType);
       let data = await this._loadData(childType, node.id);
 
-      const nodes = this._converter.iterateToNested(data);
+      const nodes = this._converter.iterateToNestTreeNode(data);
       return nodes;
     }
 
@@ -75,7 +75,7 @@ export class DivisionTreeService {
       nodes = await this.initialize();
     } else {
       data = await this._searchData(condition);
-      nodes = this._converter.recurseToNested(data);
+      nodes = this._converter.recurseToNestTreeNode(data);
     }
 
     return nodes;

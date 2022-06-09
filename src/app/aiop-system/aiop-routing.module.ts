@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-03-28 14:01:19
+ * @Last Modified time: 2022-06-09 13:15:13
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -130,10 +130,16 @@ const routes: Routes = [
               {
                 path: 'platform-manage',
                 component: PlatformManageComponent,
+                data: {
+                  breadcrumb: '平台管理',
+                },
               },
               {
                 path: 'proxy-manage',
                 component: ProxyManageComponent,
+                data: {
+                  breadcrumb: '流转服务管理',
+                },
               },
             ],
           },
@@ -148,6 +154,9 @@ const routes: Routes = [
               {
                 path: 'region-manage',
                 component: RegionManageComponent,
+                data: {
+                  breadcrumb: '区域管理',
+                },
               },
             ],
           },
@@ -157,14 +166,23 @@ const routes: Routes = [
               {
                 path: 'camera-manage',
                 component: CameraManageComponent,
+                data: {
+                  breadcrumb: '监控点',
+                },
               },
               {
                 path: 'encode-device-manage',
                 component: EncodeDeviceManageComponent,
+                data: {
+                  breadcrumb: '编码器',
+                },
               },
               {
                 path: 'camera-model-manage',
                 component: CameraModelManageComponent,
+                data: {
+                  breadcrumb: '监控点模型',
+                },
               },
               {
                 path: '',
@@ -178,6 +196,9 @@ const routes: Routes = [
               {
                 path: 'ai-model-list',
                 component: AiModelListComponent,
+                data: {
+                  breadcrumb: 'AI模型列表',
+                },
               },
             ],
           },
@@ -187,6 +208,9 @@ const routes: Routes = [
               {
                 path: 'ai-camera-events',
                 component: AiCameraEventsComponent,
+                data: {
+                  breadcrumb: 'AI摄像机事件',
+                },
               },
             ],
           },

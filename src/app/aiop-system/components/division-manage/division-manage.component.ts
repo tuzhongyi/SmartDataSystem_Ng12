@@ -277,30 +277,27 @@ export class DivisionManageComponent implements OnInit {
     }
   }
 
-  async searchNode(condition: string) {
-    // if (condition == '' && this._condition == Symbol.for('DIVISION-TREE')) {
-    //   this._toastrService.warning('输入内容再搜索');
-    //   return;
-    // }
-    // if (this._condition == condition) {
-    //   this._toastrService.warning('重复搜索相同字段');
-    //   return;
-    // }
-    // if (this._excludeGuards.includes(condition)) {
-    //   this._toastrService.warning('关键字不能是: ' + condition);
-    //   return;
-    // }
+  async searchEventHandler(condition: string) {
 
-    // this._condition = condition;
+    if (this._condition == condition && this._condition != '') {
+      this._toastrService.warning('重复搜索相同字段');
+      return;
+    }
+    if (this._excludeGuards.includes(condition)) {
+      this._toastrService.warning('关键字不能是: ' + condition);
+      return;
+    }
 
-    // if (this.tree) {
-    //   let res = await this.tree.searchNode(condition);
-    //   if (res && res.length) {
-    //     this._toastrService.success('操作成功');
-    //   } else {
-    //     this._toastrService.warning('无匹配结果');
-    //   }
-    // }
+    this._condition = condition;
+
+    if (this.tree) {
+      let res = await this.tree.searchNode(condition);
+      if (res && res.length) {
+        this._toastrService.success('操作成功');
+      } else {
+        this._toastrService.warning('无匹配结果');
+      }
+    }
   }
 
 

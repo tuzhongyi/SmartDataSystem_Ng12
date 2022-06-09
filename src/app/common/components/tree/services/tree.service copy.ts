@@ -43,7 +43,7 @@ export class TreeService {
   ) {
     if (depth < 0) return [];
     let data = await this._loadData(type, ...res);
-    let nodes = this._converter.iterateToNested(data);
+    let nodes = this._converter.iterateToNestTreeNode(data);
     if (
       type == UserResourceType.Committees &&
       this.model == TreeServiceEnum.Station
@@ -92,7 +92,7 @@ export class TreeService {
       EnumHelper.GetResourceChildType(node.type),
       node.id
     );
-    children = this._converter.iterateToNested(data);
+    children = this._converter.iterateToNestTreeNode(data);
     if (
       node.type == UserResourceType.County &&
       this.model == TreeServiceEnum.Station
@@ -147,7 +147,7 @@ export class TreeService {
       // 合并 Division 和 Station
       let result = [...divisions, ...allStations];
 
-      stationNodes = this._converter.buildNestedTree(result);
+      stationNodes = this._converter.buildNestNodeTree(result);
 
       console.log(stationNodes);
 
@@ -201,7 +201,7 @@ export class TreeService {
   // 测试拉取所有数据后生成树结构
   private async _loadAll() {
     let data = await this._divisionTreeService.loadAllData();
-    const res = this._converter.buildNestedTree(data);
+    const res = this._converter.buildNestNodeTree(data);
     console.log('所有节点', res);
     return res;
   }

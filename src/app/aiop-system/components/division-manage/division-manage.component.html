@@ -35,16 +35,10 @@
     </div>
 
     <div class="search-wrapper">
-      <div class="hw-search">
-        <input
-          type="text"
-          class="hw-search-bar"
-          placeholder="名称"
-          #search
-          (click)="searchNode(search.value)"
-        />
-        <i class="material-icons hw-search-icon">search</i>
-      </div>
+      <howell-simple-search
+        placeHolder="名称"
+        (searchEvent)="searchEventHandler($event)"
+      ></howell-simple-search>
     </div>
 
     <div class="tree-container">

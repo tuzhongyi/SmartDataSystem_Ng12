@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-12-23 16:17:25
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-24 14:00:16
+ * @Last Modified time: 2022-06-09 14:47:57
  *
  *
  *
@@ -64,7 +64,7 @@ export class TreeConverter
     throw new Error('Method not implemented.');
   }
 
-  iterateToNested<T extends Array<TreeSourceModel>>(data: T): NestTreeNode[] {
+  iterateToNestTreeNode<T extends Array<TreeSourceModel>>(data: T): NestTreeNode[] {
     let res: NestTreeNode[] = new Array<NestTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -73,7 +73,7 @@ export class TreeConverter
     }
     return res;
   }
-  recurseToNested<T extends TreeSourceModel>(
+  recurseToNestTreeNode<T extends TreeSourceModel>(
     data: T[],
     parentId: string | null = null
   ) {
@@ -85,7 +85,7 @@ export class TreeConverter
         node.parentId = parentId;
         res.push(node);
         if (item.Nodes && item.Nodes.length > 0) {
-          let children = this.recurseToNested(item.Nodes, node.id);
+          let children = this.recurseToNestTreeNode(item.Nodes, node.id);
           node.childrenChange.value.push(...children);
           node.hasChildren = true;
         }
@@ -94,7 +94,7 @@ export class TreeConverter
 
     return res;
   }
-  buildNestedTree<T extends TreeSourceModel>(data: T[]) {
+  buildNestNodeTree<T extends TreeSourceModel>(data: T[]) {
     // 最终根节点树
     let res: NestTreeNode[] = [];
 
