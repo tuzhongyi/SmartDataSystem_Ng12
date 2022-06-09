@@ -267,6 +267,7 @@ export class TreeService {
   private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
+      // 一定要直接覆盖，保证 node 为最新
       this.nestedNodeMap.set(node.id, node);
     }
   }

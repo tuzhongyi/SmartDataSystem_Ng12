@@ -27,6 +27,7 @@ import { CameraModelManageComponent } from './camera-model-manage/camera-model-m
 import { AiModelListComponent } from './ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -46,6 +47,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CameraModelManageComponent,
     AiModelListComponent,
     AiCameraEventsComponent,
+    ProxyManageComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
   providers: [],
