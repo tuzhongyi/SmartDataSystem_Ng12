@@ -4,12 +4,12 @@
       (dialogMsg)="dialogMsgEvent($event)"
     ></howell-confirm-dialog>
   </ng-container>
-  <div class="division-list">
-    <h2>区划列表</h2>
+  <div class="hw-tree-list">
+    <div class="hw-title">区划列表</div>
 
-    <div class="btns">
+    <div class="hw-btn-group">
       <button
-        class="btn btn--green"
+        class="hw-btn hw-green-btn"
         (click)="addBtnClick()"
         [disabled]="!enableAddBtn"
       >
@@ -17,7 +17,7 @@
         添加
       </button>
       <button
-        class="btn btn--red"
+        class="hw-btn hw-red-btn"
         (click)="deleteBtnClick()"
         [disabled]="!enableDelBtn"
       >
@@ -25,7 +25,7 @@
         删除
       </button>
       <button
-        class="btn btn--blue"
+        class="hw-btn hw-blue-btn"
         (click)="editBtnClick()"
         [disabled]="!enableEditBtn"
       >
@@ -35,15 +35,16 @@
     </div>
 
     <div class="search-wrapper">
-      <input
-        type="text"
-        class="search"
-        maxLength="15"
-        placeholder="名称"
-        #search
-        (click)="searchNode(search.value)"
-      />
-      <i class="material-icons search-icon">search</i>
+      <div class="hw-search">
+        <input
+          type="text"
+          class="hw-search-bar"
+          placeholder="名称"
+          #search
+          (click)="searchNode(search.value)"
+        />
+        <i class="material-icons hw-search-icon">search</i>
+      </div>
     </div>
 
     <div class="tree-container">
@@ -57,7 +58,7 @@
     </div>
   </div>
   <div class="division-detail">
-    <h2>{{ title }}</h2>
+    <div class="hw-title">{{ title }}</div>
 
     <form class="form bold-scrollbar" [formGroup]="myForm">
       <div class="form-group">

@@ -1,0 +1,23 @@
+.hw-tree-list {
+  @w: 320px;
+  @p: 20px;
+  @b: 2px;
+  @cw:@w - 2 * @p - 2 * @b; // content width
+
+  width: @w;
+  box-sizing: border-box;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  background: rgba(36, 72, 165, 0.05);
+  border: @b rgba(117, 134, 224, 0.15) solid;
+  padding: @p;
+  margin-right: 20px;
+
+  .tree-container {
+    flex-grow: 1;
+    overflow: auto;
+  }
+}

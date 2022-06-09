@@ -32,7 +32,7 @@ import { SidenavModel } from 'src/app/view-model/sidenav.model';
       state(
         'shrink',
         style({
-          width: 100,
+          width: 110,
         })
       ),
       transition('grow<=>shrink', [animate(100)]),
@@ -74,8 +74,8 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {}
+  ngOnInit(): void { }
+  ngOnChanges(changes: SimpleChanges): void { }
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
@@ -91,5 +91,5 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
 
     // this._router.navigateByUrl(target.dataset.link!);
   }
-  clickHandler() {}
+  clickHandler() { }
 }

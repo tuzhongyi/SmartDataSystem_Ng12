@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2021-09-06 17:08:22 
  * @Last Modified by: pmx
- * @Last Modified time: 2022-06-07 21:37:48
+ * @Last Modified time: 2022-06-08 16:46:33
  */
 
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
@@ -13,98 +13,51 @@
 @import "~video.js/dist/video-js.css";
 @import "~ngx-toastr/toastr";
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Source Han Sans CN Normal";
+}
+
+h5 {
+  line-height: 1;
+}
+
+a {
+  color: #9ea2a9;
+}
+
+a:hover {
+  color: #fff;
+}
+
 html,
 body {
   height: 100%;
   min-width: 800px;
   min-height: 600px;
+  font-family: "Source Han Sans CN Normal";
+  background: hsl(214, 13%, 25%);
+  color: #99abb4;
   user-select: none;
-  // font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 body {
   margin: 0;
   overflow-x: hidden;
   overflow-y: auto;
 }
-a {
+a,
+a[href] {
   text-decoration: none;
-}
-::-moz-placeholder {
-  color: #cfd7ff;
-  opacity: 0.5;
-}
-
-::-webkit-input-placeholder {
-  color: #cfd7ff;
-  opacity: 0.5;
-}
-
-::-ms-placeholder {
-  color: #cfd7ff;
-  opacity: 0.5;
 }
 
 .toast-container .ngx-toastr {
   pointer-events: none;
 }
 
-/* 滚动条整体样式*/
-::-webkit-scrollbar {
-  width: 4px;
-  height: 4px;
-}
-.bold-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
-}
-::-webkit-scrollbar-track-piece {
-  /* 内层轨道 */
-  background-color: rgba(50, 131, 229, 0);
-}
-
-::-webkit-scrollbar-corner {
-  background-color: rgba(0, 0, 0, 0);
-}
-::-webkit-scrollbar-thumb {
-  background-color: rgba(117, 134, 224, 0.5);
-  background-clip: padding-box;
-  border-radius: 8px;
-  min-height: 28px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(117, 134, 224, 0.5);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  -webkit-transition-delay: 99999s;
-  transition-delay: 99999s;
-  -webkit-transition: color 99999s, background-color 99999s;
-  transition: color 99999s, background-color 99999s;
-}
-
-input[type="number"] {
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-  }
-  -moz-appearance: textfield;
-}
-.jq-toast-single {
-  font-size: 15px;
-  h2 {
-    font-size: 18px;
-  }
-}
 // 加权
 app-root {
   @import url(assets/less/index.less);
