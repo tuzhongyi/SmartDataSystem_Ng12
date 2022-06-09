@@ -268,10 +268,10 @@ export class DivisionManageComponent implements OnInit {
   private async _deleteNode() {
     if (this.tree) {
       if (this.currentNode?.id) {
-        let res = await this._business.deleteDivision(this.currentNode?.id);
+        let res = await this._business.deleteDivision(this.currentNode.id);
         if (res) {
           this._toastrService.success('删除成功');
-          this.tree.deleteNode(this.currentNode.id);
+          this.tree.deleteNode(res.Id);
         }
       }
     }

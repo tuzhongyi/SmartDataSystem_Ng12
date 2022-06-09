@@ -30,7 +30,6 @@ import { SwitchComponent } from './switch/switch.component';
 import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
 import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
-import { TreeOldComponent } from './tree-old/tree-old.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
@@ -68,7 +67,6 @@ export const CUSTOM_COMPONENTS = [
   GarbageDropDurationPanelComponent,
   GarbageDropEventPanelComponent,
   BreadcrumbComponent,
-  TreeOldComponent,
   ConfirmDialogComponent,
   SimpleSearchComponent
 ];

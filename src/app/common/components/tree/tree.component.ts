@@ -15,10 +15,7 @@ import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
-import { TreeServiceInterface } from './interface/tree-service.interface';
 
-import { DivisionTreeService } from './services/division-tree.service';
-import { StationTreeService } from './services/station-tree.service';
 import { TreeService } from './services/tree.service';
 
 @Component({

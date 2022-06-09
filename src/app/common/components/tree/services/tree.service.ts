@@ -4,15 +4,16 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
+import { Division } from 'src/app/network/model/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionsParams, GetDivisionTreeParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
-import { TreeServiceInterface } from '../interface/tree-service.interface';
 
 @Injectable()
-export class TreeService implements TreeServiceInterface {
+export class TreeService {
 
   private _model = TreeServiceEnum.Division;
 
@@ -133,15 +134,73 @@ export class TreeService implements TreeServiceInterface {
     if (condition == '') {
       nodes = await this.initialize();
     } else {
-      let data = await this._searchData(condition);
-      nodes = this._converter.recurseToNestTreeNode(data);
-      console.log(nodes)
+      let data = await this._searchDivisionData(condition);
+      let divisionNodes = this._converter.recurseToNestTreeNode(data);
+      if (this.model == TreeServiceEnum.Division) {
+        nodes = divisionNodes;
+      }
+      else if (this.model == TreeServiceEnum.Station) {
+        let stations = await this._searchStationData(condition);
+        // 所有祖先区划
+        let allDivisions: Division[] = [];
+        let allStations: GarbageStation[] = [];
+        let stationNodes: NestTreeNode[] = [];
+
+
+        // stations = stations.filter(station => station.DivisionId);
+
+        for (let i = 0; i < stations.length; i++) {
+          let station = stations[i];
+          if (station.DivisionId) {
+            allStations.push(station);
+            let division = await this._getDivision(
+              station.DivisionId
+            );
+            allDivisions.push(division);
+            let ancestors = await this._getAncestorDivision(
+              division
+            );
+            allDivisions.push(...ancestors);
+          }
+        }
+
+        // Division 去重
+        let divisions: Division[] = [];
+        allDivisions.reduce(function (prev, cur) {
+          if (!prev.find((item) => item.Id == cur.Id)) {
+            prev.push(cur);
+          }
+          return prev;
+        }, divisions);
+
+        console.log('厢房所在区划', divisions);
+
+        // 合并 Division 和 Station
+        let result = [...divisions, ...allStations];
+
+        // 根据Division和Station创建 Station 树
+        stationNodes = this._converter.buildNestNodeTree(result);
+
+        console.log(stationNodes);
+
+        // 将 stationNodes 和  divisionNodes 合并
+
+        let merged = this._converter.mergeNestedTree(divisionNodes, stationNodes);
+        console.log(merged);
+
+        nodes = merged;
+
+      }
     }
     console.log('search result: ', nodes)
-    return [];
+
+
+    return nodes;
 
   }
 
+
+  /************************* Private *************************/
 
   private async _loadData(type: UserResourceType, divisionId?: string) {
     switch (type) {
@@ -174,21 +233,41 @@ export class TreeService implements TreeServiceInterface {
     return res.Data;
   }
 
+  private async _getDivision(id: string) {
+    return await this._divisionRequest.cache.get(id);
+  }
+  private async _getAncestorDivision(division: Division) {
+    let res: Division[] = [];
 
-  private async _searchData(condition: string) {
+    while (division.ParentId) {
+      let d = await this._getDivision(division.ParentId);
+      res.push(d);
+      division = d;
+    }
+
+    return res;
+  }
+
+  private async _searchDivisionData(condition: string) {
     let params = new GetDivisionTreeParams();
     params.Name = condition;
     let res: DivisionTree = await this._divisionRequest.tree(params);
     return res.Nodes;
   }
+  private async _searchStationData(condition: string) {
+    let params = new GetGarbageStationsParams();
+    params.Name = condition;
+    let res = await this._stationRequest.list(params);
+
+    return res.Data;
+  }
+
 
 
   private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
-      if (!this.nestedNodeMap.has(node.id)) {
-        this.nestedNodeMap.set(node.id, node);
-      }
+      this.nestedNodeMap.set(node.id, node);
     }
   }
 
