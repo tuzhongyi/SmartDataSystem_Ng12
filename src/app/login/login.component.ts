@@ -152,6 +152,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   onAutoLoginChange(checked: boolean) {
     this.savePassWord = this.autoLogin = checked;
   }
+  forgetPassword() {
+    this._router.navigateByUrl(RoutePath.passwordGetBack);
+  }
+
   // 'guangzhonglu',
   // 'yxotkccu7rc3ai1h'
   async login() {
@@ -173,23 +177,23 @@ export class LoginComponent implements OnInit, AfterViewInit {
             if (result.Role[0].StaticData == StaticDataRole.enabled) {
               this._router.navigateByUrl(RoutePath.aiop);
             } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
-              if (result.Resources &&
+              if (
+                result.Resources &&
                 result.Resources.length > 0 &&
-                result.Resources[0].ResourceType === UserResourceType.Committees) {
+                result.Resources[0].ResourceType === UserResourceType.Committees
+              ) {
                 this._router.navigateByUrl(RoutePath.garbage_system_committees);
-              }
-              else {
+              } else {
                 this._router.navigateByUrl(RoutePath.garbage_system);
               }
             }
-          }
-          else if (result.Resources &&
+          } else if (
+            result.Resources &&
             result.Resources.length > 0 &&
-            result.Resources[0].ResourceType === UserResourceType.Committees) {
+            result.Resources[0].ResourceType === UserResourceType.Committees
+          ) {
             this._router.navigateByUrl(RoutePath.garbage_system_committees);
-          }
-          else {
-
+          } else {
           }
         }
       } catch (e: any) {

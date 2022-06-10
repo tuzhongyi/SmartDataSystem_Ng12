@@ -12,10 +12,10 @@ export class CommitteesIndexBusiness {
     this.statistic = new CommitteesIndexStatisticBussiness(window);
     this.taskTable = new CommitteesIndexTaskTableBussiness(window);
     this.historyTable = new CommitteesIndexHistroyTableBussiness(window);
-    this.messageBar = new CommitteesMessageBarBussiness(window, local.user);
+    this.toolbar = new CommitteesMessageBarBussiness(window, local.user);
   }
   statistic: CommitteesIndexStatisticBussiness;
   taskTable: CommitteesIndexTaskTableBussiness;
   historyTable: CommitteesIndexHistroyTableBussiness;
-  messageBar: CommitteesMessageBarBussiness;
+  toolbar: CommitteesMessageBarBussiness;
 }

@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { User } from 'src/app/network/model/user.model';
 import { MobileBindingService } from '../mobile-binding.service';
 import { MobileViewModel } from '../mobile.model';
 
 @Injectable()
 export class MobileChangeCheckBusiness {
-  user: User;
   constructor(
     private service: MobileBindingService,
     private local: LocalStorageService
   ) {
     this.model = this.createModel();
-    this.user = local.user;
   }
 
   model: MobileViewModel;
@@ -24,7 +21,7 @@ export class MobileChangeCheckBusiness {
     let model = new MobileViewModel();
     model.title = '验证手机号码';
     model.okButtonText = '验证';
-    model.MobileNo = this.user.MobileNo;
+    model.MobileNo = this.local.user.MobileNo;
     return model;
   }
 

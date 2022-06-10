@@ -19,8 +19,10 @@ import { PagedParams } from '../IParams.interface';
 import { ServiceHelper } from '../service-helper';
 import {
   ChangeUserPasswordParams,
+  CheckCodeParams,
   GetUserLabelsParams,
   GetUsersParams,
+  PasswordCheckCodeResult,
   RandomUserPaswordParams,
 } from './user-request.params';
 
@@ -95,7 +97,7 @@ export class UserRequestService {
 }
 
 class ConfigService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
@@ -126,7 +128,7 @@ class RolesService {
 }
 
 class LabelsService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
@@ -153,12 +155,12 @@ class LabelsService {
 }
 
 class PasswordsService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
-  random(userId: string, params: RandomUserPaswordParams): Promise<String> {
+  random(userId: string, params: RandomUserPaswordParams): Promise<string> {
     let url = UserUrl.password(userId).random();
     let data = classToPlain(params);
-    return this.basic.post(url, String, data);
+    return this.basic.http.postReturnString(url, data).toPromise();
   }
 
   change(userId: string, params: ChangeUserPasswordParams) {
@@ -177,11 +179,11 @@ class PasswordsService {
 }
 
 class PasswordCheckService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   mobileNo(mobileNo: string): Promise<Fault> {
     let url = PasswordUrl.checkMobileNo(mobileNo);
-    return this.basic.get(url, Fault)
+    return this.basic.get(url, Fault);
   }
 
   code(mobileNo?: string) {
@@ -189,4 +191,9 @@ class PasswordCheckService {
     return this.basic.http.getBase64String(url).toPromise();
   }
 
+  check(params: CheckCodeParams): Promise<PasswordCheckCodeResult> {
+    let data = classToPlain(params);
+    let url = PasswordUrl.checkCode();
+    return this.basic.post(url, PasswordCheckCodeResult, data);
+  }
 }

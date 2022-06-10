@@ -4,11 +4,15 @@
       <app-account-info></app-account-info>
       <div class="spacer">
         <howell-message-bar
-          [Notify]="business.messageBar.notify"
+          [Notify]="business.toolbar.notify"
         ></howell-message-bar>
       </div>
       <app-time></app-time>
-      <app-account-operation *ngIf="!HideButton"></app-account-operation>
+      <app-account-operation
+        *ngIf="!HideButton"
+        (changePassword)="business.toolbar.onChangePasswordClick()"
+        (bindMobile)="business.toolbar.onChangeMobileClick()"
+      ></app-account-operation>
     </mat-toolbar>
   </div>
   <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
@@ -189,3 +193,27 @@
   [style]="window.media.multiple.style"
   [statistic]="window.media.multiple.statistic"
 ></howell-media-multiple-window> -->
+
+<app-window [Model]="window.mobile" [style]="window.mobile.styles">
+  <ng-container *ngIf="window.mobile.show">
+    <app-mobile-change
+      (OnBinded)="window.mobile.onBinded()"
+      (OnCancel)="window.mobile.onCancel()"
+      [Step]="window.mobile.step"
+    >
+    </app-mobile-change>
+  </ng-container>
+</app-window>
+<app-window
+  [Model]="window.password"
+  [style]="window.password.styles"
+  [CloseButton]="window.password.closeable"
+>
+  <ng-container *ngIf="window.password.show">
+    <app-password-change
+      (OnChanged)="window.password.onChanged()"
+      (OnCancel)="window.password.onCancel()"
+    >
+    </app-password-change>
+  </ng-container>
+</app-window>

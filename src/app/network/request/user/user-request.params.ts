@@ -40,3 +40,18 @@ export class ChangeUserPasswordParams implements IParams {
   /**	String	密码	M */
   Password!: string;
 }
+
+export class CheckCodeParams {
+  /**	String	手机号码	M */
+  MobileNo!: string;
+  /**	String	效验码	M */
+  CheckCode!: string;
+}
+
+/** 验证码认证结果 */
+export class PasswordCheckCodeResult {
+  /**	Boolean	是否认证成功	M	R */
+  Result!: boolean;
+  /**	String	跳转地址	O	R */
+  RedirectUrl?: string;
+}

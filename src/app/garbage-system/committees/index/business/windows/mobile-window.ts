@@ -11,6 +11,7 @@ export class MobileWindowViewModel extends WindowViewModel {
     this.step = this.user.MobileNo
       ? MobileChangeStep.Check
       : MobileChangeStep.Bind;
+    console.log(this.show);
   }
   user: User;
   styles = {

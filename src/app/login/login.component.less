@@ -4,6 +4,7 @@
   overflow: hidden;
   background: #050719;
   position: relative;
+
   .login-bg {
     width: 100%;
     height: 100%;
@@ -14,14 +15,17 @@
     .login-img {
       position: absolute;
       width: 100%;
+
       img {
         width: 100%;
       }
     }
+
     .login-video {
       width: 100%;
       height: auto;
     }
+
     .login-header-wrapper {
       position: absolute;
       top: 12%;
@@ -57,6 +61,7 @@
       }
     }
   }
+
   .login-content {
     width: 33%;
     height: 42%;
@@ -79,20 +84,21 @@
       margin-top: 26px;
       margin-bottom: 12px;
     }
+
     &__line {
       width: 69%;
       height: 2px;
       margin: 0 auto;
-      background-image: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0),
-        #6997ff,
-        rgba(0, 0, 0, 0)
-      );
+      background-image: linear-gradient(to right,
+          rgba(0, 0, 0, 0),
+          #6997ff,
+          rgba(0, 0, 0, 0));
     }
+
     .login-form {
       height: 65%;
       margin: 2% 0;
+
       .form-group {
         width: 59%;
         height: 17%;
@@ -101,6 +107,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         &__icon {
           font-size: 20px;
           color: #cfd7ff;
@@ -113,6 +120,7 @@
           margin-right: 6px;
           border-right: 2px solid #5e6ebf;
         }
+
         &__item {
           height: 70%;
           width: 100%;
@@ -123,6 +131,7 @@
           font-size: 18px;
           font-family: "Source Han Sans CN Normal";
         }
+
         &__button {
           border: none;
           width: 100%;
@@ -140,16 +149,19 @@
           &:hover {
             background-image: url(/assets/img/login-btn-hover.png);
           }
+
           &:active {
             background-image: url(/assets/img/login-btn-active.png);
           }
         }
       }
+
       .form-group--checkbox {
         height: 10%;
         margin: -11px auto -10px;
         border: none;
-        & > div {
+
+        &>div {
           display: flex;
           align-items: center;
           position: relative;
@@ -161,6 +173,7 @@
             border: 2px solid #5e6ebf;
             appearance: none;
             cursor: pointer;
+
             &:checked {
               background-image: url(/assets/img/tick2.svg);
               background-size: 15px;
@@ -168,11 +181,14 @@
               background-position: center;
             }
           }
-          input + label {
+
+          input+label {
             cursor: pointer;
+            color: #5e6ebf
           }
         }
       }
+
       .form-group--button {
         height: 22%;
         border: none;
@@ -190,6 +206,7 @@
     width: 40%;
   }
 }
+
 @media screen and (max-width: 860px) {
   .login-container .login-bg .login-header-wrapper .login-header__title {
     font-size: 43px;

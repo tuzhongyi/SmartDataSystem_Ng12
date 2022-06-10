@@ -38,7 +38,21 @@ const routes: Routes = [
         (mod) => mod.GarbageCommitteesModule
       ),
     canActivate: [AuthorizationService],
-  }
+  },
+  {
+    path: RoutePath.passwordGetBack,
+    loadChildren: () =>
+      import('./password-get-back/password-get-back.module').then(
+        (mod) => mod.PasswordGetBackModule
+      ),
+  },
+  {
+    path: RoutePath.passwordToChange,
+    loadChildren: () =>
+      import('./password-to-change/password-to-change.module').then(
+        (mod) => mod.PasswordToChangeModule
+      ),
+  },
   // {
   //   path: '**',
   //   redirectTo: 'login',

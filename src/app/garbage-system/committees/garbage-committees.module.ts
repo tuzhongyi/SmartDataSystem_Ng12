@@ -13,6 +13,7 @@ import { MobileChangeComponent } from './mobile/mobile-change/mobile-change.comp
 import { MobileViewComponent } from './mobile/mobile-change/view/mobile-view.component';
 import { MobileBindingComponent } from './mobile/mobile-binding/mobile-binding.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PasswordChangeComponent } from './password-change/password-change.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MobileChangeComponent,
     MobileViewComponent,
     MobileBindingComponent,
+
+    PasswordChangeComponent,
   ],
   imports: [
     CommonModule,
