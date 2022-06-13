@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommitteesIndexPatrolControlBusiness } from './committees-index-patrol-control.business';
+import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()
 export class CommitteesIndexNavicationBusiness {
-  constructor() {}
+  constructor(private window: CommitteesWindowBussiness) {}
   committees?: Division;
   stations: GarbageStation[] = [];
   selected?: GarbageStation;
@@ -13,5 +14,8 @@ export class CommitteesIndexNavicationBusiness {
   onStationClicked(station: GarbageStation) {
     this.selected = station;
   }
-  onCommitteesInfoClicked(division: Division) {}
+  onCommitteesInfoClicked(division: Division) {
+    this.committees = division;
+    this.window.summary.show = true;
+  }
 }
