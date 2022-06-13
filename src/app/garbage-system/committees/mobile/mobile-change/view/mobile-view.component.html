@@ -41,7 +41,11 @@
     </div>
   </form>
   <div class="operation">
-    <button class="hw-green-btn m-r-20" (click)="ok($event)">
+    <button
+      class="hw-green-btn"
+      style="margin-right: 20px"
+      (click)="ok($event)"
+    >
       {{ model.okButtonText }}
     </button>
     <button class="hw-gray-m-btn" (click)="cancel($event)">取消</button>

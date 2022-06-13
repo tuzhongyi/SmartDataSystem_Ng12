@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoutePath } from 'src/app/app-routing.path';
 import { MessageBar } from 'src/app/common/tools/message-bar';
@@ -15,7 +15,7 @@ import { PasswordToChangeService } from '../password-to-change.service';
 @Component({
   selector: 'app-password-change',
   templateUrl: './password-change.component.html',
-  styleUrls: ['./password-change.component.css'],
+  styleUrls: ['./password-change.component.less'],
   providers: [PasswordToChangeService],
 })
 export class PasswordChangeComponent implements OnInit, OnChanges {

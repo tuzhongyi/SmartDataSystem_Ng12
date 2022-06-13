@@ -153,11 +153,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this.savePassWord = this.autoLogin = checked;
   }
   forgetPassword() {
-    this._router.navigateByUrl(RoutePath.passwordGetBack);
+    this._router.navigateByUrl(RoutePath.password_get_back);
   }
 
-  // 'guangzhonglu',
-  // 'yxotkccu7rc3ai1h'
   async login() {
     if (this._checkForm()) {
       this.disableLogin = true;

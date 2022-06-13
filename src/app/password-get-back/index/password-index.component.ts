@@ -23,7 +23,6 @@ export class PasswordGetBackIndexComponent implements OnInit, AfterViewInit {
   video?: ElementRef;
 
   ngAfterViewInit() {
-    const _this = this;
     if (!this.video) return;
 
     // 自动循环播放视频
