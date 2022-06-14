@@ -9,6 +9,7 @@ import { CommitteesGarbageStationFullWindowBusiness } from './windows/committees
 import { CommitteesGarbageStationInfoWindowBusiness } from './windows/committees-station-info-window.business';
 import { MobileWindowViewModel } from './windows/mobile-window';
 import { PasswordWindowViewModel } from './windows/password-window';
+import { SummaryWindowViewModel } from './windows/summary-window';
 
 @Injectable()
 export class CommitteesWindowBussiness {
@@ -19,13 +20,16 @@ export class CommitteesWindowBussiness {
     public full: CommitteesGarbageStationFullWindowBusiness,
     public drop: CommitteesGarbageStationDropWindowBusiness,
     public stationInfo: CommitteesGarbageStationInfoWindowBusiness,
+
     private local: LocalStorageService
   ) {
     this.password = new PasswordWindowViewModel();
     this.mobile = new MobileWindowViewModel(local.user);
+    this.summary = new SummaryWindowViewModel();
   }
   mobile: MobileWindowViewModel;
   password: PasswordWindowViewModel;
+  summary: SummaryWindowViewModel;
 
   private _station?: GarbageStation;
   public get station(): GarbageStation | undefined {

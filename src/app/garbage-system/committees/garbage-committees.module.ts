@@ -14,6 +14,13 @@ import { MobileViewComponent } from './mobile/mobile-change/view/mobile-view.com
 import { MobileBindingComponent } from './mobile/mobile-binding/mobile-binding.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PasswordChangeComponent } from './password-change/password-change.component';
+import { StatisticSummaryComponent } from './summary/statistic-summary.component';
+import { StatisticSummaryHeaderComponent } from './summary/header/statistic-summary-header.component';
+import { StatisticSummaryChartsComponent } from './summary/charts/statistic-summary-charts.component';
+import { StatisticSummaryTaskChartComponent } from './summary/charts/task-statistic/statistic-summary-task-chart.component';
+import { StatisticSummaryStationEventChartComponent } from './summary/charts/station-event/statistic-summary-station-event-chart.component';
+import { StatisticSummaryIllegalDropChartComponent } from './summary/charts/line-chart/statistic-summary-line-chart.component';
+import { StatisticSummaryEventRatioChartComponent } from './summary/charts/event-ratio/statistic-summary-event-ratio-chart.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +37,14 @@ import { PasswordChangeComponent } from './password-change/password-change.compo
     MobileBindingComponent,
 
     PasswordChangeComponent,
+
+    StatisticSummaryComponent,
+    StatisticSummaryHeaderComponent,
+    StatisticSummaryChartsComponent,
+    StatisticSummaryTaskChartComponent,
+    StatisticSummaryStationEventChartComponent,
+    StatisticSummaryIllegalDropChartComponent,
+    StatisticSummaryEventRatioChartComponent,
   ],
   imports: [
     CommonModule,

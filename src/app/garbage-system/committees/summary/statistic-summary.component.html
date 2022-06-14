@@ -1,0 +1,60 @@
+<div class="statistic-summary light-blue-text" (click)="windowClick()">
+  <div class="header">
+    <div class="second-title-bg text title">{{ title }}</div>
+    <div class="operation">
+      <div class="date">
+        <div class="selection">
+          <input
+            type="text"
+            id="dtp1"
+            #dtp1
+            readonly
+            DateTimePicker
+            [format]="language.format"
+            [startView]="dateView"
+            [minView]="dateView"
+            [date]="Date"
+            (change)="changeDate($event)"
+            class="hw-form-control form-control p-r-0"
+            style="padding: 0; width: 200px"
+          /><i class="mdi mdi-menu-down light-blue-text"></i>
+        </div>
+      </div>
+      <div class="unit dropdown">
+        <div (click)="timeUnitChanging($event)">
+          {{ language.unit() }}<i class="mdi mdi-menu-down light-blue-text"></i>
+        </div>
+        <div class="dropdown control" *ngIf="display.timeunit">
+          <ng-container *ngFor="let item of TimeUnits">
+            <div class="item" (click)="unitChanged($event, item.value)">
+              {{ item.language }}
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <button type="button" class="hw-gray-m-btn" (click)="exportExcel()">
+        <i class="howell-icon-export"></i>
+        导出
+      </button>
+    </div>
+  </div>
+  <div class="content">
+    <div class="statistic-summary-header">
+      <app-statistic-summary-header
+        [DivisonStatistic]="divisionStatistic"
+        [EventTrigger]="exportTrigger"
+        (OnTriggerEvent)="onExport($event)"
+      ></app-statistic-summary-header>
+    </div>
+    <div class="statistic-summary-charts">
+      <app-statistic-summary-charts
+        [DivisonStatistic]="divisionStatistic"
+        [StationStatistic]="stationStatistic"
+        [DivisionHistory]="divisionHistory"
+        [EventTrigger]="exportTrigger"
+        (OnTriggerEvent)="onExport($event)"
+        [TimeUnit]="unit"
+      ></app-statistic-summary-charts>
+    </div>
+  </div>
+</div>

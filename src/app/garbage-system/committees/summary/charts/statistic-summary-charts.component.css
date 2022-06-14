@@ -1,0 +1,25 @@
+.chart-list {
+  overflow-y: auto;
+  height: 100%
+}
+
+.chart-list>div {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.chart-list>div>div {
+  height: 266px;
+  margin-bottom: 20px;
+  border: 1px solid rgba(94, 110, 191, 0.2);
+  padding: 20px;
+}
+
+.chart-list>div>div:last-child {
+  margin-bottom: 0;
+}
+
+.chart-list>div>div.last {
+  margin-bottom: 0;
+}

@@ -217,3 +217,11 @@
     </app-password-change>
   </ng-container>
 </app-window>
+<app-window [Model]="window.summary" [style]="window.summary.style">
+  <ng-container *ngIf="window.summary.show">
+    <app-statistic-summary
+      [Committees]="navication.committees"
+      [Stations]="navication.stations"
+    ></app-statistic-summary>
+  </ng-container>
+</app-window>
