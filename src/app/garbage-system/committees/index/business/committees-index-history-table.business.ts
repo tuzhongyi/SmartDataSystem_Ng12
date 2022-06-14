@@ -3,6 +3,7 @@ import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
 } from 'src/app/network/model/event-record.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableTypes } from '../../histroy-table/committees-history-table.model';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
@@ -12,12 +13,16 @@ export class CommitteesIndexHistroyTableBussiness {
   Types = new CommitteesHistoryTableTypes();
   Type = this.Types.IllegalDrop;
 
-  OnPictureClicked(record: IllegalDropEventRecord | MixedIntoEventRecord) {
-    // this.window.picture.load(record);
-    // this.window.picture.show = true;
+  OnPictureClicked(model: ImageControlModelArray) {
+    this.window.media.single.camera = model.models;
+    this.window.media.single.index = model.index;
+    this.window.media.single.autoplay = model.autoplay;
+    this.window.media.single.show = true;
   }
-  OnVideoClicked(record: IllegalDropEventRecord | MixedIntoEventRecord) {
-    // this.window.video.load(record);
-    // this.window.video.show = true;
+  OnVideoClicked(model: ImageControlModelArray) {
+    this.window.media.single.camera = model.models;
+    this.window.media.single.index = model.index;
+    this.window.media.single.autoplay = model.autoplay;
+    this.window.media.single.show = true;
   }
 }

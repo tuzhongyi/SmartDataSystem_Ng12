@@ -50,7 +50,7 @@ export class DisposalCountComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   DisposalCountType = DisposalCountType;
-  public title: string = '垃圾滞留处置情况';
+  public title: string = '今日任务处置';
 
   data?: DisposalCountModel;
 
@@ -65,14 +65,161 @@ export class DisposalCountComponent
     private storeService: StoreService
   ) {}
 
+  taskSerie: GaugeSeriesOption = {
+    type: 'gauge',
+    startAngle: 90,
+    endAngle: -270,
+    radius: '80%',
+    pointer: {
+      show: false,
+    },
+    progress: {
+      show: true,
+      overlap: false,
+      roundCap: false,
+      clip: false,
+      itemStyle: {
+        borderWidth: 0,
+        color: '#3a93ff',
+      },
+    },
+    axisLine: {
+      lineStyle: {
+        width: 10,
+        color: [[1, '#4b5899']],
+        opacity: 0.5,
+      },
+    },
+    splitLine: {
+      show: false,
+      distance: 0,
+      length: 10,
+    },
+    axisTick: {
+      show: false,
+    },
+    axisLabel: {
+      show: false,
+    },
+    data: [
+      {
+        value: 100,
+        name: '处置率',
+        title: {
+          offsetCenter: ['0%', '-10%'],
+        },
+        detail: {
+          offsetCenter: ['0%', '-42%'],
+        },
+      },
+    ],
+    title: {
+      fontSize: 14,
+      color: '#868fff',
+    },
+    detail: {
+      width: 50,
+      height: 14,
+      color: 'auto',
+      rich: {
+        a: {
+          color: 'white',
+          fontSize: 28,
+          fontWeight: 'normal',
+        },
+        b: {
+          fontSize: 12,
+          color: '#cfd7ff',
+          // verticalAlign: "bottom",
+        },
+      },
+      formatter: (value?: string | any) => {
+        return '{a|' + value + '}{b|%}';
+      },
+    },
+  };
+  timeoutSerie: GaugeSeriesOption = {
+    type: 'gauge',
+    startAngle: 90,
+    endAngle: -270,
+    radius: '70%',
+    pointer: {
+      show: false,
+    },
+    progress: {
+      show: true,
+      overlap: false,
+      roundCap: false,
+      clip: false,
+      itemStyle: {
+        borderWidth: 0,
+        color: '#ffba00',
+      },
+    },
+    axisLine: {
+      lineStyle: {
+        width: 10,
+        color: [[1, '#4b5899']],
+        opacity: 0.3,
+      },
+    },
+    splitLine: {
+      show: false,
+      distance: 0,
+      length: 10,
+    },
+    axisTick: {
+      show: false,
+    },
+    axisLabel: {
+      show: false,
+    },
+    data: [
+      {
+        value: 100,
+        name: '超时率',
+        title: {
+          offsetCenter: ['0%', '55%'],
+        },
+        detail: {
+          offsetCenter: ['0%', '18%'],
+        },
+      },
+    ],
+    title: {
+      fontSize: 14,
+      color: '#ffba00',
+    },
+    detail: {
+      width: 50,
+      height: 14,
+      color: 'auto',
+      rich: {
+        a: {
+          color: 'white',
+          fontSize: 28,
+          fontWeight: 'normal',
+        },
+        b: {
+          fontSize: 12,
+          color: '#cfd7ff',
+          fontFamily: '微软雅黑',
+        },
+      },
+      formatter: (value?: string | any) => {
+        return '{a|' + value + '}{b|%}';
+      },
+    },
+  };
+
   ngOnInit(): void {
     this.business.subscription.subscription =
       this.storeService.statusChange.subscribe((x) => {
         this.loadData();
       });
-      this.storeService.interval.subscribe(x=>{
-        this.loadData();
-      })
+    this.storeService.interval.subscribe((x) => {
+      this.loadData();
+    });
     this.loadData();
 
     this.gaugeOption = {
@@ -162,81 +309,7 @@ export class DisposalCountComponent
     this.option = {
       color: ['#3a93ff'],
       backgroundColor: 'transparent',
-      series: [
-        {
-          type: 'gauge',
-          startAngle: 90,
-          endAngle: -270,
-          radius: '80%',
-          pointer: {
-            show: false,
-          },
-          progress: {
-            show: true,
-            overlap: false,
-            roundCap: false,
-            clip: false,
-            itemStyle: {
-              borderWidth: 8,
-              borderColor: '#3a93ff',
-            },
-          },
-          axisLine: {
-            lineStyle: {
-              width: 5,
-              color: [[1, '#6b7199']],
-            },
-          },
-          splitLine: {
-            show: false,
-            distance: 0,
-            length: 10,
-          },
-          axisTick: {
-            show: false,
-          },
-          axisLabel: {
-            show: false,
-          },
-          data: [
-            {
-              value: 100,
-              name: '处置率',
-              title: {
-                offsetCenter: ['0%', '30%'],
-              },
-              detail: {
-                offsetCenter: ['0%', '-20%'],
-              },
-            },
-          ],
-          title: {
-            fontSize: 16,
-            color: '#868fff',
-          },
-          detail: {
-            width: 50,
-            height: 14,
-            fontSize: 50,
-            color: 'inherit',
-            rich: {
-              a: {
-                color: 'white',
-                fontSize: 40,
-                fontWeight: 'normal',
-              },
-              b: {
-                fontSize: 14,
-                color: '#cfd7ff',
-                verticalAlign: 'bottom',
-              },
-            },
-            formatter: (value) => {
-              return '{a|' + value + '}{b|%}';
-            },
-          },
-        },
-      ],
+      series: [this.taskSerie, this.timeoutSerie],
     };
   }
   ngOnDestroy() {
@@ -263,6 +336,8 @@ export class DisposalCountComponent
     // ];
 
     (this.option.series! as any)[0].data[0].value = this.data.handledPercentage;
+    (this.option.series! as any)[1].data[0].value =
+      this.data.timeoutRatio.toFixed(0);
     this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {

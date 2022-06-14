@@ -1,10 +1,14 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
+import { timer } from 'rxjs';
 import { Flags } from 'src/app/common/tools/flags';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Language } from 'src/app/global/tool/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 
@@ -12,16 +16,25 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 export class AMapBusiness {
   constructor(
     private storeService: StoreService,
-    private stationService: GarbageStationRequestService
+    private stationService: GarbageStationRequestService,
+    private divisionService: DivisionRequestService
   ) {
     this.storeService.interval.subscribe((x) => {
       this.init();
+
       if (this.labelVisibility) {
         this.setLabelVisibility(true);
       }
     });
     this.storeService.statusChange.subscribe((x) => {
       this.divisionSelect(this.storeService.divisionId);
+      let promise = this.GetPointCount(
+        this.storeService.divisionId,
+        this.storeService.divisionType
+      );
+      promise.then((count) => {
+        this.pointCountChanged.emit(count);
+      });
     });
   }
 
@@ -44,6 +57,8 @@ export class AMapBusiness {
       });
     }
   }
+
+  pointCountChanged: EventEmitter<number> = new EventEmitter();
 
   pointDoubleClicked: EventEmitter<GarbageStation> = new EventEmitter();
 
@@ -83,6 +98,13 @@ export class AMapBusiness {
           }
         });
       }
+    });
+    let p = this.GetPointCount(
+      this.storeService.divisionId,
+      this.storeService.divisionType
+    );
+    p.then((count) => {
+      this.pointCountChanged.emit(count);
     });
   }
 
@@ -169,27 +191,37 @@ export class AMapBusiness {
     this.mapClient.Point.Status(arrayStatus);
   }
 
-  async setLabel(stations: GarbageStation[]) {
+  labelFilter = GarbageTimeFilter.all;
+  GarbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
+    if (time === undefined || time <= 0) return false;
+    return time >= filter;
+  }
+
+  async setLabel(stations: GarbageStation[], filter: GarbageTimeFilter) {
     if (!this.mapClient) return;
     const params = new GetGarbageStationStatisticNumbersParams();
     params.PageSize = 9999;
     params.Ids = stations.map((x) => x.Id);
     const list = await this.stationService.statistic.number.list(params);
 
-    let dropIds = list.Data.filter((x) => {
-      return x.CurrentGarbageTime && x.CurrentGarbageTime > 0;
-    }).map((x) => {
+    let drop = list.Data.filter((x) => {
+      return this.GarbageTimeFiltering(filter, x.CurrentGarbageTime);
+    });
+    let dropIds = drop.map((x) => {
       return x.Id;
     });
 
     this.source.drop = stations.filter((x) => dropIds.includes(x.Id));
-
     const opts = new Array();
-    for (let i = 0; i < list.Data.length; i++) {
-      const data = list.Data[i];
+    for (let i = 0; i < drop.length; i++) {
+      const data = drop[i];
       const station = stations.find((x) => x.Id == data.Id);
 
-      if (station && data.CurrentGarbageTime && data.CurrentGarbageTime > 0) {
+      if (
+        station &&
+        data.CurrentGarbageTime != undefined &&
+        data.CurrentGarbageTime > 0
+      ) {
         let point = this.source.points[data.Id];
         if (!point) {
           point = this.mapClient.DataController.Village.Point.Get(
@@ -251,19 +283,56 @@ export class AMapBusiness {
     }
   }
 
+  async GetPointCount(villageId: string, divisionType: DivisionType) {
+    let count = 0;
+    if (this.mapController) {
+      if (divisionType === DivisionType.Committees) {
+        let ids = this.mapController.Village.Point.GetIds(villageId);
+        count = ids.current.length;
+      } else {
+        let params = new GetDivisionsParams();
+        params.AncestorId = villageId;
+        params.PageSize = 99999;
+        let paged = await this.divisionService.list(params);
+        paged.Data.forEach((item) => {
+          let points = this.mapController!.Village.Point.List(item.Id);
+          for (const key in points) {
+            count++;
+          }
+        });
+      }
+    }
+    return count;
+  }
+
   setPointVisibility(value: boolean) {
     this.source.all.forEach((x) => {
-      if (this.source.labels[x.Id]) return;
-      this.mapClient!.Point.SetVisibility(x.Id, value);
+      if (!value) {
+        if (this.source.labels[x.Id]) {
+          this.mapClient!.Point.SetVisibility(x.Id, true);
+        } else {
+          this.mapClient!.Point.SetVisibility(x.Id, value);
+        }
+      } else {
+        this.mapClient!.Point.SetVisibility(x.Id, value);
+      }
     });
   }
 
-  setLabelVisibility(value: boolean) {
+  async setLabelVisibility(value: boolean) {
     this.labelVisibility = value;
     if (this.mapClient) {
       if (value) {
         this.mapClient.Label.Show();
-        this.setLabel(this.source.all);
+        return await this.setLabel(this.source.all, this.labelFilter).then(
+          () => {
+            timer(100)
+              .toPromise()
+              .then(() => {
+                this.setLabel(this.source.all, this.labelFilter);
+              });
+          }
+        );
       } else {
         this.mapClient.Label.Hide();
       }
@@ -363,4 +432,13 @@ interface AMapDataSource {
   drop: GarbageStation[];
   labels: Global.Dictionary<CesiumDataController.LabelOptions>;
   points: Global.Dictionary<CesiumDataController.Point>;
+}
+
+export enum GarbageTimeFilter {
+  all = 0,
+  m30 = 30 - 1,
+  h1 = 60 - 1,
+  h2 = 120 - 1,
+  h3 = 180 - 1,
+  h4 = 240 - 1,
 }

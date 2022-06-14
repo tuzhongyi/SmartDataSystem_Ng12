@@ -10,8 +10,10 @@ import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
 } from 'src/app/network/model/event-record.model';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
@@ -26,8 +28,12 @@ export class CommitteesHistroyTableService
       >[]
     >
 {
-  constructor(private eventService: EventRequestService) {}
-  Converter: IConverter<
+  constructor(
+    private eventService: EventRequestService,
+    private stationService: GarbageStationRequestService,
+    private divisionService: DivisionRequestService
+  ) {}
+  Converter: IPromiseConverter<
     (IllegalDropEventRecord | MixedIntoEventRecord)[],
     CommitteesHistoryTableViewModel<
       IllegalDropEventRecord | MixedIntoEventRecord
@@ -49,10 +55,20 @@ export class CommitteesHistroyTableService
 
   async load(divisionId: string, eventType: EventType) {
     let data = await this.getData(divisionId, eventType);
-    let model = this.Converter.Convert(data);
+    let model = await this.Converter.Convert(data, {
+      station: (id: string) => {
+        return this.stationService.cache.get(id);
+      },
+      division: (id: string) => {
+        return this.divisionService.cache.get(id);
+      },
+      camera: (stationId: string, cameraId: string) => {
+        return this.stationService.camera.get(stationId, cameraId);
+      },
+    });
     let i = 0;
     model = model.sort((a, b) => {
-      return b.Time.localeCompare(a.Time);
+      return b.DateFormatter.localeCompare(a.DateFormatter);
     });
     model.forEach((x) => {
       x.Index = ++i;

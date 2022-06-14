@@ -18,6 +18,7 @@ import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
 } from 'src/app/network/model/event-record.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import {
   CommitteesHistoryTableTypes,
@@ -55,12 +56,9 @@ export class CommitteesHistroyTableComponent
   Type: EventType = EventType.IllegalDrop;
 
   @Output()
-  OnPictureClicked: EventEmitter<
-    IllegalDropEventRecord | MixedIntoEventRecord
-  > = new EventEmitter();
+  OnPictureClicked: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
-  OnVideoClicked: EventEmitter<IllegalDropEventRecord | MixedIntoEventRecord> =
-    new EventEmitter();
+  OnVideoClicked: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
   constructor(
     business: CommitteesHistroyTableService,
@@ -112,7 +110,8 @@ export class CommitteesHistroyTableComponent
       IllegalDropEventRecord | MixedIntoEventRecord
     >
   ) {
-    this.OnPictureClicked.emit(item.Data);
+    let array = new ImageControlModelArray(item.images, 0, false);
+    this.OnPictureClicked.emit(array);
   }
   videoClick(
     event: Event,
@@ -120,6 +119,7 @@ export class CommitteesHistroyTableComponent
       IllegalDropEventRecord | MixedIntoEventRecord
     >
   ) {
-    this.OnVideoClicked.emit(item.Data);
+    let array = new ImageControlModelArray(item.images, 0, true);
+    this.OnVideoClicked.emit(array);
   }
 }

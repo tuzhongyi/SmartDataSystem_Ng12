@@ -49,6 +49,7 @@
       [draw]="draw"
       (onplay)="onplayed($event)"
       (onstop)="onstoped($event)"
+      [operation]="operation"
     ></app-image-video-control>
     <div class="page" *ngIf="datas.length > 1 && playing === false">
       <div class="prev">

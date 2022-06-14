@@ -1,7 +1,7 @@
 <div class="retention">
   <div class="retention__head">
     <div class="title">{{ title }}</div>
-    <div class="select-group">
+    <div class="select-group" *ngIf="typeEnabled">
       <app-select-control
         style="min-width: 106px"
         [data]="retentionTypes"

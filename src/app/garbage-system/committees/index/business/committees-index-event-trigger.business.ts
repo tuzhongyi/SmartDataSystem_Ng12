@@ -38,20 +38,10 @@ class IllegalMixintoRankEventTrigger {
   constructor(private window: CommitteesWindowBussiness) {}
   onItemClicked(args: IllegalMixintoRankArgs) {
     this.window.record.count = args.model.value;
-    this.window.record.divisionId = args.model.id;
+
     this.window.record.type = args.eventType;
     this.window.record.divisionId = undefined;
-    this.window.record.stationId = undefined;
-    switch (args.resourceType) {
-      case UserResourceType.Committees:
-        this.window.record.divisionId = args.model.id;
-        break;
-      case UserResourceType.Station:
-        this.window.record.stationId = args.model.id;
-        break;
-      default:
-        break;
-    }
+    this.window.record.stationId = args.model.id;
     this.window.record.show = true;
   }
 }

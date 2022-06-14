@@ -21,4 +21,6 @@ export class DisposalCountModel {
   disposalCountArray: Array<IDisposalCount> = [];
 
   unit: string = '起';
+
+  timeoutRatio: number = 0;
 }

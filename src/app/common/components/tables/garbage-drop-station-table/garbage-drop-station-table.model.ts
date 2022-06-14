@@ -12,5 +12,9 @@ export class GarbageDropStationTableModel {
   MaxGarbageDuration?: Date;
   GarbageCount = 0;
   images: ImageControlModel[] = [];
-  members: Member[] = [];
+  members: MemberViewModel[] = [];
+}
+
+export class MemberViewModel extends Member {
+  view: string = '';
 }

@@ -13,7 +13,10 @@ import { classToClass } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlComponent } from 'src/app/common/components/image-video-control/image-video-control.component';
-import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
+import {
+  ImageVideoControlModel,
+  ImageVideoControlOperation,
+} from 'src/app/common/components/image-video-control/image-video-control.model';
 import {
   PlayMode,
   VideoModel,
@@ -49,6 +52,8 @@ export class MediaControlComponent
   stop?: EventEmitter<void>;
   @Input()
   autoplay: boolean = false;
+
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
 
   @Output()
   played: EventEmitter<void> = new EventEmitter();
@@ -91,6 +96,12 @@ export class MediaControlComponent
           }
         });
       }
+    }
+    if (this.model) {
+      this.operation.fullscreen = this.model.length > 1;
+    }
+    if (changes.autoplay && changes.autoplay.firstChange) {
+      this.playing = this.autoplay;
     }
   }
   business: MediaVideoControlBussiness;
@@ -141,6 +152,7 @@ export class MediaControlComponent
     } else {
       this.displayConfig(this.current);
     }
+    this.operation.play = !this._playing;
   }
 
   displayConfig(model?: ImageVideoControlModel) {

@@ -32,6 +32,9 @@ export class RetentionRankComponent
   @Output()
   Click: EventEmitter<RetentionRankArgs> = new EventEmitter();
 
+  @Input()
+  typeEnabled = true;
+
   public title: string = '垃圾滞留时长排名';
 
   // 处理后的排行榜数据
@@ -50,11 +53,7 @@ export class RetentionRankComponent
   ngOnInit(): void {
     let _enum = new Enum(RetentionType);
     this.retentionTypes = _enum.toArray((x) => {
-      return new SelectItem(
-        x,
-        x,
-        Language.RetentionType(x),
-      );
+      return new SelectItem(x, x, Language.RetentionType(x));
     });
 
     // 区划改变时触发

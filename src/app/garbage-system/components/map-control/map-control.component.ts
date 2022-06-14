@@ -16,7 +16,7 @@ import { LocalStorageService } from 'src/app/global/service/local-storage.servic
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
-import { AMapBusiness } from './business/amap.business';
+import { AMapBusiness, GarbageTimeFilter } from './business/amap.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
@@ -29,7 +29,6 @@ declare var $: any;
   providers: [AMapBusiness, ListPanelBusiness, PointInfoPanelBusiness],
 })
 export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
-
   //#region Output
   @Output()
   VideoPlay: EventEmitter<Camera> = new EventEmitter();
@@ -90,7 +89,6 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   //#endregion
   //#endregion
 
-
   elementInit() {
     $('.ul').each(function (index: number, element: HTMLElement) {
       if (!element.onwheel) {
@@ -133,11 +131,11 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     private sanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
-    private amap: AMapBusiness,
+    public amap: AMapBusiness,
     public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness
-  ) { }
-  ngAfterViewInit(): void { }
+  ) {}
+  ngAfterViewInit(): void {}
 
   //#region wait
   loadHandle?: NodeJS.Timer;
@@ -161,6 +159,9 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
       this.onPointDoubleClicked(x);
       this.info.station = undefined;
     });
+    this.amap.pointCountChanged.subscribe((count) => {
+      this.pointCount = count;
+    });
     this.amap.mapClicked.subscribe(() => {
       this.onMapClicked();
       this.info.station = undefined;
@@ -169,13 +170,13 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
       this.info.station = x;
       this.display.status = false;
     });
-    this.amap.menuEvents.illegalDropClicked.subscribe(x => {
-      this.illegalDropClicked.emit(x)
+    this.amap.menuEvents.illegalDropClicked.subscribe((x) => {
+      this.illegalDropClicked.emit(x);
     });
-    this.amap.menuEvents.mixedIntoClicked.subscribe(x => {
-      this.mixedIntoClicked.emit(x)
+    this.amap.menuEvents.mixedIntoClicked.subscribe((x) => {
+      this.mixedIntoClicked.emit(x);
     });
-    this.amap.menuEvents.garbageCountClicked.subscribe(x => {
+    this.amap.menuEvents.garbageCountClicked.subscribe((x) => {
       this.garbageCountClicked.emit(x);
     });
 
@@ -254,7 +255,7 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   Button1Clicked() {
     this.patrol.emit();
   }
-  Button2Clicked() { }
+  Button2Clicked() {}
   Button3Clicked() {
     this.display.label.current = !this.display.label.current;
   }
@@ -272,7 +273,34 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     this.mixedIntoClicked.emit(station);
   }
   onPointInfoPanelStateClickedEvent(station: GarbageStation) {
-    this.garbageFullClicked.emit(station)
+    this.garbageFullClicked.emit(station);
+  }
+
+  GarbageTimeFilter = GarbageTimeFilter;
+
+  GarbageTimeFilting(filter: GarbageTimeFilter) {
+    this.amap.labelFilter = filter;
+    this.amap.setLabelVisibility(false).then((x) => {
+      this.display.label.current = this.display.label.current;
+      this.amap.setLabelVisibility(true).then(() => {
+        this.display.label.station.value = this.display.label.station.value;
+      });
+    });
+  }
+
+  ButtonAllClicked() {
+    this.GarbageTimeFilting(GarbageTimeFilter.all);
+  }
+  Button30mClicked() {
+    this.GarbageTimeFilting(GarbageTimeFilter.m30);
+  }
+
+  Button1hClicked() {
+    this.GarbageTimeFilting(GarbageTimeFilter.h1);
+  }
+
+  Button2hClicked() {
+    this.GarbageTimeFilting(GarbageTimeFilter.h2);
   }
 }
 
@@ -282,7 +310,7 @@ class MapControlDisplay {
       current: (state: boolean) => void;
       station: (state: boolean) => void;
     }
-  ) { }
+  ) {}
   status = true;
   videoList = false;
   videoControl = false;

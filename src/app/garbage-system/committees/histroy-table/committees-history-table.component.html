@@ -19,9 +19,11 @@
             <tr>
               <td [ngStyle]="{ width: bodyWidths[0] }">{{ item.Index }}</td>
               <td [ngStyle]="{ width: bodyWidths[1] }">
-                {{ item.StationName }}
+                {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
               </td>
-              <td [ngStyle]="{ width: bodyWidths[2] }">{{ item.Time }}</td>
+              <td [ngStyle]="{ width: bodyWidths[2] }">
+                {{ item.DateFormatter }}
+              </td>
               <td
                 class="operate sky-blue-text2"
                 [ngStyle]="{ width: bodyWidths[3] }"

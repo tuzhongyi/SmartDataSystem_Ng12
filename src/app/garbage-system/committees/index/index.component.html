@@ -59,6 +59,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-retention-rank
+          [typeEnabled]="false"
           (Click)="trigger.retentionRank.onclick($event)"
         ></app-retention-rank>
       </div>
@@ -123,76 +124,17 @@
 >
 </app-video-window>
 
-<howell-event-record-window
-  *ngIf="window.record.show"
-  [Model]="window.record"
-  [style]="window.record.style"
-  [type]="window.record.type"
-  [stationId]="window.record.stationId"
-  (image)="window.record.onimage($event)"
->
-</howell-event-record-window>
 
-<howell-device-list-window
-  *ngIf="window.device.show"
-  [Model]="window.device"
-  [style]="window.device.style"
-  [status]="window.device.status"
-  (image)="window.device.onimage($event)"
->
-</howell-device-list-window>
 
-<howell-garbage-drop-station-window
-  *ngIf="window.drop.show"
-  [Model]="window.drop"
-  [style]="window.drop.style"
-  (image)="window.drop.onimage($event)"
->
-</howell-garbage-drop-station-window>
 
-<howell-garbage-full-station-window
-  *ngIf="window.full.show"
-  [Model]="window.full"
-  [style]="window.full.style"
-  (image)="window.full.onimage($event)"
->
-</howell-garbage-full-station-window>
 
-<howell-garbage-station-window
-  *ngIf="window.station.show"
-  [Model]="window.station"
-  [style]="window.station.style"
-  [index]="window.station.index"
-  [stationId]="window.station.stationId"
-  (image)="window.station.onimage($event)"
-  (chartdblclick)="window.station.onchartdblclick($event)"
->
-</howell-garbage-station-window>
 
-<app-window
-  [Model]="window.media.single"
-  [style]="window.media.single.style"
-  [manualClose]="true"
-  (OnClosing)="window.media.single.onclosing()"
->
-  <ng-container *ngIf="window.media.single.show">
-    <app-media-control
-      [autoplay]="window.media.single.autoplay"
-      [model]="window.media.single.camera"
-      [index]="window.media.single.index"
-      [stop]="window.media.single.closing"
-      (played)="window.media.single.onplay()"
-      (stoped)="window.media.single.onstop()"
-    ></app-media-control>
-  </ng-container>
-</app-window>
 
-<howell-media-multiple-window
-  *ngIf="window.media.multiple.show"
-  [Model]="window.media.multiple"
-  [style]="window.media.multiple.style"
-  [statistic]="window.media.multiple.statistic"
-></howell-media-multiple-window> -->
+
+
+
+
+ -->
 
 <app-window [Model]="window.mobile" [style]="window.mobile.styles">
   <ng-container *ngIf="window.mobile.show">
@@ -225,3 +167,71 @@
     ></app-statistic-summary>
   </ng-container>
 </app-window>
+
+<howell-device-list-window
+  *ngIf="window.device.show"
+  [Model]="window.device"
+  [style]="window.device.style"
+  [status]="window.device.status"
+  (image)="window.device.onimage($event)"
+>
+</howell-device-list-window>
+<howell-garbage-station-window
+  *ngIf="window.stationInfo.show"
+  [Model]="window.stationInfo"
+  [style]="window.stationInfo.style"
+  [index]="window.stationInfo.index"
+  [stationId]="window.stationInfo.stationId"
+  (image)="window.stationInfo.onimage($event)"
+  (chartdblclick)="window.stationInfo.onchartdblclick($event)"
+>
+</howell-garbage-station-window>
+<howell-event-record-window
+  *ngIf="window.record.show"
+  [Model]="window.record"
+  [style]="window.record.style"
+  [type]="window.record.type"
+  [stationId]="window.record.stationId"
+  (image)="window.record.onimage($event)"
+>
+</howell-event-record-window>
+
+<howell-garbage-full-station-window
+  *ngIf="window.full.show"
+  [Model]="window.full"
+  [style]="window.full.style"
+  (image)="window.full.onimage($event)"
+>
+</howell-garbage-full-station-window>
+<howell-garbage-drop-station-window
+  *ngIf="window.drop.show"
+  [Model]="window.drop"
+  [style]="window.drop.style"
+  (image)="window.drop.onimage($event)"
+>
+</howell-garbage-drop-station-window>
+
+<app-window
+  [Model]="window.media.single"
+  [style]="window.media.single.style"
+  [manualClose]="true"
+  (OnClosing)="window.media.single.onclosing()"
+>
+  <ng-container *ngIf="window.media.single.show">
+    <app-media-control
+      [autoplay]="window.media.single.autoplay"
+      [model]="window.media.single.camera"
+      [index]="window.media.single.index"
+      [stop]="window.media.single.closing"
+      (played)="window.media.single.onplay()"
+      (stoped)="window.media.single.onstop()"
+    ></app-media-control>
+  </ng-container>
+</app-window>
+
+<howell-media-multiple-window
+  *ngIf="window.media.multiple.show"
+  [Model]="window.media.multiple"
+  [style]="window.media.multiple.style"
+  [statistic]="window.media.multiple.statistic"
+></howell-media-multiple-window>

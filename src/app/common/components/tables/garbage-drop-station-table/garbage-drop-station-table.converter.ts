@@ -5,7 +5,10 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
+import {
+  GarbageDropStationTableModel,
+  MemberViewModel,
+} from './garbage-drop-station-table.model';
 
 export class GarbageDropStationPagedTableConverter
   implements
@@ -72,7 +75,15 @@ export class GarbageDropStationTableConverter
       getter.division
     );
     if (model.GarbageStation) {
-      model.members = model.GarbageStation.Members ?? [];
+      model.members = (model.GarbageStation.Members ?? []).map((x) => {
+        let model = new MemberViewModel();
+        model = Object.assign(model, x);
+        model.view = x.Name;
+        if (model.MobileNo) {
+          model.view += `（${model.MobileNo}）`;
+        }
+        return model;
+      });
       if (model.GarbageStation.Cameras) {
         model.images = this.converter.image.Convert(
           model.GarbageStation.Cameras

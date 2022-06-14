@@ -71,8 +71,8 @@
               <div
                 style="width: 16px"
                 *ngFor="let member of item.members"
-                matTooltip="Info about the action"
-                [title]="member.Name"
+                [matTooltip]="member.view"
+                [matTooltipPosition]="'above'"
               >
                 <i class="howell-icon-user-anonymous"></i>
               </div>

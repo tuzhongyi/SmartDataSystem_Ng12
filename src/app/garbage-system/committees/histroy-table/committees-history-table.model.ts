@@ -1,10 +1,11 @@
 import { EventType } from 'src/app/enum/event-type.enum';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 
-export class CommitteesHistoryTableViewModel<T = any> {
+export class CommitteesHistoryTableViewModel<
+  T = any
+> extends EventRecordViewModel {
   Id: string = '';
   Index: number = 0;
-  StationName: string = '';
-  Time: string = '';
   Data?: T;
 }
 
