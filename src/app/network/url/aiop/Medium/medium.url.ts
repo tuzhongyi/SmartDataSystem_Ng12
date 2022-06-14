@@ -1,7 +1,7 @@
 import { BaseAiopUrl } from '../../base.url';
 import { PictureInnerUrl } from './picture.url';
 
-export class MediumUrl {
+export abstract class MediumUrl {
   static basic() {
     return `${BaseAiopUrl}/Medium`;
   }

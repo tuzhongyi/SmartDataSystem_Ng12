@@ -8,7 +8,7 @@ import {
 import { BehaviorSubject } from 'rxjs';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
+import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -25,7 +25,7 @@ import { TreeService } from './tree.service';
   ],
 })
 export class TreeComponent implements OnInit {
-  TreeSelectEnum = TreeSelectEnum;
+  TreeSelectEnum = SelectEnum;
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],
@@ -82,9 +82,9 @@ export class TreeComponent implements OnInit {
 
   // 高亮显示选中节点
   highLight = (node: FlatTreeNode) => {
-    if (this.selectModel == TreeSelectEnum.Single) {
+    if (this.selectModel == SelectEnum.Single) {
       return this.selection.isSelected(node);
-    } else if (this.selectModel == TreeSelectEnum.Multiple) {
+    } else if (this.selectModel == SelectEnum.Multiple) {
       // 仅当前点击的高亮，其他节点状态通过checkbox体现
       return this._currentNode && this._currentNode.id == node.id;
 
@@ -130,7 +130,7 @@ export class TreeComponent implements OnInit {
   serviceModel = TreeServiceEnum.Division; // 区划树或厢房树
 
   @Input('treeSelectModel')
-  selectModel = TreeSelectEnum.Single;// 单选或多选
+  selectModel = SelectEnum.Single;// 单选或多选
 
   // 最高区划等级
   private _userResourceType: UserResourceType = UserResourceType.City;
@@ -191,7 +191,7 @@ export class TreeComponent implements OnInit {
 
     // console.log('树类型: ', this.serviceModel)
 
-    if (this.selectModel == TreeSelectEnum.Single) {
+    if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);
@@ -406,7 +406,7 @@ export class TreeComponent implements OnInit {
 
   private _setDefaultNodes() {
     if (this.defaultIds.length == 0) return;
-    if (this.selectModel == TreeSelectEnum.Single) {
+    if (this.selectModel == SelectEnum.Single) {
       this.defaultIds.length = 1;
     }
 

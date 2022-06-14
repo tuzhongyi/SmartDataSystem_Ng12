@@ -36,6 +36,9 @@ import { classToPlain } from 'class-transformer';
   providedIn: 'root',
 })
 export class DivisionRequestService extends AbstractService<Division> {
+  private basic: BaseRequestService;
+  private type: BaseTypeRequestService<Division>;
+
   constructor(_http: HowellAuthHttpService) {
     super();
     // console.log('DivisionRequestService');
@@ -43,8 +46,7 @@ export class DivisionRequestService extends AbstractService<Division> {
     this.type = this.basic.type(Division);
   }
 
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Division>;
+
   create(data: Division): Promise<Division> {
     let url = DivisionUrl.basic();
     return this.type.post(url, data);
@@ -113,7 +115,7 @@ export class DivisionRequestService extends AbstractService<Division> {
 }
 
 class VolumesService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -124,7 +126,7 @@ class VolumesService {
   }
 }
 class VolumesHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   list(
     divisionId: string,
     params: GetDivisionVolumesParams
@@ -135,7 +137,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   sum(params: GetDivisionSumEventNumberParams): Promise<SumEventNumber[]> {
     let url = DivisionUrl.eventnumber().sum();
@@ -152,7 +154,7 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   list(
     divisionId: string,
     params: GetDivisionEventNumbersParams
@@ -164,7 +166,7 @@ class EventNumbersHistoryService {
 }
 
 class StatisticService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -208,7 +210,7 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   list(
     params: GetDivisionStatisticNumbersParamsV2
   ): Promise<DivisionNumberStatisticV2[]> {

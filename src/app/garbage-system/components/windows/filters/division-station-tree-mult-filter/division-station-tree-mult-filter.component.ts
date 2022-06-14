@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
+import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';

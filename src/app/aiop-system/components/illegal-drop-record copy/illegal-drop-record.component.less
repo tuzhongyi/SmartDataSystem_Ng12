@@ -1,0 +1,77 @@
+.illegal-drop {
+  width: 100%;
+  height: 100%;
+  // border: 3px solid violet;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  &-header {
+    // background-color: rgb(0, 255, 85);
+  }
+  &-main {
+    // background-color: red;
+    flex-basis: 0;
+    flex-grow: 1;
+    overflow: auto;
+  }
+  &-footer {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid #7586e0;
+    padding: 0 20px;
+    box-sizing: border-box;
+    overflow: auto;
+    .footer-item {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+
+      .footer-info {
+        display: flex;
+        .info-item {
+          margin: 10px;
+          font-size: 14px;
+          color: #cfd7ff;
+        }
+      }
+    }
+  }
+}
+
+::ng-deep .mat-table .mat-header-row .mat-header-cell div.operate {
+  padding-right: 30px;
+}
+
+::ng-deep .mat-table .mat-row .mat-cell div.picture {
+  display: flex;
+  align-items: center;
+  width: 70px;
+  height: 50px;
+  flex-grow: 0;
+  & img {
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-table .mat-row:hover .mat-cell div.picture {
+  width: 120px;
+  height: 96px;
+}
+
+::ng-deep .mat-table .mat-row .mat-cell div.operate {
+  color: #7586e0;
+}
+::ng-deep .mat-table .mat-row .mat-cell div.operate i {
+  padding-right: 5px;
+}
+
+::ng-deep .mat-table .mat-row .mat-cell div.operate i:hover {
+  color: #fff;
+}
+
+::ng-deep .mat-table .mat-row.high-light .mat-cell div.operate i {
+  color: #cfd7ff;
+}

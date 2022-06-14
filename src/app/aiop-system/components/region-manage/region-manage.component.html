@@ -1,1 +1,103 @@
-<p>region-manage works!</p>
+<div class="region-manage">
+  <div class="hw-tree-list">
+    <div class="hw-simple-title">安保区域</div>
+    <div class="hw-btn-group">
+      <button class="hw-btn hw-green-btn" (click)="addBtnClick()">
+        <i class="howell-icon-plus"></i>
+        添加
+      </button>
+      <button class="hw-btn hw-red-btn" (click)="deleteBtnClick()">
+        <i class="howell-icon-delete-bin"></i>
+        删除
+      </button>
+    </div>
+
+    <div class="search-wrapper">
+      <howell-simple-search
+        placeHolder="名称"
+        (searchEvent)="searchEventHandler($event)"
+      ></howell-simple-search>
+    </div>
+
+    <div class="tree-container">
+      <app-tree
+        #tree
+        (selectTreeNode)="selectTreeNode($event)"
+        [(holdStatus)]="holdStatus"
+      ></app-tree>
+    </div>
+  </div>
+
+  <div class="region-detail">
+    <div class="hw-simple-title">{{ title }}</div>
+
+    <form class="form bold-scrollbar" [formGroup]="myForm">
+      <div class="form-group">
+        <div class="title">
+          <span class="form-label"> 区划ID </span>
+          <span class="form-icon" *ngIf="state == FormState.add">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="form-control form-input"
+            formControlName="Id"
+            [placeholder]="addPlaceHolder"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="title">
+          <span class="form-label"> 区划名称 </span>
+          <span class="form-icon" *ngIf="state == FormState.add">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="form-control form-input"
+            formControlName="Name"
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="title">
+          <span class="form-label"> 上级区划名称 </span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="form-control form-input"
+            formControlName="ParentName"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="title">
+          <span class="form-label"> 区划描述 </span>
+        </div>
+        <div class="content">
+          <textarea
+            class="form-control form-textarea"
+            cols="30"
+            rows="7"
+            formControlName="Description"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="btns" [hidden]="state == FormState.none">
+          <button class="btn hw-green-m-btn" type="button" (click)="onSubmit()">
+            <i class="howell-icon-Check"></i>
+          </button>
+
+          <button class="btn hw-gray-m-btn" type="button" (click)="onReset()">
+            <i class="howell-icon-Close"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

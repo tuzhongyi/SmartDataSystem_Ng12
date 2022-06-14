@@ -11,7 +11,7 @@
     ></app-table> -->
     <app-table></app-table>
   </div>
-  <!-- <div class="illegal-drop-footer">
+  <div class="illegal-drop-footer">
     <div class="footer-item">
       <app-table-select (tableSelectEvent)="tableSelect($event)">
       </app-table-select>
@@ -24,6 +24,7 @@
         <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
 
+      <!-- MatPaginator 的pageIndex是从0开始-->
       <app-paginator
         *ngIf="page"
         [length]="page.TotalRecordCount"
@@ -35,5 +36,5 @@
       >
       </app-paginator>
     </div>
-  </div> -->
+  </div>
 </div>

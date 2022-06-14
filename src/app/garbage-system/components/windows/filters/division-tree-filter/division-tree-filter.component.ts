@@ -14,7 +14,7 @@ import {
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
+import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
@@ -45,7 +45,7 @@ export class DivisionTreeFilterComponent
   align: HorizontalAlign = HorizontalAlign.right;
 
   treeServiceModel = TreeServiceEnum.Division;
-  treeSelectModel = TreeSelectEnum.Single;
+  treeSelectModel = SelectEnum.Single;
 
   current?: FlatTreeNode;
 

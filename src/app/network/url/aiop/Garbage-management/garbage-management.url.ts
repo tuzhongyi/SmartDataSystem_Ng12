@@ -1,6 +1,6 @@
 import { BaseAiopUrl } from '../../base.url';
 
-export class GarbageUrl {
+export abstract class GarbageManagementUrl {
   static get basic(): string {
     return `${BaseAiopUrl}/garbage_management`;
   }

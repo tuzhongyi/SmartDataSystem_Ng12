@@ -1,15 +1,14 @@
-<div class="division-manage">
+<div class="division-manage hw-tree-model">
   <ng-container *ngIf="showDialog">
     <howell-confirm-dialog
       (dialogMsg)="dialogMsgEvent($event)"
     ></howell-confirm-dialog>
   </ng-container>
-  <div class="hw-tree-list">
+  <div class="hw-tree-left">
     <div class="hw-simple-title">区划列表</div>
-
     <div class="hw-btn-group">
       <button
-        class="hw-btn hw-green-btn"
+        class="hw-green-btn"
         (click)="addBtnClick()"
         [disabled]="!enableAddBtn"
       >
@@ -17,7 +16,7 @@
         添加
       </button>
       <button
-        class="hw-btn hw-red-btn"
+        class="hw-red-btn"
         (click)="deleteBtnClick()"
         [disabled]="!enableDelBtn"
       >
@@ -25,7 +24,7 @@
         删除
       </button>
       <button
-        class="hw-btn hw-blue-btn"
+        class="hw-blue-btn"
         (click)="editBtnClick()"
         [disabled]="!enableEditBtn"
       >
@@ -51,58 +50,58 @@
       ></app-tree>
     </div>
   </div>
-  <div class="division-detail">
+  <div class="hw-tree-right">
     <div class="hw-simple-title">{{ title }}</div>
 
-    <form class="form bold-scrollbar" [formGroup]="myForm">
-      <div class="form-group">
+    <form class="hw-form bold-scrollbar" [formGroup]="myForm">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 区划ID </span>
-          <span class="form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-label"> 区划ID </span>
+          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
         </div>
         <div class="content">
           <input
             type="text"
-            class="form-control form-input"
+            class="hw-form-control hw-form-input"
             formControlName="Id"
             [placeholder]="addPlaceHolder"
           />
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 区划名称 </span>
-          <span class="form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-label"> 区划名称 </span>
+          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
         </div>
         <div class="content">
           <input
             type="text"
-            class="form-control form-input"
+            class="hw-form-control hw-form-input"
             formControlName="Name"
           />
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 上级区划名称 </span>
+          <span class="hw-form-label"> 上级区划名称 </span>
         </div>
         <div class="content">
           <input
             type="text"
-            class="form-control form-input"
+            class="hw-form-control hw-form-input"
             formControlName="ParentName"
           />
         </div>
       </div>
-      <div class="form-group">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 区划描述 </span>
+          <span class="hw-form-label"> 区划描述 </span>
         </div>
         <div class="content">
           <textarea
-            class="form-control form-textarea"
+            class="hw-form-control hw-form-textarea"
             cols="30"
             rows="7"
             formControlName="Description"
@@ -110,15 +109,15 @@
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="hw-form-group">
         <div class="btns" [hidden]="state == FormState.none">
-          <button class="btn hw-green-m-btn" type="button" (click)="onSubmit()">
+          <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
             <i class="howell-icon-Check"></i>
           </button>
           <!--
             type不能为reset,否则先调用 本类的onReset()，然后调用 FormGroupDirective内部 reset()
           -->
-          <button class="btn hw-gray-m-btn" type="button" (click)="onReset()">
+          <button class="hw-gray-m-btn" type="button" (click)="onReset()">
             <i class="howell-icon-Close"></i>
           </button>
         </div>

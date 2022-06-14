@@ -62,6 +62,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   constructor(public sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
+    // console.log(this.selectModel);
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<TableCellModel>();
     } else {

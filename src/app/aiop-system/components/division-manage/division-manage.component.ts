@@ -6,7 +6,7 @@ import { DivisionManageBusiness } from './division-manage.business';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { TreeSelectEnum } from 'src/app/enum/tree-select.enum';
+import { SelectEnum } from 'src/app/enum/select.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Language } from 'src/app/global/tool/language';
@@ -34,7 +34,7 @@ export class DivisionManageComponent implements OnInit {
 
   /*****public ********/
   treeServiceModel = TreeServiceEnum.Station;
-  treeSelectModel = TreeSelectEnum.Single;
+  treeSelectModel = SelectEnum.Single;
   currentNode?: FlatTreeNode;
   resourceType: UserResourceType = UserResourceType.None;
   myForm = new FormGroup({
