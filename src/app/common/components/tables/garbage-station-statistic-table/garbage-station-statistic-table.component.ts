@@ -40,7 +40,7 @@ export class GarbageStationStatisticTableComponent
 
   Language = Language;
   Math = Math;
-  width = ['17%', '13%', '16%', '16%', '16%', '13%', '9%'];
+  width = ['12%', '10%', '10%', '8%', '8%', '12%', '12%', '12%', '8%', '8%'];
   loading = false;
   ngOnInit() {
     this.loadData();
@@ -72,6 +72,7 @@ export class GarbageStationStatisticTableComponent
   }
   async loadData() {
     let datas = await this.business.load(this.date, this.unit);
+
     datas = datas.sort((a, b) => {
       switch (this.order.type) {
         case OrderType.Asc:

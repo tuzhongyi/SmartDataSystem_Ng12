@@ -17,6 +17,7 @@ table {
         align-items: left;
         font-weight: normal;
         padding: 12px;
+        white-space: nowrap;
 
         &:first-child {
           padding-left: 40px;
@@ -50,13 +51,14 @@ table {
         height: 58px;
         cursor: pointer;
 
+        box-sizing: border-box;
 
         td {
           color: #cfd7ff;
           height: 100%;
           padding: 12px;
           border: none;
-
+          white-space: nowrap;
 
           &:first-child {
             padding-left: 40px;
@@ -72,6 +74,18 @@ table {
               height: 36px;
             }
           }
+
+          &.operation {
+
+            color: #7586e0;
+
+
+
+            &:hover {
+              color: white;
+            }
+          }
+
         }
 
         &:hover {

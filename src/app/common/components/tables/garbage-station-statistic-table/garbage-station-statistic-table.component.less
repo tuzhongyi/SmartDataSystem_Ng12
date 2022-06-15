@@ -1,11 +1,15 @@
 .garbage-station-statistic-table {
   height: 100%;
 
+  label {
+    margin-bottom: 0;
+  }
+
   &-main {
     height: 100%;
 
     .body table {
-      table-layout: auto;
+      table-layout: fixed;
     }
 
     .value {
@@ -53,7 +57,7 @@
 
     ::ng-deep {
       .body {
-        height: calc(100% - 70px - 50px);
+        height: calc(100% - 70px);
       }
 
       .mat-sort-header-arrow {

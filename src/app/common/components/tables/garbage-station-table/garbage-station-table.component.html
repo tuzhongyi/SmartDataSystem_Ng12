@@ -4,11 +4,13 @@
       <thead>
         <tr>
           <td [ngStyle]="{ width: width[0] }">图片</td>
-          <td [ngStyle]="{ width: width[1] }">投放点</td>
-          <td [ngStyle]="{ width: width[2] }">街道</td>
-          <td [ngStyle]="{ width: width[3] }">居委会</td>
-          <td [ngStyle]="{ width: width[4] }">状态</td>
-          <td [ngStyle]="{ width: width[5] }">操作</td>
+
+          <td [ngStyle]="{ width: width[2] }">投放点</td>
+          <td [ngStyle]="{ width: width[1] }">社区</td>
+          <td [ngStyle]="{ width: width[3] }">街道</td>
+          <td [ngStyle]="{ width: width[4] }">居委会</td>
+          <td [ngStyle]="{ width: width[5] }">状态</td>
+          <td class="operation"><div>操作</div></td>
         </tr>
       </thead>
     </table>
@@ -19,42 +21,53 @@
             <td [ngStyle]="{ width: width[0] }">
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
-                  <app-image-control [nosignal]="false" [model]="img" (Click)="imageClick(item, img)">
+                  <app-image-control
+                    [nosignal]="false"
+                    [model]="img"
+                    (Click)="imageClick(item, img)"
+                  >
                   </app-image-control>
 
                   <!-- [src]="item.imageSrc" -->
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{ width: width[2] }">
+            <td [ngStyle]="{ width: width[1] }">
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: width[3] }">
-              {{
-              item.GarbageStation
-              ? item.GarbageStation.Committees
-              ? item.GarbageStation.Committees.Name
-              : ""
-              : ""
-              }}
+            <td [ngStyle]="{ width: width[2] }">
+              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
             </td>
             <td [ngStyle]="{ width: width[3] }">
               {{
-              item.GarbageStation
-              ? item.GarbageStation.Committees
-              ? item.GarbageStation.Committees.Name
-              : ""
-              : ""
+                item.GarbageStation
+                  ? item.GarbageStation.Committees
+                    ? item.GarbageStation.Committees.Name
+                    : ""
+                  : ""
               }}
             </td>
             <td [ngStyle]="{ width: width[4] }">
               {{
-              item.GarbageStation
-              ? Language.StationState(item.GarbageStation.StationState)
-              : ""
+                item.GarbageStation
+                  ? item.GarbageStation.Committees
+                    ? item.GarbageStation.Committees.Name
+                    : ""
+                  : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[5] }"></td>
+            <td [ngStyle]="{ width: width[5] }">
+              {{
+                item.GarbageStation
+                  ? Language.StationState(item.GarbageStation.StationState)
+                  : ""
+              }}
+            </td>
+            <td class="operation">
+              <div (click)="onPositionClicked(item)">
+                <i class="glyphicon glyphicon-map-marker"></i>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -69,8 +82,14 @@
           </div>
         </div>
 
-        <app-paginator [length]="page?page.TotalRecordCount:0" [pageSize]="page?page.PageSize:0" [pagerCount]="5"
-          [pageIndex]="0" [showFirstLastButtons]="true" (page)="pageEvent($event)">
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="0"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
         </app-paginator>
       </div>
     </div>

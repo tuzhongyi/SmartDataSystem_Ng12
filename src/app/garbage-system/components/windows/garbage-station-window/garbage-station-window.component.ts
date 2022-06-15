@@ -37,8 +37,8 @@ export class GarbageStationWindowComponent
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
   chartdblclick: EventEmitter<GarbageStationGarbageCountStatistic> = new EventEmitter();
-
-  Index = GarbageStationWindowIndex;
+  @Output()
+  position: EventEmitter<GarbageStation> = new EventEmitter();
 
   constructor(
     public station: GarbageStationWindowStationBusiness,
@@ -47,6 +47,8 @@ export class GarbageStationWindowComponent
   ) {
     super();
   }
+
+  Index = GarbageStationWindowIndex;
 
   ngOnInit(): void {}
 
@@ -60,6 +62,10 @@ export class GarbageStationWindowComponent
 
   onstaydblclick(item: GarbageStationGarbageCountStatistic) {
     this.chartdblclick.emit(item);
+  }
+
+  onposition(item: GarbageStation) {
+    this.position.emit(item);
   }
 }
 

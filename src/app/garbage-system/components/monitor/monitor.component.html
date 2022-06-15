@@ -6,7 +6,7 @@
         <app-total-waste></app-total-waste>
       </div>
       <app-time></app-time>
-      <app-account-operation  *ngIf="!HideButton"></app-account-operation>
+      <app-account-operation *ngIf="!HideButton"></app-account-operation>
     </mat-toolbar>
   </div>
   <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
@@ -36,6 +36,7 @@
             (mixedIntoClicked)="map.onMixedIntoClicked($event)"
             (garbageCountClicked)="map.onGarbageCountClicked($event)"
             (garbageFullClicked)="map.onGarbageFullClicked($event)"
+            [position]="map.position"
           ></app-map-control>
         </div>
       </div>
@@ -165,6 +166,7 @@
   [stationId]="window.station.stationId"
   (image)="window.station.onimage($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
+  (position)="map.onposition($event)"
 >
 </howell-garbage-station-window>
 

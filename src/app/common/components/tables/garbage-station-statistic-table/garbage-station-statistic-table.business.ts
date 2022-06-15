@@ -10,12 +10,14 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import { OrderModel } from 'src/app/view-model/order.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 import { GarbageStationStatisticArrayConverter } from './garbage-station-statistic.converter';
@@ -34,10 +36,11 @@ export class GarbageStationStatisticTableBusiness
 {
   constructor(
     private storeService: StoreService,
-    private stationService: GarbageStationRequestService
+    private stationService: GarbageStationRequestService,
+    private divisionService: DivisionRequestService
   ) {}
 
-  Converter: IConverter<
+  Converter: IPromiseConverter<
     GarbageStationStatisticTableSource,
     GarbageStationStatisticModel[]
   > = new GarbageStationStatisticArrayConverter();
@@ -48,7 +51,15 @@ export class GarbageStationStatisticTableBusiness
     unit: TimeUnit
   ): Promise<GarbageStationStatisticModel[]> {
     let data = await this.getData(this.storeService.divisionId, date, unit);
-    let model = this.Converter.Convert(data);
+    let getter: ConvertGetter = {
+      station: (id: string) => {
+        return this.stationService.cache.get(id);
+      },
+      division: (id: string) => {
+        return this.divisionService.cache.get(id);
+      },
+    };
+    let model = await this.Converter.Convert(data, getter);
     return model;
   }
   async getData(

@@ -1,25 +1,25 @@
-import { Injectable } from '@angular/core';
-import {
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { EventEmitter, Injectable } from '@angular/core';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
 import { MediaWindowBusiness } from './media-window.business';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 @Injectable()
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   style = {
-    height: '83.5%',
-    width: '90%',
+    height: '85%',
+    width: '93%',
     transform: 'translate(-50%, -44.5%)',
   };
 
-  index = GarbageStationWindowIndex.station;
+  index = GarbageStationWindowIndex.general;
   stationId?: string;
 
   constructor(private media: MediaWindowBusiness) {
     super();
+    this.show = true;
   }
   onimage(model: ImageControlModelArray) {
     this.media.single.camera = model.models;

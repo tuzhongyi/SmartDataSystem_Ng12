@@ -50,8 +50,8 @@
   height: 265px;
   width: 161px;
   position: relative;
-  bottom: -6px;
-  left: 20px;
+  bottom: -8px;
+  left: 16px;
 
   background-color: #2d76ce;
   clip-path: polygon(0% 10px,
@@ -79,8 +79,8 @@
 }
 
 .panel .background {
-  height: calc(100% - 25px);
-  width: calc(100% - 10px);
+  height: calc(100%);
+  width: calc(100%);
 
   background-color: #13224d;
   clip-path: polygon(0% 10px,
@@ -113,15 +113,15 @@
 }
 
 .panel .inner .search {
-  width: calc(100% - 4px);
-  height: 28px;
+  width: calc(100%);
+  height: 34px;
   margin-top: 2px;
 }
 
 .panel .inner .search::ng-deep app-input-search input {
   font-size: 15px;
   padding: 0 12px;
-  width: calc(100% - 20px);
+  width: calc(100%);
 
 }
 
@@ -130,6 +130,7 @@
 .panel .inner .search::ng-deep app-input-search .search-wrap button {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 

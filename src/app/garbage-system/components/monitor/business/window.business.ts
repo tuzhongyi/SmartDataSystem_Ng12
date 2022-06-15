@@ -20,4 +20,13 @@ export class WindowBussiness {
     public drop: GarbageStationDropWindowBusiness,
     public station: GarbageStationInfoWindowBusiness
   ) {}
+  close() {
+    this.record.show = false;
+    this.media.single.show = false;
+    this.media.multiple.show = false;
+    this.device.show = false;
+    this.drop.show = false;
+    this.full.show = false;
+    this.station.show = false;
+  }
 }

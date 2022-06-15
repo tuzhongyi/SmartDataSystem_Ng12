@@ -10,6 +10,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -36,10 +37,12 @@ export class GarbageStationTableComponent
 {
   @Input()
   load?: EventEmitter<string>;
+  @Output()
+  position: EventEmitter<GarbageStation> = new EventEmitter();
 
   @Input()
   business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
-  width = ['30%', '20%', '15%', '20%', '10%', '5%'];
+  width = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
   name?: string;
   constructor(business: GarbageStationTableBusiness) {
     super();
@@ -84,5 +87,9 @@ export class GarbageStationTableComponent
   imageClick(item: GarbageStationTableModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);
+  }
+
+  onPositionClicked(item: GarbageStationTableModel) {
+    this.position.emit(item.GarbageStation);
   }
 }

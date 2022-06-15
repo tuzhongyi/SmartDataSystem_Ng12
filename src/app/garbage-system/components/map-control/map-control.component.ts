@@ -4,9 +4,12 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -28,7 +31,9 @@ declare var $: any;
   styleUrls: ['./map-control.component.less'],
   providers: [AMapBusiness, ListPanelBusiness, PointInfoPanelBusiness],
 })
-export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MapControlComponent
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
+{
   //#region Output
   @Output()
   VideoPlay: EventEmitter<Camera> = new EventEmitter();
@@ -48,6 +53,8 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
   garbageRetentionClicked: EventEmitter<GarbageStation> = new EventEmitter();
   @Output()
   garbageFullClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input()
+  position?: EventEmitter<GarbageStation>;
 
   //#endregion
   //#region ViewChild
@@ -135,6 +142,15 @@ export class MapControlComponent implements OnInit, AfterViewInit, OnDestroy {
     public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness
   ) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.position) {
+      if (this.position) {
+        this.position.subscribe((x) => {
+          this.amap.pointSelect(x.Id);
+        });
+      }
+    }
+  }
   ngAfterViewInit(): void {}
 
   //#region wait

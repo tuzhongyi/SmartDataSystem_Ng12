@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -16,7 +16,9 @@ export class MapControlBusiness {
     private patrol: PatrolControlBusiness,
     private video: VideoControlWindowBusiness,
     private window: WindowBussiness
-  ) { }
+  ) {}
+
+  position: EventEmitter<GarbageStation> = new EventEmitter();
 
   async onpatrol() {
     this.patrol.show = true;
@@ -46,9 +48,14 @@ export class MapControlBusiness {
     this.window.station.show = true;
   }
   onGarbageRetentionClicked(station: GarbageStation) {
-    this.window.drop.show = true
+    this.window.drop.show = true;
   }
   onGarbageFullClicked(station: GarbageStation) {
     this.window.full.show = true;
+  }
+
+  onposition(station: GarbageStation) {
+    this.window.close();
+    this.position.emit(station);
   }
 }

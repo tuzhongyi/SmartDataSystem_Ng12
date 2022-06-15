@@ -1,5 +1,6 @@
+import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { SelectItem } from '../../select-control/select-control.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class GarbageStationStatisticModel extends GarbageStationNumberStatisticV2 {
   [key: string]: any;
@@ -18,6 +19,10 @@ export class GarbageStationStatisticModel extends GarbageStationNumberStatisticV
   MixedInto = 0;
 
   MixedIntoTd = new GarbageStationStatisticTd();
+
+  GarbageStation?: GarbageStation;
+  Committees?: Division;
+  County?: Division;
 }
 
 export class GarbageStationStatisticTd {
