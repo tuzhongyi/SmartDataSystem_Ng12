@@ -37,7 +37,7 @@ export class GarbageFullStationTableComponent
     OnChanges,
     OnInit
 {
-  width = ['25%', '15%', '15%', '15%', '15%', '15%'];
+  width = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
   constructor(business: GarbageFullStationTableBusiness) {
     super();
     this.business = business;

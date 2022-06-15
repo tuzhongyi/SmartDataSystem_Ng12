@@ -16,7 +16,10 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModel, ImageControlModelArray } from '../../../../../view-model/image-control.model';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
 import { EventRecordFilter } from '../event-record.model';
@@ -35,10 +38,10 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
 export class EventRecordTableComponent
   extends TableAbstractComponent<EventRecordViewModel>
   implements
-  IComponent<IModel, PagedList<EventRecordViewModel>>,
-  OnInit,
-  OnChanges {
-
+    IComponent<IModel, PagedList<EventRecordViewModel>>,
+    OnInit,
+    OnChanges
+{
   @Input()
   business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
   @Input()
@@ -47,7 +50,6 @@ export class EventRecordTableComponent
   load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
-
 
   constructor(
     business: EventRecordBusiness,
@@ -58,8 +60,7 @@ export class EventRecordTableComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-  width = ['15%', '15%', '15%', '12%', '15%', '18%'];
-
+  width = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {

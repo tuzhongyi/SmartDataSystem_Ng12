@@ -35,7 +35,7 @@ export class DeviceListTableComponent
   implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
 {
   OnlineStatus = OnlineStatus;
-  width = ['15%', '20%', '10%', '15%', '15%', '15%'];
+  width = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
 
   @Input()
   filter: DeviceListTableFilter = {};
