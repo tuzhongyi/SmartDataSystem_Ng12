@@ -47,12 +47,13 @@ export class GarbageDropRecordTableComponent
 
   width = [
     '11%',
-    '13%',
-    '12%',
-    '11%',
+    '10%',
     '9%',
     '9%',
+    '10%',
     '9%',
+    '8%',
+    '8%',
     '7%',
     '7%',
     '7%',
@@ -104,6 +105,11 @@ export class GarbageDropRecordTableComponent
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageDropRecordViewModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
+    this.image.emit(array);
+  }
+
+  videoClick(item: GarbageDropRecordViewModel) {
+    let array = new ImageControlModelArray(item.images, 0, true);
     this.image.emit(array);
   }
 }

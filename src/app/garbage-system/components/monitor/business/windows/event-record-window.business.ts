@@ -14,9 +14,9 @@ export class RecordWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '83.5%',
+    height: '90%',
     width: '90%',
-    transform: 'translate(-50%, -44.5%)',
+    transform: 'translate(-50%, -45%)',
   };
 
   type: EventType = EventType.IllegalDrop;

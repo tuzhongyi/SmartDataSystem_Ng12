@@ -14,12 +14,11 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
     transform: 'translate(-50%, -44.5%)',
   };
 
-  index = GarbageStationWindowIndex.general;
+  index = GarbageStationWindowIndex.station;
   stationId?: string;
 
   constructor(private media: MediaWindowBusiness) {
     super();
-    this.show = true;
   }
   onimage(model: ImageControlModelArray) {
     this.media.single.camera = model.models;

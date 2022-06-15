@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Language } from 'src/app/global/tool/language';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
@@ -122,6 +123,13 @@ export class GarbageDropEventRecordConverter
           source.Data.HandleTime
         );
         model.images.push(image);
+      }
+    }
+
+    if (source.Data.DivisionId) {
+      model.Committees = await getter.division(source.Data.DivisionId);
+      if (model.Committees && model.Committees.ParentId) {
+        model.County = await getter.division(model.Committees.ParentId);
       }
     }
 

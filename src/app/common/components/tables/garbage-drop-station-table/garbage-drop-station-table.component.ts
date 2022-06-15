@@ -35,7 +35,7 @@ export class GarbageDropStationTableComponent
     OnDestroy,
     OnInit
 {
-  width = ['18%', '15%', '10%', '15%', '12%', '12%', '12%', '6%'];
+  width = ['20%', '15%', '12%', '7%', '10%', '10%', '10%', '10%', '6%'];
   constructor(business: GarbageDropStationTableBusiness) {
     super();
     this.business = business;
