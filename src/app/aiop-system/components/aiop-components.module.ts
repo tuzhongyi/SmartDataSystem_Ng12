@@ -28,6 +28,7 @@ import { AiModelListComponent } from './ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
+import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -47,7 +48,8 @@ import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
     CameraModelManageComponent,
     AiModelListComponent,
     AiCameraEventsComponent,
-    ProxyManageComponent
+    ProxyManageComponent,
+    IllegalDropRecord2Component
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
   providers: [],

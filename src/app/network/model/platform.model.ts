@@ -1,5 +1,5 @@
-/**平台信息 */
-export class PlatformModel {
+/**平台信息  Platform被很多库使用*/
+export class HwPlatform {
   /**平台ID */
   Id!: string;
   /**平台名称(可选) */

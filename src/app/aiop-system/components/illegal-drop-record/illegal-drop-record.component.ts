@@ -1,20 +1,17 @@
-import { DatePipe } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { Sort } from '@angular/material/sort';
-import { BehaviorSubject } from 'rxjs';
-import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableComponent } from 'src/app/common/components/table/table.component';
-import { SelectEnum } from 'src/app/enum/select.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
-import {
-  TableColumnModel,
-  TableCellEvent,
-} from 'src/app/view-model/table.model';
-import { columns } from './columns';
-import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
+import { DatePipe } from "@angular/common";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
+import { SelectEnum } from "src/app/enum/select.enum";
+import { IllegalDropRecordModel } from "src/app/view-model/illegal-drop-record.model";
+import { TableColumnModel } from "src/app/view-model/table.model";
+import { IllegalDropEventRecordConf } from "./illegal-drop-record.config";
+import { IllegalDropRecordBusiness } from "./illegal-drop-record.business";
+import { TableSelectStateEnum } from "src/app/enum/table-select-state.enum";
+import { TableComponent } from "src/app/common/components/table/table.component";
+import { PaginatorComponent } from "src/app/common/components/paginator/paginator.component";
+import { Sort } from "@angular/material/sort";
+import { Page } from "src/app/network/model/page_list.model";
+import { PageEvent } from "@angular/material/paginator";
 
 @Component({
   selector: 'app-illegal-drop-record',
@@ -24,84 +21,50 @@ import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
 })
 export class IllegalDropRecordComponent implements OnInit {
   /**private */
-
   private _pageSize = 9;
-
-  private _dataSource: IllegalDropRecordModel[] = []; // 表格数据源
-  private _sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
-
   private _endTime = new Date();
 
-  /**public */
-  show = false;
-  public page: Page | null = null;
+
+  private _curDataSource: IllegalDropRecordModel[] = []; // 表格数据源
+  private _sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
+
+
 
   dataSubject = new BehaviorSubject<IllegalDropRecordModel[]>([]);
-
-  columns: TableColumnModel[] = [...columns]; // 表格列配置详情
-  displayedColumns: string[] = this.columns.map((column) => column.columnDef); // 表格列 id
   tableSelectModel = SelectEnum.Multiple;
-
-  selectedRows: IllegalDropRecordModel[] = [];
-  pageIndex = 0;
+  columnModel: TableColumnModel[] = [...IllegalDropEventRecordConf]; // 表格列配置详情
+  displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
+  page: Page | null = null;
   pagerCount: number = 4;
+  pageIndex = 1;
+  selectedRows: IllegalDropRecordModel[] = [];
+
 
   @ViewChild(TableComponent) table?: TableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
+
   constructor(private _business: IllegalDropRecordBusiness) {
-    this._sortedDataSource = this._dataSource = [];
 
-    this._business._dataStream.subscribe(
-      (res: PagedList<IllegalDropRecordModel>) => {
-        this._dataSource = res.Data;
-        this._sortedDataSource = Array.from(this._dataSource);
-        this.page = res.Page;
-
-        this.dataSubject.next(this._dataSource);
-      }
-    );
   }
 
   ngOnInit(): void {
-    this.initialize();
+    this.init();
   }
-  async initialize() {
-    await this._business.loadData(
+  async init() {
+    let res = await this._business.loadData(
       this.pageIndex,
       this._endTime,
       this._pageSize
     );
-    // console.log('吼吼吼');
+
+    this.page = res.Page;
+    this._curDataSource = res.Data
+    this._sortedDataSource = Array.from(res.Data);
+
+    this.dataSubject.next(res.Data)
   }
 
-  selectTableRow(row: IllegalDropRecordModel[]) {
-    // console.log('row', row);
-    this.selectedRows = row;
-  }
-  selectTableCell({ column, event }: TableCellEvent) {
-    console.log(column, event);
-    // 特殊处理
-    if (column.columnDef == 'ImageUrl' || column.columnDef == 'Operation') {
-      // console.log(event);
-      let path = event.composedPath();
-      // console.log(path);
-      let flag = path.some((el) => {
-        if (el instanceof HTMLElement) {
-          return (
-            el.nodeName.toLocaleLowerCase() == 'div' &&
-            (el.classList.contains('picture') ||
-              el.classList.contains('operate'))
-          );
-        }
-        return false;
-      });
-      if (flag) {
-        console.log('自定义处理');
-        event.stopPropagation();
-      }
-    }
-  }
   tableSelect(type: TableSelectStateEnum) {
     console.log(type);
     if (this.table) {
@@ -121,14 +84,18 @@ export class IllegalDropRecordComponent implements OnInit {
     }
   }
   pageEvent(pageInfo: PageEvent) {
-    // console.log(pageInfo);
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
-    this._business.loadData(this.pageIndex, this._endTime);
+    this.init();
   }
-  sortTableHeader(sort: Sort) {
+
+  selectTableRow(rows: IllegalDropRecordModel[]) {
+    this.selectedRows = rows;
+  }
+
+  sortDataEvent(sort: Sort) {
     if (!sort.active || sort.direction == '') {
-      this._sortedDataSource = Array.from(this._dataSource);
+      this._sortedDataSource = Array.from(this._curDataSource);
     } else {
       let isAsc = sort.direction == 'asc';
 
@@ -142,13 +109,15 @@ export class IllegalDropRecordComponent implements OnInit {
             return this._compare(a.CountyName, b.CountyName, isAsc);
           case 'CommitteeName':
             return this._compare(a.CommitteeName, b.CommitteeName, isAsc);
+          case 'CommunityName':
+            return this._compare(a.CommunityName, b.CommunityName, isAsc);
           default:
             return 0;
         }
       });
-    }
 
-    this.dataSubject.next(this._sortedDataSource);
+    }
+    this.dataSubject.next(this._sortedDataSource)
   }
   private _compare(a: string, b: string, isAsc: boolean) {
     if (this._localeCompareSupportsLocales()) {
@@ -170,4 +139,6 @@ export class IllegalDropRecordComponent implements OnInit {
     }
     return false;
   }
+
+
 }

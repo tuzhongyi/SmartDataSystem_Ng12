@@ -18,22 +18,23 @@ import { BehaviorSubject } from 'rxjs';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import {
   TableCellEvent,
-  TableCellModel,
   TableColumnModel,
+  TableRowModels,
+
 } from 'src/app/view-model/table.model';
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-table2',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.less'],
 })
-export class TableComponent implements OnInit, OnChanges, AfterViewInit {
-  private selection!: SelectionModel<TableCellModel>;
+export class Table2Component implements OnInit, OnChanges, AfterViewInit {
+  private selection!: SelectionModel<TableRowModels>;
 
-  dataSource: TableCellModel[] = [];
+  dataSource: TableRowModels[] = [];
 
   @Input()
-  dataSubject = new BehaviorSubject<TableCellModel[]>([]);
+  dataSubject = new BehaviorSubject<TableRowModels[]>([]);
 
   @ViewChild('table') table!: MatTable<any>;
 
@@ -46,8 +47,8 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
 
-  @Output() selectTableRow: EventEmitter<TableCellModel[]> = new EventEmitter<
-    TableCellModel[]
+  @Output() selectTableRow: EventEmitter<TableRowModels[]> = new EventEmitter<
+    TableRowModels[]
   >();
 
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
@@ -55,7 +56,7 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
 
   @Output() sortTableHeader: EventEmitter<Sort> = new EventEmitter<Sort>();
 
-  highLight = (model: TableCellModel) => {
+  highLight = (model: TableRowModels) => {
     return this.selection.isSelected(model);
   };
 
@@ -64,9 +65,9 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {
     // console.log(this.selectModel);
     if (this.selectModel == SelectEnum.Single) {
-      this.selection = new SelectionModel<TableCellModel>();
+      this.selection = new SelectionModel<TableRowModels>();
     } else {
-      this.selection = new SelectionModel<TableCellModel>(true);
+      this.selection = new SelectionModel<TableRowModels>(true);
     }
     this.selection.changed.subscribe((change) => {
       this.selectTableRow.emit(change.source.selected);
@@ -76,13 +77,14 @@ export class TableComponent implements OnInit, OnChanges, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSubject.subscribe((data) => {
       this.dataSource = data;
+      console.log(data)
       this.table.renderRows();
       if (this.selection) {
         this.selection.clear();
       }
     });
   }
-  clickRow(row: TableCellModel) {
+  clickRow(row: TableRowModels) {
     this.selection.toggle(row);
   }
   clickCell(column: TableColumnModel, event: Event) {

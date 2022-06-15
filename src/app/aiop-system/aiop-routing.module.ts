@@ -26,6 +26,7 @@ import { EncodeDeviceManageComponent } from './components/encode-device-manage/e
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
 import { AiModelListComponent } from './components/ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
+import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
 
 const routes: Routes = [
   {
@@ -136,7 +137,7 @@ const routes: Routes = [
               },
               {
                 path: 'proxy-manage',
-                component: ProxyManageComponent,
+                component: IllegalDropRecord2Component,
                 data: {
                   breadcrumb: '流转服务管理',
                 },

@@ -34,20 +34,31 @@ import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
 import { MediumRequestService } from '../network/request/medium/medium-request.service';
 
-type IllegalDropRecordSourceModel = IllegalDropEventRecord;
+type IllegalDropEventRecordSourceModel = IllegalDropEventRecord;
 
 @Injectable({
   providedIn: 'root',
 })
-export class IllegalDropRecordConverter
-  implements IConverter<IllegalDropRecordSourceModel, IllegalDropRecordModel>
+export class IllegalDropEventRecordConverter
+  implements IConverter<IllegalDropEventRecordSourceModel, IllegalDropRecordModel>
 {
-  constructor(private _datePipe: DatePipe) {}
-  Convert(source: IllegalDropRecordSourceModel) {
+  constructor(private _datePipe: DatePipe) { }
+  Convert(source: IllegalDropEventRecordSourceModel) {
     if (source instanceof IllegalDropEventRecord) {
       return this._fromIllegalDropEventRecord(source);
     }
     throw new Error('Error');
+  }
+  iterateToModel<T extends Array<IllegalDropEventRecordSourceModel>>(data: T) {
+    let res: Array<IllegalDropRecordModel> = [];
+
+    for (let i = 0; i < data.length; i++) {
+      let item = data[i];
+      const model = this.Convert(item);
+      res.push(model)
+    }
+
+    return res;
   }
 
   /******private ****************/
@@ -73,8 +84,11 @@ export class IllegalDropRecordConverter
     model.StationName = item.Data.StationName;
     model.CommitteeName = item.Data.DivisionName ?? '';
     model.CommitteeId = item.Data.DivisionId ?? '';
+    model.CommunityName = item.Data.CommunityName ?? '';
+    model.CommunityId = item.Data.CommunityId ?? "";
     model.EventTime =
       this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
+
 
     return model;
   }

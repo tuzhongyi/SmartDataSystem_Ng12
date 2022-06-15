@@ -11,16 +11,14 @@
       [matColumnDef]="column.columnDef"
     >
       <mat-header-cell *matHeaderCellDef>
-        <ng-container>
-          <div
-            class="cell-content"
-            [class]="column.cls"
-            [howell-sort-header]="column.columnDef"
-            [disabled]="!column.sortHeader"
-          >
-            {{ column.header }}
-          </div>
-        </ng-container>
+        <div
+          class="cell-content"
+          [class]="column.className"
+          [howell-sort-header]="column.columnDef"
+          [disabled]="!column.sortHeader"
+        >
+          {{ column.header }}
+        </div>
       </mat-header-cell>
     </ng-container>
     <mat-header-row
@@ -42,11 +40,7 @@
       [matColumnDef]="column.columnDef"
     >
       <mat-cell *matCellDef="let row" (click)="clickCell(column, $event)">
-        <div
-          [innerHtml]="column.cell(row)"
-          [style]="column.style"
-          [class]="column.cls"
-        ></div>
+        <div [innerHtml]="column.cell(row)" [class]="column.className"></div>
       </mat-cell>
     </ng-container>
 

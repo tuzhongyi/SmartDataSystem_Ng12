@@ -1,52 +1,35 @@
 <div class="table-container">
+  <!--表头 -->
   <mat-table
-    style="position: sticky; top: 0"
     [dataSource]="dataSource"
     matSort
-    [matSortDisableClear]="false"
-    (matSortChange)="sortChange($event)"
+    (matSortChange)="sortData($event)"
   >
     <ng-container
-      *ngFor="let column of columns; let index"
-      [matColumnDef]="column.columnDef"
+      *ngFor="let model of columnModel"
+      [matColumnDef]="model.columnDef"
     >
       <mat-header-cell *matHeaderCellDef>
-        <ng-container>
-          <div
-            class="cell-content"
-            [class]="column.cls"
-            [howell-sort-header]="column.columnDef"
-            [disabled]="!column.sortHeader"
-          >
-            {{ column.header }}
-          </div>
-        </ng-container>
+        <!-- 显示 ellipsis必须包一层div-->
+        <div [class]="model.className">{{ model.header }}</div>
       </mat-header-cell>
     </ng-container>
-    <mat-header-row
-      *matHeaderRowDef="displayedColumns; sticky: true"
-    ></mat-header-row>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   </mat-table>
 
+  <!--表内容-->
   <mat-table
-    style="height: calc(100% - 70px); overflow: auto"
-    class="bold-scrollbar"
     [dataSource]="dataSource"
-    matSort
-    [matSortDisableClear]="false"
-    (matSortChange)="sortChange($event)"
-    #table
+    style="overflow: auto"
+    class="bold-scrollbar"
   >
     <ng-container
-      *ngFor="let column of columns; let index"
-      [matColumnDef]="column.columnDef"
+      *ngFor="let model of columnModel"
+      [matColumnDef]="model.columnDef"
     >
-      <mat-cell *matCellDef="let row" (click)="clickCell(column, $event)">
-        <div
-          [innerHtml]="column.cell(row)"
-          [style]="column.style"
-          [class]="column.cls"
-        ></div>
+      <mat-cell *matCellDef="let row" (click)="clickCell(model, $event)">
+        <div [innerHTML]="model.cell(row)" [class]="model.className"></div>
       </mat-cell>
     </ng-container>
 
@@ -54,7 +37,6 @@
       *matRowDef="let row; columns: displayedColumns"
       (click)="clickRow(row)"
       [class.high-light]="highLight(row)"
-    >
-    </mat-row>
+    ></mat-row>
   </mat-table>
 </div>

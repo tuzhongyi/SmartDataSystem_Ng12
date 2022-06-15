@@ -1,108 +1,108 @@
-import { SelectionModel } from '@angular/cdk/collections';
-import { outputAst } from '@angular/compiler';
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { Sort } from '@angular/material/sort';
-import { MatTable, MatTableDataSource } from '@angular/material/table';
-import { DomSanitizer } from '@angular/platform-browser';
-import { BehaviorSubject } from 'rxjs';
-import { SelectEnum } from 'src/app/enum/select.enum';
-import {
-  TableCellEvent,
-  TableCellModel,
-  TableColumnModel,
-} from 'src/app/view-model/table.model';
+import { SelectionModel } from "@angular/cdk/collections";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Sort } from "@angular/material/sort";
+import { BehaviorSubject } from "rxjs";
+import { SelectEnum } from "src/app/enum/select.enum";
+import { TableCellEvent, TableColumnModel, TableRowModels } from "src/app/view-model/table.model";
+import { TableDataSource } from "./data-source";
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.less'],
 })
-export class TableComponent implements OnInit, OnChanges, AfterViewInit {
-  private selection!: SelectionModel<TableCellModel>;
+export class TableComponent implements OnInit {
+  private selection!: SelectionModel<TableRowModels>;
 
-  dataSource: TableCellModel[] = [];
+  dataSource = new TableDataSource([]);
 
-  @Input()
-  dataSubject = new BehaviorSubject<TableCellModel[]>([]);
 
-  @ViewChild('table') table!: MatTable<any>;
-
-  @Input()
-  columns: TableColumnModel[] = [];
-
-  @Input()
-  displayedColumns: string[] = [];
+  highLight = (model: TableRowModels) => {
+    return this.selection.isSelected(model);
+  };
 
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
 
-  @Output() selectTableRow: EventEmitter<TableCellModel[]> = new EventEmitter<
-    TableCellModel[]
+  // 组件更新数据时，自动更新 table 数据
+  @Input()
+  dataSubject = new BehaviorSubject<TableRowModels>([]);
+
+  // 表格的元数据配置
+  @Input()
+  columnModel: TableColumnModel[] = [];
+
+  // 要显示的列
+  @Input()
+  displayedColumns: string[] = [];
+
+  @Output() selectTableRow: EventEmitter<TableRowModels[]> = new EventEmitter<
+    TableRowModels[]
   >();
 
-  @Output() selectTableCell: EventEmitter<TableCellEvent> =
+  @Output() sortDataEvent: EventEmitter<Sort> = new EventEmitter<Sort>();
+
+
+  @Output() clickTableCellEvent: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
 
-  @Output() sortTableHeader: EventEmitter<Sort> = new EventEmitter<Sort>();
-
-  highLight = (model: TableCellModel) => {
-    return this.selection.isSelected(model);
-  };
-
-  constructor(public sanitizer: DomSanitizer) { }
+  constructor() { }
 
   ngOnInit(): void {
     if (this.selectModel == SelectEnum.Single) {
-      this.selection = new SelectionModel<TableCellModel>();
+      this.selection = new SelectionModel<TableRowModels>();
     } else {
-      this.selection = new SelectionModel<TableCellModel>(true);
+      this.selection = new SelectionModel<TableRowModels>(true);
     }
     this.selection.changed.subscribe((change) => {
       this.selectTableRow.emit(change.source.selected);
     });
+
+    this.dataSubject.subscribe(data => {
+      this.dataSource.setData(data)
+    })
   }
-  ngOnChanges(changes: SimpleChanges): void { }
-  ngAfterViewInit(): void {
-    this.dataSubject.subscribe((data) => {
-      this.dataSource = data;
-      this.table.renderRows();
-      if (this.selection) {
-        this.selection.clear();
-      }
-    });
-  }
-  clickRow(row: TableCellModel) {
+  clickRow(row: TableRowModels) {
     this.selection.toggle(row);
+    console.log('click row');
   }
   clickCell(column: TableColumnModel, event: Event) {
-    console.log('click cell');
-    this.selectTableCell.emit({
+    console.log('click cell', column);
+    this.clickTableCellEvent.emit({
       column,
       event,
     } as TableCellEvent);
+    if (column.stopPropogate) {
+      event.stopPropagation();
+    }
   }
+
   selectAll() {
-    console.log('全选');
-    this.selection.select(...this.dataSource);
+    this.selection.select(...this.dataSource.getData());
   }
   selectReverse() {
-    this.dataSource.forEach((data) => this.selection.toggle(data));
+    // let data = this.dataSource.getData();
+    // let selected = this.selection.selected;
+
+    // let res = data.filter(item => {
+    //   if (!selected.includes(item)) return true
+    //   else return false
+    // })
+
+    // // 发送两次事件
+    // this.selection.clear();
+    // this.selection.select(...res)
+
+    // 遍历数组会发送 lenght 次事件
+    this.dataSource.getData().forEach((data) => this.selection.toggle(data));
+
   }
   selectCancel() {
     this.selection.clear();
   }
-  sortChange(sort: Sort) {
-    // console.log(sort);
-    this.sortTableHeader.emit(sort);
+  sortData(sort: Sort) {
+    this.sortDataEvent.emit(sort);
   }
+
+
 }

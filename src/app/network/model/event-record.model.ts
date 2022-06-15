@@ -51,6 +51,8 @@ export class IllegalDropEventRecord
 }
 /** */
 class IllegalDropEventData {
+  CommunityName!: string;;
+  CommunityId?: string;
   /**	String	垃圾房ID	M */
   StationId!: string;
   /**	String	垃圾房名称	M */

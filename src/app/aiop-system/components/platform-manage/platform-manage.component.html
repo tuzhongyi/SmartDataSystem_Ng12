@@ -18,7 +18,11 @@
       </div>
     </div>
     <div class="hw-table-container">
-      <app-table></app-table>
+      <app-table
+        [dataSubject]="dataSubject"
+        [columnModel]="columnModel"
+        [displayedColumns]="displayedColumns"
+      ></app-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">

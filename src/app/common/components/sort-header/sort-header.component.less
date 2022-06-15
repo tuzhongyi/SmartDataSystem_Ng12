@@ -5,20 +5,23 @@
   cursor: pointer;
   align-items: center;
   letter-spacing: normal;
+  padding: 0 15px;
 
   outline: 0;
   position: relative;
 
   .howell-header-content {
-    text-align: center;
-    display: flex;
-    align-items: center;
+    overflow: hidden;
+    ::ng-deep div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
   .howell-sort-header-arrow {
-    margin: 0 0 0 @header-arrow-margin;
-    display: flex;
-    align-items: center;
-    margin-top: -0px;
+    margin-left: 5px;
+    margin-top: -15px;
+
     .indicator {
       font-size: x-small;
     }

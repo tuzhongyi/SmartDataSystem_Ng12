@@ -189,7 +189,6 @@ export class TreeComponent implements OnInit {
   }
   ngOnInit() {
 
-    // console.log('树类型: ', this.serviceModel)
 
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();

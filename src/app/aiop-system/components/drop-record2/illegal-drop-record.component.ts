@@ -5,6 +5,7 @@ import { Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableComponent } from 'src/app/common/components/table/table.component';
+import { Table2Component } from 'src/app/common/components/table2/table.component';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
@@ -17,12 +18,12 @@ import { columns } from './columns';
 import { IllegalDropRecordBusiness } from './illegal-drop-record.business';
 
 @Component({
-  selector: 'app-illegal-drop-record',
+  selector: 'app-illegal-drop-record2',
   templateUrl: './illegal-drop-record.component.html',
   styleUrls: ['./illegal-drop-record.component.less'],
   providers: [IllegalDropRecordBusiness, DatePipe],
 })
-export class IllegalDropRecordComponent implements OnInit {
+export class IllegalDropRecord2Component implements OnInit {
   /**private */
 
   private _pageSize = 9;
@@ -46,7 +47,7 @@ export class IllegalDropRecordComponent implements OnInit {
   pageIndex = 0;
   pagerCount: number = 4;
 
-  @ViewChild(TableComponent) table?: TableComponent;
+  @ViewChild(TableComponent) table?: Table2Component;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
   constructor(private _business: IllegalDropRecordBusiness) {

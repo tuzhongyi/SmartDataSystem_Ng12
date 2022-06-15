@@ -9,8 +9,7 @@ export const columns: TableColumnModel[] = [
     columnDef: 'ImageUrl',
     header: '图片',
     cell: (element: IllegalDropRecordModel) => `<img src=${element.ImageUrl}/>`,
-    style: {},
-    cls: ['picture'],
+    className: ['picture'],
   },
   {
     columnDef: 'ResourceName',
@@ -50,7 +49,6 @@ export const columns: TableColumnModel[] = [
       <i class="howell-icon-picturedownload"  title="下载图片"></i>
       <i class="howell-icon-videodownload" title="下载视频"></i>
       `,
-    style: {},
-    cls: ['operate'],
+    className: ['operate'],
   },
 ];

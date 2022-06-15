@@ -33,8 +33,8 @@ export class DivisionManageComponent implements OnInit {
   private _excludeGuards: string[] = [];
 
   /*****public ********/
-  treeServiceModel = TreeServiceEnum.Station;
-  treeSelectModel = SelectEnum.Single;
+  treeServiceModel = TreeServiceEnum.Division;
+  treeSelectModel = SelectEnum.Multiple;
   currentNode?: FlatTreeNode;
   resourceType: UserResourceType = UserResourceType.None;
   myForm = new FormGroup({

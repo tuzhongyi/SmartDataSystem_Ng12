@@ -1,39 +1,43 @@
 <div class="illegal-drop">
-  <div class="illegal-drop-main">
-    <!-- <app-table
-      [dataSubject]="dataSubject"
-      [columns]="columns"
-      [displayedColumns]="displayedColumns"
-      [tableSelectModel]="tableSelectModel"
-      (selectTableRow)="selectTableRow($event)"
-      (selectTableCell)="selectTableCell($event)"
-      (sortTableHeader)="sortTableHeader($event)"
-    ></app-table> -->
-    <app-table></app-table>
-  </div>
-  <!-- <div class="illegal-drop-footer">
-    <div class="footer-item">
-      <app-table-select (tableSelectEvent)="tableSelect($event)">
-      </app-table-select>
+  <div class="hw-table-detail">
+    <div class="hw-second-title">垃圾落地</div>
+    <div class="hw-table-container">
+      <app-table
+        #table
+        [dataSubject]="dataSubject"
+        [columnModel]="columnModel"
+        [displayedColumns]="displayedColumns"
+        [tableSelectModel]="tableSelectModel"
+        (selectTableRow)="selectTableRow($event)"
+        (sortDataEvent)="sortDataEvent($event)"
+      ></app-table>
     </div>
-
-    <div class="footer-item">
-      <div class="footer-info">
-        <div class="info-item">已选择: {{ selectedRows.length }}</div>
-        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+    <div class="hw-table-footer">
+      <div class="footer-item">
+        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        </app-table-select>
       </div>
 
-      <app-paginator
-        *ngIf="page"
-        [length]="page.TotalRecordCount"
-        [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="page.PageCount - 1"
-        [showFirstLastButtons]="true"
-        (page)="pageEvent($event)"
-      >
-      </app-paginator>
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">已选择: {{ selectedRows.length }}</div>
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          *ngIf="page"
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="pagerCount"
+          [pageIndex]="pageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
     </div>
-  </div> -->
+  </div>
 </div>

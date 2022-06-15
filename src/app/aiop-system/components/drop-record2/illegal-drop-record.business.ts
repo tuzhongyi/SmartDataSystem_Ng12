@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, from, Subject } from 'rxjs';
 import { reduce } from 'rxjs/operators';
-import { IllegalDropRecordConverter } from 'src/app/converter/illegal-drop-record.converter';
+import { IllegalDropEventRecordConverter } from 'src/app/converter/illegal-drop-event-record.converter';
 import { Time } from 'src/app/global/tool/time';
 import { Division } from 'src/app/network/model/division.model';
 import { IllegalDropEventRecord } from 'src/app/network/model/event-record.model';
@@ -22,8 +22,8 @@ export class IllegalDropRecordBusiness {
   constructor(
     private _eventRequestService: EventRequestService,
     private _divisionRequest: DivisionRequestService,
-    private _converter: IllegalDropRecordConverter
-  ) {}
+    private _converter: IllegalDropEventRecordConverter
+  ) { }
   async loadData(pageIndex: number, endTime: Date, pageSize?: number) {
     let params = new GetEventRecordsParams();
     params.PageIndex = Math.max(pageIndex, 1);

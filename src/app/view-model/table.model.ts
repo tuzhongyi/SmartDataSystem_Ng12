@@ -1,18 +1,17 @@
-import { IllegalDropRecordModel } from './illegal-drop-record.model';
 
 export class TableColumnModel<T = any> {
   constructor(
-    public columnDef: string = '',
-    public header: string,
+    public columnDef: string = '', // 唯一
+    public header: string = '',
     public cell: (element: T) => string,
+    public stopPropogate?: boolean,
     public sortHeader?: boolean,
-    public style?: Partial<CSSStyleDeclaration>,
-    public cls?: Array<string>
-  ) {}
+    public className?: Array<string>
+  ) { }
 }
 
-// 暂时只有一种类型
-export type TableCellModel = IllegalDropRecordModel;
+
+export type TableRowModels = any;
 
 export interface TableCellEvent {
   column: TableColumnModel;
