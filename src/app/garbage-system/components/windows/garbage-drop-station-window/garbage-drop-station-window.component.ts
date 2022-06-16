@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -16,6 +16,8 @@ export class GarbageDropStationWindowComponent
   extends WindowComponent
   implements OnInit
 {
+  @Input()
+  index = GarbageDropStationWindowIndex.list;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
@@ -24,7 +26,6 @@ export class GarbageDropStationWindowComponent
   }
 
   Index = GarbageDropStationWindowIndex;
-  index = GarbageDropStationWindowIndex.list;
 
   ngOnInit(): void {}
 

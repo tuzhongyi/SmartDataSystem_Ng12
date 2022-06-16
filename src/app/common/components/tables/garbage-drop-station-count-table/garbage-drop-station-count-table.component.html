@@ -1,0 +1,82 @@
+<div class="garbage-drop-station-count-table">
+  <div class="garbage-drop-station-count-table-main">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <thead>
+        <tr>
+          <td
+            [ngStyle]="{ width: width[0] }"
+            mat-sort-header="Name"
+            [disableClear]="true"
+          >
+            名称
+          </td>
+          <td
+            [ngStyle]="{ width: width[1] }"
+            mat-sort-header="Parent"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            行政区
+          </td>
+          <td
+            [ngStyle]="{ width: width[2] }"
+            mat-sort-header="EventCount"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            垃圾滞留
+          </td>
+          <td
+            [ngStyle]="{ width: width[3] }"
+            mat-sort-header="TimeoutCount"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            垃圾滞留超时
+          </td>
+          <td
+            [ngStyle]="{ width: width[4] }"
+            mat-sort-header="TimeoutRatio"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            超时率
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr *ngFor="let item of datas">
+            <td [ngStyle]="{ width: width[0] }">
+              {{ item.Name }}
+            </td>
+            <td [ngStyle]="{ width: width[1] }">
+              {{ item.Parent ? item.Parent.Name : "" }}
+            </td>
+            <td [ngStyle]="{ width: width[2] }">
+              {{ item.EventCount }}
+            </td>
+            <td [ngStyle]="{ width: width[3] }">
+              {{ item.TimeoutCount }}
+            </td>
+            <td [ngStyle]="{ width: width[4] }">
+              {{ item.TimeoutRatio.toFixed(2) }}%
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

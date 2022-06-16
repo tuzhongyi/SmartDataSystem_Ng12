@@ -1,0 +1,49 @@
+<div class="garbage-drop-station-window-count">
+  <div class="filter">
+    <div class="filter-items">
+      <div class="filter-item">
+        <span>选择时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="dateTimePickerConfig.format"
+          [startView]="dateTimePickerConfig.view"
+          [minView]="dateTimePickerConfig.view"
+          [week]="dateTimePickerConfig.week"
+          [date]="date"
+          (change)="changeDate($event)"
+          class=""
+        />
+      </div>
+      <div class="filter-item">
+        <span>范围</span>
+        <app-select-control
+          class="list-type-select full"
+          [data]="types"
+          (select)="onTypeChange($event)"
+        ></app-select-control>
+      </div>
+      <button class="hw-blue-btn search" (click)="search()">查询</button>
+      <button class="hw-blue-btn excel" (click)="exportExcel()">导出</button>
+      <button class="hw-blue-btn csv" (click)="(exportCSV)">CSV</button>
+    </div>
+    <div class="filter-items">
+      <div class="filter-item select">
+        <app-select-control
+          class="list-type-select"
+          [data]="units"
+          (select)="ontimeunit($event)"
+        ></app-select-control>
+      </div>
+    </div>
+  </div>
+  <div class="garbage-drop-station-window-count-content">
+    <howell-garbage-drop-station-count-table
+      [date]="date"
+      [unit]="unit"
+      [type]="type"
+      [load]="load"
+    >
+    </howell-garbage-drop-station-count-table>
+  </div>
+</div>

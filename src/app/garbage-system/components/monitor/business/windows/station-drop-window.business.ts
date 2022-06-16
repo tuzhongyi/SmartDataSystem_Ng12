@@ -5,13 +5,17 @@ import {
 } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { MediaWindowBusiness } from './media-window.business';
+import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-station-window/garbage-drop-station-window.component';
 
 @Injectable()
 export class GarbageStationDropWindowBusiness extends WindowViewModel {
   constructor(private media: MediaWindowBusiness) {
     super();
+    this.show = true;
   }
   divisionId?: string;
+
+  index = GarbageDropStationWindowIndex.count;
 
   style = {
     height: '83.5%',

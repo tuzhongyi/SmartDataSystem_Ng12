@@ -1,0 +1,131 @@
+.garbage-drop-station-window-count {
+  width: 100%;
+  height: 100%;
+  @filter-height: 34px;
+  @filter-margin-bottim: 10px;
+
+  .filter {
+    @title-width: 72px;
+
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: @filter-height;
+    margin-bottom: @filter-margin-bottim;
+
+    .filter-items {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      height: 100%;
+
+      .filter-item {
+        height: 100%;
+        width: 335px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 10px;
+
+
+
+        &>span {
+          max-width: @title-width;
+          text-align: center;
+          margin-right: 5px;
+          color: #cfd7ff;
+          font-size: 18px;
+        }
+
+        &>input,
+        &>.input,
+        &>select,
+        &>button {
+          width: calc(100% - @title-width);
+        }
+
+        &>input {
+          height: calc(100% - 2px);
+          width: calc(100% - @title-width - 12px - 10px);
+        }
+
+        &>button {
+          text-align: left;
+          color: #cfd7ff;
+          border: 1px solid #5e6ebf;
+          font-size: 18px;
+          border-radius: unset;
+          background-color: #1d233b;
+
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 0 5px;
+          height: 100%;
+
+          &:active,
+          &:focus,
+          &:target,
+          &[aria-expanded*="true"] {
+            border-color: #3a93ff;
+          }
+
+          ::ng-deep &>.mat-button-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+          }
+        }
+
+        &.select {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: auto;
+          margin-right: 0;
+        }
+
+        .list-type-select {
+
+          border: 1px solid #5e6ebf;
+          font-size: 18px;
+          height: 32px;
+
+          &.full {
+            width: 250px;
+
+            ::ng-deep {
+              .select-item .select-head {
+                justify-content: space-between;
+              }
+
+              .select-item .select-body .select-option {
+                max-width: 250px;
+              }
+            }
+          }
+
+
+        }
+
+      }
+    }
+
+
+
+    .hw-blue-btn {
+      margin-right: 10px;
+    }
+
+
+
+
+
+  }
+
+  &-content {
+    height: calc(100% - @filter-height - @filter-margin-bottim);
+  }
+}
