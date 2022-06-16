@@ -13,7 +13,7 @@ import {
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 import { PatrolControlBusiness } from './patrol-control.business';
 import {
@@ -168,7 +168,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
     }
   }
 
-  onplayback(params: IntervalParams) {
+  onplayback(params: DurationParams) {
     if (this.playing) {
       this.toPlayback.emit({
         CameraId: this.playing.cameraId,

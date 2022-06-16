@@ -15,7 +15,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 
 @Injectable()
@@ -64,7 +64,7 @@ export class CommitteesVideoControlWindowBusiness
   getData(
     camera: Camera,
     mode: PlayMode,
-    interval?: IntervalParams
+    interval?: DurationParams
   ): Promise<VideoUrl> {
     this.camera = camera;
     switch (mode) {
@@ -76,7 +76,7 @@ export class CommitteesVideoControlWindowBusiness
     }
   }
 
-  ondownload(args: IntervalParams) {
+  ondownload(args: DurationParams) {
     if (!this.camera || !this.garbageStation) return;
 
     this.download.video(this.garbageStation.Id, this.camera.Id, args);

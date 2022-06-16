@@ -16,7 +16,7 @@ import {
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import { OrderModel } from 'src/app/view-model/order.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
@@ -80,13 +80,13 @@ export class GarbageStationStatisticTableBusiness
 
   async getDataByDay(divisionId: string, date: Date) {
     let source = new GarbageStationStatisticTableSource();
-    let duration: IntervalParams = IntervalParams.allDay(date);
+    let duration: DurationParams = DurationParams.allDay(date);
     let unit = TimeUnit.Day;
     source.current = await this.getHistory(divisionId, duration, unit);
     let end = new Date(duration.BeginTime.getTime());
     end.setMilliseconds(-1);
     let begin = new Date(end.getFullYear(), end.getMonth(), end.getDate());
-    let yesterday: IntervalParams = {
+    let yesterday: DurationParams = {
       BeginTime: begin,
       EndTime: end,
     };
@@ -96,7 +96,7 @@ export class GarbageStationStatisticTableBusiness
 
   async getDataByWeek(divisionId: string, date: Date) {
     let source = new GarbageStationStatisticTableSource();
-    let duration: IntervalParams = IntervalParams.allWeek(date);
+    let duration: DurationParams = DurationParams.allWeek(date);
     let unit = TimeUnit.Week;
     source.current = await this.getHistory(divisionId, duration, unit);
     let end = new Date(duration.BeginTime.getTime());
@@ -104,7 +104,7 @@ export class GarbageStationStatisticTableBusiness
     let begin = new Date(duration.BeginTime.getTime());
     begin.setDate(begin.getDate() - 7);
 
-    let beofre: IntervalParams = {
+    let beofre: DurationParams = {
       BeginTime: begin,
       EndTime: end,
     };
@@ -113,13 +113,13 @@ export class GarbageStationStatisticTableBusiness
   }
   async getDataByMonth(divisionId: string, date: Date) {
     let source = new GarbageStationStatisticTableSource();
-    let duration: IntervalParams = IntervalParams.allMonth(date);
+    let duration: DurationParams = DurationParams.allMonth(date);
     let unit = TimeUnit.Month;
     source.current = await this.getHistory(divisionId, duration, unit);
     let end = new Date(duration.BeginTime.getTime());
     end.setMilliseconds(-1);
     let begin = new Date(end.getFullYear(), end.getMonth(), 1);
-    let before: IntervalParams = {
+    let before: DurationParams = {
       BeginTime: begin,
       EndTime: end,
     };
@@ -129,7 +129,7 @@ export class GarbageStationStatisticTableBusiness
 
   async getHistory(
     divisionId: string,
-    duration: IntervalParams,
+    duration: DurationParams,
     unit: TimeUnit
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let stations = await this.getStations(divisionId);

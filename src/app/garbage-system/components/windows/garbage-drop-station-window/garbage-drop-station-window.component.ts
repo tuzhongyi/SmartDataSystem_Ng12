@@ -16,9 +16,15 @@ export class GarbageDropStationWindowComponent
   extends WindowComponent
   implements OnInit
 {
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+
   constructor() {
     super();
   }
+
+  Index = GarbageDropStationWindowIndex;
+  index = GarbageDropStationWindowIndex.list;
 
   ngOnInit(): void {}
 
@@ -27,9 +33,16 @@ export class GarbageDropStationWindowComponent
   onsearch(text: string) {
     this.load.emit(text);
   }
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   onimage(item: ImageControlModelArray) {
     this.image.emit(item);
   }
+
+  indexChange(index: number) {
+    this.index = index;
+  }
+}
+export enum GarbageDropStationWindowIndex {
+  list = 0,
+  count = 1,
+  details = 2,
 }

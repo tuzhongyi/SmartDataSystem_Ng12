@@ -5,7 +5,7 @@ import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
 import {
-  IntervalParams,
+  DurationParams,
   IParams,
   PagedIntervalParams,
   PagedParams,
@@ -66,7 +66,7 @@ export class GetDivisionStatisticNumbersParams
   Name?: string;
 }
 export class GetDivisionSumEventNumberParams
-  extends IntervalParams
+  extends DurationParams
   implements IParams
 {
   /**	String[]	区划ID列表	M */
@@ -83,7 +83,7 @@ export class GetDivisionSumEventNumberParams
   Limit?: number;
 }
 export class GetDivisionStatisticNumbersParamsV2
-  extends IntervalParams
+  extends DurationParams
   implements IParams
 {
   /**

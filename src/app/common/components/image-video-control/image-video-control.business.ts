@@ -4,7 +4,7 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GetVodUrlParams } from 'src/app/network/request/sr/sr-request.params';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
@@ -27,7 +27,7 @@ export class ImageVideoControlBusiness
   async load(
     cameraId: string,
     mode: PlayMode,
-    interval?: IntervalParams
+    interval?: DurationParams
   ): Promise<VideoModel> {
     let stream = await this.loadSteam();
     if (!stream) {
@@ -55,7 +55,7 @@ export class ImageVideoControlBusiness
     cameraId: string,
     mode: PlayMode,
     stream: StreamType,
-    interval?: IntervalParams
+    interval?: DurationParams
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.vod:
@@ -69,7 +69,7 @@ export class ImageVideoControlBusiness
   getLiveUrl(cameraId: string, stream: StreamType) {
     return this.srService.preview(cameraId, stream);
   }
-  getVodUrl(cameraId: string, stream: StreamType, interval: IntervalParams) {
+  getVodUrl(cameraId: string, stream: StreamType, interval: DurationParams) {
     let params = new GetVodUrlParams();
     params.BeginTime = interval.BeginTime;
     params.EndTime = interval.EndTime;

@@ -5,7 +5,7 @@ import { VideoUrl } from '../../model/url.model';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
 import { BaseRequestService } from '../base-request.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { IntervalParams } from '../IParams.interface';
+import { DurationParams } from '../IParams.interface';
 import { GetPreviewUrlParams, GetVodUrlParams } from './sr-request.params';
 
 @Injectable({
@@ -40,14 +40,14 @@ export class SRRequestService {
 
   playback(
     cameraId: string,
-    interval: IntervalParams,
+    interval: DurationParams,
     stream?: StreamType
   ): Promise<VideoUrl>;
   playback(params: GetVodUrlParams): Promise<VideoUrl>;
 
   playback(
     args: GetVodUrlParams | string,
-    interval?: IntervalParams,
+    interval?: DurationParams,
     stream: StreamType = StreamType.main
   ) {
     let data: any;

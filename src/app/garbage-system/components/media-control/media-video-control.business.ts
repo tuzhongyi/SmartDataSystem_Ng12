@@ -14,7 +14,7 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { CameraImageUrl, VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import {
   GetPreviewUrlParams,
@@ -57,7 +57,7 @@ export class MediaVideoControlBussiness
     camera: Camera,
     mode: PlayMode,
     streamType: StreamType = StreamType.sub,
-    interval?: IntervalParams
+    interval?: DurationParams
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.live:

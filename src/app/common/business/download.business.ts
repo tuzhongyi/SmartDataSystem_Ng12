@@ -2,17 +2,17 @@ import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class DownloadBusiness {
   constructor(private stationService: GarbageStationRequestService) {}
-  video(stationId: string, cameraId: string, args: IntervalParams): void;
+  video(stationId: string, cameraId: string, args: DurationParams): void;
   video(stationId: string, cameraId: string, args: Date): void;
-  video(stationId: string, cameraId: string, args: IntervalParams | Date) {
-    let duration: IntervalParams;
+  video(stationId: string, cameraId: string, args: DurationParams | Date) {
+    let duration: DurationParams;
     if (args instanceof Date) {
-      duration = IntervalParams.beforeAndAfter(args);
+      duration = DurationParams.beforeAndAfter(args);
     } else {
       duration = args;
       const interval =

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 declare var $: any;
 
@@ -34,7 +34,7 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
   endControl?: ElementRef;
 
   @Output()
-  OnOKClicked: EventEmitter<IntervalParams> = new EventEmitter();
+  OnOKClicked: EventEmitter<DurationParams> = new EventEmitter();
   @Output()
   OnCancelClicked: EventEmitter<void> = new EventEmitter();
 

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -7,18 +15,25 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Language } from 'src/app/global/tool/language';
 import { IModel } from 'src/app/network/model/model.interface';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordCountTableBusiness } from './event-record-count-table.business';
-import { EventRecordCountTableModel, EventRecordCountTableOptions } from './event-record-count-table.model';
+import {
+  EventRecordCountTableModel,
+  EventRecordCountTableOptions,
+} from './event-record-count-table.model';
 
 @Component({
   selector: 'howell-event-record-count-table',
   templateUrl: './event-record-count-table.component.html',
   styleUrls: ['../table.less', './event-record-count-table.component.less'],
-  providers: [EventRecordCountTableBusiness]
+  providers: [EventRecordCountTableBusiness],
 })
-export class EventRecordCountTableComponent implements OnInit, OnChanges, IComponent<IModel, EventRecordCountTableModel[]> {
-
+export class EventRecordCountTableComponent
+  implements
+    OnInit,
+    OnChanges,
+    IComponent<IModel, EventRecordCountTableModel[]>
+{
   @Input()
   eventType = EventType.IllegalDrop;
   @Input()
@@ -26,9 +41,9 @@ export class EventRecordCountTableComponent implements OnInit, OnChanges, ICompo
   @Input()
   type: UserResourceType = UserResourceType.Station;
   @Input()
-  date: Date = new Date()
+  date: Date = new Date();
   @Input()
-  load?: EventEmitter<void>
+  load?: EventEmitter<void>;
   @Output()
   loaded: EventEmitter<EventRecordCountTableModel[]> = new EventEmitter();
 
@@ -37,34 +52,32 @@ export class EventRecordCountTableComponent implements OnInit, OnChanges, ICompo
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && this.load) {
-      this.load.subscribe(x => {
+      this.load.subscribe((x) => {
         this.loadData();
-      })
+      });
     }
   }
-  width = ["30%", "30%", "40%"]
+  width = ['30%', '30%', '40%'];
   business: IBusiness<IModel, EventRecordCountTableModel[]>;
   datas: EventRecordCountTableModel[] = [];
-  loading = false
-  Language = Language
+  loading = false;
+  Language = Language;
   ngOnInit(): void {
-    this.loadData()
-
+    this.loadData();
   }
 
   async loadData() {
-    
     this.loading = true;
-    let interval = new IntervalParams()
+    let interval = new DurationParams();
     switch (this.unit) {
       case TimeUnit.Day:
-        interval = IntervalParams.allDay(this.date)
+        interval = DurationParams.allDay(this.date);
         break;
       case TimeUnit.Week:
-        interval = IntervalParams.allWeek(this.date);
+        interval = DurationParams.allWeek(this.date);
         break;
       case TimeUnit.Month:
-        interval = IntervalParams.allMonth(this.date);
+        interval = DurationParams.allMonth(this.date);
         break;
       default:
         break;
@@ -74,14 +87,14 @@ export class EventRecordCountTableComponent implements OnInit, OnChanges, ICompo
       unit: this.unit,
       eventType: this.eventType,
       type: this.type,
-      ...interval
-    }
-    this.business.load(opts).then(datas=>{
+      ...interval,
+    };
+    this.business.load(opts).then((datas) => {
       this.datas = datas;
       this.loading = false;
       this.loaded.emit(datas);
-    })
-    console.log(this.datas)
+    });
+    console.log(this.datas);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
@@ -99,20 +112,18 @@ export class EventRecordCountTableComponent implements OnInit, OnChanges, ICompo
       const isAsc = sort.direction === 'asc';
       this.datas = this.datas.sort((a, b) => {
         switch (sort.active) {
-          case "value":
-          case "name":
+          case 'value':
+          case 'name':
             return this.compare(a[sort.active], b[sort.active], isAsc);
-          case "parent":
+          case 'parent':
             if (a.parent && b.parent) {
-              return this.compare(a.parent.Name, b.parent.Name, isAsc)
+              return this.compare(a.parent.Name, b.parent.Name, isAsc);
             }
-            return 0
+            return 0;
           default:
-            return 0
+            return 0;
         }
-
       });
     }
   }
-
 }

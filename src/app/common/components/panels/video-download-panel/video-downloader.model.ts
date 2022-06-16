@@ -1,11 +1,11 @@
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
-export class VideoDownloader extends IntervalParams {
+export class VideoDownloader extends DurationParams {
   constructor(
     name: string,
     cameraId: string,
     stationId: string,
-    interval: IntervalParams
+    interval: DurationParams
   ) {
     super();
     this.name = name;

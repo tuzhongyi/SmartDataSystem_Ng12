@@ -3,7 +3,7 @@ import { ComparisonType } from 'src/app/enum/comparison-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GridCellNumberStatisticV2 } from '../../model/grid-cell-number-statistic-v2.model';
 import {
-  IntervalParams,
+  DurationParams,
   IParams,
   PagedIntervalParams,
   PagedParams,
@@ -50,7 +50,7 @@ export class GetGridCellStatisticComparisonParams implements IParams {
   Data!: GridCellNumberStatisticV2[];
 }
 export class GetGridCellStatisticNumbersParamsV2
-  extends IntervalParams
+  extends DurationParams
   implements IParams
 {
   /**

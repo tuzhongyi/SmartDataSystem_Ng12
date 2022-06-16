@@ -12,8 +12,11 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Language } from 'src/app/global/tool/language';
 import { IModel } from 'src/app/network/model/model.interface';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
-import { ChartConfig, EChartOptions } from '../../../charts/details-chart/details-chart.option';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
+import {
+  ChartConfig,
+  EChartOptions,
+} from '../../../charts/details-chart/details-chart.option';
 import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-details.business';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
 
@@ -21,20 +24,19 @@ import { GarbageStationDetailsChartOptions } from './garbage-station-window-deta
   selector: 'howell-garbage-station-window-details',
   templateUrl: './garbage-station-window-details.component.html',
   styleUrls: ['./garbage-station-window-details.component.less'],
-  providers: [GarbageStationWindowDetailsBusiness]
+  providers: [GarbageStationWindowDetailsBusiness],
 })
 export class GarbageStationWindowDetailsComponent
-  implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]> {
-
+  implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]>
+{
   @Input()
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   constructor(business: GarbageStationWindowDetailsBusiness) {
     this.business = business;
   }
 
-
-  date: Date = new Date()
-  type: StatisticType = StatisticType.garde
+  date: Date = new Date();
+  type: StatisticType = StatisticType.garde;
   types: SelectItem[] = [];
   unit: TimeUnit = TimeUnit.Week;
   units: SelectItem[] = [];
@@ -42,22 +44,22 @@ export class GarbageStationWindowDetailsComponent
   chartTypes: SelectItem[] = [];
 
   selectIds: string[] = [];
-  config: GarbageStationWindowDetailsComponentConfig = {}
+  config: GarbageStationWindowDetailsComponentConfig = {};
 
   UserResourceType = UserResourceType;
   ChartType = ChartType;
-  dateFormat: string = "yyyy年MM月dd日";
+  dateFormat: string = 'yyyy年MM月dd日';
   datas: ITimeDataGroup<number>[] = [];
   echartsLegend: LegendComponentOption = {
     show: true,
-    right: "50px",
-    top: "30px",
-    icon: "",
-    orient: "vertical",
+    right: '50px',
+    top: '30px',
+    icon: '',
+    orient: 'vertical',
     textStyle: {
-      fontSize: 16
-    }
-  }
+      fontSize: 16,
+    },
+  };
 
   ngOnInit(): void {
     this.initType();
@@ -65,15 +67,15 @@ export class GarbageStationWindowDetailsComponent
     this.initChartTypes();
   }
   async loadData() {
-    let interval = IntervalParams.TimeUnit(this.unit, this.date, 1);
+    let interval = DurationParams.TimeUnit(this.unit, this.date, 1);
     let opts: GarbageStationDetailsChartOptions = {
       stationIds: this.selectIds,
       unit: TimeUnit.Day,
       type: this.type,
       begin: interval.BeginTime,
-      end: interval.EndTime
-    }
-    this.datas = await this.business.load(opts)
+      end: interval.EndTime,
+    };
+    this.datas = await this.business.load(opts);
     this.loadChart();
   }
 
@@ -83,30 +85,40 @@ export class GarbageStationWindowDetailsComponent
     this.config.bar = undefined;
     switch (this.chartType) {
       case ChartType.line:
-        this.config.line = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        this.config.line = new ChartConfig(
+          this.unit,
+          this.date,
+          this.echartsLegend,
+          merge
+        );
         break;
       case ChartType.bar:
-        this.config.bar = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        this.config.bar = new ChartConfig(
+          this.unit,
+          this.date,
+          this.echartsLegend,
+          merge
+        );
         break;
       default:
         break;
     }
   }
 
-  getEChartsFormatter(value = "value") {
-    let formatter = `{${value}} `
+  getEChartsFormatter(value = 'value') {
+    let formatter = `{${value}} `;
     switch (this.type) {
       case StatisticType.garde:
-        formatter += "分";
+        formatter += '分';
         break;
       case StatisticType.garbageDuration:
       case StatisticType.avgGarbageTime:
       case StatisticType.maxGarbageTime:
-        formatter += "分钟"
+        formatter += '分钟';
         break;
       case StatisticType.illegalDrop:
       case StatisticType.mixedInto:
-        formatter += "起"
+        formatter += '起';
         break;
       default:
         break;
@@ -114,7 +126,10 @@ export class GarbageStationWindowDetailsComponent
     return formatter;
   }
 
-  getEChartsMerge(type: ChartType, datas: ITimeDataGroup<number>[]): EChartOptions {
+  getEChartsMerge(
+    type: ChartType,
+    datas: ITimeDataGroup<number>[]
+  ): EChartOptions {
     switch (type) {
       case ChartType.line:
         return {
@@ -131,16 +146,16 @@ export class GarbageStationWindowDetailsComponent
               data: data.datas.map((x) => x.value),
               areaStyle: {},
               label: {
-                formatter: ""
+                formatter: '',
               },
-            }
-          })
+            };
+          }),
         };
       case ChartType.bar:
       default:
         return {
           grid: {
-            top: "120px"
+            top: '120px',
           },
           yAxis: {
             axisLabel: {
@@ -153,19 +168,19 @@ export class GarbageStationWindowDetailsComponent
               type: 'bar',
               name: data.Name,
               data: data.datas.map((x) => x.value),
-              barWidth: "15px",
+              barWidth: '15px',
               barMinHeight: 5,
               label: {
                 show: true,
                 position: 'top',
                 color: ChartConfig.color[i],
-                fontSize: "16px",
+                fontSize: '16px',
                 textBorderWidth: 0,
-                formatter: ""
+                formatter: '',
               },
-            }
+            };
           }),
-        }
+        };
     }
   }
 
@@ -173,26 +188,17 @@ export class GarbageStationWindowDetailsComponent
     let _enum = new Enum(StatisticType);
     let array = _enum.toArray();
     for (let i = 0; i < array.length; i++) {
-
-      let language = Language.StatisticType(array[i])
-      let type = new SelectItem(array[i], array[i], language)
-      this.types.push(type)
+      let language = Language.StatisticType(array[i]);
+      let type = new SelectItem(array[i], array[i], language);
+      this.types.push(type);
     }
   }
   initUnits() {
     this.units.push(
-      new SelectItem(
-        TimeUnit.Week.toString(),
-        TimeUnit.Week,
-        '周报表',
-      )
+      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Month.toString(),
-        TimeUnit.Month,
-        '月报表',
-      )
+      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
   initChartTypes() {
@@ -202,14 +208,14 @@ export class GarbageStationWindowDetailsComponent
         ChartType.bar,
         Language.ChartType(ChartType.bar)
       )
-    )
+    );
     this.chartTypes.push(
       new SelectItem(
         ChartType.line.toString(),
         ChartType.line,
         Language.ChartType(ChartType.line)
       )
-    )
+    );
   }
 
   changeDate(date: Date) {
@@ -232,13 +238,11 @@ export class GarbageStationWindowDetailsComponent
   search() {
     this.loadData();
   }
-  exportExcel() { 
-    
-  }
-  exportCSV() { }
+  exportExcel() {}
+  exportCSV() {}
 }
 
 interface GarbageStationWindowDetailsComponentConfig {
-  line?: ChartConfig,
-  bar?: ChartConfig
+  line?: ChartConfig;
+  bar?: ChartConfig;
 }

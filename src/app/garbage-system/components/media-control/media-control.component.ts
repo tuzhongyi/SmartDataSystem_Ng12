@@ -27,7 +27,7 @@ import { wait } from 'src/app/common/tools/tool';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediaVideoControlBussiness } from './media-video-control.business';
 
 @Component({
@@ -215,7 +215,7 @@ export class MediaControlComponent
   }
   onplayback(event?: Event) {
     if (this.current && this.current.image && this.current.image.eventTime) {
-      let interval = IntervalParams.beforeAndAfter(
+      let interval = DurationParams.beforeAndAfter(
         this.current.image.eventTime
       );
       this.player.onplayback(this.current.cameraId, interval);
@@ -240,7 +240,7 @@ export class MediaControlComponent
   onvideodownload() {
     if (this.current) {
       if (this.current && this.current.image && this.current.image.eventTime) {
-        let interval = IntervalParams.beforeAndAfter(
+        let interval = DurationParams.beforeAndAfter(
           this.current.image.eventTime
         );
         this.download.video(

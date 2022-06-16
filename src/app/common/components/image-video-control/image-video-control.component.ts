@@ -9,7 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { wait } from '../../tools/tool';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
@@ -115,7 +115,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       this.play(x);
     });
   }
-  onplayback(cameraId: string, interval: IntervalParams) {
+  onplayback(cameraId: string, interval: DurationParams) {
     this.display.image = false;
     this.display.video = true;
     this.business.load(cameraId, PlayMode.vod, interval).then((x) => {

@@ -18,7 +18,7 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { VideoWindowViewModel } from './video-window.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 declare var $: any;
@@ -46,7 +46,7 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
   window: VideoWindowViewModel = new VideoWindowViewModel();
 
   @Output()
-  download: EventEmitter<IntervalParams> = new EventEmitter();
+  download: EventEmitter<DurationParams> = new EventEmitter();
 
   ngOnDestroy(): void {
     this.playback = undefined;
@@ -87,10 +87,10 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  ondownload(interval: IntervalParams) {
+  ondownload(interval: DurationParams) {
     this.download.emit(interval);
   }
-  onplayback(interval: IntervalParams) {
+  onplayback(interval: DurationParams) {
     if (this.model) {
       this.model.beginTime = interval.BeginTime;
       this.model.endTime = interval.EndTime;
