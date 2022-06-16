@@ -1,4 +1,4 @@
-/**平台信息  Platform被很多库使用*/
+/**平台信息  Platform 名字被很多库使用*/
 export class HwPlatform {
   /**平台ID */
   Id!: string;

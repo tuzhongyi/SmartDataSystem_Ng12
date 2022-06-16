@@ -20,6 +20,11 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
   }
 
 
+  create(item: HwPlatform) {
+    let url = PlatformsUrl.basic;
+    return this.type.post(url, item)
+  }
+
   list(params: GetPlatformsParams = new GetPlatformsParams()) {
 
     let url = PlatformsUrl.list();
@@ -31,5 +36,11 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
     let url = PlatformsUrl.item(id);
     return this.type.get(url);
   }
+
+  protocol(): Promise<any> {
+    let url = PlatformsUrl.protocols();
+    return this.type.get(url);;
+  }
+
 
 }

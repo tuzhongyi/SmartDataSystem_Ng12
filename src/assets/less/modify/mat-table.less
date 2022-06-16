@@ -22,7 +22,6 @@
     &:hover {
       background-color: #3d5492;
       border-bottom-color: rgba(0, 0, 0, 0.3);
-      height: 88px;
     }
 
     &.high-light {
@@ -48,8 +47,30 @@
     img {
       height: 40px;
     }
-    &:hover img {
-      height: 60px;
+    i {
+      color: #7586e0;
+      &:hover {
+        color: #fff;
+      }
+    }
+  }
+}
+
+mat-table.zoomIn .mat-row:hover {
+  height: 88px;
+  background-color: #3d5492;
+  border-bottom-color: rgba(0, 0, 0, 0.3);
+
+  img {
+    height: 60px;
+  }
+}
+
+mat-table .mat-row.high-light {
+  i {
+    color: #cfd7ff;
+    &:hover {
+      color: #fff;
     }
   }
 }
@@ -64,9 +85,34 @@ mat-footer-cell:last-of-type {
   }
 }
 
+mat-cell:first-of-type,
+mat-header-cell:first-of-type,
+mat-footer-cell:first-of-type {
+  padding-left: 24px;
+}
 /*保留*/
 mat-cell,
 mat-header-cell,
 mat-footer-cell {
   width: 0;
 }
+
+// ::ng-deep .mat-table .mat-row .mat-cell div.operation {
+//   color: #7586e0;
+// }
+
+// ::ng-deep .mat-table .mat-row .mat-cell div.operation i {
+//   padding-right: 5px;
+// }
+
+// ::ng-deep .mat-table .mat-row .mat-cell div.operation i:hover {
+//   color: #fff;
+// }
+
+// ::ng-deep .mat-table .mat-row.high-light .mat-cell div.operation i {
+//   color: #cfd7ff;
+// }
+
+// ::ng-deep .mat-table .mat-row.high-light .mat-cell div.operation i:hover {
+//   color: #fff;
+// }

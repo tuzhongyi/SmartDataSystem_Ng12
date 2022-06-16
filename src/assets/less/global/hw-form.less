@@ -2,28 +2,24 @@
   width: 100%;
   box-sizing: border-box;
   overflow: auto;
+  display: flex;
+  flex-direction: column;
+  &.direction-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    .hw-form-group {
+      width: 49%;
+    }
+  }
   .hw-form-group {
-    width: 70%;
+    width: 60%;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
     .title {
       margin-bottom: 5px;
     }
-
-    // .btns {
-    //   .btn {
-    //     width: 46px;
-    //     height: 34px;
-    //     cursor: pointer;
-    //     font-size: 16px;
-    //     border-radius: 0;
-
-    //     &:not(:last-child) {
-    //       margin-right: 10px;
-    //     }
-    //   }
-    // }
   }
 
   .hw-form-control {
@@ -64,5 +60,7 @@
     resize: none;
     padding: 0;
     padding: 4px 12px 0px;
+    width: 100%;
+    height: 150px;
   }
 }

@@ -24,7 +24,6 @@ export class PlatformManageBusiness {
       Data: models,
     };
 
-
     return res;
   }
 

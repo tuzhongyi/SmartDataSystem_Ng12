@@ -10,43 +10,38 @@ export const PlatformManageConf: TableColumnModel[] = [
     columnDef: 'Name',
     header: '名称',
     cell: (element: PlatformManageModel) => `${element.Name}`,
-    sortHeader: true,
   },
   {
     columnDef: 'Url',
     header: '地址',
     cell: (element: PlatformManageModel) => `${element.Url}`,
-    sortHeader: true,
+    flexBasis: '8%'
   },
   {
     columnDef: 'ProtocolType',
     header: '协议类型',
     cell: (element: PlatformManageModel) => `${element.ProtocolType}`,
-    sortHeader: true,
   },
   {
     columnDef: 'State',
     header: '状态',
     cell: (element: PlatformManageModel) => `${element.State}`,
-    sortHeader: true,
   },
 
   {
     columnDef: 'UpdateTime',
     header: '更新时间',
     cell: (element: PlatformManageModel) => `${element.UpdateTime}`,
-    sortHeader: true,
   },
-
-  // {
-  //   columnDef: 'Operation',
-  //   header: '操作',
-  //   cell: (element: PlatformManageModel) => `
-  //     <i class="howell-icon-video" title="播放视频"></i>
-  //     <i class="howell-icon-picturedownload"  title="下载图片"></i>
-  //     <i class="howell-icon-videodownload" title="下载视频"></i>
-  //     `,
-  //   style: {},
-  //   cls: ['operate'],
-  // },
+  {
+    columnDef: 'Operation',
+    header: '操作',
+    cell: (row: IllegalDropRecordModel) => `
+        <i class="fa fa-retweet operate-icon" title="同步" id="sync" ></i>
+        <i class="howell-icon-modification operate-icon"  title="编辑" id="edit"></i>
+        <i class="howell-icon-delete-bin operate-icon" title="删除" id="delete"></i>
+      `,
+    className: ['operation'],
+    stopPropogate: true
+  },
 ];

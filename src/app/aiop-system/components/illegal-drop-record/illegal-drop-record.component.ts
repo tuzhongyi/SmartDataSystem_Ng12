@@ -23,8 +23,6 @@ export class IllegalDropRecordComponent implements OnInit {
   /**private */
   private _pageSize = 9;
   private _endTime = new Date();
-
-
   private _curDataSource: IllegalDropRecordModel[] = []; // 表格数据源
   private _sortedDataSource: IllegalDropRecordModel[] = []; // 表格排序后的数据源
 

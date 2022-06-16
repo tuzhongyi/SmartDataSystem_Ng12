@@ -98,7 +98,6 @@ h2 {
   background-color: transparent;
 }
 
-
 .customtab2 li a.nav-link.text.active {
   background-image: url("/assets/img/blue-tab.png");
 }
@@ -200,11 +199,6 @@ select.custom.form-control:not([size]):not([multiple]) {
 .custom.form-control:focus {
   background-color: #0d1f38;
   border: 1px solid #3a93ff;
-}
-
-.custom-select.custom {
-  background: url("/assets/img/technology-custom-select.png") right 0.75rem
-    center no-repeat;
 }
 
 .form-control::-moz-placeholder {

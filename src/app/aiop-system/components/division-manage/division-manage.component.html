@@ -1,8 +1,7 @@
 <div class="division-manage hw-tree-model">
   <ng-container *ngIf="showDialog">
-    <howell-confirm-dialog
-      (dialogMsg)="dialogMsgEvent($event)"
-    ></howell-confirm-dialog>
+    <howell-confirm-dialog (dialogMsg)="dialogMsgEvent($event)">
+    </howell-confirm-dialog>
   </ng-container>
   <div class="hw-tree-left">
     <div class="hw-simple-title">区划列表</div>
@@ -102,8 +101,6 @@
         <div class="content">
           <textarea
             class="hw-form-control hw-form-textarea"
-            cols="30"
-            rows="7"
             formControlName="Description"
           ></textarea>
         </div>

@@ -1,6 +1,7 @@
 <div class="table-container">
   <!--表头 -->
   <mat-table
+    style="position: sticky; top: 0"
     [dataSource]="dataSource"
     matSort
     (matSortChange)="sortData($event)"
@@ -9,7 +10,7 @@
       *ngFor="let model of columnModel"
       [matColumnDef]="model.columnDef"
     >
-      <mat-header-cell *matHeaderCellDef>
+      <mat-header-cell *matHeaderCellDef [style.flexBasis]="model.flexBasis">
         <!-- 显示 ellipsis必须包一层div-->
         <div [class]="model.className">{{ model.header }}</div>
       </mat-header-cell>
@@ -23,13 +24,21 @@
     [dataSource]="dataSource"
     style="overflow: auto"
     class="bold-scrollbar"
+    [class.zoomIn]="zoomIn"
   >
     <ng-container
       *ngFor="let model of columnModel"
       [matColumnDef]="model.columnDef"
     >
-      <mat-cell *matCellDef="let row" (click)="clickCell(model, $event)">
-        <div [innerHTML]="model.cell(row)" [class]="model.className"></div>
+      <mat-cell
+        *matCellDef="let row"
+        [style.flexBasis]="model.flexBasis"
+        (click)="clickCell(model, $event)"
+      >
+        <div
+          [innerHTML]="sanitizer.bypassSecurityTrustHtml(model.cell(row))"
+          [class]="model.className"
+        ></div>
       </mat-cell>
     </ng-container>
 
