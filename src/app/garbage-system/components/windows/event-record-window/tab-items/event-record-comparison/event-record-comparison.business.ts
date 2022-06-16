@@ -18,7 +18,7 @@ import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationEventNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { EventNumberStatisticGroup } from 'src/app/view-model/event-number-statistic-group.model';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
 
@@ -40,7 +40,7 @@ export class EventRecordComparisonBusiness
   async load(
     opts: EventRecordComparisonOptions
   ): Promise<ITimeDataGroup<number>[]> {
-    let interval = IntervalParams.TimeUnit(opts.unit, opts.date);
+    let interval = DurationParams.TimeUnit(opts.unit, opts.date);
     let unit = TimeUnit.Day;
     if (opts.unit == TimeUnit.Day || opts.unit === TimeUnit.Hour) {
       unit = TimeUnit.Hour;
@@ -53,7 +53,7 @@ export class EventRecordComparisonBusiness
     type: UserResourceType,
     ids: string[],
     unit: TimeUnit,
-    interval: IntervalParams
+    interval: DurationParams
   ) {
     if (type === UserResourceType.Station) {
       return this.getDataByStation(ids, unit, interval);
@@ -65,7 +65,7 @@ export class EventRecordComparisonBusiness
   async getDataByStation(
     ids: string[],
     unit: TimeUnit,
-    interval: IntervalParams
+    interval: DurationParams
   ) {
     let params = new GetGarbageStationEventNumbersParams();
     params.BeginTime = interval.BeginTime;
@@ -90,7 +90,7 @@ export class EventRecordComparisonBusiness
   async getDataByDivision(
     ids: string[],
     unit: TimeUnit,
-    interval: IntervalParams
+    interval: DurationParams
   ) {
     let params = new GetDivisionEventNumbersParams();
     params.BeginTime = interval.BeginTime;

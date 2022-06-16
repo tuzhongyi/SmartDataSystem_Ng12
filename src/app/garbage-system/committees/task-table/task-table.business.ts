@@ -5,7 +5,7 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GarbageDropEventRecord } from 'src/app/network/model/event-record.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 import { TaskTableConverter } from './task-table.converter';
 
@@ -22,7 +22,7 @@ export class TaskTableBusiness
   async getData(divisionId: string): Promise<GarbageDropEventRecord[]> {
     let params = new GetGarbageDropEventRecordsParams();
 
-    let day = IntervalParams.allDay(new Date());
+    let day = DurationParams.allDay(new Date());
 
     params.BeginTime = day.BeginTime;
     params.EndTime = day.EndTime;

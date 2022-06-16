@@ -1,4 +1,4 @@
-import { TimeUnit } from "src/app/enum/time-unit.enum";
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import * as echarts from 'echarts/core';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import {
@@ -9,10 +9,10 @@ import {
   TitleComponentOption,
   TooltipComponentOption,
 } from 'echarts';
-import { LegendOption, XAXisOption } from "echarts/types/dist/shared";
-import { IntervalParams } from "src/app/network/request/IParams.interface";
-import { Language } from "src/app/global/tool/language";
-import { UserResourceType } from "src/app/enum/user-resource-type.enum";
+import { LegendOption, XAXisOption } from 'echarts/types/dist/shared';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Language } from 'src/app/global/tool/language';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 
 export type EChartOptions = echarts.ComposeOption<
   | TitleComponentOption
@@ -24,16 +24,24 @@ export type EChartOptions = echarts.ComposeOption<
   | XAXisOption
 >;
 
-
 export class ChartConfig {
-  constructor(unit: TimeUnit, date: Date, legend?: LegendComponentOption, merge?: EChartOptions) {
+  constructor(
+    unit: TimeUnit,
+    date: Date,
+    legend?: LegendComponentOption,
+    merge?: EChartOptions
+  ) {
     this.options = this.getOption(unit, date, legend);
     this.merge = merge || {};
   }
 
   theme: EChartsTheme = EChartsTheme.adsame;
-  static color = ['#7586e0', '#ffba00', "#21E452"]
-  getOption(unit: TimeUnit, date: Date, legend?: LegendComponentOption): EChartOptions {
+  static color = ['#7586e0', '#ffba00', '#21E452'];
+  getOption(
+    unit: TimeUnit,
+    date: Date,
+    legend?: LegendComponentOption
+  ): EChartOptions {
     let x = this.getX(unit, date);
     return {
       color: ChartConfig.color,
@@ -54,7 +62,7 @@ export class ChartConfig {
   merge: EChartOptions;
 
   getX(unit: TimeUnit, date: Date): XAXisOption | undefined {
-    let interval: IntervalParams;
+    let interval: DurationParams;
     switch (unit) {
       case TimeUnit.Hour:
         return {
@@ -69,7 +77,7 @@ export class ChartConfig {
           ],
         };
       case TimeUnit.Month:
-        interval = IntervalParams.allMonth(date);
+        interval = DurationParams.allMonth(date);
 
         return {
           mainType: 'xAxis',
@@ -86,7 +94,7 @@ export class ChartConfig {
           ],
         };
       case TimeUnit.Week:
-        interval = IntervalParams.allWeek(date);
+        interval = DurationParams.allWeek(date);
 
         return {
           mainType: 'xAxis',

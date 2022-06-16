@@ -23,7 +23,7 @@ import { LocalStorageService } from 'src/app/global/service/local-storage.servic
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ITimeData } from 'src/app/common/components/charts/chart.model';
 import { Language } from 'src/app/global/tool/language';
 import { ChartConfig } from './details-chart.option';
@@ -36,14 +36,14 @@ import { ExportExcelConverter } from './details-chart-export.converter';
 import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 
-
 @Component({
   selector: 'howell-details-chart',
   templateUrl: './details-chart.component.html',
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, ITimeData<IModel>[]>, OnChanges {
+  implements OnInit, IComponent<IModel, ITimeData<IModel>[]>, OnChanges
+{
   @Input()
   business!: IBusiness<IModel, ITimeData<IModel>[]>;
   @Input()
@@ -51,12 +51,10 @@ export class DetailsChartComponent
   @Input()
   station?: GarbageStation;
 
-
-  treeAlign = HorizontalAlign.left
+  treeAlign = HorizontalAlign.left;
 
   @Input()
-  division?: Division
-
+  division?: Division;
 
   // private _division?: Division;
   // public get division(): Division | undefined {
@@ -79,9 +77,7 @@ export class DetailsChartComponent
   //   this._division = v;
   // }
 
-
-
-  options?: DetailsChartLoadOptions
+  options?: DetailsChartLoadOptions;
 
   date: Date = new Date();
 
@@ -105,8 +101,10 @@ export class DetailsChartComponent
 
   DivisionType = DivisionType;
 
-  constructor(public local: LocalStorageService,
-    private exports: ExportBusiness) {
+  constructor(
+    public local: LocalStorageService,
+    private exports: ExportBusiness
+  ) {
     if (local.user.Resources && local.user.Resources.length > 0) {
       this.userResourceType = local.user.Resources[0].ResourceType;
     }
@@ -116,18 +114,17 @@ export class DetailsChartComponent
   }
 
   async ngOnInit() {
-
     this.initUnits();
     this.initCharts();
-    wait(() => {
-      return !!this.station || !!this.division
-    }, () => {
-      this.loadData();
-    })
-
+    wait(
+      () => {
+        return !!this.station || !!this.division;
+      },
+      () => {
+        this.loadData();
+      }
+    );
   }
-
-
 
   async loadData() {
     let interval = this.getInterval();
@@ -137,9 +134,9 @@ export class DetailsChartComponent
       begin: interval.params.BeginTime,
       end: interval.params.EndTime,
       divisionId: this.station ? undefined : this.division?.Id,
-      type: this.eventType
+      type: this.eventType,
     };
-    console.log(this.options)
+    console.log(this.options);
     this.data = await this.business.load(this.options);
     // if (this.unit === TimeUnit.Hour) {
     //   let first: TimeData<IModel> = {
@@ -155,11 +152,15 @@ export class DetailsChartComponent
     // console.log(this.data);
     switch (this.chartType) {
       case ChartType.line:
-        this.config.line.options = this.config.line.getOption(this.unit, this.date, {
-          formatter: function () {
-            return '单位(起)'
-          },
-        });
+        this.config.line.options = this.config.line.getOption(
+          this.unit,
+          this.date,
+          {
+            formatter: function () {
+              return '单位(起)';
+            },
+          }
+        );
         this.config.line.merge = {
           series: [
             {
@@ -177,23 +178,27 @@ export class DetailsChartComponent
         };
         break;
       case ChartType.bar:
-        this.config.bar.options = this.config.bar.getOption(this.unit, this.date, {
-          formatter: function () {
-            return '单位(起)'
-          },
-        });
+        this.config.bar.options = this.config.bar.getOption(
+          this.unit,
+          this.date,
+          {
+            formatter: function () {
+              return '单位(起)';
+            },
+          }
+        );
         this.config.bar.merge = {
           series: [
             {
               type: 'bar',
               name: '单位(起)',
               data: this.data.map((x) => x.value),
-              barWidth: "32px",
+              barWidth: '32px',
               label: {
                 show: true,
                 position: 'top',
-                color: "#7d90bc",
-                fontSize: "16px",
+                color: '#7d90bc',
+                fontSize: '16px',
                 textBorderWidth: 0,
                 formatter: (params: CallbackDataParams) => {
                   return params.value.toString();
@@ -206,7 +211,6 @@ export class DetailsChartComponent
       default:
         break;
     }
-
   }
 
   changeDate(date: Date) {
@@ -240,45 +244,23 @@ export class DetailsChartComponent
 
   initUnits() {
     this.units.push(
-      new SelectItem(
-        TimeUnit.Hour.toString(),
-        TimeUnit.Hour,
-        '日报表',
-      )
+      new SelectItem(TimeUnit.Hour.toString(), TimeUnit.Hour, '日报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Week.toString(),
-        TimeUnit.Week,
-        '周报表',
-      )
+      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Month.toString(),
-        TimeUnit.Month,
-        '月报表',
-      )
+      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
   initCharts() {
-
     this.charts.push(
-      new SelectItem(
-        ChartType.bar.toString(),
-        ChartType.bar,
-        '柱状图',
-      )
+      new SelectItem(ChartType.bar.toString(), ChartType.bar, '柱状图')
     );
     this.charts.push(
-      new SelectItem(
-        ChartType.line.toString(),
-        ChartType.line,
-        '折线图',
-      )
+      new SelectItem(ChartType.line.toString(), ChartType.line, '折线图')
     );
   }
-
 
   onStationSelected(station?: GarbageStation) {
     this.station = station;
@@ -286,7 +268,7 @@ export class DetailsChartComponent
 
   onchartselected(item: SelectItem) {
     this.chartType = item.value;
-    this.loadData()
+    this.loadData();
   }
 
   search() {
@@ -299,30 +281,39 @@ export class DetailsChartComponent
 
     let interval = this.getInterval();
 
-
-    return `${interval.language} ${name} ${type}`
+    return `${interval.language} ${name} ${type}`;
   }
   private getName() {
-    return this.station ? this.station.Name : this.division ? this.division.Name : "";
+    return this.station
+      ? this.station.Name
+      : this.division
+      ? this.division.Name
+      : '';
   }
   private getInterval() {
     let interval = {
-      params: new IntervalParams(),
-      language: ""
-    }
+      params: new DurationParams(),
+      language: '',
+    };
     switch (this.unit) {
       case TimeUnit.Hour:
       case TimeUnit.Day:
-        interval.params = IntervalParams.allDay(this.date);
+        interval.params = DurationParams.allDay(this.date);
         interval.language = Language.Date(this.date);
         break;
       case TimeUnit.Week:
-        interval.params = IntervalParams.allWeek(this.date);
-        interval.language = Language.Duration(interval.params.BeginTime, interval.params.EndTime)
+        interval.params = DurationParams.allWeek(this.date);
+        interval.language = Language.Duration(
+          interval.params.BeginTime,
+          interval.params.EndTime
+        );
         break;
       case TimeUnit.Month:
-        interval.params = IntervalParams.allMonth(this.date);
-        interval.language = Language.Duration(interval.params.BeginTime, interval.params.EndTime)
+        interval.params = DurationParams.allMonth(this.date);
+        interval.language = Language.Duration(
+          interval.params.BeginTime,
+          interval.params.EndTime
+        );
         break;
       default:
         break;
@@ -330,29 +321,21 @@ export class DetailsChartComponent
     return interval;
   }
 
-  converter = new ExportExcelConverter()
-
+  converter = new ExportExcelConverter();
 
   exportExcel() {
     let title = this.getTitle();
-    let headers = ["序号", "日期", "时间", this.getName()]
-    this.exports.excel(title, headers, this.data, this.converter)
+    let headers = ['序号', '日期', '时间', this.getName()];
+    this.exports.excel(title, headers, this.data, this.converter);
   }
   exportCSV() {
     let title = this.getTitle();
-    let headers = ["序号", "日期", "时间", this.getName()]
+    let headers = ['序号', '日期', '时间', this.getName()];
     this.exports.csv(title, headers, this.data, this.converter);
   }
 
-
   ondivisionselect(division: Division) {
     this.division = division;
-    this.loadData()
+    this.loadData();
   }
-
 }
-
-
-
-
-

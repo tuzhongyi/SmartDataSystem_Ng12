@@ -1,4 +1,4 @@
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { ImageControlModel } from '../../../view-model/image-control.model';
 import { VideoModel } from '../video-player/video.model';
@@ -31,6 +31,6 @@ export class ImageVideoControlOperation {
   fullscreen = true;
 }
 
-export class PlaybackInterval extends IntervalParams {
+export class PlaybackInterval extends DurationParams {
   CameraId!: string;
 }

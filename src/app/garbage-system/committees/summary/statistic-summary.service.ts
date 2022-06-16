@@ -9,7 +9,7 @@ import {
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class StatisticSummaryService {
@@ -20,7 +20,7 @@ export class StatisticSummaryService {
 
   async stations(
     stationIds: string[],
-    interval: IntervalParams,
+    interval: DurationParams,
     unit: TimeUnit
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
@@ -36,7 +36,7 @@ export class StatisticSummaryService {
 
   async divisions(
     divisionId: string,
-    interval: IntervalParams,
+    interval: DurationParams,
     unit: TimeUnit
   ): Promise<DivisionNumberStatisticV2[]> {
     let params = new GetDivisionStatisticNumbersParamsV2();
@@ -51,7 +51,7 @@ export class StatisticSummaryService {
   }
   async stationHistory(
     divisionId: string,
-    day: IntervalParams,
+    day: DurationParams,
     unit: TimeUnit
   ) {
     let params = new GetDivisionEventNumbersParams();

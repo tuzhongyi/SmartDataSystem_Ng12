@@ -14,7 +14,7 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 
@@ -42,7 +42,7 @@ export class CommitteesHistroyTableService
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async getData(divisionId: string, eventType: EventType): Promise<any[]> {
-    let day = IntervalParams.allDay(new Date());
+    let day = DurationParams.allDay(new Date());
     let params = new GetEventRecordsParams();
     params.BeginTime = day.BeginTime;
     params.EndTime = day.EndTime;

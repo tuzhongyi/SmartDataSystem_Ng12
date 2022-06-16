@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 export class PlaybackConfigWindowViewModel extends WindowViewModel {
   styles = {
@@ -13,7 +13,7 @@ export class PlaybackConfigWindowViewModel extends WindowViewModel {
 
   onOkClicked = new EventEmitter();
 
-  ok(model: IntervalParams) {
+  ok(model: DurationParams) {
     this.onOkClicked.emit(model);
     this.show = false;
   }

@@ -16,7 +16,7 @@ import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { StatisticSummaryExportExcelBusiness } from './business/statistic-summary-export-excel.business';
 import { StatisticSummaryViewModel } from './statistic-summary.model';
 import { StatisticSummaryService } from './statistic-summary.service';
@@ -132,7 +132,7 @@ export class StatisticSummaryComponent
       if (this.unit == TimeUnit.Day) {
         unit = TimeUnit.Month;
       }
-      let interval = IntervalParams.TimeUnit(unit, this.Date);
+      let interval = DurationParams.TimeUnit(unit, this.Date);
 
       this.service
         .stationHistory(this.Committees.Id, interval, this.unit)

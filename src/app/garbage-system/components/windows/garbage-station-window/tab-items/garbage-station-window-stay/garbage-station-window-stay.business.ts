@@ -15,7 +15,7 @@ import {
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowStayConverter } from './garbage-station-window-stay.converter';
 import { GarbageStationWindowStayModel } from './garbage-station-window-stay.model';
 
@@ -48,7 +48,7 @@ export class GarbageStationWindowStayBusiness
     date: Date
   ): Promise<GarbageStationNumberStatisticV2> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
-    let interval = IntervalParams.allDay(date);
+    let interval = DurationParams.allDay(date);
     params = Object.assign(params, interval);
     params.GarbageStationIds = [stationId];
     params.TimeUnit = TimeUnit.Day;

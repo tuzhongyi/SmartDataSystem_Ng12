@@ -4,17 +4,15 @@ import { EventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { SelectItem } from '../../select-control/select-control.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 
-
-
-export class EventRecordFilter extends IntervalParams {
+export class EventRecordFilter extends DurationParams {
   constructor() {
     super();
-    let interval = IntervalParams.allDay(new Date());
+    let interval = DurationParams.allDay(new Date());
     this.BeginTime = interval.BeginTime;
     this.EndTime = interval.EndTime;
   }

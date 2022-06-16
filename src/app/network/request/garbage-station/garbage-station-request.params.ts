@@ -11,7 +11,7 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
 import { transformDate, transformDateTime } from '../../model/transform.model';
 import {
-  IntervalParams,
+  DurationParams,
   IParams,
   PagedIntervalParams,
   PagedParams,
@@ -120,7 +120,7 @@ export class GetGarbageStationStatisticGarbageCountsParams implements IParams {
   GarbageStationIds!: string[];
 }
 export class GetGarbageStationSumEventNumberParams
-  extends IntervalParams
+  extends DurationParams
   implements IParams
 {
   /**	String[]	垃圾房ID列表	M */
@@ -137,11 +137,11 @@ export class GetGarbageStationSumEventNumberParams
   Limit?: number;
 }
 
-export class CameraDownloadFileParams extends IntervalParams {
+export class CameraDownloadFileParams extends DurationParams {
   GarbageStationId!: string;
   CameraId!: string;
 }
-export class CameraUploadFileParams extends IntervalParams {
+export class CameraUploadFileParams extends DurationParams {
   GarbageStationId!: string;
   CameraId!: string;
 }
@@ -151,10 +151,10 @@ export class CameraUploadFileParams extends IntervalParams {
  *
  * @export
  * @class GetGarbageStationStatisticNumbersParamsV2
- * @extends {IntervalParams}
+ * @extends {DurationParams}
  */
 export class GetGarbageStationStatisticNumbersParamsV2
-  extends IntervalParams
+  extends DurationParams
   implements IParams
 {
   /**	String[]	垃圾房ID列表	M */

@@ -71,8 +71,11 @@ export class DisposalCountConverter
         tag: DisposalCountType.timeout,
       },
     ];
-    model.handledPercentage = ((handledCount / totalCount) * 100) >> 0;
 
+    model.handledPercentage = ((handledCount / totalCount) * 100) >> 0;
+    if (totalCount <= 0) {
+      model.handledPercentage = 100;
+    }
     let timeoutRatio = 0;
     if (totalCount > 0) {
       timeoutRatio = (timeoutCount / totalCount) * 100;

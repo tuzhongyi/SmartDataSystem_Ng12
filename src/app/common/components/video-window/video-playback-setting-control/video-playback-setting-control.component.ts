@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { TimeModel } from '../../time-control/time-control.model';
 
 @Component({
@@ -51,9 +51,9 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
   }
 
   @Output()
-  playback: EventEmitter<IntervalParams> = new EventEmitter();
+  playback: EventEmitter<DurationParams> = new EventEmitter();
   @Output()
-  download: EventEmitter<IntervalParams> = new EventEmitter();
+  download: EventEmitter<DurationParams> = new EventEmitter();
 
   getParams() {
     let begin = new Date(
@@ -72,7 +72,7 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
       this.time.end.minute.value,
       this.time.end.second.value
     );
-    let params = new IntervalParams();
+    let params = new DurationParams();
     params.BeginTime = begin;
     params.EndTime = end;
     return params;

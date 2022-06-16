@@ -8,24 +8,30 @@ import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-s
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowDetailsConverter } from './garbage-station-window-details.converter';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
 
-
-
 @Injectable()
 export class GarbageStationWindowDetailsBusiness
-  implements IBusiness<GarbageStationNumberStatisticV2[], ITimeDataGroup<number>[]>
+  implements
+    IBusiness<GarbageStationNumberStatisticV2[], ITimeDataGroup<number>[]>
 {
-  constructor(private stationService: GarbageStationRequestService, private divisionService: DivisionRequestService) { }
-  Converter: IConverter<GarbageStationNumberStatisticV2[], ITimeDataGroup<number>[]> =
-    new GarbageStationWindowDetailsConverter();
+  constructor(
+    private stationService: GarbageStationRequestService,
+    private divisionService: DivisionRequestService
+  ) {}
+  Converter: IConverter<
+    GarbageStationNumberStatisticV2[],
+    ITimeDataGroup<number>[]
+  > = new GarbageStationWindowDetailsConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
 
-  async load(opts: GarbageStationDetailsChartOptions): Promise<ITimeDataGroup<number>[]> {
-    let interval: IntervalParams = new IntervalParams();
+  async load(
+    opts: GarbageStationDetailsChartOptions
+  ): Promise<ITimeDataGroup<number>[]> {
+    let interval: DurationParams = new DurationParams();
     interval.BeginTime = opts.begin;
     interval.EndTime = opts.end;
     let data = await this.getData(opts.stationIds, interval, opts.unit);
@@ -34,7 +40,7 @@ export class GarbageStationWindowDetailsBusiness
   }
   async getData(
     stationIds: string[],
-    interval: IntervalParams,
+    interval: DurationParams,
     unit: TimeUnit
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
@@ -44,10 +50,9 @@ export class GarbageStationWindowDetailsBusiness
     return this.stationService.statistic.number.history.list(params);
   }
 
-
   groupBy<T>(array: T[], f: (t: T) => any) {
     const groups: {
-      [key: string]: T[],
+      [key: string]: T[];
     } = {};
     array.forEach((item) => {
       const group = JSON.stringify(f(item));
@@ -57,5 +62,5 @@ export class GarbageStationWindowDetailsBusiness
     return Object.keys(groups).map((group) => {
       return groups[group];
     });
-  };
+  }
 }

@@ -18,7 +18,7 @@ import {
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { LineZoomChartConverter } from './line-zoom-chart.converter';
 import {
   LineZoomChartModel,
@@ -69,7 +69,7 @@ export class LineZoomChartBusiness
 
   async getRecord(stationId: string, date: Date) {
     let params = new GetEventRecordsParams();
-    let interval = IntervalParams.allDay(date);
+    let interval = DurationParams.allDay(date);
     params = Object.assign(params, interval);
     params.StationIds = [stationId];
     let paged = await this.eventService.record.IllegalDrop.list(params);

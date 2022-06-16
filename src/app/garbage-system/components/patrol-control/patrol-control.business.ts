@@ -17,7 +17,7 @@ import {
   GetGarbageStationStatisticNumbersParams,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { IntervalParams } from 'src/app/network/request/IParams.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 import { PatrolArrayControlConverter } from './patrol-control.converter';
@@ -89,7 +89,7 @@ export class PatrolControlBusiness
   getPreview(camera: Camera) {
     return this.srService.preview(camera.Id);
   }
-  getPlayback(model: PatrolControlModel, interval: IntervalParams) {
+  getPlayback(model: PatrolControlModel, interval: DurationParams) {
     return this.srService.playback(model.id, interval);
   }
 
