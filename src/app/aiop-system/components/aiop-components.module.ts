@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-27 10:44:42
+ * @Last Modified time: 2022-06-16 13:39:19
  */
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -29,6 +29,7 @@ import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.com
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
+import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -49,7 +50,8 @@ import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.
     AiModelListComponent,
     AiCameraEventsComponent,
     ProxyManageComponent,
-    IllegalDropRecord2Component
+    IllegalDropRecord2Component,
+    PlatformOperateComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
   providers: [],

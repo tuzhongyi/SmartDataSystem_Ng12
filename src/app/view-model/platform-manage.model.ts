@@ -6,6 +6,7 @@ export class PlatformManageModel {
     public Url: string = '',
     public ProtocolType: string = '',
     public State: string = '',
-    public UpdateTime: string = ''
+    public UpdateTime: string = '',
+    public rowData?: any
   ) { }
 }

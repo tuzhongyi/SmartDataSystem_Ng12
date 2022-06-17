@@ -1,6 +1,7 @@
 import { SelectionModel } from "@angular/cdk/collections";
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { DomSanitizer } from "@angular/platform-browser";
 import { BehaviorSubject } from "rxjs";
 import { SelectEnum } from "src/app/enum/select.enum";
 import { TableCellEvent, TableColumnModel, TableRowModels } from "src/app/view-model/table.model";
@@ -36,6 +37,8 @@ export class TableComponent implements OnInit {
   @Input()
   displayedColumns: string[] = [];
 
+  @Input() zoomIn = false
+
   @Output() selectTableRow: EventEmitter<TableRowModels[]> = new EventEmitter<
     TableRowModels[]
   >();
@@ -43,10 +46,13 @@ export class TableComponent implements OnInit {
   @Output() sortDataEvent: EventEmitter<Sort> = new EventEmitter<Sort>();
 
 
-  @Output() clickTableCellEvent: EventEmitter<TableCellEvent> =
+  @Output() selectTableCell: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
 
-  constructor() { }
+  // 如果没有 sanitizer,则传入的id会丢失
+  constructor(public sanitizer: DomSanitizer) {
+
+  }
 
   ngOnInit(): void {
     if (this.selectModel == SelectEnum.Single) {
@@ -64,11 +70,11 @@ export class TableComponent implements OnInit {
   }
   clickRow(row: TableRowModels) {
     this.selection.toggle(row);
-    console.log('click row');
+    // console.log('click row');
   }
   clickCell(column: TableColumnModel, event: Event) {
-    console.log('click cell', column);
-    this.clickTableCellEvent.emit({
+    // console.log('click cell', column);
+    this.selectTableCell.emit({
       column,
       event,
     } as TableCellEvent);

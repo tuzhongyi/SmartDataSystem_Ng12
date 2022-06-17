@@ -1,13 +1,20 @@
 <div class="platform-manage">
+  <ng-container *ngIf="showDialog">
+    <howell-platform-operate
+      [state]="state"
+      (closeEvent)="showDialog = !$event"
+    ></howell-platform-operate>
+  </ng-container>
+
   <div class="hw-table-detail">
     <div class="hw-second-title">智慧平台</div>
     <div class="hw-operate-bar">
       <div class="hw-btn-group">
-        <button class="hw-green-btn">
+        <button class="hw-green-btn" (click)="addBtnClick()">
           <i class="howell-icon-plus"></i>
           添加
         </button>
-        <button class="hw-red-btn">
+        <button class="hw-red-btn" [disabled]="!enableDelBtn">
           <i class="howell-icon-delete-bin"></i>
           删除
         </button>
@@ -22,20 +29,34 @@
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
+        [tableSelectModel]="tableSelectModel"
+        (selectTableRow)="selectTableRow($event)"
+        (selectTableCell)="selectTableCell($event)"
       ></app-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select> </app-table-select>
+        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        </app-table-select>
       </div>
 
       <div class="footer-item">
         <div class="footer-info">
-          <div class="info-item">已选择: 1</div>
-          <div class="info-item">当前数量: 2</div>
-          <div class="info-item">总数量: 2</div>
+          <div class="info-item">已选择: {{ selectedRows.length }}</div>
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
         </div>
-        <app-paginator> </app-paginator>
+        <app-paginator
+          *ngIf="page"
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="pagerCount"
+          [pageIndex]="pageIndex - 1"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
       </div>
     </div>
   </div>
