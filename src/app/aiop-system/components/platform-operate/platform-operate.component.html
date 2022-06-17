@@ -1,12 +1,11 @@
 <div class="platform-operate hw-popped-container">
-  {{ myForm.value | json }}
   <div class="hw-popped-wrapper">
     <div class="hw-simple-title">{{ title }}</div>
     <form class="hw-form direction-row" [formGroup]="myForm">
       <div class="hw-form-group">
         <div class="title">
           <span class="hw-form-label"> 名称 </span>
-          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-icon">*</span>
         </div>
         <div class="content">
           <input
@@ -20,7 +19,7 @@
       <div class="hw-form-group">
         <div class="title">
           <span class="hw-form-label"> 协议类型 </span>
-          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-icon">*</span>
         </div>
         <div class="content">
           <select
@@ -65,7 +64,7 @@
       <div class="hw-form-group">
         <div class="title">
           <span class="hw-form-label"> IP地址 </span>
-          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-icon">*</span>
         </div>
         <div class="content">
           <input
@@ -79,7 +78,7 @@
       <div class="hw-form-group">
         <div class="title">
           <span class="hw-form-label"> 端口号 </span>
-          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-icon">*</span>
         </div>
         <div class="content">
           <input
@@ -126,18 +125,15 @@
           ></textarea>
         </div>
       </div>
-
-      <div class="hw-form-group">
-        <div class="btns">
-          <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
-            <i class="howell-icon-Check"></i>
-          </button>
-
-          <button class="hw-gray-m-btn" type="button" (click)="onReset()">
-            <i class="howell-icon-Close"></i>
-          </button>
-        </div>
-      </div>
     </form>
+    <div class="hw-middle-btn-group">
+      <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+        <i class="howell-icon-Check"></i>
+      </button>
+
+      <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+        <i class="howell-icon-Close"></i>
+      </button>
+    </div>
   </div>
 </div>

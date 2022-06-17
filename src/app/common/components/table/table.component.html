@@ -25,6 +25,7 @@
     style="overflow: auto"
     class="bold-scrollbar"
     [class.zoomIn]="zoomIn"
+    [trackBy]="trackBy"
   >
     <ng-container
       *ngFor="let model of columnModel"
@@ -33,7 +34,7 @@
       <mat-cell
         *matCellDef="let row"
         [style.flexBasis]="model.flexBasis"
-        (click)="clickCell(model, $event)"
+        (click)="clickCell(model, row, $event)"
       >
         <div
           [innerHTML]="sanitizer.bypassSecurityTrustHtml(model.cell(row))"

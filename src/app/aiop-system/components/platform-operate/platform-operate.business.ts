@@ -10,8 +10,14 @@ export class PlatformOperateBusiness {
   async addPlatform(model: HwPlatform) {
     return await this._platformRequest.create(model)
   }
+  async updatePlatform(model: HwPlatform) {
+    return await this._platformRequest.set(model)
+  }
   async getProtocols() {
     return await this._platformRequest.protocol();
 
+  }
+  async getPlatform(id: string) {
+    return await this._platformRequest.get(id)
   }
 }

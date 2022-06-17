@@ -26,5 +26,8 @@ export class PlatformManageBusiness {
 
     return res;
   }
+  async delete(id: string) {
+    return await this._platformRequest.delete(id)
+  }
 
 }

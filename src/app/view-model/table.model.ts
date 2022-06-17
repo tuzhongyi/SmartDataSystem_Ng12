@@ -16,6 +16,6 @@ export type TableRowModels = any;
 
 export interface TableCellEvent {
   column: TableColumnModel;
+  row: TableRowModels;
   event: PointerEvent;
-  row?: any;
 }

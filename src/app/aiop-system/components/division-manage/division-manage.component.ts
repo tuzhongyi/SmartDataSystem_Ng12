@@ -34,7 +34,7 @@ export class DivisionManageComponent implements OnInit {
 
   /*****public ********/
   treeServiceModel = TreeServiceEnum.Division;
-  treeSelectModel = SelectEnum.Multiple;
+  treeSelectModel = SelectEnum.Single;
   currentNode?: FlatTreeNode;
   resourceType: UserResourceType = UserResourceType.None;
   myForm = new FormGroup({

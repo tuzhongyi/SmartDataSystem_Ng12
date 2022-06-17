@@ -1,6 +1,7 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { MatTable } from "@angular/material/table";
 import { DomSanitizer } from "@angular/platform-browser";
 import { BehaviorSubject } from "rxjs";
 import { SelectEnum } from "src/app/enum/select.enum";
@@ -21,6 +22,10 @@ export class TableComponent implements OnInit {
   highLight = (model: TableRowModels) => {
     return this.selection.isSelected(model);
   };
+
+
+  @ViewChild('table') table!: MatTable<any>;
+
 
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
@@ -45,7 +50,6 @@ export class TableComponent implements OnInit {
 
   @Output() sortDataEvent: EventEmitter<Sort> = new EventEmitter<Sort>();
 
-
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
 
@@ -65,6 +69,17 @@ export class TableComponent implements OnInit {
     });
 
     this.dataSubject.subscribe(data => {
+      // 由于新数据引用不同
+      let selected = this.selection.selected;
+      for (let i = 0; i < selected.length; i++) {
+        let item = selected[i];
+        let d = data.find((d: any) => d.Id == item.Id);
+        if (d) {
+          this.selection.deselect(item);
+          this.selection.select(d)
+        }
+
+      }
       this.dataSource.setData(data)
     })
   }
@@ -72,10 +87,11 @@ export class TableComponent implements OnInit {
     this.selection.toggle(row);
     // console.log('click row');
   }
-  clickCell(column: TableColumnModel, event: Event) {
+  clickCell(column: TableColumnModel, row: TableRowModels, event: Event) {
     // console.log('click cell', column);
     this.selectTableCell.emit({
       column,
+      row,
       event,
     } as TableCellEvent);
     if (column.stopPropogate) {
@@ -87,19 +103,7 @@ export class TableComponent implements OnInit {
     this.selection.select(...this.dataSource.getData());
   }
   selectReverse() {
-    // let data = this.dataSource.getData();
-    // let selected = this.selection.selected;
 
-    // let res = data.filter(item => {
-    //   if (!selected.includes(item)) return true
-    //   else return false
-    // })
-
-    // // 发送两次事件
-    // this.selection.clear();
-    // this.selection.select(...res)
-
-    // 遍历数组会发送 lenght 次事件
     this.dataSource.getData().forEach((data) => this.selection.toggle(data));
 
   }
@@ -111,4 +115,18 @@ export class TableComponent implements OnInit {
   }
 
 
+  trackBy(index: number, item: any) {
+    return item.Id;
+  }
+  /**
+   * 本地的删除，业务上会删除后重新请求数据
+   */
+  deleteRows(rows: TableRowModels[]) {
+
+    this.selection.deselect(...rows);
+
+    let data = this.dataSource.getData();
+    let res = data.filter(d => rows.findIndex(row => row.Id == d.Id) == -1)
+    this.dataSubject.next(res)
+  }
 }

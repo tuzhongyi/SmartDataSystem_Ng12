@@ -5,7 +5,7 @@
   </ng-container>
   <div class="hw-tree-left">
     <div class="hw-simple-title">区划列表</div>
-    <div class="hw-btn-group">
+    <div class="hw-normal-btn-group">
       <button
         class="hw-green-btn"
         (click)="addBtnClick()"
@@ -107,7 +107,7 @@
       </div>
 
       <div class="hw-form-group">
-        <div class="btns" [hidden]="state == FormState.none">
+        <div class="hw-middle-btn-group" [hidden]="state == FormState.none">
           <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
             <i class="howell-icon-Check"></i>
           </button>

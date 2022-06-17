@@ -37,9 +37,19 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
     return this.type.get(url);
   }
 
+  set(item: HwPlatform) {
+    return this.type.put(PlatformsUrl.item(item.Id), item)
+  }
+
+  delete(id: string) {
+    return this.type.delete(PlatformsUrl.item(id))
+  }
   protocol(): Promise<any> {
     let url = PlatformsUrl.protocols();
     return this.type.get(url);;
+  }
+  sync() {
+
   }
 
 

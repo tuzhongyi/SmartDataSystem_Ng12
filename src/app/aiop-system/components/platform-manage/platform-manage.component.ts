@@ -11,6 +11,9 @@ import { PageEvent } from '@angular/material/paginator';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
 @Component({
   selector: 'howell-platform-manage',
@@ -33,9 +36,14 @@ export class PlatformManageComponent implements OnInit {
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
-  selectedRows: PlatformManageModel[] = [];
+  selectedRows: PlatformManageModel[] = [];//table选中项
+  willBeDeleted: PlatformManageModel[] = [];
   showDialog = false;
+  showConfirm = false;
+  dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
+
   state = FormState.none;
+  platformId = '';
 
   get enableDelBtn() {
     return !!this.selectedRows.length
@@ -46,7 +54,7 @@ export class PlatformManageComponent implements OnInit {
 
 
 
-  constructor(private _business: PlatformManageBusiness,) {
+  constructor(private _business: PlatformManageBusiness, private _toastrService: ToastrService) {
 
   }
 
@@ -85,17 +93,24 @@ export class PlatformManageComponent implements OnInit {
   selectTableRow(rows: PlatformManageModel[]) {
     this.selectedRows = rows;
   }
-  selectTableCell({ column, event }: TableCellEvent) {
-    console.log(column, event);
+  async selectTableCell({ column, row, event }: TableCellEvent) {
+    // console.log(column, row, event);
     // // 特殊处理
     if (column.columnDef == 'Operation') {
       let target = event.target as HTMLElement;
       if (target.id == 'sync') {
         console.log('sync')
       } else if (target.id == 'edit') {
-        console.log('edit')
+        // console.log('edit')
+        this.showDialog = true;
+        this.state = FormState.edit;
+        this.platformId = row.Id;
       } else if (target.id == 'delete') {
-        console.log('delete')
+
+        this.willBeDeleted = [row];
+        this.showConfirm = true;
+        this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+
       }
     }
   }
@@ -105,8 +120,40 @@ export class PlatformManageComponent implements OnInit {
     this.init();
   }
 
+  closeForm(update: boolean) {
+    this.showDialog = false
+    this.state = FormState.none;
+    if (update) this.init();
+  }
   addBtnClick() {
     this.state = FormState.add;
     this.showDialog = true;
+  }
+  deleteBtnClick() {
+    // this._deleteRows(this.selectedRows)
+    this.willBeDeleted = [...this.selectedRows]
+    this.showConfirm = true;
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+  }
+
+  async dialogMsgEvent(status: ConfirmDialogEnum) {
+    this.showConfirm = false;
+    if (status == ConfirmDialogEnum.confirm) {
+      this._deleteRows(this.willBeDeleted)
+    } else if (status == ConfirmDialogEnum.cancel) {
+
+    }
+  }
+  private async _deleteRows(rows: PlatformManageModel[]) {
+    for (let i = 0; i < rows.length; i++) {
+      let id = rows[i].Id;
+      await this._business.delete(id)
+      this._toastrService.success('删除成功');
+
+    }
+    if (this.table) {
+      this.table.deleteRows(rows);
+      this.init();
+    }
   }
 }
