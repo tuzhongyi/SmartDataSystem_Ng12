@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -6,29 +6,34 @@ import {
 import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
 
 @Component({
   selector: 'howell-garbage-drop-station-window',
   templateUrl: './garbage-drop-station-window.component.html',
   styleUrls: ['./garbage-drop-station-window.component.less'],
+  providers: [EventRecordWindowDetailsBusiness],
 })
 export class GarbageDropStationWindowComponent
   extends WindowComponent
   implements OnInit
 {
+  @Input()
+  index = GarbageDropStationWindowIndex.list;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
-  constructor() {
+  constructor(public details: EventRecordWindowDetailsBusiness) {
     super();
   }
 
   Index = GarbageDropStationWindowIndex;
-  index = GarbageDropStationWindowIndex.list;
+  load: EventEmitter<string> = new EventEmitter();
+
+  type: EventType[] = [EventType.GarbageDrop, EventType.GarbageDropTimeout];
 
   ngOnInit(): void {}
-
-  load: EventEmitter<string> = new EventEmitter();
 
   onsearch(text: string) {
     this.load.emit(text);

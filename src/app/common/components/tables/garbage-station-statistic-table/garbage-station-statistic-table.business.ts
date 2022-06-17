@@ -48,9 +48,13 @@ export class GarbageStationStatisticTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     date: Date,
-    unit: TimeUnit
+    unit: TimeUnit,
+    divisionId?: string
   ): Promise<GarbageStationStatisticModel[]> {
-    let data = await this.getData(this.storeService.divisionId, date, unit);
+    if (!divisionId) {
+      divisionId = this.storeService.divisionId;
+    }
+    let data = await this.getData(divisionId, date, unit);
     let getter: ConvertGetter = {
       station: (id: string) => {
         return this.stationService.cache.get(id);

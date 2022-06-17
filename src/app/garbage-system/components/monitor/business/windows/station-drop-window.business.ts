@@ -5,6 +5,7 @@ import {
 } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { MediaWindowBusiness } from './media-window.business';
+import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-station-window/garbage-drop-station-window.component';
 
 @Injectable()
 export class GarbageStationDropWindowBusiness extends WindowViewModel {
@@ -12,6 +13,8 @@ export class GarbageStationDropWindowBusiness extends WindowViewModel {
     super();
   }
   divisionId?: string;
+
+  index = GarbageDropStationWindowIndex.list;
 
   style = {
     height: '83.5%',

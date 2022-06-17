@@ -1,4 +1,4 @@
-<div class="garbage-station-window-general">
+<div class="garbage-drop-station-window-count">
   <div class="filter">
     <div class="filter-items">
       <div class="filter-item">
@@ -16,16 +16,16 @@
         />
       </div>
       <div class="filter-item">
-        <span>行政区</span>
-        <howell-division-tree-filter
-          (select)="ondivisionselect($event)"
-          [align]="treeAlign"
-          [division]="division"
-        ></howell-division-tree-filter>
+        <span>范围</span>
+        <app-select-control
+          class="list-type-select full"
+          [data]="types"
+          (select)="onTypeChange($event)"
+        ></app-select-control>
       </div>
       <button class="hw-blue-btn search" (click)="search()">查询</button>
-      <button class="hw-blue-btn excel">导出</button>
-      <button class="hw-blue-btn csv">CSV</button>
+      <button class="hw-blue-btn excel" (click)="exportExcel()">导出</button>
+      <button class="hw-blue-btn csv" (click)="(exportCSV)">CSV</button>
     </div>
     <div class="filter-items">
       <div class="filter-item select">
@@ -37,13 +37,13 @@
       </div>
     </div>
   </div>
-  <div class="garbage-station-window-general-content">
-    <howell-garbage-station-statistic-table
-      [unit]="unit"
+  <div class="garbage-drop-station-window-count-content">
+    <howell-garbage-drop-station-count-table
       [date]="date"
-      [divisionId]="filterId"
+      [unit]="unit"
+      [type]="type"
       [load]="load"
     >
-    </howell-garbage-station-statistic-table>
+    </howell-garbage-drop-station-count-table>
   </div>
 </div>

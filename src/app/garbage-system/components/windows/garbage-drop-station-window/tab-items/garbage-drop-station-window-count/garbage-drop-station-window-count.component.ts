@@ -4,28 +4,27 @@ import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker.directive';
-import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { Language } from 'src/app/global/tool/language';
 
 @Component({
-  selector: 'howell-garbage-station-window-general',
-  templateUrl: './garbage-station-window-general.component.html',
-  styleUrls: ['./garbage-station-window-general.component.less'],
+  selector: 'howell-garbage-drop-station-window-count',
+  templateUrl: './garbage-drop-station-window-count.component.html',
+  styleUrls: ['./garbage-drop-station-window-count.component.less'],
 })
-export class GarbageStationWindowGeneralComponent implements OnInit {
-  constructor() {}
+export class GarbageDropStationWindowCountComponent implements OnInit {
+  constructor(private local: LocalStorageService) {}
 
   DateTimePickerView = DateTimePickerView;
   dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
   TimeUnit = TimeUnit;
-
   units: SelectItem[] = [];
   unit: TimeUnit = TimeUnit.Day;
   date: Date = new Date();
-  treeAlign = HorizontalAlign.left;
-  division?: Division;
-  filterId?: string;
+  types: SelectItem[] = [];
+  type: UserResourceType = UserResourceType.Committees;
   load: EventEmitter<void> = new EventEmitter();
 
   initUnits() {
@@ -39,13 +38,35 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
       new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
+  initUserResourceTypes() {
+    this.types.push(
+      new SelectItem(
+        UserResourceType.Station.toString(),
+        UserResourceType.Station,
+        Language.UserResourceType(UserResourceType.Station)
+      )
+    );
+    this.types.push(
+      new SelectItem(
+        UserResourceType.Committees.toString(),
+        UserResourceType.Committees,
+        Language.UserResourceType(UserResourceType.Committees)
+      )
+    );
+    if (this.local.user.Resources && this.local.user.Resources.length > 0) {
+      if (this.local.user.Resources[0].ResourceType === UserResourceType.City) {
+        new SelectItem(
+          UserResourceType.County.toString(),
+          UserResourceType.County,
+          Language.UserResourceType(UserResourceType.County)
+        );
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.initUnits();
-  }
-
-  changeDate(date: Date) {
-    this.date = date;
+    this.initUserResourceTypes();
   }
 
   ontimeunit(unit: SelectItem) {
@@ -71,12 +92,17 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     }
   }
 
-  ondivisionselect(division: Division) {
-    this.division = division;
-    this.filterId = this.division.Id;
+  changeDate(date: Date) {
+    this.date = date;
+  }
+
+  onTypeChange(item: SelectItem) {
+    this.type = item.value;
   }
 
   search() {
     this.load.emit();
   }
+  exportExcel() {}
+  exportCSV() {}
 }

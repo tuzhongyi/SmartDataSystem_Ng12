@@ -6,7 +6,9 @@
       "
     >
       <div class="garbage-drop-station-table-window-header">
-        <app-input-search (search)="onsearch($event)"> </app-input-search>
+        <ng-container *ngIf="index == Index.list">
+          <app-input-search (search)="onsearch($event)"> </app-input-search>
+        </ng-container>
       </div>
     </app-tab-title>
     <div class="garbage-drop-station-table-window-content">
@@ -18,14 +20,30 @@
         (selectedIndexChange)="indexChange($event)"
       >
         <mat-tab label="列表">
-          <howell-garbage-drop-station-table
-            [load]="load"
-            (image)="onimage($event)"
-          >
-          </howell-garbage-drop-station-table>
+          <ng-container *ngIf="index == Index.list">
+            <howell-garbage-drop-station-table
+              [load]="load"
+              (image)="onimage($event)"
+            >
+            </howell-garbage-drop-station-table>
+          </ng-container>
         </mat-tab>
-        <mat-tab label="总图表"> </mat-tab>
-        <mat-tab label="细分图表"> </mat-tab>
+        <mat-tab label="总图表">
+          <ng-container *ngIf="index == Index.count">
+            <howell-garbage-drop-station-window-count>
+            </howell-garbage-drop-station-window-count>
+          </ng-container>
+        </mat-tab>
+        <mat-tab label="细分图表">
+          <ng-container *ngIf="index === Index.details">
+            <howell-details-chart
+              [types]="type"
+              [business]="details"
+              [division]="details.division"
+            >
+            </howell-details-chart>
+          </ng-container>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </ng-container>

@@ -42,12 +42,14 @@ import { ExportBusiness } from 'src/app/common/business/export.business';
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, ITimeData<IModel>[]>, OnChanges
+  implements OnInit, IComponent<IModel, ITimeData<IModel>[][]>, OnChanges
 {
   @Input()
-  business!: IBusiness<IModel, ITimeData<IModel>[]>;
+  business!: IBusiness<IModel, ITimeData<IModel>[][]>;
   @Input()
   eventType: EventType = EventType.IllegalDrop;
+  @Input()
+  types?: EventType[];
   @Input()
   station?: GarbageStation;
 
@@ -94,7 +96,7 @@ export class DetailsChartComponent
     dateTimePicker: new DateTimePickerConfig(),
   };
 
-  data: ITimeData<IModel>[] = [];
+  data: ITimeData<IModel>[][] = [];
 
   userResourceType: UserResourceType = UserResourceType.None;
   UserResourceType = UserResourceType;
@@ -128,13 +130,14 @@ export class DetailsChartComponent
 
   async loadData() {
     let interval = this.getInterval();
+    let types = this.types ?? [this.eventType];
     this.options = {
       stationId: this.station?.Id,
       unit: this.unit,
       begin: interval.params.BeginTime,
       end: interval.params.EndTime,
       divisionId: this.station ? undefined : this.division?.Id,
-      type: this.eventType,
+      type: types,
     };
     console.log(this.options);
     this.data = await this.business.load(this.options);
@@ -162,20 +165,23 @@ export class DetailsChartComponent
           }
         );
         this.config.line.merge = {
-          series: [
-            {
+          series: this.data.map((x, i) => {
+            let item: any = {
               type: 'line',
               name: '单位(起)',
-              data: this.data.map((x) => x.value),
+              data: x.map((y) => y.value),
+              color: ChartConfig.color[i],
               areaStyle: {},
               label: {
                 formatter: (params: CallbackDataParams) => {
                   return params.value.toString();
                 },
               },
-            },
-          ],
+            };
+            return item;
+          }),
         };
+
         break;
       case ChartType.bar:
         this.config.bar.options = this.config.bar.getOption(
@@ -188,25 +194,29 @@ export class DetailsChartComponent
           }
         );
         this.config.bar.merge = {
-          series: [
-            {
+          series: this.data.map((data, i) => {
+            let item: any = {
               type: 'bar',
               name: '单位(起)',
-              data: this.data.map((x) => x.value),
-              barWidth: '32px',
+              data: data.map((x) => x.value),
+              color: ChartConfig.color[i],
+              barWidth: `${32 / this.data.length}px`,
+              barMinHeight: 5,
               label: {
                 show: true,
                 position: 'top',
-                color: '#7d90bc',
                 fontSize: '16px',
+                color: ChartConfig.color[i],
                 textBorderWidth: 0,
                 formatter: (params: CallbackDataParams) => {
                   return params.value.toString();
                 },
               },
-            },
-          ],
+            };
+            return item;
+          }),
         };
+
         break;
       default:
         break;
@@ -326,6 +336,7 @@ export class DetailsChartComponent
   exportExcel() {
     let title = this.getTitle();
     let headers = ['序号', '日期', '时间', this.getName()];
+
     this.exports.excel(title, headers, this.data, this.converter);
   }
   exportCSV() {
