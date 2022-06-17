@@ -5,6 +5,7 @@ import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { MessageBar } from 'src/app/common/tools/message-bar';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { Enum } from 'src/app/enum/enum-helper';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
@@ -232,10 +233,20 @@ export class GarbageStationWindowDetailsComponent
     this.chartType = item.value;
     this.loadChart();
   }
+
+  readonly maxItem = 5;
+
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
+    if (this.selectIds.length > this.maxItem) {
+      MessageBar.response_warning(`最多查看个${this.maxItem}对象`);
+    }
   }
   search() {
+    if (this.selectIds.length > this.maxItem) {
+      MessageBar.response_warning(`最多查看个${this.maxItem}对象`);
+      return;
+    }
     this.loadData();
   }
   exportExcel() {}

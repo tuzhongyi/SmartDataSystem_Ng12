@@ -20,10 +20,10 @@ import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartLoadOptions } from '../../../charts/details-chart/details-chart.model';
-import { EventRecordWindowDetailsConverter } from './event-record-window-details.converter';
+import { GarbageDropStationWindowDetailsConverter } from './garbage-drop-station-window-details.converter';
 
 @Injectable()
-export class EventRecordWindowDetailsBusiness
+export class GarbageDropStationWindowDetailsBusiness
   implements IBusiness<EventNumberStatistic[], ITimeData<number>[][]>
 {
   constructor(
@@ -32,7 +32,7 @@ export class EventRecordWindowDetailsBusiness
     private store: StoreService
   ) {}
   Converter: IConverter<EventNumberStatistic[], ITimeData<number>[][]> =
-    new EventRecordWindowDetailsConverter();
+    new GarbageDropStationWindowDetailsConverter();
 
   async getData(
     id: string,

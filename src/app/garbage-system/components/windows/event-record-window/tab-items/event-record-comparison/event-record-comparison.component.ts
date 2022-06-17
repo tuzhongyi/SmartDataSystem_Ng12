@@ -2,7 +2,10 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import { ITimeData, ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
+import {
+  ITimeData,
+  ITimeDataGroup,
+} from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -16,7 +19,10 @@ import { Language } from 'src/app/global/tool/language';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
-import { ChartConfig, EChartOptions } from '../../../charts/details-chart/details-chart.option';
+import {
+  ChartConfig,
+  EChartOptions,
+} from '../../../charts/details-chart/details-chart.option';
 import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
 
@@ -24,10 +30,11 @@ import { EventRecordComparisonOptions } from './EventRecordComparison.model';
   selector: 'howell-event-record-comparison',
   templateUrl: './event-record-comparison.component.html',
   styleUrls: ['./event-record-comparison.component.less'],
-  providers: [EventRecordComparisonBusiness]
+  providers: [EventRecordComparisonBusiness],
 })
 export class EventRecordComparisonComponent
-  implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]> {
+  implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]>
+{
   @Input()
   date: Date = new Date();
   @Input()
@@ -37,65 +44,53 @@ export class EventRecordComparisonComponent
   @Input()
   eventType: EventType = EventType.IllegalDrop;
 
-
-  constructor(private local: LocalStorageService, private exports: ExportBusiness, business: EventRecordComparisonBusiness) {
+  constructor(
+    private local: LocalStorageService,
+    private exports: ExportBusiness,
+    business: EventRecordComparisonBusiness
+  ) {
     this.business = business;
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      this.userType = this.local.user.Resources[0].ResourceType
+      this.userType = this.local.user.Resources[0].ResourceType;
     }
-
   }
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   userTypes: SelectItem[] = [];
   DateTimePickerView = DateTimePickerView;
-  dateFormat = "yyyy年MM月dd日";
+  dateFormat = 'yyyy年MM月dd日';
   units: SelectItem[] = [];
   ChartType = ChartType;
   chartType: ChartType = ChartType.bar;
   chartTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
-  config: EventRecordComparisonComponentConfig = {}
-  datas?: ITimeDataGroup<number>[]
-  selectIds?: string[]
+  config: EventRecordComparisonComponentConfig = {};
+  datas?: ITimeDataGroup<number>[];
+  selectIds?: string[];
   echartsLegend: LegendComponentOption = {
     show: true,
-    right: "50px",
-    icon: "",
-    orient: "vertical",
+    right: '50px',
+    icon: '',
+    orient: 'vertical',
     textStyle: {
-      fontSize: 16
-    }
-  }
+      fontSize: 16,
+    },
+  };
 
   ngOnInit(): void {
     this.initUnits();
     this.initChartTypes();
     this.initUserTypes();
-
-    
   }
 
   initUnits() {
     this.units.push(
-      new SelectItem(
-        TimeUnit.Hour.toString(),
-        TimeUnit.Hour,
-        '日报表',
-      )
+      new SelectItem(TimeUnit.Hour.toString(), TimeUnit.Hour, '日报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Week.toString(),
-        TimeUnit.Week,
-        '周报表',
-      )
+      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Month.toString(),
-        TimeUnit.Month,
-        '月报表',
-      )
+      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
   initChartTypes() {
@@ -105,14 +100,14 @@ export class EventRecordComparisonComponent
         ChartType.bar,
         Language.ChartType(ChartType.bar)
       )
-    )
+    );
     this.chartTypes.push(
       new SelectItem(
         ChartType.line.toString(),
         ChartType.line,
         Language.ChartType(ChartType.line)
       )
-    )
+    );
   }
   initUserTypes() {
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
@@ -123,7 +118,7 @@ export class EventRecordComparisonComponent
             UserResourceType.County,
             Language.UserResourceType(UserResourceType.County)
           )
-        )
+        );
       }
     }
     this.userTypes.push(
@@ -132,14 +127,14 @@ export class EventRecordComparisonComponent
         UserResourceType.Committees,
         Language.UserResourceType(UserResourceType.Committees)
       )
-    )
+    );
     this.userTypes.push(
       new SelectItem(
         UserResourceType.Station.toString(),
         UserResourceType.Station,
         Language.UserResourceType(UserResourceType.Station)
       )
-    )
+    );
   }
 
   async loadData() {
@@ -149,8 +144,8 @@ export class EventRecordComparisonComponent
       eventType: this.eventType,
       unit: this.unit,
       date: this.date,
-      ids: this.selectIds
-    }
+      ids: this.selectIds,
+    };
     this.datas = await this.business.load(opts);
     this.load.emit();
 
@@ -159,17 +154,30 @@ export class EventRecordComparisonComponent
     this.config.bar = undefined;
     switch (this.chartType) {
       case ChartType.line:
-        this.config.line = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        this.config.line = new ChartConfig(
+          this.unit,
+          this.date,
+          this.echartsLegend,
+          merge
+        );
         break;
       case ChartType.bar:
-        this.config.bar = new ChartConfig(this.unit, this.date, this.echartsLegend, merge);
+        this.config.bar = new ChartConfig(
+          this.unit,
+          this.date,
+          this.echartsLegend,
+          merge
+        );
         break;
       default:
         break;
     }
   }
 
-  getEChartsMerge(type: ChartType, datas: ITimeDataGroup<number>[]): EChartOptions {
+  getEChartsMerge(
+    type: ChartType,
+    datas: ITimeDataGroup<number>[]
+  ): EChartOptions {
     switch (type) {
       case ChartType.line:
         return {
@@ -184,8 +192,8 @@ export class EventRecordComparisonComponent
                   return params.value.toString();
                 },
               },
-            }
-          })
+            };
+          }),
         };
       case ChartType.bar:
       default:
@@ -195,24 +203,23 @@ export class EventRecordComparisonComponent
               type: 'bar',
               name: data.Name,
               data: data.datas.map((x) => x.value),
-              barWidth: "15px",
+              barWidth: '15px',
               barMinHeight: 5,
               label: {
                 show: true,
                 position: 'top',
                 color: ChartConfig.color[i],
-                fontSize: "16px",
+                fontSize: '16px',
                 textBorderWidth: 0,
                 formatter: (params: CallbackDataParams) => {
                   return params.value.toString();
                 },
               },
-            }
+            };
           }),
-        }
+        };
     }
   }
-
 
   changeDate(date: Date) {
     this.date = date;
@@ -229,8 +236,6 @@ export class EventRecordComparisonComponent
     this.userType = item.value;
   }
 
-
-
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
   }
@@ -238,20 +243,15 @@ export class EventRecordComparisonComponent
   search() {
     this.loadData();
   }
-  exportExcel() {
-
-  }
+  exportExcel() {}
   exportCSV() {
     // let title = this.getTitle();
     // let headers = ["序号", "日期", "时间", this.getName()]
     // this.exports.csv(title, headers, this.datas, this.converter);
-   }
-
-
+  }
 }
 
 interface EventRecordComparisonComponentConfig {
-  line?: ChartConfig,
-  bar?: ChartConfig
+  line?: ChartConfig;
+  bar?: ChartConfig;
 }
-

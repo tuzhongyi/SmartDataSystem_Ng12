@@ -11,11 +11,10 @@ import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-sta
 export class GarbageStationDropWindowBusiness extends WindowViewModel {
   constructor(private media: MediaWindowBusiness) {
     super();
-    this.show = true;
   }
   divisionId?: string;
 
-  index = GarbageDropStationWindowIndex.count;
+  index = GarbageDropStationWindowIndex.list;
 
   style = {
     height: '83.5%',

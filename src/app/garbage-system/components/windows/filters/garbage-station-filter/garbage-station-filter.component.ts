@@ -40,6 +40,6 @@ export class GarbageStationFilterComponent implements OnInit, OnChanges {
   async ngOnInit() {}
 
   onselected(selected: SelectItem) {
-    this.select.emit(selected.value);
+    this.select.emit(selected ? selected.value : undefined);
   }
 }

@@ -16,10 +16,14 @@
         />
       </div>
       <div class="filter-item">
-        <span>区划</span>
-        <input type="text" />
+        <span>行政区</span>
+        <howell-division-tree-filter
+          (select)="ondivisionselect($event)"
+          [align]="treeAlign"
+          [division]="division"
+        ></howell-division-tree-filter>
       </div>
-      <button class="hw-blue-btn search">查询</button>
+      <button class="hw-blue-btn search" (click)="search()">查询</button>
       <button class="hw-blue-btn excel">导出</button>
       <button class="hw-blue-btn csv">CSV</button>
     </div>
@@ -34,7 +38,12 @@
     </div>
   </div>
   <div class="garbage-station-window-general-content">
-    <howell-garbage-station-statistic-table [unit]="unit" [date]="date">
+    <howell-garbage-station-statistic-table
+      [unit]="unit"
+      [date]="date"
+      [divisionId]="filterId"
+      [load]="load"
+    >
     </howell-garbage-station-statistic-table>
   </div>
 </div>

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker.directive';
+import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { Division } from 'src/app/network/model/division.model';
 
 @Component({
   selector: 'howell-garbage-station-window-general',
@@ -12,6 +14,8 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
   styleUrls: ['./garbage-station-window-general.component.less'],
 })
 export class GarbageStationWindowGeneralComponent implements OnInit {
+  constructor() {}
+
   DateTimePickerView = DateTimePickerView;
   dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
   TimeUnit = TimeUnit;
@@ -19,35 +23,26 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
   units: SelectItem[] = [];
   unit: TimeUnit = TimeUnit.Day;
   date: Date = new Date();
-  constructor() {
-    this.initUnits();
-  }
+  treeAlign = HorizontalAlign.left;
+  division?: Division;
+  filterId?: string;
+  load: EventEmitter<void> = new EventEmitter();
 
   initUnits() {
     this.units.push(
-      new SelectItem(
-        TimeUnit.Hour.toString(),
-        TimeUnit.Hour,
-        '日报表',
-      )
+      new SelectItem(TimeUnit.Hour.toString(), TimeUnit.Hour, '日报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Week.toString(),
-        TimeUnit.Week,
-        '周报表',
-      )
+      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Month.toString(),
-        TimeUnit.Month,
-        '月报表',
-      )
+      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.initUnits();
+  }
 
   changeDate(date: Date) {
     this.date = date;
@@ -74,5 +69,14 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  ondivisionselect(division: Division) {
+    this.division = division;
+    this.filterId = this.division.Id;
+  }
+
+  search() {
+    this.load.emit();
   }
 }

@@ -34,7 +34,16 @@
             </howell-garbage-drop-station-window-count>
           </ng-container>
         </mat-tab>
-        <mat-tab label="细分图表"> </mat-tab>
+        <mat-tab label="细分图表">
+          <ng-container *ngIf="index === Index.details">
+            <howell-details-chart
+              [types]="type"
+              [business]="details"
+              [division]="details.division"
+            >
+            </howell-details-chart>
+          </ng-container>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </ng-container>

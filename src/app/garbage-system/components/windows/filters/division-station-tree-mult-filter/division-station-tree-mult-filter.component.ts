@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -13,16 +22,21 @@ import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-fi
 @Component({
   selector: 'howell-division-station-tree-mult-filter',
   templateUrl: './division-station-tree-mult-filter.component.html',
-  styleUrls: ['./division-station-tree-mult-filter.component.less']
+  styleUrls: ['./division-station-tree-mult-filter.component.less'],
 })
-export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges {
+export class DivisionStationTreeMultFilterComponent
+  implements OnInit, OnChanges
+{
   @Input()
   userType = UserResourceType.County;
   @Output()
-  onselect: EventEmitter<string[]> = new EventEmitter()
-  constructor(private local: LocalStorageService) { }
+  onselect: EventEmitter<string[]> = new EventEmitter();
+  @Output()
+  maxSelection: number = Number.MAX_VALUE;
 
-  @ViewChild("tree")
+  constructor(private local: LocalStorageService) {}
+
+  @ViewChild('tree')
   tree?: TreeComponent;
   HorizontalAlign = HorizontalAlign;
   align: HorizontalAlign = HorizontalAlign.left;
@@ -36,8 +50,7 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
     if (changes.userType) {
       if (this.userType === UserResourceType.Station) {
         this.config.tree.treeServiceModel = TreeServiceEnum.Station;
-      }
-      else {
+      } else {
         this.config.tree.treeServiceModel = TreeServiceEnum.Division;
       }
       switch (this.userType) {
@@ -55,10 +68,16 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
         case UserResourceType.Station:
           let depth = 0;
           let showDepth = 0;
-          if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-            if (this.local.user.Resources[0].ResourceType == UserResourceType.County) {
+          if (
+            this.local.user.Resources &&
+            this.local.user.Resources.length > 0
+          ) {
+            if (
+              this.local.user.Resources[0].ResourceType ==
+              UserResourceType.County
+            ) {
               depth = 1;
-              showDepth = 1
+              showDepth = 1;
             }
           }
           this.config.tree.depth = depth;
@@ -72,9 +91,9 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   }
 
   ngOnInit(): void {
-    window.addEventListener("click", () => {
+    window.addEventListener('click', () => {
       this.expand = false;
-    })
+    });
   }
 
   remove(item: Division | GarbageStation): void {
@@ -82,11 +101,11 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
     if (index >= 0) {
       this.selected.splice(index, 1);
     }
-    this.selectedIds = this.selected.map(x => x.Id)
+    this.selectedIds = this.selected.map((x) => x.Id);
     if (this.tree) {
       this.tree.toggleSelect(this.selectedIds);
     }
-    this.onselect.emit(this.selectedIds)
+    this.onselect.emit(this.selectedIds);
   }
 
   onpanelclick(event: Event) {
@@ -97,17 +116,24 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
     event.cancelBubble = true;
   }
 
-
   selectTree(nodes: FlatTreeNode[]) {
     this.selected = [];
-    this.selectedIds = []
+    this.selectedIds = [];
+    let index = nodes.findIndex((x) => x.type === this.userType);
+    // if (index >= 0) {
+    //   return;
+    // }
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
+      if (node.type !== this.userType) {
+        continue;
+      }
       this.selected.push(node.rawData);
-      this.selectedIds.push(node.id)
+      this.selectedIds.push(node.id);
       // this.current = node;
       // this.select.emit(node.data);
     }
-    this.onselect.emit(this.selectedIds)
+
+    this.onselect.emit(this.selectedIds);
   }
 }

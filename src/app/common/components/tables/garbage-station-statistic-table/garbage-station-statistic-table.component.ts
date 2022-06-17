@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
@@ -34,6 +35,16 @@ export class GarbageStationStatisticTableComponent
     OnInit,
     OnChanges
 {
+  @Input()
+  unit: TimeUnit = TimeUnit.Day;
+
+  @Input()
+  date: Date = new Date();
+  @Input()
+  divisionId?: string;
+  @Input()
+  load?: EventEmitter<void>;
+
   constructor(business: GarbageStationStatisticTableBusiness) {
     this.business = business;
   }
@@ -45,12 +56,6 @@ export class GarbageStationStatisticTableComponent
   ngOnInit() {
     this.loadData();
   }
-
-  @Input()
-  unit: TimeUnit = TimeUnit.Day;
-
-  @Input()
-  date: Date = new Date();
 
   /** 居委会 */
   committees: SelectItem[] = [];
@@ -69,9 +74,16 @@ export class GarbageStationStatisticTableComponent
     ) {
       this.loadData();
     }
+    if (changes.load) {
+      if (this.load) {
+        this.load.subscribe((x) => {
+          this.loadData();
+        });
+      }
+    }
   }
   async loadData() {
-    let datas = await this.business.load(this.date, this.unit);
+    let datas = await this.business.load(this.date, this.unit, this.divisionId);
 
     datas = datas.sort((a, b) => {
       switch (this.order.type) {

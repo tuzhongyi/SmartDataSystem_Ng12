@@ -8,9 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -34,7 +32,8 @@ import { ListType } from '../event-record-operation/event-record-operation.compo
 })
 export class EventRecordWindowComponent
   extends WindowComponent
-  implements OnInit, OnDestroy, OnChanges {
+  implements OnInit, OnDestroy, OnChanges
+{
   @Input()
   type = EventType.IllegalDrop;
   @Input()
@@ -46,8 +45,6 @@ export class EventRecordWindowComponent
   @Input()
   listType = ListType.table;
 
-
-
   constructor(
     public record: EventRecordWindowRecordBusiness,
     public details: EventRecordWindowDetailsBusiness,
@@ -56,31 +53,29 @@ export class EventRecordWindowComponent
     super();
   }
 
-  filter: EventRecordFilter = new EventRecordFilter()
+  filter: EventRecordFilter = new EventRecordFilter();
   Index = EventRecordWindowIndex;
   ListType = ListType;
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.stationId) {
-      this.filter.station = this.stationId ? new SelectItem(this.stationId) : undefined;
-      this.details
+      this.filter.station = this.stationId
+        ? new SelectItem(this.stationId)
+        : undefined;
+      this.details;
     }
   }
 
   load: EventEmitter<string> = new EventEmitter();
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
-  ngOnDestroy(): void {
-
-  }
+  ngOnDestroy(): void {}
 
   indexChange(index: number) {
     this.index = index;
     this.stationId = undefined;
   }
-
-
 
   onimage(model: ImageControlModelArray) {
     this.image.emit(model);
