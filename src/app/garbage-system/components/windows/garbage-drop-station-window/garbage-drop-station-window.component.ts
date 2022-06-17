@@ -8,6 +8,7 @@ import { WindowComponent } from 'src/app/common/components/window-control/window
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-garbage-drop-station-window',
@@ -29,13 +30,13 @@ export class GarbageDropStationWindowComponent
   }
 
   Index = GarbageDropStationWindowIndex;
-  load: EventEmitter<string> = new EventEmitter();
+  load: EventEmitter<SearchOptions> = new EventEmitter();
 
   type: EventType[] = [EventType.GarbageDrop, EventType.GarbageDropTimeout];
 
   ngOnInit(): void {}
 
-  onsearch(text: string) {
+  onsearch(text: SearchOptions) {
     this.load.emit(text);
   }
   onimage(item: ImageControlModelArray) {

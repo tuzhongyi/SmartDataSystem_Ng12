@@ -16,6 +16,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -50,28 +51,28 @@ export class GarbageFullStationTableComponent
   count: number = 0;
 
   @Input()
-  load?: EventEmitter<string>;
+  load?: EventEmitter<SearchOptions>;
 
-  name?: string;
+  searchOptions?: SearchOptions;
 
   ngOnInit(): void {
     this.loadData(1, this.pageSize);
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
-      this.load.subscribe((name) => {
-        this.name = name;
-        this.loadData(1, this.pageSize, name);
+      this.load.subscribe((opts) => {
+        this.searchOptions = opts;
+        this.loadData(1, this.pageSize, opts);
       });
     }
   }
 
-  async loadData(index: number, size: number, name?: string, show = true) {
+  async loadData(index: number, size: number, opts?: SearchOptions, show = true) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, name);
+    let promise = this.business.load(params, opts);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -84,7 +85,7 @@ export class GarbageFullStationTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.name);
+    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOptions);
   }
 
   onerror(e: Event) {

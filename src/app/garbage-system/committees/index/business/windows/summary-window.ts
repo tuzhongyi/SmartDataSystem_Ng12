@@ -2,7 +2,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 
 export class SummaryWindowViewModel extends WindowViewModel {
   style = {
-    height: '89%',
-    top: '55%',
+    height: '87%',
+    top: '53%',
   };
 }

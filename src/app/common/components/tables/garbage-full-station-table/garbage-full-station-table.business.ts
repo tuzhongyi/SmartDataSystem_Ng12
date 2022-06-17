@@ -14,6 +14,7 @@ import {
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageFullStationPagedTableConverter } from './garbage-full-station-table.converter';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
 
@@ -37,9 +38,9 @@ export class GarbageFullStationTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,
-    name?: string
+    opts?: SearchOptions
   ): Promise<PagedList<GarbageFullStationTableModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, name);
+    let data = await this.getData(this.storeService.divisionId, page, opts);
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -53,7 +54,7 @@ export class GarbageFullStationTableBusiness
   async getData(
     divisionId: string,
     page: PagedParams,
-    name?: string
+    opts?: SearchOptions
   ): Promise<PagedList<GarbageStationNumberStatistic>> {
     let p = new GetGarbageStationsParams();
     p.DryFull = true;
@@ -68,7 +69,10 @@ export class GarbageFullStationTableBusiness
     params.DivisionId = divisionId;
     params = Object.assign(params, page);
     params.Ids = stations.Data.map((x) => x.Id);
-    params.Name = name;
+    if (opts) {
+      (params as any)[opts.propertyName] = opts.text;
+    }
+
     return this.stationService.statistic.number.list(params);
   }
 }

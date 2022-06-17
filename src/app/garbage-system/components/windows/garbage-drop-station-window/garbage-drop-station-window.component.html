@@ -7,7 +7,8 @@
     >
       <div class="garbage-drop-station-table-window-header">
         <ng-container *ngIf="index == Index.list">
-          <app-input-search (search)="onsearch($event)"> </app-input-search>
+          <app-input-search-options (search)="onsearch($event)">
+          </app-input-search-options>
         </ng-container>
       </div>
     </app-tab-title>

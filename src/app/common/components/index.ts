@@ -34,6 +34,7 @@ import { CARD_COMPONENTS } from './cards/cards.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { Table2Component } from './table2/table.component';
+import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -53,6 +54,7 @@ export const CUSTOM_COMPONENTS = [
   TableSelectComponent,
   VideoWindowComponent,
   InputSearchComponent,
+  InputSearchOptionsComponent,
   ImageVideoControlComponent,
   ImageVideoMultControlComponent,
   SortHeaderComponent,
@@ -70,5 +72,5 @@ export const CUSTOM_COMPONENTS = [
   BreadcrumbComponent,
   ConfirmDialogComponent,
   SimpleSearchComponent,
-  Table2Component
+  Table2Component,
 ];
