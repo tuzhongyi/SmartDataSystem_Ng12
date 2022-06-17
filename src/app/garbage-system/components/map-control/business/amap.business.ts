@@ -4,6 +4,7 @@ import { timer } from 'rxjs';
 import { Flags } from 'src/app/common/tools/flags';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { StationType } from 'src/app/enum/station-type.enum';
 import { StoreService } from 'src/app/global/service/store.service';
 import { Language } from 'src/app/global/tool/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -106,13 +107,20 @@ export class AMapBusiness {
     p.then((count) => {
       this.pointCountChanged.emit(count);
     });
+    return p;
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
     this.mapClient = new CesiumMapClient(iframe);
     this.mapClient.Events.OnLoaded = async () => {
       this.mapController = this.mapClient!.DataController;
-      this.init();
+      this.init().then(() => {
+        timer(0.1 * 1000)
+          .toPromise()
+          .then(() => {
+            this.ChangePoint();
+          });
+      });
 
       this.mapClient!.Events.OnElementsDoubleClicked = (elements) => {
         if (elements && elements.length > 0) {
@@ -129,6 +137,51 @@ export class AMapBusiness {
 
       this.setContentMenu();
     };
+  }
+
+  ChangePoint() {
+    if (!this.mapController) return;
+    for (let i = 0; i < this.source.all.length; i++) {
+      const point = this.mapController.Village.Point.Get(
+        this.source.all[i].DivisionId!,
+        this.source.all[i].Id
+      );
+      if (point) {
+        let changed = false;
+        this.source.points[point.id] = point;
+        if (point.name !== this.source.all[i].Name) {
+          point.name = this.source.all[i].Name;
+          changed = true;
+        }
+        if (this.source.all[i].StationType != undefined) {
+          switch (this.source.all[i].StationType) {
+            case StationType.Garbage:
+              if (point.type != CesiumDataController.ElementType.Camera) {
+                point.type = CesiumDataController.ElementType.Camera;
+                point.url = 'img/camera.png';
+                changed = true;
+              }
+              break;
+            case StationType.NucleicAcid:
+              if (point.type != CesiumDataController.ElementType.NucleicAcid) {
+                point.type = CesiumDataController.ElementType.NucleicAcid;
+                point.url = 'img/acid.png';
+                changed = true;
+              }
+              break;
+            default:
+              break;
+          }
+        }
+        if (changed) {
+          this.mapController.Village.Point.Update(
+            this.source.all[i].DivisionId!,
+            this.source.all[i].Id,
+            point
+          );
+        }
+      }
+    }
   }
 
   loadDivision(divisionId: string) {
