@@ -5,6 +5,7 @@ import {
   OnChanges,
   OnDestroy,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
@@ -43,6 +44,9 @@ export class GarbageDropStationCountTableComponent
   type: UserResourceType = UserResourceType.Committees;
   @Input()
   load?: EventEmitter<void>;
+  @Output()
+  loaded: EventEmitter<GarbageDropStationCountTableModel[]> =
+    new EventEmitter();
 
   constructor(business: GarbageDropStationCountTableBusiness) {
     super();
@@ -76,6 +80,7 @@ export class GarbageDropStationCountTableComponent
         };
       }
       this.sortData(this.sort);
+      this.loaded.emit(this.datas);
     });
   }
 

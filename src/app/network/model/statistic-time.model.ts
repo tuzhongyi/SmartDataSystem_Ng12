@@ -1,4 +1,4 @@
-import { Exclude } from "class-transformer";
+import { Exclude } from 'class-transformer';
 
 /** 统计时间 */
 export class StatisticTime {
@@ -10,10 +10,12 @@ export class StatisticTime {
   Day?: number;
   /**	Int32	第几周	O */
   Week?: number;
-  
-  static toDate(time:StatisticTime) {
-    return new Date(time.Year || 0, time.Month || 0, time.Day || 0)
-  }
 
-  
+  static toDate(time: StatisticTime) {
+    return new Date(
+      time.Year || 0,
+      time.Month ? time.Month - 1 : 0,
+      time.Day || 0
+    );
+  }
 }

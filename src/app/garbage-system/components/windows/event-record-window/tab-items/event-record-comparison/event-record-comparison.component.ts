@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
@@ -10,8 +11,10 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { TimeDataGroupExportConverter } from 'src/app/converter/exports/time-data-group-exports.converter';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
@@ -243,11 +246,56 @@ export class EventRecordComparisonComponent
   search() {
     this.loadData();
   }
-  exportExcel() {}
+
+  converter = new TimeDataGroupExportConverter();
+  getTitle() {
+    let title = formatDate(this.date, 'yyyy年MM月dd日', 'en');
+    if (this.datas) {
+      for (let i = 0; i < this.datas.length; i++) {
+        const data = this.datas[i];
+        title += ' ' + data.Name;
+      }
+    }
+    title += ' ' + Language.EventType(this.eventType);
+    title += ' 数据比较';
+    return title;
+  }
+
+  toExport(type: ExportType) {
+    if (!this.datas) {
+      return;
+    }
+    let title = this.getTitle();
+    let headers = ['序号', '日期'];
+    switch (this.unit) {
+      case TimeUnit.Hour:
+      case TimeUnit.Week:
+        headers.push('时间');
+        break;
+
+      default:
+        break;
+    }
+
+    for (let i = 0; i < this.datas.length; i++) {
+      const data = this.datas[i];
+      headers.push(data.Name);
+    }
+    this.exports.export(
+      type,
+      title,
+      headers,
+      this.datas,
+      this.converter,
+      this.unit
+    );
+  }
+
+  exportExcel() {
+    this.toExport(ExportType.excel);
+  }
   exportCSV() {
-    // let title = this.getTitle();
-    // let headers = ["序号", "日期", "时间", this.getName()]
-    // this.exports.csv(title, headers, this.datas, this.converter);
+    this.toExport(ExportType.csv);
   }
 }
 

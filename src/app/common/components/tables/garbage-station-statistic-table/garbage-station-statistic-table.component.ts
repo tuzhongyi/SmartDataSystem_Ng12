@@ -4,6 +4,7 @@ import {
   Input,
   OnChanges,
   OnInit,
+  Output,
   SimpleChanges,
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
@@ -44,6 +45,8 @@ export class GarbageStationStatisticTableComponent
   divisionId?: string;
   @Input()
   load?: EventEmitter<void>;
+  @Output()
+  loaded: EventEmitter<GarbageStationStatisticModel[]> = new EventEmitter();
 
   constructor(business: GarbageStationStatisticTableBusiness) {
     this.business = business;
@@ -82,20 +85,30 @@ export class GarbageStationStatisticTableComponent
       }
     }
   }
-  async loadData() {
-    let datas = await this.business.load(this.date, this.unit, this.divisionId);
-
-    datas = datas.sort((a, b) => {
-      switch (this.order.type) {
-        case OrderType.Asc:
-          return a[this.order.name] - b[this.order.name];
-        case OrderType.Desc:
-          return b[this.order.name] - a[this.order.name];
-        default:
-          return 0;
+  loadData() {
+    this.loading = true;
+    this.business.load(this.date, this.unit, this.divisionId).then((data) => {
+      this.datas = data.sort((a, b) => {
+        switch (this.order.type) {
+          case OrderType.Asc:
+            return a[this.order.name] - b[this.order.name];
+          case OrderType.Desc:
+            return b[this.order.name] - a[this.order.name];
+          default:
+            return 0;
+        }
+      });
+      if (!this.sort) {
+        this.sort = {
+          active: 'GarbageRatio',
+          direction: 'desc',
+        };
       }
+      this.sortData(this.sort);
+      this.datas = data;
+      this.loading = false;
+      this.loaded.emit(this.datas);
     });
-    this.datas = datas;
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {
@@ -108,7 +121,9 @@ export class GarbageStationStatisticTableComponent
     return 0;
   }
 
+  sort?: Sort;
   sortData(sort: Sort) {
+    this.sort = sort;
     if (this.datas) {
       const isAsc = sort.direction === 'asc';
       this.datas = this.datas.sort((a, b) => {

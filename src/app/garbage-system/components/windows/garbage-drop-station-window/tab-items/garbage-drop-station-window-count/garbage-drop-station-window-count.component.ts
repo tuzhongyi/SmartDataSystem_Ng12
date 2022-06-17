@@ -1,13 +1,18 @@
+import { formatDate } from '@angular/common';
 import { Component, EventEmitter, OnInit } from '@angular/core';
+import { ExportBusiness } from 'src/app/common/business/export.business';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { GarbageDropStationCountTableModel } from 'src/app/common/components/tables/garbage-drop-station-count-table/garbage-drop-station-count-table.model';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker.directive';
+import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Language } from 'src/app/global/tool/language';
+import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 
 @Component({
   selector: 'howell-garbage-drop-station-window-count',
@@ -15,7 +20,10 @@ import { Language } from 'src/app/global/tool/language';
   styleUrls: ['./garbage-drop-station-window-count.component.less'],
 })
 export class GarbageDropStationWindowCountComponent implements OnInit {
-  constructor(private local: LocalStorageService) {}
+  constructor(
+    private local: LocalStorageService,
+    private exports: ExportBusiness
+  ) {}
 
   DateTimePickerView = DateTimePickerView;
   dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
@@ -26,6 +34,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   types: SelectItem[] = [];
   type: UserResourceType = UserResourceType.Committees;
   load: EventEmitter<void> = new EventEmitter();
+  datas?: GarbageDropStationCountTableModel[];
 
   initUnits() {
     this.units.push(
@@ -103,6 +112,38 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   search() {
     this.load.emit();
   }
-  exportExcel() {}
-  exportCSV() {}
+
+  loaded(datas: GarbageDropStationCountTableModel[]) {
+    this.datas = datas;
+  }
+
+  converter = new GarbageDropStationWindowCountExportConverter();
+
+  getTitle() {
+    let title = formatDate(this.date, 'yyyy年MM月dd日', 'en');
+    title += ' ' + Language.UserResourceType(this.type);
+    title += ' 垃圾滞留总数据';
+    return title;
+  }
+
+  toExport(type: ExportType) {
+    if (!this.datas) return;
+    let title = this.getTitle();
+    let headers = [
+      '序号',
+      '名称',
+      '行政区',
+      '垃圾滞留',
+      '垃圾滞留超时',
+      '超时率',
+    ];
+    this.exports.export(type, title, headers, this.datas, this.converter);
+  }
+
+  exportExcel() {
+    this.toExport(ExportType.excel);
+  }
+  exportCSV() {
+    this.toExport(ExportType.csv);
+  }
 }
