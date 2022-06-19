@@ -1,1 +1,57 @@
-<p>encode-device-manage works!</p>
+<div class="encode-device-manage">
+  <div class="hw-table-detail">
+    <div class="hw-second-title">编码器</div>
+    <div class="hw-operate-bar">
+      <div class="hw-normal-btn-group">
+        <button class="hw-green-btn">
+          <i class="howell-icon-plus"></i>
+          添加
+        </button>
+        <button class="hw-red-btn">
+          <i class="howell-icon-delete-bin"></i>
+          删除
+        </button>
+      </div>
+
+      <div class="search-wrapper">
+        <howell-simple-search placeHolder="名称"></howell-simple-search>
+      </div>
+    </div>
+    <div class="hw-table-container">
+      <!-- <app-table
+        [dataSubject]="dataSubject"
+        [columnModel]="columnModel"
+        [displayedColumns]="displayedColumns"
+        [tableSelectModel]="tableSelectModel"
+        [tableOperates]="tableOperates"
+        (selectTableRow)="selectTableRow($event)"
+        (selectTableCell)="selectTableCell($event)"
+      ></app-table> -->
+    </div>
+    <!-- <div class="hw-table-footer">
+      <div class="footer-item">
+        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        </app-table-select>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">已选择: {{ selectedRows.length }}</div>
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+        <app-paginator
+          *ngIf="page"
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="pagerCount"
+          [pageIndex]="pageIndex - 1"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div> -->
+  </div>
+</div>

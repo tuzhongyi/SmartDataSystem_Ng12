@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlatformManageModel } from 'src/app/view-model/platform-manage.model';
-import { TableCellEvent, TableColumnModel } from 'src/app/view-model/table.model';
+import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { PlatformManageConf } from './platform-manage.config';
 import { PlatformManageBusiness } from './platform-manage.business';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -33,6 +33,7 @@ export class PlatformManageComponent implements OnInit {
   tableSelectModel = SelectEnum.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
+  tableOperates: TableOperateModel[] = []
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
@@ -55,7 +56,9 @@ export class PlatformManageComponent implements OnInit {
 
 
   constructor(private _business: PlatformManageBusiness, private _toastrService: ToastrService) {
-
+    this.tableOperates.push(new TableOperateModel('sync', ['fa', 'fa-retweet', 'operate-icon'], '同步'))
+    this.tableOperates.push(new TableOperateModel('edit', ['howell-icon-modification', 'operate-icon'], '编辑'))
+    this.tableOperates.push(new TableOperateModel('delete', ['howell-icon-delete-bin', 'operate-icon'], '删除'))
   }
 
 

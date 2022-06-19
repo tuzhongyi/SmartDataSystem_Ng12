@@ -5,7 +5,7 @@ import { MatTable } from "@angular/material/table";
 import { DomSanitizer } from "@angular/platform-browser";
 import { BehaviorSubject } from "rxjs";
 import { SelectEnum } from "src/app/enum/select.enum";
-import { TableCellEvent, TableColumnModel, TableRowModels } from "src/app/view-model/table.model";
+import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModels } from "src/app/view-model/table.model";
 import { TableDataSource } from "./data-source";
 
 @Component({
@@ -26,6 +26,9 @@ export class TableComponent implements OnInit {
 
   @ViewChild('table') table!: MatTable<any>;
 
+
+  @Input()
+  tableOperates: TableOperateModel[] = []
 
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
@@ -59,6 +62,7 @@ export class TableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.tableOperates.length) this.displayedColumns.push('Operation')
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<TableRowModels>();
     } else {
@@ -85,10 +89,8 @@ export class TableComponent implements OnInit {
   }
   clickRow(row: TableRowModels) {
     this.selection.toggle(row);
-    // console.log('click row');
   }
   clickCell(column: TableColumnModel, row: TableRowModels, event: Event) {
-    // console.log('click cell', column);
     this.selectTableCell.emit({
       column,
       row,

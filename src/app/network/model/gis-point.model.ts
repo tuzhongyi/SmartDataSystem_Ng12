@@ -14,3 +14,4 @@ export class GisPoint implements IModel {
   GisType?: number;
   /** */
 }
+

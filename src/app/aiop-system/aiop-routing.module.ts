@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-06-09 13:15:13
+ * @Last Modified time: 2022-06-17 15:35:37
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -27,6 +27,7 @@ import { CameraModelManageComponent } from './components/camera-model-manage/cam
 import { AiModelListComponent } from './components/ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
+import { SrServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
 
 const routes: Routes = [
   {
@@ -136,8 +137,8 @@ const routes: Routes = [
                 },
               },
               {
-                path: 'proxy-manage',
-                component: IllegalDropRecord2Component,
+                path: 'srserver-manage',
+                component: SrServerManageComponent,
                 data: {
                   breadcrumb: '流转服务管理',
                 },

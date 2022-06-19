@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:30
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-22 14:41:40
+ * @Last Modified time: 2022-06-17 15:35:15
  */
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -12,7 +12,7 @@ import { Title } from '@angular/platform-browser';
   template: ` <router-outlet></router-outlet> `,
 })
 export class AiopComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

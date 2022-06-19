@@ -1,6 +1,6 @@
 import { BaseAiopUrl } from '../../base.url';
 
-export abstract class PlatformsUrl {
+export abstract class PlatformsURL {
   static get basic(): string {
     return `${BaseAiopUrl}/Platforms`;
   }

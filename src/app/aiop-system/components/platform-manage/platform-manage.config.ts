@@ -33,15 +33,4 @@ export const PlatformManageConf: TableColumnModel[] = [
     header: '更新时间',
     cell: (element: PlatformManageModel) => `${element.UpdateTime}`,
   },
-  {
-    columnDef: 'Operation',
-    header: '操作',
-    cell: (row: IllegalDropRecordModel) => `
-        <i class="fa fa-retweet operate-icon" title="同步" id="sync" ></i>
-        <i class="howell-icon-modification operate-icon"  title="编辑" id="edit"></i>
-        <i class="howell-icon-delete-bin operate-icon" title="删除" id="delete"></i>
-      `,
-    className: ['operation'],
-    stopPropogate: true
-  },
 ];

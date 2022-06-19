@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { SRServer } from '../../model/sr-server';
 import { VideoUrl } from '../../model/url.model';
+import { SRServersURL } from '../../url/aiop/SRServers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
-import { BaseRequestService } from '../base-request.service';
+import { BaseRequestService, BaseTypeRequestService } from '../base-request.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { DurationParams } from '../IParams.interface';
 import { GetPreviewUrlParams, GetVodUrlParams } from './sr-request.params';
@@ -12,8 +14,12 @@ import { GetPreviewUrlParams, GetVodUrlParams } from './sr-request.params';
   providedIn: 'root',
 })
 export class SRRequestService {
+  private type: BaseTypeRequestService<SRServer>;
+
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
+    this.type = this.basic.type(SRServer);
+
   }
   private basic: BaseRequestService;
 
@@ -66,4 +72,36 @@ export class SRRequestService {
     let url = SRServiceUrl.vod();
     return this.basic.post(url, VideoUrl, data);
   }
+
+
+
+  // create(item: SRServer) {
+  //   return this.requestService.post<SRServer, HowellResponse<SRServer>>(
+  //     AIOPSRServiceUrl.create(),
+  //     SaveModel.toModel(item, SaveModel.formMustField.srServer)
+  //   );
+  // }
+
+  // get(id: string) {
+  //   return this.requestService.get<SRServer>(AIOPSRServiceUrl.get(id));
+  // }
+
+  // set(item: SRServer) {
+  //   return this.requestService.put<SRServer, HowellResponse<SRServer>>(
+  //     AIOPSRServiceUrl.edit(item.Id),
+  //     item
+  //   );
+  // }
+
+  // del(id: string) {
+  //   return this.requestService.delete<SRServer>(AIOPSRServiceUrl.del(id));
+  // }
+
+  list() {
+    return this.type.get(SRServersURL.list());
+  }
+
+  // sync(id: string) {
+  //   return this.requestService.post<any>(AIOPSRServiceUrl.sync(id));
+  // }
 }

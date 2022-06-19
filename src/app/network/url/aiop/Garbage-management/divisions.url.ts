@@ -1,6 +1,6 @@
-import { GarbageManagementUrl } from './garbage-management.url';
+import { GarbageManagementURL } from './garbage-management.url';
 
-export abstract class DivisionsUrl extends GarbageManagementUrl {
+export abstract class DivisionsUrl extends GarbageManagementURL {
   static get basic(): string {
     return `${super.basic}/Divisions`;
   }

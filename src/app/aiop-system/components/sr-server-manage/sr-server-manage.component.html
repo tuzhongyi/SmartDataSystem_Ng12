@@ -1,22 +1,22 @@
-<div class="platform-manage">
+<div class="srserver-manage">
   <ng-container *ngIf="showDialog">
-    <howell-platform-operate
+    <!-- <howell-platform-operate
       [state]="state"
       [platformId]="platformId"
       (closeEvent)="closeForm($event)"
-    ></howell-platform-operate>
+    ></howell-platform-operate> -->
   </ng-container>
 
   <ng-container *ngIf="showConfirm">
-    <howell-confirm-dialog
+    <!-- <howell-confirm-dialog
       (dialogMsg)="dialogMsgEvent($event)"
       [dialogModel]="dialogModel"
     >
-    </howell-confirm-dialog>
+    </howell-confirm-dialog> -->
   </ng-container>
 
   <div class="hw-table-detail">
-    <div class="hw-second-title">智慧平台</div>
+    <div class="hw-second-title">流转服务</div>
     <div class="hw-operate-bar">
       <div class="hw-normal-btn-group">
         <button class="hw-green-btn" (click)="addBtnClick()">
@@ -43,7 +43,6 @@
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
         [tableSelectModel]="tableSelectModel"
-        [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
         (selectTableCell)="selectTableCell($event)"
       ></app-table>
@@ -52,25 +51,6 @@
       <div class="footer-item">
         <app-table-select (tableSelectEvent)="tableSelect($event)">
         </app-table-select>
-      </div>
-
-      <div class="footer-item">
-        <div class="footer-info">
-          <div class="info-item">已选择: {{ selectedRows.length }}</div>
-          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-          <div class="info-item">
-            总数量: {{ page && page.TotalRecordCount }}
-          </div>
-        </div>
-        <app-paginator
-          *ngIf="page"
-          [length]="page.TotalRecordCount"
-          [pageSize]="page.PageSize"
-          [pagerCount]="pagerCount"
-          [pageIndex]="pageIndex - 1"
-          (page)="pageEvent($event)"
-        >
-        </app-paginator>
       </div>
     </div>
   </div>

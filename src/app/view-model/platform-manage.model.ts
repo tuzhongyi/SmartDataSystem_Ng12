@@ -7,6 +7,5 @@ export class PlatformManageModel {
     public ProtocolType: string = '',
     public State: string = '',
     public UpdateTime: string = '',
-    public rowData?: any
   ) { }
 }

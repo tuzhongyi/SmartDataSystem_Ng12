@@ -4,7 +4,7 @@ import { HwPlatform } from 'src/app/network/model/platform.model';
 import { GetPlatformsParams } from "./platforms-params";
 import { AbstractService } from "src/app/business/Ibusiness";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
-import { PlatformsUrl } from "../../url/aiop/platforms/platforms.url";
+import { PlatformsURL } from "../../url/aiop/platforms/platforms.url";
 import { classToPlain } from "class-transformer";
 @Injectable({
   providedIn: "root",
@@ -21,31 +21,31 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
 
 
   create(item: HwPlatform) {
-    let url = PlatformsUrl.basic;
+    let url = PlatformsURL.basic;
     return this.type.post(url, item)
   }
 
   list(params: GetPlatformsParams = new GetPlatformsParams()) {
 
-    let url = PlatformsUrl.list();
+    let url = PlatformsURL.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
   }
 
   get(id: string): Promise<HwPlatform> {
-    let url = PlatformsUrl.item(id);
+    let url = PlatformsURL.item(id);
     return this.type.get(url);
   }
 
   set(item: HwPlatform) {
-    return this.type.put(PlatformsUrl.item(item.Id), item)
+    return this.type.put(PlatformsURL.item(item.Id), item)
   }
 
   delete(id: string) {
-    return this.type.delete(PlatformsUrl.item(id))
+    return this.type.delete(PlatformsURL.item(id))
   }
   protocol(): Promise<any> {
-    let url = PlatformsUrl.protocols();
+    let url = PlatformsURL.protocols();
     return this.type.get(url);;
   }
   sync() {

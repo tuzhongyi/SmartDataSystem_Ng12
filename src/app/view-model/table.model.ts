@@ -19,3 +19,11 @@ export interface TableCellEvent {
   row: TableRowModels;
   event: PointerEvent;
 }
+
+export class TableOperateModel {
+  constructor(
+    public id: string,
+    public classNames: string | string[],
+    public title: string
+  ) { }
+}

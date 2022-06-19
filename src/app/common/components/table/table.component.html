@@ -16,6 +16,12 @@
       </mat-header-cell>
     </ng-container>
 
+    <ng-container matColumnDef="Operation">
+      <mat-header-cell *matHeaderCellDef>
+        <div class="Operation">操作</div></mat-header-cell
+      >
+    </ng-container>
+
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   </mat-table>
 
@@ -37,12 +43,25 @@
         (click)="clickCell(model, row, $event)"
       >
         <div
-          [innerHTML]="sanitizer.bypassSecurityTrustHtml(model.cell(row))"
+          [innerHTML]="model.cell(row)"
           [class]="model.className"
+          [title]="model.cell(row)"
         ></div>
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="Operation">
+      <mat-cell *matCellDef="let row">
+        <div>
+          <i
+            *ngFor="let operate of tableOperates"
+            [class]="operate.classNames"
+            [id]="operate.id"
+            [title]="operate.title"
+          ></i>
+        </div>
+      </mat-cell>
+    </ng-container>
     <mat-row
       *matRowDef="let row; columns: displayedColumns"
       (click)="clickRow(row)"

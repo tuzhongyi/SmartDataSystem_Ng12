@@ -13,8 +13,8 @@
         },
         {
           "title": "流转服务管理",
-          "id": "proxy-manage",
-          "path": "/aiop/aiop-manage/system-setting/platform/proxy-manage"
+          "id": "srserver-manage",
+          "path": "/aiop/aiop-manage/system-setting/platform/srserver-manage"
         }
       ]
     },
