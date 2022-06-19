@@ -25,7 +25,6 @@ import { TreeService } from './tree.service';
   ],
 })
 export class TreeComponent implements OnInit {
-  TreeSelectEnum = SelectEnum;
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],
@@ -79,6 +78,8 @@ export class TreeComponent implements OnInit {
   trackBy = (index: number, node: FlatTreeNode) => node;
 
   selection!: SelectionModel<FlatTreeNode>;// 保存选中节点
+  TreeSelectEnum = SelectEnum;
+
 
   // 高亮显示选中节点
   highLight = (node: FlatTreeNode) => {
@@ -107,10 +108,8 @@ export class TreeComponent implements OnInit {
     return this._depth
   }
 
-
   // 展示数据的深度，一般等于 depth
   private _showDepth: number = -1;
-
   @Input()
   set showDepth(val: number) {
     if (val < 0) {
@@ -121,7 +120,6 @@ export class TreeComponent implements OnInit {
   get showDepth() {
     return this._showDepth
   }
-
   // 强制最大深度节点为叶节点
   @Input()
   depthIsEnd = false;
@@ -156,6 +154,9 @@ export class TreeComponent implements OnInit {
   }
   // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
   @Input() holdStatus: boolean = false;
+
+  // 指定类型的节点会被选中
+  @Input() filterTypes: UserResourceType[] = []
 
   @Output() holdStatusChange = new EventEmitter<boolean>();
 
@@ -196,8 +197,27 @@ export class TreeComponent implements OnInit {
       this.selection = new SelectionModel<FlatTreeNode>(true);
     }
     this.selection.changed.subscribe((change) => {
-      // console.log('选中节点 ', this.selection.selected)
-      this.selectTreeNode.emit(change.source.selected);
+      // console.log('添加节点', change.added);
+      // console.log('删除节点', change.removed);
+      // console.log("当前节点", change.source.selected)
+
+      let filtered: FlatTreeNode[] = [];
+      if (this.filterTypes.includes(UserResourceType.None) || this.filterTypes.length == 0) {
+        filtered = change.source.selected;
+        this.selectTreeNode.emit(filtered);
+
+      } else {
+        filtered = change.source.selected.filter(node => {
+          return this.filterTypes.some(type => node.type == type)
+        })
+        let has1 = change.added.some(node => this.filterTypes.some(type => node.type == type))
+        let has2 = change.removed.some(node => this.filterTypes.some(type => node.type == type))
+        if (has1 || has2) {
+          this.selectTreeNode.emit(filtered);
+
+        }
+      }
+
     });
 
     this._treeService.model = this.serviceModel;
@@ -305,7 +325,6 @@ export class TreeComponent implements OnInit {
         return;
       }
     }
-
 
     // 处理当前节点
     this.selection.toggle(node);

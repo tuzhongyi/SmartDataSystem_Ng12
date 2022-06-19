@@ -151,7 +151,7 @@ export class DivisionManageComponent implements OnInit {
   // 点击树节点
   selectTreeNode(nodes: FlatTreeNode[]) {
     this.currentNode = nodes[0];
-    console.log(nodes)
+    // console.log('外部结果', nodes)
     this.state = FormState.none;
     this.resourceType = this.currentNode?.type ?? UserResourceType.None;
     this._updateForm();
