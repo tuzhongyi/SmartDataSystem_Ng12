@@ -1,5 +1,11 @@
 .mat-checkbox {
+  overflow: hidden;
   .mat-checkbox-layout {
     margin-bottom: 0; //受bootstrap的影响
+    .mat-checkbox-label {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 }

@@ -32,6 +32,7 @@
     <!-- 单选模式 -->
     <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
       <div
+        [title]="node.name"
         (click)="singleSelectNode(node)"
         style="
           flex-grow: 1;
@@ -51,6 +52,7 @@
         (change)="multipleSelectNode(node)"
         [checked]="selection.isSelected(node)"
         [indeterminate]="descendantsPartiallySelected(node)"
+        [title]="node.name"
       >
         <i [class]="node.iconType"></i>
         {{ node.name }}
