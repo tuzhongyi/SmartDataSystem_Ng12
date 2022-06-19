@@ -2,7 +2,8 @@
   <ng-container *ngIf="Model.show">
     <app-tab-title [title]="Language.json.camera">
       <div class="device-list-table-window-header">
-        <app-input-search (search)="onsearch($event)"> </app-input-search>
+        <app-input-search-options (search)="onsearch($event)">
+        </app-input-search-options>
       </div>
     </app-tab-title>
     <div class="device-list-table-window-content">

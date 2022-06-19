@@ -24,8 +24,8 @@
         ></howell-division-tree-filter>
       </div>
       <button class="hw-blue-btn search" (click)="search()">查询</button>
-      <button class="hw-blue-btn excel">导出</button>
-      <button class="hw-blue-btn csv">CSV</button>
+      <button class="hw-blue-btn excel" (click)="exportExcel()">导出</button>
+      <button class="hw-blue-btn csv" (click)="exportCSV()">CSV</button>
     </div>
     <div class="filter-items">
       <div class="filter-item select">
@@ -43,6 +43,7 @@
       [date]="date"
       [divisionId]="filterId"
       [load]="load"
+      (loaded)="loaded($event)"
     >
     </howell-garbage-station-statistic-table>
   </div>

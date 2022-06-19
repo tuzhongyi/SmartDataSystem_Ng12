@@ -14,6 +14,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -36,23 +37,27 @@ export class GarbageStationTableComponent
     OnChanges
 {
   @Input()
-  load?: EventEmitter<string>;
+  load?: EventEmitter<SearchOptions>;
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
 
   @Input()
   business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
-  width = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
-  name?: string;
+
   constructor(business: GarbageStationTableBusiness) {
     super();
     this.business = business;
   }
+
+  width = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
+
+  searchOpts?: SearchOptions;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
-      this.load.subscribe((name) => {
-        this.name = name;
-        this.loadData(1, this.pageSize, name);
+      this.load.subscribe((opts) => {
+        this.searchOpts = opts;
+        this.loadData(1, this.pageSize, opts);
       });
     }
   }
@@ -61,12 +66,17 @@ export class GarbageStationTableComponent
     this.loadData(1, this.pageSize);
   }
 
-  async loadData(index: number, size: number, name?: string, show = true) {
+  async loadData(
+    index: number,
+    size: number,
+    opts?: SearchOptions,
+    show = true
+  ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, name);
+    let promise = this.business.load(params, opts);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -79,7 +89,7 @@ export class GarbageStationTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.name);
+    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOpts);
   }
 
   @Output()

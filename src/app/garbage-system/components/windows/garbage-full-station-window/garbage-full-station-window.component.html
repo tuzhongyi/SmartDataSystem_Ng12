@@ -3,8 +3,8 @@
     <app-tab-title [title]="Language.json.station + Language.json.state">
       <div class="garbage-full-station-table-window-header">
         <div class="operation" *ngIf="index === Index.station">
-          <app-input-search (search)="station.onsearch($event)">
-          </app-input-search>
+          <app-input-search-options (search)="station.onsearch($event)">
+          </app-input-search-options>
         </div>
         <div class="operation" *ngIf="index === Index.record">
           <howell-event-record-operation

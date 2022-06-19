@@ -95,7 +95,7 @@
   background: #0c1127;
   position: absolute;
   z-index: 30;
-  width: calc(100% + 10px);
+  width: calc(100px + 10px);
 
   margin-left: -10px;
 }

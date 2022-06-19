@@ -35,6 +35,7 @@ import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { ExportExcelConverter } from './details-chart-export.converter';
 import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
 import { ExportBusiness } from 'src/app/common/business/export.business';
+import { ExportType } from 'src/app/enum/export-type.enum';
 
 @Component({
   selector: 'howell-details-chart',
@@ -333,16 +334,32 @@ export class DetailsChartComponent
 
   converter = new ExportExcelConverter();
 
-  exportExcel() {
+  toExport(type: ExportType) {
     let title = this.getTitle();
-    let headers = ['序号', '日期', '时间', this.getName()];
 
-    this.exports.excel(title, headers, this.data, this.converter);
+    let headers = ['序号', '日期', '时间'];
+
+    let types = this.types ?? [this.eventType];
+
+    for (let i = 0; i < types.length; i++) {
+      headers.push(Language.EventType(types[i]));
+    }
+
+    this.exports.export(
+      type,
+      title,
+      headers,
+      this.data,
+      this.converter,
+      this.unit
+    );
+  }
+
+  exportExcel() {
+    this.toExport(ExportType.excel);
   }
   exportCSV() {
-    let title = this.getTitle();
-    let headers = ['序号', '日期', '时间', this.getName()];
-    this.exports.csv(title, headers, this.data, this.converter);
+    this.toExport(ExportType.csv);
   }
 
   ondivisionselect(division: Division) {

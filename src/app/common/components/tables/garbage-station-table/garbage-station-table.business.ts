@@ -16,6 +16,7 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 
 @Injectable()
@@ -36,9 +37,9 @@ export class GarbageStationTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,
-    name?: string
+    opts?: SearchOptions
   ): Promise<PagedList<GarbageStationTableModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, name);
+    let data = await this.getData(this.storeService.divisionId, page, opts);
     let model = await this.Converter.Convert(data, (id: string) => {
       return this.divisionService.cache.get(id);
     });
@@ -47,11 +48,13 @@ export class GarbageStationTableBusiness
   getData(
     divisionId: string,
     page: PagedParams,
-    name?: string
+    opts?: SearchOptions
   ): Promise<PagedList<GarbageStation>> {
     let params = new GetGarbageStationsParams();
     params = Object.assign(params, page);
-    params.Name = name;
+    if (opts) {
+      (params as any)[opts.propertyName] = opts.text;
+    }
     params.DivisionId = divisionId;
     return this.stationService.list(params);
   }

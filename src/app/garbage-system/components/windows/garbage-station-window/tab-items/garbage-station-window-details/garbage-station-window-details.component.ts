@@ -1,6 +1,8 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
+import { ExportBusiness } from 'src/app/common/business/export.business';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -8,6 +10,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { Enum } from 'src/app/enum/enum-helper';
+import { ExportType } from 'src/app/enum/export-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -18,6 +21,7 @@ import {
   ChartConfig,
   EChartOptions,
 } from '../../../charts/details-chart/details-chart.option';
+import { TimeDataGroupExportConverter } from '../../../../../../converter/exports/time-data-group-exports.converter';
 import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-details.business';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
 
@@ -32,7 +36,10 @@ export class GarbageStationWindowDetailsComponent
 {
   @Input()
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
-  constructor(business: GarbageStationWindowDetailsBusiness) {
+  constructor(
+    business: GarbageStationWindowDetailsBusiness,
+    private exports: ExportBusiness
+  ) {
     this.business = business;
   }
 
@@ -243,14 +250,58 @@ export class GarbageStationWindowDetailsComponent
     }
   }
   search() {
+    if (this.selectIds.length <= 0) {
+      MessageBar.response_warning(`请选择要查看的对象`);
+      return;
+    }
     if (this.selectIds.length > this.maxItem) {
       MessageBar.response_warning(`最多查看个${this.maxItem}对象`);
       return;
     }
     this.loadData();
   }
-  exportExcel() {}
-  exportCSV() {}
+
+  converter = new TimeDataGroupExportConverter();
+
+  getTitle() {
+    let duration = DurationParams.TimeUnit(this.unit, this.date);
+    let begin = formatDate(duration.BeginTime, 'yyyy年MM月dd日', 'en');
+    let end = formatDate(duration.EndTime, 'yyyy年MM月dd日', 'en');
+    let title = `${begin} 至 ${end}`;
+    for (let i = 0; i < this.datas.length; i++) {
+      const data = this.datas[i];
+      title += ' ' + data.Name;
+    }
+    title += ' ' + Language.StatisticType(this.type);
+    return title;
+  }
+
+  toExport(type: ExportType) {
+    let title = this.getTitle();
+    let headers = ['序号', '日期']; //, '时间', this.getName()
+    if (this.unit === TimeUnit.Week) {
+      headers.push('时间');
+    }
+    for (let i = 0; i < this.datas.length; i++) {
+      const data = this.datas[i];
+      headers.push(data.Name);
+    }
+    this.exports.export(
+      type,
+      title,
+      headers,
+      this.datas,
+      this.converter,
+      this.unit
+    );
+  }
+
+  exportExcel() {
+    this.toExport(ExportType.excel);
+  }
+  exportCSV() {
+    this.toExport(ExportType.csv);
+  }
 }
 
 interface GarbageStationWindowDetailsComponentConfig {

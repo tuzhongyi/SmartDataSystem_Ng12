@@ -16,6 +16,7 @@ import { DeviceViewModel } from 'src/app/common/components/tables/device-list-ta
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-device-list-window',
@@ -39,12 +40,12 @@ export class DeviceListWindowComponent
 
   ngOnInit(): void {}
 
-  load: EventEmitter<string> = new EventEmitter();
+  load: EventEmitter<SearchOptions> = new EventEmitter();
 
   filter: DeviceListTableFilter = {};
 
-  onsearch(text: string) {
-    this.load.emit(text);
+  onsearch(opts: SearchOptions) {
+    this.load.emit(opts);
   }
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();

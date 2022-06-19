@@ -16,6 +16,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -44,7 +45,7 @@ export class DeviceListTableComponent
   business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
   @Input()
-  load?: EventEmitter<string>;
+  load?: EventEmitter<SearchOptions>;
 
   constructor(business: DeviceListTableBusiness) {
     super();
@@ -57,9 +58,9 @@ export class DeviceListTableComponent
   ngOnInit(): void {
     this.loadData(1, this.pageSize, this.filter.status);
     if (this.load) {
-      this.load.subscribe((name) => {
-        this.filter.name = name;
-        this.loadData(1, this.pageSize, this.filter.status, this.filter.name);
+      this.load.subscribe((opts) => {
+        this.filter.opts = opts;
+        this.loadData(1, this.pageSize, this.filter.status, this.filter.opts);
       });
     }
   }
@@ -68,14 +69,14 @@ export class DeviceListTableComponent
     index: number,
     size: number,
     status?: OnlineStatus,
-    name?: string,
+    opts?: SearchOptions,
     show = true
   ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, status, name);
+    let promise = this.business.load(params, status, opts);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -92,7 +93,7 @@ export class DeviceListTableComponent
       page.pageIndex + 1,
       this.pageSize,
       this.filter.status,
-      this.filter.name
+      this.filter.opts
     );
   }
   onerror(e: Event) {
@@ -101,9 +102,9 @@ export class DeviceListTableComponent
     }
   }
 
-  search(name: string) {
-    this.filter.name = name;
-    this.loadData(1, this.pageSize, this.filter.status, name);
+  search(opts: SearchOptions) {
+    this.filter.opts = opts;
+    this.loadData(1, this.pageSize, this.filter.status, opts);
   }
 
   @Output()
@@ -116,5 +117,5 @@ export class DeviceListTableComponent
 
 export interface DeviceListTableFilter {
   status?: OnlineStatus;
-  name?: string;
+  opts?: SearchOptions;
 }
