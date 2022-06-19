@@ -5,12 +5,14 @@ import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { Deduplication } from 'src/app/global/tool/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
@@ -70,6 +72,15 @@ export class TreeComponent implements OnInit {
   private dataChange = new BehaviorSubject<NestTreeNode[]>([]);
   private _nestedNodeMap = new Map<string, NestTreeNode>();
   private _currentNode: FlatTreeNode | null = null;
+
+  // 要屏蔽的搜索字符串
+  private _searchGuards: string[] = ['街道', '路居委会'];
+  private _condition: string | Symbol = Symbol.for('DIVISION-TREE');
+
+  /**
+   *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
+   */
+  private _excludeGuards: string[] = [];
 
   /****** public ********/
   treeControl: FlatTreeControl<FlatTreeNode>;
@@ -158,12 +169,14 @@ export class TreeComponent implements OnInit {
   // 指定类型的节点会被选中
   @Input() filterTypes: UserResourceType[] = []
 
+  @Input() showSearchBar = true;
+
   @Output() holdStatusChange = new EventEmitter<boolean>();
 
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
-  constructor(private _treeService: TreeService) {
+  constructor(private _treeService: TreeService, private _toastrService: ToastrService,) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -187,6 +200,8 @@ export class TreeComponent implements OnInit {
     });
 
     this._nestedNodeMap = this._treeService.nestedNodeMap;
+
+    this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
   }
   ngOnInit() {
 
@@ -231,6 +246,25 @@ export class TreeComponent implements OnInit {
     this._initialize();
   }
 
+  async searchEventHandler(condition: string) {
+    if (this._condition == condition && this._condition != '') {
+      this._toastrService.warning('重复搜索相同字段');
+      return;
+    }
+    if (this._excludeGuards.includes(condition)) {
+      this._toastrService.warning('关键字不能是: ' + condition);
+      return;
+    }
+
+    this._condition = condition;
+
+    let res = await this.searchNode(condition)
+    if (res && res.length) {
+      this._toastrService.success('操作成功');
+    } else {
+      this._toastrService.warning('无匹配结果');
+    }
+  }
   private async _initialize() {
     this._flatNodeMap.clear();
     this.treeControl.collapseAll();

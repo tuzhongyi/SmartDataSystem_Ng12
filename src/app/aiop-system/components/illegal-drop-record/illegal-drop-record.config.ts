@@ -48,15 +48,15 @@ export const IllegalDropEventRecordConf: TableColumnModel[] = [
     header: '上报时间',
     cell: (row: IllegalDropRecordModel) => `${row.EventTime}`,
   },
-  {
-    columnDef: 'Operation',
-    header: '操作',
-    cell: (row: IllegalDropRecordModel) => `
-        <i class="howell-icon-video" title="播放视频" ></i>
-        <i class="howell-icon-picturedownload"  title="下载图片"></i>
-        <i class="howell-icon-videodownload" title="下载视频"></i>
-      `,
-    className: ['operation'],
-    stopPropogate: true
-  },
+  // {
+  //   columnDef: 'Operation',
+  //   header: '操作',
+  //   cell: (row: IllegalDropRecordModel) => `
+  //       <i class="howell-icon-video" title="播放视频" ></i>
+  //       <i class="howell-icon-picturedownload"  title="下载图片"></i>
+  //       <i class="howell-icon-videodownload" title="下载视频"></i>
+  //     `,
+  //   className: ['operation'],
+  //   stopPropogate: true
+  // },
 ];

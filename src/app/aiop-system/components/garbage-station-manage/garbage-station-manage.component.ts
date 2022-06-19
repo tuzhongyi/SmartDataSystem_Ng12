@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Deduplication } from 'src/app/global/tool/deduplication';
+import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 
 @Component({
   selector: 'howell-garbage-station-manage',
@@ -19,6 +21,19 @@ export class GarbageStationManageComponent implements OnInit {
    *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
    */
   private _excludeGuards: string[] = [];
+
+  currentNode?: FlatTreeNode;
+
+
+  get enableAddBtn() {
+    return this.currentNode && this.currentNode.type == UserResourceType.Committees
+
+
+  }
+  get enableDelBtn() {
+    return true
+  }
+
 
   @ViewChild('tree') tree?: TreeComponent;
 

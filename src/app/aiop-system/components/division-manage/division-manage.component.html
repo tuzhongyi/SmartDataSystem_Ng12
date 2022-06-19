@@ -31,23 +31,13 @@
         编辑
       </button>
     </div>
-
-    <div class="search-wrapper">
-      <howell-simple-search
-        placeHolder="名称"
-        (searchEvent)="searchEventHandler($event)"
-      ></howell-simple-search>
-    </div>
-
-    <div class="tree-container">
-      <app-tree
-        #tree
-        [treeSelectModel]="treeSelectModel"
-        [treeServiceModel]="treeServiceModel"
-        (selectTreeNode)="selectTreeNode($event)"
-        [(holdStatus)]="holdStatus"
-      ></app-tree>
-    </div>
+    <app-tree
+      #tree
+      [treeSelectModel]="treeSelectModel"
+      [treeServiceModel]="treeServiceModel"
+      (selectTreeNode)="selectTreeNode($event)"
+      [(holdStatus)]="holdStatus"
+    ></app-tree>
   </div>
   <div class="hw-tree-right">
     <div class="hw-simple-title">{{ title }}</div>
@@ -106,8 +96,11 @@
         </div>
       </div>
 
-      <div class="hw-form-group">
-        <div class="hw-middle-btn-group" [hidden]="state == FormState.none">
+      <div
+        class="hw-form-group"
+        [style.display]="state == FormState.none ? 'none' : ''"
+      >
+        <div class="hw-middle-btn-group">
           <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
             <i class="howell-icon-Check"></i>
           </button>

@@ -1,68 +1,19 @@
-.select.expanded {
-  transform: translate(-3px, 3px) rotate(90deg);
+:host {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
 }
-.select {
-  border-width: 5px;
-  border-style: solid;
-  border-top-color: transparent;
-  border-right-color: transparent;
-  border-bottom-color: transparent;
-  border-left-color: #fff;
-}
-
-button.tree-select {
-  width: 20px;
-  height: 25px;
+.howell-tree {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  // background: #982121e6;
-  background: transparent;
-  -webkit-tap-highlight-color: transparent;
-  outline: none;
-  border: none;
-  padding: 0;
-  user-select: none;
-  cursor: pointer;
-  margin: 0;
-  border-radius: 5px;
-  flex-shrink: 0;
-}
-
-::ng-deep .mat-checkbox {
-  flex-grow: 1;
-
-  label.mat-checkbox-layout {
-    width: 100%;
-
-    .mat-checkbox-inner-container {
-      margin: 0;
-      margin-right: 8px;
-      width: 14px;
-      height: 14px;
-      .mat-checkbox-background {
-        background: transparent !important;
-
-        .mat-checkbox-checkmark-path {
-          stroke-width: 4px;
-        }
-        .mat-checkbox-mixedmark {
-          width: 6px;
-          height: 6px;
-          border-radius: 0;
-        }
-      }
-
-      .mat-checkbox-frame {
-        border-color: #7586e0;
-      }
-    }
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .search-wrapper {
+    flex-shrink: 0;
+    margin-bottom: 10px;
   }
-}
-
-//mat-checkbox-indeterminate.
-.mat-tree {
-  padding-left: 10px;
-  box-sizing: border-box;
+  .tree-container {
+    flex-grow: 1;
+    overflow: auto;
+  }
 }

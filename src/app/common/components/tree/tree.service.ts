@@ -130,6 +130,7 @@ export class TreeService {
     return children;
   }
   async searchNode(condition: string) {
+    this.nestedNodeMap.clear()
     let nodes: NestTreeNode[] = []
     if (condition == '') {
       nodes = await this.initialize();
@@ -173,7 +174,7 @@ export class TreeService {
           return prev;
         }, divisions);
 
-        console.log('厢房所在区划', divisions);
+        // console.log('厢房所在区划', divisions);
 
         // 合并 Division 和 Station
         let result = [...divisions, ...allStations];
@@ -181,20 +182,20 @@ export class TreeService {
         // 根据Division和Station创建 Station 树
         stationNodes = this._converter.buildNestNodeTree(result);
 
-        console.log(stationNodes);
+        // console.log(stationNodes);
 
         // 将 stationNodes 和  divisionNodes 合并
 
         let merged = this._converter.mergeNestedTree(divisionNodes, stationNodes);
-        console.log(merged);
+        // console.log(merged);
 
         nodes = merged;
 
       }
     }
-    console.log('search result: ', nodes)
-
-
+    this._updateNestedMap(nodes)
+    console.log(this.nestedNodeMap.values())
+    // console.log('search result: ', nodes)
     return nodes;
 
   }
@@ -270,6 +271,16 @@ export class TreeService {
       // 一定要直接覆盖，保证 node 为最新
       this.nestedNodeMap.set(node.id, node);
     }
+  }
+  private _updateNestedMap(nodes: NestTreeNode[]) {
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      this.nestedNodeMap.set(node.id, node);
+      if (node.childrenChange.value.length > 0) {
+        this._updateNestedMap(node.childrenChange.value)
+      }
+    }
+
   }
 
 
