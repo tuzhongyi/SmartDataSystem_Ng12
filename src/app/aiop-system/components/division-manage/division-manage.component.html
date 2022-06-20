@@ -1,6 +1,6 @@
 <div class="division-manage hw-tree-model">
   <ng-container *ngIf="showDialog">
-    <howell-confirm-dialog (dialogMsg)="dialogMsgEvent($event)">
+    <howell-confirm-dialog (dialogMsgEvent)="dialogMsgEvent($event)">
     </howell-confirm-dialog>
   </ng-container>
   <div class="hw-tree-left">
@@ -31,13 +31,13 @@
         编辑
       </button>
     </div>
-    <app-tree
+    <howell-district-tree
       #tree
       [treeSelectModel]="treeSelectModel"
       [treeServiceModel]="treeServiceModel"
       (selectTreeNode)="selectTreeNode($event)"
       [(holdStatus)]="holdStatus"
-    ></app-tree>
+    ></howell-district-tree>
   </div>
   <div class="hw-tree-right">
     <div class="hw-simple-title">{{ title }}</div>

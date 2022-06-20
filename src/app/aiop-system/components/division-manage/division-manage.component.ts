@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { DivisionManageBusiness } from './division-manage.business';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
+import { DistrictTreeComponent } from 'src/app/common/components/district-tree/district-tree.component';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -80,7 +80,7 @@ export class DivisionManageComponent implements OnInit {
     );
   }
 
-  @ViewChild('tree') tree?: TreeComponent;
+  @ViewChild('tree') tree?: DistrictTreeComponent;
 
   get Id() {
     return this.myForm.get('Id') as FormControl;

@@ -8,7 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
+import { DistrictTreeComponent } from 'src/app/common/components/district-tree/district-tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
@@ -25,8 +25,7 @@ import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-fi
   styleUrls: ['./division-station-tree-mult-filter.component.less'],
 })
 export class DivisionStationTreeMultFilterComponent
-  implements OnInit, OnChanges
-{
+  implements OnInit, OnChanges {
   @Input()
   userType = UserResourceType.County;
   @Output()
@@ -34,10 +33,10 @@ export class DivisionStationTreeMultFilterComponent
   @Output()
   maxSelection: number = Number.MAX_VALUE;
 
-  constructor(private local: LocalStorageService) {}
+  constructor(private local: LocalStorageService) { }
 
   @ViewChild('tree')
-  tree?: TreeComponent;
+  tree?: DistrictTreeComponent;
   HorizontalAlign = HorizontalAlign;
   align: HorizontalAlign = HorizontalAlign.left;
   expand = false;

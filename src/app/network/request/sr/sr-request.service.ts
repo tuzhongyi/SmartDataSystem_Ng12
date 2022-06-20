@@ -75,33 +75,24 @@ export class SRRequestService {
 
 
 
-  // create(item: SRServer) {
-  //   return this.requestService.post<SRServer, HowellResponse<SRServer>>(
-  //     AIOPSRServiceUrl.create(),
-  //     SaveModel.toModel(item, SaveModel.formMustField.srServer)
-  //   );
-  // }
-
-  // get(id: string) {
-  //   return this.requestService.get<SRServer>(AIOPSRServiceUrl.get(id));
-  // }
-
-  // set(item: SRServer) {
-  //   return this.requestService.put<SRServer, HowellResponse<SRServer>>(
-  //     AIOPSRServiceUrl.edit(item.Id),
-  //     item
-  //   );
-  // }
-
-  // del(id: string) {
-  //   return this.requestService.delete<SRServer>(AIOPSRServiceUrl.del(id));
-  // }
+  create(item: SRServer) {
+    return this.type.post(SRServersURL.basic, item);
+  }
+  get(id: string) {
+    return this.type.get(SRServersURL.item(id));
+  }
+  set(item: SRServer) {
+    return this.type.post(SRServersURL.item(item.Id), item)
+  }
 
   list() {
     return this.type.get(SRServersURL.list());
   }
 
-  // sync(id: string) {
-  //   return this.requestService.post<any>(AIOPSRServiceUrl.sync(id));
-  // }
+  sync(id: string) {
+    return this.type.post(SRServersURL.sync(id))
+  }
+  delete(id: string) {
+    return this.type.delete(SRServersURL.item(id))
+  }
 }

@@ -27,7 +27,7 @@ import { CameraModelManageComponent } from './components/camera-model-manage/cam
 import { AiModelListComponent } from './components/ai-model-list/ai-model-list.component';
 import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
-import { SrServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
+import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
 
 const routes: Routes = [
   {
@@ -138,7 +138,7 @@ const routes: Routes = [
               },
               {
                 path: 'srserver-manage',
-                component: SrServerManageComponent,
+                component: SRServerManageComponent,
                 data: {
                   breadcrumb: '流转服务管理',
                 },

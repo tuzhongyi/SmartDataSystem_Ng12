@@ -7,7 +7,7 @@ import { TabTitleComponent } from './tab-title/tab-title.component';
 import { TableComponent } from './table/table.component';
 import { TimeComponent } from './time/time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
-import { TreeComponent } from './tree/tree.component';
+import { DistrictTreeComponent } from './district-tree/district-tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 
 import { WindowComponent } from './window-control/window.component';
@@ -38,7 +38,7 @@ import { InputSearchOptionsComponent } from './input-search-options/input-search
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
-  TreeComponent,
+  DistrictTreeComponent,
   TimeComponent,
   AccountInfoComponent,
   AccountOperationComponent,

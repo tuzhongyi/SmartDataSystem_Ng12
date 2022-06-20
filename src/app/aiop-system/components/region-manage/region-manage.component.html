@@ -15,16 +15,16 @@
     <div class="search-wrapper">
       <howell-simple-search
         placeHolder="名称"
-        (searchEvent)="searchEventHandler($event)"
+        (searchEvent)="searchEvent($event)"
       ></howell-simple-search>
     </div>
 
     <div class="tree-container">
-      <app-tree
+      <howell-district-tree
         #tree
         (selectTreeNode)="selectTreeNode($event)"
         [(holdStatus)]="holdStatus"
-      ></app-tree>
+      ></howell-district-tree>
     </div>
   </div>
 

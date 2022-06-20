@@ -13,7 +13,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
 @Injectable()
-export class TreeService {
+export class DistrictTreeService {
 
   private _model = TreeServiceEnum.Division;
 

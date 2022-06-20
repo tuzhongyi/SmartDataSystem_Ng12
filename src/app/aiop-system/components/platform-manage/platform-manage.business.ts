@@ -11,10 +11,11 @@ export class PlatformManageBusiness {
   ) {
 
   }
-  async loadData(pageIndex: number, pageSize: number = 9) {
+  async loadData(condition: string = '', pageIndex: number = 1, pageSize: number = 9,) {
     let params = new GetPlatformsParams();
     params.PageIndex = Math.max(1, pageIndex);
     params.PageSize = Math.max(1, pageSize);// pageSize不会小于1
+    params.Name = condition;
 
     let records = await this._platformRequest.list(params);
     let models = this._converter.iterateToModel(records.Data)
@@ -33,4 +34,18 @@ export class PlatformManageBusiness {
     return await this._platformRequest.delete(id)
   }
 
+  async search(condition: string = '') {
+    let params = new GetPlatformsParams();
+    params.Name = condition;
+
+    let records = await this._platformRequest.list(params);
+    let models = this._converter.iterateToModel(records.Data)
+
+    let res: PagedList<PlatformManageModel> = {
+      Page: records.Page,
+      Data: models,
+    };
+
+    return res;
+  }
 }

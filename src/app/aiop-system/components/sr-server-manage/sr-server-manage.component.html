@@ -1,18 +1,18 @@
 <div class="srserver-manage">
   <ng-container *ngIf="showDialog">
-    <!-- <howell-platform-operate
+    <howell-sr-server-operate
       [state]="state"
-      [platformId]="platformId"
+      [serverId]="serverId"
       (closeEvent)="closeForm($event)"
-    ></howell-platform-operate> -->
+    ></howell-sr-server-operate>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">
-    <!-- <howell-confirm-dialog
-      (dialogMsg)="dialogMsgEvent($event)"
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
       [dialogModel]="dialogModel"
     >
-    </howell-confirm-dialog> -->
+    </howell-confirm-dialog>
   </ng-container>
 
   <div class="hw-table-detail">
@@ -43,8 +43,8 @@
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
         [tableSelectModel]="tableSelectModel"
+        [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
-        (selectTableCell)="selectTableCell($event)"
       ></app-table>
     </div>
     <div class="hw-table-footer">

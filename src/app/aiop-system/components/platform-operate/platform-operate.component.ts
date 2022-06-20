@@ -169,8 +169,10 @@ export class PlatformOperateComponent implements OnInit {
       model.State = this._platform?.State ?? 0;;
       model.CreateTime = this._platform!.CreateTime ?? new Date().toISOString();
 
+      console.log('_platform', this._platform)
       let res = await this._business.updatePlatform(model);
       if (res) {
+        console.log('res', res)
         this._toastrService.success('编辑成功')
         this.closeEvent.emit(true)
       }

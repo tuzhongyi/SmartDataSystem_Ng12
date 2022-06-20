@@ -12,17 +12,17 @@ export class ConfirmDialogComponent implements OnInit {
 
   @Input() dialogModel: ConfirmDialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
-  @Output() dialogMsg = new EventEmitter<ConfirmDialogEnum>();
+  @Output() dialogMsgEvent = new EventEmitter<ConfirmDialogEnum>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
   confirmClick() {
-    this.dialogMsg.emit(ConfirmDialogEnum.confirm)
+    this.dialogMsgEvent.emit(ConfirmDialogEnum.confirm)
   }
   cancelClick() {
-    this.dialogMsg.emit(ConfirmDialogEnum.cancel)
+    this.dialogMsgEvent.emit(ConfirmDialogEnum.cancel)
 
   }
 

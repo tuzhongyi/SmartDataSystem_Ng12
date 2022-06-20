@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
+import { DistrictTreeComponent } from 'src/app/common/components/district-tree/district-tree.component';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Deduplication } from 'src/app/global/tool/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -35,7 +35,7 @@ export class GarbageStationManageComponent implements OnInit {
   }
 
 
-  @ViewChild('tree') tree?: TreeComponent;
+  @ViewChild('tree') tree?: DistrictTreeComponent;
 
 
   constructor(private _toastrService: ToastrService,) {

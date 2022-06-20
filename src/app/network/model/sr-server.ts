@@ -11,7 +11,7 @@ export class SRServer {
   /**密码(可选) */
   Password?: string;
   /**地址列表(可选) */
-  Addresses?: SRServerAddress[];
+  Addresses!: SRServerAddress[];
 }
 
 /**服务器地址列表 */

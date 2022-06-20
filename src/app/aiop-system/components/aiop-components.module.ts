@@ -30,7 +30,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
 import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
-import { SrServerManageComponent } from './sr-server-manage/sr-server-manage.component';
+import { SRServerManageComponent } from './sr-server-manage/sr-server-manage.component';
+import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -53,7 +54,8 @@ import { SrServerManageComponent } from './sr-server-manage/sr-server-manage.com
     ProxyManageComponent,
     IllegalDropRecord2Component,
     PlatformOperateComponent,
-    SrServerManageComponent
+    SRServerManageComponent,
+    SRServerOperateComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
   providers: [],

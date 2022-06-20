@@ -188,7 +188,7 @@ export class PaginatorComponent
     let index = +this.jumpToIndex;
     if (index == 0 || index > this.getNumberOfPages()) {
       this._toastrService.error('无效的页码', '', {
-        positionClass: 'toast-top-right',
+        // positionClass: 'toast-top-right',
       });
       return;
     } else {

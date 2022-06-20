@@ -1,7 +1,12 @@
 export class SRServerManageModel {
-  Name: string = ''
-  ProtocolType: string = ''
-  Username: string = ''
-  Password: string = ''
+  constructor(
+    public Id: string = '',
+    public Name: string = '',
+    public ProtocolType: string = '',
+    public Username: string = '',
+    public Password: string = ''
+  ) {
+
+  }
 
 }

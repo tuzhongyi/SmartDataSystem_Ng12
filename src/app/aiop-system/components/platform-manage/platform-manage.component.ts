@@ -26,6 +26,7 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 export class PlatformManageComponent implements OnInit {
   /**private */
   private _pageSize = 9;
+  private _condition = '';
 
 
   dataSource: PlatformManageModel[] = [];
@@ -45,6 +46,7 @@ export class PlatformManageComponent implements OnInit {
 
   state = FormState.none;
   platformId = '';
+
 
   get enableDelBtn() {
     return !!this.selectedRows.length
@@ -88,16 +90,20 @@ export class PlatformManageComponent implements OnInit {
   }
   async init() {
     let res = await this._business.loadData(
+      this._condition,
       this.pageIndex,
       this._pageSize
     );
 
-
     this.page = res.Page;
     this.dataSubject.next(res.Data)
   }
-  tableSelect(type: TableSelectStateEnum) {
-    console.log(type);
+
+  selectTableRow(rows: PlatformManageModel[]) {
+    this.selectedRows = rows;
+  }
+  tableSelectEvent(type: TableSelectStateEnum) {
+    // console.log(type);
     if (this.table) {
       switch (type) {
         case TableSelectStateEnum.All:
@@ -114,10 +120,6 @@ export class PlatformManageComponent implements OnInit {
       }
     }
   }
-  selectTableRow(rows: PlatformManageModel[]) {
-    this.selectedRows = rows;
-  }
-
 
   pageEvent(pageInfo: PageEvent) {
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
@@ -140,6 +142,10 @@ export class PlatformManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
+  async searchEvent(condition: string) {
+    this._condition = condition;
+    this.init();
+  }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;
     if (status == ConfirmDialogEnum.confirm) {

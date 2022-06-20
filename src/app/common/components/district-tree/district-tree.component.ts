@@ -16,17 +16,17 @@ import { Deduplication } from 'src/app/global/tool/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
-import { TreeService } from './tree.service';
+import { DistrictTreeService } from './district-tree.service';
 
 @Component({
-  selector: 'app-tree',
-  templateUrl: './tree.component.html',
-  styleUrls: ['./tree.component.less'],
+  selector: 'howell-district-tree',
+  templateUrl: './district-tree.component.html',
+  styleUrls: ['./district-tree.component.less'],
   providers: [
-    TreeService,
+    DistrictTreeService,
   ],
 })
-export class TreeComponent implements OnInit {
+export class DistrictTreeComponent implements OnInit {
 
   private _nodeIconType = new Map([
     [UserResourceType.City, 'howell-icon-earth'],
@@ -176,7 +176,7 @@ export class TreeComponent implements OnInit {
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
-  constructor(private _treeService: TreeService, private _toastrService: ToastrService,) {
+  constructor(private _treeService: DistrictTreeService, private _toastrService: ToastrService,) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,

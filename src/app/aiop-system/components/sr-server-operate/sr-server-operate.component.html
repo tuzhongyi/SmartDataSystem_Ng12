@@ -1,0 +1,70 @@
+<div class="sr-server-operate hw-popped-container">
+  <div class="hw-popped-wrapper">
+    <div class="hw-simple-title">{{ title }}</div>
+    <form class="hw-form direction-row" [formGroup]="myForm">
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 名称 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Name"
+          />
+        </div>
+      </div>
+
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 协议类型 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <select
+            class="hw-form-control hw-form-select"
+            formControlName="ProtocolType"
+          >
+            <option value="Howell">Howell</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 用户名 </span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Username"
+          />
+        </div>
+      </div>
+
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 密码 </span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Password"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="hw-middle-btn-group">
+      <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+        <i class="howell-icon-Check"></i>
+      </button>
+
+      <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+        <i class="howell-icon-Close"></i>
+      </button>
+    </div>
+  </div>
+</div>

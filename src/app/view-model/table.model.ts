@@ -1,9 +1,10 @@
+export type TableRowModel = any;
 
-export class TableColumnModel<T = any> {
+export class TableColumnModel {
   constructor(
     public columnDef: string = '', // 唯一
     public header: string = '',
-    public cell: (element: T) => string,
+    public cell: (row: TableRowModel) => string,
     public flexBasis?: string,
     public stopPropogate?: boolean,
     public sortHeader?: boolean,
@@ -11,8 +12,6 @@ export class TableColumnModel<T = any> {
   ) { }
 }
 
-
-export type TableRowModel = any;
 
 export interface TableCellEvent {
   column: TableColumnModel;

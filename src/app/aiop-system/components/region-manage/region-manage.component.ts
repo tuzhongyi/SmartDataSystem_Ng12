@@ -33,7 +33,7 @@ export class RegionManageComponent implements OnInit {
   deleteBtnClick() {
 
   }
-  searchEventHandler(condition: string) {
+  searchEvent(condition: string) {
 
   }
 

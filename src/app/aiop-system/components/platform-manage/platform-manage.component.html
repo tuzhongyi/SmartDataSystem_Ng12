@@ -9,7 +9,7 @@
 
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog
-      (dialogMsg)="dialogMsgEvent($event)"
+      (dialogMsgEvent)="dialogMsgEvent($event)"
       [dialogModel]="dialogModel"
     >
     </howell-confirm-dialog>
@@ -34,7 +34,10 @@
       </div>
 
       <div class="search-wrapper">
-        <howell-simple-search placeHolder="名称"></howell-simple-search>
+        <howell-simple-search
+          placeHolder="名称"
+          (searchEvent)="searchEvent($event)"
+        ></howell-simple-search>
       </div>
     </div>
     <div class="hw-table-container">
@@ -49,7 +52,7 @@
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        <app-table-select (tableSelectEvent)="tableSelectEvent($event)">
         </app-table-select>
       </div>
 
