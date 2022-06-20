@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 import { SelectEnum } from "src/app/enum/select.enum";
 import { IllegalDropRecordModel } from "src/app/view-model/illegal-drop-record.model";
-import { TableColumnModel } from "src/app/view-model/table.model";
+import { TableCellEvent, TableColumnModel, TableOperateModel } from "src/app/view-model/table.model";
 import { IllegalDropEventRecordConf } from "./illegal-drop-record.config";
 import { IllegalDropRecordBusiness } from "./illegal-drop-record.business";
 import { TableSelectStateEnum } from "src/app/enum/table-select-state.enum";
@@ -36,6 +36,7 @@ export class IllegalDropRecordComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
   selectedRows: IllegalDropRecordModel[] = [];
+  tableOperates: TableOperateModel[] = []
 
 
   @ViewChild(TableComponent) table?: TableComponent;
@@ -43,7 +44,15 @@ export class IllegalDropRecordComponent implements OnInit {
 
 
   constructor(private _business: IllegalDropRecordBusiness) {
-
+    this.tableOperates.push(new TableOperateModel('sync', ['fa', 'fa-retweet', 'operate-icon'], '同步', this._editRow))
+    this.tableOperates.push(
+      new TableOperateModel(
+        'edit',
+        ['howell-icon-modification', 'operate-icon'],
+        '编辑',
+        this._editRow)
+    )
+    this.tableOperates.push(new TableOperateModel('delete', ['howell-icon-delete-bin', 'operate-icon'], '删除', this._editRow))
   }
 
   ngOnInit(): void {
@@ -64,7 +73,7 @@ export class IllegalDropRecordComponent implements OnInit {
   }
 
   tableSelect(type: TableSelectStateEnum) {
-    console.log(type);
+    // console.log(type);
     if (this.table) {
       switch (type) {
         case TableSelectStateEnum.All:
@@ -91,6 +100,29 @@ export class IllegalDropRecordComponent implements OnInit {
     this.selectedRows = rows;
   }
 
+  selectTableCell({ column, row, event }: TableCellEvent) {
+    console.log(column, row, event);
+    // 特殊处理
+    if (column.columnDef == 'ImageUrl' || column.columnDef == 'Operation') {
+      // console.log(event);
+      let path = event.composedPath();
+      // console.log(path);
+      let flag = path.some((el) => {
+        if (el instanceof HTMLElement) {
+          return (
+            el.nodeName.toLocaleLowerCase() == 'div' &&
+            (el.classList.contains('picture') ||
+              el.classList.contains('operate'))
+          );
+        }
+        return false;
+      });
+      if (flag) {
+        console.log('自定义处理');
+        event.stopPropagation();
+      }
+    }
+  }
   sortDataEvent(sort: Sort) {
     if (!sort.active || sort.direction == '') {
       this._sortedDataSource = Array.from(this._curDataSource);
@@ -136,6 +168,9 @@ export class IllegalDropRecordComponent implements OnInit {
       return e.name === 'RangeError';
     }
     return false;
+  }
+  private _editRow() {
+    console.log('eieieie')
   }
 
 

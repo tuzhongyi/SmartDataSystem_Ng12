@@ -33,6 +33,7 @@
     [class.zoomIn]="zoomIn"
     [trackBy]="trackBy"
   >
+    <!--普通内容 -->
     <ng-container
       *ngFor="let model of columnModel"
       [matColumnDef]="model.columnDef"
@@ -50,6 +51,7 @@
       </mat-cell>
     </ng-container>
 
+    <!-- 操作列内容 -->
     <ng-container matColumnDef="Operation">
       <mat-cell *matCellDef="let row">
         <div>
@@ -58,10 +60,12 @@
             [class]="operate.classNames"
             [id]="operate.id"
             [title]="operate.title"
+            (click)="$event.stopPropagation(); operate.callBack(row, $event)"
           ></i>
         </div>
       </mat-cell>
     </ng-container>
+
     <mat-row
       *matRowDef="let row; columns: displayedColumns"
       (click)="clickRow(row)"

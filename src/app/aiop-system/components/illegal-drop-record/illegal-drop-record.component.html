@@ -8,8 +8,10 @@
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
         [zoomIn]="true"
+        [tableOperates]="tableOperates"
         [tableSelectModel]="tableSelectModel"
         (selectTableRow)="selectTableRow($event)"
+        (selectTableCell)="selectTableCell($event)"
         (sortDataEvent)="sortDataEvent($event)"
       ></app-table>
     </div>

@@ -2,10 +2,9 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { MatTable } from "@angular/material/table";
-import { DomSanitizer } from "@angular/platform-browser";
 import { BehaviorSubject } from "rxjs";
 import { SelectEnum } from "src/app/enum/select.enum";
-import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModels } from "src/app/view-model/table.model";
+import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } from "src/app/view-model/table.model";
 import { TableDataSource } from "./data-source";
 
 @Component({
@@ -14,28 +13,17 @@ import { TableDataSource } from "./data-source";
   styleUrls: ['./table.component.less'],
 })
 export class TableComponent implements OnInit {
-  private selection!: SelectionModel<TableRowModels>;
+  private selection!: SelectionModel<TableRowModel>;
 
   dataSource = new TableDataSource([]);
 
-
-  highLight = (model: TableRowModels) => {
+  highLight = (model: TableRowModel) => {
     return this.selection.isSelected(model);
   };
 
-
-  @ViewChild('table') table!: MatTable<any>;
-
-
-  @Input()
-  tableOperates: TableOperateModel[] = []
-
-  @Input('tableSelectModel')
-  selectModel = SelectEnum.Single;
-
   // 组件更新数据时，自动更新 table 数据
   @Input()
-  dataSubject = new BehaviorSubject<TableRowModels>([]);
+  dataSubject = new BehaviorSubject<TableRowModel>([]);
 
   // 表格的元数据配置
   @Input()
@@ -45,10 +33,21 @@ export class TableComponent implements OnInit {
   @Input()
   displayedColumns: string[] = [];
 
+  // hover是否放大
   @Input() zoomIn = false
 
-  @Output() selectTableRow: EventEmitter<TableRowModels[]> = new EventEmitter<
-    TableRowModels[]
+
+  // 操作列
+  @Input()
+  tableOperates: TableOperateModel[] = []
+
+
+  // 单选表 || 多选表
+  @Input('tableSelectModel')
+  selectModel = SelectEnum.Single;
+
+  @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
+    TableRowModel[]
   >();
 
   @Output() sortDataEvent: EventEmitter<Sort> = new EventEmitter<Sort>();
@@ -56,28 +55,35 @@ export class TableComponent implements OnInit {
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
 
-  // 如果没有 sanitizer,则传入的id会丢失
-  constructor(public sanitizer: DomSanitizer) {
+  @ViewChild('table') table!: MatTable<any>;
+
+  constructor() {
 
   }
 
   ngOnInit(): void {
+    // 如果传入操作数据，则添加操作列
     if (this.tableOperates.length) this.displayedColumns.push('Operation')
+
     if (this.selectModel == SelectEnum.Single) {
-      this.selection = new SelectionModel<TableRowModels>();
+      this.selection = new SelectionModel<TableRowModel>();
     } else {
-      this.selection = new SelectionModel<TableRowModels>(true);
+      this.selection = new SelectionModel<TableRowModel>(true);
     }
     this.selection.changed.subscribe((change) => {
       this.selectTableRow.emit(change.source.selected);
     });
 
     this.dataSubject.subscribe(data => {
-      // 由于新数据引用不同
       let selected = this.selection.selected;
+      // 页数据切换时，清除状态
+      this.selection.clear();
+
+      // 当前页数据更新时，保留状态
       for (let i = 0; i < selected.length; i++) {
         let item = selected[i];
         let d = data.find((d: any) => d.Id == item.Id);
+        // 用新对象替换原对象，维持高亮状态
         if (d) {
           this.selection.deselect(item);
           this.selection.select(d)
@@ -87,15 +93,16 @@ export class TableComponent implements OnInit {
       this.dataSource.setData(data)
     })
   }
-  clickRow(row: TableRowModels) {
+  clickRow(row: TableRowModel) {
     this.selection.toggle(row);
   }
-  clickCell(column: TableColumnModel, row: TableRowModels, event: Event) {
+  clickCell(column: TableColumnModel, row: TableRowModel, event: Event) {
     this.selectTableCell.emit({
       column,
       row,
       event,
     } as TableCellEvent);
+    // 点击图片时用到
     if (column.stopPropogate) {
       event.stopPropagation();
     }
@@ -123,7 +130,7 @@ export class TableComponent implements OnInit {
   /**
    * 本地的删除，业务上会删除后重新请求数据
    */
-  deleteRows(rows: TableRowModels[]) {
+  deleteRows(rows: TableRowModel[]) {
 
     this.selection.deselect(...rows);
 

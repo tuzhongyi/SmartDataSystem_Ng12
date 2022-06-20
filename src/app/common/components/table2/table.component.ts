@@ -19,7 +19,7 @@ import { SelectEnum } from 'src/app/enum/select.enum';
 import {
   TableCellEvent,
   TableColumnModel,
-  TableRowModels,
+  TableRowModel,
 
 } from 'src/app/view-model/table.model';
 
@@ -29,12 +29,12 @@ import {
   styleUrls: ['./table.component.less'],
 })
 export class Table2Component implements OnInit, OnChanges, AfterViewInit {
-  private selection!: SelectionModel<TableRowModels>;
+  private selection!: SelectionModel<TableRowModel>;
 
-  dataSource: TableRowModels[] = [];
+  dataSource: TableRowModel[] = [];
 
   @Input()
-  dataSubject = new BehaviorSubject<TableRowModels[]>([]);
+  dataSubject = new BehaviorSubject<TableRowModel[]>([]);
 
   @ViewChild('table') table!: MatTable<any>;
 
@@ -47,8 +47,8 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
   @Input('tableSelectModel')
   selectModel = SelectEnum.Single;
 
-  @Output() selectTableRow: EventEmitter<TableRowModels[]> = new EventEmitter<
-    TableRowModels[]
+  @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
+    TableRowModel[]
   >();
 
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
@@ -56,7 +56,7 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
 
   @Output() sortTableHeader: EventEmitter<Sort> = new EventEmitter<Sort>();
 
-  highLight = (model: TableRowModels) => {
+  highLight = (model: TableRowModel) => {
     return this.selection.isSelected(model);
   };
 
@@ -65,9 +65,9 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
   ngOnInit(): void {
     // console.log(this.selectModel);
     if (this.selectModel == SelectEnum.Single) {
-      this.selection = new SelectionModel<TableRowModels>();
+      this.selection = new SelectionModel<TableRowModel>();
     } else {
-      this.selection = new SelectionModel<TableRowModels>(true);
+      this.selection = new SelectionModel<TableRowModel>(true);
     }
     this.selection.changed.subscribe((change) => {
       this.selectTableRow.emit(change.source.selected);
@@ -84,7 +84,7 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
       }
     });
   }
-  clickRow(row: TableRowModels) {
+  clickRow(row: TableRowModel) {
     this.selection.toggle(row);
   }
   clickCell(column: TableColumnModel, event: Event) {

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { PlatformManageModel } from 'src/app/view-model/platform-manage.model';
-import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } from 'src/app/view-model/table.model';
 import { PlatformManageConf } from './platform-manage.config';
 import { PlatformManageBusiness } from './platform-manage.business';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -56,9 +56,30 @@ export class PlatformManageComponent implements OnInit {
 
 
   constructor(private _business: PlatformManageBusiness, private _toastrService: ToastrService) {
-    this.tableOperates.push(new TableOperateModel('sync', ['fa', 'fa-retweet', 'operate-icon'], '同步'))
-    this.tableOperates.push(new TableOperateModel('edit', ['howell-icon-modification', 'operate-icon'], '编辑'))
-    this.tableOperates.push(new TableOperateModel('delete', ['howell-icon-delete-bin', 'operate-icon'], '删除'))
+    this.tableOperates.push(
+      new TableOperateModel(
+        'sync',
+        ['fa', 'fa-retweet', 'operate-icon'],
+        '同步',
+        this._clickSyncBtn.bind(this)
+      )
+    )
+    this.tableOperates.push(
+      new TableOperateModel(
+        'edit',
+        ['howell-icon-modification', 'operate-icon'],
+        '编辑',
+        this._clickEditBtn.bind(this)
+      )
+    )
+    this.tableOperates.push(
+      new TableOperateModel(
+        'delete',
+        ['howell-icon-delete-bin', 'operate-icon'],
+        '删除',
+        this._clickDelBtn.bind(this)
+      )
+    )
   }
 
 
@@ -96,27 +117,8 @@ export class PlatformManageComponent implements OnInit {
   selectTableRow(rows: PlatformManageModel[]) {
     this.selectedRows = rows;
   }
-  async selectTableCell({ column, row, event }: TableCellEvent) {
-    // console.log(column, row, event);
-    // // 特殊处理
-    if (column.columnDef == 'Operation') {
-      let target = event.target as HTMLElement;
-      if (target.id == 'sync') {
-        console.log('sync')
-      } else if (target.id == 'edit') {
-        // console.log('edit')
-        this.showDialog = true;
-        this.state = FormState.edit;
-        this.platformId = row.Id;
-      } else if (target.id == 'delete') {
 
-        this.willBeDeleted = [row];
-        this.showConfirm = true;
-        this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
 
-      }
-    }
-  }
   pageEvent(pageInfo: PageEvent) {
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
@@ -133,7 +135,6 @@ export class PlatformManageComponent implements OnInit {
     this.showDialog = true;
   }
   deleteBtnClick() {
-    // this._deleteRows(this.selectedRows)
     this.willBeDeleted = [...this.selectedRows]
     this.showConfirm = true;
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
@@ -158,5 +159,24 @@ export class PlatformManageComponent implements OnInit {
       this.table.deleteRows(rows);
       this.init();
     }
+  }
+  private async _clickSyncBtn(row: PlatformManageModel, event: Event) {
+    console.log('sync')
+    let res = await this._business.sync(row.Id)
+    if (res) {
+      this._toastrService.success('同步成功');
+    }
+  }
+  private _clickEditBtn(row: PlatformManageModel, event: Event) {
+    console.log('edit')
+    this.showDialog = true;
+    this.state = FormState.edit;
+    this.platformId = row.Id;
+  }
+  private _clickDelBtn(row: PlatformManageModel, event: Event) {
+    console.log('delete')
+    this.willBeDeleted = [row];
+    this.showConfirm = true;
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 }

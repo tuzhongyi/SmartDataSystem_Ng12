@@ -21,20 +21,15 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
 
 
   create(item: HwPlatform) {
-    let url = PlatformsURL.basic;
-    return this.type.post(url, item)
+    return this.type.post(PlatformsURL.basic, item)
   }
 
   list(params: GetPlatformsParams = new GetPlatformsParams()) {
-
-    let url = PlatformsURL.list();
-    let data = classToPlain(params);
-    return this.type.paged(url, data);
+    return this.type.paged(PlatformsURL.list(), params);
   }
 
   get(id: string): Promise<HwPlatform> {
-    let url = PlatformsURL.item(id);
-    return this.type.get(url);
+    return this.type.get(PlatformsURL.item(id));
   }
 
   set(item: HwPlatform) {
@@ -45,12 +40,9 @@ export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
     return this.type.delete(PlatformsURL.item(id))
   }
   protocol(): Promise<any> {
-    let url = PlatformsURL.protocols();
-    return this.type.get(url);;
+    return this.type.get(PlatformsURL.protocols());;
   }
-  sync() {
-
+  sync(id: string) {
+    return this.type.post(PlatformsURL.sync(id))
   }
-
-
 }
