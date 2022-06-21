@@ -36,6 +36,7 @@ import { UserResourceType } from '../enum/user-resource-type.enum';
 import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
+import { Region } from '../network/model/region';
 import { DivisionManageModel } from '../view-model/division-manange.model';
 import { NestTreeNode } from '../view-model/nest-tree-node.model';
 
@@ -43,7 +44,8 @@ type TreeSourceModel =
   | DivisionNode
   | Division
   | DivisionManageModel
-  | GarbageStation;
+  | GarbageStation
+  | Region
 
 @Injectable({
   providedIn: 'root',
@@ -60,6 +62,8 @@ export class TreeConverter
       return this._fromDivisionManage(source);
     } else if (source instanceof GarbageStation) {
       return this._fromGarbageStation(source);
+    } else if (source instanceof Region) {
+      return this._fromRegion(source)
     }
     throw new Error('Method not implemented.');
   }
@@ -209,6 +213,11 @@ export class TreeConverter
       false,
       item.DivisionId,
     );
+    node.rawData = item;
+    return node;
+  }
+  private _fromRegion(item: Region) {
+    const node = new NestTreeNode(item.Id, item.Name, item.Description, item.RegionType)
     node.rawData = item;
     return node;
   }

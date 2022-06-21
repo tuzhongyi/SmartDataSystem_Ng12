@@ -35,6 +35,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
+import { RegionTreeComponent } from './region-tree/region-tree.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -73,4 +74,5 @@ export const CUSTOM_COMPONENTS = [
   ConfirmDialogComponent,
   SimpleSearchComponent,
   Table2Component,
+  RegionTreeComponent
 ];

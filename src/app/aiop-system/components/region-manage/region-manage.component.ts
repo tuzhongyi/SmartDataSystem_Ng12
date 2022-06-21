@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
+import { RegionManageBusiness } from './region-manage.business';
 
 @Component({
   selector: 'howell-region-manage',
   templateUrl: './region-manage.component.html',
-  styleUrls: ['./region-manage.component.less']
+  styleUrls: ['./region-manage.component.less'],
+  providers: [
+    RegionManageBusiness
+  ]
 })
 export class RegionManageComponent implements OnInit {
   state: FormState = FormState.none;
@@ -23,9 +27,14 @@ export class RegionManageComponent implements OnInit {
   });
   addPlaceHolder = '';
 
-  constructor() { }
+  constructor(private _business: RegionManageBusiness) { }
 
   ngOnInit(): void {
+    this.init();
+  }
+  async init() {
+    let res = await this._business.loadData();
+    // console.log(res)
   }
   addBtnClick() {
 

@@ -16,14 +16,14 @@ import { Deduplication } from 'src/app/global/tool/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
-import { DistrictTreeService } from './district-tree.service';
+import { DistrictTreeBusiness } from './district-tree.service';
 
 @Component({
   selector: 'howell-district-tree',
   templateUrl: './district-tree.component.html',
   styleUrls: ['./district-tree.component.less'],
   providers: [
-    DistrictTreeService,
+    DistrictTreeBusiness,
   ],
 })
 export class DistrictTreeComponent implements OnInit {
@@ -176,7 +176,7 @@ export class DistrictTreeComponent implements OnInit {
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
-  constructor(private _treeService: DistrictTreeService, private _toastrService: ToastrService,) {
+  constructor(private _treeBusiness: DistrictTreeBusiness, private _toastrService: ToastrService,) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -199,7 +199,7 @@ export class DistrictTreeComponent implements OnInit {
 
     });
 
-    this._nestedNodeMap = this._treeService.nestedNodeMap;
+    this._nestedNodeMap = this._treeBusiness.nestedNodeMap;
 
     this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
   }
@@ -235,8 +235,8 @@ export class DistrictTreeComponent implements OnInit {
 
     });
 
-    this._treeService.model = this.serviceModel;
-    this._treeService.depthIsEnd = this.depthIsEnd
+    this._treeBusiness.model = this.serviceModel;
+    this._treeBusiness.depthIsEnd = this.depthIsEnd
 
     // 如果showDepth没有设置或者比depth大，则用depth的值
     if (this.showDepth == -1 || this.showDepth > this.depth)
@@ -269,7 +269,7 @@ export class DistrictTreeComponent implements OnInit {
     this._flatNodeMap.clear();
     this.treeControl.collapseAll();
 
-    const nodes = await this._treeService.initialize(
+    const nodes = await this._treeBusiness.initialize(
       this.resourceType,
       this.depth
     );
@@ -326,7 +326,7 @@ export class DistrictTreeComponent implements OnInit {
       const nestedNode = this._nestedNodeMap.get(node.id);
       // 仅拉取子节点数据一次
       if (nestedNode && !nestedNode.childrenLoaded) {
-        let nodes = await this._treeService.loadChildren(nestedNode);
+        let nodes = await this._treeBusiness.loadChildren(nestedNode);
         // // console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
         nestedNode.childrenChange.next(nodes);
@@ -441,7 +441,7 @@ export class DistrictTreeComponent implements OnInit {
   async searchNode(condition: string) {
     this.selection.clear();
     let nodes: NestTreeNode[] = []
-    nodes = await this._treeService.searchNode(condition);
+    nodes = await this._treeBusiness.searchNode(condition);
 
     if (nodes.length) {
       this.dataChange.next(nodes);

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { MediumUrl } from '../../url/aiop/Medium/medium.url';
+import { MediumUrl } from '../../url/aiop/medium/medium.url';
 
 @Injectable({
   providedIn: 'root',
