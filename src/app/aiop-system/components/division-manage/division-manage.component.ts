@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { DivisionManageBusiness } from './division-manage.business';
-import { DistrictTreeComponent } from 'src/app/common/components/district-tree/district-tree.component';
+import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
@@ -14,6 +14,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { Deduplication } from 'src/app/global/tool/deduplication';
+import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 
 
 @Component({
@@ -25,7 +26,7 @@ export class DivisionManageComponent implements OnInit {
 
 
   /*****public ********/
-  treeServiceModel = TreeServiceEnum.Division;
+  treeServiceModel = DistrictTreeEnum.Division;
   treeSelectModel = SelectEnum.Single;
   currentNode?: FlatTreeNode;
   resourceType: UserResourceType = UserResourceType.None;
@@ -40,6 +41,7 @@ export class DivisionManageComponent implements OnInit {
   addPlaceHolder = '';
   holdStatus = false;
   showDialog = false;
+  businessProvider = TreeBusinessEnum.District;
 
 
   get title() {
@@ -80,7 +82,7 @@ export class DivisionManageComponent implements OnInit {
     );
   }
 
-  @ViewChild('tree') tree?: DistrictTreeComponent;
+  @ViewChild('tree') tree?: TreeComponent;
 
   get Id() {
     return this.myForm.get('Id') as FormControl;

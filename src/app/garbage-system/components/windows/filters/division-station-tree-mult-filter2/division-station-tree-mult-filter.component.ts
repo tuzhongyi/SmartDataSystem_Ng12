@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -23,7 +23,7 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   align: HorizontalAlign = HorizontalAlign.left;
   expand = true;
 
-  treeServiceModel: TreeServiceEnum = TreeServiceEnum.Division;
+  treeServiceModel: TreeBusinessEnum = TreeBusinessEnum.Division;
   treeSelectModel: SelectEnum = SelectEnum.Multiple
 
   selected: Array<Division | GarbageStation> = [];
@@ -31,10 +31,10 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userType) {
       if (this.userType === UserResourceType.Station) {
-        this.treeServiceModel = TreeServiceEnum.Station;
+        this.treeServiceModel = TreeBusinessEnum.Station;
       }
       else {
-        this.treeServiceModel = TreeServiceEnum.Division;
+        this.treeServiceModel = TreeBusinessEnum.Division;
       }
     }
   }

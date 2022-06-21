@@ -11,5 +11,8 @@ export abstract class RegionsURL {
   static list() {
     return `${this.basic}/List`;
   }
+  static trees() {
+    return `${this.basic}/Trees`;
+  }
 
 }

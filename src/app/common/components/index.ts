@@ -7,7 +7,7 @@ import { TabTitleComponent } from './tab-title/tab-title.component';
 import { TableComponent } from './table/table.component';
 import { TimeComponent } from './time/time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
-import { DistrictTreeComponent } from './district-tree/district-tree.component';
+import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 
 import { WindowComponent } from './window-control/window.component';
@@ -35,11 +35,10 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
-import { RegionTreeComponent } from './region-tree/region-tree.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
-  DistrictTreeComponent,
+  TreeComponent,
   TimeComponent,
   AccountInfoComponent,
   AccountOperationComponent,
@@ -74,5 +73,4 @@ export const CUSTOM_COMPONENTS = [
   ConfirmDialogComponent,
   SimpleSearchComponent,
   Table2Component,
-  RegionTreeComponent
 ];

@@ -21,3 +21,15 @@ export class Region {
   /**更新事件 */
   UpdateTime!: Date | string;
 }
+
+export class RegionNode {
+  Id!: string;
+  Name!: string;
+  RegionType!: number;
+  Description?: string;
+  Nodes?: RegionNode[]
+}
+export class RegionTree {
+  Name!: string;
+  Nodes?: RegionNode[];
+}

@@ -1,92 +1,85 @@
-<div class="region-manage">
-  <div class="hw-tree-list">
+<div class="region-manage hw-tree-model">
+  <ng-container *ngIf="showDialog">
+    <howell-confirm-dialog (dialogMsgEvent)="dialogMsgEvent($event)">
+    </howell-confirm-dialog>
+  </ng-container>
+  <div class="hw-tree-left">
     <div class="hw-simple-title">安保区域</div>
     <div class="hw-normal-btn-group">
-      <button class="hw-btn hw-green-btn" (click)="addBtnClick()">
+      <button
+        class="hw-green-btn"
+        (click)="addBtnClick()"
+        [disabled]="!enableAddBtn"
+      >
         <i class="howell-icon-plus"></i>
         添加
       </button>
-      <button class="hw-btn hw-red-btn" (click)="deleteBtnClick()">
+      <button
+        class="hw-red-btn"
+        (click)="deleteBtnClick()"
+        [disabled]="!enableDelBtn"
+      >
         <i class="howell-icon-delete-bin"></i>
         删除
       </button>
+      <button
+        class="hw-blue-btn"
+        (click)="editBtnClick()"
+        [disabled]="!enableEditBtn"
+      >
+        <i class="howell-icon-move2"></i>
+        编辑
+      </button>
     </div>
 
-    <div class="tree-container">
-      <howell-district-tree
-        #tree
-        (selectTreeNode)="selectTreeNode($event)"
-        [(holdStatus)]="holdStatus"
-      ></howell-district-tree>
-    </div>
+    <howell-tree
+      #tree
+      [treeBusinessProvider]="businessProvider"
+      (selectTreeNode)="selectTreeNode($event)"
+      [holdStatus]="holdStatus"
+    ></howell-tree>
   </div>
 
-  <div class="region-detail">
+  <div class="hw-tree-right">
     <div class="hw-simple-title">{{ title }}</div>
 
-    <form class="form bold-scrollbar" [formGroup]="myForm">
-      <div class="form-group">
+    <form class="hw-form bold-scrollbar" [formGroup]="myForm">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 区划ID </span>
-          <span class="form-icon" *ngIf="state == FormState.add">*</span>
+          <span class="hw-form-label"> 名称 </span>
+          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
         </div>
         <div class="content">
           <input
             type="text"
-            class="form-control form-input"
-            formControlName="Id"
-            [placeholder]="addPlaceHolder"
-          />
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="title">
-          <span class="form-label"> 区划名称 </span>
-          <span class="form-icon" *ngIf="state == FormState.add">*</span>
-        </div>
-        <div class="content">
-          <input
-            type="text"
-            class="form-control form-input"
+            class="hw-form-control hw-form-input"
             formControlName="Name"
           />
         </div>
       </div>
 
-      <div class="form-group">
+      <div class="hw-form-group">
         <div class="title">
-          <span class="form-label"> 上级区划名称 </span>
-        </div>
-        <div class="content">
-          <input
-            type="text"
-            class="form-control form-input"
-            formControlName="ParentName"
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <div class="title">
-          <span class="form-label"> 区划描述 </span>
+          <span class="hw-form-label"> 描述 </span>
         </div>
         <div class="content">
           <textarea
-            class="form-control form-textarea"
-            cols="30"
-            rows="7"
+            class="hw-form-control hw-form-textarea"
             formControlName="Description"
           ></textarea>
         </div>
       </div>
 
-      <div class="form-group">
-        <div class="btns" [hidden]="state == FormState.none">
-          <button class="btn hw-green-m-btn" type="button" (click)="onSubmit()">
+      <div
+        class="hw-form-group"
+        [style.display]="state == FormState.none ? 'none' : ''"
+      >
+        <div class="hw-middle-btn-group">
+          <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
             <i class="howell-icon-Check"></i>
           </button>
 
-          <button class="btn hw-gray-m-btn" type="button" (click)="onReset()">
+          <button class="hw-gray-m-btn" type="button" (click)="onReset()">
             <i class="howell-icon-Close"></i>
           </button>
         </div>

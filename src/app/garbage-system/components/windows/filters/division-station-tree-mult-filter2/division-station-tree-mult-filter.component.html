@@ -19,11 +19,11 @@
     [class.left]="align == HorizontalAlign.left"
     *ngIf="expand"
   >
-    <howell-district-tree
+    <howell-tree
       [treeServiceModel]="treeServiceModel"
       [treeSelectModel]="treeSelectModel"
       [resourceType]="userType"
       (selectTreeNode)="selectTreeNode($event)"
-    ></howell-district-tree>
+    ></howell-tree>
   </div>
 </div>

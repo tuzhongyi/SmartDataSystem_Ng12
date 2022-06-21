@@ -8,7 +8,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';

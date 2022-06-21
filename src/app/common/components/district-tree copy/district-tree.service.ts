@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
@@ -15,12 +15,12 @@ import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 @Injectable()
 export class DistrictTreeBusiness {
 
-  private _model = TreeServiceEnum.Division;
+  private _model = TreeBusinessEnum.Division;
 
   public nestedNodeMap = new Map<string, NestTreeNode>();
   public depthIsEnd = false;
 
-  public set model(val: TreeServiceEnum) {
+  public set model(val: TreeBusinessEnum) {
     this._model = val;
   }
   get model() {
@@ -60,7 +60,7 @@ export class DistrictTreeBusiness {
     // 厢房树需要给居委会添加子节点
     if (
       type == UserResourceType.Committees &&
-      this.model == TreeServiceEnum.Station
+      this.model == TreeBusinessEnum.Station
     ) {
       nodes.forEach((node) => {
         node.hasChildren = true;
@@ -118,7 +118,7 @@ export class DistrictTreeBusiness {
       this._register(children);
       if (
         node.type == UserResourceType.County &&
-        this.model == TreeServiceEnum.Station
+        this.model == TreeBusinessEnum.Station
       ) {
         children.forEach((node) => (node.hasChildren = true));
       }
@@ -137,10 +137,10 @@ export class DistrictTreeBusiness {
     } else {
       let data = await this._searchDivisionData(condition);
       let divisionNodes = this._converter.recurseToNestTreeNode(data);
-      if (this.model == TreeServiceEnum.Division) {
+      if (this.model == TreeBusinessEnum.Division) {
         nodes = divisionNodes;
       }
-      else if (this.model == TreeServiceEnum.Station) {
+      else if (this.model == TreeBusinessEnum.Station) {
         let stations = await this._searchStationData(condition);
         // 所有祖先区划
         let allDivisions: Division[] = [];

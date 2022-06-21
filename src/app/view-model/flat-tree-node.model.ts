@@ -13,7 +13,7 @@ export class FlatTreeNode {
     public expandable = false,
     public parentId: string | null = null,
     public iconType: string = 'howell-icon-map5',
-    public type: UserResourceType = UserResourceType.None,
+    public type: number = 0,
     public parentNode: FlatTreeNode | null = null,
     public rawData?: any,
   ) { }

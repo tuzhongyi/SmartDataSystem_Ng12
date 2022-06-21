@@ -31,13 +31,14 @@
         编辑
       </button>
     </div>
-    <howell-district-tree
+    <howell-tree
       #tree
       [treeSelectModel]="treeSelectModel"
       [treeServiceModel]="treeServiceModel"
+      [treeBusinessProvider]="businessProvider"
       (selectTreeNode)="selectTreeNode($event)"
       [(holdStatus)]="holdStatus"
-    ></howell-district-tree>
+    ></howell-tree>
   </div>
   <div class="hw-tree-right">
     <div class="hw-simple-title">{{ title }}</div>

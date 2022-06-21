@@ -8,10 +8,11 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { DistrictTreeComponent } from 'src/app/common/components/district-tree/district-tree.component';
+import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
+import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/global/service/local-storage.service';
 import { Division } from 'src/app/network/model/division.model';
@@ -36,7 +37,7 @@ export class DivisionStationTreeMultFilterComponent
   constructor(private local: LocalStorageService) { }
 
   @ViewChild('tree')
-  tree?: DistrictTreeComponent;
+  tree?: TreeComponent;
   HorizontalAlign = HorizontalAlign;
   align: HorizontalAlign = HorizontalAlign.left;
   expand = false;
@@ -48,9 +49,9 @@ export class DivisionStationTreeMultFilterComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.userType) {
       if (this.userType === UserResourceType.Station) {
-        this.config.tree.treeServiceModel = TreeServiceEnum.Station;
+        this.config.tree.treeServiceModel = DistrictTreeEnum.Station;
       } else {
-        this.config.tree.treeServiceModel = TreeServiceEnum.Division;
+        this.config.tree.treeServiceModel = DistrictTreeEnum.Division;
       }
       switch (this.userType) {
         case UserResourceType.Committees:

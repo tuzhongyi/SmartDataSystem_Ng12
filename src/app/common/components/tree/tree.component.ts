@@ -1,39 +1,36 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
-import { TreeServiceEnum } from 'src/app/enum/tree-service.enum';
+import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Deduplication } from 'src/app/global/tool/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
-import { DistrictTreeBusiness } from './district-tree.service';
+import { TreeBusinessFactory } from './business/tree-business.factory';
+import { TreeBusinessInterface } from './interface/tree-business.interface';
+import { TreeBusinessProviders } from './tokens/tree-business.token';
 
 @Component({
-  selector: 'howell-district-tree',
-  templateUrl: './district-tree.component.html',
-  styleUrls: ['./district-tree.component.less'],
+  selector: 'howell-tree',
+  templateUrl: './tree.component.html',
+  styleUrls: ['./tree.component.less'],
   providers: [
-    DistrictTreeBusiness,
+    TreeBusinessFactory,
+    ...TreeBusinessProviders
   ],
 })
-export class DistrictTreeComponent implements OnInit {
-
-  private _nodeIconType = new Map([
-    [UserResourceType.City, 'howell-icon-earth'],
-    [UserResourceType.County, 'howell-icon-map5'],
-    [UserResourceType.Committees, 'howell-icon-map5'],
-    [UserResourceType.Station, 'howell-icon-garbage'],
-  ]);
+export class TreeComponent implements OnInit {
 
   private _flatNodeMap = new Map<string, FlatTreeNode>();
   private _transformer = (nestNode: NestTreeNode, level: number) => {
@@ -51,7 +48,7 @@ export class DistrictTreeComponent implements OnInit {
       nestNode.description,
       nestNode.hasChildren,
       nestNode.parentId,
-      this._nodeIconType.get(nestNode.type),
+      nestNode.iconType,
       nestNode.type,
     );
 
@@ -76,6 +73,8 @@ export class DistrictTreeComponent implements OnInit {
   // 要屏蔽的搜索字符串
   private _searchGuards: string[] = ['街道', '路居委会'];
   private _condition: string | Symbol = Symbol.for('DIVISION-TREE');
+
+  private _business!: TreeBusinessInterface;
 
   /**
    *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
@@ -104,6 +103,17 @@ export class DistrictTreeComponent implements OnInit {
     }
     return false;
   };
+
+
+  @Input('treeServiceModel')
+  serviceModel = DistrictTreeEnum.Division; // 区划树或厢房树
+
+  @Input('treeSelectModel')
+  selectModel = SelectEnum.Single;// 单选或多选
+
+  @Input('treeBusinessProvider')
+  businessProvider = TreeBusinessEnum.District
+
 
   // 请求数据的深度
   private _depth: number = 0;
@@ -134,12 +144,6 @@ export class DistrictTreeComponent implements OnInit {
   // 强制最大深度节点为叶节点
   @Input()
   depthIsEnd = false;
-
-  @Input('treeServiceModel')
-  serviceModel = TreeServiceEnum.Division; // 区划树或厢房树
-
-  @Input('treeSelectModel')
-  selectModel = SelectEnum.Single;// 单选或多选
 
   // 最高区划等级
   private _userResourceType: UserResourceType = UserResourceType.City;
@@ -176,7 +180,7 @@ export class DistrictTreeComponent implements OnInit {
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
 
-  constructor(private _treeBusiness: DistrictTreeBusiness, private _toastrService: ToastrService,) {
+  constructor(private _businessFactory: TreeBusinessFactory, private _toastrService: ToastrService) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -199,12 +203,12 @@ export class DistrictTreeComponent implements OnInit {
 
     });
 
-    this._nestedNodeMap = this._treeBusiness.nestedNodeMap;
-
     this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
   }
   ngOnInit() {
+    this._business = this._businessFactory.createBusiness(this.businessProvider);
 
+    this._nestedNodeMap = this._business.nestedNodeMap;
 
     if (this.selectModel == SelectEnum.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
@@ -235,8 +239,8 @@ export class DistrictTreeComponent implements OnInit {
 
     });
 
-    this._treeBusiness.model = this.serviceModel;
-    this._treeBusiness.depthIsEnd = this.depthIsEnd
+    this._business.model = this.serviceModel;
+    this._business.depthIsEnd = this.depthIsEnd
 
     // 如果showDepth没有设置或者比depth大，则用depth的值
     if (this.showDepth == -1 || this.showDepth > this.depth)
@@ -269,14 +273,17 @@ export class DistrictTreeComponent implements OnInit {
     this._flatNodeMap.clear();
     this.treeControl.collapseAll();
 
-    const nodes = await this._treeBusiness.initialize(
+    const nodes = await this._business.initialize(
       this.resourceType,
       this.depth
     );
-    // console.log('树节点: ', nodes)
+    console.log('树节点: ', nodes)
 
     this.dataChange.next(nodes);
 
+    if (nodes.length == 1 && this.businessProvider == TreeBusinessEnum.Region) {
+      this.defaultIds.push(nodes[0].id)
+    }
     // 设置预选节点
     this._setDefaultNodes()
 
@@ -295,7 +302,6 @@ export class DistrictTreeComponent implements OnInit {
         this.treeControl.expand(flatNode)
         this._expandNodeRecursively(node.childrenChange.value)
       } else {
-        // console.log('break', node)
         break;
       }
     }
@@ -326,7 +332,7 @@ export class DistrictTreeComponent implements OnInit {
       const nestedNode = this._nestedNodeMap.get(node.id);
       // 仅拉取子节点数据一次
       if (nestedNode && !nestedNode.childrenLoaded) {
-        let nodes = await this._treeBusiness.loadChildren(nestedNode);
+        let nodes = await this._business.loadChildren(nestedNode);
         // // console.log('chidren', nodes);
         nestedNode.childrenLoaded = true;
         nestedNode.childrenChange.next(nodes);
@@ -342,7 +348,6 @@ export class DistrictTreeComponent implements OnInit {
     }
   }
   singleSelectNode(node: FlatTreeNode) {
-
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;
@@ -390,9 +395,12 @@ export class DistrictTreeComponent implements OnInit {
     if (node.parentId) {
       let parentNode = this._nestedNodeMap.get(node.parentId);
       if (parentNode) {
-        node.type = EnumHelper.GetResourceChildType(parentNode.type);
+        if (parentNode.childrenChange.value.length == 0) {
+          parentNode.childrenLoaded = true;
+        }
         parentNode.hasChildren = true;
         parentNode.childrenChange.value.push(node);
+
       }
     } else {
       this.dataChange.value.push(node);
@@ -427,6 +435,14 @@ export class DistrictTreeComponent implements OnInit {
       if (node) {
         this.selection.deselect(node);
         this._flatNodeMap.delete(id);
+        if (node.parentId) {
+          let parentNode = this._flatNodeMap.get(node.parentId);
+          if (parentNode) {
+            this.selection.select(parentNode)
+          }
+        }
+
+
       }
     }
   }
@@ -441,7 +457,7 @@ export class DistrictTreeComponent implements OnInit {
   async searchNode(condition: string) {
     this.selection.clear();
     let nodes: NestTreeNode[] = []
-    nodes = await this._treeBusiness.searchNode(condition);
+    nodes = await this._business.searchNode(condition);
 
     if (nodes.length) {
       this.dataChange.next(nodes);

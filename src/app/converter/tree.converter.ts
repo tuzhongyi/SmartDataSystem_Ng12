@@ -32,11 +32,12 @@
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { EnumHelper } from '../enum/enum-helper';
+import { RegionType } from '../enum/region-type.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
-import { Region } from '../network/model/region';
+import { Region, RegionNode } from '../network/model/region';
 import { DivisionManageModel } from '../view-model/division-manange.model';
 import { NestTreeNode } from '../view-model/nest-tree-node.model';
 
@@ -46,6 +47,25 @@ type TreeSourceModel =
   | DivisionManageModel
   | GarbageStation
   | Region
+  | RegionNode
+
+
+
+const DivisionNodeIconType = new Map([
+  [UserResourceType.City, 'howell-icon-earth'],
+  [UserResourceType.County, 'howell-icon-map5'],
+  [UserResourceType.Committees, 'howell-icon-map5'],
+  [UserResourceType.Station, 'howell-icon-garbage'],
+]);
+
+
+
+const RegionNodeIconType = new Map([
+  [RegionType.None, 'howell-icon-earth'],
+  [RegionType.Normal, 'howell-icon-map5'],
+  [RegionType.Leaf, 'howell-icon-map5'],
+]);
+
 
 @Injectable({
   providedIn: 'root',
@@ -64,6 +84,8 @@ export class TreeConverter
       return this._fromGarbageStation(source);
     } else if (source instanceof Region) {
       return this._fromRegion(source)
+    } else if (source instanceof RegionNode) {
+      return this._fromRegionNode(source);
     }
     throw new Error('Method not implemented.');
   }
@@ -85,6 +107,16 @@ export class TreeConverter
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       if (item instanceof DivisionNode) {
+        const node = this.Convert(item);
+        node.parentId = parentId;
+        res.push(node);
+        if (item.Nodes && item.Nodes.length > 0) {
+          let children = this.recurseToNestTreeNode(item.Nodes, node.id);
+          node.childrenChange.value.push(...children);
+          node.hasChildren = true;
+        }
+      }
+      else if (item instanceof RegionNode) {
         const node = this.Convert(item);
         node.parentId = parentId;
         res.push(node);
@@ -123,6 +155,8 @@ export class TreeConverter
         // 动态用Map,静态用Array
         for (let h of hanged.values()) {
           if (h.parentId == node.id) {
+            node.childrenLoaded = true;
+            node.hasChildren = true;
             node.childrenChange.value.push(h);
             hanged.delete(h.id);
           }
@@ -133,11 +167,14 @@ export class TreeConverter
             // 当前已经有 parentNode 记录
             let parentNode = m.get(node.parentId)!;
             parentNode.hasChildren = true;
+            parentNode.childrenLoaded = true;
             parentNode.childrenChange.value.push(node);
           } else if (hanged.has(node.parentId)) {
             let parentNode = hanged.get(node.parentId)!;
             parentNode.hasChildren = true;
+            parentNode.childrenLoaded = true;
             parentNode.childrenChange.value.push(node);
+
           } else {
             // parentNode还没有创建
             hanged.set(node.id, node);
@@ -148,6 +185,7 @@ export class TreeConverter
         }
       }
     }
+
 
     return res;
   }
@@ -181,6 +219,7 @@ export class TreeConverter
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       item.Nodes.length > 0,
       parentId,
+      DivisionNodeIconType.get(EnumHelper.ConvertDivisionToUserResource(item.DivisionType)),
       true,
     );
     node.rawData = item;
@@ -195,6 +234,7 @@ export class TreeConverter
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       !item.IsLeaf,
       item.ParentId,
+      DivisionNodeIconType.get(EnumHelper.ConvertDivisionToUserResource(item.DivisionType)),
     );
     node.rawData = item;
     return node;
@@ -212,12 +252,35 @@ export class TreeConverter
       UserResourceType.Station,
       false,
       item.DivisionId,
+      DivisionNodeIconType.get(UserResourceType.Station),
     );
     node.rawData = item;
     return node;
   }
   private _fromRegion(item: Region) {
-    const node = new NestTreeNode(item.Id, item.Name, item.Description, item.RegionType)
+    const node = new NestTreeNode(
+      item.Id,
+      item.Name,
+      item.Description,
+      item.RegionType,
+      false,
+      item.ParentId,
+      RegionNodeIconType.get(item.RegionType)
+    )
+    node.rawData = item;
+    return node;
+  }
+  private _fromRegionNode(item: RegionNode, parentId: string | null = null) {
+    const node = new NestTreeNode(
+      item.Id,
+      item.Name,
+      item.Description,
+      item.RegionType,
+      item.Nodes && item.Nodes.length > 0,
+      parentId,
+      RegionNodeIconType.get(item.RegionType),
+      true
+    )
     node.rawData = item;
     return node;
   }

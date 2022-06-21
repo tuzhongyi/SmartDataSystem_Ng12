@@ -11,12 +11,12 @@
     [ngStyle]="style"
     *ngIf="expand"
   >
-    <howell-district-tree
+    <howell-tree
       [treeServiceModel]="treeServiceModel"
       [treeSelectModel]="treeSelectModel"
       [resourceType]="type"
       (selectTreeNode)="selectTreeNode($event)"
       [depth]="1"
-    ></howell-district-tree>
+    ></howell-tree>
   </div>
 </div>
