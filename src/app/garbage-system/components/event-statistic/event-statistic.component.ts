@@ -16,7 +16,7 @@ import {
 } from 'echarts';
 import { ResizedEvent } from 'angular-resize-event';
 import { Subscription } from 'rxjs';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { EventStatisticBusiness } from './event-statistic.business';

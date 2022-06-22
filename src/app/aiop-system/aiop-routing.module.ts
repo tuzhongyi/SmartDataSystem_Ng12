@@ -24,7 +24,7 @@ import { RegionManageComponent } from './components/region-manage/region-manage.
 import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
-import { AiModelListComponent } from './components/ai-model-list/ai-model-list.component';
+import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
 import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
 import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
@@ -196,10 +196,10 @@ const routes: Routes = [
             path: 'ai',
             children: [
               {
-                path: 'ai-model-list',
-                component: AiModelListComponent,
+                path: 'ai-model-manage',
+                component: AIModelManageComponent,
                 data: {
-                  breadcrumb: 'AI模型列表',
+                  breadcrumb: 'AI模型管理',
                 },
               },
             ],

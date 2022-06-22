@@ -6,7 +6,7 @@ import {
   SubscriptionService,
 } from 'src/app/common/interfaces/subscribe.interface';
 import { RankConverter } from 'src/app/converter/rank.converter';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {

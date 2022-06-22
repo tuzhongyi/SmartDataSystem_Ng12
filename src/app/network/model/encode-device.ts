@@ -3,7 +3,7 @@ import { DeviceType } from "src/app/enum/device-type.enum";
 import { OnlineStatus } from "src/app/enum/online-status.enum";
 import { ProtocolType } from "src/app/enum/protocol-type.enum";
 import { TransType } from "src/app/enum/trans-type.enum";
-import { Resource } from "./Resource.model";
+import { Resource } from "./resource.model";
 
 // /**编码设备信息 */
 export class EncodeDevice extends Resource {

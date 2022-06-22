@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 
 export interface ISubscription {
   subscription?: Subscription;

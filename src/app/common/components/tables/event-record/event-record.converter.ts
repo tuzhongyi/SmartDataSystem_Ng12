@@ -11,7 +11,7 @@ import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';

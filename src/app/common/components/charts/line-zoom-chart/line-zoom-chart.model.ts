@@ -1,6 +1,6 @@
 import {
   IllegalDropEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';

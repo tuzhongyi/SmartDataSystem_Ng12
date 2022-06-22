@@ -5,9 +5,9 @@
  * @Last Modified time: 2021-11-09 09:44:40
  */
 import { Component, OnInit } from '@angular/core';
-import { IBusiness } from 'src/app/business/Ibusiness';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
+import { IService } from 'src/app/business/Ibusiness';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionListBusiness } from './division-list.business';
@@ -19,7 +19,7 @@ import { DivisionListBusiness } from './division-list.business';
   providers: [
     {
       provide: DivisionListBusiness,
-      useFactory: function (business: IBusiness<Division>) {
+      useFactory: function (business: IService<Division>) {
         return new DivisionListBusiness(business);
       },
       deps: [DivisionRequestService],
@@ -35,7 +35,7 @@ export class DivisionListComponent implements OnInit {
   constructor(
     private divisionListBusiness: DivisionListBusiness,
     private storeService: StoreService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadData();

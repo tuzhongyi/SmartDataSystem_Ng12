@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';

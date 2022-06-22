@@ -62,7 +62,7 @@ const DivisionNodeIconType = new Map([
 
 const RegionNodeIconType = new Map([
   [RegionType.None, 'howell-icon-earth'],
-  [RegionType.Normal, 'howell-icon-map5'],
+  [RegionType.Normal, 'howell-icon-earth'],
   [RegionType.Leaf, 'howell-icon-map5'],
 ]);
 

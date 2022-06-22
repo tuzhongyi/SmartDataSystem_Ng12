@@ -11,9 +11,9 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { plainToClass } from 'class-transformer';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { SessionStorageService } from 'src/app/global/service/session-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
 import CryptoJS from 'crypto-js';
@@ -78,7 +78,7 @@ export class AuthorizationService implements CanActivate {
       try {
         let result = await this.login(url);
         if (result instanceof User) {
-          
+
           return this._router.parseUrl(`/${RoutePath.garbage_system}`)
         }
       } catch (error) {
@@ -122,9 +122,9 @@ export class AuthorizationService implements CanActivate {
           UserUrl.login(username)
         );
         this._sessionStorageService.challenge = challenge;
-        return axios(this._config).then((res: AxiosResponse<User>) =>{
+        return axios(this._config).then((res: AxiosResponse<User>) => {
           let result = plainToClass(User, res.data)
-          this._storeUserInfo(result, password , result.Id, result.Resources ?? []);
+          this._storeUserInfo(result, password, result.Id, result.Resources ?? []);
           return result;
         }
         );
@@ -135,7 +135,7 @@ export class AuthorizationService implements CanActivate {
 
   private _storeUserInfo(
     user: User,
-    password:string,
+    password: string,
     userId: string,
     userResource: Array<UserResource>
   ) {

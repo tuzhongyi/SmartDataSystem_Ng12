@@ -6,7 +6,7 @@ import { Division } from 'src/app/network/model/division.model';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';

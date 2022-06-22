@@ -1,4 +1,4 @@
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { Page } from 'src/app/network/model/page_list.model';
 import { IConverter, IPromiseConverter } from '../../interfaces/converter.interface';
 

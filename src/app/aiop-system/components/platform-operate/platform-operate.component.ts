@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { HwPlatform } from 'src/app/network/model/platform.model';
+import { Platform } from 'src/app/network/model/platform.model';
 import { Protocol } from 'src/app/network/model/protocol.model';
 import { PlatformManageModel } from 'src/app/view-model/platform-manage.model';
 import { PlatformOperateBusiness } from './platform-operate.business';
@@ -17,7 +17,7 @@ import { PlatformOperateBusiness } from './platform-operate.business';
 })
 export class PlatformOperateComponent implements OnInit {
 
-  private _platform?: HwPlatform;
+  private _platform?: Platform;
 
   myForm = new FormGroup({
     Name: new FormControl('', Validators.required),
@@ -144,7 +144,7 @@ export class PlatformOperateComponent implements OnInit {
       return;
     }
 
-    let model = new HwPlatform();
+    let model = new Platform();
     model.Name = this.Name.value;
     model.ProtocolType = this.ProtocolType.value;
     model.Username = this.Username.value;

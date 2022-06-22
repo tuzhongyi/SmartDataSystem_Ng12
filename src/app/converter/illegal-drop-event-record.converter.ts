@@ -28,7 +28,7 @@
  */
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
-import { IllegalDropEventRecord } from '../network/model/event-record.model';
+import { IllegalDropEventRecord } from '../network/model/garbage-event-record.model';
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
 import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';

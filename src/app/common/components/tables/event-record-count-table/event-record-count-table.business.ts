@@ -5,8 +5,8 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,

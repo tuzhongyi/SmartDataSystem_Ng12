@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { TheDayTime } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { StoreService } from 'src/app/global/service/store.service';
-import { Language } from 'src/app/global/tool/language';
+import { StoreService } from 'src/app/common/service/store.service';
+import { Language } from 'src/app/common/tools/language';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';

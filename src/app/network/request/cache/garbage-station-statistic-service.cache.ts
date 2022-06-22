@@ -1,11 +1,11 @@
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { IService } from 'src/app/business/Ibusiness';
 import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetGarbageStationStatisticNumbersParams } from '../garbage-station/garbage-station-request.params';
 import { ServiceCache } from './service.cache';
 
 export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageStationNumberStatistic> {
-  constructor(key: string, service: IBusiness<GarbageStationNumberStatistic>) {
+  constructor(key: string, service: IService<GarbageStationNumberStatistic>) {
     super(key, service, 1 * 20 * 1000, false);
   }
 
@@ -22,7 +22,7 @@ export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageSta
       if (data) {
         return data;
       }
-    } catch (error) {}
+    } catch (error) { }
     return super.get(id);
   }
 
@@ -55,7 +55,7 @@ export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageSta
           return super.getPaged(result, args);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     return this.service.list!(args).then((result) => {
       result.Data.forEach((item) => {

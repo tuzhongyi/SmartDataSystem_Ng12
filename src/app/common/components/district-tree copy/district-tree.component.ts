@@ -12,7 +12,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Deduplication } from 'src/app/global/tool/deduplication';
+import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 

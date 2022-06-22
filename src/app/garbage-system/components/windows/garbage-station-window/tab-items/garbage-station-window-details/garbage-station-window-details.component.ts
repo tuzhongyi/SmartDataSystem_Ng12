@@ -14,7 +14,7 @@ import { ExportType } from 'src/app/enum/export-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import {

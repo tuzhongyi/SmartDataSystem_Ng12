@@ -1,6 +1,6 @@
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { EventDataObject } from 'src/app/network/model/event-record.model';
+import { EventDataObject } from 'src/app/network/model/garbage-event-record.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 

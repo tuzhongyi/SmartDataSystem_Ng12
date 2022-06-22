@@ -4,7 +4,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import {

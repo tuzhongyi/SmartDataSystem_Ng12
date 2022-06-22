@@ -20,7 +20,7 @@ import { interval, Subscription } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';

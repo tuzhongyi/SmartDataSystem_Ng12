@@ -9,7 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoutePath } from 'src/app/app-routing.path';
 import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { PasswordToChangeService } from '../password-to-change.service';
 
 @Component({

@@ -24,9 +24,9 @@ import { RoutePath } from '../app-routing.path';
 import { EnumHelper } from '../enum/enum-helper';
 import { StaticDataRole } from '../enum/role-static-data.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
-import { LocalStorageService } from '../global/service/local-storage.service';
-import { SessionStorageService } from '../global/service/session-storage.service';
-import { StoreService } from '../global/service/store.service';
+import { LocalStorageService } from '../common/service/local-storage.service';
+import { SessionStorageService } from '../common/service/session-storage.service';
+import { StoreService } from '../common/service/store.service';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 

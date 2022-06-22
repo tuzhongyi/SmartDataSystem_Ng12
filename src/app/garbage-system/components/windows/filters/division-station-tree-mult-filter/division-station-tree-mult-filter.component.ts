@@ -14,7 +14,7 @@ import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';

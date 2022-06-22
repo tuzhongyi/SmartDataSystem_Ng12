@@ -2,9 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { SessionStorageService } from 'src/app/global/service/session-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { AccountOperationDisplay } from './account-operation.model';
 
 @Component({

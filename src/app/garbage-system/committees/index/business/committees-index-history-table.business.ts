@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableTypes } from '../../histroy-table/committees-history-table.model';
 import { CommitteesWindowBussiness } from './committees-window.business';

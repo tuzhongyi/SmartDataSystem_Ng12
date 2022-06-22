@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
-import { CameraState } from 'src/app/enum/camera_state.enum';
-import { CameraType } from 'src/app/enum/camera_type.enum';
+import { CameraState } from 'src/app/enum/camera-state.enum';
+import { CameraType } from 'src/app/enum/camera-type.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import {
   DeviceStateCountType,

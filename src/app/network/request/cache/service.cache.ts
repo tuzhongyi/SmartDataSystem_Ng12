@@ -1,4 +1,4 @@
-import { IBusiness, IData } from 'src/app/business/Ibusiness';
+import { IService, IData } from 'src/app/business/Ibusiness';
 import { Page, PagedList } from '../../model/page_list.model';
 import { IParams, PagedParams } from '../IParams.interface';
 import { AppCache } from './app-cache';
@@ -14,7 +14,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
 
   constructor(
     protected key: string,
-    protected service: IBusiness<T>,
+    protected service: IService<T>,
     private timeout = 1000 * 60 * 30,
     private init = true
   ) {

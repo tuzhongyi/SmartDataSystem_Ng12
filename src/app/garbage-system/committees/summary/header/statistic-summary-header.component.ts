@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { StatisticSummaryViewModel } from '../statistic-summary.model';
 import { StatisticSummaryHeaderBusiness } from './statistic-summary-header.business';
 import { StatisticSummaryHeaderConverter } from './statistic-summary-header.converter';

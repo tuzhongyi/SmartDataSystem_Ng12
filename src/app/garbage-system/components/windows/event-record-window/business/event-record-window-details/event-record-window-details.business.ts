@@ -6,7 +6,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';

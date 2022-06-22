@@ -1,6 +1,5 @@
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
-import { EventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';

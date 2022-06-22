@@ -8,7 +8,7 @@ import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 
 export interface EventRecordComparisonOptions {

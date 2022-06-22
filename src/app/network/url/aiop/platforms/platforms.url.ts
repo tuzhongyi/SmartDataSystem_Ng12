@@ -1,10 +1,13 @@
 import { BaseAiopUrl } from '../../base.url';
 
 export abstract class PlatformsURL {
-  static get basic(): string {
+  protected static get basic(): string {
     return `${BaseAiopUrl}/Platforms`;
   }
 
+  static create() {
+    return this.basic;
+  }
   static item(id: string) {
     return `${this.basic}/${id}`;
   }

@@ -6,7 +6,7 @@ import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from '../../model/event-record.model';
+} from '../../model/garbage-event-record.model';
 import { PagedList } from '../../model/page_list.model';
 import { EventUrl } from '../../url/garbage/event.url';
 import {

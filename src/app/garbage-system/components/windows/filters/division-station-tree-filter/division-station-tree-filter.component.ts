@@ -19,7 +19,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { IService } from 'src/app/business/Ibusiness';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
 import { EventNumberStatistic } from '../../model/event-number-statistic.model';
@@ -78,7 +78,7 @@ export class GridCellRequestService {
 }
 
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -88,7 +88,7 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   list(
     gridCellId: string,
     params: GetGridCellEventNumbersParams
@@ -99,7 +99,7 @@ class EventNumbersHistoryService {
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -109,7 +109,7 @@ class StatisticService {
   }
 }
 class StatisticNumberService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   list(
     params: GetGridCellStatisticNumbersParams
@@ -136,7 +136,7 @@ class StatisticNumberService {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   list(
     params: GetGridCellStatisticNumbersParamsV2
   ): Promise<GridCellNumberStatisticV2[]> {

@@ -9,11 +9,11 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
-import { Deduplication } from 'src/app/global/tool/deduplication';
+import { Deduplication } from 'src/app/common/tools/deduplication';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 
 

@@ -22,7 +22,7 @@ import {
   RankResourceType,
 } from 'src/app/view-model/rank.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
@@ -32,7 +32,7 @@ import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-sta
 import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/user.model';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IllegalMixintoDataResource } from './illegal-mixinto-rank.converter';

@@ -5,7 +5,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
-import { GarbageDropEventRecord } from 'src/app/network/model/event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';

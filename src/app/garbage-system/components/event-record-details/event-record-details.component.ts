@@ -6,8 +6,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
-import { Language } from 'src/app/global/tool/language';
+import { StoreService } from 'src/app/common/service/store.service';
+import { Language } from 'src/app/common/tools/language';
 
 @Component({
   selector: 'app-event-record-details',

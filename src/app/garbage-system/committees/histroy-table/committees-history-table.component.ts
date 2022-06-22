@@ -11,13 +11,13 @@ import {
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { StoreService } from 'src/app/global/service/store.service';
-import { Language } from 'src/app/global/tool/language';
+import { StoreService } from 'src/app/common/service/store.service';
+import { Language } from 'src/app/common/tools/language';
 import { Division } from 'src/app/network/model/division.model';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import {

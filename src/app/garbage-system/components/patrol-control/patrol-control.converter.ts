@@ -5,7 +5,7 @@ import { ImageControlConverter } from 'src/app/converter/image-control.converter
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ControlClass, PatrolControlModel } from './patrol-control.model';

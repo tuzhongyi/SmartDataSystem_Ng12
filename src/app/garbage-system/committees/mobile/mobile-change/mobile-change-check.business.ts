@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { MobileBindingService } from '../mobile-binding.service';
 import { MobileViewModel } from '../mobile.model';
 

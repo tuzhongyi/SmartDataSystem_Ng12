@@ -2,7 +2,7 @@ import { formatDate } from '@angular/common';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { StatisticSummaryLineChartViewModel } from './statistic-summary-line-chart.model';
 

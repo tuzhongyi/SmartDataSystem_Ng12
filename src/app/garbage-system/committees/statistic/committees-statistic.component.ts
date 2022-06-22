@@ -12,8 +12,8 @@ import { CommitteesStatisticViewModel } from './committees-statistic.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
-import { Language } from 'src/app/global/tool/language';
-import { StoreService } from 'src/app/global/service/store.service';
+import { Language } from 'src/app/common/tools/language';
+import { StoreService } from 'src/app/common/service/store.service';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 
 @Component({

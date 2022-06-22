@@ -55,9 +55,9 @@
       "id": "ai",
       "children": [
         {
-          "title": "AI模型列表",
-          "id": "ai-model-list",
-          "path": "/aiop/aiop-manage/system-setting/ai/ai-model-list"
+          "title": "AI模型管理",
+          "id": "ai-model-manage",
+          "path": "/aiop/aiop-manage/system-setting/ai/ai-model-manage"
         }
       ]
     },

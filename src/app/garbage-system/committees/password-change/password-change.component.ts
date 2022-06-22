@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { StoreService } from 'src/app/global/service/store.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
 
 import { PasswordChangeService } from './password-change.service';
 

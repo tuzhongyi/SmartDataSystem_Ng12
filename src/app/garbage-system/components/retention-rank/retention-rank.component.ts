@@ -14,7 +14,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 
 import { RankModel } from 'src/app/view-model/rank.model';

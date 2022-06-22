@@ -13,7 +13,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 
 import { OrderModel } from 'src/app/view-model/order.model';

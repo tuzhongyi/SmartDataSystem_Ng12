@@ -1,4 +1,4 @@
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { IService } from 'src/app/business/Ibusiness';
 import { Division } from '../../model/division.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetDivisionsParams } from '../division/division-request.params';
@@ -6,7 +6,7 @@ import { IParams, PagedParams } from '../IParams.interface';
 import { ServiceCache } from './service.cache';
 
 export class DivisionServiceCache extends ServiceCache<Division> {
-  constructor(key: string, service: IBusiness<Division>) {
+  constructor(key: string, service: IService<Division>) {
     super(key, service);
   }
 

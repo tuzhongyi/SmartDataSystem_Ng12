@@ -11,12 +11,12 @@ import { TaskTableBusiness } from './task-table.business';
 import { TaskTableViewModel } from './task-table.model';
 import { TaskTableConverter } from './task-table.converter';
 import { DatePipe } from '@angular/common';
-import { GarbageDropEventRecord } from 'src/app/network/model/event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 
 @Component({
   selector: 'app-task-table',

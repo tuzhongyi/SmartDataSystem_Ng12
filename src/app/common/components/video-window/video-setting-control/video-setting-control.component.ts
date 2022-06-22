@@ -10,7 +10,7 @@ import {
 import { MatSliderChange } from '@angular/material/slider';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { VideoPresetPointControlModel } from '../video-preset-point-control/video-preset-point-control.model';
 import {

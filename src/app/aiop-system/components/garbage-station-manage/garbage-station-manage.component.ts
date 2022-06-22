@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Deduplication } from 'src/app/global/tool/deduplication';
+import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 
 @Component({

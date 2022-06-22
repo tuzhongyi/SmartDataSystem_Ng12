@@ -8,7 +8,7 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';

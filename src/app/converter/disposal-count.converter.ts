@@ -1,7 +1,7 @@
 import { IConverter } from '../common/interfaces/converter.interface';
 import { DisposalCountType } from '../enum/disposal-count.enum';
 import { EventType } from '../enum/event-type.enum';
-import { Language } from '../global/tool/language';
+import { Language } from '../common/tools/language';
 import { DivisionNumberStatistic } from '../network/model/division-number-statistic.model';
 import { GarbageStationNumberStatistic } from '../network/model/garbage-station-number-statistic.model';
 import { DisposalCountModel } from '../view-model/disposal-count.model';

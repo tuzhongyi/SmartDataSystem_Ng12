@@ -6,13 +6,7 @@ export interface IData {
   Id: string;
 }
 
-/*
- * @Author: pmx
- * @Date: 2021-09-14 14:59:24
- * @Last Modified by: zzl
- * @Last Modified time: 2021-12-14 15:58:10
- */
-export interface IBusiness<T extends IData> {
+export interface IService<T extends IData> {
   cache: ServiceCache<T>;
   get: (id: string) => Promise<T>;
   update?: (data: T) => Promise<T>;
@@ -21,7 +15,7 @@ export interface IBusiness<T extends IData> {
   list: (args?: IParams) => Promise<PagedList<T>>;
 }
 
-export abstract class AbstractService<T extends IData> implements IBusiness<T> {
+export abstract class AbstractService<T extends IData> implements IService<T> {
   abstract list(args?: IParams): Promise<PagedList<T>>;
   abstract get(id: string): Promise<T>;
 }

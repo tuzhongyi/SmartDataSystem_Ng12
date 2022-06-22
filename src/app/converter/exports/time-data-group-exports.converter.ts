@@ -3,7 +3,7 @@ import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IExportConverter } from 'src/app/common/interfaces/converter.interface';
 import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 
 export class TimeDataGroupExportConverter
   implements IExportConverter<ITimeDataGroup<number>[]>

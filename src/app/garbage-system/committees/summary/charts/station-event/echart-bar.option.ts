@@ -1,5 +1,5 @@
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import * as echarts from 'echarts/core';
 
 export var EchartBarOption = {

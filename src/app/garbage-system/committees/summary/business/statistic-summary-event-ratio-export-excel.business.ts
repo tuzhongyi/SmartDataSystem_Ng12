@@ -1,5 +1,5 @@
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { StatisticSummaryEventRatioChartViewModel } from '../charts/event-ratio/statistic-summary-event-ratio-chart.model';
 
 import { ExportTool, IExport } from './statistic-summary-export-excel.business';

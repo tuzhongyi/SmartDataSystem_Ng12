@@ -11,7 +11,7 @@ import {
 } from 'echarts';
 import { LegendOption, XAXisOption } from 'echarts/types/dist/shared';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 
 export type EChartOptions = echarts.ComposeOption<

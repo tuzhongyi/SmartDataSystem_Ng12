@@ -1,4 +1,4 @@
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { StatisticSummaryHeaderViewModel } from '../header/statistic-summary-header.model';
 import { ExportTool, IExport } from './statistic-summary-export-excel.business';
 

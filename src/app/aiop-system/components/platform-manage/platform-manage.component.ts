@@ -29,12 +29,10 @@ export class PlatformManageComponent implements OnInit {
   private _condition = '';
 
 
-  dataSource: PlatformManageModel[] = [];
   dataSubject = new BehaviorSubject<PlatformManageModel[]>([]);
   tableSelectModel = SelectEnum.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  tableOperates: TableOperateModel[] = []
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
@@ -43,8 +41,9 @@ export class PlatformManageComponent implements OnInit {
   showDialog = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
-
   state = FormState.none;
+  tableOperates: TableOperateModel[] = []
+
   platformId = '';
 
 
@@ -64,17 +63,13 @@ export class PlatformManageComponent implements OnInit {
         ['fa', 'fa-retweet', 'operate-icon'],
         '同步',
         this._clickSyncBtn.bind(this)
-      )
-    )
-    this.tableOperates.push(
+      ),
       new TableOperateModel(
         'edit',
         ['howell-icon-modification', 'operate-icon'],
         '编辑',
         this._clickEditBtn.bind(this)
-      )
-    )
-    this.tableOperates.push(
+      ),
       new TableOperateModel(
         'delete',
         ['howell-icon-delete-bin', 'operate-icon'],
@@ -84,13 +79,11 @@ export class PlatformManageComponent implements OnInit {
     )
   }
 
-
   ngOnInit(): void {
-    this.init();
+    this._init();
   }
-  async init() {
-    let res = await this._business.loadData(
-      this._condition,
+  private async _init() {
+    let res = await this._business.init(
       this.pageIndex,
       this._pageSize
     );
@@ -124,13 +117,13 @@ export class PlatformManageComponent implements OnInit {
   pageEvent(pageInfo: PageEvent) {
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
-    this.init();
+    this._init();
   }
 
   closeForm(update: boolean) {
     this.showDialog = false
     this.state = FormState.none;
-    if (update) this.init();
+    if (update) this._init();
   }
   addBtnClick() {
     this.state = FormState.add;
@@ -144,7 +137,7 @@ export class PlatformManageComponent implements OnInit {
 
   async searchEvent(condition: string) {
     this._condition = condition;
-    this.init();
+    this._init();
   }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;
@@ -163,7 +156,7 @@ export class PlatformManageComponent implements OnInit {
     }
     if (this.table) {
       this.table.deleteRows(rows);
-      this.init();
+      this._init();
     }
   }
   private async _clickSyncBtn(row: PlatformManageModel, event: Event) {

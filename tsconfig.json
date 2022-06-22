@@ -22,9 +22,11 @@
     ],
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule":true,
+    "resolveJsonModule": true,
     "paths": {
-      "exceljs":["node_modules/exceljs/dist/exceljs.min"]
+      "exceljs": [
+        "node_modules/exceljs/dist/exceljs.min"
+      ]
     }
   },
   "angularCompilerOptions": {

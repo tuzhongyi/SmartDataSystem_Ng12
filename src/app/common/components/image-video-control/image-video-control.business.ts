@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GetVodUrlParams } from 'src/app/network/request/sr/sr-request.params';

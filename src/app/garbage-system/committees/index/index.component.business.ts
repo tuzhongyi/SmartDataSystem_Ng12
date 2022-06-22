@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { CommitteesIndexHistroyTableBussiness } from './business/committees-index-history-table.business';
 import { CommitteesIndexStatisticBussiness } from './business/committees-index-statistic.business';
 import { CommitteesIndexTaskTableBussiness } from './business/committees-index-task-table.business';

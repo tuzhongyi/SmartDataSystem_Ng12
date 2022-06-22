@@ -3,7 +3,7 @@ import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { StatisticLineEChartsConverter } from 'src/app/converter/statistic-line-eCharts.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Time } from 'src/app/global/tool/time';
+import { Time } from 'src/app/common/tools/time';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';

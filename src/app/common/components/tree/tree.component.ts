@@ -13,7 +13,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Deduplication } from 'src/app/global/tool/deduplication';
+import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
@@ -348,6 +348,7 @@ export class TreeComponent implements OnInit {
     }
   }
   singleSelectNode(node: FlatTreeNode) {
+    console.log(node)
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;
@@ -455,6 +456,7 @@ export class TreeComponent implements OnInit {
     this.dataChange.next(this.dataChange.value);
   }
   async searchNode(condition: string) {
+    let selected = this.selection.selected;
     this.selection.clear();
     let nodes: NestTreeNode[] = []
     nodes = await this._business.searchNode(condition);
@@ -467,7 +469,17 @@ export class TreeComponent implements OnInit {
       } else {
         this.treeControl.collapseAll();
       }
+      let selected = this._flatNodeMap.get(nodes[0].id);
+      if (this.businessProvider == TreeBusinessEnum.Region) {
+        selected && this.selection.select(selected)
+      }
+    } else {
+      if (this.businessProvider == TreeBusinessEnum.Region) {
+        this.selection.select(...selected)
+      }
     }
+
+
     return nodes;
   }
 

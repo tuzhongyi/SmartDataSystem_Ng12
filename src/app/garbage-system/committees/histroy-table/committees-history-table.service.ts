@@ -9,7 +9,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/event-record.model';
+} from 'src/app/network/model/garbage-event-record.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';

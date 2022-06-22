@@ -13,8 +13,8 @@ import {
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { StoreService } from 'src/app/global/service/store.service';
-import { Language } from 'src/app/global/tool/language';
+import { StoreService } from 'src/app/common/service/store.service';
+import { Language } from 'src/app/common/tools/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';

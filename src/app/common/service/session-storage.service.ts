@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-28 13:20:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-09-28 15:38:47
+ * @Last Modified time: 2022-06-22 14:23:36
  */
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';

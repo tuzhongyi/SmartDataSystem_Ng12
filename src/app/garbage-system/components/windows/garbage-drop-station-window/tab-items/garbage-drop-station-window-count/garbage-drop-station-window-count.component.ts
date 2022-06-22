@@ -10,8 +10,8 @@ import {
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { Language } from 'src/app/global/tool/language';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
 import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 
 @Component({

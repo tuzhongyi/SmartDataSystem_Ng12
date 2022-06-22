@@ -7,7 +7,7 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { HwPlatform } from 'src/app/network/model/platform.model';
-import { GetPlatformsParams } from "./platforms-params";
+import { Platform } from 'src/app/network/model/platform.model';
+import { GetPlatformsParams } from "./platforms.params";
 import { AbstractService } from "src/app/business/Ibusiness";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { PlatformsURL } from "../../url/aiop/platforms/platforms.url";
@@ -9,30 +9,29 @@ import { classToPlain } from "class-transformer";
 @Injectable({
   providedIn: "root",
 })
-export class PlatformRequestSerivce extends AbstractService<HwPlatform> {
+export class PlatformRequestSerivce {
   private basic: BaseRequestService;
-  private type: BaseTypeRequestService<HwPlatform>;
+  private type: BaseTypeRequestService<Platform>;
 
   constructor(_http: HowellAuthHttpService) {
-    super();
     this.basic = new BaseRequestService(_http);
-    this.type = this.basic.type(HwPlatform);
+    this.type = this.basic.type(Platform);
   }
 
 
-  create(item: HwPlatform) {
-    return this.type.post(PlatformsURL.basic, item)
+  create(item: Platform) {
+    return this.type.post(PlatformsURL.create(), item)
   }
 
   list(params: GetPlatformsParams = new GetPlatformsParams()) {
     return this.type.paged(PlatformsURL.list(), params);
   }
 
-  get(id: string): Promise<HwPlatform> {
+  get(id: string): Promise<Platform> {
     return this.type.get(PlatformsURL.item(id));
   }
 
-  set(item: HwPlatform) {
+  set(item: Platform) {
     return this.type.put(PlatformsURL.item(item.Id), item)
   }
 

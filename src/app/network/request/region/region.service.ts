@@ -4,31 +4,22 @@ import { Region, RegionTree } from "../../model/region";
 import { RegionsURL } from "../../url/aiop/regions/regions.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { GetRegionsParams } from "./region-params";
+import { GetRegionsParams } from "./region.params";
 
 @Injectable({
   providedIn: "root",
 })
-export class RegionRequestService extends AbstractService<Region> {
+export class RegionRequestService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Region>;
 
   constructor(_http: HowellAuthHttpService) {
-    super();
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Region);
   }
 
-
-  // get(id: string) {
-  //   return this.requestService.get<Region>(AIOPRegionUrl.get(id));
-  // }
-
-
-
-
   create(item: Region) {
-    return this.type.post(RegionsURL.basic, item)
+    return this.type.post(RegionsURL.create(), item)
   }
 
   get(id: string): Promise<Region> {

@@ -16,7 +16,7 @@ import { PlayMode, VideoModel } from '../video-player/video.model';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoWindowViewModel } from './video-window.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { VideoPlayerComponent } from '../video-player/video-player.component';

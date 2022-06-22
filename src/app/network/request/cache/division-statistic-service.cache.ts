@@ -1,4 +1,4 @@
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { IService } from 'src/app/business/Ibusiness';
 import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
 import { Division } from '../../model/division.model';
 import { PagedList } from '../../model/page_list.model';
@@ -10,7 +10,7 @@ import { IParams, PagedParams } from '../IParams.interface';
 import { ServiceCache } from './service.cache';
 
 export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberStatistic> {
-  constructor(key: string, service: IBusiness<DivisionNumberStatistic>) {
+  constructor(key: string, service: IService<DivisionNumberStatistic>) {
     super(key, service, 1 * 20 * 1000, false);
   }
 
@@ -51,7 +51,7 @@ export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberSt
           return super.getPaged(result, args);
         }
       }
-    } catch (error) {}
+    } catch (error) { }
 
     return this.service.list!(args).then((result) => {
       result.Data.forEach((item) => {

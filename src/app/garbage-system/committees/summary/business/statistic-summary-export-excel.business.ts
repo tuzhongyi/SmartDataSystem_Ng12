@@ -1,7 +1,7 @@
 import { Worksheet } from 'exceljs';
 import { HowellExcelJS } from 'src/app/common/tools/exports/hw-export-excel';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { StatisticSummaryEventRatioChartViewModel } from '../charts/event-ratio/statistic-summary-event-ratio-chart.model';
 import { StatisticSummaryLineChartViewModel } from '../charts/line-chart/statistic-summary-line-chart.model';
 import { StatisticSummaryStationEventChartViewModel } from '../charts/station-event/statistic-summary-station-event-chart.model';

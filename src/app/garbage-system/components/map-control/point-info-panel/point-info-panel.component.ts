@@ -4,7 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Flags } from 'src/app/common/tools/flags';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

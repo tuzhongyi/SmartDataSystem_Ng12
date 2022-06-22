@@ -1,9 +1,9 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
-import { Language } from 'src/app/global/tool/language';
-import { IllegalDropEventRecord } from 'src/app/network/model/event-record.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { User } from 'src/app/network/model/user.model';
 import {
   CommitteesMessageBarNotifyViewModel,

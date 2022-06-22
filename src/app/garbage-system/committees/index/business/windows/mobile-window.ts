@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { User } from 'src/app/network/model/user.model';
 import { MobileChangeStep } from '../../../mobile/mobile.model';
 

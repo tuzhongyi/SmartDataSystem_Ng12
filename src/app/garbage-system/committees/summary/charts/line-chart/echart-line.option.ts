@@ -1,4 +1,4 @@
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 
 export var EChartLineOption = {
   backgroundColor: 'transparent',

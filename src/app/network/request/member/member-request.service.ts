@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IBusiness } from 'src/app/business/Ibusiness';
+import { IService } from 'src/app/business/Ibusiness';
 import { Member } from '../../model/member.model';
 import { PagedList } from '../../model/page_list.model';
 import { MemberUrl } from '../../url/garbage/member.url';
@@ -54,7 +54,7 @@ export class MemberRequsetService {
 }
 
 class RelationsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
   async sync(): Promise<string> {
     let url = MemberUrl.relation.sync();
     let response = await this.basic.http.post(url).toPromise();

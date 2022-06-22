@@ -4,7 +4,7 @@ import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { StoreService } from 'src/app/global/service/store.service';
+import { StoreService } from 'src/app/common/service/store.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';

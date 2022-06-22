@@ -19,13 +19,13 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { LocalStorageService } from 'src/app/global/service/local-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ITimeData } from 'src/app/common/components/charts/chart.model';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import { ChartConfig } from './details-chart.option';
 import { DetailsChartLoadOptions } from './details-chart.model';
 import { wait } from 'src/app/common/tools/tool';

@@ -13,7 +13,7 @@ import { GetDivisionsParams, GetDivisionTreeParams } from "src/app/network/reque
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationsParams } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
-import { GetRegionsParams } from "src/app/network/request/region/region-params";
+import { GetRegionsParams } from "src/app/network/request/region/region.params";
 import { RegionRequestService } from "src/app/network/request/region/region.service";
 import { NestTreeNode } from "src/app/view-model/nest-tree-node.model";
 import { TreeBusinessInterface } from "../interface/tree-business.interface";

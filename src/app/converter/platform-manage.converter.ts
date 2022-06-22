@@ -1,24 +1,24 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
 import { IConverter } from "../common/interfaces/converter.interface";
-import { HwPlatform } from "../network/model/platform.model";
+import { Platform } from "../network/model/platform.model";
 import { PlatformManageModel } from "../view-model/platform-manage.model";
 
-type PlatformManageModelSource = HwPlatform;
+type PlatformManageModelSource = Platform;
 
 @Injectable({
   providedIn: "root"
 })
-export class PlatformManageConverter implements IConverter<HwPlatform, PlatformManageModel>{
+export class PlatformManageConverter implements IConverter<PlatformManageModelSource, PlatformManageModel>{
   constructor(private _datePipe: DatePipe) { }
   Convert(source: PlatformManageModelSource) {
-    if (source instanceof HwPlatform) {
-      return this._fromHwPlatform(source)
+    if (source instanceof Platform) {
+      return this._fromPlatform(source)
     }
     throw new Error('Error');
   }
 
-  iterateToModel<T extends Array<HwPlatform>>(data: T) {
+  iterateToModel<T extends Array<Platform>>(data: T) {
     let res: Array<PlatformManageModel> = [];
 
     for (let i = 0; i < data.length; i++) {
@@ -29,11 +29,15 @@ export class PlatformManageConverter implements IConverter<HwPlatform, PlatformM
 
     return res;
   }
-  private _fromHwPlatform(item: HwPlatform) {
-    let res = new PlatformManageModel(item.Id, item.Name, item.Url, item.ProtocolType,);
-    res.State = item.State == 0 ? '正常' : '故障';
-    res.UpdateTime = this._datePipe.transform(item.UpdateTime, 'yyyy-MM-dd HH:mm:ss') ?? ''
-    return res;
+  private _fromPlatform(item: Platform) {
+    let model = new PlatformManageModel();
+    model.Id = item.Id;
+    model.Name = item.Name;
+    model.Url = item.Url;
+    model.ProtocolType = item.ProtocolType
+    model.State = item.State == 0 ? '正常' : '故障';
+    model.UpdateTime = this._datePipe.transform(item.UpdateTime, 'yyyy-MM-dd HH:mm:ss') ?? ''
+    return model;
   }
 
 

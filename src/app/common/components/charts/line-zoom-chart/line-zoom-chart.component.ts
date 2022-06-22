@@ -25,7 +25,7 @@ import { LineZoomChartBusiness } from './line-zoom-chart.business';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { count } from 'console';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
-import { Language } from 'src/app/global/tool/language';
+import { Language } from 'src/app/common/tools/language';
 import {
   ImageControlModel,
   ImageControlModelArray,
