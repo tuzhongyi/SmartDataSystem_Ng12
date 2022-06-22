@@ -29,21 +29,30 @@ export class PlatformManageComponent implements OnInit {
   private _condition = '';
 
 
+  // Table
   dataSubject = new BehaviorSubject<PlatformManageModel[]>([]);
   tableSelectModel = SelectEnum.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
+  tableOperates: TableOperateModel[] = []
+
+
+  selectedRows: PlatformManageModel[] = [];//table选中项
+  willBeDeleted: PlatformManageModel[] = [];
+
+  // Paginator
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
-  selectedRows: PlatformManageModel[] = [];//table选中项
-  willBeDeleted: PlatformManageModel[] = [];
+
+
+  // 对话框
   showDialog = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
-  state = FormState.none;
-  tableOperates: TableOperateModel[] = []
 
+  // 表单
+  state = FormState.none;
   platformId = '';
 
 
@@ -96,7 +105,6 @@ export class PlatformManageComponent implements OnInit {
     this.selectedRows = rows;
   }
   tableSelectEvent(type: TableSelectStateEnum) {
-    // console.log(type);
     if (this.table) {
       switch (type) {
         case TableSelectStateEnum.All:
@@ -137,7 +145,7 @@ export class PlatformManageComponent implements OnInit {
 
   async searchEvent(condition: string) {
     this._condition = condition;
-    this._init();
+    this._business.search();
   }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;

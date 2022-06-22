@@ -36,4 +36,20 @@ export class AIModelManageBusiness {
   private list(params: GetAIModelsParams) {
     return this._service.list(params)
   }
+
+
+  async search(condition: string = '') {
+    let params = new GetAIModelsParams();
+    params.ModelName = condition;
+
+    let records = await this._service.list(params);
+    let models = this._converter.iterateToModel(records.Data)
+
+    let res: PagedList<AIModelManageModel> = {
+      Page: records.Page,
+      Data: models,
+    };
+
+    return res;
+  }
 }
