@@ -1,7 +1,7 @@
 import { BaseAiopUrl } from "../../../base.url";
-import { EventUrl } from "../event.url";
+import { EventsUrl } from "../events.url";
 
-export abstract class RecordsUrl extends EventUrl {
+export abstract class RecordsUrl extends EventsUrl {
   protected static get basic(): string {
     return `${super.basic}/Records`;
 

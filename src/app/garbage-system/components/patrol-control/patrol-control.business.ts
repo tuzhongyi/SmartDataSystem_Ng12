@@ -18,7 +18,7 @@ import {
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
 import { PatrolArrayControlConverter } from './patrol-control.converter';
 
@@ -73,7 +73,7 @@ export class PatrolControlBusiness
                     url.Id
                   ) {
                     media.fulled = false;
-                    media.image.src = MediumRequestService.jpg(url.Id);
+                    media.image.src = Medium.jpg(url.Id);
                   }
                 });
               });

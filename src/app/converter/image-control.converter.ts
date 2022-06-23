@@ -2,7 +2,7 @@ import { ImageControlModel } from '../view-model/image-control.model';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { OnlineStatus } from '../enum/online-status.enum';
 import { Camera } from '../network/model/camera.model';
-import { MediumRequestService } from '../network/request/medium/medium-request.service';
+import { Medium } from '../common/tools/medium';
 import { CameraImageUrlModel } from '../common/components/tables/event-record/event-record.model';
 
 export class ImageControlConverter
@@ -29,8 +29,8 @@ export class ImageControlConverter
         source.Id,
         source.GarbageStationId,
         source.Name,
-        MediumRequestService.jpg(source.ImageUrl),
-        onerror ? MediumRequestService.default : '',
+        Medium.jpg(source.ImageUrl),
+        onerror ? Medium.default : '',
         source.OnlineStatus,
         source,
         eventTime
@@ -40,8 +40,8 @@ export class ImageControlConverter
         source.CameraId,
         source.StationId,
         source.CameraName ?? '',
-        MediumRequestService.jpg(source.ImageUrl),
-        onerror ? MediumRequestService.default : '',
+        Medium.jpg(source.ImageUrl),
+        onerror ? Medium.default : '',
         OnlineStatus.Online,
         source,
         eventTime

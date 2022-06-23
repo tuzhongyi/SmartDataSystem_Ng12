@@ -15,7 +15,7 @@ import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
@@ -34,10 +34,9 @@ import { GarbageFullStationTableModel } from './garbage-full-station-table.model
 export class GarbageFullStationTableComponent
   extends TableAbstractComponent<GarbageFullStationTableModel>
   implements
-    IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
-    OnChanges,
-    OnInit
-{
+  IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
+  OnChanges,
+  OnInit {
   width = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
   constructor(business: GarbageFullStationTableBusiness) {
     super();
@@ -90,7 +89,7 @@ export class GarbageFullStationTableComponent
 
   onerror(e: Event) {
     if (e.target) {
-      (e.target as HTMLImageElement).src = MediumRequestService.default;
+      (e.target as HTMLImageElement).src = Medium.default;
     }
   }
 

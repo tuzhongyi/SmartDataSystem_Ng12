@@ -1,1 +1,64 @@
-<p>ai-camera-events works!</p>
+<div class="ai-camera-events">
+  <div class="hw-table-detail">
+    <div class="hw-operation">
+      <div class="hw-second-title">AI事件</div>
+      <div class="hw-operate-bar">
+        <div class="search-wrapper">
+          <howell-simple-search
+            placeHolder="名称"
+            (searchEvent)="searchEvent($event)"
+          ></howell-simple-search>
+        </div>
+        <div class="hw-normal-btn-group" style="margin: 0 10px">
+          <button class="hw-blue-btn">
+            <i class="mdi mdi-magnify"></i>
+            查询
+          </button>
+          <button class="hw-blue-m-btn">
+            <i class="howell-icon-ul"></i>
+            <i class="mdi mdi-menu-down"></i>
+          </button>
+          <button class="hw-cyan-m-btn">
+            <i class="mdi mdi-filter-outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hw-table-container">
+      <app-table
+        [dataSubject]="dataSubject"
+        [columnModel]="columnModel"
+        [displayedColumns]="displayedColumns"
+        [tableSelectModel]="tableSelectModel"
+        [tableOperates]="tableOperates"
+        (selectTableRow)="selectTableRow($event)"
+      ></app-table>
+    </div>
+    <div class="hw-table-footer">
+      <div class="footer-item">
+        <app-table-select (tableSelectEvent)="tableSelectEvent($event)">
+        </app-table-select>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">已选择: {{ selectedRows.length }}</div>
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+        <app-paginator
+          *ngIf="page"
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="pagerCount"
+          [pageIndex]="pageIndex - 1"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

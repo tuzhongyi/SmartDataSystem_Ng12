@@ -15,7 +15,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import {
   PagedParams,
 } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
   EventRecordPagedConverter,
@@ -103,6 +103,6 @@ export class EventRecordBusiness
   }
 
   getImage(id: string) {
-    return MediumRequestService.jpg(id)
+    return Medium.jpg(id)
   }
 }

@@ -25,7 +25,7 @@ import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
-import { AiCameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
+import { AICameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
@@ -50,7 +50,7 @@ import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.
     EncodeDeviceManageComponent,
     CameraModelManageComponent,
     AIModelManageComponent,
-    AiCameraEventsComponent,
+    AICameraEventsComponent,
     ProxyManageComponent,
     IllegalDropRecord2Component,
     PlatformOperateComponent,

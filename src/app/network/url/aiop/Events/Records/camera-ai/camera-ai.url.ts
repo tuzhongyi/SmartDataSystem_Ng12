@@ -1,4 +1,3 @@
-import { BaseAiopUrl } from "src/app/network/url/base.url";
 import { RecordsUrl } from "../records.url";
 
 export abstract class CameraAIUrl extends RecordsUrl {

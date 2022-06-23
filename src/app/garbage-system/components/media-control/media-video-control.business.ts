@@ -15,7 +15,7 @@ import { Camera } from 'src/app/network/model/camera.model';
 import { CameraImageUrl, VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
@@ -25,12 +25,12 @@ import { SRRequestService } from 'src/app/network/request/sr/sr-request.service'
 @Injectable()
 export class MediaVideoControlBussiness
   implements
-    IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+  IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
   constructor(
     private srService: SRRequestService,
     private stationService: GarbageStationRequestService
-  ) {}
+  ) { }
   manualCaptureEvent: EventEmitter<boolean> = new EventEmitter();
 
   Converter: IConverter<
@@ -93,7 +93,7 @@ export class MediaVideoControlBussiness
                     models[i].image &&
                     url.Id
                   ) {
-                    models[i].image!.src = MediumRequestService.jpg(url.Id);
+                    models[i].image!.src = Medium.jpg(url.Id);
                   }
                 }
               }
@@ -109,7 +109,7 @@ export class MediaVideoControlBussiness
 
 class MediaVideoControlArrayConverter
   implements
-    IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+  IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
   converter = {
     item: new MediaVideoControlConverter(),

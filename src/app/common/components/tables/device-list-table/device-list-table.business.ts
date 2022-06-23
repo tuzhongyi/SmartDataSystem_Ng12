@@ -17,7 +17,7 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import { GetGarbageStationCamerasParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { DeviceListTableFilter } from './device-list-table.component';
 import { DeviceViewModel } from './device.model';
@@ -30,7 +30,7 @@ export class DeviceListTableBusiness
     private storeService: StoreService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) {}
+  ) { }
   Converter: IPromiseConverter<PagedList<Camera>, PagedList<DeviceViewModel>> =
     new DevicePagedConverter();
 
@@ -65,8 +65,7 @@ export class DeviceListTableBusiness
     let params = new GetGarbageStationCamerasParams();
     params = Object.assign(params, page);
     params.OnlineStatus = status;
-    if(opts)
-    {
+    if (opts) {
       (params as any)[opts.propertyName] = opts.text;
     }
     params.DivisionIds = [divisionId];

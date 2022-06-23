@@ -1,4 +1,16 @@
-.hw-operate-bar {
+.hw-operation {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+  .hw-operate-bar {
+    display: flex;
+    justify-content: flex-end;
+    &.bar-wrap {
+      margin: 10px 0;
+      flex-basis: 100%;
+      justify-content: space-between;
+    }
+  }
 }

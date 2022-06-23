@@ -1,31 +1,27 @@
-import { Injectable } from '@angular/core';
-import { MediumUrl } from '../../url/aiop/medium/medium.url';
+import { PicturesUrl } from 'src/app/network/url/aiop/medium/pictures/pictures.url';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class MediumRequestService {
+export class Medium {
   constructor() { }
 
   static default = '/assets/img/timg-pic.jpg';
 
   static binary() {
-    return MediumUrl.picture.binary();
+    return PicturesUrl.binary();
   }
 
   static jpg(id?: string) {
     if (!id) return this.default;
-    return MediumUrl.picture.jpg(id);
+    return PicturesUrl.jpg(id);
   }
   static data(id?: string) {
     if (!id) return this.default;
-    return MediumUrl.picture.data(id);
+    return PicturesUrl.data(id);
   }
 
-  static img(url?: string):Promise<string> {
+  static img(url?: string): Promise<string> {
     return new Promise((resolve) => {
       let img = url
-        ? MediumRequestService.jpg(url)
+        ? Medium.jpg(url)
         : '';
       var image = new Image();
       image.src = img;

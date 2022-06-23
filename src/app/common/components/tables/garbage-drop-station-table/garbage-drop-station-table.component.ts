@@ -13,7 +13,7 @@ import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
@@ -32,10 +32,9 @@ import { GarbageDropStationTableModel } from './garbage-drop-station-table.model
 export class GarbageDropStationTableComponent
   extends TableAbstractComponent<GarbageDropStationTableModel>
   implements
-    IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
-    OnDestroy,
-    OnInit
-{
+  IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
+  OnDestroy,
+  OnInit {
   width = ['20%', '15%', '12%', '7%', '10%', '10%', '10%', '10%', '6%'];
   constructor(business: GarbageDropStationTableBusiness) {
     super();
@@ -87,7 +86,7 @@ export class GarbageDropStationTableComponent
 
   onerror(e: Event) {
     if (e.target) {
-      (e.target as HTMLImageElement).src = MediumRequestService.default;
+      (e.target as HTMLImageElement).src = Medium.default;
     }
   }
 

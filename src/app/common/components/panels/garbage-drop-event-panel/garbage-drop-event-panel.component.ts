@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 
 @Component({
@@ -22,7 +22,7 @@ export class GarbageDropEventPanelComponent implements OnInit, OnChanges {
   @Output()
   onclick: EventEmitter<ImageControlModel> = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.model) {
     }
@@ -36,7 +36,7 @@ export class GarbageDropEventPanelComponent implements OnInit, OnChanges {
 
   onerror(event: Event) {
     if (event.target) {
-      (event.target as HTMLImageElement).src = MediumRequestService.default;
+      (event.target as HTMLImageElement).src = Medium.default;
     }
   }
 

@@ -10,7 +10,7 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { CameraAIUrl } from 'src/app/network/url/aiop/Events/Records/CameraAI/camera-ai.url';
+import { CameraAIUrl } from 'src/app/network/url/aiop/events/records/camera-ai/camera-ai.url';
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import {
@@ -91,6 +91,11 @@ export class AIModelManageComponent implements OnInit {
 
   }
 
+  async searchEvent(condition: string) {
+    this._condition = condition;
+    this._business.search();
+  }
+
 
   selectTableRow(rows: AIModelManageModel[]) {
     this.selectedRows = rows;
@@ -133,10 +138,6 @@ export class AIModelManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
-  async searchEvent(condition: string) {
-    this._condition = condition;
-    this._business.search();
-  }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;
     if (status == ConfirmDialogEnum.confirm) {

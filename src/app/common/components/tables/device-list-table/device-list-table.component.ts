@@ -15,7 +15,7 @@ import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { MediumRequestService } from 'src/app/network/request/medium/medium-request.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
@@ -33,8 +33,7 @@ import { DeviceViewModel } from './device.model';
 })
 export class DeviceListTableComponent
   extends TableAbstractComponent<DeviceViewModel>
-  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
-{
+  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy {
   OnlineStatus = OnlineStatus;
   width = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
 
@@ -98,7 +97,7 @@ export class DeviceListTableComponent
   }
   onerror(e: Event) {
     if (e.target) {
-      (e.target as HTMLImageElement).src = MediumRequestService.default;
+      (e.target as HTMLImageElement).src = Medium.default;
     }
   }
 

@@ -32,7 +32,7 @@ import { IllegalDropEventRecord } from '../network/model/garbage-event-record.mo
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
 import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
-import { MediumRequestService } from '../network/request/medium/medium-request.service';
+import { Medium } from '../common/tools/medium';
 
 type IllegalDropEventRecordSourceModel = IllegalDropEventRecord;
 
@@ -67,7 +67,7 @@ export class IllegalDropEventRecordConverter
 
     model.EventId = item.EventId;
     model.ImageUrl = item.ImageUrl
-      ? MediumRequestService.jpg(item.ImageUrl)
+      ? Medium.jpg(item.ImageUrl)
       : '';
     var image = new Image();
     try {

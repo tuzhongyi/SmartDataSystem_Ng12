@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { CameraAIModel } from "../../model/camera-ai.model";
-import { AIModelsUrl } from "../../url/aiop/AIModels/ai-models.url";
-import { CameraAIUrl } from "../../url/aiop/Events/Records/CameraAI/camera-ai.url";
+import { AIModelsUrl } from "../../url/aiop/ai-models/ai-models.url";
+import { CameraAIUrl } from "../../url/aiop/events/records/camera-ai/camera-ai.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
 import { GetAIModelsParams } from "./camera-ai-model.params";

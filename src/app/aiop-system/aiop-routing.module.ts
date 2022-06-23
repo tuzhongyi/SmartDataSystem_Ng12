@@ -25,7 +25,7 @@ import { CameraManageComponent } from './components/camera-manage/camera-manage.
 import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
 import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
-import { AiCameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
+import { AICameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
 import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
 
@@ -199,7 +199,7 @@ const routes: Routes = [
                 path: 'ai-model-manage',
                 component: AIModelManageComponent,
                 data: {
-                  breadcrumb: 'AI模型管理',
+                  breadcrumb: 'AI模型列表',
                 },
               },
             ],
@@ -209,7 +209,7 @@ const routes: Routes = [
             children: [
               {
                 path: 'ai-camera-events',
-                component: AiCameraEventsComponent,
+                component: AICameraEventsComponent,
                 data: {
                   breadcrumb: 'AI摄像机事件',
                 },

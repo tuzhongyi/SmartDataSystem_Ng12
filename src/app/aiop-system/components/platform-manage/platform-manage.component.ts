@@ -24,6 +24,7 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
   ]
 })
 export class PlatformManageComponent implements OnInit {
+ 
   /**private */
   private _pageSize = 9;
   private _condition = '';

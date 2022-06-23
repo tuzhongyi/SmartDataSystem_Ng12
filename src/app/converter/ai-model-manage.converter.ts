@@ -22,7 +22,7 @@ export class AIModelManageConverter implements IConverter<AIModelManageSource, A
     throw new Error('Error');
   }
 
-  iterateToModel<T extends Array<CameraAIModel>>(data: T) {
+  iterateToModel<T extends Array<AIModelManageSource>>(data: T) {
     let res: Array<AIModelManageModel> = [];
 
     for (let i = 0; i < data.length; i++) {

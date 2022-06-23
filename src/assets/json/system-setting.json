@@ -55,7 +55,7 @@
       "id": "ai",
       "children": [
         {
-          "title": "AI模型管理",
+          "title": "AI模型列表",
           "id": "ai-model-manage",
           "path": "/aiop/aiop-manage/system-setting/ai/ai-model-manage"
         }
@@ -66,7 +66,7 @@
       "id": "ai-events",
       "children": [
         {
-          "title": "AI模型列表",
+          "title": "AI摄像机事件",
           "id": "ai-camera-events",
           "path": "/aiop/aiop-manage/system-setting/ai-events/ai-camera-events"
         }
