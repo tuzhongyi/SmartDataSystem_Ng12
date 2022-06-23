@@ -4,13 +4,16 @@
       <div class="hw-second-title">AI事件</div>
       <div class="hw-operate-bar">
         <div class="search-wrapper">
-          <howell-simple-search
-            placeHolder="名称"
-            (searchEvent)="searchEvent($event)"
-          ></howell-simple-search>
+          <input
+            [disabled]="disableSearch"
+            type="text"
+            [placeholder]="placeHolder"
+            [(ngModel)]="condition"
+            (keyup.enter)="search()"
+          />
         </div>
-        <div class="hw-normal-btn-group" style="margin: 0 10px">
-          <button class="hw-blue-btn">
+        <div class="hw-normal-btn-group hw-btn-group">
+          <button class="hw-blue-btn" (click)="search()">
             <i class="mdi mdi-magnify"></i>
             查询
           </button>
@@ -18,9 +21,60 @@
             <i class="howell-icon-ul"></i>
             <i class="mdi mdi-menu-down"></i>
           </button>
-          <button class="hw-cyan-m-btn">
+          <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
             <i class="mdi mdi-filter-outline"></i>
           </button>
+        </div>
+      </div>
+      <div class="filter" *ngIf="showFilter">
+        <div class="filter-item">
+          <span class="hw-form-label">开始时间:</span>
+          <input
+            type="text"
+            DateTimePicker
+            [format]="dateFormat"
+            [date]="beginTime"
+            (change)="changeBegin($event)"
+            class="hw-form-control hw-form-input"
+          />
+        </div>
+
+        <div class="filter-item">
+          <span class="hw-form-label">结束时间:</span>
+          <input
+            type="text"
+            DateTimePicker
+            [format]="dateFormat"
+            [date]="endTime"
+            (change)="changeEnd($event)"
+            class="hw-form-control hw-form-input"
+          />
+        </div>
+
+        <div class="filter-item">
+          <span class="hw-form-label">事件类型:</span>
+          <select
+            class="hw-form-control hw-form-select"
+            [(ngModel)]="eventType"
+          >
+            <option value="0">全部</option>
+            <option [value]="type" *ngFor="let type of eventTypes">
+              {{ Language.EventType(type) }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-item">
+          <span class="hw-form-label">AI模型:</span>
+          <select
+            class="hw-form-control hw-form-select"
+            [(ngModel)]="modelName"
+            style="min-width: 190px"
+          >
+            <option value="">全部</option>
+            <option [value]="model.ModelName" *ngFor="let model of aiModels">
+              {{ model.ModelName }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
@@ -32,18 +86,13 @@
         [displayedColumns]="displayedColumns"
         [tableSelectModel]="tableSelectModel"
         [tableOperates]="tableOperates"
+        [zoomIn]="zoomIn"
         (selectTableRow)="selectTableRow($event)"
       ></app-table>
     </div>
-    <div class="hw-table-footer">
-      <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelectEvent($event)">
-        </app-table-select>
-      </div>
-
+    <div class="hw-table-footer" style="justify-content: flex-end">
       <div class="footer-item">
         <div class="footer-info">
-          <div class="info-item">已选择: {{ selectedRows.length }}</div>
           <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
           <div class="info-item">
             总数量: {{ page && page.TotalRecordCount }}

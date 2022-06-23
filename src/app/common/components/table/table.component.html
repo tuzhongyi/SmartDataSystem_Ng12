@@ -58,6 +58,7 @@
           <i
             *ngFor="let operate of tableOperates"
             [class]="operate.classNames"
+            class="operate-icon"
             [id]="operate.id"
             [title]="operate.title"
             (click)="$event.stopPropagation(); operate.callBack(row, $event)"

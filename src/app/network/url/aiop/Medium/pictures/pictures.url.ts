@@ -23,7 +23,7 @@ export abstract class PicturesUrl extends MediumUrl {
     return `${this.basic}/${id}/Data`;
   }
   static jpg(id: string) {
-    return `${this.basic}/${id}/.jpg`;
+    return `${this.basic}/${id}.jpg`;
   }
 
 }

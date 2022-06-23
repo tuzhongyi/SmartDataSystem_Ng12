@@ -37,7 +37,7 @@ export class AIModelManageBusiness {
   }
 
 
-  async search(condition: string = '') {
+  async search(condition: string = '', pageSize: number = 9) {
     let params = new GetAIModelsParams();
     params.ModelName = condition;
 

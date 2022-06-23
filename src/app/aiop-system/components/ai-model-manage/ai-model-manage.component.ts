@@ -67,13 +67,13 @@ export class AIModelManageComponent implements OnInit {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
-        ['howell-icon-modification', 'operate-icon'],
+        ['howell-icon-modification'],
         '编辑',
         this._clickEditBtn.bind(this)
       ),
       new TableOperateModel(
         'delete',
-        ['howell-icon-delete-bin', 'operate-icon'],
+        ['howell-icon-delete-bin'],
         '删除',
         this._clickDelBtn.bind(this)
       )
@@ -85,7 +85,10 @@ export class AIModelManageComponent implements OnInit {
   }
 
   private async _init() {
-    let res = await this._business.init();
+    let res = await this._business.init(
+      this.pageIndex,
+      this._pageSize
+    );
     this.page = res.Page;
     this.dataSubject.next(res.Data);
 
@@ -93,7 +96,7 @@ export class AIModelManageComponent implements OnInit {
 
   async searchEvent(condition: string) {
     this._condition = condition;
-    this._business.search();
+    this._business.search(this._condition, this._pageSize);
   }
 
 

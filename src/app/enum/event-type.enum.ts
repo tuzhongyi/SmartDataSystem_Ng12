@@ -1,4 +1,5 @@
 export enum EventType {
+  None = 0,
   /**乱扔垃圾事件 */
   IllegalDrop = 1,
   /**混合投放事件 */

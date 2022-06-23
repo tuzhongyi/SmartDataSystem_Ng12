@@ -26,7 +26,7 @@ import { EncodeDeviceManageComponent } from './encode-device-manage/encode-devic
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
 import { AICameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
 import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
@@ -57,9 +57,9 @@ import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.
     SRServerManageComponent,
     SRServerOperateComponent
   ],
-  imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],
 })
 export class AiopComponentsModule {
-  constructor(private _injector: Injector) { }
+  constructor() { }
 }
