@@ -1,17 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableComponent } from 'src/app/common/components/table/table.component';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectEnum } from 'src/app/enum/select.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { AICameraEventsModel } from 'src/app/view-model/ai-camera-events.model';

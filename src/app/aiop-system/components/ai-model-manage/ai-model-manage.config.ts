@@ -9,7 +9,7 @@ export const AIModelManageConf: TableColumnModel[] = [
   },
   {
     columnDef: 'ModelName',
-    header: '名称',
+    header: '模型名称',
     cell: (element: AIModelManageModel) => `${element.ModelName}`,
   },
   {

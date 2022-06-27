@@ -1,10 +1,10 @@
 <div class="ai-model-manage">
-  <!-- <ng-container *ngIf="showDialog">
-    <howell-platform-operate
+  <ng-container *ngIf="showOperate">
+    <howell-ai-model-operate
       [state]="state"
-      [platformId]="platformId"
+      [aiModelId]="aiModelId"
       (closeEvent)="closeForm($event)"
-    ></howell-platform-operate>
+    ></howell-ai-model-operate>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">
@@ -13,7 +13,7 @@
       [dialogModel]="dialogModel"
     >
     </howell-confirm-dialog>
-  </ng-container> -->
+  </ng-container>
 
   <div class="hw-table-detail">
     <div class="hw-operation">
@@ -36,7 +36,7 @@
 
         <div class="search-wrapper">
           <howell-simple-search
-            placeHolder="名称"
+            placeHolder="模型名称"
             (searchEvent)="searchEvent($event)"
           ></howell-simple-search>
         </div>
@@ -50,6 +50,7 @@
         [displayedColumns]="displayedColumns"
         [tableSelectModel]="tableSelectModel"
         [tableOperates]="tableOperates"
+        (selectTableRow)="selectTableRow($event)"
       ></app-table>
     </div>
     <div class="hw-table-footer">

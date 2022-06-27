@@ -11,43 +11,30 @@ export class PlatformManageBusiness {
   ) {
 
   }
-  async init(pageIndex: number = 1, pageSize: number = 9,) {
+  async init(condition: string, pageIndex: number = 1, pageSize: number = 9,) {
     let params = new GetPlatformsParams();
-    params.PageIndex = Math.max(1, pageIndex);
-    params.PageSize = Math.max(1, pageSize);// pageSize不会小于1
+    params.PageIndex = pageIndex
+    params.PageSize = pageSize// pageSize不会小于1
+    params.Name = condition;
 
-    let list = await this.list(params);
-    let data = this._converter.iterateToModel(list.Data)
+    let tmp = await this.list(params);
+    let data = this._converter.iterateToModel(tmp.Data)
 
     let res: PagedList<PlatformManageModel> = {
-      Page: list.Page,
+      Page: tmp.Page,
       Data: data,
     };
 
     return res;
   }
-  async list(params: GetPlatformsParams) {
+  list(params: GetPlatformsParams) {
     return this._platformRequest.list(params);
   }
-  async sync(id: string) {
-    return await this._platformRequest.sync(id);
+  sync(id: string) {
+    return this._platformRequest.sync(id);
   }
-  async delete(id: string) {
-    return await this._platformRequest.delete(id)
+  delete(id: string) {
+    return this._platformRequest.delete(id)
   }
 
-  async search(condition: string = '') {
-    let params = new GetPlatformsParams();
-    params.Name = condition;
-
-    let records = await this._platformRequest.list(params);
-    let models = this._converter.iterateToModel(records.Data)
-
-    let res: PagedList<PlatformManageModel> = {
-      Page: records.Page,
-      Data: models,
-    };
-
-    return res;
-  }
 }

@@ -1,0 +1,128 @@
+<div class="ai-model-operate hw-popped-container" #mask>
+  <div class="hw-popped-wrapper">
+    <div class="hw-simple-title" style="margin-bottom: 20px">{{ title }}</div>
+    <form class="hw-form direction-row" [formGroup]="myForm">
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 模型名称 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="ModelName"
+          />
+        </div>
+      </div>
+
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 模型协议 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <select formControlName="ModelType">
+            <option value="AIOP">AIOP</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="hw-form-group" style="flex-basis: 100%">
+        <div class="title">
+          <span class="hw-form-label"> 上传模型 </span>
+          <span class="hw-form-icon" *ngIf="state == FormState.add">*</span>
+        </div>
+        <div class="content" style="display: flex">
+          <input
+            readonly
+            type="text"
+            class="hw-form-control hw-form-input"
+            style="margin-right: 10px"
+            formControlName="FilePath"
+          />
+          <input type="file" (change)="selectFile(fileBtn)" #fileBtn />
+          <button class="hw-blue-btn" (click)="triggerSelect()">
+            <i class="howell-icon-repeat"></i>
+            选择模型
+          </button>
+          <button class="hw-cyan-btn" (click)="parseFile()">
+            <i class="mdi mdi-tag"></i>
+            应用模型
+          </button>
+        </div>
+      </div>
+
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 模型版本 </span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Version"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 应用类型 </span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="TransformType"
+          />
+        </div>
+      </div>
+
+      <div class="hw-form-group" style="flex-basis: 100%">
+        <div class="title">
+          <span class="hw-form-label"> 模型图标 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <div class="ai-icon-drop">
+            <div class="ai-icon-picked">
+              <div class="ai-icon" (click)="toggleList($event)">
+                <img [src]="selectedIcon" alt="" />
+              </div>
+            </div>
+            <div class="ai-icon-list" *ngIf="showList">
+              <div
+                class="ai-icon"
+                *ngFor="let icon of iconsEntries"
+                (click)="clickIcon(icon, $event)"
+              >
+                <img [src]="imgBase + icon[1]" alt="" />
+                <i
+                  class="howell-icon-Check"
+                  *ngIf="icon[0] == selectedIconKey"
+                ></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="hw-form-group" style="flex-basis: 100%">
+        <div class="title">
+          <span class="hw-form-label"> 模型属性 </span>
+        </div>
+        <div class="content">
+          <div class="ai-model-attr"></div>
+        </div>
+      </div>
+    </form>
+    <div class="hw-middle-btn-group">
+      <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+        <i class="howell-icon-Check"></i>
+      </button>
+
+      <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+        <i class="howell-icon-Close"></i>
+      </button>
+    </div>
+  </div>
+</div>

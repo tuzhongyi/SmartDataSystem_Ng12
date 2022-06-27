@@ -78,14 +78,6 @@ h2 {
   z-index: 9;
 }
 
-.hw-form-wrap {
-  height: 720px;
-  position: absolute;
-  left: 50%;
-  top: 49%;
-  transform: translate(-50%, -50%);
-}
-
 .close-winow:hover,
 .close-winow:hover i {
   color: #fd2f2d !important;

@@ -1,5 +1,5 @@
 <div class="platform-manage">
-  <ng-container *ngIf="showDialog">
+  <ng-container *ngIf="showOperate">
     <howell-platform-operate
       [state]="state"
       [platformId]="platformId"
@@ -19,7 +19,7 @@
     <div class="hw-operation">
       <div class="hw-second-title">智慧平台</div>
       <div class="hw-operate-bar bar-wrap">
-        <div class="hw-normal-btn-group" style="margin: 0 10px">
+        <div class="hw-normal-btn-group">
           <button class="hw-green-btn" (click)="addBtnClick()">
             <i class="howell-icon-plus"></i>
             添加

@@ -24,9 +24,9 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
   ]
 })
 export class PlatformManageComponent implements OnInit {
- 
+
   /**private */
-  private _pageSize = 9;
+  private _pageSize = 1;
   private _condition = '';
 
 
@@ -48,7 +48,7 @@ export class PlatformManageComponent implements OnInit {
 
 
   // 对话框
-  showDialog = false;
+  showOperate = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
@@ -94,6 +94,7 @@ export class PlatformManageComponent implements OnInit {
   }
   private async _init() {
     let res = await this._business.init(
+      this._condition,
       this.pageIndex,
       this._pageSize
     );
@@ -102,6 +103,12 @@ export class PlatformManageComponent implements OnInit {
     this.dataSubject.next(res.Data)
   }
 
+
+  async searchEvent(condition: string) {
+    this._condition = condition;
+    this.pageIndex = 1;
+    this._init();
+  }
   selectTableRow(rows: PlatformManageModel[]) {
     this.selectedRows = rows;
   }
@@ -130,13 +137,13 @@ export class PlatformManageComponent implements OnInit {
   }
 
   closeForm(update: boolean) {
-    this.showDialog = false
+    this.showOperate = false
     this.state = FormState.none;
     if (update) this._init();
   }
   addBtnClick() {
     this.state = FormState.add;
-    this.showDialog = true;
+    this.showOperate = true;
   }
   deleteBtnClick() {
     this.willBeDeleted = [...this.selectedRows]
@@ -144,10 +151,6 @@ export class PlatformManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
-  async searchEvent(condition: string) {
-    this._condition = condition;
-    this._business.search();
-  }
   async dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;
     if (status == ConfirmDialogEnum.confirm) {
@@ -156,6 +159,7 @@ export class PlatformManageComponent implements OnInit {
 
     }
   }
+
   private async _deleteRows(rows: PlatformManageModel[]) {
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
@@ -165,6 +169,7 @@ export class PlatformManageComponent implements OnInit {
     }
     if (this.table) {
       this.table.deleteRows(rows);
+      this.pageIndex = 1;
       this._init();
     }
   }
@@ -177,7 +182,7 @@ export class PlatformManageComponent implements OnInit {
   }
   private _clickEditBtn(row: PlatformManageModel, event: Event) {
     console.log('edit')
-    this.showDialog = true;
+    this.showOperate = true;
     this.state = FormState.edit;
     this.platformId = row.Id;
   }

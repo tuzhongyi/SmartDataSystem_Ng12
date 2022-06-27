@@ -27,7 +27,7 @@ import { AIModelManageConf } from './ai-model-manage.config';
   providers: [AIModelManageBusiness],
 })
 export class AIModelManageComponent implements OnInit {
-  private _pageSize = 9;
+  private _pageSize = 3;
   private _condition = '';
 
   // Table
@@ -47,17 +47,17 @@ export class AIModelManageComponent implements OnInit {
 
 
   // 对话框
-  showDialog = false;
+  showOperate = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
   // 表单
   state = FormState.none;
-  AIModelId = '';
+  aiModelId = '';
 
 
   get enableDelBtn() {
-    return true;
+    return !!this.selectedRows.length
   }
 
   @ViewChild(TableComponent) table?: TableComponent;
@@ -86,6 +86,7 @@ export class AIModelManageComponent implements OnInit {
 
   private async _init() {
     let res = await this._business.init(
+      this._condition,
       this.pageIndex,
       this._pageSize
     );
@@ -96,7 +97,8 @@ export class AIModelManageComponent implements OnInit {
 
   async searchEvent(condition: string) {
     this._condition = condition;
-    this._business.search(this._condition, this._pageSize);
+    this.pageIndex = 1;
+    this._init();
   }
 
 
@@ -127,13 +129,16 @@ export class AIModelManageComponent implements OnInit {
   }
 
   closeForm(update: boolean) {
-    this.showDialog = false
+    this.showOperate = false
     this.state = FormState.none;
-    if (update) this._init();
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
   }
   addBtnClick() {
     this.state = FormState.add;
-    this.showDialog = true;
+    this.showOperate = true;
   }
   deleteBtnClick() {
     this.willBeDeleted = [...this.selectedRows]
@@ -149,20 +154,30 @@ export class AIModelManageComponent implements OnInit {
 
     }
   }
+
   private async _deleteRows(rows: AIModelManageModel[]) {
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      // await this._business.delete(id)
+      await this._business.delete(id)
       this._toastrService.success('删除成功');
 
     }
     if (this.table) {
       this.table.deleteRows(rows);
+      this.pageIndex = 1;
       this._init();
     }
   }
-  private _clickEditBtn() { }
-  private _clickDelBtn() { }
+  private _clickEditBtn(row: AIModelManageModel) {
+    this.showOperate = true;
+    this.state = FormState.edit;
+    this.aiModelId = row.Id;
+  }
+  private _clickDelBtn(row: AIModelManageModel) {
+    this.willBeDeleted = [row];
+    this.showConfirm = true;
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+  }
 
 
 }

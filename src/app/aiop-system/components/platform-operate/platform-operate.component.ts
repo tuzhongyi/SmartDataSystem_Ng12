@@ -91,7 +91,6 @@ export class PlatformOperateComponent implements OnInit {
     this.protocols = await this._business.getProtocols()
     if (this.state == FormState.edit) {
       this._platform = await this._business.getPlatform(this.platformId);
-      // console.log(this._platform)
     }
     this._updateForm();
   }

@@ -1,7 +1,7 @@
 /**AI模型信息 */
 export class CameraAIModel {
   /**ID */
-  readonly Id!: string;
+  Id!: string;
   /**模型ID(可选) */
   ModelId?: string;
   /**模型标签图标0-n */
@@ -13,13 +13,13 @@ export class CameraAIModel {
   /**应用类型，一般是设备型号(可选) */
   readonly TransformType?: string;
   /**模型类型(可选)：AIOP */
-  readonly ModelType?: string;
+  ModelType?: string;
   /**模型名称(可选) */
-  readonly ModelName?: string;
+  ModelName?: string;
   /**模型数据传输对象的格式(可选) */
   readonly ModelDTO?: CameraAIModelDTO;
   /**JSON文件的BASE64， 创建时必须填写 */
-  readonly ModelJSON!: string;
+  ModelJSON!: string;
   /**创建时间 */
   CreateTime!: Date | string;
   /**更新事件 */

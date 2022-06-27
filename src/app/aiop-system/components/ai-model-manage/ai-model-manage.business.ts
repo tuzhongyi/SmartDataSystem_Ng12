@@ -12,13 +12,16 @@ export class AIModelManageBusiness {
   constructor(private _cameraAIModelRequest: CameraAIModelRequestService, private _converter: AIModelManageConverter) {
 
   }
-  async init(pageIndex: number = 1, pageSize: number = 9) {
+  async init(condition: string = '', pageIndex: number = 1, pageSize: number = 9) {
 
     let params: GetAIModelsParams = new GetAIModelsParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
+    params.ModelName = condition;
 
     let tmp = await this.list(params);
+
+    // console.log(tmp)
 
     let data = this._converter.iterateToModel(tmp.Data);
     data = data.sort((a, b) => {
@@ -32,23 +35,14 @@ export class AIModelManageBusiness {
 
     return res;
   }
+
+  delete(id: string) {
+    return this._cameraAIModelRequest.delete(id);
+  }
   private list(params: GetAIModelsParams) {
     return this._cameraAIModelRequest.list(params)
   }
 
 
-  async search(condition: string = '', pageSize: number = 9) {
-    let params = new GetAIModelsParams();
-    params.ModelName = condition;
 
-    let records = await this._cameraAIModelRequest.list(params);
-    let models = this._converter.iterateToModel(records.Data)
-
-    let res: PagedList<AIModelManageModel> = {
-      Page: records.Page,
-      Data: models,
-    };
-
-    return res;
-  }
 }

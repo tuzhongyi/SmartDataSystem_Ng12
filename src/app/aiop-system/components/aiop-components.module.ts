@@ -32,6 +32,7 @@ import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.
 import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
 import { SRServerManageComponent } from './sr-server-manage/sr-server-manage.component';
 import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.component';
+import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -55,7 +56,8 @@ import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.
     IllegalDropRecord2Component,
     PlatformOperateComponent,
     SRServerManageComponent,
-    SRServerOperateComponent
+    SRServerOperateComponent,
+    AIModelOperateComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],
