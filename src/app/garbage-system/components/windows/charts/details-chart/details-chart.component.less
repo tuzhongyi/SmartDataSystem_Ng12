@@ -16,6 +16,10 @@
 
       &>* {
         margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0px;
+        }
       }
 
 
@@ -25,23 +29,24 @@
         justify-content: flex-start;
         align-items: center;
 
-        &>span{
+        &>span {
           color: #cfd7ff;
           font-size: 18px;
           margin-right: 10px;
         }
-        &>input{
+
+        &>input {
           height: 32px;
         }
 
-        ::ng-deep{
-          .division-station-tree-filter .selected label{
+        ::ng-deep {
+          .division-station-tree-filter .selected label {
             font-size: 18px;
           }
 
 
         }
-        
+
       }
 
     }
@@ -51,24 +56,25 @@
       justify-content: flex-end;
       align-items: center;
 
-      &>*{
+      &>* {
         margin-left: 10px;
-        &:first-child{
+
+        &:first-child {
           margin-left: 0;
         }
       }
-      
+
       .list-type-select {
         border: 1px solid #5e6ebf;
         padding: 0 10px;
         height: 32px;
 
-        ::ng-deep{
-        .select-group{
-          width:calc(100% + 20px) ;
-          margin:0 -10px;
+        ::ng-deep {
+          .select-group {
+            width: calc(100% + 20px);
+            margin: 0 -10px;
+          }
         }
-      }
       }
     }
   }
@@ -77,5 +83,3 @@
     height: calc(100% - 35px - 10px);
   }
 }
-
-

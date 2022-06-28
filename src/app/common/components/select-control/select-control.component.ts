@@ -23,16 +23,18 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Output()
   select: EventEmitter<SelectItem> = new EventEmitter();
   @Input()
-  cannull:boolean = false;
+  cannull: boolean = false;
+  @Input()
+  cansearch = false;
 
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {    
+  ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
         this.load.subscribe((x) => {
-          if (x) {            
-            this.onselect(x)
-          } 
+          if (x) {
+            this.onselect(x);
+          }
         });
       }
     }
@@ -42,9 +44,8 @@ export class SelectControlComponent implements OnInit, OnChanges {
     window.addEventListener('click', () => {
       this.opened = false;
     });
-    if(this.data && this.data.length > 0 && !this.load){
-      
-      this.onselect(this.data[0])
+    if (this.data && this.data.length > 0 && !this.load) {
+      this.onselect(this.data[0]);
     }
   }
 
@@ -61,12 +62,34 @@ export class SelectControlComponent implements OnInit, OnChanges {
     this.selected = item;
     this.opened = false;
     this.select.emit(item);
+    if (this.standby) {
+      this.data = this.standby;
+      this.standby = undefined;
+    }
   }
 
-  clear(event:Event){
+  clear(event: Event) {
     this.selected = undefined;
     event.cancelBubble = true;
     this.opened = false;
     this.select.emit(undefined);
+  }
+  standby?: SelectItem[];
+  search(text: string) {
+    if (this.standby) {
+      this.data = this.standby;
+      this.standby = undefined;
+    }
+    if (text) {
+      if (this.data) {
+        this.standby = this.data;
+        this.data = this.data.filter((x) => {
+          return x.language.indexOf(text) >= 0;
+        });
+      }
+    }
+  }
+  onsearching(event: Event) {
+    event.cancelBubble = true;
   }
 }

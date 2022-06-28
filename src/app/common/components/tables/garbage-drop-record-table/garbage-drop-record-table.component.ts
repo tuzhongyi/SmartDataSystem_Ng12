@@ -46,15 +46,15 @@ export class GarbageDropRecordTableComponent
   filter: GarbageDropRecordFilter;
 
   width = [
-    '11%',
+    '12%',
     '10%',
     '9%',
     '9%',
-    '10%',
+    '8%',
     '9%',
-    '8%',
-    '8%',
     '7%',
+    '7%',
+    '10%',
     '7%',
     '7%',
     '5%',

@@ -81,6 +81,7 @@
 .panel .background {
   height: calc(100%);
   width: calc(100%);
+  box-sizing: border-box;
 
   background-color: #13224d;
   clip-path: polygon(0% 10px,

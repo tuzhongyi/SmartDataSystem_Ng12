@@ -17,7 +17,7 @@ export class DurationParams {
   @Transform(transformDateTime)
   EndTime!: Date;
 
-  static TimeUnit(unit: TimeUnit, date: Date, firstDay = 0) {
+  static TimeUnit(unit: TimeUnit, date: Date, firstDay = 1) {
     switch (unit) {
       case TimeUnit.Month:
         return DurationParams.allMonth(date);

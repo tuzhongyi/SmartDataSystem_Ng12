@@ -44,19 +44,19 @@
       <div class="filter-item">
         <span>行政区</span>
         <howell-division-tree-filter
-        (select)="ondivisionselect($event)"
-        [align]="treeAlign"
-        [division]="division"
-      ></howell-division-tree-filter>
+          (select)="ondivisionselect($event)"
+          [align]="treeAlign"
+          [division]="division"
+        ></howell-division-tree-filter>
       </div>
       <div class="filter-item">
         <howell-garbage-station-filter
-          [divisionId]="division? division.Id : undefined"
+          [divisionId]="division ? division.Id : undefined"
           (select)="onStationSelected($event)"
         >
         </howell-garbage-station-filter>
       </div>
-      
+
       <button class="hw-blue-btn search" (click)="search()">
         <i class="mdi mdi-magnify"></i>查询
       </button>
@@ -81,14 +81,15 @@
     </div>
   </div>
   <div class="garbage-station-window-details-content">
-    <howell-line-chart *ngIf="chartType === ChartType.line"
+    <howell-line-chart
+      *ngIf="chartType === ChartType.line"
       [theme]="config.line.theme"
       [options]="config.line.options"
       [merge]="config.line.merge"
     ></howell-line-chart>
     <howell-bar-chart
-    *ngIf="chartType === ChartType.bar"
-    [theme]="config.bar.theme"
+      *ngIf="chartType === ChartType.bar"
+      [theme]="config.bar.theme"
       [options]="config.bar.options"
       [merge]="config.bar.merge"
     ></howell-bar-chart>

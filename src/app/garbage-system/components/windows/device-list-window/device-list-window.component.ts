@@ -16,7 +16,10 @@ import { DeviceViewModel } from 'src/app/common/components/tables/device-list-ta
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import {
+  SearchOptionKey,
+  SearchOptions,
+} from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-device-list-window',
@@ -44,7 +47,11 @@ export class DeviceListWindowComponent
 
   filter: DeviceListTableFilter = {};
 
-  onsearch(opts: SearchOptions) {
+  onsearch(text: string) {
+    let opts: SearchOptions = {
+      text: text,
+      propertyName: SearchOptionKey.name,
+    };
     this.load.emit(opts);
   }
   @Output()

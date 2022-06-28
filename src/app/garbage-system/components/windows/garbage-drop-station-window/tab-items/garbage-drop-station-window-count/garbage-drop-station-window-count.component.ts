@@ -64,10 +64,12 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     );
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
       if (this.local.user.Resources[0].ResourceType === UserResourceType.City) {
-        new SelectItem(
-          UserResourceType.County.toString(),
-          UserResourceType.County,
-          Language.UserResourceType(UserResourceType.County)
+        this.types.push(
+          new SelectItem(
+            UserResourceType.County.toString(),
+            UserResourceType.County,
+            Language.UserResourceType(UserResourceType.County)
+          )
         );
       }
     }
