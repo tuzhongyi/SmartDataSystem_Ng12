@@ -3,7 +3,7 @@ import { CameraAIModel } from "src/app/network/model/camera-ai.model";
 import { CameraAIModelRequestService } from "src/app/network/request/camera-ai-model/camera-ai-model.service";
 
 @Injectable()
-export class AiModelOperateBusiness {
+export class AIModelOperateBusiness {
   constructor(private _cameraAIModelRequest: CameraAIModelRequestService) {
 
   }

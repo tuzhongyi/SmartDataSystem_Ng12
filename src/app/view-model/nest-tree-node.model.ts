@@ -1,8 +1,4 @@
 import { BehaviorSubject } from 'rxjs';
-import { DivisionType } from '../enum/division-type.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
 
 export class NestTreeNode {
   childrenChange = new BehaviorSubject<NestTreeNode[]>([]);

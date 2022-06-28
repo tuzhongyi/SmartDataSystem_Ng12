@@ -6,7 +6,8 @@
     "types": [
       "node",
       "@types/jquery",
-      "@types/jquery-toast-plugin"
+      "@types/jquery-toast-plugin",
+      "@types/bootstrap-touchspin"
     ]
   },
   "files": [

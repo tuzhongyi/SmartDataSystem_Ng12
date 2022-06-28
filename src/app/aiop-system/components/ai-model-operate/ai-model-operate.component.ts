@@ -1,25 +1,55 @@
-import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
-import { AiModelOperateBusiness } from './ai-model-operate.business';
+import { CameraAIModel, CameraAIModelDTOLabel, EnumValue } from 'src/app/network/model/camera-ai.model';
+import { AIModelOperateBusiness } from './ai-model-operate.business';
 import Icons from "src/assets/json/ai-icon.json"
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common'
 import { ToastrService } from 'ngx-toastr';
 import { Camera } from 'src/app/network/model/camera.model';
+import { TreeConverter } from 'src/app/converter/tree.converter';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { NestedTreeControl } from '@angular/cdk/tree';
+
+export interface NestedTreeNode {
+  name: string;
+  children?: Array<NestedTreeNode>
+}
 
 @Component({
   selector: 'howell-ai-model-operate',
   templateUrl: './ai-model-operate.component.html',
   styleUrls: ['./ai-model-operate.component.less'],
   providers: [
-    AiModelOperateBusiness
+    AIModelOperateBusiness
   ]
 })
-export class AIModelOperateComponent implements OnInit {
+export class AIModelOperateComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private _cameraAIModel?: CameraAIModel;
+
+
+  data: CameraAIModelDTOLabel[] = [
+
+  ]
+
+  public dataSource = new MatTreeNestedDataSource<CameraAIModelDTOLabel>();
+  public treeControl = new NestedTreeControl(
+    (node: CameraAIModelDTOLabel) => {
+      // if (!!node.IsLeaf) {
+      //   return node.EnumValues || []
+      // }
+      // else {
+
+      // }
+      return node.Labels
+    }
+  )
+
+  hasChild = (_: number, node: CameraAIModelDTOLabel) => {
+    return !node.IsLeaf
+  }
 
   FormState = FormState;
   myForm = new FormGroup({
@@ -40,6 +70,8 @@ export class AIModelOperateComponent implements OnInit {
   iconsValue = Array.from(this.iconsMap.values());
   iconsKey = Array.from(this.iconsMap.keys())
   iconsEntries = Array.from(this.iconsMap.entries())
+
+  maskSub!: Subscription;
 
   get title() {
     if (this.state == FormState.add) {
@@ -69,13 +101,13 @@ export class AIModelOperateComponent implements OnInit {
   @Output()
   closeEvent = new EventEmitter<boolean>()
 
-
   @ViewChild('fileBtn') fileBtn?: ElementRef<HTMLInputElement>;
 
   @ViewChild('mask') mask!: ElementRef<HTMLDivElement>;
 
-  constructor(private _business: AiModelOperateBusiness, private _toastrService: ToastrService, @Inject(DOCUMENT) private document: any) {
-
+  constructor(private _business: AIModelOperateBusiness, private _toastrService: ToastrService,
+    private _converter: TreeConverter, @Inject(DOCUMENT) private document: any) {
+    this.dataSource.data = this.data;
   }
 
 
@@ -83,6 +115,9 @@ export class AIModelOperateComponent implements OnInit {
     if (this.state == FormState.edit) {
       this._cameraAIModel = await this._business.getAIModel(this.aiModelId)
       console.log(this._cameraAIModel)
+      this.data = this._cameraAIModel.ModelDTO?.Labels || [];
+
+      this.dataSource.data = this.data;
 
     }
     this._updateForm()
@@ -92,9 +127,12 @@ export class AIModelOperateComponent implements OnInit {
     // fromEvent(this.document.body, 'click').subscribe(() => {
     //   this.showList = false;
     // })
-    fromEvent(this.mask.nativeElement, 'click').subscribe(() => {
+    this.maskSub = fromEvent(this.mask.nativeElement, 'click').subscribe(() => {
       this.showList = false;
     })
+  }
+  ngOnDestroy(): void {
+    this.maskSub.unsubscribe();
   }
   // 选择ModelJson文件
   triggerSelect() {
@@ -120,7 +158,6 @@ export class AIModelOperateComponent implements OnInit {
     let jsonData = this.myForm.value.ModelJson;
     if (jsonData) {
       let res = await this._business.parseAIModel(jsonData);
-      console.log('解析', res)
       this.myForm.patchValue({
         Version: res.Version,
         TransformType: res.TransformType
@@ -156,7 +193,6 @@ export class AIModelOperateComponent implements OnInit {
         model.UpdateTime = new Date().toISOString();
         let res = await this._business.createAIModel(model)
         if (res) {
-          console.log('添加', res)
           this._toastrService.success('添加成功');
           this.closeEvent.emit(true)
         }
@@ -168,11 +204,9 @@ export class AIModelOperateComponent implements OnInit {
           this._cameraAIModel.ModelJSON = this.myForm.value.ModelJson ?? ""
           this._cameraAIModel.Label = + (this.myForm.value.Label ?? '');
           this._cameraAIModel.UpdateTime = new Date().toISOString();
-          console.log(this._cameraAIModel)
 
           let res = await this._business.setAIModel(this._cameraAIModel)
           if (res) {
-            console.log('编辑', res)
             this._toastrService.success('编辑成功');
             this.closeEvent.emit(true)
           }

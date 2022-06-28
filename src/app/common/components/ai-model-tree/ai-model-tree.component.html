@@ -1,0 +1,53 @@
+<div class="ai-model-tree">
+  <div class="tree-container">
+    <mat-tree
+      [dataSource]="dataSource"
+      [treeControl]="treeControl"
+      [trackBy]="trackBy"
+      #tree
+    >
+      <mat-tree-node
+        *matTreeNodeDef="let node"
+        [matTreeNodePadding]="node.level + 1"
+        [matTreeNodePaddingIndent]="15"
+        [class.high-light]="highLight(node)"
+      >
+        <ng-container *ngIf="node.expandable">
+          <button class="tree-select" matTreeNodeToggle>
+            <div
+              class="select"
+              [class.expanded]="treeControl.isExpanded(node)"
+            ></div>
+          </button>
+        </ng-container>
+
+        <ng-container *ngIf="!node.expandable">
+          <button class="tree-select" disabled></button>
+        </ng-container>
+
+        <div
+          class="node-content"
+          [title]="node.name"
+          (click)="selectNode(node)"
+        >
+          <div class="content-left">
+            <i [class]="node.iconClass"></i>
+            {{ node.name }}
+          </div>
+          <div class="content-right" style="">
+            <span style="font-size: 14px"> {{ node.value }}</span>
+            <i class="howell-icon-arrowright" style="margin: 0 10px"></i>
+            <div style="width: 60px">
+              <input
+                appTouchSpin
+                type="text"
+                [value]="node.modelValue"
+                style="height: 42px; min-width: auto; font-size: 14px"
+              />
+            </div>
+          </div>
+        </div>
+      </mat-tree-node>
+    </mat-tree>
+  </div>
+</div>

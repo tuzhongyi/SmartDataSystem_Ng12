@@ -1,8 +1,3 @@
-import { DivisionType } from '../enum/division-type.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
-import { UserResource } from '../network/model/user.model';
 
 export class FlatTreeNode {
   constructor(

@@ -34,6 +34,7 @@ import { IConverter } from '../common/interfaces/converter.interface';
 import { EnumHelper } from '../enum/enum-helper';
 import { RegionType } from '../enum/region-type.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
+import { CameraAIModelDTOLabel } from '../network/model/camera-ai.model';
 import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';

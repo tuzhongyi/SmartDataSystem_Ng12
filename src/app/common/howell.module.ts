@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-26 14:26:27
  * @Last Modified by: pmx
- * @Last Modified time: 2022-03-28 11:21:02
+ * @Last Modified time: 2022-06-28 15:14:56
  */
 import { CommonModule, DatePipe } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -22,6 +22,7 @@ import Adsame from 'src/assets/echart-theme/adsame.json';
 import 'echarts/theme/shine.js';
 import 'echarts/theme/vintage.js';
 import { RouterModule } from '@angular/router';
+import { TouchSpinDirective } from './directives/touch-spin.directive';
 
 echarts.registerTheme('adsame', Adsame);
 
@@ -39,4 +40,4 @@ echarts.registerTheme('adsame', Adsame);
   ],
   providers: [],
 })
-export class HowellModule {}
+export class HowellModule { }

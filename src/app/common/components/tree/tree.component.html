@@ -14,8 +14,8 @@
     >
       <mat-tree-node
         *matTreeNodeDef="let node"
-        matTreeNodePadding
-        [matTreeNodePaddingIndent]="20"
+        [matTreeNodePadding]="node.level + 1"
+        [matTreeNodePaddingIndent]="15"
         [class.high-light]="highLight(node)"
       >
         <!-- 下拉箭头 -->
@@ -39,16 +39,7 @@
 
         <!-- 单选模式 -->
         <ng-template [ngIf]="selectModel == TreeSelectEnum.Single">
-          <div
-            [title]="node.name"
-            (click)="singleSelectNode(node)"
-            style="
-              flex-grow: 1;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            "
-          >
+          <div [title]="node.name" (click)="singleSelectNode(node)">
             <i [class]="node.iconType"></i>
             {{ node.name }}
           </div>

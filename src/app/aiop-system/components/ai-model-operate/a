@@ -1,0 +1,31 @@
+<!-- <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+              <mat-nested-tree-node *matTreeNodeDef="let node">
+                <div class="parent-node">
+                  <button class="tree-select" disabled></button>
+                  <div>
+                    {{ node.name }}
+
+                    <button (click)="node.name = 'hello'">Click</button>
+                  </div>
+                </div>
+              </mat-nested-tree-node>
+              <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <div class="parent-node">
+                  <button class="tree-select" matTreeNodeToggle>
+                    <div class="select"></div>
+                  </button>
+                  <div>
+                    {{ node.name }}
+                  </div>
+                </div>
+                <div
+                  [hidden]="!treeControl.isExpanded(node)"
+                  class="child-nodes"
+                >
+                  <ng-container matTreeNodeOutlet></ng-container>
+                </div>
+              </mat-nested-tree-node>
+            </mat-tree> -->
+
+/** * 编辑模型属性，一定要清空ModelJson *
+选择模型，可以直接提交ModelJson，可不清Model * */
