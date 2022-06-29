@@ -34,15 +34,16 @@
             <i [class]="node.iconClass"></i>
             {{ node.name }}
           </div>
-          <div class="content-right" style="">
+          <div class="content-right">
             <span style="font-size: 14px"> {{ node.value }}</span>
             <i class="howell-icon-arrowright" style="margin: 0 10px"></i>
             <div style="width: 60px">
               <input
+                (touchSpinChange)="touchSpinChange($event, node)"
                 appTouchSpin
                 type="text"
                 [value]="node.modelValue"
-                style="height: 42px; min-width: auto; font-size: 14px"
+                style="height: 22px; min-width: auto; font-size: 14px"
               />
             </div>
           </div>

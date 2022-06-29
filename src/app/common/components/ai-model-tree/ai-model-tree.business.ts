@@ -6,7 +6,5 @@ export class AIModelTreeBusiness {
   constructor(private _cameraAIModelRequest: CameraAIModelRequestService) {
 
   }
-  getAIModel(id: string) {
-    return this._cameraAIModelRequest.get(id)
-  }
+
 }

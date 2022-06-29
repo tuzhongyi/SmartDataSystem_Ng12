@@ -80,7 +80,7 @@ export class CameraAIModel {
   ModelName?: string;
   /**模型数据传输对象的格式(可选) */
   @Type(() => CameraAIModelDTO)
-  readonly ModelDTO?: CameraAIModelDTO;
+  ModelDTO?: CameraAIModelDTO;
   /**JSON文件的BASE64， 创建时必须填写 */
   ModelJSON!: string;
   /**创建时间 */

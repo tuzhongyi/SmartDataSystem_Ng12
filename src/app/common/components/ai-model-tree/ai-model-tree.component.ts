@@ -1,15 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { time } from 'console';
 import { TreeConverter } from 'src/app/converter/tree.converter';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
+import { CameraAIModel, CameraAIModelDTOLabel, EnumValue } from 'src/app/network/model/camera-ai.model';
 import { AIModelTreeBusiness } from './ai-model-tree.business';
 import { AIModelTreeConverter } from '../../../converter/ai-model-tree.converter';
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
 import { AIModelNestNode } from 'src/app/view-model/ai-model-nest-node.model';
 import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
 import { AIModelFlatNode } from 'src/app/view-model/ai-model-flat-node.model';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { SelectionModel } from '@angular/cdk/collections';
+
+type rawDataType = CameraAIModelDTOLabel | EnumValue;
 
 @Component({
   selector: 'howell-ai-model-tree',
@@ -22,8 +24,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 })
 export class AIModelTreeComponent implements OnInit {
 
-  private _flatNodeMap = new Map<string, AIModelFlatNode>();
-  private _transformer = (nestNode: AIModelNestNode, level: number) => {
+  private _flatNodeMap = new Map<string, AIModelFlatNode<rawDataType>>();
+  private _transformer = (nestNode: AIModelNestNode<rawDataType>, level: number) => {
     const existingNode = this._flatNodeMap.get(nestNode.id);
 
     if (existingNode) {
@@ -31,7 +33,7 @@ export class AIModelTreeComponent implements OnInit {
       existingNode.expandable = nestNode.hasChild;
       return existingNode;
     }
-    const flatNode = new AIModelFlatNode();
+    const flatNode = new AIModelFlatNode<rawDataType>();
     flatNode.id = nestNode.id;
     flatNode.name = nestNode.name;
     flatNode.level = level;
@@ -50,32 +52,31 @@ export class AIModelTreeComponent implements OnInit {
     this._flatNodeMap.set(flatNode.id, flatNode);
     return flatNode;
   };
-  private _getLevel = (node: AIModelFlatNode) => node.level;
-  private _isExpandable = (node: AIModelFlatNode) => node.expandable;
-  private _getChildren = (node: AIModelNestNode) => node.childrenChange;
-  private _hasChild = (index: number, node: AIModelFlatNode) => node.expandable;
+  private _getLevel = (node: AIModelFlatNode<rawDataType>) => node.level;
+  private _isExpandable = (node: AIModelFlatNode<rawDataType>) => node.expandable;
+  private _getChildren = (node: AIModelNestNode<rawDataType>) => node.childrenChange;
+  private _hasChild = (index: number, node: AIModelFlatNode<rawDataType>) => node.expandable;
   private dataChange = new BehaviorSubject<AIModelNestNode[]>([]);
   private _nestedNodeMap = new Map<string, AIModelNestNode>();
-  private _currentNode: AIModelFlatNode | null = null;
+  private _currentNode: AIModelFlatNode<rawDataType> | null = null;
 
 
-  private _treeFlattener: MatTreeFlattener<AIModelNestNode, AIModelFlatNode>;
-
-  private _cameraAIModel?: CameraAIModel;
-
+  private _treeFlattener: MatTreeFlattener<AIModelNestNode<rawDataType>, AIModelFlatNode<rawDataType>>;
+  private _aiModelLabels: CameraAIModelDTOLabel[] = [];
 
 
-  treeControl: FlatTreeControl<AIModelFlatNode>;
-  dataSource: MatTreeFlatDataSource<AIModelNestNode, AIModelFlatNode>;
-  // 一定要返回对象
-  trackBy = (index: number, node: AIModelFlatNode) => node;
-  selection!: SelectionModel<AIModelFlatNode>;// 保存选中节点
 
-
+  treeControl: FlatTreeControl<AIModelFlatNode<rawDataType>>;
+  dataSource: MatTreeFlatDataSource<AIModelNestNode<rawDataType>, AIModelFlatNode<rawDataType>>;
+  trackBy = (index: number, node: AIModelFlatNode<rawDataType>) => node;
+  selection!: SelectionModel<AIModelFlatNode<rawDataType>>;// 保存选中节点
   // 高亮显示选中节点
-  highLight = (node: AIModelFlatNode) => {
+  highLight = (node: AIModelFlatNode<rawDataType>) => {
     return this.selection.isSelected(node);
   };
+
+  @Input()
+  modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>([])
 
 
   constructor(private _business: AIModelTreeBusiness, private _converter: AIModelTreeConverter) {
@@ -86,12 +87,12 @@ export class AIModelTreeComponent implements OnInit {
       this._getChildren
     )
 
-    this.treeControl = new FlatTreeControl<AIModelFlatNode>(
+    this.treeControl = new FlatTreeControl<AIModelFlatNode<rawDataType>>(
       this._getLevel,
       this._isExpandable
     );
 
-    this.dataSource = new MatTreeFlatDataSource<AIModelNestNode, AIModelFlatNode>(
+    this.dataSource = new MatTreeFlatDataSource<AIModelNestNode<rawDataType>, AIModelFlatNode<rawDataType>>(
       this.treeControl,
       this._treeFlattener
     );
@@ -99,22 +100,35 @@ export class AIModelTreeComponent implements OnInit {
     this.dataChange.subscribe((data) => {
       this.dataSource.data = data;
     });
-    this.selection = new SelectionModel<AIModelFlatNode>();
+    this.selection = new SelectionModel<AIModelFlatNode<rawDataType>>();
   }
 
   async ngOnInit() {
-    this._cameraAIModel = await this._business.getAIModel("98f7956d19054d6590392fbd888ac59e")
-    // console.log(this._cameraAIModel)
-
-    let res = this._converter.recurseToNestTreeNode(this._cameraAIModel.ModelDTO!.Labels)
-    // console.log(res)
-    this.dataChange.next(res);
-
-    // console.log(this._flatNodeMap)
+    this.modelLabelsSubject.subscribe(data => {
+      this._aiModelLabels = data;
+      let res = this._converter.recurseToNestTreeNode(data);
+      this.dataChange.next(res);
+    })
 
   }
-  selectNode(node: AIModelFlatNode) {
+  selectNode(node: AIModelFlatNode<CameraAIModelDTOLabel>) {
+    if (this.selection.isSelected(node)) return;
     this.selection.toggle(node);
+  }
+  click() {
+    console.log(this._flatNodeMap)
+  }
+  touchSpinChange(data: string, node: AIModelFlatNode<rawDataType>) {
+    // console.log('touchSpinChange', data)
+    node.modelValue = data;
+    if (node.rawData instanceof CameraAIModelDTOLabel) {
+      node.rawData.LabelModelValue = data;
+    } else if (node.rawData instanceof EnumValue) {
+      node.rawData.ModelValue = +data;
+    }
+    // 虽然修改的是对象，显式提示数据更新
+    this.modelLabelsSubject.next(this._aiModelLabels)
+
   }
 
 }

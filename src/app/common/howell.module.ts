@@ -22,7 +22,7 @@ import Adsame from 'src/assets/echart-theme/adsame.json';
 import 'echarts/theme/shine.js';
 import 'echarts/theme/vintage.js';
 import { RouterModule } from '@angular/router';
-import { TouchSpinDirective } from './directives/touch-spin.directive';
+import { TouchSpinDirective } from './directives/touch-spin/touch-spin.directive';
 
 echarts.registerTheme('adsame', Adsame);
 

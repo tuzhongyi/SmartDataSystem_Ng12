@@ -1,4 +1,4 @@
-export class AIModelFlatNode {
+export class AIModelFlatNode<T = any> {
   id!: string;
   name!: string;
   level!: number;
@@ -7,6 +7,6 @@ export class AIModelFlatNode {
   modelValue!: string;
   expandable!: boolean;
   parentId!: string | null;
-  parentNode!: AIModelFlatNode | null;
-  rawData?: any;
+  parentNode!: AIModelFlatNode<T> | null;
+  rawData?: T;
 }

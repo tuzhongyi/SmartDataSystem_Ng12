@@ -47,7 +47,7 @@ export class AIModelManageComponent implements OnInit {
 
 
   // 对话框
-  showOperate = true;
+  showOperate = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 

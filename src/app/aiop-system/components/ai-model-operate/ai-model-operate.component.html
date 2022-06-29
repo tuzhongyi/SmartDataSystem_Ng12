@@ -112,7 +112,9 @@
         </div>
         <div class="content">
           <div class="ai-model-attr">
-            <howell-ai-model-tree></howell-ai-model-tree>
+            <howell-ai-model-tree
+              [modelLabelsSubject]="modelLabelsSubject"
+            ></howell-ai-model-tree>
           </div>
         </div>
       </div>
@@ -125,6 +127,10 @@
       <button class="hw-gray-m-btn" type="button" (click)="onReset()">
         <i class="howell-icon-Close"></i>
       </button>
+
+      <!-- <button class="hw-red-m-btn" type="button" (click)="modify()">
+        修改Label
+      </button> -->
     </div>
   </div>
 </div>

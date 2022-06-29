@@ -1,6 +1,6 @@
 import { BehaviorSubject } from "rxjs";
 
-export class AIModelNestNode {
+export class AIModelNestNode<T = any> {
   id!: string;
   name!: string;
   value!: string;
@@ -8,7 +8,6 @@ export class AIModelNestNode {
   iconClass!: string;
   hasChild!: boolean;
   parentId!: string | null;
-  childrenChange!: BehaviorSubject<AIModelNestNode[]>;
-  rawData?: any;
-
+  childrenChange!: BehaviorSubject<AIModelNestNode<T>[]>;
+  rawData?: T;
 }
