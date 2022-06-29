@@ -23,6 +23,8 @@ import Icons from 'src/assets/json/ai-icon.json';
 import { BehaviorSubject, fromEvent, Subject, Subscription } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
+import { encode, decode, Base64 } from 'js-base64';
+
 
 export interface NestedTreeNode {
   name: string;
@@ -36,8 +38,7 @@ export interface NestedTreeNode {
   providers: [AIModelOperateBusiness],
 })
 export class AIModelOperateComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+  implements OnInit, AfterViewInit, OnDestroy {
   private _cameraAIModel?: CameraAIModel;
   private _parsedAIModel?: CameraAIModel;
   private _aiModelDTo?: CameraAIModelDTO;
@@ -100,13 +101,16 @@ export class AIModelOperateComponent
     private _business: AIModelOperateBusiness,
     private _toastrService: ToastrService,
     @Inject(DOCUMENT) private document: any
-  ) {}
+  ) {
+  }
 
   async ngOnInit() {
     if (this.state == FormState.edit) {
       this._cameraAIModel = await this._business.getAIModel(this.aiModelId);
       console.log('编辑', this._cameraAIModel);
       this._aiModelDTo = this._cameraAIModel.ModelDTO;
+
+      // 初始化AIModel树
       this.modelLabelsSubject.next(
         this._aiModelDTo ? this._aiModelDTo.Labels : []
       );
@@ -140,22 +144,34 @@ export class AIModelOperateComponent
     if (input.files && input.files.length) {
       fileContent = (await this._readFileContent(input.files[0])) as string;
       fileContent = fileContent.replace('data:application/json;base64,', '');
-    } else {
-      if (this.state == FormState.add) {
-        this._aiModelDTo = void 0;
-        this._parsedAIModel = void 0;
-        this.modelLabelsSubject.next([]);
-      } else {
+    }
+
+    // 每次切换模型文件，都重置状态
+    this.myForm.patchValue({
+      FilePath: filePath,
+      ModelJson: fileContent,
+      Version: '',
+      TransformType: ''
+    });
+    this._aiModelDTo = void 0;
+    this._parsedAIModel = void 0;
+    this.modelLabelsSubject.next([]);
+
+
+    if (filePath == '') {
+      // 编辑状态，取消后，返回原始状态
+      if (this.state == FormState.edit) {
         this._aiModelDTo = this._cameraAIModel?.ModelDTO;
         this.modelLabelsSubject.next(
           this._aiModelDTo ? this._aiModelDTo.Labels : []
         );
+        this.myForm.patchValue({
+          Version: this._cameraAIModel?.Version,
+          TransformType: this._cameraAIModel?.TransformType
+        })
       }
     }
-    this.myForm.patchValue({
-      FilePath: filePath,
-      ModelJson: fileContent,
-    });
+
   }
   // 应用模型
   async parseFile() {
@@ -222,6 +238,11 @@ export class AIModelOperateComponent
           this._cameraAIModel.ModelType = this.myForm.value.ModelType ?? '';
           this._cameraAIModel.Label = +(this.myForm.value.Label ?? '');
           this._cameraAIModel.UpdateTime = new Date().toISOString();
+          if (this.myForm.value.FilePath) {
+            this._cameraAIModel.ModelDTO = void 0;
+          } else {
+            this._cameraAIModel.ModelJSON = '';
+          }
           if (this._parsedAIModel) {
             this._cameraAIModel.ModelJSON = '';
             this._cameraAIModel.ModelDTO = this._parsedAIModel.ModelDTO;
@@ -240,11 +261,20 @@ export class AIModelOperateComponent
     this.closeEvent.emit(false);
   }
 
-  modify() {
-    if (this._cameraAIModel && this._cameraAIModel.ModelDTO) {
-      this._cameraAIModel.ModelDTO.Labels[0].LabelModelValue = '10';
+  downLoadModel() {
+    let modelJson = this.myForm.value.ModelJson;
+    if (modelJson) {
+      let res = decode(modelJson);
+      let blob = new Blob([res]);
+      const a = document.createElement('a');
+      let url = URL.createObjectURL(blob);
+      a.href = url;
+      a.download = (this.myForm.value.ModelName ?? 'demo') + ".txt"
+      a.click();
+      URL.revokeObjectURL(url)
     }
   }
+
   private _readFileContent(file: File) {
     return new Promise((resolve, reject) => {
       if (!file) reject('No File!!!');
@@ -261,6 +291,7 @@ export class AIModelOperateComponent
     } else if (this.state == FormState.edit) {
       if (this._cameraAIModel) {
         this.myForm.patchValue({
+          ModelJson: this._cameraAIModel.ModelJSON,
           ModelName: this._cameraAIModel.ModelName,
           ModelType: this._cameraAIModel.ModelType,
           Version: this._cameraAIModel.Version,

@@ -109,6 +109,14 @@
       <div class="hw-form-group" style="flex-basis: 100%">
         <div class="title">
           <span class="hw-form-label"> 模型属性 </span>
+          <span
+            (click)="downLoadModel()"
+            class="hw-form-icon"
+            *ngIf="state == FormState.edit"
+            style="vertical-align: middle; cursor: pointer"
+          >
+            <i class="howell-icon-download" style="color: #7586e0"></i>
+          </span>
         </div>
         <div class="content">
           <div class="ai-model-attr">
@@ -127,10 +135,6 @@
       <button class="hw-gray-m-btn" type="button" (click)="onReset()">
         <i class="howell-icon-Close"></i>
       </button>
-
-      <!-- <button class="hw-red-m-btn" type="button" (click)="modify()">
-        修改Label
-      </button> -->
     </div>
   </div>
 </div>
