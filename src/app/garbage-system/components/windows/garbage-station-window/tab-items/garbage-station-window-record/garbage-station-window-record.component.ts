@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-garbage-station-window-record',
@@ -14,6 +15,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
   changed: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+  @Input()
+  search: EventEmitter<SearchOptions> = new EventEmitter();
 
   constructor() {}
 

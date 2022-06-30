@@ -12,7 +12,7 @@ export class EventRecordOperationFilterBusiness {
 
   load: EventEmitter<EventRecordFilter> = new EventEmitter();
 
-  search(opts: SearchOptions) {
+  onsearch(opts: SearchOptions) {
     this.filter.opts = opts;
     this.load.emit(this.filter);
   }
