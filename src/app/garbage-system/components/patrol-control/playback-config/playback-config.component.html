@@ -15,14 +15,20 @@
     </div>
     <div class="item">
       <div class="title">开始时间：</div>
-      <div class="bootstrap-timepicker">
+      <!-- <div class="bootstrap-timepicker">
         <input #begin type="text" class="custom form-control" />
+      </div> -->
+      <div class="bootstrap-timepicker">
+        <app-time-control [time]="time.begin"></app-time-control>
       </div>
     </div>
     <div class="item">
       <div class="title">结束时间：</div>
-      <div class="bootstrap-timepicker">
+      <!-- <div class="bootstrap-timepicker">
         <input #end type="text" class="custom form-control" />
+      </div> -->
+      <div class="bootstrap-timepicker">
+        <app-time-control [time]="time.end"></app-time-control>
       </div>
     </div>
 

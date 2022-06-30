@@ -32,10 +32,11 @@
         (click)="openplayback()"
         *ngIf="!!playing"
         [class.hide]="!config.playback"
+        title="回放预览中的视频"
       >
         <i class="howell-icon-film text-white"></i>
       </div>
-      <div class="reflush" (click)="onreflush()">
+      <div class="reflush" (click)="onreflush()" title="刷新图片">
         <i class="howell-icon-restore text-white"></i>
       </div>
       <div class="fullscreen" (click)="onfullscreen()">

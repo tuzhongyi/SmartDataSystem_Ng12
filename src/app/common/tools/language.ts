@@ -17,6 +17,7 @@ import { StationState } from 'src/app/enum/station-state.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 
 export class Language {
@@ -49,7 +50,6 @@ export class Language {
     }
   }
 
-
   static TimeUnit(unit: TimeUnit) {
     switch (unit) {
       case TimeUnit.Hour:
@@ -62,18 +62,17 @@ export class Language {
   }
 
   static Week(day: number) {
-    let name = ["日", "一", "二", "三", "四", "五", "六", "日"];
-    return `周${name[day]}`
+    let name = ['日', '一', '二', '三', '四', '五', '六', '日'];
+    return `周${name[day]}`;
   }
 
   static Date(date: Date) {
-    return formatDate(date, "yyyy年MM月dd日", "en")
+    return formatDate(date, 'yyyy年MM月dd日', 'en');
   }
 
   static Duration(begin: Date, end: Date) {
-    return `${Language.Date(begin)} 至 ${Language.Date(end)}`
+    return `${Language.Date(begin)} 至 ${Language.Date(end)}`;
   }
-
 
   static StationStateFlags(flags: Flags<StationState>) {
     if (flags.contains(StationState.Error)) {
@@ -187,6 +186,17 @@ export class Language {
         return '';
     }
   }
+  static SearchOption(key: SearchOptionKey) {
+    switch (key) {
+      case SearchOptionKey.name:
+        return '投放点';
+      case SearchOptionKey.community:
+        return '社区';
+
+      default:
+        return '';
+    }
+  }
   static DivisionType(type: DivisionType) {
     switch (type) {
       case DivisionType.Province:
@@ -232,7 +242,7 @@ export class Language {
       }
     }
     if (!result) {
-      result = `0${Language.json.Time.minute}`
+      result = `0${Language.json.Time.minute}`;
     }
     return result;
   }
@@ -320,11 +330,11 @@ export class Language {
   static ChartType(type: ChartType) {
     switch (type) {
       case ChartType.bar:
-        return "柱状图"
+        return '柱状图';
       case ChartType.line:
-        return "折线图"
+        return '折线图';
       default:
-        return ""
+        return '';
     }
   }
 

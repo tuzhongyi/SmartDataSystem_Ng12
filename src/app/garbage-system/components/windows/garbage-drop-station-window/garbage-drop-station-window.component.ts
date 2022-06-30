@@ -9,6 +9,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { EventType } from 'src/app/enum/event-type.enum';
 import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 @Component({
   selector: 'howell-garbage-drop-station-window',
@@ -24,6 +25,10 @@ export class GarbageDropStationWindowComponent
   index = GarbageDropStationWindowIndex.list;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input()
+  divisionId?: string;
 
   constructor(public details: EventRecordWindowDetailsBusiness) {
     super();
@@ -45,6 +50,10 @@ export class GarbageDropStationWindowComponent
 
   indexChange(index: number) {
     this.index = index;
+  }
+
+  onposition(station: GarbageStation) {
+    this.position.emit(station);
   }
 }
 export enum GarbageDropStationWindowIndex {

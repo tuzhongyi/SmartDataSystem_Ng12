@@ -40,6 +40,8 @@ export class EventRecordWindowComponent
   index = EventRecordWindowIndex.record;
   @Input()
   stationId?: string;
+  @Input()
+  divisionId?: string;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Input()
@@ -59,10 +61,10 @@ export class EventRecordWindowComponent
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.stationId) {
-      this.filter.station = this.stationId
-        ? new SelectItem(this.stationId)
-        : undefined;
-      this.details;
+      this.filter.stationId = this.stationId;
+    }
+    if (changes.divisionId) {
+      this.filter.divisionId = this.divisionId;
     }
   }
 

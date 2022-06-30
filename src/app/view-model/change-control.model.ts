@@ -15,6 +15,10 @@ export class ChangeControlModel<T> {
   }
   public set value(v: T) {
     this._value = v;
-    this.onChange.emit(this._value);
+    if (this._value) {
+      this.onChange.emit(this._value);
+    } else {
+      this.onChange.unsubscribe();
+    }
   }
 }

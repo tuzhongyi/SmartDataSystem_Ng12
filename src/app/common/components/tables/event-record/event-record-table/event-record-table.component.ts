@@ -50,7 +50,6 @@ export class EventRecordTableComponent
   load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
-
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,

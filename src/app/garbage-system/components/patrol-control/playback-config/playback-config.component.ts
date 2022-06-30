@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 
@@ -17,21 +18,26 @@ declare var $: any;
 @Component({
   selector: 'app-playback-config',
   templateUrl: './playback-config.component.html',
-  styleUrls: ['./playback-config.component.css'],
+  styleUrls: ['./playback-config.component.less'],
 })
 export class PlaybackConfigComponent implements OnInit, AfterViewInit {
   DateTimePickerView = DateTimePickerView;
   endTime: Date = new Date();
   beginTime: Date = new Date();
 
+  time = {
+    begin: new TimeModel(),
+    end: new TimeModel(),
+  };
+
   form?: FormGroup;
 
   date: Date = new Date();
 
-  @ViewChild('begin')
-  beginControl?: ElementRef;
-  @ViewChild('end')
-  endControl?: ElementRef;
+  // @ViewChild('begin')
+  // beginControl?: ElementRef;
+  // @ViewChild('end')
+  // endControl?: ElementRef;
 
   @Output()
   OnOKClicked: EventEmitter<DurationParams> = new EventEmitter();
@@ -42,18 +48,21 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // let begin = this.initTimepicker(this.endControl, this.endTime);
     // let end = this.initTimepicker(this.beginControl, this.beginTime);
-    if (this.beginControl) {
-      this.beginControl.nativeElement.value = this.datePipe.transform(
-        this.beginTime,
-        'HH:mm:ss'
-      );
-    }
-    if (this.endControl) {
-      this.endControl.nativeElement.value = this.datePipe.transform(
-        this.endTime,
-        'HH:mm:ss'
-      );
-    }
+    // if (this.beginControl) {
+    //   this.beginControl.nativeElement.value = this.datePipe.transform(
+    //     this.beginTime,
+    //     'HH:mm:ss'
+    //   );
+    // }
+    // if (this.endControl) {
+    //   this.endControl.nativeElement.value = this.datePipe.transform(
+    //     this.endTime,
+    //     'HH:mm:ss'
+    //   );
+    // }
+
+    this.time.begin = new TimeModel(this.beginTime);
+    this.time.end = new TimeModel(this.endTime);
   }
 
   ngOnInit() {
@@ -99,22 +108,27 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
   }
 
   ok() {
-    if (this.beginControl) {
-      this.beginTime = this.getDate(
-        this.date,
-        this.beginControl.nativeElement.value
-      );
-    }
-    if (this.endControl) {
-      this.endTime = this.getDate(
-        this.date,
-        this.endControl.nativeElement.value
-      );
-      this.OnOKClicked.emit({
-        BeginTime: this.beginTime,
-        EndTime: this.endTime,
-      });
-    }
+    let begin = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      this.date.getDate(),
+      this.time.begin.hour.value,
+      this.time.begin.minute.value,
+      this.time.begin.second.value
+    );
+    let end = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      this.date.getDate(),
+      this.time.end.hour.value,
+      this.time.end.minute.value,
+      this.time.end.second.value
+    );
+
+    this.OnOKClicked.emit({
+      BeginTime: begin,
+      EndTime: end,
+    });
   }
 
   cancel() {

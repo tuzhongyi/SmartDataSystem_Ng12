@@ -32,7 +32,7 @@ export class DivisionFilterComponent
 
   business: IBusiness<IModel, SelectItem[]>;
 
-  loading: EventEmitter<SelectItem | undefined> = new EventEmitter();
+  loading: EventEmitter<string> = new EventEmitter();
 
   constructor(business: DivisionFilterBusiness) {
     this.business = business;
@@ -44,18 +44,16 @@ export class DivisionFilterComponent
     if (this.default) {
       let first: SelectItem | undefined = undefined;
       if (this.items && this.items.length > 0) {
-        this.loading.emit(this.items[0]);
+        this.loading.emit(this.items[0].key);
       }
-
     }
   }
 
   onselected(selected: SelectItem) {
     if (selected) {
       this.select.emit(selected.value);
-    }
-    else {
-      this.select.emit()
+    } else {
+      this.select.emit();
     }
   }
 }

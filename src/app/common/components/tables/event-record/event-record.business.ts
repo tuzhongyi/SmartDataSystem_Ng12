@@ -1,20 +1,14 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import {
-  SubscriptionService,
-} from 'src/app/common/interfaces/subscribe.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import {
-  PagedParams,
-} from 'src/app/network/request/IParams.interface';
+import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
@@ -26,14 +20,14 @@ import { EventRecordFilter } from './event-record.model';
 @Injectable()
 export class EventRecordBusiness
   implements
-  IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>
+    IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>
 {
   constructor(
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService,
     public subscription: SubscriptionService
-  ) { }
+  ) {}
   Converter: IPromiseConverter<
     PagedList<EventRecordType>,
     PagedList<EventRecordViewModel>
@@ -42,9 +36,11 @@ export class EventRecordBusiness
   async load(
     type: EventType,
     page: PagedParams,
-    opts: EventRecordFilter
+    opts: EventRecordFilter,
+    divisionId?: string,
+    stationId?: string
   ): Promise<PagedList<EventRecordViewModel>> {
-    let data = await this.getData(type, page, opts);
+    let data = await this.getData(type, page, opts, divisionId, stationId);
     let models = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -62,10 +58,13 @@ export class EventRecordBusiness
   getData(
     type: EventType,
     page: PagedParams,
-    opts: EventRecordFilter
+    opts: EventRecordFilter,
+    divisionId?: string,
+    stationId?: string
   ): Promise<PagedList<EventRecordType>> {
     this.eventService.record.IllegalDrop;
-    let params = this.getParams(page, opts);
+    let params = this.getParams(page, opts, divisionId, stationId);
+
     switch (type) {
       case EventType.IllegalDrop:
         return this.eventService.record.IllegalDrop.list(params);
@@ -78,31 +77,36 @@ export class EventRecordBusiness
     }
   }
 
-  getParams(page: PagedParams, opts: EventRecordFilter) {
+  getParams(
+    page: PagedParams,
+    opts: EventRecordFilter,
+    divisionId?: string,
+    stationId?: string
+  ) {
     let params = new GetEventRecordsParams();
     params = Object.assign(params, page);
     params.BeginTime = opts.BeginTime;
     params.EndTime = opts.EndTime;
-    if (opts.division) {
-      params.DivisionIds = [opts.division.key];
+    if (opts.divisionId) {
+      params.DivisionIds = [opts.divisionId];
     }
-    if (opts.station) {
-      params.StationIds = [opts.station.key];
+    if (opts.stationId) {
+      params.StationIds = [opts.stationId];
     }
-    if (opts.camera) {
-      params.ResourceIds = [opts.camera.key];
+    if (opts.cameraId) {
+      params.ResourceIds = [opts.cameraId];
     }
-    if (opts.text) {
-      params.ResourceName = opts.text;
+    if (opts.opts) {
+      params.ResourceName = opts.opts.text;
     }
     return params;
   }
 
   getDivision(id: string) {
-    return this.divisionService.cache.get(id)
+    return this.divisionService.cache.get(id);
   }
 
   getImage(id: string) {
-    return Medium.jpg(id)
+    return Medium.jpg(id);
   }
 }

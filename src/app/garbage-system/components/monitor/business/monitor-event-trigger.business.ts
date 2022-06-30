@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { IllegalMixintoRankArgs } from '../../illegal-mixinto-rank/illegal-mixinto-rank.component';
@@ -37,11 +38,11 @@ class IllegalMixintoRankEventTrigger {
   constructor(private window: WindowBussiness) {}
   onItemClicked(args: IllegalMixintoRankArgs) {
     this.window.record.count = args.model.value;
-    this.window.record.divisionId = args.model.id;
     this.window.record.type = args.eventType;
     this.window.record.divisionId = undefined;
     this.window.record.stationId = undefined;
     switch (args.resourceType) {
+      case UserResourceType.County:
       case UserResourceType.Committees:
         this.window.record.divisionId = args.model.id;
         break;

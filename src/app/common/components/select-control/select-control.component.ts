@@ -19,7 +19,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
   data?: SelectItem[];
 
   @Input()
-  load?: EventEmitter<any>;
+  load?: EventEmitter<string>;
   @Output()
   select: EventEmitter<SelectItem> = new EventEmitter();
   @Input()
@@ -31,9 +31,12 @@ export class SelectControlComponent implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
-        this.load.subscribe((x) => {
-          if (x) {
-            this.onselect(x);
+        this.load.subscribe((key) => {
+          if (key && this.data) {
+            let index = this.data.findIndex((x) => x.key === key);
+            if (index >= 0) {
+              this.onselect(this.data[index]);
+            }
           }
         });
       }

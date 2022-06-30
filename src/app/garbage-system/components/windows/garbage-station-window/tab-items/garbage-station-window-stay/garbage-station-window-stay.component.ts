@@ -39,7 +39,7 @@ export class GarbageStationWindowStayComponent
 
   unit: TimeUnit = TimeUnit.Hour;
 
-  model?: GarbageStationWindowStayModel;
+  model: GarbageStationWindowStayModel = new GarbageStationWindowStayModel();
 
   chartLoad: EventEmitter<void> = new EventEmitter();
 

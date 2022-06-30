@@ -9,9 +9,8 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
@@ -22,6 +21,7 @@ import {
 import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 @Component({
   selector: 'howell-garbage-drop-station-table',
@@ -32,27 +32,35 @@ import { GarbageDropStationTableModel } from './garbage-drop-station-table.model
 export class GarbageDropStationTableComponent
   extends TableAbstractComponent<GarbageDropStationTableModel>
   implements
-  IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
-  OnDestroy,
-  OnInit {
-  width = ['20%', '15%', '12%', '7%', '10%', '10%', '10%', '10%', '6%'];
-  constructor(business: GarbageDropStationTableBusiness) {
-    super();
-    this.business = business;
-  }
-  ngOnDestroy(): void {
-    this.searchOptions = undefined;
-  }
+    IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
+    OnDestroy,
+    OnInit
+{
   @Input()
   business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
-
+  @Input()
+  divisionId?: string;
   @Input()
   count: number = 0;
 
   @Input()
   load?: EventEmitter<SearchOptions>;
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  position: EventEmitter<GarbageStation> = new EventEmitter();
 
+  constructor(business: GarbageDropStationTableBusiness) {
+    super();
+    this.business = business;
+  }
+
+  width = ['20%', '14%', '12%', '7%', '9%', '9%', '9%', '8%', '6%', '6%'];
   searchOptions?: SearchOptions;
+
+  ngOnDestroy(): void {
+    this.searchOptions = undefined;
+  }
 
   ngOnInit(): void {
     this.loadData(1, this.pageSize);
@@ -63,12 +71,17 @@ export class GarbageDropStationTableComponent
     }
   }
 
-  async loadData(index: number, size: number, opts?: SearchOptions, show = true) {
+  async loadData(
+    index: number,
+    size: number,
+    opts?: SearchOptions,
+    show = true
+  ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, opts);
+    let promise = this.business.load(params, opts, this.divisionId);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -90,10 +103,12 @@ export class GarbageDropStationTableComponent
     }
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageDropStationTableModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);
+  }
+
+  onPositionClicked(item: GarbageDropStationTableModel) {
+    this.position.emit(item.GarbageStation);
   }
 }

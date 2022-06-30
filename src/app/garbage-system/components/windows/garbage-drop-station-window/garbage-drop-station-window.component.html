@@ -24,7 +24,9 @@
           <ng-container *ngIf="index == Index.list">
             <howell-garbage-drop-station-table
               [load]="load"
+              [divisionId]="divisionId"
               (image)="onimage($event)"
+              (position)="onposition($event)"
             >
             </howell-garbage-drop-station-table>
           </ng-container>

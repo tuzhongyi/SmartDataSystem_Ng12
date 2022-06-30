@@ -43,6 +43,10 @@ export class GarbageStationTableComponent
 
   @Input()
   business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
+  @Input()
+  stationId?: string;
+  @Input()
+  divisionId?: string;
 
   constructor(business: GarbageStationTableBusiness) {
     super();
@@ -76,7 +80,12 @@ export class GarbageStationTableComponent
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, opts);
+    let promise = this.business.load(
+      params,
+      opts,
+      this.stationId,
+      this.divisionId
+    );
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;

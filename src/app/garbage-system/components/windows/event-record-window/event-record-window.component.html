@@ -24,6 +24,7 @@
           <ng-container *ngIf="index === Index.record">
             <interval-division-station-filter
               *ngIf="record.filter.show"
+              [divisionId]="divisionId"
               (filter)="record.filter.onfilter($event)"
             >
             </interval-division-station-filter>

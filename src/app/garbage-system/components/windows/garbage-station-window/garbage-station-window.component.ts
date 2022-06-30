@@ -32,6 +32,8 @@ export class GarbageStationWindowComponent
   index = GarbageStationWindowIndex.station;
   @Input()
   stationId?: string;
+  @Input()
+  divisionId?: string;
 
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
@@ -54,6 +56,8 @@ export class GarbageStationWindowComponent
 
   indexChange(index: number) {
     this.index = index;
+    this.divisionId = undefined;
+    this.stationId = undefined;
   }
 
   onimage(item: ImageControlModelArray) {

@@ -1,4 +1,12 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
@@ -18,15 +26,39 @@ import {
   providers: [EventRecordFilterBusiness],
 })
 export class EventRecordFilterComponent
-  implements IComponent<IModel, DivisionStationFilteModel>, OnInit
+  implements IComponent<IModel, DivisionStationFilteModel>, OnInit, OnChanges
 {
   @Output('filter')
   filterEvent: EventEmitter<EventRecordFilter> = new EventEmitter();
+  @Input()
+  divisionId?: string;
+
   DateTimePickerView = DateTimePickerView;
   constructor(business: EventRecordFilterBusiness) {
     this.business = business;
 
     this.filter = new EventRecordFilter();
+  }
+
+  loadDivision: EventEmitter<string> = new EventEmitter();
+  loadStation: EventEmitter<string> = new EventEmitter();
+  loadCamera: EventEmitter<string> = new EventEmitter();
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.divisionId) {
+      if (this.divisionId) {
+        let opts: DivisionStationFilterOpts = {
+          divisionId: this.divisionId,
+        };
+        this.business.load(opts).then((model) => {
+          this.model = model;
+          this.filter.divisionId = this.divisionId;
+          this.filter.camera = undefined;
+          this.filter.station = undefined;
+          this.loadDivision.emit(this.filter.divisionId);
+        });
+      }
+    }
   }
   business: IBusiness<IModel, DivisionStationFilteModel>;
 
@@ -60,16 +92,18 @@ export class EventRecordFilterComponent
     this.filter.camera = undefined;
     this.filter.station = undefined;
     this.filterEvent.emit(this.filter);
+    this.loadStation.emit(this.filter.station);
   }
   async onstation(item: SelectItem) {
     let opts: DivisionStationFilterOpts = {
-      divisionId: this.filter.division!.key,
+      divisionId: this.filter.divisionId!,
       stationId: item.key,
     };
     this.model = await this.business.load(opts);
     this.filter.station = item;
     this.filter.camera = undefined;
     this.filterEvent.emit(this.filter);
+    this.loadCamera.emit(this.filter.camera);
   }
   oncamera(item: SelectItem) {
     this.filter.camera = item;

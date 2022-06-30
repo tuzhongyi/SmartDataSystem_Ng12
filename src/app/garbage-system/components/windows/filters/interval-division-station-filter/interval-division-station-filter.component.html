@@ -39,6 +39,7 @@
     <app-select-control
       class="list-type-select"
       [data]="model.divisions"
+      [load]="loadDivision"
       (select)="ondivision($event)"
     ></app-select-control>
   </div>
@@ -47,7 +48,7 @@
     <app-select-control
       class="list-type-select"
       [data]="model.stations"
-      [load]="filterEvent"
+      [load]="loadStation"
       (select)="onstation($event)"
     ></app-select-control>
   </div>
@@ -56,7 +57,7 @@
     <app-select-control
       class="list-type-select"
       [data]="model.cameras"
-      [load]="filterEvent"
+      [load]="loadCamera"
       (select)="oncamera($event)"
     ></app-select-control>
   </div>

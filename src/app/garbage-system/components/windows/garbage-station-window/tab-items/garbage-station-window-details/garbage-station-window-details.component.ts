@@ -75,6 +75,7 @@ export class GarbageStationWindowDetailsComponent
     this.initChartTypes();
   }
   async loadData() {
+    if (this.selectIds.length <= 0) return;
     let interval = DurationParams.TimeUnit(this.unit, this.date, 1);
     let opts: GarbageStationDetailsChartOptions = {
       stationIds: this.selectIds,
@@ -234,7 +235,7 @@ export class GarbageStationWindowDetailsComponent
   }
   ontimeunit(item: SelectItem) {
     this.unit = item.value;
-    this.loadChart();
+    this.loadData();
   }
   oncharttype(item: SelectItem) {
     this.chartType = item.value;

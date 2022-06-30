@@ -25,7 +25,7 @@ export class GarbageStationFilterComponent implements OnInit, OnChanges {
   @Output()
   select: EventEmitter<GarbageStation> = new EventEmitter();
 
-  loading: EventEmitter<GarbageStation | undefined> = new EventEmitter();
+  loading: EventEmitter<string> = new EventEmitter();
 
   items: SelectItem[] = [];
   business: IBusiness<IModel, SelectItem[]>;
