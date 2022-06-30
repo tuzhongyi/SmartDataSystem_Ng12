@@ -27,6 +27,8 @@
           <ng-container *ngIf="index == Index.station">
             <howell-garbage-station-table
               [load]="station.load"
+              [stationId]="stationId"
+              [divisionId]="divisionId"
               (position)="onposition($event)"
               (image)="onimage($event)"
             >
@@ -57,6 +59,7 @@
         </mat-tab>
         <mat-tab label="报警事件处置">
           <ng-container *ngIf="index == Index.record">
+            <howell-garbage-station-window-record-filter></howell-garbage-station-window-record-filter>
             <howell-garbage-drop-record-table (image)="onimage($event)">
             </howell-garbage-drop-record-table>
           </ng-container>

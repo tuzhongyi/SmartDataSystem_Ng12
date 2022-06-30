@@ -16,6 +16,7 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
 
   index = GarbageStationWindowIndex.station;
   stationId?: string;
+  divisionId?:string;
 
   constructor(private media: MediaWindowBusiness) {
     super();

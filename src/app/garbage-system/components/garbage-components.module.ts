@@ -44,6 +44,7 @@ import { GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS } from './windows/filters/garba
 import { MediaMultipleWindowComponent } from './windows/media-multiple-window/media-multiple-window.component';
 import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-window.module';
 import { PlaybackConfigComponent } from './patrol-control/playback-config/playback-config.component';
+import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-station-window/filter/garbage-station-window-record-filter/garbage-station-window-record-filter.component';
 
 @NgModule({
   declarations: [
@@ -70,8 +71,11 @@ import { PlaybackConfigComponent } from './patrol-control/playback-config/playba
     EventRecordOperationComponent,
     EventRecordFilterComponent,
     EventStatisticComponent,
+
+    GarbageStationWindowRecordFilterComponent,
     GarbageStationWindowGeneralComponent,
     GarbageStationWindowStayComponent,
+
     IntervalFilterComponent,
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,

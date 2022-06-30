@@ -16,6 +16,7 @@ import {
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
 import { SelectItem } from '../select-control/select-control.model';
+import { Language } from '../../tools/language';
 @Component({
   selector: 'app-input-search-options',
   templateUrl: './input-search-options.component.html',
@@ -51,14 +52,10 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
 
   initKeys() {
     this.keys.push(
-      new SelectItem(SearchOptionKey.name, SearchOptionKey.name, '投放点')
+      SelectItem.create(SearchOptionKey.name, Language.SearchOption)
     );
     this.keys.push(
-      new SelectItem(
-        SearchOptionKey.community,
-        SearchOptionKey.community,
-        '社区'
-      )
+      SelectItem.create(SearchOptionKey.community, Language.SearchOption)
     );
   }
 

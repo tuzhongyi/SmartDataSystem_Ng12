@@ -34,9 +34,13 @@ export class GarbageDropStationTableBusiness
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,
-    opts?: SearchOptions
+    opts?: SearchOptions,
+    divisionId?: string
   ): Promise<PagedList<GarbageDropStationTableModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, opts);
+    if (!divisionId) {
+      divisionId = this.storeService.divisionId;
+    }
+    let data = await this.getData(divisionId, page, opts);
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -56,11 +60,10 @@ export class GarbageDropStationTableBusiness
     params.DivisionId = divisionId;
     params = Object.assign(params, page);
     params.GarbageDrop = true;
-    if(opts)
-    {
+    if (opts) {
       (params as any)[opts.propertyName] = opts.text;
     }
-    
+
     return this.stationService.statistic.number.list(params);
   }
 }

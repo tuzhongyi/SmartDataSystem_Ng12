@@ -1,6 +1,6 @@
 .video-window {
   color: white;
-  height: calc(100% - 30px);
+  height: calc(100%);
   padding: 20px 10px 10px 10px;
 
   .video-window-header {
@@ -20,7 +20,7 @@
       justify-content: flex-end;
       align-items: center;
 
-      & > div {
+      &>div {
         margin: 0 5px;
         cursor: pointer;
       }
@@ -47,6 +47,7 @@
     .controls {
       width: 180px;
       height: 100%;
+      box-sizing: content-box;
     }
   }
 }

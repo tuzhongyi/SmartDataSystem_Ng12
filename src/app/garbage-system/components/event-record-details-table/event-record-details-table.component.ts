@@ -17,6 +17,7 @@ import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { EventRecordDetailsTableBusiness } from './event-record-details-table.business';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
+import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 
 @Component({
   selector: 'howell-event-record-details-table',
@@ -30,17 +31,11 @@ export class EventRecordDetailsTableComponent
     OnInit,
     OnChanges
 {
-  Language = Language;
-  DateTimePickerView = DateTimePickerView;
-
   @Input()
   count: number = 0;
   @Input()
   type: EventType = EventType.IllegalDrop;
 
-  model: EventRecordDetailsTableModel = new EventRecordDetailsTableModel();
-
-  listTypes: SelectItem[] = [];
   constructor(business: EventRecordDetailsTableBusiness) {
     this.business = business;
 
@@ -66,7 +61,17 @@ export class EventRecordDetailsTableComponent
       return item;
     });
   }
+
+  model: EventRecordDetailsTableModel = new EventRecordDetailsTableModel();
+
+  listTypes: SelectItem[] = [];
+
+  Language = Language;
+  DateTimePickerView = DateTimePickerView;
   business: IBusiness<IModel, EventRecordDetailsTableModel>;
+
+  filter: EventRecordFilter;
+
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
   }
@@ -85,8 +90,6 @@ export class EventRecordDetailsTableComponent
     this.filter.division = undefined;
     this.display.filter = !this.display.filter;
   }
-
-  filter: EventRecordFilter;
 
   searchEvent: EventEmitter<EventRecordFilter> = new EventEmitter();
 
@@ -107,16 +110,15 @@ export class EventRecordDetailsTableComponent
 
   async ondivisionselect(item: SelectItem) {
     this.filter.division = item;
-    this.model = await this.business.load({ divisionId: item.key });
     this.filter.camera = undefined;
-
     this.filter.station = undefined;
+    this.model = await this.business.load({ divisionId: item.key });
   }
   async onstationselect(item: SelectItem) {
     this.filter.station = item;
 
     this.model = await this.business.load({
-      divisionId: this.filter.division?.key,
+      divisionId: this.filter.division,
       stationId: item.key,
     });
     this.filter.camera = undefined;

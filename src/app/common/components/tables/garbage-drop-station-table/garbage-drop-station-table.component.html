@@ -12,6 +12,7 @@
           <td [ngStyle]="{ width: width[6] }">滞留时间</td>
           <td [ngStyle]="{ width: width[7] }">总滞留时长</td>
           <td [ngStyle]="{ width: width[8] }">人员</td>
+          <td [ngStyle]="{ width: width[9] }">操作</td>
         </tr>
       </thead>
     </table>
@@ -79,6 +80,11 @@
                 [matTooltipPosition]="'above'"
               >
                 <i class="howell-icon-user-anonymous"></i>
+              </div>
+            </td>
+            <td [ngStyle]="{ width: width[9] }" class="operation">
+              <div style="width: 16px" (click)="onPositionClicked(item)">
+                <i class="glyphicon glyphicon-map-marker"></i>
               </div>
             </td>
           </tr>

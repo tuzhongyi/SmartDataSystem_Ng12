@@ -1,6 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { Language } from 'src/app/common/tools/language';
 import { Enum } from 'src/app/enum/enum-helper';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import {
+  SearchOptionKey,
+  SearchOptions,
+} from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-event-record-operation',
@@ -8,11 +14,25 @@ import { Enum } from 'src/app/enum/enum-helper';
   styleUrls: ['./event-record-operation.component.less'],
 })
 export class EventRecordOperationComponent implements OnInit {
+  @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
+  @Output() filter: EventEmitter<void> = new EventEmitter();
+  @Output() typeChange: EventEmitter<ListType> = new EventEmitter();
+
+  constructor() {}
+
   listTypes: SelectItem[] = [];
+  searchOpts: SelectItem[] = [];
+  searchOption: SearchOptions = {
+    text: '',
+    propertyName: SearchOptionKey.name,
+  };
 
-  text: string = '';
+  ngOnInit(): void {
+    this.initListType();
+    this.initSearchOpts();
+  }
 
-  constructor() {
+  initListType() {
     let typeEnum = new Enum(ListType);
     this.listTypes = typeEnum.toArray().map((x) => {
       let item = new SelectItem();
@@ -34,21 +54,27 @@ export class EventRecordOperationComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
-
-  @Output() search: EventEmitter<string> = new EventEmitter();
-  @Output() filter: EventEmitter<void> = new EventEmitter();
-  @Output() typeChange: EventEmitter<ListType> = new EventEmitter();
+  initSearchOpts() {
+    this.searchOpts.push(
+      SelectItem.create(SearchOptionKey.name, Language.SearchOption)
+    );
+    this.searchOpts.push(
+      SelectItem.create(SearchOptionKey.community, Language.SearchOption)
+    );
+  }
 
   onsearch() {
-    this.search.emit(this.text);
+    this.search.emit(this.searchOption);
   }
   onfilter() {
     this.filter.emit();
   }
 
-  onListTypeSelect(item: SelectItem){    
-    this.typeChange.emit(item.value)
+  onListTypeSelect(item: SelectItem) {
+    this.typeChange.emit(item.value);
+  }
+  onSearchOptionSelect(item: SelectItem) {
+    this.searchOption.propertyName = item.value;
   }
 }
 

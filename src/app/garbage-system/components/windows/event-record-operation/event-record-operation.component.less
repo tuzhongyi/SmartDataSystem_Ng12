@@ -3,13 +3,44 @@
   justify-content: space-between;
   align-items: center;
   height: 34px;
-  width: 500px;
+  width: 590px;
   pointer-events: all;
 
+  @input-width: 300px;
+
+
+  &-search {
+    display: flex;
+    justify-content: space-between;
+
+    .search-option-select {
+      width: 90px;
+      color: #cfd7ff;
+      border: 1px solid #5e6ebf;
+      font-size: 18px;
+      border-radius: unset;
+      background-color: #1d233b;
+
+
+      ::ng-deep {
+        .select-head {
+          justify-content: space-between !important;
+          align-items: center;
+        }
+
+        .select-option {
+          justify-content: start;
+        }
+      }
+    }
+
+  }
+
+
   input {
-    width: 300px;
-    height: 30px;
-    line-height: 30px;
+    width: @input-width;
+    height: 34px;
+    line-height: 34px;
   }
 
   button {

@@ -65,20 +65,20 @@ export class GarbageDropRecordTableBusiness
     params.EndTime = opts.EndTime;
     params.IsHandle = opts.IsHandle;
     params.IsTimeout = opts.IsTimeout;
-    if (opts.division) {
-      params.DivisionIds = [opts.division.key];
+    if (opts.divisionId) {
+      params.DivisionIds = [opts.divisionId];
     }
-    if (opts.station) {
-      params.StationIds = [opts.station.key];
+    if (opts.stationId) {
+      params.StationIds = [opts.stationId];
     }
-    if (opts.camera) {
-      params.ResourceIds = [opts.camera.key];
+    if (opts.cameraId) {
+      params.ResourceIds = [opts.cameraId];
     }
     if (opts.community) {
       params.CommunityIds = [opts.community.key];
     }
-    if (opts.text) {
-      params.ResourceName = opts.text;
+    if (opts.opts) {
+      params.ResourceName = opts.opts.text;
     }
     return this.eventService.record.GarbageDrop.list(params);
   }
