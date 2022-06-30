@@ -33,9 +33,13 @@ export class GarbageDropEventRecordPagedConverter
   ): Promise<PagedList<GarbageDropRecordViewModel>> {
     let array: GarbageDropRecordViewModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
-      const data = source.Data[i];
-      let model = await this.converter.item.Convert(data, getter);
-      array.push(model);
+      try {
+        const data = source.Data[i];
+        let model = await this.converter.item.Convert(data, getter);
+        array.push(model);
+      } catch (error) {
+        console.error(error, this, source.Data[i]);
+      }
     }
     return {
       Page: source.Page,
@@ -86,43 +90,55 @@ export class GarbageDropEventRecordConverter
 
     if (source.Data.DropImageUrls) {
       for (let i = 0; i < source.Data.DropImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(
-          source.Data.DropImageUrls[i],
-          source.Data.StationId
-        );
-        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
-        let image = this.converter.image.Convert(
-          url,
-          true,
-          source.Data.DropTime
-        );
-        model.images.push(image);
+        try {
+          let url = new CameraImageUrlModel(
+            source.Data.DropImageUrls[i],
+            source.Data.StationId
+          );
+          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          let image = this.converter.image.Convert(
+            url,
+            true,
+            source.Data.DropTime
+          );
+          model.images.push(image);
+        } catch (error) {
+          console.error(error, this, source.Data.DropImageUrls[i]);
+        }
       }
     }
     if (source.Data.TimeoutImageUrls) {
       for (let i = 0; i < source.Data.TimeoutImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(
-          source.Data.TimeoutImageUrls[i],
-          source.Data.StationId
-        );
-        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
-        let image = this.converter.image.Convert(url, true, source.EventTime);
-        model.images.push(image);
+        try {
+          let url = new CameraImageUrlModel(
+            source.Data.TimeoutImageUrls[i],
+            source.Data.StationId
+          );
+          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          let image = this.converter.image.Convert(url, true, source.EventTime);
+          model.images.push(image);
+        } catch (error) {
+          console.error(error, this, source.Data.TimeoutImageUrls[i]);
+        }
       }
     }
     if (source.Data.HandleImageUrls) {
       for (let i = 0; i < source.Data.HandleImageUrls.length; i++) {
-        let url = new CameraImageUrlModel(
-          source.Data.HandleImageUrls[i],
-          source.Data.StationId
-        );
-        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
-        let image = this.converter.image.Convert(
-          url,
-          true,
-          source.Data.HandleTime
-        );
-        model.images.push(image);
+        try {
+          let url = new CameraImageUrlModel(
+            source.Data.HandleImageUrls[i],
+            source.Data.StationId
+          );
+          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          let image = this.converter.image.Convert(
+            url,
+            true,
+            source.Data.HandleTime
+          );
+          model.images.push(image);
+        } catch (error) {
+          console.error(error, this, source.Data.HandleImageUrls[i]);
+        }
       }
     }
 

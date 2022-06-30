@@ -51,6 +51,7 @@ export class GarbageStationWindowComponent
   }
 
   Index = GarbageStationWindowIndex;
+  isfilter = false;
 
   ngOnInit(): void {}
 

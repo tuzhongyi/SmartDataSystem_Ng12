@@ -59,9 +59,10 @@
         </mat-tab>
         <mat-tab label="报警事件处置">
           <ng-container *ngIf="index == Index.record">
-            <howell-garbage-station-window-record-filter></howell-garbage-station-window-record-filter>
-            <howell-garbage-drop-record-table (image)="onimage($event)">
-            </howell-garbage-drop-record-table>
+            <howell-garbage-station-window-record
+              [isfilter]="record.filter.show"
+              (image)="onimage($event)"
+            ></howell-garbage-station-window-record>
           </ng-container>
         </mat-tab>
       </mat-tab-group>

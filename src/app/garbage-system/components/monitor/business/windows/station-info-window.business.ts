@@ -9,17 +9,19 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 @Injectable()
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   style = {
-    height: '85%',
+    height: '88%',
     width: '93%',
-    transform: 'translate(-50%, -44.5%)',
+    transform: 'translate(-50%, -44%)',
   };
 
   index = GarbageStationWindowIndex.station;
   stationId?: string;
-  divisionId?:string;
+  divisionId?: string;
 
   constructor(private media: MediaWindowBusiness) {
     super();
+    this.show = true;
+    this.index = GarbageStationWindowIndex.record;
   }
   onimage(model: ImageControlModelArray) {
     this.media.single.camera = model.models;

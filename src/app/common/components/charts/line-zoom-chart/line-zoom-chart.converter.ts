@@ -1,17 +1,13 @@
-import {
-  IConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import {
-  IllegalDropEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { CameraImageUrlModel } from '../../tables/event-record/event-record.model';
 import { ImageTimeData, ITimeData } from '../chart.model';
 import {
   LineZoomChartModel,
-  LineZoomChartSource
+  LineZoomChartSource,
 } from './line-zoom-chart.model';
 
 export class LineZoomChartConverter
@@ -52,24 +48,28 @@ export class LineZoomChartEventRecordConverter
     let datas: ImageTimeData<IllegalDropEventRecord>[] = [];
     for (let i = 0; i < source.length; i++) {
       const record = source[i];
-      let time = new Date(record.EventTime);
-      time.setMilliseconds(0);
-      time.setSeconds(0);
+      try {
+        let time = new Date(record.EventTime);
+        time.setMilliseconds(0);
+        time.setSeconds(0);
 
-      let url: CameraImageUrl = {
-        CameraId: record.ResourceId ?? '',
-        CameraName: record.ResourceName,
-        ImageUrl: record.ImageUrl ?? '',
-      };
+        let url: CameraImageUrl = {
+          CameraId: record.ResourceId ?? '',
+          CameraName: record.ResourceName,
+          ImageUrl: record.ImageUrl ?? '',
+        };
 
-      let img = this.converter.image.Convert(
-        new CameraImageUrlModel(url, record.Data.StationId)
-      );
-      datas.push({
-        time: time,
-        value: record,
-        image: img,
-      });
+        let img = this.converter.image.Convert(
+          new CameraImageUrlModel(url, record.Data.StationId)
+        );
+        datas.push({
+          time: time,
+          value: record,
+          image: img,
+        });
+      } catch (error) {
+        console.error(error, this, record);
+      }
     }
     return datas;
   }
@@ -89,10 +89,14 @@ export class LineZoomChartDropDurationConverter
     let datas: ITimeData<GarbageStationGarbageCountStatistic>[] = [];
     for (let i = 0; i < source.length; i++) {
       const item = source[i];
-      datas.push({
-        time: item.BeginTime,
-        value: item,
-      });
+      try {
+        datas.push({
+          time: item.BeginTime,
+          value: item,
+        });
+      } catch (error) {
+        console.error(error, this, item);
+      }
     }
     return datas;
   }

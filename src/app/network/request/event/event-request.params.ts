@@ -1,4 +1,6 @@
 import { EventType } from 'src/app/enum/event-type.enum';
+import { OrderType } from 'src/app/enum/order-type.enum';
+import { CompareRange } from '../../model/compare-range.model';
 import {
   IParams,
   PagedIntervalParams,
@@ -68,4 +70,12 @@ export class GetGarbageDropEventRecordsParams
   CommunityName?: string;
   /**	String	工单号，支持LIKE	O */
   RecordNo?: string;
+
+  TakeMinutes?: CompareRange<number>;
+  /**	String	处置时长排序 ASC，DESC，不区分大小写	O */
+  TakeMinutesOrderBy?: OrderType;
+  /**	String	落地时间排序 ASC，DESC，不区分大小写	O */
+  DropTimeOrderBy?: OrderType;
+  /**	String	处置时间排序 ASC，DESC，不区分大小写	O */
+  HandleTimeOrderBy?: OrderType;
 }

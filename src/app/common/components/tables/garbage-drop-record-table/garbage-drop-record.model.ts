@@ -1,3 +1,4 @@
+import { CompareRange } from 'src/app/network/model/compare-range.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
@@ -23,4 +24,5 @@ export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
 export class GarbageDropRecordFilter extends EventRecordFilter {
   IsHandle?: boolean;
   IsTimeout?: boolean;
+  duration?: CompareRange<number>;
 }

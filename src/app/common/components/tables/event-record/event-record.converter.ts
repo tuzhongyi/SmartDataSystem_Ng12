@@ -1,7 +1,5 @@
 import { formatDate } from '@angular/common';
-import {
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -16,9 +14,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import {
-  CameraImageUrlModel,
-} from './event-record.model';
+import { CameraImageUrlModel } from './event-record.model';
 
 export type EventRecordType =
   | MixedIntoEventRecord
@@ -47,8 +43,12 @@ export class EventRecordPagedConverter
     let array: EventRecordViewModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
       const data = source.Data[i];
-      let model = await this.converter.item.Convert(data, get);
-      array.push(model);
+      try {
+        let model = await this.converter.item.Convert(data, get);
+        array.push(model);
+      } catch (error) {
+        console.error(error, this, data);
+      }
     }
     return {
       Page: source.Page,
@@ -146,14 +146,18 @@ export class EventRecordConverter
     model.images = [];
     if (source.Data.CameraImageUrls && model.GarbageStation) {
       for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
-        const url = new CameraImageUrlModel(
-          source.Data.CameraImageUrls[i],
-          source.Data.StationId
-        );
-        url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
-        let image = this.converter.image.Convert(url, true, source.EventTime);
-        image.index = i;
-        model.images.push(image);
+        try {
+          const url = new CameraImageUrlModel(
+            source.Data.CameraImageUrls[i],
+            source.Data.StationId
+          );
+          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          let image = this.converter.image.Convert(url, true, source.EventTime);
+          image.index = i;
+          model.images.push(image);
+        } catch (error) {
+          console.error(error, this, source.Data.CameraImageUrls[i]);
+        }
       }
     }
     return model;

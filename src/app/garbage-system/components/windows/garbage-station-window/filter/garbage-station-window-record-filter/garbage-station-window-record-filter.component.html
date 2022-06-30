@@ -1,0 +1,65 @@
+<div class="garbage-station-window-record-filter">
+  <div class="filter-item datetime">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd HH:mm'"
+      [startView]="DateTimePickerView.day"
+      [minView]="DateTimePickerView.hour"
+      [date]="filter.BeginTime"
+      (change)="changeBegin($event)"
+      class=""
+    />
+  </div>
+  <div class="filter-item datetime">
+    <span>开始时间</span>
+    <input
+      type="text"
+      DateTimePicker
+      [format]="'yyyy-MM-dd HH:mm'"
+      [startView]="DateTimePickerView.day"
+      [minView]="DateTimePickerView.hour"
+      [date]="filter.EndTime"
+      (change)="changeEnd($event)"
+      class=""
+    />
+  </div>
+  <div class="filter-item select">
+    <span>行政区</span>
+    <!-- <app-select-control
+      class="list-type-select"
+      [data]="model.divisions"
+      [load]="loadDivision"
+      (select)="ondivision($event)"
+    ></app-select-control> -->
+    <howell-division-tree-filter
+      (select)="ondivision($event)"
+      [align]="HorizontalAlign.left"
+    ></howell-division-tree-filter>
+  </div>
+  <div class="filter-item">
+    <span>投放点</span>
+    <app-select-control
+      class="list-type-select"
+      [data]="model.stations"
+      (select)="onstation($event)"
+    ></app-select-control>
+  </div>
+  <div class="filter-item duration">
+    <span>滞留时长</span>
+    <app-select-control
+      class="list-type-select"
+      [data]="durations"
+      (select)="onduration($event)"
+    ></app-select-control>
+  </div>
+  <div class="filter-item">
+    <span>状态</span>
+    <app-select-control
+      class="list-type-select"
+      [data]="statuses"
+      (select)="onstatus($event)"
+    ></app-select-control>
+  </div>
+</div>

@@ -24,12 +24,16 @@ export class EventRecordCountTableConverter
   ): Promise<EventRecordCountTableModel[]> {
     let array: EventRecordCountTableModel[] = [];
     for (let i = 0; i < source.length; i++) {
-      const item = await this.converter.item.Convert(
-        source[i],
-        eventType,
-        getter
-      );
-      array.push(item);
+      try {
+        const item = await this.converter.item.Convert(
+          source[i],
+          eventType,
+          getter
+        );
+        array.push(item);
+      } catch (error) {
+        console.error(error, this, source[i]);
+      }
     }
     return array;
   }

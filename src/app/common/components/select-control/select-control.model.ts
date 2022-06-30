@@ -8,7 +8,11 @@ export class SelectItem {
   value!: any;
   language!: string;
 
-  static create<T>(t: T, language: (t: T) => string) {
-    return new SelectItem((t as any).toString(), t, language(t));
+  static create<T>(t: T, language: string | ((t: T) => string)) {
+    let key = t === undefined ? '' : (t as any).toString();
+    if (typeof language === 'string') {
+      return new SelectItem(key, t, language);
+    }
+    return new SelectItem(key, t, language(t));
   }
 }
