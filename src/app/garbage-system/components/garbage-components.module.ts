@@ -121,4 +121,4 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
   ],
 })
-export class GarbageComponentsModule {}
+export class GarbageComponentsModule { }

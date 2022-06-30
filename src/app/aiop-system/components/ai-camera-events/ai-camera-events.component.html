@@ -1,5 +1,5 @@
 <div class="ai-camera-events">
-  <div class="hw-table-detail">
+  <div class="hw-table-layout">
     <div class="hw-operation">
       <div class="hw-second-title">AI事件</div>
       <div class="hw-operate-bar">
@@ -12,7 +12,7 @@
             (keyup.enter)="search()"
           />
         </div>
-        <div class="hw-normal-btn-group hw-btn-group">
+        <div class="hw-normal-btn-group">
           <button class="hw-blue-btn" (click)="search()">
             <i class="mdi mdi-magnify"></i>
             查询
@@ -26,7 +26,7 @@
           </button>
         </div>
       </div>
-      <div class="filter" *ngIf="showFilter">
+      <div class="filter-group" *ngIf="showFilter">
         <div class="filter-item">
           <span class="hw-form-label">开始时间:</span>
           <input

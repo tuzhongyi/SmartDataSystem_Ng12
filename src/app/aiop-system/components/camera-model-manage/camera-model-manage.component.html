@@ -1,3 +1,50 @@
-<div class='camera-model-manage'>
-  
+<div class="camera-model-manage hw-horizontal">
+  <div class="horizontal-left">
+    <div class="hw-simple-title">模型列表</div>
+    <div class="search-wrapper">
+      <howell-simple-search placeHolder="名称"></howell-simple-search>
+    </div>
+    <div class="model-list">
+      <!-- <div class="model-item">
+        <div class="middle-round-btn">
+          <img src="assets/img/ai-model/ai-m1.png" alt="" />
+        </div>
+        <div>垃圾满溢</div>
+      </div> -->
+      <div class="model-item" *ngFor="let model of AIModels">
+        <div class="middle-round-btn">
+          <img [src]="imgBase + '/' + icons[model.Label]" alt="" />
+        </div>
+        <!-- imgBase'/'icons[model.Label] -->
+        <div>
+          {{ model.ModelName }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="horizontal-right">
+    <div class="hw-operation">
+      <div class="hw-simple-title">AI设备列表</div>
+      <div class="hw-operate-bar">
+        <div class="operate-item">
+          <span class="hw-form-label">选择标签:</span>
+          <input type="text" class="hw-form-input" />
+        </div>
+        <div class="operate-item">
+          <span class="hw-form-label">名称:</span>
+          <input type="text" class="hw-form-input" />
+        </div>
+        <div class="operate-item">
+          <span class="hw-form-label">名称:</span>
+          <input type="text" class="hw-form-input" />
+        </div>
+        <!--
+        
+        <button class="hw-blue-btn">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button> -->
+      </div>
+    </div>
+  </div>
 </div>

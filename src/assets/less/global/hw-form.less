@@ -3,24 +3,23 @@
   box-sizing: border-box;
   overflow: auto;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   flex-grow: 1;
-  align-items: flex-start;
-  align-content: flex-start;
+  justify-content: space-between;
 
-  &.direction-row {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    .hw-form-group {
-      width: 49%;
-    }
-  }
+  // &.direction-row {
+  //   flex-direction: row;
+  //   flex-wrap: wrap;
+  //   justify-content: space-around;
+  //   .hw-form-group {
+  //     width: 49%;
+  //   }
+  // }
   .hw-form-group {
-    width: 60%;
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
+    flex-basis: 100%;
     .title {
       margin-bottom: 5px;
     }
@@ -38,4 +37,3 @@
   color: #fc4b6c;
   vertical-align: sub;
 }
-
