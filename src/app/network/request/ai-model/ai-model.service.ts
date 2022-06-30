@@ -4,12 +4,12 @@ import { AIModelsUrl } from "../../url/aiop/ai-models/ai-models.url";
 import { CameraAIUrl } from "../../url/aiop/events/records/camera-ai/camera-ai.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { GetAIModelsParams } from "./camera-ai-model.params";
+import { GetAIModelsParams } from "./ai-model.params";
 
 @Injectable({
   providedIn: "root",
 })
-export class CameraAIModelRequestService {
+export class AIModelRequestService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<CameraAIModel>;
 

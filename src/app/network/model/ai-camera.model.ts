@@ -5,7 +5,7 @@ import { CameraAIModel } from "./camera-ai.model";
 import { Resource } from "./resource.model";
 
 /**监控点信息 */
-export class AiopCamera extends Resource {
+export class AICamera extends Resource {
   /**摄像机类型 */
   CameraType!: CameraType;
   /**摄像机状态 */

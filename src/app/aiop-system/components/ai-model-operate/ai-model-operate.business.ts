@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { CameraAIModel } from "src/app/network/model/camera-ai.model";
-import { CameraAIModelRequestService } from "src/app/network/request/camera-ai-model/camera-ai-model.service";
+import { AIModelRequestService } from "src/app/network/request/ai-model/ai-model.service";
 
 @Injectable()
 export class AIModelOperateBusiness {
-  constructor(private _cameraAIModelRequest: CameraAIModelRequestService) {
+  constructor(private _cameraAIModelRequest: AIModelRequestService) {
 
   }
   getAIModel(id: string) {

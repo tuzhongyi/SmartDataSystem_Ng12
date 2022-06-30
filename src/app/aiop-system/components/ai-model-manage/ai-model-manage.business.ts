@@ -2,14 +2,14 @@ import { Injectable } from "@angular/core";
 import { LocaleCompare } from "src/app/common/tools/locale-compare";
 import { AIModelManageConverter } from "src/app/converter/ai-model-manage.converter";
 import { PagedList } from "src/app/network/model/page_list.model";
-import { GetAIModelsParams } from "src/app/network/request/camera-ai-model/camera-ai-model.params";
-import { CameraAIModelRequestService } from "src/app/network/request/camera-ai-model/camera-ai-model.service";
+import { GetAIModelsParams } from "src/app/network/request/ai-model/ai-model.params";
+import { AIModelRequestService } from "src/app/network/request/ai-model/ai-model.service";
 import { AIModelManageModel } from "src/app/view-model/ai-model-manage.model";
 
 @Injectable()
 export class AIModelManageBusiness {
 
-  constructor(private _cameraAIModelRequest: CameraAIModelRequestService, private _converter: AIModelManageConverter) {
+  constructor(private _cameraAIModelRequest: AIModelRequestService, private _converter: AIModelManageConverter) {
 
   }
   async init(condition: string = '', pageIndex: number = 1, pageSize: number = 9) {

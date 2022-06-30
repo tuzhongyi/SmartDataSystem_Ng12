@@ -19,8 +19,8 @@ import { Medium } from 'src/app/common/tools/medium';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
-} from 'src/app/network/request/sr/sr-request.params';
-import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
+} from 'src/app/network/request/ai-sr-server/sr-server.params';
+import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 
 @Injectable()
 export class MediaVideoControlBussiness
@@ -28,7 +28,7 @@ export class MediaVideoControlBussiness
   IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
   constructor(
-    private srService: SRRequestService,
+    private srService: SRServerRequestService,
     private stationService: GarbageStationRequestService
   ) { }
   manualCaptureEvent: EventEmitter<boolean> = new EventEmitter();

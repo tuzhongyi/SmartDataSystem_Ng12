@@ -1,9 +1,10 @@
-<div class="division-manage hw-tree-model">
+<div class="division-manage hw-horizontal">
   <ng-container *ngIf="showDialog">
     <howell-confirm-dialog (dialogMsgEvent)="dialogMsgEvent($event)">
     </howell-confirm-dialog>
   </ng-container>
-  <div class="hw-tree-left">
+  <!-- left -->
+  <div class="horizontal-left">
     <div class="hw-simple-title">区划列表</div>
     <div class="hw-normal-btn-group" style="margin: 10px 0">
       <button
@@ -40,7 +41,8 @@
       [(holdStatus)]="holdStatus"
     ></howell-tree>
   </div>
-  <div class="hw-tree-right">
+  <!-- right -->
+  <div class="horizontal-right">
     <div class="hw-simple-title">{{ title }}</div>
 
     <form class="hw-form bold-scrollbar" [formGroup]="myForm">

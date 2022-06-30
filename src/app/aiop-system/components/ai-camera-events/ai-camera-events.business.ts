@@ -4,14 +4,14 @@ import { Time } from "src/app/common/tools/time";
 import { AICameraEventsConverter } from "src/app/converter/ai-camera-events.converter";
 import { EventType } from "src/app/enum/event-type.enum";
 import { PagedList } from "src/app/network/model/page_list.model";
-import { GetCameraAIEventRecordsParams } from "src/app/network/request/camera-ai-event/camera-ai-event.params";
-import { CameraAIEventRequestService } from "src/app/network/request/camera-ai-event/camera-ai-event.service";
-import { CameraAIModelRequestService } from "src/app/network/request/camera-ai-model/camera-ai-model.service";
+import { GetCameraAIEventRecordsParams } from "src/app/network/request/ai-camera-event/camera-ai-event.params";
+import { CameraAIEventRequestService } from "src/app/network/request/ai-camera-event/camera-ai-event.service";
+import { AIModelRequestService } from "src/app/network/request/ai-model/ai-model.service";
 import { AICameraEventsModel } from "src/app/view-model/ai-camera-events.model";
 
 @Injectable()
 export class AICameraEventsBusiness {
-  constructor(private _cameraAIEventRequest: CameraAIEventRequestService, private _cameraAIModelRequest: CameraAIModelRequestService, private _converter: AICameraEventsConverter) {
+  constructor(private _cameraAIEventRequest: CameraAIEventRequestService, private _cameraAIModelRequest: AIModelRequestService, private _converter: AICameraEventsConverter) {
 
   }
 

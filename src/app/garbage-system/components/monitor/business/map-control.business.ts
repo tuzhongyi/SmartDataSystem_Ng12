@@ -3,8 +3,8 @@ import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GetPreviewUrlParams } from 'src/app/network/request/sr/sr-request.params';
-import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
+import { GetPreviewUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';
+import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 import { PatrolControlBusiness } from './patrol-control.business';
 import { WindowBussiness } from './window.business';
@@ -16,7 +16,7 @@ export class MapControlBusiness {
     private patrol: PatrolControlBusiness,
     private video: VideoControlWindowBusiness,
     private window: WindowBussiness
-  ) {}
+  ) { }
 
   position: EventEmitter<GarbageStation> = new EventEmitter();
 

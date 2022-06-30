@@ -8,12 +8,12 @@ import { SRServiceUrl } from '../../url/garbage/sr-server.url';
 import { BaseRequestService, BaseTypeRequestService } from '../base-request.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { DurationParams } from '../IParams.interface';
-import { GetPreviewUrlParams, GetVodUrlParams } from './sr-request.params';
+import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
 
 @Injectable({
   providedIn: 'root',
 })
-export class SRRequestService {
+export class SRServerRequestService {
   private type: BaseTypeRequestService<SRServer>;
 
   constructor(_http: HowellAuthHttpService) {

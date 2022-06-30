@@ -1,9 +1,9 @@
 import { Injectable } from "@angular/core";
-import { SRRequestService } from "src/app/network/request/sr/sr-request.service";
+import { SRServerRequestService } from "src/app/network/request/ai-sr-server/sr-server.service";
 
 @Injectable()
 export class SRServerManageBusiness {
-  constructor(private _srRequest: SRRequestService) {
+  constructor(private _srRequest: SRServerRequestService) {
 
   }
   async loadData() {

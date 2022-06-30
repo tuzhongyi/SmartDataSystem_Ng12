@@ -1,5 +1,4 @@
 import { Transform, Type } from "class-transformer";
-import { type } from "os";
 
 
 
@@ -17,7 +16,7 @@ export class EnumValue {
 
 
 
-/**I摄像机模型DTO标签 */
+/**AI摄像机模型DTO标签 */
 export class CameraAIModelDTOLabel {
   /**模型数据ID */
   ModelId!: string;

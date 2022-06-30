@@ -16,7 +16,7 @@ import { VideoUrl } from 'src/app/network/model/url.model';
 import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { SRRequestService } from 'src/app/network/request/sr/sr-request.service';
+import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 
 @Injectable()
 export class VideoControlWindowBusiness
@@ -37,7 +37,7 @@ export class VideoControlWindowBusiness
   };
 
   constructor(
-    private srService: SRRequestService,
+    private srService: SRServerRequestService,
     private stationService: GarbageStationRequestService,
     private download: DownloadBusiness
   ) {
