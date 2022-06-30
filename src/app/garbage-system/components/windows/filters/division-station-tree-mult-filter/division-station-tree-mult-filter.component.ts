@@ -26,7 +26,8 @@ import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-fi
   styleUrls: ['./division-station-tree-mult-filter.component.less'],
 })
 export class DivisionStationTreeMultFilterComponent
-  implements OnInit, OnChanges {
+  implements OnInit, OnChanges
+{
   @Input()
   userType = UserResourceType.County;
   @Output()
@@ -34,7 +35,7 @@ export class DivisionStationTreeMultFilterComponent
   @Output()
   maxSelection: number = Number.MAX_VALUE;
 
-  constructor(private local: LocalStorageService) { }
+  constructor(private local: LocalStorageService) {}
 
   @ViewChild('tree')
   tree?: TreeComponent;
@@ -119,10 +120,7 @@ export class DivisionStationTreeMultFilterComponent
   selectTree(nodes: FlatTreeNode[]) {
     this.selected = [];
     this.selectedIds = [];
-    let index = nodes.findIndex((x) => x.type === this.userType);
-    // if (index >= 0) {
-    //   return;
-    // }
+
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       if (node.type !== this.userType) {
@@ -130,8 +128,6 @@ export class DivisionStationTreeMultFilterComponent
       }
       this.selected.push(node.rawData);
       this.selectedIds.push(node.id);
-      // this.current = node;
-      // this.select.emit(node.data);
     }
 
     this.onselect.emit(this.selectedIds);

@@ -9,7 +9,7 @@
         <div class="operation" *ngIf="index === Index.record">
           <howell-event-record-operation
             (filter)="record.filter.display()"
-            (search)="record.filter.search($event)"
+            (search)="record.filter.onsearch($event)"
           >
           </howell-event-record-operation>
         </div>
