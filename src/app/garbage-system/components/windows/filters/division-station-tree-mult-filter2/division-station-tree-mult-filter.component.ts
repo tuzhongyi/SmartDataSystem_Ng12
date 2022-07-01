@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/division.model';
@@ -24,7 +24,7 @@ export class DivisionStationTreeMultFilterComponent implements OnInit, OnChanges
   expand = true;
 
   treeServiceModel: TreeBusinessEnum = TreeBusinessEnum.Division;
-  treeSelectModel: SelectEnum = SelectEnum.Multiple
+  treeSelectModel: SelectStrategy = SelectStrategy.Multiple
 
   selected: Array<Division | GarbageStation> = [];
 

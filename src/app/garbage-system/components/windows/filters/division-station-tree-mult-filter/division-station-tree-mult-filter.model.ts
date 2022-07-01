@@ -1,5 +1,5 @@
 import { DistrictTreeEnum } from "src/app/enum/district-tree.enum";
-import { SelectEnum } from "src/app/enum/select.enum";
+import { SelectStrategy } from "src/app/enum/select-strategy.enum";
 import { TreeBusinessEnum } from "src/app/enum/tree-business.enum";
 import { UserResourceType } from "src/app/enum/user-resource-type.enum";
 
@@ -8,7 +8,7 @@ export class DivisionStationTreeConfig {
   showDepth: number = 0;
   depthIsEnd: boolean = true;
   treeServiceModel: DistrictTreeEnum = DistrictTreeEnum.Division;
-  treeSelectModel: SelectEnum = SelectEnum.Multiple;
+  treeSelectModel: SelectStrategy = SelectStrategy.Multiple;
   userType: UserResourceType = UserResourceType.County;
 
 }

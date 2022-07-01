@@ -1,7 +1,7 @@
 import { DatePipe } from "@angular/common";
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
-import { SelectEnum } from "src/app/enum/select.enum";
+import { SelectStrategy } from "src/app/enum/select-strategy.enum";
 import { IllegalDropRecordModel } from "src/app/view-model/illegal-drop-record.model";
 import { TableCellEvent, TableColumnModel, TableOperateModel } from "src/app/view-model/table.model";
 import { IllegalDropEventRecordConf } from "./illegal-drop-record.config";
@@ -29,7 +29,7 @@ export class IllegalDropRecordComponent implements OnInit {
 
 
   dataSubject = new BehaviorSubject<IllegalDropRecordModel[]>([]);
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...IllegalDropEventRecordConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   page: Page | null = null;

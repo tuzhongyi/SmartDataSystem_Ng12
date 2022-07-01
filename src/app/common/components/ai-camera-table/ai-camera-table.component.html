@@ -1,0 +1,27 @@
+<div class="camera-table">
+  <div class="camera-row" *ngFor="let data of dataSource">
+    <div class="title">
+      <div class="left-side">
+        <i class="howell-icon-video light-blue-text"></i>
+        <span style="margin-left: 10px">{{ data.CameraName }}</span>
+      </div>
+      <div class="right-side">
+        <div class="icon">
+          <i class="mdi mdi-content-copy sky-blue-text"></i>
+        </div>
+        <div class="icon">
+          <i class="howell-icon-signal2 green-text"></i>
+        </div>
+      </div>
+    </div>
+
+    <div class="body hw-model-list dir-row">
+      <div class="hw-model-item" *ngFor="let model of data.AIModels">
+        <div class="hw-model-icon">
+          <img [src]="model.LabelIcon" alt="" />
+        </div>
+        <div>{{ model.ModelName }}</div>
+      </div>
+    </div>
+  </div>
+</div>

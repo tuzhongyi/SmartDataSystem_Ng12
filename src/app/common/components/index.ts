@@ -36,6 +36,7 @@ import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
+import { AICameraTableComponent } from './ai-camera-table/ai-camera-table.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -74,5 +75,6 @@ export const CUSTOM_COMPONENTS = [
   ConfirmDialogComponent,
   SimpleSearchComponent,
   Table2Component,
-  AIModelTreeComponent
+  AIModelTreeComponent,
+  AICameraTableComponent
 ];

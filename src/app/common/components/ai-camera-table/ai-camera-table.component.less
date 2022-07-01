@@ -1,0 +1,78 @@
+.camera-table {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  font-size: 18px;
+  .camera-row {
+    height: 154px;
+    margin: 10px 0;
+    border: 1px solid #35324b;
+    box-shadow: 0 0 5px 0px rgba(127, 148, 255, 0.15),
+      inset 0 0 10px 0 rgba(127, 148, 255, 0.15);
+    background: linear-gradient(to left, #ade9ff, #ade9ff) left top no-repeat,
+      linear-gradient(to bottom, #ade9ff, #ade9ff) left top no-repeat,
+      linear-gradient(to left, #ade9ff, #ade9ff) right top no-repeat,
+      linear-gradient(to bottom, #ade9ff, #ade9ff) right top no-repeat,
+      linear-gradient(to left, #ade9ff, #ade9ff) left bottom no-repeat,
+      linear-gradient(to bottom, #ade9ff, #ade9ff) left bottom no-repeat,
+      linear-gradient(to left, #ade9ff, #ade9ff) right bottom no-repeat,
+      linear-gradient(to left, #ade9ff, #ade9ff) right bottom no-repeat;
+    background-size: 1px 6px, 6px 1px, 1px 6px, 6px 1px !important;
+    &:first-child {
+      margin-top: 0;
+    }
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      height: 36px;
+      background: linear-gradient(
+        to bottom,
+        rgba(105, 173, 255, 0) 0%,
+        rgba(105, 173, 255, 0.1) 100%
+      );
+      margin: 0 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .left-side {
+        display: flex;
+        background-image: url(/assets/img/blue-light-spot.png);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+      .right-side {
+        display: flex;
+        .icon {
+          margin: 0 5px;
+        }
+      }
+    }
+    // .body {
+    //   flex-grow: 1;
+    //   display: flex;
+    //   align-items: center;
+    //   overflow: auto;
+    //   .item {
+    //     margin: 0 10px;
+    //     height: 90%;
+    //     width: 190px;
+    //     flex-shrink: 0;
+    //     display: flex;
+    //     flex-direction: column;
+    //     align-items: center;
+    //     justify-content: center;
+    //     &:first-child {
+    //       margin-left: 0;
+    //     }
+    //     &:last-child {
+    //       margin-right: 0;
+    //     }
+    //   }
+    // }
+  }
+}

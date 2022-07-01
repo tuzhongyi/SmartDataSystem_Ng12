@@ -8,7 +8,7 @@ import { Page } from 'src/app/network/model/page_list.model';
 import { TableComponent } from 'src/app/common/components/table/table.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { PageEvent } from '@angular/material/paginator';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ToastrService } from 'ngx-toastr';
@@ -32,7 +32,7 @@ export class PlatformManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<PlatformManageModel[]>([]);
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []

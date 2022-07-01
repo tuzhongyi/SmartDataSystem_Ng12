@@ -7,7 +7,7 @@ import { TableComponent } from 'src/app/common/components/table/table.component'
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraAIUrl } from 'src/app/network/url/aiop/events/records/camera-ai/camera-ai.url';
@@ -32,7 +32,7 @@ export class AIModelManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<AIModelManageModel[]>([]);
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...AIModelManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = [];

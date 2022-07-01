@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { AICamera } from "../../model/ai-camera.model";
+import { CameraAIModel } from "../../model/camera-ai.model";
 import { AICamerasUrl } from "../../url/aiop/resources/cameras/cameras.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
@@ -39,6 +40,6 @@ export class AICameraRequestService {
     return this.type.paged(AICamerasUrl.list(), params);
   }
   AIModels(id: string) {
-    return this.type.get(AICamerasUrl.AIModels(id))
+    return this.basic.get(AICamerasUrl.AIModels(id), CameraAIModel)
   }
 }

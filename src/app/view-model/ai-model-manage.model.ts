@@ -1,3 +1,4 @@
+// AI模型列表
 export class AIModelManageModel {
 
   Id!: string;

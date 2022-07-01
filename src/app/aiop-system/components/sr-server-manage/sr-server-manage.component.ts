@@ -5,7 +5,7 @@ import { PaginatorComponent } from 'src/app/common/components/paginator/paginato
 import { TableComponent } from 'src/app/common/components/table/table.component';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
@@ -30,7 +30,7 @@ export class SRServerManageComponent implements OnInit {
 
   dataSource: SRServerManageModel[] = [];
   dataSubject = new BehaviorSubject<SRServerManageModel[]>([]);
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...SRServerManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   page: Page | null = null;

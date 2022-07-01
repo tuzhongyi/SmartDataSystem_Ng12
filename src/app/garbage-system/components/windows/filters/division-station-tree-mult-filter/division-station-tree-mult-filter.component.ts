@@ -11,7 +11,7 @@ import {
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -26,8 +26,7 @@ import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-fi
   styleUrls: ['./division-station-tree-mult-filter.component.less'],
 })
 export class DivisionStationTreeMultFilterComponent
-  implements OnInit, OnChanges
-{
+  implements OnInit, OnChanges {
   @Input()
   userType = UserResourceType.County;
   @Output()
@@ -35,7 +34,7 @@ export class DivisionStationTreeMultFilterComponent
   @Output()
   maxSelection: number = Number.MAX_VALUE;
 
-  constructor(private local: LocalStorageService) {}
+  constructor(private local: LocalStorageService) { }
 
   @ViewChild('tree')
   tree?: TreeComponent;

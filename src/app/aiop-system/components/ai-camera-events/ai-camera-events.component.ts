@@ -8,7 +8,7 @@ import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { AICameraEventsModel } from 'src/app/view-model/ai-camera-events.model';
@@ -31,7 +31,7 @@ export class AICameraEventsComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<AICameraEventsModel[]>([]);
-  tableSelectModel = SelectEnum.Single;
+  tableSelectModel = SelectStrategy.Single;
   columnModel: TableColumnModel[] = [...AICameraEventsConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []

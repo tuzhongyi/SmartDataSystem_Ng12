@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Deduplication } from 'src/app/common/tools/deduplication';
@@ -89,14 +89,14 @@ export class DistrictTreeComponent implements OnInit {
   trackBy = (index: number, node: FlatTreeNode) => node;
 
   selection!: SelectionModel<FlatTreeNode>;// 保存选中节点
-  TreeSelectEnum = SelectEnum;
+  TreeSelectEnum = SelectStrategy;
 
 
   // 高亮显示选中节点
   highLight = (node: FlatTreeNode) => {
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == SelectStrategy.Single) {
       return this.selection.isSelected(node);
-    } else if (this.selectModel == SelectEnum.Multiple) {
+    } else if (this.selectModel == SelectStrategy.Multiple) {
       // 仅当前点击的高亮，其他节点状态通过checkbox体现
       return this._currentNode && this._currentNode.id == node.id;
 
@@ -139,7 +139,7 @@ export class DistrictTreeComponent implements OnInit {
   serviceModel = TreeBusinessEnum.District; // 区划树或厢房树
 
   @Input('treeSelectModel')
-  selectModel = SelectEnum.Single;// 单选或多选
+  selectModel = SelectStrategy.Single;// 单选或多选
 
   // 最高区划等级
   private _userResourceType: UserResourceType = UserResourceType.City;
@@ -206,7 +206,7 @@ export class DistrictTreeComponent implements OnInit {
   ngOnInit() {
 
 
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == SelectStrategy.Single) {
       this.selection = new SelectionModel<FlatTreeNode>();
     } else {
       this.selection = new SelectionModel<FlatTreeNode>(true);
@@ -458,7 +458,7 @@ export class DistrictTreeComponent implements OnInit {
 
   private _setDefaultNodes() {
     if (this.defaultIds.length == 0) return;
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == SelectStrategy.Single) {
       this.defaultIds.length = 1;
     }
 

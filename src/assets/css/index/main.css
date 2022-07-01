@@ -83,12 +83,6 @@ h2 {
   color: #fd2f2d !important;
 }
 
-.middle-round-btn {
-  background-image: url("/assets/img/middle-round.png");
-  width: 99px;
-  height: 99px;
-  background-color: transparent;
-}
 
 .customtab2 li a.nav-link.text.active {
   background-image: url("/assets/img/blue-tab.png");

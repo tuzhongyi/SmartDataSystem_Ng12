@@ -15,7 +15,7 @@ import { Sort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
 import { DomSanitizer } from '@angular/platform-browser';
 import { BehaviorSubject } from 'rxjs';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import {
   TableCellEvent,
   TableColumnModel,
@@ -45,7 +45,7 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
   displayedColumns: string[] = [];
 
   @Input('tableSelectModel')
-  selectModel = SelectEnum.Single;
+  selectModel = SelectStrategy.Single;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
     TableRowModel[]
@@ -64,7 +64,7 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
 
   ngOnInit(): void {
     // console.log(this.selectModel);
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == SelectStrategy.Single) {
       this.selection = new SelectionModel<TableRowModel>();
     } else {
       this.selection = new SelectionModel<TableRowModel>(true);

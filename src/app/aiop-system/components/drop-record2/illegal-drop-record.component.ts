@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableComponent } from 'src/app/common/components/table/table.component';
 import { Table2Component } from 'src/app/common/components/table2/table.component';
-import { SelectEnum } from 'src/app/enum/select.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
@@ -41,7 +41,7 @@ export class IllegalDropRecord2Component implements OnInit {
 
   columns: TableColumnModel[] = [...columns]; // 表格列配置详情
   displayedColumns: string[] = this.columns.map((column) => column.columnDef); // 表格列 id
-  tableSelectModel = SelectEnum.Multiple;
+  tableSelectModel = SelectStrategy.Multiple;
 
   selectedRows: IllegalDropRecordModel[] = [];
   pageIndex = 0;

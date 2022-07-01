@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from "@angu
 import { Sort } from "@angular/material/sort";
 import { MatTable } from "@angular/material/table";
 import { BehaviorSubject } from "rxjs";
-import { SelectEnum } from "src/app/enum/select.enum";
+import { SelectStrategy } from "src/app/enum/select-strategy.enum";
 import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } from "src/app/view-model/table.model";
 import { TableDataSource } from "./data-source";
 
@@ -44,7 +44,7 @@ export class TableComponent implements OnInit {
 
   // 单选表 || 多选表
   @Input('tableSelectModel')
-  selectModel = SelectEnum.Single;
+  selectModel = SelectStrategy.Single;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
     TableRowModel[]
@@ -65,7 +65,7 @@ export class TableComponent implements OnInit {
     // 如果传入操作数据，则添加操作列
     if (this.tableOperates.length) this.displayedColumns.push('Operation')
 
-    if (this.selectModel == SelectEnum.Single) {
+    if (this.selectModel == SelectStrategy.Single) {
       this.selection = new SelectionModel<TableRowModel>();
     } else {
       this.selection = new SelectionModel<TableRowModel>(true);
