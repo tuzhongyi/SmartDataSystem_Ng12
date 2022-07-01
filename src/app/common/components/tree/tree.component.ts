@@ -179,6 +179,8 @@ export class TreeComponent implements OnInit {
 
   @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
 
+  @Output() defaultIdsChange = new EventEmitter<string[]>();
+
 
   constructor(private _businessFactory: TreeBusinessFactory, private _toastrService: ToastrService) {
     this._treeFlattener = new MatTreeFlattener(
@@ -518,6 +520,7 @@ export class TreeComponent implements OnInit {
     }
     // 循环结束后，留下的都是没有匹配到的节点
     this.defaultIds = res;
+    if (len !== this.defaultIds.length) this.defaultIdsChange.emit(this.defaultIds)
 
     console.log('defaultIds', this.defaultIds)
 

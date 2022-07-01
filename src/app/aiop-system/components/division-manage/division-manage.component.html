@@ -34,6 +34,8 @@
     </div>
     <howell-tree
       #tree
+      [defaultIds]="defaultIds"
+      (defaultIdsChange)="defaultIdsChange($event)"
       [treeSelectModel]="treeSelectModel"
       [treeServiceModel]="treeServiceModel"
       [treeBusinessProvider]="businessProvider"

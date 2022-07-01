@@ -27,7 +27,7 @@ export class DivisionManageComponent implements OnInit {
 
   /*****public ********/
   treeServiceModel = DistrictTreeEnum.Division;
-  treeSelectModel = SelectEnum.Single;
+  treeSelectModel = SelectEnum.Multiple;
   currentNode?: FlatTreeNode;
   resourceType: UserResourceType = UserResourceType.None;
   myForm = new FormGroup({
@@ -42,7 +42,7 @@ export class DivisionManageComponent implements OnInit {
   holdStatus = false;
   showDialog = false;
   businessProvider = TreeBusinessEnum.District;
-
+  defaultIds: string[] = ["310101002001", "310101002002", "310101013001"]
 
   get title() {
     if (this.state == FormState.none) {
@@ -271,6 +271,10 @@ export class DivisionManageComponent implements OnInit {
 
   async searchEventHandler(condition: string) {
 
+  }
+  defaultIdsChange(ids: string[]) {
+
+    console.log('defaultIdsChange', ids)
   }
 
 
