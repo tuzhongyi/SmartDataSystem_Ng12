@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IConverter } from "../common/interfaces/converter.interface";
+import { OnlineStatus } from "../enum/online-status.enum";
 import { AICamera } from "../network/model/ai-camera.model";
 import { AICameraRequestService } from "../network/request/ai-camera/ai-camera.service";
 import { AICameraModelManageModel } from "../view-model/ai-camera-model-manage.model";
@@ -36,6 +37,7 @@ export class AICameraModelManageConverter implements IConverter<AICameraModelMan
     let model = new AICameraModelManageModel();
     model.CameraId = item.Id;
     model.CameraName = item.Name;
+    model.OnlineStatus = item.OnlineStatus ?? OnlineStatus.Offline;
     model.AIModels = [];
     return model
   }

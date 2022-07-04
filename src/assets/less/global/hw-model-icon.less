@@ -32,17 +32,19 @@
     }
     // 位图放大失真
     .hw-model-icon {
-      background-image: url("/assets/img/middle-round.png");
-      width: 99px;
-      height: 99px;
+      // background-image: url("/assets/img/middle-round.png");
+      // width: 99px;
+      // height: 99px;
     }
   }
   &.dir-row {
+    flex-direction: row;
     .hw-model-item {
+      font-size: 16px;
       height: 90%;
       width: 190px;
       margin: 0 10px;
-
+      cursor: pointer;
       &:first-child {
         margin-left: 0;
       }
@@ -54,9 +56,11 @@
       }
     }
     .hw-model-icon {
-      background-image: url("/assets/img/blue-round.png");
-      width: 69px;
-      height: 69px;
+      // background-image: url("/assets/img/blue-round.png");
+      // width: 69px;
+      // height: 69px;
+    }
+    &.disabled {
     }
   }
 }
@@ -68,12 +72,25 @@
   flex-shrink: 0;
   color: #cfd7ff;
   font-size: 18px;
+  position: relative;
+  &.disabled {
+    color: gray;
+  }
+  &:hover {
+    .close-btn {
+      display: inline-block;
+    }
+  }
+  .close-btn {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: #e15e64;
+    cursor: pointer;
+    display: none;
+  }
 }
 .hw-model-icon {
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;

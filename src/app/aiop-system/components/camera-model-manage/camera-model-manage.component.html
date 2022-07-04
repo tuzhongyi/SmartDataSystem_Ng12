@@ -1,15 +1,36 @@
 <div class="camera-model-manage hw-horizontal-layout">
+  <ng-container *ngIf="showConfirm">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="dialogModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+
   <div class="horizontal-left">
     <div class="hw-simple-title">模型列表</div>
     <div class="search-wrapper">
-      <howell-simple-search placeHolder="名称"></howell-simple-search>
+      <howell-simple-search
+        placeHolder="模型名称"
+        (searchEvent)="searchAIModels($event)"
+      ></howell-simple-search>
     </div>
     <div class="hw-model-list dir-column">
-      <div class="hw-model-item" *ngFor="let model of AIModels">
-        <div class="hw-model-icon">
-          <img [src]="imgBase + '/' + icons[model.Label]" alt="" />
+      <div
+        class="hw-model-item"
+        *ngFor="let model of AIModels"
+        draggable="true"
+        (dragstart)="dragstart($event, model)"
+        (dragend)="dragend($event)"
+      >
+        <div class="hw-model-icon middle-round-btn">
+          <img
+            [src]="imgBase + '/' + icons[model.Label]"
+            alt=""
+            draggable="false"
+          />
         </div>
-        <div>
+        <div draggable="false">
           {{ model.ModelName }}
         </div>
       </div>
@@ -20,15 +41,21 @@
       <div class="hw-simple-title">AI设备列表</div>
       <div class="hw-operate-bar">
         <div class="operate-item">
-          <span class="hw-form-label">选择标签:</span>
-          <input type="text" class="hw-form-input" style="width: 150px" />
+          <span class="hw-form-label">选择标签:&nbsp;</span>
+          <input type="text" class="hw-form-input" />
         </div>
         <div class="operate-item">
-          <span class="hw-form-label">名称:</span>
-          <input type="text" class="hw-form-input" style="width: 150px" />
+          <span class="hw-form-label">名称:&nbsp;</span>
+          <input
+            placeholder="摄像机名称"
+            type="text"
+            class="hw-form-input"
+            [(ngModel)]="cameraModelCondition"
+            (keyup.enter)="searchCameraAIModels()"
+          />
         </div>
 
-        <button class="hw-blue-btn">
+        <button class="hw-blue-btn" (click)="searchCameraAIModels()">
           <i class="mdi mdi-magnify"></i>
           查询
         </button>
@@ -36,13 +63,16 @@
     </div>
     <div class="hw-table-container">
       <howell-ai-camera-table
+        [disablehover]="disablehover"
         [dataSubject]="dataSubject"
         [tableSelectStrategy]="tableSelectStrategy"
+        (selectTableRow)="selectTableRow($event)"
+        (operateTableRow)="operateTableRow($event)"
       ></howell-ai-camera-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select> </app-table-select>
+        <app-table-select (tableSelectEvent)="tableSelectEvent($event)"> </app-table-select>
       </div>
 
       <div class="footer-item">

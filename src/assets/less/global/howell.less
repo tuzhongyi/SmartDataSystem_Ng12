@@ -37,6 +37,13 @@
     filter: brightness(60%);
   }
 }
+.hw-normal-round-btn() {
+  width: 69px;
+  height: 69px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 .form-control() {
   width: 100%;
   height: 34px;
@@ -186,17 +193,13 @@
 
 // round-btn
 .blue-round-btn {
+  .hw-normal-round-btn();
   background-image: url("/assets/img/blue-round.png");
-  width: 69px;
-  height: 69px;
-  background-color: transparent;
 }
 
 .gray-round-btn {
+  .hw-normal-round-btn();
   background-image: url("/assets/img/gray-round.png");
-  width: 69px;
-  height: 69px;
-  background-color: transparent;
 }
 
 .middle-round-btn {
@@ -204,6 +207,8 @@
   width: 99px;
   height: 99px;
   background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 
 // form-controls

@@ -1,26 +1,53 @@
-<div class="camera-table">
-  <div class="camera-row" *ngFor="let data of dataSource">
-    <div class="title">
+<div class="camera-table" #myTable>
+  <div
+    (dragenter)="dragenter($event, row)"
+    (dragleave)="dragleave($event, row)"
+    (dragover)="dragover($event, row)"
+    (drop)="drop($event, row)"
+    class="camera-row"
+    *ngFor="let row of dataSource"
+    (click)="clickRow(row)"
+    [class.high-light]="highLight(row)"
+  >
+    <div class="title" style="pointer-events: none">
       <div class="left-side">
         <i class="howell-icon-video light-blue-text"></i>
-        <span style="margin-left: 10px">{{ data.CameraName }}</span>
+        <span style="margin-left: 10px">{{ row.CameraName }}</span>
       </div>
       <div class="right-side">
         <div class="icon">
           <i class="mdi mdi-content-copy sky-blue-text"></i>
         </div>
         <div class="icon">
-          <i class="howell-icon-signal2 green-text"></i>
+          <i
+            class="howell-icon-signal2"
+            [class]="row.OnlineStatus == 0 ? 'green-text' : 'text-danger'"
+          ></i>
         </div>
       </div>
     </div>
 
-    <div class="body hw-model-list dir-row">
-      <div class="hw-model-item" *ngFor="let model of data.AIModels">
-        <div class="hw-model-icon">
+    <div
+      class="hw-model-list dir-row"
+      [style.pointerEvents]="disablehover ? 'none' : 'auto'"
+    >
+      <div class="hw-model-item" *ngFor="let model of row.AIModels">
+        <div class="hw-model-icon blue-round-btn">
           <img [src]="model.LabelIcon" alt="" />
         </div>
         <div>{{ model.ModelName }}</div>
+        <div class="close-btn" (click)="delete($event, row, model)">
+          <i class="howell-icon-Close"></i>
+        </div>
+      </div>
+      <div
+        class="hw-model-item disabled"
+        *ngIf="row.AIModels.length < maxLength"
+      >
+        <div class="hw-model-icon gray-round-btn">
+          <i class="howell-icon-plus"></i>
+        </div>
+        <div>待添加</div>
       </div>
     </div>
   </div>

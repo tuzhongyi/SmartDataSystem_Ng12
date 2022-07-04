@@ -39,7 +39,17 @@ export class AICameraRequestService {
   list(params: GetCamerasParams = new GetCamerasParams()) {
     return this.type.paged(AICamerasUrl.list(), params);
   }
-  AIModels(id: string) {
+  listAIModels(id: string) {
     return this.basic.get(AICamerasUrl.AIModels(id), CameraAIModel)
   }
+  addAIModel(cameraId: string, modelId: string) {
+    return this.basic.post(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+  }
+  getAIModel(cameraId: string, modelId: string) {
+    return this.basic.get(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+  }
+  deleteAIModel(cameraId: string, modelId: string) {
+    return this.basic.delete(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+  }
+
 }
