@@ -13,6 +13,7 @@ import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { ToastrService } from 'ngx-toastr';
+import { FormState } from 'src/app/enum/form-state.enum';
 
 @Component({
   selector: 'howell-encode-device-manage',
@@ -56,7 +57,9 @@ export class EncodeDeviceManageComponent implements OnInit {
   placeHolder = '搜索编码器名称'
 
 
-
+  // 表单
+  state = FormState.none;
+  encodeDeviceId = '';
 
 
   get enableDelBtn() {
@@ -90,7 +93,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
   private async _init() {
     let res = await this._business.init(this.condition, this.pageIndex, this._pageSize);
-    console.log('res', res)
+    console.log('编码设备', res)
     this.page = res.Page;
     this.dataSubject.next(res.Data);
 
@@ -136,17 +139,19 @@ export class EncodeDeviceManageComponent implements OnInit {
 
     }
   }
+  closeForm(update: boolean) {
+    this.showOperate = false
+    this.state = FormState.none;
+    if (update) this._init();
+  }
   showFilterHandler() {
 
     this.disableSearch = this.showFilter = !this.showFilter;
 
-    // this.beginTime = this.today;
-    // this.endTime = this.today
-    // this.eventType = EventType.None;
-    // this.modelName = '';
   }
   addBtnClick() {
-
+    this.state = FormState.add;
+    this.showOperate = true;
   }
   deleteBtnClick() {
     this.willBeDeleted = [...this.selectedRows]
@@ -166,8 +171,10 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   }
 
-  private _clickEditBtn() {
-
+  private _clickEditBtn(row: EncodeDeviceManageModel) {
+    this.showOperate = true;
+    this.state = FormState.edit;
+    this.encodeDeviceId = row.Id;
   }
 
 }

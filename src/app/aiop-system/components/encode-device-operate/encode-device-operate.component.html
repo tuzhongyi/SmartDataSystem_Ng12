@@ -1,1 +1,214 @@
-<p>encode-device-operate works!</p>
+<div class="encode-device-operate hw-popped-container">
+  <div class="hw-popped-wrapper">
+    <div class="hw-simple-title" style="margin-bottom: 20px">{{ title }}</div>
+    <form class="hw-form" [formGroup]="myForm">
+      <div class="hw-form-group" style="flex-basis: 100%">
+        <div class="title">
+          <span class="hw-form-label"> 名称 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Name"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 传输类型 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <select
+            class="hw-form-control hw-form-select"
+            formControlName="TransType"
+          >
+            <option value="0">UDP</option>
+            <option value="1">TCP</option>
+          </select>
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 协议类型 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <select
+            class="hw-form-control hw-form-select"
+            formControlName="ProtocolType"
+          >
+            <option
+              *ngFor="let protocol of protocols"
+              [value]="protocol.ProtocolType"
+            >
+              {{ protocol.ProtocolType }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> IP地址 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Hostname"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 端口号 </span>
+          <span class="hw-form-icon">*</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Port"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 用户名 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Username"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 密码 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Password"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 设备类型 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <!-- <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="DeviceType"
+          /> -->
+          <select
+            class="hw-form-control hw-form-select"
+            formControlName="DeviceType"
+          >
+            <option value="NVR">NVR</option>
+            <option value="IPC">IPC</option>
+            <option value="DVS">DVS</option>
+          </select>
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 型号 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Model"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 序列号 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="SerialNumber"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 厂商 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="Manufactory"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 固件版本号 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="FirmwareVersion"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group">
+        <div class="title">
+          <span class="hw-form-label"> 软件版本号 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="SoftwareVersion"
+          />
+        </div>
+      </div>
+      <div class="hw-form-group" style="flex-basis: 100%">
+        <div class="title">
+          <span class="hw-form-label"> 硬件版本号 </span>
+          <span class="hw-form-icon"></span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            class="hw-form-control hw-form-input"
+            formControlName="HardwareVersion"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="hw-middle-btn-group">
+      <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+        <i class="howell-icon-Check"></i>
+      </button>
+
+      <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+        <i class="howell-icon-Close"></i>
+      </button>
+    </div>
+  </div>
+</div>

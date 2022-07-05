@@ -79,8 +79,8 @@ export function pageCount(totalnum: number, limit: number) {
     ? totalnum < limit
       ? 1
       : totalnum % limit
-      ? totalnum / limit + 1
-      : totalnum / limit
+        ? totalnum / limit + 1
+        : totalnum / limit
     : 0;
 }
 
@@ -202,3 +202,5 @@ export function wait(
     }
   }, timeout);
 }
+
+export const ValidIP = /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/

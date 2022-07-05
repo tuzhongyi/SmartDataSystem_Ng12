@@ -28,7 +28,7 @@ export class PlatformOperateComponent implements OnInit {
     Port: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/), Validators.max(65535), Validators.min(0)]),
     EventRecvPort: new FormControl("", [Validators.pattern(/^\d*$/), Validators.max(65535), Validators.min(0)]),
     EventRecvIPAddress: new FormControl("", Validators.pattern(/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/)),
-    EventCodes: new FormControl(""),
+    EventCodes: new FormControl([]),
   });
   FormState = FormState;
   protocols: Array<Protocol> = [];
@@ -89,6 +89,7 @@ export class PlatformOperateComponent implements OnInit {
   }
   async init() {
     this.protocols = await this._business.getProtocols()
+    console.log('dss', this.protocols)
     if (this.state == FormState.edit) {
       this._platform = await this._business.getPlatform(this.platformId);
     }
@@ -96,7 +97,82 @@ export class PlatformOperateComponent implements OnInit {
   }
 
   async onSubmit() {
-    // this.closeEvent.emit()
+
+    if (this._checkForm()) {
+      let model = new Platform();
+      model.Name = this.Name.value;
+      model.ProtocolType = this.ProtocolType.value;
+      model.Username = this.Username.value;
+      model.Password = this.Password.value;
+      model.EventRecvIPAddress = this.EventRecvIPAddress.value;
+      model.EventRecvPort = this.EventRecvPort.value;
+      model.EventCodes = this.EventCodes.value;
+      model.Url = "http://" + this.Hostname.value + ":" + this.Port.value;
+      model.UpdateTime = new Date().toISOString();
+
+      if (this.state == FormState.add) {
+        model.Id = '';
+        model.State = 0;
+        model.CreateTime = new Date().toISOString();
+        let res = await this._business.createPlatform(model)
+        if (res) {
+          this._toastrService.success('添加成功')
+          this.closeEvent.emit(true)
+        }
+      } else if (this.state == FormState.edit) {
+        model.Id = this._platform?.Id ?? "";
+        model.State = this._platform?.State ?? 0;;
+        model.CreateTime = this._platform!.CreateTime ?? new Date().toISOString();
+
+        console.log('_platform', this._platform)
+        let res = await this._business.setPlatform(model);
+        if (res) {
+          console.log('res', res)
+          this._toastrService.success('编辑成功')
+          this.closeEvent.emit(true)
+        }
+      }
+    }
+
+
+  }
+  onReset() {
+    this.closeEvent.emit(false)
+  }
+  private _updateForm() {
+    if (this.state == FormState.add) {
+      if (this.protocols.length) {
+        let protocol = this.protocols[0];
+        let url = new URL(protocol.Url);
+        this.myForm.patchValue({
+          Name: protocol.Name,
+          ProtocolType: protocol.ProtocolType,
+          Username: protocol.Username,
+          Password: protocol.Password,
+          Hostname: url.hostname,
+          Port: url.port
+        })
+      }
+
+    } else if (this.state == FormState.edit) {
+      if (this._platform) {
+        let url = new URL(this._platform.Url);
+        this.myForm.patchValue({
+          Name: this._platform.Name,
+          ProtocolType: this._platform.ProtocolType,
+          Username: this._platform.Username,
+          Password: this._platform.Password,
+          Hostname: url.hostname,
+          Port: url.port,
+          EventRecvPort: this._platform.EventRecvPort?.toString(),
+          EventRecvIPAddress: this._platform.EventRecvIPAddress,
+          EventCodes: []
+        })
+      }
+    }
+  }
+
+  private _checkForm() {
     if (this.Name.invalid) {
       this._toastrService.error('请输入名称');
       return;
@@ -142,75 +218,9 @@ export class PlatformOperateComponent implements OnInit {
       this._toastrService.error('事件端口号无效')
       return;
     }
+    return true;
 
-    let model = new Platform();
-    model.Name = this.Name.value;
-    model.ProtocolType = this.ProtocolType.value;
-    model.Username = this.Username.value;
-    model.Password = this.Password.value;
-    model.EventRecvIPAddress = this.EventRecvIPAddress.value;
-    model.EventRecvPort = this.EventRecvPort.value;
-    model.EventCodes = this.EventCodes.value;
-    model.Url = "http://" + this.Hostname.value + ":" + this.Port.value;
-    model.UpdateTime = new Date().toISOString();
-
-    if (this.state == FormState.add) {
-      model.Id = '';
-      model.State = 0;
-      model.CreateTime = new Date().toISOString();
-      let res = await this._business.addPlatform(model)
-      if (res) {
-        this._toastrService.success('添加成功')
-        this.closeEvent.emit(true)
-      }
-    } else if (this.state == FormState.edit) {
-      model.Id = this._platform?.Id ?? "";
-      model.State = this._platform?.State ?? 0;;
-      model.CreateTime = this._platform!.CreateTime ?? new Date().toISOString();
-
-      console.log('_platform', this._platform)
-      let res = await this._business.updatePlatform(model);
-      if (res) {
-        console.log('res', res)
-        this._toastrService.success('编辑成功')
-        this.closeEvent.emit(true)
-      }
-    }
   }
-  onReset() {
-    this.closeEvent.emit(false)
-  }
-  private _updateForm() {
-    if (this.state == FormState.add) {
-      if (this.protocols.length) {
-        let protocol = this.protocols[0];
-        let url = new URL(protocol.Url);
-        this.myForm.patchValue({
-          Name: protocol.Name,
-          ProtocolType: protocol.ProtocolType,
-          Username: protocol.Username,
-          Password: protocol.Password,
-          Hostname: url.hostname,
-          Port: url.port
-        })
-      }
-
-    } else if (this.state == FormState.edit) {
-      if (this._platform) {
-        let url = new URL(this._platform.Url);
-        this.myForm.patchValue({
-          Name: this._platform.Name,
-          ProtocolType: this._platform.ProtocolType,
-          Username: this._platform.Username,
-          Password: this._platform.Password,
-          Hostname: url.hostname,
-          Port: url.port
-        })
-      }
-
-    }
-  }
-
 }
 
 

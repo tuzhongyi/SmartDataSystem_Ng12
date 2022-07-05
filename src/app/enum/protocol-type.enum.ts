@@ -1,4 +1,5 @@
 export enum ProtocolType {
+  None = '',
   Howell = 'Howell',
   Hikvision = 'Hikvision',
   UniView = 'UniView',

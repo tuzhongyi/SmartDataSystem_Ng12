@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { EncodeDevice } from "../../model/encode-device";
+import { Protocol } from "../../model/protocol.model";
 import { EncodeDevicesUrl } from "../../url/aiop/resources/encode-devices/encode-devices.url";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { HowellAuthHttpService } from "../howell-auth-http.service";
@@ -9,7 +10,6 @@ import { GetEncodeDevicesParams } from "./encode-devices-params";
   providedIn: "root",
 })
 export class EncodeDeviceRequestService {
-
 
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<EncodeDevice>;
@@ -27,7 +27,7 @@ export class EncodeDeviceRequestService {
   }
 
   set(item: EncodeDevice) {
-    this.type.put(EncodeDevicesUrl.item(item.Id), item)
+    return this.type.put(EncodeDevicesUrl.item(item.Id), item)
   }
 
   del(id: string) {
@@ -39,6 +39,7 @@ export class EncodeDeviceRequestService {
   }
 
   protocol() {
-    return this.type.get(EncodeDevicesUrl.protocols());
+    return this.basic.get(EncodeDevicesUrl.protocols(), Protocol);
   }
 }
+

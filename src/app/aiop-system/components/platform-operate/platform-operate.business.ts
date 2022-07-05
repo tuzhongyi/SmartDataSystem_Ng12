@@ -7,11 +7,11 @@ export class PlatformOperateBusiness {
   constructor(private _platformRequest: PlatformRequestSerivce) {
 
   }
-  async addPlatform(model: Platform) {
-    return await this._platformRequest.create(model)
+  async createPlatform(item: Platform) {
+    return await this._platformRequest.create(item)
   }
-  async updatePlatform(model: Platform) {
-    return await this._platformRequest.set(model)
+  async setPlatform(item: Platform) {
+    return await this._platformRequest.set(item)
   }
   async getProtocols() {
     return await this._platformRequest.protocol();

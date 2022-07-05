@@ -25,12 +25,6 @@ import { DOCUMENT } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { encode, decode, Base64 } from 'js-base64';
 
-
-export interface NestedTreeNode {
-  name: string;
-  children?: Array<NestedTreeNode>;
-}
-
 @Component({
   selector: 'howell-ai-model-operate',
   templateUrl: './ai-model-operate.component.html',

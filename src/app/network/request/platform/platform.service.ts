@@ -6,6 +6,7 @@ import { AbstractService } from "src/app/business/Ibusiness";
 import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
 import { PlatformsURL } from "../../url/aiop/platforms/platforms.url";
 import { classToPlain } from "class-transformer";
+import { Protocol } from "../../model/protocol.model";
 @Injectable({
   providedIn: "root",
 })
@@ -39,7 +40,7 @@ export class PlatformRequestSerivce {
     return this.type.delete(PlatformsURL.item(id))
   }
   protocol(): Promise<any> {
-    return this.type.get(PlatformsURL.protocols());;
+    return this.basic.get(PlatformsURL.protocols(), Protocol);;
   }
   sync(id: string) {
     return this.type.post(PlatformsURL.sync(id))
