@@ -38,6 +38,7 @@ import { InputSearchOptionsComponent } from './input-search-options/input-search
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
 import { AICameraTableComponent } from './ai-camera-table/ai-camera-table.component';
 import { LabelListComponent } from './label-list/label-list.component';
+import { DivisionTreeComponent } from './division-tree/division-tree.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -78,5 +79,6 @@ export const CUSTOM_COMPONENTS = [
   Table2Component,
   AIModelTreeComponent,
   AICameraTableComponent,
-  LabelListComponent
+  LabelListComponent,
+  DivisionTreeComponent
 ];
