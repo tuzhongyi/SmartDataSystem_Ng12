@@ -5,7 +5,7 @@ import { ProtocolType } from "src/app/enum/protocol-type.enum";
 import { TransType } from "src/app/enum/trans-type.enum";
 import { Resource } from "./resource.model";
 
-// /**编码设备信息 */
+/**编码设备信息 */
 export class EncodeDevice extends Resource {
   /**传输类型(可选)　0：UDP，1：TCP */
   TransType?: TransType;

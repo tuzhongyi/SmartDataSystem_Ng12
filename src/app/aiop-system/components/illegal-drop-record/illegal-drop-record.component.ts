@@ -7,7 +7,7 @@ import { TableCellEvent, TableColumnModel, TableOperateModel } from "src/app/vie
 import { IllegalDropEventRecordConf } from "./illegal-drop-record.config";
 import { IllegalDropRecordBusiness } from "./illegal-drop-record.business";
 import { TableSelectStateEnum } from "src/app/enum/table-select-state.enum";
-import { TableComponent } from "src/app/common/components/table/table.component";
+import { CommonTableComponent } from "src/app/common/components/common-table/common.component";
 import { PaginatorComponent } from "src/app/common/components/paginator/paginator.component";
 import { Sort } from "@angular/material/sort";
 import { Page } from "src/app/network/model/page_list.model";
@@ -29,7 +29,7 @@ export class IllegalDropRecordComponent implements OnInit {
 
 
   dataSubject = new BehaviorSubject<IllegalDropRecordModel[]>([]);
-  tableSelectModel = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...IllegalDropEventRecordConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   page: Page | null = null;
@@ -39,7 +39,7 @@ export class IllegalDropRecordComponent implements OnInit {
   tableOperates: TableOperateModel[] = []
 
 
-  @ViewChild(TableComponent) table?: TableComponent;
+  @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
 

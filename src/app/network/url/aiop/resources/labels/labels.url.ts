@@ -13,4 +13,7 @@ export abstract class LabelsUrl extends ResourcesURL {
   static list() {
     return `${this.basic}/List`;
   }
+  static batch(id: string) {
+    return `${this.basic}/${id}/Batch`
+  }
 }

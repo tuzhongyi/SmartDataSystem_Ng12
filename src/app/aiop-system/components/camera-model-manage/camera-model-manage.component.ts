@@ -34,7 +34,7 @@ export class CameraModelManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<AICameraModelManageModel[]>([]);
-  tableSelectStrategy = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Multiple;
   selectedRows: AICameraModelManageModel[] = []; //table选中项
   // willBeDeleted: AIModelManageModel[] = [];
 
@@ -116,7 +116,7 @@ export class CameraModelManageComponent implements OnInit {
 
     }
   }
-  tableSelectEvent(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectStateEnum) {
     if (this.table) {
       switch (type) {
         case TableSelectStateEnum.All:

@@ -41,18 +41,18 @@
     </div>
 
     <div class="hw-table-container">
-      <app-table
+      <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
-        [tableSelectModel]="tableSelectModel"
+        [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
-      ></app-table>
+      ></common-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>
       </div>
     </div>

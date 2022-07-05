@@ -5,7 +5,7 @@ import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } fr
 import { PlatformManageConf } from './platform-manage.config';
 import { PlatformManageBusiness } from './platform-manage.business';
 import { Page } from 'src/app/network/model/page_list.model';
-import { TableComponent } from 'src/app/common/components/table/table.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { PageEvent } from '@angular/material/paginator';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -32,7 +32,7 @@ export class PlatformManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<PlatformManageModel[]>([]);
-  tableSelectModel = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
@@ -61,7 +61,7 @@ export class PlatformManageComponent implements OnInit {
     return !!this.selectedRows.length
   }
 
-  @ViewChild(TableComponent) table?: TableComponent;
+  @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
 
@@ -112,7 +112,7 @@ export class PlatformManageComponent implements OnInit {
   selectTableRow(rows: PlatformManageModel[]) {
     this.selectedRows = rows;
   }
-  tableSelectEvent(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectStateEnum) {
     if (this.table) {
       switch (type) {
         case TableSelectStateEnum.All:

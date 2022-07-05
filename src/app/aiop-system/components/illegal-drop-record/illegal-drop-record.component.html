@@ -2,22 +2,22 @@
   <div class="hw-table-detail">
     <div class="hw-second-title">垃圾落地</div>
     <div class="hw-table-container">
-      <app-table
+      <common-table
         #table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
         [zoomIn]="true"
         [tableOperates]="tableOperates"
-        [tableSelectModel]="tableSelectModel"
+        [selectStrategy]="selectStrategy"
         (selectTableRow)="selectTableRow($event)"
         (selectTableCell)="selectTableCell($event)"
         (sortDataEvent)="sortDataEvent($event)"
-      ></app-table>
+      ></common-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>
       </div>
 

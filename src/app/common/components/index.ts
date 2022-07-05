@@ -4,7 +4,7 @@ import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { SelectControlComponent } from './select-control/select-control.component';
 import { StatisticLineEChartsComponent } from './statistic-line-echarts/statistic-line-echarts.component';
 import { TabTitleComponent } from './tab-title/tab-title.component';
-import { TableComponent } from './table/table.component';
+import { CommonTableComponent } from './common-table/common.component';
 import { TimeComponent } from './time/time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
@@ -37,6 +37,7 @@ import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
 import { AICameraTableComponent } from './ai-camera-table/ai-camera-table.component';
+import { LabelListComponent } from './label-list/label-list.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -50,7 +51,7 @@ export const CUSTOM_COMPONENTS = [
   TabTitleComponent,
   HeaderNavComponent,
   VideoPlayerComponent,
-  TableComponent,
+  CommonTableComponent,
   ImageControlComponent,
   PaginatorComponent,
   TableSelectComponent,
@@ -76,5 +77,6 @@ export const CUSTOM_COMPONENTS = [
   SimpleSearchComponent,
   Table2Component,
   AIModelTreeComponent,
-  AICameraTableComponent
+  AICameraTableComponent,
+  LabelListComponent
 ];

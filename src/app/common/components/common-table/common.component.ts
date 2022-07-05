@@ -8,11 +8,11 @@ import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } fr
 import { TableDataSource } from "./data-source";
 
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.less'],
+  selector: 'common-table',
+  templateUrl: './common-table.component.html',
+  styleUrls: ['./common-table.component.less'],
 })
-export class TableComponent implements OnInit {
+export class CommonTableComponent implements OnInit {
   private selection!: SelectionModel<TableRowModel>;
 
   dataSource = new TableDataSource([]);
@@ -43,8 +43,8 @@ export class TableComponent implements OnInit {
 
 
   // 单选表 || 多选表
-  @Input('tableSelectModel')
-  selectModel = SelectStrategy.Single;
+  @Input('selectStrategy')
+  selectStrategy = SelectStrategy.Single;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
     TableRowModel[]
@@ -65,7 +65,7 @@ export class TableComponent implements OnInit {
     // 如果传入操作数据，则添加操作列
     if (this.tableOperates.length) this.displayedColumns.push('Operation')
 
-    if (this.selectModel == SelectStrategy.Single) {
+    if (this.selectStrategy == SelectStrategy.Single) {
       this.selection = new SelectionModel<TableRowModel>();
     } else {
       this.selection = new SelectionModel<TableRowModel>(true);

@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableComponent } from 'src/app/common/components/table/table.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -31,7 +31,7 @@ export class AICameraEventsComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<AICameraEventsModel[]>([]);
-  tableSelectModel = SelectStrategy.Single;
+  selectStrategy = SelectStrategy.Single;
   columnModel: TableColumnModel[] = [...AICameraEventsConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
@@ -75,7 +75,7 @@ export class AICameraEventsComponent implements OnInit {
   Language = Language;
   modelName = '';
 
-  @ViewChild(TableComponent) table?: TableComponent;
+  @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
 

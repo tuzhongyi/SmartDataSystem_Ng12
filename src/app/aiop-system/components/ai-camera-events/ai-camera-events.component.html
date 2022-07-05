@@ -80,15 +80,15 @@
     </div>
 
     <div class="hw-table-container">
-      <app-table
+      <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
-        [tableSelectModel]="tableSelectModel"
+        [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         [zoomIn]="zoomIn"
         (selectTableRow)="selectTableRow($event)"
-      ></app-table>
+      ></common-table>
     </div>
     <div class="hw-table-footer" style="justify-content: flex-end">
       <div class="footer-item">

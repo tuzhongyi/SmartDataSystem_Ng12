@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
  * @Last Modified by: pmx
- * @Last Modified time: 2022-06-17 15:35:25
+ * @Last Modified time: 2022-07-05 14:46:18
  */
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -33,6 +33,7 @@ import { PlatformOperateComponent } from './platform-operate/platform-operate.co
 import { SRServerManageComponent } from './sr-server-manage/sr-server-manage.component';
 import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.component';
 import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.component';
+import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-device-operate.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -57,7 +58,8 @@ import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.com
     PlatformOperateComponent,
     SRServerManageComponent,
     SRServerOperateComponent,
-    AIModelOperateComponent
+    AIModelOperateComponent,
+    EncodeDeviceOperateComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],

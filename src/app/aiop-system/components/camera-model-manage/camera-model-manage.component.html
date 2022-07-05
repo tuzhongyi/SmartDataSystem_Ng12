@@ -42,7 +42,7 @@
       <div class="hw-operate-bar">
         <div class="operate-item">
           <span class="hw-form-label">选择标签:&nbsp;</span>
-          <input type="text" class="hw-form-input" />
+          <howell-label-list></howell-label-list>
         </div>
         <div class="operate-item">
           <span class="hw-form-label">名称:&nbsp;</span>
@@ -65,14 +65,15 @@
       <howell-ai-camera-table
         [disablehover]="disablehover"
         [dataSubject]="dataSubject"
-        [tableSelectStrategy]="tableSelectStrategy"
+        [selectStrategy]="selectStrategy"
         (selectTableRow)="selectTableRow($event)"
         (operateTableRow)="operateTableRow($event)"
       ></howell-ai-camera-table>
     </div>
     <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelectEvent($event)"> </app-table-select>
+        <app-table-select (tableSelect)="tableSelect($event)">
+        </app-table-select>
       </div>
 
       <div class="footer-item">

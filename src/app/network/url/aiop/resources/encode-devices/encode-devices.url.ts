@@ -13,4 +13,7 @@ export abstract class EncodeDevicesUrl extends ResourcesURL {
   static list() {
     return `${this.basic}/List`;
   }
+  static protocols() {
+    return `${this.basic}/Protocols`;
+  }
 }

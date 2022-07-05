@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
-import { TableSelectModel } from 'src/app/view-model/table-select.model';
+import { TableSelectStrategy } from 'src/app/view-model/table-select.model';
 import { config } from './config';
 @Component({
   selector: 'app-table-select',
@@ -8,15 +8,15 @@ import { config } from './config';
   styleUrls: ['./table-select.component.less'],
 })
 export class TableSelectComponent implements OnInit {
-  config: TableSelectModel[] = Array.from(config);
+  config: TableSelectStrategy[] = Array.from(config);
 
-  @Output() tableSelectEvent = new EventEmitter<TableSelectStateEnum>();
+  @Output() tableSelect = new EventEmitter<TableSelectStateEnum>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   clickItem(type: TableSelectStateEnum) {
-    this.tableSelectEvent.emit(type);
+    this.tableSelect.emit(type);
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableComponent } from 'src/app/common/components/table/table.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -30,7 +30,7 @@ export class SRServerManageComponent implements OnInit {
 
   dataSource: SRServerManageModel[] = [];
   dataSubject = new BehaviorSubject<SRServerManageModel[]>([]);
-  tableSelectModel = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...SRServerManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   page: Page | null = null;
@@ -50,7 +50,7 @@ export class SRServerManageComponent implements OnInit {
   }
 
 
-  @ViewChild(TableComponent) table?: TableComponent;
+  @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
   constructor(private _business: SRServerManageBusiness, private _toastrService: ToastrService) {

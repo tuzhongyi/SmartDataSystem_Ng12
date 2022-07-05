@@ -4,7 +4,7 @@
       [dataSubject]="dataSubject"
       [columns]="columns"
       [displayedColumns]="displayedColumns"
-      [tableSelectModel]="tableSelectModel"
+      [selectStrategy]="selectStrategy"
       (selectTableRow)="selectTableRow($event)"
       (selectTableCell)="selectTableCell($event)"
       (sortTableHeader)="sortTableHeader($event)"
@@ -12,7 +12,7 @@
   </div>
   <div class="illegal-drop-footer">
     <div class="footer-item">
-      <app-table-select (tableSelectEvent)="tableSelect($event)">
+      <app-table-select (tableSelect)="tableSelect($event)">
       </app-table-select>
     </div>
 

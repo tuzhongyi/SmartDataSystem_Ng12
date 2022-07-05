@@ -1,36 +1,91 @@
 <div class="encode-device-manage">
-  <div class="hw-table-detail">
-    <div class="hw-second-title">编码器</div>
-    <div class="hw-operate-bar">
-      <div class="hw-normal-btn-group">
-        <button class="hw-green-btn">
-          <i class="howell-icon-plus"></i>
-          添加
-        </button>
-        <button class="hw-red-btn">
-          <i class="howell-icon-delete-bin"></i>
-          删除
-        </button>
-      </div>
+  <ng-container *ngIf="showConfirm">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="dialogModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
 
-      <div class="search-wrapper">
-        <howell-simple-search placeHolder="名称"></howell-simple-search>
+  <div class="hw-table-layout">
+    <div class="hw-operation">
+      <div class="hw-second-title">编码器</div>
+      <div class="hw-operate-bar wrap">
+        <div class="left-wrapper">
+          <div class="hw-normal-btn-group" (click)="addBtnClick()">
+            <button class="hw-green-btn">
+              <i class="howell-icon-plus"></i>
+              添加
+            </button>
+            <button
+              class="hw-red-btn"
+              [disabled]="!enableDelBtn"
+              (click)="deleteBtnClick()"
+            >
+              <i class="howell-icon-delete-bin"></i>
+              删除
+            </button>
+            <button class="hw-cyan-btn" [disabled]="!enableBindBtn">
+              <i class="mdi mdi-tag"></i>
+              绑定标签
+            </button>
+          </div>
+        </div>
+        <div class="right-wrapper">
+          <div class="search-wrapper">
+            <input
+              [disabled]="disableSearch"
+              type="text"
+              [placeholder]="placeHolder"
+              [(ngModel)]="condition"
+              (keyup.enter)="search()"
+            />
+          </div>
+          <div class="hw-normal-btn-group">
+            <button class="hw-blue-btn" (click)="search()">
+              <i class="mdi mdi-magnify"></i>
+              查询
+            </button>
+            <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
+              <i class="mdi mdi-filter-outline"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="filter-group" *ngIf="showFilter">
+        <div class="filter-item">
+          <span class="hw-form-label">地址:</span>
+          <input type="text" />
+        </div>
+
+        <div class="filter-item">
+          <span class="hw-form-label">状态:</span>
+          <select class="hw-form-control hw-form-select">
+            <option value="0">全部</option>
+            <option value="1">正常</option>
+            <option value="2">离线</option>
+          </select>
+        </div>
+        <div class="filter-item" style="flex-basis: 25%">
+          <span class="hw-form-label">选择标签:</span>
+          <input type="text" />
+        </div>
       </div>
     </div>
+
     <div class="hw-table-container">
-      <!-- <app-table
+      <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
-        [tableSelectModel]="tableSelectModel"
+        [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
-        (selectTableCell)="selectTableCell($event)"
-      ></app-table> -->
+      ></common-table>
     </div>
-    <!-- <div class="hw-table-footer">
+    <div class="hw-table-footer">
       <div class="footer-item">
-        <app-table-select (tableSelectEvent)="tableSelect($event)">
+        <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>
       </div>
 
@@ -52,6 +107,6 @@
         >
         </app-paginator>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>

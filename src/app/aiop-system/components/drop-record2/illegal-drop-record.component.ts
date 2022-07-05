@@ -4,7 +4,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableComponent } from 'src/app/common/components/table/table.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Table2Component } from 'src/app/common/components/table2/table.component';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
@@ -41,13 +41,13 @@ export class IllegalDropRecord2Component implements OnInit {
 
   columns: TableColumnModel[] = [...columns]; // 表格列配置详情
   displayedColumns: string[] = this.columns.map((column) => column.columnDef); // 表格列 id
-  tableSelectModel = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Multiple;
 
   selectedRows: IllegalDropRecordModel[] = [];
   pageIndex = 0;
   pagerCount: number = 4;
 
-  @ViewChild(TableComponent) table?: Table2Component;
+  @ViewChild(CommonTableComponent) table?: Table2Component;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
   constructor(private _business: IllegalDropRecordBusiness) {

@@ -26,7 +26,7 @@ export class AICameraTableComponent implements OnInit, AfterViewInit {
   @Input()
   dataSubject = new BehaviorSubject<AICameraModelManageModel[]>([]);
 
-  @Input('tableSelectStrategy')
+  @Input('selectStrategy')
   selectStrategy = SelectStrategy.Multiple;
 
   @Input() disablehover = false;

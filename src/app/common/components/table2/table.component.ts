@@ -44,7 +44,7 @@ export class Table2Component implements OnInit, OnChanges, AfterViewInit {
   @Input()
   displayedColumns: string[] = [];
 
-  @Input('tableSelectModel')
+  @Input('selectStrategy')
   selectModel = SelectStrategy.Single;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
