@@ -9,6 +9,7 @@ import { ValidIP } from 'src/app/common/tools/tool';
 import { ProtocolType } from 'src/app/enum/protocol-type.enum';
 import { DeviceType } from 'src/app/enum/device-type.enum';
 import { TransType } from 'src/app/enum/trans-type.enum';
+import { ResourceType } from 'src/app/enum/resource-type.enum';
 
 @Component({
   selector: 'howell-encode-device-operate',
@@ -83,6 +84,31 @@ export class EncodeDeviceOperateComponent implements OnInit {
   async onSubmit() {
     if (this._checkForm()) {
       if (this.state == FormState.add) {
+        let encodeDevice = new EncodeDevice();
+        encodeDevice.ResourceType = ResourceType.EncodeDevice;
+        encodeDevice.Id = '';
+        encodeDevice.Name = this.myForm.value.Name!;
+        encodeDevice.TransType = +this.myForm.value.TransType!;
+        encodeDevice.ProtocolType = this.myForm.value.ProtocolType!;
+        encodeDevice.Url = "http://" + this.myForm.value.Hostname + ":" + this.myForm.value.Port;
+        encodeDevice.Username = this.myForm.value.Username!;
+        encodeDevice.Password = this.myForm.value.Password!;
+        encodeDevice.DeviceType = this.myForm.value.DeviceType!
+        encodeDevice.Model = this.myForm.value.Model!;
+        encodeDevice.SerialNumber = this.myForm.value.SerialNumber!;
+        encodeDevice.Manufactory = this.myForm.value.Manufactory!;
+        encodeDevice.FirmwareVersion = this.myForm.value.FirmwareVersion!;
+        encodeDevice.SoftwareVersion = this.myForm.value.SoftwareVersion!;
+        encodeDevice.HardwareVersion = this.myForm.value.HardwareVersion!;
+        encodeDevice.CreateTime = new Date().toISOString();
+        encodeDevice.UpdateTime = new Date().toISOString();
+
+        let res = await this._business.createEncodeDevice(encodeDevice)
+        if (res) {
+          console.log(res)
+          this._toastrService.success('添加成功')
+          this.closeEvent.emit(true)
+        }
 
       } else if (this.state == FormState.edit) {
         if (this._encodeDevice) {
@@ -99,7 +125,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
           this._encodeDevice.FirmwareVersion = this.myForm.value.FirmwareVersion!;
           this._encodeDevice.SoftwareVersion = this.myForm.value.SoftwareVersion!;
           this._encodeDevice.HardwareVersion = this.myForm.value.HardwareVersion!;
-
+          this._encodeDevice.UpdateTime = new Date().toISOString()
 
           let res = await this._business.setEncodeDevice(this._encodeDevice)
           if (res) {
@@ -118,17 +144,33 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
   private _updateForm() {
     if (this.state == FormState.add) {
+      if (this.protocols.length) {
+        let protocol = this.protocols[0];
+        console.log(protocol)
+        this.myForm.patchValue({
+          Name: protocol.Name,
+          ProtocolType: protocol.ProtocolType,
+          Username: protocol.Username,
+          Password: protocol.Password,
+        })
+        try {
+          let url = new URL(protocol.Url);
+          this.myForm.patchValue({
+            Hostname: url.hostname,
+            Port: url.port
+          })
+        } catch (e) {
+
+        }
+      }
 
     } else if (this.state == FormState.edit) {
       if (this._encodeDevice) {
-        let url = new URL(this._encodeDevice.Url);
 
         this.myForm.patchValue({
           Name: this._encodeDevice.Name,
           TransType: this._encodeDevice.TransType,
           ProtocolType: this._encodeDevice.ProtocolType,
-          Hostname: url.hostname,
-          Port: url.port,
           Username: this._encodeDevice.Username,
           Password: this._encodeDevice.Password,
           DeviceType: this._encodeDevice.DeviceType,
@@ -140,6 +182,17 @@ export class EncodeDeviceOperateComponent implements OnInit {
           HardwareVersion: this._encodeDevice.HardwareVersion
         })
 
+        try {
+          let url = new URL(this._encodeDevice.Url);
+          this.myForm.patchValue({
+            Hostname: url.hostname,
+            Port: url.port,
+          })
+        } catch (e) {
+          console.log('无效的url')
+        } finally {
+          console.log('finally')
+        }
       }
     }
   }

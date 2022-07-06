@@ -4,7 +4,7 @@ import { PaginatorComponent } from 'src/app/common/components/paginator/paginato
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { EncodeDeviceManageModel } from 'src/app/view-model/encode-device-manage.model';
+import { EncodeDeviceManageModel, EncodeDeviceManageSearchInfo } from 'src/app/view-model/encode-device-manage.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { EncodeDeviceManageBusiness } from './encode-device-manage.business';
 import { EncodeDeviceManageConf } from './encode-device-manage.config'
@@ -14,6 +14,7 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'howell-encode-device-manage',
@@ -26,7 +27,6 @@ import { FormState } from 'src/app/enum/form-state.enum';
 export class EncodeDeviceManageComponent implements OnInit {
 
   private _pageSize = 3;
-
 
 
   // Table
@@ -57,6 +57,17 @@ export class EncodeDeviceManageComponent implements OnInit {
   placeHolder = '搜索编码器名称'
 
 
+  //AndLabelIds: ["1bb10bbfa1f546debf5237eeadb57777"]
+  searchInfo: EncodeDeviceManageSearchInfo = {
+    condition: '',
+    deviceName: '',
+    ip: '',
+    online: '',
+    labelIds: [],//["1bb10bbfa1f546debf5237eeadb57777"],
+    filter: false
+  }
+
+
   // 表单
   state = FormState.none;
   encodeDeviceId = '';
@@ -76,7 +87,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
 
-  constructor(private _business: EncodeDeviceManageBusiness, private _toastrService: ToastrService) {
+  constructor(private fb: FormBuilder, private _business: EncodeDeviceManageBusiness, private _toastrService: ToastrService) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -92,7 +103,7 @@ export class EncodeDeviceManageComponent implements OnInit {
     this._init()
   }
   private async _init() {
-    let res = await this._business.init(this.condition, this.pageIndex, this._pageSize);
+    let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize,);
     console.log('编码设备', res)
     this.page = res.Page;
     this.dataSubject.next(res.Data);
@@ -142,11 +153,14 @@ export class EncodeDeviceManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    if (update) this._init();
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
   }
   showFilterHandler() {
-
     this.disableSearch = this.showFilter = !this.showFilter;
+    this.searchInfo.filter = this.showFilter
 
   }
   addBtnClick() {

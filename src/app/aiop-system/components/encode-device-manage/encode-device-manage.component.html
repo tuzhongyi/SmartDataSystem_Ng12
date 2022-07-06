@@ -20,8 +20,8 @@
       <div class="hw-second-title">编码器</div>
       <div class="hw-operate-bar wrap">
         <div class="left-wrapper">
-          <div class="hw-normal-btn-group" (click)="addBtnClick()">
-            <button class="hw-green-btn">
+          <div class="hw-normal-btn-group">
+            <button class="hw-green-btn" (click)="addBtnClick()">
               <i class="howell-icon-plus"></i>
               添加
             </button>
@@ -44,8 +44,8 @@
             <input
               [disabled]="disableSearch"
               type="text"
+              [(ngModel)]="searchInfo.condition"
               [placeholder]="placeHolder"
-              [(ngModel)]="condition"
               (keyup.enter)="search()"
             />
           </div>
@@ -62,16 +62,31 @@
       </div>
       <div class="filter-group" *ngIf="showFilter">
         <div class="filter-item">
+          <span class="hw-form-label">名称:</span>
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.deviceName"
+            placeHolder="请输入关键字"
+          />
+        </div>
+        <div class="filter-item">
           <span class="hw-form-label">地址:</span>
-          <input type="text" />
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.ip"
+            placeHolder="请输入关键字"
+          />
         </div>
 
         <div class="filter-item">
           <span class="hw-form-label">状态:</span>
-          <select class="hw-form-control hw-form-select">
-            <option value="0">全部</option>
-            <option value="1">正常</option>
-            <option value="2">离线</option>
+          <select
+            class="hw-form-control hw-form-select"
+            [(ngModel)]="searchInfo.online"
+          >
+            <option value="">全部</option>
+            <option value="0">正常</option>
+            <option value="1">离线</option>
           </select>
         </div>
         <div class="filter-item" style="flex-basis: 25%">
