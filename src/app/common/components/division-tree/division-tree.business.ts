@@ -25,9 +25,8 @@ export class DivisionTreeBusiness {
 
   constructor(private _divisionRequest: DivisionRequestService,
     private _stationRequest: GarbageStationRequestService,
-    private _converter: DivisionTreeConverter) {
+    private _converter: DivisionTreeConverter) { }
 
-  }
   init(type: UserResourceType = UserResourceType.City,
     depth: number = 0) {
     this.nestedNodeMap.clear()
@@ -66,6 +65,7 @@ export class DivisionTreeBusiness {
 
   async searchNode(condition: string, type: UserResourceType = UserResourceType.City,
     depth: number = 0) {
+    this.nestedNodeMap.clear();
     let nodes: CommonNestNode[] = [];
     if (condition == '') {
       nodes = await this.init(type, depth);

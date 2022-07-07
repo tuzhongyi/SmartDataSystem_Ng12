@@ -26,21 +26,29 @@ export class DivisionTreeComponent implements OnInit {
 
 
   // 要屏蔽的搜索字符串
-  private _searchGuards: string[] = ['街道', '路居委会'];
   private _condition: string | Symbol = Symbol.for('DIVISION-TREE');
+  private _searchGuards: string[] = ['街道', '路居委会'];
   /**
    *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
    */
   private _excludeGuards: string[] = [];
+  private _nestedNodeMap = new Map<string, CommonNestNode>();
+
 
   dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
-  dataSource: CommonNestNode[] = [];
-  selectStrategy = SelectStrategy.Single;
-  holdStatus = true;
 
+
+  @Input()
+  holdStatus = false;
+
+  @Input()
+  selectStrategy = SelectStrategy.Single;
 
   @Input('showStation')
   showStation = false; // 区划树或厢房树
+
+  @Input() showSearchBar = true;
+
 
   // 默认选中列表
   private _defaultIds: string[] = []
@@ -96,12 +104,13 @@ export class DivisionTreeComponent implements OnInit {
   }
 
   // 抛出指定类型的节点
-  @Input() filterTypes: UserResourceType[] = [UserResourceType.County]
+  @Input() filterTypes: UserResourceType[] = []
 
 
   @Output() defaultIdsChange = new EventEmitter<string[]>();
   @Output() selectTreeNode: EventEmitter<CommonFlatNode<Division | GarbageStation>[]> = new EventEmitter<CommonFlatNode<Division | GarbageStation>[]>();
 
+  @Output() holdStatusChange = new EventEmitter();
 
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
@@ -119,10 +128,13 @@ export class DivisionTreeComponent implements OnInit {
     this._init()
   }
   private async _init() {
-    this.dataSource = await this._business.init(this.resourceType, this.depth);
-    this.dataSubject.next(this.dataSource)
+    this._nestedNodeMap = this._business.nestedNodeMap;
+
+
+    let res = await this._business.init(this.resourceType, this.depth);
+    this.dataSubject.next(res)
     if (this.tree) {
-      this.tree.expandNodeRecursively(this.dataSource, this.showDepth)
+      this.tree.expandNodeRecursively(res, this.showDepth)
     }
   }
 
@@ -138,7 +150,7 @@ export class DivisionTreeComponent implements OnInit {
   }
   selectTreeNodeHandler(change: SelectionChange<CommonFlatNode<any>>) {
     let nodes = change.source.selected;
-    console.log('选中节点', nodes)
+    // console.log('选中节点', nodes)
     let filtered: CommonFlatNode<Division | GarbageStation>[] = [];
     if (this.filterTypes.includes(UserResourceType.None) || this.filterTypes.length == 0) {
       filtered = nodes;
@@ -158,6 +170,10 @@ export class DivisionTreeComponent implements OnInit {
   }
   defaultIdsChangeHandler(ids: string[]) {
     this.defaultIdsChange.emit(ids)
+  }
+  holdStatusChangeHandler(change: boolean) {
+    this.holdStatus = change;
+    this.holdStatusChange.emit(change)
   }
   async searchEventHandler(condition: string) {
     console.log('搜索字段', condition)
@@ -187,7 +203,7 @@ export class DivisionTreeComponent implements OnInit {
     }
   }
 
-  changeTreeConfig(type: UserResourceType, depth?: number) {
+  changeDivisionTreeConfig(type: UserResourceType, depth?: number) {
     if (type == UserResourceType.None) return;
 
     this.resourceType = type;
@@ -196,6 +212,59 @@ export class DivisionTreeComponent implements OnInit {
     }
     this._init()
   }
+
+  addNode(node: CommonNestNode) {
+    if (node.ParentId) {
+      let parentNode = this._nestedNodeMap.get(node.ParentId);
+      if (parentNode) {
+
+        parentNode.HasChildren = true;
+        parentNode.childrenChange.value.push(node);
+
+      }
+    } else {
+      this.dataSubject.value.push(node);
+    }
+    this._nestedNodeMap.set(node.Id, node);
+    this.dataSubject.next(this.dataSubject.value)
+  }
+
+  /**原节点有各种状态,使用原节点 */
+  editNode(node: CommonNestNode) {
+    let currentNode = this._nestedNodeMap.get(node.Id);
+    if (currentNode) {
+      currentNode.Name = node.Name;
+      currentNode.RawData = node.RawData;
+    }
+    this.dataSubject.next(this.dataSubject.value);
+  }
+
+  deleteNode(flat: CommonFlatNode) {
+    const node = flat;
+    // 当前要删除的节点
+    let currentNode = this._nestedNodeMap.get(node.Id);
+    if (currentNode) {
+      // 该节点有没有父节点
+      if (currentNode.ParentId) {
+        let parentNode = this._nestedNodeMap.get(currentNode.ParentId)!;
+        let index = parentNode.childrenChange.value.indexOf(currentNode);
+        if (index != -1) {
+          parentNode.childrenChange.value.splice(index, 1);
+          parentNode.HasChildren = parentNode.childrenChange.value.length > 0;
+        }
+      } else {
+        let index = this.dataSubject.value.indexOf(currentNode);
+        if (index != -1) {
+          this.dataSubject.value.splice(index, 1);
+        }
+      }
+      this._nestedNodeMap.delete(currentNode.Id);
+    }
+    this.dataSubject.next(this.dataSubject.value);
+    this.tree?.deleteNode(flat)
+  }
+
+
   private _filterNode(type: UserResourceType, node: CommonFlatNode) {
     let raw = node.RawData;
     let t: UserResourceType = UserResourceType.None

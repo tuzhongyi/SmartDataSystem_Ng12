@@ -32,16 +32,13 @@
         编辑
       </button>
     </div>
-    <howell-tree
-      #tree
-      [defaultIds]="defaultIds"
-      (defaultIdsChange)="defaultIdsChange($event)"
-      [treeSelectModel]="treeSelectModel"
-      [treeServiceModel]="treeServiceModel"
-      [treeBusinessProvider]="businessProvider"
-      (selectTreeNode)="selectTreeNode($event)"
-      [(holdStatus)]="holdStatus"
-    ></howell-tree>
+    <div class="tree-container">
+      <howell-division-tree
+        [showStation]="showStation"
+        [(holdStatus)]="holdStatus"
+        (selectTreeNode)="selectTreeNode($event)"
+      ></howell-division-tree>
+    </div>
   </div>
   <!-- right -->
   <div class="horizontal-right">

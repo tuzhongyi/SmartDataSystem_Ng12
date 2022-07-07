@@ -1,4 +1,4 @@
-<div class="division-tree howell-tree">
+<div class="region-tree howell-tree">
   <div class="search-wrapper" *ngIf="showSearchBar">
     <howell-simple-search
       placeHolder="名称"
@@ -8,13 +8,9 @@
   <div class="tree-container">
     <howell-common-tree
       [dataSubject]="dataSubject"
+      [(holdStatus)]="holdStatus"
       [defaultIds]="defaultIds"
-      [selectStrategy]="selectStrategy"
-      (loadChildrenEvent)="loadChildrenEvent($event)"
       (selectTreeNode)="selectTreeNodeHandler($event)"
-      (defaultIdsChange)="defaultIdsChangeHandler($event)"
-      [holdStatus]="holdStatus"
-      (holdStatusChange)="holdStatusChangeHandler($event)"
     ></howell-common-tree>
   </div>
 </div>

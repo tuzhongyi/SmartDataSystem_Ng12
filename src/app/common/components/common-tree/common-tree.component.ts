@@ -1,6 +1,6 @@
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -12,11 +12,11 @@ import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
   templateUrl: './common-tree.component.html',
   styleUrls: ['./common-tree.component.less']
 })
-export class CommonTreeComponent implements OnInit {
+export class CommonTreeComponent implements OnInit, OnChanges {
 
   SelectStrategy = SelectStrategy
 
-  private _flatNodeMap = new Map<string, CommonFlatNode>();
+  _flatNodeMap = new Map<string, CommonFlatNode>();
   private _currentNode: CommonFlatNode | null = null;
 
   private _transformer = (nestNode: CommonNestNode, level: number) => {
@@ -28,6 +28,7 @@ export class CommonTreeComponent implements OnInit {
     if (existingNode) {
       existingNode.Name = nestNode.Name;
       existingNode.Expandable = nestNode.HasChildren;
+      existingNode.RawData = nestNode.RawData
       return existingNode;
     }
 
@@ -140,6 +141,11 @@ export class CommonTreeComponent implements OnInit {
       this._setDefaultNodes();
     });
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('defaultIds' in changes) {
+      this._setDefaultNodes();
+    }
+  }
   singleSelectNode(node: CommonFlatNode) {
 
     // 如果当前节点正被选中，则再次点击当前节点，不会取消选中，一般用于编辑节点状态时
@@ -190,6 +196,8 @@ export class CommonTreeComponent implements OnInit {
     );
     return result && !this._descendantAllSelected(node);
   }
+
+
 
   /**
  *
@@ -297,16 +305,16 @@ export class CommonTreeComponent implements OnInit {
   }
 
 
-  // toggleSelect(ids: string[]) {
-  //   this.selection.clear();
-  //   for (let i = 0; i < ids.length; i++) {
-  //     let id = ids[i];
-  //     let flatNode = this._flatNodeMap.get(id);
-  //     if (flatNode) {
-  //       this.selection.toggle(flatNode)
-  //     }
-  //   }
-  // }
+  toggleSelect(ids: string[]) {
+    this.selection.clear();
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i];
+      let flatNode = this._flatNodeMap.get(id);
+      if (flatNode) {
+        this.selection.toggle(flatNode)
+      }
+    }
+  }
   /**
    * 如果当前节点选中，则所有子节点被选中
    * 如果当前节点取消选中，则所有子节点取消选中
@@ -326,9 +334,13 @@ export class CommonTreeComponent implements OnInit {
   collapseAll() {
     this.treeControl.collapseAll()
   }
-
+  deleteNode(node: CommonFlatNode) {
+    this.selection.deselect(node);
+    this._flatNodeMap.delete(node.Id)
+  }
   reset() {
     this._currentNode = null;
     this.selection.clear()
   }
+
 }

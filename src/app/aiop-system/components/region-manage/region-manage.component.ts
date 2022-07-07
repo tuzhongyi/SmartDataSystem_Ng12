@@ -165,54 +165,54 @@ export class RegionManageComponent implements OnInit {
   }
 
   private async _addNode() {
-    if (this.tree) {
-      let name = this.Name.value
-      let des = this.Description.value
-      let model = new RegionManageModel(name, des);
-      let parentId = this.currentNode ? this.currentNode.id : '';
-      let res = await this._business.addRegion(parentId, model);
-      if (res) {
-        console.log(res)
-        this._toastrService.success('添加成功');
-        const node = this._converter.Convert(res);
-        this.tree.addNode(node);
+    // if (this.tree) {
+    //   let name = this.Name.value
+    //   let des = this.Description.value
+    //   let model = new RegionManageModel(name, des);
+    //   let parentId = this.currentNode ? this.currentNode.id : '';
+    //   let res = await this._business.addRegion(parentId, model);
+    //   if (res) {
+    //     console.log(res)
+    //     this._toastrService.success('添加成功');
+    //     const node = this._converter.Convert(res);
+    //     this.tree.addNode(node);
 
-        this.onReset();
-      }
-    }
+    //     this.onReset();
+    //   }
+    // }
   }
   private async _editNode() {
-    if (this.tree) {
+    // if (this.tree) {
 
-      let id = this.currentNode?.id ?? '';;
-      let name = this.Name.value
-      let des = this.Description.value
-      let model = new RegionManageModel(name, des);
+    //   let id = this.currentNode?.id ?? '';;
+    //   let name = this.Name.value
+    //   let des = this.Description.value
+    //   let model = new RegionManageModel(name, des);
 
-      let res = await this._business.editRegion(id, model);
-      if (res) {
-        console.log(res)
-        this._toastrService.success('编辑成功');
-        const node = this._converter.Convert(res);
-        this.tree.editNode(node);
-        // 提交成功后，更新数据
-        if (this.currentNode) {
-          this.currentNode.name = name;
-          this.currentNode.description = des;
-        }
-        this.onReset();
-      }
-    }
+    //   let res = await this._business.editRegion(id, model);
+    //   if (res) {
+    //     console.log(res)
+    //     this._toastrService.success('编辑成功');
+    //     const node = this._converter.Convert(res);
+    //     this.tree.editNode(node);
+    //     // 提交成功后，更新数据
+    //     if (this.currentNode) {
+    //       this.currentNode.name = name;
+    //       this.currentNode.description = des;
+    //     }
+    //     this.onReset();
+    //   }
+    // }
   }
   private async _deleteNode() {
-    if (this.tree) {
-      if (this.currentNode?.id) {
-        let res = await this._business.deleteRegion(this.currentNode.id);
-        if (res) {
-          this._toastrService.success('删除成功');
-          this.tree.deleteNode(res.Id);
-        }
-      }
-    }
+    // if (this.tree) {
+    //   if (this.currentNode?.id) {
+    //     let res = await this._business.deleteRegion(this.currentNode.id);
+    //     if (res) {
+    //       this._toastrService.success('删除成功');
+    //       this.tree.deleteNode(res.Id);
+    //     }
+    //   }
+    // }
   }
 }

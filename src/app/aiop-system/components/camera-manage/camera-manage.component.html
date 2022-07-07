@@ -1,12 +1,61 @@
-<div class="camera-manage">
-  <div class="hw-tree-list">
+<div class="camera-manage hw-horizontal-layout">
+  <div class="horizontal-left">
     <div class="hw-simple-title">安保区域</div>
-    <div class="search-wrapper">
-      <howell-simple-search placeHolder="名称"></howell-simple-search>
-    </div>
+    <howell-region-tree></howell-region-tree>
+  </div>
+  <div class="horizontal-right hw-table-layout">
+    <div class="hw-operation">
+      <div class="hw-simple-title">监控点</div>
+      <!-- <div class="hw-operate-bar">
+        <div class="operate-item">
+          <span class="hw-form-label">选择标签:&nbsp;</span>
+          <howell-label-list></howell-label-list>
+        </div>
+        <div class="operate-item">
+          <span class="hw-form-label">名称:&nbsp;</span>
+          <input placeholder="摄像机名称" type="text" class="hw-form-input" />
+        </div>
 
-    <div class="tree-container">
-      <howell-tree #tree></howell-tree>
+        <button class="hw-blue-btn">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button>
+      </div> -->
     </div>
+    <!-- <div class="hw-table-container">
+      <howell-ai-camera-table
+        [disablehover]="disablehover"
+        [dataSubject]="dataSubject"
+        [selectStrategy]="selectStrategy"
+        (selectTableRow)="selectTableRow($event)"
+        (operateTableRow)="operateTableRow($event)"
+      ></howell-ai-camera-table>
+    </div> -->
+
+    <!-- <div class="hw-table-footer">
+      <div class="footer-item">
+        <app-table-select (tableSelect)="tableSelect($event)">
+        </app-table-select>
+      </div>
+
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">已选择: {{ selectedRows.length }}</div>
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+        <app-paginator
+          *ngIf="page"
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="pagerCount"
+          [pageIndex]="pageIndex - 1"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div> -->
   </div>
 </div>

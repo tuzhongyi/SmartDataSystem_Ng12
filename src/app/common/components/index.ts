@@ -40,6 +40,7 @@ import { AICameraTableComponent } from './ai-camera-table/ai-camera-table.compon
 import { LabelListComponent } from './label-list/label-list.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
+import { RegionTreeComponent } from './region-tree/region-tree.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -82,5 +83,6 @@ export const CUSTOM_COMPONENTS = [
   AICameraTableComponent,
   LabelListComponent,
   DivisionTreeComponent,
-  CommonTreeComponent
+  CommonTreeComponent,
+  RegionTreeComponent
 ];

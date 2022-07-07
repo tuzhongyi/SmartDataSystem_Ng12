@@ -1,3 +1,5 @@
+import { Type } from "class-transformer";
+
 /**区域信息 */
 export class Region {
   /**区域ID */
@@ -27,9 +29,11 @@ export class RegionNode {
   Name!: string;
   RegionType!: number;
   Description?: string;
+  @Type(() => RegionNode)
   Nodes?: RegionNode[]
 }
 export class RegionTree {
   Name!: string;
+  @Type(() => RegionNode)
   Nodes?: RegionNode[];
 }
