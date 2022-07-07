@@ -134,11 +134,12 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
     }
     return children;
   }
-  async searchNode(condition: string) {
+  async searchNode(condition: string, type: UserResourceType,
+    depth: number) {
 
     let nodes: NestTreeNode[] = []
     if (condition == '') {
-      nodes = await this.initialize();
+      nodes = await this.initialize(type, depth);
     } else {
       let data = await this._searchDivisionData(condition);
       let divisionNodes = this._converter.recurseToNestTreeNode(data);

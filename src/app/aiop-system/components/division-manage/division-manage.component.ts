@@ -27,9 +27,9 @@ export class DivisionManageComponent implements OnInit {
 
   /*****public ********/
   treeServiceModel = DistrictTreeEnum.Division;
-  treeSelectModel = SelectStrategy.Multiple;
+  treeSelectModel = SelectStrategy.Single;
   currentNode?: FlatTreeNode;
-  resourceType: UserResourceType = UserResourceType.None;
+  resourceType: UserResourceType = UserResourceType.City;
   myForm = new FormGroup({
     Id: new FormControl('', [Validators.required, Validators.pattern(/^[\d]*$/)]),
     Name: new FormControl('', Validators.required),

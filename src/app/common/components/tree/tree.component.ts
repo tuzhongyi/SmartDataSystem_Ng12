@@ -66,6 +66,7 @@ export class TreeComponent implements OnInit {
   private _getChildren = (node: NestTreeNode) => node.childrenChange;
   private _hasChild = (index: number, node: FlatTreeNode) => node.expandable;
   private _treeFlattener: MatTreeFlattener<NestTreeNode, FlatTreeNode>;
+
   private dataChange = new BehaviorSubject<NestTreeNode[]>([]);
   private _nestedNodeMap = new Map<string, NestTreeNode>();
   private _currentNode: FlatTreeNode | null = null;
@@ -146,7 +147,7 @@ export class TreeComponent implements OnInit {
   depthIsEnd = false;
 
   // 最高区划等级
-  private _userResourceType: UserResourceType = UserResourceType.City;
+  private _userResourceType: UserResourceType = UserResourceType.County;
   @Input()
   set resourceType(type: UserResourceType) {
     if (type !== UserResourceType.None) {
@@ -461,7 +462,7 @@ export class TreeComponent implements OnInit {
     let selected = this.selection.selected;
     this.selection.clear();
     let nodes: NestTreeNode[] = []
-    nodes = await this._business.searchNode(condition);
+    nodes = await this._business.searchNode(condition, this.resourceType, this.depth);
 
     if (nodes.length) {
       this.dataChange.next(nodes);

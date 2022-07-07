@@ -15,5 +15,5 @@ export interface TreeBusinessInterface {
 
   loadChildren(node: NestTreeNode): Promise<NestTreeNode[]>;
 
-  searchNode(condition: string): Promise<NestTreeNode[]>;
+  searchNode(condition: string, ...res: any[]): Promise<NestTreeNode[]>;
 }

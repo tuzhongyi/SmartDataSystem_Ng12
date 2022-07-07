@@ -1,1 +1,19 @@
-<p>division-tree works!</p>
+<div class="division-tree howell-tree">
+  <div class="search-wrapper" *ngIf="true">
+    <howell-simple-search
+      placeHolder="名称"
+      (searchEvent)="searchEventHandler($event)"
+    ></howell-simple-search>
+  </div>
+  <div class="tree-container">
+    <howell-common-tree
+      [dataSubject]="dataSubject"
+      [defaultIds]="defaultIds"
+      [selectStrategy]="selectStrategy"
+      (loadChildrenEvent)="loadChildrenEvent($event)"
+      (selectTreeNode)="selectTreeNodeHandler($event)"
+      (defaultIdsChange)="defaultIdsChangeHandler($event)"
+      [(holdStatus)]="holdStatus"
+    ></howell-common-tree>
+  </div>
+</div>
