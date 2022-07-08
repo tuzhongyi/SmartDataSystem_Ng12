@@ -23,7 +23,6 @@ export class CameraAIEventRequestService {
     return this.type.paged(CameraAIUrl.list(), params);
   }
 
-
   create(item: CameraAIEventRecord) {
     return this.type.post(CameraAIUrl.create(), item)
   }

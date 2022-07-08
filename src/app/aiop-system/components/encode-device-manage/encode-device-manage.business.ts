@@ -38,6 +38,6 @@ export class EncodeDeviceManageBusiness {
     return this._encodeDeviceRequest.list(params)
   }
   deleteEncodeDevice(id: string) {
-    return this._encodeDeviceRequest.del(id)
+    return this._encodeDeviceRequest.delete(id)
   }
 }

@@ -19,7 +19,7 @@ export class AIModelManageBusiness {
     params.PageSize = pageSize;
     params.ModelName = condition;
 
-    let tmp = await this.list(params);
+    let tmp = await this._list(params);
 
     // console.log(tmp)
 
@@ -39,7 +39,7 @@ export class AIModelManageBusiness {
   delete(id: string) {
     return this._cameraAIModelRequest.delete(id);
   }
-  private list(params: GetAIModelsParams) {
+  private _list(params: GetAIModelsParams) {
     return this._cameraAIModelRequest.list(params)
   }
 

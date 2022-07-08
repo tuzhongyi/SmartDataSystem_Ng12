@@ -18,7 +18,7 @@ export class EncodeDeviceOperateBusiness {
     return this._encodeDeviceRequest.create(item)
   }
   setEncodeDevice(item: EncodeDevice) {
-    return this._encodeDeviceRequest.set(item)
+    return this._encodeDeviceRequest.update(item)
   }
 
 }

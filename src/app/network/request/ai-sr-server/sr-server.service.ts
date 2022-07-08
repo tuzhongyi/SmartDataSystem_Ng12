@@ -74,25 +74,23 @@ export class SRServerRequestService {
   }
 
 
-
+  list() {
+    return this.type.get(SRServersURL.list());
+  }
   create(item: SRServer) {
     return this.type.post(SRServersURL.basic, item);
   }
   get(id: string) {
     return this.type.get(SRServersURL.item(id));
   }
-  set(item: SRServer) {
+  update(item: SRServer) {
     return this.type.post(SRServersURL.item(item.Id), item)
-  }
-
-  list() {
-    return this.type.get(SRServersURL.list());
-  }
-
-  sync(id: string) {
-    return this.type.post(SRServersURL.sync(id))
   }
   delete(id: string) {
     return this.type.delete(SRServersURL.item(id))
   }
+  sync(id: string) {
+    return this.type.post(SRServersURL.sync(id))
+  }
+
 }

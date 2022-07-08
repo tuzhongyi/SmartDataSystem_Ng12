@@ -1,16 +1,15 @@
 export type TableRowModel = any;
 
-export class TableColumnModel {
-  constructor(
-    public columnDef: string = '', // 唯一
-    public header: string = '',
-    public cell: (row: TableRowModel) => string,
-    public flexBasis?: string,
-    public stopPropogate?: boolean,
-    public sortHeader?: boolean,
-    public className?: Array<string>
-  ) { }
+export interface TableColumnModel {
+  columnDef: string; // 唯一
+  header: string;
+  cell: (row: TableRowModel) => string;
+  flexBasis?: string;
+  stopPropogate?: boolean;
+  sortHeader?: boolean;
+  className?: Array<string>;
 }
+
 
 
 export interface TableCellEvent {

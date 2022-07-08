@@ -26,18 +26,17 @@ import { DivisionTreeComponent } from 'src/app/common/components/division-tree/d
 })
 export class DivisionManageComponent implements OnInit, AfterViewInit {
 
+  private _currentNode?: CommonFlatNode<DivisionTreeSource>;
+  private _resourceType: UserResourceType = UserResourceType.None;
 
   //树
-  showStation = true;
+  showStation = false;
   holdStatus = false;
 
 
-  resourceType: UserResourceType = UserResourceType.None;
-  currentNode?: CommonFlatNode<DivisionTreeSource>;
 
 
   // 表单
-
   FormState = FormState;
   state: FormState = FormState.none;
   addPlaceHolder = '';
@@ -53,13 +52,13 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
 
   get title() {
     if (this.state == FormState.none) {
-      let normal = this.resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this.resourceType)
+      let normal = this._resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this._resourceType)
       return normal + '详情'
     } else if (this.state == FormState.add) {
-      let add = Language.UserResourceType(EnumHelper.GetResourceChildType(this.resourceType));
+      let add = Language.UserResourceType(EnumHelper.GetResourceChildType(this._resourceType));
       return '添加' + add;
     } else if (this.state == FormState.edit) {
-      let edit = this.resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this.resourceType)
+      let edit = this._resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this._resourceType)
       return '编辑' + edit;
     }
     return ''
@@ -67,21 +66,21 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   }
 
   get type() {
-    if (this.currentNode) {
-      if (this.currentNode.RawData instanceof GarbageStation) {
+    if (this._currentNode) {
+      if (this._currentNode.RawData instanceof GarbageStation) {
         return UserResourceType.Station
       } else {
-        return EnumHelper.ConvertDivisionToUserResource(this.currentNode.RawData.DivisionType)
+        return EnumHelper.ConvertDivisionToUserResource(this._currentNode.RawData.DivisionType)
       }
     }
     return UserResourceType.None
   }
   get enableAddBtn() {
-    return !this.currentNode || this.type == UserResourceType.City || this.type == UserResourceType.County;
+    return !this._currentNode || this.type == UserResourceType.City || this.type == UserResourceType.County;
   }
   get enableDelBtn() {
     return (
-      !!this.currentNode &&
+      !!this._currentNode &&
       this.type != UserResourceType.None &&
       this.type != UserResourceType.Station
     );
@@ -89,7 +88,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
 
   get enableEditBtn() {
     return (
-      !!this.currentNode &&
+      !!this._currentNode &&
       this.type != UserResourceType.None &&
       this.type != UserResourceType.Station
     );
@@ -124,11 +123,12 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
 
   }
   // 点击树节点
-  selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
-    this.currentNode = nodes[0];
+  selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]): void {
+    this._currentNode = nodes[0];
     console.log('外部结果', nodes)
     this.state = FormState.none;
-    this.resourceType = this.type
+    this._resourceType = this.type
+    this.holdStatus = false;
     this._updateForm();
   }
 
@@ -198,12 +198,12 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   private _updateForm() {
     if (this.state == FormState.none) {
       this.myForm.disable();
-      if (this.currentNode) {
-        let data = this.currentNode.RawData;
+      if (this._currentNode) {
+        let data = this._currentNode.RawData;
         this.myForm.patchValue({
-          Name: this.currentNode.Name,
-          Id: this.currentNode.Id,
-          ParentName: this.currentNode.ParentNode?.Name ?? '',
+          Name: this._currentNode.Name,
+          Id: this._currentNode.Id,
+          ParentName: this._currentNode.ParentNode?.Name ?? '',
           Description: data.Description ?? ''
         })
       } else {
@@ -212,21 +212,21 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     } else if (this.state == FormState.add) {
       this.myForm.enable();
       this.ParentName.disable();
-      if (this.currentNode) {
+      if (this._currentNode) {
         this.myForm.reset();
         this.myForm.patchValue({
-          ParentName: this.currentNode.ParentNode?.Name ?? '',
+          ParentName: this._currentNode.ParentNode?.Name ?? '',
         })
       }
     } else if (this.state == FormState.edit) {
       this.myForm.disable();
 
-      if (this.currentNode) {
-        let data = this.currentNode.RawData;
+      if (this._currentNode) {
+        let data = this._currentNode.RawData;
         this.myForm.patchValue({
-          Name: this.currentNode.Name,
-          Id: this.currentNode.Id,
-          ParentName: this.currentNode.ParentNode?.Name ?? '',
+          Name: this._currentNode.Name,
+          Id: this._currentNode.Id,
+          ParentName: this._currentNode.ParentNode?.Name ?? '',
           Description: data.Description ?? ''
         })
         this.Name.enable();
@@ -243,7 +243,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
       let name = this.Name.value
       let des = this.Description.value
       let model = new DivisionManageModel(id + '', name, des);
-      let parentId = this.currentNode ? this.currentNode.Id : '';
+      let parentId = this._currentNode ? this._currentNode.Id : '';
       let res = await this._business.addDivision(parentId, model);
       if (res) {
         this._toastrService.success('添加成功');
@@ -269,11 +269,11 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     }
   }
   private async _deleteNode() {
-    if (this.tree && this.currentNode) {
+    if (this.tree && this._currentNode) {
 
-      let res = await this._business.deleteDivision(this.currentNode.Id);
+      let res = await this._business.deleteDivision(this._currentNode.Id);
       if (res) {
-        this.tree.deleteNode(this.currentNode);
+        this.tree.deleteNode(this._currentNode);
         this._toastrService.success('删除成功');
       }
     }

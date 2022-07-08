@@ -18,20 +18,19 @@ export class AIModelRequestService {
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(CameraAIModel);
   }
+  list(params: GetAIModelsParams = new GetAIModelsParams()) {
+    return this.type.paged(AIModelsUrl.list(), params);
+  }
 
   create(item: CameraAIModel) {
     return this.type.post(AIModelsUrl.create(), item)
-  }
-
-  list(params: GetAIModelsParams = new GetAIModelsParams()) {
-    return this.type.paged(AIModelsUrl.list(), params);
   }
 
   get(id: string): Promise<CameraAIModel> {
     return this.type.get(AIModelsUrl.item(id));
   }
 
-  set(item: CameraAIModel) {
+  update(item: CameraAIModel) {
     return this.type.put(AIModelsUrl.item(item.Id), item)
   }
 

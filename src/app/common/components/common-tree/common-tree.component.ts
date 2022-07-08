@@ -24,7 +24,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     const existingNode = this._flatNodeMap.get(nestNode.Id);
 
 
-    // 必须有 existingNode
+    // 为了保证加载子节点时，原节点信息不丢失
     if (existingNode) {
       existingNode.Name = nestNode.Name;
       existingNode.Expandable = nestNode.HasChildren;
@@ -97,7 +97,6 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
   @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode<any>>> = new EventEmitter<SelectionChange<CommonFlatNode<any>>>();
   @Output() defaultIdsChange = new EventEmitter<string[]>();
-  @Output() holdStatusChange = new EventEmitter<boolean>();
 
 
 
@@ -142,18 +141,16 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
+    // 动态设置默认Id时
     if ('defaultIds' in changes) {
       this._setDefaultNodes();
     }
   }
   singleSelectNode(node: CommonFlatNode) {
-
     // 如果当前节点正被选中，则再次点击当前节点，不会取消选中，一般用于编辑节点状态时
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;
-      } else {
-        this.holdStatusChange.emit(false)
       }
     }
     this.selection.toggle(node);

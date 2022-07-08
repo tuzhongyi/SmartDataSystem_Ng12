@@ -26,11 +26,11 @@ export class EncodeDeviceRequestService {
     return this.type.get(EncodeDevicesUrl.item(id))
   }
 
-  set(item: EncodeDevice) {
+  update(item: EncodeDevice) {
     return this.type.put(EncodeDevicesUrl.item(item.Id), item)
   }
 
-  del(id: string) {
+  delete(id: string) {
     return this.type.delete(EncodeDevicesUrl.item(id))
   }
 

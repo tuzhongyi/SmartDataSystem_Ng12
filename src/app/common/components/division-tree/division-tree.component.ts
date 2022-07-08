@@ -171,10 +171,6 @@ export class DivisionTreeComponent implements OnInit {
   defaultIdsChangeHandler(ids: string[]) {
     this.defaultIdsChange.emit(ids)
   }
-  holdStatusChangeHandler(change: boolean) {
-    this.holdStatus = change;
-    this.holdStatusChange.emit(change)
-  }
   async searchEventHandler(condition: string) {
     console.log('搜索字段', condition)
     if (this._condition == condition && this._condition != '') {

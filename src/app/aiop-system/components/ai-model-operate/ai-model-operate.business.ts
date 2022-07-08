@@ -14,7 +14,7 @@ export class AIModelOperateBusiness {
     return this._cameraAIModelRequest.parse(base64JSONData)
   }
   setAIModel(model: CameraAIModel) {
-    return this._cameraAIModelRequest.set(model)
+    return this._cameraAIModelRequest.update(model)
   }
   createAIModel(model: CameraAIModel) {
     return this._cameraAIModelRequest.create(model)

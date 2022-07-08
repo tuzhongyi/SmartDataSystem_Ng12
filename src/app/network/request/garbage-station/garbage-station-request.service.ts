@@ -452,7 +452,7 @@ class TypesService {
     this.basicType = basic.type(GarbageStationType);
   }
   private basicType: BaseTypeRequestService<GarbageStationType>;
-  all(): Promise<GarbageStationType[]> {
+  list(): Promise<GarbageStationType[]> {
     let url = GarbageStationUrl.type.basic();
     return this.basicType.get(url);
   }

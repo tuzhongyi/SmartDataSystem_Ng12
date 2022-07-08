@@ -19,6 +19,9 @@ export class AICameraRequestService {
     this.type = this.basic.type(AICamera);
   }
 
+  list(params: GetCamerasParams = new GetCamerasParams()) {
+    return this.type.paged(AICamerasUrl.list(), params);
+  }
   create(item: AICamera) {
     return this.type.post(AICamerasUrl.create(), item)
   }
@@ -27,17 +30,12 @@ export class AICameraRequestService {
     return this.type.get(AICamerasUrl.item(id));
   }
 
-
-  set(item: AICamera) {
+  update(item: AICamera) {
     return this.type.put(AICamerasUrl.item(item.Id), item)
   }
 
   delete(id: string) {
     return this.type.delete(AICamerasUrl.item(id))
-  }
-
-  list(params: GetCamerasParams = new GetCamerasParams()) {
-    return this.type.paged(AICamerasUrl.list(), params);
   }
   listAIModels(id: string) {
     return this.basic.get(AICamerasUrl.AIModels(id), CameraAIModel)
