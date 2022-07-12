@@ -10,7 +10,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
-import { AICameraTableComponent } from 'src/app/common/components/ai-camera-table/ai-camera-table.component';
+import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 
 @Component({
@@ -51,7 +51,7 @@ export class CameraModelManageComponent implements OnInit {
   aiCameraManageEvent?: AICameraModelManageEvent;
 
 
-  @ViewChild(AICameraTableComponent) table?: AICameraTableComponent;
+  @ViewChild(AICameraModelTableComponent) table?: AICameraModelTableComponent;
 
   constructor(private _business: AICameraModelManageBusiness, private _toastrService: ToastrService) { }
 

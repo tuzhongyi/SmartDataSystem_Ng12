@@ -4,12 +4,12 @@ import { TableColumnModel } from 'src/app/view-model/table.model';
 export const GarbageStationManageConf: TableColumnModel[] = [
   {
     columnDef: 'Name',
-    header: '摄像机名称',
+    header: '名称',
     cell: (element: GarbageStationManageModel) => `${element.Name}`,
   },
   {
     columnDef: 'StationType',
-    header: '摄像机类型',
+    header: '类型',
     cell: (element: GarbageStationManageModel) => `${element.StationType}`,
   },
 

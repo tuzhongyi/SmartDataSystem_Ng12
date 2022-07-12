@@ -1,5 +1,5 @@
 import { Transform, Type } from 'class-transformer';
-import { CameraUsage } from '../../enum/camera-sage.enum';
+import { CameraUsage } from '../../enum/camera-usage.enum';
 import { CanType } from '../../enum/can-type.enum';
 import { Camera } from './camera.model';
 import { GisPoint } from './gis-point.model';

@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { CameraUsage } from '../../enum/camera-sage.enum';
+import { CameraUsage } from '../../enum/camera-usage.enum';
 import { OnlineStatus } from '../../enum/online-status.enum';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';

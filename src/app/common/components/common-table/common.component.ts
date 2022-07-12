@@ -11,6 +11,7 @@ import { TableDataSource } from "./data-source";
   selector: 'common-table',
   templateUrl: './common-table.component.html',
   styleUrls: ['./common-table.component.less'],
+  exportAs: "commonTable"
 })
 export class CommonTableComponent implements OnInit {
   private selection!: SelectionModel<TableRowModel>;

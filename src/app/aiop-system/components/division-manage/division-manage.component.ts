@@ -239,10 +239,12 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
 
   private async _addNode() {
     if (this.tree) {
-      let id = this.Id.value
-      let name = this.Name.value
-      let des = this.Description.value
-      let model = new DivisionManageModel(id + '', name, des);
+
+      let model = new DivisionManageModel();
+      model.Id = this.myForm.value.Id ?? '';
+      model.Name = this.myForm.value.Id ?? ''
+      model.Description = this.myForm.value.Description ?? "";
+
       let parentId = this._currentNode ? this._currentNode.Id : '';
       let res = await this._business.addDivision(parentId, model);
       if (res) {
@@ -255,11 +257,13 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   }
   private async _editNode() {
     if (this.tree) {
-      let id = this.Id.value
-      let name = this.Name.value
-      let des = this.Description.value
-      let model = new DivisionManageModel(id + '', name, des);
-      let res = await this._business.editDivision(id, model);
+
+      let model = new DivisionManageModel();
+      model.Id = this.myForm.value.Id ?? '';
+      model.Name = this.myForm.value.Id ?? ''
+      model.Description = this.myForm.value.Description ?? ""
+
+      let res = await this._business.editDivision(model.Id, model);
       if (res) {
         this._toastrService.success('编辑成功');
         const node = this._converter.Convert(res);

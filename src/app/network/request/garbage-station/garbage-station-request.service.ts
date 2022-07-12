@@ -66,7 +66,7 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
     return this.typeBasic.get(url);
   }
   update(data: GarbageStation): Promise<GarbageStation> {
-    let url = GarbageStationUrl.basic();
+    let url = GarbageStationUrl.item(data.Id);
     return this.typeBasic.put(url, data);
   }
   create(data: GarbageStation): Promise<GarbageStation> {

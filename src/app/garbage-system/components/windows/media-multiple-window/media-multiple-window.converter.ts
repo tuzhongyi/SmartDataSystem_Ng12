@@ -2,7 +2,7 @@ import { ImageVideoControlModel } from 'src/app/common/components/image-video-co
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { CameraUsage } from 'src/app/enum/camera-sage.enum';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { MediaMultipleWindowModel } from './media-multiple-window.model';

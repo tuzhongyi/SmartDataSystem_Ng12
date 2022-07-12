@@ -8,11 +8,11 @@ import { AICameraModelManageEvent, AICameraModelManageModel, AICameraModelOperat
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
 
 @Component({
-  selector: 'howell-ai-camera-table',
-  templateUrl: './ai-camera-table.component.html',
-  styleUrls: ['./ai-camera-table.component.less']
+  selector: 'howell-ai-camera-model-table',
+  templateUrl: './ai-camera-model-table.component.html',
+  styleUrls: ['./ai-camera-model-table.component.less']
 })
-export class AICameraTableComponent implements OnInit, AfterViewInit {
+export class AICameraModelTableComponent implements OnInit, AfterViewInit {
   private selection!: SelectionModel<AICameraModelManageModel>;
 
   dataSource: AICameraModelManageModel[] = [];

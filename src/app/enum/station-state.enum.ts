@@ -1,16 +1,7 @@
-/**
- * 垃圾房状态 Flags
- *
- * Full	满溢	1
- * Error	异常	2
- */
 export enum StationState {
-  /**
-   *	满溢	1
-   */
+  Normal = 0,
+  /**满溢 */
   Full = 1,
-  /**
-   *	异常	2
-   */
+  /**异常 */
   Error = 2,
 }

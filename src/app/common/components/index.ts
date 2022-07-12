@@ -36,7 +36,7 @@ import { SimpleSearchComponent } from './simple-search/simple-search.component';
 import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
-import { AICameraTableComponent } from './ai-camera-table/ai-camera-table.component';
+import { AICameraModelTableComponent } from './ai-camera-model-table/ai-camera-model-table.component';
 import { LabelListComponent } from './label-list/label-list.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
@@ -80,7 +80,7 @@ export const CUSTOM_COMPONENTS = [
   SimpleSearchComponent,
   Table2Component,
   AIModelTreeComponent,
-  AICameraTableComponent,
+  AICameraModelTableComponent,
   LabelListComponent,
   DivisionTreeComponent,
   CommonTreeComponent,

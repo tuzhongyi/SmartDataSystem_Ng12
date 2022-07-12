@@ -5,7 +5,7 @@ import {
   IConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
-import { CameraUsage } from 'src/app/enum/camera-sage.enum';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { VideoDownloader } from '../../panels/video-download-panel/video-downloader.model';
 import { WindowViewModel } from '../../window-control/window.model';

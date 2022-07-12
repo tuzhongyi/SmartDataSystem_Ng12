@@ -6,33 +6,35 @@
   <div class="horizontal-right hw-table-layout">
     <div class="hw-operation">
       <div class="hw-simple-title">监控点</div>
-      <!-- <div class="hw-operate-bar">
-        <div class="operate-item">
-          <span class="hw-form-label">选择标签:&nbsp;</span>
-          <howell-label-list></howell-label-list>
-        </div>
-        <div class="operate-item">
-          <span class="hw-form-label">名称:&nbsp;</span>
-          <input placeholder="摄像机名称" type="text" class="hw-form-input" />
+      <div class="hw-operate-bar wrap">
+        <div class="hw-normal-btn-group">
+          <button class="hw-green-btn">
+            <i class="howell-icon-plus"></i>
+            添加
+          </button>
+          <button class="hw-red-btn">
+            <i class="howell-icon-delete-bin"></i>
+            删除
+          </button>
         </div>
 
-        <button class="hw-blue-btn">
-          <i class="mdi mdi-magnify"></i>
-          查询
-        </button>
-      </div> -->
+        <div class="search-wrapper">
+          <howell-simple-search placeHolder="模型名称"></howell-simple-search>
+        </div>
+      </div>
     </div>
-    <!-- <div class="hw-table-container">
-      <howell-ai-camera-table
-        [disablehover]="disablehover"
+    <div class="hw-table-container">
+      <common-table
         [dataSubject]="dataSubject"
+        [columnModel]="columnModel"
+        [displayedColumns]="displayedColumns"
         [selectStrategy]="selectStrategy"
+        [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
-        (operateTableRow)="operateTableRow($event)"
-      ></howell-ai-camera-table>
-    </div> -->
+      ></common-table>
+    </div>
 
-    <!-- <div class="hw-table-footer">
+    <div class="hw-table-footer">
       <div class="footer-item">
         <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>
@@ -56,6 +58,6 @@
         >
         </app-paginator>
       </div>
-    </div> -->
+    </div>
   </div>
 </div>

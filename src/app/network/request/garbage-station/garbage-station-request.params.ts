@@ -1,6 +1,6 @@
 import { Data } from '@angular/router';
 import { Transform } from 'class-transformer';
-import { CameraUsage } from 'src/app/enum/camera-sage.enum';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { CanType } from 'src/app/enum/can-type.enum';
 import { ComparisonType } from 'src/app/enum/comparison-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';

@@ -34,7 +34,7 @@ import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
   ]
 })
 export class GarbageStationManageComponent implements OnInit {
-  private _pageSize = 2;
+  private _pageSize = 9;
   private _condition = '';
   private _currentNode?: CommonFlatNode<DivisionTreeSource>;
 
@@ -67,7 +67,8 @@ export class GarbageStationManageComponent implements OnInit {
 
   // 表单
   state = FormState.none;
-  aiModelId = '';
+  stationId = '';
+  divisionId = '';
 
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
@@ -123,7 +124,7 @@ export class GarbageStationManageComponent implements OnInit {
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
     this._currentNode = nodes[0];
-    console.log('外部结果', nodes);
+    // console.log('外部结果', nodes);
     this._updateTable();
   }
 
@@ -160,6 +161,14 @@ export class GarbageStationManageComponent implements OnInit {
     this._init();
   }
 
+  closeForm(update: boolean) {
+    this.showOperate = false
+    this.state = FormState.none;
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
+  }
 
   dialogMsgEvent(status: ConfirmDialogEnum) {
     this.showConfirm = false;
@@ -195,6 +204,7 @@ export class GarbageStationManageComponent implements OnInit {
   private async _updateTable() {
     if (this._currentNode && this.type == UserResourceType.Committees) {
       this._init();
+      this.divisionId = this._currentNode.Id;
     } else {
       this.page = {
         PageIndex: this.pageIndex,
@@ -203,11 +213,14 @@ export class GarbageStationManageComponent implements OnInit {
         TotalRecordCount: 0,
         PageCount: 0
       }
+      this.divisionId = '';
       this.dataSubject.next([])
     }
   }
-  private _clickEditBtn() {
-
+  private _clickEditBtn(row: GarbageStationManageModel) {
+    this.showOperate = true;
+    this.state = FormState.edit;
+    this.stationId = row.Id;
   }
 
 

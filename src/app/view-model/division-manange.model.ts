@@ -1,9 +1,9 @@
-export class DivisionManageModel {
-  constructor(
-    public Id: string = '',
-    public Name: string = '',
-    public Description: string = ''
-  ) { }
+import { CommonModel } from "./common-model";
+
+export class DivisionManageModel implements CommonModel {
+  Id!: string;
+  Name!: string;
+  Description!: string;
 }
 
 

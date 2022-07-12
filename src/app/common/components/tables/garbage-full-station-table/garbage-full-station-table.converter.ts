@@ -1,7 +1,7 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
-import { CameraUsage } from 'src/app/enum/camera-sage.enum';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';

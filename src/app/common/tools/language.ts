@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import {
   DeviceStateCountType,
@@ -14,11 +15,13 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { StationType } from 'src/app/enum/station-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
+
 
 export class Language {
   static StationState(state: StationState) {
@@ -94,6 +97,20 @@ export class Language {
         return Language.json.CameraType.HalfBall;
       case CameraType.AIO:
         return Language.json.CameraType.AIO;
+      default:
+        return '';
+    }
+  }
+  static CameraUsage(usage: CameraUsage) {
+    switch (usage) {
+      case CameraUsage.Volume:
+        return Language.json.CameraUsage.Volume;
+      case CameraUsage.MixedInto:
+        return Language.json.CameraUsage.MixedInto;
+      case CameraUsage.IllegalDrop:
+        return Language.json.CameraUsage.IllegalDrop;
+      case CameraUsage.GarbageFull:
+        return Language.json.CameraUsage.GarbageFull;
       default:
         return '';
     }
@@ -192,7 +209,16 @@ export class Language {
         return '投放点';
       case SearchOptionKey.community:
         return '社区';
-
+      default:
+        return '';
+    }
+  }
+  static StationType(type: StationType) {
+    switch (type) {
+      case StationType.Garbage:
+        return Language.json.StationType.Garbage
+      case StationType.NucleicAcid:
+        return Language.json.StationType.NucleicAcid
       default:
         return '';
     }
@@ -318,7 +344,6 @@ export class Language {
           return Language.json.OnlineStatus.online;
         case OnlineStatus.Offline:
           return Language.json.OnlineStatus.Offline;
-
         default:
           return Language.json.normal;
       }

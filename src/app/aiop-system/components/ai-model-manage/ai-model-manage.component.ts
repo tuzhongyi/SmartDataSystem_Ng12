@@ -178,5 +178,4 @@ export class AIModelManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
-
 }

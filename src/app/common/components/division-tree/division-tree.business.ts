@@ -13,6 +13,7 @@ import { GetGarbageStationsParams } from "src/app/network/request/garbage-statio
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
 import { CommonFlatNode } from "src/app/view-model/common-flat-node.model";
 import { CommonNestNode } from "src/app/view-model/common-nest-node.model";
+import { LocaleCompare } from "../../tools/locale-compare";
 
 @Injectable()
 export class DivisionTreeBusiness {
@@ -29,6 +30,7 @@ export class DivisionTreeBusiness {
 
   init(type: UserResourceType = UserResourceType.City,
     depth: number = 0) {
+
     this.nestedNodeMap.clear()
     return this._getDataRecursively(type, depth)
   }
@@ -125,6 +127,7 @@ export class DivisionTreeBusiness {
     depth: number = 0,) {
     if (depth < 0) return [];
     let data = await this._loadData(type);
+
     let nodes = this._converter.iterateToNestTreeNode(data);
     this._register(nodes);
 
