@@ -10,11 +10,12 @@ import Config from 'src/assets/json/header-nav.json';
 export class HeaderNavComponent implements OnInit {
   config = Config.data;
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   navigate(path: string) {
     // console.log('path', path);
+    if (path == '/aiop/aiop-manage/garbage-events') return
     this._router.navigateByUrl(path);
   }
 }
