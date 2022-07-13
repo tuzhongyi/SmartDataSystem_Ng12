@@ -186,12 +186,15 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
 
     } else if (this.state == FormState.edit) {
       if (this._server) {
+
         this.myForm.patchValue({
           Name: this._server.Name,
           ProtocolType: this._server.ProtocolType,
           Username: this._server.Username,
           Password: this._server.Password,
         })
+
+        this.Address.clear();
         this._server.Addresses.forEach(item => {
           let address = this.newAddress();
           address.setValue({
