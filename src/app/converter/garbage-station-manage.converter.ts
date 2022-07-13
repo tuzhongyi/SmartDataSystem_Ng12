@@ -22,12 +22,10 @@ export class GarbageStationManageConverter extends CommonModelConverter<GarbageS
 
   private async init() {
     let res = await this._listTypes();
-    // console.log(res)
 
     res.forEach(v => {
       this._stationTypes.set(v.Type, v)
     })
-    // console.log(this._stationTypes)
   }
   Convert(source: CommonModelSource, ...res: any[]) {
     if (source instanceof GarbageStation) {

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ValidIP } from 'src/app/common/tools/tool';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Platform } from 'src/app/network/model/platform.model';
 import { Protocol } from 'src/app/network/model/protocol.model';
@@ -24,10 +25,10 @@ export class PlatformOperateComponent implements OnInit {
     ProtocolType: new FormControl('', Validators.required),
     Username: new FormControl(''),
     Password: new FormControl(''),
-    Hostname: new FormControl('', [Validators.required, Validators.pattern(/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/)]),
+    Hostname: new FormControl('', [Validators.required, Validators.pattern(ValidIP)]),
     Port: new FormControl('', [Validators.required, Validators.pattern(/^\d*$/), Validators.max(65535), Validators.min(0)]),
     EventRecvPort: new FormControl("", [Validators.pattern(/^\d*$/), Validators.max(65535), Validators.min(0)]),
-    EventRecvIPAddress: new FormControl("", Validators.pattern(/^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/)),
+    EventRecvIPAddress: new FormControl("", Validators.pattern(ValidIP)),
     EventCodes: new FormControl([]),
   });
   FormState = FormState;

@@ -7,8 +7,8 @@ export class EncodeDeviceOperateBusiness {
   constructor(private _encodeDeviceRequest: EncodeDeviceRequestService) {
 
   }
-  async getProtocols() {
-    return await this._encodeDeviceRequest.protocol();
+  getProtocols() {
+    return this._encodeDeviceRequest.protocol();
 
   }
   getEncodeDevice(id: string) {

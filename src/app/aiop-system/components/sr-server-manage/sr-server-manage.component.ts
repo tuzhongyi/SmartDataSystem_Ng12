@@ -13,6 +13,7 @@ import { SRServerManageModel } from 'src/app/view-model/sr-server-manage.model';
 import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { SRServerManageConf } from './sr-server-manage..config';
 import { SRServerManageBusiness } from './sr-server-manage.business';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'howell-sr-server-manage',
@@ -24,23 +25,25 @@ import { SRServerManageBusiness } from './sr-server-manage.business';
 })
 export class SRServerManageComponent implements OnInit {
   /**private */
-  private _pageSize = 9;
   private _condition = '';
 
 
-  dataSource: SRServerManageModel[] = [];
+  // Table
   dataSubject = new BehaviorSubject<SRServerManageModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...SRServerManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  page: Page | null = null;
-  pagerCount: number = 4;
-  pageIndex = 1;
+
   selectedRows: SRServerManageModel[] = [];//table选中项
   willBeDeleted: SRServerManageModel[] = [];
+
+
+  // 对话框
   showDialog = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
+
+  // 表单
   state = FormState.none;
   tableOperates: TableOperateModel[] = []
   serverId: string = '';
@@ -81,15 +84,21 @@ export class SRServerManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.init();
+    this._init();
   }
-  async init() {
-    let res = await this._business.loadData();
+  private async _init() {
+    let res = await this._business.listServers(this._condition);
     this.dataSubject.next(res)
+  }
+
+  async searchEvent(condition: string) {
+    this._condition = condition;
+    this._init();
   }
 
   selectTableRow(rows: SRServerManageModel[]) {
     this.selectedRows = rows;
+    console.log(rows)
   }
 
   tableSelect(type: TableSelectStateEnum) {
@@ -110,10 +119,11 @@ export class SRServerManageComponent implements OnInit {
     }
   }
 
+
   closeForm(update: boolean) {
     this.showDialog = false
     this.state = FormState.none;
-    if (update) this.init();
+    if (update) this._init();
   }
 
   addBtnClick() {
@@ -135,16 +145,14 @@ export class SRServerManageComponent implements OnInit {
     }
   }
   private async _deleteRows(rows: SRServerManageModel[]) {
+    this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
       await this._business.delete(id)
       this._toastrService.success('删除成功');
 
     }
-    if (this.table) {
-      this.table.deleteRows(rows);
-      this.init();
-    }
+    this._init();
   }
 
   private async _clickSyncBtn(row: SRServerManageModel, event: Event) {

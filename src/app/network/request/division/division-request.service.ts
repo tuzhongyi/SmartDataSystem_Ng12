@@ -142,7 +142,7 @@ class EventNumbersService {
   sum(params: GetDivisionSumEventNumberParams): Promise<SumEventNumber[]> {
     let url = DivisionUrl.eventnumber().sum();
     let data = classToPlain(params);
-    return this.basic.array(url, SumEventNumber, data);
+    return this.basic.postArray(url, SumEventNumber, data);
   }
 
   private _history?: EventNumbersHistoryService;
@@ -198,7 +198,7 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
   ): Promise<DivisionNumberStatisticComparison[]> {
     let url = DivisionUrl.statistic().number.comparison();
     let data = classToPlain(params);
-    return this.basic.array(url, DivisionNumberStatisticComparison, data);
+    return this.basic.postArray(url, DivisionNumberStatisticComparison, data);
   }
 
   private _history?: StatisticNumberHistoryService;
@@ -216,6 +216,6 @@ class StatisticNumberHistoryService {
   ): Promise<DivisionNumberStatisticV2[]> {
     let url = DivisionUrl.statistic().number.history.list();
     let data = classToPlain(params);
-    return this.basic.array(url, DivisionNumberStatisticV2, data);
+    return this.basic.postArray(url, DivisionNumberStatisticV2, data);
   }
 }

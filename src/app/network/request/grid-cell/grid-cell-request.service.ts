@@ -124,7 +124,7 @@ class StatisticNumberService {
   ): Promise<GridCellNumberStatisticComparison[]> {
     let url = GridCellUrl.statistic.number.comparison();
     let data = classToPlain(params);
-    return this.basic.array(url, GridCellNumberStatisticComparison, data);
+    return this.basic.postArray(url, GridCellNumberStatisticComparison, data);
   }
 
   private _history?: StatisticNumberHistoryService;
@@ -142,6 +142,6 @@ class StatisticNumberHistoryService {
   ): Promise<GridCellNumberStatisticV2[]> {
     let url = GridCellUrl.statistic.number.history.list();
     let data = classToPlain(params);
-    return this.basic.array(url, GridCellNumberStatisticV2, data);
+    return this.basic.postArray(url, GridCellNumberStatisticV2, data);
   }
 }

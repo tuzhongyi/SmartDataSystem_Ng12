@@ -92,7 +92,7 @@ export class GarbageStationOperateComponent implements OnInit {
 
 
   constructor(private _business: GarbageStationOperateBusiness, private _fb: FormBuilder,
-    private _toastrService: ToastrService, private changeDetector: ChangeDetectorRef) { }
+    private _toastrService: ToastrService) { }
 
   async ngOnInit() {
     let res = await this._business.listTypes();

@@ -7,10 +7,14 @@ export class SRServerOperateBusiness {
   constructor(private _srRequest: SRServerRequestService) {
 
   }
-  async getServer(id: string) {
-    return await this._srRequest.get(id)
+  getServer(id: string) {
+    return this._srRequest.get(id)
   }
-  async addServer(server: SRServer) {
-    return await this._srRequest.create(server)
+  createServer(server: SRServer) {
+    return this._srRequest.create(server)
   }
+  updateServer(server: SRServer) {
+    return this._srRequest.update(server)
+  }
+
 }

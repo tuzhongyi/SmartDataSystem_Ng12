@@ -75,7 +75,7 @@ export class SRServerRequestService {
 
 
   list() {
-    return this.type.get(SRServersURL.list());
+    return this.type.getArray(SRServersURL.list());
   }
   create(item: SRServer) {
     return this.type.post(SRServersURL.basic, item);
@@ -84,7 +84,7 @@ export class SRServerRequestService {
     return this.type.get(SRServersURL.item(id));
   }
   update(item: SRServer) {
-    return this.type.post(SRServersURL.item(item.Id), item)
+    return this.type.put(SRServersURL.item(item.Id), item)
   }
   delete(id: string) {
     return this.type.delete(SRServersURL.item(id))

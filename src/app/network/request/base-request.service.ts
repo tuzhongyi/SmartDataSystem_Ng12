@@ -38,13 +38,19 @@ export class BaseRequestService {
     let response = await this.http.delete(url).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
-  async array<T>(url: string, type: ClassConstructor<T>, params?: IParams) {
+  async postArray<T>(url: string, type: ClassConstructor<T>, params?: IParams) {
     let data: IParams | undefined;
     if (params) {
       data = classToPlain(params) as IParams;
     }
     let response = await this.http
       .post<IParams, HowellResponse<Array<T>>>(url, data)
+      .toPromise();
+    return ServiceHelper.ResponseProcess(response, type);
+  }
+  async getArray<T>(url: string, type: ClassConstructor<T>) {
+    let response = await this.http
+      .get<IParams, HowellResponse<Array<T>>>(url)
       .toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
@@ -81,8 +87,11 @@ export class BaseTypeRequestService<T> {
   async delete(url: string) {
     return this._service.delete(url, this.type);
   }
-  async array(url: string, params?: IParams) {
-    return this._service.array(url, this.type, params);
+  async postArray(url: string, params?: IParams) {
+    return this._service.postArray(url, this.type, params);
+  }
+  async getArray(url: string) {
+    return this._service.getArray(url, this.type);
   }
   async paged(url: string, params: IParams) {
     return this._service.paged(url, this.type, params);

@@ -86,7 +86,7 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
 
   manualCapture(stationId: string): Promise<CameraPictureUrl[]> {
     let url = GarbageStationUrl.manualcapture(stationId);
-    return this.basic.array(url, CameraPictureUrl);
+    return this.basic.postArray(url, CameraPictureUrl);
   }
 
   private _camera?: CamerasService;
@@ -392,13 +392,13 @@ class StatisticNumberService extends AbstractService<GarbageStationNumberStatist
     params: GetGarbageStationSumEventNumberParams
   ): Promise<SumEventNumber[]> {
     let url = GarbageStationUrl.statistic().number.sum();
-    return this.basic.array(url, SumEventNumber, params);
+    return this.basic.postArray(url, SumEventNumber, params);
   }
   comparison(
     params: GetGarbageStationStatisticComparisonParams
   ): Promise<GarbageStationNumberStatisticComparison[]> {
     let url = GarbageStationUrl.statistic().number.comparison();
-    return this.basic.array(
+    return this.basic.postArray(
       url,
       GarbageStationNumberStatisticComparison,
       params
@@ -422,7 +422,7 @@ class StatisticNumberHistoryService {
     params: GetGarbageStationStatisticNumbersParamsV2
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let url = GarbageStationUrl.statistic().number.history.list();
-    return this.basicType.array(url, params);
+    return this.basicType.postArray(url, params);
   }
 }
 class StatistictGarbageCountService {
@@ -444,7 +444,7 @@ class StatistictGarbageCountHistoryService {
     params: GetGarbageStationStatisticGarbageCountsParams
   ): Promise<GarbageStationGarbageCountStatistic[]> {
     let url = GarbageStationUrl.statistic().garbagecount.history.list();
-    return this.basicType.array(url, params);
+    return this.basicType.postArray(url, params);
   }
 }
 class TypesService {
