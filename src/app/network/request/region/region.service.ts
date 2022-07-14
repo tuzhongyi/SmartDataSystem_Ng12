@@ -26,7 +26,7 @@ export class RegionRequestService {
     return this.type.get(RegionsURL.item(id));
   }
 
-  set(item: Region) {
+  update(item: Region) {
 
     return this.type.put(RegionsURL.item(item.Id), item)
   }

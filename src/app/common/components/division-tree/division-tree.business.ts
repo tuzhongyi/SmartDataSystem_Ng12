@@ -28,6 +28,7 @@ export class DivisionTreeBusiness {
     private _stationRequest: GarbageStationRequestService,
     private _converter: DivisionTreeConverter) { }
 
+  // 相当于默认请求 condition==''的区划
   init(type: UserResourceType = UserResourceType.City,
     depth: number = 0) {
 
@@ -49,7 +50,7 @@ export class DivisionTreeBusiness {
         EnumHelper.GetResourceChildType(type),
         node.Id
       );
-      children = this._converter.iterateToNestTreeNode(data);
+      children = this._converter.iterateToNestNode(data);
       children.forEach(child => child.ParentNode = node!);
       this._register(children);
       node.childrenChange.next(children);
@@ -73,7 +74,7 @@ export class DivisionTreeBusiness {
       nodes = await this.init(type, depth);
     } else {
       let data = await this._searchDivisionData(condition);
-      let divisionNodes = this._converter.recurseToNestTreeNode(data);
+      let divisionNodes = this._converter.recurseToNestNode(data);
       nodes = divisionNodes;
       if (this.showStation) {
         let stations = await this._searchStationData(condition);
@@ -107,7 +108,7 @@ export class DivisionTreeBusiness {
         // 合并 Division 和 Station
         let result = [...divisions, ...allStations];
 
-        stationNodes = this._converter.buildNestNodeTree(result);
+        stationNodes = this._converter.buildNestTree(result);
 
         // console.log(stationNodes);
 
@@ -128,7 +129,7 @@ export class DivisionTreeBusiness {
     if (depth < 0) return [];
     let data = await this._loadData(type);
 
-    let nodes = this._converter.iterateToNestTreeNode(data);
+    let nodes = this._converter.iterateToNestNode(data);
     this._register(nodes);
 
     if (type == UserResourceType.Committees && this.showStation) {

@@ -241,9 +241,9 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     if (this.tree) {
 
       let model = new DivisionManageModel();
-      model.Id = this.myForm.value.Id ?? '';
-      model.Name = this.myForm.value.Id ?? ''
-      model.Description = this.myForm.value.Description ?? "";
+      model.Id = this.myForm.getRawValue().Id ?? '';
+      model.Name = this.myForm.getRawValue().Id ?? ''
+      model.Description = this.myForm.getRawValue().Description ?? "";
 
       let parentId = this._currentNode ? this._currentNode.Id : '';
       let res = await this._business.addDivision(parentId, model);
@@ -259,9 +259,9 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     if (this.tree) {
 
       let model = new DivisionManageModel();
-      model.Id = this.myForm.value.Id ?? '';
-      model.Name = this.myForm.value.Id ?? ''
-      model.Description = this.myForm.value.Description ?? ""
+      model.Id = this.myForm.getRawValue().Id ?? '';
+      model.Name = this.myForm.getRawValue().Name ?? ''
+      model.Description = this.myForm.getRawValue().Description ?? ""
 
       let res = await this._business.editDivision(model.Id, model);
       if (res) {

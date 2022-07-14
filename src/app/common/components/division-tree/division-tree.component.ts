@@ -11,6 +11,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { Deduplication } from '../../tools/deduplication';
+import { CommonTreeBusiness } from '../common-tree/common-tree.business';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
 import { DivisionTreeBusiness } from './division-tree.business';
 
@@ -22,7 +23,7 @@ import { DivisionTreeBusiness } from './division-tree.business';
     DivisionTreeBusiness
   ]
 })
-export class DivisionTreeComponent implements OnInit {
+export class DivisionTreeComponent extends CommonTreeBusiness implements OnInit {
 
 
   // 要屏蔽的搜索字符串
@@ -32,10 +33,6 @@ export class DivisionTreeComponent implements OnInit {
    *  屏蔽: 街,街道,道,居,居委,居委会,委,委会,会
    */
   private _excludeGuards: string[] = [];
-  private _nestedNodeMap = new Map<string, CommonNestNode>();
-
-
-  dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
 
 
   @Input()
@@ -115,6 +112,7 @@ export class DivisionTreeComponent implements OnInit {
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
   constructor(private _business: DivisionTreeBusiness, private _toastrService: ToastrService) {
+    super();
     this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
   }
 
@@ -148,7 +146,7 @@ export class DivisionTreeComponent implements OnInit {
     }
 
   }
-  selectTreeNodeHandler(change: SelectionChange<CommonFlatNode<any>>) {
+  override selectTreeNodeHandler(change: SelectionChange<CommonFlatNode<any>>) {
     let nodes = change.source.selected;
     // console.log('选中节点', nodes)
     let filtered: CommonFlatNode<Division | GarbageStation>[] = [];
@@ -208,58 +206,6 @@ export class DivisionTreeComponent implements OnInit {
     }
     this._init()
   }
-
-  addNode(node: CommonNestNode) {
-    if (node.ParentId) {
-      let parentNode = this._nestedNodeMap.get(node.ParentId);
-      if (parentNode) {
-
-        parentNode.HasChildren = true;
-        parentNode.childrenChange.value.push(node);
-
-      }
-    } else {
-      this.dataSubject.value.push(node);
-    }
-    this._nestedNodeMap.set(node.Id, node);
-    this.dataSubject.next(this.dataSubject.value)
-  }
-
-  /**原节点有各种状态,使用原节点 */
-  editNode(node: CommonNestNode) {
-    let currentNode = this._nestedNodeMap.get(node.Id);
-    if (currentNode) {
-      currentNode.Name = node.Name;
-      currentNode.RawData = node.RawData;
-    }
-    this.dataSubject.next(this.dataSubject.value);
-  }
-
-  deleteNode(flat: CommonFlatNode) {
-    const node = flat;
-    // 当前要删除的节点
-    let currentNode = this._nestedNodeMap.get(node.Id);
-    if (currentNode) {
-      // 该节点有没有父节点
-      if (currentNode.ParentId) {
-        let parentNode = this._nestedNodeMap.get(currentNode.ParentId)!;
-        let index = parentNode.childrenChange.value.indexOf(currentNode);
-        if (index != -1) {
-          parentNode.childrenChange.value.splice(index, 1);
-          parentNode.HasChildren = parentNode.childrenChange.value.length > 0;
-        }
-      } else {
-        let index = this.dataSubject.value.indexOf(currentNode);
-        if (index != -1) {
-          this.dataSubject.value.splice(index, 1);
-        }
-      }
-      this._nestedNodeMap.delete(currentNode.Id);
-    }
-    this.dataSubject.next(this.dataSubject.value);
-    this.tree?.deleteNode(flat)
-  }
-
 
   private _filterNode(type: UserResourceType, node: CommonFlatNode) {
     let raw = node.RawData;

@@ -30,7 +30,7 @@ export class RegionManageBusiness {
     region.UpdateTime = new Date();
 
 
-    let res = await this._regionRequest.set(region);
+    let res = await this._regionRequest.update(region);
     return res;
   }
   async deleteRegion(id: string) {

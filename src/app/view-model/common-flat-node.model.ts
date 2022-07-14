@@ -1,4 +1,6 @@
-export class CommonFlatNode<T = any> {
+import { CommonTreeModel } from "./common-tree.model";
+
+export class CommonFlatNode<T = any> implements CommonTreeModel {
   Id!: string;
   Name!: string;
   Level!: number;

@@ -12,7 +12,7 @@ const RegionNodeIconType = new Map([
 ]);
 
 
-type RegionTreeSource = Region | RegionNode
+export type RegionTreeSource = Region | RegionNode
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class RegionTreeConverter extends CommonTreeConverter {
     throw new Error('Method not implemented.');
   }
 
-  private _fromRegion(item: Region) {
+  private _fromRegion(item: Region): CommonNestNode<Region> {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
@@ -42,7 +42,7 @@ export class RegionTreeConverter extends CommonTreeConverter {
     node.RawData = item;
     return node;
   }
-  private _fromRegionNode(item: RegionNode, parentId: string | null = null) {
+  private _fromRegionNode(item: RegionNode, parentId: string | null = null): CommonNestNode<RegionNode> {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;

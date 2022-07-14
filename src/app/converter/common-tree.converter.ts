@@ -1,18 +1,14 @@
 import { DivisionNode } from "../network/model/division-tree.model";
 import { CommonNestNode } from "../view-model/common-nest-node.model";
+import { CommonTreeModel } from "../view-model/common-tree.model";
 import { DivisionTreeSource } from "./division-tree.converter";
 
-interface CommonTreeSource {
-  Id: string;
-  Name: string;
-  [key: string]: any;
-}
 export abstract class CommonTreeConverter {
 
-  abstract Convert(source: CommonTreeSource, ...res: any[]): CommonNestNode;
+  abstract Convert(source: CommonTreeModel, ...res: any[]): CommonNestNode;
 
   // 数据以数组形式
-  iterateToNestTreeNode<T extends Array<CommonTreeSource>>(data: T): CommonNestNode[] {
+  iterateToNestNode<T extends Array<CommonTreeModel>>(data: T): CommonNestNode[] {
     let res: CommonNestNode[] = new Array<CommonNestNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -23,7 +19,7 @@ export abstract class CommonTreeConverter {
   }
 
   // 数据以递归形式
-  recurseToNestTreeNode<T extends CommonTreeSource>(data: T[],
+  recurseToNestNode<T extends CommonTreeModel>(data: T[],
     parentId: string | null = null) {
     let res: CommonNestNode[] = [];
     for (let i = 0; i < data.length; i++) {
@@ -32,18 +28,20 @@ export abstract class CommonTreeConverter {
       node.ParentId = parentId;
       res.push(node);
       if (item.Nodes && item.Nodes.length > 0) {
-        let children = this.recurseToNestTreeNode(item.Nodes, node.Id);
+        let children = this.recurseToNestNode(item.Nodes, node.Id);
         node.childrenChange.value.push(...children);
         node.HasChildren = true;
+        children.forEach(child => child.ParentNode = node)
       }
 
     }
     return res;
   }
 
-  buildNestNodeTree<T extends CommonTreeSource>(data: T[]) {
+  // 数组形式,转成递归树
+  buildNestTree<T extends CommonTreeModel>(data: T[]) {
     // 最终根节点树
-    let res: CommonNestNode[] = [];
+    let res: CommonNestNode<T>[] = [];
 
     // 所有树节点
     let m = new Map<string, CommonNestNode>();
@@ -53,22 +51,29 @@ export abstract class CommonTreeConverter {
 
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      let node: CommonNestNode | null = null;
+      let node: CommonNestNode<T> | null = null;
 
       if (m.has(item.Id)) {
         node = m.get(item.Id)!;
       } else {
-        node = this.Convert(item);
+
+        if (item instanceof CommonNestNode) {
+          node = item;
+        } else {
+          node = this.Convert(item);
+        }
         m.set(node.Id, node);
       }
 
       if (node) {
+
         // 动态用Map,静态用Array
         for (let h of hanged.values()) {
           if (h.ParentId == node.Id) {
             node.ChildrenLoaded = true;
             node.HasChildren = true;
             node.childrenChange.value.push(h);
+            h.ParentNode = node;
             hanged.delete(h.Id);
           }
         }
@@ -79,11 +84,13 @@ export abstract class CommonTreeConverter {
             let parentNode = m.get(node.ParentId)!;
             parentNode.HasChildren = true;
             parentNode.ChildrenLoaded = true;
+            node.ParentNode = parentNode;
             parentNode.childrenChange.value.push(node);
           } else if (hanged.has(node.ParentId)) {
             let parentNode = hanged.get(node.ParentId)!;
             parentNode.HasChildren = true;
             parentNode.ChildrenLoaded = true;
+            node.ParentNode = parentNode;
             parentNode.childrenChange.value.push(node);
 
           } else {

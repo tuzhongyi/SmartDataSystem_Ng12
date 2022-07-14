@@ -32,13 +32,12 @@
       </button>
     </div>
 
-    <!-- <howell-tree
-      #tree
-      [treeBusinessProvider]="businessProvider"
-      (selectTreeNode)="selectTreeNode($event)"
-      [holdStatus]="holdStatus"
-    ></howell-tree> -->
-    <howell-region-tree #tree></howell-region-tree>
+    <div class="tree-container">
+      <howell-region-tree
+        #tree
+        (selectTreeNode)="selectTreeNode($event)"
+      ></howell-region-tree>
+    </div>
   </div>
 
   <div class="horizontal-right">

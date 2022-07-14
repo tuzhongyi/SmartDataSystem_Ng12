@@ -19,7 +19,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   _flatNodeMap = new Map<string, CommonFlatNode>();
   private _currentNode: CommonFlatNode | null = null;
 
-  private _transformer = (nestNode: CommonNestNode, level: number) => {
+  private _transformer = (nestNode: CommonNestNode, level: number): CommonFlatNode => {
 
     const existingNode = this._flatNodeMap.get(nestNode.Id);
 
@@ -95,10 +95,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   }
 
   @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
-  @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode<any>>> = new EventEmitter<SelectionChange<CommonFlatNode<any>>>();
+  @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> = new EventEmitter<SelectionChange<CommonFlatNode>>();
   @Output() defaultIdsChange = new EventEmitter<string[]>();
-
-
 
   constructor() {
 
