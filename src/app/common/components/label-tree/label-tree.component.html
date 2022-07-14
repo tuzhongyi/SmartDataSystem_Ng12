@@ -1,0 +1,16 @@
+<div class="label-tree howell-tree">
+  <div class="search-wrapper" *ngIf="showSearchBar">
+    <howell-simple-search
+      placeHolder="名称"
+      (searchEvent)="searchEventHandler($event)"
+    ></howell-simple-search>
+  </div>
+  <div class="tree-container">
+    <howell-common-tree
+      [dataSubject]="dataSubject"
+      [defaultIds]="defaultIds"
+      [selectStrategy]="selectStrategy"
+      (selectTreeNode)="selectTreeNodeHandler($event)"
+    ></howell-common-tree>
+  </div>
+</div>

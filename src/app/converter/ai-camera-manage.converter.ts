@@ -35,8 +35,8 @@ export class AICameraManageConverter extends CommonModelConverter<AICameraManage
 
   private _fromAICamera(item: AICamera) {
     let model = new AICameraManageModel();
-    model.CameraId = item.Id;
-    model.CameraName = item.Name;
+    model.Id = item.Id;
+    model.Name = item.Name;
     model.CameraType = Language.CameraType(item.CameraType);
     model.CameraState = Language.CameraState(item.CameraState) || "-"
     model.DeciveName = this._encodeDevicesMap.get(item.EncodeDeviceId)?.Name ?? "";

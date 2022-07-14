@@ -7,7 +7,6 @@
   .hw-operate-bar {
     display: flex;
     margin: 10px 0;
-
     flex-grow: 1;
     justify-content: flex-end;
     &.wrap {
@@ -23,9 +22,13 @@
   .right-wrapper {
     display: flex;
     align-items: center;
+    flex-grow: 1;
+    justify-content: flex-end;
   }
   .search-wrapper {
-    width: 250px;
+    width: 30%;
+    max-width: 300px;
+    min-width: 185px;
     margin: 0 10px;
     input {
       padding: 0 12px;
@@ -33,8 +36,22 @@
       padding-top: 2px;
     }
   }
+  .operate-item {
+    width: auto;
+    flex-basis: 40%;
+    display: flex;
+    align-items: center;
+    margin: 0 5px;
+    .title {
+      flex-shrink: 0;
+      margin-right: 5px;
+    }
+    .content {
+      flex-grow: 1;
+    }
+  }
 
-  .filter-group {
+  .filter-wrapper {
     margin: 5px 0;
     flex-basis: 100%;
     display: flex;
@@ -42,11 +59,18 @@
     justify-content: flex-start;
     align-content: center;
     align-items: center;
-    .filter-item {
-      flex-basis: 22%;
+    .filter-group {
+      flex-basis: 23%;
       display: flex;
       align-items: center;
       margin: 5px 10px;
+      .title {
+        flex-shrink: 0;
+        margin-right: 5px;
+      }
+      .content {
+        flex-grow: 1;
+      }
     }
   }
 }

@@ -194,10 +194,10 @@ export class GarbageStationOperateComponent implements OnInit {
           console.log(res)
           this.aiopSelectedRows.map((row) => {
             let camera = new Camera();
-            camera.Id = row.CameraId;
+            camera.Id = row.Id;
             camera.CreateTime = new Date();
             camera.UpdateTime = new Date();
-            camera.Name = row.CameraName;
+            camera.Name = row.Name;
             camera.GarbageStationId = res.Id;
 
             return this._business.addCameraToGarbageStation(camera);
@@ -234,10 +234,10 @@ export class GarbageStationOperateComponent implements OnInit {
         for (let i = 0; i < len; i++) {
           let row = this.aiopSelectedRows[i]
           let camera = new Camera();
-          camera.Id = row.CameraId;
+          camera.Id = row.Id;
           camera.CreateTime = new Date();
           camera.UpdateTime = new Date();
-          camera.Name = row.CameraName;
+          camera.Name = row.Name;
           camera.GarbageStationId = this._garbageStation.Id
 
           await this._business.addCameraToGarbageStation(camera);

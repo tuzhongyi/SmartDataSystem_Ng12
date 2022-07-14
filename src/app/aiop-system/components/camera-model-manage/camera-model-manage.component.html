@@ -41,18 +41,26 @@
       <div class="hw-simple-title">AI设备列表</div>
       <div class="hw-operate-bar">
         <div class="operate-item">
-          <span class="hw-form-label">选择标签:&nbsp;</span>
-          <howell-label-list></howell-label-list>
+          <div class="title">
+            <span class="hw-form-label">选择标签:&nbsp;</span>
+          </div>
+          <div class="content">
+            <howell-label-list></howell-label-list>
+          </div>
         </div>
         <div class="operate-item">
-          <span class="hw-form-label">名称:&nbsp;</span>
-          <input
-            placeholder="摄像机名称"
-            type="text"
-            class="hw-form-input"
-            [(ngModel)]="cameraModelCondition"
-            (keyup.enter)="searchCameraAIModels()"
-          />
+          <div class="title">
+            <span class="hw-form-label">名称:&nbsp;</span>
+          </div>
+          <div class="content">
+            <input
+              placeholder="摄像机名称"
+              type="text"
+              class="hw-form-input"
+              [(ngModel)]="cameraModelCondition"
+              (keyup.enter)="searchCameraAIModels()"
+            />
+          </div>
         </div>
 
         <button class="hw-blue-btn" (click)="searchCameraAIModels()">

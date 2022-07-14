@@ -6,7 +6,8 @@ import { PaginatorComponent } from 'src/app/common/components/paginator/paginato
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
+import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-model/ai-camera-manage.model';
+import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { CameraManageBusiness } from './camera-manage.business';
 import { CameraManageConf } from './camera-manage.config'
@@ -41,6 +42,27 @@ export class CameraManageComponent implements OnInit {
   pageIndex = 1;
 
 
+
+  // 对话框
+  showOperate = false;
+  showConfirm = false;
+  dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
+
+  //搜索
+  showFilter = false;
+  placeHolder = '输入名称';
+  disableSearch = false;
+  searchInfo: AICameraManageSearchInfo = {
+    condition: '',
+    CameraName: "",
+    CameraType: '',
+    DeviceName: '',
+    Labels: [],
+    filter: false
+  }
+
+
+
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
@@ -51,7 +73,7 @@ export class CameraManageComponent implements OnInit {
   }
   private async _init() {
     let res = await this._business.init(
-      this._condition,
+      this.searchInfo,
       this.pageIndex,
       this._pageSize
     );
@@ -59,10 +81,14 @@ export class CameraManageComponent implements OnInit {
     this.dataSubject.next(res.Data);
   }
 
-  async searchEvent(condition: string) {
-    this._condition = condition;
+  search() {
     this.pageIndex = 1;
     this._init();
+  }
+  toggleFilter() {
+    this.disableSearch = this.showFilter = !this.showFilter;
+    this.searchInfo.filter = this.showFilter
+
   }
 
   selectTableRow(rows: AICameraManageModel[]) {

@@ -7,5 +7,5 @@ export class GetResourceLabelsParams {
   /**资源标签ID列表(可选) */
   ResourceLabelIds?: string[];
   /**标签名称，支持LIKE(可选) */
-  Name?: string;
+  LabelName?: string;
 }

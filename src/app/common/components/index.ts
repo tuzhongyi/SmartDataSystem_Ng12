@@ -37,10 +37,11 @@ import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
 import { AICameraModelTableComponent } from './ai-camera-model-table/ai-camera-model-table.component';
-import { LabelListComponent } from './label-list/label-list.component';
+import { LabelTreeComponent } from './label-tree/label-tree.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
+import { LabelListComponent } from './label-list/label-list.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -81,8 +82,9 @@ export const CUSTOM_COMPONENTS = [
   Table2Component,
   AIModelTreeComponent,
   AICameraModelTableComponent,
-  LabelListComponent,
+  LabelTreeComponent,
   DivisionTreeComponent,
   CommonTreeComponent,
-  RegionTreeComponent
+  RegionTreeComponent,
+  LabelListComponent
 ];

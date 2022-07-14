@@ -1,34 +1,26 @@
-import { SelectionChange } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
-import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { Region } from 'src/app/network/model/region';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { Deduplication } from '../../tools/deduplication';
 import { CommonTreeBusiness } from '../common-tree/common-tree.business';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
-import { RegionTreeBusiness } from './region-tree.business';
+import { LabelListBusiness as LabelTreeBusiness } from './label-tree.business';
 
 @Component({
-  selector: 'howell-region-tree',
-  templateUrl: './region-tree.component.html',
-  styleUrls: ['./region-tree.component.less'],
+  selector: 'howell-label-tree',
+  templateUrl: './label-tree.component.html',
+  styleUrls: ['./label-tree.component.less'],
   providers: [
-    RegionTreeBusiness
+    LabelTreeBusiness
   ]
 })
-export class RegionTreeComponent extends CommonTreeBusiness implements OnInit {
+export class LabelTreeComponent extends CommonTreeBusiness implements OnInit {
 
-  private _condition: string = ''
-  private _searchGuards: string[] = ['区域'];
-  private _excludeGuards: string[] = [];
 
-  holdStatus = true;
+  private _condition: string = '';
 
-  @Input() showSearchBar = true;
+
+  selectStrategy = SelectStrategy.Multiple;
 
   // 默认选中列表
   private _defaultIds: string[] = []
@@ -41,38 +33,31 @@ export class RegionTreeComponent extends CommonTreeBusiness implements OnInit {
     return this._defaultIds;
   }
 
-  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<CommonFlatNode[]>();
 
+  @Input() showSearchBar = true;
+
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<CommonFlatNode[]>();
 
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
-
-  constructor(private _business: RegionTreeBusiness, private _toastrService: ToastrService) {
+  constructor(private _business: LabelTreeBusiness, private _toastrService: ToastrService) {
     super();
-    this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
   }
 
   ngOnInit(): void {
     this._init();
   }
-
   private async _init() {
     this._nestedNodeMap = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
-    if (res.length > 0)
-      this.defaultIds = [res[0].Id]
+    console.log(res);
     this.dataSubject.next(res)
   }
-
   async searchEventHandler(condition: string) {
     console.log('搜索字段', condition);
     if (this._condition == condition && this._condition != '') {
       this._toastrService.warning('重复搜索相同字段');
-      return;
-    }
-    if (this._excludeGuards.includes(condition)) {
-      this._toastrService.warning('关键字不能是: ' + condition);
       return;
     }
 
@@ -94,10 +79,6 @@ export class RegionTreeComponent extends CommonTreeBusiness implements OnInit {
     } else {
       this._toastrService.warning('无匹配结果');
     }
-  }
-  setDefault() {
-    if (this.dataSubject.value.length)
-      this.defaultIds = [this.dataSubject.value[0].Id]
   }
 
 }

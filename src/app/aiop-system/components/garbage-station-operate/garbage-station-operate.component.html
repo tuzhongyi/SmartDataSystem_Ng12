@@ -18,32 +18,34 @@
         </div>
         <div class="hw-operate-bar wrap">
           <div class="left-wrapper">
-            <form class="inline-form">
-              <div class="hw-form-group" style="flex-basis: 44%">
+            <div class="operate-item">
+              <div class="title">
                 <span class="hw-form-label"> 名称 </span>
                 <span class="hw-form-icon">*</span>
+              </div>
+              <div class="content">
                 <input
                   type="text"
-                  style="width: 74%"
                   name="stationName"
                   [(ngModel)]="stationName"
                 />
               </div>
-              <div class="hw-form-group" style="flex-basis: 44%">
+            </div>
+            <div class="operate-item">
+              <div class="title">
                 <span class="hw-form-label">类型 </span>
                 <span class="hw-form-icon"></span>
-                <select
-                  style="width: 74%"
-                  name="stationType"
-                  [(ngModel)]="stationType"
-                >
+              </div>
+              <div class="content">
+                <select name="stationType" [(ngModel)]="stationType">
                   <option *ngFor="let s of stationTypes" [value]="s.Type">
                     {{ s.Name }}
                   </option>
                 </select>
               </div>
-            </form>
+            </div>
           </div>
+
           <div class="right-wrapper">
             <div class="search-wrapper">
               <input

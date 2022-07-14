@@ -110,7 +110,7 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   }
 
-  async search() {
+  search() {
     this.pageIndex = 1;
     this._init();
   }
@@ -158,7 +158,7 @@ export class EncodeDeviceManageComponent implements OnInit {
       this._init();
     }
   }
-  showFilterHandler() {
+  toggleFilter() {
     this.disableSearch = this.showFilter = !this.showFilter;
     this.searchInfo.filter = this.showFilter
 

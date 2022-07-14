@@ -26,7 +26,7 @@ export class LabelRequestService {
   }
 
 
-  set(item: ResourceLabel) {
+  update(item: ResourceLabel) {
     return this.type.put(LabelsUrl.item(item.Id), item)
   }
 

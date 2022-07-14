@@ -5,7 +5,7 @@ export const CameraManageConf: TableColumnModel[] = [
   {
     columnDef: 'CameraName',
     header: '名称',
-    cell: (element: AICameraManageModel) => `${element.CameraName}`,
+    cell: (element: AICameraManageModel) => `${element.Name}`,
     flexBasis: "12%"
   },
   {

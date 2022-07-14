@@ -54,44 +54,52 @@
               <i class="mdi mdi-magnify"></i>
               查询
             </button>
-            <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
+            <button class="hw-cyan-m-btn" (click)="toggleFilter()">
               <i class="mdi mdi-filter-outline"></i>
             </button>
           </div>
         </div>
       </div>
-      <div class="filter-group" *ngIf="showFilter">
-        <div class="filter-item">
-          <span class="hw-form-label">名称:</span>
-          <input
-            type="text"
-            [(ngModel)]="searchInfo.deviceName"
-            placeHolder="请输入关键字"
-          />
+      <div class="filter-wrapper" *ngIf="showFilter">
+        <div class="filter-group">
+          <div class="title">
+            <span class="hw-form-label">名称:</span>
+          </div>
+          <div class="content">
+            <input
+              type="text"
+              [(ngModel)]="searchInfo.deviceName"
+              placeHolder="请输入关键字"
+            />
+          </div>
         </div>
-        <div class="filter-item">
-          <span class="hw-form-label">地址:</span>
-          <input
-            type="text"
-            [(ngModel)]="searchInfo.ip"
-            placeHolder="请输入关键字"
-          />
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">地址:</span></div>
+          <div class="content">
+            <input
+              type="text"
+              [(ngModel)]="searchInfo.ip"
+              placeHolder="请输入关键字"
+            />
+          </div>
         </div>
 
-        <div class="filter-item">
-          <span class="hw-form-label">状态:</span>
-          <select
-            class="hw-form-control hw-form-select"
-            [(ngModel)]="searchInfo.online"
-          >
-            <option value="">全部</option>
-            <option value="0">正常</option>
-            <option value="1">离线</option>
-          </select>
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">状态:</span></div>
+          <div class="content">
+            <select
+              class="hw-form-control hw-form-select"
+              [(ngModel)]="searchInfo.online"
+            >
+              <option value="">全部</option>
+              <option value="0">正常</option>
+              <option value="1">离线</option>
+            </select>
+          </div>
         </div>
-        <div class="filter-item" style="flex-basis: 25%">
-          <span class="hw-form-label">选择标签:</span>
-          <input type="text" />
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">选择标签:</span></div>
+          <div class="content"><input type="text" /></div>
         </div>
       </div>
     </div>

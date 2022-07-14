@@ -1,25 +1,91 @@
 <div class="camera-manage hw-horizontal-layout">
   <div class="horizontal-left">
-    <div class="hw-simple-title">安保区域</div>
+    <div class="hw-simple-title" style="margin-bottom: 10px">安保区域</div>
     <howell-region-tree></howell-region-tree>
   </div>
   <div class="horizontal-right hw-table-layout">
     <div class="hw-operation">
       <div class="hw-simple-title">监控点</div>
       <div class="hw-operate-bar wrap">
-        <div class="hw-normal-btn-group">
-          <button class="hw-green-btn">
-            <i class="howell-icon-plus"></i>
-            添加
-          </button>
-          <button class="hw-red-btn">
-            <i class="howell-icon-delete-bin"></i>
-            删除
-          </button>
+        <div class="left-wrapper">
+          <div class="hw-normal-btn-group">
+            <button class="hw-green-btn">
+              <i class="howell-icon-plus"></i>
+              添加
+            </button>
+            <button class="hw-red-btn">
+              <i class="howell-icon-delete-bin"></i>
+              删除
+            </button>
+            <button class="hw-cyan-btn">
+              <i class="mdi mdi-tag"></i>
+              绑定标签
+            </button>
+            <button class="hw-blue-btn">
+              <i class="hw-icon-move2"></i>
+              移动至
+            </button>
+          </div>
+        </div>
+        <div class="right-wrapper">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              [disabled]="disableSearch"
+              [(ngModel)]="searchInfo.condition"
+              [placeholder]="placeHolder"
+              (keyup.enter)="search()"
+            />
+          </div>
+          <div class="hw-normal-btn-group">
+            <button class="hw-blue-btn" (click)="search()">
+              <i class="mdi mdi-magnify"></i>
+              查询
+            </button>
+            <button class="hw-cyan-m-btn" (click)="toggleFilter()">
+              <i class="mdi mdi-filter-outline"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="filter-wrapper" *ngIf="showFilter">
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">名称:</span></div>
+          <div class="content">
+            <input
+              type="text"
+              [(ngModel)]="searchInfo.CameraName"
+              placeHolder="请输入关键字"
+            />
+          </div>
+        </div>
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">类型:</span></div>
+          <div class="content">
+            <input
+              type="text"
+              [(ngModel)]="searchInfo.CameraType"
+              placeHolder="请输入关键字"
+            />
+          </div>
         </div>
 
-        <div class="search-wrapper">
-          <howell-simple-search placeHolder="模型名称"></howell-simple-search>
+        <div class="filter-group">
+          <div class="title"><span class="hw-form-label">编码设备:</span></div>
+          <div class="content">
+            <select
+              class="hw-form-control hw-form-select"
+              [(ngModel)]="searchInfo.DeviceName"
+            >
+              <option value="">全部</option>
+              <option value="0">正常</option>
+              <option value="1">离线</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-group" style="flex-basis: 25%">
+          <div class="title"><span class="hw-form-label">选择标签:</span></div>
+          <div class="content"><input type="text" /></div>
         </div>
       </div>
     </div>
