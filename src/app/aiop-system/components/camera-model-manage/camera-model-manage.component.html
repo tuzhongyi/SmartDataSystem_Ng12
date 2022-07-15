@@ -44,8 +44,15 @@
           <div class="title">
             <span class="hw-form-label">选择标签:&nbsp;</span>
           </div>
-          <div class="content">
-            <howell-label-list></howell-label-list>
+          <div class="content" style="width: 0">
+            <howell-label-list [selectedNodes]="selectedNodes">
+              <howell-label-tree
+                #tree
+                [defaultIds]="defaultIds"
+                [selectStrategy]="selectStrategy"
+                (selectTreeNode)="selectTreeNode($event)"
+              ></howell-label-tree>
+            </howell-label-list>
           </div>
         </div>
         <div class="operate-item">

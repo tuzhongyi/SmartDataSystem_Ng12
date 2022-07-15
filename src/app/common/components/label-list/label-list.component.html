@@ -1,10 +1,22 @@
 <div class="label-list">
-  <div class="list-header">
-    <div>请选择</div>
-    <div></div>
+  <div class="list-header" (click)="toggleHandler()">
+    <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
+    <div class="wrapper">
+      <div class="list-item" *ngFor="let node of selectedNodes">
+        <div class="title">{{ node.Name }}</div>
+        <div class="close-btn" (click)="removeNode($event, node)">
+          <i class="howell-icon-Close"></i>
+        </div>
+      </div>
+    </div>
     <button class="btn">
-      <i class="mdi mdi-menu-down"></i>
+      <i
+        class="mdi"
+        [class]="{ 'mdi-menu-down': !show, 'mdi-menu-up': show }"
+      ></i>
     </button>
   </div>
-  <div class="list-body"></div>
+  <div class="list-body" *ngIf="show">
+    <ng-content></ng-content>
+  </div>
 </div>

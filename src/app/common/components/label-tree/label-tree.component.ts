@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { ToastrService } from 'ngx-toastr';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { CommonTreeBusiness } from '../common-tree/common-tree.business';
+import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
 import { LabelListBusiness as LabelTreeBusiness } from './label-tree.business';
 
@@ -14,12 +14,13 @@ import { LabelListBusiness as LabelTreeBusiness } from './label-tree.business';
     LabelTreeBusiness
   ]
 })
-export class LabelTreeComponent extends CommonTreeBusiness implements OnInit {
+export class LabelTreeComponent extends CommonTree implements OnInit {
 
 
   private _condition: string = '';
 
 
+  @Input()
   selectStrategy = SelectStrategy.Multiple;
 
   // 默认选中列表

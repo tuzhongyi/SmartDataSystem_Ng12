@@ -8,7 +8,7 @@ import { Region } from 'src/app/network/model/region';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { Deduplication } from '../../tools/deduplication';
-import { CommonTreeBusiness } from '../common-tree/common-tree.business';
+import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
 import { RegionTreeBusiness } from './region-tree.business';
 
@@ -20,7 +20,7 @@ import { RegionTreeBusiness } from './region-tree.business';
     RegionTreeBusiness
   ]
 })
-export class RegionTreeComponent extends CommonTreeBusiness implements OnInit {
+export class RegionTreeComponent extends CommonTree implements OnInit {
 
   private _condition: string = ''
   private _searchGuards: string[] = ['区域'];

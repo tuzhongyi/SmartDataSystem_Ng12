@@ -5,7 +5,7 @@ import { CommonFlatNode } from "src/app/view-model/common-flat-node.model";
 import { CommonNestNode } from "src/app/view-model/common-nest-node.model";
 import { CommonTreeComponent } from "./common-tree.component";
 
-export abstract class CommonTreeBusiness {
+export abstract class CommonTree {
   protected _nestedNodeMap = new Map<string, CommonNestNode>();
   public dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
   public tree?: CommonTreeComponent;
@@ -13,7 +13,7 @@ export abstract class CommonTreeBusiness {
   abstract selectTreeNode: EventEmitter<CommonFlatNode[]>;
 
 
-  
+
   selectTreeNodeHandler(change: SelectionChange<CommonFlatNode>) {
     let nodes = change.source.selected;
     this.selectTreeNode.emit(nodes);
@@ -69,6 +69,11 @@ export abstract class CommonTreeBusiness {
     }
     this.dataSubject.next(this.dataSubject.value);
     this.tree?.deleteNode(flat)
+  }
+
+
+  toggleNodes(ids: string[], clear?: boolean) {
+    this.tree?.toggleSelect(ids, clear)
   }
 
 }

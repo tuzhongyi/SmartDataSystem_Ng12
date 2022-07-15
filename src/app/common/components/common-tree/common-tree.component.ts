@@ -94,6 +94,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     return this._defaultIds;
   }
 
+  @Input() showButton = false;
+
   @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
   @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> = new EventEmitter<SelectionChange<CommonFlatNode>>();
   @Output() defaultIdsChange = new EventEmitter<string[]>();
@@ -134,14 +136,12 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     this.dataSubject.subscribe((data) => {
       // console.log('树数据', data)
       this.dataSource.data = data;
-
-      this._setDefaultNodes();
     });
   }
   ngOnChanges(changes: SimpleChanges): void {
     // 动态设置默认Id时
     if ('defaultIds' in changes) {
-      this._setDefaultNodes();
+      this.setDefaultNodes();
     }
   }
   singleSelectNode(node: CommonFlatNode) {
@@ -244,7 +244,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     return null;
   }
 
-  private _setDefaultNodes() {
+  setDefaultNodes() {
     if (this.defaultIds.length == 0) return;
     if (this.selectStrategy == SelectStrategy.Single) {
       this.defaultIds.length = 1;
@@ -299,17 +299,6 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     }
   }
 
-
-  toggleSelect(ids: string[]) {
-    this.selection.clear();
-    for (let i = 0; i < ids.length; i++) {
-      let id = ids[i];
-      let flatNode = this._flatNodeMap.get(id);
-      if (flatNode) {
-        this.selection.toggle(flatNode)
-      }
-    }
-  }
   /**
    * 如果当前节点选中，则所有子节点被选中
    * 如果当前节点取消选中，则所有子节点取消选中
@@ -332,6 +321,19 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   deleteNode(node: CommonFlatNode) {
     this.selection.deselect(node);
     this._flatNodeMap.delete(node.Id)
+  }
+
+
+  toggleSelect(ids: string[], clear?: boolean) {
+    // this.selection.clear();
+    if (clear) this.selection.clear();
+    for (let i = 0; i < ids.length; i++) {
+      let id = ids[i];
+      let flatNode = this._flatNodeMap.get(id);
+      if (flatNode) {
+        this.multipleSelectNode(flatNode)
+      }
+    }
   }
   reset() {
     this._currentNode = null;

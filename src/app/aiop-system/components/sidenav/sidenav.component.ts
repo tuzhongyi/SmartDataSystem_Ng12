@@ -40,7 +40,7 @@ import { SidenavModel } from 'src/app/view-model/sidenav.model';
   ],
 })
 export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
-  state: 'grow' | 'shrink' = 'grow';
+  state: 'grow' | 'shrink' = 'shrink';
   groups = {
     first: '',
     second: '',

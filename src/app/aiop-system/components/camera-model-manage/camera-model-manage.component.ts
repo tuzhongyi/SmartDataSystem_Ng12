@@ -12,6 +12,8 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 
 @Component({
   selector: 'howell-camera-model-manage',
@@ -49,6 +51,15 @@ export class CameraModelManageComponent implements OnInit {
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
   aiCameraManageEvent?: AICameraModelManageEvent;
+
+
+
+
+  selectedNodes: CommonFlatNode[] = [];
+  treeSelectStrategy = SelectStrategy.Multiple;
+  show = false;
+  defaultIds: string[] = ["310105001002"];
+  filterTypes = [UserResourceType.Committees]
 
 
   @ViewChild(AICameraModelTableComponent) table?: AICameraModelTableComponent;
@@ -132,6 +143,15 @@ export class CameraModelManageComponent implements OnInit {
           throw new TypeError('类型错误');
       }
     }
+  }
+
+
+
+  // 点击树节点
+  selectTreeNode(nodes: CommonFlatNode[]) {
+    console.log('外部结果', nodes)
+    this.selectedNodes = nodes;
+
   }
 
 

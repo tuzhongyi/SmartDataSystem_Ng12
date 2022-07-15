@@ -35,6 +35,8 @@
     <div class="tree-container">
       <howell-division-tree
         [showStation]="showStation"
+        [selectStrategy]="selectStrategy"
+        [defaultIds]="defaultIds"
         [(holdStatus)]="holdStatus"
         (selectTreeNode)="selectTreeNode($event)"
       ></howell-division-tree>

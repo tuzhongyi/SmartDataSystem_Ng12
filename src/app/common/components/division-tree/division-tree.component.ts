@@ -11,7 +11,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { Deduplication } from '../../tools/deduplication';
-import { CommonTreeBusiness } from '../common-tree/common-tree.business';
+import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
 import { DivisionTreeBusiness } from './division-tree.business';
 
@@ -23,7 +23,7 @@ import { DivisionTreeBusiness } from './division-tree.business';
     DivisionTreeBusiness
   ]
 })
-export class DivisionTreeComponent extends CommonTreeBusiness implements OnInit {
+export class DivisionTreeComponent extends CommonTree implements OnInit {
 
 
   // 要屏蔽的搜索字符串
@@ -139,9 +139,12 @@ export class DivisionTreeComponent extends CommonTreeBusiness implements OnInit 
   async loadChildrenEvent(flat: CommonFlatNode<Division>) {
     let node = await this._business.loadChildren(flat);
     if (node) {
+
       this.dataSubject.next(this.dataSubject.value)
       if (this.tree) {
-        this.tree.checkAllDescendants(flat)
+        this.tree.checkAllDescendants(flat);
+        // 一定要在check之后设置默认
+        this.tree.setDefaultNodes()
       }
     }
 
