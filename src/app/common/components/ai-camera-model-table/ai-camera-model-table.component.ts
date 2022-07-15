@@ -60,7 +60,7 @@ export class AICameraModelTableComponent implements OnInit, AfterViewInit {
       // 当前页数据更新时，保留状态
       for (let i = 0; i < selected.length; i++) {
         let item = selected[i];
-        let d = data.find((d: AICameraModelManageModel) => d.CameraId == item.CameraId);
+        let d = data.find((d: AICameraModelManageModel) => d.Id == item.Id);
         // 用新对象替换原对象，维持高亮状态
         if (d) {
           this.selection.deselect(item);
@@ -171,8 +171,8 @@ export class AICameraModelTableComponent implements OnInit, AfterViewInit {
     this.operateTableRow.emit({
       type: AICameraModelOperateType.delete,
       data: [{
-        CameraId: row.CameraId,
-        CameraName: row.CameraName,
+        CameraId: row.Id,
+        CameraName: row.Name,
         ModelId: model.Id
       }]
     })
@@ -182,8 +182,8 @@ export class AICameraModelTableComponent implements OnInit, AfterViewInit {
 
     if (row.AIModels.length < this.maxLength && row.AIModels.every(m => m.Id != model.Id)) {
       return {
-        CameraId: row.CameraId,
-        CameraName: row.CameraName,
+        CameraId: row.Id,
+        CameraName: row.Name,
         ModelId: model.Id
       }
     }

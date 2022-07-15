@@ -52,7 +52,7 @@ export class LabelTreeComponent extends CommonTree implements OnInit {
     this._nestedNodeMap = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
-    console.log(res);
+    // console.log(res);
     this.dataSubject.next(res)
   }
   async searchEventHandler(condition: string) {
@@ -68,8 +68,7 @@ export class LabelTreeComponent extends CommonTree implements OnInit {
     // console.log(res)
     if (res && res.length) {
       this._toastrService.success('操作成功');
-      if (res.length)
-        this.defaultIds = [res[0].Id]
+
       this.dataSubject.next(res);
       if (condition != '') {
         this.tree?.expandAll()

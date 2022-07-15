@@ -14,6 +14,7 @@ import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { CommonTree } from 'src/app/common/components/common-tree/common-tree';
 
 @Component({
   selector: 'howell-camera-model-manage',
@@ -56,6 +57,7 @@ export class CameraModelManageComponent implements OnInit {
 
 
   selectedNodes: CommonFlatNode[] = [];
+  labelIds: string[] = []
   treeSelectStrategy = SelectStrategy.Multiple;
   show = false;
   defaultIds: string[] = ["310105001002"];
@@ -63,6 +65,7 @@ export class CameraModelManageComponent implements OnInit {
 
 
   @ViewChild(AICameraModelTableComponent) table?: AICameraModelTableComponent;
+  @ViewChild('tree') tree?: CommonTree;
 
   constructor(private _business: AICameraModelManageBusiness, private _toastrService: ToastrService) { }
 
@@ -149,11 +152,11 @@ export class CameraModelManageComponent implements OnInit {
 
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode[]) {
-    console.log('外部结果', nodes)
+    // console.log('外部结果', nodes)
     this.selectedNodes = nodes;
+    this.labelIds = this.selectedNodes.map(n => n.Id)
 
   }
-
 
   private async _listAIModels() {
     let AIModelsRes = await this._business.listAIModels(this._Modelcondition);
@@ -164,16 +167,13 @@ export class CameraModelManageComponent implements OnInit {
 
     let res = await this._business.listCameraAIModels(
       this.cameraModelCondition,
+      this.labelIds,
       this.pageIndex,
       this._pageSize
     );
+    console.log(res)
     this.page = res.Page;
     this.dataSubject.next(res.Data);
-  }
-  private _listLabels() {
-
-    // let labels = await this._business.listLabels();
-    // console.log(labels)
   }
   private async _deleteAIModelFromCamera() {
     if (this.aiCameraManageEvent) {

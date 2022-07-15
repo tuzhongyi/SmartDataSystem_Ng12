@@ -12,9 +12,13 @@
     <div class="title" style="pointer-events: none">
       <div class="left-side">
         <i class="howell-icon-video light-blue-text"></i>
-        <span style="margin-left: 10px">{{ row.CameraName }}</span>
+        <span style="margin-left: 10px">{{ row.Name }}</span>
       </div>
       <div class="right-side">
+        <div *ngFor="let label of row.Labels" class="tag">
+          <i class="mdi mdi-tag sky-blue-text"></i>
+          <span class="light-blue-text">{{ label.Name }}</span>
+        </div>
         <div class="icon">
           <i class="mdi mdi-content-copy sky-blue-text"></i>
         </div>

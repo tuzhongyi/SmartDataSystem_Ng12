@@ -14,7 +14,11 @@ export class LabelListComponent implements OnInit, AfterViewInit {
   @Input()
   selectedNodes: CommonFlatNode[] = [];
 
+  @Output() defaultIdsChange = new EventEmitter<string[]>();
+
   show = false;
+
+  defaultIds: string[] = [];
 
   @ContentChild('tree') tree?: CommonTree;
 
@@ -27,11 +31,25 @@ export class LabelListComponent implements OnInit, AfterViewInit {
 
   toggleHandler() {
     this.show = !this.show;
+
+    // 仅在关闭的时候保存所有选中节点，用于恢复
+    // if (!this.show) {
+    //     this.defaultIds = this.selectedNodes.map(node => node.Id);
+    // }
   }
   removeNode(e: Event, node: CommonFlatNode) {
     e.stopPropagation();
     if (this.tree) {
       this.tree.toggleNodes([node.Id])
+    } else {
+
+      // let index = this.selectedNodes.findIndex(v => v.Id == node.Id)
+      // if (index != -1) {
+      //   this.selectedNodes.splice(index, 1);
+
+      //   this.defaultIds = this.selectedNodes.map(node => node.Id);
+      //   this.defaultIdsChange.emit(this.defaultIds)
+      // }
     }
   }
 

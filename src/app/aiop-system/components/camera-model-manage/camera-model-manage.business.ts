@@ -14,18 +14,20 @@ export class AICameraModelManageBusiness {
   constructor(private _cameraRequest: AICameraRequestService, private _AIModelRequest: AIModelRequestService, private _labelRequest: LabelRequestService, private _converter: AICameraModelManageConverter, private _AIModelManageConverter: AIModelManageConverter) {
 
   }
-  async listCameraAIModels(condition: string = '', pageIndex: number = 1, pageSize: number = 9) {
+  async listCameraAIModels(condition: string = '', labelIds: string[] = [], pageIndex: number = 1, pageSize: number = 9) {
     let params = new GetCamerasParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
     params.Name = condition;
+    // params.AndLabelIds = ["6267c76237174d248129ef1642fce616"]
+    params.LabelIds = labelIds;
     let tmp = await this._listCameras(params);
-
+    // console.log(tmp)
     let data = this._converter.iterateToModel(tmp.Data);
 
     for (let i = 0; i < data.length; i++) {
       let model = data[i];
-      let aiModels = await this._cameraRequest.listAIModels(model.CameraId)
+      let aiModels = await this._cameraRequest.listAIModels(model.Id)
       model.AIModels = this._AIModelManageConverter.iterateToModel(aiModels)
 
     }

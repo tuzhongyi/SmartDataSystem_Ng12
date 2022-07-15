@@ -1,13 +1,16 @@
 import { OnlineStatus } from "../enum/online-status.enum";
+import { ResourceLabel } from "../network/model/resource-label.model";
 import { AIModelManageModel } from "./ai-model-manage.model";
+import { CommonModel } from "./common-model";
 
 
 // 摄像机AI模型列表
-export class AICameraModelManageModel {
-  CameraId!: string;
-  CameraName!: string;
+export class AICameraModelManageModel implements CommonModel {
+  Id!: string;
+  Name!: string;
   OnlineStatus!: OnlineStatus;
   AIModels!: AIModelManageModel[];
+  Labels!: ResourceLabel[]
 }
 
 

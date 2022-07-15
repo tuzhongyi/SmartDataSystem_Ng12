@@ -21,10 +21,11 @@ export class AICameraModelManageConverter extends CommonModelConverter<AICameraM
 
   private _fromAICamera(item: AICamera) {
     let model = new AICameraModelManageModel();
-    model.CameraId = item.Id;
-    model.CameraName = item.Name;
+    model.Id = item.Id;
+    model.Name = item.Name;
     model.OnlineStatus = item.OnlineStatus ?? OnlineStatus.Offline;
     model.AIModels = [];
+    model.Labels = item.Labels ?? [];
     return model
   }
 }
