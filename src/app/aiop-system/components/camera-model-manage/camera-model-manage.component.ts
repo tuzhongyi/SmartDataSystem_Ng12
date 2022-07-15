@@ -55,13 +55,11 @@ export class CameraModelManageComponent implements OnInit {
 
 
 
-
+  // 标签筛选器
   selectedNodes: CommonFlatNode[] = [];
-  labelIds: string[] = []
   treeSelectStrategy = SelectStrategy.Multiple;
-  show = false;
-  defaultIds: string[] = ["310105001002"];
-  filterTypes = [UserResourceType.Committees]
+  defaultIds: string[] = [];
+  labelIds: string[] = []
 
 
   @ViewChild(AICameraModelTableComponent) table?: AICameraModelTableComponent;
@@ -207,7 +205,5 @@ export class CameraModelManageComponent implements OnInit {
     }
 
   }
-
-
 
 }

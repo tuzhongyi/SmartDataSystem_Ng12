@@ -15,6 +15,7 @@ import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { FormBuilder } from '@angular/forms';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 @Component({
   selector: 'howell-encode-device-manage',
@@ -67,6 +68,12 @@ export class EncodeDeviceManageComponent implements OnInit {
     filter: false
   }
 
+
+  // 标签筛选器
+  selectedNodes: CommonFlatNode[] = [];
+  treeSelectStrategy = SelectStrategy.Multiple;
+  defaultIds: string[] = [];
+  labelIds: string[] = []
 
   // 表单
   state = FormState.none;
@@ -139,6 +146,15 @@ export class EncodeDeviceManageComponent implements OnInit {
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
     this._init();
+  }
+
+
+  // 点击树节点
+  selectTreeNode(nodes: CommonFlatNode[]) {
+    // console.log('外部结果', nodes)
+    this.selectedNodes = nodes;
+    this.searchInfo.labelIds = this.selectedNodes.map(n => n.Id)
+
   }
 
 
