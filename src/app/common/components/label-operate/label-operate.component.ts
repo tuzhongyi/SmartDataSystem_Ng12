@@ -26,14 +26,9 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
     return this.selection.isSelected(model);
   };
 
-  @Input()
-  title: string = '标签管理';
-
-  @Input() showTitle = true;
 
   @Input()
   resourceId: string = '';
-
 
   @Output() selectLabelEvent: EventEmitter<ResourceLabel[]> = new EventEmitter<
     ResourceLabel[]

@@ -16,6 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { FormBuilder } from '@angular/forms';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { ResourceLabel } from 'src/app/network/model/resource-label.model';
 
 @Component({
   selector: 'howell-encode-device-manage',
@@ -179,6 +180,14 @@ export class EncodeDeviceManageComponent implements OnInit {
       this._init();
     }
   }
+  closeBind(update: boolean) {
+    this.showBind = false
+    this.encodeDeviceId = '';
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
+  }
   toggleFilter() {
     this.disableSearch = this.showFilter = !this.showFilter;
     this.searchInfo.filter = this.showFilter
@@ -196,7 +205,9 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   bindBtnClick() {
     this.showBind = true;
+    this.encodeDeviceId = this.selectedRows[0]?.Id || '';
   }
+
   private async _deleteRows(rows: EncodeDeviceManageModel[]) {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {

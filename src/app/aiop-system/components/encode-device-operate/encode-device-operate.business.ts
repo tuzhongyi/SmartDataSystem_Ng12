@@ -7,7 +7,7 @@ import { BatchRequest } from "src/app/network/request/resources/resources-params
 
 @Injectable()
 export class EncodeDeviceOperateBusiness {
-  constructor(private _encodeDeviceRequest: EncodeDeviceRequestService, private _resourceRequest: ResourceRequestService, private _labelRequest: LabelRequestService) {
+  constructor(private _encodeDeviceRequest: EncodeDeviceRequestService, private _resourceRequest: ResourceRequestService) {
 
   }
   getProtocols() {

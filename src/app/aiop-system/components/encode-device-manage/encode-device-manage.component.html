@@ -16,7 +16,11 @@
   </ng-container>
   <ng-container *ngIf="showBind">
     <howell-pop-up-window>
-      <howell-label-operate></howell-label-operate>
+      <howell-label-manage-form
+        [resourceId]="encodeDeviceId"
+        (closeEvent)="closeBind($event)"
+      >
+      </howell-label-manage-form>
     </howell-pop-up-window>
   </ng-container>
 

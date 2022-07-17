@@ -1,0 +1,18 @@
+<div class="label-manage-form">
+  <div class="hw-simple-title" style="margin-bottom: 20px">标签管理</div>
+  <div class="manage-content">
+    <howell-label-operate
+      [resourceId]="resourceId"
+      (selectLabelEvent)="selectLabelEvent($event)"
+    ></howell-label-operate>
+  </div>
+  <div class="hw-middle-btn-group">
+    <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+      <i class="howell-icon-Check"></i>
+    </button>
+
+    <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>
