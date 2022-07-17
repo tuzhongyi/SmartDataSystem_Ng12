@@ -123,6 +123,7 @@ export class SRServerManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showDialog = false
     this.state = FormState.none;
+    this.serverId = '';
     if (update) this._init();
   }
 

@@ -139,6 +139,7 @@ export class PlatformManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
+    this.platformId = ''
     if (update) this._init();
   }
   addBtnClick() {

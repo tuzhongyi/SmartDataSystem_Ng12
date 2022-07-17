@@ -21,10 +21,10 @@ export class CameraManageBusiness {
     if (!searchInfo.filter) {
       params.Name = searchInfo.condition;
     } else {
-      // params.Name = searchInfo.deviceName;
-      // params.IPAddress = searchInfo.ip;
+      params.Name = searchInfo.DeviceName;
+      // params.CameraTypes = [searchInfo.CameraType];
       // params.OnlineStatus = searchInfo.online ? +searchInfo.online : void 0;
-      // params.AndLabelIds = searchInfo.labelIds;
+      params.AndLabelIds = searchInfo.Labels;
     }
 
     let tmp = await this._listAiopCameras(params);

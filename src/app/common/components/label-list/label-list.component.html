@@ -2,7 +2,7 @@
   <div class="list-header" (click)="toggleHandler()">
     <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
     <div class="wrapper">
-      <div class="list-item" *ngFor="let node of selectedNodes">
+      <div class="label-item" *ngFor="let node of selectedNodes">
         <div class="title">{{ node.Name }}</div>
         <div class="close-btn" (click)="removeNode($event, node)">
           <i class="howell-icon-Close"></i>

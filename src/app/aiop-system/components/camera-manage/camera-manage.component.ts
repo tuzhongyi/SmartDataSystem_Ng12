@@ -7,6 +7,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-model/ai-camera-manage.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { CameraManageBusiness } from './camera-manage.business';
@@ -63,6 +64,14 @@ export class CameraManageComponent implements OnInit {
 
 
 
+
+  // 标签筛选器
+  selectedNodes: CommonFlatNode[] = [];
+  treeSelectStrategy = SelectStrategy.Multiple;
+  defaultIds: string[] = [];
+  labelIds: string[] = []
+
+
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
@@ -115,6 +124,15 @@ export class CameraManageComponent implements OnInit {
     if (this.pageIndex == pageInfo.pageIndex + 1) return;
     this.pageIndex = pageInfo.pageIndex + 1;
     this._init();
+  }
+
+
+  // 点击树节点
+  selectTreeNode(nodes: CommonFlatNode[]) {
+    // console.log('外部结果', nodes)
+    this.selectedNodes = nodes;
+    this.labelIds = this.selectedNodes.map(n => n.Id)
+
   }
 
 }

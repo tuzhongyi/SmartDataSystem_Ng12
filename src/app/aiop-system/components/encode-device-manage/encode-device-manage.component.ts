@@ -79,6 +79,9 @@ export class EncodeDeviceManageComponent implements OnInit {
   state = FormState.none;
   encodeDeviceId = '';
 
+  // 绑定标签
+  showBind = false;
+
 
   get enableDelBtn() {
     return !!this.selectedRows.length
@@ -111,7 +114,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
   private async _init() {
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize,);
-    console.log('编码设备', res)
+    // console.log('编码设备', res)
     this.page = res.Page;
     this.dataSubject.next(res.Data);
 
@@ -124,6 +127,7 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   selectTableRow(rows: EncodeDeviceManageModel[]) {
     this.selectedRows = rows;
+    console.log('选择', rows)
   }
   tableSelect(type: TableSelectStateEnum) {
     if (this.table) {
@@ -169,6 +173,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
+    this.encodeDeviceId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -189,6 +194,9 @@ export class EncodeDeviceManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
+  bindBtnClick() {
+    this.showBind = true;
+  }
   private async _deleteRows(rows: EncodeDeviceManageModel[]) {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {

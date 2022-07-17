@@ -42,6 +42,9 @@ import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
 import { LabelListComponent } from './label-list/label-list.component';
+import { LabelOperateComponent } from './label-operate/label-operate.component';
+import { PopUpWindowComponent } from './pop-up-window/pop-up-window.component';
+import { LabelManageComponent } from './label-manage/label-manage.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -86,5 +89,8 @@ export const CUSTOM_COMPONENTS = [
   DivisionTreeComponent,
   CommonTreeComponent,
   RegionTreeComponent,
-  LabelListComponent
+  LabelListComponent,
+  LabelOperateComponent,
+  LabelManageComponent,
+  PopUpWindowComponent
 ];

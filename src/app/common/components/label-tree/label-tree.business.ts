@@ -12,7 +12,6 @@ export class LabelListBusiness {
 
 
   constructor(private _labelRequest: LabelRequestService, private _converter: LabelTreeConverter) {
-
   }
   async init(condition: string = '') {
     this.nestedNodeMap.clear();

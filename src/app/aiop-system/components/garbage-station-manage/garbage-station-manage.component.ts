@@ -164,6 +164,8 @@ export class GarbageStationManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
+    this.stationId = '';
+    this.divisionId = ''
     if (update) {
       this.pageIndex = 1;
       this._init();

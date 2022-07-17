@@ -1,0 +1,52 @@
+<div class="label-operate">
+  <div *ngIf="showTitle" class="hw-simple-title" style="margin-bottom: 20px">
+    {{ title }}
+  </div>
+  <div class="label-content">
+    <div class="label-pool">
+      <div class="hw-simple-title">绑定新标签</div>
+      <div class="operate-item">
+        <howell-simple-search
+          #searchPool
+          (searchEvent)="searchPoolEvent($event)"
+        >
+        </howell-simple-search>
+        <button type="button" class="hw-cyan-btn" (click)="addLabel()">
+          <i class="howell-icon-plus"></i>
+        </button>
+      </div>
+
+      <div class="wrapper">
+        <div
+          class="label-item"
+          [class.high-light]="highLight(label)"
+          *ngFor="let label of allLables"
+          (click)="selectLabel(label)"
+        >
+          <div class="title">{{ label.Name }}</div>
+          <div class="close-btn" (click)="deleteLabel($event, label)">
+            <i class="howell-icon-Close"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="label-native">
+      <div class="hw-simple-title">取消原标签</div>
+      <div class="operate-item">
+        <howell-simple-search
+          #searchNative
+          (searchEvent)="searchNativeEvent($event)"
+        ></howell-simple-search>
+      </div>
+
+      <div class="wrapper">
+        <div class="label-item" *ngFor="let label of resourceLabels">
+          <div class="title">{{ label.Name }}</div>
+          <div class="close-btn" (click)="deleteResourceLabel(label)">
+            <i class="howell-icon-Close"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

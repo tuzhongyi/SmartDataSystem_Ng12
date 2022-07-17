@@ -10,6 +10,7 @@ import { ProtocolType } from 'src/app/enum/protocol-type.enum';
 import { DeviceType } from 'src/app/enum/device-type.enum';
 import { TransType } from 'src/app/enum/trans-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { ResourceLabel } from 'src/app/network/model/resource-label.model';
 
 @Component({
   selector: 'howell-encode-device-operate',
@@ -22,6 +23,8 @@ import { ResourceType } from 'src/app/enum/resource-type.enum';
 export class EncodeDeviceOperateComponent implements OnInit {
 
   private _encodeDevice?: EncodeDevice;
+
+  selectedLabels: ResourceLabel[] = []
 
   protocols: Array<Protocol> = [];
   FormState = FormState;
@@ -73,13 +76,16 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
   async ngOnInit() {
     this.protocols = await this._business.getProtocols();
-    console.log("协议", this.protocols);
+    // console.log("协议", this.protocols);
 
     if (this.state == FormState.edit) {
       this._encodeDevice = await this._business.getEncodeDevice(this.encodeDeviceId);
-      console.log('编码器', this._encodeDevice)
+      // console.log('编码器', this._encodeDevice)
     }
     this._updateForm();
+  }
+  selectLabelEvent(labels: ResourceLabel[]) {
+    this.selectedLabels = labels
   }
   async onSubmit() {
     if (this._checkForm()) {
@@ -105,7 +111,11 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
         let res = await this._business.createEncodeDevice(encodeDevice)
         if (res) {
-          console.log(res)
+
+          for (let i = 0; i < this.selectedLabels.length; i++) {
+            let id = this.selectedLabels[i].Id;
+            await this._business.addResourceLabel(res.Id, id)
+          }
           this._toastrService.success('添加成功')
           this.closeEvent.emit(true)
         }
@@ -127,9 +137,12 @@ export class EncodeDeviceOperateComponent implements OnInit {
           this._encodeDevice.HardwareVersion = this.myForm.value.HardwareVersion!;
           this._encodeDevice.UpdateTime = new Date().toISOString()
 
-          let res = await this._business.setEncodeDevice(this._encodeDevice)
+          let res = await this._business.updateEncodeDevice(this._encodeDevice)
           if (res) {
-            console.log(res)
+            for (let i = 0; i < this.selectedLabels.length; i++) {
+              let id = this.selectedLabels[i].Id;
+              await this._business.addResourceLabel(res.Id, id)
+            }
             this._toastrService.success('编辑成功')
             this.closeEvent.emit(true)
 

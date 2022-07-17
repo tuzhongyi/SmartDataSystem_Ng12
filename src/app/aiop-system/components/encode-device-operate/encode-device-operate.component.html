@@ -108,11 +108,6 @@
             <span class="hw-form-icon"></span>
           </div>
           <div class="content">
-            <!-- <input
-              type="text"
-              class="hw-form-control hw-form-input"
-              formControlName="DeviceType"
-            /> -->
             <select
               class="hw-form-control hw-form-select"
               formControlName="DeviceType"
@@ -199,6 +194,20 @@
               class="hw-form-control hw-form-input"
               formControlName="HardwareVersion"
             />
+          </div>
+        </div>
+
+        <div class="hw-form-group" style="flex-basis: 100%">
+          <div class="title">
+            <span class="hw-form-label"> 标签 </span>
+            <span class="hw-form-icon"></span>
+          </div>
+          <div class="content">
+            <howell-label-operate
+              [showTitle]="false"
+              [resourceId]="encodeDeviceId"
+              (selectLabelEvent)="selectLabelEvent($event)"
+            ></howell-label-operate>
           </div>
         </div>
       </form>

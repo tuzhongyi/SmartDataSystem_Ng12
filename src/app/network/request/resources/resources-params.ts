@@ -25,3 +25,32 @@ export class GetResourcesParams {
   /**区域ID必须为NULL */
   RegionIdNullable?: boolean;
 }
+
+import { Type } from "class-transformer";
+
+
+/**批量操作结果 */
+export class BatchRequest {
+  /**资源ID列表 */
+  ResourceIds!: string[];
+  /**是否删除数据，(可选)，默认：true */
+  IsDelete?: boolean;
+}
+
+/**批量操作结果 */
+export class BatchResult {
+  /**操作结果(可选) */
+  @Type(() => SingleResult)
+  Results?: SingleResult[];
+}
+
+
+/**单个操作结果 */
+export class SingleResult {
+  /**资源ID */
+  ResourceId!: string;
+  /**结果：0-成功，1-失败 */
+  Result!: number;
+  /**描述信息(可选) */
+  ResultDescription?: string;
+}

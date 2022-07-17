@@ -14,6 +14,11 @@
     >
     </howell-confirm-dialog>
   </ng-container>
+  <ng-container *ngIf="showBind">
+    <howell-pop-up-window>
+      <howell-label-operate></howell-label-operate>
+    </howell-pop-up-window>
+  </ng-container>
 
   <div class="hw-table-layout">
     <div class="hw-operation">
@@ -33,7 +38,11 @@
               <i class="howell-icon-delete-bin"></i>
               删除
             </button>
-            <button class="hw-cyan-btn" [disabled]="!enableBindBtn">
+            <button
+              class="hw-cyan-btn"
+              [disabled]="!enableBindBtn"
+              (click)="bindBtnClick()"
+            >
               <i class="mdi mdi-tag"></i>
               绑定标签
             </button>

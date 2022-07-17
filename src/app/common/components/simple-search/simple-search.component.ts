@@ -10,6 +10,7 @@ export class SimpleSearchComponent implements OnInit {
   @Input() placeHolder = '';
 
   @Output() searchEvent = new EventEmitter<string>();
+  @Output() changeEvent = new EventEmitter<string>();
 
   @Input() value = '';
 
@@ -19,6 +20,9 @@ export class SimpleSearchComponent implements OnInit {
   }
   search() {
     this.searchEvent.emit(this.value);
+  }
+  getValue() {
+    return this.value;
   }
 
 

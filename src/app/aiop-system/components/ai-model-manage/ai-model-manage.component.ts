@@ -131,6 +131,8 @@ export class AIModelManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
+    console.log('sdfsdf', this.aiModelId)
+    this.aiModelId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
