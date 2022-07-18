@@ -40,6 +40,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     flatNode.ParentId = nestNode.ParentId;
     flatNode.IconClass = nestNode.IconClass;
     flatNode.RawData = nestNode.RawData;
+    flatNode.hideArrow = nestNode.hideArrow;
 
     if (nestNode.ParentId) {
       let ParentNode = this._flatNodeMap.get(nestNode.ParentId) ?? null;
@@ -88,7 +89,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Input()
   set defaultIds(ids: string[]) {
     // 排除空字符串
-    this._defaultIds = ids.filter(id => id);
+    this._defaultIds = ids;//ids.filter(id => id);
   }
   get defaultIds() {
     return this._defaultIds;

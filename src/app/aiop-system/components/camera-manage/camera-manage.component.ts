@@ -1,13 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
+import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
+import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
+import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { EncodeDevice } from 'src/app/network/model/encode-device';
 import { Page } from 'src/app/network/model/page_list.model';
 import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-model/ai-camera-manage.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { CameraManageBusiness } from './camera-manage.business';
@@ -21,10 +26,13 @@ import { CameraManageConf } from './camera-manage.config'
     CameraManageBusiness
   ]
 })
-export class CameraManageComponent implements OnInit {
+export class CameraManageComponent implements OnInit, AfterViewInit {
   private _pageSize = 3;
   private _condition = '';
+  private _currentNode?: CommonFlatNode<RegionTreeSource>;
 
+
+  FormState = FormState
 
   //Table
   dataSubject = new BehaviorSubject<AICameraManageModel[]>([]);
@@ -42,6 +50,11 @@ export class CameraManageComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
+  // 表单
+  state = FormState.none;
+  cameraId = '';
+  regionId = ''
+
 
 
   // 对话框
@@ -57,13 +70,10 @@ export class CameraManageComponent implements OnInit {
     condition: '',
     CameraName: "",
     CameraType: '',
-    DeviceName: '',
-    Labels: [],
+    DeviceId: '',
+    LabelIds: [],
     filter: false
   }
-
-
-
 
   // 标签筛选器
   selectedNodes: CommonFlatNode[] = [];
@@ -71,17 +81,59 @@ export class CameraManageComponent implements OnInit {
   defaultIds: string[] = [];
   labelIds: string[] = []
 
+  // 编码设备筛选器
+  encodeDevices: EncodeDevice[] = []
+
+
+  get enableAddBtn() {
+    return this._currentNode && this._currentNode.Expandable == false;
+  }
+  get enableDelBtn() {
+    return !!this.selectedRows.length
+  }
+
+
+  get enableBindBtn() {
+    return !!this.selectedRows.length
+  }
+
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
+  @ViewChild(RegionTreeComponent) regionTree?: RegionTreeComponent;
 
-  constructor(private _business: CameraManageBusiness) { }
+  constructor(private _business: CameraManageBusiness) {
+    this.tableOperates.push(
+      new TableOperateModel(
+        'edit',
+        ['howell-icon-modification'],
+        '编辑',
+        this._clickEditBtn.bind(this)
+      )
+    );
+  }
 
-  ngOnInit(): void {
-    this._init();
+  async ngOnInit() {
+    this.encodeDevices = (await this._business.listEncodeDevice()).Data;
+  }
+  ngAfterViewInit(): void {
+
+    if (this.regionTree) {
+      let extra = new CommonNestNode();
+      extra.Id = String(null)
+      extra.Name = '未分配摄像机'
+      extra.HasChildren = false;
+      extra.ParentId = null;
+      extra.ChildrenLoaded = true;
+      extra.ParentNode = null;
+      extra.IconClass = 'howell-icon-video'
+      this.regionTree.addNode(extra)
+    }
   }
   private async _init() {
+    console.log('searchInfo', this.searchInfo)
     let res = await this._business.init(
+      this.regionId,
       this.searchInfo,
       this.pageIndex,
       this._pageSize
@@ -127,12 +179,73 @@ export class CameraManageComponent implements OnInit {
   }
 
 
+  selectRegionTreeNode(nodes: CommonFlatNode[]) {
+    this._currentNode = nodes[0];
+    console.log('外部结果', nodes)
+    this.state = FormState.none;
+    this._updateTable();
+  }
   // 点击树节点
-  selectTreeNode(nodes: CommonFlatNode[]) {
+  selectLabelTreeNode(nodes: CommonFlatNode[]) {
     // console.log('外部结果', nodes)
     this.selectedNodes = nodes;
-    this.labelIds = this.selectedNodes.map(n => n.Id)
+    this.searchInfo.LabelIds = this.selectedNodes.map(n => n.Id)
 
+  }
+  deleteBtnClick() {
+
+  }
+  addBtnClick() {
+
+  }
+
+  bindBtnClick() {
+
+  }
+  closeForm(update: boolean) {
+    this.showOperate = false
+    this.state = FormState.none;
+    this.cameraId = '';
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
+  }
+
+
+  private async _updateTable() {
+    if (this._currentNode) {
+      this.regionId = this._currentNode.Id;
+      if (this._currentNode.Expandable == false) {
+        this._init();
+      } else {
+        this.page = {
+          PageIndex: this.pageIndex,
+          PageSize: this._pageSize,
+          RecordCount: 0,
+          TotalRecordCount: 0,
+          PageCount: 0
+        }
+        this.dataSubject.next([])
+      }
+
+    } else {
+      this.page = {
+        PageIndex: this.pageIndex,
+        PageSize: this._pageSize,
+        RecordCount: 0,
+        TotalRecordCount: 0,
+        PageCount: 0
+      }
+      this.regionId = '';
+      this.dataSubject.next([])
+    }
+  }
+
+  private _clickEditBtn(row: AICameraManageModel) {
+    this.showOperate = true;
+    this.state = FormState.edit;
+    this.cameraId = row.Id;
   }
 
 }

@@ -29,6 +29,7 @@ export class LabelTreeConverter extends CommonTreeConverter {
     node.ParentNode = null;
     node.IconClass = '';
     node.RawData = item;
+    node.hideArrow = true;
     return node;
   }
 

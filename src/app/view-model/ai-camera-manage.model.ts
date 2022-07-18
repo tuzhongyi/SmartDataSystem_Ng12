@@ -16,7 +16,7 @@ export interface AICameraManageSearchInfo {
   condition: string;
   CameraName: string;
   CameraType: string;
-  DeviceName: string;
-  Labels: string[];
+  DeviceId: string;
+  LabelIds: string[];
   filter: boolean;
 }

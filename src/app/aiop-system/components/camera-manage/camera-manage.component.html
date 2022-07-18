@@ -1,7 +1,17 @@
 <div class="camera-manage hw-horizontal-layout">
+  <ng-container *ngIf="showOperate">
+    <howell-camera-operate
+      [state]="state"
+      [cameraId]="cameraId"
+      (closeEvent)="closeForm($event)"
+    ></howell-camera-operate>
+  </ng-container>
+
   <div class="horizontal-left">
     <div class="hw-simple-title" style="margin-bottom: 10px">安保区域</div>
-    <howell-region-tree></howell-region-tree>
+    <howell-region-tree
+      (selectTreeNode)="selectRegionTreeNode($event)"
+    ></howell-region-tree>
   </div>
   <div class="horizontal-right hw-table-layout">
     <div class="hw-operation">
@@ -9,11 +19,19 @@
       <div class="hw-operate-bar wrap">
         <div class="left-wrapper">
           <div class="hw-normal-btn-group">
-            <button class="hw-green-btn">
+            <button
+              class="hw-green-btn"
+              [disabled]="!enableAddBtn"
+              (click)="addBtnClick()"
+            >
               <i class="howell-icon-plus"></i>
               添加
             </button>
-            <button class="hw-red-btn">
+            <button
+              class="hw-red-btn"
+              [disabled]="!enableDelBtn"
+              (click)="deleteBtnClick()"
+            >
               <i class="howell-icon-delete-bin"></i>
               删除
             </button>
@@ -21,7 +39,11 @@
               <i class="mdi mdi-tag"></i>
               绑定标签
             </button>
-            <button class="hw-blue-btn">
+            <button
+              class="hw-blue-btn"
+              [disabled]="!enableBindBtn"
+              (click)="bindBtnClick()"
+            >
               <i class="hw-icon-move2"></i>
               移动至
             </button>
@@ -62,11 +84,16 @@
         <div class="filter-group">
           <div class="title"><span class="hw-form-label">类型:</span></div>
           <div class="content">
-            <input
-              type="text"
+            <select
+              class="hw-form-control hw-form-select"
               [(ngModel)]="searchInfo.CameraType"
-              placeHolder="请输入关键字"
-            />
+            >
+              <option value="">全部</option>
+              <option value="1">枪机</option>
+              <option value="2">球机</option>
+              <option value="3">半球</option>
+              <option value="4">一体机</option>
+            </select>
           </div>
         </div>
 
@@ -75,11 +102,12 @@
           <div class="content">
             <select
               class="hw-form-control hw-form-select"
-              [(ngModel)]="searchInfo.DeviceName"
+              [(ngModel)]="searchInfo.DeviceId"
             >
               <option value="">全部</option>
-              <option value="0">正常</option>
-              <option value="1">离线</option>
+              <option *ngFor="let device of encodeDevices" [value]="device.Id">
+                {{ device.Name }}
+              </option>
             </select>
           </div>
         </div>
@@ -88,10 +116,9 @@
           <div class="content">
             <howell-label-list [selectedNodes]="selectedNodes">
               <howell-label-tree
-                #tree
                 [defaultIds]="defaultIds"
                 [selectStrategy]="selectStrategy"
-                (selectTreeNode)="selectTreeNode($event)"
+                (selectTreeNode)="selectLabelTreeNode($event)"
               ></howell-label-tree>
             </howell-label-list>
           </div>

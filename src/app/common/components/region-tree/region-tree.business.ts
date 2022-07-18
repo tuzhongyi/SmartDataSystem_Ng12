@@ -32,8 +32,10 @@ export class RegionTreeBusiness {
     // 要求condition必须为 "",才可使用该字段
     this._regions = tmp.Data;
 
-    let nodes = this._converter.iterateToNestNode(tmp.Data)
+    let nodes = this._converter.iterateToNestNode(tmp.Data);
+   
 
+    // nodes.unshift(extra)
     // 注册请求到的节点
     this._registerArray(nodes)
 
@@ -54,7 +56,6 @@ export class RegionTreeBusiness {
     this._nodes = allNodes;
 
     let res = this._converter.buildNestTree(allNodes);
-    console.log(res)
     return res;
   }
 

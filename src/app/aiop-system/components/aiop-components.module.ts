@@ -35,6 +35,7 @@ import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.
 import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.component';
 import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-device-operate.component';
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
+import { CameraOperateComponent } from './camera-operate/camera-operate.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -61,7 +62,8 @@ import { GarbageStationOperateComponent } from './garbage-station-operate/garbag
     SRServerOperateComponent,
     AIModelOperateComponent,
     EncodeDeviceOperateComponent,
-    GarbageStationOperateComponent
+    GarbageStationOperateComponent,
+    CameraOperateComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],

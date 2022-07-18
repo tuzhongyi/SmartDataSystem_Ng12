@@ -8,5 +8,6 @@ export class CommonFlatNode<T = any> implements CommonTreeModel {
   ParentId!: string | null;
   ParentNode!: CommonFlatNode | null;
   IconClass!: string;
-  RawData!: T
+  RawData!: T;
+  hideArrow?: boolean;
 }

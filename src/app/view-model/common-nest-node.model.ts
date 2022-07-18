@@ -12,5 +12,6 @@ export class CommonNestNode<T = any> implements CommonTreeModel {
   ChildrenLoaded!: boolean;
   ParentNode!: CommonNestNode | null;
   IconClass!: string;
-  RawData!: T
+  RawData!: T;
+  hideArrow?: boolean
 }

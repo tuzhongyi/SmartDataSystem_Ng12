@@ -27,7 +27,7 @@
       </ng-container>
 
       <!-- 下拉箭头 -->
-      <ng-container *ngIf="!node.Expandable && node.Level != 0">
+      <ng-container *ngIf="!node.Expandable && !node.hideArrow">
         <button class="tree-select" disabled></button>
       </ng-container>
 
