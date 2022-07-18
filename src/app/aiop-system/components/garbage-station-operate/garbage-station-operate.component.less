@@ -1,14 +1,18 @@
 :host {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
-  z-index: 9999;
 }
-
 .garbage-station-operate {
+  width: 100%;
+  height: 100%;
   .page-one {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+
     .inline-form {
       display: flex;
       flex-grow: 1;
@@ -28,5 +32,12 @@
     position: absolute;
     top: 0;
     left: 0;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
   }
 }

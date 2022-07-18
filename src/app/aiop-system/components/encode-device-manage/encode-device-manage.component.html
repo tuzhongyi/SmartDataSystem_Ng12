@@ -1,10 +1,12 @@
 <div class="encode-device-manage">
   <ng-container *ngIf="showOperate">
-    <howell-encode-device-operate
-      [state]="state"
-      [encodeDeviceId]="encodeDeviceId"
-      (closeEvent)="closeForm($event)"
-    ></howell-encode-device-operate>
+    <howell-pop-up-window>
+      <howell-encode-device-operate
+        [state]="state"
+        [encodeDeviceId]="encodeDeviceId"
+        (closeEvent)="closeForm($event)"
+      ></howell-encode-device-operate>
+    </howell-pop-up-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">

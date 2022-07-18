@@ -35,18 +35,22 @@
               <i class="howell-icon-delete-bin"></i>
               删除
             </button>
-            <button class="hw-cyan-btn">
+            <button
+              class="hw-cyan-btn"
+              [disabled]="!enableBindBtn"
+              (click)="bindBtnClick()"
+            >
               <i class="mdi mdi-tag"></i>
               绑定标签
             </button>
-            <button
+            <!-- <button
               class="hw-blue-btn"
               [disabled]="!enableBindBtn"
               (click)="bindBtnClick()"
             >
               <i class="hw-icon-move2"></i>
               移动至
-            </button>
+            </button> -->
           </div>
         </div>
         <div class="right-wrapper">

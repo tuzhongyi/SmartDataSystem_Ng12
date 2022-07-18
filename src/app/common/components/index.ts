@@ -44,7 +44,7 @@ import { RegionTreeComponent } from './region-tree/region-tree.component';
 import { LabelListComponent } from './label-list/label-list.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { PopUpWindowComponent } from './pop-up-window/pop-up-window.component';
-import { LabelManageFormComponent } from './label-manage/label-manage-form.component';
+import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,

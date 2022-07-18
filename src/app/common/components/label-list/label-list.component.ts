@@ -3,6 +3,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonTree } from '../common-tree/common-tree';
+import { LabelTreeComponent } from '../label-tree/label-tree.component';
 
 @Component({
   selector: 'howell-label-list',
@@ -20,7 +21,7 @@ export class LabelListComponent implements OnInit, AfterViewInit {
 
   defaultIds: string[] = [];
 
-  @ContentChild('tree') tree?: CommonTree;
+  @ContentChild(LabelTreeComponent) tree?: CommonTree;
 
   constructor() { }
 

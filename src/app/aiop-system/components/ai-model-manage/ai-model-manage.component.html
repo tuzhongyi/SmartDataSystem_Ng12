@@ -1,10 +1,12 @@
 <div class="ai-model-manage">
   <ng-container *ngIf="showOperate">
-    <howell-ai-model-operate
-      [state]="state"
-      [aiModelId]="aiModelId"
-      (closeEvent)="closeForm($event)"
-    ></howell-ai-model-operate>
+    <howell-pop-up-window>
+      <howell-ai-model-operate
+        [state]="state"
+        [aiModelId]="aiModelId"
+        (closeEvent)="closeForm($event)"
+      ></howell-ai-model-operate>
+    </howell-pop-up-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">

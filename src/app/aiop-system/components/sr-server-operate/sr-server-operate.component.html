@@ -1,240 +1,226 @@
-<div class="sr-server-operate hw-popped-container">
-  <div class="hw-popped-wrapper">
-    <div class="inner-popped-wrapper">
-      <div class="hw-simple-title">{{ title }}</div>
-      <form class="hw-form" [formGroup]="myForm">
-        <div class="hw-form-group">
-          <div class="title">
-            <span class="hw-form-label"> 名称 </span>
-            <span class="hw-form-icon">*</span>
-          </div>
-          <div class="content">
-            <input
-              type="text"
-              class="hw-form-control hw-form-input"
-              formControlName="Name"
-            />
-          </div>
-        </div>
-
-        <div class="hw-form-group">
-          <div class="title">
-            <span class="hw-form-label"> 协议类型 </span>
-            <span class="hw-form-icon">*</span>
-          </div>
-          <div class="content">
-            <select
-              class="hw-form-control hw-form-select"
-              formControlName="ProtocolType"
-            >
-              <option value="Howell">Howell</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="hw-form-group">
-          <div class="title">
-            <span class="hw-form-label"> 用户名 </span>
-          </div>
-          <div class="content">
-            <input
-              type="text"
-              class="hw-form-control hw-form-input"
-              formControlName="Username"
-            />
-          </div>
-        </div>
-
-        <div class="hw-form-group">
-          <div class="title">
-            <span class="hw-form-label"> 密码 </span>
-          </div>
-          <div class="content">
-            <input
-              type="text"
-              class="hw-form-control hw-form-input"
-              formControlName="Password"
-            />
-          </div>
-        </div>
-        <div class="hw-form-group" style="flex-basis: 100%">
-          <div class="title">
-            <span class="hw-form-label"> 地址 </span>
-            <span class="hw-form-icon">*</span>
-          </div>
-          <div class="content">
-            <div class="addr-btns">
-              <div
-                class="addr-item"
-                [class.active]="i == currentIndex"
-                *ngFor="let add of Address.controls; let i = index"
-                (click)="currentIndex = i"
-              >
-                <span> 地址 {{ i + 1 }}</span>
-                <div
-                  class="close-btn"
-                  (click)="deleteAddress(i, $event)"
-                  *ngIf="i != 0"
-                >
-                  <i class="howell-icon-Close"></i>
-                </div>
-              </div>
-              <div
-                class="plus-btn"
-                (click)="addAddress()"
-                *ngIf="Address.length < maxLength"
-              >
-                <i class="howell-icon-pluscircle"></i>
-              </div>
-            </div>
-            <div formArrayName="Address" class="address-wrapper">
-              <div *ngFor="let add of Address.controls; let i = index">
-                <div
-                  [formGroupName]="i"
-                  class="hw-form"
-                  *ngIf="i == currentIndex"
-                >
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> IP地址 </span>
-                      <span class="hw-form-icon">*</span>
-                    </div>
-                    <div class="content">
-                      <input
-                        type="text"
-                        class="hw-form-control hw-form-input"
-                        formControlName="IPAddress"
-                      />
-                    </div>
-                  </div>
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> 端口号 </span>
-                      <span class="hw-form-icon">*</span>
-                    </div>
-                    <div class="content">
-                      <input
-                        class="hw-form-control hw-form-input"
-                        (touchSpinChange)="touchSpinChange($event, i, 'Port')"
-                        appTouchSpin
-                        type="number"
-                        formControlName="Port"
-                      />
-                    </div>
-                  </div>
-
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> 互联网IP </span>
-                      <span class="hw-form-icon">*</span>
-                    </div>
-                    <div class="content">
-                      <select
-                        class="hw-form-control hw-form-select"
-                        formControlName="IsInternet"
-                      >
-                        <option value="0">否</option>
-                        <option value="1">是</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> 直连IP地址 </span>
-                      <span class="hw-form-icon">*</span>
-                    </div>
-                    <div class="content">
-                      <select
-                        class="hw-form-control hw-form-select"
-                        formControlName="IsDefault"
-                      >
-                        <option value="0">否</option>
-                        <option value="1">是</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> RTSP端口号 </span>
-                      <span class="hw-form-icon"></span>
-                    </div>
-                    <div class="content">
-                      <input
-                        class="hw-form-control hw-form-input"
-                        (touchSpinChange)="
-                          touchSpinChange($event, i, 'RtspPort')
-                        "
-                        appTouchSpin
-                        type="number"
-                        formControlName="RtspPort"
-                      />
-                    </div>
-                  </div>
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> RTMP端口号 </span>
-                      <span class="hw-form-icon"></span>
-                    </div>
-                    <div class="content">
-                      <input
-                        class="hw-form-control hw-form-input"
-                        (touchSpinChange)="
-                          touchSpinChange($event, i, 'RtmpPort')
-                        "
-                        appTouchSpin
-                        type="number"
-                        formControlName="RtmpPort"
-                      />
-                    </div>
-                  </div>
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> HTTP端口号 </span>
-                      <span class="hw-form-icon"></span>
-                    </div>
-                    <div class="content">
-                      <input
-                        class="hw-form-control hw-form-input"
-                        (touchSpinChange)="
-                          touchSpinChange($event, i, 'HttpPort')
-                        "
-                        appTouchSpin
-                        type="number"
-                        formControlName="HttpPort"
-                      />
-                    </div>
-                  </div>
-                  <div class="hw-form-group">
-                    <div class="title">
-                      <span class="hw-form-label"> WebSocket端口号 </span>
-                      <span class="hw-form-icon"></span>
-                    </div>
-                    <div class="content">
-                      <input
-                        class="hw-form-control hw-form-input"
-                        (touchSpinChange)="touchSpinChange($event, i, 'WsPort')"
-                        appTouchSpin
-                        type="number"
-                        formControlName="WsPort"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-      <div class="hw-middle-btn-group">
-        <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
-          <i class="howell-icon-Check"></i>
-        </button>
-
-        <button class="hw-gray-m-btn" type="button" (click)="onReset()">
-          <i class="howell-icon-Close"></i>
-        </button>
+<div class="sr-server-operate">
+  <div class="hw-simple-title" style="margin-bottom: 10px">{{ title }}</div>
+  <form class="hw-form" [formGroup]="myForm">
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 名称 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <input
+          type="text"
+          class="hw-form-control hw-form-input"
+          formControlName="Name"
+        />
       </div>
     </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 协议类型 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <select
+          class="hw-form-control hw-form-select"
+          formControlName="ProtocolType"
+        >
+          <option value="Howell">Howell</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 用户名 </span>
+      </div>
+      <div class="content">
+        <input
+          type="text"
+          class="hw-form-control hw-form-input"
+          formControlName="Username"
+        />
+      </div>
+    </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 密码 </span>
+      </div>
+      <div class="content">
+        <input
+          type="text"
+          class="hw-form-control hw-form-input"
+          formControlName="Password"
+        />
+      </div>
+    </div>
+    <div class="hw-form-group" style="flex-basis: 100%">
+      <div class="title">
+        <span class="hw-form-label"> 地址 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <div class="addr-btns">
+          <div
+            class="addr-item"
+            [class.active]="i == currentIndex"
+            *ngFor="let add of Address.controls; let i = index"
+            (click)="currentIndex = i"
+          >
+            <span> 地址 {{ i + 1 }}</span>
+            <div
+              class="close-btn"
+              (click)="deleteAddress(i, $event)"
+              *ngIf="i != 0"
+            >
+              <i class="howell-icon-Close"></i>
+            </div>
+          </div>
+          <div
+            class="plus-btn"
+            (click)="addAddress()"
+            *ngIf="Address.length < maxLength"
+          >
+            <i class="howell-icon-pluscircle"></i>
+          </div>
+        </div>
+        <div formArrayName="Address" class="address-wrapper">
+          <div *ngFor="let add of Address.controls; let i = index">
+            <div [formGroupName]="i" class="hw-form" *ngIf="i == currentIndex">
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> IP地址 </span>
+                  <span class="hw-form-icon">*</span>
+                </div>
+                <div class="content">
+                  <input
+                    type="text"
+                    class="hw-form-control hw-form-input"
+                    formControlName="IPAddress"
+                  />
+                </div>
+              </div>
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> 端口号 </span>
+                  <span class="hw-form-icon">*</span>
+                </div>
+                <div class="content">
+                  <input
+                    class="hw-form-control hw-form-input"
+                    (touchSpinChange)="touchSpinChange($event, i, 'Port')"
+                    appTouchSpin
+                    type="number"
+                    formControlName="Port"
+                  />
+                </div>
+              </div>
+
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> 互联网IP </span>
+                  <span class="hw-form-icon">*</span>
+                </div>
+                <div class="content">
+                  <select
+                    class="hw-form-control hw-form-select"
+                    formControlName="IsInternet"
+                  >
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> 直连IP地址 </span>
+                  <span class="hw-form-icon">*</span>
+                </div>
+                <div class="content">
+                  <select
+                    class="hw-form-control hw-form-select"
+                    formControlName="IsDefault"
+                  >
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                  </select>
+                </div>
+              </div>
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> RTSP端口号 </span>
+                  <span class="hw-form-icon"></span>
+                </div>
+                <div class="content">
+                  <input
+                    class="hw-form-control hw-form-input"
+                    (touchSpinChange)="touchSpinChange($event, i, 'RtspPort')"
+                    appTouchSpin
+                    type="number"
+                    formControlName="RtspPort"
+                  />
+                </div>
+              </div>
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> RTMP端口号 </span>
+                  <span class="hw-form-icon"></span>
+                </div>
+                <div class="content">
+                  <input
+                    class="hw-form-control hw-form-input"
+                    (touchSpinChange)="touchSpinChange($event, i, 'RtmpPort')"
+                    appTouchSpin
+                    type="number"
+                    formControlName="RtmpPort"
+                  />
+                </div>
+              </div>
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> HTTP端口号 </span>
+                  <span class="hw-form-icon"></span>
+                </div>
+                <div class="content">
+                  <input
+                    class="hw-form-control hw-form-input"
+                    (touchSpinChange)="touchSpinChange($event, i, 'HttpPort')"
+                    appTouchSpin
+                    type="number"
+                    formControlName="HttpPort"
+                  />
+                </div>
+              </div>
+              <div class="hw-form-group">
+                <div class="title">
+                  <span class="hw-form-label"> WebSocket端口号 </span>
+                  <span class="hw-form-icon"></span>
+                </div>
+                <div class="content">
+                  <input
+                    class="hw-form-control hw-form-input"
+                    (touchSpinChange)="touchSpinChange($event, i, 'WsPort')"
+                    appTouchSpin
+                    type="number"
+                    formControlName="WsPort"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="hw-middle-btn-group">
+    <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+      <i class="howell-icon-Check"></i>
+    </button>
+
+    <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+      <i class="howell-icon-Close"></i>
+    </button>
   </div>
 </div>

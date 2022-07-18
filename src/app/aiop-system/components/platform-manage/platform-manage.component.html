@@ -1,10 +1,12 @@
 <div class="platform-manage">
   <ng-container *ngIf="showOperate">
-    <howell-platform-operate
-      [state]="state"
-      [platformId]="platformId"
-      (closeEvent)="closeForm($event)"
-    ></howell-platform-operate>
+    <howell-pop-up-window>
+      <howell-platform-operate
+        [state]="state"
+        [platformId]="platformId"
+        (closeEvent)="closeForm($event)"
+      ></howell-platform-operate>
+    </howell-pop-up-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">

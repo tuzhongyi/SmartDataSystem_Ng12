@@ -1,11 +1,13 @@
 <div class="garbage-station-manage hw-horizontal-layout">
   <ng-container *ngIf="showOperate">
-    <howell-garbage-station-operate
-      [state]="state"
-      [stationId]="stationId"
-      [divisionId]="divisionId"
-      (closeEvent)="closeForm($event)"
-    ></howell-garbage-station-operate>
+    <howell-pop-up-window>
+      <howell-garbage-station-operate
+        [state]="state"
+        [stationId]="stationId"
+        [divisionId]="divisionId"
+        (closeEvent)="closeForm($event)"
+      ></howell-garbage-station-operate>
+    </howell-pop-up-window>
   </ng-container>
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog

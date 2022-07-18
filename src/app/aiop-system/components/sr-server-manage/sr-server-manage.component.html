@@ -1,10 +1,12 @@
 <div class="srserver-manage">
   <ng-container *ngIf="showDialog">
-    <howell-sr-server-operate
-      [state]="state"
-      [serverId]="serverId"
-      (closeEvent)="closeForm($event)"
-    ></howell-sr-server-operate>
+    <howell-pop-up-window>
+      <howell-sr-server-operate
+        [state]="state"
+        [serverId]="serverId"
+        (closeEvent)="closeForm($event)"
+      ></howell-sr-server-operate>
+    </howell-pop-up-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">

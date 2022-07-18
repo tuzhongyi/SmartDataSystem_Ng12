@@ -33,9 +33,8 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   showStation = false;
   holdStatus = false;
 
-  selectStrategy = SelectStrategy.Multiple;
-  defaultIds = ["310105001001",
-    "310109011002"]
+  selectStrategy = SelectStrategy.Single;
+  defaultIds = []
 
 
   // 表单
