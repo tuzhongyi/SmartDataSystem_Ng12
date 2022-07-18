@@ -12,6 +12,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { EncodeDevice } from 'src/app/network/model/encode-device';
 import { Page } from 'src/app/network/model/page_list.model';
+import { Resource } from 'src/app/network/model/resource.model';
 import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-model/ai-camera-manage.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
@@ -90,7 +91,9 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   // 绑定标签
   showBind = false;
 
-
+  // 移动摄像机
+  showMove = false;
+  resourceIds: string[] = []
 
   get enableAddBtn() {
     return this._currentNode && this._currentNode.Expandable == false;
@@ -98,10 +101,12 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   get enableDelBtn() {
     return !!this.selectedRows.length
   }
-
-
   get enableBindBtn() {
     return !!this.selectedRows.length
+  }
+  get enableMoveBtn() {
+    return !!this.selectedRows.length
+
   }
 
 
@@ -222,6 +227,10 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
     this.showBind = true;
     this.cameraId = this.selectedRows[0]?.Id || '';
   }
+  moveBtnClick() {
+    this.showMove = true;
+    this.resourceIds = this.selectedRows.map(row => row.Id)
+  }
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
@@ -239,22 +248,31 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
       this._init();
     }
   }
+  closeMove(update: boolean) {
+    this.showMove = false
+    this.resourceIds = [];
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
+  }
 
   private async _updateTable() {
     if (this._currentNode) {
       this.regionId = this._currentNode.Id;
-      if (this._currentNode.Expandable == false) {
-        this._init();
-      } else {
-        this.page = {
-          PageIndex: this.pageIndex,
-          PageSize: this._pageSize,
-          RecordCount: 0,
-          TotalRecordCount: 0,
-          PageCount: 0
-        }
-        this.dataSubject.next([])
-      }
+      this._init();
+      // if (this._currentNode.Expandable == false) {
+      //   this._init();
+      // } else {
+      //   this.page = {
+      //     PageIndex: this.pageIndex,
+      //     PageSize: this._pageSize,
+      //     RecordCount: 0,
+      //     TotalRecordCount: 0,
+      //     PageCount: 0
+      //   }
+      //   this.dataSubject.next([])
+      // }
 
     } else {
       this.page = {

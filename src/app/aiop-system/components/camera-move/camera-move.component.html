@@ -1,0 +1,25 @@
+<div class="camera-move">
+  <div class="hw-simple-title" style="margin-bottom: 10px">移动摄像机</div>
+  <div class="move-content">
+    <div class="title">
+      <span>摄像机({{ cameras.length }}): &nbsp;</span>
+      <span *ngFor="let camera of cameras; let i = index">
+        【{{ camera.Name }}】
+      </span>
+    </div>
+    <div class="content">
+      <howell-region-tree
+        (selectTreeNode)="selectRegionTreeNode($event)"
+      ></howell-region-tree>
+    </div>
+  </div>
+  <div class="hw-middle-btn-group">
+    <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+      <i class="howell-icon-Check"></i>
+    </button>
+
+    <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>

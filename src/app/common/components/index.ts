@@ -92,5 +92,5 @@ export const CUSTOM_COMPONENTS = [
   LabelListComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
-  PopUpWindowComponent
+  PopUpWindowComponent,
 ];

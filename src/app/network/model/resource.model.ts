@@ -32,7 +32,7 @@ export class Resource {
   /**所属地图元素ID(可选) */
   MapElementId?: string;
   /**所属区域ID */
-  RegionId?: string;
+  RegionId?: string | null;
   /**平台接入信息(可选) */
   PlatformAssociation?: PlatformAssociation;
 }

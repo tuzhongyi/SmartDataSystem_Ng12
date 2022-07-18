@@ -36,6 +36,7 @@ import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.com
 import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-device-operate.component';
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
 import { CameraOperateComponent } from './camera-operate/camera-operate.component';
+import { CameraMoveComponent } from './camera-move/camera-move.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -63,7 +64,8 @@ import { CameraOperateComponent } from './camera-operate/camera-operate.componen
     AIModelOperateComponent,
     EncodeDeviceOperateComponent,
     GarbageStationOperateComponent,
-    CameraOperateComponent
+    CameraOperateComponent,
+    CameraMoveComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],

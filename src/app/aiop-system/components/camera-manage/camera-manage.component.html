@@ -26,6 +26,15 @@
       </howell-label-manage-form>
     </howell-pop-up-window>
   </ng-container>
+  <ng-container *ngIf="showMove">
+    <howell-pop-up-window>
+      <howell-camera-move
+        [resourceIds]="resourceIds"
+        (closeEvent)="closeMove($event)"
+      >
+      </howell-camera-move>
+    </howell-pop-up-window>
+  </ng-container>
 
   <div class="horizontal-left">
     <div class="hw-simple-title" style="margin-bottom: 10px">安保区域</div>
@@ -63,14 +72,14 @@
               <i class="mdi mdi-tag"></i>
               绑定标签
             </button>
-            <!-- <button
+            <button
               class="hw-blue-btn"
-              [disabled]="!enableBindBtn"
-              (click)="bindBtnClick()"
+              [disabled]="!enableMoveBtn"
+              (click)="moveBtnClick()"
             >
-              <i class="hw-icon-move2"></i>
+              <i class="howell-icon-move2"></i>
               移动至
-            </button> -->
+            </button>
           </div>
         </div>
         <div class="right-wrapper">

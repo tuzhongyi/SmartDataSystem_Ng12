@@ -1,0 +1,29 @@
+:host {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.camera-move {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  flex-grow: 1;
+
+  .move-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow: hidden;
+    .title {
+      flex-shrink: 0;
+      margin-bottom: 10px;
+    }
+    .content {
+      flex-grow: 1;
+      overflow: auto;
+    }
+  }
+}
