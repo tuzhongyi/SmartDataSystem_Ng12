@@ -1,10 +1,30 @@
 <div class="camera-manage hw-horizontal-layout">
   <ng-container *ngIf="showOperate">
-    <howell-camera-operate
-      [state]="state"
-      [cameraId]="cameraId"
-      (closeEvent)="closeForm($event)"
-    ></howell-camera-operate>
+    <howell-pop-up-window>
+      <howell-camera-operate
+        [state]="state"
+        [cameraId]="cameraId"
+        (closeEvent)="closeForm($event)"
+      ></howell-camera-operate>
+    </howell-pop-up-window>
+  </ng-container>
+
+  <ng-container *ngIf="showConfirm">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="dialogModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+
+  <ng-container *ngIf="showBind">
+    <howell-pop-up-window>
+      <howell-label-manage-form
+        [resourceId]="cameraId"
+        (closeEvent)="closeBind($event)"
+      >
+      </howell-label-manage-form>
+    </howell-pop-up-window>
   </ng-container>
 
   <div class="horizontal-left">

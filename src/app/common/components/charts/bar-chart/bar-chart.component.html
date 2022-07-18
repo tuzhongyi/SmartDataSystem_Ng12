@@ -1,5 +1,13 @@
 <div class="line-chart" (resized)="onResized($event)">
-    <div class="chart-container" style="height:100%" id="chartContainer" #chartContainer echarts [options]="options" [theme]="theme"
-        [loading]="true" [merge]="merge">
-    </div>
+  <div
+    class="chart-container"
+    style="height: 100%"
+    id="chartContainer"
+    #chartContainer
+    echarts
+    [options]="options"
+    [theme]="theme"
+    [loading]="true"
+    [merge]="merge"
+  ></div>
 </div>

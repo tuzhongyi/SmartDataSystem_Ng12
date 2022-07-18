@@ -6,14 +6,13 @@ import { PagedList } from "src/app/network/model/page_list.model";
 import { GetCamerasParams } from "src/app/network/request/ai-camera/ai-camera.params";
 import { AICameraRequestService } from "src/app/network/request/ai-camera/ai-camera.service";
 import { EncodeDeviceRequestService } from "src/app/network/request/encode-device/encode-device.service";
-import { GetEncodeDevicesParams } from "src/app/network/request/encode-device/encode-devices-params";
 import { AICameraManageModel, AICameraManageSearchInfo } from "src/app/view-model/ai-camera-manage.model";
 
 @Injectable()
 export class CameraManageBusiness {
 
 
-  constructor(private _aiCameraRequest: AICameraRequestService, private _encodeDeviceRequest: EncodeDeviceRequestService, private _converter: AICameraManageConverter) { }
+  constructor(private _AICameraRequest: AICameraRequestService, private _encodeDeviceRequest: EncodeDeviceRequestService, private _converter: AICameraManageConverter) { }
 
   async init(regionId: string, searchInfo: AICameraManageSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
 
@@ -55,12 +54,15 @@ export class CameraManageBusiness {
     return res;
 
   }
-
-  private _listAiopCameras(params: GetCamerasParams) {
-    return this._aiCameraRequest.list(params)
-  }
   listEncodeDevice() {
     return this._encodeDeviceRequest.list()
   }
+  deleteAICamera(id: string) {
+    return this._AICameraRequest.delete(id)
+  }
+  private _listAiopCameras(params: GetCamerasParams) {
+    return this._AICameraRequest.list(params)
+  }
+
 
 }

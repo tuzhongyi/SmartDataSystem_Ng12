@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
 import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
+import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
@@ -85,6 +87,11 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   encodeDevices: EncodeDevice[] = []
 
 
+  // 绑定标签
+  showBind = false;
+
+
+
   get enableAddBtn() {
     return this._currentNode && this._currentNode.Expandable == false;
   }
@@ -102,7 +109,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
   @ViewChild(RegionTreeComponent) regionTree?: RegionTreeComponent;
 
-  constructor(private _business: CameraManageBusiness) {
+  constructor(private _business: CameraManageBusiness, private _toastrService: ToastrService) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -179,6 +186,15 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   }
 
 
+  async dialogMsgEvent(status: ConfirmDialogEnum) {
+    this.showConfirm = false;
+    if (status == ConfirmDialogEnum.confirm) {
+      this._deleteRows(this.willBeDeleted)
+    } else if (status == ConfirmDialogEnum.cancel) {
+
+    }
+  }
+
   selectRegionTreeNode(nodes: CommonFlatNode[]) {
     this._currentNode = nodes[0];
     console.log('外部结果', nodes)
@@ -193,14 +209,18 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   }
   deleteBtnClick() {
-
+    this.willBeDeleted = [...this.selectedRows]
+    this.showConfirm = true;
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
   addBtnClick() {
-
+    this.state = FormState.add;
+    this.showOperate = true;
   }
 
   bindBtnClick() {
-
+    this.showBind = true;
+    this.cameraId = this.selectedRows[0]?.Id || '';
   }
   closeForm(update: boolean) {
     this.showOperate = false
@@ -211,7 +231,14 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
       this._init();
     }
   }
-
+  closeBind(update: boolean) {
+    this.showBind = false
+    this.cameraId = '';
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
+  }
 
   private async _updateTable() {
     if (this._currentNode) {
@@ -240,6 +267,18 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
       this.regionId = '';
       this.dataSubject.next([])
     }
+  }
+
+  private async _deleteRows(rows: AICameraManageModel[]) {
+    this.table?.deleteRows(rows);
+    for (let i = 0; i < rows.length; i++) {
+      let id = rows[i].Id
+      let res = await this._business.deleteAICamera(id)
+      if (res) this._toastrService.success('删除成功');
+    }
+    this.pageIndex = 1;
+    this._init();
+
   }
 
   private _clickEditBtn(row: AICameraManageModel) {

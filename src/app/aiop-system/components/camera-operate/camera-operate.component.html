@@ -1,1 +1,113 @@
-<div class="camera-operate"></div>
+<div class="camera-operate">
+  <div class="hw-simple-title" style="margin-bottom: 10px">{{ title }}</div>
+  <form class="hw-form" [formGroup]="myForm">
+    <div class="hw-form-group" style="flex-basis: 100%">
+      <div class="title">
+        <span class="hw-form-label"> 名称 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <input
+          type="text"
+          class="hw-form-control hw-form-input"
+          formControlName="Name"
+        />
+      </div>
+    </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 类型 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <select formControlName="CameraType">
+          <option value="1">枪机</option>
+          <option value="2">球机</option>
+          <option value="3">半球</option>
+          <option value="4">一体机</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 编码设备 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <select formControlName="EncodeDeviceId">
+          <option value="" disabled>请选择</option>
+          <option *ngFor="let device of encodeDevices" [value]="device.Id">
+            {{ device.Name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hw-form-group" style="flex-basis: 100%">
+      <div class="title">
+        <span class="hw-form-label"> 通道号 </span>
+        <span class="hw-form-icon">*</span>
+      </div>
+      <div class="content">
+        <input
+          class="hw-form-control hw-form-input"
+          (touchSpinChange)="touchSpinChange($event)"
+          appTouchSpin
+          type="number"
+          formControlName="ChannelNo"
+        />
+      </div>
+    </div>
+
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> PTZ </span>
+        <span class="hw-form-icon"></span>
+      </div>
+      <div class="content">
+        <select formControlName="PTZControllable">
+          <option value="">请选择</option>
+          <option value="0">否</option>
+          <option value="1">是</option>
+        </select>
+      </div>
+    </div>
+    <div class="hw-form-group">
+      <div class="title">
+        <span class="hw-form-label"> 存储 </span>
+        <span class="hw-form-icon"></span>
+      </div>
+      <div class="content">
+        <select formControlName="Storable">
+          <option value="">请选择</option>
+          <option value="0">否</option>
+          <option value="1">是</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="hw-form-group" style="flex-basis: 100%">
+      <div class="title">
+        <span class="hw-form-label"> 标签 </span>
+        <span class="hw-form-icon"></span>
+      </div>
+      <div class="content">
+        <howell-label-operate
+          [resourceId]="cameraId"
+          (selectLabelEvent)="selectLabelEvent($event)"
+        ></howell-label-operate>
+      </div>
+    </div>
+  </form>
+  <div class="hw-middle-btn-group">
+    <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+      <i class="howell-icon-Check"></i>
+    </button>
+
+    <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>
