@@ -62,6 +62,10 @@ export class CameraMoveComponent implements OnInit {
 
   async onSubmit() {
     if (this._currentNode) {
+      if (this._currentNode.Expandable) {
+        this._toastrService.warning('请选择最底层节点')
+        return
+      }
       for (let i = 0; i < this.cameras.length; i++) {
         let camera = this.cameras[i];
         if (this._currentNode.Id == 'null')
@@ -72,9 +76,9 @@ export class CameraMoveComponent implements OnInit {
       }
 
       this._toastrService.success("操作成功")
-
+      this.closeEvent.emit(true)
     }
-    this.closeEvent.emit(true)
+
   }
   onReset() {
     this.closeEvent.emit(false)

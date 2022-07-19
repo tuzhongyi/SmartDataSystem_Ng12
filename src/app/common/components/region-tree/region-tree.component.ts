@@ -26,9 +26,12 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
   private _searchGuards: string[] = ['区域'];
   private _excludeGuards: string[] = [];
 
-  holdStatus = true;
+  @Input() holdStatus = true;
 
   @Input() showSearchBar = true;
+
+  // 第一个节点被选中
+  @Input() selectOnFirst = true;
 
   // 默认选中列表
   private _defaultIds: string[] = []
@@ -60,7 +63,7 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
     this._nestedNodeMap = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
-    if (res.length > 0)
+    if (res.length > 0 && this.selectOnFirst)
       this.defaultIds = [res[0].Id]
     this.dataSubject.next(res)
   }
@@ -82,7 +85,7 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
     // console.log(res)
     if (res && res.length) {
       this._toastrService.success('操作成功');
-      if (res.length)
+      if (res.length && this.selectOnFirst)
         this.defaultIds = [res[0].Id]
       this.dataSubject.next(res);
       if (condition != '') {
