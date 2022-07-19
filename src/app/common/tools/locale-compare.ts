@@ -15,7 +15,7 @@
  * 
  */
 export class LocaleCompare {
-  static compare(a: string, b: string, isAsc: boolean = true) {
+  static compare(a: string, b: string, isAsc: boolean = false) {
     if (this._localeCompareSupportsLocales()) {
       let collator = new Intl.Collator('zh-CN', {
         caseFirst: 'upper',

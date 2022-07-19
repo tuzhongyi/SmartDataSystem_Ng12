@@ -3,7 +3,7 @@
     <howell-pop-up-window>
       <howell-camera-operate
         [state]="state"
-        [cameraId]="resourceId"
+        [cameraId]="operateId"
         (closeEvent)="closeForm($event)"
       ></howell-camera-operate>
     </howell-pop-up-window>
@@ -20,7 +20,7 @@
   <ng-container *ngIf="showBind">
     <howell-pop-up-window>
       <howell-label-manage-form
-        [resourceId]="resourceId"
+        [resourceId]="operateId"
         [resourceName]="resourceName"
         (closeEvent)="closeBind($event)"
       >
@@ -151,7 +151,6 @@
             <howell-label-list [selectedNodes]="selectedNodes">
               <howell-label-tree
                 [defaultIds]="defaultIds"
-                [selectStrategy]="selectStrategy"
                 (selectTreeNode)="selectLabelTreeNode($event)"
               ></howell-label-tree>
             </howell-label-list>
@@ -164,7 +163,6 @@
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
-        [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
         (selectTableCell)="selectTableCell($event)"

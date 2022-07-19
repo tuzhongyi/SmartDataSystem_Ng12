@@ -45,7 +45,7 @@ export class CommonTableComponent implements OnInit {
 
   // 单选表 || 多选表
   @Input('selectStrategy')
-  selectStrategy = SelectStrategy.Single;
+  selectStrategy = SelectStrategy.Multiple;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
     TableRowModel[]

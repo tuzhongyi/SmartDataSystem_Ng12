@@ -18,7 +18,9 @@ import { PlatformOperateBusiness } from './platform-operate.business';
 })
 export class PlatformOperateComponent implements OnInit {
 
-  private _platform?: Platform;
+  private _operateModel?: Platform;
+
+  FormState = FormState;
 
   myForm = new FormGroup({
     Name: new FormControl('', Validators.required),
@@ -31,7 +33,6 @@ export class PlatformOperateComponent implements OnInit {
     EventRecvIPAddress: new FormControl("", Validators.pattern(ValidIP)),
     EventCodes: new FormControl([]),
   });
-  FormState = FormState;
   protocols: Array<Protocol> = [];
 
   get Name() {
@@ -67,7 +68,7 @@ export class PlatformOperateComponent implements OnInit {
     if (this.state == FormState.add) {
       return '添加平台';
     } else if (this.state == FormState.edit) {
-      return '编辑' + this._platform?.Name;
+      return '编辑' + this._operateModel?.Name;
     }
     return ''
   }
@@ -76,7 +77,7 @@ export class PlatformOperateComponent implements OnInit {
   state: FormState = FormState.none;
 
   @Input()
-  platformId: string = '';
+  operateId: string = '';
 
   @Output()
   closeEvent = new EventEmitter<boolean>()
@@ -90,9 +91,8 @@ export class PlatformOperateComponent implements OnInit {
   }
   async init() {
     this.protocols = await this._business.getProtocols()
-    console.log('dss', this.protocols)
     if (this.state == FormState.edit) {
-      this._platform = await this._business.getPlatform(this.platformId);
+      this._operateModel = await this._business.getPlatform(this.operateId);
     }
     this._updateForm();
   }
@@ -121,11 +121,11 @@ export class PlatformOperateComponent implements OnInit {
           this.closeEvent.emit(true)
         }
       } else if (this.state == FormState.edit) {
-        model.Id = this._platform?.Id ?? "";
-        model.State = this._platform?.State ?? 0;;
-        model.CreateTime = this._platform!.CreateTime ?? new Date().toISOString();
+        model.Id = this._operateModel?.Id ?? "";
+        model.State = this._operateModel?.State ?? 0;;
+        model.CreateTime = this._operateModel!.CreateTime ?? new Date().toISOString();
 
-        console.log('_platform', this._platform)
+        console.log('_platform', this._operateModel)
         let res = await this._business.setPlatform(model);
         if (res) {
           console.log('res', res)
@@ -156,17 +156,17 @@ export class PlatformOperateComponent implements OnInit {
       }
 
     } else if (this.state == FormState.edit) {
-      if (this._platform) {
-        let url = new URL(this._platform.Url);
+      if (this._operateModel) {
+        let url = new URL(this._operateModel.Url);
         this.myForm.patchValue({
-          Name: this._platform.Name,
-          ProtocolType: this._platform.ProtocolType,
-          Username: this._platform.Username,
-          Password: this._platform.Password,
+          Name: this._operateModel.Name,
+          ProtocolType: this._operateModel.ProtocolType,
+          Username: this._operateModel.Username,
+          Password: this._operateModel.Password,
           Hostname: url.hostname,
           Port: url.port,
-          EventRecvPort: this._platform.EventRecvPort?.toString(),
-          EventRecvIPAddress: this._platform.EventRecvIPAddress,
+          EventRecvPort: this._operateModel.EventRecvPort?.toString(),
+          EventRecvIPAddress: this._operateModel.EventRecvIPAddress,
           EventCodes: []
         })
       }

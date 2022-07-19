@@ -21,11 +21,9 @@ export class AIModelManageBusiness {
 
     let tmp = await this._list(params);
 
-    // console.log(tmp)
-
     let data = this._converter.iterateToModel(tmp.Data);
     data = data.sort((a, b) => {
-      return LocaleCompare.compare(a.ModelName ?? "", b.ModelName ?? "")
+      return LocaleCompare.compare(a.UpdateTime ?? "", b.UpdateTime ?? "")
     })
 
     let res: PagedList<AIModelManageModel> = {

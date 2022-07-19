@@ -3,7 +3,7 @@
     <howell-pop-up-window>
       <howell-ai-model-operate
         [state]="state"
-        [aiModelId]="aiModelId"
+        [operateId]="operateId"
         (closeEvent)="closeForm($event)"
       ></howell-ai-model-operate>
     </howell-pop-up-window>
@@ -50,7 +50,6 @@
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
         [displayedColumns]="displayedColumns"
-        [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
       ></common-table>

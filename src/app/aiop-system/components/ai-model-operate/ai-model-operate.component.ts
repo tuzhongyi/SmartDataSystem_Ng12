@@ -16,7 +16,6 @@ import {
   CameraAIModel,
   CameraAIModelDTO,
   CameraAIModelDTOLabel,
-  EnumValue,
 } from 'src/app/network/model/camera-ai.model';
 import { AIModelOperateBusiness } from './ai-model-operate.business';
 import Icons from 'src/assets/json/ai-icon.json';
@@ -33,9 +32,9 @@ import { encode, decode, Base64 } from 'js-base64';
 })
 export class AIModelOperateComponent
   implements OnInit, AfterViewInit, OnDestroy {
-  private _cameraAIModel?: CameraAIModel;
+  private _operateModel?: CameraAIModel;
   private _parsedAIModel?: CameraAIModel;
-  private _aiModelDTo?: CameraAIModelDTO;
+  private _AIModelDTo?: CameraAIModelDTO;
 
   FormState = FormState;
   myForm = new FormGroup({
@@ -65,7 +64,7 @@ export class AIModelOperateComponent
     if (this.state == FormState.add) {
       return '添加AI模型';
     } else if (this.state == FormState.edit) {
-      return '编辑' + this._cameraAIModel?.ModelName;
+      return '编辑 ' + this._operateModel?.ModelName;
     }
     return '';
   }
@@ -82,13 +81,12 @@ export class AIModelOperateComponent
   state: FormState = FormState.none;
 
   @Input()
-  aiModelId: string = '';
+  operateId: string = '';
 
   @Output()
   closeEvent = new EventEmitter<boolean>();
 
   @ViewChild('fileBtn') fileBtn?: ElementRef<HTMLInputElement>;
-
   @ViewChild('mask') mask!: ElementRef<HTMLDivElement>;
 
   constructor(
@@ -100,18 +98,17 @@ export class AIModelOperateComponent
 
   async ngOnInit() {
     if (this.state == FormState.edit) {
-      this._cameraAIModel = await this._business.getAIModel(this.aiModelId);
-      console.log('编辑', this._cameraAIModel);
-      this._aiModelDTo = this._cameraAIModel.ModelDTO;
+      this._operateModel = await this._business.getAIModel(this.operateId);
+      console.log('编辑', this._operateModel);
+      // this._AIModelDTo = this._operateModel.ModelDTO;
 
       // 初始化AIModel树
       this.modelLabelsSubject.next(
-        this._aiModelDTo ? this._aiModelDTo.Labels : []
+        this._operateModel.ModelDTO ? this._operateModel.ModelDTO.Labels : []
       );
     }
     this.modelLabelsSubject.subscribe((labels) => {
-      // console.log('回调', labels);
-      // this._aiModelLabels = data;
+      console.log('模型数据更新了');
     });
     this._updateForm();
   }
@@ -147,22 +144,20 @@ export class AIModelOperateComponent
       Version: '',
       TransformType: ''
     });
-    this._aiModelDTo = void 0;
-    this._parsedAIModel = void 0;
-    this.modelLabelsSubject.next([]);
 
-
-    if (filePath == '') {
-      // 编辑状态，取消后，返回原始状态
-      if (this.state == FormState.edit) {
-        this._aiModelDTo = this._cameraAIModel?.ModelDTO;
+    if (this.state == FormState.edit) {
+      if (filePath == '') {
         this.modelLabelsSubject.next(
-          this._aiModelDTo ? this._aiModelDTo.Labels : []
+          this._operateModel?.ModelDTO ? this._operateModel.ModelDTO.Labels : []
         );
         this.myForm.patchValue({
-          Version: this._cameraAIModel?.Version,
-          TransformType: this._cameraAIModel?.TransformType
+          Version: this._operateModel?.Version,
+          TransformType: this._operateModel?.TransformType
         })
+      } else {
+
+        // this.modelLabelsSubject.next([]);
+
       }
     }
 
@@ -173,7 +168,7 @@ export class AIModelOperateComponent
     if (jsonData) {
       let res = (await this._business.parseAIModel(jsonData)) as CameraAIModel;
       this._parsedAIModel = res;
-      this._aiModelDTo = res.ModelDTO;
+      // this._AIModelDTo = res.ModelDTO;
       this.modelLabelsSubject.next(res.ModelDTO ? res.ModelDTO.Labels : []);
       console.log('parsed', res);
 
@@ -226,23 +221,26 @@ export class AIModelOperateComponent
           this.closeEvent.emit(true);
         }
       } else if (this.state == FormState.edit) {
-        if (this._cameraAIModel) {
-          // 解析后的对象Id是'',要用 _cameraAIModel 提交
-          this._cameraAIModel.ModelName = this.myForm.value.ModelName ?? '';
-          this._cameraAIModel.ModelType = this.myForm.value.ModelType ?? '';
-          this._cameraAIModel.Label = +(this.myForm.value.Label ?? '');
-          this._cameraAIModel.UpdateTime = new Date().toISOString();
+        if (this._operateModel) {
+          // 解析后的对象Id是'',要用 _operateModel 提交
+          this._operateModel.ModelName = this.myForm.value.ModelName ?? '';
+          this._operateModel.ModelType = this.myForm.value.ModelType ?? '';
+          this._operateModel.Label = +(this.myForm.value.Label ?? '');
+          this._operateModel.ModelJSON = this.myForm.value.ModelJson ?? '';
+          this._operateModel.UpdateTime = new Date().toISOString();
+
+          // 如果选择了新模型文件,则清空 ModelDTO
           if (this.myForm.value.FilePath) {
-            this._cameraAIModel.ModelDTO = void 0;
+            this._operateModel.ModelDTO = void 0;
           } else {
-            this._cameraAIModel.ModelJSON = '';
+            this._operateModel.ModelJSON = '';
           }
           if (this._parsedAIModel) {
-            this._cameraAIModel.ModelJSON = '';
-            this._cameraAIModel.ModelDTO = this._parsedAIModel.ModelDTO;
+            this._operateModel.ModelJSON = '';
+            this._operateModel.ModelDTO = this._parsedAIModel.ModelDTO;
           }
 
-          let res = await this._business.setAIModel(this._cameraAIModel);
+          let res = await this._business.updateAIModel(this._operateModel);
           if (res) {
             this._toastrService.success('编辑成功');
             this.closeEvent.emit(true);
@@ -283,16 +281,16 @@ export class AIModelOperateComponent
   private _updateForm() {
     if (this.state == FormState.add) {
     } else if (this.state == FormState.edit) {
-      if (this._cameraAIModel) {
+      if (this._operateModel) {
         this.myForm.patchValue({
-          ModelJson: this._cameraAIModel.ModelJSON,
-          ModelName: this._cameraAIModel.ModelName,
-          ModelType: this._cameraAIModel.ModelType,
-          Version: this._cameraAIModel.Version,
-          TransformType: this._cameraAIModel.TransformType,
-          Label: this._cameraAIModel.Label.toString(),
+          ModelJson: this._operateModel.ModelJSON,
+          ModelName: this._operateModel.ModelName,
+          ModelType: this._operateModel.ModelType,
+          Version: this._operateModel.Version,
+          TransformType: this._operateModel.TransformType,
+          Label: this._operateModel.Label.toString(),
         });
-        this.selectedIconKey = this._cameraAIModel.Label.toString();
+        this.selectedIconKey = this._operateModel.Label.toString();
       }
     }
   }

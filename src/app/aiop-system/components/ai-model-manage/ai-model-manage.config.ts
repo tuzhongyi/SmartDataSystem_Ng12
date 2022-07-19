@@ -8,9 +8,9 @@ export const AIModelManageConf: TableColumnModel[] = [
     cell: (element: AIModelManageModel) => `<img src=${element.LabelIcon}/>`,
   },
   {
-    columnDef: 'ModelName',
+    columnDef: 'Name',
     header: '模型名称',
-    cell: (element: AIModelManageModel) => `${element.ModelName}`,
+    cell: (element: AIModelManageModel) => `${element.Name}`,
   },
   {
     columnDef: 'ModelType',

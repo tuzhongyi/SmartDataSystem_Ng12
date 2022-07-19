@@ -1,9 +1,7 @@
-import { CommonModel } from "../view-model/common-model";
 
 
 export interface CommonModelSource {
   Id: string;
-  Name: string;
   [key: string]: any;
 }
 

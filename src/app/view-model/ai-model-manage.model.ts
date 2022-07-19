@@ -1,9 +1,11 @@
+import { CommonModel } from "./common-model";
+
 // AI模型列表
-export class AIModelManageModel {
+export class AIModelManageModel implements CommonModel {
 
   Id!: string;
+  Name!: string;
   LabelIcon!: string;
-  ModelName?: string;
   ModelType?: string;
   TransformType?: string;
   Version?: string;

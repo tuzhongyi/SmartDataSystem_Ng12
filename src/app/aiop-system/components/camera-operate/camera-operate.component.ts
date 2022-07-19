@@ -38,7 +38,6 @@ export class CameraOperateComponent implements OnInit {
 
 
 
-
   get title() {
     if (this.state == FormState.add) {
       return '添加平台';

@@ -27,16 +27,14 @@ import { AIModelManageConf } from './ai-model-manage.config';
   providers: [AIModelManageBusiness],
 })
 export class AIModelManageComponent implements OnInit {
-  private _pageSize = 3;
+  private _pageSize = 9;
   private _condition = '';
 
   // Table
   dataSubject = new BehaviorSubject<AIModelManageModel[]>([]);
-  selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...AIModelManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = [];
-
   selectedRows: AIModelManageModel[] = []; //table选中项
   willBeDeleted: AIModelManageModel[] = [];
 
@@ -45,7 +43,6 @@ export class AIModelManageComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
-
   // 对话框
   showOperate = false;
   showConfirm = false;
@@ -53,7 +50,7 @@ export class AIModelManageComponent implements OnInit {
 
   // 表单
   state = FormState.none;
-  aiModelId = '';
+  operateId = '';
 
 
   get enableDelBtn() {
@@ -101,7 +98,6 @@ export class AIModelManageComponent implements OnInit {
     this._init();
   }
 
-
   selectTableRow(rows: AIModelManageModel[]) {
     this.selectedRows = rows;
   }
@@ -131,8 +127,7 @@ export class AIModelManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    console.log('sdfsdf', this.aiModelId)
-    this.aiModelId = '';
+    this.operateId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -158,7 +153,6 @@ export class AIModelManageComponent implements OnInit {
   }
 
   private async _deleteRows(rows: AIModelManageModel[]) {
-
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
@@ -172,7 +166,7 @@ export class AIModelManageComponent implements OnInit {
   private _clickEditBtn(row: AIModelManageModel) {
     this.showOperate = true;
     this.state = FormState.edit;
-    this.aiModelId = row.Id;
+    this.operateId = row.Id;
   }
   private _clickDelBtn(row: AIModelManageModel) {
     this.willBeDeleted = [row];

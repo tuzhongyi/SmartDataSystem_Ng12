@@ -67,7 +67,7 @@ export class AIModelTreeComponent implements OnInit {
     AIModelNestNode<rawDataType>,
     AIModelFlatNode<rawDataType>
   >;
-  private _aiModelLabels: CameraAIModelDTOLabel[] = [];
+  private _AIModelLabels: CameraAIModelDTOLabel[] = [];
 
   treeControl: FlatTreeControl<AIModelFlatNode<rawDataType>>;
   dataSource: MatTreeFlatDataSource<
@@ -113,7 +113,7 @@ export class AIModelTreeComponent implements OnInit {
 
   async ngOnInit() {
     this.modelLabelsSubject.subscribe((data) => {
-      this._aiModelLabels = data;
+      this._AIModelLabels = data;
       let res = this._converter.recurseToNestTreeNode(data);
       this.dataChange.next(res);
     });
@@ -133,7 +133,7 @@ export class AIModelTreeComponent implements OnInit {
     } else if (node.rawData instanceof EnumValue) {
       node.rawData.ModelValue = +data;
     }
-    // 虽然修改的是对象，显式提示数据更新
-    this.modelLabelsSubject.next(this._aiModelLabels);
+    // 虽然修改的是对象，可以显式提示数据更新
+    this.modelLabelsSubject.next(this._AIModelLabels);
   }
 }

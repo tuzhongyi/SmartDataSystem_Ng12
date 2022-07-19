@@ -13,7 +13,7 @@ export class AIModelOperateBusiness {
   parseAIModel(base64JSONData: string) {
     return this._cameraAIModelRequest.parse(base64JSONData)
   }
-  setAIModel(model: CameraAIModel) {
+  updateAIModel(model: CameraAIModel) {
     return this._cameraAIModelRequest.update(model)
   }
   createAIModel(model: CameraAIModel) {

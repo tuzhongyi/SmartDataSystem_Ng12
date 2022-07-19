@@ -26,7 +26,7 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 export class PlatformManageComponent implements OnInit {
 
   /**private */
-  private _pageSize = 1;
+  private _pageSize = 9;
   private _condition = '';
 
 
@@ -37,7 +37,6 @@ export class PlatformManageComponent implements OnInit {
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
 
-
   selectedRows: PlatformManageModel[] = [];//table选中项
   willBeDeleted: PlatformManageModel[] = [];
 
@@ -46,7 +45,6 @@ export class PlatformManageComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
-
   // 对话框
   showOperate = false;
   showConfirm = false;
@@ -54,7 +52,7 @@ export class PlatformManageComponent implements OnInit {
 
   // 表单
   state = FormState.none;
-  platformId = '';
+  operateId = '';
 
 
   get enableDelBtn() {
@@ -139,8 +137,11 @@ export class PlatformManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    this.platformId = ''
-    if (update) this._init();
+    this.operateId = ''
+    if (update) {
+      this.pageIndex = 1;
+      this._init();
+    }
   }
   addBtnClick() {
     this.state = FormState.add;
@@ -162,33 +163,28 @@ export class PlatformManageComponent implements OnInit {
   }
 
   private async _deleteRows(rows: PlatformManageModel[]) {
+    this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
       await this._business.delete(id)
       this._toastrService.success('删除成功');
 
     }
-    if (this.table) {
-      this.table.deleteRows(rows);
-      this.pageIndex = 1;
-      this._init();
-    }
+    this.pageIndex = 1;
+    this._init();
   }
   private async _clickSyncBtn(row: PlatformManageModel, event: Event) {
-    console.log('sync')
     let res = await this._business.sync(row.Id)
     if (res) {
       this._toastrService.success('同步成功');
     }
   }
   private _clickEditBtn(row: PlatformManageModel, event: Event) {
-    console.log('edit')
     this.showOperate = true;
     this.state = FormState.edit;
-    this.platformId = row.Id;
+    this.operateId = row.Id;
   }
   private _clickDelBtn(row: PlatformManageModel, event: Event) {
-    console.log('delete')
     this.willBeDeleted = [row];
     this.showConfirm = true;
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`

@@ -1,9 +1,11 @@
-export class PlatformManageModel {
-  public Id!: string;
-  public Name?: string;
-  public Url!: string;
-  public ProtocolType!: string;
-  public State!: string;
-  public UpdateTime!: string;
+import { CommonModel } from "./common-model";
+
+export class PlatformManageModel implements CommonModel {
+  Id!: string;
+  Name!: string;
+  Url!: string;
+  ProtocolType!: string;
+  State!: string;
+  UpdateTime!: string;
   constructor() { }
 }

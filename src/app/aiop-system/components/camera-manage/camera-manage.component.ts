@@ -12,7 +12,6 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { EncodeDevice } from 'src/app/network/model/encode-device';
 import { Page } from 'src/app/network/model/page_list.model';
-import { Resource } from 'src/app/network/model/resource.model';
 import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-model/ai-camera-manage.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
@@ -31,7 +30,6 @@ import { CameraManageConf } from './camera-manage.config'
 })
 export class CameraManageComponent implements OnInit, AfterViewInit {
   private _pageSize = 3;
-  private _condition = '';
   private _currentNode?: CommonFlatNode<RegionTreeSource>;
 
 
@@ -39,33 +37,30 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   //Table
   dataSubject = new BehaviorSubject<AICameraManageModel[]>([]);
-  selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...CameraManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = [];
-
   selectedRows: AICameraManageModel[] = []; //table选中项
   willBeDeleted: AICameraManageModel[] = [];
-
 
   // Paginator
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
 
-  // 表单
-  state = FormState.none;
-  resourceId = '';
-  resourceName = '';
-  regionId = '';
-
-
-
 
   // 对话框
   showOperate = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
+
+
+  // 表单
+  state = FormState.none;
+  operateId = '';
+
+  resourceName = '';
+  regionId = '';
 
   //搜索
   showFilter = false;
@@ -88,7 +83,6 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   // 编码设备筛选器
   encodeDevices: EncodeDevice[] = []
-
 
   // 绑定标签
   showBind = false;
@@ -172,7 +166,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   selectTableCell(e: TableCellEvent<AICameraManageModel>) {
     console.log(e);
     if (e.column.columnDef == 'Labels') {
-      this.resourceId = e.row.Id;
+      this.operateId = e.row.Id;
       this.showBind = true;
       this.resourceName = e.row.Name
     }
@@ -235,7 +229,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   bindBtnClick() {
     this.showBind = true;
-    this.resourceId = this.selectedRows[0]?.Id || '';
+    this.operateId = this.selectedRows[0]?.Id || '';
     this.resourceName = this.selectedRows[0]?.Name || "";
   }
   moveBtnClick() {
@@ -245,7 +239,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    this.resourceId = '';
+    this.operateId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -253,7 +247,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   }
   closeBind(update: boolean) {
     this.showBind = false
-    this.resourceId = '';
+    this.operateId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -313,7 +307,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   private _clickEditBtn(row: AICameraManageModel) {
     this.showOperate = true;
     this.state = FormState.edit;
-    this.resourceId = row.Id;
+    this.operateId = row.Id;
   }
 
 }
