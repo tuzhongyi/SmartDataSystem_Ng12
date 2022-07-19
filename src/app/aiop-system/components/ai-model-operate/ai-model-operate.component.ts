@@ -34,7 +34,6 @@ export class AIModelOperateComponent
   implements OnInit, AfterViewInit, OnDestroy {
   private _operateModel?: CameraAIModel;
   private _parsedAIModel?: CameraAIModel;
-  private _AIModelDTo?: CameraAIModelDTO;
 
   FormState = FormState;
   myForm = new FormGroup({
@@ -100,7 +99,6 @@ export class AIModelOperateComponent
     if (this.state == FormState.edit) {
       this._operateModel = await this._business.getAIModel(this.operateId);
       console.log('编辑', this._operateModel);
-      // this._AIModelDTo = this._operateModel.ModelDTO;
 
       // 初始化AIModel树
       this.modelLabelsSubject.next(
@@ -146,6 +144,7 @@ export class AIModelOperateComponent
     });
 
     if (this.state == FormState.edit) {
+      this._parsedAIModel = void 0;
       if (filePath == '') {
         this.modelLabelsSubject.next(
           this._operateModel?.ModelDTO ? this._operateModel.ModelDTO.Labels : []
@@ -154,23 +153,19 @@ export class AIModelOperateComponent
           Version: this._operateModel?.Version,
           TransformType: this._operateModel?.TransformType
         })
-      } else {
-
-        // this.modelLabelsSubject.next([]);
-
       }
     }
 
   }
   // 应用模型
   async parseFile() {
-    let jsonData = this.myForm.value.ModelJson;
-    if (jsonData) {
+
+    if (this.myForm.value.FilePath) {
+      let jsonData = this.myForm.value.ModelJson!;
       let res = (await this._business.parseAIModel(jsonData)) as CameraAIModel;
       this._parsedAIModel = res;
-      // this._AIModelDTo = res.ModelDTO;
       this.modelLabelsSubject.next(res.ModelDTO ? res.ModelDTO.Labels : []);
-      console.log('parsed', res);
+      // console.log('parsed', res);
 
       this.myForm.patchValue({
         Version: res.Version,
@@ -235,6 +230,7 @@ export class AIModelOperateComponent
           } else {
             this._operateModel.ModelJSON = '';
           }
+          // 如果选择了新文件,且解析了Model,则使用解析后的Model
           if (this._parsedAIModel) {
             this._operateModel.ModelJSON = '';
             this._operateModel.ModelDTO = this._parsedAIModel.ModelDTO;

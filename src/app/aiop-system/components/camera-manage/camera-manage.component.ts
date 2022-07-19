@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
@@ -110,7 +110,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
   @ViewChild(RegionTreeComponent) regionTree?: RegionTreeComponent;
 
-  constructor(private _business: CameraManageBusiness, private _toastrService: ToastrService) {
+  constructor(private _business: CameraManageBusiness, private _toastrService: ToastrService, private changeDetector: ChangeDetectorRef) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -137,6 +137,9 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
       extra.IconClass = 'howell-icon-video'
       this.regionTree.addNode(extra)
     }
+  }
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
   }
   private async _init() {
     // console.log('searchInfo', this.searchInfo)

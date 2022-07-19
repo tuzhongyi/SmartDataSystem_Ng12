@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
@@ -52,17 +52,15 @@ export class RegionManageComponent implements OnInit {
   }
 
   get enableAddBtn() {
-    return !!this._currentNode
+    return !!this._currentNode;
   }
   get enableDelBtn() {
     return !!this._currentNode && this._currentNode.Level != 0
-
   }
 
   get enableEditBtn() {
     return !!this._currentNode
   }
-
 
   get Name() {
     return this.myForm.get('Name') as FormControl
@@ -72,27 +70,24 @@ export class RegionManageComponent implements OnInit {
   }
 
 
-
-  constructor(private _business: RegionManageBusiness, private _toastrService: ToastrService, private _converter: RegionTreeConverter,
+  constructor(private _business: RegionManageBusiness, private _toastrService: ToastrService, private _converter: RegionTreeConverter, private changeDetector: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-    this.init();
-  }
-  async init() {
 
+  }
+  ngAfterViewChecked() {
+    this.changeDetector.detectChanges();
   }
   addBtnClick() {
     if (this.state == FormState.add) return
     this.state = FormState.add;
     this._updateForm();
-    console.log('add')
   }
   editBtnClick() {
     if (this.state == FormState.edit) return
     this.state = FormState.edit;
     this._updateForm();
-    console.log('edit')
   }
   deleteBtnClick() {
     this.showDialog = true;
@@ -111,7 +106,7 @@ export class RegionManageComponent implements OnInit {
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode[]) {
     this._currentNode = nodes[0];
-    console.log('外部结果', nodes)
+    // console.log('外部结果', nodes)
     this.state = FormState.none;
     this._updateForm();
 
