@@ -24,7 +24,8 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
   private _encodeDevice?: EncodeDevice;
 
-  selectedLabels: ResourceLabel[] = []
+  selectedLabels: ResourceLabel[] = [];
+  resourceLabels: ResourceLabel[] = [];
 
   protocols: Array<Protocol> = [];
   FormState = FormState;
@@ -81,6 +82,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
     if (this.state == FormState.edit) {
       this._encodeDevice = await this._business.getEncodeDevice(this.encodeDeviceId);
       // console.log('编码器', this._encodeDevice)
+      this.resourceLabels = await this._business.getResourceLabels(this.encodeDeviceId)
     }
     this._updateForm();
   }
@@ -139,13 +141,16 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
           let res = await this._business.updateEncodeDevice(this._encodeDevice)
           if (res) {
-            for (let i = 0; i < this.selectedLabels.length; i++) {
-              let id = this.selectedLabels[i].Id;
+            let filtered = this.selectedLabels.filter(selected => {
+              return !this.resourceLabels.some(resource => resource.Id == selected.Id)
+            })
+            for (let i = 0; i < filtered.length; i++) {
+              let id = filtered[i].Id;
               await this._business.addResourceLabel(res.Id, id)
             }
+
             this._toastrService.success('编辑成功')
             this.closeEvent.emit(true)
-
           }
         }
       }

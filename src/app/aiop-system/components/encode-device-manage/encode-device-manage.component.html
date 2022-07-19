@@ -3,7 +3,7 @@
     <howell-pop-up-window>
       <howell-encode-device-operate
         [state]="state"
-        [encodeDeviceId]="encodeDeviceId"
+        [encodeDeviceId]="resourceId"
         (closeEvent)="closeForm($event)"
       ></howell-encode-device-operate>
     </howell-pop-up-window>
@@ -19,7 +19,8 @@
   <ng-container *ngIf="showBind">
     <howell-pop-up-window>
       <howell-label-manage-form
-        [resourceId]="encodeDeviceId"
+        [resourceName]="resourceName"
+        [resourceId]="resourceId"
         (closeEvent)="closeBind($event)"
       >
       </howell-label-manage-form>
@@ -136,6 +137,7 @@
         [selectStrategy]="selectStrategy"
         [tableOperates]="tableOperates"
         (selectTableRow)="selectTableRow($event)"
+        (selectTableCell)="selectTableCell($event)"
       ></common-table>
     </div>
     <div class="hw-table-footer">

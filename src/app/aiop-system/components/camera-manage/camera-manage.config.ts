@@ -27,6 +27,8 @@ export const CameraManageConf: TableColumnModel[] = [
     columnDef: 'Labels',
     header: '标签',
     cell: (element: AICameraManageModel) => `【${element.Labels.length}】`,
+    stopPropogate: true,
+    title: '点击以管理标签'
   }
 
 ];

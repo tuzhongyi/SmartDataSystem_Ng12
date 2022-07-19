@@ -33,7 +33,9 @@ export class CameraOperateComponent implements OnInit {
 
 
   encodeDevices: EncodeDevice[] = [];
-  selectedLabels: ResourceLabel[] = []
+  selectedLabels: ResourceLabel[] = [];
+  resourceLabels: ResourceLabel[] = [];
+
 
 
 
@@ -77,6 +79,7 @@ export class CameraOperateComponent implements OnInit {
     if (this.state == FormState.edit) {
       this._AICamera = await this._business.getAICamera(this.cameraId);
       console.log('摄像机', this._AICamera)
+      this.resourceLabels = await this._business.getResourceLabels(this.cameraId)
     }
     this._updateForm();
 
@@ -125,10 +128,14 @@ export class CameraOperateComponent implements OnInit {
           this._AICamera.UpdateTime = new Date().toISOString();;
           let res = await this._business.updateAICamera(this._AICamera);
           if (res) {
-            for (let i = 0; i < this.selectedLabels.length; i++) {
-              let id = this.selectedLabels[i].Id;
+            let filtered = this.selectedLabels.filter(selected => {
+              return !this.resourceLabels.some(resource => resource.Id == selected.Id)
+            })
+            for (let i = 0; i < filtered.length; i++) {
+              let id = filtered[i].Id;
               await this._business.addResourceLabel(res.Id, id)
             }
+
             this._toastrService.success('编辑成功')
             this.closeEvent.emit(true)
           }

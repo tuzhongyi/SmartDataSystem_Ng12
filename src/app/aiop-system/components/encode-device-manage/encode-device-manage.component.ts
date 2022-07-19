@@ -5,7 +5,7 @@ import { CommonTableComponent } from 'src/app/common/components/common-table/com
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { EncodeDeviceManageModel, EncodeDeviceManageSearchInfo } from 'src/app/view-model/encode-device-manage.model';
-import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { EncodeDeviceManageBusiness } from './encode-device-manage.business';
 import { EncodeDeviceManageConf } from './encode-device-manage.config'
 import { PageEvent } from '@angular/material/paginator';
@@ -78,7 +78,8 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   // 表单
   state = FormState.none;
-  encodeDeviceId = '';
+  resourceId = '';
+  resourceName = '';
 
   // 绑定标签
   showBind = false;
@@ -130,6 +131,14 @@ export class EncodeDeviceManageComponent implements OnInit {
     this.selectedRows = rows;
     console.log('选择', rows)
   }
+  selectTableCell(e: TableCellEvent<EncodeDeviceManageModel>) {
+    console.log(e);
+    if (e.column.columnDef == 'Labels') {
+      this.resourceId = e.row.Id;
+      this.showBind = true;
+      this.resourceName = e.row.Name
+    }
+  }
   tableSelect(type: TableSelectStateEnum) {
     if (this.table) {
       switch (type) {
@@ -174,7 +183,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    this.encodeDeviceId = '';
+    this.resourceId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -182,7 +191,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
   closeBind(update: boolean) {
     this.showBind = false
-    this.encodeDeviceId = '';
+    this.resourceId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -205,7 +214,8 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   bindBtnClick() {
     this.showBind = true;
-    this.encodeDeviceId = this.selectedRows[0]?.Id || '';
+    this.resourceId = this.selectedRows[0]?.Id || '';
+    this.resourceName = this.selectedRows[0]?.Name || "";
   }
 
   private async _deleteRows(rows: EncodeDeviceManageModel[]) {
@@ -223,7 +233,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   private _clickEditBtn(row: EncodeDeviceManageModel) {
     this.showOperate = true;
     this.state = FormState.edit;
-    this.encodeDeviceId = row.Id;
+    this.resourceId = row.Id;
   }
 
 }

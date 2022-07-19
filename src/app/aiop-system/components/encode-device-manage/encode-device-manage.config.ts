@@ -35,5 +35,7 @@ export const EncodeDeviceManageConf: TableColumnModel[] = [
     columnDef: 'Labels',
     header: '标签',
     cell: (element: EncodeDeviceManageModel) => `【${element.Labels.length}】`,
+    stopPropogate: true,
+    title: '点击以管理标签'
   },
 ];

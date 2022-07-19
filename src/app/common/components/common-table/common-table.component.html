@@ -42,12 +42,9 @@
         *matCellDef="let row"
         [style.flexBasis]="model.flexBasis"
         (click)="clickCell(model, row, $event)"
+        [title]="model.title ?? model.cell(row)"
       >
-        <div
-          [innerHTML]="model.cell(row)"
-          [class]="model.className"
-          [title]="model.cell(row)"
-        ></div>
+        <div [innerHTML]="model.cell(row)" [class]="model.className"></div>
       </mat-cell>
     </ng-container>
 

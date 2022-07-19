@@ -17,7 +17,7 @@ import { AICameraManageModel, AICameraManageSearchInfo } from 'src/app/view-mode
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { CameraManageBusiness } from './camera-manage.business';
 import { CameraManageConf } from './camera-manage.config'
 
@@ -55,8 +55,10 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   // 表单
   state = FormState.none;
-  cameraId = '';
-  regionId = ''
+  resourceId = '';
+  resourceName = '';
+  regionId = '';
+
 
 
 
@@ -143,7 +145,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
     }
   }
   private async _init() {
-    console.log('searchInfo', this.searchInfo)
+    // console.log('searchInfo', this.searchInfo)
     let res = await this._business.init(
       this.regionId,
       this.searchInfo,
@@ -166,6 +168,14 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   selectTableRow(rows: AICameraManageModel[]) {
     this.selectedRows = rows;
+  }
+  selectTableCell(e: TableCellEvent<AICameraManageModel>) {
+    console.log(e);
+    if (e.column.columnDef == 'Labels') {
+      this.resourceId = e.row.Id;
+      this.showBind = true;
+      this.resourceName = e.row.Name
+    }
   }
   tableSelect(type: TableSelectStateEnum) {
     if (this.table) {
@@ -225,7 +235,8 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
 
   bindBtnClick() {
     this.showBind = true;
-    this.cameraId = this.selectedRows[0]?.Id || '';
+    this.resourceId = this.selectedRows[0]?.Id || '';
+    this.resourceName = this.selectedRows[0]?.Name || "";
   }
   moveBtnClick() {
     this.showMove = true;
@@ -234,7 +245,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   closeForm(update: boolean) {
     this.showOperate = false
     this.state = FormState.none;
-    this.cameraId = '';
+    this.resourceId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -242,7 +253,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   }
   closeBind(update: boolean) {
     this.showBind = false
-    this.cameraId = '';
+    this.resourceId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -302,7 +313,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   private _clickEditBtn(row: AICameraManageModel) {
     this.showOperate = true;
     this.state = FormState.edit;
-    this.cameraId = row.Id;
+    this.resourceId = row.Id;
   }
 
 }

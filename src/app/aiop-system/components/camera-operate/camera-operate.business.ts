@@ -23,4 +23,7 @@ export class CameraOperateBusiness {
   addResourceLabel(resourceId: string, labelId: string) {
     return this._resourceRequest.createLabel(resourceId, labelId)
   }
+  getResourceLabels(id: string) {
+    return this._resourceRequest.listLabels(id);
+  }
 }

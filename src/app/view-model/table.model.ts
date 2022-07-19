@@ -4,6 +4,7 @@ export interface TableColumnModel {
   columnDef: string; // 唯一
   header: string;
   cell: (row: TableRowModel) => string;
+  title?: string;
   flexBasis?: string;
   stopPropogate?: boolean;
   sortHeader?: boolean;
@@ -12,9 +13,9 @@ export interface TableColumnModel {
 
 
 
-export interface TableCellEvent {
+export interface TableCellEvent<T = any> {
   column: TableColumnModel;
-  row: TableRowModel;
+  row: T;
   event: Event;
 }
 
