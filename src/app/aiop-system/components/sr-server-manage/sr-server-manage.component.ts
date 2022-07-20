@@ -33,7 +33,6 @@ export class SRServerManageComponent implements OnInit {
   selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...SRServerManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-
   selectedRows: SRServerManageModel[] = [];//table选中项
   willBeDeleted: SRServerManageModel[] = [];
 
@@ -46,12 +45,11 @@ export class SRServerManageComponent implements OnInit {
   // 表单
   state = FormState.none;
   tableOperates: TableOperateModel[] = []
-  serverId: string = '';
+  operateId: string = '';
 
   get enableDelBtn() {
     return !!this.selectedRows.length
   }
-
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
@@ -98,7 +96,6 @@ export class SRServerManageComponent implements OnInit {
 
   selectTableRow(rows: SRServerManageModel[]) {
     this.selectedRows = rows;
-    console.log(rows)
   }
 
   tableSelect(type: TableSelectStateEnum) {
@@ -123,8 +120,10 @@ export class SRServerManageComponent implements OnInit {
   closeForm(update: boolean) {
     this.showDialog = false
     this.state = FormState.none;
-    this.serverId = '';
-    if (update) this._init();
+    this.operateId = '';
+    if (update) {
+      this._init();
+    }
   }
 
   addBtnClick() {
@@ -157,20 +156,19 @@ export class SRServerManageComponent implements OnInit {
   }
 
   private async _clickSyncBtn(row: SRServerManageModel, event: Event) {
-    console.log('sync', row)
-    let res = await this._business.sync(row.Id)
+    let res = await this._business.sync(row.Id).catch(() => {
+      this._toastrService.error('同步失败');
+    })
     if (res) {
       this._toastrService.success('同步成功');
     }
   }
   private _clickEditBtn(row: SRServerManageModel, event: Event) {
-    console.log('edit')
     this.showDialog = true;
     this.state = FormState.edit;
-    this.serverId = row.Id;
+    this.operateId = row.Id;
   }
   private _clickDelBtn(row: SRServerManageModel, event: Event) {
-    console.log('delete')
     this.willBeDeleted = [row];
     this.showConfirm = true;
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`

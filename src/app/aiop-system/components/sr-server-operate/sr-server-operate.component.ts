@@ -17,7 +17,7 @@ import { ValidIP } from 'src/app/common/tools/tool';
   ]
 })
 export class SRServerOperateComponent implements OnInit, AfterViewInit {
-  private _server?: SRServer;
+  private _operateModel?: SRServer;
 
 
   myForm = this._fb.group({
@@ -25,7 +25,7 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     ProtocolType: ['Howell', Validators.required],
     Username: '',
     Password: '',
-    Address: this._fb.array<FormGroup>([])
+    Address: this._fb.array<FormGroup>([], [Validators.required, Validators.maxLength(7)])
   })
 
   currentIndex = 0;
@@ -42,7 +42,7 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     if (this.state == FormState.add) {
       return '添加流转服务';
     } else if (this.state == FormState.edit) {
-      return '编辑' + this._server?.Name;
+      return '编辑 ' + this._operateModel?.Name;
     }
     return ''
   }
@@ -51,7 +51,7 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
   state: FormState = FormState.none;
 
   @Input()
-  serverId: string = '';
+  operateId: string = '';
 
   @Output()
   closeEvent = new EventEmitter<boolean>()
@@ -68,8 +68,8 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     if (this.state == FormState.add) {
       this.addAddress()
     } else if (this.state == FormState.edit) {
-      this._server = await this._business.getServer(this.serverId);
-      console.log(this._server)
+      this._operateModel = await this._business.getServer(this.operateId);
+      console.log(this._operateModel)
     }
     this._updateForm();
   }
@@ -142,11 +142,11 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
           this.closeEvent.emit(true);
         }
       } else if (this.state == FormState.edit) {
-        if (this._server) {
-          this._server.Name = this.myForm.value.Name ?? '';
-          this._server.ProtocolType = this.myForm.value.ProtocolType ?? "";
-          this._server.Username = this.myForm.value.Username ?? "";
-          this._server.Password = this.myForm.value.Password ?? "";
+        if (this._operateModel) {
+          this._operateModel.Name = this.myForm.value.Name ?? '';
+          this._operateModel.ProtocolType = this.myForm.value.ProtocolType ?? "";
+          this._operateModel.Username = this.myForm.value.Username ?? "";
+          this._operateModel.Password = this.myForm.value.Password ?? "";
 
           let arr = <IAddress[]>(this.myForm.value.Address ?? []);
           let address_arr = arr.map(item => {
@@ -162,10 +162,10 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
 
             return address
           })
-          this._server.Addresses = address_arr;
+          this._operateModel.Addresses = address_arr;
 
 
-          let res = await this._business.updateServer(this._server);
+          let res = await this._business.updateServer(this._operateModel);
           if (res) {
             this._toastrService.success('操作成功');
             this.closeEvent.emit(true);
@@ -183,19 +183,17 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
   private _updateForm() {
     if (this.state == FormState.add) {
 
-
     } else if (this.state == FormState.edit) {
-      if (this._server) {
-
+      if (this._operateModel) {
         this.myForm.patchValue({
-          Name: this._server.Name,
-          ProtocolType: this._server.ProtocolType,
-          Username: this._server.Username,
-          Password: this._server.Password,
+          Name: this._operateModel.Name,
+          ProtocolType: this._operateModel.ProtocolType,
+          Username: this._operateModel.Username,
+          Password: this._operateModel.Password,
         })
 
         this.Address.clear();
-        this._server.Addresses.forEach(item => {
+        this._operateModel.Addresses.forEach(item => {
           let address = this.newAddress();
           address.setValue({
             IPAddress: item.IPAddress,
@@ -215,14 +213,35 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     }
   }
   private _checkForm() {
-    if (this.Name.invalid) {
-      this._toastrService.error('请输入名称');
-      return false;
-    }
-    if (this.myForm.valid)
-      return true
+    if (this.myForm.invalid) {
+      if (this.Name.invalid) {
+        this._toastrService.warning('请输入名称');
+        return false;
+      }
+      for (let i = 0; i < this.Address.length; i++) {
+        let control = this.Address.at(i);
+        if (control.invalid) {
+          let IPAddress = control.get('IPAddress') as FormControl;
+          if (IPAddress.errors && 'required' in IPAddress.errors) {
+            this._toastrService.warning('地址' + (i + 1) + ': 请输入IP地址');
+            return false;
+          }
+          if (IPAddress.errors && 'pattern' in IPAddress.errors) {
+            this._toastrService.warning('地址' + (i + 1) + ': 请输入正确的IP地址');
+            return false;
+          }
 
-    return false;
+          let Port = control.get('Port') as FormControl;
+          if (Port.errors && 'required' in Port.errors) {
+            this._toastrService.warning('地址' + (i + 1) + ': 请输入端口号');
+            return false;
+          }
+        }
+      }
+
+    }
+
+    return true;
   }
 
 }
