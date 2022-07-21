@@ -18,7 +18,6 @@ export class AIOPSystemModeComponent implements OnInit {
 
   navigate(path: string) {
     // console.log('path', path);
-    if (path == '/aiop/aiop-manage/garbage-events') return
     this._router.navigateByUrl(path);
   }
 }

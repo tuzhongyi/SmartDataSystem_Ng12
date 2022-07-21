@@ -45,6 +45,8 @@ import { LabelListComponent } from './label-list/label-list.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { PopUpWindowComponent } from './pop-up-window/pop-up-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
+import { MixIntoComponent } from './mix-into/mix-into.component';
+import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -93,4 +95,6 @@ export const CUSTOM_COMPONENTS = [
   LabelOperateComponent,
   LabelManageFormComponent,
   PopUpWindowComponent,
+  MixIntoComponent,
+  IllegalDropComponent
 ];

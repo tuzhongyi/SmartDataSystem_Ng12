@@ -15,7 +15,6 @@ export class HeaderNavComponent implements OnInit {
   ngOnInit(): void { }
   navigate(path: string) {
     // console.log('path', path);
-    if (path == '/aiop/aiop-manage/garbage-events') return
     this._router.navigateByUrl(path);
   }
 }

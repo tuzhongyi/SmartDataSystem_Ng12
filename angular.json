@@ -19,7 +19,8 @@
           "prefix": "howell"
         },
         "@schematics/angular:directive": {
-          "skipTests": true
+          "skipTests": true,
+          "prefix": "howell"
         },
         "@schematics/angular:guard": {
           "skipTests": true
@@ -31,14 +32,16 @@
           "skipTests": true
         },
         "@schematics/angular:service": {
-          "skipTests": true
+          "skipTests": true,
+          "flat": true
         },
         "@schematics/angular:application": {
           "strict": true
         },
         "@schematics/angular:interface": {
           "type": "interface"
-        }
+        },
+        "@schematics/angular:enum": {}
       },
       "root": "",
       "sourceRoot": "src",
@@ -59,22 +62,23 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": [
-            ],
-            "allowedCommonJsDependencies": ["crypto-js"]
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "crypto-js"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "4mb"
                 }
               ],
               "fileReplacements": [

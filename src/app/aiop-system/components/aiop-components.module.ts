@@ -12,7 +12,6 @@ import { RouterModule } from '@angular/router';
 import { AIOPSystemModeComponent } from './system-mode/system-mode.component';
 import { AiopSystemManageComponent } from './aiop-manage/aiop-manage.component';
 import { DivisionManageComponent } from './division-manage/division-manage.component';
-import { IllegalDropRecordComponent } from './illegal-drop-record/illegal-drop-record.component';
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
@@ -37,13 +36,14 @@ import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-dev
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
 import { CameraOperateComponent } from './camera-operate/camera-operate.component';
 import { CameraMoveComponent } from './camera-move/camera-move.component';
+import { IllegalDropManage } from './illegal-drop-manage/illegal-drop-manage.component';
+import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.component';
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
     AiopSystemManageComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
-    IllegalDropRecordComponent,
     DeployMapComponent,
     GarbageStationManageComponent,
     SystemSettingComponent,
@@ -65,7 +65,9 @@ import { CameraMoveComponent } from './camera-move/camera-move.component';
     EncodeDeviceOperateComponent,
     GarbageStationOperateComponent,
     CameraOperateComponent,
-    CameraMoveComponent
+    CameraMoveComponent,
+    IllegalDropManage,
+    MixIntoManageComponent
   ],
   imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
   providers: [],

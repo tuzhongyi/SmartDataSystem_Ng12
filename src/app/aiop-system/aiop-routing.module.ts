@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiopComponent } from './aiop.component';
 import { AiopSystemManageComponent } from './components/aiop-manage/aiop-manage.component';
-import { IllegalDropRecordComponent } from './components/illegal-drop-record/illegal-drop-record.component';
+import { IllegalDropManage } from './components/illegal-drop-manage/illegal-drop-manage.component';
 import { DivisionManageComponent } from './components/division-manage/division-manage.component';
 import { StationStatusComponent } from './components/station-status/station-status.component';
 import { AIOPSystemModeComponent } from './components/system-mode/system-mode.component';
@@ -28,6 +28,7 @@ import { AIModelManageComponent } from './components/ai-model-manage/ai-model-ma
 import { AICameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
 import { IllegalDropRecord2Component } from './components/drop-record2/illegal-drop-record.component';
 import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
+import { MixIntoManageComponent } from './components/mix-into-manage/mix-into-manage.component';
 
 const routes: Routes = [
   {
@@ -104,13 +105,20 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'illegal-drop-record', pathMatch: 'full'
+                redirectTo: 'illegal-drop-manage', pathMatch: 'full'
               },
               {
-                path: 'illegal-drop-record',
-                component: IllegalDropRecordComponent,
+                path: 'illegal-drop-manage',
+                component: IllegalDropManage,
                 data: {
                   breadcrumb: '垃圾落地',
+                },
+              },
+              {
+                path: 'mix-into-manage',
+                component: MixIntoManageComponent,
+                data: {
+                  breadcrumb: '混合投放',
                 },
               },
             ],
