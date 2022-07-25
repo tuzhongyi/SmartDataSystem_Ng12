@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Enum } from "src/app/enum/enum-helper";
 
 @Component({
   selector: 'app-illegal-drop-manage',
