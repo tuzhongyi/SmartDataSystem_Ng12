@@ -43,10 +43,10 @@
       (selectTreeNode)="selectRegionTreeNode($event)"
     ></howell-region-tree>
   </div>
-  <div class="horizontal-right hw-table-layout">
-    <div class="hw-operation">
+  <div class="horizontal-right vertical-layout">
+    <div class="vertical-header">
       <div class="hw-simple-title">监控点</div>
-      <div class="hw-operate-bar wrap">
+      <div class="operate-bar">
         <div class="left-wrapper">
           <div class="hw-normal-btn-group">
             <button
@@ -158,7 +158,8 @@
         </div>
       </div>
     </div>
-    <div class="hw-table-container">
+
+    <div class="vertical-main">
       <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
@@ -169,7 +170,7 @@
       ></common-table>
     </div>
 
-    <div class="hw-table-footer">
+    <div class="vertical-footer">
       <div class="footer-item">
         <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>

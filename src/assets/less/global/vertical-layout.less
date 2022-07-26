@@ -1,4 +1,7 @@
-.hw-table-layout {
+/*
+  垂直布局,header和footer不能shrink
+*/
+.vertical-layout {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -8,11 +11,19 @@
   min-width: 400px;
   height: 100%;
 
-  .hw-table-container {
+  .vertical-header {
+    flex-shrink: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+  }
+  .vertical-main {
     flex-grow: 1;
     overflow: auto;
   }
-  .hw-table-footer {
+  .vertical-footer {
     flex-shrink: 0;
     display: flex;
     justify-content: space-between;

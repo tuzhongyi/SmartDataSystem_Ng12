@@ -26,10 +26,10 @@
     </div>
   </div>
   <div class="horizontal-right">
-    <div class="hw-table-layout">
-      <div class="hw-operation">
+    <div class="vertical-layout">
+      <div class="vertical-header">
         <div class="hw-simple-title">垃圾厢房</div>
-        <div class="hw-operate-bar wrap">
+        <div class="operate-bar wrap">
           <div class="hw-normal-btn-group">
             <button
               class="hw-btn hw-green-btn"
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <div class="hw-table-container">
+      <div class="vertical-main">
         <common-table
           [dataSubject]="dataSubject"
           [columnModel]="columnModel"
@@ -69,7 +69,7 @@
         ></common-table>
       </div>
 
-      <div class="hw-table-footer">
+      <div class="vertical-footer">
         <div class="footer-item">
           <app-table-select (tableSelect)="tableSelect($event)">
           </app-table-select>

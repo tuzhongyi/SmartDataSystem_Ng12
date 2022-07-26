@@ -17,10 +17,10 @@
     </howell-confirm-dialog>
   </ng-container>
 
-  <div class="hw-table-layout">
-    <div class="hw-operation">
+  <div class="vertical-layout">
+    <div class="vertical-header">
       <div class="hw-second-title">智慧平台</div>
-      <div class="hw-operate-bar wrap">
+      <div class="operate-bar">
         <div class="hw-normal-btn-group">
           <button class="hw-green-btn" (click)="addBtnClick()">
             <i class="howell-icon-plus"></i>
@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="hw-table-container">
+    <div class="vertical-main">
       <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
@@ -55,7 +55,7 @@
         (selectTableRow)="selectTableRow($event)"
       ></common-table>
     </div>
-    <div class="hw-table-footer">
+    <div class="vertical-footer">
       <div class="footer-item">
         <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>

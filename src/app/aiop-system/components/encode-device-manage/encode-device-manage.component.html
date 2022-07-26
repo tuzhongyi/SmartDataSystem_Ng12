@@ -27,10 +27,10 @@
     </howell-pop-up-window>
   </ng-container>
 
-  <div class="hw-table-layout">
-    <div class="hw-operation">
+  <div class="vertical-layout">
+    <div class="vertical-head">
       <div class="hw-second-title">编码器</div>
-      <div class="hw-operate-bar wrap">
+      <div class="operate-bar wrap">
         <div class="left-wrapper">
           <div class="hw-normal-btn-group">
             <button class="hw-green-btn" (click)="addBtnClick()">
@@ -129,7 +129,7 @@
       </div>
     </div>
 
-    <div class="hw-table-container">
+    <div class="vertical-main">
       <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
@@ -140,7 +140,7 @@
         (selectTableCell)="selectTableCell($event)"
       ></common-table>
     </div>
-    <div class="hw-table-footer">
+    <div class="vertical-footer">
       <div class="footer-item">
         <app-table-select (tableSelect)="tableSelect($event)">
         </app-table-select>

@@ -1,34 +1,40 @@
 <div class="ai-camera-events">
-  <div class="hw-table-layout">
-    <div class="hw-operation">
+  <div class="vertical-layout">
+    <div class="vertical-header">
       <div class="hw-second-title">AI事件</div>
-      <div class="hw-operate-bar">
-        <div class="search-wrapper">
-          <input
-            [disabled]="disableSearch"
-            type="text"
-            [placeholder]="placeHolder"
-            [(ngModel)]="condition"
-            (keyup.enter)="search()"
-          />
-        </div>
-        <div class="hw-normal-btn-group">
-          <button class="hw-blue-btn" (click)="search()">
-            <i class="mdi mdi-magnify"></i>
-            查询
-          </button>
-          <button class="hw-blue-m-btn">
-            <i class="howell-icon-ul"></i>
-            <i class="mdi mdi-menu-down"></i>
-          </button>
-          <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
-            <i class="mdi mdi-filter-outline"></i>
-          </button>
+
+      <div class="operate-bar inline-bar">
+        <div class="right-wrapper">
+          <div class="search-wrapper">
+            <input
+              [disabled]="disableSearch"
+              type="text"
+              [placeholder]="placeHolder"
+              [(ngModel)]="condition"
+              (keyup.enter)="search()"
+            />
+          </div>
+          <div class="hw-normal-btn-group">
+            <button class="hw-blue-btn" (click)="search()">
+              <i class="mdi mdi-magnify"></i>
+              查询
+            </button>
+            <button class="hw-blue-m-btn">
+              <i class="howell-icon-ul"></i>
+              <i class="mdi mdi-menu-down"></i>
+            </button>
+            <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
+              <i class="mdi mdi-filter-outline"></i>
+            </button>
+          </div>
         </div>
       </div>
+
       <div class="filter-wrapper" *ngIf="showFilter">
         <div class="filter-group">
-          <div class="title"><span class="hw-form-label">开始时间:</span></div>
+          <div class="title">
+            <span class="hw-form-label">开始时间:</span>
+          </div>
           <div class="content">
             <input
               type="text"
@@ -42,7 +48,9 @@
         </div>
 
         <div class="filter-group">
-          <div class="title"><span class="hw-form-label">结束时间:</span></div>
+          <div class="title">
+            <span class="hw-form-label">结束时间:</span>
+          </div>
           <div class="content">
             <input
               type="text"
@@ -81,7 +89,7 @@
       </div>
     </div>
 
-    <div class="hw-table-container">
+    <div class="vertical-main">
       <common-table
         [dataSubject]="dataSubject"
         [columnModel]="columnModel"
@@ -92,7 +100,7 @@
         (selectTableRow)="selectTableRow($event)"
       ></common-table>
     </div>
-    <div class="hw-table-footer" style="justify-content: flex-end">
+    <div class="vertical-footer" style="justify-content: flex-end">
       <div class="footer-item">
         <div class="footer-info">
           <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
