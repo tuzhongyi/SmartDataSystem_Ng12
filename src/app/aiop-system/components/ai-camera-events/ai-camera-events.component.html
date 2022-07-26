@@ -23,14 +23,14 @@
               <i class="howell-icon-ul"></i>
               <i class="mdi mdi-menu-down"></i>
             </button>
-            <button class="hw-cyan-m-btn" (click)="showFilterHandler()">
+            <button class="hw-cyan-m-btn" (click)="toggleFilterHandler()">
               <i class="mdi mdi-filter-outline"></i>
             </button>
           </div>
         </div>
       </div>
 
-      <div class="filter-wrapper" *ngIf="showFilter">
+      <div class="filter-wrapper" *ngIf="searchInfo.Filter">
         <div class="filter-group">
           <div class="title">
             <span class="hw-form-label">开始时间:</span>

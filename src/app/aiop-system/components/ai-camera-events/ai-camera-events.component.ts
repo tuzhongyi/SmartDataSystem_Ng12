@@ -56,12 +56,8 @@ export class AICameraEventsComponent implements OnInit {
 
   // 搜索
   disableSearch = false;
-  showFilter = false;
-  condition = '';
   dateFormat: string = 'yyyy年MM月dd日';
   today = new Date();
-  beginTime = Time.beginTime(this.today)
-  endTime = Time.endTime(this.today);
 
   eventTypes = [
     EventType.IllegalDrop,
@@ -124,14 +120,15 @@ export class AICameraEventsComponent implements OnInit {
     this.pageIndex = pageInfo.pageIndex + 1;
     this._init();
   }
-  showFilterHandler() {
+  toggleFilterHandler() {
 
-    this.disableSearch = this.showFilter = !this.showFilter;
-
-    this.beginTime = this.today;
-    this.endTime = this.today
-    this.eventType = EventType.None;
-    this.modelName = '';
+    this.disableSearch = this.searchInfo.Filter = !this.searchInfo.Filter;
+    if (!this.searchInfo.Filter) {
+      this.searchInfo.BeginTime = Time.beginTime(this.today);
+      this.searchInfo.EndTime = Time.endTime(this.today);
+      this.searchInfo.EventType = EventType.None;
+      this.searchInfo.ModelName = ''
+    }
   }
   changeBegin(date: Date) {
     this.searchInfo.BeginTime = date;
