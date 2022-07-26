@@ -1,4 +1,3 @@
-import { IllegalDropRecordModel } from 'src/app/view-model/illegal-drop-record.model';
 import { SRServerManageModel } from 'src/app/view-model/sr-server-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 

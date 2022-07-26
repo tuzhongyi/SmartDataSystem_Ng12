@@ -48,6 +48,7 @@ import { LabelManageFormComponent } from './label-manage-form/label-manage-form.
 import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { TabHeaderComponent } from './tab-header/tab-header.component';
+import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -98,5 +99,6 @@ export const CUSTOM_COMPONENTS = [
   PopUpWindowComponent,
   MixIntoComponent,
   IllegalDropComponent,
-  TabHeaderComponent
+  TabHeaderComponent,
+  IllegalDropEventComponent
 ];
