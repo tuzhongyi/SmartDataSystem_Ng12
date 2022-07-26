@@ -7,7 +7,7 @@ import { PagedList } from "src/app/network/model/page_list.model";
 import { GetCameraAIEventRecordsParams } from "src/app/network/request/ai-camera-event/camera-ai-event.params";
 import { CameraAIEventRequestService } from "src/app/network/request/ai-camera-event/camera-ai-event.service";
 import { AIModelRequestService } from "src/app/network/request/ai-model/ai-model.service";
-import { AICameraEventsModel } from "src/app/view-model/ai-camera-events.model";
+import { AICameraEventsModel, AICameraEventsSearchInfo } from "src/app/view-model/ai-camera-events.model";
 
 @Injectable()
 export class AICameraEventsBusiness {
@@ -15,23 +15,26 @@ export class AICameraEventsBusiness {
 
   }
 
-  async init(condition: string = '', beginTime: Date, endTime: Date, eventType: EventType, modelName: string, pageIndex: number = 1, pageSize: number = 9) {
+  async init(searchInfo: AICameraEventsSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
     let params = new GetCameraAIEventRecordsParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
-    params.ResourceName = condition;
+    params.BeginTime = searchInfo.BeginTime;
+    params.EndTime = searchInfo.EndTime;
 
-    params.BeginTime = Time.beginTime(beginTime);
-    params.EndTime = Time.endTime(endTime);
-    if (+eventType) {
-      params.EventTypes = [eventType]
+    if (!searchInfo.Filter) {
+      params.ResourceName = searchInfo.Condition;
+    } else {
+
+      if (+searchInfo.EventType) {
+        params.EventTypes = [searchInfo.EventType]
+      }
+      params.ModelName = searchInfo.ModelName;
     }
-    params.ModelName = modelName;
 
 
     let tmp = await this.listCameraAIEvents(params);
 
-    console.log(tmp)
     let data = await this._converter.iterateToModel(tmp.Data);
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.EventTime, b.EventTime)

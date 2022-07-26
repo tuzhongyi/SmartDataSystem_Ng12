@@ -67,12 +67,12 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   placeHolder = '输入名称';
   disableSearch = false;
   searchInfo: AICameraManageSearchInfo = {
-    condition: '',
+    Condition: '',
     CameraName: "",
     CameraType: '',
     DeviceId: '',
     LabelIds: [],
-    filter: false
+    Filter: false
   }
 
   // 标签筛选器
@@ -159,7 +159,7 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   }
   toggleFilter() {
     this.disableSearch = this.showFilter = !this.showFilter;
-    this.searchInfo.filter = this.showFilter
+    this.searchInfo.Filter = this.showFilter
 
   }
 

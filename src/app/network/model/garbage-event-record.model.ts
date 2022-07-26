@@ -49,7 +49,7 @@ export class IllegalDropEventRecord
   extends EventRecordData<IllegalDropEventData>{ }
 /** */
 class IllegalDropEventData {
-  CommunityName!: string;;
+  CommunityName?: string;;
   CommunityId?: string;
   /**	String	垃圾房ID	M */
   StationId!: string;

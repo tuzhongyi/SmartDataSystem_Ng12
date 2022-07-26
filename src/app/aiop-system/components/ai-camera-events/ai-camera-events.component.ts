@@ -11,7 +11,7 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
-import { AICameraEventsModel } from 'src/app/view-model/ai-camera-events.model';
+import { AICameraEventsModel, AICameraEventsSearchInfo } from 'src/app/view-model/ai-camera-events.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
 import { AICameraEventsBusiness } from './ai-camera-events.business';
@@ -29,13 +29,14 @@ export class AICameraEventsComponent implements OnInit {
   /**private */
   private _pageSize = 9;
 
+  aiModels: CameraAIModel[] = [];
+
   // Table
   dataSubject = new BehaviorSubject<AICameraEventsModel[]>([]);
   selectStrategy = SelectStrategy.Single;
   columnModel: TableColumnModel[] = [...AICameraEventsConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = []
-  aiModels: CameraAIModel[] = [];
   zoomIn = true;
 
   selectedRows: AICameraEventsModel[] = [];//table选中项
@@ -52,14 +53,10 @@ export class AICameraEventsComponent implements OnInit {
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
-  // 表单
-  state = FormState.none;
-  platformId = '';
 
   // 搜索
   disableSearch = false;
   showFilter = false;
-  placeHolder = '搜索设备名称'
   condition = '';
   dateFormat: string = 'yyyy年MM月dd日';
   today = new Date();
@@ -74,6 +71,15 @@ export class AICameraEventsComponent implements OnInit {
   eventType = EventType.None;
   Language = Language;
   modelName = '';
+
+  searchInfo: AICameraEventsSearchInfo = {
+    Condition: '',
+    BeginTime: Time.beginTime(this.today),
+    EndTime: Time.endTime(this.today),
+    EventType: EventType.None,
+    ModelName: '',
+    Filter: false,
+  }
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
@@ -96,7 +102,7 @@ export class AICameraEventsComponent implements OnInit {
     this._init();
   }
   private async _init() {
-    let res = await this._business.init(this.condition, this.beginTime, this.endTime, this.eventType, this.modelName, this.pageIndex, this._pageSize);
+    let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
 
 
     this.page = res.Page;
@@ -128,10 +134,10 @@ export class AICameraEventsComponent implements OnInit {
     this.modelName = '';
   }
   changeBegin(date: Date) {
-    this.beginTime = date;
+    this.searchInfo.BeginTime = date;
   }
   changeEnd(date: Date) {
-    this.endTime = date;
+    this.searchInfo.EndTime = date;
   }
 
 

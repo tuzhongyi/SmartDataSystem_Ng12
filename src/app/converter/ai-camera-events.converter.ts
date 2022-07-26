@@ -5,14 +5,17 @@ import { Language } from "../common/tools/language";
 import { CameraAIEventRecord } from "../network/model/camera-ai-event-record.model";
 import { Medium } from "../common/tools/medium";
 import { AICameraEventsModel } from "../view-model/ai-camera-events.model";
+import { CommonModelPromiseConverter } from "./common-model.converter";
 
 type AICameraEventsSource = CameraAIEventRecord;
 
 @Injectable({
   providedIn: 'root'
 })
-export class AICameraEventsConverter implements IPromiseConverter<AICameraEventsSource, AICameraEventsModel>{
-  constructor(private _datePipe: DatePipe,) { }
+export class AICameraEventsConverter extends CommonModelPromiseConverter<AICameraEventsModel>{
+  constructor(private _datePipe: DatePipe,) {
+    super();
+  }
 
   async Convert(source: AICameraEventsSource) {
     if (source instanceof CameraAIEventRecord) {
@@ -20,20 +23,9 @@ export class AICameraEventsConverter implements IPromiseConverter<AICameraEvents
     }
     throw new Error('Error');
   }
-  async iterateToModel<T extends Array<AICameraEventsSource>>(data: T) {
-    let res: Array<AICameraEventsModel> = [];
-
-    for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-      const model = await this.Convert(item);
-      res.push(model)
-    }
-
-    return res;
-  }
   private async _fromCameraAIEventRecord(item: CameraAIEventRecord) {
     let model = new AICameraEventsModel();
-    model.EventId = item.EventId;
+    model.Id = item.EventId;
     model.EventType = Language.EventType(item.EventType)
     model.ModelName = item.Data.ModelName ?? "";
     model.ResourceType = Language.ResourceType(item.ResourceType!);

@@ -8,26 +8,26 @@ export const AICameraEventsConf: TableColumnModel[] = [
     cell: (element: AICameraEventsModel) => `<img src=${element.ImageUrl}/>`,
   },
   {
-    columnDef: 'EventType',
-    header: '事件类型',
-    cell: (element: AICameraEventsModel) => `${element.EventType}`,
+    columnDef: 'ResourceName',
+    header: '资源名称',
+    cell: (element: AICameraEventsModel) => `${element.ResourceName}`,
+  },
+  {
+    columnDef: 'ResourceType',
+    header: '资源类型',
+    cell: (element: AICameraEventsModel) => `${element.ResourceType}`,
   },
   {
     columnDef: 'ModelName',
     header: '模型名称',
     cell: (element: AICameraEventsModel) => `${element.ModelName}`,
   },
-  {
-    columnDef: 'ResourceType',
-    header: '设备类型',
-    cell: (element: AICameraEventsModel) => `${element.ResourceType}`,
-  },
-  {
-    columnDef: 'ResourceName',
-    header: '设备名称',
-    cell: (element: AICameraEventsModel) => `${element.ResourceName}`,
-  },
 
+  {
+    columnDef: 'EventType',
+    header: '事件类型',
+    cell: (element: AICameraEventsModel) => `${element.EventType}`,
+  },
   {
     columnDef: 'EventTime',
     header: '上报时间',

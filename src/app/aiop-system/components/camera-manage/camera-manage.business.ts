@@ -25,8 +25,8 @@ export class CameraManageBusiness {
     } else {
       params.RegionIds = [regionId]
     }
-    if (!searchInfo.filter) {
-      params.Name = searchInfo.condition;
+    if (!searchInfo.Filter) {
+      params.Name = searchInfo.Condition;
     } else {
       params.Name = searchInfo.CameraName;
       if (searchInfo.CameraType)

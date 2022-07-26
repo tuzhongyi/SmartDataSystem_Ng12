@@ -13,10 +13,10 @@ export class AICameraManageModel implements CommonModel {
 
 
 export interface AICameraManageSearchInfo {
-  condition: string;
+  Condition: string;
   CameraName: string;
   CameraType: string;
   DeviceId: string;
   LabelIds: string[];
-  filter: boolean;
+  Filter: boolean;
 }
