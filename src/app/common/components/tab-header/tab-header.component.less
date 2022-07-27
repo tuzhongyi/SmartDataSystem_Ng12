@@ -1,0 +1,32 @@
+.tab-header {
+  display: flex;
+  background: transparent;
+  align-items: center;
+  .tab-label {
+    width: 130px;
+    height: 45px;
+    background-image: url(src/assets/img/second-menu.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    margin: 0 2px;
+    cursor: pointer;
+    color: white;
+    font-size: 18px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:first-child {
+      margin-left: 0;
+    }
+    &:last-child {
+      margin-right: 0;
+    }
+    &:hover {
+      background-image: url(src/assets/img/second-menu-hover.png);
+    }
+    &.selected {
+      background-image: url(src/assets/img/second-menu-focus.png);
+    }
+  }
+}

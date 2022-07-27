@@ -5,19 +5,24 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonTree } from '../common-tree/common-tree';
 import { LabelTreeComponent } from '../label-tree/label-tree.component';
 
+/**
+ *  显示树的选中节点信息
+ */
 @Component({
-  selector: 'howell-label-list',
-  templateUrl: './label-list.component.html',
-  styleUrls: ['./label-list.component.less']
+  selector: 'tree-select',
+  templateUrl: './tree-select.component.html',
+  styleUrls: ['./tree-select.component.less']
 })
-export class LabelListComponent implements OnInit, AfterViewInit {
+export class TreeSelecComponent implements OnInit, AfterViewInit {
+
+  show = false;
+
 
   @Input()
   selectedNodes: CommonFlatNode[] = [];
 
   @Output() defaultIdsChange = new EventEmitter<string[]>();
 
-  show = false;
 
   defaultIds: string[] = [];
 

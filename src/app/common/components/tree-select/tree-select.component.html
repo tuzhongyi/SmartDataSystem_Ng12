@@ -1,8 +1,8 @@
-<div class="label-list">
-  <div class="list-header" (click)="toggleHandler()">
+<div class="select-list common-select">
+  <div class="select-header" (click)="toggleHandler()">
     <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
     <div class="wrapper">
-      <div class="label-item" *ngFor="let node of selectedNodes">
+      <div class="select-item" *ngFor="let node of selectedNodes">
         <div class="title">{{ node.Name }}</div>
         <div class="close-btn" (click)="removeNode($event, node)">
           <i class="howell-icon-Close"></i>
@@ -16,7 +16,7 @@
       ></i>
     </button>
   </div>
-  <div class="list-body" *ngIf="show">
+  <div class="list-body select-body" *ngIf="show">
     <ng-content></ng-content>
   </div>
 </div>

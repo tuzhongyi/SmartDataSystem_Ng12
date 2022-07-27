@@ -1,0 +1,21 @@
+<div class="common-select">
+  <div class="select-header" (click)="toggleHandler()">
+    <div class="placeholder">请选择</div>
+    <div class="wrapper"></div>
+    <button class="btn">
+      <i
+        class="mdi"
+        [class]="{ 'mdi-menu-down': !show, 'mdi-menu-up': show }"
+      ></i>
+    </button>
+  </div>
+  <div class="select-body" *ngIf="show" (click)="selectChange($event)">
+    <div
+      class="select-option"
+      *ngFor="let option of options"
+      [attr.value]="option"
+    >
+      {{ option.title }}
+    </div>
+  </div>
+</div>

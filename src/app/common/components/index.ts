@@ -41,7 +41,7 @@ import { LabelTreeComponent } from './label-tree/label-tree.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
-import { LabelListComponent } from './label-list/label-list.component';
+import { TreeSelecComponent } from './tree-select/tree-select.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { PopUpWindowComponent } from './pop-up-window/pop-up-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
@@ -49,6 +49,8 @@ import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
+import { ComplexSearchComponent } from './complex-search/complex-search.component';
+import { CommonSelectComponent } from './common-select/common-select.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -93,12 +95,14 @@ export const CUSTOM_COMPONENTS = [
   DivisionTreeComponent,
   CommonTreeComponent,
   RegionTreeComponent,
-  LabelListComponent,
+  TreeSelecComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
   PopUpWindowComponent,
   MixIntoComponent,
   IllegalDropComponent,
   TabHeaderComponent,
-  IllegalDropEventComponent
+  IllegalDropEventComponent,
+  ComplexSearchComponent,
+  CommonSelectComponent
 ];
