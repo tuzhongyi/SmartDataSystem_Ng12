@@ -1,7 +1,11 @@
 <div class="common-select">
   <div class="select-header" (click)="toggleHandler()">
-    <div class="placeholder">请选择</div>
-    <div class="wrapper"></div>
+    <div class="placeholder" *ngIf="!selectedItems.length">请选择</div>
+    <div class="wrapper">
+      <div class="select-item">
+        <div class="title"></div>
+      </div>
+    </div>
     <button class="btn">
       <i
         class="mdi"
@@ -9,13 +13,13 @@
       ></i>
     </button>
   </div>
-  <div class="select-body" *ngIf="show" (click)="selectChange($event)">
+  <!-- <div class="select-body" *ngIf="show" (click)="selectChange($event)">
     <div
+      commonSelectOption
       class="select-option"
       *ngFor="let option of options"
-      [attr.value]="option"
-    >
-      {{ option.title }}
-    </div>
-  </div>
+      [innerHTML]="option.title"
+      [attr.value]="option.value"
+    ></div>
+  </div> -->
 </div>

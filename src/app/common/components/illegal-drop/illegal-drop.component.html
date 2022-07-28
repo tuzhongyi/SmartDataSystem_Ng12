@@ -13,4 +13,12 @@
     <howell-illegal-drop-event></howell-illegal-drop-event>
   </div>
 </div> -->
-<div style="width: 300px"><common-select></common-select></div>
+<!-- <div style="width: 300px"><common-select></common-select></div> -->
+
+<select [(ngModel)]="current">
+  <option *ngFor="let model of models" [value]="model">
+    {{ model.name }}
+  </option>
+</select>
+
+{{ current | json }}

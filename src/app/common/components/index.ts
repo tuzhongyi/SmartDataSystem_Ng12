@@ -51,6 +51,7 @@ import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 import { ComplexSearchComponent } from './complex-search/complex-search.component';
 import { CommonSelectComponent } from './common-select/common-select.component';
+import { CommonOptionComponent } from './common-option/common-option.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -104,5 +105,6 @@ export const CUSTOM_COMPONENTS = [
   TabHeaderComponent,
   IllegalDropEventComponent,
   ComplexSearchComponent,
-  CommonSelectComponent
+  CommonSelectComponent,
+  CommonOptionComponent
 ];
