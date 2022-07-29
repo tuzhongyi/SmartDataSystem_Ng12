@@ -38,16 +38,16 @@ export class CameraManageBusiness {
 
 
 
-    let tmp = await this._listAiopCameras(params);
+    let { Data, Page } = await this._listAiopCameras(params);
 
-    let data = this._converter.iterateToModel(tmp.Data);
+    let data = await this._converter.iterateToModel(Data);
 
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.Name ?? "", b.Name ?? "")
     })
 
     let res: PagedList<AICameraManageModel> = {
-      Page: tmp.Page,
+      Page,
       Data: data,
     };
 

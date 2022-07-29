@@ -22,12 +22,12 @@ export class EncodeDeviceManageBusiness {
       params.AndLabelIds = searchInfo.labelIds;
     }
 
-    let tmp = await this.listEncodeDevice(params);
-    let data = this._converter.iterateToModel(tmp.Data)
+    let { Data, Page } = await this.listEncodeDevice(params);
+    let data = this._converter.iterateToModel(Data)
 
 
     let res: PagedList<EncodeDeviceManageModel> = {
-      Page: tmp.Page,
+      Page,
       Data: data,
     };
     return res;

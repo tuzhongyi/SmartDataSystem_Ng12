@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 16:02:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-06-17 15:35:37
+ * @Last Modified time: 2022-07-29 23:26:10
  */
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -17,7 +17,6 @@ import { GarbageEventsComponent } from './components/garbage-events/garbage-even
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './components/platform-manage/platform-manage.component';
-import { ProxyManageComponent } from './components/proxy-manage/proxy-manage.component';
 import { SystemSettingComponent } from './components/system-setting/system-setting.component';
 import { SuperVisionComponent } from './components/super-vision/super-vision.component';
 import { RegionManageComponent } from './components/region-manage/region-manage.component';

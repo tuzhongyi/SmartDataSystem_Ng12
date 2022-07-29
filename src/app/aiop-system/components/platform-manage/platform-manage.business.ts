@@ -18,15 +18,15 @@ export class PlatformManageBusiness {
     params.PageSize = pageSize// pageSize不会小于1
     params.Name = condition;
 
-    let tmp = await this._list(params);
-    let data = this._converter.iterateToModel(tmp.Data)
+    let { Data, Page } = await this._list(params);
+    let data = this._converter.iterateToModel(Data)
 
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.UpdateTime ?? "", b.UpdateTime ?? "")
     })
 
     let res: PagedList<PlatformManageModel> = {
-      Page: tmp.Page,
+      Page: Page,
       Data: data,
     };
 

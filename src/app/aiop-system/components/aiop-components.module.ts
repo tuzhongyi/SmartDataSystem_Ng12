@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
  * @Last Modified by: pmx
- * @Last Modified time: 2022-07-05 14:46:18
+ * @Last Modified time: 2022-07-29 23:26:17
  */
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -26,7 +26,6 @@ import { CameraModelManageComponent } from './camera-model-manage/camera-model-m
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
 import { AICameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ProxyManageComponent } from './proxy-manage/proxy-manage.component';
 import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
 import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
 import { SRServerManageComponent } from './sr-server-manage/sr-server-manage.component';
@@ -56,7 +55,6 @@ import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.compon
     CameraModelManageComponent,
     AIModelManageComponent,
     AICameraEventsComponent,
-    ProxyManageComponent,
     IllegalDropRecord2Component,
     PlatformOperateComponent,
     SRServerManageComponent,

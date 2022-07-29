@@ -4,7 +4,7 @@ import { AICamera } from "../network/model/ai-camera.model";
 import { EncodeDevice } from "../network/model/encode-device";
 import { EncodeDeviceRequestService } from "../network/request/encode-device/encode-device.service";
 import { AICameraManageModel } from "../view-model/ai-camera-manage.model";
-import { CommonModelConverter } from "./common-model.converter";
+import { CommonModelConverter, CommonModelPromiseConverter } from "./common-model.converter";
 
 type AICameraManageSource = AICamera;
 
@@ -12,20 +12,15 @@ type AICameraManageSource = AICamera;
 @Injectable({
   providedIn: "root"
 })
-export class AICameraManageConverter extends CommonModelConverter<AICameraManageModel> {
+export class AICameraManageConverter extends CommonModelPromiseConverter<AICameraManageModel> {
 
   private _encodeDevicesMap: Map<string, EncodeDevice> = new Map();
 
 
   constructor(private _encodeDeviceRequest: EncodeDeviceRequestService,) {
     super();
-    this._init();
   }
 
-  private async _init() {
-    let devices = (await this._listDevices()).Data
-    devices.forEach(device => this._encodeDevicesMap.set(device.Id, device))
-  }
   Convert(source: AICameraManageSource) {
     if (source instanceof AICamera) {
       return this._fromAICamera(source)
@@ -33,13 +28,15 @@ export class AICameraManageConverter extends CommonModelConverter<AICameraManage
     throw new Error('Error');
   }
 
-  private _fromAICamera(item: AICamera) {
+  private async _fromAICamera(item: AICamera) {
+    console.log(item)
     let model = new AICameraManageModel();
     model.Id = item.Id;
     model.Name = item.Name;
     model.CameraType = Language.CameraType(item.CameraType);
-    model.CameraState = Language.CameraState(item.CameraState) || "-"
-    model.DeciveName = this._encodeDevicesMap.get(item.EncodeDeviceId)?.Name ?? "";
+    model.CameraState = Language.CameraState(item.CameraState) || "-";
+    let { Name } = await this._encodeDeviceRequest.get(item.EncodeDeviceId);
+    model.DeciveName = Name;
     model.Labels = item.Labels ?? [];
     return model
   }

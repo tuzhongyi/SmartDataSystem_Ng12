@@ -33,17 +33,17 @@ export class AICameraEventsBusiness {
     }
 
 
-    let tmp = await this.listCameraAIEvents(params);
-
-    let data = await this._converter.iterateToModel(tmp.Data);
+    let { Data, Page } = await this.listCameraAIEvents(params);
+    let data = await this._converter.iterateToModel(Data);
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.EventTime, b.EventTime)
     })
 
     let res: PagedList<AICameraEventsModel> = {
-      Page: tmp.Page,
+      Page: Page,
       Data: data,
     };
+
 
     return res;
 

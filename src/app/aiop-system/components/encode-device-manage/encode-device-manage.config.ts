@@ -7,7 +7,7 @@ export const EncodeDeviceManageConf: TableColumnModel[] = [
     columnDef: 'Name',
     header: '名称',
     cell: (element: EncodeDeviceManageModel) => `${element.Name}`,
-    flexBasis: "10%"
+    flexBasis: "8%"
   },
   {
     columnDef: 'IPAddress',

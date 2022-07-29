@@ -19,15 +19,15 @@ export class GarbageStationManageBusiness {
     params.PageSize = pageSize;
     params.Name = condition;
     params.DivisionId = divisionId;
-    let tmp = await this._list(params);
+    let { Data, Page } = await this._list(params);
     // console.log(tmp)
-    let data = this._converter.iterateToModel(tmp.Data);
+    let data = this._converter.iterateToModel(Data);
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.Name ?? "", b.Name ?? "")
     });
 
     let res: PagedList<GarbageStationManageModel> = {
-      Page: tmp.Page,
+      Page: Page,
       Data: data,
     };
 

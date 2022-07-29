@@ -29,7 +29,7 @@ import { CameraManageConf } from './camera-manage.config'
   ]
 })
 export class CameraManageComponent implements OnInit, AfterViewInit {
-  private _pageSize = 3;
+  private _pageSize = 9;
   private _currentNode?: CommonFlatNode<RegionTreeSource>;
 
 
