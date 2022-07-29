@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CommonOptionComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit(): void {
   }

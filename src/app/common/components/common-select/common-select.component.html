@@ -22,4 +22,7 @@
       [attr.value]="option.value"
     ></div>
   </div> -->
+  <div class="select-body" *ngIf="show" (click)="selectChange($event)">
+    <ng-content></ng-content>
+  </div>
 </div>

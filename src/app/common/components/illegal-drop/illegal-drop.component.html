@@ -15,10 +15,20 @@
 </div> -->
 <!-- <div style="width: 300px"><common-select></common-select></div> -->
 
-<select [(ngModel)]="current">
+<!-- <select [(ngModel)]="current">
   <option *ngFor="let model of models" [value]="model">
     {{ model.name }}
   </option>
 </select>
 
-{{ current | json }}
+{{ current | json }} -->
+
+<common-select>
+  <common-option value="a">Apple</common-option>
+  <common-option value="b">Bear</common-option>
+</common-select>
+
+<!-- <select>
+  <option value="a">Apple</option>
+  <option value="b">Bear</option>
+</select> -->

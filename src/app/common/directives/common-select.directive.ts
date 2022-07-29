@@ -1,16 +1,16 @@
-import { Directive, ElementRef, Input } from "@angular/core";
+import { Directive, ElementRef, Input, OnInit } from "@angular/core";
+import { SelectControlValueAccessor } from "@angular/forms";
 
 @Directive({
   selector: 'common-select'
 })
-export class CommonSelectDirective {
+export class CommonSelectDirective extends SelectControlValueAccessor implements OnInit {
   @Input()
   set commonValue(value: any) {
 
   }
-
-  constructor(private _el: ElementRef) {
-    console.log('sdf')
+  ngOnInit(): void {
+    // console.log(this.value)
   }
 
 }

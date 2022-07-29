@@ -15,6 +15,7 @@ import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
 export class AICameraModelTableComponent implements OnInit, AfterViewInit {
   private selection!: SelectionModel<AICameraModelManageModel>;
 
+
   dataSource: AICameraModelManageModel[] = [];
   maxLength = 4;// 摄像机最大绑定AI模型数量
 
