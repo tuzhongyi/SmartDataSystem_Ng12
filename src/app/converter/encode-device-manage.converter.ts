@@ -1,13 +1,11 @@
-// EncodeDeviceManageModel
 
 import { Injectable } from "@angular/core";
-import { IConverter } from "../common/interfaces/converter.interface";
 import { Language } from "../common/tools/language";
 import { DeviceType } from "../enum/device-type.enum";
-import { OnlineStatus } from "../enum/online-status.enum";
 import { ProtocolType } from "../enum/protocol-type.enum";
 import { EncodeDevice } from "../network/model/encode-device";
 import { EncodeDeviceManageModel } from "../view-model/encode-device-manage.model";
+import { CommonModelConverter } from "./common-model.converter";
 
 
 type EncodeDeviceManageSource = EncodeDevice;
@@ -15,7 +13,7 @@ type EncodeDeviceManageSource = EncodeDevice;
 @Injectable({
   providedIn: 'root'
 })
-export class EncodeDeviceManageConverter implements IConverter<EncodeDeviceManageSource, EncodeDeviceManageModel>{
+export class EncodeDeviceManageConverter extends CommonModelConverter<EncodeDeviceManageModel>{
 
   Convert(source: EncodeDeviceManageSource) {
     if (source instanceof EncodeDevice) {
@@ -24,17 +22,6 @@ export class EncodeDeviceManageConverter implements IConverter<EncodeDeviceManag
     throw new Error('Error');
   }
 
-  iterateToModel<T extends Array<EncodeDeviceManageSource>>(data: T) {
-    let res: Array<EncodeDeviceManageModel> = [];
-
-    for (let i = 0; i < data.length; i++) {
-      let item = data[i];
-      const model = this.Convert(item);
-      res.push(model)
-    }
-
-    return res;
-  }
   private _fromEncodeDevice(item: EncodeDevice) {
     let model = new EncodeDeviceManageModel();
     model.Id = item.Id;

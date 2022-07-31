@@ -28,7 +28,7 @@ import { ResourceLabel } from 'src/app/network/model/resource-label.model';
 })
 export class EncodeDeviceManageComponent implements OnInit {
 
-  private _pageSize = 3;
+  private _pageSize = 9;
 
 
   // Table
