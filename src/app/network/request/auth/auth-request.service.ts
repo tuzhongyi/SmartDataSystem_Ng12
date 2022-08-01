@@ -1,3 +1,10 @@
+/*
+ * @Author: pmx 
+ * @Date: 2022-08-01 13:46:28 
+ * @Last Modified by:   pmx 
+ * @Last Modified time: 2022-08-01 13:46:28 
+ */
+
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
@@ -274,3 +281,40 @@ export class AuthorizationService implements CanActivate {
     });
   }
 }
+
+// 用自带的 HttpClient
+
+// async loginByUsername(username: string, password: string) {
+//   this._username = username;
+//   this._password = password;
+
+//   let res = await this._http.get<User>(UserUrl.login(username), {
+//     headers: this._header
+//   }).pipe(
+//     catchError((error: HttpErrorResponse) => {
+//       return this._handlerError(error)
+//     }),
+//   ).toPromise()
+//   if (res)
+//     this._storeUserInfo(res, this._password, res?.Id, res?.Resources ?? [])
+//   return plainToClass(User, res);
+
+// }
+// private _handlerError(error: HttpErrorResponse) {
+//   if (error.status == 403) {
+//     let authenticateHeader = error.headers.get('www-authenticate') ?? "";
+//     let challenge = this._parseAuthenticateHeader(authenticateHeader);
+//     this._sessionStorageService.challenge = challenge
+//     let authorization = this._generateChallengeHeader(
+//       challenge,
+//       'GET',
+//       UserUrl.login(this._username)
+//     );
+//     this._header = this._header.append('Authorization', authorization)
+//     return this._http.get<User>(UserUrl.login(this._username), {
+//       headers: this._header
+//     })
+//   }
+
+//   return of(null);
+// }
