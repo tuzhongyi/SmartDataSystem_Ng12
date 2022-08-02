@@ -49,8 +49,15 @@ export class AccountOperationComponent implements OnInit {
   logoutHandler() {
     this._sessionStorageService.clear();
     this._localStorageService.clear();
-    this._cookieService.deleteAll('/');
+
     this._router.navigateByUrl('/login');
+
+    // if (this._cookieService.check('savePassWord')) {
+    //   let savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
+    //   if (!savePassWord) {
+    //     this._cookieService.deleteAll('/');
+    //   }
+    // }
   }
   navigateToHelp() {
     window.open('http://garbage01.51hws.com/help/help.html');
