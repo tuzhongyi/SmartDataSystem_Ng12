@@ -24,7 +24,7 @@ import { DigestResponse } from './digest-response.class';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorizationService implements CanActivate {
+export class AuthorizationServiceModify implements CanActivate {
   private _username: string = '';
   private _password: string = '';
   private _nc: number = 0;
