@@ -1,0 +1,55 @@
+<!-- 垃圾落地总图表 -->
+<div class="illegal-drop-total vertical-layout">
+  <div class="vertical-header">
+    <div class="operate-bar">
+      <div class="left-wrapper filter-wrapper">
+        <div class="filter-group">
+          <div class="title">
+            <span class="hw-form-label">结束时间</span>
+          </div>
+          <div class="content">
+            <input type="text" DateTimePicker />
+          </div>
+        </div>
+        <div class="filter-group">
+          <div class="title">
+            <span class="hw-form-label">结束时间</span>
+          </div>
+          <div class="content">
+            <input type="text" DateTimePicker />
+          </div>
+        </div>
+        <div class="hw-normal-btn-group">
+          <button class="hw-blue-btn">
+            <i class="mdi mdi-magnify"></i>
+            查询
+          </button>
+          <button class="hw-blue-btn">
+            <i class="howell-icon-export"></i>
+            导出
+          </button>
+          <button class="hw-blue-btn">
+            <i class="howell-icon-export"></i>
+            CSV
+          </button>
+        </div>
+      </div>
+      <div class="right-wrapper">
+        <select>
+          <option value="">日报表</option>
+          <option value="">周报表</option>
+          <option value="">月报表</option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="vertical-main">
+    <common-table
+      [dataSubject]="dataSubject"
+      [columnModel]="columnModel"
+      [displayedColumns]="displayedColumns"
+      [selectStrategy]="selectStrategy"
+    ></common-table>
+  </div>
+  <div class="vertical-footer"></div>
+</div>

@@ -13,11 +13,11 @@ export class AICameraEventsModel implements CommonModel {
 }
 
 
-export interface AICameraEventsSearchInfo {
-  Condition: string;
-  BeginTime: Date;
-  EndTime: Date;
-  EventType: EventType;
-  ModelName: string;
-  Filter: boolean;
-}
+  export interface AICameraEventsSearchInfo {
+    Condition: string;
+    BeginTime: Date;
+    EndTime: Date;
+    EventType: EventType;
+    ModelName: string;
+    Filter: boolean;
+  }

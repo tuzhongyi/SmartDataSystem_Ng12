@@ -33,7 +33,7 @@ export class AICameraEventsBusiness {
     }
 
 
-    let { Data, Page } = await this.listCameraAIEvents(params);
+    let { Data, Page } = await this._listCameraAIEvents(params);
     let data = await this._converter.iterateToModel(Data);
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.EventTime, b.EventTime)
@@ -53,7 +53,7 @@ export class AICameraEventsBusiness {
     let res = await this._cameraAIModelRequest.list();
     return res.Data
   }
-  async listCameraAIEvents(params: GetCameraAIEventRecordsParams) {
+  private async _listCameraAIEvents(params: GetCameraAIEventRecordsParams) {
     return this._cameraAIEventRequest.list(params)
   }
 
