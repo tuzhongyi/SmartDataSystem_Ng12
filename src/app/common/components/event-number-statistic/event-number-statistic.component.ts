@@ -29,7 +29,7 @@ export class EventNumberStatisticComponent implements OnInit {
 
 
   @Input()
-  ResourceId: string = '310109000000';
+  ResourceId: string = '';
 
   // 虹口区: 310109000000
   // 欧阳路街道: 310109009000
@@ -37,6 +37,9 @@ export class EventNumberStatisticComponent implements OnInit {
   // 当前区划等级
   @Input()
   userResourceType: UserResourceType = UserResourceType.City;
+
+  // 默认筛选街道
+  defaultResourceType = UserResourceType.County;
 
 
   // Table
@@ -58,14 +61,19 @@ export class EventNumberStatisticComponent implements OnInit {
   // 
 
   // 行政区列表
-  options: SelectItem[] = [];
+  optionMap: Map<UserResourceType, SelectItem> = new Map();
 
   constructor(private _business: IllegalDropTotalBusiness, private _globalStore: GlobalStoreService) { }
 
   ngOnInit(): void {
     this._initUserResourceType();
-    if (this.options.length) {
-      this.searchInfo.ResourceType = this.options[2].value;
+    // 设置默认值
+    if (this.optionMap.has(this.defaultResourceType)) {
+      this.searchInfo.ResourceType = this.optionMap.get(this.defaultResourceType)!.value
+    }
+    console.log(this.optionMap)
+    for (let [k, v] of this.optionMap) {
+      console.log(k, v)
     }
     this._init();
 
@@ -83,69 +91,17 @@ export class EventNumberStatisticComponent implements OnInit {
     this._init();
   }
   private _initUserResourceType() {
-    let type: UserResourceType = this.userResourceType;
+    let resourceType: UserResourceType = this.userResourceType;
 
     do {
-      type = EnumHelper.GetResourceChildType(type);
-      this.options.push(
-        new SelectItem(
-          type.toString(),
-          type,
-          Language.UserResourceType(type)
-        )
-      );
-    } while (type != UserResourceType.Station)
+      resourceType = EnumHelper.GetResourceChildType(resourceType);
 
-    // console.log(this.options)
+      this.optionMap.set(resourceType, new SelectItem(
+        resourceType.toString(),
+        resourceType,
+        Language.UserResourceType(resourceType)
+      ))
+    } while (resourceType != UserResourceType.Station);
+
   }
 }
-
-// {
-//   "Id": "0af2654c-8716-48ca-bc18-0ae1f24857db",
-//   "Username": "admin",
-//   "Password": null,
-//   "PasswordHash": null,
-//   "PasswordSalt": null,
-//   "FirstName": null,
-//   "LastName": null,
-//   "Gender": 1,
-//   "MobileNo": null,
-//   "Email": null,
-//   "Note": null,
-//   "ExpiredTime": "2099-01-01T07:00:56.000Z",
-//   "CreateTime": "2019-03-06T07:01:12.000Z",
-//   "UpdateTime": "2019-06-21T07:06:13.645Z",
-//   "State": 0,
-//   "Role": [
-//       {
-//           "Id": "c245dfa9-ff65-43cc-9187-2e1d4cef6f84",
-//           "Name": "管理员",
-//           "CreateTime": "2019-03-06T15:40:12",
-//           "UpdateTime": "2019-03-06T15:40:16",
-//           "PrivacyData": 1,
-//           "UserData": 1,
-//           "StaticData": 1,
-//           "PictureData": 1,
-//           "Resources": [],
-//           "ServerId": null
-//       }
-//   ],
-//   "OpenId": null,
-//   "Resources": [
-//       {
-//           "Id": "310110000000",
-//           "Name": "杨浦区",
-//           "ResourceType": 4,
-//           "RoleFlags": 0,
-//           "AllSubResources": true,
-//           "Resources": []
-//       }
-//   ],
-//   "ServerId": null,
-//   "CanCreateWeChatUser": null,
-//   "CreatorId": null,
-//   "OffEvents": [],
-//   "UserType": null,
-//   "RandomPassword": null,
-//   "RandomPasswordExpiredTime": null
-// }

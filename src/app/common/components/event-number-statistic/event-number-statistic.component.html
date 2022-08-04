@@ -17,9 +17,9 @@
           </div>
           <div class="content">
             <select [(ngModel)]="searchInfo.ResourceType">
-              <ng-container *ngFor="let option of options">
-                <option [value]="option.value">
-                  {{ option.language }}
+              <ng-container *ngFor="let option of optionMap | keyvalue">
+                <option [value]="option.value.value">
+                  {{ option.value.language }}
                 </option>
               </ng-container>
             </select>

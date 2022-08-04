@@ -153,7 +153,6 @@ export class IllegalDropTotalBusiness {
     return this._divisionRequest.get(id);
   }
 
-
   private _register(models: EventNumberStatisticModel[]) {
     models.forEach(model => {
       if (!this.map.has(model.Id)) {
