@@ -20,7 +20,7 @@ import { interval, Subscription } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
@@ -47,8 +47,7 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
   providers: [DisposalCountBusiness],
 })
 export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   DisposalCountType = DisposalCountType;
   public title: string = '今日任务处置';
 
@@ -62,8 +61,8 @@ export class DisposalCountComponent
 
   constructor(
     private business: DisposalCountBusiness,
-    private storeService: StoreService
-  ) {}
+    private storeService: GlobalStoreService
+  ) { }
 
   taskSerie: GaugeSeriesOption = {
     type: 'gauge',

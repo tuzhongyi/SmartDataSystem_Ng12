@@ -4,7 +4,7 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Language } from 'src/app/common/tools/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GetDivisionStatisticNumbersParams } from 'src/app/network/request/division/division-request.params';
@@ -23,7 +23,7 @@ export class StatisticCardBussiness
   constructor(
     private divisionService: DivisionRequestService,
     private garbageStationService: GarbageStationRequestService,
-    private storeService: StoreService,
+    private storeService: GlobalStoreService,
     private window: WindowBussiness
   ) {
     this.loading.subscribe(async (x) => {
@@ -68,7 +68,7 @@ export class StatisticCardBussiness
     switch (model.type) {
       case StatisticType.stationCount:
         this.window.station.stationId = undefined;
-        this.window.station.show = true;        
+        this.window.station.show = true;
         break;
       case StatisticType.stationDrop:
         this.window.drop.divisionId = undefined;

@@ -4,10 +4,10 @@ export interface CommonModelSource {
   [key: string]: any;
 }
 
-export abstract class CommonModelConverter<T> {
+export abstract class CommonModelConverter<T, M = any> {
   abstract Convert(source: CommonModelSource, ...res: any[]): T;
 
-  iterateToModel<M extends CommonModelSource>(data: M[]) {
+  iterateToModel(data: M[]) {
     let res: T[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -19,10 +19,10 @@ export abstract class CommonModelConverter<T> {
 }
 
 
-export abstract class CommonModelPromiseConverter<T> {
+export abstract class CommonModelPromiseConverter<T, M = any> {
   abstract Convert(source: CommonModelSource, ...res: any[]): Promise<T>;
 
-  async iterateToModel<M extends CommonModelSource>(data: M[]) {
+  async iterateToModel(data: M[]) {
     let res: T[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];

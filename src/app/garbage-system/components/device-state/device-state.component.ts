@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import {
@@ -39,11 +39,10 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
 })
 export class DeviceStateComponent
   implements
-    IComponent<IModel, DeviceStateCountModel>,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
-{
+  IComponent<IModel, DeviceStateCountModel>,
+  OnInit,
+  OnDestroy,
+  AfterViewInit {
   @Output()
   Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
 

@@ -26,7 +26,7 @@ import { StaticDataRole } from '../enum/role-static-data.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
-import { StoreService } from '../common/service/store.service';
+import { GlobalStoreService } from '../common/service/global-store.service';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
     private _cookieService: CookieService,
-    private _storeService: StoreService
+    private _storeService: GlobalStoreService
   ) {
     this._titleService.setTitle('用户登录');
   }

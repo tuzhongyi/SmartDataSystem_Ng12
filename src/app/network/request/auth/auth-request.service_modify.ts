@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
 import CryptoJS from 'crypto-js';
@@ -36,7 +36,7 @@ export class AuthorizationServiceModify implements CanActivate {
 
     private _cookieService: CookieService,
     private _router: Router,
-    private _store: StoreService
+    private _store: GlobalStoreService
   ) {
     if (this._cookieService.check('userName')) {
       let userName = this._cookieService.get('userName');

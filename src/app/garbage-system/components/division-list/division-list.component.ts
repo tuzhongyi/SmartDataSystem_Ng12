@@ -7,7 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionListBusiness } from './division-list.business';
@@ -34,7 +34,7 @@ export class DivisionListComponent implements OnInit {
 
   constructor(
     private divisionListBusiness: DivisionListBusiness,
-    private storeService: StoreService
+    private storeService: GlobalStoreService
   ) { }
 
   ngOnInit(): void {

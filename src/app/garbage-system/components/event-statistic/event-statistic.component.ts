@@ -16,7 +16,7 @@ import {
 } from 'echarts';
 import { ResizedEvent } from 'angular-resize-event';
 import { Subscription } from 'rxjs';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { EventStatisticBusiness } from './event-statistic.business';
@@ -41,8 +41,7 @@ type EChartOptions = echarts.ComposeOption<
   providers: [EventStatisticBusiness],
 })
 export class EventStatisticComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   // 在销毁组件时，取消订阅
   private subscription: Subscription | null = null;
 
@@ -91,16 +90,16 @@ export class EventStatisticComponent
   };
   merge: EChartOptions = {};
   constructor(
-    private _storeService: StoreService,
+    private _storeService: GlobalStoreService,
     private _business: EventStatisticBusiness,
     private _converter: EventStatisticConverter
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.subscription = this._storeService.statusChange.subscribe(() => {
       this._changeData();
     });
-    this._storeService.interval.subscribe(x=>{
+    this._storeService.interval.subscribe(x => {
       this._changeData();
     })
     this._changeData();
@@ -114,7 +113,7 @@ export class EventStatisticComponent
       this.subscription = null;
     }
   }
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void { }
 
   private _changeData() {
     this.divisionId = this._storeService.divisionId;

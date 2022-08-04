@@ -9,7 +9,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,
@@ -29,13 +29,13 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
 @Injectable()
 export class GarbageDropStationCountTableBusiness
   implements
-    IBusiness<NumberStatisticV2Type[], GarbageDropStationCountTableModel[]>
+  IBusiness<NumberStatisticV2Type[], GarbageDropStationCountTableModel[]>
 {
   constructor(
-    private store: StoreService,
+    private store: GlobalStoreService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) {}
+  ) { }
 
   Converter: IPromiseConverter<
     NumberStatisticV2Type[],

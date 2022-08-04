@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommitteesIndexEventTriggerBusiness } from './business/committees-index-event-trigger.business';
@@ -66,7 +66,7 @@ export class CommitteesIndexComponent implements OnInit {
     public business: CommitteesIndexBusiness,
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: StoreService,
+    private _storeService: GlobalStoreService,
     public window: CommitteesWindowBussiness,
     public trigger: CommitteesIndexEventTriggerBusiness,
     public patrol: CommitteesIndexPatrolControlBusiness,
@@ -95,7 +95,7 @@ export class CommitteesIndexComponent implements OnInit {
             default:
               break;
           }
-        } catch {}
+        } catch { }
       }
     });
   }

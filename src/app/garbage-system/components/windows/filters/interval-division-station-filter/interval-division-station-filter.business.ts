@@ -6,7 +6,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -25,7 +25,7 @@ export class EventRecordFilterBusiness
   implements IBusiness<string, DivisionStationFilteModel>
 {
   constructor(
-    private storeService: StoreService,
+    private storeService: GlobalStoreService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
   ) { }

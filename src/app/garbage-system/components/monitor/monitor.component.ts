@@ -10,7 +10,7 @@ import { ActivatedRoute } from '@angular/router';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { AuthorizationService } from 'src/app/network/request/auth/auth-request.service';
 import { StatisticCardViewModel } from '../statistic-card/statistic-card.model';
 import { MapControlBusiness } from './business/map-control.business';
@@ -52,17 +52,17 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
 export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
-  get HideButton():boolean{
+  get HideButton(): boolean {
     return this._storeService.HideButton;
   }
-  get HideTitlebar():boolean{
+  get HideTitlebar(): boolean {
     return this._storeService.HideTitlebar;
   }
 
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: StoreService,
+    private _storeService: GlobalStoreService,
     public window: WindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
     public map: MapControlBusiness,

@@ -31,10 +31,7 @@ export class CommonSelectComponent implements OnInit {
     this.show = !this.show;
   }
   selectChange(e: Event) {
-    this.show = false;
-    // let target = e.target as HTMLElement;
-    // console.log(target)
-    console.log(this.aa.value)
+
   }
 
 }

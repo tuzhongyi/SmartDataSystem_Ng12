@@ -11,7 +11,7 @@ import {
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Language } from 'src/app/common/tools/language';
 import { Division } from 'src/app/network/model/division.model';
 import {
@@ -34,14 +34,14 @@ import { CommitteesHistroyTableService } from './committees-history-table.servic
 })
 export class CommitteesHistroyTableComponent
   implements
-    OnInit,
-    OnChanges,
-    IComponent<
-      Array<IllegalDropEventRecord | MixedIntoEventRecord>,
-      CommitteesHistoryTableViewModel<
-        IllegalDropEventRecord | MixedIntoEventRecord
-      >[]
-    >
+  OnInit,
+  OnChanges,
+  IComponent<
+  Array<IllegalDropEventRecord | MixedIntoEventRecord>,
+  CommitteesHistoryTableViewModel<
+    IllegalDropEventRecord | MixedIntoEventRecord
+  >[]
+  >
 {
   Language = Language;
   headWidths = ['10%', '60%', '15%', 'calc(15% - 8px)', '8px'];
@@ -62,7 +62,7 @@ export class CommitteesHistroyTableComponent
 
   constructor(
     business: CommitteesHistroyTableService,
-    private store: StoreService
+    private store: GlobalStoreService
   ) {
     this.business = business;
   }

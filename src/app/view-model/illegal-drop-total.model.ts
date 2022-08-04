@@ -2,21 +2,24 @@ import { EventType } from "@angular/router";
 import { UserResourceType } from "../enum/user-resource-type.enum";
 import { CommonModel } from "./common-model";
 
-export class IllegalDropTotalModel implements CommonModel {
+export class EventNumberStatisticModel implements CommonModel {
   Id!: string;
   Name!: string;
   ParentId!: string | null;
-  ParentName!: string;
+  ParentModel!: EventNumberStatisticModel | null;
+  EventNumber!: string;
+  Type!: UserResourceType;
 }
 
 
 
-export interface IllegalDropTotalSearchInfo {
+export interface EventNumberStatisticSearchInfo {
   // Condition: string;
   // BeginTime: Date;
   // EndTime: Date;
   // EventType: EventType;
   // ModelName: string;
   // Filter: boolean;
-  resourceType: UserResourceType;
+  ResourceType: UserResourceType;
+  ResourceId: string;
 }

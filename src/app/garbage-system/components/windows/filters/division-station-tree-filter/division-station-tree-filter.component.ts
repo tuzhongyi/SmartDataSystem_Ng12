@@ -19,7 +19,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 
@@ -56,7 +56,7 @@ export class DivisionStationTreeFilterComponent
     top: '0',
   };
   HorizontalAlign = HorizontalAlign;
-  constructor(private store: StoreService) {
+  constructor(private store: GlobalStoreService) {
     this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
   }
   ngOnChanges(changes: SimpleChanges): void {

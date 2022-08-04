@@ -5,7 +5,7 @@ import { Flags } from 'src/app/common/tools/flags';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Language } from 'src/app/common/tools/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -16,7 +16,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 @Injectable()
 export class AMapBusiness {
   constructor(
-    private storeService: StoreService,
+    private storeService: GlobalStoreService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
   ) {
@@ -299,8 +299,8 @@ export class AMapBusiness {
         opt.text = hours
           ? hours + Language.json.Time.hour
           : minutes
-          ? minutes + Language.json.Time.minute
-          : '';
+            ? minutes + Language.json.Time.minute
+            : '';
 
         const color = new CesiumDataController.Color();
         color.rgb = '#36e323';

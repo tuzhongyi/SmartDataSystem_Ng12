@@ -4,7 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { AccountOperationDisplay } from './account-operation.model';
 
 @Component({
@@ -21,10 +21,10 @@ export class AccountOperationComponent implements OnInit {
   constructor(
     private _sessionStorageService: SessionStorageService,
     private _localStorageService: LocalStorageService,
-    private _store: StoreService,
+    private _store: GlobalStoreService,
     private _cookieService: CookieService,
     private _router: Router
-  ) {}
+  ) { }
 
   userName: string = '';
   display = new AccountOperationDisplay();

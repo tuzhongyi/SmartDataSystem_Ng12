@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -15,16 +15,16 @@ import { GarbageDropStationTableModel } from './garbage-drop-station-table.model
 @Injectable()
 export class GarbageDropStationTableBusiness
   implements
-    IBusiness<
-      PagedList<GarbageStationNumberStatistic>,
-      PagedList<GarbageDropStationTableModel>
-    >
+  IBusiness<
+  PagedList<GarbageStationNumberStatistic>,
+  PagedList<GarbageDropStationTableModel>
+  >
 {
   constructor(
-    private storeService: StoreService,
+    private storeService: GlobalStoreService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) {}
+  ) { }
 
   Converter: IPromiseConverter<
     PagedList<GarbageStationNumberStatistic>,

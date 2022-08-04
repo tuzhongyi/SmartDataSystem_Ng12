@@ -5,13 +5,13 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 @Injectable({
   providedIn: 'root',
 })
-export class StoreService {
+export class GlobalStoreService {
   statusChange = new EventEmitter();
 
   password?: string;
 
-  HideButton:boolean = false;
-  HideTitlebar:boolean = false;
+  HideButton: boolean = false;
+  HideTitlebar: boolean = false;
 
   private _divisionId: string = '';
   private _divisionType: DivisionType = DivisionType.None;

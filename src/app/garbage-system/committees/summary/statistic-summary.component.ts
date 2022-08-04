@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { TheDayTime } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Language } from 'src/app/common/tools/language';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
@@ -28,8 +28,7 @@ import { StatisticSummaryService } from './statistic-summary.service';
   providers: [StatisticSummaryService],
 })
 export class StatisticSummaryComponent
-  implements OnInit, OnChanges, AfterViewInit
-{
+  implements OnInit, OnChanges, AfterViewInit {
   private _unit: TimeUnit = TimeUnit.Hour;
 
   title = '汇总信息';
@@ -98,9 +97,9 @@ export class StatisticSummaryComponent
   constructor(
     private datePipe: DatePipe,
     private service: StatisticSummaryService,
-    private store: StoreService
-  ) {}
-  ngAfterViewInit(): void {}
+    private store: GlobalStoreService
+  ) { }
+  ngAfterViewInit(): void { }
   ngOnChanges(changes: SimpleChanges): void {
     if (this.Committees && this.Stations && this.Date) {
       this.onLoaded();

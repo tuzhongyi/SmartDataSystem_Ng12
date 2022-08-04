@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { IllegalStatisticBusiness } from './event-statistic-echarts.business';
@@ -51,9 +51,9 @@ export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
   @Input('type') currentType: EventType = EventType.IllegalDrop;
 
   constructor(
-    private storeService: StoreService,
+    private storeService: GlobalStoreService,
     private business: IllegalStatisticBusiness
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.lineOption.xAxisInterval = [0, 5, 11, 17, 23];
@@ -87,7 +87,7 @@ export class EvemtStatisticEChartsComponent implements OnInit, OnDestroy {
     this.subscription = this.storeService.statusChange.subscribe(() => {
       this.changeStatus();
     });
-    this.storeService.interval.subscribe(x=>{
+    this.storeService.interval.subscribe(x => {
       this.changeStatus();
     })
     this.changeStatus();

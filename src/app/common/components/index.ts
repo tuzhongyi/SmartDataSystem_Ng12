@@ -52,7 +52,7 @@ import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-eve
 import { ComplexSearchComponent } from './complex-search/complex-search.component';
 import { CommonSelectComponent } from './common-select/common-select.component';
 import { CommonOptionComponent } from './common-option/common-option.component';
-import { IllegalDropTotalComponent } from './illegal-drop-total/illegal-drop-total.component';
+import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -108,5 +108,5 @@ export const CUSTOM_COMPONENTS = [
   ComplexSearchComponent,
   CommonSelectComponent,
   CommonOptionComponent,
-  IllegalDropTotalComponent
+  EventNumberStatisticComponent
 ];

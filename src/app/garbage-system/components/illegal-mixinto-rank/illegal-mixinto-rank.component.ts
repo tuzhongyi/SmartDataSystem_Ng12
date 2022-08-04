@@ -22,7 +22,7 @@ import {
   RankResourceType,
 } from 'src/app/view-model/rank.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
@@ -65,7 +65,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   public rankData: RankModel[] = [];
   constructor(
     public business: IllegalMixintoRankBusiness,
-    private storeService: StoreService
+    private storeService: GlobalStoreService
   ) { }
 
   ngOnInit(): void {

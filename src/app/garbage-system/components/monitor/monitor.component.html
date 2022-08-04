@@ -20,40 +20,10 @@
       [ngClass]="{ fullscreen: patrol.fullscreen == true }"
     >
       <div class="monitor-body__wrapper">
-        <div *ngIf="statistic.cards" class="statistic-card-group">
-          <ng-container *ngFor="let item of statistic.cards">
-            <app-statistic-card
-              [model]="item"
-              (Click)="statistic.onclick(item)"
-            ></app-statistic-card>
-          </ng-container>
-        </div>
-        <div class="map-control">
-          <!-- <app-map-control
-            (patrol)="map.onpatrol()"
-            (VideoPlay)="map.onvideoplay($event)"
-            (illegalDropClicked)="map.onIllegalDropClicked($event)"
-            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
-            (garbageCountClicked)="map.onGarbageCountClicked($event)"
-            (garbageFullClicked)="map.onGarbageFullClicked($event)"
-            [position]="map.position"
-          ></app-map-control> -->
-        </div>
-      </div>
-      <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <app-patrol-control
-          (close)="patrol.onclose()"
-          (fullscreen)="patrol.onfullscreen()"
-        ></app-patrol-control>
+        <event-number-statistic></event-number-statistic>
       </div>
     </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-device-state
-          (Click)="trigger.deviceState.onclick($event)"
-        ></app-device-state>
-      </div>
-    </div>
+
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-illegal-mixinto-rank
@@ -62,47 +32,20 @@
         </app-illegal-mixinto-rank>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <!-- <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-retention-rank
           (Click)="trigger.retentionRank.onclick($event)"
         ></app-retention-rank>
       </div>
-    </div>
-    <div class="monitor-body__item">
+    </div> -->
+    <!-- <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-disposal-rank
           (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
         ></app-disposal-rank>
       </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
-        <howell-event-statistic
-          [title]="'乱扔垃圾统计表'"
-        ></howell-event-statistic>
-      </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <!-- <app-event-statistic-echarts
-          [title]="'混合投放统计表'"
-          [type]="mixIntoType"
-        ></app-event-statistic-echarts> -->
-        <howell-event-statistic
-          [title]="'混合投放统计表'"
-          [type]="mixIntoType"
-        ></howell-event-statistic>
-      </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-disposal-count
-          (task)="trigger.risposalCount.ontask()"
-        ></app-disposal-count>
-      </div>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -114,15 +57,6 @@
 >
 </app-video-window>
 
-<!-- <app-window [Model]="window.record" [style]="window.record.style">
-  <ng-container *ngIf="window.record.show">
-    <app-event-record-details
-      [recordCount]="window.record.count"
-      [type]="window.record.type"
-    >
-    </app-event-record-details>
-  </ng-container>
-</app-window> -->
 <howell-event-record-window
   *ngIf="window.record.show"
   [Model]="window.record"

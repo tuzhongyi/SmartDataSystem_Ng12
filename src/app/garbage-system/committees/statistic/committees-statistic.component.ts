@@ -13,7 +13,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { Language } from 'src/app/common/tools/language';
-import { StoreService } from 'src/app/common/service/store.service';
+import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 
 @Component({
@@ -24,9 +24,9 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 })
 export class CommitteesStatisticComponent
   implements
-    OnInit,
-    OnChanges,
-    IComponent<DivisionNumberStatistic, CommitteesStatisticViewModel>
+  OnInit,
+  OnChanges,
+  IComponent<DivisionNumberStatistic, CommitteesStatisticViewModel>
 {
   Language = Language;
 
@@ -54,7 +54,7 @@ export class CommitteesStatisticComponent
 
   constructor(
     business: CommitteesStatisticBusiness,
-    private store: StoreService
+    private store: GlobalStoreService
   ) {
     this.business = business;
   }
