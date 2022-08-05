@@ -30,7 +30,7 @@ export class IllegalDropTotalBusiness {
     // 获取原始数据
     let { Data, Page } = await this._getList(searchInfo, pageIndex, pageSize);
 
-    console.log('区划', Data)
+    // console.log('区划', Data)
     // 转成视图数据
     let models = await this._converter.iterateToModel(Data);
 
@@ -101,8 +101,8 @@ export class IllegalDropTotalBusiness {
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionStatisticNumbersParamsV2();
       params.TimeUnit = TimeUnit.Day;
-      params.BeginTime = Time.beginTime(new Date());
-      params.EndTime = Time.endTime(new Date())
+      params.BeginTime = searchInfo.BeginTime;
+      params.EndTime = searchInfo.EndTime;
       params.DivisionIds = ids;
       let res = this._divisionRequest.statistic.number.history.list(params)
       return res;
@@ -142,9 +142,7 @@ export class IllegalDropTotalBusiness {
 
   private _register(models: EventNumberStatisticModel[]) {
     models.forEach(model => {
-      if (!this.map.has(model.Id)) {
-        this.map.set(model.Id, model)
-      }
+      this.map.set(model.Id, model)
     })
 
   }

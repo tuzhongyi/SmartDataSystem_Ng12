@@ -15,8 +15,8 @@ export class EventNumberStatisticModel implements CommonModel {
 
 export interface EventNumberStatisticSearchInfo {
   // Condition: string;
-  // BeginTime: Date;
-  // EndTime: Date;
+  BeginTime: Date;
+  EndTime: Date;
   // EventType: EventType;
   // ModelName: string;
   // Filter: boolean;

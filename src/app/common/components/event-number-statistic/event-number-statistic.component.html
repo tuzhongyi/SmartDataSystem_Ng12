@@ -8,7 +8,15 @@
             <span class="hw-form-label">结束时间</span>
           </div>
           <div class="content">
-            <input type="text" DateTimePicker />
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="dateFormat"
+              [date]="today"
+              (change)="changeBegin($event)"
+              class="hw-form-control hw-form-input"
+            />
           </div>
         </div>
         <div class="filter-group">
@@ -58,7 +66,7 @@
     ></common-table>
   </div>
   <div class="vertical-footer" style="justify-content: flex-end">
-    <div class="footer-item">
+    <!-- <div class="footer-item">
       <div class="footer-info">
         <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
         <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
@@ -72,8 +80,6 @@
         (page)="pageEvent($event)"
       >
       </app-paginator>
-    </div>
+    </div> -->
   </div>
 </div>
-
-{{ searchInfo.ResourceType }}

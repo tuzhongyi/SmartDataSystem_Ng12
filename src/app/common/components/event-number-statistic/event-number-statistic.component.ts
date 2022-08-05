@@ -10,6 +10,7 @@ import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from 'src/a
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { GlobalStoreService } from '../../service/global-store.service';
 import { Language } from '../../tools/language';
+import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
@@ -85,7 +86,12 @@ export class EventNumberStatisticComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
+  dateFormat: string = 'yyyy年MM月dd日';
+  today = new Date();
+
   searchInfo: EventNumberStatisticSearchInfo = {
+    BeginTime: Time.beginTime(this.today),
+    EndTime: Time.endTime(this.today),
     ResourceType: this.resourceDefault,
     ResourceId: this.resourceId
   }
@@ -117,6 +123,7 @@ export class EventNumberStatisticComponent implements OnInit {
     // this.dataSubject.next([...res1.Data, ...res2.Data]);
 
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
+    console.log(res)
     this.dataSubject.next(res.Data);
   }
 
@@ -129,6 +136,14 @@ export class EventNumberStatisticComponent implements OnInit {
     this._init();
     console.log(this.searchInfo)
   }
+
+  changeBegin(date: Date) {
+    // this.searchInfo.BeginTime = date;
+    console.log(date)
+    this.searchInfo.BeginTime = Time.beginTime(date);
+    this.searchInfo.EndTime = Time.endTime(date);
+  }
+
   private _initUserResourceType() {
     let resourceType: UserResourceType = this.resourceType;
     do {
