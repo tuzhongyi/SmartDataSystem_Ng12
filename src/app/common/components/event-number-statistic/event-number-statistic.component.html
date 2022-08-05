@@ -17,16 +17,16 @@
           </div>
           <div class="content">
             <select [(ngModel)]="searchInfo.ResourceType">
-              <ng-container *ngFor="let option of optionMap | keyvalue">
-                <option [value]="option.value.value">
-                  {{ option.value.language }}
+              <ng-container *ngFor="let option of options">
+                <option [ngValue]="option.value">
+                  {{ option.language }}
                 </option>
               </ng-container>
             </select>
           </div>
         </div>
         <div class="hw-normal-btn-group">
-          <button class="hw-blue-btn">
+          <button class="hw-blue-btn" (click)="search()">
             <i class="mdi mdi-magnify"></i>
             查询
           </button>
@@ -75,3 +75,5 @@
     </div>
   </div>
 </div>
+
+{{ searchInfo.ResourceType }}

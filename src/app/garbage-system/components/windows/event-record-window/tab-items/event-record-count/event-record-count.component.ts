@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { EventRecordCountTableModel } from 'src/app/common/components/tables/event-record-count-table/event-record-count-table.model';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';

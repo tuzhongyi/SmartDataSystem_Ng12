@@ -130,9 +130,10 @@ export class DivisionTreeComponent extends CommonTree implements OnInit {
 
 
     let res = await this._business.init(this.resourceType, this.depth);
-    this.dataSubject.next(res)
+    this.dataSubject.next(res);
     if (this.tree) {
       this.tree.expandNodeRecursively(res, this.showDepth)
+      this.tree.setDefaultNodes();
     }
   }
 
@@ -141,6 +142,7 @@ export class DivisionTreeComponent extends CommonTree implements OnInit {
     if (node) {
 
       this.dataSubject.next(this.dataSubject.value)
+
       if (this.tree) {
         this.tree.checkAllDescendants(flat);
         // 一定要在check之后设置默认

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -24,22 +25,52 @@ import { IllegalDropStatisticConf } from './event-number-statistic.config';
 })
 export class EventNumberStatisticComponent implements OnInit {
 
-  /**private */
+  // 拉取所有数据
   private _pageSize = 9527;
+  private _firstSize = 20;
 
-
+  // 默认展示垃圾落地统计信息
   @Input()
-  ResourceId: string = '';
+  eventType: EventType = EventType.IllegalDrop
 
-  // 虹口区: 310109000000
-  // 欧阳路街道: 310109009000
+
+  // 当前区划ID
+  private _resourceId: string = '';
+  @Input()
+  set resourceId(id: string) {
+    console.log('set resourceId')
+    this._resourceId = id;
+    this.searchInfo.ResourceId = id;
+  }
+  get resourceId() {
+    return this._resourceId;
+  }
 
   // 当前区划等级
+  private _resourceType: UserResourceType = UserResourceType.City;
   @Input()
-  userResourceType: UserResourceType = UserResourceType.City;
+  set resourceType(type: UserResourceType) {
+    console.log('set resourceType')
+    this._resourceType = type;
+    this.searchInfo.ResourceType = EnumHelper.GetResourceChildType(type);
+  }
+  get resourceType() {
+    return this._resourceType;
+  }
 
-  // 默认筛选街道
-  defaultResourceType = UserResourceType.County;
+  // 默认筛选项
+  private _resourceDefault: UserResourceType = EnumHelper.GetResourceChildType(this.resourceType)
+  @Input()
+  set resourceDefault(type: UserResourceType) {
+    console.log('set default')
+    this._resourceDefault = type;
+    this.searchInfo.ResourceType = type;
+  }
+  get resourceDefault() {
+    return this._resourceDefault;
+  }
+  // 下拉表
+  options: SelectItem[] = [];
 
 
   // Table
@@ -55,33 +86,37 @@ export class EventNumberStatisticComponent implements OnInit {
   pageIndex = 1;
 
   searchInfo: EventNumberStatisticSearchInfo = {
-    ResourceType: UserResourceType.None,
-    ResourceId: this.ResourceId
+    ResourceType: this.resourceDefault,
+    ResourceId: this.resourceId
   }
-  // 
 
-  // 行政区列表
-  optionMap: Map<UserResourceType, SelectItem> = new Map();
 
-  constructor(private _business: IllegalDropTotalBusiness, private _globalStore: GlobalStoreService) { }
+  constructor(private _business: IllegalDropTotalBusiness) { }
 
   ngOnInit(): void {
+    // 模版要用 ngValue
     this._initUserResourceType();
-    // 设置默认值
-    if (this.optionMap.has(this.defaultResourceType)) {
-      this.searchInfo.ResourceType = this.optionMap.get(this.defaultResourceType)!.value
-    }
-    console.log(this.optionMap)
-    for (let [k, v] of this.optionMap) {
-      console.log(k, v)
-    }
     this._init();
 
   }
   private async _init() {
+    // if (this.searchInfo.ResourceType == UserResourceType.County) {
+    //   this._firstSize = 50;
+    // }
+    // else if (this.searchInfo.ResourceType == UserResourceType.Committees) {
+    //   this._firstSize = 1000;
+    // }
+    // else if (this.searchInfo.ResourceType == UserResourceType.Station) {
+    //   this._firstSize = 100;
+    // }
+    // let res1 = await this._business.init(this.searchInfo, this.pageIndex, this._firstSize);
+    // this.dataSubject.next(res1.Data);
+
+    // let res2 = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize - this._firstSize);
+
+    // this.dataSubject.next([...res1.Data, ...res2.Data]);
+
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
-    console.log(res);
-    this.page = res.Page;
     this.dataSubject.next(res.Data);
   }
 
@@ -90,18 +125,23 @@ export class EventNumberStatisticComponent implements OnInit {
     this.pageIndex = pageInfo.pageIndex + 1;
     this._init();
   }
+  search() {
+    this._init();
+    console.log(this.searchInfo)
+  }
   private _initUserResourceType() {
-    let resourceType: UserResourceType = this.userResourceType;
-
+    let resourceType: UserResourceType = this.resourceType;
     do {
       resourceType = EnumHelper.GetResourceChildType(resourceType);
 
-      this.optionMap.set(resourceType, new SelectItem(
+      let item = new SelectItem(
         resourceType.toString(),
         resourceType,
         Language.UserResourceType(resourceType)
-      ))
-    } while (resourceType != UserResourceType.Station);
+      )
+      this.options.push(item);
+
+    } while (resourceType != UserResourceType.Station);// 最底层区划是 GarbageStation
 
   }
 }

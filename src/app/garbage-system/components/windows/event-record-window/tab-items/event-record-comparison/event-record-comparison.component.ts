@@ -8,7 +8,7 @@ import {
   ITimeDataGroup,
 } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { TimeDataGroupExportConverter } from 'src/app/converter/exports/time-data-group-exports.converter';

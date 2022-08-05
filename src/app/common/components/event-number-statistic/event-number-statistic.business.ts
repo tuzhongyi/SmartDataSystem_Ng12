@@ -20,18 +20,12 @@ import { Time } from "../../tools/time";
 @Injectable()
 export class IllegalDropTotalBusiness {
   private map: Map<string, EventNumberStatisticModel> = new Map();
-
+  count = 0;
   constructor(private _divisionRequest: DivisionRequestService, private _garbageStationRequest: GarbageStationRequestService, private _converter: EventNumberStatisticConverter) {
 
   }
 
   async init(searchInfo: EventNumberStatisticSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
-
-
-    // params.Ids = ['310109009000', "310109011000", '310109010000', '310109014000']
-    // params.Ids = [];
-
-
 
     // 获取原始数据
     let { Data, Page } = await this._getList(searchInfo, pageIndex, pageSize);
@@ -54,7 +48,7 @@ export class IllegalDropTotalBusiness {
     }
 
     // 数量统计信息
-    let statistics = await this.getStatistic(searchInfo, models);
+    let statistics = await this._getStatistic(searchInfo, models);
 
     statistics.forEach(({ Id, EventNumbers = [] }) => {
       if (this.map.has(Id)) {
@@ -82,9 +76,6 @@ export class IllegalDropTotalBusiness {
 
   }
 
-
-
-
   private _getList(searchInfo: EventNumberStatisticSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionsParams();
@@ -105,9 +96,7 @@ export class IllegalDropTotalBusiness {
   }
 
 
-
-  getStatistic(searchInfo: EventNumberStatisticSearchInfo, models: EventNumberStatisticModel[]) {
-
+  private _getStatistic(searchInfo: EventNumberStatisticSearchInfo, models: EventNumberStatisticModel[]) {
     let ids = models.map(model => model.Id);
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionStatisticNumbersParamsV2();
@@ -118,7 +107,6 @@ export class IllegalDropTotalBusiness {
       let res = this._divisionRequest.statistic.number.history.list(params)
       return res;
     } else {
-
       let params = new GetGarbageStationStatisticNumbersParamsV2();
       params.TimeUnit = TimeUnit.Day;
       params.BeginTime = Time.beginTime(new Date());
@@ -127,9 +115,7 @@ export class IllegalDropTotalBusiness {
       let res = this._garbageStationRequest.statistic.number.history.list(params)
       return res;
     }
-
   }
-
 
 
 
@@ -139,7 +125,7 @@ export class IllegalDropTotalBusiness {
         let parentModel = this.map.get(model.ParentId)!;
         return parentModel;
       } else {
-        let division = await this._getParent(model.ParentId);
+        let division = await this._getDivision(model.ParentId);
         let parentModel = this._converter.Convert(division);
         this._register([parentModel]);
         return parentModel;
@@ -149,7 +135,8 @@ export class IllegalDropTotalBusiness {
     return null;
   }
 
-  private _getParent(id: string) {
+  // 获取当前区划等级
+  private _getDivision(id: string) {
     return this._divisionRequest.get(id);
   }
 
@@ -163,7 +150,7 @@ export class IllegalDropTotalBusiness {
   }
 
 }
-
-// 186 个街道
-// 4196 个居委会
 // 15 个区
+// 186 个街道
+// 4197 个居委会
+// 1496 个厢房

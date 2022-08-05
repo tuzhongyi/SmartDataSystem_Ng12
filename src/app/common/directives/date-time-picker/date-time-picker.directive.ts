@@ -10,7 +10,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { formatDate } from '@angular/common';
-import { OneWeekDate } from '../tools/tool';
+import { OneWeekDate } from '../../tools/tool';
 
 declare let $: any;
 

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 declare var $: any;

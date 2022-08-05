@@ -5,7 +5,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker.directive';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 

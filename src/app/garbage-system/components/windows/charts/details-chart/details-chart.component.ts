@@ -14,7 +14,7 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
-} from 'src/app/common/directives/date-time-picker.directive';
+} from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';

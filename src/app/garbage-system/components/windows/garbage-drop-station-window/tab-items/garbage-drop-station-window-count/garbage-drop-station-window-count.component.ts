@@ -6,7 +6,7 @@ import { GarbageDropStationCountTableModel } from 'src/app/common/components/tab
 import {
   DateTimePickerConfig,
   DateTimePickerView,
-} from 'src/app/common/directives/date-time-picker.directive';
+} from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
