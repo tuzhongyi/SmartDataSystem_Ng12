@@ -137,6 +137,9 @@ export class EventNumberStatisticComponent implements OnInit {
     console.log(this.searchInfo)
   }
 
+  export() {
+
+  }
   changeBegin(date: Date) {
     // this.searchInfo.BeginTime = date;
     console.log(date)
