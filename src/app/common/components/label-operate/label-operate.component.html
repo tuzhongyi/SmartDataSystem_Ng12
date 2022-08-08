@@ -15,7 +15,7 @@
 
       <div class="wrapper">
         <div
-          class="label-item"
+          class="select-item select-item--green"
           [class.high-light]="highLight(label)"
           *ngFor="let label of allLables"
           (click)="selectLabel(label)"
@@ -37,7 +37,10 @@
       </div>
 
       <div class="wrapper">
-        <div class="label-item" *ngFor="let label of resourceLabels">
+        <div
+          class="select-item select-item--blue"
+          *ngFor="let label of resourceLabels"
+        >
           <div class="title">{{ label.Name }}</div>
           <div class="close-btn" (click)="deleteResourceLabel(label)">
             <i class="howell-icon-Close"></i>

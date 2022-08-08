@@ -26,7 +26,7 @@ export class TreeSelecComponent implements OnInit, AfterViewInit {
 
   defaultIds: string[] = [];
 
-  @ContentChild(LabelTreeComponent) tree?: CommonTree;
+  @ContentChild(CommonTree) tree?: CommonTree;
 
   constructor() { }
 
