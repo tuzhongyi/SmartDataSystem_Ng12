@@ -22,7 +22,7 @@
     "@angular/router": "^14.0.0",
     "@types/bootstrap-touchspin": "^0.0.31",
     "@types/jquery-toast-plugin": "^1.3.3",
-    "angular-resize-event": "^3.1.1",
+    "angular-resize-event": "^3.2.0",
     "axios": "^0.21.4",
     "class-transformer": "^0.4.0",
     "crypto-js": "^4.1.1",
@@ -42,6 +42,7 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^14.0.0",
     "@angular-devkit/build-angular": "^14.0.0",
     "@angular/cli": "^14.0.0",
     "@angular/compiler-cli": "^14.0.0",
@@ -52,6 +53,8 @@
     "@types/jquery": "^3.5.11",
     "@types/node": "^12.11.1",
     "@types/video.js": "^7.3.26",
+    "csv-loader": "^3.0.5",
+    "excel-loader": "^1.0.1",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

@@ -18,6 +18,16 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import testXLS from "src/assets/files/test.xls";
 console.log(testXLS)
 
+import testXLSX from "src/assets/files/test.xlsx";
+console.log(testXLSX)
+
+import testCSV from "src/assets/files/test.csv";
+console.log(testCSV)
+
+
+import testCanvasXLS from "src/assets/files/test_canvas.xls";
+console.log(testCanvasXLS)
+
 @Component({
   selector: 'howell-platform-manage',
   templateUrl: './platform-manage.component.html',
