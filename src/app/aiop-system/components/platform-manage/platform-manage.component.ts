@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
+
 @Component({
   selector: 'howell-platform-manage',
   templateUrl: './platform-manage.component.html',

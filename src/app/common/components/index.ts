@@ -49,9 +49,6 @@ import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
-import { ComplexSearchComponent } from './complex-search/complex-search.component';
-import { CommonSelectComponent } from './common-select/common-select.component';
-import { CommonOptionComponent } from './common-option/common-option.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 
 export const CUSTOM_COMPONENTS = [
@@ -105,8 +102,5 @@ export const CUSTOM_COMPONENTS = [
   IllegalDropComponent,
   TabHeaderComponent,
   IllegalDropEventComponent,
-  ComplexSearchComponent,
-  CommonSelectComponent,
-  CommonOptionComponent,
   EventNumberStatisticComponent
 ];
