@@ -15,6 +15,8 @@ import { CUSTOM_DIRECTIVES } from './directives';
 import { FormsModule, NG_VALUE_ACCESSOR, SelectControlValueAccessor } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
+import Adsame from 'src/assets/echart-theme/adsame.json';
+echarts.registerTheme('adsame', Adsame);
 
 
 @NgModule({
