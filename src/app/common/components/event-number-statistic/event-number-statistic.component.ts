@@ -161,7 +161,7 @@ export class EventNumberStatisticComponent implements OnInit {
     // console.log(workbook)
     // XLSX.writeFile(workbook, "aa.csv");
     let title = this._getTitle();
-    let header = ['序号', '区划', '上级区划', '单位(起)']
+    let header = ['序号', '区划', '上级区划上级区划上级区划', '单位(起)']
     this._business.exportXLSX(title, header, this.dataSubject.value)
   }
   private _initUserResourceType() {
