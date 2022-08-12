@@ -15,49 +15,68 @@
         <app-division-list></app-division-list>
       </div>
     </div>
-    <div class="monitor-body__item monitor-body__item--map" [ngClass]="{ fullscreen: patrol.fullscreen == true }">
+    <div
+      class="monitor-body__item monitor-body__item--map"
+      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+    >
       <div class="monitor-body__wrapper">
         <div *ngIf="statistic.cards" class="statistic-card-group">
           <ng-container *ngFor="let item of statistic.cards">
-            <app-statistic-card [model]="item" (Click)="statistic.onclick(item)"></app-statistic-card>
+            <app-statistic-card
+              [model]="item"
+              (Click)="statistic.onclick(item)"
+            ></app-statistic-card>
           </ng-container>
         </div>
-        <div class="map-control">
+        <!-- <div class="map-control">
           <app-map-control (patrol)="map.onpatrol()" (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)" (mixedIntoClicked)="map.onMixedIntoClicked($event)"
             (garbageCountClicked)="map.onGarbageCountClicked($event)"
             (garbageFullClicked)="map.onGarbageFullClicked($event)" [position]="map.position"></app-map-control>
-        </div>
+        </div> -->
       </div>
-      <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <app-patrol-control (close)="patrol.onclose()" (fullscreen)="patrol.onfullscreen()"></app-patrol-control>
+      <!-- <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
+        <app-patrol-control
+          (close)="patrol.onclose()"
+          (fullscreen)="patrol.onfullscreen()"
+        ></app-patrol-control>
+      </div> -->
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <app-device-state
+          (Click)="trigger.deviceState.onclick($event)"
+        ></app-device-state>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-device-state (Click)="trigger.deviceState.onclick($event)"></app-device-state>
-      </div>
-    </div>
-    <div class="monitor-body__item">
-      <div class="monitor-body__wrapper">
-        <app-illegal-mixinto-rank (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)">
+        <app-illegal-mixinto-rank
+          (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
+        >
         </app-illegal-mixinto-rank>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-retention-rank (Click)="trigger.retentionRank.onclick($event)"></app-retention-rank>
+        <app-retention-rank
+          (Click)="trigger.retentionRank.onclick($event)"
+        ></app-retention-rank>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-disposal-rank (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"></app-disposal-rank>
+        <app-disposal-rank
+          (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
+        ></app-disposal-rank>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
-        <howell-event-statistic [title]="'乱扔垃圾统计表'"></howell-event-statistic>
+        <howell-event-statistic
+          [title]="'乱扔垃圾统计表'"
+        ></howell-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -66,18 +85,28 @@
           [title]="'混合投放统计表'"
           [type]="mixIntoType"
         ></app-event-statistic-echarts> -->
-        <howell-event-statistic [title]="'混合投放统计表'" [type]="mixIntoType"></howell-event-statistic>
+        <howell-event-statistic
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></howell-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-disposal-count (task)="trigger.risposalCount.ontask()"></app-disposal-count>
+        <app-disposal-count
+          (task)="trigger.risposalCount.ontask()"
+        ></app-disposal-count>
       </div>
     </div>
   </div>
 </div>
 
-<app-video-window [model]="video.model" [window]="video" [title]="video.title" (download)="video.ondownload($event)">
+<app-video-window
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
+  (download)="video.ondownload($event)"
+>
 </app-video-window>
 
 <!-- <app-window [Model]="window.record" [style]="window.record.style">
@@ -89,37 +118,78 @@
     </app-event-record-details>
   </ng-container>
 </app-window> -->
-<howell-event-record-window *ngIf="window.record.show" [Model]="window.record" [style]="window.record.style"
-  [type]="window.record.type" [stationId]="window.record.stationId" [divisionId]="window.record.divisionId"
-  (image)="window.record.onimage($event)">
+<howell-event-record-window
+  *ngIf="window.record.show"
+  [Model]="window.record"
+  [style]="window.record.style"
+  [type]="window.record.type"
+  [stationId]="window.record.stationId"
+  [divisionId]="window.record.divisionId"
+  (image)="window.record.onimage($event)"
+>
 </howell-event-record-window>
 
-<howell-device-list-window *ngIf="window.device.show" [Model]="window.device" [style]="window.device.style"
-  [status]="window.device.status" (image)="window.device.onimage($event)">
+<howell-device-list-window
+  *ngIf="window.device.show"
+  [Model]="window.device"
+  [style]="window.device.style"
+  [status]="window.device.status"
+  (image)="window.device.onimage($event)"
+>
 </howell-device-list-window>
 
-<howell-garbage-drop-station-window *ngIf="window.drop.show" [Model]="window.drop" [style]="window.drop.style"
-  [index]="window.drop.index" [divisionId]="window.drop.divisionId" (image)="window.drop.onimage($event)"
-  (position)="map.onposition($event)">
+<howell-garbage-drop-station-window
+  *ngIf="window.drop.show"
+  [Model]="window.drop"
+  [style]="window.drop.style"
+  [index]="window.drop.index"
+  [divisionId]="window.drop.divisionId"
+  (image)="window.drop.onimage($event)"
+  (position)="map.onposition($event)"
+>
 </howell-garbage-drop-station-window>
 
-<howell-garbage-full-station-window *ngIf="window.full.show" [Model]="window.full" [style]="window.full.style"
-  (image)="window.full.onimage($event)">
+<howell-garbage-full-station-window
+  *ngIf="window.full.show"
+  [Model]="window.full"
+  [style]="window.full.style"
+  (image)="window.full.onimage($event)"
+>
 </howell-garbage-full-station-window>
 
-<howell-garbage-station-window *ngIf="window.station.show" [Model]="window.station" [style]="window.station.style"
-  [index]="window.station.index" [stationId]="window.station.stationId" (image)="window.station.onimage($event)"
-  (chartdblclick)="window.station.onchartdblclick($event)" (position)="map.onposition($event)">
+<howell-garbage-station-window
+  *ngIf="window.station.show"
+  [Model]="window.station"
+  [style]="window.station.style"
+  [index]="window.station.index"
+  [stationId]="window.station.stationId"
+  (image)="window.station.onimage($event)"
+  (chartdblclick)="window.station.onchartdblclick($event)"
+  (position)="map.onposition($event)"
+>
 </howell-garbage-station-window>
 
-<app-window [Model]="window.media.single" [style]="window.media.single.style" [manualClose]="true"
-  (OnClosing)="window.media.single.onclosing()">
+<app-window
+  [Model]="window.media.single"
+  [style]="window.media.single.style"
+  [manualClose]="true"
+  (OnClosing)="window.media.single.onclosing()"
+>
   <ng-container *ngIf="window.media.single.show">
-    <app-media-control [autoplay]="window.media.single.autoplay" [model]="window.media.single.camera"
-      [index]="window.media.single.index" [stop]="window.media.single.closing" (played)="window.media.single.onplay()"
-      (stoped)="window.media.single.onstop()"></app-media-control>
+    <app-media-control
+      [autoplay]="window.media.single.autoplay"
+      [model]="window.media.single.camera"
+      [index]="window.media.single.index"
+      [stop]="window.media.single.closing"
+      (played)="window.media.single.onplay()"
+      (stoped)="window.media.single.onstop()"
+    ></app-media-control>
   </ng-container>
 </app-window>
 
-<howell-media-multiple-window *ngIf="window.media.multiple.show" [Model]="window.media.multiple"
-  [style]="window.media.multiple.style" [statistic]="window.media.multiple.statistic"></howell-media-multiple-window>
+<howell-media-multiple-window
+  *ngIf="window.media.multiple.show"
+  [Model]="window.media.multiple"
+  [style]="window.media.multiple.style"
+  [statistic]="window.media.multiple.statistic"
+></howell-media-multiple-window>

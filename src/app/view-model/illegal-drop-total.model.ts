@@ -23,3 +23,19 @@ export interface EventNumberStatisticSearchInfo {
   ResourceType: UserResourceType;
   ResourceId: string;
 }
+
+// 需要导入到CSV中的字段
+export class EventNumberStatisticCSV {
+  Id!: string;
+  Name!: string;
+  ParentName!: string;
+  EventNumber!: string;
+}
+// 需要导入到 XLSX中的字段
+export class EventNumberStatisticXLSX {
+  Id!: string;
+  Name!: string;
+  ParentName!: string;
+  EventNumber!: string;
+  [key: string]: string;
+}

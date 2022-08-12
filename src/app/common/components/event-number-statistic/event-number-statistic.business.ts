@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
-import { data } from "jquery";
+import * as XLSX from 'xlsx';
+
+
 import { EventNumberStatisticConverter } from "src/app/converter/illegal-drop-total.converter";
 import { DivisionType } from "src/app/enum/division-type.enum";
 import { EnumHelper } from "src/app/enum/enum-helper";
@@ -13,9 +15,10 @@ import { GetDivisionEventNumbersParams, GetDivisionsParams, GetDivisionStatistic
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationsParams, GetGarbageStationStatisticNumbersParams, GetGarbageStationStatisticNumbersParamsV2 } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
-import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from "src/app/view-model/illegal-drop-total.model";
+import { EventNumberStatisticCSV, EventNumberStatisticModel, EventNumberStatisticSearchInfo, EventNumberStatisticXLSX } from "src/app/view-model/illegal-drop-total.model";
 import { LocaleCompare } from "../../tools/locale-compare";
 import { Time } from "../../tools/time";
+import { HwExport } from "../../tools/hw-export";
 
 @Injectable()
 export class IllegalDropTotalBusiness {
@@ -76,6 +79,120 @@ export class IllegalDropTotalBusiness {
 
   }
 
+  exportCSV(title: string, models: EventNumberStatisticModel[]) {
+    let csvModels = models.map(model => {
+      let csvModel = new EventNumberStatisticCSV();
+      csvModel.Id = model.Id;
+      csvModel.Name = model.Name;
+      csvModel.ParentName = model.ParentModel?.Name ?? '';
+      csvModel.EventNumber = model.EventNumber;
+
+      return csvModel;
+    })
+    console.log(csvModels)
+    let len = Object.keys(csvModels[0]).length;
+
+
+    let workbook = XLSX.utils.book_new();
+
+    let worksheet = XLSX.utils.aoa_to_sheet([['序号', '区划', '上级区划', '单位(起)']]);
+
+    // console.log(worksheet)
+
+    // XLSX.utils.sheet_add_aoa(worksheet, [[title]], { origin: { r: 0, c: Math.ceil(len / 2) } });
+    // let arr = [0, 0, 0, 0]
+    // csvModels.forEach(row => {
+    //   if (row.Id.length > arr[0]) arr[0] = row.Id.length
+    //   if (row.Name.length > arr[1]) arr[1] = row.Name.length * 2
+    //   if (row.ParentName.length > arr[2]) arr[2] = row.ParentName.length
+    //   if (row.EventNumber.length > arr[3]) arr[3] = row.EventNumber.length
+    // })
+    // console.log(arr)
+
+
+    // worksheet["!cols"] = arr.map(v => {
+    //   return { wch: v }
+    // })
+    // worksheet["!cols"] = [{ wch: 50 }];
+
+
+    // worksheet["!cols"] = [
+    //   {
+    //     wch: 40
+    //   },
+    //   {
+    //     wch: 40
+    //   }
+    //   ,
+    //   {
+    //     wch: 40
+    //   }
+    //   , {
+    //     wch: 40
+    //   }
+    // ]
+
+    // console.log(worksheet)
+    // XLSX.utils.sheet_add_aoa(worksheet,[[title]],{origin:})
+    // worksheet['A1'].s = { // set the style for target cell
+    //   "fontSize": "30px"
+    // };
+    // worksheet = XLSX.utils.sheet_add_aoa(worksheet, [['序号', '区划', '上级区划', '单位(起)']], { origin: -1 })
+    // XLSX.utils.sheet_add_json(worksheet, csvModels, { skipHeader: true, origin: -1, cellDates: true });
+
+    // XLSX.utils.book_append_sheet(workbook, worksheet);
+
+    // worksheet["!cols"] = [{ wch: 80 }, { wpx: 40 },];
+
+    // XLSX.writeFile(workbook, "2022街道.xlsx",);
+
+
+    // let aoo = [
+    //   { S: 1, h: 2, e: "", e_1: "", t: 5, J: 6, S_1: 7 },
+    //   { S: 2, h: 3, e: "", e_1: "", t: 6, J: 7, S_1: 8 },
+    //   { S: 3, h: 4, e: "", e_1: "", t: 7, J: 8, S_1: 9 },
+    //   { S: 4, h: 5, e: 6, e_1: 7, t: 8, J: 9, S_1: 0 },
+    // ]
+    // let worksheet = XLSX.utils.json_to_sheet(aoo);
+
+    // worksheet["!cols"] = [{ wch: 80 }, { wpx: 40 },];
+
+
+    // // 创建工作簿
+    // const workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, "Dates");
+
+
+    // // 导出工作簿
+    // XLSX.writeFileXLSX(workbook, "Presidents.xlsx");
+
+    // XLSX.utils.sheet_add_aoa(worksheet, [['table']], { origin: { r: 0, c: 2 } });
+    // // XLSX.utils.sheet_add_json(worksheet, aoo, { origin: -1 });
+
+    // let worksheet2 = XLSX.utils.json_to_sheet(aoo);
+    // let workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, 'hello');
+    // XLSX.utils.book_append_sheet(workbook, worksheet2, 'sh');
+
+    // console.log(workbook)
+    // XLSX.writeFile(workbook, "aa.csv");
+  }
+
+  exportXLSX(title: string, header: string[], models: EventNumberStatisticModel[]) {
+    let xlsxModels = models.map(model => {
+      let xlsxModel = new EventNumberStatisticXLSX();
+      xlsxModel.Id = model.Id;
+      xlsxModel.Name = model.Name;
+      xlsxModel.ParentName = model.ParentModel?.Name ?? '';
+      xlsxModel.EventNumber = model.EventNumber;
+
+      return xlsxModel;
+    })
+    xlsxModels = xlsxModels.slice(0, 5)
+
+    HwExport.exportXLXS(title, header, xlsxModels);
+
+  }
   private _getList(searchInfo: EventNumberStatisticSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionsParams();

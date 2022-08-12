@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
+import * as XLSX from 'xlsx';
+
+
+
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -14,6 +18,7 @@ import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
+import { formatDate } from '@angular/common';
 
 
 @Component({
@@ -27,8 +32,8 @@ import { IllegalDropStatisticConf } from './event-number-statistic.config';
 export class EventNumberStatisticComponent implements OnInit {
 
   // 拉取所有数据
-  private _pageSize = 9527;
-  private _firstSize = 20;
+  private _pageSize = 9527E2;
+  private _firstSize = 200;
 
   // 默认展示垃圾落地统计信息
   @Input()
@@ -70,9 +75,10 @@ export class EventNumberStatisticComponent implements OnInit {
   get resourceDefault() {
     return this._resourceDefault;
   }
+
   // 下拉表
   options: SelectItem[] = [];
-
+  loadFinish = false;
 
   // Table
   dataSubject = new BehaviorSubject<EventNumberStatisticModel[]>([]);
@@ -87,11 +93,11 @@ export class EventNumberStatisticComponent implements OnInit {
   pageIndex = 1;
 
   dateFormat: string = 'yyyy年MM月dd日';
-  today = new Date();
+  curDate = new Date();
 
   searchInfo: EventNumberStatisticSearchInfo = {
-    BeginTime: Time.beginTime(this.today),
-    EndTime: Time.endTime(this.today),
+    BeginTime: Time.beginTime(this.curDate),
+    EndTime: Time.endTime(this.curDate),
     ResourceType: this.resourceDefault,
     ResourceId: this.resourceId
   }
@@ -106,25 +112,14 @@ export class EventNumberStatisticComponent implements OnInit {
 
   }
   private async _init() {
-    // if (this.searchInfo.ResourceType == UserResourceType.County) {
-    //   this._firstSize = 50;
-    // }
-    // else if (this.searchInfo.ResourceType == UserResourceType.Committees) {
-    //   this._firstSize = 1000;
-    // }
-    // else if (this.searchInfo.ResourceType == UserResourceType.Station) {
-    //   this._firstSize = 100;
-    // }
-    // let res1 = await this._business.init(this.searchInfo, this.pageIndex, this._firstSize);
-    // this.dataSubject.next(res1.Data);
 
-    // let res2 = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize - this._firstSize);
-
-    // this.dataSubject.next([...res1.Data, ...res2.Data]);
 
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
-    console.log(res)
+    console.log(res.Page)
+    this.page = res.Page
     this.dataSubject.next(res.Data);
+
+    this.loadFinish = true;
   }
 
   pageEvent(pageInfo: PageEvent) {
@@ -134,19 +129,41 @@ export class EventNumberStatisticComponent implements OnInit {
   }
   search() {
     this._init();
-    console.log(this.searchInfo)
+    this.loadFinish = false;
   }
 
-  export() {
-
-  }
   changeBegin(date: Date) {
-    // this.searchInfo.BeginTime = date;
-    console.log(date)
+    this.curDate = date;
     this.searchInfo.BeginTime = Time.beginTime(date);
     this.searchInfo.EndTime = Time.endTime(date);
   }
+  exportCSV() {
+    let title = this._getTitle();
+    this._business.exportCSV(title, this.dataSubject.value)
 
+  }
+  exportXLSX() {
+    // let aoo = [
+    //   { S: 1, h: 2, e: "", e_1: "", t: 5, J: 6, S_1: 7 },
+    //   { S: 2, h: 3, e: "", e_1: "", t: 6, J: 7, S_1: 8 },
+    //   { S: 3, h: 4, e: "", e_1: "", t: 7, J: 8, S_1: 9 },
+    //   { S: 4, h: 5, e: 6, e_1: 7, t: 8, J: 9, S_1: 0 },
+    // ]
+    // let worksheet = XLSX.utils.aoa_to_sheet([[]]);
+    // XLSX.utils.sheet_add_aoa(worksheet, [['table']], { origin: { r: 0, c: 2 } });
+    // // XLSX.utils.sheet_add_json(worksheet, aoo, { origin: -1 });
+
+    // let worksheet2 = XLSX.utils.json_to_sheet(aoo);
+    // let workbook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(workbook, worksheet, 'hello');
+    // XLSX.utils.book_append_sheet(workbook, worksheet2, 'sh');
+
+    // console.log(workbook)
+    // XLSX.writeFile(workbook, "aa.csv");
+    let title = this._getTitle();
+    let header = ['序号', '区划', '上级区划', '单位(起)']
+    this._business.exportXLSX(title, header, this.dataSubject.value)
+  }
   private _initUserResourceType() {
     let resourceType: UserResourceType = this.resourceType;
     do {
@@ -161,5 +178,41 @@ export class EventNumberStatisticComponent implements OnInit {
 
     } while (resourceType != UserResourceType.Station);// 最底层区划是 GarbageStation
 
+  }
+  private _getTitle() {
+    let date = formatDate(this.curDate, 'yyyy年MM月dd日', 'zh-CN');
+    let userType = Language.UserResourceType(this.searchInfo.ResourceType);
+    let eventType = Language.EventType(this.eventType);
+    return `${date}${userType}${eventType}总数据`;
+  }
+  chunk() {
+    // 分批次加载
+    // this.loadFinish = false;
+
+    // // 加载前 _firstSize 条数据
+    // let res = await this._business.init(this.searchInfo, this.pageIndex, this._firstSize);
+    // this.dataSubject.next(res.Data);
+
+    // console.log(res.Page);
+
+    // // 获得总记录数,计算出还需请求几次
+    // let count = Math.ceil(res.Page.TotalRecordCount / this._firstSize) - 1;
+
+    // let tasks: Promise<number>[] = [];
+    // // 互不依赖的异步任务不需要 await 
+    // for (let i = 1; i <= count; i++) {
+    //   let promise = this._business.init(this.searchInfo, i, this._firstSize).then(res => {
+    //     this.dataSubject.next([...this.dataSubject.value, ...res.Data]);
+    //     console.log(i)
+    //     return (i)
+    //   });
+    //   tasks.push(promise)
+
+    // }
+    // // 所有数据加载完成
+    // Promise.all(tasks).then((result) => {
+    //   console.log('finish')
+    //   this.loadFinish = true;
+    // })
   }
 }
