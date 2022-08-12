@@ -54,6 +54,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthorizationService],
   },
+  {
+    path: RoutePath.electric_bike,
+    loadChildren: () =>
+      import('./electric-bike/electric-bike.module').then(
+        (mod) => mod.ElectricBikeModule
+      ),
+    canActivate: [AuthorizationService],
+  },
   // {
   //   path: '**',
   //   redirectTo: 'login',

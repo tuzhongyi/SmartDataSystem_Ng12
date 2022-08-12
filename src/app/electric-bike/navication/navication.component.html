@@ -1,0 +1,30 @@
+<div class="navication">
+  <div class="navication-item main" (click)="CommitteesClicked()">
+    <div class="inner">
+      <div class="title">
+        <i class="howell-icon-map5 m-r-10 sky-blue-text"></i>
+        <span class="text light-blue-text">
+          {{ root ? root.name : "" }}
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="stations">
+    <ng-container *ngFor="let item of children">
+      <div
+        class="navication-item"
+        [ngClass]="selected && selected.id === item.id ? 'selected' : ''"
+        (click)="StationClicked(item)"
+      >
+        <div class="inner">
+          <div class="title">
+            <i class="howell-icon-grid m-r-15 sky-blue-text"></i>
+            <span class="light-blue-text text">
+              {{ item ? item.name : "" }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>

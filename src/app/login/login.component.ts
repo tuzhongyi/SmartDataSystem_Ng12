@@ -169,7 +169,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
           // console.log('登录成功', result);
 
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
-
+          // 测试
+          this._router.navigateByUrl(RoutePath.electric_bike);
+          return;
           // 区分权限
           if (result.Role && result.Role.length > 0) {
             if (result.Role[0].StaticData == StaticDataRole.enabled) {

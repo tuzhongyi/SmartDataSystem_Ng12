@@ -1,0 +1,39 @@
+<div class="index">
+  <div class="index-head">
+    <mat-toolbar>
+      <div class="left">
+        <app-account-info></app-account-info>
+      </div>
+      <div class="right">
+        <app-time></app-time>
+        <app-account-operation></app-account-operation>
+      </div>
+    </mat-toolbar>
+  </div>
+  <div class="index-body">
+    <div class="index-body-left">
+      <div class="">
+        <howell-electric-bike-navication
+          [root]="navication.root"
+          [children]="navication.children"
+          [selected]="navication.selected"
+          (onchildclick)="navication.onchildclick($event)"
+        ></howell-electric-bike-navication>
+      </div>
+      <div class="">
+        <howell-index-card>
+          <app-disposal-count></app-disposal-count>
+          <!-- (task)="trigger.risposalCount.ontask()" -->
+        </howell-index-card>
+      </div>
+      <div class="">
+        <howell-index-card> </howell-index-card>
+      </div>
+    </div>
+    <div class="index-body-right">
+      <howell-index-card>
+        <app-map-control></app-map-control>
+      </howell-index-card>
+    </div>
+  </div>
+</div>

@@ -5,4 +5,5 @@ export enum RoutePath {
   garbage_system_committees = 'waste-regulation-committees',
   password_get_back = 'password-get-back',
   password_to_change = 'password-to-change',
+  electric_bike = 'electric-bike',
 }
