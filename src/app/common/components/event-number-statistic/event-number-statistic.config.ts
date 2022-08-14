@@ -10,7 +10,7 @@ export const IllegalDropStatisticConf: TableColumnModel[] = [
   },
   {
     columnDef: 'ParentName',
-    header: '上级区划',
+    header: '上级行政区',
     cell: (element: EventNumberStatisticModel) => `${element.ParentModel?.Name ?? '-'}`,
   },
   {
