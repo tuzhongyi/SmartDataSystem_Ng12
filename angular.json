@@ -48,7 +48,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/smart",
             "index": "src/index.html",
@@ -65,7 +65,13 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "crypto-js"
-            ]
+            ],
+            "customWebpackConfig": {
+              "path": "webpack.config.ts",
+              "mergeStrategies": {
+                "loaders": "append"
+              }
+            }
           },
           "configurations": {
             "production": {
@@ -101,7 +107,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular-builders/custom-webpack:dev-server",
           "options": {
             "proxyConfig": "proxy.conf.ts"
           },
@@ -111,7 +117,7 @@
             },
             "development": {
               "browserTarget": "smart:build:development",
-              "port": 9527,
+              "port": 9999,
               "open": false
             }
           },

@@ -1,5 +1,7 @@
 import { Injectable } from "@angular/core";
-import { data } from "jquery";
+import * as XLSX from 'xlsx';
+
+
 import { EventNumberStatisticConverter } from "src/app/converter/illegal-drop-total.converter";
 import { DivisionType } from "src/app/enum/division-type.enum";
 import { EnumHelper } from "src/app/enum/enum-helper";
@@ -14,9 +16,9 @@ import { DivisionRequestService } from "src/app/network/request/division/divisio
 import { GetGarbageStationsParams, GetGarbageStationStatisticNumbersParams, GetGarbageStationStatisticNumbersParamsV2 } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
 import { EventNumberStatisticCSV, EventNumberStatisticModel, EventNumberStatisticSearchInfo, EventNumberStatisticXLSX } from "src/app/view-model/illegal-drop-total.model";
-import { HwExport } from "../../tools/hw-export";
 import { LocaleCompare } from "../../tools/locale-compare";
 import { Time } from "../../tools/time";
+import { HwExport } from "../../tools/hw-export";
 
 @Injectable()
 export class IllegalDropTotalBusiness {
@@ -76,6 +78,7 @@ export class IllegalDropTotalBusiness {
     return res;
 
   }
+
   exportCSV(title: string, header: string[], models: EventNumberStatisticModel[]) {
     let csvModels = models.map((model, index) => {
       let csvModel = new EventNumberStatisticCSV();
@@ -104,7 +107,6 @@ export class IllegalDropTotalBusiness {
     HwExport.exportXLXS(title, header, xlsxModels);
 
   }
-
   private _getList(searchInfo: EventNumberStatisticSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionsParams();

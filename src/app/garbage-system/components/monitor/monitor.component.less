@@ -4,7 +4,7 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-08-11 09:45:02
  */
-.monitor-container {
+ .monitor-container {
   width: 100%;
   height: 100%;
 
@@ -33,11 +33,13 @@
     // grid-template-columns: repeat(4, 1fr);
     // grid-template-rows: repeat(2, 1fr);
 
-    grid-template-areas: "a b c" "d e f" "g h i";
+    grid-template-areas: "a b c""d e f""g h i";
 
     &.hide-titlebar {
       height: 100%;
     }
+
+
 
     .monitor-body__item {
       margin: 5px;
@@ -98,6 +100,7 @@
           width: 100%;
           height: 100%;
         }
+
       }
 
       .monitor-body__wrapper {

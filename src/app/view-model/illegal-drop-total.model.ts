@@ -19,7 +19,10 @@ export interface EventNumberStatisticSearchInfo {
   EndTime: Date;
   ResourceType: UserResourceType;
   ResourceId: string;
+<<<<<<< HEAD
   TimeUnit: TimeUnit;
+=======
+>>>>>>> f8a7cef3ac8c4fd6c0e20c5dbbb79c8071b48bfb
 }
 
 // 需要导入到CSV中的字段

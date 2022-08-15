@@ -2,6 +2,10 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
+import * as XLSX from 'xlsx';
+
+
+
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -17,8 +21,8 @@ import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
-import * as moment from 'moment';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
+
 
 @Component({
   selector: 'event-number-statistic',
@@ -32,8 +36,8 @@ export class EventNumberStatisticComponent implements OnInit {
   TimeUnit = TimeUnit
 
   // 拉取所有数据
-  private _pageSize = 9527;
-  private _firstSize = 20;
+  private _pageSize = 9527E2;
+  private _firstSize = 200;
 
   // 默认展示垃圾落地统计信息
   @Input()
@@ -75,10 +79,10 @@ export class EventNumberStatisticComponent implements OnInit {
   get resourceDefault() {
     return this._resourceDefault;
   }
+
   // 下拉表
   options: SelectItem[] = [];
   loadFinish = false;
-
 
   // Table
   dataSubject = new BehaviorSubject<EventNumberStatisticModel[]>([]);
@@ -116,9 +120,11 @@ export class EventNumberStatisticComponent implements OnInit {
   private async _init() {
 
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
-    console.log(res)
+    console.log(res.Page)
+    this.page = res.Page
     this.dataSubject.next(res.Data);
     this.loadFinish = true;
+
 
   }
 
@@ -147,10 +153,10 @@ export class EventNumberStatisticComponent implements OnInit {
 
 
   changeDate(date: Date) {
-    this.curDate = date;
-    this.searchInfo.BeginTime = Time.beginTime(date);
-    this.searchInfo.EndTime = Time.endTime(date);
+    this._init();
+    this.loadFinish = false;
   }
+
   changeTimeUnit(unit: TimeUnit) {
     console.log(unit);
 
