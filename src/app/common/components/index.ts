@@ -33,7 +33,6 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
-import { Table2Component } from './table2/table.component';
 import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
 import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
 import { AICameraModelTableComponent } from './ai-camera-model-table/ai-camera-model-table.component';
@@ -49,9 +48,6 @@ import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
-import { ComplexSearchComponent } from './complex-search/complex-search.component';
-import { CommonSelectComponent } from './common-select/common-select.component';
-import { CommonOptionComponent } from './common-option/common-option.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 
 export const CUSTOM_COMPONENTS = [
@@ -90,7 +86,6 @@ export const CUSTOM_COMPONENTS = [
   BreadcrumbComponent,
   ConfirmDialogComponent,
   SimpleSearchComponent,
-  Table2Component,
   AIModelTreeComponent,
   AICameraModelTableComponent,
   LabelTreeComponent,
@@ -105,8 +100,5 @@ export const CUSTOM_COMPONENTS = [
   IllegalDropComponent,
   TabHeaderComponent,
   IllegalDropEventComponent,
-  ComplexSearchComponent,
-  CommonSelectComponent,
-  CommonOptionComponent,
   EventNumberStatisticComponent
 ];

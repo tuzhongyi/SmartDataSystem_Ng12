@@ -26,7 +26,6 @@ import { CameraModelManageComponent } from './camera-model-manage/camera-model-m
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
 import { AICameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IllegalDropRecord2Component } from './drop-record2/illegal-drop-record.component';
 import { PlatformOperateComponent } from './platform-operate/platform-operate.component';
 import { SRServerManageComponent } from './sr-server-manage/sr-server-manage.component';
 import { SRServerOperateComponent } from './sr-server-operate/sr-server-operate.component';
@@ -55,7 +54,6 @@ import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.compon
     CameraModelManageComponent,
     AIModelManageComponent,
     AICameraEventsComponent,
-    IllegalDropRecord2Component,
     PlatformOperateComponent,
     SRServerManageComponent,
     SRServerOperateComponent,

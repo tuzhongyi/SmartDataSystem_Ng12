@@ -28,6 +28,7 @@
             ></app-statistic-card>
           </ng-container>
         </div>
+<<<<<<< HEAD
         <!-- <div class="map-control">
           <app-map-control (patrol)="map.onpatrol()" (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)" (mixedIntoClicked)="map.onMixedIntoClicked($event)"
@@ -36,11 +37,30 @@
         </div> -->
       </div>
       <!-- <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
+=======
+        <div class="map-control">
+          <app-map-control
+            (patrol)="map.onpatrol()"
+            (VideoPlay)="map.onvideoplay($event)"
+            (illegalDropClicked)="map.onIllegalDropClicked($event)"
+            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
+            (garbageCountClicked)="map.onGarbageCountClicked($event)"
+            (garbageFullClicked)="map.onGarbageFullClicked($event)"
+            [position]="map.position"
+          ></app-map-control>
+        </div>
+      </div>
+      <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
+>>>>>>> edeb8accf4d8eb0dfe55d7bf4696b69f8f12a905
         <app-patrol-control
           (close)="patrol.onclose()"
           (fullscreen)="patrol.onfullscreen()"
         ></app-patrol-control>
+<<<<<<< HEAD
       </div> -->
+=======
+      </div>
+>>>>>>> edeb8accf4d8eb0dfe55d7bf4696b69f8f12a905
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">

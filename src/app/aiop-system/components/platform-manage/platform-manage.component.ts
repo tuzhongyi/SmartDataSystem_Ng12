@@ -15,6 +15,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
+<<<<<<< HEAD
 // import testXLS from "src/assets/files/test.xls";
 // console.log(testXLS)
 
@@ -27,6 +28,8 @@ import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
 // import testCanvasXLS from "src/assets/files/test_canvas.xls";
 // console.log(testCanvasXLS)
+=======
+>>>>>>> edeb8accf4d8eb0dfe55d7bf4696b69f8f12a905
 
 @Component({
   selector: 'howell-platform-manage',

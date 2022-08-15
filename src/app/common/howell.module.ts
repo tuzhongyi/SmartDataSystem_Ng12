@@ -15,24 +15,10 @@ import { CUSTOM_DIRECTIVES } from './directives';
 import { FormsModule, NG_VALUE_ACCESSOR, SelectControlValueAccessor } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
-
 import Adsame from 'src/assets/echart-theme/adsame.json';
-
-//内置主题
-import 'echarts/theme/shine.js';
-import 'echarts/theme/vintage.js';
-import { RouterModule } from '@angular/router';
-import { TouchSpinDirective } from './directives/touch-spin/touch-spin.directive';
-import { CommonOptionDirective } from './directives/common-select.option.directive';
-import { CommonSelectDirective } from './directives/common-select.directive';
-
 echarts.registerTheme('adsame', Adsame);
 
-const SELECT_VALUE_ACCESSOR = {
-  provide: NG_VALUE_ACCESSOR,
-  useClass: CommonSelectDirective,
-  multi: true
-}
+
 @NgModule({
   declarations: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
   exports: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
@@ -45,7 +31,5 @@ const SELECT_VALUE_ACCESSOR = {
       echarts: () => import('echarts'),
     }),
   ],
-  providers: [CommonOptionDirective,
-    SELECT_VALUE_ACCESSOR],
 })
 export class HowellModule { }
