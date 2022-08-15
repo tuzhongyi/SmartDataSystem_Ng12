@@ -30,6 +30,8 @@ export class EventNumberStatisticCSV {
   Name!: string;
   ParentName!: string;
   EventNumber!: string;
+  [key: string]: string;
+
 }
 // 需要导入到 XLSX中的字段
 export class EventNumberStatisticXLSX {

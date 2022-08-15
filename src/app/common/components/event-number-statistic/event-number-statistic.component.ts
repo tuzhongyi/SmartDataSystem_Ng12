@@ -139,27 +139,11 @@ export class EventNumberStatisticComponent implements OnInit {
   }
   exportCSV() {
     let title = this._getTitle();
-    this._business.exportCSV(title, this.dataSubject.value)
-
+    let header = ['序号', '行政区', '上级行政区', '单位(起)']
+    this._business.exportCSV(title, header, this.dataSubject.value)
   }
   exportXLSX() {
-    // let aoo = [
-    //   { S: 1, h: 2, e: "", e_1: "", t: 5, J: 6, S_1: 7 },
-    //   { S: 2, h: 3, e: "", e_1: "", t: 6, J: 7, S_1: 8 },
-    //   { S: 3, h: 4, e: "", e_1: "", t: 7, J: 8, S_1: 9 },
-    //   { S: 4, h: 5, e: 6, e_1: 7, t: 8, J: 9, S_1: 0 },
-    // ]
-    // let worksheet = XLSX.utils.aoa_to_sheet([[]]);
-    // XLSX.utils.sheet_add_aoa(worksheet, [['table']], { origin: { r: 0, c: 2 } });
-    // // XLSX.utils.sheet_add_json(worksheet, aoo, { origin: -1 });
 
-    // let worksheet2 = XLSX.utils.json_to_sheet(aoo);
-    // let workbook = XLSX.utils.book_new();
-    // XLSX.utils.book_append_sheet(workbook, worksheet, 'hello');
-    // XLSX.utils.book_append_sheet(workbook, worksheet2, 'sh');
-
-    // console.log(workbook)
-    // XLSX.writeFile(workbook, "aa.csv");
     let title = this._getTitle();
     let header = ['序号', '行政区', '上级行政区', '单位(起)']
     this._business.exportXLSX(title, header, this.dataSubject.value)
@@ -184,35 +168,5 @@ export class EventNumberStatisticComponent implements OnInit {
     let userType = Language.UserResourceType(this.searchInfo.ResourceType);
     let eventType = Language.EventType(this.eventType);
     return `${date}${userType}${eventType}总数据`;
-  }
-  chunk() {
-    // 分批次加载
-    // this.loadFinish = false;
-
-    // // 加载前 _firstSize 条数据
-    // let res = await this._business.init(this.searchInfo, this.pageIndex, this._firstSize);
-    // this.dataSubject.next(res.Data);
-
-    // console.log(res.Page);
-
-    // // 获得总记录数,计算出还需请求几次
-    // let count = Math.ceil(res.Page.TotalRecordCount / this._firstSize) - 1;
-
-    // let tasks: Promise<number>[] = [];
-    // // 互不依赖的异步任务不需要 await 
-    // for (let i = 1; i <= count; i++) {
-    //   let promise = this._business.init(this.searchInfo, i, this._firstSize).then(res => {
-    //     this.dataSubject.next([...this.dataSubject.value, ...res.Data]);
-    //     console.log(i)
-    //     return (i)
-    //   });
-    //   tasks.push(promise)
-
-    // }
-    // // 所有数据加载完成
-    // Promise.all(tasks).then((result) => {
-    //   console.log('finish')
-    //   this.loadFinish = true;
-    // })
   }
 }

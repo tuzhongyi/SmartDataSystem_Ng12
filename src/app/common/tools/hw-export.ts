@@ -5,8 +5,25 @@ interface KeyValue {
 }
 
 export class HwExport {
-  static exportCSV(title: string, data: Array<any>, columns?: string[]) {
+  static exportCSV(title: string, header: string[], data: Array<KeyValue>) {
+    // 创建工作簿
+    let workbook = XLSX.utils.book_new();
 
+
+    // 创建空的工作表
+    let worksheet = XLSX.utils.aoa_to_sheet([[]]);
+
+    // 添加表头
+    XLSX.utils.sheet_add_aoa(worksheet, [[title]], { origin: { r: 0, c: 0 } })
+    XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: -1 })
+
+    XLSX.utils.sheet_add_json(worksheet, data, { origin: -1, skipHeader: true })
+
+    // 工作表添加到工作簿中
+    XLSX.utils.book_append_sheet(workbook, worksheet);
+
+    // 将工作簿导出
+    XLSX.writeFile(workbook, title + ".csv", { bookType: 'csv' });
   }
   static exportXLXS(title: string, header: string[], data: Array<KeyValue>,) {
     // 创建工作簿
@@ -15,14 +32,16 @@ export class HwExport {
 
     // 创建空的工作表
     let worksheet = XLSX.utils.aoa_to_sheet([[]]);
-    // XLSX.utils.sheet_add_aoa(worksheet, [[title]], { origin: { r: 0, c: columnInfo ? Math.ceil(columnInfo.columnNum / 2) : 0 } });
+    let columnInfo = this._getColumnInfo(header, data);;
+
+
+    XLSX.utils.sheet_add_aoa(worksheet, [[title]], { origin: { r: 0, c: 0 } });
 
     // 添加表头
-    XLSX.utils.sheet_add_aoa(worksheet, [header])
+    XLSX.utils.sheet_add_aoa(worksheet, [header], { origin: -1 })
 
     XLSX.utils.sheet_add_json(worksheet, data, { origin: -1, skipHeader: true })
 
-    let columnInfo = this._getColumnInfo(header, data);;
 
     worksheet["!cols"] = columnInfo?.columWidth ?? [];
 
