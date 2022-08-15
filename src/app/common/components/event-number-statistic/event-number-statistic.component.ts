@@ -101,8 +101,8 @@ export class EventNumberStatisticComponent implements OnInit {
   curDate = new Date();
 
   searchInfo: EventNumberStatisticSearchInfo = {
-    BeginTime: Time.beginTime(new Date(this.curDate)),
-    EndTime: Time.endTime(new Date(this.curDate)),
+    BeginTime: Time.beginTime(this.curDate),
+    EndTime: Time.endTime(this.curDate),
     ResourceType: this.resourceDefault,
     ResourceId: this.resourceId,
     TimeUnit: TimeUnit.Day,
@@ -120,7 +120,6 @@ export class EventNumberStatisticComponent implements OnInit {
   private async _init() {
 
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
-    console.log(res.Page)
     this.page = res.Page
     this.dataSubject.next(res.Data);
     this.loadFinish = true;
@@ -155,16 +154,20 @@ export class EventNumberStatisticComponent implements OnInit {
   changeDate(date: Date) {
     this._init();
     this.loadFinish = false;
+    this.curDate = date;
+    this.changeTimeUnit(this.searchInfo.TimeUnit);
   }
 
   changeTimeUnit(unit: TimeUnit) {
-    console.log(unit);
 
+    this.searchInfo.TimeUnit = unit;
     if (unit == TimeUnit.Day) {
       this.searchInfo.BeginTime = Time.beginTime(this.curDate);
       this.searchInfo.EndTime = Time.endTime(this.curDate);
     } else if (unit == TimeUnit.Week) {
-      Time.curWeek(this.curDate)
+      this.searchInfo.BeginTime = Time.curWeek(this.curDate).beginTime;
+      this.searchInfo.EndTime = Time.curWeek(this.curDate).endTime;
+
     } else if (unit === TimeUnit.Month) {
 
     }

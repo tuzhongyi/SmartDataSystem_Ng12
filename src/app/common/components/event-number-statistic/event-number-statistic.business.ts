@@ -131,7 +131,7 @@ export class IllegalDropTotalBusiness {
     let ids = models.map(model => model.Id);
     if (searchInfo.ResourceType !== UserResourceType.Station) {
       let params = new GetDivisionStatisticNumbersParamsV2();
-      params.TimeUnit = TimeUnit.Day;
+      params.TimeUnit = searchInfo.TimeUnit;
       params.BeginTime = searchInfo.BeginTime;
       params.EndTime = searchInfo.EndTime;
       params.DivisionIds = ids;
@@ -139,7 +139,7 @@ export class IllegalDropTotalBusiness {
       return res;
     } else {
       let params = new GetGarbageStationStatisticNumbersParamsV2();
-      params.TimeUnit = TimeUnit.Day;
+      params.TimeUnit = searchInfo.TimeUnit;
       params.BeginTime = Time.beginTime(new Date());
       params.EndTime = Time.endTime(new Date())
       params.GarbageStationIds = ids;

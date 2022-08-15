@@ -21,7 +21,7 @@ export class IllegalDropComponent implements OnInit {
   // 虹口区: 310109000000
   // 欧阳路街道: 310109009000
 
-  resourceId: string = '';
+  resourceId: string = '310109000000';
 
   resourceType: UserResourceType = UserResourceType.County;
 

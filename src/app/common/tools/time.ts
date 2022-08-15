@@ -1,25 +1,30 @@
+// new Date(time)不影响 time
 export class Time {
   // 任意一天的开始时间
   static beginTime(time: Date) {
-    return new Date(time.setHours(0, 0, 0, 0));
+    return new Date(new Date(time).setHours(0, 0, 0, 0));
   }
   // 任意一天的结束时间
   static endTime(time: Date) {
-    return new Date(time.setHours(23, 59, 59, 999));
+    return new Date(new Date(time).setHours(23, 59, 59, 999));
   }
   // 后退n天
   static backDate(time: Date, n: number) {
-    return new Date(time.getTime() - n * 24 * 60 * 60 * 1000)
+    return new Date(new Date(time).getTime() - n * 24 * 60 * 60 * 1000)
   }
   // 前进n天
   static forwardDate(time: Date, n: number) {
-    return new Date(time.getTime() + n * 24 * 60 * 60 * 1000)
+    return new Date(new Date(time).getTime() + n * 24 * 60 * 60 * 1000)
 
   }
-  static curWeek(time: Date, firstDay = 0) {
+  static curWeek(t: Date, firstDay = 0) {
+    let time = new Date(t)
     let offset = time.getDay() - firstDay;
     let beginTime = Time.beginTime(this.backDate(time, offset));
     let endTime = Time.endTime(Time.forwardDate(beginTime, 6))
-    console.log(beginTime, endTime)
+    return {
+      beginTime,
+      endTime
+    }
   }
 }
