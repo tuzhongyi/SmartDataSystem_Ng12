@@ -13,7 +13,8 @@ import { GetDivisionEventNumbersParams, GetDivisionsParams, GetDivisionStatistic
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationsParams, GetGarbageStationStatisticNumbersParams, GetGarbageStationStatisticNumbersParamsV2 } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
-import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from "src/app/view-model/illegal-drop-total.model";
+import { EventNumberStatisticCSV, EventNumberStatisticModel, EventNumberStatisticSearchInfo, EventNumberStatisticXLSX } from "src/app/view-model/illegal-drop-total.model";
+import { HwExport } from "../../tools/hw-export";
 import { LocaleCompare } from "../../tools/locale-compare";
 import { Time } from "../../tools/time";
 
@@ -73,6 +74,34 @@ export class IllegalDropTotalBusiness {
     };
 
     return res;
+
+  }
+  exportCSV(title: string, header: string[], models: EventNumberStatisticModel[]) {
+    let csvModels = models.map((model, index) => {
+      let csvModel = new EventNumberStatisticCSV();
+      csvModel.Id = (index + 1).toString();
+      csvModel.Name = model.Name;
+      csvModel.ParentName = model.ParentModel?.Name ?? '';
+      csvModel.EventNumber = model.EventNumber;
+
+      return csvModel;
+    })
+    HwExport.exportCSV(title, header, csvModels);
+
+  }
+
+  exportXLSX(title: string, header: string[], models: EventNumberStatisticModel[]) {
+    let xlsxModels = models.map((model, index) => {
+      let xlsxModel = new EventNumberStatisticXLSX();
+      xlsxModel.Id = (index + 1).toString();
+      xlsxModel.Name = model.Name;
+      xlsxModel.ParentName = model.ParentModel?.Name ?? '';
+      xlsxModel.EventNumber = model.EventNumber;
+
+      return xlsxModel;
+    })
+
+    HwExport.exportXLXS(title, header, xlsxModels);
 
   }
 

@@ -16,4 +16,10 @@ export class Time {
     return new Date(time.getTime() + n * 24 * 60 * 60 * 1000)
 
   }
+  static curWeek(time: Date, firstDay = 0) {
+    let offset = time.getDay() - firstDay;
+    let beginTime = Time.beginTime(this.backDate(time, offset));
+    let endTime = Time.endTime(Time.forwardDate(beginTime, 6))
+    console.log(beginTime, endTime)
+  }
 }

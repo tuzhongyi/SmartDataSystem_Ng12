@@ -1,20 +1,24 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from 'src/app/view-model/illegal-drop-total.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
+import { ExportBusiness } from '../../business/export.business';
 import { GlobalStoreService } from '../../service/global-store.service';
 import { Language } from '../../tools/language';
 import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
-
+import * as moment from 'moment';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Component({
   selector: 'event-number-statistic',
@@ -25,6 +29,7 @@ import { IllegalDropStatisticConf } from './event-number-statistic.config';
   ]
 })
 export class EventNumberStatisticComponent implements OnInit {
+  TimeUnit = TimeUnit
 
   // 拉取所有数据
   private _pageSize = 9527;
@@ -72,6 +77,7 @@ export class EventNumberStatisticComponent implements OnInit {
   }
   // 下拉表
   options: SelectItem[] = [];
+  loadFinish = false;
 
 
   // Table
@@ -81,23 +87,25 @@ export class EventNumberStatisticComponent implements OnInit {
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
 
 
+
   // Paginator
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
 
   dateFormat: string = 'yyyy年MM月dd日';
-  today = new Date();
+  curDate = new Date();
 
   searchInfo: EventNumberStatisticSearchInfo = {
-    BeginTime: Time.beginTime(this.today),
-    EndTime: Time.endTime(this.today),
+    BeginTime: Time.beginTime(new Date(this.curDate)),
+    EndTime: Time.endTime(new Date(this.curDate)),
     ResourceType: this.resourceDefault,
-    ResourceId: this.resourceId
+    ResourceId: this.resourceId,
+    TimeUnit: TimeUnit.Day,
   }
 
 
-  constructor(private _business: IllegalDropTotalBusiness) { }
+  constructor(private _business: IllegalDropTotalBusiness, private exports: ExportBusiness) { }
 
   ngOnInit(): void {
     // 模版要用 ngValue
@@ -106,25 +114,12 @@ export class EventNumberStatisticComponent implements OnInit {
 
   }
   private async _init() {
-    // if (this.searchInfo.ResourceType == UserResourceType.County) {
-    //   this._firstSize = 50;
-    // }
-    // else if (this.searchInfo.ResourceType == UserResourceType.Committees) {
-    //   this._firstSize = 1000;
-    // }
-    // else if (this.searchInfo.ResourceType == UserResourceType.Station) {
-    //   this._firstSize = 100;
-    // }
-    // let res1 = await this._business.init(this.searchInfo, this.pageIndex, this._firstSize);
-    // this.dataSubject.next(res1.Data);
-
-    // let res2 = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize - this._firstSize);
-
-    // this.dataSubject.next([...res1.Data, ...res2.Data]);
 
     let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
     console.log(res)
     this.dataSubject.next(res.Data);
+    this.loadFinish = true;
+
   }
 
   pageEvent(pageInfo: PageEvent) {
@@ -133,18 +128,40 @@ export class EventNumberStatisticComponent implements OnInit {
     this._init();
   }
   search() {
-    this._init();
-    console.log(this.searchInfo)
+    // this._init();
+    this.loadFinish = false;
+    console.log(this.searchInfo);
   }
 
-  export() {
-
+  exportCSV() {
+    let title = this._getTitle();
+    let header = ['序号', '行政区', '上级行政区', '单位(起)']
+    this._business.exportCSV(title, header, this.dataSubject.value)
   }
-  changeBegin(date: Date) {
-    // this.searchInfo.BeginTime = date;
-    console.log(date)
+  exportXLSX() {
+
+    let title = this._getTitle();
+    let header = ['序号', '行政区', '上级行政区', '单位(起)']
+    this._business.exportXLSX(title, header, this.dataSubject.value)
+  }
+
+
+  changeDate(date: Date) {
+    this.curDate = date;
     this.searchInfo.BeginTime = Time.beginTime(date);
     this.searchInfo.EndTime = Time.endTime(date);
+  }
+  changeTimeUnit(unit: TimeUnit) {
+    console.log(unit);
+
+    if (unit == TimeUnit.Day) {
+      this.searchInfo.BeginTime = Time.beginTime(this.curDate);
+      this.searchInfo.EndTime = Time.endTime(this.curDate);
+    } else if (unit == TimeUnit.Week) {
+      Time.curWeek(this.curDate)
+    } else if (unit === TimeUnit.Month) {
+
+    }
   }
 
   private _initUserResourceType() {
@@ -161,5 +178,11 @@ export class EventNumberStatisticComponent implements OnInit {
 
     } while (resourceType != UserResourceType.Station);// 最底层区划是 GarbageStation
 
+  }
+  private _getTitle() {
+    let date = formatDate(this.curDate, 'yyyy年MM月dd日', 'zh-CN');
+    let userType = Language.UserResourceType(this.searchInfo.ResourceType);
+    let eventType = Language.EventType(this.eventType);
+    return `${date}${userType}${eventType}总数据`;
   }
 }

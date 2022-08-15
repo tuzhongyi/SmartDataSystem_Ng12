@@ -1,4 +1,5 @@
 <!-- 垃圾事件统计表 -->
+{{ curDate | json }}
 <div class="event-number-statistic vertical-layout">
   <div class="vertical-header">
     <div class="operate-bar">
@@ -13,8 +14,8 @@
               readonly
               DateTimePicker
               [format]="dateFormat"
-              [date]="today"
-              (change)="changeBegin($event)"
+              [date]="curDate"
+              (change)="changeDate($event)"
               class="hw-form-control hw-form-input"
             />
           </div>
@@ -38,26 +39,32 @@
             <i class="mdi mdi-magnify"></i>
             查询
           </button>
-          <button class="hw-blue-btn" (click)="export()">
+          <button class="hw-blue-btn" (click)="exportXLSX()">
             <i class="howell-icon-export"></i>
             导出
           </button>
-          <button class="hw-blue-btn">
+          <button class="hw-blue-btn" (click)="exportCSV()">
             <i class="howell-icon-export"></i>
             CSV
           </button>
         </div>
       </div>
       <div class="right-wrapper">
-        <select>
-          <option value="">日报表</option>
-          <option value="">周报表</option>
-          <option value="">月报表</option>
+        <select
+          [(ngModel)]="searchInfo.TimeUnit"
+          (ngModelChange)="changeTimeUnit($event)"
+        >
+          <option [value]="TimeUnit.Day">日报表</option>
+          <option [value]="TimeUnit.Week">周报表</option>
+          <option [value]="TimeUnit.Month">月报表</option>
         </select>
       </div>
     </div>
   </div>
   <div class="vertical-main">
+    <div class="progress-mask" *ngIf="!loadFinish">
+      <mat-spinner></mat-spinner>
+    </div>
     <common-table
       [dataSubject]="dataSubject"
       [columnModel]="columnModel"
@@ -66,7 +73,7 @@
     ></common-table>
   </div>
   <div class="vertical-footer" style="justify-content: flex-end">
-    <!-- <div class="footer-item">
+    <div class="footer-item">
       <div class="footer-info">
         <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
         <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
@@ -80,6 +87,6 @@
         (page)="pageEvent($event)"
       >
       </app-paginator>
-    </div> -->
+    </div>
   </div>
 </div>
