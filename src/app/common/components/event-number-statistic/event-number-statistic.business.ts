@@ -15,7 +15,7 @@ import { GetDivisionEventNumbersParams, GetDivisionsParams, GetDivisionStatistic
 import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
 import { GetGarbageStationsParams, GetGarbageStationStatisticNumbersParams, GetGarbageStationStatisticNumbersParamsV2 } from "src/app/network/request/garbage-station/garbage-station-request.params";
 import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
-import { EventNumberStatisticCSV, EventNumberStatisticModel, EventNumberStatisticSearchInfo, EventNumberStatisticXLSX } from "src/app/view-model/illegal-drop-total.model";
+import { EventNumberStatisticCSV, EventNumberStatisticModel, EventNumberStatisticSearchInfo, EventNumberStatisticXLSX } from "src/app/view-model/event-number-statistic.model";
 import { LocaleCompare } from "../../tools/locale-compare";
 import { Time } from "../../tools/time";
 import { HwExport } from "../../tools/hw-export";
@@ -140,8 +140,8 @@ export class IllegalDropTotalBusiness {
     } else {
       let params = new GetGarbageStationStatisticNumbersParamsV2();
       params.TimeUnit = searchInfo.TimeUnit;
-      params.BeginTime = Time.beginTime(new Date());
-      params.EndTime = Time.endTime(new Date())
+      params.BeginTime = searchInfo.BeginTime;
+      params.EndTime = searchInfo.EndTime;
       params.GarbageStationIds = ids;
       let res = this._garbageStationRequest.statistic.number.history.list(params)
       return res;

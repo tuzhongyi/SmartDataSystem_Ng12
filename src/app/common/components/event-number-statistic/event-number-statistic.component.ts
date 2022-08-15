@@ -12,7 +12,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from 'src/app/view-model/illegal-drop-total.model';
+import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from 'src/app/view-model/event-number-statistic.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
 import { GlobalStoreService } from '../../service/global-store.service';
@@ -133,9 +133,9 @@ export class EventNumberStatisticComponent implements OnInit {
     this._init();
   }
   search() {
-    // this._init();
+    this._init();
     this.loadFinish = false;
-    console.log(this.searchInfo);
+    // console.log(this.searchInfo);
   }
 
   exportCSV() {
@@ -151,25 +151,31 @@ export class EventNumberStatisticComponent implements OnInit {
   }
 
 
+  // 更改日期,重新计算开始/结束时间
   changeDate(date: Date) {
-    this._init();
-    this.loadFinish = false;
     this.curDate = date;
-    this.changeTimeUnit(this.searchInfo.TimeUnit);
+    this._updateSearchInfo();
   }
 
+  // 更改时间单位,重新计算开始/结束时间
   changeTimeUnit(unit: TimeUnit) {
-
     this.searchInfo.TimeUnit = unit;
-    if (unit == TimeUnit.Day) {
+
+    this._updateSearchInfo();
+
+    this.search();
+  }
+  private _updateSearchInfo() {
+    if (this.searchInfo.TimeUnit == TimeUnit.Day) {
       this.searchInfo.BeginTime = Time.beginTime(this.curDate);
       this.searchInfo.EndTime = Time.endTime(this.curDate);
-    } else if (unit == TimeUnit.Week) {
+    } else if (this.searchInfo.TimeUnit == TimeUnit.Week) {
       this.searchInfo.BeginTime = Time.curWeek(this.curDate).beginTime;
       this.searchInfo.EndTime = Time.curWeek(this.curDate).endTime;
 
-    } else if (unit === TimeUnit.Month) {
-
+    } else if (this.searchInfo.TimeUnit == TimeUnit.Month) {
+      this.searchInfo.BeginTime = Time.curMonth(this.curDate).beginTime;
+      this.searchInfo.EndTime = Time.curMonth(this.curDate).endTime;
     }
   }
 

@@ -17,11 +17,19 @@ export class Time {
     return new Date(new Date(time).getTime() + n * 24 * 60 * 60 * 1000)
 
   }
-  static curWeek(t: Date, firstDay = 0) {
-    let time = new Date(t)
+  static curWeek(time: Date, firstDay = 0) {
     let offset = time.getDay() - firstDay;
     let beginTime = Time.beginTime(this.backDate(time, offset));
     let endTime = Time.endTime(Time.forwardDate(beginTime, 6))
+    return {
+      beginTime,
+      endTime
+    }
+  }
+  static curMonth(t: Date) {
+    let beginTime = new Date(t.getFullYear(), t.getMonth(), 1, 0, 0, 0, 0);
+    let endTime = new Date(t.getFullYear(), t.getMonth() + 1, 1, 0, 0, 0, 0);
+    endTime = Time.endTime(Time.backDate(endTime, 1));
     return {
       beginTime,
       endTime

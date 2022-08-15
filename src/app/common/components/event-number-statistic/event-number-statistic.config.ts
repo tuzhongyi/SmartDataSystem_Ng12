@@ -1,4 +1,4 @@
-import { EventNumberStatisticModel } from 'src/app/view-model/illegal-drop-total.model';
+import { EventNumberStatisticModel } from 'src/app/view-model/event-number-statistic.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 export const IllegalDropStatisticConf: TableColumnModel[] = [

@@ -4,7 +4,7 @@ import { UserResourceType } from "../enum/user-resource-type.enum";
 import { Division } from "../network/model/division.model";
 import { GarbageStation } from "../network/model/garbage-station.model";
 import { DivisionRequestService } from "../network/request/division/division-request.service";
-import { EventNumberStatisticModel } from "../view-model/illegal-drop-total.model";
+import { EventNumberStatisticModel } from "../view-model/event-number-statistic.model";
 import { CommonModelConverter, CommonModelPromiseConverter } from "./common-model.converter";
 
 type IllegalDropTotalSource = Division | GarbageStation;

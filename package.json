@@ -32,7 +32,6 @@
     "jquery": "^3.6.0",
     "jquery-toast-plugin": "^1.3.2",
     "js-base64": "^3.7.2",
-    "moment": "^2.29.4",
     "jszip": "^3.10.1",
     "jszip-utils": "^0.1.0",
     "myclabs.jquery.confirm": "^2.7.0",
