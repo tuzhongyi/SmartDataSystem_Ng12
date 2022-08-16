@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-21 14:02:08
+ * @Last Modified time: 2022-08-16 08:53:59
  */
 
 import {
@@ -26,9 +26,9 @@ import { StaticDataRole } from '../enum/role-static-data.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
-import { StoreService } from '../common/service/store.service';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
+import { StoreService } from '../common/service/store.service';
 
 /**
  *  LoginComponent 需要用到 form 指令，

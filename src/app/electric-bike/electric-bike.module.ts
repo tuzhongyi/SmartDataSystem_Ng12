@@ -8,12 +8,16 @@ import { ElectricBikeIndexComponent } from './index/index.component';
 import { GarbageCommitteesModule } from '../garbage-system/committees/garbage-committees.module';
 import { ElectricBikeNavicationComponent } from './navication/navication.component';
 import { IndexCardComponent } from './cards/index-card/index-card.component';
+import { AlarmComponent } from './alarm/alarm.component';
+import { DeviceStatisticComponent } from './device-statistic/device-statistic.component';
 
 @NgModule({
   declarations: [
     IndexCardComponent,
     ElectricBikeIndexComponent,
     ElectricBikeNavicationComponent,
+    AlarmComponent,
+    DeviceStatisticComponent,
   ],
   imports: [
     CommonModule,

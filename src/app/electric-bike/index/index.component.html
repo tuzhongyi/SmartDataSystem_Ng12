@@ -13,12 +13,9 @@
   <div class="index-body">
     <div class="index-body-left">
       <div class="">
-        <howell-electric-bike-navication
-          [root]="navication.root"
-          [children]="navication.children"
-          [selected]="navication.selected"
-          (onchildclick)="navication.onchildclick($event)"
-        ></howell-electric-bike-navication>
+        <howell-electric-bike-navication [root]="navication.root" [children]="navication.children"
+          [selected]="navication.selected" (onchildclick)="navication.onchildclick($event)">
+        </howell-electric-bike-navication>
       </div>
       <div class="">
         <howell-index-card>
@@ -27,10 +24,13 @@
         </howell-index-card>
       </div>
       <div class="">
-        <howell-index-card> </howell-index-card>
+        <howell-index-card>
+          <howell-alarm></howell-alarm>
+        </howell-index-card>
       </div>
     </div>
     <div class="index-body-right">
+      <howell-device-statistic></howell-device-statistic>
       <howell-index-card>
         <app-map-control></app-map-control>
       </howell-index-card>
