@@ -10,6 +10,7 @@ import { ElectricBikeNavicationComponent } from './navication/navication.compone
 import { IndexCardComponent } from './cards/index-card/index-card.component';
 import { AlarmComponent } from './alarm/alarm.component';
 import { DeviceStatisticComponent } from './device-statistic/device-statistic.component';
+import { DeviceStatusComponent } from './device-status/device-status.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { DeviceStatisticComponent } from './device-statistic/device-statistic.co
     ElectricBikeNavicationComponent,
     AlarmComponent,
     DeviceStatisticComponent,
+    DeviceStatusComponent,
   ],
   imports: [
     CommonModule,

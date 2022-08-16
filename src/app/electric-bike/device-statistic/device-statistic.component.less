@@ -1,11 +1,112 @@
 :host {
   position: absolute;
   z-index: 9527;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 30px;
 }
 .device-statistic {
   width: 200px;
-  height: 400px;
   background-color: rgba(0, 0, 0, 0.4);
+  // border: 1px solid #1e88e5;
+
+  background-image: linear-gradient(90deg, #5e6ebe, #5e6ebe),
+    linear-gradient(180deg, #5e6ebe, #5e6ebe),
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      #5e6ebe 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ),
+    linear-gradient(270deg, #5e6ebe, #5e6ebe),
+    linear-gradient(0deg, #5e6ebe, #5e6ebe),
+    linear-gradient(
+      135deg,
+      transparent 0%,
+      transparent calc(50% - 1px),
+      #5e6ebe 50%,
+      transparent calc(50% + 1px),
+      transparent 100%
+    ),
+    linear-gradient(135deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
+    linear-gradient(-135deg, transparent 0px, #060d37 0),
+    linear-gradient(-45deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
+    linear-gradient(45deg, transparent 0px, #060d37 0);
+  background-position: 15px 0, 100% 0, 100% 100%, 0% 100%, 0% 100%, 0% 0%,
+    top left, top right, bottom right, bottom left;
+  background-size: calc(100% - 15px) 1px, 1px calc(100% - 15px), 15px 15px,
+    calc(100% - 15px) 1px, 1px calc(100% - 15px), 15px 15px, 51% 51%, 50% 50%,
+    51% 51%, 50% 50%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.wrapper {
+  padding: 20px;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(0deg, #7a8de6, #7a8de6),
+    linear-gradient(90deg, #7a8de6, #7a8de6),
+    linear-gradient(270deg, #7a8de6, #7a8de6),
+    linear-gradient(0deg, #7a8de6, #7a8de6);
+  background-position: top right, top right, left bottom, left bottom;
+  background-size: 10px 2px, 2px 10px, 10px 2px, 2px 10px;
+}
+
+.item {
+  display: flex;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+
+  .icon {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    .bg {
+      width: 100%;
+      height: 100%;
+      background-image: url(/assets/img/middle-round.png);
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+    }
+    .bg_green {
+      filter: hue-rotate(250deg);
+    }
+    .bg_yellow {
+      filter: hue-rotate(197deg);
+    }
+    .bg_red {
+      filter: hue-rotate(115deg);
+    }
+    .bg_gray {
+      filter: grayscale(1);
+    }
+    i {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      font-size: 30px;
+      color: white;
+      z-index: 9527;
+      transform: translate(-50%, -50%);
+    }
+  }
+  .info {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+
+    &-des {
+      color: #cfd7ff;
+      font-size: 14px;
+    }
+    &-num {
+      color: white;
+      font-size: 26px;
+    }
+  }
 }
