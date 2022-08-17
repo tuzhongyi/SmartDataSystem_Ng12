@@ -1,0 +1,51 @@
+.device-status {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: column;
+}
+.header {
+  flex-shrink: 0;
+  font-size: 24px;
+  color: #fff;
+  line-height: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 10px;
+}
+.body {
+  flex-grow: 1;
+  display: flex;
+  overflow: auto;
+}
+.left-wrapper {
+  flex-grow: 1;
+  flex-basis: 60%;
+}
+.right-wrapper {
+  flex-grow: 1;
+  overflow: auto;
+  flex-shrink: 0;
+}
+
+#chartContainer {
+  width: 86%;
+  height: 100%;
+  // background-color: red;
+}
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.item .label {
+  color: #99aaff;
+  font-size: 16px;
+}
+
+.item .count {
+  font-size: 24px;
+}

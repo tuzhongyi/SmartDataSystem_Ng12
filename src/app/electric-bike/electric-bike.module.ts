@@ -11,6 +11,7 @@ import { IndexCardComponent } from './cards/index-card/index-card.component';
 import { AlarmComponent } from './alarm/alarm.component';
 import { DeviceStatisticComponent } from './device-statistic/device-statistic.component';
 import { DeviceStatusComponent } from './device-status/device-status.component';
+import { AngularResizeEventModule } from 'angular-resize-event';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DeviceStatusComponent } from './device-status/device-status.component';
     ElectricBikeRoutingModule,
     GarbageComponentsModule,
     GarbageCommitteesModule,
+    AngularResizeEventModule,
   ],
 })
 export class ElectricBikeModule {}
