@@ -38,10 +38,6 @@ export class TreeSelecComponent implements OnInit, AfterViewInit {
   toggleHandler() {
     this.show = !this.show;
 
-    // 仅在关闭的时候保存所有选中节点，用于恢复
-    // if (!this.show) {
-    //     this.defaultIds = this.selectedNodes.map(node => node.Id);
-    // }
   }
   removeNode(e: Event, node: CommonFlatNode) {
     e.stopPropagation();

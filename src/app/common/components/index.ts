@@ -49,6 +49,7 @@ import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
+import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -100,5 +101,6 @@ export const CUSTOM_COMPONENTS = [
   IllegalDropComponent,
   TabHeaderComponent,
   IllegalDropEventComponent,
-  EventNumberStatisticComponent
+  EventNumberStatisticComponent,
+  EventNumberChartComponent
 ];

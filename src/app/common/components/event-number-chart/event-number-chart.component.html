@@ -1,5 +1,4 @@
-<!-- 垃圾事件统计表 -->
-<div class="event-number-statistic vertical-layout">
+<div class="event-number-chart vertical-layout">
   <div class="vertical-header">
     <div class="operate-bar">
       <div class="left-wrapper filter-wrapper">
@@ -19,18 +18,17 @@
             />
           </div>
         </div>
-        <div class="filter-group">
+        <div class="filter-group" style="flex-basis: 36%; max-width: 350px">
           <div class="title">
             <span class="hw-form-label">行政区</span>
           </div>
           <div class="content">
-            <select [(ngModel)]="searchInfo.ResourceType">
-              <ng-container *ngFor="let option of options">
-                <option [ngValue]="option.value">
-                  {{ option.language }}
-                </option>
-              </ng-container>
-            </select>
+            <tree-select>
+              <howell-division-tree
+                #tree
+                (selectTreeNode)="selectTreeNode($event)"
+              ></howell-division-tree>
+            </tree-select>
           </div>
         </div>
         <div class="hw-normal-btn-group">
@@ -50,6 +48,7 @@
       </div>
       <div class="right-wrapper">
         <select
+          style="margin-right: 10px"
           [(ngModel)]="searchInfo.TimeUnit"
           (ngModelChange)="changeTimeUnit($event)"
         >
@@ -57,21 +56,18 @@
           <option [value]="TimeUnit.Week">周报表</option>
           <option [value]="TimeUnit.Month">月报表</option>
         </select>
+        <select
+          [(ngModel)]="chartType"
+          (ngModelChange)="changeChartType($event)"
+        >
+          <option [value]="ChartType.bar">柱状图</option>
+          <option [value]="ChartType.line">折线图</option>
+        </select>
       </div>
     </div>
   </div>
-  <div class="vertical-main">
-    <div class="progress-mask" *ngIf="!loadFinish">
-      <mat-spinner></mat-spinner>
-    </div>
-    <common-table
-      [dataSubject]="dataSubject"
-      [columnModel]="columnModel"
-      [displayedColumns]="displayedColumns"
-      [selectStrategy]="selectStrategy"
-    ></common-table>
-  </div>
-  <div class="vertical-footer" style="justify-content: flex-end">
+  <div class="vertical-main" #chartContainer (resized)="onResized($event)"></div>
+  <!-- <div class="vertical-footer" style="justify-content: flex-end">
     <div class="footer-item">
       <div class="footer-info">
         <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
@@ -87,5 +83,5 @@
       >
       </app-paginator>
     </div>
-  </div>
+  </div> -->
 </div>

@@ -16,7 +16,7 @@
           "skipTests": true,
           "skipImport": true,
           "style": "less",
-          "prefix": "howell"
+          "prefix": ""
         },
         "@schematics/angular:directive": {
           "skipTests": true,
