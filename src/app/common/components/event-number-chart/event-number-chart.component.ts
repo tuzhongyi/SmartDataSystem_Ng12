@@ -21,11 +21,15 @@ import { ChartType } from 'src/app/enum/chart-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EventNumberChartSearchInfo } from 'src/app/view-model/event-number-chart.model';
 import { Time } from '../../tools/time';
+import { EventNumberChartBusiness } from './event-number-chart.business';
 
 @Component({
   selector: 'event-number-chart',
   templateUrl: './event-number-chart.component.html',
-  styleUrls: ['./event-number-chart.component.less']
+  styleUrls: ['./event-number-chart.component.less'],
+  providers: [
+    EventNumberChartBusiness
+  ]
 })
 export class EventNumberChartComponent implements OnInit, AfterViewInit {
   TimeUnit = TimeUnit;
@@ -69,9 +73,13 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
   }
   @ViewChild('chartContainer') container!: ElementRef<HTMLDivElement>;
 
-  constructor() { }
+  constructor(private _business: EventNumberChartBusiness) { }
 
   ngOnInit(): void {
+    this._init();
+  }
+  private _init() {
+    this._business.init()
   }
 
   ngAfterViewInit(): void {

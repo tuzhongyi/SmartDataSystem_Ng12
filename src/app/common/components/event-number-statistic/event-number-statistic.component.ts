@@ -21,7 +21,6 @@ import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 
 @Component({
