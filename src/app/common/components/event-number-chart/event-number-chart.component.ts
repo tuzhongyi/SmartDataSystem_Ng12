@@ -57,9 +57,7 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
     areaStyle: {},
     label: {
       show: true,
-      color: '#cfd7fe',
-      fontSize: 16,
-      position: 'top',
+
     }
   }
   barSeries: BarSeriesOption = {
@@ -69,9 +67,9 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
     barMinHeight: 5,
     label: {
       show: true,
-      color: '#7586e0',
-      fontSize: 16,
-      position: 'top',
+      // color: '#7586e0',
+      // fontSize: 16,
+      // position: 'top',
     }
   }
 

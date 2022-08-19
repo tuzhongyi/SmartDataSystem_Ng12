@@ -58,7 +58,7 @@ export class GarbageDropStationCountTableBusiness
         return this.divisionService.cache.get(id);
       },
     };
-    let model = await this.Converter.Convert(data, getter);
+    let model = await this.Converter.Convert(data, getter, this.store.defaultDivisionType);
     return model;
   }
   async getData(

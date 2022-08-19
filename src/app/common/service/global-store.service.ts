@@ -1,6 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { interval } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +32,19 @@ export class GlobalStoreService {
     return this._divisionType;
   }
 
+
+  private _defaultDivisionType: DivisionType = DivisionType.None;
+  public get defaultDivisionType() {
+    if (this._defaultDivisionType == DivisionType.None) {
+      let user = this.localStorage.user;
+      let type = user.Resources && user.Resources.length > 0 ? user.Resources[0].ResourceType : undefined;
+      if (type)
+        this._defaultDivisionType = EnumHelper.ConvertUserResourceToDivision(
+          type
+        );
+    }
+    return this._defaultDivisionType;
+  }
   statistic = {
     illegalDrop: 0,
     mixedInto: 0,
@@ -57,7 +73,7 @@ export class GlobalStoreService {
     }
   }
 
-  constructor() {
+  constructor(private localStorage: LocalStorageService) {
     this.runInterval();
   }
 }

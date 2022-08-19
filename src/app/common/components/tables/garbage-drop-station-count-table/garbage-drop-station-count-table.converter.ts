@@ -1,4 +1,5 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
@@ -9,10 +10,10 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
 
 export class GarbageDropStationCountTableConverter
   implements
-    IPromiseConverter<
-      NumberStatisticV2Type[],
-      GarbageDropStationCountTableModel[]
-    >
+  IPromiseConverter<
+  NumberStatisticV2Type[],
+  GarbageDropStationCountTableModel[]
+  >
 {
   converter = {
     item: new GarbageDropStationCountTableItemConverter(),
@@ -21,11 +22,12 @@ export class GarbageDropStationCountTableConverter
   async Convert(
     source: NumberStatisticV2Type[],
     getter: ConvertGetter,
+    divisionType: DivisionType,
     ...res: any[]
   ): Promise<GarbageDropStationCountTableModel[]> {
     let array: GarbageDropStationCountTableModel[] = [];
     for (let i = 0; i < source.length; i++) {
-      let item = await this.converter.item.Convert(source[i], getter);
+      let item = await this.converter.item.Convert(source[i], getter, divisionType);
       array.push(item);
     }
     return array;
@@ -34,11 +36,12 @@ export class GarbageDropStationCountTableConverter
 
 export class GarbageDropStationCountTableItemConverter
   implements
-    IPromiseConverter<NumberStatisticV2Type, GarbageDropStationCountTableModel>
+  IPromiseConverter<NumberStatisticV2Type, GarbageDropStationCountTableModel>
 {
   async Convert(
     source: NumberStatisticV2Type,
-    getter: ConvertGetter
+    getter: ConvertGetter,
+    divisionType: DivisionType
   ): Promise<GarbageDropStationCountTableModel> {
     let model = new GarbageDropStationCountTableModel();
     model.Id = source.Id;
@@ -52,16 +55,26 @@ export class GarbageDropStationCountTableItemConverter
         model.EventCount = eventNumber.DayNumber;
       }
 
+
       eventNumber = source.EventNumbers.find(
-        (x) => x.EventType === EventType.GarbageDropTimeout
+        (x) =>
+          x.EventType ==
+          (divisionType === DivisionType.City
+            ? EventType.GarbageDropSuperTimeout
+            : EventType.GarbageDropTimeout)
       );
       if (eventNumber) {
         model.TimeoutCount = eventNumber.DayNumber;
       }
     }
-
     if (model.EventCount > 0) {
       model.TimeoutRatio = (model.TimeoutCount / model.EventCount) * 100;
+    }
+    model.TimeinRatio = 100;
+
+    if (model.EventCount > 0) {
+      model.TimeinRatio = ((model.EventCount - model.TimeoutCount) / model.EventCount) * 100;
+
     }
 
     if (source instanceof GarbageStationNumberStatisticV2) {

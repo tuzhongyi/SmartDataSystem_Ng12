@@ -14,4 +14,10 @@ export enum EventType {
   GarbageDropTimeout = 6,
   /**垃圾滞留已处置(摄像机监控期间，落地垃圾消失) */
   GarbageDropHandle = 7,
+
+  /**小包垃圾滞留超级超时 */
+  GarbageDropSuperTimeout = 8,
+
+  GarbageDropTimeoutHandle = 255
+
 }
