@@ -27,17 +27,20 @@ export class DeviceStatusComponent implements OnInit, AfterViewInit {
         type: 'gauge',
         startAngle: 90,
         endAngle: 450,
-        // radius: '80%',
+        radius: '70%',
         progress: {
           show: true,
+          width: 7,
           itemStyle: {
-            borderWidth: 0,
+            borderWidth: 3,
+            borderColor: '#3a93ff',
             color: '#3a93ff',
           },
         },
         // 坐标轴
         axisLine: {
           lineStyle: {
+            width: 5,
             opacity: 0.5,
             color: [[1, '#4b5899']],
           },
