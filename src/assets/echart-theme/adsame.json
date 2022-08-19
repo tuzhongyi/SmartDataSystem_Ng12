@@ -9,16 +9,14 @@
     "#cda819",
     "#32a487"
   ],
-   "grid": {
+  "grid": {
     "left": 15,
-    "right":15,
-    "bottom":0,
-    "containLabel":true
+    "right": 15,
+    "bottom": 0,
+    "containLabel": true
   },
   "backgroundColor": "rgba(0,0,0,0)",
-  "textStyle": {
-   
-  },
+  "textStyle": {},
   "title": {
     "textStyle": {
       "color": "#ffffff",
@@ -334,9 +332,9 @@
   },
   "legend": {
     "selectedMode": false,
-    "icon":"none",
-    "top":"10%",
-    "left":"80%",
+    "icon": "none",
+    "top": "10%",
+    "left": "80%",
     "textStyle": {
       "color": "inherit",
       "fontSize": 12
@@ -346,7 +344,7 @@
     "mainType": "tooltip",
     "trigger": "axis",
     "axisPointer": {
-      "type":"cross",
+      "type": "cross",
       "lineStyle": {
         "color": "#cccccc",
         "width": 1

@@ -1,14 +1,19 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
-import { XAXisComponentOption, YAXisComponentOption } from 'echarts';
+import { Color, XAXisComponentOption, YAXisComponentOption } from 'echarts';
 import { BarChart, BarSeriesOption, LineChart, LineSeriesOption } from 'echarts/charts';
+import { TitleComponent, TitleComponentOption, TooltipComponent, TooltipComponentOption } from 'echarts/components';
 import * as echarts from 'echarts/core';
 
 echarts.use([
+  TitleComponent,
+  TooltipComponent,
   BarChart,
   LineChart
 ])
 type ECOption = echarts.ComposeOption<
+  TitleComponentOption |
+  TooltipComponentOption |
   XAXisComponentOption |
   YAXisComponentOption |
   BarSeriesOption |
@@ -47,21 +52,44 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
   myChart: echarts.ECharts | null = null;
   lineSeries: LineSeriesOption = {
     type: 'line',
-    name: 'Highest',
-    data: [10, 11, 13, 11, 12, 12, 9],
+    name: '单位(起)',
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 74, 106, 124, 85, 86, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    areaStyle: {},
+    label: {
+      show: true,
+      color: '#cfd7fe',
+      fontSize: 16,
+      position: 'top',
+    }
   }
   barSeries: BarSeriesOption = {
     type: 'bar',
-    name: 'Highest',
-    data: [10, 11, 13, 11, 12, 12, 9],
+    name: '单位(起)',
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 74, 106, 124, 85, 86, 34, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    barMinHeight: 5,
+    label: {
+      show: true,
+      color: '#7586e0',
+      fontSize: 16,
+      position: 'top',
+    }
   }
 
 
   option: ECOption = {
+    title: {
+      text: '单位(起)',
+      right: 0,
+      textStyle: {
+        color: '#7586e0',
+        fontSize: 14
+      }
+    },
+    tooltip: {},
     xAxis: {
       mainType: "xAxis",
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      data: ['00:00', '01:00', '02:00', '03:00', '04:00', '05:00', '06:00', '07:00', '08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00', '23:00', '24:00',]
     },
     yAxis: {
       mainType: 'yAxis',
@@ -84,7 +112,7 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     if (this.container) {
-      this.myChart = echarts.init(this.container.nativeElement);
+      this.myChart = echarts.init(this.container.nativeElement, 'adsame');
       if (this.chartType == ChartType.line) {
         this.option.series = [this.lineSeries]
 
