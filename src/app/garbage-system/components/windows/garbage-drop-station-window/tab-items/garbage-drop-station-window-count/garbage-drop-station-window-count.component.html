@@ -1,3 +1,4 @@
+{{ type }}--{{ parentId }}
 <div class="garbage-drop-station-window-count">
   <div class="filter">
     <div class="filter-items">
@@ -20,7 +21,16 @@
         <app-select-control
           class="list-type-select full"
           [data]="types"
+          [selected]="typeSelected"
           (select)="onTypeChange($event)"
+        ></app-select-control>
+      </div>
+      <div class="filter-item" *ngIf="type != UserResourceType.County">
+        <span>筛选</span>
+        <app-select-control
+          class="list-type-select full"
+          [data]="counties"
+          (select)="onCountyChange($event)"
         ></app-select-control>
       </div>
       <button class="hw-blue-btn search" (click)="search()">查询</button>
@@ -39,6 +49,7 @@
   </div>
   <div class="garbage-drop-station-window-count-content">
     <howell-garbage-drop-station-count-table
+      [parentId]="parentId"
       [date]="date"
       [unit]="unit"
       [type]="type"

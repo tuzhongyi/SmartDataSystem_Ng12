@@ -30,12 +30,14 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
 export class GarbageDropStationCountTableComponent
   extends TableAbstractComponent<GarbageDropStationCountTableModel>
   implements
-    IComponent<IModel, GarbageDropStationCountTableModel[]>,
-    OnInit,
-    OnChanges
-{
+  IComponent<IModel, GarbageDropStationCountTableModel[]>,
+  OnInit,
+  OnChanges {
   @Input()
   business: IBusiness<IModel, GarbageDropStationCountTableModel[]>;
+  @Input()
+  parentId: string = '';
+
   @Input()
   date: Date = new Date();
   @Input()
@@ -61,7 +63,7 @@ export class GarbageDropStationCountTableComponent
       }
     }
   }
-  width: string[] = ['30%', '25%', '15%', '15%', '15%'];
+  width: string[] = ['10%', '25%', '15%', '15%', '15%'];
   sort?: Sort;
 
   ngOnInit(): void {
@@ -70,7 +72,7 @@ export class GarbageDropStationCountTableComponent
 
   async loadData() {
     this.loading = true;
-    this.business.load(this.date, this.unit, this.type).then((x) => {
+    this.business.load(this.parentId, this.date, this.unit, this.type).then((x) => {
       this.loading = false;
       this.datas = x;
       if (!this.sort) {

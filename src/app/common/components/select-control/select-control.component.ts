@@ -27,7 +27,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Input()
   cansearch = false;
 
-  constructor() {}
+  constructor() { }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
@@ -52,6 +52,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
     }
   }
 
+  @Input()
   selected?: SelectItem;
 
   opened = false;

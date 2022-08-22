@@ -44,12 +44,13 @@ export class GarbageDropStationCountTableBusiness
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async load(
+    parentId: string,
     date: Date,
     unit: TimeUnit,
     type: UserResourceType
   ): Promise<GarbageDropStationCountTableModel[]> {
     let duration = DurationParams.TimeUnit(unit, date);
-    let data = await this.getData(this.store.divisionId, duration, type, unit);
+    let data = await this.getData(parentId, this.store.divisionId, duration, type, unit);
     let getter: ConvertGetter = {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -62,47 +63,57 @@ export class GarbageDropStationCountTableBusiness
     return model;
   }
   async getData(
+    parentId: string,
     divisionId: string,
     duration: DurationParams,
     type: UserResourceType,
     unit: TimeUnit
   ): Promise<NumberStatisticV2Type[]> {
     if (type === UserResourceType.Station) {
-      let stations = await this.getGarbageStationList(divisionId);
+      let stations = await this.getGarbageStationList(parentId, divisionId);
       let ids = stations.map((x) => x.Id);
-      return this.getGarbageStationData(ids, duration, unit);
+      return this.getGarbageStationData(parentId, ids, duration, unit);
     } else {
       let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
-      let divisions = await this.getDivisionList(divisionId, divisionType);
+      let divisions = await this.getDivisionList(parentId, divisionId, divisionType);
       let ids = divisions.map((x) => x.Id);
       return this.getDivisionData(ids, duration, unit);
     }
   }
 
-  async getGarbageStationList(divisionId: string) {
+  async getGarbageStationList(parentId: string, divisionId: string) {
     let params = new GetGarbageStationsParams();
     params.AncestorId = divisionId;
+    params.DivisionId = parentId;
     let paged = await this.stationService.list(params);
     return paged.Data;
   }
-  async getDivisionList(divisionId: string, divisionType: DivisionType) {
+  async getDivisionList(parentId: string, divisionId: string, divisionType: DivisionType) {
     let params = new GetDivisionsParams();
     params.DivisionType = divisionType;
     params.AncestorId = divisionId;
+    params.ParentId = parentId;
     let paged = await this.divisionService.list(params);
     return paged.Data;
   }
 
-  getGarbageStationData(
+  async getGarbageStationData(
+    parentId: string,
     stationIds: string[],
     interval: DurationParams,
     unit: TimeUnit
   ) {
-    let params = new GetGarbageStationStatisticNumbersParamsV2();
-    params = Object.assign(params, interval);
-    params.TimeUnit = unit;
-    params.GarbageStationIds = stationIds;
-    return this.stationService.statistic.number.history.list(params);
+    if (stationIds.length) {
+      let params = new GetGarbageStationStatisticNumbersParamsV2();
+      params = Object.assign(params, interval);
+      params.TimeUnit = unit;
+      params.GarbageStationIds = stationIds;
+      let res = await this.stationService.statistic.number.history.list(params);
+      return res;
+    } else {
+      return []
+    }
+
   }
   getDivisionData(
     divisionIds: string[],
