@@ -37,13 +37,14 @@
     .mat-cell {
       color: #cfd7ff;
       font-size: 18px;
-
+      overflow: auto;
       > div {
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         // text-align: center;
+        flex-shrink: 0;
       }
     }
     img {

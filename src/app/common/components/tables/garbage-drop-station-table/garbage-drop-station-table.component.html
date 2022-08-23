@@ -1,46 +1,53 @@
 <div class="garbage-drop-station-table">
   <div class="garbage-drop-station-table-main">
-    <table
-      border="0"
-      cellpadding="0"
-      cellspacing="0"
-      matSort
-      (matSortChange)="sortData($event)"
-    >
-      <thead>
-        <tr>
-          <td [ngStyle]="{ width: width[0] }">图片</td>
-          <td [ngStyle]="{ width: width[1] }">投放点</td>
-          <td [ngStyle]="{ width: width[2] }">社区</td>
-          <td [ngStyle]="{ width: width[3] }">街道</td>
-          <td [ngStyle]="{ width: width[4] }">居委会</td>
-          <td [ngStyle]="{ width: width[5] }">垃圾堆数</td>
-          <td
-            [ngStyle]="{ width: width[6] }"
-            mat-sort-header="GarbageDuration"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
-            滞留时间
-          </td>
-          <td
-            [ngStyle]="{ width: width[7] }"
-            mat-sort-header="MaxGarbageDuration"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
-            总滞留时长
-          </td>
-          <td [ngStyle]="{ width: width[8] }">人员</td>
-          <td [ngStyle]="{ width: width[9] }">操作</td>
-        </tr>
-      </thead>
-    </table>
-    <div class="body">
-      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+    <div class="table-header">
+      <!-- 有滚动条 -->
+      <table>
+        <colgroup>
+          <col style="width: 10%" />
+          <col style="width: 14%" />
+          <col style="width: 12%" />
+          <col style="width: 7%" />
+          <col style="width: 9%" />
+          <col style="width: 5%" />
+          <col style="width: 9%" />
+          <col style="width: 8%" />
+          <col style="width: 6%" />
+          <col style="width: 6%" />
+        </colgroup>
+        <thead>
+          <tr>
+            <th>图片</th>
+            <th>投放点</th>
+            <th>社区</th>
+            <th>街道</th>
+            <th>居委会</th>
+            <th>垃圾堆数</th>
+            <th>滞留时间</th>
+            <th>总滞留时长</th>
+            <th>人员</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="table-body">
+      <table>
+        <colgroup>
+          <col style="width: 10%" />
+          <col style="width: 14%" />
+          <col style="width: 12%" />
+          <col style="width: 7%" />
+          <col style="width: 9%" />
+          <col style="width: 5%" />
+          <col style="width: 9%" />
+          <col style="width: 8%" />
+          <col style="width: 6%" />
+          <col style="width: 6%" />
+        </colgroup>
         <tbody>
           <tr *ngFor="let item of datas">
-            <td [ngStyle]="{ width: width[0] }">
+            <td>
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
                   <app-image-control
@@ -51,13 +58,13 @@
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{ width: width[1] }">
+            <td>
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: width[2] }">
+            <td>
               {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
             </td>
-            <td [ngStyle]="{ width: width[3] }">
+            <td>
               {{
                 item.GarbageStation
                   ? item.GarbageStation.County
@@ -66,7 +73,7 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[4] }">
+            <td>
               {{
                 item.GarbageStation
                   ? item.GarbageStation.Committees
@@ -75,22 +82,22 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[5] }">
+            <td>
               {{ item.GarbageCount }}
             </td>
-            <td [ngStyle]="{ width: width[6] }">
+            <td>
               {{
                 item.GarbageDuration ? Language.Time(item.GarbageDuration) : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[7] }">
+            <td>
               {{
                 item.MaxGarbageDuration
                   ? Language.Time(item.MaxGarbageDuration)
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[8] }">
+            <td>
               <div
                 style="width: 16px"
                 *ngFor="let member of item.members"
@@ -100,7 +107,7 @@
                 <i class="howell-icon-user-anonymous"></i>
               </div>
             </td>
-            <td [ngStyle]="{ width: width[9] }" class="operation">
+            <td class="operation">
               <div style="width: 16px" (click)="onPositionClicked(item)">
                 <i class="glyphicon glyphicon-map-marker"></i>
               </div>
@@ -109,26 +116,24 @@
         </tbody>
       </table>
     </div>
+  </div>
 
-    <div class="garbage-drop-station-table-main-footer footer" *ngIf="page">
-      <div class="footer-item">
-        <div class="footer-info">
-          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-          <div class="info-item">
-            总数量: {{ page && page.TotalRecordCount }}
-          </div>
-        </div>
-
-        <app-paginator
-          [length]="page.TotalRecordCount"
-          [pageSize]="page.PageSize"
-          [pagerCount]="5"
-          [pageIndex]="0"
-          [showFirstLastButtons]="true"
-          (page)="pageEvent($event)"
-        >
-        </app-paginator>
+  <div class="garbage-drop-station-table-main-footer footer" *ngIf="page">
+    <div class="footer-item">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
+
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="5"
+        [pageIndex]="0"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
     </div>
   </div>
 

@@ -1,16 +1,13 @@
 table {
   width: 100%;
 
-
   thead {
     color: white;
     font-size: 24px;
     background-color: rgba(117, 134, 224, 0.5);
 
-
     tr {
       height: 70px;
-
 
       th,
       td {
@@ -27,82 +24,71 @@ table {
           text-align: center;
         }
       }
-
     }
-
-
   }
-
 }
 
-.body {
-  height: calc(100% - 70px);
-  overflow-y: auto;
-  overflow-x: hidden;
+table {
+  background-color: rgba(117, 134, 224, 0.15);
+  // table-layout: fixed;
 
-  table {
-    background-color: rgba(117, 134, 224, 0.15);
-    // table-layout: fixed;
+  tbody {
+    font-size: 18px;
 
-    tbody {
-      font-size: 18px;
+    tr {
+      height: 58px;
+      cursor: pointer;
 
-      tr {
-        height: 58px;
-        cursor: pointer;
+      box-sizing: border-box;
 
-        box-sizing: border-box;
+      td {
+        color: #cfd7ff;
+        height: 100%;
+        padding: 12px;
+        border: none;
+        white-space: nowrap;
 
-        td {
-          color: #cfd7ff;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        &:first-child {
+          padding-left: 40px;
+        }
+
+        .img {
+          display: flex;
+          align-items: center;
           height: 100%;
-          padding: 12px;
-          border: none;
-          white-space: nowrap;
 
-          overflow: hidden;
-          text-overflow: ellipsis;
-
-          &:first-child {
-            padding-left: 40px;
+          img {
+            width: 44px;
+            height: 36px;
           }
-
-          .img {
-            display: flex;
-            align-items: center;
-            height: 100%;
-
-            img {
-              width: 44px;
-              height: 36px;
-            }
-          }
-
-          &.operation {
-
-            color: #7586e0;
-
-
-
-            &:hover {
-              color: white;
-            }
-          }
-
         }
 
-        &:hover {
-          background: linear-gradient(to right, rgba(117, 134, 224, .5), rgba(50, 134, 229, .5));
-        }
+        &.operation {
+          color: #7586e0;
 
-        &.zoom:hover {
-
-          height: 105.5px;
-
-          td .img img {
-            width: 100px;
-            height: 80px;
+          &:hover {
+            color: white;
           }
+        }
+      }
+
+      &:hover {
+        background: linear-gradient(
+          to right,
+          rgba(117, 134, 224, 0.5),
+          rgba(50, 134, 229, 0.5)
+        );
+      }
+
+      &.zoom:hover {
+        height: 105.5px;
+
+        td .img img {
+          width: 100px;
+          height: 80px;
         }
       }
     }
@@ -135,8 +121,6 @@ table {
     }
   }
 }
-
-
 
 .loading {
   width: 100%;

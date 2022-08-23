@@ -12,10 +12,10 @@ import {
 
 export class GarbageDropStationPagedTableConverter
   implements
-    IPromiseConverter<
-      PagedList<GarbageStationNumberStatistic>,
-      PagedList<GarbageDropStationTableModel>
-    >
+  IPromiseConverter<
+  PagedList<GarbageStationNumberStatistic>,
+  PagedList<GarbageDropStationTableModel>
+  >
 {
   private converter = {
     item: new GarbageDropStationTableConverter(),
@@ -43,10 +43,10 @@ export class GarbageDropStationPagedTableConverter
 
 export class GarbageDropStationTableConverter
   implements
-    IPromiseConverter<
-      GarbageStationNumberStatistic,
-      GarbageDropStationTableModel
-    >
+  IPromiseConverter<
+  GarbageStationNumberStatistic,
+  GarbageDropStationTableModel
+  >
 {
   converter = {
     image: new ImageControlArrayConverter(),
@@ -64,10 +64,10 @@ export class GarbageDropStationTableConverter
     model.GarbageCount = source.GarbageCount ?? 0;
 
     if (source.CurrentGarbageTime) {
-      model.GarbageDuration = new Date(source.CurrentGarbageTime * 1000);
+      model.GarbageDuration = new Date(source.CurrentGarbageTime * 60 * 1000);
     }
     if (source.MaxGarbageTime) {
-      model.MaxGarbageDuration = new Date(source.MaxGarbageTime * 1000);
+      model.MaxGarbageDuration = new Date(source.MaxGarbageTime * 60 * 1000);
     }
     let station = await getter.station(source.Id);
     model.GarbageStation = await this.converter.station.Convert(
