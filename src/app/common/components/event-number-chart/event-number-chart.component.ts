@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { Color, XAXisComponentOption, YAXisComponentOption } from 'echarts';
 import { BarChart, BarSeriesOption, LineChart, LineSeriesOption } from 'echarts/charts';
@@ -37,6 +37,21 @@ import { EventNumberChartBusiness } from './event-number-chart.business';
   ]
 })
 export class EventNumberChartComponent implements OnInit, AfterViewInit {
+
+
+  // 当前区划ID
+  private _resourceId: string = '';
+  @Input()
+  set resourceId(id: string) {
+    console.log('set resourceId')
+    this._resourceId = id;
+    this.searchInfo.ResourceId = id;
+  }
+  get resourceId() {
+    return this._resourceId;
+  }
+
+
   TimeUnit = TimeUnit;
   ChartType = ChartType;
 
@@ -47,6 +62,7 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
   searchInfo: EventNumberChartSearchInfo = {
     CurrentTime: Time.beginTime(this.curDate),
     TimeUnit: TimeUnit.Day,
+    ResourceId: this.resourceId
   }
 
   myChart: echarts.ECharts | null = null;
@@ -97,6 +113,8 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
 
     ]
   }
+
+
   @ViewChild('chartContainer') container!: ElementRef<HTMLDivElement>;
 
   constructor(private _business: EventNumberChartBusiness) { }

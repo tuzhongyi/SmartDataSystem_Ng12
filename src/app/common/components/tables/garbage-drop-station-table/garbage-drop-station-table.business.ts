@@ -41,6 +41,7 @@ export class GarbageDropStationTableBusiness
       divisionId = this.storeService.divisionId;
     }
     let data = await this.getData(divisionId, page, opts);
+    console.log(data)
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);

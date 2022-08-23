@@ -42,7 +42,6 @@ export class EventNumberStatisticComponent implements OnInit {
   @Input()
   eventType: EventType = EventType.IllegalDrop
 
-
   // 当前区划ID
   private _resourceId: string = '';
   @Input()
@@ -77,6 +76,10 @@ export class EventNumberStatisticComponent implements OnInit {
   }
   get resourceDefault() {
     return this._resourceDefault;
+  }
+
+  get week() {
+    return this.searchInfo.TimeUnit == TimeUnit.Week
   }
 
   // 下拉表
@@ -132,21 +135,30 @@ export class EventNumberStatisticComponent implements OnInit {
     this._init();
   }
   search() {
-    this._init();
-    this.loadFinish = false;
+    if (this.loadFinish) {
+      this._init();
+      this.loadFinish = false;
+    }
+
     // console.log(this.searchInfo);
   }
 
   exportCSV() {
-    let title = this._getTitle();
-    let header = ['序号', '行政区', '上级行政区', '单位(起)']
-    this._business.exportCSV(title, header, this.dataSubject.value)
+    if (this.loadFinish) {
+      let title = this._getTitle();
+      let header = ['序号', '行政区', '上级行政区', '单位(起)']
+      this._business.exportCSV(title, header, this.dataSubject.value)
+    }
+
   }
   exportXLSX() {
 
-    let title = this._getTitle();
-    let header = ['序号', '行政区', '上级行政区', '单位(起)']
-    this._business.exportXLSX(title, header, this.dataSubject.value)
+    if (this.loadFinish) {
+      let title = this._getTitle();
+      let header = ['序号', '行政区', '上级行政区', '单位(起)']
+      this._business.exportXLSX(title, header, this.dataSubject.value)
+    }
+
   }
 
 

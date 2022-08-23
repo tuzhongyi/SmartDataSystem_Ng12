@@ -22,6 +22,7 @@ import { TableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'howell-garbage-drop-station-table',
@@ -32,10 +33,9 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 export class GarbageDropStationTableComponent
   extends TableAbstractComponent<GarbageDropStationTableModel>
   implements
-    IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
-    OnDestroy,
-    OnInit
-{
+  IComponent<IModel, PagedList<GarbageDropStationTableModel>>,
+  OnDestroy,
+  OnInit {
   @Input()
   business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
   @Input()
@@ -50,12 +50,14 @@ export class GarbageDropStationTableComponent
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
 
+  sort?: Sort;
+
   constructor(business: GarbageDropStationTableBusiness) {
     super();
     this.business = business;
   }
 
-  width = ['20%', '14%', '12%', '7%', '9%', '9%', '9%', '8%', '6%', '6%'];
+  width = ['10%', '14%', '12%', '7%', '9%', '9%', '9%', '8%', '6%', '6%'];
   searchOptions?: SearchOptions;
 
   ngOnDestroy(): void {
@@ -110,5 +112,37 @@ export class GarbageDropStationTableComponent
 
   onPositionClicked(item: GarbageDropStationTableModel) {
     this.position.emit(item.GarbageStation);
+  }
+
+  compare(a: number | string, b: number | string, isAsc: boolean) {
+    if (typeof a === 'string' && typeof b === 'string') {
+      return isAsc ? a.localeCompare(b) : b.localeCompare(a);
+    } else if (typeof a === 'number' && typeof b === 'number') {
+      return isAsc ? a - b : b - a;
+    }
+    return 0;
+  }
+  sortData(sort: Sort) {
+    this.sort = sort;
+    if (this.datas) {
+      console.log(this.datas)
+      const isAsc = sort.direction === 'asc' ? 1 : -1;
+      if (sort.active == 'GarbageDuration') {
+        this.datas.sort((a, b) => {
+          if (a.GarbageDuration && b.GarbageDuration) {
+            return (a.GarbageDuration.getTime() - b.GarbageDuration.getTime()) * isAsc
+          }
+          return 0;
+        })
+      }
+      if (sort.active == 'MaxGarbageDuration') {
+        this.datas.sort((a, b) => {
+          if (a.MaxGarbageDuration && b.MaxGarbageDuration) {
+            return (a.MaxGarbageDuration.getTime() - b.MaxGarbageDuration.getTime()) * isAsc
+          }
+          return 0;
+        })
+      }
+    }
   }
 }

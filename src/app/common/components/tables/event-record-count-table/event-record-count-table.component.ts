@@ -30,9 +30,9 @@ import {
 })
 export class EventRecordCountTableComponent
   implements
-    OnInit,
-    OnChanges,
-    IComponent<IModel, EventRecordCountTableModel[]>
+  OnInit,
+  OnChanges,
+  IComponent<IModel, EventRecordCountTableModel[]>
 {
   @Input()
   eventType = EventType.IllegalDrop;
@@ -57,7 +57,7 @@ export class EventRecordCountTableComponent
       });
     }
   }
-  width = ['30%', '30%', '40%'];
+  width = ['10%', '30%', '30%', '40%'];
   business: IBusiness<IModel, EventRecordCountTableModel[]>;
   datas: EventRecordCountTableModel[] = [];
   loading = false;

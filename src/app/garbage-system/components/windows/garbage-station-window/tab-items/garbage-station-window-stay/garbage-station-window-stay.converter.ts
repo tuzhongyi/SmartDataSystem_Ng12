@@ -13,10 +13,10 @@ import { GarbageStationWindowStayModel } from './garbage-station-window-stay.mod
 
 export class GarbageStationWindowStayConverter
   implements
-    IPromiseConverter<
-      GarbageStationNumberStatisticV2,
-      GarbageStationWindowStayModel
-    >
+  IPromiseConverter<
+  GarbageStationNumberStatisticV2,
+  GarbageStationWindowStayModel
+  >
 {
   async Convert(
     source: GarbageStationNumberStatisticV2,
@@ -44,6 +44,9 @@ export class GarbageStationWindowStayConverter
         switch (number.EventType) {
           case EventType.IllegalDrop:
             model.eventCount = number.DayNumber;
+            break;
+          case EventType.GarbageDrop:
+            model.taskCount = number.DayNumber
             break;
           default:
             break;

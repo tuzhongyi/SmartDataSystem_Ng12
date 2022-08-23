@@ -8,4 +8,5 @@ export class GarbageStationWindowStayModel {
   countDropDuration: string =
     '<div class="statistic-item-value-number">-</div>';
   eventCount: number = 0;
+  taskCount: number = 0;
 }

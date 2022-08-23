@@ -55,6 +55,7 @@ export class GarbageStationWindowStayComponent
 
   async loadData(stationId: string, date: Date) {
     this.model = await this.business.load(stationId, date);
+    console.log(this.model);
     this.chartLoad.emit();
   }
 

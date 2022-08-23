@@ -1,6 +1,12 @@
 <div class="garbage-drop-station-table">
   <div class="garbage-drop-station-table-main">
-    <table border="0" cellpadding="0" cellspacing="0">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
       <thead>
         <tr>
           <td [ngStyle]="{ width: width[0] }">图片</td>
@@ -9,8 +15,22 @@
           <td [ngStyle]="{ width: width[3] }">街道</td>
           <td [ngStyle]="{ width: width[4] }">居委会</td>
           <td [ngStyle]="{ width: width[5] }">垃圾堆数</td>
-          <td [ngStyle]="{ width: width[6] }">滞留时间</td>
-          <td [ngStyle]="{ width: width[7] }">总滞留时长</td>
+          <td
+            [ngStyle]="{ width: width[6] }"
+            mat-sort-header="GarbageDuration"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            滞留时间
+          </td>
+          <td
+            [ngStyle]="{ width: width[7] }"
+            mat-sort-header="MaxGarbageDuration"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            总滞留时长
+          </td>
           <td [ngStyle]="{ width: width[8] }">人员</td>
           <td [ngStyle]="{ width: width[9] }">操作</td>
         </tr>
@@ -28,8 +48,6 @@
                     [model]="img"
                     (Click)="imageClick(item, img)"
                   ></app-image-control>
-
-                  <!-- [src]="item.imageSrc" -->
                 </div>
               </div>
             </td>

@@ -17,6 +17,7 @@ export class EventNumberChartModel implements CommonModel {
 export interface EventNumberChartSearchInfo {
   CurrentTime: Date;
   TimeUnit: TimeUnit;
+  ResourceId: string
 }
 
 // 需要导入到CSV中的字段

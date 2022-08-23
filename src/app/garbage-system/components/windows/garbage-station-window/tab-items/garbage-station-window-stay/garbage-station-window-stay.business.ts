@@ -22,9 +22,9 @@ import { GarbageStationWindowStayModel } from './garbage-station-window-stay.mod
 @Injectable()
 export class GarbageStationWindowStayBusiness
   implements
-    IBusiness<GarbageStationNumberStatisticV2, GarbageStationWindowStayModel>
+  IBusiness<GarbageStationNumberStatisticV2, GarbageStationWindowStayModel>
 {
-  constructor(private stationService: GarbageStationRequestService) {}
+  constructor(private stationService: GarbageStationRequestService) { }
   Converter: IPromiseConverter<
     GarbageStationNumberStatisticV2,
     GarbageStationWindowStayModel
@@ -36,6 +36,7 @@ export class GarbageStationWindowStayBusiness
     date: Date
   ): Promise<GarbageStationWindowStayModel> {
     let data = await this.getData(stationId, date);
+    console.log(data);
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);

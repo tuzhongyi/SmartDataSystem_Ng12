@@ -14,6 +14,7 @@
               DateTimePicker
               [format]="dateFormat"
               [date]="curDate"
+              [week]="week"
               (change)="changeDate($event)"
               class="hw-form-control hw-form-input"
             />
@@ -34,15 +35,27 @@
           </div>
         </div>
         <div class="hw-normal-btn-group">
-          <button class="hw-blue-btn" (click)="search()">
+          <button
+            class="hw-blue-btn"
+            (click)="search()"
+            [disabled]="!loadFinish"
+          >
             <i class="mdi mdi-magnify"></i>
             查询
           </button>
-          <button class="hw-blue-btn" (click)="exportXLSX()">
+          <button
+            class="hw-blue-btn"
+            (click)="exportXLSX()"
+            [disabled]="!loadFinish"
+          >
             <i class="howell-icon-export"></i>
             导出
           </button>
-          <button class="hw-blue-btn" (click)="exportCSV()">
+          <button
+            class="hw-blue-btn"
+            (click)="exportCSV()"
+            [disabled]="!loadFinish"
+          >
             <i class="howell-icon-export"></i>
             CSV
           </button>
@@ -50,6 +63,7 @@
       </div>
       <div class="right-wrapper">
         <select
+          [disabled]="!loadFinish"
           [(ngModel)]="searchInfo.TimeUnit"
           (ngModelChange)="changeTimeUnit($event)"
         >

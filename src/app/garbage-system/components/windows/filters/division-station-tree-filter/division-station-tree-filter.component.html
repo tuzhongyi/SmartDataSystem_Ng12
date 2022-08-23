@@ -1,6 +1,6 @@
 <div class="division-station-tree-filter">
   <div class="selected" (click)="onclick($event)">
-    <label #selected>{{ current ? current.name : "请选择" }}</label>
+    <label #selected>{{ current ? currentTitle.join(" ") : "请选择" }}</label>
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
   </div>
 
@@ -17,6 +17,7 @@
       [resourceType]="type"
       (selectTreeNode)="selectTreeNode($event)"
       [depth]="1"
+      [filterTypes]="filterTypes"
     ></howell-tree>
   </div>
 </div>

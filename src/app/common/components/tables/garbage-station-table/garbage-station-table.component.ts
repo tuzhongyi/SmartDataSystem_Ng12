@@ -32,10 +32,9 @@ import { GarbageStationTableModel } from './garbage-station-table.model';
 export class GarbageStationTableComponent
   extends TableAbstractComponent<GarbageStationTableModel>
   implements
-    IComponent<IModel, PagedList<GarbageStationTableModel>>,
-    OnInit,
-    OnChanges
-{
+  IComponent<IModel, PagedList<GarbageStationTableModel>>,
+  OnInit,
+  OnChanges {
   @Input()
   load?: EventEmitter<SearchOptions>;
   @Output()
@@ -53,7 +52,7 @@ export class GarbageStationTableComponent
     this.business = business;
   }
 
-  width = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
+  width = ['10%', '20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 
   searchOpts?: SearchOptions;
 
