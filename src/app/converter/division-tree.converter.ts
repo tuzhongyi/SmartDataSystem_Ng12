@@ -60,6 +60,12 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.ParentNode = null;
     node.IconClass = DivisionNodeIconType.get(UserResourceType.Station) ?? '';
     node.RawData = item;
+    if (item.GisPoint) {
+      node.ButtonIconClasses = ['howell-icon-Unlink']
+    } else {
+      node.ButtonIconClasses = ['howell-icon-Link']
+    }
+
 
     return node;
   }

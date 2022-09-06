@@ -13,5 +13,7 @@ export class CommonNestNode<T = any> implements CommonTreeModel {
   ParentNode!: CommonNestNode | null;
   IconClass!: string;
   RawData!: T;
-  hideArrow?: boolean
+  hideArrow?: boolean;
+  ButtonIconClasses: string[] = [];
+
 }

@@ -41,6 +41,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     flatNode.IconClass = nestNode.IconClass;
     flatNode.RawData = nestNode.RawData;
     flatNode.hideArrow = nestNode.hideArrow;
+    flatNode.ButtonIconClasses = nestNode.ButtonIconClasses;
 
     if (nestNode.ParentId) {
       let ParentNode = this._flatNodeMap.get(nestNode.ParentId) ?? null;
@@ -95,7 +96,9 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     return this._defaultIds;
   }
 
-  @Input() showButton = false;
+  @Input() showButtonIcon = false;
+
+
 
   @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
   @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> = new EventEmitter<SelectionChange<CommonFlatNode>>();

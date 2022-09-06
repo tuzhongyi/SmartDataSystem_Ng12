@@ -30,7 +30,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   private _resourceType: UserResourceType = UserResourceType.None;
 
   //树
-  showStation = false;
+  showStation = true;
   holdStatus = false;
 
   selectStrategy = SelectStrategy.Single;

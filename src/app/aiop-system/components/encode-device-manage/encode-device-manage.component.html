@@ -1,12 +1,12 @@
 <div class="encode-device-manage">
   <ng-container *ngIf="showOperate">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-encode-device-operate
         [state]="state"
         [encodeDeviceId]="resourceId"
         (closeEvent)="closeForm($event)"
       ></howell-encode-device-operate>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">
@@ -17,14 +17,14 @@
     </howell-confirm-dialog>
   </ng-container>
   <ng-container *ngIf="showBind">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-label-manage-form
         [resourceName]="resourceName"
         [resourceId]="resourceId"
         (closeEvent)="closeBind($event)"
       >
       </howell-label-manage-form>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
 
   <div class="vertical-layout">

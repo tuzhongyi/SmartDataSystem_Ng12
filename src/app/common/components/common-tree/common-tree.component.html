@@ -37,6 +37,16 @@
           <i [class]="node.IconClass"></i>
           {{ node.Name }}
         </div>
+        <div
+          class="btns"
+          style="display: flex; align-items: center; justify-content: flex-end"
+          *ngIf="showButtonIcon"
+        >
+          <i
+            [class]="icon"
+            *ngFor="let icon of node.ButtonIconClasses; let i = index"
+          ></i>
+        </div>
       </ng-template>
 
       <!-- 多选模式 -->

@@ -1,12 +1,12 @@
 <div class="camera-manage hw-horizontal-layout">
   <ng-container *ngIf="showOperate">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-camera-operate
         [state]="state"
         [cameraId]="operateId"
         (closeEvent)="closeForm($event)"
       ></howell-camera-operate>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">
@@ -18,23 +18,23 @@
   </ng-container>
 
   <ng-container *ngIf="showBind">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-label-manage-form
         [resourceId]="operateId"
         [resourceName]="resourceName"
         (closeEvent)="closeBind($event)"
       >
       </howell-label-manage-form>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
   <ng-container *ngIf="showMove">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-camera-move
         [resourceIds]="resourceIds"
         (closeEvent)="closeMove($event)"
       >
       </howell-camera-move>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
 
   <div class="horizontal-left">

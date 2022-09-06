@@ -46,6 +46,9 @@ export class DivisionTreeComponent extends CommonTree implements OnInit {
 
   @Input() showSearchBar = true;
 
+  @Input() showButtonIcon = false;
+
+
 
   // 默认选中列表
   private _defaultIds: string[] = []

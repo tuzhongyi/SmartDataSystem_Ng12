@@ -42,7 +42,7 @@ import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
 import { TreeSelecComponent } from './tree-select/tree-select.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
-import { PopUpWindowComponent } from './pop-up-window/pop-up-window.component';
+import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
@@ -50,6 +50,7 @@ import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
+import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -96,11 +97,12 @@ export const CUSTOM_COMPONENTS = [
   TreeSelecComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
-  PopUpWindowComponent,
+  ToastWindowComponent,
   MixIntoComponent,
   IllegalDropComponent,
   TabHeaderComponent,
   IllegalDropEventComponent,
   EventNumberStatisticComponent,
-  EventNumberChartComponent
+  EventNumberChartComponent,
+  CoordinateManageComponent
 ];

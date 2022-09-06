@@ -1,12 +1,12 @@
 <div class="srserver-manage">
   <ng-container *ngIf="showDialog">
-    <howell-pop-up-window>
+    <toast-window>
       <howell-sr-server-operate
         [state]="state"
         [operateId]="operateId"
         (closeEvent)="closeForm($event)"
       ></howell-sr-server-operate>
-    </howell-pop-up-window>
+    </toast-window>
   </ng-container>
 
   <ng-container *ngIf="showConfirm">

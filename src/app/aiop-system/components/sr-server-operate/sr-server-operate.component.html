@@ -7,11 +7,7 @@
         <span class="hw-form-icon">*</span>
       </div>
       <div class="content">
-        <input
-          type="text"
-          class="hw-form-control hw-form-input"
-          formControlName="Name"
-        />
+        <input type="text" formControlName="Name" />
       </div>
     </div>
 
@@ -21,10 +17,7 @@
         <span class="hw-form-icon">*</span>
       </div>
       <div class="content">
-        <select
-          class="hw-form-control hw-form-select"
-          formControlName="ProtocolType"
-        >
+        <select class="hw-form-select" formControlName="ProtocolType">
           <option value="Howell">Howell</option>
         </select>
       </div>
@@ -35,11 +28,7 @@
         <span class="hw-form-label"> 用户名 </span>
       </div>
       <div class="content">
-        <input
-          type="text"
-          class="hw-form-control hw-form-input"
-          formControlName="Username"
-        />
+        <input type="text" formControlName="Username" />
       </div>
     </div>
 
@@ -48,11 +37,7 @@
         <span class="hw-form-label"> 密码 </span>
       </div>
       <div class="content">
-        <input
-          type="text"
-          class="hw-form-control hw-form-input"
-          formControlName="Password"
-        />
+        <input type="text" formControlName="Password" />
       </div>
     </div>
     <div class="hw-form-group" style="flex-basis: 100%">
@@ -94,11 +79,7 @@
                   <span class="hw-form-icon">*</span>
                 </div>
                 <div class="content">
-                  <input
-                    type="text"
-                    class="hw-form-control hw-form-input"
-                    formControlName="IPAddress"
-                  />
+                  <input type="text" formControlName="IPAddress" />
                 </div>
               </div>
               <div class="hw-form-group">
@@ -108,7 +89,6 @@
                 </div>
                 <div class="content">
                   <input
-                    class="hw-form-control hw-form-input"
                     (touchSpinChange)="touchSpinChange($event, i, 'Port')"
                     appTouchSpin
                     type="number"
@@ -123,10 +103,7 @@
                   <span class="hw-form-icon">*</span>
                 </div>
                 <div class="content">
-                  <select
-                    class="hw-form-control hw-form-select"
-                    formControlName="IsInternet"
-                  >
+                  <select class="hw-form-select" formControlName="IsInternet">
                     <option value="0">否</option>
                     <option value="1">是</option>
                   </select>
@@ -139,10 +116,7 @@
                   <span class="hw-form-icon">*</span>
                 </div>
                 <div class="content">
-                  <select
-                    class="hw-form-control hw-form-select"
-                    formControlName="IsDefault"
-                  >
+                  <select class="hw-form-select" formControlName="IsDefault">
                     <option value="0">否</option>
                     <option value="1">是</option>
                   </select>
@@ -155,7 +129,6 @@
                 </div>
                 <div class="content">
                   <input
-                    class="hw-form-control hw-form-input"
                     (touchSpinChange)="touchSpinChange($event, i, 'RtspPort')"
                     appTouchSpin
                     type="number"
@@ -170,7 +143,6 @@
                 </div>
                 <div class="content">
                   <input
-                    class="hw-form-control hw-form-input"
                     (touchSpinChange)="touchSpinChange($event, i, 'RtmpPort')"
                     appTouchSpin
                     type="number"
@@ -185,7 +157,6 @@
                 </div>
                 <div class="content">
                   <input
-                    class="hw-form-control hw-form-input"
                     (touchSpinChange)="touchSpinChange($event, i, 'HttpPort')"
                     appTouchSpin
                     type="number"
@@ -200,7 +171,6 @@
                 </div>
                 <div class="content">
                   <input
-                    class="hw-form-control hw-form-input"
                     (touchSpinChange)="touchSpinChange($event, i, 'WsPort')"
                     appTouchSpin
                     type="number"
