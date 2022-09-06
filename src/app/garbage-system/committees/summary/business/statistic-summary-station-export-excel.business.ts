@@ -13,7 +13,6 @@ export class StatisticSummaryStationsExportExcelBusiness
   completed: boolean = false;
   tool: ExportTool;
   export(title: string, row: number): number {
-    debugger;
     try {
       row = this.tool.setTitle(title, row);
 

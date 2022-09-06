@@ -178,10 +178,16 @@ declare namespace CesiumMap {
   }
 
   interface Label {
-    Show(): void;
-    Hide(): void;
-    Set(opts: CesiumDataController.LabelOptions): void;
-    Set(opts: CesiumDataController.LabelOptions[]): void;
+    Show(types?: CesiumDataController.ImageResource): void;
+    Hide(types?: CesiumDataController.ImageResource): void;
+    Set(
+      opts: CesiumDataController.LabelOptions,
+      type?: CesiumDataController.ImageResource
+    ): void;
+    Set(
+      opts: CesiumDataController.LabelOptions[],
+      type?: CesiumDataController.ImageResource
+    ): void;
     Remove(id: string): void;
     Remove(ids: string[]): void;
   }

@@ -11,6 +11,7 @@ import {
   CameraDownloadFileParams,
   CameraUploadFileParams,
   FinishTaskParams,
+  GarbageStationResetStateParams,
   GetGarbageStationCamerasParams,
   GetGarbageStationsParams,
   GetGarbageStationStatisticComparisonParams,
@@ -87,6 +88,16 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
   manualCapture(stationId: string): Promise<CameraPictureUrl[]> {
     let url = GarbageStationUrl.manualcapture(stationId);
     return this.basic.postArray(url, CameraPictureUrl);
+  }
+
+  async resetState(
+    stationId: string,
+    params = new GarbageStationResetStateParams()
+  ) {
+    let url = GarbageStationUrl.resetState(stationId);
+    let data = classToPlain(params);
+    let response = await this.basic.http.postReturnInt32(url, data).toPromise();
+    return response.Data;
   }
 
   private _camera?: CamerasService;
@@ -303,7 +314,7 @@ class TrashCansService {
   }
 }
 class VolumesService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -327,7 +338,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -350,7 +361,7 @@ class EventNumbersHistoryService {
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
@@ -426,7 +437,7 @@ class StatisticNumberHistoryService {
   }
 }
 class StatistictGarbageCountService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _history?: StatistictGarbageCountHistoryService;
   public get history(): StatistictGarbageCountHistoryService {
     if (!this._history) {

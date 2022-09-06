@@ -24,6 +24,8 @@ import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { Division } from 'src/app/network/model/division.model';
+import { MapControlConfig } from './map-control.config';
+import { StoreService } from 'src/app/common/service/store.service';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -53,8 +55,14 @@ export class MapControlComponent
   garbageRetentionClicked: EventEmitter<GarbageStation> = new EventEmitter();
   @Output()
   garbageFullClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output()
+  pointDisarmClicked: EventEmitter<GarbageStation> = new EventEmitter();
   @Input()
   position?: EventEmitter<GarbageStation>;
+  @Input()
+  config: MapControlConfig = new MapControlConfig();
+  @Input()
+  load?: EventEmitter<void>;
 
   //#endregion
   //#region ViewChild
@@ -140,13 +148,21 @@ export class MapControlComponent
     private changeDetectorRef: ChangeDetectorRef,
     public amap: AMapBusiness,
     public panel: ListPanelBusiness,
-    public info: PointInfoPanelBusiness
+    public info: PointInfoPanelBusiness,
+    private store: StoreService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
       if (this.position) {
         this.position.subscribe((x) => {
           this.amap.pointSelect(x.Id);
+        });
+      }
+    }
+    if (changes.load) {
+      if (this.load) {
+        this.load.subscribe((x) => {
+          this.amap.reload(false);
         });
       }
     }
@@ -195,6 +211,9 @@ export class MapControlComponent
     this.amap.menuEvents.garbageCountClicked.subscribe((x) => {
       this.garbageCountClicked.emit(x);
     });
+    this.amap.menuEvents.disarmClicked.subscribe((x) => {
+      this.pointDisarmClicked.emit(x);
+    });
 
     this.panel.itemSelected.subscribe((x) => {
       if (x instanceof Division) {
@@ -203,6 +222,9 @@ export class MapControlComponent
         this.amap.pointSelect(x.Id);
       } else {
       }
+    });
+    this.store.refresh.subscribe((x) => {
+      this.amap.reload(false);
     });
   }
   ngOnDestroy(): void {

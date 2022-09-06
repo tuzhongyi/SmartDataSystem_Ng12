@@ -1,9 +1,10 @@
 :host {
   position: absolute;
-  z-index: 9527;
+  z-index: 3;
   top: 30px;
   left: 30px;
 }
+
 .device-statistic {
   width: 200px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -11,24 +12,20 @@
 
   background-image: linear-gradient(90deg, #5e6ebe, #5e6ebe),
     linear-gradient(180deg, #5e6ebe, #5e6ebe),
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       transparent 0%,
       transparent calc(50% - 1px),
       #5e6ebe 50%,
       transparent calc(50% + 1px),
-      transparent 100%
-    ),
+      transparent 100%),
     linear-gradient(270deg, #5e6ebe, #5e6ebe),
     linear-gradient(0deg, #5e6ebe, #5e6ebe),
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       transparent 0%,
       transparent calc(50% - 1px),
       #5e6ebe 50%,
       transparent calc(50% + 1px),
-      transparent 100%
-    ),
+      transparent 100%),
     linear-gradient(135deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
     linear-gradient(-135deg, transparent 0px, #060d37 0),
     linear-gradient(-45deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
@@ -58,6 +55,14 @@
 .item {
   display: flex;
 
+  &:hover {
+    cursor: pointer;
+
+    .info-num {
+      color: #99aaff;
+    }
+  }
+
   &:not(:last-child) {
     margin-bottom: 20px;
   }
@@ -66,35 +71,50 @@
     width: 60px;
     height: 60px;
     position: relative;
+
     .bg {
       width: 100%;
       height: 100%;
-      background-image: url(/assets/img/middle-round.png);
+      // background-image: url(/assets/img/middle-round.png);
       background-repeat: no-repeat;
       background-size: 100% 100%;
     }
+
+    .bg_blue {
+      background-image: url(/assets/img/statistic/blue.png);
+    }
+
     .bg_green {
-      filter: hue-rotate(250deg);
+      // filter: hue-rotate(250deg);
+      background-image: url(/assets/img/statistic/green.png);
     }
+
     .bg_yellow {
-      filter: hue-rotate(197deg);
+      // filter: hue-rotate(197deg);
+      background-image: url(/assets/img/statistic/yellow.png);
     }
+
     .bg_red {
-      filter: hue-rotate(115deg);
+      // filter: hue-rotate(142deg);
+      background-image: url(/assets/img/statistic/red.png);
     }
+
     .bg_gray {
-      filter: grayscale(1);
+      // filter: grayscale(1);
+      background-image: url(/assets/img/statistic/gray.png);
     }
+
     i {
       position: absolute;
       top: 50%;
       left: 50%;
       font-size: 30px;
       color: white;
-      z-index: 9527;
+      z-index: 3;
       transform: translate(-50%, -50%);
     }
   }
+
   .info {
     margin-left: 10px;
     display: flex;
@@ -104,6 +124,7 @@
       color: #cfd7ff;
       font-size: 14px;
     }
+
     &-num {
       color: white;
       font-size: 26px;

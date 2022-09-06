@@ -6,6 +6,7 @@ import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
+  SmokeEventRecord,
 } from '../../model/garbage-event-record.model';
 import { PagedList } from '../../model/page_list.model';
 import { EventUrl } from '../../url/garbage/event.url';
@@ -103,6 +104,14 @@ class RecordsService {
     }
     return this._GarbageDrop;
   }
+
+  private _Smoke?: RecordsSmokeService;
+  public get Smoke(): RecordsSmokeService {
+    if (!this._Smoke) {
+      this._Smoke = new RecordsSmokeService(this.basic);
+    }
+    return this._Smoke;
+  }
 }
 
 class RecordsIllegalDropService {
@@ -175,6 +184,24 @@ class RecordsGarbageDropService {
   }
   get(id: string): Promise<GarbageDropEventRecord> {
     let url = EventUrl.record.garbagedrop.item(id);
+    return this.type.get(url);
+  }
+}
+class RecordsSmokeService {
+  constructor(private basic: BaseRequestService) {
+    this.type = basic.type(SmokeEventRecord);
+  }
+
+  type: BaseTypeRequestService<SmokeEventRecord>;
+
+  list(
+    params: GetGarbageDropEventRecordsParams
+  ): Promise<PagedList<SmokeEventRecord>> {
+    let url = EventUrl.record.smoke.list();
+    return this.type.paged(url, params);
+  }
+  get(id: string): Promise<SmokeEventRecord> {
+    let url = EventUrl.record.smoke.item(id);
     return this.type.get(url);
   }
 }

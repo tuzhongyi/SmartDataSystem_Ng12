@@ -45,7 +45,9 @@
       }
     }
 
-    .body table tbody tr.zoom:hover .img-list {
+
+
+    .body table.zoom tbody tr:hover .img-list {
       height: 80px;
 
       .img {
@@ -56,6 +58,14 @@
     ::ng-deep {
       .body {
         height: calc(100% - 70px - 50px);
+
+        table {
+          table-layout: fixed;
+        }
+
+        table.zoom {
+          table-layout: auto;
+        }
       }
     }
 

@@ -40,6 +40,8 @@ export class GarbageStationTableComponent
   load?: EventEmitter<SearchOptions>;
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
   @Input()
   business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
@@ -101,8 +103,6 @@ export class GarbageStationTableComponent
     this.loadData(page.pageIndex + 1, this.pageSize, this.searchOpts);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageStationTableModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);

@@ -8,4 +8,8 @@ export enum CameraUsage {
   IllegalDrop = 3,
   /**垃圾满溢 */
   GarbageFull = 4,
+  /**	火灾检测	5 */
+  Smoke = 5,
+  /**	紧急按钮	6 */
+  PanicButton = 6,
 }

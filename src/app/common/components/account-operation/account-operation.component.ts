@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -17,6 +17,8 @@ export class AccountOperationComponent implements OnInit {
   changePassword: EventEmitter<void> = new EventEmitter();
   @Output()
   bindMobile: EventEmitter<void> = new EventEmitter();
+  @Input()
+  display = new AccountOperationDisplay();
 
   constructor(
     private _sessionStorageService: SessionStorageService,
@@ -27,7 +29,6 @@ export class AccountOperationComponent implements OnInit {
   ) {}
 
   userName: string = '';
-  display = new AccountOperationDisplay();
 
   ngOnInit(): void {
     let userName = this._cookieService.get('userName');

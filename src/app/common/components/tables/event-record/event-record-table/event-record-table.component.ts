@@ -50,6 +50,10 @@ export class EventRecordTableComponent
   load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  play: EventEmitter<ImageControlModelArray> = new EventEmitter();
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -60,20 +64,42 @@ export class EventRecordTableComponent
     this.filter = new EventRecordFilter();
   }
   width = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
+  get zoom() {
+    switch (this.type) {
+      case EventType.GarbageFull:
+      case EventType.MixedInto:
+      case EventType.Smoke:
+        return false;
 
+      default:
+        return true;
+    }
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((x) => {
         if (x) {
           this.filter = x;
         }
-        this.loadData(-1, this.pageSize, this.filter);
+        this.loadData(1, this.pageSize, this.filter);
       });
+    }
+    if (changes.type) {
+      switch (this.type) {
+        case EventType.IllegalDrop:
+          this.width = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
+          break;
+        case EventType.Smoke:
+          this.width = ['15%', '15%', '10%', '10%', '10%', '15%', '15%', '10%'];
+          break;
+        default:
+          break;
+      }
     }
   }
 
   async ngOnInit() {
-    this.loadData(-1, this.pageSize, this.filter);
+    this.loadData(1, this.pageSize, this.filter);
   }
 
   async pageEvent(page: PageEvent) {
@@ -117,8 +143,6 @@ export class EventRecordTableComponent
     this.image.emit(array);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: EventRecordViewModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);

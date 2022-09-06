@@ -24,6 +24,9 @@ export class GarbageStationUrl {
   static manualcapture(id: string) {
     return `${GarbageStationUrl.item(id)}/ManualCapture`;
   }
+  static resetState(id: string) {
+    return `${GarbageStationUrl.item(id)}/ResetState`;
+  }
 
   static camera(id?: string) {
     const base = id ? GarbageStationUrl.item(id) : GarbageStationUrl.basic();

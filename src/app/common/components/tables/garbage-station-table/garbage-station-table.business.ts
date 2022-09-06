@@ -18,6 +18,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationTableModel } from './garbage-station-table.model';
+import { StationState } from 'src/app/enum/station-state.enum';
 
 @Injectable()
 export class GarbageStationTableBusiness
@@ -111,6 +112,17 @@ export class GarbageStationTableConverter
         model.images = this.converter.image.Convert(
           model.GarbageStation.Cameras
         );
+      }
+      let flags = new Flags(source.StationState);
+      model.stateClassName = 'status';
+      if (flags.contains(StationState.Full)) {
+        model.stateClassName += ' full';
+      }
+      if (flags.contains(StationState.Smoke)) {
+        model.stateClassName += ' smoke';
+      }
+      if (flags.contains(StationState.Error)) {
+        model.stateClassName += ' error';
       }
     }
     return model;

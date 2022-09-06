@@ -21,11 +21,7 @@ export class AMapBusiness {
     private divisionService: DivisionRequestService
   ) {
     this.storeService.interval.subscribe((x) => {
-      this.init();
-
-      if (this.labelVisibility) {
-        this.setLabelVisibility(true);
-      }
+      this.reload();
     });
     this.storeService.statusChange.subscribe((x) => {
       this.divisionSelect(this.storeService.divisionId);
@@ -65,11 +61,12 @@ export class AMapBusiness {
 
   mapClicked: EventEmitter<void> = new EventEmitter();
 
-  private source: AMapDataSource = {
+  source: AMapDataSource = {
     all: [],
     drop: [],
     labels: {},
     points: {},
+    ripple: [],
   };
 
   getSrc() {
@@ -81,11 +78,15 @@ export class AMapBusiness {
     return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   loaded = false;
-  init() {
+  init(cache = true) {
+    if (!cache) {
+      this.stationService.cache.clear();
+    }
     let promise = this.stationService.cache.all();
     promise.then((x) => {
       this.source.all = x;
       this.setPointStatus(this.source.all);
+      this.setRippleLabel(this.source.all);
       if (this.mapClient) {
         this.source.all.forEach((x) => {
           if (this.mapController) {
@@ -108,6 +109,13 @@ export class AMapBusiness {
       this.pointCountChanged.emit(count);
     });
     return p;
+  }
+
+  reload(cache = true) {
+    this.init(cache);
+    if (this.labelVisibility) {
+      this.setLabelVisibility(true);
+    }
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
@@ -228,9 +236,11 @@ export class AMapBusiness {
         };
         let flags = new Flags(station.StationState);
         if (flags.contains(StationState.Error)) {
-          status.status = StationState.Error;
+          status.status = 2;
         } else if (flags.contains(StationState.Full)) {
-          status.status = StationState.Full;
+          status.status = 1;
+        } else if (flags.contains(StationState.Smoke)) {
+          status.status = 1;
         } else {
           status.status = 0;
         }
@@ -372,6 +382,39 @@ export class AMapBusiness {
     });
   }
 
+  async setRippleLabel(stations: GarbageStation[]) {
+    if (!this.mapController || !this.mapClient) return;
+    let opts = new Array();
+    for (let i = 0; i < stations.length; i++) {
+      const station = stations[i];
+      let flags = new Flags(station.StationState);
+      if (!flags.contains(StationState.Smoke)) continue;
+
+      let point = this.mapController.Village.Point.Get(
+        station.DivisionId!,
+        station.Id
+      );
+
+      const opt =
+        new CesiumDataController.LabelOptions<CesiumDataController.AlarmColor>();
+      opt.position = point.position;
+      opt.id = point.id;
+      opt.image =
+        new CesiumDataController.ImageOptions<CesiumDataController.AlarmColor>();
+      opt.image.value = CesiumDataController.AlarmColor.orange;
+      opt.image.resource = CesiumDataController.ImageResource.ripple;
+      opt.position = point.position;
+      opts.push(opt);
+    }
+    this.mapClient.Label.Set(opts, CesiumDataController.ImageResource.ripple);
+
+    if (opts.length > 0) {
+      this.mapClient.Label.Show(CesiumDataController.ImageResource.ripple);
+    } else {
+      this.mapClient.Label.Hide(CesiumDataController.ImageResource.ripple);
+    }
+  }
+
   async setLabelVisibility(value: boolean) {
     this.labelVisibility = value;
     if (this.mapClient) {
@@ -397,12 +440,13 @@ export class AMapBusiness {
     mixedIntoClicked: new EventEmitter(),
     garbageCountClicked: new EventEmitter(),
     stationInformationClicked: new EventEmitter(),
+    disarmClicked: new EventEmitter(),
   };
 
   setContentMenu() {
     if (!this.mapClient) return;
     this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-nolittering" style="font-size: 18px"></i> ${Language.json.EventType.IllegalDrop}${Language.json.record}`,
+      `<i class="howell-icon-ebikepark" style="font-size: 18px"></i> 火灾警报解除`,
       async (id: string) => {
         this.onMapClicked();
 
@@ -411,41 +455,13 @@ export class AMapBusiness {
           const station = await this.stationService.cache.get(id);
           this.source.all.push(station);
         }
-        this.menuEvents.illegalDropClicked.emit(station);
-      },
-      0
-    );
-    this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-mixlittering" style="font-size: 18px"></i> ${Language.json.EventType.MixedInto}${Language.json.record}`,
-      async (id: string) => {
-        this.onMapClicked();
-
-        let station = this.source.all.find((x) => x.Id === id);
-        if (!station) {
-          const station = await this.stationService.cache.get(id);
-          this.source.all.push(station);
-        }
-        this.menuEvents.mixedIntoClicked.emit(station);
-      },
-      1
-    );
-    this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-garbagebags" style="font-size: 18px"></i> ${Language.json.small}${Language.json.garbage}${Language.json.stay}`,
-      async (id: string) => {
-        this.onMapClicked();
-
-        let station = this.source.all.find((x) => x.Id === id);
-        if (!station) {
-          const station = await this.stationService.cache.get(id);
-          this.source.all.push(station);
-        }
-        this.menuEvents.garbageCountClicked.emit(station);
+        this.menuEvents.disarmClicked.emit(station);
       },
       2
     );
 
     this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-Subsystem" style="font-size: 18px"></i> ${Language.json.station}${Language.json.info}`,
+      `<i class="howell-icon-Subsystem" style="font-size: 18px"></i> 车棚${Language.json.info}`,
       async (id: string) => {
         this.onMapClicked();
         const status = document.getElementsByClassName(
@@ -464,7 +480,7 @@ export class AMapBusiness {
       3
     );
     this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-video" style="font-size: 18px"></i> ${Language.json.station}${Language.json.video}`,
+      `<i class="howell-icon-video" style="font-size: 18px"></i> 车棚${Language.json.video}`,
       async (id: string) => {
         let station = this.source.all.find((x) => x.Id === id);
         if (!station) {
@@ -485,6 +501,7 @@ interface AMapDataSource {
   drop: GarbageStation[];
   labels: Global.Dictionary<CesiumDataController.LabelOptions>;
   points: Global.Dictionary<CesiumDataController.Point>;
+  ripple: GarbageStation[];
 }
 
 export enum GarbageTimeFilter {

@@ -1,6 +1,12 @@
-import { plainToClass, Transform, TransformationType, TransformFnParams } from 'class-transformer';
+import {
+  plainToClass,
+  Transform,
+  TransformationType,
+  TransformFnParams,
+} from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
 import { ResourceType } from '../../enum/resource-type.enum';
+import { EventRecord } from './event-record.model';
 import { EventRule } from './event-rule';
 import { IModel } from './model.interface';
 import { Point } from './point.model';
@@ -40,18 +46,17 @@ export class BaseEventRecord implements IModel {
 }
 
 class EventRecordData<T> extends BaseEventRecord {
-  @Transform(x => EventRecordDataTransformer(x), { toClassOnly: true })
+  @Transform((x) => EventRecordDataTransformer(x), { toClassOnly: true })
   Data!: T;
 }
 
 /** 乱丢垃圾事件 */
 export class IllegalDropEventRecord
   extends EventRecordData<IllegalDropEventData>
-  implements IModel {
-}
+  implements IModel {}
 /** */
 class IllegalDropEventData {
-  CommunityName!: string;;
+  CommunityName!: string;
   CommunityId?: string;
   /**	String	垃圾房ID	M */
   StationId!: string;
@@ -83,8 +88,7 @@ export interface EventDataObject {
 /** 混合投放事件 */
 export class MixedIntoEventRecord
   extends EventRecordData<MixedIntoEventData>
-  implements IModel {
-}
+  implements IModel {}
 /** */
 class MixedIntoEventData {
   /**	String	垃圾房ID	M */
@@ -112,8 +116,7 @@ class MixedIntoEventData {
  * */
 export class GarbageFullEventRecord
   extends EventRecordData<GarbageFullEventData>
-  implements IModel {
-}
+  implements IModel {}
 /** */
 class GarbageFullEventData {
   /**	String	垃圾房ID	M */
@@ -143,8 +146,7 @@ class GarbageFullEventData {
  */
 export class GarbageDropEventRecord
   extends EventRecordData<GarbageDropEventData>
-  implements IModel {
-}
+  implements IModel {}
 /** */
 export class GarbageDropEventData {
   /**	String	垃圾房ID	M */
@@ -199,8 +201,40 @@ export class GarbageDropEventData {
   TakeMinutes?: number;
 }
 
+export class SmokeEventData {
+  /**	String	垃圾房ID	M */
+  StationId!: string;
+  /**	String	垃圾房名称	M */
+  StationName!: string;
+  /**	String	区划ID	O */
+  DivisionId?: string;
+  /**	String	区划名称	O */
+  DivisionName?: string;
+  /**	DateTime	开始时间	O */
+  @Transform(transformDateTime)
+  BeginTime?: Date;
+  /**	DateTime	结束时间	O */
+  @Transform(transformDateTime)
+  EndTime?: Date;
+  /**	Boolean	是否正在报警	O */
+  IsAlarming?: boolean;
+  /**	CameraImageUrl[]	图片ID、图片地址列表	O */
+  CameraImageUrls?: CameraImageUrl[];
+  /**	String	网格单元ID	O */
+  GridCellId?: string;
+  /**	String	网格单元名称	O */
+  GridCellName?: string;
+  /**	String	小区ID	O */
+  CommunityId?: string;
+  /**	String	小区名称	O */
+  CommunityName?: string;
+}
+export class SmokeEventRecord
+  extends EventRecordData<SmokeEventData>
+  implements IModel {}
+
 function EventRecordDataTransformer(params: TransformFnParams) {
-  let record = params.obj as EventRecordData<any>
+  let record = params.obj as EventRecordData<any>;
   switch (record.EventType) {
     case EventType.GarbageDrop:
     case EventType.GarbageDropHandle:
@@ -212,8 +246,9 @@ function EventRecordDataTransformer(params: TransformFnParams) {
       return plainToClass(IllegalDropEventData, params.value);
     case EventType.MixedInto:
       return plainToClass(MixedIntoEventData, params.value);
-
+    case EventType.Smoke:
+      return plainToClass(SmokeEventData, params.value);
     default:
-      throw new Error("EventRecordDataTransformer unknow eventtype")
+      throw new Error('EventRecordDataTransformer unknow eventtype');
   }
 }

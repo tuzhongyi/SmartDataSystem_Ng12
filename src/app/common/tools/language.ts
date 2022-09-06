@@ -22,7 +22,6 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 
-
 export class Language {
   static StationState(state: StationState) {
     switch (state) {
@@ -30,6 +29,8 @@ export class Language {
         return Language.json.full;
       case StationState.Error:
         return Language.json.error;
+      case StationState.Smoke:
+        return '火灾报警';
       default:
         return Language.json.normal;
     }
@@ -80,6 +81,8 @@ export class Language {
   static StationStateFlags(flags: Flags<StationState>) {
     if (flags.contains(StationState.Error)) {
       return Language.StationState(StationState.Error);
+    } else if (flags.contains(StationState.Smoke)) {
+      return '火灾';
     } else if (flags.contains(StationState.Full)) {
       return Language.StationState(StationState.Full);
     } else {
@@ -132,6 +135,8 @@ export class Language {
         return Language.json.EventType.GarbageDropTimeout;
       case EventType.GarbageDropHandle:
         return Language.json.EventType.GarbageDropHandle;
+      case EventType.Smoke:
+        return '火灾报警';
       default:
         return '';
     }
@@ -216,9 +221,9 @@ export class Language {
   static StationType(type: StationType) {
     switch (type) {
       case StationType.Garbage:
-        return Language.json.StationType.Garbage
+        return Language.json.StationType.Garbage;
       case StationType.NucleicAcid:
-        return Language.json.StationType.NucleicAcid
+        return Language.json.StationType.NucleicAcid;
       default:
         return '';
     }

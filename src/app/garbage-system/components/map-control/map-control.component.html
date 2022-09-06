@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<ul class="map-bar status" *ngIf="display.status">
+<ul class="map-bar status" *ngIf="config.status && display.status">
   <li class="light-blue-text">
     <i
       style="margin-left: -3px; margin-right: 3px"
@@ -73,6 +73,7 @@
     <div class="inner" style="line-height: 26px">vs</div>
   </div>
   <div
+    *ngIf="config.dropButton"
     class="btn"
     (click)="Button3Clicked()"
     [ngStyle]="{

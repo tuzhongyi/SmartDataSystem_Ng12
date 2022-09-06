@@ -3,4 +3,5 @@ export class AccountOperationDisplay {
   changePassword: boolean = false;
   bindMobile: boolean = false;
   logout: boolean = true;
+  help: boolean = true;
 }

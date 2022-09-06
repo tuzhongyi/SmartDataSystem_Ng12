@@ -1,24 +1,27 @@
 <div class="device-status">
-    <div class="header">
-        设备运行状态
+  <div class="header">设备运行状态</div>
+  <div class="body">
+    <div class="left-wrapper">
+      <div
+        class="chart-container"
+        id="chartContainer"
+        #chartContainer
+        (resized)="onResized()"
+      ></div>
     </div>
-    <div class="body">
-        <div class="left-wrapper">
-            <div class="chart-container" id="chartContainer" #chartContainer (resized)="onResized()"></div>
-        </div>
-        <div class="right-wrapper">
-            <div class="item">
-                <span class="label">全部设备数量</span>
-                <span class="count sky-blue-text2">60</span>
-            </div>
-            <div class="item">
-                <span class="label">在线设备数量</span>
-                <span class="count orange-text">58</span>
-            </div>
-            <div class="item">
-                <span class="label">离线设备数量</span>
-                <span class="count powder-red-text">2</span>
-            </div>
-        </div>
+    <div class="right-wrapper">
+      <div class="item" (click)="itemClicked()">
+        <span class="label">全部设备数量</span>
+        <span class="count sky-blue-text2">{{ data.all }}</span>
+      </div>
+      <div class="item" (click)="itemClicked(OnlineStatus.Online)">
+        <span class="label">在线设备数量</span>
+        <span class="count orange-text">{{ data.online }}</span>
+      </div>
+      <div class="item" (click)="itemClicked(OnlineStatus.Offline)">
+        <span class="label">离线设备数量</span>
+        <span class="count powder-red-text">{{ data.offline }}</span>
+      </div>
     </div>
+  </div>
 </div>

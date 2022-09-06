@@ -71,6 +71,8 @@ export class StoreService {
     }
   }
 
+  refresh = new EventEmitter();
+
   constructor(private local: LocalStorageService) {
     this.runInterval();
   }

@@ -12,6 +12,7 @@ import { AlarmComponent } from './alarm/alarm.component';
 import { DeviceStatisticComponent } from './device-statistic/device-statistic.component';
 import { DeviceStatusComponent } from './device-status/device-status.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
+import { ElectricBikeWindowComponents } from './windows/windows.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
     AlarmComponent,
     DeviceStatisticComponent,
     DeviceStatusComponent,
+    ...ElectricBikeWindowComponents,
   ],
   imports: [
     CommonModule,

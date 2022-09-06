@@ -170,6 +170,13 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
           // 测试
+          if (result.Role && result.Role.length > 0) {
+            if (result.Role[0].StaticData == StaticDataRole.enabled) {
+              this._router.navigateByUrl(RoutePath.aiop);
+              return;
+            }
+          }
+
           this._router.navigateByUrl(RoutePath.electric_bike);
           return;
           // 区分权限

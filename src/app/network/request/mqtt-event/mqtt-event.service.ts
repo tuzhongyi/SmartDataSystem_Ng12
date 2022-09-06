@@ -1,35 +1,49 @@
-import { Injectable } from "@angular/core";
-import { MqttComponent, } from "./mqtt";
-import { EventPushService } from "./event-push.service";
-import { IllegalDropEventRecord } from "../../model/garbage-event-record.model";
-import { ConfigRequestService } from "../config/config-request.service";
+import { EventEmitter, Injectable } from '@angular/core';
+import { HowellMqttService } from './mqtt-service';
+import { EventPushService } from './event-push.service';
+import { ConfigRequestService } from '../config/config-request.service';
+import { DisarmMessage } from './disarm.message';
+import { EventRecord } from '../../model/event-record.model';
+import { wait } from 'src/app/common/tools/tool';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MQTTEventService {
-  mqtt?: MqttComponent;
-  constructor(private pushService: EventPushService, private configService: ConfigRequestService) {
+  mqtt?: HowellMqttService;
+  loaded = false;
+  constructor(
+    public pushService: EventPushService,
+    configService: ConfigRequestService
+  ) {
     // this.mqtt = new MqttComponent('192.168.21.241', 15883);
     let hostname = document.location.hostname;
-    if (hostname == "127.0.0.1" || hostname == "localhost") {
-      hostname = "garbage01.51hws.com"
+    if (hostname == '127.0.0.1' || hostname == 'localhost') {
+      hostname = '101.91.121.126';
     }
-    configService.getMQTT().subscribe(x =>
-      this.mqtt = new MqttComponent(hostname, x.Port, x.Username, x.Password));
+    configService.getMQTT().subscribe((x) => {
+      this.mqtt = new HowellMqttService(
+        hostname,
+        x.Port,
+        x.Username,
+        x.Password
+      );
+      this.loaded = true;
+    });
   }
 
-  listenerIllegalDrop(divisionsId?: string) {
+  listenerStationEvent(divisionsId?: string) {
     var topic = 'AIOP/Garbage/Counties/';
-    topic += (divisionsId ? divisionsId : '+') + '/Committees/+/GarbageStations/+/Events/1';
+    topic +=
+      (divisionsId ? divisionsId : '+') +
+      '/Committees/+/GarbageStations/+/Events/1';
 
     // console.log(topic);
     setTimeout(() => {
       if (this.mqtt) {
         this.mqtt.subscription(topic, (topic: string, message: string) => {
-
-          const msg = JSON.parse(message) as IllegalDropEventRecord;
+          const msg = JSON.parse(message) as EventRecord;
           //console.log(msg);
-          this.pushService.pushIllegalDrop.emit(msg);
+          this.pushService.pushEvent.emit(msg);
         });
         // this.mqtt.connectionState.subscribe((x) => {
         //   const state = x != MqttConnectionState.CLOSED;
@@ -37,12 +51,51 @@ export class MQTTEventService {
         // });
       }
     }, 500);
+  }
 
+  smokeEventListener() {
+    let topic = `AIOP/Resources/Cameras/+/Artemis/IOStatus/+`;
+
+    wait(
+      () => {
+        return this.loaded;
+      },
+      () => {
+        if (this.mqtt) {
+          this.mqtt.subscription(topic, (topic: string, message: string) => {
+            const msg = JSON.parse(message) as EventRecord;
+            //console.log(msg);
+            this.pushService.pushEvent.emit(msg);
+          });
+          // this.mqtt.connectionState.subscribe((x) => {
+          //   const state = x != MqttConnectionState.CLOSED;
+          //   this.pushService.connectionState.emit(state);
+          // });
+        }
+      }
+    );
+  }
+
+  smoke(
+    id: string,
+    name: string,
+    messageId: string = '1293819274174094',
+    status: number = 0
+  ) {
+    if (this.mqtt) {
+      let topic = `AIOP/Resources/Cameras/${id}/Artemis/IOStatus/${status}`;
+      let message = new DisarmMessage();
+      message.Id = messageId;
+      message.Data.Id = id;
+      message.Data.Name = name;
+      message.Data.IOStatus = status;
+      this.mqtt.unsafePublish(topic, JSON.stringify(message));
+    }
   }
 
   unlistenerIllegalDrop() {
     if (this.mqtt) {
-      this.mqtt.ngOnDestroy();
+      this.mqtt.destroy();
     }
   }
 }

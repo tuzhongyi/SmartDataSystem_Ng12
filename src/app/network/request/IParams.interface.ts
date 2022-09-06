@@ -1,4 +1,5 @@
 import { Exclude, Transform } from 'class-transformer';
+import { param } from 'jquery';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { transformDateTime } from '../model/transform.model';
 
@@ -79,6 +80,21 @@ export class DurationParams {
     let end = new Date(date.getTime());
     end.setSeconds(end.getSeconds() + seconds);
     params.EndTime = end;
+
+    return params;
+  }
+
+  static before(date: Date, day: number = 7) {
+    let end = new Date(date.getTime());
+    let params = new DurationParams();
+    params.EndTime = end;
+    let begin = new Date(date.getTime());
+    begin.setHours(0);
+    begin.setMinutes(0);
+    begin.setSeconds(0);
+    begin.setMilliseconds(0);
+    begin.setDate(date.getDate() - day);
+    params.BeginTime = begin;
 
     return params;
   }

@@ -1,57 +1,45 @@
-<div class="device-statistic ">
-    <div class="wrapper">
-        <div class="item">
-
-            <div class="icon">
-                <div class="bg"></div>
-                <i class="howell-icon-ebikepark"></i>
-            </div>
-            <div class="info">
-                <span class="info-des">全部车棚</span>
-                <span class="info-num">8536</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="icon">
-                <div class="bg bg_green"></div>
-                <i class="howell-icon-ebikepark"></i>
-            </div>
-            <div class="info">
-                <span class="info-des">全部车棚</span>
-                <span class="info-num">8536</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="icon">
-                <div class="bg bg_yellow"></div>
-                <i class="howell-icon-ebikepark"></i>
-            </div>
-            <div class="info">
-                <span class="info-des">全部车棚</span>
-                <span class="info-num">8536</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="icon">
-                <div class="bg bg_red"></div>
-                <i class="howell-icon-ebikepark"></i>
-            </div>
-            <div class="info">
-                <div class="bg bg_gray"></div>
-                <span class="info-des">全部车棚</span>
-                <span class="info-num">8536</span>
-            </div>
-        </div>
-        <div class="item">
-            <div class="icon">
-                <div class="bg bg_gray"></div>
-                <i class="howell-icon-ebikepark"></i>
-            </div>
-            <div class="info">
-                <div class="bg bg_gray"></div>
-                <span class="info-des">全部车棚</span>
-                <span class="info-num">8536</span>
-            </div>
-        </div>
+<div class="device-statistic">
+  <div class="wrapper">
+    <div class="item" (click)="stationClicked()">
+      <div class="icon">
+        <div class="bg bg_blue"></div>
+        <i class="howell-icon-ebikepark"></i>
+      </div>
+      <div class="info">
+        <span class="info-des">全部车棚</span>
+        <span class="info-num">{{ data.all }}</span>
+      </div>
     </div>
+    <div class="item" (click)="deviceStatusClicked()">
+      <div class="icon">
+        <div class="bg bg_green"></div>
+        <i class="howell-icon-ebikepark"></i>
+      </div>
+      <div class="info">
+        <span class="info-des">设备正常</span>
+        <span class="info-num">{{ data.online }}</span>
+      </div>
+    </div>
+    <div class="item" (click)="recordClicked()">
+      <div class="icon">
+        <div class="bg bg_yellow"></div>
+        <i class="howell-icon-ebikepark"></i>
+      </div>
+      <div class="info">
+        <span class="info-des">火灾报警</span>
+        <span class="info-num">{{ data.smoke }}</span>
+      </div>
+    </div>
+    <div class="item" (click)="deviceStatusClicked(OnlineStatus.Offline)">
+      <div class="icon">
+        <div class="bg bg_gray"></div>
+        <i class="howell-icon-ebikepark"></i>
+      </div>
+      <div class="info">
+        <div class="bg bg_gray"></div>
+        <span class="info-des">设备离线</span>
+        <span class="info-num">{{ data.offline }}</span>
+      </div>
+    </div>
+  </div>
 </div>

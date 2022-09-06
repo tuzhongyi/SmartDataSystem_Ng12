@@ -1,0 +1,20 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title [title]="'所有车棚'">
+      <div class="event-record-smoke-window-header">
+        <div>
+          <app-input-search-options (search)="onsearch($event)">
+          </app-input-search-options>
+        </div>
+      </div>
+    </app-tab-title>
+    <div class="event-record-smoke-window-content">
+      <howell-garbage-station-table
+        [load]="load"
+        (position)="onposition($event)"
+        (image)="onimage($event)"
+      >
+      </howell-garbage-station-table>
+    </div>
+  </ng-container>
+</app-window>

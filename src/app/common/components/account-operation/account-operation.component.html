@@ -30,7 +30,7 @@
       </button>
     </mat-menu>
   </div>
-  <div class="operation-item" (click)="navigateToHelp()">
+  <div class="operation-item" (click)="navigateToHelp()" *ngIf="display.help">
     <mat-icon> help </mat-icon>
   </div>
 </div>

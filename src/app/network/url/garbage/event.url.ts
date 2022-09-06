@@ -75,6 +75,18 @@ class GarbageDropUrl {
     return `${this.basic()}/${id}`;
   }
 }
+class SmokeUrl {
+  constructor(private base: string) {}
+  basic() {
+    return `${this.base}/Smoke`;
+  }
+  list() {
+    return `${this.basic()}/List`;
+  }
+  item(id: string) {
+    return `${this.basic()}/${id}`;
+  }
+}
 class RecordUrl {
   constructor(private base: string) {}
   basic() {
@@ -84,4 +96,5 @@ class RecordUrl {
   mixedinto = new MixedIntoUrl(this.basic());
   garbagefull = new GarbageFullUrl(this.basic());
   garbagedrop = new GarbageDropUrl(this.basic());
+  smoke = new SmokeUrl(this.basic());
 }

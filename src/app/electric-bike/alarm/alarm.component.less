@@ -5,17 +5,22 @@
   color: #cfd7ff;
   display: flex;
   flex-direction: column;
+
   .table-header-container {
     flex-shrink: 0;
   }
+
   .table-body-container {
     flex-grow: 1;
     overflow: auto;
   }
+
   table {
     width: 100%;
+    table-layout: fixed;
+
     thead {
-      background-color: #1e88e5;
+      background-color: rgba(30, 136, 229, 0.6);
 
       tr th {
         padding: 5px;
@@ -23,16 +28,32 @@
         color: white;
       }
     }
+
     tbody {
       tr {
         cursor: pointer;
       }
-      tr td {
-        padding: 5px;
-        span {
-          margin: 0 2.5px;
-          i:hover {
-            color: #fff;
+
+      tr {
+
+
+        &:hover {
+          background-color: rgba(30, 136, 229, 0.3);
+        }
+
+        td {
+          padding: 5px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+
+          span {
+            margin: 0 2.5px;
+
+            i:hover {
+              color: #fff;
+            }
           }
         }
       }

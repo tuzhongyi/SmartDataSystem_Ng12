@@ -43,6 +43,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
   onselected: EventEmitter<PatrolControlModel> = new EventEmitter();
 
   constructor(private business: PatrolControlBusiness) {}
+  loading = false;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.id && this.id) {
       if (this.models && this.models.length > 0) {
@@ -73,6 +74,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
   toPlayback: EventEmitter<PlaybackInterval> = new EventEmitter();
 
   async ngOnInit() {
+    this.loading = true;
     for (let i = 1; i <= 4; i++) {
       let time = 30 * i;
       let item = new SelectItem(time.toString(), time, time + 's');
@@ -83,6 +85,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
       this.manualCaptureing = x;
     });
     this.models = await this.business.load();
+    this.loading = false;
     if (this.models.length > 0) {
       this.selected = this.models[this.index];
       this.onselected.emit(this.selected);

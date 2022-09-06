@@ -1,15 +1,70 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { StoreService } from 'src/app/common/service/store.service';
+import { SmokeEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { IModel } from 'src/app/network/model/model.interface';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from 'src/app/view-model/image-control.model';
+import { AlarmBusiness } from './alarm.business';
+import { ElectricBikeAlarmModel } from './alarm.model';
 
 @Component({
   selector: 'howell-alarm',
   templateUrl: './alarm.component.html',
-  styleUrls: ['./alarm.component.less']
+  styleUrls: ['./alarm.component.less'],
+  providers: [AlarmBusiness],
 })
-export class AlarmComponent implements OnInit {
+export class AlarmComponent
+  implements IComponent<IModel, ElectricBikeAlarmModel[]>, OnInit
+{
+  @Input()
+  business: IBusiness<IModel, ElectricBikeAlarmModel<any>[]>;
+  @Output()
+  picture: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  playback: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  itemClick: EventEmitter<SmokeEventRecord> = new EventEmitter();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(business: AlarmBusiness, private store: StoreService) {
+    this.business = business;
   }
 
+  datas: ElectricBikeAlarmModel[] = [];
+
+  ngOnInit(): void {
+    this.loadData();
+    this.store.interval.subscribe((x) => {
+      this.loadData();
+    });
+    this.store.refresh.subscribe((x) => {
+      this.loadData();
+    });
+  }
+
+  async loadData() {
+    this.datas = await this.business.load();
+  }
+
+  onpicture(event: Event, item: ElectricBikeAlarmModel<SmokeEventRecord>) {
+    if (item.images) {
+      let img = new ImageControlModelArray(item.images, 0);
+      this.picture.emit(img);
+    }
+    event.cancelBubble = true;
+  }
+  onplayback(event: Event, item: ElectricBikeAlarmModel) {
+    if (item.images) {
+      let img = new ImageControlModelArray(item.images, 0);
+      this.playback.emit(img);
+    }
+    event.cancelBubble = true;
+  }
+
+  onitemclick(item: ElectricBikeAlarmModel) {
+    this.itemClick.emit(item.data);
+  }
 }

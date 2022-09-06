@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 
@@ -8,6 +8,7 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
   styleUrls: ['./account-info.component.less'],
 })
 export class AccountInfoComponent implements OnInit {
+  @Input()
   desc: string = '生活垃圾分类全程监管平台';
   title: string = '';
 

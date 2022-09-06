@@ -34,7 +34,10 @@
     </div>
   </div>
 
-  <div class="statistic">
+  <div
+    class="statistic"
+    *ngIf="GarbageStation.StationType == StationType.Garbage"
+  >
     <div class="left">
       <div class="number">{{ GarbageStationGrade }}</div>
       <div class="suffix">分</div>

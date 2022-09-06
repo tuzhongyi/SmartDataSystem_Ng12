@@ -9,6 +9,7 @@ import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
+  SmokeEventRecord,
 } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -19,7 +20,8 @@ import { CameraImageUrlModel } from './event-record.model';
 export type EventRecordType =
   | MixedIntoEventRecord
   | IllegalDropEventRecord
-  | GarbageFullEventRecord;
+  | GarbageFullEventRecord
+  | SmokeEventRecord;
 
 export class EventRecordPagedConverter
   implements
@@ -77,6 +79,8 @@ export class EventRecordConverter
       return this.fromGarbageFull(source, getter);
     } else if (source instanceof IllegalDropEventRecord) {
       return this.fromIllegalDrop(source, getter);
+    } else if (source instanceof SmokeEventRecord) {
+      return this.fromSmoke(source, getter);
     } else {
       return this.fromEventRecord(source, getter);
     }
@@ -136,6 +140,34 @@ export class EventRecordConverter
 
   async fromGarbageFull(
     source: GarbageFullEventRecord,
+    getter: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
+    }
+  ) {
+    let model = await this.fromEventRecord(source, getter);
+    model.images = [];
+    if (source.Data.CameraImageUrls && model.GarbageStation) {
+      for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
+        try {
+          const url = new CameraImageUrlModel(
+            source.Data.CameraImageUrls[i],
+            source.Data.StationId
+          );
+          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          let image = this.converter.image.Convert(url, true, source.EventTime);
+          image.index = i;
+          model.images.push(image);
+        } catch (error) {
+          console.error(error, this, source.Data.CameraImageUrls[i]);
+        }
+      }
+    }
+    return model;
+  }
+  async fromSmoke(
+    source: SmokeEventRecord,
     getter: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;

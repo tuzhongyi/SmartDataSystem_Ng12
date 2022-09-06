@@ -1,0 +1,73 @@
+.event-record-smoke-window {
+  &-header {}
+
+  &-content {
+    height: calc(100% - 72px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+
+    &-table {
+      height: calc(100% - 34px - 10px);
+
+    }
+
+    &-filter {
+      display: flex;
+      justify-content: space-between;
+
+
+      .filter-item {
+        height: 100%;
+        width: calc((100% - 76px) / 5 - 10px);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-right: 10px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        @title-width: 90px;
+
+        &-title {
+          width: @title-width;
+          color: #cfd7ff;
+          font-size: 18px;
+          white-space: nowrap;
+        }
+
+        &-value {
+          width: calc(100% - @title-width)
+        }
+
+        @title-three-width: 72px;
+        @title-two-width: 50px;
+
+
+        &.three .filter-item-title {
+          width: @title-three-width;
+        }
+
+        &.three .filter-item-value {
+          width: calc(100% - @title-three-width)
+        }
+
+        &.two .filter-item-title {
+          width: @title-two-width;
+        }
+
+        &.two .filter-item-value {
+          width: calc(100% - @title-two-width)
+        }
+      }
+
+      .search {
+        width: 76px;
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <app-tab-title [title]="'报警记录'">
+      <div class="event-record-smoke-window-header"></div>
+    </app-tab-title>
+    <div class="event-record-smoke-window-content">
+      <div class="event-record-smoke-window-content-filter">
+        <div class="filter-item">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [format]="'yyyy-MM-dd HH:mm'"
+              [startView]="DateTimePickerView.day"
+              [minView]="DateTimePickerView.hour"
+              [date]="filter.BeginTime"
+              (change)="changeBegin($event)"
+              class=""
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [format]="'yyyy-MM-dd HH:mm'"
+              [startView]="DateTimePickerView.day"
+              [minView]="DateTimePickerView.hour"
+              [date]="filter.EndTime"
+              (change)="changeEnd($event)"
+              class=""
+            />
+          </div>
+        </div>
+        <div class="filter-item three">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <select [(ngModel)]="division">
+              <option [ngValue]="item" *ngFor="let item of divisions">
+                {{ item.language }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-item" style="width: 200">
+          <div class="filter-item-title">报警类型：</div>
+          <div class="filter-item-value">
+            <select [(ngModel)]="type">
+              <option [value]="item.value" *ngFor="let item of types">
+                {{ item.language }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-item two" style="margin-right: 0">
+          <div class="filter-item-title">名称：</div>
+          <div>
+            <input
+              type="text"
+              placeholder="输入关键字"
+              class=""
+              [(ngModel)]="text"
+            />
+          </div>
+        </div>
+        <button type="button" class="hw-blue-btn search" (click)="onsearch()">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button>
+      </div>
+      <div class="event-record-smoke-window-content-table">
+        <howell-event-record-table
+          (image)="onimage($event)"
+          [type]="type"
+          [filter]="filter"
+          [load]="load"
+        >
+        </howell-event-record-table>
+      </div>
+    </div>
+  </ng-container>
+</app-window>

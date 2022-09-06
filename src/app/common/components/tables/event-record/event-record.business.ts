@@ -72,6 +72,8 @@ export class EventRecordBusiness
         return this.eventService.record.MixedInto.list(params);
       case EventType.GarbageFull:
         return this.eventService.record.GarbageFull.list(params);
+      case EventType.Smoke:
+        return this.eventService.record.Smoke.list(params);
       default:
         throw new Event('error event type');
     }

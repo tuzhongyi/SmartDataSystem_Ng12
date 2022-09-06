@@ -41,8 +41,8 @@
             <td [ngStyle]="{ width: width[3] }">
               {{
                 item.GarbageStation
-                  ? item.GarbageStation.Committees
-                    ? item.GarbageStation.Committees.Name
+                  ? item.GarbageStation.County
+                    ? item.GarbageStation.County.Name
                     : ""
                   : ""
               }}
@@ -56,7 +56,11 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[5] }">
+            <td
+              [ngStyle]="{ width: width[5] }"
+              class="status"
+              [class]="item.stateClassName"
+            >
               {{
                 item.GarbageStation
                   ? Language.StationState(item.GarbageStation.StationState)
@@ -65,7 +69,7 @@
             </td>
             <td class="operation">
               <div (click)="onPositionClicked(item)">
-                <i class="glyphicon glyphicon-map-marker"></i>
+                <i class="mdi mdi-map-marker"></i>
               </div>
             </td>
           </tr>

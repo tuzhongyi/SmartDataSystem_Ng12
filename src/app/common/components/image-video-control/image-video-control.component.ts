@@ -71,7 +71,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
           this.model.image.status == OnlineStatus.Online;
       }
     }
-    if (changes.operation) {
+    if (this.operation) {
       this.display.operation.fullscreen = this.operation.fullscreen;
       this.display.operation.play = this.operation.play;
     }

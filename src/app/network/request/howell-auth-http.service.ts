@@ -140,6 +140,23 @@ export class HowellAuthHttpService {
     return this._http.post<string>(url, model, httpOptions);
   }
 
+  public postReturnInt32<T, R = HowellResponse<number>>(
+    url: string,
+    model?: T,
+    params?: HttpParams
+  ): Observable<R> {
+    // const myHeaders = this.getHttpHeaders('POST', url);
+    const myHeaders = this._authorizationService.generateHttpHeader(
+      'POST',
+      url
+    );
+    const httpOptions = {
+      headers: myHeaders,
+      params: params,
+    };
+    return this._http.post<R>(url, model, httpOptions);
+  }
+
   public postString<T = any, R = HowellResponse<T>>(
     url: string,
     base64: string,

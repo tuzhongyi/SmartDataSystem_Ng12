@@ -98,7 +98,7 @@ export class MediaControlComponent
       }
     }
     if (this.model) {
-      this.operation.fullscreen = this.model.length > 1;
+      this.operation.fullscreen = false;
     }
     if (changes.autoplay && changes.autoplay.firstChange) {
       this.playing = this.autoplay;

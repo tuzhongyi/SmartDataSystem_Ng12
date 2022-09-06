@@ -8,6 +8,7 @@ import { Language } from 'src/app/common/tools/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { StationType } from 'src/app/enum/station-type.enum';
 
 @Component({
   selector: 'app-point-info-panel',
@@ -66,7 +67,9 @@ export class PointInfoPanelComponent implements OnInit {
     // this.GarbageStation.Members
   }
 
-  ngOnInit() { }
+  StationType = StationType;
+
+  ngOnInit() {}
 
   onGarbageStationChanged(station: GarbageStation) {
     let flags = new Flags(station.StationState);
@@ -114,7 +117,10 @@ export class PointInfoPanelComponent implements OnInit {
         //   ? this.GarbageInterval
         //   : minute + Language.json.Time.minute;
 
-        this.GarbageInterval = Language.Time(statistic.CurrentGarbageTime ?? 0, false);
+        this.GarbageInterval = Language.Time(
+          statistic.CurrentGarbageTime ?? 0,
+          false
+        );
 
         if (statistic.TodayEventNumbers) {
           for (let i = 0; i < statistic.TodayEventNumbers.length; i++) {

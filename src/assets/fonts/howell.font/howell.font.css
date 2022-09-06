@@ -2427,3 +2427,15 @@ a .howell-icon-flip-vertical:before {
 .howell-icon-grid:before {
     content: "\f362";
 }
+
+.howell-icon-people-out2:before {
+    content: "\f363";
+}
+
+.howell-icon-people-in2:before {
+    content: "\f364";
+}
+
+.howell-icon-construction_waste:before {
+    content: "\f365";
+}

@@ -3,5 +3,6 @@ import { GarbageStationModel } from '../../../../view-model/garbage-station.mode
 
 export class GarbageStationTableModel {
   GarbageStation?: GarbageStationModel;
+  stateClassName: string = '';
   images: ImageControlModel[] = [];
 }

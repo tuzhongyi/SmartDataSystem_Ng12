@@ -34,7 +34,6 @@ declare namespace CesiumDataController {
     Create: (villageId: string, pointId: string, point: Point) => boolean;
     Update: (villageId: string, pointId: string, point: Point) => boolean;
     Remove: (villageId: string, pointId: string) => boolean;
-
     Asyn: AsynPointController;
   }
   class AsynPointController {
@@ -52,7 +51,6 @@ declare namespace CesiumDataController {
     Update: (villageId: string, pointId: string, point: Point) => boolean;
     Remove: (villageId: string, pointId: string) => boolean;
   }
-
   namespace CallbackType {
     type Array<T> = (values: Array<T>) => void;
     type Dictionary<T> = (values: Dictionary<T>) => void;
@@ -90,6 +88,13 @@ declare namespace CesiumDataController {
     DumpingCamera = 'dumpingCamera', //垃圾倾倒检测
     GarbageClassificationCamera = 'garbageClassificationCamera', //垃圾分类
     NucleicAcid = 'acid', //核酸
+    LargeWaste = 'largewaste', //大件垃圾
+  }
+
+  enum BatteryLevel {
+    empty = 0, //空的
+    half = 1, //一半
+    full = 2, //满得
   }
 
   enum ShapeType {
@@ -519,23 +524,25 @@ declare namespace CesiumDataController {
     color?: Color;
   }
 
-  class LabelOptions {
+  class LabelOptions<T = number> {
     id: string;
     position: Position;
     text?: string;
     color?: Color | string;
     backgroundColor?: Color | string;
     value: number;
-    image?: ImageOptions;
+    image?: ImageOptions<T>;
   }
-  class ImageOptions {
+  class ImageOptions<T = number> {
     color?: Color | string;
-    value?: number;
+    value?: T;
     resource: ImageResource;
   }
 
   enum ImageResource {
     arcProgress = 'arc-progress',
+    battery = 'battery',
+    ripple = 'ripple',
   }
 
   // 路径规划类型
