@@ -7,7 +7,7 @@ export class GisPoint implements IModel {
   /**	Double	纬度	M */
   Latitude!: number;
   /**	Double	高度	M */
-  Altitude!: number;
+  Altitude: number = 0;
   /**	Int32	楼层	O */
   Floor?: number;
   /**	Int32	坐标系类型	O */

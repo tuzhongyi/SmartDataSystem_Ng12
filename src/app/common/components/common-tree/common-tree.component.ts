@@ -103,6 +103,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
   @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> = new EventEmitter<SelectionChange<CommonFlatNode>>();
   @Output() defaultIdsChange = new EventEmitter<string[]>();
+  @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
 
   constructor() {
 
@@ -147,6 +148,10 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     if ('defaultIds' in changes) {
       this.setDefaultNodes();
     }
+  }
+  buttonIconClick(node: CommonFlatNode, index: number, e: Event) {
+    node.CurrentButtonIcon = index;
+    this.buttonIconClickEvent.emit(node);
   }
   singleSelectNode(node: CommonFlatNode) {
     // 如果当前节点正被选中，则再次点击当前节点，不会取消选中，一般用于编辑节点状态时

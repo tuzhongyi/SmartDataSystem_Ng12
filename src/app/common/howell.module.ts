@@ -12,7 +12,7 @@ import { CUSTOM_PIPES } from './pipes';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { CUSTOM_DIRECTIVES } from './directives';
-import { FormsModule, NG_VALUE_ACCESSOR, SelectControlValueAccessor } from '@angular/forms';
+import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, SelectControlValueAccessor } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
 import Adsame from 'src/assets/echart-theme/adsame.json';
@@ -27,6 +27,7 @@ echarts.registerTheme('adsame', Adsame);
     MaterialModule,
     AngularResizeEventModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),

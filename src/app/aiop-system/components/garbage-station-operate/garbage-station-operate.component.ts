@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { GarbageStation, GarbageStationType } from 'src/app/network/model/garbage-station.model';
 import { GarbageStationOperateBusiness } from './garbage-station-operate.business';
-import { AiopCameraConf, StationCameraConf } from './garbage-station-manage.config';
+import { AiopCameraConf, StationCameraConf } from './garbage-station.config';
 import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { EnumHelper } from "../enum/enum-helper";
+import { IconTypeEnum } from "../enum/icon-type.enum";
 import { UserResourceType } from "../enum/user-resource-type.enum";
 import { DivisionNode } from "../network/model/division-tree.model";
 import { Division } from "../network/model/division.model";
@@ -61,9 +62,9 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.IconClass = DivisionNodeIconType.get(UserResourceType.Station) ?? '';
     node.RawData = item;
     if (item.GisPoint) {
-      node.ButtonIconClasses = ['howell-icon-Unlink']
+      node.ButtonIconClasses = [IconTypeEnum.unlink, IconTypeEnum.earth]
     } else {
-      node.ButtonIconClasses = ['howell-icon-Link']
+      node.ButtonIconClasses = [IconTypeEnum.link, IconTypeEnum.earth]
     }
 
 

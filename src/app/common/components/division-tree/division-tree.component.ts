@@ -111,6 +111,9 @@ export class DivisionTreeComponent extends CommonTree implements OnInit {
   @Output() selectTreeNode: EventEmitter<CommonFlatNode<Division | GarbageStation>[]> = new EventEmitter<CommonFlatNode<Division | GarbageStation>[]>();
 
   @Output() holdStatusChange = new EventEmitter();
+  @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
+
+
 
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
@@ -213,6 +216,9 @@ export class DivisionTreeComponent extends CommonTree implements OnInit {
       this.depth = depth
     }
     this._init()
+  }
+  buttonIconClick(node: CommonFlatNode) {
+    this.buttonIconClickEvent.emit(node)
   }
 
   private _filterNode(type: UserResourceType, node: CommonFlatNode) {

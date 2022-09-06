@@ -29,7 +29,7 @@ export class AICameraManageConverter extends CommonModelPromiseConverter<AICamer
   }
 
   private async _fromAICamera(item: AICamera) {
-    console.log(item)
+    // console.log(item)
     let model = new AICameraManageModel();
     model.Id = item.Id;
     model.Name = item.Name;

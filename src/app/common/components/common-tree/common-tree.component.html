@@ -37,13 +37,10 @@
           <i [class]="node.IconClass"></i>
           {{ node.Name }}
         </div>
-        <div
-          class="btns"
-          style="display: flex; align-items: center; justify-content: flex-end"
-          *ngIf="showButtonIcon"
-        >
+        <div class="btns" *ngIf="showButtonIcon">
           <i
             [class]="icon"
+            (click)="buttonIconClick(node, i, $event)"
             *ngFor="let icon of node.ButtonIconClasses; let i = index"
           ></i>
         </div>

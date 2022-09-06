@@ -1,16 +1,27 @@
 <div class="deploy-map hw-horizontal-layout">
-  <ng-container *ngIf="confirmLocation">
+  <ng-container *ngIf="locationDialog">
     <howell-confirm-dialog
       (dialogMsgEvent)="locationDialogMsg($event)"
-      [dialogModel]="locationDialog"
+      [dialogModel]="locationModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+  <ng-container *ngIf="unbindDialog">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="unbindDialogMsg($event)"
+      [dialogModel]="unbindModel"
     >
     </howell-confirm-dialog>
   </ng-container>
 
-  <ng-container *ngIf="showOperate"> <toast-window>
-    <coordinate-manage (closeEvent)="closeForm($event)"></coordinate-manage>
-  </toast-window> </ng-container>
- 
+  <ng-container *ngIf="showOperate">
+    <toast-window>
+      <coordinate-manage
+        (closeEvent)="closeForm($event)"
+        [title]="operateTitle"
+      ></coordinate-manage>
+    </toast-window>
+  </ng-container>
 
   <div class="horizontal-left">
     <div class="hw-simple-title">投放点列表</div>
@@ -20,6 +31,7 @@
         [holdStatus]="true"
         [showButtonIcon]="true"
         (selectTreeNode)="selectTreeNode($event)"
+        (buttonIconClickEvent)="buttonIconClick($event)"
       ></howell-division-tree>
     </div>
   </div>
