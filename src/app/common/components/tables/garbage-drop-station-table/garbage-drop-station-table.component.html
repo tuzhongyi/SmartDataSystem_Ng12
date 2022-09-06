@@ -4,24 +4,24 @@
       <!-- 有滚动条 -->
       <table>
         <colgroup>
-          <col style="width: 10%" />
-          <col style="width: 14%" />
           <col style="width: 12%" />
-          <col style="width: 7%" />
-          <col style="width: 9%" />
-          <col style="width: 5%" />
-          <col style="width: 9%" />
+          <col style="width: 12%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
           <col style="width: 8%" />
-          <col style="width: 6%" />
-          <col style="width: 6%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 5%" />
+          <col style="width: 10%" />
         </colgroup>
         <thead>
           <tr>
             <th>图片</th>
             <th>投放点</th>
-            <th>社区</th>
             <th>街道</th>
             <th>居委会</th>
+            <th>社区</th>
             <th>垃圾堆数</th>
             <th>滞留时间</th>
             <th>总滞留时长</th>
@@ -34,76 +34,70 @@
     <div class="table-body">
       <table>
         <colgroup>
-          <col style="width: 10%" />
-          <col style="width: 14%" />
           <col style="width: 12%" />
-          <col style="width: 7%" />
-          <col style="width: 9%" />
-          <col style="width: 5%" />
-          <col style="width: 9%" />
+          <col style="width: 12%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
           <col style="width: 8%" />
-          <col style="width: 6%" />
-          <col style="width: 6%" />
+          <col style="width: 10%" />
+          <col style="width: 10%" />
+          <col style="width: 5%" />
+          <col style="width: 10%" />
         </colgroup>
         <tbody>
           <tr *ngFor="let item of datas">
             <td>
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
-                  <app-image-control
-                    [nosignal]="false"
-                    [model]="img"
-                    (Click)="imageClick(item, img)"
-                  ></app-image-control>
+                  <app-image-control [nosignal]="false" [model]="img" (Click)="imageClick(item, img)">
+                  </app-image-control>
                 </div>
               </div>
             </td>
             <td>
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
+
+            <td>
+              {{
+              item.GarbageStation
+              ? item.GarbageStation.County
+              ? item.GarbageStation.County.Name
+              : ""
+              : ""
+              }}
+            </td>
+            <td>
+              {{
+              item.GarbageStation
+              ? item.GarbageStation.Committees
+              ? item.GarbageStation.Committees.Name
+              : ""
+              : ""
+              }}
+            </td>
             <td>
               {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
-            </td>
-            <td>
-              {{
-                item.GarbageStation
-                  ? item.GarbageStation.County
-                    ? item.GarbageStation.County.Name
-                    : ""
-                  : ""
-              }}
-            </td>
-            <td>
-              {{
-                item.GarbageStation
-                  ? item.GarbageStation.Committees
-                    ? item.GarbageStation.Committees.Name
-                    : ""
-                  : ""
-              }}
             </td>
             <td>
               {{ item.GarbageCount }}
             </td>
             <td>
               {{
-                item.GarbageDuration ? Language.Time(item.GarbageDuration) : ""
+              item.GarbageDuration ? Language.Time(item.GarbageDuration) : ""
               }}
             </td>
             <td>
               {{
-                item.MaxGarbageDuration
-                  ? Language.Time(item.MaxGarbageDuration)
-                  : ""
+              item.MaxGarbageDuration
+              ? Language.Time(item.MaxGarbageDuration)
+              : ""
               }}
             </td>
             <td>
-              <div
-                style="width: 16px"
-                *ngFor="let member of item.members"
-                [matTooltip]="member.view"
-                [matTooltipPosition]="'above'"
-              >
+              <div style="width: 16px" *ngFor="let member of item.members" [matTooltip]="member.view"
+                [matTooltipPosition]="'above'">
                 <i class="howell-icon-user-anonymous"></i>
               </div>
             </td>
@@ -125,14 +119,8 @@
         <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
 
-      <app-paginator
-        [length]="page.TotalRecordCount"
-        [pageSize]="page.PageSize"
-        [pagerCount]="5"
-        [pageIndex]="0"
-        [showFirstLastButtons]="true"
-        (page)="pageEvent($event)"
-      >
+      <app-paginator [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="5" [pageIndex]="0"
+        [showFirstLastButtons]="true" (page)="pageEvent($event)">
       </app-paginator>
     </div>
   </div>
