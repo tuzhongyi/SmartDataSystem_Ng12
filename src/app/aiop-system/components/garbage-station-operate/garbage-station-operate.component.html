@@ -9,75 +9,69 @@
 
   <div class="page-one vertical-layout" *ngIf="!showPageTwo">
     <div class="vertical-header">
-      <div class="hw-operation">
-        <div class="hw-simple-title" style="margin-bottom: 10px">
-          {{ title }}
-        </div>
-        <div class="operate-bar wrap">
-          <div class="left-wrapper">
-            <div class="operate-item" style="flex-basis: 50%">
-              <div class="title">
-                <span class="hw-form-label"> 名称 </span>
-                <span class="hw-form-icon">*</span>
-              </div>
-              <div class="content">
-                <input
-                  type="text"
-                  name="stationName"
-                  [(ngModel)]="stationName"
-                />
-              </div>
+      <div class="hw-simple-title" style="margin-bottom: 10px">
+        {{ title }}
+      </div>
+      <div class="operate-bar wrap">
+        <div class="left-wrapper">
+          <div class="operate-item" style="flex-basis: 50%">
+            <div class="title">
+              <span class="hw-form-label"> 名称 </span>
+              <span class="hw-form-icon">*</span>
             </div>
-            <div class="operate-item">
-              <div class="title">
-                <span class="hw-form-label">类型 </span>
-                <span class="hw-form-icon"></span>
-              </div>
-              <div class="content">
-                <select name="stationType" [(ngModel)]="stationType">
-                  <option *ngFor="let s of stationTypes" [value]="s.Type">
-                    {{ s.Name }}
-                  </option>
-                </select>
-              </div>
+            <div class="content">
+              <input type="text" name="stationName" [(ngModel)]="stationName" />
             </div>
           </div>
+          <div class="operate-item">
+            <div class="title">
+              <span class="hw-form-label">类型 </span>
+              <span class="hw-form-icon"></span>
+            </div>
+            <div class="content">
+              <select name="stationType" [(ngModel)]="stationType">
+                <option *ngFor="let s of stationTypes" [value]="s.Type">
+                  {{ s.Name }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-          <div class="right-wrapper">
-            <div class="search-wrapper">
-              <input
-                type="text"
-                [(ngModel)]="condition"
-                placeholder="名称"
-                (keyup.enter)="search()"
-              />
-            </div>
-            <div class="hw-normal-btn-group">
-              <button class="hw-blue-btn" (click)="search()">
-                <i class="mdi mdi-magnify"></i>
-                查询
-              </button>
-            </div>
+        <div class="right-wrapper">
+          <div class="search-wrapper">
+            <input
+              type="text"
+              [(ngModel)]="condition"
+              placeholder="名称"
+              (keyup.enter)="search()"
+            />
+          </div>
+          <div class="hw-normal-btn-group">
+            <button class="hw-blue-btn" (click)="search()">
+              <i class="mdi mdi-magnify"></i>
+              查询
+            </button>
           </div>
         </div>
-        <div
-          class="hw-normal-btn-group"
-          style="margin-bottom: 10px"
-          *ngIf="state == FormState.edit"
+      </div>
+      <div
+        class="hw-normal-btn-group"
+        style="margin-bottom: 10px"
+        *ngIf="state == FormState.edit"
+      >
+        <button class="hw-green-btn" (click)="addBtnClick()">
+          <i class="howell-icon-plus"></i>
+          添加
+        </button>
+        <button
+          class="hw-red-btn"
+          [disabled]="!enableDelBtn"
+          (click)="deleteBtnClick()"
         >
-          <button class="hw-green-btn" (click)="addBtnClick()">
-            <i class="howell-icon-plus"></i>
-            添加
-          </button>
-          <button
-            class="hw-red-btn"
-            [disabled]="!enableDelBtn"
-            (click)="deleteBtnClick()"
-          >
-            <i class="howell-icon-delete-bin"></i>
-            删除
-          </button>
-        </div>
+          <i class="howell-icon-delete-bin"></i>
+          删除
+        </button>
       </div>
     </div>
 
@@ -134,11 +128,11 @@
 
   <div class="page-two vertical-layout" *ngIf="showPageTwo">
     <div class="vertical-header">
-      <div class="hw-operation">
-        <div class="hw-simple-title" style="margin-bottom: 10px">
-          可添加摄像机列表
-        </div>
-        <div class="operate-bar">
+      <div class="hw-simple-title" style="margin-bottom: 10px">
+        可添加摄像机列表
+      </div>
+      <div class="operate-bar">
+        <div class="right-wrapper">
           <div class="search-wrapper">
             <input
               type="text"
@@ -155,6 +149,9 @@
           </div>
         </div>
       </div>
+      <!-- <div class="hw-operation">
+        
+      </div> -->
     </div>
 
     <div class="vertical-main">
