@@ -13,7 +13,7 @@ import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Camera } from 'src/app/network/model/camera.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 
 @Component({
   selector: 'howell-garbage-station-operate',
@@ -167,11 +167,11 @@ export class GarbageStationOperateComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
-  dialogMsgEvent(status: ConfirmDialogEnum) {
+  dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted)
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

@@ -6,7 +6,7 @@ import { CommonTableComponent } from 'src/app/common/components/common-table/com
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
 import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
@@ -198,11 +198,11 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
   }
 
 
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted)
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

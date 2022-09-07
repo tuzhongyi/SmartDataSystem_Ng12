@@ -17,7 +17,7 @@
   <ng-container *ngIf="showOperate">
     <toast-window>
       <coordinate-manage
-        (closeEvent)="closeForm($event)"
+        (closeEvent)="coordinateDialogMsg($event)"
         [title]="operateTitle"
       ></coordinate-manage>
     </toast-window>
@@ -49,7 +49,9 @@
             >
               拖拽
             </button>
-            <button class="hw-red-btn" *ngIf="point">删除</button>
+            <button class="hw-red-btn" *ngIf="point" (click)="unlinkClicked()">
+              删除
+            </button>
 
             <!-- <button class="hw-blue-btn">录入坐标</button> -->
           </div>

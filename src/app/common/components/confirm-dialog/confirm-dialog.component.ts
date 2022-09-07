@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
 
@@ -12,17 +12,17 @@ export class ConfirmDialogComponent implements OnInit {
 
   @Input() dialogModel: ConfirmDialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
-  @Output() dialogMsgEvent = new EventEmitter<ConfirmDialogEnum>();
+  @Output() dialogMsgEvent = new EventEmitter<DialogEnum>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
   confirmClick() {
-    this.dialogMsgEvent.emit(ConfirmDialogEnum.confirm)
+    this.dialogMsgEvent.emit(DialogEnum.confirm)
   }
   cancelClick() {
-    this.dialogMsgEvent.emit(ConfirmDialogEnum.cancel)
+    this.dialogMsgEvent.emit(DialogEnum.cancel)
 
   }
 

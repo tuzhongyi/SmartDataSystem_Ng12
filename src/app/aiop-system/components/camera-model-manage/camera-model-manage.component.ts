@@ -9,7 +9,7 @@ import { AICameraModelManageEvent, AICameraModelManageModel, AICameraModelOperat
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -119,12 +119,12 @@ export class CameraModelManageComponent implements OnInit {
       this._addAIModelToCamera();
     }
   }
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteAIModelFromCamera()
 
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

@@ -62,9 +62,9 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.IconClass = DivisionNodeIconType.get(UserResourceType.Station) ?? '';
     node.RawData = item;
     if (item.GisPoint) {
-      node.ButtonIconClasses = [IconTypeEnum.unlink, IconTypeEnum.earth]
+      node.ButtonIconClasses = [IconTypeEnum.unlink];
     } else {
-      node.ButtonIconClasses = [IconTypeEnum.link, IconTypeEnum.earth]
+      node.ButtonIconClasses = [IconTypeEnum.link];
     }
 
 

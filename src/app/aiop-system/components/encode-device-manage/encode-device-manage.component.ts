@@ -11,7 +11,7 @@ import { EncodeDeviceManageConf } from './encode-device-manage.config'
 import { PageEvent } from '@angular/material/paginator';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { FormBuilder } from '@angular/forms';
@@ -172,11 +172,11 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
 
 
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted)
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

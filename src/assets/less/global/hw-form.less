@@ -13,21 +13,18 @@
 
     display: flex;
     align-items: flex-start;
-    justify-content: center;
     flex-grow: 1;
-    // flex-direction: column;
-    // flex-basis: 49%;
+    flex-basis: 100%;
+    flex-wrap: wrap;
     > .title {
       margin-right: 10px;
-      flex-basis: 20%;
+      flex-basis: 15%;
       text-align: right;
     }
     > .content {
-      flex-grow: 1;
+      // flex-grow: 1;
+      flex-basis: 70%;
     }
-  }
-  &.vertical .hw-form-group {
-    flex-basis: 60%;
   }
 }
 

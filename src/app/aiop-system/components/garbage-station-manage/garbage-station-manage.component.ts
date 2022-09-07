@@ -23,7 +23,7 @@ import { CommonTableComponent } from 'src/app/common/components/common-table/com
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { PageEvent } from '@angular/material/paginator';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 
 @Component({
   selector: 'howell-garbage-station-manage',
@@ -172,11 +172,11 @@ export class GarbageStationManageComponent implements OnInit {
     }
   }
 
-  dialogMsgEvent(status: ConfirmDialogEnum) {
+  dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted)
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

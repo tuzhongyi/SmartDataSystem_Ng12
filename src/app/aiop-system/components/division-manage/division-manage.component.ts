@@ -11,7 +11,7 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { Language } from 'src/app/common/tools/language';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -153,11 +153,11 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     console.log('delete')
 
   }
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showDialog = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteNode()
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

@@ -9,13 +9,14 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ConfirmDialogComponent } from 'src/app/common/components/confirm-dialog/confirm-dialog.component';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
-import { Coordinate } from 'src/app/common/components/coordinate-manage/coordinate-manage.component';
-import { CoordinateTransform } from 'src/app/common/tools/CoordinateTransform';
+import { CoordinateTransform } from 'src/app/common/tools/coordinateTransform';
 import { GisPoint } from 'src/app/network/model/gis-point.model';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { DeployMapBusiness } from './deploy-map.business';
+import { IDialogMessage } from 'src/app/common/interfaces/dialog-message.interface';
+import { ICoordinate } from 'src/app/common/interfaces/coordinate.interface';
 
 @Component({
   selector: 'howell-deploy-map',
@@ -29,6 +30,7 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
 
   mouseLon = 0;
   mouseLat = 0;
+
   isDragging = false;
   locationDialog = false;
   unbindDialog = false;
@@ -38,7 +40,8 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
 
 
   locationModel = new ConfirmDialogModel("提示", "是否保存当前位置");
-  unbindModel = new ConfirmDialogModel("提示", "是否解除绑定");
+  unbindModel = new ConfirmDialogModel("提示", "是否解除绑定该点位");
+  bindModel = new ConfirmDialogModel("提示", "是否绑定该点位");
 
   // iframe 地址
   srcUrl: SafeResourceUrl = "";
@@ -80,15 +83,42 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     }
     this.client.Events.OnElementsClicked = (objs) => {
       if (!objs || objs.length < 0) return;
-      console.log("点击: ", objs)
+      // console.log("点击: ", objs)
       this.point = objs[0] as unknown as CesiumDataController.Point;
       this.client.Viewer.MoveTo(this.point!.position)
     }
+    this.client.Events.OnMouseDoubleClick = (position) => {
+      console.log('双击: ', position)
+
+      // this._createPoint(data.lon, data.lat, rawData);
+
+
+
+      if (this.currentNode) {
+        let rawData = this.currentNode.RawData;
+        if (rawData instanceof GarbageStation) {
+          if (rawData.GisPoint) return;
+          this._createPoint(position, rawData);
+
+          // 更新垃圾厢房点位信息
+          this._updateGarbageStation(position.lon, position.lat);
+
+          // 更新树节点绑定图标
+          this._toggleLink();
+
+        }
+      }
+
+    }
   }
   selectTreeNode(node: CommonFlatNode<DivisionTreeSource>[]) {
+    // console.log("selectTreeNode")
+    this.point = null;
+    this.position = null;
     if (!this.mapLoaded) return;
     if (node.length) {
       this.currentNode = node[0];
+      console.log(this.currentNode);
       let rawData = this.currentNode.RawData;
 
       if (rawData instanceof Division) {
@@ -98,8 +128,15 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
       } else if (rawData instanceof GarbageStation) {
         if (rawData.DivisionId) {
           this.client.Village.Select(rawData.DivisionId)
-          this.point = this.client.DataController.Village.Point.Get(rawData.DivisionId, rawData.Id);
-          this.client.Viewer.MoveTo(this.point.position)
+
+          try {
+            this.point = this.client.DataController.Village.Point.Get(rawData.DivisionId, rawData.Id);
+            this.client.Viewer.MoveTo(this.point.position)
+          } catch (e) {
+            let village = this.client.DataController.Village.Get(rawData.DivisionId);
+            this.client.Viewer.MoveTo(village.center)
+            this._toastrService.error('还未部署该点位')
+          }
         }
       }
     }
@@ -114,11 +151,37 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     }
     this.client.Point.Draggable(this.isDragging)
   }
-  locationDialogMsg(status: ConfirmDialogEnum) {
+
+  // 绑定 - 解绑
+  buttonIconClick(node: CommonFlatNode) {
+    console.log('buttonIconClick')
+    if (node.CurrentButtonIcon != void 0) {
+      switch (node.ButtonIconClasses[node.CurrentButtonIcon]) {
+        case IconTypeEnum.link:
+          this.operateTitle = node.Name;
+          this.linkClicked();
+          break;
+        case IconTypeEnum.unlink:
+          this.unlinkClicked();
+          break;
+      }
+    }
+  }
+
+  linkClicked() {
+    this.showOperate = true;
+  }
+  unlinkClicked() {
+    this.unbindDialog = true;
+  }
+
+
+  // 拖拽点位
+  locationDialogMsg(status: DialogEnum) {
     this.locationDialog = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this.locationYesClick();
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
       this.locationCancelClick();
     }
   }
@@ -130,12 +193,8 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
       try {
         this.client.DataController.Village.Point.Update(this.point.parentId, this.point.id, this.point)
 
-        let gisPoint = new GisPoint();
-        gisPoint.Longitude = this.position.lon;
-        gisPoint.Latitude = this.position.lat;
-        gisPoint.GisType = GisType.GCJ02;
 
-        let res = await this._updateGarbageStation(gisPoint);
+        let res = await this._updateGarbageStation(this.position.lon, this.position.lat);
         if (res) {
           this._toastrService.success('地图数据修改成功')
         }
@@ -152,85 +211,152 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     }
   }
 
-  unbindDialogMsg(status: ConfirmDialogEnum) {
-
-    if (status == ConfirmDialogEnum.confirm) {
-
-    }
-    else if (status == ConfirmDialogEnum.cancel) {
-
+  // 解绑对话框
+  unbindDialogMsg(status: DialogEnum) {
+    if (status == DialogEnum.confirm) {
+      this.unbindYesClick();
+    } else if (status == DialogEnum.cancel) {
+      // do nothing
     }
     this.unbindDialog = false;
   }
+  async unbindYesClick() {
+    if (this.currentNode) {
+      let rawData = this.currentNode.RawData;
+      if (rawData instanceof GarbageStation && rawData.DivisionId) {
 
+        // 移除地图点位
+        this._removePoint(rawData);
 
-  buttonIconClick(node: CommonFlatNode) {
-    if (node.CurrentButtonIcon != void 0) {
-      switch (node.ButtonIconClasses[node.CurrentButtonIcon]) {
-        case IconTypeEnum.link:
-          this.operateTitle = node.Name;
-          this.linkClicked();
-          break;
-        case IconTypeEnum.unlink:
-          break;
+        // 更新垃圾厢房点位信息
+        this._updateGarbageStation();
+
+        // 更新树节点绑定图标
+        this._toggleLink();
       }
     }
   }
-  closeForm(data: Coordinate | null) {
-    if (data && this.currentNode) {
-      let rawData = this.currentNode.RawData;
-      if (rawData instanceof GarbageStation) {
-        let lon = data.lon;
-        let lat = data.lat;
 
-        let point = new CesiumDataController.Point();
-        point.id = rawData.Id;
-        point.name = rawData.Name;
-        point.parentId = rawData.DivisionId ?? "";
-        point.villageId = point.parentId;
-        point.type = CesiumDataController.ElementType.Camera;
+  // 绑定点位
+  async coordinateDialogMsg(msg: IDialogMessage<ICoordinate | null>) {
+    if (msg.type == DialogEnum.confirm) {
+      let data = msg.data;
+      if (data && this.currentNode) {
+        let rawData = this.currentNode.RawData;
+        if (rawData instanceof GarbageStation) {
 
 
-        let gcj02 = CoordinateTransform.bd09togcj02(lon, lat);
-        point.position = new CesiumDataController.Position(
-          gcj02[0],
-          gcj02[1],
-          18
-        )
-        try {
-          this.client.DataController.Village.Point.Create(point.villageId, point.id, point);
-          this.client.Point.Create(point);
-        } catch (e) {
-          this._toastrService.error('点位录入坐标失败')
+          let gcj02 = CoordinateTransform.bd09togcj02(data.lon, data.lat);
+          let position = new CesiumDataController.Position(
+            gcj02[0],
+            gcj02[1],
+            18
+          )
+
+          // 创建地图点位
+          this._createPoint(position, rawData);
+
+
+          // 更新垃圾厢房点位信息
+          this._updateGarbageStation(position.lon, position.lat);
+
+          // 更新树节点绑定图标
+          this._toggleLink();
+
         }
-
-
-
       }
-
+    } else if (msg.type == DialogEnum.cancel) {
+      // do nothing
     }
     this.showOperate = false;
   }
-  private async _updateGarbageStation(gisPoint: GisPoint) {
+
+
+
+  // 给垃圾厢房创建对应的点位
+  private _createPoint(position: CesiumDataController.Position, garbageStation: GarbageStation) {
+    let point = new CesiumDataController.Point();
+    point.id = garbageStation.Id;
+    point.name = garbageStation.Name;
+    point.parentId = garbageStation.DivisionId ?? "";
+    point.villageId = point.parentId;
+    point.type = CesiumDataController.ElementType.Camera;
+    point.position = position;
+    point.position.height = 18;
+    try {
+      this.client.DataController.Village.Point.Create(point.villageId, point.id, point);
+      this.client.Point.Create(point);
+      this.client.Viewer.MoveTo(point.position);
+      this.point = point;
+      this.position = point.position;
+      this._toastrService.success("点位数据创建成功")
+    } catch (e) {
+      this._toastrService.error('点位数据创建失败')
+    }
+  }
+  private _removePoint(garbageStation: GarbageStation) {
+    if (garbageStation.Id && garbageStation.DivisionId) {
+      try {
+        this.client.Point.Remove(garbageStation.Id);
+        this.client.DataController.Village.Point.Remove(garbageStation.DivisionId, garbageStation.Id)
+
+        this.point = null;
+        this.position = null;
+
+        this._toastrService.success('点位数据删除成功');
+      } catch (e) {
+        this._toastrService.error('点位数据删除失败');
+      }
+    }
+  }
+  private async _updateGarbageStation(lon?: number, lat?: number) {
     if (this.currentNode) {
       let rawData = this.currentNode.RawData;
       if (rawData instanceof GarbageStation) {
-        rawData.GisPoint = gisPoint;
+        if (lon && lat) {
+
+          let gisPoint = new GisPoint();
+          gisPoint.Longitude = lon;
+          gisPoint.Latitude = lat;
+          gisPoint.GisType = GisType.GCJ02;
+          rawData.GisPoint = gisPoint;
+        } else {
+          rawData.GisPoint = void 0;
+        }
+
         let res = await this._business.updateGarbageStation(rawData)
-        console.log('点位更新 ', res)
+
+        // this._toastrService.success('垃圾厢房点位信息更新');
 
         return res;
       }
     }
     return null;
   }
-  private linkClicked() {
-    this.showOperate = true;
-  }
-  private unlinkClicked() {
+
+  private _toggleLink() {
+    if (!this.currentNode) return;
+    // if (this.currentNode.CurrentButtonIcon != void 0) {
+    //   let iconClass = this.currentNode.ButtonIconClasses[this.currentNode.CurrentButtonIcon]
+
+    //   if (iconClass == IconTypeEnum.link) {
+    //     this.currentNode.ButtonIconClasses[this.currentNode.CurrentButtonIcon] = IconTypeEnum.unlink
+    //   } else if (iconClass == IconTypeEnum.unlink) {
+    //     this.currentNode.ButtonIconClasses[this.currentNode.CurrentButtonIcon] = IconTypeEnum.link
+    //   }
+    // }
+
+    // 通过代码自动创建点位时，更改状态，
+    if (this.currentNode.ButtonIconClasses.includes(IconTypeEnum.link)) {
+      let index = this.currentNode.ButtonIconClasses.indexOf(IconTypeEnum.link);
+      this.currentNode.ButtonIconClasses[index] = IconTypeEnum.unlink;
+    } else if (this.currentNode.ButtonIconClasses.includes(IconTypeEnum.unlink)) {
+      let index = this.currentNode.ButtonIconClasses.indexOf(IconTypeEnum.unlink);
+      this.currentNode.ButtonIconClasses[index] = IconTypeEnum.link;
+
+    }
 
   }
-
   private _getSrc() {
     const host = this._location.hostname;
     const port = this._location.port;
@@ -239,5 +365,3 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
   }
 
 }
-
-// 121.481032  31.277591

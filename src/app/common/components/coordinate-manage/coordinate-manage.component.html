@@ -2,13 +2,19 @@
   <div class="hw-simple-title" style="margin-bottom: 20px; text-align: center">
     {{ title }}
   </div>
-  <form class="hw-form" [formGroup]="myForm">
+  <form class="hw-form">
     <div class="hw-form-group">
       <div class="title">
         <span class="hw-form-label"> 经度 </span>
       </div>
       <div class="content">
-        <input type="text" class="form-control" formControlName="lon" />
+        <input
+          type="number"
+          class="form-control"
+          name="lon"
+          [(ngModel)]="lon"
+          (keydown)="down($event)"
+        />
       </div>
     </div>
     <div class="hw-form-group">
@@ -16,7 +22,13 @@
         <span class="hw-form-label"> 纬度 </span>
       </div>
       <div class="content">
-        <input type="text" class="form-control" formControlName="lat" />
+        <input
+          type="number"
+          class="form-control"
+          name="lat"
+          [(ngModel)]="lat"
+          (keydown)="down($event)"
+        />
       </div>
     </div>
   </form>
@@ -30,5 +42,3 @@
     </button>
   </div>
 </div>
-
-{{ myForm.value | json }}

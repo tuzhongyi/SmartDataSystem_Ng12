@@ -5,7 +5,7 @@ import { RegionTreeComponent } from 'src/app/common/components/region-tree/regio
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { RegionTreeConverter, RegionTreeSource } from 'src/app/converter/region-tree.converter';
 import { TreeConverter } from 'src/app/converter/tree.converter';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -94,11 +94,11 @@ export class RegionManageComponent implements OnInit {
     console.log('delete')
   }
 
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showDialog = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteNode()
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

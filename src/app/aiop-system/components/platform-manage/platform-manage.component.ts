@@ -12,7 +12,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ToastrService } from 'ngx-toastr';
-import { ConfirmDialogEnum } from 'src/app/enum/confim-dialog.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 
 
@@ -154,11 +154,11 @@ export class PlatformManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
   }
 
-  async dialogMsgEvent(status: ConfirmDialogEnum) {
+  async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
-    if (status == ConfirmDialogEnum.confirm) {
+    if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted)
-    } else if (status == ConfirmDialogEnum.cancel) {
+    } else if (status == DialogEnum.cancel) {
 
     }
   }

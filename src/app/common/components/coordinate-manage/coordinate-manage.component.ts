@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
+import { ICoordinate } from '../../interfaces/coordinate.interface';
+import { IDialogMessage } from '../../interfaces/dialog-message.interface';
+import { ValidLatitude, ValidLogitude } from '../../tools/tool';
 
 @Component({
   selector: 'coordinate-manage',
@@ -8,32 +13,68 @@ import { FormControl, FormGroup } from '@angular/forms';
 })
 export class CoordinateManageComponent implements OnInit {
 
-  myForm = new FormGroup({
-    lon: new FormControl(''),
-    lat: new FormControl('')
-  })
+  lon = "";
+  lat = ""
 
   @Input() title = "";
 
-  @Output() closeEvent = new EventEmitter<Coordinate | null>();
+  @Output() closeEvent = new EventEmitter<IDialogMessage<ICoordinate | null>>();
 
-  constructor() { }
+  constructor(private _toastrService: ToastrService) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    this.closeEvent.emit({
-      lon: 121.481032,
-      lat: 31.277591
-    });
+    // this.closeEvent.emit(
+    //   {
+    //     type: DialogEnum.confirm,
+    //     data: {
+    //       lon: 121.482972,
+    //       lat: 31.278655
+    //     }
+    //   }
+    // );
+    if (this._checkForm()) {
+      console.log('输入正确');
+
+      this.closeEvent.emit({
+        type: DialogEnum.confirm,
+        data: {
+          lon: +this.lon,
+          lat: +this.lat,
+        }
+      });
+    }
+
   }
   onReset() {
-    this.closeEvent.emit(null);
+    this.closeEvent.emit(
+      {
+        type: DialogEnum.cancel,
+        data: null
+      }
+    );
   }
-}
+  down(e: KeyboardEvent) {
 
-export interface Coordinate {
-  lon: number;
-  lat: number;
+    let key = e.key.toLocaleLowerCase();
+    console.log(key);
+    if (key === 'e') {
+      e.preventDefault();
+    }
+
+
+  }
+  private _checkForm() {
+    if (!ValidLogitude.test(this.lon)) {
+      this._toastrService.error('请输入正确的经度');
+      return false;
+    }
+    if (!ValidLatitude.test(this.lat)) {
+      this._toastrService.error('请输入正确的纬度');
+      return false;
+    }
+    return true;
+  }
 }
