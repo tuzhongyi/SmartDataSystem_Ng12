@@ -50,6 +50,7 @@ export class AccountOperationComponent implements OnInit {
   logoutHandler() {
     this._sessionStorageService.clear();
     this._localStorageService.clear();
+    this._store.clear();
     this._cookieService.deleteAll('/');
     this._router.navigateByUrl('/login');
   }

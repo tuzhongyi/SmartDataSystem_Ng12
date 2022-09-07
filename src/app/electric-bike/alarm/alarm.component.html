@@ -17,7 +17,7 @@
       </thead>
     </table>
   </div>
-  <div class="table-body-container">
+  <div class="table-body-container" *ngIf="datas.length > 0">
     <table>
       <colgroup>
         <col style="width: 30%" />
@@ -41,5 +41,8 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="check" (click)="onitemclick()" *ngIf="datas.length <= 0">
+    查看报警记录
   </div>
 </div>

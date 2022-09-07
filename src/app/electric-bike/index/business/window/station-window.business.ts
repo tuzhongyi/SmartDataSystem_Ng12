@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { MediaWindowBusiness } from './media-window.business';
@@ -14,6 +15,7 @@ export class StationWindowBusiness extends WindowViewModel {
     width: '90%',
     transform: 'translate(-50%, -45%)',
   };
+  state?: StationState;
 
   onimage(model: ImageControlModelArray) {
     this.media.single.camera = model.models;

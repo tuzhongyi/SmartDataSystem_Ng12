@@ -98,7 +98,7 @@ export class VideoModel {
       this.stream = stream;
     }
     if (!this.stream) {
-      this.stream = StreamType.sub;
+      this.stream = StreamType.main;
     }
     let url = `ws://${this.host}:${this.port}/ws/video/howellps/${this.mode}/${this.deviceId}/${this.slot}/${this.stream}/${this.mode}.mp4?user=${this.username}&password=${this.password}`;
     if (this.mode === PlayMode.vod && this.beginTime && this.endTime) {

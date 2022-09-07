@@ -4,6 +4,7 @@ import { MediaMultipleWindowBusiness } from './media-multiple-window.business';
 import { MediaSingleWindowBusiness } from './media-single-window.business';
 import { MediaWindowBusiness } from './media-window.business';
 import { StationWindowBusiness } from './station-window.business';
+import { VideoSingleWindowBusiness } from './video-single-window.business';
 
 export const ElectricBikeWindowBusinesses = [
   MediaWindowBusiness,
@@ -12,4 +13,5 @@ export const ElectricBikeWindowBusinesses = [
   DeviceWindowBusiness,
   ElectricBikeIndexEventRecordWindowBusiness,
   StationWindowBusiness,
+  VideoSingleWindowBusiness,
 ];

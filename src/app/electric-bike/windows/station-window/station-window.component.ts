@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { Language } from 'src/app/common/tools/language';
@@ -13,6 +13,8 @@ import { SearchOptions } from 'src/app/view-model/search-options.model';
   styleUrls: ['./station-window.component.less'],
 })
 export class StationWindowComponent extends WindowComponent implements OnInit {
+  @Input()
+  state?: StationState;
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Output()

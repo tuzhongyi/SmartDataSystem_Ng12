@@ -111,6 +111,7 @@ export class CommitteesHistroyTableComponent
     >
   ) {
     let array = new ImageControlModelArray(item.images, 0, false);
+    array.resourceId = item.ResourceId;
     this.OnPictureClicked.emit(array);
   }
   videoClick(
@@ -120,6 +121,7 @@ export class CommitteesHistroyTableComponent
     >
   ) {
     let array = new ImageControlModelArray(item.images, 0, true);
+    array.resourceId = item.ResourceId;
     this.OnVideoClicked.emit(array);
   }
 }

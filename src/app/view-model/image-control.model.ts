@@ -50,6 +50,7 @@ export class ImageControlModelArray {
     this.autoplay = autoplay;
   }
   models: ImageControlModel[];
+  resourceId?: string;
   autoplay: boolean;
   index: number;
 }

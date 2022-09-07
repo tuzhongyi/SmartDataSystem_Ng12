@@ -28,6 +28,8 @@ export class EventRecordSmokeWindowComponent
   constructor(private business: EventRecordSmokeWindowBusiness) {
     super();
   }
+  @Output()
+  play: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
   load: EventEmitter<EventRecordFilter> = new EventEmitter();
 
@@ -52,7 +54,7 @@ export class EventRecordSmokeWindowComponent
   }
 
   ngOnInit(): void {
-    let day = DurationParams.before(new Date());
+    let day = DurationParams.before(new Date(), 30);
     this.filter.BeginTime = day.BeginTime;
     this.filter.EndTime = day.EndTime;
 
@@ -68,6 +70,9 @@ export class EventRecordSmokeWindowComponent
   }
   onimage(images: ImageControlModelArray) {
     this.image.emit(images);
+  }
+  onplay(images: ImageControlModelArray) {
+    this.play.emit(images);
   }
   onsearch() {
     if (this.division) {

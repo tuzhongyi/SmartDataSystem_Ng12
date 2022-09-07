@@ -21,7 +21,7 @@ export class AMapBusiness {
     private divisionService: DivisionRequestService
   ) {
     this.storeService.interval.subscribe((x) => {
-      this.reload();
+      this.reload(false);
     });
     this.storeService.statusChange.subscribe((x) => {
       this.divisionSelect(this.storeService.divisionId);
@@ -199,9 +199,12 @@ export class AMapBusiness {
     }
   }
 
-  divisionSelect(divisionId: string) {
+  divisionSelect(divisionId: string, isBasic = false) {
     if (this.mapClient) {
-      this.mapClient.Village.Select(divisionId, false);
+      this.mapClient.Village.Select(
+        divisionId,
+        this.storeService.defaultDivisionId === divisionId
+      );
       this.mapClient.Viewer.Focus(divisionId);
     }
   }
@@ -384,9 +387,12 @@ export class AMapBusiness {
 
   async setRippleLabel(stations: GarbageStation[]) {
     if (!this.mapController || !this.mapClient) return;
+
     let opts = new Array();
+    let ids = new Array();
     for (let i = 0; i < stations.length; i++) {
       const station = stations[i];
+      ids.push(station.Id);
       let flags = new Flags(station.StationState);
       if (!flags.contains(StationState.Smoke)) continue;
 
@@ -406,6 +412,9 @@ export class AMapBusiness {
       opt.position = point.position;
       opts.push(opt);
     }
+
+    this.mapClient.Label.Remove(ids);
+
     this.mapClient.Label.Set(opts, CesiumDataController.ImageResource.ripple);
 
     if (opts.length > 0) {

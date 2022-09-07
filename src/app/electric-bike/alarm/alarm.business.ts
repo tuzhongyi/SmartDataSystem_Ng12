@@ -31,7 +31,7 @@ export class AlarmBusiness
     if (!date) {
       date = new Date();
     }
-    let duration = DurationParams.before(date);
+    let duration = DurationParams.before(date, 365);
     let data = await this.getData(divisionId, duration);
     data = data.sort((a, b) => {
       return b.EventTime.getTime() - a.EventTime.getTime();

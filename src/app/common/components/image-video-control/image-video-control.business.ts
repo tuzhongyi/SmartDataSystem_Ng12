@@ -21,7 +21,7 @@ export class ImageVideoControlBusiness
     private srService: SRServerRequestService,
     private local: LocalStorageService,
     private userService: UserRequestService
-  ) { }
+  ) {}
   Converter: IConverter<VideoUrl, VideoModel> = new VideoControlConverter();
   subscription?: ISubscription | undefined;
   async load(
@@ -31,7 +31,7 @@ export class ImageVideoControlBusiness
   ): Promise<VideoModel> {
     let stream = await this.loadSteam();
     if (!stream) {
-      stream = mode == PlayMode.live ? StreamType.sub : StreamType.main;
+      stream = StreamType.main;
     }
     let url = await this.getData(cameraId, mode, stream, interval);
     return this.Converter.Convert(url);

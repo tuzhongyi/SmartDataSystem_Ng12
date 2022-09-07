@@ -52,6 +52,9 @@ export class AlarmComponent
   onpicture(event: Event, item: ElectricBikeAlarmModel<SmokeEventRecord>) {
     if (item.images) {
       let img = new ImageControlModelArray(item.images, 0);
+      if (item.data) {
+        img.resourceId = item.data.ResourceId;
+      }
       this.picture.emit(img);
     }
     event.cancelBubble = true;
@@ -59,12 +62,19 @@ export class AlarmComponent
   onplayback(event: Event, item: ElectricBikeAlarmModel) {
     if (item.images) {
       let img = new ImageControlModelArray(item.images, 0);
+      if (item.data) {
+        img.resourceId = item.data.ResourceId;
+      }
       this.playback.emit(img);
     }
     event.cancelBubble = true;
   }
 
-  onitemclick(item: ElectricBikeAlarmModel) {
-    this.itemClick.emit(item.data);
+  onitemclick(item?: ElectricBikeAlarmModel) {
+    if (item) {
+      this.itemClick.emit(item.data);
+    } else {
+      this.itemClick.emit();
+    }
   }
 }

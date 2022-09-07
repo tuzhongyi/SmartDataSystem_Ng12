@@ -13,6 +13,8 @@ import { PatrolControlBusiness } from './business/patrol-control.business';
 import { VideoControlWindowBusiness } from './business/video-control-window.business';
 import { ElectricBikeWindowBusinesses } from './business/window/window.moudle';
 import { ElectricBikeIndexService } from './index.component.service';
+import { Title } from '@angular/platform-browser';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Component({
   selector: 'howell-electric-bike-index',
@@ -34,6 +36,7 @@ import { ElectricBikeIndexService } from './index.component.service';
 })
 export class ElectricBikeIndexComponent implements OnInit {
   constructor(
+    titleService: Title,
     public business: ElectricBikeIndexBusiness,
     public navication: ElectricBikeIndexNavicationBusiness,
     private service: ElectricBikeIndexService,
@@ -46,7 +49,9 @@ export class ElectricBikeIndexComponent implements OnInit {
     private mqtt: MQTTEventService,
     public device: ElectricBikeIndexDeviceStatusBusiness,
     public statistic: ElectricBikeIndexDeviceStatisticBusiness
-  ) {}
+  ) {
+    titleService.setTitle('智能车棚管理平台');
+  }
 
   converter = {
     navication: new CommitteesNavicationConverter(),
@@ -57,7 +62,7 @@ export class ElectricBikeIndexComponent implements OnInit {
   }
   async initNavication() {
     let root = await this.service.getDivision();
-    this.mqtt.smokeEventListener();
+    this.mqtt.listenerStationEvent(undefined, EventType.Smoke);
     this.navication.root = this.converter.navication.Convert(root);
     let children = await this.service.getChildren(root.Id);
     this.navication.children = children.map((x) => {

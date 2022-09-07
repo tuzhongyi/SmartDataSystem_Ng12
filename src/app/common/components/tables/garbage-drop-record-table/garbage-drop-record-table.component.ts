@@ -105,11 +105,13 @@ export class GarbageDropRecordTableComponent
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageDropRecordViewModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
+    array.resourceId = item.ResourceId;
     this.image.emit(array);
   }
 
   videoClick(item: GarbageDropRecordViewModel) {
     let array = new ImageControlModelArray(item.images, 0, true);
+    array.resourceId = item.ResourceId;
     this.image.emit(array);
   }
 }

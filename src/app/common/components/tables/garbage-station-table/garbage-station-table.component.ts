@@ -10,6 +10,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -49,6 +50,8 @@ export class GarbageStationTableComponent
   stationId?: string;
   @Input()
   divisionId?: string;
+  @Input()
+  state?: StationState;
 
   constructor(business: GarbageStationTableBusiness) {
     super();
@@ -63,18 +66,19 @@ export class GarbageStationTableComponent
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((opts) => {
         this.searchOpts = opts;
-        this.loadData(1, this.pageSize, opts);
+        this.loadData(1, this.pageSize, this.state, opts);
       });
     }
   }
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize);
+    this.loadData(1, this.pageSize, this.state);
   }
 
   async loadData(
     index: number,
     size: number,
+    state?: StationState,
     opts?: SearchOptions,
     show = true
   ) {
@@ -85,6 +89,7 @@ export class GarbageStationTableComponent
     let promise = this.business.load(
       params,
       opts,
+      state,
       this.stationId,
       this.divisionId
     );
@@ -100,7 +105,12 @@ export class GarbageStationTableComponent
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOpts);
+    this.loadData(
+      page.pageIndex + 1,
+      this.pageSize,
+      this.state,
+      this.searchOpts
+    );
   }
 
   imageClick(item: GarbageStationTableModel, img: ImageControlModel) {

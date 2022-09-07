@@ -61,11 +61,7 @@
               class="status"
               [class]="item.stateClassName"
             >
-              {{
-                item.GarbageStation
-                  ? Language.StationState(item.GarbageStation.StationState)
-                  : ""
-              }}
+              {{ item.stateName }}
             </td>
             <td class="operation">
               <div (click)="onPositionClicked(item)">

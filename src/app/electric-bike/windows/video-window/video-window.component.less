@@ -1,0 +1,24 @@
+.video-window {
+  color: white;
+  height: 100%;
+
+  &-header {
+    font-size: 20px;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 26px;
+
+    .control {
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  &-content {
+    height: calc(100% - 30px);
+  }
+}

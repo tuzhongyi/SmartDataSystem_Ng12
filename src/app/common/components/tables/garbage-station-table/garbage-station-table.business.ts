@@ -19,6 +19,7 @@ import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { Language } from 'src/app/common/tools/language';
 
 @Injectable()
 export class GarbageStationTableBusiness
@@ -39,13 +40,14 @@ export class GarbageStationTableBusiness
   async load(
     page: PagedParams,
     opts?: SearchOptions,
+    state?: StationState,
     stationId?: string,
     divisionId?: string
   ): Promise<PagedList<GarbageStationTableModel>> {
     if (!divisionId) {
       divisionId = this.storeService.divisionId;
     }
-    let data = await this.getData(divisionId, page, opts, stationId);
+    let data = await this.getData(divisionId, page, opts, state, stationId);
     let model = await this.Converter.Convert(data, (id: string) => {
       return this.divisionService.cache.get(id);
     });
@@ -55,6 +57,7 @@ export class GarbageStationTableBusiness
     divisionId: string,
     page: PagedParams,
     opts?: SearchOptions,
+    state?: StationState,
     stationId?: string
   ): Promise<PagedList<GarbageStation>> {
     let params = new GetGarbageStationsParams();
@@ -62,10 +65,23 @@ export class GarbageStationTableBusiness
     if (opts) {
       (params as any)[opts.propertyName] = opts.text;
     }
+
+    if (state != undefined) {
+      // console.log(state);
+      // let str = state.toString(2);
+      // console.log(str);
+      if (state === StationState.Normal) {
+        params.StationState = StationState.Normal;
+      } else {
+        params.StationState = Math.pow(2, state - 1);
+      }
+    }
+
     params.DivisionId = divisionId;
     if (stationId) {
       params.Ids = [stationId];
     }
+
     return this.stationService.list(params);
   }
 }
@@ -124,6 +140,7 @@ export class GarbageStationTableConverter
       if (flags.contains(StationState.Error)) {
         model.stateClassName += ' error';
       }
+      model.stateName = Language.StationStateFlags(flags);
     }
     return model;
   }

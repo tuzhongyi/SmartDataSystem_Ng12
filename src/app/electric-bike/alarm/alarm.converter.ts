@@ -37,10 +37,15 @@ export class AlarmItemConverter
     model.type = Language.EventType(source.EventType);
     model.date = formatDate(source.EventTime, 'MM-dd HH:mm:ss', 'en');
     if (source.Data.CameraImageUrls) {
+      source.Data.CameraImageUrls = source.Data.CameraImageUrls.sort((a, b) => {
+        if (a.CameraName && b.CameraName)
+          return a.CameraName.localeCompare(b.CameraName);
+        return a.CameraId.localeCompare(b.CameraId);
+      });
       model.images = source.Data.CameraImageUrls.map((x) => {
         let url = new CameraImageUrlModel(x, source.Data.StationId);
 
-        return this.img.Convert(url);
+        return this.img.Convert(url, undefined, source.EventTime);
       });
     }
 

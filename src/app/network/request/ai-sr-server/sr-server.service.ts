@@ -5,7 +5,10 @@ import { SRServer } from '../../model/sr-server';
 import { VideoUrl } from '../../model/url.model';
 import { SRServersURL } from '../../url/aiop/sr-servers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
-import { BaseRequestService, BaseTypeRequestService } from '../base-request.service';
+import {
+  BaseRequestService,
+  BaseTypeRequestService,
+} from '../base-request.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { DurationParams } from '../IParams.interface';
 import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
@@ -19,7 +22,6 @@ export class SRServerRequestService {
   constructor(_http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(SRServer);
-
   }
   private basic: BaseRequestService;
 
@@ -28,7 +30,7 @@ export class SRServerRequestService {
 
   preview(
     args: GetPreviewUrlParams | string,
-    stream: StreamType = StreamType.sub
+    stream: StreamType = StreamType.main
   ) {
     let data: any;
     if (typeof args === 'string') {
@@ -73,7 +75,6 @@ export class SRServerRequestService {
     return this.basic.post(url, VideoUrl, data);
   }
 
-
   list() {
     return this.type.getArray(SRServersURL.list());
   }
@@ -84,13 +85,12 @@ export class SRServerRequestService {
     return this.type.get(SRServersURL.item(id));
   }
   update(item: SRServer) {
-    return this.type.put(SRServersURL.item(item.Id), item)
+    return this.type.put(SRServersURL.item(item.Id), item);
   }
   delete(id: string) {
-    return this.type.delete(SRServersURL.item(id))
+    return this.type.delete(SRServersURL.item(id));
   }
   sync(id: string) {
-    return this.type.post(SRServersURL.sync(id))
+    return this.type.post(SRServersURL.sync(id));
   }
-
 }

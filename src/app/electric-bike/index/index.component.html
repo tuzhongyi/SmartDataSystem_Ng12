@@ -56,8 +56,6 @@
       <howell-device-statistic
         [load]="map.load"
         (statusClick)="statistic.onstatus($event)"
-        (stationClick)="statistic.onstation()"
-        (recordClick)="statistic.onrecord()"
       >
       </howell-device-statistic>
       <howell-index-card>
@@ -96,6 +94,7 @@
   [Model]="window.record"
   [style]="window.record.style"
   (image)="window.record.onimage($event)"
+  (play)="window.record.onplay($event)"
 >
 </howell-event-record-smoke-window>
 
@@ -103,6 +102,7 @@
   *ngIf="window.station.show"
   [Model]="window.station"
   [style]="window.station.style"
+  [state]="window.station.state"
   (position)="map.onposition($event)"
   (image)="window.station.onimage($event)"
 >
@@ -139,3 +139,10 @@
   [style]="window.media.multiple.style"
   [statistic]="window.media.multiple.statistic"
 ></howell-media-multiple-window>
+<howell-video-window
+  *ngIf="window.video.show"
+  [Model]="window.video"
+  [style]="window.video.style"
+  [media]="window.video.media"
+>
+</howell-video-window>

@@ -85,7 +85,8 @@ export class DurationParams {
   }
 
   static before(date: Date, day: number = 7) {
-    let end = new Date(date.getTime());
+    let end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1);
+    end.setMilliseconds(-1);
     let params = new DurationParams();
     params.EndTime = end;
     let begin = new Date(date.getTime());

@@ -9,6 +9,8 @@ import { LocalStorageService } from './local-storage.service';
 })
 export class StoreService {
   statusChange = new EventEmitter();
+  interval = new EventEmitter();
+  refresh = new EventEmitter();
 
   password?: string;
 
@@ -42,6 +44,15 @@ export class StoreService {
     }
     return this._divisionType;
   }
+  private _defaultDivisionId: string = '';
+  get defaultDivisionId(): string {
+    if (!this._defaultDivisionId) {
+      if (this.local.user.Resources && this.local.user.Resources.length > 0) {
+        this._defaultDivisionId = this.local.user.Resources[0].Id;
+      }
+    }
+    return this._defaultDivisionId;
+  }
 
   statistic = {
     illegalDrop: 0,
@@ -58,7 +69,6 @@ export class StoreService {
     },
   };
 
-  interval = new EventEmitter();
   private intervalHandle?: NodeJS.Timer;
   runInterval(interval: number = 1000 * 60 * 1) {
     this.intervalHandle = setInterval(() => {
@@ -71,9 +81,21 @@ export class StoreService {
     }
   }
 
-  refresh = new EventEmitter();
-
   constructor(private local: LocalStorageService) {
     this.runInterval();
+  }
+
+  clear() {
+    this.stopInterval();
+    this._divisionId = '';
+    this._divisionType = DivisionType.None;
+    this.password = undefined;
+    this.interval.unsubscribe();
+    this.statusChange.unsubscribe();
+    this.refresh.unsubscribe();
+
+    this.interval = new EventEmitter();
+    this.statusChange = new EventEmitter();
+    this.refresh = new EventEmitter();
   }
 }

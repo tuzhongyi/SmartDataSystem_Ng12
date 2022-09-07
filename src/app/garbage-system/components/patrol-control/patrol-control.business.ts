@@ -23,6 +23,7 @@ import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-
 import { PatrolArrayControlConverter } from './patrol-control.converter';
 
 import { PatrolControlModel } from './patrol-control.model';
+import { classToPlain, plainToClass } from 'class-transformer';
 
 @Injectable()
 export class PatrolControlBusiness
@@ -64,19 +65,22 @@ export class PatrolControlBusiness
         return this.stationService.manualCapture(model.id).then((urls) => {
           try {
             if (model.media) {
-              model.media.forEach((media) => {
-                urls.forEach((url) => {
+              for (let i = 0; i < model.media.length; i++) {
+                let plain = classToPlain(model.media[0]);
+                model.media[i] = plainToClass(ImageVideoControlModel, plain);
+                for (let j = 0; j < urls.length; j++) {
+                  const url = urls[j];
                   if (
-                    url.CameraId == media.cameraId &&
+                    url.CameraId == model.media[i].cameraId &&
                     url.Result &&
-                    media.image &&
+                    model.media[i].image &&
                     url.Id
                   ) {
-                    media.fulled = false;
-                    media.image.src = Medium.jpg(url.Id);
+                    model.media[i].fulled = false;
+                    model.media[i]!.image!.src = Medium.jpg(url.Id);
                   }
-                });
-              });
+                }
+              }
             }
             return model.media;
           } finally {

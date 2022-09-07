@@ -25,12 +25,12 @@ import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-
 @Injectable()
 export class MediaVideoControlBussiness
   implements
-  IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+    IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
   constructor(
     private srService: SRServerRequestService,
     private stationService: GarbageStationRequestService
-  ) { }
+  ) {}
   manualCaptureEvent: EventEmitter<boolean> = new EventEmitter();
 
   Converter: IConverter<
@@ -56,7 +56,7 @@ export class MediaVideoControlBussiness
   async getVideoUrl(
     camera: Camera,
     mode: PlayMode,
-    streamType: StreamType = StreamType.sub,
+    streamType: StreamType = StreamType.main,
     interval?: DurationParams
   ): Promise<VideoUrl> {
     switch (mode) {
@@ -109,7 +109,7 @@ export class MediaVideoControlBussiness
 
 class MediaVideoControlArrayConverter
   implements
-  IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+    IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
 {
   converter = {
     item: new MediaVideoControlConverter(),

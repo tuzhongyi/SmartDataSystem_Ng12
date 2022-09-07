@@ -1,10 +1,11 @@
 import { Flags } from '../common/tools/flags';
 import { DivisionType } from './division-type.enum';
+import { OnlineStatus } from './online-status.enum';
 import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
-  constructor() { }
+  constructor() {}
 
   static ConvertUserResourceToDivision(type: UserResourceType) {
     switch (type) {
@@ -31,7 +32,6 @@ export class EnumHelper {
         return UserResourceType.City;
     }
   }
-
 
   static GetResourceChildTypeByDivisionType(type: DivisionType) {
     switch (type) {
@@ -80,6 +80,15 @@ export class EnumHelper {
       return 'orange-text';
     } else {
       return 'green-text';
+    }
+  }
+  static GetStationState(status: OnlineStatus) {
+    switch (status) {
+      case OnlineStatus.Online:
+        return StationState.Normal;
+      case OnlineStatus.Offline:
+      default:
+        return StationState.Error;
     }
   }
 }

@@ -44,6 +44,8 @@ export class EventRecordWindowComponent
   divisionId?: string;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output()
+  play: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Input()
   listType = ListType.table;
 
@@ -81,6 +83,9 @@ export class EventRecordWindowComponent
 
   onimage(model: ImageControlModelArray) {
     this.image.emit(model);
+  }
+  onplay(model: ImageControlModelArray) {
+    this.play.emit(model);
   }
 
   onTypeChange(type: ListType) {

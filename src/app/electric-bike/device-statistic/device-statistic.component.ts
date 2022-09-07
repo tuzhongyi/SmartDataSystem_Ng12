@@ -10,7 +10,7 @@ import {
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StoreService } from 'src/app/common/service/store.service';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DeviceStatisticBusiness } from './device-statistic.business';
 import { DeviceStatisticModel } from './device-statistic.model';
@@ -28,11 +28,7 @@ export class DeviceStatisticComponent
   business: IBusiness<IModel, DeviceStatisticModel>;
 
   @Output()
-  statusClick: EventEmitter<OnlineStatus | undefined> = new EventEmitter();
-  @Output()
-  stationClick: EventEmitter<void> = new EventEmitter();
-  @Output()
-  recordClick: EventEmitter<void> = new EventEmitter();
+  statusClick: EventEmitter<StationState | undefined> = new EventEmitter();
   @Input()
   load?: EventEmitter<void>;
 
@@ -49,7 +45,7 @@ export class DeviceStatisticComponent
     }
   }
 
-  OnlineStatus = OnlineStatus;
+  StationState = StationState;
 
   data: DeviceStatisticModel = new DeviceStatisticModel();
   ngOnInit(): void {
@@ -66,14 +62,7 @@ export class DeviceStatisticComponent
     this.data = await this.business.load();
   }
 
-  deviceStatusClicked(status?: OnlineStatus) {
+  onStatusClicked(status?: StationState) {
     this.statusClick.emit(status);
-  }
-
-  stationClicked() {
-    this.stationClick.emit();
-  }
-  recordClicked() {
-    this.recordClick.emit();
   }
 }

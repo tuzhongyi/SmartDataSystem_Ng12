@@ -1,6 +1,6 @@
 <div class="device-statistic">
   <div class="wrapper">
-    <div class="item" (click)="stationClicked()">
+    <div class="item" (click)="onStatusClicked()">
       <div class="icon">
         <div class="bg bg_blue"></div>
         <i class="howell-icon-ebikepark"></i>
@@ -10,17 +10,17 @@
         <span class="info-num">{{ data.all }}</span>
       </div>
     </div>
-    <div class="item" (click)="deviceStatusClicked()">
+    <div class="item" (click)="onStatusClicked(StationState.Normal)">
       <div class="icon">
         <div class="bg bg_green"></div>
         <i class="howell-icon-ebikepark"></i>
       </div>
       <div class="info">
-        <span class="info-des">设备正常</span>
+        <span class="info-des">正常车棚</span>
         <span class="info-num">{{ data.online }}</span>
       </div>
     </div>
-    <div class="item" (click)="recordClicked()">
+    <div class="item" (click)="onStatusClicked(StationState.Smoke)">
       <div class="icon">
         <div class="bg bg_yellow"></div>
         <i class="howell-icon-ebikepark"></i>
@@ -30,14 +30,14 @@
         <span class="info-num">{{ data.smoke }}</span>
       </div>
     </div>
-    <div class="item" (click)="deviceStatusClicked(OnlineStatus.Offline)">
+    <div class="item" (click)="onStatusClicked(StationState.Error)">
       <div class="icon">
         <div class="bg bg_gray"></div>
         <i class="howell-icon-ebikepark"></i>
       </div>
       <div class="info">
         <div class="bg bg_gray"></div>
-        <span class="info-des">设备离线</span>
+        <span class="info-des">离线车棚</span>
         <span class="info-num">{{ data.offline }}</span>
       </div>
     </div>

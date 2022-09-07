@@ -78,6 +78,8 @@ export class PointInfoPanelComponent implements OnInit {
       this.state.className = 'error';
     } else if (flags.contains(StationState.Full)) {
       this.state.className = 'warm';
+    } else if (flags.contains(StationState.Smoke)) {
+      this.state.className = 'warm';
     } else {
       this.state.language = '';
       this.state.className = 'normal';

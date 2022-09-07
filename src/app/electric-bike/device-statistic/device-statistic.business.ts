@@ -35,11 +35,24 @@ export class DeviceStatisticBusiness
 
     let model = this.Converter.Convert(data);
     let stations = await this.getStation();
-    let smokes = stations.filter((x) => {
+    model.smoke = 0;
+    model.offline = 0;
+    model.online = 0;
+    stations.forEach((x) => {
+      if (x.StationState === StationState.Normal) {
+        model.online++;
+        return;
+      }
       let flags = new Flags(x.StationState);
-      return flags.contains(StationState.Smoke);
+
+      if (flags.contains(StationState.Smoke)) {
+        model.smoke++;
+      }
+      if (flags.contains(StationState.Error)) {
+        model.offline++;
+      }
     });
-    model.smoke = smokes.length;
+
     return model;
   }
   getData(divisionId: string): Promise<DivisionNumberStatistic> {

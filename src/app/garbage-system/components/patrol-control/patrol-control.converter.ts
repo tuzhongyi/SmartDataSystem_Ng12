@@ -70,7 +70,11 @@ export class PatrolControlConverter
     model.title = source.Name;
 
     model.media = [];
+
     if (source.Cameras) {
+      source.Cameras = source.Cameras.sort((a, b) => {
+        return a.Name.localeCompare(b.Name);
+      });
       let online: OnlineStatus = OnlineStatus.Offline;
       for (let i = 0; i < source.Cameras.length; i++) {
         const camera = source.Cameras[i];
@@ -82,6 +86,7 @@ export class PatrolControlConverter
         media.image = img;
         model.media.push(media);
       }
+
       model.status.online = online;
     }
     let flags = new Flags(source.StationState);

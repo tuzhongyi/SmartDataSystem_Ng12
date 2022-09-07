@@ -140,11 +140,13 @@ export class EventRecordTableComponent
   }
   playvideo(model: EventRecordViewModel) {
     let array = new ImageControlModelArray(model.images, 0, true);
-    this.image.emit(array);
+    array.resourceId = model.ResourceId;
+    this.play.emit(array);
   }
 
   imageClick(item: EventRecordViewModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
+    array.resourceId = item.ResourceId;
     this.image.emit(array);
   }
 }

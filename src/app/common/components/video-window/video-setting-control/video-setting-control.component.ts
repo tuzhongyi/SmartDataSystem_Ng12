@@ -31,7 +31,7 @@ export class VideoSettingControlComponent implements OnInit {
     private userService: UserRequestService
   ) {}
 
-  stream: StreamType = StreamType.sub;
+  stream: StreamType = StreamType.main;
 
   async loadStream() {
     try {

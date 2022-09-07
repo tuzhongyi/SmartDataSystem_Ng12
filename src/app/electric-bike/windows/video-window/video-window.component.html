@@ -1,0 +1,28 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <div class="video-window" *ngIf="!!model">
+      <div class="video-window-header">
+        <div class="title">
+          {{ title }}
+        </div>
+        <div class="controls">
+          <div
+            class="control sky-blue-text"
+            (click)="onpreview()"
+            *ngIf="mode === PlayMode.vod"
+          >
+            <i class="howell-icon-video"></i>
+          </div>
+        </div>
+      </div>
+      <div class="video-window-content">
+        <app-video-player
+          [model]="model"
+          (destroy)="ondestroy($event)"
+          (onStoping)="onstop()"
+        >
+        </app-video-player>
+      </div>
+    </div>
+  </ng-container>
+</app-window>

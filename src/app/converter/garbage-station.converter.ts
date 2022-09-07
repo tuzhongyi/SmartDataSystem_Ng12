@@ -10,7 +10,14 @@ export class GarbageStationConverter
     source: GarbageStation,
     getter: (id: string) => Promise<Division>
   ): Promise<GarbageStationModel> {
+    if (source.Cameras) {
+      source.Cameras = source.Cameras.sort((a, b) => {
+        return a.Name.localeCompare(b.Name);
+      });
+    }
+
     let model = new GarbageStationModel();
+
     model = Object.assign(model, source);
     if (model.DivisionId) {
       model.Committees = await getter(model.DivisionId);
