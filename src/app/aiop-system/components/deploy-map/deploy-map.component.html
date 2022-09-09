@@ -1,38 +1,31 @@
 <div class="deploy-map hw-horizontal-layout">
   <ng-container *ngIf="locationDialog">
-    <howell-confirm-dialog
-      (dialogMsgEvent)="locationDialogMsg($event)"
-      [dialogModel]="locationModel"
-    >
+    <howell-confirm-dialog (dialogMsgEvent)="locationDialogMsg($event)" [dialogModel]="locationModel">
     </howell-confirm-dialog>
   </ng-container>
   <ng-container *ngIf="unbindDialog">
-    <howell-confirm-dialog
-      (dialogMsgEvent)="unbindDialogMsg($event)"
-      [dialogModel]="unbindModel"
-    >
+    <howell-confirm-dialog (dialogMsgEvent)="unbindDialogMsg($event)" [dialogModel]="unbindModel">
     </howell-confirm-dialog>
   </ng-container>
 
+  <ng-container *ngIf="bindDialog">
+    <howell-confirm-dialog (dialogMsgEvent)="bindDialogMsg($event)" [dialogModel]="bindModel">
+    </howell-confirm-dialog>
+  </ng-container>
+
+
   <ng-container *ngIf="showOperate">
     <toast-window>
-      <coordinate-manage
-        (closeEvent)="coordinateDialogMsg($event)"
-        [title]="operateTitle"
-      ></coordinate-manage>
+      <coordinate-manage (closeEvent)="coordinateDialogMsg($event)" [title]="operateTitle"></coordinate-manage>
     </toast-window>
   </ng-container>
 
   <div class="horizontal-left">
     <div class="hw-simple-title">投放点列表</div>
     <div class="tree-container">
-      <howell-division-tree
-        [showStation]="true"
-        [holdStatus]="true"
-        [showButtonIcon]="true"
-        (selectTreeNode)="selectTreeNode($event)"
-        (buttonIconClickEvent)="buttonIconClick($event)"
-      ></howell-division-tree>
+      <howell-division-tree [showStation]="true" [holdStatus]="true" [showButtonIcon]="true"
+        (selectTreeNode)="selectTreeNode($event)" (buttonIconClickEvent)="buttonIconClick($event)">
+      </howell-division-tree>
     </div>
   </div>
   <div class="horizontal-right vertical-layout">
@@ -40,13 +33,10 @@
       <div class="operate-bar" style="margin-top: 0">
         <div class="left-wrapper">
           <div class="hw-normal-btn-group">
-            <button
-              [class]="{
+            <button [class]="{
                 'hw-blue-btn': !isDragging,
                 'hw-green-btn': isDragging
-              }"
-              (click)="dragPoint()"
-            >
+              }" (click)="dragPoint()">
               拖拽
             </button>
             <button class="hw-red-btn" *ngIf="point" (click)="unlinkClicked()">
@@ -63,14 +53,7 @@
       </div>
     </div>
     <div class="vertical-main">
-      <iframe
-        [src]="srcUrl"
-        class="map"
-        width="100%"
-        height="100%"
-        frameborder="0"
-        #iframe
-      >
+      <iframe [src]="srcUrl" class="map" width="100%" height="100%" frameborder="0" #iframe>
       </iframe>
     </div>
   </div>
