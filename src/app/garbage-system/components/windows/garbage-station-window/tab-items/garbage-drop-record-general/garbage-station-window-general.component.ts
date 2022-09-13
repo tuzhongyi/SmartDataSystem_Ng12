@@ -109,7 +109,7 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
         break;
     }
 
-    title += ' 投放点';
+    title += ' 车棚';
 
     if (this.unitSelected) {
       title += ' ' + this.unitSelected.language;

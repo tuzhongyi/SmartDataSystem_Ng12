@@ -90,7 +90,7 @@ export class EventRecordTableComponent
           this.width = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
           break;
         case EventType.Smoke:
-          this.width = ['15%', '15%', '10%', '10%', '10%', '15%', '15%', '10%'];
+          this.width = ['15%', '15%', '9%', '9%', '12%', '15%', '15%', '10%'];
           break;
         default:
           break;

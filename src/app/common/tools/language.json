@@ -12,7 +12,7 @@
     "Province": "省",
     "City": "区",
     "County": "街道",
-    "Committees": "居委会",
+    "Committees": "警务责任区",
     "Community": "小区"
   },
   "StationType": {
@@ -87,7 +87,7 @@
   "report": "报表",
   "see": "查看",
   "info": "信息",
-  "station": "投放点",
+  "station": "车棚",
   "link": "连接",
   "unlink": "断开",
   "behavior": "行为",

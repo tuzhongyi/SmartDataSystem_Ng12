@@ -269,9 +269,14 @@ export class MapControlComponent
     this.selected.station = station;
     this.display.status = false;
     this.display.videoList = true;
-    this.images = station.Cameras
-      ? this.imageConverter.Convert(station.Cameras)
-      : [];
+    if (station.Cameras) {
+      station.Cameras = station.Cameras.sort((a, b) => {
+        return a.Name.localeCompare(b.Name);
+      });
+      this.images = this.imageConverter.Convert(station.Cameras);
+    } else {
+      this.images = [];
+    }
     this.display.videoControl = this.images.length > 5;
     this.changeDetectorRef.detectChanges();
   }

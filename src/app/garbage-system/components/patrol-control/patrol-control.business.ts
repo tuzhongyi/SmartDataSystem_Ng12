@@ -66,7 +66,7 @@ export class PatrolControlBusiness
           try {
             if (model.media) {
               for (let i = 0; i < model.media.length; i++) {
-                let plain = classToPlain(model.media[0]);
+                let plain = classToPlain(model.media[i]);
                 model.media[i] = plainToClass(ImageVideoControlModel, plain);
                 for (let j = 0; j < urls.length; j++) {
                   const url = urls[j];

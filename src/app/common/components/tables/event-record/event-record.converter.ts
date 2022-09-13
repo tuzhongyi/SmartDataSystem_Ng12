@@ -113,12 +113,11 @@ export class EventRecordConverter
 
     model.images = [image];
 
-    model.DateFormatter = formatDate(
+    model.BeginTimeFormatter = formatDate(
       source.EventTime,
       'yyyy-MM-dd HH:mm:dd',
       'en'
     );
-    EventType.IllegalDrop;
     return model;
   }
 
@@ -176,6 +175,20 @@ export class EventRecordConverter
   ) {
     let model = await this.fromEventRecord(source, getter);
     model.images = [];
+    if (source.Data.EndTime) {
+      model.EndTimeFormatter = formatDate(
+        source.Data.EndTime,
+        'yyyy-MM-dd HH:mm:dd',
+        'en'
+      );
+    }
+    if (source.Data.BeginTime) {
+      model.BeginTimeFormatter = formatDate(
+        source.Data.BeginTime,
+        'yyyy-MM-dd HH:mm:dd',
+        'en'
+      );
+    }
     if (source.Data.CameraImageUrls && model.GarbageStation) {
       for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
         try {

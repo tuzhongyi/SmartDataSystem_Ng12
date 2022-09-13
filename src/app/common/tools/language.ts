@@ -211,7 +211,7 @@ export class Language {
   static SearchOption(key: SearchOptionKey) {
     switch (key) {
       case SearchOptionKey.name:
-        return '投放点';
+        return '车棚';
       case SearchOptionKey.community:
         return '社区';
       default:
@@ -308,9 +308,9 @@ export class Language {
       case UserResourceType.County:
         return '街道';
       case UserResourceType.Committees:
-        return '居委会';
+        return '警务责任区';
       case UserResourceType.Station:
-        return '投放点';
+        return '车棚';
       default:
         return '';
     }

@@ -68,7 +68,7 @@ export class CommitteesHistroyTableService
     });
     let i = 0;
     model = model.sort((a, b) => {
-      return b.DateFormatter.localeCompare(a.DateFormatter);
+      return b.BeginTimeFormatter.localeCompare(a.BeginTimeFormatter);
     });
     model.forEach((x) => {
       x.Index = ++i;

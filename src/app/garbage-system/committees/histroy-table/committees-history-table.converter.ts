@@ -65,7 +65,7 @@ export class CommitteesHistoryTableConverter
     vm = Object.assign(vm, event);
     vm.Data = input;
     vm.Id = input.EventId;
-    vm.DateFormatter = formatDate(input.EventTime, 'HH:mm', 'en');
+    vm.BeginTimeFormatter = formatDate(input.EventTime, 'HH:mm', 'en');
     return vm;
   }
 }

@@ -101,6 +101,7 @@ export class EventRecordBusiness
     if (opts.opts) {
       params.ResourceName = opts.opts.text;
     }
+    params.Desc = true;
     return params;
   }
 
