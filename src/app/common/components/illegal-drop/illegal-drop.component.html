@@ -1,37 +1,16 @@
-<!-- <div class="illegal-drop vertical-layout">
+<div class="illegal-drop vertical-layout">
   <div class="vertical-header">
     <div class="hw-second-title">乱扔垃圾</div>
     <div class="operate-bar inline-bar">
-      <div class="left-wrapper"><howell-tab-header></howell-tab-header></div>
+      <div class="left-wrapper">
+        <howell-tab-header [headers]="tabHeaders" (tabHeaderEvent)="tabHeaderEvent($event)"></howell-tab-header>
+      </div>
       <div class="right-wrapper">
-        <howell-complex-search></howell-complex-search>
-        <button type="button" class="hw-blue-btn">查询</button>
+
       </div>
     </div>
   </div>
   <div class="vertical-main">
-    <howell-illegal-drop-event></howell-illegal-drop-event>
+    <ng-container *ngComponentOutlet="currentComponent"></ng-container>
   </div>
-</div> -->
-<!-- <div style="width: 300px"><common-select></common-select></div> -->
-
-<!-- <select [(ngModel)]="current">
-  <option *ngFor="let model of models" [value]="model">
-    {{ model.name }}
-  </option>
-</select>
-
-{{ current | json }} -->
-
-<!-- <common-select>
-  <common-option value="a">Apple</common-option>
-  <common-option value="b">Bear</common-option>
-</common-select> -->
-
-<!-- <select>
-  <option value="a">Apple</option>
-  <option value="b">Bear</option>
-</select> -->
-
-<!-- <event-number-statistic></event-number-statistic> -->
-<event-number-chart [resourceId]="resourceId"></event-number-chart>
+</div>

@@ -1,22 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { ClassConstructor } from 'class-transformer';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { TabHeaderModel } from 'src/app/view-model/tab-header.model';
+import { EventNumberChartComponent } from '../event-number-chart/event-number-chart.component';
+import { EventNumberStatisticComponent } from '../event-number-statistic/event-number-statistic.component';
+import { IllegalDropEventComponent } from '../illegal-drop-event/illegal-drop-event.component';
 
 @Component({
   selector: 'howell-illegal-drop',
   templateUrl: './illegal-drop.component.html',
-  styleUrls: ['./illegal-drop.component.less']
+  styleUrls: ['./illegal-drop.component.less'],
 })
 export class IllegalDropComponent implements OnInit {
+  tabHeaders: TabHeaderModel[] = [];
 
-  models: Hello[] = [
-    {
-      id: 1, name: 'a', value: 'hello',
-    }, {
-      id: 2, name: 'b', value: 'hi'
-    }
-  ]
+  currentComponent = IllegalDropEventComponent;
   current = 2;
-
 
   // 虹口区: 310109000000
   // 欧阳路街道: 310109009000
@@ -27,15 +26,26 @@ export class IllegalDropComponent implements OnInit {
 
   resourceDefault: UserResourceType = UserResourceType.Committees;
 
-
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor() {
+    this.tabHeaders.push(new TabHeaderModel('事件', IllegalDropEventComponent));
+    this.tabHeaders.push(
+      new TabHeaderModel('总图表', EventNumberStatisticComponent)
+    );
+    this.tabHeaders.push(
+      new TabHeaderModel('细分图表', EventNumberChartComponent)
+    );
+    // this.tabHeaders.push(new TabHeaderModel('数据比较'));
   }
 
+  ngOnInit(): void {}
+
+  tabHeaderEvent(header: TabHeaderModel) {
+    console.log('sdf', header);
+    this.currentComponent = header.dynamicComponent;
+  }
 }
 interface Hello {
   id: number;
   name: string;
-  value: any
+  value: any;
 }

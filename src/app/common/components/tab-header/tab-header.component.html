@@ -1,6 +1,11 @@
 <div class="tab-header">
-  <div class="tab-label">事件</div>
+  <!-- <div class="tab-label">事件</div>
   <div class="tab-label">总图表</div>
   <div class="tab-label">细分图表</div>
-  <div class="tab-label">数据比较</div>
+  <div class="tab-label">数据比较</div> -->
+
+  <div class="tab-label" [class.selected]="i == currentIndex" *ngFor="let header of headers;let i=index"
+    (click)="tabClicked(header,i,$event)">
+    {{header.title}}
+  </div>
 </div>
