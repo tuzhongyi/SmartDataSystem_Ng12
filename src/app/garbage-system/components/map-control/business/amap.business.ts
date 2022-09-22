@@ -78,7 +78,7 @@ export class AMapBusiness {
     //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
 
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+    return `http://${host}:${port}/amap/map_ts_offline.html?v=${date}`;
   }
   loaded = false;
   init() {
@@ -162,10 +162,10 @@ export class AMapBusiness {
                 changed = true;
               }
               break;
-            case StationType.NucleicAcid:
-              if (point.type != CesiumDataController.ElementType.NucleicAcid) {
-                point.type = CesiumDataController.ElementType.NucleicAcid;
-                point.url = 'img/acid.png';
+            case StationType.Construction:
+              if (point.type != CesiumDataController.ElementType.LargeWaste) {
+                point.type = CesiumDataController.ElementType.LargeWaste;
+                point.url = 'img/largewaste.png';
                 changed = true;
               }
               break;
@@ -299,8 +299,8 @@ export class AMapBusiness {
         opt.text = hours
           ? hours + Language.json.Time.hour
           : minutes
-            ? minutes + Language.json.Time.minute
-            : '';
+          ? minutes + Language.json.Time.minute
+          : '';
 
         const color = new CesiumDataController.Color();
         color.rgb = '#36e323';

@@ -399,6 +399,6 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     const host = this._location.hostname;
     const port = this._location.port;
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'zh-CN');
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+    return `http://${host}:${port}/amap/map_ts_offline.html?v=${date}`;
   }
 }
