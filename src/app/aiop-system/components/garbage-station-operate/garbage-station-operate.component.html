@@ -30,8 +30,8 @@
             </div>
             <div class="content">
               <select name="stationType" [(ngModel)]="stationType">
-                <option *ngFor="let s of stationTypes" [value]="s.Type">
-                  {{ s.Name }}
+                <option *ngFor="let s of stationTypes" [ngValue]="s.value">
+                  {{ s.language }}
                 </option>
               </select>
             </div>

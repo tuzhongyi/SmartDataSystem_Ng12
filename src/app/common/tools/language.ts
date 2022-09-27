@@ -22,7 +22,6 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 
-
 export class Language {
   static StationState(state: StationState) {
     switch (state) {
@@ -216,9 +215,9 @@ export class Language {
   static StationType(type: StationType) {
     switch (type) {
       case StationType.Garbage:
-        return Language.json.StationType.Garbage
-      case StationType.NucleicAcid:
-        return Language.json.StationType.NucleicAcid
+        return Language.json.StationType.Garbage;
+      case StationType.Construction:
+        return '建筑垃圾';
       default:
         return '';
     }
