@@ -276,7 +276,7 @@ a [class*=" howell-icon-"] {
 
 .howell-icon-stack .howell-icon-stack-base {
   font-size: 2em;
-  *line-height: 1em;
+  line-height: 1em;
 }
 
 .howell-icon-spin {
