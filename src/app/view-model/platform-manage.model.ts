@@ -1,4 +1,4 @@
-import { CommonModel } from "./common-model";
+import { CommonModel } from './common-model';
 
 export class PlatformManageModel implements CommonModel {
   Id!: string;
@@ -7,5 +7,10 @@ export class PlatformManageModel implements CommonModel {
   ProtocolType!: string;
   State!: string;
   UpdateTime!: string;
-  constructor() { }
+}
+
+export interface PlatformManageSearch {
+  Condition: string;
+  PageIndex: number;
+  PageSize: number;
 }

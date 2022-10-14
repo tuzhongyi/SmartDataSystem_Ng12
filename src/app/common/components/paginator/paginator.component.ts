@@ -51,7 +51,8 @@ export type Constructor<T> = new (...args: any[]) => T;
 })
 export class PaginatorComponent
   extends _MatPaginatorBase<MatPaginatorDefaultOptions>
-  implements AfterViewInit, OnChanges {
+  implements AfterViewInit, OnChanges
+{
   @Input()
   override get pageIndex() {
     return super.pageIndex;
@@ -73,7 +74,7 @@ export class PaginatorComponent
 
   /***************** private ************************/
   // 显示几个分页按钮
-  private _pagerCount = 5; // 不能小于等于0，但可以超出 max pager count
+  private _pagerCount = 3; // 不能小于等于0，但可以超出 max pager count
 
   /***************** public ************************/
   public pagers: number[] = [];

@@ -1,7 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { PlatformManageModel } from 'src/app/view-model/platform-manage.model';
-import { TableCellEvent, TableColumnModel, TableOperateModel, TableRowModel } from 'src/app/view-model/table.model';
+import {
+  PlatformManageModel,
+  PlatformManageSearch,
+} from 'src/app/view-model/platform-manage.model';
+import {
+  TableCellEvent,
+  TableColumnModel,
+  TableOperateModel,
+  TableRowModel,
+} from 'src/app/view-model/table.model';
 import { PlatformManageConf } from './platform-manage.config';
 import { PlatformManageBusiness } from './platform-manage.business';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -14,37 +22,38 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { ToastrService } from 'ngx-toastr';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-
+import { ThisReceiver } from '@angular/compiler';
 
 @Component({
   selector: 'howell-platform-manage',
   templateUrl: './platform-manage.component.html',
   styleUrls: ['./platform-manage.component.less'],
-  providers: [
-    PlatformManageBusiness
-  ]
+  providers: [PlatformManageBusiness],
 })
 export class PlatformManageComponent implements OnInit {
-
-  /**private */
-  private _pageSize = 9;
-  private _condition = '';
-
-
   // Table
   dataSubject = new BehaviorSubject<PlatformManageModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...PlatformManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  tableOperates: TableOperateModel[] = []
-
-  selectedRows: PlatformManageModel[] = [];//table选中项
+  tableOperates: TableOperateModel[] = [];
+  selectedRows: PlatformManageModel[] = []; //table选中项
   willBeDeleted: PlatformManageModel[] = [];
 
   // Paginator
-  page: Page | null = null;
-  pagerCount: number = 4;
-  pageIndex = 1;
+  page: Page = {
+    PageIndex: 0,
+    PageSize: 0,
+    RecordCount: 0,
+    TotalRecordCount: 0,
+    PageCount: 0,
+  };
+
+  searchInfo: PlatformManageSearch = {
+    Condition: '',
+    PageIndex: 1,
+    PageSize: 9,
+  };
 
   // 对话框
   showOperate = false;
@@ -55,17 +64,17 @@ export class PlatformManageComponent implements OnInit {
   state = FormState.none;
   operateId = '';
 
-
   get enableDelBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
-
-
-  constructor(private _business: PlatformManageBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private _business: PlatformManageBusiness,
+    private _toastrService: ToastrService
+  ) {
     this.tableOperates.push(
       new TableOperateModel(
         'sync',
@@ -85,27 +94,21 @@ export class PlatformManageComponent implements OnInit {
         '删除',
         this._clickDelBtn.bind(this)
       )
-    )
+    );
   }
 
   ngOnInit(): void {
     this._init();
   }
   private async _init() {
-    let res = await this._business.init(
-      this._condition,
-      this.pageIndex,
-      this._pageSize
-    );
-
+    let res = await this._business.init(this.searchInfo);
     this.page = res.Page;
-    this.dataSubject.next(res.Data)
+    this.dataSubject.next(res.Data);
   }
 
-
   async searchEvent(condition: string) {
-    this._condition = condition;
-    this.pageIndex = 1;
+    this.searchInfo.Condition = condition;
+    this.searchInfo.PageIndex = 1;
     this._init();
   }
   selectTableRow(rows: PlatformManageModel[]) {
@@ -130,17 +133,17 @@ export class PlatformManageComponent implements OnInit {
   }
 
   pageEvent(pageInfo: PageEvent) {
-    if (this.pageIndex == pageInfo.pageIndex + 1) return;
-    this.pageIndex = pageInfo.pageIndex + 1;
+    if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
+    this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
     this._init();
   }
 
   closeForm(update: boolean) {
-    this.showOperate = false
+    this.showOperate = false;
     this.state = FormState.none;
-    this.operateId = ''
+    this.operateId = '';
     if (update) {
-      this.pageIndex = 1;
+      this.searchInfo.PageIndex = 1;
       this._init();
     }
   }
@@ -149,17 +152,16 @@ export class PlatformManageComponent implements OnInit {
     this.showOperate = true;
   }
   deleteBtnClick() {
-    this.willBeDeleted = [...this.selectedRows]
+    this.willBeDeleted = [...this.selectedRows];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
     if (status == DialogEnum.confirm) {
-      this._deleteRows(this.willBeDeleted)
+      this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
-
     }
   }
 
@@ -167,15 +169,16 @@ export class PlatformManageComponent implements OnInit {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      await this._business.delete(id)
+      await this._business.delete(id);
       this._toastrService.success('删除成功');
-
+      if (this.page.RecordCount == 1) {
+        this.searchInfo.PageIndex = Math.max(this.searchInfo.PageIndex - 1, 1);
+      }
     }
-    this.pageIndex = 1;
     this._init();
   }
   private async _clickSyncBtn(row: PlatformManageModel, event: Event) {
-    let res = await this._business.sync(row.Id)
+    let res = await this._business.sync(row.Id);
     if (res) {
       this._toastrService.success('同步成功');
     }
@@ -188,6 +191,6 @@ export class PlatformManageComponent implements OnInit {
   private _clickDelBtn(row: PlatformManageModel, event: Event) {
     this.willBeDeleted = [row];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 }
