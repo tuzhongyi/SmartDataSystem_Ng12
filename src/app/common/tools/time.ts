@@ -17,6 +17,7 @@ export class Time {
     return new Date(new Date(time).getTime() + n * 24 * 60 * 60 * 1000)
 
   }
+  // 当前日期所在的周
   static curWeek(time: Date, firstDay = 1) {
     let offset = time.getDay() - firstDay;
     let beginTime = Time.beginTime(this.backDate(time, offset));
@@ -26,6 +27,7 @@ export class Time {
       endTime
     }
   }
+  // 当前日期所在的月
   static curMonth(t: Date) {
     let beginTime = new Date(t.getFullYear(), t.getMonth(), 1, 0, 0, 0, 0);
     let endTime = new Date(t.getFullYear(), t.getMonth() + 1, 1, 0, 0, 0, 0);
