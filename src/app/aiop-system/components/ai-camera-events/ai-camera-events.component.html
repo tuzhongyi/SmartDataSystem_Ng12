@@ -19,10 +19,26 @@
               <i class="mdi mdi-magnify"></i>
               查询
             </button>
-            <button class="hw-blue-m-btn">
-              <i class="howell-icon-ul"></i>
-              <i class="mdi mdi-menu-down"></i>
-            </button>
+            <div class="list-container">
+              <button class="hw-blue-m-btn" (click)="showMode = !showMode">
+                <i class="howell-icon-ul"></i>
+                <i class="mdi mdi-menu-down"></i>
+              </button>
+              <div class="list-body" *ngIf="showMode">
+                <ul>
+                  <li>
+                    <a (click)="changeViewMode(ViewMode.table)">
+                      <i class="howell-icon-ul"></i>
+                    </a>
+                  </li>
+                  <li>
+                    <a (click)="changeViewMode(ViewMode.card)">
+                      <i class="howell-icon-cam-all1"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
             <button class="hw-cyan-m-btn" (click)="toggleFilterHandler()">
               <i class="mdi mdi-filter-outline"></i>
             </button>
@@ -92,30 +108,20 @@
     </div>
 
     <div class="vertical-main">
-      <common-table
-        [dataSubject]="dataSubject"
-        [columnModel]="columnModel"
-        [displayedColumns]="displayedColumns"
-        [selectStrategy]="selectStrategy"
-        [tableOperates]="tableOperates"
-        [zoomIn]="zoomIn"
-        (selectTableRow)="selectTableRow($event)"
-      ></common-table>
+      <ng-template *ngIf="template" [ngTemplateOutlet]="template"></ng-template>
     </div>
     <div class="vertical-footer" style="justify-content: flex-end">
       <div class="footer-item">
         <div class="footer-info">
-          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-          <div class="info-item">
-            总数量: {{ page && page.TotalRecordCount }}
-          </div>
+          <div class="info-item">当前数量: {{ page.RecordCount }}</div>
+          <div class="info-item">总数量: {{ page.TotalRecordCount }}</div>
         </div>
         <app-paginator
           *ngIf="page"
           [length]="page.TotalRecordCount"
           [pageSize]="page.PageSize"
           [pagerCount]="pagerCount"
-          [pageIndex]="pageIndex - 1"
+          [pageIndex]="page.PageIndex - 1"
           (page)="pageEvent($event)"
         >
         </app-paginator>
@@ -123,3 +129,84 @@
     </div>
   </div>
 </div>
+
+<ng-template #tableTemplate>
+  <div class="table-layout">
+    <div class="table-header">
+      <table>
+        <colgroup>
+          <col *ngFor="let width of widths" [style.width]="width" />
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th>图片</th>
+            <th>事件类型</th>
+            <th>模型名称</th>
+            <th>设备类型</th>
+            <th>设备名称</th>
+            <th>上报时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="table-body">
+      <table>
+        <colgroup>
+          <col *ngFor="let width of widths" [style.width]="width" />
+        </colgroup>
+
+        <tbody>
+          <ng-template ngFor [ngForOf]="dataSource" let-item>
+            <tr>
+              <td><img [src]="item.ImageUrl" alt="" /></td>
+              <td>{{ item.EventType }}</td>
+              <td>{{ item.ModelName }}</td>
+              <td>{{ item.ResourceType }}</td>
+              <td>{{ item.ResourceName }}</td>
+              <td>{{ item.EventTime }}</td>
+              <td>
+                <a>
+                  <i class="howell-icon-video"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>
+<ng-template #cardTemplate>
+  <div class="card-container">
+    <ng-template ngFor [ngForOf]="dataSource" let-item>
+      <div class="hw-card-layout">
+        <div class="hw-card-header">
+          <div class="left-wrapper">{{ item.ResourceName }}</div>
+          <div class="right-wrapper">
+            <div>
+              <a>
+                <i class="howell-icon-videodownload"></i>
+              </a>
+              <a>
+                <i class="howell-icon-picturedownload"></i>
+              </a>
+              <a>
+                <i class="m-r-5 howell-icon-video"></i>
+              </a>
+            </div>
+            <div style="font-size: 14px">{{ item.EventTime }}</div>
+          </div>
+        </div>
+        <div class="hw-card-body">
+          <img [src]="item.ImageUrl" alt="" />
+        </div>
+        <div class="hw-card-footer">
+          <div>{{ item.EventType }}</div>
+          <div>{{ item.ResourceType }}</div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</ng-template>

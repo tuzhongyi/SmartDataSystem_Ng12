@@ -1,9 +1,8 @@
-.table-container {
+.table-layout {
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  color: red;
   background-color: #1b2242;
 
   .table-header {
@@ -41,9 +40,17 @@ table {
     tr {
       height: 60px;
       cursor: pointer;
+
       &:hover {
         background-color: #3d5492;
         border-bottom-color: rgba(0, 0, 0, 0.3);
+        td {
+          height: 104px;
+          img {
+            width: 104px;
+            height: 60px;
+          }
+        }
       }
       &.high-light {
         background: linear-gradient(
@@ -62,12 +69,10 @@ table {
         &:first-child {
           padding-left: 24px;
         }
-        a {
-          color: #7586e0;
-          margin-right: 5px;
-          &:hover {
-            color: white;
-          }
+
+        img {
+          width: 69px;
+          height: 40px;
         }
       }
     }
