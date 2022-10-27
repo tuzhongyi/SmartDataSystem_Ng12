@@ -9,21 +9,19 @@ import { ValidLatitude, ValidLogitude } from '../../tools/tool';
 @Component({
   selector: 'coordinate-manage',
   templateUrl: './coordinate-manage.component.html',
-  styleUrls: ['./coordinate-manage.component.less']
+  styleUrls: ['./coordinate-manage.component.less'],
 })
 export class CoordinateManageComponent implements OnInit {
+  lon = '';
+  lat = '';
 
-  lon = "";
-  lat = ""
-
-  @Input() title = "";
+  @Input() title = '';
 
   @Output() closeEvent = new EventEmitter<IDialogMessage<ICoordinate | null>>();
 
-  constructor(private _toastrService: ToastrService) { }
+  constructor(private _toastrService: ToastrService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   onSubmit() {
     // this.closeEvent.emit(
@@ -43,28 +41,22 @@ export class CoordinateManageComponent implements OnInit {
         data: {
           lon: +this.lon,
           lat: +this.lat,
-        }
+        },
       });
     }
-
   }
   onReset() {
-    this.closeEvent.emit(
-      {
-        type: DialogEnum.cancel,
-        data: null
-      }
-    );
+    this.closeEvent.emit({
+      type: DialogEnum.cancel,
+      data: null,
+    });
   }
   down(e: KeyboardEvent) {
-
     let key = e.key.toLocaleLowerCase();
     console.log(key);
     if (key === 'e') {
       e.preventDefault();
     }
-
-
   }
   private _checkForm() {
     if (!ValidLogitude.test(this.lon)) {

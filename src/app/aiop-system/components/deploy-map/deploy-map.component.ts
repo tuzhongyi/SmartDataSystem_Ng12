@@ -31,6 +31,9 @@ import { ICoordinate } from 'src/app/common/interfaces/coordinate.interface';
   providers: [DeployMapBusiness],
 })
 export class DeployMapComponent implements OnInit, AfterViewInit {
+  gisType = GisType.BD09;
+  GisType = GisType;
+
   mouseLon = 0;
   mouseLat = 0;
 
@@ -277,7 +280,19 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
       if (data && this.currentNode) {
         let rawData = this.currentNode.RawData;
         if (rawData instanceof GarbageStation) {
-          let gcj02 = CoordinateTransform.bd09togcj02(data.lon, data.lat);
+          let gcj02 = [data.lon, data.lat];
+
+          switch (this.gisType) {
+            case GisType.BD09:
+              gcj02 = CoordinateTransform.bd09togcj02(data.lon, data.lat);
+              break;
+            case GisType.WGS84:
+              gcj02 = CoordinateTransform.wgs84togcj02(data.lon, data.lat);
+              break;
+            default:
+              break;
+          }
+
           let position = new CesiumDataController.Position(
             gcj02[0],
             gcj02[1],
@@ -399,6 +414,6 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     const host = this._location.hostname;
     const port = this._location.port;
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'zh-CN');
-    return `http://${host}:${port}/amap/map_ts_offline.html?v=${date}`;
+    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
 }
