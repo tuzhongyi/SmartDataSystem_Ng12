@@ -1,18 +1,30 @@
-import { Injectable } from "@angular/core";
-import { IllegalDropEventConverter } from "src/app/converter/illegal-drop-event.converter";
-import { PagedList } from "src/app/network/model/page_list.model";
-import { DivisionRequestService } from "src/app/network/request/division/division-request.service";
-import { GetEventRecordsParams } from "src/app/network/request/event/event-request.params";
-import { EventRequestService } from "src/app/network/request/event/event-request.service";
-import { IllegalDropEventModel, IllegalDropEventSearchInfo } from "src/app/view-model/illegal-drop-event.model";
-import { LocaleCompare } from "../../tools/locale-compare";
+import { Injectable } from '@angular/core';
+import { count } from 'console';
+import { IllegalDropEventConverter } from 'src/app/converter/illegal-drop-event.converter';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
+import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import {
+  IllegalDropEventModel,
+  IllegalDropEventSearchInfo,
+} from 'src/app/view-model/illegal-drop-event.model';
+import { LocaleCompare } from '../../tools/locale-compare';
 
 @Injectable()
 export class IllegalDropEventBusiness {
-  constructor(private _eventRequest: EventRequestService, private _converter: IllegalDropEventConverter) {
+  private _divisionMap = new Map<string, string>();
 
-  }
-  async init(searchInfo: IllegalDropEventSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
+  constructor(
+    private _eventRequest: EventRequestService,
+    private _divisionRequest: DivisionRequestService,
+    private _converter: IllegalDropEventConverter
+  ) {}
+  async init(
+    searchInfo: IllegalDropEventSearchInfo,
+    pageIndex: number = 1,
+    pageSize: number = 9
+  ) {
     let params = new GetEventRecordsParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
@@ -30,10 +42,31 @@ export class IllegalDropEventBusiness {
     }
 
     let tmp = await this._listEventRecords(params);
+
+    // console.log(tmp);
     let data = await this._converter.iterateToModel(tmp.Data);
     data = data.sort((a, b) => {
-      return LocaleCompare.compare(a.EventTime, b.EventTime)
-    })
+      return LocaleCompare.compare(a.EventTime, b.EventTime);
+    });
+
+    for (let i = 0; i < data.length; i++) {
+      let model = data[i];
+      if (model.CommitteeId) {
+        let division = await this._getDivision(model.CommitteeId);
+        // console.log(division);
+        if (division.ParentId) {
+          model.CountyId = division.ParentId;
+
+          if (this._divisionMap.has(division.ParentId)) {
+            model.CountyName = this._divisionMap.get(division.ParentId)!;
+          } else {
+            let county = await this._getDivision(division.ParentId);
+            this._divisionMap.set(county.Id, county.Name);
+            model.CountyName = county.Name;
+          }
+        }
+      }
+    }
 
     let res: PagedList<IllegalDropEventModel> = {
       Page: tmp.Page,
@@ -43,6 +76,12 @@ export class IllegalDropEventBusiness {
     return res;
   }
   private _listEventRecords(params: GetEventRecordsParams) {
-    return this._eventRequest.record.IllegalDrop.list(params)
+    return this._eventRequest.record.IllegalDrop.list(params);
+  }
+  private _getDivision(id: string) {
+    return this._divisionRequest.get(id);
+  }
+  private _register(id: string, name: string) {
+    this._divisionMap.set(id, name);
   }
 }

@@ -5,7 +5,10 @@ import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model'
 import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
 import { Medium } from '../common/tools/medium';
-import { CommonModelConverter, CommonModelPromiseConverter } from './common-model.converter';
+import {
+  CommonModelConverter,
+  CommonModelPromiseConverter,
+} from './common-model.converter';
 import { IllegalDropEventModel } from '../view-model/illegal-drop-event.model';
 import { DivisionRequestService } from '../network/request/division/division-request.service';
 import { Division } from '../network/model/division.model';
@@ -31,17 +34,27 @@ export class IllegalDropEventConverter extends CommonModelPromiseConverter<Illeg
   private async _fromIllegalDropEventRecord(item: IllegalDropEventRecord) {
     let model = new IllegalDropEventModel();
     model.Id = item.EventId;
-    model.ResourceName = item.ResourceName ?? "";
+    model.ResourceName = item.ResourceName ?? '';
     model.ImageUrl = await Medium.img(item.ImageUrl);
-    model.CountyId = null;
-    model.CountyName = '';
+
+    // 居委会信息
     model.CommitteeId = item.Data.DivisionId || null;
     model.CommitteeName = item.Data.DivisionName ?? '';
+
+    // 厢房信息
     model.StationId = item.Data.StationId;
     model.StationName = item.Data.StationName;
+
+    // 社区信息
     model.CommunityId = item.Data.CommunityId ?? null;
-    model.CommunityName = item.Data.CommunityName ?? ""
-    model.EventTime = this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? ""
+    model.CommunityName = item.Data.CommunityName ?? '';
+
+    // 街道信息
+    model.CountyId = null;
+    model.CountyName = '';
+
+    model.EventTime =
+      this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
 
     return model;
   }

@@ -44,8 +44,3 @@ export class IllegalDropComponent implements OnInit {
     this.currentComponent = header.dynamicComponent;
   }
 }
-interface Hello {
-  id: number;
-  name: string;
-  value: any;
-}

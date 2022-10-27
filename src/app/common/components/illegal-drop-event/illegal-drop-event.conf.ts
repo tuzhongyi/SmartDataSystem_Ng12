@@ -35,11 +35,15 @@ export const IllegalDropEventConf: TableColumnModel[] = [
     cell: (element: IllegalDropEventModel) => `${element.CommitteeName}`,
     sortHeader: true,
   },
-
+  {
+    columnDef: 'CommunityName',
+    header: '社区',
+    cell: (element: IllegalDropEventModel) => `${element.CommunityName}`,
+    sortHeader: true,
+  },
   {
     columnDef: 'EventTime',
     header: '上报时间',
     cell: (element: IllegalDropRecordModel) => `${element.EventTime}`,
   },
-
 ];
