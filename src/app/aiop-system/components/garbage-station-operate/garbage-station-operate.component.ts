@@ -61,8 +61,8 @@ export class GarbageStationOperateComponent implements OnInit {
   stationSelectedRows: Camera[] = [];
   willBeDeleted: Camera[] = [];
 
-  stationTypes: SelectItem[] = [];
-  stationType!: StationType;
+  stationTypes: GarbageStationType[] = [];
+  stationType: StationType = 0;
   stationName: string = '';
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
@@ -109,8 +109,8 @@ export class GarbageStationOperateComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    // let res = await this._business.listTypes();
-    // this.stationTypes = res;
+    let res = await this._business.listTypes();
+    this.stationTypes = res;
 
     this.initStationType();
     this._init();
@@ -131,13 +131,13 @@ export class GarbageStationOperateComponent implements OnInit {
   }
 
   initStationType() {
-    this.stationTypes.push(
-      SelectItem.create(StationType.Garbage, Language.StationType)
-    );
-    this.stationTypes.push(
-      SelectItem.create(StationType.Construction, Language.StationType)
-    );
-    this.stationType = this.stationTypes[0].value;
+    // this.stationTypes.push(
+    //   SelectItem.create(StationType.Garbage, Language.StationType)
+    // );
+    // this.stationTypes.push(
+    //   SelectItem.create(StationType.Construction, Language.StationType)
+    // );
+    // this.stationType = this.stationTypes[0].value;
   }
 
   selectAiopTableRow(rows: AICameraManageModel[]) {

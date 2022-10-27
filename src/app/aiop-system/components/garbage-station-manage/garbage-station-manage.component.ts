@@ -6,7 +6,10 @@ import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
-import { GarbageStation, GarbageStationType } from 'src/app/network/model/garbage-station.model';
+import {
+  GarbageStation,
+  GarbageStationType,
+} from 'src/app/network/model/garbage-station.model';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { GarbageStationManageBusiness } from './garbage-station-manage.business';
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
@@ -17,8 +20,11 @@ import { GarbageStationTypesUrls } from 'src/app/network/url/aiop/garbage-manage
 import { GarbageStationManageModel } from 'src/app/view-model/garbage-station-manage.model';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { GarbageStationManageConf } from './garbage-station-manage.config'
-import { TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import { GarbageStationManageConf } from './garbage-station-manage.config';
+import {
+  TableColumnModel,
+  TableOperateModel,
+} from 'src/app/view-model/table.model';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
@@ -29,9 +35,7 @@ import { DialogEnum } from 'src/app/enum/dialog.enum';
   selector: 'howell-garbage-station-manage',
   templateUrl: './garbage-station-manage.component.html',
   styleUrls: ['./garbage-station-manage.component.less'],
-  providers: [
-    GarbageStationManageBusiness
-  ]
+  providers: [GarbageStationManageBusiness],
 })
 export class GarbageStationManageComponent implements OnInit {
   private _pageSize = 9;
@@ -56,9 +60,8 @@ export class GarbageStationManageComponent implements OnInit {
     PageSize: this._pageSize,
     RecordCount: 0,
     TotalRecordCount: 0,
-    PageCount: 0
+    PageCount: 0,
   };
-
 
   // 对话框
   showOperate = false;
@@ -70,34 +73,36 @@ export class GarbageStationManageComponent implements OnInit {
   stationId = '';
   divisionId = '';
 
-
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
-
 
   get type() {
     if (this._currentNode) {
       if (this._currentNode.RawData instanceof GarbageStation) {
-        return UserResourceType.Station
+        return UserResourceType.Station;
       } else {
-        return EnumHelper.ConvertDivisionToUserResource(this._currentNode.RawData.DivisionType)
+        return EnumHelper.ConvertDivisionToUserResource(
+          this._currentNode.RawData.DivisionType
+        );
       }
     }
-    return UserResourceType.None
+    return UserResourceType.None;
   }
 
   get enableAddBtn() {
-    return this._currentNode && this.type == UserResourceType.Committees
+    return this._currentNode && this.type == UserResourceType.Committees;
   }
 
   get enableDelBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
 
   @ViewChild(DivisionTreeComponent) tree?: DivisionTreeComponent;
 
-
-  constructor(private _business: GarbageStationManageBusiness, private _toastrService: ToastrService,) {
+  constructor(
+    private _business: GarbageStationManageBusiness,
+    private _toastrService: ToastrService
+  ) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -114,12 +119,16 @@ export class GarbageStationManageComponent implements OnInit {
   }
 
   private async _init() {
-    let res = await this._business.listStations(this._currentNode?.Id ?? '', this._condition, this.pageIndex, this._pageSize)
-    // console.log(res);
+    let res = await this._business.listStations(
+      this._currentNode?.Id ?? '',
+      this._condition,
+      this.pageIndex,
+      this._pageSize
+    );
+    console.log(res);
     this.page = res.Page;
     this.dataSubject.next(res.Data);
   }
-
 
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
@@ -127,7 +136,6 @@ export class GarbageStationManageComponent implements OnInit {
     // console.log('外部结果', nodes);
     this._updateTable();
   }
-
 
   selectTableRow(rows: GarbageStationManageModel[]) {
     this.selectedRows = rows;
@@ -162,10 +170,9 @@ export class GarbageStationManageComponent implements OnInit {
   }
 
   closeForm(update: boolean) {
-    this.showOperate = false
+    this.showOperate = false;
     this.state = FormState.none;
     this.stationId = '';
-    this.divisionId = ''
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -175,9 +182,8 @@ export class GarbageStationManageComponent implements OnInit {
   dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
     if (status == DialogEnum.confirm) {
-      this._deleteRows(this.willBeDeleted)
+      this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
-
     }
   }
   addBtnClick() {
@@ -185,17 +191,16 @@ export class GarbageStationManageComponent implements OnInit {
     this.showOperate = true;
   }
   deleteBtnClick() {
-    this.willBeDeleted = [...this.selectedRows]
+    this.willBeDeleted = [...this.selectedRows];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   private async _deleteRows(rows: GarbageStationManageModel[]) {
-
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      await this._business.delete(id)
+      await this._business.delete(id);
       this._toastrService.success('删除成功');
     }
 
@@ -213,10 +218,10 @@ export class GarbageStationManageComponent implements OnInit {
         PageSize: this._pageSize,
         RecordCount: 0,
         TotalRecordCount: 0,
-        PageCount: 0
-      }
+        PageCount: 0,
+      };
       this.divisionId = '';
-      this.dataSubject.next([])
+      this.dataSubject.next([]);
     }
   }
   private _clickEditBtn(row: GarbageStationManageModel) {
@@ -224,7 +229,4 @@ export class GarbageStationManageComponent implements OnInit {
     this.state = FormState.edit;
     this.stationId = row.Id;
   }
-
-
 }
-

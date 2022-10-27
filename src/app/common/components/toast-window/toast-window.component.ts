@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./toast-window.component.less'],
 })
 export class ToastWindowComponent implements OnInit {
-  @Input() showClose = true;
+  @Input() showClose = false;
   @Output() closeEvent = new EventEmitter();
   constructor() {}
 

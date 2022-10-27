@@ -14,10 +14,10 @@ import { DigestResponse } from 'src/app/network/request/auth/digest-response.cla
 })
 export class SessionStorageService {
   set challenge(challenge: DigestResponse) {
-    sessionStorage.setItem('challenge', JSON.stringify(challenge));
+    sessionStorage.setItem('smart_challenge', JSON.stringify(challenge));
   }
   get challenge() {
-    let challenge_str = sessionStorage.getItem('challenge');
+    let challenge_str = sessionStorage.getItem('smart_challenge');
 
     return challenge_str == null ? null : JSON.parse(challenge_str);
   }
