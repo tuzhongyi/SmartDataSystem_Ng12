@@ -78,7 +78,7 @@ export class AMapBusiness {
     //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
 
-    return `http://${host}:${port}/amap/map_ts_offline.html?v=${date}`;
+    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   loaded = false;
   init() {

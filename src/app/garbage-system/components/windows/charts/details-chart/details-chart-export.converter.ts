@@ -30,7 +30,7 @@ export class ExportExcelConverter
         const data = source[j][i];
         value.push(data.value);
       }
-      model.datas.push(value);
+      model.rowValues.push(value);
     }
     return model;
   }

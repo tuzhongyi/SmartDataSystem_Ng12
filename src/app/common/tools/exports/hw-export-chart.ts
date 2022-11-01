@@ -1,48 +1,53 @@
-export declare class HowellExportChart {
-  constructor(data: ExcelData);
+import { HttpClient } from '@angular/common/http';
+import { ExcelData } from './hw-excel-v1/data';
+import { HowellExcelV1 } from './hw-excel-v1/hw-excel-v1';
+import { HowellExcel } from './hw-export-excel';
+import { HowellExportModel } from './hw-export.model';
 
-  read(opts: any, cb?: any): void;
-  //generate(data: any, opt: any, bc:(bolb:any)=>void):void;
+export class HowellExportChart {
+  constructor(private http: HttpClient) {}
 
-  loadZip(fileData: any): void;
+  setData(
+    model: HowellExportModel,
+    excel: HowellExcel,
+    yDataIndex: number,
+    xDataIndex: number[]
+  ) {
+    this.http
+      .get('/assets/xlsx/column.xlsx', {
+        responseType: 'arraybuffer',
+      })
+      .subscribe((x) => {
+        let data = new ExcelData();
+        data.titles = [model.title];
+        data.chartTitle = model.title;
+        data.dataLen = model.rowValues.length;
+        data.dataKey = xDataIndex.map((x) => model.headers[x]);
+        data.fields = model.rowValues.map((x) => x[yDataIndex].toString());
+        data.data = new Object();
+        xDataIndex.forEach((index) => {
+          let head = model.headers[index];
+          if (!data.data[head]) data.data[head] = {};
+          model.rowValues.forEach((x) => {
+            data.data[head][x[yDataIndex]] = x[index];
+          });
+        });
 
-  writeStrings(strs: string[]): void;
-
-  getStr(str: string): string;
-
-  writeRows(area: string, rows: { $: any; c: any }[]): void;
-
-  setRowCells(
-    row: { num: number; spans: string },
-    col: { num: string; t: boolean; val: string }[]
-  ): { $: any; c: any };
-  /**
-   *
-   * @param fileData 数据buffer
-   * @param writeName 导出的文件名
-   * @param col 统计 第几了列（A,B）
-   */
-  generate(
-    fileData: any,
-    writeName: string,
-    row: number,
-    col: number,
-    v2: boolean,
-    replaceWorksheetAttr?: { $: any; sheetViews: any; drawing: any }
-  ): void;
-}
-
-export class ExcelData {
-  chart?: string;
-  chartTitle?: string;
-  titles?: Array<string>;
-  dataKey?: Array<string>;
-  fields?: Array<string>;
-  fieldName?: Array<string>;
-  chartCatStrRef?: string;
-  data: any;
-  dataLen: number;
-  constructor() {
-    this.dataLen = 9;
+        let v1 = new HowellExcelV1(data);
+        v1.loadZip(x).then(() => {
+          var sheetArr: any;
+          /**图表 数据 */
+          v1.read({ file: 'xl/worksheets/sheet1.xml' }, (err: any, o: any) => {
+            sheetArr = {
+              $: o.worksheet.$,
+              sheetViews: o.worksheet.sheetViews,
+              drawing: o.worksheet.drawing,
+            };
+            excel.getBuffer().then((buffer) => {
+              v1.generate(buffer, model.title, 2, 4, true, sheetArr);
+            });
+          });
+        });
+      });
   }
 }

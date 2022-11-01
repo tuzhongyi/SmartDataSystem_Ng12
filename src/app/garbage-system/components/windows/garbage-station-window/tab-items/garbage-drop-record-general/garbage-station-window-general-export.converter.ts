@@ -53,7 +53,7 @@ export class GarbageStationWindowGeneralExportConverter
       );
       row.push(this.GetValue(data.MixedIntoTd.format, data.MixedIntoTd.differ));
 
-      model.datas.push(row);
+      model.rowValues.push(row);
     }
 
     return model;

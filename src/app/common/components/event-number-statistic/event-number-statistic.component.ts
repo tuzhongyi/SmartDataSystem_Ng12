@@ -4,15 +4,16 @@ import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 
-
-
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { EventNumberStatisticModel, EventNumberStatisticSearchInfo } from 'src/app/view-model/event-number-statistic.model';
+import {
+  EventNumberStatisticModel,
+  EventNumberStatisticSearchInfo,
+} from 'src/app/view-model/event-number-statistic.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
 import { GlobalStoreService } from '../../service/global-store.service';
@@ -21,32 +22,30 @@ import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
-
+import { EventNumberStatisticExportConverter } from './event-number-statistic-export.converter';
 
 @Component({
   selector: 'event-number-statistic',
   templateUrl: './event-number-statistic.component.html',
   styleUrls: ['./event-number-statistic.component.less'],
-  providers: [
-    IllegalDropTotalBusiness
-  ]
+  providers: [EventNumberStatisticExportConverter, IllegalDropTotalBusiness],
 })
 export class EventNumberStatisticComponent implements OnInit {
-  TimeUnit = TimeUnit
+  TimeUnit = TimeUnit;
 
   // 拉取所有数据
-  private _pageSize = 9527E2;
+  private _pageSize = 9527e2;
   private _firstSize = 200;
 
   // 默认展示垃圾落地统计信息
   @Input()
-  eventType: EventType = EventType.IllegalDrop
+  eventType: EventType = EventType.IllegalDrop;
 
   // 当前区划ID
   private _resourceId: string = '';
   @Input()
   set resourceId(id: string) {
-    console.log('set resourceId')
+    console.log('set resourceId');
     this._resourceId = id;
     this.searchInfo.ResourceId = id;
   }
@@ -58,7 +57,7 @@ export class EventNumberStatisticComponent implements OnInit {
   private _resourceType: UserResourceType = UserResourceType.City;
   @Input()
   set resourceType(type: UserResourceType) {
-    console.log('set resourceType')
+    console.log('set resourceType');
     this._resourceType = type;
     this.searchInfo.ResourceType = EnumHelper.GetResourceChildType(type);
   }
@@ -67,10 +66,12 @@ export class EventNumberStatisticComponent implements OnInit {
   }
 
   // 默认筛选项
-  private _resourceDefault: UserResourceType = EnumHelper.GetResourceChildType(this.resourceType)
+  private _resourceDefault: UserResourceType = EnumHelper.GetResourceChildType(
+    this.resourceType
+  );
   @Input()
   set resourceDefault(type: UserResourceType) {
-    console.log('set default')
+    console.log('set default');
     this._resourceDefault = type;
     this.searchInfo.ResourceType = type;
   }
@@ -79,7 +80,7 @@ export class EventNumberStatisticComponent implements OnInit {
   }
 
   get week() {
-    return this.searchInfo.TimeUnit == TimeUnit.Week
+    return this.searchInfo.TimeUnit == TimeUnit.Week;
   }
 
   // 下拉表
@@ -91,8 +92,6 @@ export class EventNumberStatisticComponent implements OnInit {
   selectStrategy = SelectStrategy.Single;
   columnModel: TableColumnModel[] = [...IllegalDropStatisticConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-
-
 
   // Paginator
   page: Page | null = null;
@@ -108,25 +107,27 @@ export class EventNumberStatisticComponent implements OnInit {
     ResourceType: this.resourceDefault,
     ResourceId: this.resourceId,
     TimeUnit: TimeUnit.Day,
-  }
+  };
 
-
-  constructor(private _business: IllegalDropTotalBusiness, private exports: ExportBusiness) { }
+  constructor(
+    private _business: IllegalDropTotalBusiness,
+    private exports: ExportBusiness
+  ) {}
 
   ngOnInit(): void {
     // 模版要用 ngValue
     this._initUserResourceType();
     this._init();
-
   }
   private async _init() {
-
-    let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize);
-    this.page = res.Page
+    let res = await this._business.init(
+      this.searchInfo,
+      this.pageIndex,
+      this._pageSize
+    );
+    this.page = res.Page;
     this.dataSubject.next(res.Data);
     this.loadFinish = true;
-
-
   }
 
   pageEvent(pageInfo: PageEvent) {
@@ -146,21 +147,17 @@ export class EventNumberStatisticComponent implements OnInit {
   exportCSV() {
     if (this.loadFinish) {
       let title = this._getTitle();
-      let header = ['序号', '行政区', '上级行政区', '单位(起)']
-      this._business.exportCSV(title, header, this.dataSubject.value)
+      let header = ['序号', '行政区', '上级行政区', '单位(起)'];
+      this._business.exportCSV(title, header, this.dataSubject.value);
     }
-
   }
   exportXLSX() {
-
     if (this.loadFinish) {
       let title = this._getTitle();
-      let header = ['序号', '行政区', '上级行政区', '单位(起)']
-      this._business.exportXLSX(title, header, this.dataSubject.value)
+      let header = ['序号', '行政区', '上级行政区', '单位(起)'];
+      this._business.exportXLSX(title, header, this.dataSubject.value);
     }
-
   }
-
 
   // 更改日期,重新计算开始/结束时间
   changeDate(date: Date) {
@@ -183,7 +180,6 @@ export class EventNumberStatisticComponent implements OnInit {
     } else if (this.searchInfo.TimeUnit == TimeUnit.Week) {
       this.searchInfo.BeginTime = Time.curWeek(this.curDate).beginTime;
       this.searchInfo.EndTime = Time.curWeek(this.curDate).endTime;
-
     } else if (this.searchInfo.TimeUnit == TimeUnit.Month) {
       this.searchInfo.BeginTime = Time.curMonth(this.curDate).beginTime;
       this.searchInfo.EndTime = Time.curMonth(this.curDate).endTime;
@@ -199,11 +195,9 @@ export class EventNumberStatisticComponent implements OnInit {
         resourceType.toString(),
         resourceType,
         Language.UserResourceType(resourceType)
-      )
+      );
       this.options.push(item);
-
-    } while (resourceType != UserResourceType.Station);// 最底层区划是 GarbageStation
-
+    } while (resourceType != UserResourceType.Station); // 最底层区划是 GarbageStation
   }
   private _getTitle() {
     let date = formatDate(this.curDate, 'yyyy年MM月dd日', 'zh-CN');

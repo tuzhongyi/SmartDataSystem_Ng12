@@ -21,7 +21,7 @@ export class GarbageDropStationWindowCountExportConverter
       value.push(data.EventCount);
       value.push(data.TimeoutCount);
       value.push(data.TimeoutRatio.toFixed(2) + '%');
-      model.datas.push(value);
+      model.rowValues.push(value);
     }
     return model;
   }
