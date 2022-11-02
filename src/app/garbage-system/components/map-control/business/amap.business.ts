@@ -195,7 +195,11 @@ export class AMapBusiness {
   loadDivision(divisionId: string) {
     if (this.mapClient) {
       this.mapClient.Village.Select(divisionId, true);
-      this.mapClient.Viewer.Focus(divisionId);
+      // this.mapClient.Viewer.Focus(divisionId);
+      if (this.mapController) {
+        let village = this.mapController.Village.Get(divisionId);
+        this.mapClient.Viewer.MoveTo(village.center);
+      }
     }
   }
 
@@ -205,7 +209,12 @@ export class AMapBusiness {
         divisionId,
         this.storeService.defaultDivisionId === divisionId
       );
-      this.mapClient.Viewer.Focus(divisionId);
+      // this.mapClient.Viewer.Focus(divisionId);
+
+      if (this.mapController) {
+        let village = this.mapController.Village.Get(divisionId);
+        this.mapClient.Viewer.MoveTo(village.center);
+      }
     }
   }
 
