@@ -53,11 +53,11 @@ const routes: Routes = [
     canActivate: [AuthorizationService],
   },
   {
-    path: RoutePath.garbage_remove,
+    path: RoutePath.garbage_collection,
     loadChildren: () =>
-      import('./garbage-system/garbage-remove/garbage-remove.module').then(
-        (mode) => mode.GarbageRemoveModule
-      ),
+      import(
+        './garbage-system/garbage-collection/garbage-collection.module'
+      ).then((mode) => mode.GarbageCollectionModule),
   },
   {
     path: '**',

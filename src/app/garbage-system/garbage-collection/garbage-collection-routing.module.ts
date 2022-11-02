@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { GarbageRemoveIndexComponent } from './components/garbage-remove-index/garbage-remove-index.component';
+import { GarbageCollectionIndexComponent } from './components/collection-index/collection-index.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'index',
-    component: GarbageRemoveIndexComponent,
+    component: GarbageCollectionIndexComponent,
   },
 ];
 
@@ -18,4 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class GarbageRemoveRoutingModule {}
+export class GarbageCollectionRoutingModule {}

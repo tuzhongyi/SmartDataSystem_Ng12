@@ -21,9 +21,9 @@ import { GarbageStationInfoWindowBusiness } from './business/windows/station-inf
 import { VideoControlWindowBusiness } from './business/windows/video-control-window.business';
 
 @Component({
-  selector: 'garbage-remove-index',
-  templateUrl: './garbage-remove-index.component.html',
-  styleUrls: ['./garbage-remove-index.component.less'],
+  selector: 'collection-index',
+  templateUrl: './collection-index.component.html',
+  styleUrls: ['./collection-index.component.less'],
   providers: [
     MonitorEventTriggerBusiness,
     StatisticCardBussiness,
@@ -41,7 +41,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     WindowBussiness,
   ],
 })
-export class GarbageRemoveIndexComponent {
+export class GarbageCollectionIndexComponent {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
@@ -96,11 +96,9 @@ export class GarbageRemoveIndexComponent {
       let resourceType = user.Resources[0].ResourceType;
       let userDivisionType =
         EnumHelper.ConvertUserResourceToDivision(resourceType);
-
       this._storeService.divisionId = userDivisionId;
       this._storeService.divisionType = userDivisionType;
     }
-
     this.statistic.loading.emit();
   }
 }

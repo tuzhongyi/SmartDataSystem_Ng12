@@ -13,7 +13,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
-export class EventStatisticBusiness {
+export class GarbageVehiclesEventStatisticBusiness {
   constructor(private divisionRequest: DivisionRequestService) {}
 
   async getCurrentDivision(id: string) {

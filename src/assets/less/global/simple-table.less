@@ -1,0 +1,39 @@
+.simple-table {
+  table {
+    color: #cfd7ff;
+    width: 100%;
+
+    thead {
+      background-color: rgba(58, 147, 255, 0.6);
+
+      tr th {
+        padding: 5px;
+        font-weight: normal;
+        color: white;
+      }
+      tr th:first-child {
+        padding-left: 24px;
+      }
+    }
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+      tr:hover {
+        background-color: rgba(58, 147, 255, 0.4);
+      }
+      tr td {
+        padding: 5px;
+      }
+      tr td:first-child {
+        padding-left: 24px;
+      }
+      i {
+        color: #7586e0;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}

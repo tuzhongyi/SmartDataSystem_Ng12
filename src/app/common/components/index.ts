@@ -52,6 +52,7 @@ import { EventNumberStatisticComponent } from './event-number-statistic/event-nu
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 import { RankComponent } from './rank/rank.component';
+import { SimpleTableComponent } from './simple-table/simple-table.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -107,4 +108,5 @@ export const CUSTOM_COMPONENTS = [
   EventNumberChartComponent,
   CoordinateManageComponent,
   RankComponent,
+  SimpleTableComponent,
 ];

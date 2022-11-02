@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
-import { EventStatisticBusiness } from './event-statistic.business';
+import { GarbageVehiclesEventStatisticBusiness } from './vehicles-event-statistic.business';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -35,12 +35,12 @@ type EChartOptions = echarts.ComposeOption<
 >;
 
 @Component({
-  selector: 'howell-event-statistic',
-  templateUrl: './event-statistic.component.html',
-  styleUrls: ['./event-statistic.component.less'],
-  providers: [EventStatisticBusiness],
+  selector: 'vehicles-event-statistic',
+  templateUrl: './vehicles-event-statistic.component.html',
+  styleUrls: ['./vehicles-event-statistic.component.less'],
+  providers: [GarbageVehiclesEventStatisticBusiness],
 })
-export class GarbageRemoveEventStatisticComponent
+export class GarbageVehiclesEventStatisticComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
   // 在销毁组件时，取消订阅
@@ -92,7 +92,7 @@ export class GarbageRemoveEventStatisticComponent
   merge: EChartOptions = {};
   constructor(
     private _storeService: GlobalStoreService,
-    private _business: EventStatisticBusiness,
+    private _business: GarbageVehiclesEventStatisticBusiness,
     private _converter: EventStatisticConverter
   ) {}
 

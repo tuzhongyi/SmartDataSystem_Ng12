@@ -10,7 +10,7 @@
   <div class="monitor-body">
     <div class="monitor-body__item monitor-body__item--none">
       <div class="monitor-body__wrapper">
-        <app-division-list></app-division-list>
+        <collection-division-list></collection-division-list>
       </div>
     </div>
     <div class="monitor-body__item monitor-body__item--map">
@@ -37,9 +37,9 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <app-device-state
+        <collection-device-state
           (Click)="trigger.deviceState.onclick($event)"
-        ></app-device-state> -->
+        ></collection-device-state>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -49,31 +49,29 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <app-retention-rank
-          (Click)="trigger.retentionRank.onclick($event)"
-        ></app-retention-rank> -->
+        <collection-vehicle></collection-vehicle>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <howell-event-statistic
+        <vehicles-event-statistic
           [title]="'乱扔垃圾统计表'"
-        ></howell-event-statistic>
+        ></vehicles-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <howell-event-statistic
+        <vehicles-event-statistic
           [title]="'乱扔垃圾统计表'"
-        ></howell-event-statistic>
+        ></vehicles-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <howell-event-statistic
+        <vehicles-event-statistic
           [title]="'混合投放统计表'"
           [type]="mixIntoType"
-        ></howell-event-statistic>
+        ></vehicles-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">

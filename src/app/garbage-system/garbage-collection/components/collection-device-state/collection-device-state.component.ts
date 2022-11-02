@@ -25,19 +25,19 @@ import {
   DeviceStateCountModel,
   IDeviceStateDes,
 } from 'src/app/view-model/device-state-count.model';
-import { DeviceStateBusiness } from './device-state.business';
+import { GarbageVehiclesDeviceStateBusiness } from './collection-device-state.business';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 
 type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
 
 @Component({
-  selector: 'app-device-state',
-  templateUrl: './device-state.component.html',
-  styleUrls: ['./device-state.component.less'],
-  providers: [DeviceStateBusiness],
+  selector: 'collection-device-state',
+  templateUrl: './collection-device-state.component.html',
+  styleUrls: ['./collection-device-state.component.less'],
+  providers: [GarbageVehiclesDeviceStateBusiness],
 })
-export class DeviceStateComponent
+export class GarbageVehiclesDeviceStateComponent
   implements
     IComponent<IModel, DeviceStateCountModel>,
     OnInit,
@@ -65,7 +65,7 @@ export class DeviceStateComponent
 
   @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(business: DeviceStateBusiness) {
+  constructor(business: GarbageVehiclesDeviceStateBusiness) {
     this.business = business;
   }
   business: IBusiness<IModel, DeviceStateCountModel>;
@@ -137,7 +137,7 @@ export class DeviceStateComponent
   }
   async loadData() {
     this.model = await this.business.load();
-    // this.model.onLineRatio = 30;
+
     this.myChart?.setOption({
       series: [
         {

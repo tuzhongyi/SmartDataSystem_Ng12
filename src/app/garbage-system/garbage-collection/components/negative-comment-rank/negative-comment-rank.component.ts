@@ -106,7 +106,7 @@ export class NegativeCommentRankComponent implements OnInit, OnDestroy {
         : this.resourceType,
       this.eventType
     );
-    console.log(this.rankData);
+    // console.log(this.rankData);
   }
 
   onItemClicked(model: RankModel) {

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-11 13:11:58
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-01 15:18:09
+ * @Last Modified time: 2022-11-02 10:51:46
  */
 import { Component, OnInit } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
@@ -10,30 +10,30 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { DivisionListBusiness } from './division-list.business';
+import { GarbageVehiclesDivisionListBusiness } from './collection-division-list.business';
 
 @Component({
-  selector: 'app-division-list',
-  templateUrl: './division-list.component.html',
-  styleUrls: ['./division-list.component.less'],
+  selector: 'collection-division-list',
+  templateUrl: './collection-division-list.component.html',
+  styleUrls: ['./collection-division-list.component.less'],
   providers: [
     {
-      provide: DivisionListBusiness,
+      provide: GarbageVehiclesDivisionListBusiness,
       useFactory: function (business: IService<Division>) {
-        return new DivisionListBusiness(business);
+        return new GarbageVehiclesDivisionListBusiness(business);
       },
       deps: [DivisionRequestService],
     },
   ],
 })
-export class GarbageRemoveDivisionListComponent implements OnInit {
+export class GarbageCollectionDivisionListComponent implements OnInit {
   // 显式声明null类型，表示类实例一定有该属性
   currentDivision: Division | null = null;
   childDivisions: Division[] | null = null;
   selectedId: string = '';
 
   constructor(
-    private divisionListBusiness: DivisionListBusiness,
+    private divisionListBusiness: GarbageVehiclesDivisionListBusiness,
     private storeService: GlobalStoreService
   ) {}
 
