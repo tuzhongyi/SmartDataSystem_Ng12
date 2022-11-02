@@ -1,0 +1,87 @@
+<div class="monitor-container">
+  <div class="monitor-header">
+    <mat-toolbar>
+      <app-account-info></app-account-info>
+      <div class="spacer"></div>
+      <app-time></app-time>
+      <app-account-operation></app-account-operation>
+    </mat-toolbar>
+  </div>
+  <div class="monitor-body">
+    <div class="monitor-body__item monitor-body__item--none">
+      <div class="monitor-body__wrapper">
+        <app-division-list></app-division-list>
+      </div>
+    </div>
+    <div class="monitor-body__item monitor-body__item--map">
+      <div class="monitor-body__wrapper">
+        <div></div>
+        <div class="map-control">
+          <!-- <app-map-control
+            (patrol)="map.onpatrol()"
+            (VideoPlay)="map.onvideoplay($event)"
+            (illegalDropClicked)="map.onIllegalDropClicked($event)"
+            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
+            (garbageCountClicked)="map.onGarbageCountClicked($event)"
+            (garbageFullClicked)="map.onGarbageFullClicked($event)"
+            [position]="map.position"
+          ></app-map-control> -->
+        </div>
+      </div>
+      <div class="monitor-body__wrapper patrol">
+        <!-- <app-patrol-control
+          (close)="patrol.onclose()"
+          (fullscreen)="patrol.onfullscreen()"
+        ></app-patrol-control> -->
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <!-- <app-device-state
+          (Click)="trigger.deviceState.onclick($event)"
+        ></app-device-state> -->
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <app-negative-comment-rank> </app-negative-comment-rank>
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <!-- <app-retention-rank
+          (Click)="trigger.retentionRank.onclick($event)"
+        ></app-retention-rank> -->
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <howell-event-statistic
+          [title]="'乱扔垃圾统计表'"
+        ></howell-event-statistic>
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <howell-event-statistic
+          [title]="'乱扔垃圾统计表'"
+        ></howell-event-statistic>
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <howell-event-statistic
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></howell-event-statistic>
+      </div>
+    </div>
+    <div class="monitor-body__item">
+      <div class="monitor-body__wrapper">
+        <!-- <app-disposal-count
+          (task)="trigger.risposalCount.ontask()"
+        ></app-disposal-count> -->
+      </div>
+    </div>
+  </div>
+</div>

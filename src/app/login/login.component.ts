@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2021-12-21 14:02:08
+ * @Last Modified time: 2022-11-01 13:39:54
  */
 
 import {
@@ -167,9 +167,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         );
         if (result instanceof User) {
           // console.log('登录成功', result);
-
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
-
           // 区分权限
           if (result.Role && result.Role.length > 0) {
             if (result.Role[0].StaticData == StaticDataRole.enabled) {
@@ -182,7 +180,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               ) {
                 this._router.navigateByUrl(RoutePath.garbage_system_committees);
               } else {
-                this._router.navigateByUrl(RoutePath.garbage_system);
+                this._router.navigateByUrl(RoutePath.garbage_remove);
               }
             }
           } else if (

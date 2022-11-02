@@ -52,17 +52,22 @@ const routes: Routes = [
       ),
     canActivate: [AuthorizationService],
   },
-  // {
-  //   path: '**',
-  //   redirectTo: 'login',
-  // },
+  {
+    path: RoutePath.garbage_remove,
+    loadChildren: () =>
+      import('./garbage-system/garbage-remove/garbage-remove.module').then(
+        (mode) => mode.GarbageRemoveModule
+      ),
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+  },
 ];
 
 @NgModule({
   declarations: [],
-  imports: [
-    RouterModule.forRoot(routes),
-  ],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

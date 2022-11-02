@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
- * @Last Modified by: zzl
- * @Last Modified time: 2022-01-27 14:53:06
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-01 15:00:18
  */
 
 import { NgModule } from '@angular/core';
@@ -48,7 +48,6 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
 
 @NgModule({
   declarations: [
-    RankComponent,
     MonitorComponent,
     DivisionListComponent,
     IllegalMixintoRankComponent,
@@ -121,4 +120,4 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
   ],
 })
-export class GarbageComponentsModule { }
+export class GarbageComponentsModule {}

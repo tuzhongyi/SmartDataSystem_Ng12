@@ -6,6 +6,7 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { AccountOperationDisplay } from './account-operation.model';
+import { RoutePath } from 'src/app/app-routing.path';
 
 @Component({
   selector: 'app-account-operation',
@@ -24,13 +25,14 @@ export class AccountOperationComponent implements OnInit {
     private _store: GlobalStoreService,
     private _cookieService: CookieService,
     private _router: Router
-  ) { }
+  ) {}
 
   userName: string = '';
   display = new AccountOperationDisplay();
 
   ngOnInit(): void {
     let userName = this._cookieService.get('userName');
+    if (!userName) this._router.navigateByUrl(RoutePath.login);
     userName = atob(userName);
 
     let res = userName.match(

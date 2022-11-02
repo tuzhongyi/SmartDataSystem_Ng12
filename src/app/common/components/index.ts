@@ -51,6 +51,7 @@ import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-eve
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
+import { RankComponent } from './rank/rank.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -104,5 +105,6 @@ export const CUSTOM_COMPONENTS = [
   IllegalDropEventComponent,
   EventNumberStatisticComponent,
   EventNumberChartComponent,
-  CoordinateManageComponent
+  CoordinateManageComponent,
+  RankComponent,
 ];

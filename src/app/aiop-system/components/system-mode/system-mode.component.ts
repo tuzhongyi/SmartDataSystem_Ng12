@@ -14,7 +14,7 @@ export class AIOPSystemModeComponent implements OnInit {
     this._title.setTitle('生活垃圾分类全程监管平台');
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   navigate(path: string) {
     // console.log('path', path);
