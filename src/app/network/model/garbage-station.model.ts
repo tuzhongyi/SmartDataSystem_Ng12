@@ -1,6 +1,6 @@
 import { Transform, Type } from 'class-transformer';
 import { CameraUsage } from '../../enum/camera-usage.enum';
-import { CanType } from '../../enum/can-type.enum';
+import { TrashCanType } from '../../enum/trashcan-type.enum';
 import { Camera } from './camera.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
@@ -116,7 +116,7 @@ export interface GarbageStationWindow {
   /**	String	名称	O */
   Name?: string;
   /**	Int32	垃圾桶类型	M */
-  CanType: CanType;
+  CanType: TrashCanType;
   /**	Int32	垃圾桶数量，（保留）	O */
   TrashCanNumber?: number;
 }

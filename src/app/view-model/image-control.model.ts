@@ -1,8 +1,8 @@
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { EventDataObject } from 'src/app/network/model/garbage-event-record.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
+import { EventDataObject } from '../network/model/event-data-object.model';
 
 export class ImageControlModel<T = Camera | CameraImageUrl> {
   constructor(

@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2022-11-03 15:03:31
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-03 16:37:39
+ */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { CameraState } from 'src/app/enum/camera-state.enum';
@@ -12,13 +18,20 @@ import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
+import { RelayState } from 'src/app/enum/relay-state.enum';
+import {
+  ResourceType,
+  VehicleResourceType,
+} from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { VehicleScore } from 'src/app/enum/vehicle-score.enum';
+import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 
@@ -359,6 +372,65 @@ export class Language {
         return '折线图';
       default:
         return '';
+    }
+  }
+
+  static VehicleType(type: VehicleType) {
+    switch (type) {
+      case VehicleType.Tricycle:
+        return this.json.VehicleType.Tricycle;
+      case VehicleType.Car:
+        return this.json.VehicleType.Car;
+      default:
+        return this.json.VehicleType.Default;
+    }
+  }
+
+  static VehiclePositionNo(type: VehiclePositionNo) {
+    switch (type) {
+      case VehiclePositionNo.CarFront:
+        return this.json.VehiclePositionNo.CarFront;
+      case VehiclePositionNo.CarEnd:
+        return this.json.VehiclePositionNo.CarEnd;
+      case VehiclePositionNo.TrashCan:
+        return this.json.VehiclePositionNo.TrashCan;
+      default:
+        return this.json.VehiclePositionNo.Default;
+    }
+  }
+
+  static RelayState(type: RelayState) {
+    switch (type) {
+      case RelayState.Closed:
+        return this.json.RelayState.Closed;
+      case RelayState.Opened:
+        return this.json.RelayState.Opened;
+      default:
+        return this.json.RelayState.Default;
+    }
+  }
+
+  static VehicleResourceType(type: VehicleResourceType) {
+    switch (type) {
+      case VehicleResourceType.Camera:
+        return this.json.VehicleResourceType.Camera;
+      case VehicleResourceType.GarbageVehicle:
+        return this.json.VehicleResourceType.GarbageVehicle;
+      default:
+        return this.json.VehicleResourceType.Default;
+    }
+  }
+
+  static VehicleScore(type: VehicleScore) {
+    switch (type) {
+      case VehicleScore.Poor:
+        return this.json.VehicleScore.Poor;
+      case VehicleScore.Average:
+        return this.json.VehicleScore.Average;
+      case VehicleScore.Good:
+        return this.json.VehicleScore.Good;
+      default:
+        return this.json.VehicleScore.Default;
     }
   }
 

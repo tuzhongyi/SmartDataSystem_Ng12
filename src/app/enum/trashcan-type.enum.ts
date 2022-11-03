@@ -6,7 +6,7 @@
  * Recycle	可回收垃圾桶	3
  * Hazard	有害垃圾桶	4
  */
-export enum CanType {
+export enum TrashCanType {
   /** 干垃圾桶*/
   Dry = 1,
   /**湿垃圾桶 */

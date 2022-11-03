@@ -97,5 +97,32 @@
   "state": "状态",
   "garde": "达标率",
   "avg": "平均",
-  "duration": "时长"
+  "duration": "时长",
+  "VehicleType": {
+    "Tricycle": "三轮车",
+    "Car": "汽车",
+    "Default": "未知"
+  },
+  "VehiclePositionNo": {
+    "CarFront": "车头",
+    "CarEnd": "车尾",
+    "TrashCan": "垃圾桶",
+    "Default": "未知"
+  },
+  "RelayState": {
+    "Closed": "关闭",
+    "Opened": "打开",
+    "Default": "未知"
+  },
+  "VehicleResourceType": {
+    "Camera": "监控点",
+    "GarbageVehicle": "清运车辆",
+    "Default": "未知"
+  },
+  "VehicleScore": {
+    "Poor": "差评",
+    "Average": "中评",
+    "Good": "好评",
+    "Default": "未知"
+  }
 }

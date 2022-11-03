@@ -12,12 +12,12 @@ import {
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { EventDataObject } from 'src/app/network/model/garbage-event-record.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { Point } from 'src/app/network/model/point.model';
 import { Size } from 'src/app/network/model/size.model';
 import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlModel } from '../../../view-model/image-control.model';
+import { EventDataObject } from 'src/app/network/model/event-data-object.model';
 
 @Component({
   selector: 'app-image-control',
@@ -42,7 +42,7 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   @Input('draw')
   isDraw = false;
 
-  constructor() { }
+  constructor() {}
   ngAfterViewInit(): void {
     if (this.isDraw) {
       this.draw();
@@ -158,7 +158,7 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
     backgroundImage: '',
   };
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   onError(event: Event) {
     if (this.model) {

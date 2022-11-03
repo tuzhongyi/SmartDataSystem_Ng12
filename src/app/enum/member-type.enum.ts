@@ -12,3 +12,11 @@ export enum MemberType {
   /**	卫生干部	2 */
   healthworker = 2,
 }
+
+export enum GarbageVehicleMemberType {
+  // 其他人员
+  other = 0,
+
+  // 清运人员
+  volunteer = 1,
+}

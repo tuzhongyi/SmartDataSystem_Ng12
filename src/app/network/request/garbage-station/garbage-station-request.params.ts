@@ -1,7 +1,7 @@
 import { Data } from '@angular/router';
 import { Transform } from 'class-transformer';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { CanType } from 'src/app/enum/can-type.enum';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { ComparisonType } from 'src/app/enum/comparison-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LidState } from 'src/app/enum/lid-state.enum';
@@ -37,7 +37,8 @@ export class GetGarbageStationsParams extends PagedParams implements IParams {
 
 export class GetGarbageStationCamerasParams
   extends PagedParams
-  implements IParams {
+  implements IParams
+{
   /**	String[]	摄像机ID	O */
   Ids?: string[];
   /**	String[]	垃圾房ID	O */
@@ -56,7 +57,8 @@ export class GetGarbageStationCamerasParams
 
 export class GetGarbageStationTrashCansParams
   extends PagedParams
-  implements IParams {
+  implements IParams
+{
   /**	String	垃圾桶ID	O */
   Ids?: string;
   /**	String[]	摄像机ID	O */
@@ -68,7 +70,7 @@ export class GetGarbageStationTrashCansParams
   /**	String	垃圾桶编号	O */
   No?: string;
   /**	Int32	垃圾桶类型	O */
-  CanType?: CanType;
+  CanType?: TrashCanType;
   /**
    * Int32	垃圾桶盖子状态：
    *  0：打开，1：关闭	O
@@ -77,7 +79,8 @@ export class GetGarbageStationTrashCansParams
 }
 export class GetGarbageStationVolumesParams
   extends PagedIntervalParams
-  implements IParams {
+  implements IParams
+{
   /**
    * 	Int32	统计时间单位：
    *  1-Hour，2-Day	M
@@ -86,7 +89,8 @@ export class GetGarbageStationVolumesParams
 }
 export class GetGarbageStationEventNumbersParams
   extends PagedIntervalParams
-  implements IParams {
+  implements IParams
+{
   /**
    * 	Int32	统计时间单位：
    *  1-Hour，2-Day	M
@@ -95,7 +99,8 @@ export class GetGarbageStationEventNumbersParams
 }
 export class GetGarbageStationStatisticNumbersParams
   extends PagedParams
-  implements IParams {
+  implements IParams
+{
   /**	String[]	垃圾房ID	O */
   Ids?: string[];
   /**	String	垃圾房名称，支持LIKE	O */
@@ -116,7 +121,8 @@ export class GetGarbageStationStatisticGarbageCountsParams implements IParams {
 }
 export class GetGarbageStationSumEventNumberParams
   extends DurationParams
-  implements IParams {
+  implements IParams
+{
   /**	String[]	垃圾房ID列表	M */
   GarbageStationIds!: string[];
   /**
@@ -149,7 +155,8 @@ export class CameraUploadFileParams extends DurationParams {
  */
 export class GetGarbageStationStatisticNumbersParamsV2
   extends DurationParams
-  implements IParams {
+  implements IParams
+{
   /**	String[]	垃圾房ID列表	M */
   GarbageStationIds!: string[];
   /**
