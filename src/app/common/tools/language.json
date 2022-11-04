@@ -124,5 +124,11 @@
     "Average": "中评",
     "Good": "好评",
     "Default": "未知"
+  },
+  "VehicleRelayOperator": {
+    "Reset": "复位",
+    "Open": "打开",
+    "Close": "关闭",
+    "Default": "未知"
   }
 }

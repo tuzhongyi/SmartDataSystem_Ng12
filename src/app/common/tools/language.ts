@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 16:37:39
+ * @Last Modified time: 2022-11-04 15:41:41
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -30,6 +30,7 @@ import { StationType } from 'src/app/enum/station-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleScore } from 'src/app/enum/vehicle-score.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
@@ -431,6 +432,18 @@ export class Language {
         return this.json.VehicleScore.Good;
       default:
         return this.json.VehicleScore.Default;
+    }
+  }
+  static VehicleRelayOperator(type: VehicleRelayOperator) {
+    switch (type) {
+      case VehicleRelayOperator.Reset:
+        return this.json.VehicleRelayOperator.Reset;
+      case VehicleRelayOperator.Open:
+        return this.json.VehicleRelayOperator.Open;
+      case VehicleRelayOperator.Close:
+        return this.json.VehicleRelayOperator.Close;
+      default:
+        return this.json.VehicleRelayOperator.Default;
     }
   }
 

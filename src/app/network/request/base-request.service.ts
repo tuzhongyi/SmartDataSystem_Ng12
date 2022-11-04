@@ -6,7 +6,7 @@ import { IParams } from './IParams.interface';
 import { ServiceHelper } from './service-helper';
 
 export class BaseRequestService {
-  constructor(public http: HowellAuthHttpService) { }
+  constructor(public http: HowellAuthHttpService) {}
   async get<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http.get(url).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
@@ -48,6 +48,16 @@ export class BaseRequestService {
       .toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
+  async postReturnString(url: string, params?: IParams) {
+    let data: IParams | undefined;
+    if (params) {
+      data = classToPlain(params) as IParams;
+    }
+    let response = await this.http
+      .post<IParams, HowellResponse<string>>(url, data)
+      .toPromise();
+    return ServiceHelper.ResponseProcess(response, true);
+  }
   async getArray<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http
       .get<IParams, HowellResponse<Array<T>>>(url)
@@ -71,7 +81,7 @@ export class BaseTypeRequestService<T> {
   constructor(
     private _service: BaseRequestService,
     private type: ClassConstructor<T>
-  ) { }
+  ) {}
 
   async get(url: string) {
     return this._service.get(url, this.type);

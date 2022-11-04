@@ -30,6 +30,9 @@ import { DivisionNumberStatisticComparison } from '../../model/division-number-s
 import { Injectable } from '@angular/core';
 import { Cache } from '../cache/cache';
 import { classToPlain } from 'class-transformer';
+import { GarbageVehicleDivisionUrl } from '../../url/garbage-vehicle/division.url';
+import { DivisionGarbageWeight } from '../../model/division-garbage-weight.model';
+import { DivisionGarbageScore } from '../../model/division-garbage-score.model';
 
 @Cache(DivisionUrl.basic(), Division)
 @Injectable({
@@ -41,11 +44,9 @@ export class DivisionRequestService extends AbstractService<Division> {
 
   constructor(_http: HowellAuthHttpService) {
     super();
-    // console.log('DivisionRequestService');
     this.basic = new BaseRequestService(_http);
     this.type = this.basic.type(Division);
   }
-
 
   create(data: Division): Promise<Division> {
     let url = DivisionUrl.basic();
@@ -88,6 +89,10 @@ export class DivisionRequestService extends AbstractService<Division> {
       return this.basic.get(url, DivisionTree);
     }
   }
+  vehicleExcels(data: BinaryData) {
+    let url = GarbageVehicleDivisionUrl.excles();
+    return this.basic.postReturnString(url, data);
+  }
 
   private _volume?: VolumesService;
   public get volume(): VolumesService {
@@ -112,10 +117,18 @@ export class DivisionRequestService extends AbstractService<Division> {
     }
     return this._statistic;
   }
+
+  private _divisionGarbage?: DivisionGarbage;
+  get divisionGarbage() {
+    if (this._divisionGarbage) {
+      this._divisionGarbage = new DivisionGarbage(this.basic);
+    }
+    return this._divisionGarbage;
+  }
 }
 
 class VolumesService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -126,7 +139,7 @@ class VolumesService {
   }
 }
 class VolumesHistoryService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   list(
     divisionId: string,
     params: GetDivisionVolumesParams
@@ -137,7 +150,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   sum(params: GetDivisionSumEventNumberParams): Promise<SumEventNumber[]> {
     let url = DivisionUrl.eventnumber().sum();
@@ -154,7 +167,7 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   list(
     divisionId: string,
     params: GetDivisionEventNumbersParams
@@ -166,7 +179,7 @@ class EventNumbersHistoryService {
 }
 
 class StatisticService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -210,12 +223,37 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   list(
     params: GetDivisionStatisticNumbersParamsV2
   ): Promise<DivisionNumberStatisticV2[]> {
     let url = DivisionUrl.statistic().number.history.list();
     let data = classToPlain(params);
     return this.basic.postArray(url, DivisionNumberStatisticV2, data);
+  }
+}
+
+class DivisionGarbage {
+  weight = new GarbageVehicleWeightService(this.basic);
+  score = new GarbageVehiclScoreService(this.basic);
+
+  constructor(private basic: BaseRequestService) {}
+}
+
+class GarbageVehicleWeightService {
+  constructor(private basic: BaseRequestService) {}
+
+  get() {
+    let url = GarbageVehicleDivisionUrl.garbage().weight.basic();
+    return this.basic.get(url, DivisionGarbageWeight);
+  }
+}
+
+class GarbageVehiclScoreService {
+  constructor(private basic: BaseRequestService) {}
+
+  get() {
+    let url = GarbageVehicleDivisionUrl.garbage().score.basic();
+    return this.basic.get(url, DivisionGarbageScore);
   }
 }

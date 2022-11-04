@@ -1,8 +1,8 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-03 14:46:13 
- * @Last Modified by:   pmx 
- * @Last Modified time: 2022-11-03 14:46:13 
+ * @Author: pmx
+ * @Date: 2022-11-03 14:46:13
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-04 15:38:46
  */
 import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
 
@@ -23,7 +23,7 @@ export abstract class GarbageVehicleUrl {
     let base: string = id ? this.item(id) : this.basic();
     return new CameraUrl(base);
   }
-  static get route() {
+  static route() {
     return new RouteUrl(this.basic());
   }
 
