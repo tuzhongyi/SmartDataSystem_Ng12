@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 16:56:50
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 16:57:19
+ * @Last Modified time: 2022-11-06 15:49:51
  */
 import { Transform } from 'class-transformer';
 import { CollectionPointClassification } from 'src/app/enum/collection-point.enum';

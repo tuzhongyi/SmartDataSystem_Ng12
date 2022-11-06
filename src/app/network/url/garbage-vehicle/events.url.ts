@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-11-03 14:46:16
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-03 14:46:16
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-06 14:56:39
  */
 import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
 
@@ -19,7 +19,7 @@ export abstract class GarbageVehicleEventUrl {
 }
 
 class InfoUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/Infos`;
@@ -38,7 +38,7 @@ class RecordUrl implements InnerUrl {
   vehicleOnline = new VehicleOnlineUrl(this.basic());
   cameraOnline = new CameraOnlineUrl(this.basic());
 
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/Records`;
@@ -46,7 +46,7 @@ class RecordUrl implements InnerUrl {
 }
 
 class GarbageCollectionUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/GarbageCollection`;
@@ -60,7 +60,7 @@ class GarbageCollectionUrl implements InnerUrl {
 }
 
 class RelayStateChangeUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/RelayStateChange`;
@@ -74,7 +74,7 @@ class RelayStateChangeUrl implements InnerUrl {
 }
 
 class VehicleOnlineUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/VehicleOnline`;
@@ -88,7 +88,7 @@ class VehicleOnlineUrl implements InnerUrl {
 }
 
 class CameraOnlineUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic(): string {
     return `${this.base}/CameraOnline`;

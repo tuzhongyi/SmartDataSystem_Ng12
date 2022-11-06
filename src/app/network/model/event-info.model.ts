@@ -1,4 +1,4 @@
-import { EventType } from 'src/app/enum/event-type.enum';
+import { EventType, VehicleEventType } from 'src/app/enum/event-type.enum';
 import { AIModelTrigger } from './ai-model-trigger.model';
 import { IModel } from './model.interface';
 
@@ -12,4 +12,12 @@ export class EventInfo implements IModel {
   AIModels?: AIModelTrigger[];
   /**	Int32	事件级别	M */
   Level!: number;
+}
+
+export class VehicleEventInfo implements IModel {
+  Type!: VehicleEventType;
+  Name!: string;
+  AIModels?: AIModelTrigger[];
+  Level!: number;
+
 }

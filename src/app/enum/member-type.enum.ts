@@ -13,7 +13,7 @@ export enum MemberType {
   healthworker = 2,
 }
 
-export enum GarbageVehicleMemberType {
+export enum VehicleMemberType {
   // 其他人员
   other = 0,
 

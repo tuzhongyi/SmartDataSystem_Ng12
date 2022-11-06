@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-11-03 14:46:22
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-03 14:46:22
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-06 16:10:51
  */
 import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
 
@@ -29,7 +29,7 @@ export abstract class GarbageVehicleCollectionPointUrl {
   }
 }
 class TrashCanUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
   basic() {
     return `${this.base}/TrashCans`;
   }
@@ -45,7 +45,7 @@ class TrashCanUrl implements InnerUrl {
 }
 
 class StatisticUrl implements InnerUrl {
-  constructor(private base: string) {}
+  constructor(private base: string) { }
 
   basic() {
     return `${this.base}/Statistics`;
