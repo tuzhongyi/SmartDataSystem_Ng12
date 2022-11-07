@@ -68,7 +68,7 @@ export class GetGarbageVehicleRouteParams
   /**	String[]	只检查包含垃圾桶ID的点位	O */
   TrashCanIds?: string[];
   /**	Boolean	是否按时间倒序排列	O */
-  Desc?: keyof GisRoutePoint;
+  Desc?: boolean;
 }
 
 export class ResetRelayParams implements IParams {

@@ -1,30 +1,17 @@
-/*
- * @Author: pmx 
- * @Date: 2022-11-06 15:33:37 
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-06 15:35:07
- */
 import { VehicleMemberType } from 'src/app/enum/member-type.enum';
 import { IParams, PagedParams } from '../IParams.interface';
 
 export class GetVehicleMembersParams extends PagedParams implements IParams {
-
-  // 人员ID
+  /**	String[]	人员ID	O	*/
   Ids?: string[];
-
-  // 人员名称，支持LIKE	
+  /**	String	人员名称，支持LIKE	O	*/
   Name?: string;
-
-  // 手机号码，支持LIKE
+  /**	String	手机号码，支持LIKE	O	*/
   MobileNo?: string;
-
-  // 人员类型
+  /**	Int32	人员类型	O	*/
   MemberType?: VehicleMemberType;
-
-  // 区划ID
+  /**	String	区划ID	O	*/
   DivisionId?: string;
-
-  // 唯一编号
+  /**	String	唯一编号	O	*/
   No?: string;
-
 }

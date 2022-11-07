@@ -18,11 +18,10 @@ import {
   PagedParams,
 } from '../IParams.interface';
 
-export class GetVehicleEventInfosParams extends PagedParams implements IParams {
-  // 事件类型
+export class GetEventInfosParams extends PagedParams implements IParams {
+  /**	Int32[]	事件类型	O */
   Types?: EventType[];
-
-  // 事件名称，支持LIKE
+  /**	String	事件名称，支持LIKE	O */
   Name?: string;
 }
 
@@ -66,22 +65,17 @@ export class GetRelayStateChangeEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 所属区划ID列表
+  /**	String[]	所属区划ID列表	O	*/
   DivisionIds?: string[];
-
-  // 清运车辆ID
+  /**	String[]	车辆ID列表	O	*/
   VehicleIds?: string[];
-
-  // 清运车辆名称
+  /**	String	车辆名称，支持LIKE	O	*/
   VehicleName?: string;
-
-  // 资源ID列表
+  /**	String[]	资源ID列表	O	*/
   ResourceIds?: string[];
-
-  // 资源名称，支持LIKE
+  /**	String	资源名称，支持LIKE	O	*/
   ResourceName?: string;
-
-  // 是否按时间倒序排列
+  /**	Boolean	是否倒序时间排列	O	*/
   Desc?: boolean;
 }
 
@@ -89,25 +83,19 @@ export class GetVehicleOnlineEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 所属区划ID列表
+  /**	String[]	所属区划ID列表	O	*/
   DivisionIds?: string[];
-
-  // 清运车辆ID
+  /**	String[]	车辆ID列表	O	*/
   VehicleIds?: string[];
-
-  // 清运车辆名称
+  /**	String	车辆名称，支持LIKE	O	*/
   VehicleName?: string;
-
-  // 资源ID列表
+  /**	String[]	资源ID列表	O	*/
   ResourceIds?: string[];
-
-  // 资源名称，支持LIKE
+  /**	String	资源名称，支持LIKE	O	*/
   ResourceName?: string;
-
-  // 在线状态
+  /**	Int32	在线状态0-正常，1-离线	O	*/
   OnlineStatus?: OnlineStatus;
-
-  // 是否按时间倒序排列
+  /**	Boolean	是否倒序时间排列	O	*/
   Desc?: boolean;
 }
 
@@ -115,30 +103,22 @@ export class GetCameraOnlineEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 所属区划ID列表
+  /**	String[]	所属区划ID列表	O	*/
   DivisionIds?: string[];
-
-  // 清运车辆ID
+  /**	String[]	车辆ID列表	O	*/
   VehicleIds?: string[];
-
-  // 清运车辆名称
+  /**	String	车辆名称，支持LIKE	O	*/
   VehicleName?: string;
-
-  // 资源ID列表
+  /**	String[]	资源ID列表	O	*/
   ResourceIds?: string[];
-
-  // 资源名称，支持LIKE
+  /**	String	资源名称，支持LIKE	O	*/
   ResourceName?: string;
-
-  // 摄像机ID
+  /**	String[]	摄像机ID列表	O	*/
   CameraIds?: string[];
-
-  // 摄像机名称
+  /**	String	摄像机名称，支持LIKE	O	*/
   CameraName?: string;
-
-  // 在线状态
+  /**	Int32	在线状态0-正常，1-离线	O	*/
   OnlineStatus?: OnlineStatus;
-
-  // 是否按时间倒序排列
+  /**	Boolean	是否倒序时间排列	O	*/
   Desc?: boolean;
 }
