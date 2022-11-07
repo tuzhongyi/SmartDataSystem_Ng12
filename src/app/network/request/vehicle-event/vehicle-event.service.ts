@@ -1,18 +1,31 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-06 15:08:52 
- * @Last Modified by:   pmx 
- * @Last Modified time: 2022-11-06 15:08:52 
+ * @Author: pmx
+ * @Date: 2022-11-06 15:08:52
+ * @Last Modified by:   pmx
+ * @Last Modified time: 2022-11-06 15:08:52
  */
-import { Injectable } from "@angular/core";
-import { classToPlain } from "class-transformer";
-import { VehicleEventInfo } from "../../model/event-info.model";
-import { PagedList } from "../../model/page_list.model";
-import { CameraOnlineEventRecord, GarbageCollectionEventRecord, RelayStateChangeEventRecord, VehicleOnlineEventRecord } from "../../model/vehicle-event-record.model";
-import { GarbageVehicleEventUrl } from "../../url/garbage-vehicle/events.url";
-import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
-import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { GetGarbageCollectionEventRecordsParams, GetRelayStateChangeEventRecordsParams, GetVehicleEventInfosParams, GetVehicleOnlineEventRecordsParams } from "./vehicle-event.params";
+import { Injectable } from '@angular/core';
+import { classToPlain } from 'class-transformer';
+import { VehicleEventInfo } from '../../model/event-info.model';
+import { PagedList } from '../../model/page_list.model';
+import {
+  CameraOnlineEventRecord,
+  GarbageCollectionEventRecord,
+  RelayStateChangeEventRecord,
+  VehicleOnlineEventRecord,
+} from '../../model/vehicle-event-record.model';
+import { GarbageVehicleEventUrl } from '../../url/garbage-vehicle/events.url';
+import {
+  BaseRequestService,
+  BaseTypeRequestService,
+} from '../base-request.service';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
+import {
+  GetEventInfosParams,
+  GetGarbageCollectionEventRecordsParams,
+  GetRelayStateChangeEventRecordsParams,
+  GetVehicleOnlineEventRecordsParams,
+} from './vehicle-event.params';
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +51,7 @@ export class VehicleEventRequestService {
     }
     return this._record;
   }
-
 }
-
 
 class InfosService {
   constructor(private basic: BaseRequestService) {
@@ -49,7 +60,7 @@ class InfosService {
 
   type: BaseTypeRequestService<VehicleEventInfo>;
 
-  list(params: GetVehicleEventInfosParams): Promise<PagedList<VehicleEventInfo>> {
+  list(params: GetEventInfosParams): Promise<PagedList<VehicleEventInfo>> {
     let url = GarbageVehicleEventUrl.info.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -64,18 +75,13 @@ class InfosService {
   }
 }
 
-
 class RecordsService {
-
   garbageCollection = new RecordsGarbageCollectionService(this.basic);
   relayStateChange = new RecordsRelayStateChangeService(this.basic);
   vehicleOnline = new RecordsVehicleOnlineService(this.basic);
   cameraOnline = new RecordsCameraOnlineService(this.basic);
 
-  constructor(private basic: BaseRequestService) {
-  }
-
-
+  constructor(private basic: BaseRequestService) {}
 }
 class RecordsGarbageCollectionService {
   type: BaseTypeRequestService<GarbageCollectionEventRecord>;
@@ -84,8 +90,9 @@ class RecordsGarbageCollectionService {
     this.type = basic.type(GarbageCollectionEventRecord);
   }
 
-
-  list(params: GetGarbageCollectionEventRecordsParams): Promise<PagedList<GarbageCollectionEventRecord>> {
+  list(
+    params: GetGarbageCollectionEventRecordsParams
+  ): Promise<PagedList<GarbageCollectionEventRecord>> {
     let url = GarbageVehicleEventUrl.record.garbageCollection.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -94,9 +101,7 @@ class RecordsGarbageCollectionService {
     let url = GarbageVehicleEventUrl.record.garbageCollection.item(id);
     return this.type.get(url);
   }
-
 }
-
 
 class RecordsRelayStateChangeService {
   type: BaseTypeRequestService<RelayStateChangeEventRecord>;
@@ -105,8 +110,9 @@ class RecordsRelayStateChangeService {
     this.type = basic.type(RelayStateChangeEventRecord);
   }
 
-
-  list(params: GetRelayStateChangeEventRecordsParams): Promise<PagedList<RelayStateChangeEventRecord>> {
+  list(
+    params: GetRelayStateChangeEventRecordsParams
+  ): Promise<PagedList<RelayStateChangeEventRecord>> {
     let url = GarbageVehicleEventUrl.record.relayStateChange.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -115,9 +121,7 @@ class RecordsRelayStateChangeService {
     let url = GarbageVehicleEventUrl.record.relayStateChange.item(id);
     return this.type.get(url);
   }
-
 }
-
 
 class RecordsVehicleOnlineService {
   type: BaseTypeRequestService<VehicleOnlineEventRecord>;
@@ -126,8 +130,9 @@ class RecordsVehicleOnlineService {
     this.type = basic.type(VehicleOnlineEventRecord);
   }
 
-
-  list(params: GetVehicleOnlineEventRecordsParams): Promise<PagedList<VehicleOnlineEventRecord>> {
+  list(
+    params: GetVehicleOnlineEventRecordsParams
+  ): Promise<PagedList<VehicleOnlineEventRecord>> {
     let url = GarbageVehicleEventUrl.record.vehicleOnline.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -136,9 +141,7 @@ class RecordsVehicleOnlineService {
     let url = GarbageVehicleEventUrl.record.vehicleOnline.item(id);
     return this.type.get(url);
   }
-
 }
-
 
 class RecordsCameraOnlineService {
   type: BaseTypeRequestService<CameraOnlineEventRecord>;
@@ -147,8 +150,9 @@ class RecordsCameraOnlineService {
     this.type = basic.type(CameraOnlineEventRecord);
   }
 
-
-  list(params: GetVehicleOnlineEventRecordsParams): Promise<PagedList<CameraOnlineEventRecord>> {
+  list(
+    params: GetVehicleOnlineEventRecordsParams
+  ): Promise<PagedList<CameraOnlineEventRecord>> {
     let url = GarbageVehicleEventUrl.record.cameraOnline.list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -157,8 +161,4 @@ class RecordsCameraOnlineService {
     let url = GarbageVehicleEventUrl.record.cameraOnline.item(id);
     return this.type.get(url);
   }
-
 }
-
-
-

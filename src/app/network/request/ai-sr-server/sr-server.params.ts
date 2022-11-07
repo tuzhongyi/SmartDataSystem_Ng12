@@ -8,7 +8,7 @@ export class GetPreviewUrlParams implements IParams {
   /**	String	监控点ID	M */
   CameraId!: string;
   /**	Int32	流类型：1-主码流，2-子码流	M */
-  StreamType: StreamType = StreamType.sub;
+  StreamType: StreamType = StreamType.main;
   /**
    * 	String	协议类型：
    *  rtmp, rtsp, hls, ws-flv, ws-ps
