@@ -1,128 +1,83 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-06 14:50:26 
+ * @Author: pmx
+ * @Date: 2022-11-06 14:50:26
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-06 16:13:05
  */
 import { Transform } from 'class-transformer';
-import { CollectionPointClassification } from 'src/app/enum/collection-point.enum';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { VehicleScore } from 'src/app/enum/vehicle-score.enum';
+import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
 import { transformDateTime } from '../../model/transform.model';
 import {
   IParams,
+  PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
 
 export class GetCollectionPointsParams extends PagedParams implements IParams {
-
-  // 垃圾桶ID
-  Ids?: string[];
-
-  // 收运点地址
+  /**	String	垃圾桶ID	O */
+  Ids?: string;
+  /**	String	地址，LIKE	O */
   Address?: string;
-
-  // 所属区划ID
+  /**	String[]	区划ID	O */
   DivisionIds?: string[];
-
-  // 收运点名称
+  /**	String	名称，LIKE	O */
   Name?: string;
-
-  // 收运点类型
+  /**	Int32	收运点类型	O */
   Classification?: CollectionPointClassification;
-
 }
 
 export class GetTrashCansParams extends PagedParams implements IParams {
-
-  // 垃圾桶ID
-  Ids?: string[];
-
-  // 垃圾桶地址
+  /**	String	垃圾桶ID	O */
+  Ids?: string;
+  /**	String	地址，LIKE	O */
   Address?: string;
-
-
-  // 所属区划ID
+  /**	String[]	区划ID	O */
   DivisionIds?: string[];
-
-  // 垃圾桶名称
+  /**	String	名称，LIKE	O */
   Name?: string;
-
-  // 垃圾桶编号
+  /**	String	垃圾桶唯一编号	O */
   No?: string;
-
-  // 垃圾桶类型
+  /**	Int32	垃圾桶类型	O */
   CanType?: TrashCanType;
-
-
-  // 收运点ID
+  /**	String[]	垃圾收运点ID	O */
   CollectionPointIds?: string[];
-
-
 }
 
-
-
-export class GetCollectionPointNumberParams {
-
-
-
-  // 所属区划ID
+export class GetCollectionPointNumberParams implements IParams {
+  /**	String[]	区划ID	O */
   DivisionIds?: string[];
-
-  // 分类类型过滤列表
+  /**	Int32[]	分类类型过滤列表	O */
   Classifications?: CollectionPointClassification[];
-
 }
 
-
-
-export class GetCollectionPointScoreTopListParams extends PagedParams implements IParams {
-
-
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
-  // 分类评分
-  Score!: VehicleScore
-
-  // 所属区划ID列表
+export class GetCollectionPointScoreTopListParams
+  extends PagedDurationParams
+  implements IParams
+{
+  /**	Int32	分类评分：1-差评，2-中评，3-好评	M */
+  Score!: CollectionPointScore;
+  /**	String[]	区划ID	O */
   DivisionIds?: string[];
 
-  // 分类类型过滤列表
+  /**
+   *	Int32[]	分类类型过滤列表，不支持	O
+   *  @deprecated
+   */
   Classifications?: CollectionPointClassification[];
-
-  // 是否按时间倒序排列
+  /**	Boolean	是否倒序排列	O */
   Desc?: boolean;
-
-
 }
 
-
-export class GetCollectionPointWeightTopListParams extends PagedParams implements IParams {
-
-
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
-  // 垃圾类型
+export class GetCollectionPointWeightTopListParams
+  extends PagedDurationParams
+  implements IParams
+{
+  /**	Int32	垃圾类型	O */
   TrashCanType?: TrashCanType;
-
-  // 所属区划ID列表
+  /**	String[]	区划ID	O */
   DivisionIds?: string[];
-
-  // 是否按时间倒序排列
+  /**	Boolean	是否倒序排列	O */
   Desc?: boolean;
-
-
 }

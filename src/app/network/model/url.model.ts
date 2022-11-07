@@ -22,7 +22,7 @@ export class VideoUrl implements IModel {
   WebUrl?: string;
 }
 /** 摄像机照片地址 */
-export class CameraImageUrl {
+export class CameraImageUrl implements IModel {
   /**	String	摄像机ID	M */
   CameraId!: string;
   /**	String	摄像机名称	O */

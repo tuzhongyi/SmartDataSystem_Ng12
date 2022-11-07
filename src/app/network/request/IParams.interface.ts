@@ -83,7 +83,7 @@ export class DurationParams {
     return params;
   }
 }
-export class PagedIntervalParams extends PagedParams {
+export class PagedDurationParams extends PagedParams {
   /**	DateTime	开始时间	M */
   @Transform(transformDateTime)
   BeginTime!: Date;

@@ -1,17 +1,9 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 17:00:43
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-03 17:00:43
- */
-// 重量排行项
+/** 重量排行项 */
 export class WeightTop {
-  // 收运点ID
+  /**	String	收运点ID	M */
   Id!: string;
-
-  // 收运点名称
+  /**	String	收运点名称	M */
   Name!: string;
-
-  // 重量
+  /**	Double	重量	M */
   Weight!: number;
 }

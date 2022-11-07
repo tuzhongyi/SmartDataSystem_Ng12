@@ -13,9 +13,10 @@ import { transformDate, transformDateTime } from '../../model/transform.model';
 import {
   DurationParams,
   IParams,
-  PagedIntervalParams,
+  PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
+import { GarbageStation } from '../../model/garbage-station.model';
 
 /**获取垃圾房列表参数 */
 export class GetGarbageStationsParams extends PagedParams implements IParams {
@@ -78,7 +79,7 @@ export class GetGarbageStationTrashCansParams
   LidState?: LidState;
 }
 export class GetGarbageStationVolumesParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**
@@ -88,7 +89,7 @@ export class GetGarbageStationVolumesParams
   TimeUnit!: TimeUnit;
 }
 export class GetGarbageStationEventNumbersParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**
@@ -167,9 +168,9 @@ export class GetGarbageStationStatisticNumbersParamsV2
   TimeUnit!: TimeUnit;
 
   /**	String[]	升序排列的属性名称	O */
-  Asc?: string[];
+  Asc?: keyof GarbageStation[];
   /**	String[]	降序排列的属性名称	O */
-  Desc?: string[];
+  Desc?: keyof GarbageStation[];
 }
 
 export class GetGarbageStationStatisticComparisonParams implements IParams {

@@ -33,42 +33,32 @@ export class TrashCan implements IModel {
   LidState?: LidState;
 }
 
+/**	垃圾桶	*/
 export class VehicleTrashCan implements IModel {
-  // 垃圾桶ID
+  /**	String	垃圾桶ID	M	*/
   Id!: string;
-
-  // 垃圾桶名称
+  /**	String	垃圾桶名称	O	*/
   Name?: string;
-
-  // 垃圾桶编号
-  No?: string;
-
-  // 垃圾桶类型
-  CanType!: TrashCanType;
-
-  // 容积，单位：L，默认：240
-  MaxVolume!: number;
-
-  // 垃圾桶地址
+  /**	String	垃圾桶编号，RFID编号	M	*/
+  No!: string;
+  /**	Int32	垃圾桶类型	O	*/
+  CanType?: number;
+  /**	Double	容积，单位：L，默认：240	O	*/
+  MaxVolume?: number;
+  /**	String	垃圾桶地址	O	*/
   Address?: string;
-
-  // 描述信息
+  /**	String	描述信息	O	*/
   Description?: string;
-
-  // 创建时间
+  /**	DateTime	创建时间	M	*/
   @Transform(transformDateTime)
   CreateTime!: Date;
-
-  // 更新时间
+  /**	DateTime	更新事件	M	*/
   @Transform(transformDateTime)
   UpdateTime!: Date;
-
-  // 当前位置GIS点位
+  /**	GisPoint	当前位置GIS点位	O	*/
   GisPoint?: GisPoint;
-
-  // 所属区划ID
+  /**	String	所属区划ID	O	*/
   DivisionId?: string;
-
-  // 收运点ID
+  /**	String	收运点ID	O	*/
   CollectionPointId?: string;
 }

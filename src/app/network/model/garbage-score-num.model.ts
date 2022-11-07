@@ -1,16 +1,9 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 16:51:23
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-03 16:51:23
- */
-import { VehicleScore } from 'src/app/enum/vehicle-score.enum';
+import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
 
-// 垃圾评价次数
+/**	垃圾评价次数	*/
 export class GarbageScoreNumber {
-  // 分类评分
-  Score!: VehicleScore;
-
-  // 次数
+  /**	Int32	分类评分：1-差评，2-中评，3-好评	M	*/
+  Score!: CollectionPointScore;
+  /**	Int32	次数	M	*/
   Number!: number;
 }

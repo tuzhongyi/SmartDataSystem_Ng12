@@ -5,7 +5,7 @@ import { GridCellNumberStatisticV2 } from '../../model/grid-cell-number-statisti
 import {
   DurationParams,
   IParams,
-  PagedIntervalParams,
+  PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
 
@@ -25,7 +25,7 @@ export class GetGridCellsParams extends PagedParams implements IParams {
 }
 
 export class GetGridCellEventNumbersParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**
@@ -62,7 +62,7 @@ export class GetGridCellStatisticNumbersParamsV2
   /**	String[]	网格单元ID列表	M */
   GridCellIds!: string[];
   /**	String[]	升序排列的属性名称	O */
-  Asc?: string[];
+  Asc?: keyof GridCellNumberStatisticV2[];
   /**	String[]	降序排列的属性名称	O */
-  Desc?: string[];
+  Desc?: keyof GridCellNumberStatisticV2[];
 }

@@ -10,42 +10,34 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
+import { GisRoutePoint } from '../../model/gis-point.model';
 import { transformDateTime } from '../../model/transform.model';
-import { IParams, PagedParams } from '../IParams.interface';
+import {
+  IParams,
+  PagedDurationParams,
+  PagedParams,
+} from '../IParams.interface';
 
 export class GetGarbageVehiclesParams extends PagedParams implements IParams {
-  // 清运车辆ID
+  /**	String[]	清运车辆ID	O */
   Ids?: string[];
-
-  // 清运车辆名称，支持LIKE
+  /**	String	清运车辆名称，支持LIKE	O */
   Name?: string;
-
-  // 清运车辆类型
+  /**	Int32	清运车辆类型	O */
   VehicleType?: VehicleType;
-
-  // 区划ID
-  ParentId?: string;
-
-  /**区划完整路径(可选)，含本节点，@进行分割，上级节点在前，支持LIKE */
-  DivisionPath?: string;
-
-  // 祖辈ID
+  /**	String	区划ID	O */
+  DivisionId?: string;
+  /**	String	祖辈ID，返回该ID下的所有子孙区划及其本身的垃圾房	O */
   AncestorId?: string;
-
-  // 区划ID为NULL
+  /**	Boolean	区划ID为NULL	O */
   DivisionIdNullable?: boolean;
-
-  // IMEI串号
+  /**	String	IMEI串号	O */
   IMEI?: string;
-
-  // 车辆状态
-
+  /**	Int32	车辆状态	O */
   State?: VehicleState;
-
-  // 唯一编号
+  /**	String	唯一编号	O */
   No?: string;
-
-  // 车牌号码
+  /**	String	车牌号码	O */
   PlateNo?: string;
 }
 
@@ -53,49 +45,35 @@ export class GetGarbageVehicleCamerasParams
   extends PagedParams
   implements IParams
 {
-  // 摄像机ID
+  /**	String[]	摄像机ID	O */
   Ids?: string[];
-
-  // 清运车辆ID
+  /**	String[]	清运车辆ID	O */
   GarbageVehicleIds?: string[];
-
-  // 摄像机名称;
+  /**	String	摄像机名称	O */
   Name?: string;
-
-  // 摄像机用途
+  /**	Int32	摄像机用途	O */
   CameraUsage?: CameraUsage;
-
-  // 在线状态
+  /**	Int32	在线状态，0-正常，1-离线	O */
   OnlineStatus?: OnlineStatus;
-
-  // 所属区划
+  /**	String[]	所属区划	O */
   DivisionIds?: string[];
 }
 
 export class GetGarbageVehicleRouteParams
-  extends PagedParams
+  extends PagedDurationParams
   implements IParams
 {
-  // 车辆ID
+  /**	String	车辆ID	M */
   VehicleId!: string;
-
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
-  // 只检查包含垃圾桶ID的点位
+  /**	String[]	只检查包含垃圾桶ID的点位	O */
   TrashCanIds?: string[];
-
-  // 是否按时间倒序排列
-  Desc?: boolean;
+  /**	Boolean	是否按时间倒序排列	O */
+  Desc?: keyof GisRoutePoint;
 }
 
 export class ResetRelayParams implements IParams {
+  /**	Int32[]	需要操作的继电器编号数组1-8，目前设备前端最多3个继电器 ，从1开始	M */
   No!: number[];
-
+  /**	Int32	操作：1：复位，2：打开，3：关闭	M */
   Operator!: VehicleRelayOperator;
 }

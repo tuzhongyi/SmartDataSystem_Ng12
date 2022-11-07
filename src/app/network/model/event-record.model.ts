@@ -1,12 +1,15 @@
-import { EventType } from "src/app/enum/event-type.enum";
-import { ResourceType } from "src/app/enum/resource-type.enum";
+import { Transform } from 'class-transformer';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { transformDateTime } from './transform.model';
 
 /** 事件基础类型 */
 export class EventRecord {
   /**事件ID */
   EventId!: string;
   /**事件时间 */
-  EventTime!: Date | string;
+  @Transform(transformDateTime)
+  EventTime!: Date;
   /**事件类型 */
   EventType!: EventType;
   /**事件描述信息 */

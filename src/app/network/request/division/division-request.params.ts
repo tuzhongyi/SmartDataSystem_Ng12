@@ -3,11 +3,14 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { DivisionGarbageScore } from '../../model/division-garbage-score.model';
+import { DivisionGarbageWeight } from '../../model/division-garbage-weight.model';
 import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
+import { Division } from '../../model/division.model';
 import {
   DurationParams,
   IParams,
-  PagedIntervalParams,
+  PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
 
@@ -35,7 +38,7 @@ export class GetDivisionsParams extends PagedParams implements IParams {
   AncestorId?: string;
 }
 export class GetDivisionVolumesParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**
@@ -46,7 +49,7 @@ export class GetDivisionVolumesParams
   TimeUnit!: TimeUnit;
 }
 export class GetDivisionEventNumbersParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**
@@ -95,9 +98,9 @@ export class GetDivisionStatisticNumbersParamsV2
   /**	String[]	区划ID列表	M */
   DivisionIds!: string[];
   /**	String[]	升序排列的属性名称	O */
-  Asc?: string[];
+  Asc?: keyof Division[];
   /**	String[]	降序排列的属性名称	O */
-  Desc?: string[];
+  Desc?: keyof Division[];
 }
 export class GetDivisionStatisticComparisonParams implements IParams {
   /**	Int32	比较方式，1-环比，2-同比	M */
@@ -112,4 +115,36 @@ export class GetDivisionTreeParams {
   Name?: string;
   /**	Int32	区划类型，该值必须和Name共同使用，可以只有Name，没有DivisionType，但是不能只有DivisionType没有Name	O */
   DivisionType?: DivisionType;
+}
+
+export class GetDivisionGarbageWeightsParams
+  extends DurationParams
+  implements IParams
+{
+  /**	String[]	区划ID	O */
+  DivisionIds?: string;
+  /**	String	区划名称，支持LIKE	O */
+  DivisionName?: string;
+  /**	Int32	统计时间单位：2-Day,3-Week,4-Month	O */
+  TimeUnit?: TimeUnit;
+  /**	String	排序，字段名称	O */
+  Asc?: keyof DivisionGarbageWeight;
+  /**	String	倒序，字段名称	O */
+  Desc?: keyof DivisionGarbageWeight;
+}
+
+export class GetDivisionGarbageScoresParams
+  extends DurationParams
+  implements IParams
+{
+  /**	String[]	区划ID	O */
+  DivisionIds?: string[];
+  /**	String	区划名称，支持LIKE	O */
+  DivisionName?: string;
+  /**	Int32	统计时间单位：2-Day,3-Week,4-Month	O */
+  TimeUnit?: TimeUnit;
+  /**	String	排序，字段名称	O */
+  Asc?: keyof DivisionGarbageScore;
+  /**	String	倒序，字段名称	O */
+  Desc?: keyof DivisionGarbageScore;
 }

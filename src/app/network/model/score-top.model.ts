@@ -1,17 +1,9 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 16:59:58
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-03 16:59:58
- */
-// 评分排行项
+/** 评分排行项 */
 export class ScoreTop {
-  // 收运点ID
+  /**	String	收运点ID	M */
   Id!: string;
-
-  // 收运点名称
+  /**	String	收运点名称	M */
   Name!: string;
-
-  // 数量
-  Number!: number;
+  /**	Int64	数量	M */
+  Number!: string;
 }

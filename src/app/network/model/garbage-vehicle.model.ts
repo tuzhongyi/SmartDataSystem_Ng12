@@ -1,70 +1,50 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 15:00:35
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 15:42:33
- */
-
 import { Transform, Type } from 'class-transformer';
 import { RelayState } from 'src/app/enum/relay-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { GisPoint } from './gis-point.model';
+import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 import { VehicleCamera } from './vehicle-camera.model';
-
-export class GarbageVehicle {
-  // 车辆ID
+/**	清运车辆	*/
+export class GarbageVehicle implements IModel {
+  /**	String	车辆ID	M	*/
   Id!: string;
-
-  // 车辆名称
+  /**	String	车辆名称	M	*/
   Name!: string;
-
-  // 车辆类型;
+  /**	Int32	"车辆类型：
+1：三轮车
+2：汽车"	M	*/
   VehicleType!: VehicleType;
-
-  // 描述信息
+  /**	String	描述信息	O	*/
   Description?: string;
-
-  // 创建时间
+  /**	DateTime	创建时间	M	*/
   @Transform(transformDateTime)
   CreateTime!: Date;
-
-  // 更新事件
+  /**	DateTime	更新事件	M	*/
   @Transform(transformDateTime)
   UpdateTime!: Date;
-
-  // 当前位置GIS点位
+  /**	GisPoint	当前位置GIS点位	O	*/
   GisPoint?: GisPoint;
-
-  // 所属区划ID
+  /**	String	所属区划ID	O	*/
   DivisionId?: string;
-
-  // 摄像机列表
+  /**	Camera[]	摄像机列表	O	*/
   @Type(() => VehicleCamera)
   Cameras?: VehicleCamera[];
-
-  // IMEI串号
+  /**	String	IMEI串号	O	*/
   IMEI?: string;
-
-  // 唯一编号
+  /**	String	唯一编号	M	*/
   No!: string;
-
-  // 车辆状态
-  state?: VehicleState;
-
-  // 心跳间隔,单位：秒，默认5秒
-  HeartbeatInterval?: number = 5;
-
-  // 自动关闭时间，最小600，最大14400
+  /**	Int32	状态	O	*/
+  State?: VehicleState;
+  /**	Int32	心跳间隔，单位：秒，默认5秒	O	*/
+  HeartbeatInterval?: number;
+  /**	Int32	自动关闭时间，最小600，最大14400	O	*/
   ShutdownSeconds?: number;
-
-  // 继电器数量
+  /**	Int32	继电器数量	O	*/
   RelayCount?: number;
-
-  // 继电器状态，0-关闭，1-打开
+  /**	Int32	"继电器状态，0-关闭，1-打开，最低位，表示1号继电器"	O	*/
   RelayState?: RelayState;
-
-  // 车牌号码
+  /**	String	车牌号码	O	*/
   PlateNo?: string;
 }

@@ -4,8 +4,10 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-03 16:01:28
  */
+import { Transform } from 'class-transformer';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { IModel } from './model.interface';
+import { transformDateTime } from './transform.model';
 
 /** 地理信息坐标点 */
 export class GisPoint implements IModel {
@@ -22,22 +24,18 @@ export class GisPoint implements IModel {
   /** */
 }
 
-export class GisRoutePoint {
-  // 经度
+/**	车辆行径坐标	*/
+export class GisRoutePoint implements IModel {
+  /**	Double	经度	M	*/
   Longitude!: number;
-
-  // 纬度
+  /**	Double	纬度	M	*/
   Latitude!: number;
-
-  // 高度
-  Altitude: number = 0;
-
-  // 坐标系类型
+  /**	Double	高度	M	*/
+  Altitude!: number;
+  /**	Int32	坐标系类型	O	*/
   GisType?: GisType;
-
-  // 记录时间
-  Time!: Date;
-
-  // 称重垃圾桶ID
+  /**	DateTime	记录时间	M	*/
+  @Transform(transformDateTime) Time!: Date;
+  /**	String	称重垃圾桶ID	O	*/
   TrashCanId?: string;
 }

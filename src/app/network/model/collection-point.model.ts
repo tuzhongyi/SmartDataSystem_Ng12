@@ -5,42 +5,33 @@
  * @Last Modified time: 2022-11-06 15:49:51
  */
 import { Transform } from 'class-transformer';
-import { CollectionPointClassification } from 'src/app/enum/collection-point.enum';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { GisPoint } from './gis-point.model';
 import { transformDateTime } from './transform.model';
 import { TrashCan } from './trash-can.model';
 
-// 收运点
+/**	收运点	*/
 export class CollectionPoint {
-  // 收运点ID
+  /**	String	收运点ID	M	*/
   Id!: string;
-
-  // 收运点名称
+  /**	String	收运点名称	M	*/
   Name!: string;
-
-  // 收运点类型
+  /**	Int32	收运点类型	M	*/
   Classification!: CollectionPointClassification;
-
-  // 收运点地址
+  /**	String	收运点地址	O	*/
   Address?: string;
-
-  // 描述信息
+  /**	String	描述信息	O	*/
   Description?: string;
-
-  // 开始时间
+  /**	DateTime	创建时间	M	*/
   @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
+  CreateTime!: Date;
+  /**	DateTime	更新事件	M	*/
   @Transform(transformDateTime)
-  EndTime!: Date;
-
-  // 当前位置GIS点位
+  UpdateTime!: Date;
+  /**	GisPoint	当前位置GIS点位	O	*/
   GisPoint?: GisPoint;
-
-  // 所属区划ID
+  /**	String	所属区划ID	O	*/
   DivisionId?: string;
-
-  // 垃圾桶列表
-  TrashCans?: TrashCan[];
+  /**	TrashCan[]	垃圾桶列表	O	*/
+  TrashCans?: TrashCan;
 }

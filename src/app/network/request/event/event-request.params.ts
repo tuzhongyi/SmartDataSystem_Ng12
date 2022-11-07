@@ -1,9 +1,11 @@
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
 import { CompareRange } from '../../model/compare-range.model';
 import {
   IParams,
-  PagedIntervalParams,
+  PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
 
@@ -15,7 +17,7 @@ export class GetEventInfosParams extends PagedParams implements IParams {
 }
 
 export class GetEventRecordsParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**	String[]	所属区划ID列表	O */
@@ -39,7 +41,7 @@ export class GetEventRecordsParams
 }
 
 export class GetGarbageDropEventRecordsParams
-  extends PagedIntervalParams
+  extends PagedDurationParams
   implements IParams
 {
   /**	String[]	所属区划ID列表	O */

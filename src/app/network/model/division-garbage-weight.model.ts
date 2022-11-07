@@ -1,37 +1,24 @@
 import { Transform } from 'class-transformer';
 import { GarbageWeight } from './garbage-weight.model';
 import { transformDateTime } from './transform.model';
-
-/*
- * @Author: pmx
- * @Date: 2022-11-03 16:46:55
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 16:49:14
- */
+/**	区划垃圾重量	*/
 export class DivisionGarbageWeight {
-  // 区划ID
-  DivisionIdD!: string;
-
-  // 区划名称
+  /**	String	区划ID	M	*/
+  DivisionId!: string;
+  /**	String	区划名称	M	*/
   DivisionName!: string;
-
-  // 开始时间
+  /**	DateTime	开始时间	M	*/
   @Transform(transformDateTime)
   BeginTime!: Date;
-
-  // 结束时间
+  /**	DateTime	结束时间	M	*/
   @Transform(transformDateTime)
   EndTime!: Date;
-
-  // 总重量
+  /**	Double	总重量，单位：KG	M	*/
   TotalWeight!: number;
-
-  // 分类垃圾重量;
+  /**	GarbageWeight[]	分类垃圾重量	O	*/
   Weights?: GarbageWeight[];
-
-  // 日期
+  /**	Int64	日期	M	*/
   Date!: number;
-
-  // 周
+  /**	Int32	周	M	*/
   Week!: number;
 }
