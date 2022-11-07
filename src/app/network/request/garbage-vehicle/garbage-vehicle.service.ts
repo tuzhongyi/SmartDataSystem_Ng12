@@ -29,7 +29,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class GarbageVehicleService extends AbstractService<GarbageVehicle> {
+export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle> {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<GarbageVehicle>;
   constructor(_http: HowellAuthHttpService) {
@@ -145,7 +145,7 @@ class VehicleRouteService {
 }
 
 class VehicleRelayService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   reset(vehicleId: string, params: ResetRelayParams) {
     let url = GarbageVehicleUrl.relay(vehicleId).reset();

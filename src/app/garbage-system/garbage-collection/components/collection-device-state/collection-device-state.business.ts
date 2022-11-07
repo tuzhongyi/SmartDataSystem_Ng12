@@ -22,6 +22,8 @@ import {
   DeviceStateCountModel,
   IDeviceStateDes,
 } from 'src/app/view-model/device-state-count.model';
+import { GarbageVehicleRequestService } from 'src/app/network/request/garbage-vehicle/garbage-vehicle.service';
+import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage-vehicle/garbage-vehicle.params';
 
 @Injectable()
 export class GarbageVehiclesDeviceStateBusiness
@@ -30,8 +32,9 @@ export class GarbageVehiclesDeviceStateBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private storeService: GlobalStoreService,
-    public subscription: SubscriptionService
-  ) {}
+    public subscription: SubscriptionService,
+    private _garbageVehicleRequest: GarbageVehicleRequestService
+  ) { }
   Converter: IConverter<DivisionNumberStatistic, DeviceStateCountModel> =
     new DeviceStateConverter();
 
@@ -42,6 +45,14 @@ export class GarbageVehiclesDeviceStateBusiness
   }
   getData(divisionId: string): Promise<DivisionNumberStatistic> {
     return this.divisionRequest.statistic.number.cache.get(divisionId);
+  }
+  async init() {
+    let res = await this._listGarbageVehicle();
+    console.log(res);
+  }
+  private _listGarbageVehicle() {
+    let params = new GetGarbageVehiclesParams();
+    return this._garbageVehicleRequest.list(params);
   }
 }
 

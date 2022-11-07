@@ -38,12 +38,7 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   providers: [GarbageVehiclesDeviceStateBusiness],
 })
 export class GarbageVehiclesDeviceStateComponent
-  implements
-    IComponent<IModel, DeviceStateCountModel>,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   @Output()
   Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
 
@@ -65,10 +60,7 @@ export class GarbageVehiclesDeviceStateComponent
 
   @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
 
-  constructor(business: GarbageVehiclesDeviceStateBusiness) {
-    this.business = business;
-  }
-  business: IBusiness<IModel, DeviceStateCountModel>;
+  constructor(private business: GarbageVehiclesDeviceStateBusiness) { }
 
   ngOnInit(): void {
     // if (this.business.subscription) {
@@ -121,6 +113,7 @@ export class GarbageVehiclesDeviceStateComponent
     //     },
     //   ],
     // };
+    this.business.init();
   }
   ngOnDestroy() {
     if (this.business.subscription) {

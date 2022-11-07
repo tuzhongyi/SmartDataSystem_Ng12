@@ -130,5 +130,17 @@
     "Open": "打开",
     "Close": "关闭",
     "Default": "未知"
+  },
+  "CollectionDeviceStateRatioType": {
+    "Bad": "严重",
+    "Mild": "中度",
+    "Good": "正常",
+    "Default": "未知"
+  },
+  "CollectionDeviceStateCountType": {
+    "All": "全部车辆",
+    "Online": "在线车辆",
+    "Offline": "离线车辆",
+    "Default": "未知"
   }
 }

@@ -10,6 +10,7 @@ import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
+import { CollectionDeviceStateCountType, CollectionDeviceStateRatioType } from 'src/app/enum/collection-device-state.enum';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
@@ -444,6 +445,44 @@ export class Language {
         return this.json.VehicleRelayOperator.Close;
       default:
         return this.json.VehicleRelayOperator.Default;
+    }
+  }
+
+
+
+  /**
+   *  车辆在线比
+   * @param type 
+   * @returns 
+   */
+  static CollectionDeviceStateRatioType(type: CollectionDeviceStateRatioType) {
+    switch (type) {
+      case CollectionDeviceStateRatioType.Bad:
+        return this.json.CollectionDeviceStateRatioType.Bad;
+      case CollectionDeviceStateRatioType.Mild:
+        return this.json.CollectionDeviceStateRatioType.Mild;
+      case CollectionDeviceStateRatioType.Good:
+        return this.json.CollectionDeviceStateRatioType.Good;
+      default:
+        return '';
+    }
+  }
+
+  /**
+   *  车辆在线数量
+   * @param type 
+   * @returns 
+   */
+  static CollectionDeviceStateCountType(type: CollectionDeviceStateCountType) {
+    switch (type) {
+      case CollectionDeviceStateCountType.All:
+        return this.json.CollectionDeviceStateCountType.All;
+      case CollectionDeviceStateCountType.Online:
+        return this.json.CollectionDeviceStateCountType.Online;
+      case CollectionDeviceStateCountType.Offline:
+        return this.json.CollectionDeviceStateCountType.Offline;
+      default:
+        return '';
     }
   }
 
