@@ -1,6 +1,6 @@
 <app-window [Model]="Model" [style]="style">
   <ng-container *ngIf="Model.show">
-    <app-tab-title [title]="'报警记录'">
+    <app-tab-title [title]="'预警记录'">
       <div class="event-record-smoke-window-header"></div>
     </app-tab-title>
     <div class="event-record-smoke-window-content">
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="filter-item" style="width: 200">
-          <div class="filter-item-title">报警类型：</div>
+          <div class="filter-item-title">预警类型：</div>
           <div class="filter-item-value">
             <select [(ngModel)]="type">
               <option [value]="item.value" *ngFor="let item of types">

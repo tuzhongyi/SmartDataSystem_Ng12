@@ -30,7 +30,7 @@ export class Language {
       case StationState.Error:
         return Language.json.error;
       case StationState.Smoke:
-        return '火灾报警';
+        return '火灾预警';
       default:
         return Language.json.normal;
     }
@@ -136,7 +136,7 @@ export class Language {
       case EventType.GarbageDropHandle:
         return Language.json.EventType.GarbageDropHandle;
       case EventType.Smoke:
-        return '火灾报警';
+        return '火灾预警';
       default:
         return '';
     }

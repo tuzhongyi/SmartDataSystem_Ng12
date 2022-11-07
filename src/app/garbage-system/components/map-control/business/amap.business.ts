@@ -464,7 +464,7 @@ export class AMapBusiness {
   setContentMenu() {
     if (!this.mapClient) return;
     this.mapClient.ContextMenu.AddItem(
-      `<i class="howell-icon-ebikepark" style="font-size: 18px"></i> 火灾警报解除`,
+      `<i class="howell-icon-ebikepark" style="font-size: 18px"></i> 火灾预警解除`,
       async (id: string) => {
         this.onMapClicked();
 
