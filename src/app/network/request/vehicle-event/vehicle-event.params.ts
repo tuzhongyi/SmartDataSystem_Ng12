@@ -66,14 +66,6 @@ export class GetRelayStateChangeEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
   // 所属区划ID列表
   DivisionIds?: string[];
 
@@ -97,14 +89,6 @@ export class GetVehicleOnlineEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
   // 所属区划ID列表
   DivisionIds?: string[];
 
@@ -131,14 +115,6 @@ export class GetCameraOnlineEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
-  // 开始时间
-  @Transform(transformDateTime)
-  BeginTime!: Date;
-
-  // 结束时间
-  @Transform(transformDateTime)
-  EndTime!: Date;
-
   // 所属区划ID列表
   DivisionIds?: string[];
 
