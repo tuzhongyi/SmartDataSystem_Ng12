@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { AuthorizationService } from './network/request/auth/auth-request.service';
 import { RoutePath } from './app-routing.path';
+import { WidescreenLoginComponent } from './electric-bike/widescreen/login/widescreen-login.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: RoutePath.login,
     component: LoginComponent,
+  },
+  {
+    path: RoutePath.widescreen_login,
+    component: WidescreenLoginComponent,
   },
   {
     path: RoutePath.aiop,
@@ -69,7 +74,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent],
+  declarations: [LoginComponent, WidescreenLoginComponent],
   imports: [
     RouterModule.forRoot(routes),
     FormsModule,

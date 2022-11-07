@@ -1,0 +1,51 @@
+<div class="hw-table">
+  <div class="table-header-container">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>社区</th>
+          <th>摄像机数量</th>
+          <th>状态</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="table-body-container" *ngIf="datas.length > 0">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <tbody>
+        <tr *ngFor="let item of datas">
+          <td>{{ item.name }}</td>
+          <td>{{ item.communityName }}</td>
+          <td>{{ item.cameraCount }}</td>
+          <td
+            class="green-text"
+            [ngClass]="{
+              'powder-red-text': item.status.contains(StationState.Error)
+            }"
+          >
+            {{ item.status | station_state_pipe }}
+          </td>
+          <td>
+            <span class="icon" (click)="onvideo($event, item)">
+              <i class="howell-icon-video"></i
+            ></span>
+            <span class="icon" (click)="onposition($event, item)">
+              <i class="glyphicon glyphicon-map-marker"></i
+            ></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-body-container nodata" *ngIf="datas.length <= 0">
+    暂无数据
+  </div>
+</div>

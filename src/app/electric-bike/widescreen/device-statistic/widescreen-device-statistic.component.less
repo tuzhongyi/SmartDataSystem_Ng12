@@ -1,0 +1,121 @@
+.widescreen-device-statistic {
+  width: 100%;
+  height: 100%;
+  // background-image: url("/assets/img/device-statistic.png");
+  // background-repeat: no-repeat;
+  // background-size: contain;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &-background {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+    // background: linear-gradient(to right, rgba(0, 0, 0, 0), transparent, #050936, #050936);
+
+    background-image: url("/assets/img/device-statistic.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 10px 0;
+
+
+  }
+
+
+  &-content {
+    display: flex;
+    height: 100%;
+    width: 60%;
+    justify-content: flex-start;
+
+
+    flex-wrap: wrap;
+
+    .item {
+      display: flex;
+      width: 50%;
+      align-items: center;
+
+      &:hover {
+        cursor: pointer;
+
+        .info-num {
+          color: #99aaff;
+        }
+      }
+
+
+      .icon {
+        width: 60px;
+        height: 60px;
+        position: relative;
+
+        .howell-icon-ebikepark {
+          transform: translate(-50%, -52%);
+        }
+
+
+        .bg {
+          width: 100%;
+          height: 100%;
+          // background-image: url(/assets/img/middle-round.png);
+          background-repeat: no-repeat;
+          background-size: 100% 100%;
+        }
+
+        .bg_blue {
+          background-image: url(/assets/img/statistic/blue.png);
+        }
+
+        .bg_green {
+          // filter: hue-rotate(250deg);
+          background-image: url(/assets/img/statistic/green.png);
+        }
+
+        .bg_yellow {
+          // filter: hue-rotate(197deg);
+          background-image: url(/assets/img/statistic/yellow.png);
+        }
+
+        .bg_red {
+          // filter: hue-rotate(142deg);
+          background-image: url(/assets/img/statistic/red.png);
+        }
+
+        .bg_gray {
+          // filter: grayscale(1);
+          background-image: url(/assets/img/statistic/gray.png);
+        }
+
+        i {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          font-size: 30px;
+          color: white;
+          z-index: 3;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .info {
+        margin-left: 10px;
+        display: flex;
+        flex-direction: column;
+
+        &-des {
+          color: #cfd7ff;
+          font-size: 14px;
+        }
+
+        &-num {
+          color: white;
+          font-size: 26px;
+        }
+      }
+    }
+  }
+}

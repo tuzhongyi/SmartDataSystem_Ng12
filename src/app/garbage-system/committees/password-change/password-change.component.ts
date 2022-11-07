@@ -126,7 +126,7 @@ export class PasswordChangeComponent implements OnInit {
 
   logout(event: Event) {
     this.local.clear();
-    window.location.href = '/login';
+    window.location.href = this.store.loginPath;
   }
 }
 

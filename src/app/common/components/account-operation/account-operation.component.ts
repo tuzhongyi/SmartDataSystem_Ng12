@@ -15,6 +15,7 @@ import { AccountOperationDisplay } from './account-operation.model';
 export class AccountOperationComponent implements OnInit {
   @Output()
   changePassword: EventEmitter<void> = new EventEmitter();
+
   @Output()
   bindMobile: EventEmitter<void> = new EventEmitter();
   @Input()
@@ -48,11 +49,13 @@ export class AccountOperationComponent implements OnInit {
       this._store.divisionType === DivisionType.Committees;
   }
   logoutHandler() {
+    let path = this._store.loginPath;
+
     this._sessionStorageService.clear();
     this._localStorageService.clear();
     this._store.clear();
     this._cookieService.deleteAll('/');
-    this._router.navigateByUrl('/login');
+    this._router.navigateByUrl(path);
   }
   navigateToHelp() {
     window.open('http://garbage01.51hws.com/help/help.html');

@@ -61,7 +61,8 @@
             ],
             "scripts": [
             ],
-            "allowedCommonJsDependencies": ["crypto-js"]
+            "allowedCommonJsDependencies": ["crypto-js"],
+            "sourceMap": true
           },
           "configurations": {
             "production": {

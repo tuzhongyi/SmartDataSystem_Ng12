@@ -6,4 +6,6 @@ export enum RoutePath {
   password_get_back = 'password-get-back',
   password_to_change = 'password-to-change',
   electric_bike = 'electric-bike',
+  widescreen_login = 'widescreen-login',
+  electric_bike_widescreen = 'electric-bike/widescreen',
 }

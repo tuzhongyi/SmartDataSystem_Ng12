@@ -11,6 +11,12 @@ const PROXY_CONFIG = [
     changeOrigin: true,
     secure: false,
   },
+  // {
+  //   context: ['/amap/'],
+  //   target: 'http://192.168.21.241:9000',
+  //   changeOrigin: true,
+  //   secure: false,
+  // },
 ];
 
 module.exports = PROXY_CONFIG;

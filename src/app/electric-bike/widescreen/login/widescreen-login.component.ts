@@ -14,31 +14,30 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AxiosError } from 'axios';
 import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
+import { RoutePath } from 'src/app/app-routing.path';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
+import { StoreService } from 'src/app/common/service/store.service';
+import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { User, UserResource } from 'src/app/network/model/user.model';
+import { AuthorizationService } from 'src/app/network/request/auth/auth-request.service';
 import videojs, { VideoJsPlayer } from 'video.js';
-import { RoutePath } from '../app-routing.path';
-import { EnumHelper } from '../enum/enum-helper';
-import { StaticDataRole } from '../enum/role-static-data.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
-import { LocalStorageService } from '../common/service/local-storage.service';
-import { SessionStorageService } from '../common/service/session-storage.service';
-import { User, UserResource } from '../network/model/user.model';
-import { AuthorizationService } from '../network/request/auth/auth-request.service';
-import { StoreService } from '../common/service/store.service';
 
 /**
  *  LoginComponent 需要用到 form 指令，
  */
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.less'],
+  selector: 'app-widescreen-login',
+  templateUrl: './widescreen-login.component.html',
+  styleUrls: ['./widescreen-login.component.less'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class WidescreenLoginComponent implements OnInit, AfterViewInit {
   @ViewChild('loginVideo')
   video?: ElementRef;
 
@@ -66,7 +65,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _storeService: StoreService
   ) {
     this._titleService.setTitle('智能车棚管理平台');
-    this._storeService.loginPath = '/login';
+    this._storeService.loginPath = '/widescreen-login';
   }
 
   ngOnInit() {
@@ -178,7 +177,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }
           }
 
-          this._router.navigateByUrl(RoutePath.electric_bike);
+          this._router.navigateByUrl(RoutePath.electric_bike_widescreen);
           return;
           // 区分权限
           if (result.Role && result.Role.length > 0) {

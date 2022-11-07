@@ -3,15 +3,22 @@
     <div class="media-multiple-window-header">
       {{ model.station ? model.station.Name : "" }}
     </div>
-    <div class="media-multiple-window-content">
+    <div
+      class="media-multiple-window-content"
+      [ngClass]="{
+        'no-footer': model.garbageCount === undefined && !model.date
+      }"
+    >
       <app-image-video-mult-control [models]="model.medias">
       </app-image-video-mult-control>
     </div>
     <div class="media-multiple-window-footer">
-      <div class="">
+      <div class="" *ngIf="model.garbageCount !== undefined">
         垃圾堆数 <label class="orange-text">{{ model.garbageCount }}</label> 堆
       </div>
-      <div class="">{{ formatDate(model.date, "yyyy-MM-dd HH:mm") }}</div>
+      <div class="" *ngIf="!!model.date">
+        {{ formatDate(model.date, "yyyy-MM-dd HH:mm") }}
+      </div>
     </div>
   </div>
 </app-window>

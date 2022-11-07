@@ -1,0 +1,48 @@
+<div class="widescreen-device-statistic">
+  <div class="widescreen-device-statistic-background">
+    <div></div>
+    <div class="widescreen-device-statistic-content">
+      <div class="item" (click)="onStatusClicked()">
+        <div class="icon">
+          <div class="bg bg_blue"></div>
+          <i class="howell-icon-ebikepark"></i>
+        </div>
+        <div class="info">
+          <span class="info-des">全部车棚</span>
+          <span class="info-num">{{ data.all }}</span>
+        </div>
+      </div>
+      <div class="item" (click)="onStatusClicked(StationState.Normal)">
+        <div class="icon">
+          <div class="bg bg_green"></div>
+          <i class="howell-icon-ebikepark"></i>
+        </div>
+        <div class="info">
+          <span class="info-des">正常车棚</span>
+          <span class="info-num">{{ data.online }}</span>
+        </div>
+      </div>
+      <div class="item" (click)="onStatusClicked(StationState.Smoke)">
+        <div class="icon">
+          <div class="bg bg_yellow"></div>
+          <i class="howell-icon-ebikepark"></i>
+        </div>
+        <div class="info">
+          <span class="info-des">火灾报警</span>
+          <span class="info-num">{{ data.smoke }}</span>
+        </div>
+      </div>
+      <div class="item" (click)="onStatusClicked(StationState.Error)">
+        <div class="icon">
+          <div class="bg bg_red"></div>
+          <i class="howell-icon-ebikepark"></i>
+        </div>
+        <div class="info">
+          <div class="bg bg_red"></div>
+          <span class="info-des">离线车棚</span>
+          <span class="info-num">{{ data.offline }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -61,8 +61,6 @@ export class AuthorizationService implements CanActivate {
     }
   }
 
-
-
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
@@ -78,22 +76,26 @@ export class AuthorizationService implements CanActivate {
       try {
         let result = await this.login(url);
         if (result instanceof User) {
-
-          return this._router.parseUrl(`/${RoutePath.garbage_system}`)
+          return this._router.parseUrl(`/${RoutePath.garbage_system}`);
         }
       } catch (error) {
-        return this._router.parseUrl('/login');
+        return this._router.parseUrl(this._store.loginPath);
       }
     }
-    return this._router.parseUrl('/login');
+    return this._router.parseUrl(this._store.loginPath);
   }
-  login(url: string): Promise<User | AxiosResponse<any> | null>
-  login(username: string, password: string): Promise<User | AxiosResponse<any> | null>
-  login(username: string, password?: string): Promise<User | AxiosResponse<any> | null> {
+  login(url: string): Promise<User | AxiosResponse<any> | null>;
+  login(
+    username: string,
+    password: string
+  ): Promise<User | AxiosResponse<any> | null>;
+  login(
+    username: string,
+    password?: string
+  ): Promise<User | AxiosResponse<any> | null> {
     if (password) {
-      return this.loginByUsername(username, password)
-    }
-    else {
+      return this.loginByUsername(username, password);
+    } else {
       return this.loginByUrl(username);
     }
   }
@@ -123,11 +125,15 @@ export class AuthorizationService implements CanActivate {
         );
         this._sessionStorageService.challenge = challenge;
         return axios(this._config).then((res: AxiosResponse<User>) => {
-          let result = plainToClass(User, res.data)
-          this._storeUserInfo(result, password, result.Id, result.Resources ?? []);
+          let result = plainToClass(User, res.data);
+          this._storeUserInfo(
+            result,
+            password,
+            result.Id,
+            result.Resources ?? []
+          );
           return result;
-        }
-        );
+        });
       }
       return null;
     });
@@ -152,9 +158,7 @@ export class AuthorizationService implements CanActivate {
       ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
     ).toString();
 
-    let userName = btoa(
-      prefix + user.Username + suffix
-    );
+    let userName = btoa(prefix + user.Username + suffix);
     this._cookieService.set('userName', userName, options);
 
     //password
@@ -164,9 +168,7 @@ export class AuthorizationService implements CanActivate {
     suffix = CryptoJS.MD5(
       ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
     ).toString();
-    let passWord = btoa(
-      prefix + password + suffix
-    );
+    let passWord = btoa(prefix + password + suffix);
     this._cookieService.set('passWord', passWord, options);
 
     this._localStorageService.user = user;
@@ -174,27 +176,26 @@ export class AuthorizationService implements CanActivate {
   }
 
   loginByUrl(url: string): Promise<AxiosResponse<any> | User | null> {
-
     let uri = new HowellUrl(url);
     if (uri.Querys) {
       try {
         let auto = false;
         for (const key in uri.Querys) {
           let lower = key.toLocaleLowerCase();
-          let value = uri.Querys[key]
+          let value = uri.Querys[key];
           switch (lower) {
-            case "auth":
+            case 'auth':
               let encode = decodeURIComponent(value);
               let urlParam = base64decode(encode);
-              let paramSplit = urlParam.split("&");
+              let paramSplit = urlParam.split('&');
               this._username = paramSplit[0];
               this._password = paramSplit[1];
               auto = true;
               break;
-            case "hidetitlebar":
+            case 'hidetitlebar':
               this._store.HideTitlebar = JSON.parse(value);
               break;
-            case "hidebutton":
+            case 'hidebutton':
               this._store.HideButton = JSON.parse(value);
               break;
             default:
@@ -205,12 +206,11 @@ export class AuthorizationService implements CanActivate {
           //this.sessionUser.clear();
         }
       } catch (error) {
-        console.error("login by url: query is null");
+        console.error('login by url: query is null');
         throw error;
       }
     }
     return this.login(this._username, this._password);
-
   }
 
   /**

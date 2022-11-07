@@ -12,7 +12,7 @@ import { User, UserResource } from 'src/app/network/model/user.model';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() { }
+  constructor() {}
 
   set user(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
@@ -21,6 +21,15 @@ export class LocalStorageService {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  public get loginPath(): string {
+    let value = localStorage.getItem('loginPath');
+    return value ?? '/login';
+  }
+  public set loginPath(v: string) {
+    localStorage.setItem('loginPath', v);
+  }
+
   clear(name?: string) {
     if (name) {
       localStorage.removeItem(name);

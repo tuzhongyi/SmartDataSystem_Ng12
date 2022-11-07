@@ -1,0 +1,42 @@
+<div class="hw-table">
+  <div class="table-header-container">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>名称</th>
+          <th>时间</th>
+          <th>报警类型</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="table-body-container" *ngIf="datas.length > 0">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <tbody>
+        <tr *ngFor="let item of datas">
+          <td [title]="item.name">{{ item.name }}</td>
+          <td>{{ item.date }}</td>
+          <td>{{ item.type }}</td>
+          <td>
+            <span class="icon" (click)="onpicture($event, item)">
+              <i class="howell-icon-picture"></i
+            ></span>
+            <span class="icon" (click)="onplayback($event, item)">
+              <i class="howell-icon-video-playback1"></i
+            ></span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-body-container nodata" *ngIf="datas.length <= 0">
+    暂无数据
+  </div>
+</div>

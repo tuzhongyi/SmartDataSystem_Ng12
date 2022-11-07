@@ -1,0 +1,27 @@
+.app-account-info {
+  color: #d8f4ff;
+  // font: bold 20px/32px Roboto, "Helvetica Neue", sans-serif;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+
+  .account-title {
+    font-size: 36px;
+    letter-spacing: 5px;
+    .filter();
+  }
+
+  .account-desc {
+    display: flex;
+    align-items: flex-end;
+    font-size: 36px;
+    letter-spacing: 5px;
+    .filter();
+  }
+}
+
+.filter() {
+  background-image: linear-gradient(to top, #7f94ff, #fff);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}

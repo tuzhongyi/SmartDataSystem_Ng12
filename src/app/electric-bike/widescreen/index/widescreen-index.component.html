@@ -1,0 +1,302 @@
+<div class="index">
+  <div class="index-head">
+    <mat-toolbar>
+      <div class="left"></div>
+      <div class="center">
+        <app-widescreen-account-info
+          [desc]="'智能车棚管理平台'"
+        ></app-widescreen-account-info>
+      </div>
+      <div class="right">
+        <app-time></app-time>
+        <app-account-operation
+          [display]="{
+            username: true,
+            changePassword: false,
+            bindMobile: false,
+            logout: true,
+            help: false
+          }"
+        ></app-account-operation>
+      </div>
+    </mat-toolbar>
+  </div>
+  <div class="index-body">
+    <div class="index-body-left">
+      <div class="">
+        <!-- <howell-electric-bike-navication
+          [root]="navication.root"
+          [children]="navication.children"
+          [selected]="navication.selected"
+          (ondivisionclicked)="navication.ondivisionclicked($event)"
+          (onrootclick)="navication.onrootclick($event)"
+        >
+        </howell-electric-bike-navication> -->
+        <howell-index-card class="relative">
+          <!-- <div class="absolute selection">
+            <select name="" id="" [(ngModel)]="display">
+              <option [ngValue]="WidescreenIndexDisplay.status">
+                设备状态
+              </option>
+              <option [ngValue]="WidescreenIndexDisplay.alarm">报警信息</option>
+            </select>
+          </div> -->
+          <!-- <howell-device-status
+            *ngIf="display == WidescreenIndexDisplay.status"
+            (statusClick)="device.onclick($event)"
+          ></howell-device-status> -->
+          <div class="header">
+            <!-- <select name="" id="" [(ngModel)]="display">
+              <option [ngValue]="WidescreenIndexDisplay.status">
+                设备状态
+              </option>
+              <option [ngValue]="WidescreenIndexDisplay.alarm">报警信息</option>
+            </select> -->
+
+            <div
+              *ngIf="navication.root"
+              class="link"
+              (click)="ondivisionclicked(root)"
+            >
+              {{ navication.root.name }}
+            </div>
+
+            <div class="tabs">
+              <div
+                [ngClass]="{
+                  selected: display === WidescreenIndexDisplay.status
+                }"
+                (click)="onDisplayChange(WidescreenIndexDisplay.status)"
+              >
+                运行状态
+                <!-- <i class="howell-icon-list2" title="车棚运行状态"></i> -->
+              </div>
+              <div class="_">|</div>
+              <div
+                [ngClass]="{
+                  selected: display === WidescreenIndexDisplay.alarm
+                }"
+                (click)="onDisplayChange(WidescreenIndexDisplay.alarm)"
+              >
+                报警信息
+                <!-- <i class="howell-icon-alarm2" title="报警信息"></i> -->
+              </div>
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-device-statistic
+              *ngIf="display == WidescreenIndexDisplay.status"
+              [load]="map.load"
+              (statusClick)="statistic.onstatus($event)"
+            >
+            </howell-widescreen-device-statistic>
+
+            <!-- <howell-alarm
+              *ngIf="display == WidescreenIndexDisplay.alarm"
+              (picture)="alarm.onpicture($event)"
+              (playback)="alarm.onplayback($event)"
+              (itemClick)="alarm.onItemClicked($event)"
+            ></howell-alarm> -->
+            <howell-widescreen-event-record-table
+              *ngIf="display == WidescreenIndexDisplay.alarm"
+              (picture)="alarm.onpicture($event)"
+              (playback)="alarm.onplayback($event)"
+            >
+            </howell-widescreen-event-record-table>
+          </div>
+        </howell-index-card>
+      </div>
+      <div class="">
+        <howell-index-card>
+          <div class="header">
+            <div class="link" (click)="ondivisionclicked(children[0])">
+              {{ children[0].Name }}
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-station-table
+              [divisionId]="children[0].Id"
+              (position)="map.onposition($event)"
+              (video)="child.onvideo($event)"
+            >
+            </howell-widescreen-station-table>
+          </div>
+        </howell-index-card>
+      </div>
+      <div class="">
+        <howell-index-card>
+          <div class="header">
+            <div class="link" (click)="ondivisionclicked(children[1])">
+              {{ children[1].Name }}
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-station-table
+              [divisionId]="children[1].Id"
+              (position)="map.onposition($event)"
+              (video)="child.onvideo($event)"
+            >
+            </howell-widescreen-station-table>
+          </div>
+        </howell-index-card>
+      </div>
+    </div>
+    <div
+      class="index-body-content"
+      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+    >
+      <!-- <howell-device-statistic
+        [load]="map.load"
+        (statusClick)="statistic.onstatus($event)"
+      >
+      </howell-device-statistic> -->
+      <howell-index-card>
+        <app-map-control
+          [config]="map.config"
+          [load]="map.load"
+          [position]="map.position"
+          (patrol)="map.onpatrol()"
+          (VideoPlay)="map.onvideoplay($event)"
+          (pointDisarmClicked)="map.ondisarm($event)"
+        ></app-map-control>
+      </howell-index-card>
+      <div class="patrol" *ngIf="patrol.show">
+        <howell-index-card>
+          <app-patrol-control
+            (close)="patrol.onclose()"
+            (fullscreen)="patrol.onfullscreen()"
+          ></app-patrol-control>
+        </howell-index-card>
+      </div>
+    </div>
+    <div class="index-body-right">
+      <div class="horizontal">
+        <!-- <howell-electric-bike-navication
+          [root]="navication.root"
+          [children]="navication.children"
+          [selected]="navication.selected"
+          (ondivisionclicked)="navication.ondivisionclicked($event)"
+          (onrootclick)="navication.onrootclick($event)"
+        >
+        </howell-electric-bike-navication> -->
+
+        <howell-index-card>
+          <div class="header">
+            <div class="link" (click)="ondivisionclicked(children[2])">
+              {{ children[2].Name }}
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-station-table
+              [divisionId]="children[2].Id"
+              (position)="map.onposition($event)"
+              (video)="child.onvideo($event)"
+            >
+            </howell-widescreen-station-table>
+          </div>
+        </howell-index-card>
+      </div>
+      <div class="">
+        <howell-index-card>
+          <div class="header">
+            <div class="link" (click)="ondivisionclicked(children[3])">
+              {{ children[3].Name }}
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-station-table
+              [divisionId]="children[3].Id"
+              (position)="map.onposition($event)"
+              (video)="child.onvideo($event)"
+            >
+            </howell-widescreen-station-table>
+          </div>
+        </howell-index-card>
+      </div>
+      <div class="">
+        <howell-index-card>
+          <div class="header">
+            <div class="link" (click)="ondivisionclicked(children[4])">
+              {{ children[4].Name }}
+            </div>
+          </div>
+          <div class="content">
+            <howell-widescreen-station-table
+              [divisionId]="children[4].Id"
+              (position)="map.onposition($event)"
+              (video)="child.onvideo($event)"
+            >
+            </howell-widescreen-station-table>
+          </div>
+        </howell-index-card>
+      </div>
+    </div>
+  </div>
+</div>
+
+<howell-device-list-window
+  *ngIf="window.device.show"
+  [Model]="window.device"
+  [style]="window.device.style"
+  [status]="window.device.status"
+  (image)="window.device.onimage($event)"
+>
+</howell-device-list-window>
+
+<howell-event-record-smoke-window
+  *ngIf="window.record.show"
+  [Model]="window.record"
+  [style]="window.record.style"
+  (image)="window.record.onimage($event)"
+  (play)="window.record.onplay($event)"
+>
+</howell-event-record-smoke-window>
+
+<howell-station-window
+  *ngIf="window.station.show"
+  [Model]="window.station"
+  [style]="window.station.style"
+  [state]="window.station.state"
+  (position)="map.onposition($event)"
+  (image)="window.station.onimage($event)"
+>
+</howell-station-window>
+
+<app-video-window
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
+  (download)="video.ondownload($event)"
+>
+</app-video-window>
+<app-window
+  [Model]="window.media.single"
+  [style]="window.media.single.style"
+  [manualClose]="true"
+  (OnClosing)="window.media.single.onclosing()"
+>
+  <ng-container *ngIf="window.media.single.show">
+    <app-media-control
+      [autoplay]="window.media.single.autoplay"
+      [model]="window.media.single.camera"
+      [index]="window.media.single.index"
+      [stop]="window.media.single.closing"
+      (played)="window.media.single.onplay()"
+      (stoped)="window.media.single.onstop()"
+    ></app-media-control>
+  </ng-container>
+</app-window>
+
+<howell-media-multiple-window
+  *ngIf="window.media.multiple.show"
+  [Model]="window.media.multiple"
+  [style]="window.media.multiple.style"
+  [statistic]="window.media.multiple.statistic"
+></howell-media-multiple-window>
+<howell-video-window
+  *ngIf="window.video.show"
+  [Model]="window.video"
+  [style]="window.video.style"
+  [media]="window.video.media"
+>
+</howell-video-window>

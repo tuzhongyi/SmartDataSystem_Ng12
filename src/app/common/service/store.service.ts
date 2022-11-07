@@ -12,6 +12,13 @@ export class StoreService {
   interval = new EventEmitter();
   refresh = new EventEmitter();
 
+  public get loginPath(): string {
+    return this.local.loginPath;
+  }
+  public set loginPath(v: string) {
+    this.local.loginPath = v;
+  }
+
   password?: string;
 
   HideButton: boolean = false;

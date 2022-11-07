@@ -13,6 +13,7 @@ import { DeviceStatisticComponent } from './device-statistic/device-statistic.co
 import { DeviceStatusComponent } from './device-status/device-status.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { ElectricBikeWindowComponents } from './windows/windows.module';
+import { ElectricBikeWidescreenComponents } from './widescreen/widescreen.module';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,8 @@ import { ElectricBikeWindowComponents } from './windows/windows.module';
     DeviceStatisticComponent,
     DeviceStatusComponent,
     ...ElectricBikeWindowComponents,
+
+    ...ElectricBikeWidescreenComponents,
   ],
   imports: [
     CommonModule,
