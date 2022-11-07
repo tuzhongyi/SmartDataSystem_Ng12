@@ -21,8 +21,8 @@
         <tbody>
           <ng-template ngFor [ngForOf]="dataSource" let-item>
             <tr>
-              <td>{{ item.VehicleName }}</td>
-              <td>{{ item.MemberName }}</td>
+              <td [title]="item.VehicleName">{{ item.VehicleName }}</td>
+              <td [title]="item.MemberName">{{ item.MemberName }}</td>
               <td>
                 <span> <i class="howell-icon-picture"></i></span>
                 <span> <i class="howell-icon-account"></i></span>

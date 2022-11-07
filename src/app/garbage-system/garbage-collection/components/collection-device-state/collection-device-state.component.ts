@@ -71,57 +71,56 @@ export class GarbageVehiclesDeviceStateComponent
   business: IBusiness<IModel, DeviceStateCountModel>;
 
   ngOnInit(): void {
-    if (this.business.subscription) {
-      this.business.subscription.subscribe(() => {
-        this.loadData();
-      });
-    }
-    this.loadData();
-
-    this.option = {
-      series: [
-        {
-          type: 'gauge',
-          radius: '70%',
-          center: ['50%', '50%'],
-          progress: {
-            show: true,
-            width: 10,
-            itemStyle: {},
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              width: 10,
-              color: [[1, '#6b7199']],
-            },
-          },
-          axisLabel: {
-            show: false,
-            distance: 5,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          title: {
-            offsetCenter: ['0%', '0%'],
-            color: 'auto',
-            fontSize: 18,
-            fontWeight: 400,
-          },
-          detail: {
-            show: false,
-          },
-          pointer: {
-            show: false,
-          },
-          data: [],
-        },
-      ],
-    };
+    // if (this.business.subscription) {
+    //   this.business.subscription.subscribe(() => {
+    //     this.loadData();
+    //   });
+    // }
+    // this.loadData();
+    // this.option = {
+    //   series: [
+    //     {
+    //       type: 'gauge',
+    //       radius: '70%',
+    //       center: ['50%', '50%'],
+    //       progress: {
+    //         show: true,
+    //         width: 10,
+    //         itemStyle: {},
+    //       },
+    //       axisLine: {
+    //         show: true,
+    //         lineStyle: {
+    //           width: 10,
+    //           color: [[1, '#6b7199']],
+    //         },
+    //       },
+    //       axisLabel: {
+    //         show: false,
+    //         distance: 5,
+    //       },
+    //       splitLine: {
+    //         show: false,
+    //       },
+    //       axisTick: {
+    //         show: false,
+    //       },
+    //       title: {
+    //         offsetCenter: ['0%', '0%'],
+    //         color: 'auto',
+    //         fontSize: 18,
+    //         fontWeight: 400,
+    //       },
+    //       detail: {
+    //         show: false,
+    //       },
+    //       pointer: {
+    //         show: false,
+    //       },
+    //       data: [],
+    //     },
+    //   ],
+    // };
   }
   ngOnDestroy() {
     if (this.business.subscription) {

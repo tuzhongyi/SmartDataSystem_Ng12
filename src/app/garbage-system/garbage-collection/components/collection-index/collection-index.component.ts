@@ -89,16 +89,16 @@ export class GarbageCollectionIndexComponent {
   }
 
   ngOnInit(): void {
-    this.config(this.activatedRoute);
-    let user = this._localStorageService.user;
-    if (user.Resources && user.Resources.length > 0) {
-      let userDivisionId = user.Resources[0].Id;
-      let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType =
-        EnumHelper.ConvertUserResourceToDivision(resourceType);
-      this._storeService.divisionId = userDivisionId;
-      this._storeService.divisionType = userDivisionType;
-    }
-    this.statistic.loading.emit();
+    // this.config(this.activatedRoute);
+    // let user = this._localStorageService.user;
+    // if (user.Resources && user.Resources.length > 0) {
+    //   let userDivisionId = user.Resources[0].Id;
+    //   let resourceType = user.Resources[0].ResourceType;
+    //   let userDivisionType =
+    //     EnumHelper.ConvertUserResourceToDivision(resourceType);
+    //   this._storeService.divisionId = userDivisionId;
+    //   this._storeService.divisionType = userDivisionType;
+    // }
+    // this.statistic.loading.emit();
   }
 }

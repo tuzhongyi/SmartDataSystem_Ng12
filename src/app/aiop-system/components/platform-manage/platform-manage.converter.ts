@@ -1,9 +1,9 @@
 import { DatePipe } from "@angular/common";
 import { Injectable } from "@angular/core";
-import { IConverter } from "../common/interfaces/converter.interface";
-import { Platform } from "../network/model/platform.model";
-import { PlatformManageModel } from "../view-model/platform-manage.model";
-import { CommonModelConverter } from "./common-model.converter";
+import { IConverter } from "../../../common/interfaces/converter.interface";
+import { Platform } from "../../../network/model/platform.model";
+import { PlatformManageModel } from "../../../view-model/platform-manage.model";
+import { CommonModelConverter } from "../../../converter/common-model.converter";
 
 type PlatformManageModelSource = Platform;
 

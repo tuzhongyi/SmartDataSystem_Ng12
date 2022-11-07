@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Time } from 'src/app/common/tools/time';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
+import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {
   CollectionVehicleModel,
   CollectionVehicleSearchInfo,
@@ -14,6 +17,7 @@ import {
       provide: CollectionVehicleBusiness,
       useClass: CollectionVehicleBusiness,
     },
+    CollectionVehicleConverter,
   ],
 })
 export class CollectionVehicleComponent implements OnInit {
@@ -22,17 +26,21 @@ export class CollectionVehicleComponent implements OnInit {
   dataSource: CollectionVehicleModel[] = [];
 
   searchInfo: CollectionVehicleSearchInfo = {
-    BeginTime: new Date(),
-    EndTime: new Date(),
+    BeginTime: Time.beginTime(new Date()),
+    EndTime: Time.endTime(new Date()),
   };
 
   constructor(private _business: CollectionVehicleBusiness) {}
 
   ngOnInit(): void {
     this._init();
+
+    // console.log(DurationParams.allDay(new Date()));
+
+    // console.log(Time.curWeek(new Date()));
   }
   private async _init() {
     this.dataSource = await this._business.init(this.searchInfo);
-    console.log(this.dataSource);
+    // console.log(this.dataSource);
   }
 }

@@ -1,15 +1,16 @@
+import { formatDate } from '@angular/common';
 import {
   CommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
-import { CollectionVehicleModel } from './collection-vehicle.model';
+import { CollectionPointModel } from './collection-point.model';
 
-export class CollectionVehicleConverter extends CommonModelConverter<
-  CollectionVehicleModel,
+export class CollectionPointConverter extends CommonModelConverter<
+  CollectionPointModel,
   GarbageCollectionEventRecord
 > {
-  Convert(source: CommonModelSource, ...res: any[]): CollectionVehicleModel {
+  Convert(source: CommonModelSource, ...res: any[]): CollectionPointModel {
     if (source instanceof GarbageCollectionEventRecord) {
       return this._fromGarbageCollectionEventRecord(source);
     }
@@ -19,9 +20,10 @@ export class CollectionVehicleConverter extends CommonModelConverter<
   private _fromGarbageCollectionEventRecord(
     record: GarbageCollectionEventRecord
   ) {
-    let model = new CollectionVehicleModel();
-    model.VehicleName = record.Data.VehicleName;
-    model.MemberName = record.Data.MemberName ?? '';
+    let model = new CollectionPointModel();
+    model.CollectionPointName = record.Data.CollectionPointName ?? '';
+    model.Weight = record.Data.Weight ?? 0;
+    model.EventTime = formatDate(record.EventTime, 'MM-dd hh:mm:ss', 'zh-CN');
 
     return model;
   }

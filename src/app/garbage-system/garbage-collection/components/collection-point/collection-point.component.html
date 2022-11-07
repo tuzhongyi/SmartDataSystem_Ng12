@@ -1,1 +1,46 @@
-<p>collection-point works!</p>
+<!--  垃圾清运记录 垃圾收运点有关信息-->
+<div class="collection-point">
+  <simple-table>
+    <ng-container ngProjectAs="table-header">
+      <table>
+        <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>重量(KG)</th>
+            <th>清运时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+    </ng-container>
+
+    <ng-container ngProjectAs="table-body">
+      <table>
+        <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+
+        <tbody>
+          <ng-template ngFor [ngForOf]="dataSource" let-item>
+            <tr>
+              <td [title]="item.CollectionPointName">
+                {{ item.CollectionPointName }}
+              </td>
+              <td>{{ item.Weight }}</td>
+              <td>{{ item.EventTime }}</td>
+              <td>
+                <span> <i class="howell-icon-picture"></i></span>
+                <span> <i class="howell-icon-account"></i></span>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </ng-container>
+  </simple-table>
+</div>
+
+<ng-template #colGroup>
+  <colgroup>
+    <col *ngFor="let item of tdWidth" [style.width]="item" />
+  </colgroup>
+</ng-template>

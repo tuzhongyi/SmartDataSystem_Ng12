@@ -53,7 +53,7 @@ const routes: Routes = [
     canActivate: [AuthorizationService],
   },
   {
-    path: RoutePath.garbage_collection,
+    path: RoutePath.garbage_vehicle,
     loadChildren: () =>
       import(
         './garbage-system/garbage-collection/garbage-collection.module'

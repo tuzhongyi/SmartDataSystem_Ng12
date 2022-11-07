@@ -10,22 +10,26 @@ export class Time {
   }
   // 后退n天
   static backDate(time: Date, n: number) {
-    return new Date(new Date(time).getTime() - n * 24 * 60 * 60 * 1000)
+    return new Date(new Date(time).getTime() - n * 24 * 60 * 60 * 1000);
   }
   // 前进n天
   static forwardDate(time: Date, n: number) {
-    return new Date(new Date(time).getTime() + n * 24 * 60 * 60 * 1000)
-
+    return new Date(new Date(time).getTime() + n * 24 * 60 * 60 * 1000);
   }
-  // 当前日期所在的周
-  static curWeek(time: Date, firstDay = 1) {
-    let offset = time.getDay() - firstDay;
+  /**
+   * 当前日期所在的周
+   * @param time 当前时间
+   * @param firstIsSunday 默认0表示星期天
+   * @returns \{beginTime:Date,endTime:Date}
+   */
+  static curWeek(time: Date, firstIsSunday = true) {
+    let offset = time.getDay() - (firstIsSunday ? 0 : 1);
     let beginTime = Time.beginTime(this.backDate(time, offset));
-    let endTime = Time.endTime(Time.forwardDate(beginTime, 6))
+    let endTime = Time.endTime(Time.forwardDate(beginTime, 6));
     return {
       beginTime,
-      endTime
-    }
+      endTime,
+    };
   }
   // 当前日期所在的月
   static curMonth(t: Date) {
@@ -34,7 +38,7 @@ export class Time {
     endTime = Time.endTime(Time.backDate(endTime, 1));
     return {
       beginTime,
-      endTime
-    }
+      endTime,
+    };
   }
 }

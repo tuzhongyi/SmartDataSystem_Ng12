@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { PlatformManageConverter } from 'src/app/converter/platform-manage.converter';
+import { PlatformManageConverter } from 'src/app/aiop-system/components/platform-manage/platform-manage.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PlatformRequestSerivce } from 'src/app/network/request/platform/platform.service';
 import { GetPlatformsParams } from 'src/app/network/request/platform/platforms.params';

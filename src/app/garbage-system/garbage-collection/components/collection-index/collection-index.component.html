@@ -1,16 +1,16 @@
 <div class="monitor-container">
   <div class="monitor-header">
-    <mat-toolbar>
+    <!-- <mat-toolbar>
       <app-account-info></app-account-info>
       <div class="spacer"></div>
       <app-time></app-time>
       <app-account-operation></app-account-operation>
-    </mat-toolbar>
+    </mat-toolbar> -->
   </div>
   <div class="monitor-body">
     <div class="monitor-body__item monitor-body__item--none">
       <div class="monitor-body__wrapper">
-        <collection-division-list></collection-division-list>
+        <!-- <collection-division-list></collection-division-list> -->
       </div>
     </div>
     <div class="monitor-body__item monitor-body__item--map">
@@ -37,14 +37,12 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <collection-device-state
-          (Click)="trigger.deviceState.onclick($event)"
-        ></collection-device-state>
+        <collection-device-state></collection-device-state>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-negative-comment-rank> </app-negative-comment-rank>
+        <!-- <app-negative-comment-rank> </app-negative-comment-rank> -->
       </div>
     </div>
     <div class="monitor-body__item">
@@ -54,31 +52,29 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <vehicles-event-statistic
+        <!-- <vehicles-event-statistic
           [title]="'乱扔垃圾统计表'"
-        ></vehicles-event-statistic>
+        ></vehicles-event-statistic> -->
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <vehicles-event-statistic
+        <!-- <vehicles-event-statistic
           [title]="'乱扔垃圾统计表'"
-        ></vehicles-event-statistic>
+        ></vehicles-event-statistic> -->
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <vehicles-event-statistic
+        <!-- <vehicles-event-statistic
           [title]="'混合投放统计表'"
           [type]="mixIntoType"
-        ></vehicles-event-statistic>
+        ></vehicles-event-statistic> -->
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <app-disposal-count
-          (task)="trigger.risposalCount.ontask()"
-        ></app-disposal-count> -->
+        <collection-point></collection-point>
       </div>
     </div>
   </div>

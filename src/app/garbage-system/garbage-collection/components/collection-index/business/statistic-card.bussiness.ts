@@ -11,7 +11,10 @@ import { GetDivisionStatisticNumbersParams } from 'src/app/network/request/divis
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { WindowBussiness } from './window.business';
-import { StatisticCardViewModel, StatisticType } from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
+import {
+  StatisticCardViewModel,
+  StatisticType,
+} from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
 
 @Injectable()
 export class StatisticCardBussiness
@@ -29,11 +32,11 @@ export class StatisticCardBussiness
     this.storeService.statusChange.subscribe(async (x) => {
       this.cards = await this.load();
     });
-    this.storeService.interval.subscribe((x) => {
-      this.load().then((cards) => {
-        this.cards = cards;
-      });
-    });
+    // this.storeService.interval.subscribe((x) => {
+    //   this.load().then((cards) => {
+    //     this.cards = cards;
+    //   });
+    // });
   }
 
   cards: StatisticCardViewModel[] = [];

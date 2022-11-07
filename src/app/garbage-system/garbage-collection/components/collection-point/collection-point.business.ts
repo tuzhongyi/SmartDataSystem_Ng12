@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/vehicle-event/vehicle-event.params';
 import { VehicleEventRequestService } from 'src/app/network/request/vehicle-event/vehicle-event.service';
-import { CollectionVehicleConverter } from './collection-vehicle.converter';
-import { CollectionVehicleSearchInfo } from './collection-vehicle.model';
+import { CollectionPointConverter } from './collection-point.converter';
+import { CollectionPointSearchInfo } from './collection-point.model';
 
 @Injectable()
-export class CollectionVehicleBusiness {
+export class CollectionPointBusiness {
   constructor(
     private _vehicleEventRequest: VehicleEventRequestService,
-    private _converter: CollectionVehicleConverter
+    private _converter: CollectionPointConverter
   ) {}
-  async init(searchInfo: CollectionVehicleSearchInfo) {
+  async init(searchInfo: CollectionPointSearchInfo) {
     let { Data } = await this._list(searchInfo);
 
     let res = this._converter.iterateToModel(Data);
     return res;
   }
-  private _list(searchInfo: CollectionVehicleSearchInfo) {
+  private _list(searchInfo: CollectionPointSearchInfo) {
     let params = new GetGarbageCollectionEventRecordsParams();
 
     params.BeginTime = searchInfo.BeginTime;
