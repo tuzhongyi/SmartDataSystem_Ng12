@@ -26,7 +26,7 @@
                 {{ item.CollectionPointName }}
               </td>
               <td>{{ item.Weight }}</td>
-              <td>{{ item.EventTime }}</td>
+              <td>{{ item.EventTime | date: "MM-dd hh:mm:ss" }}</td>
               <td>
                 <span> <i class="howell-icon-picture"></i></span>
                 <span> <i class="howell-icon-account"></i></span>

@@ -8,26 +8,26 @@
         <div
           class="chart-container"
           id="chartContainer"
-          style="width: 203px; height: 117px"
           #chartContainer
-          (resized)="onResized($event)"
+          echarts
+          [theme]="theme"
+          [options]="gaugeOption"
         ></div>
         <div class="chart-des">
-          <div class="chart-des__label">系统设备在线比</div>
-          <div class="chart-des__ratio" [style.color]="stateRatioColor">
-            <span class="num">{{ model.onLineRatio }}</span
-            ><span class="unit">{{ model.unit }}</span>
+          <div class="chart-des__label">车辆在线比</div>
+          <div class="chart-des__ratio" [class]="model?.stateCls">
+            <span class="num">{{ model?.onLineRatio }}</span
+            ><span class="unit">{{ model?.unit }}</span>
           </div>
         </div>
       </div>
       <div class="device-state__foot">
         <div
-          *ngFor="let item of model.deviceStateArr"
+          *ngFor="let item of model?.deviceStateArr"
           class="device-state__foot__item"
-          (click)="onclick(item)"
         >
           <div class="item-label">{{ item.label }}</div>
-          <div class="item-num" [ngClass]="item.tagCls">
+          <div class="item-num" [class]="item.tagCls">
             <span>{{ item.count }}</span>
           </div>
         </div>

@@ -1,7 +1,7 @@
 export class CollectionPointModel {
   CollectionPointName!: string;
   Weight!: number;
-  EventTime!: string;
+  EventTime!: Date;
 }
 
 export interface CollectionPointSearchInfo {

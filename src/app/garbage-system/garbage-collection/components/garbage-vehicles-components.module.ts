@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-02 10:51:30
+ * @Last Modified time: 2022-11-08 13:18:39
  */
 
 import { NgModule } from '@angular/core';
@@ -20,6 +20,7 @@ import { GarbageComponentsModule } from 'src/app/garbage-system/components/garba
 import { GarbageVehiclesDeviceStateComponent } from './collection-device-state/collection-device-state.component';
 import { CollectionVehicleComponent } from './collection-vehicle/collection-vehicle.component';
 import { CollectionPointComponent } from './collection-point/collection-point.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -38,8 +39,9 @@ import { CollectionPointComponent } from './collection-point/collection-point.co
     MaterialModule,
     FormsModule,
     GarbageComponentsModule,
+    NgxEchartsModule
   ],
   providers: [DownloadBusiness],
   exports: [],
 })
-export class GarbageCollectionComponentsModule {}
+export class GarbageCollectionComponentsModule { }

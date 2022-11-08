@@ -9,23 +9,17 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
+import { EChartsOption } from 'echarts';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { Subscription } from 'rxjs';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { IModel } from 'src/app/network/model/model.interface';
-import {
-  DeviceStateCountModel,
-  IDeviceStateDes,
-} from 'src/app/view-model/device-state-count.model';
-import { GarbageVehiclesDeviceStateBusiness } from './collection-device-state.business';
+import { NgxEchartsDirective } from 'ngx-echarts';
+import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
+import { CollectionDeviceStateBusiness } from './collection-device-state.business';
+import { CollectionVehicleConverter } from './collection-device-state.converter';
+import { CollectionDeviceStateModel } from './collection-device-state.model';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -35,182 +29,37 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   selector: 'collection-device-state',
   templateUrl: './collection-device-state.component.html',
   styleUrls: ['./collection-device-state.component.less'],
-  providers: [GarbageVehiclesDeviceStateBusiness],
+  providers: [CollectionDeviceStateBusiness, CollectionVehicleConverter],
 })
 export class GarbageVehiclesDeviceStateComponent
-  implements OnInit, OnDestroy, AfterViewInit {
-  @Output()
-  Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
+  implements OnInit {
 
-  public title: string = '设备运行状态';
-  public model: DeviceStateCountModel = new DeviceStateCountModel();
+  title: string = '设备运行状态';
+  model: CollectionDeviceStateModel | null = null;
+  theme: EChartsTheme = EChartsTheme.adsame;
 
-  public get stateRatioColor() {
-    return this.stateColor.get(this.model.state);
+  gaugeOption: EChartsOption = {
+
+  };
+
+
+  constructor(private _business: CollectionDeviceStateBusiness) { }
+
+  ngOnInit() {
+
+
+    this._init();
+  }
+  private async _init() {
+    this.model = await this._business.init();
+
   }
 
-  private myChart?: echarts.ECharts;
-  private option: ECOption = {};
-
-  private stateColor = new Map([
-    [DeviceStateRatioType.bad, '#ef6464'],
-    [DeviceStateRatioType.mild, '#ffba00'],
-    [DeviceStateRatioType.good, '#21e452'],
-  ]);
-
-  @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
-
-  constructor(private business: GarbageVehiclesDeviceStateBusiness) { }
-
-  ngOnInit(): void {
-    // if (this.business.subscription) {
-    //   this.business.subscription.subscribe(() => {
-    //     this.loadData();
-    //   });
-    // }
-    // this.loadData();
-    // this.option = {
-    //   series: [
-    //     {
-    //       type: 'gauge',
-    //       radius: '70%',
-    //       center: ['50%', '50%'],
-    //       progress: {
-    //         show: true,
-    //         width: 10,
-    //         itemStyle: {},
-    //       },
-    //       axisLine: {
-    //         show: true,
-    //         lineStyle: {
-    //           width: 10,
-    //           color: [[1, '#6b7199']],
-    //         },
-    //       },
-    //       axisLabel: {
-    //         show: false,
-    //         distance: 5,
-    //       },
-    //       splitLine: {
-    //         show: false,
-    //       },
-    //       axisTick: {
-    //         show: false,
-    //       },
-    //       title: {
-    //         offsetCenter: ['0%', '0%'],
-    //         color: 'auto',
-    //         fontSize: 18,
-    //         fontWeight: 400,
-    //       },
-    //       detail: {
-    //         show: false,
-    //       },
-    //       pointer: {
-    //         show: false,
-    //       },
-    //       data: [],
-    //     },
-    //   ],
-    // };
-    this.business.init();
-  }
-  ngOnDestroy() {
-    if (this.business.subscription) {
-      this.business.subscription.destroy();
-    }
-  }
   ngAfterViewInit() {
-    // console.log('chartContainers', this.chartContainer);
-    if (this.chartContainer) {
-      this.myChart = echarts.init(this.chartContainer.nativeElement);
-      this.myChart.setOption(this.option);
-    }
-  }
-  async loadData() {
-    this.model = await this.business.load();
-
-    this.myChart?.setOption({
-      series: [
-        {
-          type: 'gauge',
-          axisLabel: {
-            color: this.stateRatioColor,
-          },
-          data: [
-            {
-              name: this.model.stateDes,
-              value: this.model.onLineRatio,
-              // itemStyle: {
-              //   color: this.stateRatioColor,
-              // },
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: this.model.onLineRatio
-                    ? 100 / this.model.onLineRatio
-                    : 100,
-                  y2: 0,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: '#ef6464', // 0% 处的颜色
-                    },
-                    {
-                      offset: 0.5,
-                      color: '#ffba00', // 100% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: '#21e452', // 100% 处的颜色
-                    },
-                  ],
-                },
-              },
-              title: {
-                color: this.stateRatioColor,
-              },
-            },
-          ],
-        },
-      ],
-    });
+    // if (this.chartContainer) {
+    //   this.myChart = echarts.init(this.chartContainer.nativeElement);
+    //   this.myChart.setOption(this.option);
+    // }
   }
 
-  onResized(e: ResizedEvent) {
-    if (this.myChart) {
-      this.myChart.resize();
-      let w = e.newRect.width;
-      if (w < 101) {
-        this.myChart.setOption({
-          series: [
-            {
-              type: 'gauge',
-              title: {
-                show: false,
-              },
-            },
-          ],
-        });
-      } else {
-        this.myChart.setOption({
-          series: [
-            {
-              type: 'gauge',
-              title: {
-                show: true,
-              },
-            },
-          ],
-        });
-      }
-    }
-    // this.myCharts.forEach((myChart) => myChart.resize());
-  }
-
-  onclick(args: IDeviceStateDes) {
-    this.Click.emit(args);
-  }
 }

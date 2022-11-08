@@ -14,6 +14,11 @@ import zh from '@angular/common/locales/zh';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
+import * as echarts from 'echarts';
+import Adsame from 'src/assets/echart-theme/adsame.json';
+echarts.registerTheme('adsame', Adsame);
+
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -36,6 +41,10 @@ registerLocaleData(zh, 'zh-CN');
       progressAnimation: 'increasing',
       tapToDismiss: true,
     }),
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
+
   ],
   providers: [
     {
