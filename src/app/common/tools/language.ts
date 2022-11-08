@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-04 15:41:41
+ * @Last Modified time: 2022-11-08 16:50:22
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -10,7 +10,10 @@ import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ChartType } from 'src/app/enum/chart-type.enum';
-import { CollectionDeviceStateCountType, CollectionDeviceStateRatioType } from 'src/app/enum/collection-device-state.enum';
+import {
+  CollectionDeviceStateCountType,
+  CollectionDeviceStateRatioType,
+} from 'src/app/enum/collection-device-state.enum';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
@@ -32,10 +35,11 @@ import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
-import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
+import { CollectionScore } from 'src/app/enum/collection-score.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -423,16 +427,16 @@ export class Language {
     }
   }
 
-  static VehicleScore(type: CollectionPointScore) {
+  static CollectionScore(type: CollectionScore) {
     switch (type) {
-      case CollectionPointScore.Poor:
-        return this.json.VehicleScore.Poor;
-      case CollectionPointScore.Average:
-        return this.json.VehicleScore.Average;
-      case CollectionPointScore.Good:
-        return this.json.VehicleScore.Good;
+      case CollectionScore.Poor:
+        return this.json.CollectionScore.Poor;
+      case CollectionScore.Average:
+        return this.json.CollectionScore.Average;
+      case CollectionScore.Good:
+        return this.json.CollectionScore.Good;
       default:
-        return this.json.VehicleScore.Default;
+        return this.json.CollectionScore.Default;
     }
   }
   static VehicleRelayOperator(type: VehicleRelayOperator) {
@@ -448,12 +452,10 @@ export class Language {
     }
   }
 
-
-
   /**
    *  车辆在线比
-   * @param type 
-   * @returns 
+   * @param type
+   * @returns
    */
   static CollectionDeviceStateRatioType(type: CollectionDeviceStateRatioType) {
     switch (type) {
@@ -464,14 +466,14 @@ export class Language {
       case CollectionDeviceStateRatioType.Good:
         return this.json.CollectionDeviceStateRatioType.Good;
       default:
-        return '';
+        return this.json.CollectionDeviceStateRatioType.Default;
     }
   }
 
   /**
    *  车辆在线数量
-   * @param type 
-   * @returns 
+   * @param type
+   * @returns
    */
   static CollectionDeviceStateCountType(type: CollectionDeviceStateCountType) {
     switch (type) {
@@ -482,7 +484,21 @@ export class Language {
       case CollectionDeviceStateCountType.Offline:
         return this.json.CollectionDeviceStateCountType.Offline;
       default:
-        return '';
+        return this.json.CollectionDeviceStateCountType.Default;
+    }
+  }
+  static TrashCanType(type: TrashCanType) {
+    switch (type) {
+      case TrashCanType.Dry:
+        return this.json.TrashCanType.Dry;
+      case TrashCanType.Wet:
+        return this.json.TrashCanType.Wet;
+      case TrashCanType.Recycle:
+        return this.json.TrashCanType.Recycle;
+      case TrashCanType.Hazard:
+        return this.json.TrashCanType.Hazard;
+      default:
+        return this.json.TrashCanType.Default;
     }
   }
 

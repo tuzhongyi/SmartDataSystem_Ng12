@@ -41,7 +41,8 @@ type EChartOptions = echarts.ComposeOption<
   providers: [EventStatisticBusiness],
 })
 export class EventStatisticComponent
-  implements OnInit, OnDestroy, AfterViewInit {
+  implements OnInit, OnDestroy, AfterViewInit
+{
   // 在销毁组件时，取消订阅
   private subscription: Subscription | null = null;
 
@@ -93,15 +94,15 @@ export class EventStatisticComponent
     private _storeService: GlobalStoreService,
     private _business: EventStatisticBusiness,
     private _converter: EventStatisticConverter
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.subscription = this._storeService.statusChange.subscribe(() => {
       this._changeData();
     });
-    this._storeService.interval.subscribe(x => {
+    this._storeService.interval.subscribe((x) => {
       this._changeData();
-    })
+    });
     this._changeData();
     this.options.title = {
       text: this.title,
@@ -113,7 +114,7 @@ export class EventStatisticComponent
       this.subscription = null;
     }
   }
-  ngAfterViewInit(): void { }
+  ngAfterViewInit(): void {}
 
   private _changeData() {
     this.divisionId = this._storeService.divisionId;

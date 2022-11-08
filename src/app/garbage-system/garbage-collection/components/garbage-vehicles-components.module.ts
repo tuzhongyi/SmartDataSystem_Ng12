@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-08 13:18:39
+ * @Last Modified time: 2022-11-08 16:13:35
  */
 
 import { NgModule } from '@angular/core';
@@ -21,6 +21,8 @@ import { GarbageVehiclesDeviceStateComponent } from './collection-device-state/c
 import { CollectionVehicleComponent } from './collection-vehicle/collection-vehicle.component';
 import { CollectionPointComponent } from './collection-point/collection-point.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { CollectionStatisticComponent } from './collection-statistic/collection-statistic.component';
+import { CollectionScoreComponent } from './collection-score/collection-score.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     GarbageVehiclesDeviceStateComponent,
     CollectionVehicleComponent,
     CollectionPointComponent,
+    CollectionStatisticComponent,
+    CollectionScoreComponent,
   ],
   imports: [
     CommonModule,
@@ -39,9 +43,9 @@ import { NgxEchartsModule } from 'ngx-echarts';
     MaterialModule,
     FormsModule,
     GarbageComponentsModule,
-    NgxEchartsModule
+    NgxEchartsModule,
   ],
   providers: [DownloadBusiness],
   exports: [],
 })
-export class GarbageCollectionComponentsModule { }
+export class GarbageCollectionComponentsModule {}

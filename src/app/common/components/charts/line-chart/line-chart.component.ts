@@ -18,7 +18,7 @@ import * as echarts from 'echarts/core';
   styleUrls: ['./line-chart.component.less'],
 })
 export class LineChartComponent implements OnInit, OnChanges {
-  @Input() theme: string = '';
+  @Input() theme: string = 'adsame';
   @Input() options: EChartsOption = {};
   @Input() merge: EChartsOption = {};
 
@@ -35,7 +35,7 @@ export class LineChartComponent implements OnInit, OnChanges {
         textStyle: {
           width: w,
         },
-      }
+      };
     }
   }
 }

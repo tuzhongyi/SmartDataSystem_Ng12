@@ -1,15 +1,18 @@
-import { Injectable } from "@angular/core";
-import { SRServer } from "../network/model/sr-server";
-import { SRServerManageModel } from "../view-model/sr-server-manage.model";
-import { CommonModelConverter, CommonModelSource } from "./common-model.converter";
+import { Injectable } from '@angular/core';
+import { SRServer } from '../network/model/sr-server';
+import { SRServerManageModel } from '../view-model/sr-server-manage.model';
+import {
+  AbstractCommonModelConverter,
+  CommonModelSource,
+} from './common-model.converter';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class SRServerManageConverter extends CommonModelConverter<SRServerManageModel> {
+export class SRServerManageConverter extends AbstractCommonModelConverter<SRServerManageModel> {
   Convert(source: CommonModelSource, ...res: any[]): SRServerManageModel {
     if (source instanceof SRServer) {
-      return this._fromSRServer(source)
+      return this._fromSRServer(source);
     }
     throw new Error('Error');
   }

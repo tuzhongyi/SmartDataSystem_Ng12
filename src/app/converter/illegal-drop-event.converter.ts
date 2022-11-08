@@ -6,8 +6,8 @@ import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
 import { Medium } from '../common/tools/medium';
 import {
-  CommonModelConverter,
-  CommonModelPromiseConverter,
+  AbstractCommonModelConverter,
+  AbstractCommonModelPromiseConverter,
 } from './common-model.converter';
 import { IllegalDropEventModel } from '../view-model/illegal-drop-event.model';
 import { DivisionRequestService } from '../network/request/division/division-request.service';
@@ -19,7 +19,7 @@ type IllegalDropEventdSource = IllegalDropEventRecord;
 @Injectable({
   providedIn: 'root',
 })
-export class IllegalDropEventConverter extends CommonModelPromiseConverter<IllegalDropEventModel> {
+export class IllegalDropEventConverter extends AbstractCommonModelPromiseConverter<IllegalDropEventModel> {
   constructor(private _datePipe: DatePipe) {
     super();
   }

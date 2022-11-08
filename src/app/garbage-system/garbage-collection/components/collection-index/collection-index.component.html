@@ -52,24 +52,17 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <vehicles-event-statistic
-          [title]="'乱扔垃圾统计表'"
-        ></vehicles-event-statistic> -->
+        <collection-score [type]="CollectionScore.Good"></collection-score>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <vehicles-event-statistic
-          [title]="'乱扔垃圾统计表'"
-        ></vehicles-event-statistic> -->
+        <collection-statistic [type]="TrashCanType.Dry"></collection-statistic>
       </div>
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <!-- <vehicles-event-statistic
-          [title]="'混合投放统计表'"
-          [type]="mixIntoType"
-        ></vehicles-event-statistic> -->
+        <collection-statistic [type]="TrashCanType.Wet"></collection-statistic>
       </div>
     </div>
     <div class="monitor-body__item">

@@ -1,23 +1,20 @@
-
-import { Injectable } from "@angular/core";
-import { Language } from "../common/tools/language";
-import { DeviceType } from "../enum/device-type.enum";
-import { ProtocolType } from "../enum/protocol-type.enum";
-import { EncodeDevice } from "../network/model/encode-device";
-import { EncodeDeviceManageModel } from "../view-model/encode-device-manage.model";
-import { CommonModelConverter } from "./common-model.converter";
-
+import { Injectable } from '@angular/core';
+import { Language } from '../common/tools/language';
+import { DeviceType } from '../enum/device-type.enum';
+import { ProtocolType } from '../enum/protocol-type.enum';
+import { EncodeDevice } from '../network/model/encode-device';
+import { EncodeDeviceManageModel } from '../view-model/encode-device-manage.model';
+import { AbstractCommonModelConverter } from './common-model.converter';
 
 type EncodeDeviceManageSource = EncodeDevice;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class EncodeDeviceManageConverter extends CommonModelConverter<EncodeDeviceManageModel>{
-
+export class EncodeDeviceManageConverter extends AbstractCommonModelConverter<EncodeDeviceManageModel> {
   Convert(source: EncodeDeviceManageSource) {
     if (source instanceof EncodeDevice) {
-      return this._fromEncodeDevice(source)
+      return this._fromEncodeDevice(source);
     }
     throw new Error('Error');
   }
@@ -31,6 +28,6 @@ export class EncodeDeviceManageConverter extends CommonModelConverter<EncodeDevi
     model.OnlineStatus = Language.OnlineStatus(item.OnlineStatus);
     model.DeviceType = item.DeviceType ?? DeviceType.None;
     model.Labels = item.Labels || [];
-    return model
+    return model;
   }
 }

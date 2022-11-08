@@ -3,8 +3,10 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { CollectionScore } from 'src/app/enum/collection-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { MapControlBusiness } from './business/map-control.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
 import { PatrolControlBusiness } from './business/patrol-control.business';
@@ -42,6 +44,9 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
   ],
 })
 export class GarbageCollectionIndexComponent {
+  TrashCanType = TrashCanType;
+  CollectionScore = CollectionScore;
+
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {

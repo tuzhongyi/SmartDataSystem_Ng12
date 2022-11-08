@@ -119,7 +119,7 @@
     "GarbageVehicle": "清运车辆",
     "Default": "未知"
   },
-  "VehicleScore": {
+  "CollectionScore": {
     "Poor": "差评",
     "Average": "中评",
     "Good": "好评",
@@ -141,6 +141,13 @@
     "All": "全部车辆",
     "Online": "在线车辆",
     "Offline": "离线车辆",
+    "Default": "未知"
+  },
+  "TrashCanType": {
+    "Dry": "干垃圾",
+    "Wet": "湿垃圾",
+    "Recycle": "可回收垃圾",
+    "Hazard": "有害垃圾",
     "Default": "未知"
   }
 }

@@ -31,28 +31,20 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   styleUrls: ['./collection-device-state.component.less'],
   providers: [CollectionDeviceStateBusiness, CollectionVehicleConverter],
 })
-export class GarbageVehiclesDeviceStateComponent
-  implements OnInit {
-
+export class GarbageVehiclesDeviceStateComponent implements OnInit {
   title: string = '设备运行状态';
   model: CollectionDeviceStateModel | null = null;
   theme: EChartsTheme = EChartsTheme.adsame;
 
-  gaugeOption: EChartsOption = {
+  gaugeOption: EChartsOption = {};
 
-  };
-
-
-  constructor(private _business: CollectionDeviceStateBusiness) { }
+  constructor(private _business: CollectionDeviceStateBusiness) {}
 
   ngOnInit() {
-
-
     this._init();
   }
   private async _init() {
     this.model = await this._business.init();
-
   }
 
   ngAfterViewInit() {
@@ -61,5 +53,4 @@ export class GarbageVehiclesDeviceStateComponent
     //   this.myChart.setOption(this.option);
     // }
   }
-
 }

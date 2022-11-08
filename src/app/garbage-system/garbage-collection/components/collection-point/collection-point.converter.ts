@@ -1,12 +1,12 @@
 import { formatDate } from '@angular/common';
 import {
-  CommonModelConverter,
+  AbstractCommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { CollectionPointModel } from './collection-point.model';
 
-export class CollectionPointConverter extends CommonModelConverter<
+export class CollectionPointConverter extends AbstractCommonModelConverter<
   CollectionPointModel,
   GarbageCollectionEventRecord
 > {
@@ -23,7 +23,7 @@ export class CollectionPointConverter extends CommonModelConverter<
     let model = new CollectionPointModel();
     model.CollectionPointName = record.Data.CollectionPointName ?? '';
     model.Weight = record.Data.Weight ?? 0;
-    model.EventTime = record.EventTime;// formatDate(record.EventTime, 'MM-dd hh:mm:ss', 'zh-CN');
+    model.EventTime = record.EventTime; // formatDate(record.EventTime, 'MM-dd hh:mm:ss', 'zh-CN');
 
     return model;
   }

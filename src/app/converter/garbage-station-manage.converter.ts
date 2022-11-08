@@ -1,17 +1,21 @@
-import { Injectable } from "@angular/core";
-import { init } from "echarts";
-import { GarbageStation, GarbageStationType } from "../network/model/garbage-station.model";
-import { GarbageStationRequestService } from "../network/request/garbage-station/garbage-station-request.service";
-import { CommonModel } from "../view-model/common-model";
-import { GarbageStationManageModel } from "../view-model/garbage-station-manage.model";
-import { CommonModelConverter, CommonModelSource } from "./common-model.converter";
-
+import { Injectable } from '@angular/core';
+import { init } from 'echarts';
+import {
+  GarbageStation,
+  GarbageStationType,
+} from '../network/model/garbage-station.model';
+import { GarbageStationRequestService } from '../network/request/garbage-station/garbage-station-request.service';
+import { CommonModel } from '../view-model/common-model';
+import { GarbageStationManageModel } from '../view-model/garbage-station-manage.model';
+import {
+  AbstractCommonModelConverter,
+  CommonModelSource,
+} from './common-model.converter';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class GarbageStationManageConverter extends CommonModelConverter<GarbageStationManageModel> {
-
+export class GarbageStationManageConverter extends AbstractCommonModelConverter<GarbageStationManageModel> {
   private _stationTypes: Map<number, GarbageStationType> = new Map();
 
   constructor(private _garbageStationRequest: GarbageStationRequestService) {
@@ -23,13 +27,13 @@ export class GarbageStationManageConverter extends CommonModelConverter<GarbageS
   private async init() {
     let res = await this._listTypes();
 
-    res.forEach(v => {
-      this._stationTypes.set(v.Type, v)
-    })
+    res.forEach((v) => {
+      this._stationTypes.set(v.Type, v);
+    });
   }
   Convert(source: CommonModelSource, ...res: any[]) {
     if (source instanceof GarbageStation) {
-      return this._fromGarbageStation(source)
+      return this._fromGarbageStation(source);
     }
     throw new Error('Error');
   }
@@ -40,11 +44,10 @@ export class GarbageStationManageConverter extends CommonModelConverter<GarbageS
     model.Name = item.Name;
     model.StationType = this._stationTypes.get(item.StationType)?.Name ?? '';
 
-    return model
+    return model;
   }
 
   private _listTypes() {
-    return this._garbageStationRequest.type.list()
+    return this._garbageStationRequest.type.list();
   }
-
 }

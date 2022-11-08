@@ -1,7 +1,7 @@
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
+import { CollectionScore } from 'src/app/enum/collection-score.enum';
 import { CompareRange } from '../../model/compare-range.model';
 import {
   IParams,

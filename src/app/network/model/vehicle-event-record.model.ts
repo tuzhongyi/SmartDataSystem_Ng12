@@ -9,7 +9,7 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleEventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehicleResourceType } from 'src/app/enum/resource-type.enum';
-import { CollectionPointScore } from 'src/app/enum/vehicle-score.enum';
+import { CollectionScore } from 'src/app/enum/collection-score.enum';
 import { transformDateTime } from './transform.model';
 import { GisPoint } from './gis-point.model';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
@@ -94,7 +94,7 @@ export class GarbageCollectionEventData {
   /**	Double	垃圾重量，KG	O	*/
   Weight?: number;
   /**	Int32	分类评分：1-差评，2-中评，3-好评	O	*/
-  Score?: CollectionPointScore;
+  Score?: CollectionScore;
   /**	GisPoint	坐标	O	*/
   GisPoint?: GisPoint;
   /**	String	垃圾收运点ID	O	*/
