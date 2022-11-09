@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-06 14:50:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-06 16:13:05
+ * @Last Modified time: 2022-11-09 09:54:35
  */
 import { Transform } from 'class-transformer';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
@@ -15,7 +15,7 @@ import {
   PagedParams,
 } from '../IParams.interface';
 
-export class GetCollectionPointsParams extends PagedParams implements IParams {
+export class GetCollectionPointParams extends PagedParams implements IParams {
   /**	String	垃圾桶ID	O */
   Ids?: string;
   /**	String	地址，LIKE	O */

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-08 16:13:35
+ * @Last Modified time: 2022-11-09 09:52:29
  */
 
 import { NgModule } from '@angular/core';
@@ -23,6 +23,8 @@ import { CollectionPointComponent } from './collection-point/collection-point.co
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CollectionStatisticComponent } from './collection-statistic/collection-statistic.component';
 import { CollectionScoreComponent } from './collection-score/collection-score.component';
+import { CollectionScoreRankComponent } from './collection-score-rank/collection-score-rank.component';
+import { CollectionWeightRankComponent } from './collection-weight-rank/collection-weight-rank.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { CollectionScoreComponent } from './collection-score/collection-score.co
     CollectionPointComponent,
     CollectionStatisticComponent,
     CollectionScoreComponent,
+    CollectionScoreRankComponent,
+    CollectionWeightRankComponent,
   ],
   imports: [
     CommonModule,

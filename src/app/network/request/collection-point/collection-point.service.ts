@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-06 15:08:52
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-06 16:13:36
+ * @Last Modified time: 2022-11-09 09:54:16
  */
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
@@ -21,15 +21,15 @@ import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   GetCollectionPointNumberParams,
   GetCollectionPointScoreTopListParams,
-  GetCollectionPointsParams,
+  GetCollectionPointParams,
   GetCollectionPointWeightTopListParams,
   GetTrashCansParams,
-} from './collection-points.params';
+} from './collection-point.params';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CollectionPointsService {
+export class CollectionPointService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<CollectionPoint>;
 
@@ -55,7 +55,7 @@ export class CollectionPointsService {
     return this.type.delete(url);
   }
   list(
-    params: GetCollectionPointsParams = new GetCollectionPointsParams()
+    params: GetCollectionPointParams = new GetCollectionPointParams()
   ): Promise<PagedList<CollectionPoint>> {
     let url = GarbageVehicleCollectionPointUrl.list();
     return this.type.paged(url, params);
