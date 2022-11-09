@@ -35,7 +35,7 @@ import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
-import { CollectionScore } from 'src/app/enum/collection-score.enum';
+import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
@@ -427,13 +427,13 @@ export class Language {
     }
   }
 
-  static CollectionScore(type: CollectionScore) {
+  static CollectionScore(type: CollectionScoreEnum) {
     switch (type) {
-      case CollectionScore.Poor:
+      case CollectionScoreEnum.Poor:
         return this.json.CollectionScore.Poor;
-      case CollectionScore.Average:
+      case CollectionScoreEnum.Average:
         return this.json.CollectionScore.Average;
-      case CollectionScore.Good:
+      case CollectionScoreEnum.Good:
         return this.json.CollectionScore.Good;
       default:
         return this.json.CollectionScore.Default;

@@ -1,12 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
 
-@Component({
-  selector: 'collection-score-rank',
-  templateUrl: './collection-score-rank.component.html',
-  styleUrls: ['./collection-score-rank.component.less'],
-})
-export class CollectionScoreRankComponent implements OnInit {
-  constructor() {}
+export class CollectionScoreRankModel {}
 
-  ngOnInit(): void {}
+export interface ICollectionScoreRankSearchInfo {
+  BeginTime: Date;
+  EndTime: Date;
+  Type: CollectionScoreEnum;
 }

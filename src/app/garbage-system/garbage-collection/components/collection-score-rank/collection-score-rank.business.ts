@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+/*
+ * @Author: pmx
+ * @Date: 2022-11-09 09:56:20
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-09 10:02:06
+ */
+import { Injectable } from '@angular/core';
+import { CollectionPointRequestService } from 'src/app/network/request/collection-point/collection-point.service';
 
-@Component({
-  selector: 'collection-score-rank',
-  templateUrl: './collection-score-rank.component.html',
-  styleUrls: ['./collection-score-rank.component.less']
-})
-export class CollectionScoreRankComponent implements OnInit {
+@Injectable()
+export class CollectionScoreRankBusiness {
+  constructor(private _collectionPointRequest: CollectionPointRequestService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  init() {}
+  private _list() {}
 }

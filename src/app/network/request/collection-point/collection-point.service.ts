@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-06 15:08:52
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-09 09:54:16
+ * @Last Modified time: 2022-11-09 09:56:38
  */
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
@@ -29,7 +29,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class CollectionPointService {
+export class CollectionPointRequestService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<CollectionPoint>;
 

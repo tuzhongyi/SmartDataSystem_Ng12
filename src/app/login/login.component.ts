@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-08 14:52:37
+ * @Last Modified time: 2022-11-09 10:03:04
  */
 
 import {
@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               ) {
                 this._router.navigateByUrl(RoutePath.garbage_system_committees);
               } else {
-                this._router.navigateByUrl(RoutePath.garbage_vehicle);
+                this._router.navigateByUrl(RoutePath.garbage_system);
               }
             }
           } else if (

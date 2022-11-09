@@ -9,7 +9,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { CollectionScore } from 'src/app/enum/collection-score.enum';
+import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
 import { CompareRange } from '../../model/compare-range.model';
 import { transformDateTime } from '../../model/transform.model';
 import {
@@ -52,7 +52,7 @@ export class GetGarbageCollectionEventRecordsParams
   /**	String	地址，支持LIKE	O */
   Address?: string;
   /**	Int32	分类评分：1-差评，2-中评，3-好评	O */
-  Score?: CollectionScore;
+  Score?: CollectionScoreEnum;
   /**	String[]	垃圾收运点ID	O */
   CollectionPointIds?: string[];
   /**	String	垃圾收运点名称	O */
