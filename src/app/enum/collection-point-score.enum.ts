@@ -4,7 +4,7 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-09 10:00:14
  */
-export enum CollectionScoreEnum {
+export enum CollectionPointScore {
   Poor = 1,
   Average = 2,
   Good = 3,

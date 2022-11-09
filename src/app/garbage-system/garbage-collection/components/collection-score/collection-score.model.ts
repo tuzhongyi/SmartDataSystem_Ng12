@@ -1,4 +1,4 @@
-import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 
 export class CollectionScoreModel {
@@ -8,5 +8,5 @@ export class CollectionScoreModel {
 export interface CollectionScoreSearchInfo {
   BeginTime: Date;
   EndTime: Date;
-  Type: CollectionScoreEnum;
+  Type: CollectionPointScore;
 }

@@ -3,7 +3,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalStoreService } from 'src/app/common/service/global-store.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
@@ -45,7 +45,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
 })
 export class GarbageCollectionIndexComponent {
   TrashCanType = TrashCanType;
-  CollectionScore = CollectionScoreEnum;
+  CollectionScore = CollectionPointScore;
 
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;

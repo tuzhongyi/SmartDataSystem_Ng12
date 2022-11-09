@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Time } from 'src/app/common/tools/time';
-import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { CollectionScoreRankBusiness } from './collection-score-rank.business';
 import { ICollectionScoreRankSearchInfo } from './collection-score-rank.model';
 
@@ -11,7 +11,7 @@ import { ICollectionScoreRankSearchInfo } from './collection-score-rank.model';
   providers: [CollectionScoreRankBusiness],
 })
 export class CollectionScoreRankComponent implements OnInit {
-  @Input() type: CollectionScoreEnum = CollectionScoreEnum.Good; // 默认好评榜
+  @Input() type: CollectionPointScore = CollectionPointScore.Good; // 默认好评榜
 
   today = new Date();
 

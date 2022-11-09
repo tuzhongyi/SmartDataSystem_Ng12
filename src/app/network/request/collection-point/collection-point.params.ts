@@ -7,7 +7,7 @@
 import { Transform } from 'class-transformer';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { transformDateTime } from '../../model/transform.model';
 import {
   IParams,
@@ -57,7 +57,7 @@ export class GetCollectionPointScoreTopListParams
   implements IParams
 {
   /**	Int32	分类评分：1-差评，2-中评，3-好评	M */
-  Score!: CollectionScoreEnum;
+  Score!: CollectionPointScore;
   /**	String[]	区划ID	O */
   DivisionIds?: string[];
 

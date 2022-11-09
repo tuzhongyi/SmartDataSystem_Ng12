@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
-import { CollectionScoreEnum } from 'src/app/enum/collection-score.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { EChartOptions } from 'src/app/garbage-system/components/windows/charts/details-chart/details-chart.option';
 import { CollectionScoreBusiness } from './collection-score.business';
@@ -18,7 +18,7 @@ import {
   providers: [CollectionScoreBusiness, CollectionScoreConverter],
 })
 export class CollectionScoreComponent implements OnInit {
-  @Input() type: CollectionScoreEnum = CollectionScoreEnum.Good;
+  @Input() type: CollectionPointScore = CollectionPointScore.Good;
 
   get title() {
     return '今日清运' + Language.CollectionScore(this.type) + '数';
