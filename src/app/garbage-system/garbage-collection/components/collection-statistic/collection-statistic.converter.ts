@@ -7,12 +7,17 @@ export class CollectionStatisticConverter extends AbstractCommonModelConverter<C
   Convert(source: GarbageCollectionEventRecord[], type: TrashCanType) {
     let model = new CollectionStatisticModel();
 
-    model.chartData = source.map((item) => {
+    model.ChartData = source.map((item) => {
       if (item.Data.TrashCanType == type) {
         return item.Data.Weight ?? 0;
       }
       return 0;
     });
+    let tmp = [];
+    for (let i = 0; i < 25; i++) {
+      tmp.push((Math.random() * 20) >> 0);
+    }
+    model.ChartData = tmp;
     return model;
   }
 }
