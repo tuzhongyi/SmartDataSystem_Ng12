@@ -1,21 +1,19 @@
-/*
- * @Author: pmx 
- * @Date: 2022-11-03 14:46:19 
- * @Last Modified by:   pmx 
- * @Last Modified time: 2022-11-03 14:46:19 
- */
-import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
-export abstract class GarbageVehicleDivisionUrl {
+export class GarbageVehicleDivisionUrl extends AbstractUrl {
+  private static url = new GarbageVehicleDivisionUrl(
+    `${BasicUrl.garbage.vehicle}/Divisions`
+  );
   static basic() {
-    return `${BaseGarbageVehicleUrl}/Divisions`;
+    return this.url.basic();
   }
 
   static item(id: string) {
-    return `${this.basic()}/${id}`;
+    return this.url.item(id);
   }
   static list() {
-    return `${this.basic()}/List`;
+    return this.url.list();
   }
   static excles() {
     return `${this.basic()}/Excels`;
@@ -25,29 +23,23 @@ export abstract class GarbageVehicleDivisionUrl {
     return new GarbageUrl(base);
   }
 }
-class GarbageUrl implements InnerUrl {
+class GarbageUrl extends AbstractUrl {
   weight = new WeightUrl(this.basic());
   score = new ScoreUrl(this.basic());
 
-  constructor(private base: string) {}
-
-  basic() {
-    return `${this.base}/Garbages`;
+  constructor(base: string) {
+    super(`${base}/Garbages`);
   }
 }
 
-class WeightUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic() {
-    return `${this.base}/Weight`;
+class WeightUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Weight`);
   }
 }
 
-class ScoreUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic() {
-    return `${this.base}/Score`;
+class ScoreUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Score`);
   }
 }

@@ -1,17 +1,12 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 import { HistoryInnerUrl } from './history.url';
 
-export class EventNumberInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/EventNumbers`;
+export class EventNumberInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/EventNumbers`);
   }
   sum() {
     return `${this.basic()}/Sum`;
-  }
-
-  list() {
-    return `${this.basic()}/List`;
   }
 
   private _history?: HistoryInnerUrl;

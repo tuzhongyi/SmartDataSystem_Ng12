@@ -1,14 +1,9 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 import { HistoryInnerUrl } from './history.url';
 
-export class NumberInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Number`;
-  }
-
-  list() {
-    return `${this.basic()}/List`;
+export class NumberInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Number`);
   }
 
   sum() {

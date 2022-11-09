@@ -1,11 +1,10 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 
-export class TypeInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Types`;
+export class TypeInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Types`);
   }
-  item(type: string | number) {
+  override item<T = string | number>(type: T) {
     return `${this.basic()}/${type}`;
   }
 }

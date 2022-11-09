@@ -1,13 +1,15 @@
-import { SmsProtocolType } from "src/app/enum/sms-protocol-type.enum";
-import { BaseGarbageUrl, BaseSmsUrl } from "../base.url";
+import { SmsProtocolType } from 'src/app/enum/sms-protocol-type.enum';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
+import { UserUrl } from '../garbage/user.url';
 
-
-export class SmsUrl {
+export class SmsUrl extends AbstractUrl {
+  private static url = new SmsUrl(BasicUrl.sms);
   static authcodes(phoneNo: string, protocolType?: SmsProtocolType) {
-    let type = "";
+    let type = '';
     if (protocolType) {
       type = `&ProtocolType=${protocolType}`;
     }
-    return `${BaseSmsUrl}/AuthCodes?PhoneNo=${phoneNo}${type}`;
+    return `${this.url}/AuthCodes?PhoneNo=${phoneNo}${type}`;
   }
 }

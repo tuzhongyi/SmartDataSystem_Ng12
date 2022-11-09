@@ -1,14 +1,9 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 14:46:16
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-07 13:53:12
- */
-import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
 export abstract class GarbageVehicleEventUrl {
   static basic() {
-    return `${BaseGarbageVehicleUrl}/Events`;
+    return `${BasicUrl.garbage.vehicle}/Events`;
   }
   static get info() {
     return new InfoUrl(this.basic());
@@ -18,85 +13,43 @@ export abstract class GarbageVehicleEventUrl {
   }
 }
 
-class InfoUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/Infos`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string | number) {
-    return `${this.basic()}/${id}`;
+class InfoUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Infos`);
   }
 }
 
-class RecordUrl implements InnerUrl {
+class RecordUrl extends AbstractUrl {
   garbageCollection = new GarbageCollectionUrl(this.basic());
   relayStateChange = new RelayStateChangeUrl(this.basic());
   vehicleOnline = new VehicleOnlineUrl(this.basic());
   cameraOnline = new CameraOnlineUrl(this.basic());
 
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/Records`;
+  constructor(base: string) {
+    super(`${base}/Records`);
   }
 }
 
-class GarbageCollectionUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/GarbageCollection`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class GarbageCollectionUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/GarbageCollection`);
   }
 }
 
-class RelayStateChangeUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/RelayStateChange`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class RelayStateChangeUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/RelayStateChange`);
   }
 }
 
-class VehicleOnlineUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/VehicleOnline`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class VehicleOnlineUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/VehicleOnline`);
   }
 }
 
-class CameraOnlineUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic(): string {
-    return `${this.base}/CameraOnline`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class CameraOnlineUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/CameraOnline`);
   }
 }

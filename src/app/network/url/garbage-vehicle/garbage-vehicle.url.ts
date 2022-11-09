@@ -4,11 +4,12 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-04 15:38:46
  */
-import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
 export abstract class GarbageVehicleUrl {
   static basic() {
-    return `${BaseGarbageVehicleUrl}/GarbageVehicles`;
+    return `${BasicUrl.garbage.vehicle}/GarbageVehicles`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;
@@ -32,39 +33,24 @@ export abstract class GarbageVehicleUrl {
   }
 }
 
-class CameraUrl implements InnerUrl {
-  constructor(private base: string) {}
+class CameraUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Cameras`);
+  }
 
-  basic(): string {
-    return `${this.base}/Cameras`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
   excles() {
     return `${this.basic()}/Excels`;
   }
 }
-class RouteUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic() {
-    return `${this.base}/Routes`;
-  }
-
-  list() {
-    return `${this.basic()}/List`;
+class RouteUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Routes`);
   }
 }
 
-class RelayUrl implements InnerUrl {
-  constructor(private base: string) {}
-
-  basic() {
-    return `${this.base}/Relays`;
+class RelayUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Relays`);
   }
 
   reset() {

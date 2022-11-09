@@ -1,4 +1,4 @@
-import { BaseGarbageUrl } from '../base.url';
+import { BasicUrl } from '../base.url';
 import { CameraInnerUrl } from './inner/camera.url';
 import { EventNumberInnerUrl } from './inner/event_number.url';
 import { MemberInnerUrl } from './inner/member.url';
@@ -10,7 +10,7 @@ import { VolumeInnerUrl } from './inner/volume.url';
 
 export class GarbageStationUrl {
   static basic() {
-    return `${BaseGarbageUrl}/GarbageStations`;
+    return `${BasicUrl.garbage.management}/GarbageStations`;
   }
   static item(id: string) {
     return `${GarbageStationUrl.basic()}/${id}`;

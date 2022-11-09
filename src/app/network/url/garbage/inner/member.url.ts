@@ -1,11 +1,7 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 
-export class MemberInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Members`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+export class MemberInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Members`);
   }
 }

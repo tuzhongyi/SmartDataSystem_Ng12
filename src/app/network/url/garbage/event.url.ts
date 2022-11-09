@@ -1,8 +1,9 @@
-import { BaseGarbageUrl } from '../base.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
 export class EventUrl {
   static basic() {
-    return `${BaseGarbageUrl}/Events`;
+    return `${BasicUrl.garbage.management}/Events`;
   }
   static get info() {
     return new InfoUrl(this.basic());
@@ -12,73 +13,40 @@ export class EventUrl {
   }
 }
 
-class InfoUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Infos`;
+class InfoUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Infos`);
   }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string | number) {
+  override item<T = string | number>(id: T) {
     return `${this.basic()}/${id}`;
   }
 }
 
-class IllegalDropUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/IllegalDrop`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class IllegalDropUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/IllegalDrop`);
   }
 }
-class MixedIntoUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/MixedInto`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class MixedIntoUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/MixedInto`);
   }
 }
 
-class GarbageFullUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/GarbageFull`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class GarbageFullUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/GarbageFull`);
   }
 }
 
-class GarbageDropUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/GarbageDrop`;
-  }
-  list() {
-    return `${this.basic()}/List`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
+class GarbageDropUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/GarbageDrop`);
   }
 }
-class RecordUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Records`;
+class RecordUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Records`);
   }
   illegaldrop = new IllegalDropUrl(this.basic());
   mixedinto = new MixedIntoUrl(this.basic());

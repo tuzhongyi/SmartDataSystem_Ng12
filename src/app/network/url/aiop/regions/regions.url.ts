@@ -1,8 +1,8 @@
-import { BaseAiopUrl } from '../../base.url';
+import { BasicUrl } from '../../base.url';
 
 export abstract class RegionsURL {
   protected static get basic(): string {
-    return `${BaseAiopUrl}/Regions`;
+    return `${BasicUrl.aiop}/Regions`;
   }
 
   static create() {
@@ -17,5 +17,4 @@ export abstract class RegionsURL {
   static trees() {
     return `${this.basic}/Trees`;
   }
-
 }

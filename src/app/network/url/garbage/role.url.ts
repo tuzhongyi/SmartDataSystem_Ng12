@@ -6,7 +6,8 @@
  */
 
 import { PagedParams } from '../../request/IParams.interface';
-import { BaseUserUrl } from '../base.url';
+import { BasicUrl } from '../base.url';
+
 import { ConfigInnerUrl } from './inner/config.url';
 import { LabelInnerUrl } from './inner/label.url';
 import { PasswordInnerUrl } from './inner/password.url';
@@ -17,7 +18,7 @@ import { UrlHelper } from './url-helper';
 export class RoleUrl {
   static basic(params?: PagedParams) {
     let query = UrlHelper.toQueryString(params);
-    return `${BaseUserUrl}/Roles${query}`;
+    return `${BasicUrl.user}/Roles${query}`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

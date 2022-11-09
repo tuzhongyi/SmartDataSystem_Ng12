@@ -1,15 +1,18 @@
-import { BaseGarbageUrl, InnerUrl } from '../base.url';
-import { GarbageStationUrl } from './garbage-station.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
-export class SRServiceUrl {
+export class SRServiceUrl extends AbstractUrl {
+  private static url = new SRServiceUrl(
+    `${BasicUrl.garbage.management}/SRServers`
+  );
   static basic() {
-    return `${BaseGarbageUrl}/SRServers`;
+    return this.url.basic();
   }
   static item(id: string) {
-    return `${this.basic()}/${id}`;
+    return this.url.item(id);
   }
   static list() {
-    return `${this.basic()}/List`;
+    return this.url.list();
   }
   static sync(id: string) {
     return `${this.item(id)}/Sync`;

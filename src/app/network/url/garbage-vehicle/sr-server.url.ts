@@ -4,11 +4,11 @@
  * @Last Modified by:   pmx 
  * @Last Modified time: 2022-11-03 14:46:08 
  */
-import { BaseGarbageVehicleUrl } from '../base.url';
+import { BasicUrl.garbage.vehicle } from '../base.url';
 
 export abstract class GarbageVehicleSRServerUrl {
   static basic() {
-    return `${BaseGarbageVehicleUrl}/SRServers`;
+    return `${BasicUrl.garbage.vehicle}/SRServers`;
   }
 
   static preview() {

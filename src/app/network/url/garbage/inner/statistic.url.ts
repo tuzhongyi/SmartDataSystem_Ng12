@@ -1,11 +1,10 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 import { GarbageCountInnerUrl } from './garbage_count.url';
 import { NumberInnerUrl } from './number.url';
 
-export class StatisticInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Statistic`;
+export class StatisticInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Statistic`);
   }
 
   private _number?: NumberInnerUrl;

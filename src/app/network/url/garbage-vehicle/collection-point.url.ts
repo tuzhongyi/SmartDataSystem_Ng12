@@ -4,11 +4,11 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-06 16:10:51
  */
-import { BaseGarbageVehicleUrl, InnerUrl } from '../base.url';
+import { BasicUrl.garbage.vehicle, InnerUrl } from '../base.url';
 
 export abstract class GarbageVehicleCollectionPointUrl {
   static basic() {
-    return `${BaseGarbageVehicleUrl}/CollectionPoints`;
+    return `${BasicUrl.garbage.vehicle}/CollectionPoints`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;
@@ -28,7 +28,7 @@ export abstract class GarbageVehicleCollectionPointUrl {
     return new StatisticUrl(this.basic());
   }
 }
-class TrashCanUrl implements InnerUrl {
+class TrashCanUrl extends AbstractUrl {
   constructor(private base: string) { }
   basic() {
     return `${this.base}/TrashCans`;
@@ -44,7 +44,7 @@ class TrashCanUrl implements InnerUrl {
   }
 }
 
-class StatisticUrl implements InnerUrl {
+class StatisticUrl extends AbstractUrl {
   constructor(private base: string) { }
 
   basic() {

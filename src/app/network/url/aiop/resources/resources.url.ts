@@ -1,8 +1,8 @@
-import { BaseAiopUrl } from '../../base.url';
+import { BasicUrl } from '../../base.url';
 
 export abstract class ResourcesURL {
   protected static get basic(): string {
-    return `${BaseAiopUrl}/Resources`;
+    return `${BasicUrl.aiop}/Resources`;
   }
 
   static create() {
@@ -15,9 +15,9 @@ export abstract class ResourcesURL {
     return `${this.basic}/List`;
   }
   static labels(id: string) {
-    return `${this.basic}/${id}/Labels`
+    return `${this.basic}/${id}/Labels`;
   }
   static singleLabel(resourceId: string, labelId: string) {
-    return `${this.basic}/${resourceId}/Labels/${labelId}`
+    return `${this.basic}/${resourceId}/Labels/${labelId}`;
   }
 }

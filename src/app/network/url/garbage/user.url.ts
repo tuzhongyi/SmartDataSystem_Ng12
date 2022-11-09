@@ -5,25 +5,27 @@
  * @Last Modified time: 2021-12-21 17:26:04
  */
 
-import { BaseUserUrl } from '../base.url';
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 import { ConfigInnerUrl } from './inner/config.url';
 import { LabelInnerUrl } from './inner/label.url';
 import { PasswordInnerUrl } from './inner/password.url';
 import { RoleInnerUrl } from './inner/role.url';
 
-export class UserUrl {
+export class UserUrl extends AbstractUrl {
+  private static url = new UserUrl(`${BasicUrl.user}/Users`);
+
   static basic() {
-    return `${BaseUserUrl}/Users`;
+    return this.url.basic();
+  }
+  static item(id: string) {
+    return this.url.item(id);
+  }
+  static list() {
+    return this.url.list();
   }
   static login(username: string): string {
     return `${this.basic()}/Login/${username}`;
-  }
-
-  static item(id: string) {
-    return `${this.basic()}/${id}`;
-  }
-  static list() {
-    return `${this.basic()}/List`;
   }
 
   static role(userId: string) {

@@ -1,8 +1,8 @@
-import { BaseAiopUrl } from "../../base.url";
+import { BasicUrl } from '../../base.url';
 
 export abstract class SRServersURL {
   static get basic(): string {
-    return `${BaseAiopUrl}/SRServers`;
+    return `${BasicUrl.aiop}/SRServers`;
   }
   static item(id: string) {
     return `${this.basic}/${id}`;

@@ -10,13 +10,13 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { GisRoutePoint } from '../../model/gis-point.model';
-import { transformDateTime } from '../../model/transform.model';
+import { GisRoutePoint } from '../../../model/gis-point.model';
+import { transformDateTime } from '../../../model/transform.model';
 import {
   IParams,
   PagedDurationParams,
   PagedParams,
-} from '../IParams.interface';
+} from '../../IParams.interface';
 
 export class GetGarbageVehiclesParams extends PagedParams implements IParams {
   /**	String[]	清运车辆ID	O */
@@ -43,7 +43,8 @@ export class GetGarbageVehiclesParams extends PagedParams implements IParams {
 
 export class GetGarbageVehicleCamerasParams
   extends PagedParams
-  implements IParams {
+  implements IParams
+{
   /**	String[]	摄像机ID	O */
   Ids?: string[];
   /**	String[]	清运车辆ID	O */
@@ -60,7 +61,8 @@ export class GetGarbageVehicleCamerasParams
 
 export class GetGarbageVehicleRouteParams
   extends PagedDurationParams
-  implements IParams {
+  implements IParams
+{
   /**	String	车辆ID	M */
   VehicleId!: string;
   /**	String[]	只检查包含垃圾桶ID的点位	O */

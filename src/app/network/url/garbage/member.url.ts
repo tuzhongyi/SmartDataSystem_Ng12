@@ -1,9 +1,9 @@
-import { BaseGarbageUrl } from '../base.url';
+import { BasicUrl } from '../base.url';
 import { RelationInnerUrl } from './inner/relation.url';
 
 export class MemberUrl {
   static basic() {
-    return `${BaseGarbageUrl}/Members`;
+    return `${BasicUrl.garbage.management}/Members`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

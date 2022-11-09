@@ -1,10 +1,9 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 import { HistoryInnerUrl } from './history.url';
 
-export class VolumeInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Volumes`;
+export class VolumeInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Volumes`);
   }
 
   private _history?: HistoryInnerUrl;

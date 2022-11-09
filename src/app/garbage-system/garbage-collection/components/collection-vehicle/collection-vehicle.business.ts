@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/vehicle-event/vehicle-event.params';
-import { VehicleEventRequestService } from 'src/app/network/request/vehicle-event/vehicle-event.service';
+import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
+import { VehicleEventRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.service';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import { CollectionVehicleSearchInfo } from './collection-vehicle.model';
 

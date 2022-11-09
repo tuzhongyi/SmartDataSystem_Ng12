@@ -1,15 +1,8 @@
-import { InnerUrl } from '../../base.url';
+import { AbstractUrl } from '../../abstract.url';
 
-export class PasswordInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Passwords`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
-  }
-  list() {
-    return `${this.basic()}/List`;
+export class PasswordInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Passwords`);
   }
 
   random() {

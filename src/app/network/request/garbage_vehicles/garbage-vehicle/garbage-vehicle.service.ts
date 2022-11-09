@@ -7,17 +7,17 @@
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
-import { GarbageVehicle } from '../../model/garbage-vehicle.model';
-import { GisPoint } from '../../model/gis-point.model';
-import { PagedList } from '../../model/page_list.model';
-import { VehicleCamera } from '../../model/vehicle-camera.model';
-import { GarbageVehicleUrl } from '../../url/garbage-vehicle/garbage-vehicle.url';
+import { GarbageVehicle } from '../../../model/garbage-vehicle.model';
+import { GisPoint } from '../../../model/gis-point.model';
+import { PagedList } from '../../../model/page_list.model';
+import { VehicleCamera } from '../../../model/vehicle-camera.model';
+import { GarbageVehicleUrl } from '../../../url/garbage-vehicle/garbage-vehicle.url';
 import {
   BaseRequestService,
   BaseTypeRequestService,
-} from '../base-request.service';
-import { Cache } from '../cache/cache';
-import { HowellAuthHttpService } from '../howell-auth-http.service';
+} from '../../base-request.service';
+import { Cache } from '../../cache/cache';
+import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetGarbageVehicleCamerasParams,
   GetGarbageVehicleRouteParams,
@@ -145,7 +145,7 @@ class VehicleRouteService {
 }
 
 class VehicleRelayService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   reset(vehicleId: string, params: ResetRelayParams) {
     let url = GarbageVehicleUrl.relay(vehicleId).reset();

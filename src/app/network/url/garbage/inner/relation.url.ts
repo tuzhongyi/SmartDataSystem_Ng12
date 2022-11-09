@@ -1,9 +1,8 @@
-import { InnerUrl } from "../../base.url";
+import { AbstractUrl } from '../../abstract.url';
 
-export class RelationInnerUrl implements InnerUrl {
-  constructor(private base: string) {}
-  basic() {
-    return `${this.base}/Members`;
+export class RelationInnerUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Members`);
   }
   sync() {
     return `${this.basic()}/Sync`;
