@@ -17,23 +17,15 @@
       <div class="monitor-body__wrapper">
         <div></div>
         <div class="map-control">
-          <!-- <app-map-control
-            (patrol)="map.onpatrol()"
-            (VideoPlay)="map.onvideoplay($event)"
-            (illegalDropClicked)="map.onIllegalDropClicked($event)"
-            (mixedIntoClicked)="map.onMixedIntoClicked($event)"
-            (garbageCountClicked)="map.onGarbageCountClicked($event)"
-            (garbageFullClicked)="map.onGarbageFullClicked($event)"
-            [position]="map.position"
-          ></app-map-control> -->
+          <app-map-control [position]="map.position"></app-map-control>
         </div>
       </div>
-      <div class="monitor-body__wrapper patrol">
-        <!-- <app-patrol-control
+      <!-- <div class="monitor-body__wrapper patrol">
+        <app-patrol-control
           (close)="patrol.onclose()"
           (fullscreen)="patrol.onfullscreen()"
-        ></app-patrol-control> -->
-      </div>
+        ></app-patrol-control>
+      </div> -->
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
