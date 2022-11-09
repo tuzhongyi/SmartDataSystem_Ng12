@@ -2,7 +2,7 @@ import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 
 export class CollectionScoreModel {
-  chartData: number[] = [];
+  ChartData: number[] = [];
 }
 
 export interface CollectionScoreSearchInfo {

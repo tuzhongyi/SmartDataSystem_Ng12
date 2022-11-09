@@ -1,1 +1,25 @@
-<p>collection-score-rank works!</p>
+<!-- 垃圾清运 好评、差评排行榜 -->
+<div class="collection-score-rank vertical-layout">
+  <div class="collection-score-rank-head vertical-header">
+    <div class="title">{{ title }}</div>
+  </div>
+  <div class="collection-score-rank-body vertical-main">
+    <div class="rank-container">
+      <div class="rank-wrapper">
+        <div
+          class="rank-item"
+          *ngFor="let item of dataSource; let i = index; trackBy: trackByFn"
+        >
+          <div class="rank-prefix">
+            <div class="rank-order">{{ i + 1 }}</div>
+            <div class="rank-link">{{ item.Name }}</div>
+          </div>
+          <div class="rank-suffix">
+            <div class="rank-num">{{ item.Number }}</div>
+            <div class="rank-unit">{{ item.Unit }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
