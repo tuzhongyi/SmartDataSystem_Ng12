@@ -29,7 +29,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
-export class CollectionPointsService {
+export class CollectionPointsRequestService {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<CollectionPoint>;
 

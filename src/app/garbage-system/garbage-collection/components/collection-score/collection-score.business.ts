@@ -1,7 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
-import { param } from 'jquery';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/vehicle-event/vehicle-event.params';
-import { VehicleEventRequestService } from 'src/app/network/request/vehicle-event/vehicle-event.service';
+import { Injectable } from '@angular/core';
+import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
+import { VehicleEventRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.service';
 import { CollectionScoreConverter } from './collection-score.converter';
 import { CollectionScoreSearchInfo } from './collection-score.model';
 
