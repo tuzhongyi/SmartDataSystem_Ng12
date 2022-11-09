@@ -4,7 +4,9 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-06 16:10:51
  */
-import { BasicUrl.garbage.vehicle, InnerUrl } from '../base.url';
+
+import { AbstractUrl } from '../abstract.url';
+import { BasicUrl } from '../base.url';
 
 export abstract class GarbageVehicleCollectionPointUrl {
   static basic() {
@@ -29,15 +31,8 @@ export abstract class GarbageVehicleCollectionPointUrl {
   }
 }
 class TrashCanUrl extends AbstractUrl {
-  constructor(private base: string) { }
-  basic() {
-    return `${this.base}/TrashCans`;
-  }
-  item(id: string) {
-    return `${this.basic()}/${id}`;
-  }
-  list() {
-    return `${this.basic()}/List`;
+  constructor(base: string) {
+    super(`${base}/TrashCans`);
   }
   excels() {
     return `${this.basic()}/Excels`;
@@ -45,10 +40,8 @@ class TrashCanUrl extends AbstractUrl {
 }
 
 class StatisticUrl extends AbstractUrl {
-  constructor(private base: string) { }
-
-  basic() {
-    return `${this.base}/Statistics`;
+  constructor(base: string) {
+    super(`${base}/Statistics`);
   }
 
   number() {
