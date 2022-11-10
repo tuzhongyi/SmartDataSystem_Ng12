@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
@@ -37,7 +38,7 @@ export class CollectionScoreComponent implements OnInit {
   theme = EChartsTheme.adsame;
   lineSeriesData: number[] = [];
 
-  options: EChartOptions = {
+  options: EChartsOption = {
     title: {
       text: this.title,
     },
@@ -55,7 +56,7 @@ export class CollectionScoreComponent implements OnInit {
       type: 'value',
     },
   };
-  merge: EChartOptions = {
+  merge: EChartsOption = {
     series: [
       {
         data: [],
