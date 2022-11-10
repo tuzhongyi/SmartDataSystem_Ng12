@@ -1,15 +1,14 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-08 10:04:09 
+ * @Author: pmx
+ * @Date: 2022-11-08 10:04:09
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-08 10:56:28
+ * @Last Modified time: 2022-11-10 18:17:02
  */
-import { CollectionDeviceStateCountType, CollectionDeviceStateRatioType } from "src/app/enum/collection-device-state.enum";
-import { VehicleState } from "src/app/enum/vehicle-state.enum";
-
-
-
-
+import {
+  CollectionDeviceStateCountType,
+  CollectionDeviceStateRatioType,
+} from 'src/app/enum/collection-device-state.enum';
+import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 
 export interface ICollectionDeviceStateDes {
   /**标签文本 */
@@ -35,12 +34,12 @@ export class CollectionDeviceStateModel {
   state: CollectionDeviceStateRatioType = CollectionDeviceStateRatioType.Good;
 
   /**等级颜色 */
-  stateCls: string = '';
+  stateColor: string = '';
 
   stateDes: string = '';
 
   /**全部车辆、在线车辆、离线车辆 */
   deviceStateArr: Array<ICollectionDeviceStateDes> = [];
 
-  constructor() { }
+  constructor() {}
 }

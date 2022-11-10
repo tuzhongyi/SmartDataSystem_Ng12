@@ -22,6 +22,7 @@ export class CollectionVehicleConverter {
     model.onLineRatio =
       totalNum == 0 ? 100 : ((onLineNum / totalNum) * 100) >> 0;
 
+    // model.onLineRatio = 100;
     if (model.onLineRatio < 80) {
       model.state = CollectionDeviceStateRatioType.Bad;
     } else if (model.onLineRatio >= 80 && model.onLineRatio < 90) {
@@ -30,7 +31,9 @@ export class CollectionVehicleConverter {
       model.state = CollectionDeviceStateRatioType.Good;
     }
 
-    model.stateCls = CollectionDeviceStateRatioType[model.state];
+    model.stateColor = Language.CollectionDeviceStateRatioTypeColor(
+      model.state
+    );
     model.stateDes = Language.CollectionDeviceStateRatioType(model.state);
 
     model.deviceStateArr = [

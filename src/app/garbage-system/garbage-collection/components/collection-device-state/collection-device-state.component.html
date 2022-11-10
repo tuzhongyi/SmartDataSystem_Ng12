@@ -10,12 +10,12 @@
           id="chartContainer"
           #chartContainer
           echarts
-          [theme]="theme"
-          [options]="options"
+          [options]="gaugeOption"
+          [merge]="merge"
         ></div>
         <div class="chart-des">
           <div class="chart-des__label">车辆在线比</div>
-          <div class="chart-des__ratio" [class]="model?.stateCls">
+          <div class="chart-des__ratio" [style.color]="model?.stateColor">
             <span class="num">{{ model?.onLineRatio }}</span
             ><span class="unit">{{ model?.unit }}</span>
           </div>

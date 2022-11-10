@@ -16,9 +16,8 @@ import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 import * as echarts from 'echarts';
-import Adsame from 'src/assets/echart-theme/adsame.json';
-echarts.registerTheme('adsame', Adsame);
-
+import 'src/assets/echart-theme/adsame.js';
+// echarts.registerTheme('adsame', Adsame);
 
 registerLocaleData(zh, 'zh-CN');
 
@@ -44,7 +43,6 @@ registerLocaleData(zh, 'zh-CN');
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts'),
     }),
-
   ],
   providers: [
     {
@@ -58,4 +56,4 @@ registerLocaleData(zh, 'zh-CN');
   bootstrap: [AppComponent],
   exports: [],
 })
-export class AppModule { }
+export class AppModule {}
