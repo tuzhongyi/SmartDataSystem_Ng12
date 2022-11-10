@@ -37,65 +37,53 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
 
   theme: EChartsTheme = EChartsTheme.adsame;
 
-  options: EChartsOption = {
+  gaugeOption: EChartsOption = {
     series: [
       {
         type: 'gauge',
-        radius: '70%',
-        center: ['50%', '50%'],
-        progress: {
-          show: true,
-          width: 10,
-          itemStyle: {},
-        },
-        axisLine: {
-          show: true,
-          lineStyle: {
-            width: 10,
-            color: [[1, '#6b7199']],
-          },
-        },
+
+        // 坐标轴数字
         axisLabel: {
           show: false,
-          distance: 5,
-          color: '#6b7199',
         },
-        splitLine: {
-          show: false,
-        },
+        // 坐标轴刻度
         axisTick: {
           show: false,
         },
-        title: {
-          offsetCenter: ['0%', '0%'],
-          color: 'auto',
-          fontSize: 18,
-          fontWeight: 400,
-        },
-        detail: {
+        // 分割线
+        splitLine: {
           show: false,
         },
+        // 指针
         pointer: {
           show: false,
         },
-        data: [
-          {
-            value: 30,
+        // 当前 value 详情
+        detail: {
+          show: false,
+        },
+        // 当前所有数据项的 name 值
+        title: {
+          offsetCenter: ['0%', '0%'],
+          fontSize: 18,
+        },
+        progress: {
+          show: true,
+          width: 10,
+        },
+        // 坐标轴
+        axisLine: {
+          lineStyle: {
+            width: 10,
+            color: [[1, '#6B7199']],
           },
-        ],
+        },
+        data: [],
       },
     ],
   };
 
-  merge: EChartsOption = {
-    series: [
-      {
-        data: [],
-        type: 'line',
-        name: '单位(吨)',
-      },
-    ],
-  };
+  merge: EChartsOption = {};
 
   constructor(private _business: CollectionDeviceStateBusiness) {}
 
@@ -104,12 +92,53 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
   }
   private async _init() {
     this.model = await this._business.init();
-  }
 
-  ngAfterViewInit() {
-    // if (this.chartContainer) {
-    //   this.myChart = echarts.init(this.chartContainer.nativeElement);
-    //   this.myChart.setOption(this.option);
-    // }
+    console.log(this.model);
+    this.merge = {
+      series: [
+        {
+          data: [
+            {
+              value: this.model.onLineRatio,
+              name: this.model.stateDes,
+              title: {
+                color: this.model.stateColor,
+              },
+              itemStyle: {
+                /**
+                 * x:1 右往左
+                 * y:1  下往上
+                 * x2:1 左往右
+                 * y2:1 上往下
+                 */
+                color: {
+                  type: 'linear',
+                  x: 0,
+                  y: 0,
+                  x2: this.model.onLineRatio
+                    ? 100 / this.model.onLineRatio
+                    : 100,
+                  y2: 0,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#ef6464', // 0% 处的颜色
+                    },
+                    {
+                      offset: 0.5,
+                      color: '#ffba00', // 50% 处的颜色
+                    },
+                    {
+                      offset: 1,
+                      color: '#21e452', // 100% 处的颜色
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+      ],
+    };
   }
 }
