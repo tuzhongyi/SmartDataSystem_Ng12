@@ -13,6 +13,8 @@ import {
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import { GetDivisionsParams } from './division-request.params';
 import { Cache } from '../../cache/cache';
+import { GetDivisionTreeParams } from '../../division/division-request.params';
+import { DivisionTree } from 'src/app/network/model/division-tree.model';
 
 @Cache(GarbageVehicleDivisionUrl.basic(), Division)
 @Injectable({
@@ -63,6 +65,16 @@ export class GarbageVehicleDivisionRequestService extends AbstractService<Divisi
       this._garbage = new DivisionGarbage(this.basic);
     }
     return this._garbage;
+  }
+
+  tree(params?: GetDivisionTreeParams): Promise<DivisionTree> {
+    let url = GarbageVehicleDivisionUrl.tree();
+    if (params) {
+      let data = classToPlain(params);
+      return this.basic.post(url, DivisionTree, data);
+    } else {
+      return this.basic.get(url, DivisionTree);
+    }
   }
 }
 

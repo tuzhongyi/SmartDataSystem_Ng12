@@ -65,26 +65,26 @@ export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle
     return this.basic.postReturnString(url, data);
   }
 
-  private _vehicleCamera?: VehicleCameraService;
-  get vehicleCamera() {
-    if (this._vehicleCamera) {
-      this._vehicleCamera = new VehicleCameraService(this.basic);
+  private _camera?: VehicleCameraService;
+  get camera() {
+    if (!this._camera) {
+      this._camera = new VehicleCameraService(this.basic);
     }
-    return this._vehicleCamera;
+    return this._camera;
   }
-  private _vehicleRoute?: VehicleRouteService;
-  get vehicleRoute() {
-    if (this._vehicleRoute) {
-      this._vehicleRoute = new VehicleRouteService(this.basic);
+  private _route?: VehicleRouteService;
+  get route() {
+    if (!this._route) {
+      this._route = new VehicleRouteService(this.basic);
     }
-    return this._vehicleRoute;
+    return this._route;
   }
-  private _vehicleRelay?: VehicleRelayService;
-  get vehicleRelay() {
-    if (this._vehicleRelay) {
-      this._vehicleRelay = new VehicleRelayService(this.basic);
+  private _relay?: VehicleRelayService;
+  get relay() {
+    if (!this._relay) {
+      this._relay = new VehicleRelayService(this.basic);
     }
-    return this._vehicleRelay;
+    return this._relay;
   }
 }
 
