@@ -23,7 +23,7 @@ export class CollectionPointConverter extends AbstractCommonModelConverter<
     let model = new CollectionPointModel();
     model.CollectionPointName = record.Data.CollectionPointName ?? '';
     model.Weight = record.Data.Weight ?? 0;
-    model.EventTime = record.EventTime; // formatDate(record.EventTime, 'MM-dd hh:mm:ss', 'zh-CN');
+    model.EventTime = record.EventTime;
 
     return model;
   }
