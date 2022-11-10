@@ -41,6 +41,6 @@ export class CollectionScoreRankComponent implements OnInit {
   private async _init() {
     this.dataSource = await this._business.init(this.searchInfo);
 
-    console.log(this.dataSource);
+    // console.log(this.dataSource);
   }
 }

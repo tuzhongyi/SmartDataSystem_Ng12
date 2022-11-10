@@ -1,7 +1,7 @@
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 
 export class CollectionStatisticModel {
-  chartData: number[] = [];
+  ChartData: number[] = [];
 }
 
 export interface CollectionStatisticSearchInfo {

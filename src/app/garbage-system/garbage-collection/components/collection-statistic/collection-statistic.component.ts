@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EChartsCoreOption, EChartsOption } from 'echarts';
+import { EChartsOption } from 'echarts';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
@@ -56,14 +56,17 @@ export class CollectionStatisticComponent implements OnInit {
     yAxis: {
       type: 'value',
     },
+  };
+  merge: EChartsOption = {
     series: [
       {
-        data: this.lineSeriesData,
+        data: [],
         type: 'line',
         name: '单位(吨)',
       },
     ],
   };
+
   constructor(private _business: CollectionStatisticBusiness) {}
 
   ngOnInit(): void {
@@ -76,7 +79,14 @@ export class CollectionStatisticComponent implements OnInit {
   private async _init() {
     this.model = await this._business.init(this.searchInfo);
 
-    this.lineSeriesData.length = 0;
-    this.lineSeriesData.push(...this.model.chartData);
+    this.merge = {
+      series: [
+        {
+          data: this.model.ChartData,
+          type: 'line',
+          name: '单位(吨)',
+        },
+      ],
+    };
   }
 }
