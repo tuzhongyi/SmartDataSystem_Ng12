@@ -15,10 +15,16 @@ type AICameraManageSource = AICamera;
   providedIn: 'root',
 })
 export class AICameraManageConverter extends AbstractCommonModelPromiseConverter<AICameraManageModel> {
-  private _encodeDevicesMap: Map<string, EncodeDevice> = new Map();
-
   constructor(private _encodeDeviceRequest: EncodeDeviceRequestService) {
     super();
+    this.init();
+  }
+
+  devices: EncodeDevice[] = [];
+
+  async init() {
+    let paged = await this._encodeDeviceRequest.list();
+    this.devices = paged.Data;
   }
 
   Convert(source: AICameraManageSource) {
@@ -35,8 +41,11 @@ export class AICameraManageConverter extends AbstractCommonModelPromiseConverter
     model.Name = item.Name;
     model.CameraType = Language.CameraType(item.CameraType);
     model.CameraState = Language.CameraState(item.CameraState) || '-';
-    let { Name } = await this._encodeDeviceRequest.get(item.EncodeDeviceId);
-    model.DeciveName = Name;
+    let device = this.devices.find((x) => x.Id === item.EncodeDeviceId);
+    if (!device) {
+      device = await this._encodeDeviceRequest.get(item.EncodeDeviceId);
+    }
+    model.DeciveName = device.Name;
     model.Labels = item.Labels ?? [];
     return model;
   }

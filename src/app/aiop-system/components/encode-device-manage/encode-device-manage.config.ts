@@ -2,18 +2,17 @@ import { EncodeDeviceManageModel } from 'src/app/view-model/encode-device-manage
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 export const EncodeDeviceManageConf: TableColumnModel[] = [
-
   {
     columnDef: 'Name',
     header: '名称',
     cell: (element: EncodeDeviceManageModel) => `${element.Name}`,
-    flexBasis: "8%"
+    flexBasis: '8%',
   },
   {
     columnDef: 'IPAddress',
     header: '地址',
     cell: (element: EncodeDeviceManageModel) => `${element.IPAddress}`,
-    flexBasis: "20%"
+    flexBasis: '20%',
   },
   {
     columnDef: 'ProtocolType',
@@ -36,6 +35,6 @@ export const EncodeDeviceManageConf: TableColumnModel[] = [
     header: '标签',
     cell: (element: EncodeDeviceManageModel) => `【${element.Labels.length}】`,
     stopPropogate: true,
-    title: '点击以管理标签'
+    title: '点击以管理标签',
   },
 ];

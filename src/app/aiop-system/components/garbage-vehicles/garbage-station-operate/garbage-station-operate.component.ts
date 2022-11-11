@@ -81,7 +81,7 @@ export class GarbageStationOperateComponent
   willBeDeleted: Camera[] = [];
 
   stationTypes: GarbageStationType[] = [];
-  stationType: StationType = 0;
+  stationType: StationType = StationType.Garbage;
   stationName: string = '';
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');

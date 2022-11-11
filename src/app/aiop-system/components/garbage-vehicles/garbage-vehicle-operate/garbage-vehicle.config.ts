@@ -8,7 +8,7 @@ export const AiopCameraConf: TableColumnModel[] = [
     columnDef: 'CameraName',
     header: '名称',
     cell: (element: AICameraManageModel) => `${element.Name}`,
-    flexBasis: "12%"
+    flexBasis: '12%',
   },
   {
     columnDef: 'CameraType',
@@ -20,16 +20,14 @@ export const AiopCameraConf: TableColumnModel[] = [
     header: '编码设备',
     cell: (element: AICameraManageModel) => `${element.DeciveName}`,
   },
-
 ];
 
-
-export const StationCameraConf: TableColumnModel[] = [
+export const VehicleCameraConf: TableColumnModel[] = [
   {
     columnDef: 'Name',
     header: '名称',
     cell: (element: Camera) => `${element.Name}`,
-    flexBasis: "12%"
+    flexBasis: '12%',
   },
   {
     columnDef: 'OnlineStatus',
@@ -41,4 +39,4 @@ export const StationCameraConf: TableColumnModel[] = [
     header: '用途',
     cell: (element: Camera) => `${Language.CameraUsage(element.CameraUsage)}`,
   },
-]
+];

@@ -3,7 +3,8 @@
     <toast-window>
       <howell-garbage-vehicle-operate
         [state]="state"
-        [vehicle]="selectedRows.length > 0 ? selectedRows[0].data : undefined"
+        [vehicleId]="vehicleId"
+        [divisionId]="divisionId"
         (closeEvent)="closeForm($event)"
       ></howell-garbage-vehicle-operate>
     </toast-window>

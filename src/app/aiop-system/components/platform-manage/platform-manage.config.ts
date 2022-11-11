@@ -14,7 +14,7 @@ export const PlatformManageConf: TableColumnModel[] = [
     columnDef: 'Url',
     header: '地址',
     cell: (element: PlatformManageModel) => `${element.Url}`,
-    flexBasis: '8%'
+    flexBasis: '8%',
   },
   {
     columnDef: 'ProtocolType',

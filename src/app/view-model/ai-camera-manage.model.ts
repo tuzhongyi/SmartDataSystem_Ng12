@@ -1,5 +1,5 @@
-import { ResourceLabel } from "../network/model/resource-label.model";
-import { CommonModel } from "./common-model";
+import { ResourceLabel } from '../network/model/resource-label.model';
+import { CommonModel } from './common-model';
 
 export class AICameraManageModel implements CommonModel {
   Id!: string;
@@ -9,8 +9,6 @@ export class AICameraManageModel implements CommonModel {
   DeciveName!: string;
   Labels!: ResourceLabel[];
 }
-
-
 
 export interface AICameraManageSearchInfo {
   Condition: string;
