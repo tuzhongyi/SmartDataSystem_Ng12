@@ -1,0 +1,100 @@
+<div class="garbage-station-manage hw-horizontal-layout">
+  <ng-container *ngIf="showOperate">
+    <toast-window>
+      <howell-garbage-vehicle-operate
+        [state]="state"
+        [vehicle]="selectedRows.length > 0 ? selectedRows[0].data : undefined"
+        (closeEvent)="closeForm($event)"
+      ></howell-garbage-vehicle-operate>
+    </toast-window>
+  </ng-container>
+  <ng-container *ngIf="showConfirm">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="dialogModel"
+    >
+    </howell-confirm-dialog>
+  </ng-container>
+  <div class="horizontal-left">
+    <div class="hw-simple-title" style="margin-bottom: 10px">区划列表</div>
+    <div class="tree-container">
+      <garbage-vehicle-division-tree
+        [holdStatus]="true"
+        (selectTreeNode)="selectTreeNode($event)"
+      ></garbage-vehicle-division-tree>
+    </div>
+  </div>
+  <div class="horizontal-right">
+    <div class="vertical-layout">
+      <div class="vertical-header">
+        <div class="hw-simple-title">清运车</div>
+        <div class="operate-bar wrap">
+          <div class="hw-normal-btn-group">
+            <button
+              class="hw-btn hw-green-btn"
+              [disabled]="!enableAddBtn"
+              (click)="addBtnClick()"
+            >
+              <i class="howell-icon-plus"></i>
+              添加
+            </button>
+            <button
+              class="hw-btn hw-red-btn"
+              [disabled]="!enableDelBtn"
+              (click)="deleteBtnClick()"
+            >
+              <i class="howell-icon-delete-bin"></i>
+              删除
+            </button>
+          </div>
+
+          <div class="search-wrapper">
+            <howell-simple-search
+              placeHolder="厢房名称"
+              (searchEvent)="searchEvent($event)"
+            ></howell-simple-search>
+          </div>
+        </div>
+      </div>
+
+      <div class="vertical-main">
+        <common-table
+          [dataSubject]="dataSubject"
+          [columnModel]="columnModel"
+          [displayedColumns]="displayedColumns"
+          [selectStrategy]="selectStrategy"
+          [tableOperates]="tableOperates"
+          (selectTableRow)="selectTableRow($event)"
+        ></common-table>
+      </div>
+
+      <div class="vertical-footer">
+        <div class="footer-item">
+          <app-table-select (tableSelect)="tableSelect($event)">
+          </app-table-select>
+        </div>
+
+        <div class="footer-item">
+          <div class="footer-info">
+            <div class="info-item">已选择: {{ selectedRows.length }}</div>
+            <div class="info-item">
+              当前数量: {{ page && page.RecordCount }}
+            </div>
+            <div class="info-item">
+              总数量: {{ page && page.TotalRecordCount }}
+            </div>
+          </div>
+          <app-paginator
+            *ngIf="page"
+            [length]="page.TotalRecordCount"
+            [pageSize]="page.PageSize"
+            [pagerCount]="pagerCount"
+            [pageIndex]="pageIndex - 1"
+            (page)="pageEvent($event)"
+          >
+          </app-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

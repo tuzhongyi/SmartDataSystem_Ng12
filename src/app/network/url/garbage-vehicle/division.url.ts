@@ -18,6 +18,9 @@ export class GarbageVehicleDivisionUrl extends AbstractUrl {
   static excles() {
     return `${this.basic()}/Excels`;
   }
+  static tree() {
+    return `${this.basic()}/Tree`;
+  }
   static garbage(id?: string) {
     let base: string = id ? this.item(id) : this.basic();
     return new GarbageUrl(base);

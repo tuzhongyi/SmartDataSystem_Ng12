@@ -13,11 +13,11 @@ export interface IBusiness<IModel, IViewModel> {
 }
 
 export interface ICreate<T> {
-  create(model: T): Promise<T>;
+  create(...args: any[]): Promise<T>;
 }
 export interface IUpdate<T> {
-  update(model: T): Promise<T>;
+  update(...args: any[]): Promise<T>;
 }
-export interface IDelete<TKey, T> {
-  delete(key: TKey): Promise<T>;
+export interface IDelete<T> {
+  delete(...args: any[]): Promise<T>;
 }

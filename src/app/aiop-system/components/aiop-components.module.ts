@@ -36,6 +36,11 @@ import { CameraOperateComponent } from './camera-operate/camera-operate.componen
 import { CameraMoveComponent } from './camera-move/camera-move.component';
 import { IllegalDropManage } from './illegal-drop-manage/illegal-drop-manage.component';
 import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.component';
+import { GarbageVehicleDivisionManageComponent } from './garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
+import { GarbageVehicleManageComponent } from './garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
+import { GarbageVehicleOperateComponent } from './garbage-vehicles/garbage-vehicle-operate/garbage-vehicle-operate.component';
+import { GarbageVehicleDivisionTreeComponent } from './garbage-vehicles/garbage-vehicle-division-tree/garbage-vehicle-division-tree.component';
+
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
@@ -63,11 +68,23 @@ import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.compon
     CameraOperateComponent,
     CameraMoveComponent,
     IllegalDropManage,
-    MixIntoManageComponent
+    MixIntoManageComponent,
+
+    GarbageVehicleManageComponent,
+    GarbageVehicleOperateComponent,
+    GarbageVehicleDivisionManageComponent,
+    GarbageVehicleDivisionTreeComponent,
   ],
-  imports: [CommonModule, HowellModule, MaterialModule, RouterModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    HowellModule,
+    MaterialModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
   providers: [],
 })
 export class AiopComponentsModule {
-  constructor() { }
+  constructor() {}
 }

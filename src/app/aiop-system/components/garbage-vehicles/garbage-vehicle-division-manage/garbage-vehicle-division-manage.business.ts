@@ -2,15 +2,17 @@ import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Division } from 'src/app/network/model/division.model';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
   DivisionManageModel,
   IDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
+import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 
 @Injectable()
-export class DivisionManageBusiness implements IDivisionManageBusiness {
-  constructor(private service: DivisionRequestService) {}
+export class GarbageVehicleDivisionManageBusiness
+  implements IDivisionManageBusiness
+{
+  constructor(private service: GarbageVehicleDivisionRequestService) {}
 
   async create(
     parentId: string,

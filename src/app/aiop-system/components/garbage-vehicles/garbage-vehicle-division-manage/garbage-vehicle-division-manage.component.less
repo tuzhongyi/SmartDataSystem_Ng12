@@ -1,0 +1,70 @@
+.division-manage {
+  .hw-middle-btn-group {
+    justify-content: flex-start;
+  }
+}
+
+.hw-form {
+  margin-top: 10px;
+  .hw-form-group {
+    flex-basis: 100%;
+    .title {
+      flex-basis: 100%;
+    }
+    .content {
+      flex-basis: 65%;
+    }
+  }
+}
+
+.checkbox-layout {
+  user-select: none;
+  cursor: inherit;
+  align-items: baseline;
+  vertical-align: middle;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.checkbox-wrapper {
+  display: inline-block;
+  position: relative;
+  margin-right: 8px;
+  width: 14px;
+  height: 14px;
+
+  .checkbox-input {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+    white-space: nowrap;
+    outline: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    bottom: 0;
+    left: 50%;
+  }
+  .checkbox-frame {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    border-radius: 2px;
+    box-sizing: border-box;
+    pointer-events: none;
+    background-color: transparent;
+    transition: border-color 90ms cubic-bezier(0, 0, 0.2, 0.1);
+    border-width: 2px;
+    border-style: solid;
+    border-color: #7586e0;
+  }
+}
+
+.checkbox-label {
+}

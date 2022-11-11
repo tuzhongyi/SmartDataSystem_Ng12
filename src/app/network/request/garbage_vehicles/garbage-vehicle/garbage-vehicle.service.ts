@@ -102,12 +102,12 @@ class VehicleCameraService {
   list(
     params: GetGarbageVehicleCamerasParams = new GetGarbageVehicleCamerasParams()
   ) {
-    let url = GarbageVehicleUrl.camera().basic();
+    let url = GarbageVehicleUrl.camera().list();
     let data = classToPlain(params);
     return this.basicType.paged(url, data);
   }
-  create(vehicleId: string, camera: VehicleCamera) {
-    let url = GarbageVehicleUrl.camera(vehicleId).basic();
+  create(camera: VehicleCamera) {
+    let url = GarbageVehicleUrl.camera(camera.GarbageVehicleId).basic();
     return this.basicType.post(url, camera);
   }
 
@@ -115,8 +115,8 @@ class VehicleCameraService {
     let url = GarbageVehicleUrl.camera(vehicleId).item(cameraId);
     return this.basicType.get(url);
   }
-  update(vehicleId: string, camera: VehicleCamera) {
-    let url = GarbageVehicleUrl.camera(vehicleId).item(camera.Id);
+  update(camera: VehicleCamera) {
+    let url = GarbageVehicleUrl.camera(camera.GarbageVehicleId).item(camera.Id);
     return this.basicType.put(url, camera);
   }
   delete(vehicleId: string, cameraId: string) {

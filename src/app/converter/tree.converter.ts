@@ -39,7 +39,7 @@ import { DivisionNode } from '../network/model/division-tree.model';
 import { Division } from '../network/model/division.model';
 import { GarbageStation } from '../network/model/garbage-station.model';
 import { Region, RegionNode } from '../network/model/region';
-import { DivisionManageModel } from '../view-model/division-manange.model';
+import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
 import { NestTreeNode } from '../view-model/nest-tree-node.model';
 
 type TreeSourceModel =
@@ -48,9 +48,7 @@ type TreeSourceModel =
   | DivisionManageModel
   | GarbageStation
   | Region
-  | RegionNode
-
-
+  | RegionNode;
 
 const DivisionNodeIconType = new Map([
   [UserResourceType.City, 'howell-icon-earth'],
@@ -59,14 +57,11 @@ const DivisionNodeIconType = new Map([
   [UserResourceType.Station, 'howell-icon-garbage'],
 ]);
 
-
-
 const RegionNodeIconType = new Map([
   [RegionType.None, 'howell-icon-earth'],
   [RegionType.Normal, 'howell-icon-earth'],
   [RegionType.Leaf, 'howell-icon-map5'],
 ]);
-
 
 @Injectable({
   providedIn: 'root',
@@ -84,14 +79,16 @@ export class TreeConverter
     } else if (source instanceof GarbageStation) {
       return this._fromGarbageStation(source);
     } else if (source instanceof Region) {
-      return this._fromRegion(source)
+      return this._fromRegion(source);
     } else if (source instanceof RegionNode) {
       return this._fromRegionNode(source);
     }
     throw new Error('Method not implemented.');
   }
 
-  iterateToNestTreeNode<T extends Array<TreeSourceModel>>(data: T): NestTreeNode[] {
+  iterateToNestTreeNode<T extends Array<TreeSourceModel>>(
+    data: T
+  ): NestTreeNode[] {
     let res: NestTreeNode[] = new Array<NestTreeNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -116,8 +113,7 @@ export class TreeConverter
           node.childrenChange.value.push(...children);
           node.hasChildren = true;
         }
-      }
-      else if (item instanceof RegionNode) {
+      } else if (item instanceof RegionNode) {
         const node = this.Convert(item);
         node.parentId = parentId;
         res.push(node);
@@ -175,7 +171,6 @@ export class TreeConverter
             parentNode.hasChildren = true;
             parentNode.childrenLoaded = true;
             parentNode.childrenChange.value.push(node);
-
           } else {
             // parentNode还没有创建
             hanged.set(node.id, node);
@@ -186,7 +181,6 @@ export class TreeConverter
         }
       }
     }
-
 
     return res;
   }
@@ -220,8 +214,10 @@ export class TreeConverter
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       item.Nodes.length > 0,
       parentId,
-      DivisionNodeIconType.get(EnumHelper.ConvertDivisionToUserResource(item.DivisionType)),
-      true,
+      DivisionNodeIconType.get(
+        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+      ),
+      true
     );
     node.rawData = item;
     return node;
@@ -235,7 +231,9 @@ export class TreeConverter
       EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
       !item.IsLeaf,
       item.ParentId,
-      DivisionNodeIconType.get(EnumHelper.ConvertDivisionToUserResource(item.DivisionType)),
+      DivisionNodeIconType.get(
+        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+      )
     );
     node.rawData = item;
     return node;
@@ -253,7 +251,7 @@ export class TreeConverter
       UserResourceType.Station,
       false,
       item.DivisionId,
-      DivisionNodeIconType.get(UserResourceType.Station),
+      DivisionNodeIconType.get(UserResourceType.Station)
     );
     node.rawData = item;
     return node;
@@ -267,7 +265,7 @@ export class TreeConverter
       false,
       item.ParentId,
       RegionNodeIconType.get(item.RegionType)
-    )
+    );
     node.rawData = item;
     return node;
   }
@@ -281,7 +279,7 @@ export class TreeConverter
       parentId,
       RegionNodeIconType.get(item.RegionType),
       true
-    )
+    );
     node.rawData = item;
     return node;
   }

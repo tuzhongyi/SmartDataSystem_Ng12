@@ -1,7 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/division-tree.model';
 import { DivisionTreeConverter } from 'src/app/converter/division-tree.converter';
-import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
@@ -11,30 +10,23 @@ import {
   GetDivisionsParams,
   GetDivisionTreeParams,
 } from 'src/app/network/request/division/division-request.params';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { IBusiness } from '../../interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from '../../interfaces/converter.interface';
-import { ISubscription } from '../../interfaces/subscribe.interface';
-import { LocaleCompare } from '../../tools/locale-compare';
-import { IDivisionTreeBusiness } from './division-tree.model';
 
 @Injectable()
-export class DivisionTreeBusiness implements IDivisionTreeBusiness {
+export class GarbageVehicleDivisionTreeBusiness
+  implements IDivisionTreeBusiness
+{
   public showStation = false;
   public depthIsEnd = false;
 
   public nestedNodeMap = new Map<string, CommonNestNode<Division>>();
 
   constructor(
-    private _divisionRequest: DivisionRequestService,
+    private _divisionRequest: GarbageVehicleDivisionRequestService,
     private _stationRequest: GarbageStationRequestService,
     private _converter: DivisionTreeConverter
   ) {}

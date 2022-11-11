@@ -2,9 +2,10 @@
   "$schema": "./sidenav.schema.json",
   "data": [
     {
-      "title": "监管平台",
+      "title": "垃圾分类",
       "id": "supervise-platform",
       "path": "/aiop/aiop-manage/super-vision/supervise-platform",
+      "icon":"howell-icon-garbagebags",
       "children": [
         {
           "title": "区划管理",
@@ -20,6 +21,29 @@
           "title": "垃圾厢房管理",
           "id": "garbage-station-manage",
           "path": "/aiop/aiop-manage/super-vision/supervise-platform/garbage-station-manage"
+        }
+      ]
+    },
+    {
+      "title": "垃圾清运",
+      "id": "garbage-collection",
+      "path": "/aiop/aiop-manage/super-vision/garbage-collection",
+      "icon":"howell-icon-dustcart",
+      "children": [
+        {
+          "title": "区划管理",
+          "id": "division-manage",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/division-manage"
+        },
+        {
+          "title": "地图布控",
+          "id": "deploy-map",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/deploy-map"
+        },
+        {
+          "title": "清运车管理",
+          "id": "garbage-vehicle-manage",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-manage"
         }
       ]
     }

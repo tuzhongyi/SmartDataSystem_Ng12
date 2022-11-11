@@ -1,26 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Deduplication } from 'src/app/common/tools/deduplication';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
-import {
-  GarbageStation,
-  GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
+
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { GarbageStationManageBusiness } from './garbage-station-manage.business';
+
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { GarbageStationTypesUrls } from 'src/app/network/url/aiop/garbage-management/garbage-stations/types/garbage-station-types.url';
-import { GarbageStationManageModel } from 'src/app/view-model/garbage-station-manage.model';
+
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { GarbageStationManageConf } from './garbage-station-manage.config';
+
 import {
   TableColumnModel,
   TableOperateModel,
@@ -30,30 +23,49 @@ import { PaginatorComponent } from 'src/app/common/components/paginator/paginato
 import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { PageEvent } from '@angular/material/paginator';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { GarbageVehicleManageBusiness } from './business/garbage-vehicle-manage.business';
+import { GarbageVehicleManageConf } from './garbage-vehicle-manage.config';
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import {
+  GarbageVehicleModel,
+  IGarbageVehicleManageComponent,
+} from './garbage-vehicle-manage.model';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { GarbageVehicleManageDivisionTreeBusiness } from './business/garbage-vehicle-manage-division-tree.business';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { IModel } from 'src/app/network/model/model.interface';
+import {
+  IBusiness,
+  IDelete,
+} from 'src/app/common/interfaces/bussiness.interface';
 
 @Component({
-  selector: 'howell-garbage-station-manage',
-  templateUrl: './garbage-station-manage.component.html',
-  styleUrls: ['./garbage-station-manage.component.less'],
-  providers: [GarbageStationManageBusiness],
+  selector: 'howell-garbage-vehicle-manage',
+  templateUrl: './garbage-vehicle-manage.component.html',
+  styleUrls: ['./garbage-vehicle-manage.component.less'],
+  providers: [
+    GarbageVehicleManageDivisionTreeBusiness,
+    GarbageVehicleManageBusiness,
+  ],
 })
-export class GarbageStationManageComponent implements OnInit {
+export class GarbageVehicleManageComponent
+  implements IGarbageVehicleManageComponent, OnInit
+{
   private _pageSize = 9;
   private _condition = '';
   private _currentNode?: CommonFlatNode<DivisionTreeSource>;
 
   //Table
-  dataSubject = new BehaviorSubject<GarbageStationManageModel[]>([]);
+  dataSubject = new BehaviorSubject<GarbageVehicleModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
-  columnModel: TableColumnModel[] = [...GarbageStationManageConf]; // 表格列配置详情
+  columnModel: TableColumnModel[] = [...GarbageVehicleManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
   tableOperates: TableOperateModel[] = [];
 
-  selectedRows: GarbageStationManageModel[] = []; //table选中项
-  willBeDeleted: GarbageStationManageModel[] = [];
+  selectedRows: GarbageVehicleModel[] = []; //table选中项
+  willBeDeleted: GarbageVehicleModel[] = [];
 
   // Paginator
   pagerCount: number = 4;
@@ -80,19 +92,8 @@ export class GarbageStationManageComponent implements OnInit {
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
   get enableAddBtn() {
-    if (this._currentNode) {
-      if (
-        this._currentNode.RawData instanceof Division ||
-        this._currentNode.RawData instanceof DivisionNode
-      ) {
-        return (
-          this._currentNode.RawData.DivisionType === DivisionType.Committees
-        );
-      }
-    }
-    return false;
+    return !!this._currentNode;
   }
-
   get enableDelBtn() {
     return !!this.selectedRows.length;
   }
@@ -100,9 +101,11 @@ export class GarbageStationManageComponent implements OnInit {
   @ViewChild(DivisionTreeComponent) tree?: DivisionTreeComponent;
 
   constructor(
-    private _business: GarbageStationManageBusiness,
+    public treeBusiness: GarbageVehicleManageDivisionTreeBusiness,
+    business: GarbageVehicleManageBusiness,
     private _toastrService: ToastrService
   ) {
+    this.business = business;
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -112,6 +115,11 @@ export class GarbageStationManageComponent implements OnInit {
       )
     );
   }
+  business: IBusiness<
+    PagedList<GarbageVehicle>,
+    PagedList<GarbageVehicleModel<any>>
+  > &
+    IDelete<string, GarbageVehicle>;
 
   async ngOnInit() {
     // let res = await this._business.listStations()
@@ -119,7 +127,7 @@ export class GarbageStationManageComponent implements OnInit {
   }
 
   private async _init() {
-    let res = await this._business.listStations(
+    let res = await this.business.load(
       this._currentNode?.Id ?? '',
       this._condition,
       this.pageIndex,
@@ -137,7 +145,7 @@ export class GarbageStationManageComponent implements OnInit {
     this._updateTable();
   }
 
-  selectTableRow(rows: GarbageStationManageModel[]) {
+  selectTableRow(rows: GarbageVehicleModel[]) {
     this.selectedRows = rows;
   }
 
@@ -196,11 +204,11 @@ export class GarbageStationManageComponent implements OnInit {
     this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
-  private async _deleteRows(rows: GarbageStationManageModel[]) {
+  private async _deleteRows(rows: GarbageVehicleModel[]) {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      await this._business.delete(id);
+      await this.business.delete(id);
       this._toastrService.success('删除成功');
     }
 
@@ -224,7 +232,7 @@ export class GarbageStationManageComponent implements OnInit {
       this.dataSubject.next([]);
     }
   }
-  private _clickEditBtn(row: GarbageStationManageModel) {
+  private _clickEditBtn(row: GarbageVehicleModel) {
     this.showOperate = true;
     this.state = FormState.edit;
     this.stationId = row.Id;

@@ -1,41 +1,56 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { DivisionManageBusiness } from './division-manage.business';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
-import { TreeConverter } from 'src/app/converter/tree.converter';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Language } from 'src/app/common/tools/language';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { DivisionManageModel } from 'src/app/view-model/division-manange.model';
+import {
+  DivisionManageModel,
+  IDivisionManageComponent,
+  TDivisionManageBusiness,
+} from 'src/app/aiop-system/components/division-manage/division-manange.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { DivisionTreeConverter, DivisionTreeSource } from "src/app/converter/division-tree.converter"
+import {
+  DivisionTreeConverter,
+  DivisionTreeSource,
+} from 'src/app/converter/division-tree.converter';
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
-
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/division-tree.model';
 
 @Component({
+  selector: 'howell-division-manage',
   templateUrl: './division-manage.component.html',
   styleUrls: ['division-manage.component.less'],
   providers: [DivisionManageBusiness],
 })
-export class DivisionManageComponent implements OnInit, AfterViewInit {
+export class DivisionManageComponent
+  implements IDivisionManageComponent, OnInit, AfterViewInit
+{
+  @Input()
+  business: TDivisionManageBusiness;
+  @Input()
+  treeBusiness?: IDivisionTreeBusiness;
 
   private _currentNode?: CommonFlatNode<DivisionTreeSource>;
-  private _resourceType: UserResourceType = UserResourceType.None;
 
   //树
   showStation = true;
   holdStatus = false;
 
   selectStrategy = SelectStrategy.Single;
-  defaultIds = []
-
+  defaultIds = [];
 
   // 表单
   FormState = FormState;
@@ -44,55 +59,60 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   showDialog = false;
 
   myForm = new FormGroup({
-    Id: new FormControl('', [Validators.required, Validators.pattern(/^[\d]+$/)]),
+    Id: new FormControl('', [
+      Validators.required,
+      Validators.pattern(/^[\d]+$/),
+    ]),
     Name: new FormControl('', Validators.required),
     ParentName: new FormControl(''),
-    Description: new FormControl('')
+    Description: new FormControl(''),
   });
-
 
   get title() {
     if (this.state == FormState.none) {
-      let normal = this._resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this._resourceType)
-      return normal + '详情'
+      let normal =
+        this.type == DivisionType.None
+          ? Language.DivisionType(DivisionType.City)
+          : Language.DivisionType(this.type);
+      return normal + '详情';
     } else if (this.state == FormState.add) {
-      let add = Language.UserResourceType(EnumHelper.GetResourceChildType(this._resourceType));
-      return '添加' + add;
+      let child = EnumHelper.GetDivisionChildType(this.type);
+      if (this.type === DivisionType.None) {
+        child = DivisionType.City;
+      }
+      let language = Language.DivisionType(child);
+      return '添加' + language;
     } else if (this.state == FormState.edit) {
-      let edit = this._resourceType == UserResourceType.None ? Language.UserResourceType(UserResourceType.City) : Language.UserResourceType(this._resourceType)
-      return '编辑' + edit;
+      let language = Language.DivisionType(this.type);
+      return '编辑' + language;
     }
-    return ''
-
+    return '';
   }
 
   get type() {
     if (this._currentNode) {
-      if (this._currentNode.RawData instanceof GarbageStation) {
-        return UserResourceType.Station
-      } else {
-        return EnumHelper.ConvertDivisionToUserResource(this._currentNode.RawData.DivisionType)
+      if (
+        this._currentNode.RawData instanceof Division ||
+        this._currentNode.RawData instanceof DivisionNode
+      ) {
+        return this._currentNode.RawData.DivisionType;
       }
     }
-    return UserResourceType.None
+    return DivisionType.None;
   }
   get enableAddBtn() {
-    return !this._currentNode || this.type == UserResourceType.City || this.type == UserResourceType.County;
+    return (
+      !this._currentNode ||
+      this.type == DivisionType.City ||
+      this.type == DivisionType.County
+    );
   }
   get enableDelBtn() {
-    return (
-      !!this._currentNode &&
-      this.type != UserResourceType.None &&
-      this.type != UserResourceType.Station
-    );
+    return !!this._currentNode && this.type != DivisionType.None;
   }
 
   get enableEditBtn() {
-    return (
-      !!this._currentNode &&
-      this.type != UserResourceType.None &&
-      this.type != UserResourceType.Station
-    );
+    return !!this._currentNode && this.type != DivisionType.None;
   }
 
   @ViewChild(DivisionTreeComponent) tree?: DivisionTreeComponent;
@@ -101,64 +121,60 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     return this.myForm.get('Id') as FormControl;
   }
   get Name() {
-    return this.myForm.get('Name') as FormControl
+    return this.myForm.get('Name') as FormControl;
   }
   get ParentName() {
-    return this.myForm.get('ParentName') as FormControl
+    return this.myForm.get('ParentName') as FormControl;
   }
   get Description() {
-    return this.myForm.get('Description') as FormControl
+    return this.myForm.get('Description') as FormControl;
   }
 
   constructor(
-    private _business: DivisionManageBusiness,
+    business: DivisionManageBusiness,
     private _toastrService: ToastrService,
-    private _converter: DivisionTreeConverter,
-  ) { }
+    private _converter: DivisionTreeConverter
+  ) {
+    this.business = business;
+  }
 
   ngOnInit(): void {
     this.myForm.disable();
   }
 
-  ngAfterViewInit(): void {
-
-  }
+  ngAfterViewInit(): void {}
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]): void {
     this._currentNode = nodes[0];
-    console.log('外部结果', nodes)
+    console.log('外部结果', nodes);
     this.state = FormState.none;
-    this._resourceType = this.type
     this.holdStatus = false;
     this._updateForm();
   }
 
   addBtnClick() {
-    if (this.state == FormState.add) return
+    if (this.state == FormState.add) return;
     this.holdStatus = true;
     this.addPlaceHolder = '请填写数字';
     this.state = FormState.add;
     this._updateForm();
   }
   editBtnClick() {
-    if (this.state == FormState.edit) return
+    if (this.state == FormState.edit) return;
     this.holdStatus = true;
     this.state = FormState.edit;
     this._updateForm();
-    console.log('edit')
-
+    console.log('edit');
   }
   deleteBtnClick() {
     this.showDialog = true;
-    console.log('delete')
-
+    console.log('delete');
   }
   async dialogMsgEvent(status: DialogEnum) {
     this.showDialog = false;
     if (status == DialogEnum.confirm) {
-      this._deleteNode()
+      this._deleteNode();
     } else if (status == DialogEnum.cancel) {
-
     }
   }
 
@@ -169,7 +185,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
         return;
       }
       if (this.Id.errors && 'pattern' in this.Id.errors) {
-        this._toastrService.error('区划ID为数字')
+        this._toastrService.error('区划ID为数字');
         return;
       }
     }
@@ -181,12 +197,10 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     }
     if (this.state == FormState.add) {
       this._addNode();
-    }
-    else if (this.state == FormState.edit) {
+    } else if (this.state == FormState.edit) {
       this._editNode();
     }
   }
-
 
   onReset() {
     this.holdStatus = false;
@@ -194,7 +208,6 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
     this.addPlaceHolder = '';
     this._updateForm();
   }
-
 
   private _updateForm() {
     if (this.state == FormState.none) {
@@ -205,8 +218,8 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
           Name: this._currentNode.Name,
           Id: this._currentNode.Id,
           ParentName: this._currentNode.ParentNode?.Name ?? '',
-          Description: data.Description ?? ''
-        })
+          Description: data.Description ?? '',
+        });
       } else {
         this.myForm.reset();
       }
@@ -217,7 +230,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
         this.myForm.reset();
         this.myForm.patchValue({
           ParentName: this._currentNode.ParentNode?.Name ?? '',
-        })
+        });
       }
     } else if (this.state == FormState.edit) {
       this.myForm.disable();
@@ -228,26 +241,23 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
           Name: this._currentNode.Name,
           Id: this._currentNode.Id,
           ParentName: this._currentNode.ParentNode?.Name ?? '',
-          Description: data.Description ?? ''
-        })
+          Description: data.Description ?? '',
+        });
         this.Name.enable();
         this.Description.enable();
       }
-
     }
   }
 
-
   private async _addNode() {
     if (this.tree) {
-
       let model = new DivisionManageModel();
       model.Id = this.myForm.getRawValue().Id ?? '';
-      model.Name = this.myForm.getRawValue().Id ?? ''
-      model.Description = this.myForm.getRawValue().Description ?? "";
+      model.Name = this.myForm.getRawValue().Name ?? '';
+      model.Description = this.myForm.getRawValue().Description ?? '';
 
       let parentId = this._currentNode ? this._currentNode.Id : '';
-      let res = await this._business.addDivision(parentId, model);
+      let res = await this.business.create(parentId, model);
       if (res) {
         this._toastrService.success('添加成功');
         const node = this._converter.Convert(res);
@@ -258,13 +268,12 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   }
   private async _editNode() {
     if (this.tree) {
-
       let model = new DivisionManageModel();
       model.Id = this.myForm.getRawValue().Id ?? '';
-      model.Name = this.myForm.getRawValue().Name ?? ''
-      model.Description = this.myForm.getRawValue().Description ?? ""
+      model.Name = this.myForm.getRawValue().Name ?? '';
+      model.Description = this.myForm.getRawValue().Description ?? '';
 
-      let res = await this._business.editDivision(model.Id, model);
+      let res = await this.business.update(model.Id, model);
       if (res) {
         this._toastrService.success('编辑成功');
         const node = this._converter.Convert(res);
@@ -275,8 +284,7 @@ export class DivisionManageComponent implements OnInit, AfterViewInit {
   }
   private async _deleteNode() {
     if (this.tree && this._currentNode) {
-
-      let res = await this._business.deleteDivision(this._currentNode.Id);
+      let res = await this.business.delete(this._currentNode.Id);
       if (res) {
         this.tree.deleteNode(this._currentNode);
         this._toastrService.success('删除成功');

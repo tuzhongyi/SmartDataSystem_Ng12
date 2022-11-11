@@ -4,7 +4,7 @@ import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
-  constructor() { }
+  constructor() {}
 
   static ConvertUserResourceToDivision(type: UserResourceType) {
     switch (type) {
@@ -31,7 +31,6 @@ export class EnumHelper {
         return UserResourceType.City;
     }
   }
-
 
   static GetResourceChildTypeByDivisionType(type: DivisionType) {
     switch (type) {
@@ -70,7 +69,7 @@ export class EnumHelper {
       case DivisionType.Committees:
         return DivisionType.Community;
       default:
-        throw new Error('this is not divisiontype');
+        return DivisionType.None;
     }
   }
   static GetClass(flags: Flags<StationState>) {
