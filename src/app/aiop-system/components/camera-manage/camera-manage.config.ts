@@ -6,7 +6,7 @@ export const CameraManageConf: TableColumnModel[] = [
     columnDef: 'CameraName',
     header: '名称',
     cell: (element: AICameraManageModel) => `${element.Name}`,
-    flexBasis: "20%"
+    flexBasis: '20%',
   },
   {
     columnDef: 'CameraType',
@@ -22,14 +22,13 @@ export const CameraManageConf: TableColumnModel[] = [
     columnDef: 'DeciveName',
     header: '编码设备',
     cell: (element: AICameraManageModel) => `${element.DeciveName}`,
-    flexBasis: "14%"
+    flexBasis: '14%',
   },
   {
     columnDef: 'Labels',
     header: '标签',
     cell: (element: AICameraManageModel) => `【${element.Labels.length}】`,
     stopPropogate: true,
-    title: '点击以管理标签'
-  }
-
+    title: '点击以管理标签',
+  },
 ];

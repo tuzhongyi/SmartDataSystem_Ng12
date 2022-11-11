@@ -12,5 +12,4 @@ export const GarbageStationManageConf: TableColumnModel[] = [
     header: '类型',
     cell: (element: GarbageStationManageModel) => `${element.StationType}`,
   },
-
 ];

@@ -1,4 +1,4 @@
-<div class="garbage-vehicle-operate">
+<div class="garbage-station-operate">
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog
       (dialogMsgEvent)="dialogMsgEvent($event)"
@@ -20,7 +20,7 @@
               <span class="hw-form-icon">*</span>
             </div>
             <div class="content">
-              <input type="text" name="vehicleName" [(ngModel)]="vehicleName" />
+              <input type="text" name="stationName" [(ngModel)]="stationName" />
             </div>
           </div>
           <div class="operate-item">
@@ -29,9 +29,9 @@
               <span class="hw-form-icon"></span>
             </div>
             <div class="content">
-              <select name="vehicleType" [(ngModel)]="vehicleType">
-                <option *ngFor="let s of vehicleTypes" [ngValue]="s.value">
-                  {{ s.language }}
+              <select name="stationType" [(ngModel)]="stationType">
+                <option *ngFor="let s of stationTypes" [ngValue]="s.Type">
+                  {{ s.Name }}
                 </option>
               </select>
             </div>
@@ -99,17 +99,17 @@
       <div class="vertical-main">
         <common-table
           #editTable="commonTable"
-          [dataSubject]="vehicleDataSubject"
-          [columnModel]="vehicleColumnModel"
-          [displayedColumns]="vehicleDisplayedColumns"
+          [dataSubject]="stationDataSubject"
+          [columnModel]="stationColumnModel"
+          [displayedColumns]="stationDisplayedColumns"
           [selectStrategy]="selectStrategy"
-          (selectTableRow)="selectvehicleTableRow($event)"
+          (selectTableRow)="selectstationTableRow($event)"
         ></common-table>
       </div>
 
       <div class="vertical-footer">
         <div class="footer-item">
-          <app-table-select (tableSelect)="vehicleTableSelect($event)">
+          <app-table-select (tableSelect)="stationTableSelect($event)">
           </app-table-select>
         </div>
       </div>

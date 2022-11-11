@@ -78,7 +78,7 @@ export class GarbageVehicleManageComponent
 
   // 表单
   state = FormState.none;
-  stationId = '';
+  vehicleId = '';
   divisionId = '';
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
@@ -172,7 +172,7 @@ export class GarbageVehicleManageComponent
   closeForm(update: boolean) {
     this.showOperate = false;
     this.state = FormState.none;
-    this.stationId = '';
+    this.vehicleId = '';
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -227,6 +227,6 @@ export class GarbageVehicleManageComponent
   private _clickEditBtn(row: GarbageVehicleModel) {
     this.showOperate = true;
     this.state = FormState.edit;
-    this.stationId = row.Id;
+    this.vehicleId = row.Id;
   }
 }

@@ -384,71 +384,71 @@ export class Language {
   static VehicleType(type: VehicleType) {
     switch (type) {
       case VehicleType.Tricycle:
-        return this.json.VehicleType.Tricycle;
+        return Language.json.VehicleType.Tricycle;
       case VehicleType.Car:
-        return this.json.VehicleType.Car;
+        return Language.json.VehicleType.Car;
       default:
-        return this.json.VehicleType.Default;
+        return Language.json.VehicleType.Default;
     }
   }
 
   static VehiclePositionNo(type: VehiclePositionNo) {
     switch (type) {
       case VehiclePositionNo.CarFront:
-        return this.json.VehiclePositionNo.CarFront;
+        return Language.json.VehiclePositionNo.CarFront;
       case VehiclePositionNo.CarEnd:
-        return this.json.VehiclePositionNo.CarEnd;
+        return Language.json.VehiclePositionNo.CarEnd;
       case VehiclePositionNo.TrashCan:
-        return this.json.VehiclePositionNo.TrashCan;
+        return Language.json.VehiclePositionNo.TrashCan;
       default:
-        return this.json.VehiclePositionNo.Default;
+        return Language.json.VehiclePositionNo.Default;
     }
   }
 
   static RelayState(type: RelayState) {
     switch (type) {
       case RelayState.Closed:
-        return this.json.RelayState.Closed;
+        return Language.json.RelayState.Closed;
       case RelayState.Opened:
-        return this.json.RelayState.Opened;
+        return Language.json.RelayState.Opened;
       default:
-        return this.json.RelayState.Default;
+        return Language.json.RelayState.Default;
     }
   }
 
   static VehicleResourceType(type: VehicleResourceType) {
     switch (type) {
       case VehicleResourceType.Camera:
-        return this.json.VehicleResourceType.Camera;
+        return Language.json.VehicleResourceType.Camera;
       case VehicleResourceType.GarbageVehicle:
-        return this.json.VehicleResourceType.GarbageVehicle;
+        return Language.json.VehicleResourceType.GarbageVehicle;
       default:
-        return this.json.VehicleResourceType.Default;
+        return Language.json.VehicleResourceType.Default;
     }
   }
 
   static CollectionScore(type: CollectionPointScore) {
     switch (type) {
       case CollectionPointScore.Poor:
-        return this.json.CollectionScore.Poor;
+        return Language.json.CollectionScore.Poor;
       case CollectionPointScore.Average:
-        return this.json.CollectionScore.Average;
+        return Language.json.CollectionScore.Average;
       case CollectionPointScore.Good:
-        return this.json.CollectionScore.Good;
+        return Language.json.CollectionScore.Good;
       default:
-        return this.json.CollectionScore.Default;
+        return Language.json.CollectionScore.Default;
     }
   }
   static VehicleRelayOperator(type: VehicleRelayOperator) {
     switch (type) {
       case VehicleRelayOperator.Reset:
-        return this.json.VehicleRelayOperator.Reset;
+        return Language.json.VehicleRelayOperator.Reset;
       case VehicleRelayOperator.Open:
-        return this.json.VehicleRelayOperator.Open;
+        return Language.json.VehicleRelayOperator.Open;
       case VehicleRelayOperator.Close:
-        return this.json.VehicleRelayOperator.Close;
+        return Language.json.VehicleRelayOperator.Close;
       default:
-        return this.json.VehicleRelayOperator.Default;
+        return Language.json.VehicleRelayOperator.Default;
     }
   }
 
@@ -460,13 +460,13 @@ export class Language {
   static CollectionDeviceStateRatioType(type: CollectionDeviceStateRatioType) {
     switch (type) {
       case CollectionDeviceStateRatioType.Bad:
-        return this.json.CollectionDeviceStateRatioType.Bad;
+        return Language.json.CollectionDeviceStateRatioType.Bad;
       case CollectionDeviceStateRatioType.Mild:
-        return this.json.CollectionDeviceStateRatioType.Mild;
+        return Language.json.CollectionDeviceStateRatioType.Mild;
       case CollectionDeviceStateRatioType.Good:
-        return this.json.CollectionDeviceStateRatioType.Good;
+        return Language.json.CollectionDeviceStateRatioType.Good;
       default:
-        return this.json.CollectionDeviceStateRatioType.Default;
+        return Language.json.CollectionDeviceStateRatioType.Default;
     }
   }
   static CollectionDeviceStateRatioTypeColor(
@@ -474,13 +474,13 @@ export class Language {
   ) {
     switch (type) {
       case CollectionDeviceStateRatioType.Bad:
-        return this.json.CollectionDeviceStateRatioTypeColor.Bad;
+        return Language.json.CollectionDeviceStateRatioTypeColor.Bad;
       case CollectionDeviceStateRatioType.Mild:
-        return this.json.CollectionDeviceStateRatioTypeColor.Mild;
+        return Language.json.CollectionDeviceStateRatioTypeColor.Mild;
       case CollectionDeviceStateRatioType.Good:
-        return this.json.CollectionDeviceStateRatioTypeColor.Good;
+        return Language.json.CollectionDeviceStateRatioTypeColor.Good;
       default:
-        return this.json.CollectionDeviceStateRatioTypeColor.Default;
+        return Language.json.CollectionDeviceStateRatioTypeColor.Default;
     }
   }
 
@@ -492,27 +492,27 @@ export class Language {
   static CollectionDeviceStateCountType(type: CollectionDeviceStateCountType) {
     switch (type) {
       case CollectionDeviceStateCountType.All:
-        return this.json.CollectionDeviceStateCountType.All;
+        return Language.json.CollectionDeviceStateCountType.All;
       case CollectionDeviceStateCountType.Online:
-        return this.json.CollectionDeviceStateCountType.Online;
+        return Language.json.CollectionDeviceStateCountType.Online;
       case CollectionDeviceStateCountType.Offline:
-        return this.json.CollectionDeviceStateCountType.Offline;
+        return Language.json.CollectionDeviceStateCountType.Offline;
       default:
-        return this.json.CollectionDeviceStateCountType.Default;
+        return Language.json.CollectionDeviceStateCountType.Default;
     }
   }
   static TrashCanType(type: TrashCanType) {
     switch (type) {
       case TrashCanType.Dry:
-        return this.json.TrashCanType.Dry;
+        return Language.json.TrashCanType.Dry;
       case TrashCanType.Wet:
-        return this.json.TrashCanType.Wet;
+        return Language.json.TrashCanType.Wet;
       case TrashCanType.Recycle:
-        return this.json.TrashCanType.Recycle;
+        return Language.json.TrashCanType.Recycle;
       case TrashCanType.Hazard:
-        return this.json.TrashCanType.Hazard;
+        return Language.json.TrashCanType.Hazard;
       default:
-        return this.json.TrashCanType.Default;
+        return Language.json.TrashCanType.Default;
     }
   }
 
