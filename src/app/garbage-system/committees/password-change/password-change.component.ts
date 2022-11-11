@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 import { PasswordChangeService } from './password-change.service';
 
@@ -20,8 +20,8 @@ export class PasswordChangeComponent implements OnInit {
   constructor(
     private service: PasswordChangeService,
     private local: LocalStorageService,
-    private store: GlobalStoreService
-  ) { }
+    private store: GlobalStorageService
+  ) {}
 
   successed = false;
   readonly disabled = 'disabled';
@@ -44,7 +44,7 @@ export class PasswordChangeComponent implements OnInit {
     repeat: new FormControl({ value: '', disabled: true }, Validators.required),
   });
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   checkOldPassword(event: Event) {
     if (!this.old.value()) {

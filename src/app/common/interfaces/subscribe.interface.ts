@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 export interface ISubscription {
   subscription?: Subscription;
@@ -12,7 +12,7 @@ export interface ISubscription {
   providedIn: 'root',
 })
 export class SubscriptionService implements ISubscription {
-  constructor(private storeService: GlobalStoreService) { }
+  constructor(private storeService: GlobalStorageService) {}
   subscription?: Subscription;
 
   subscribe(fn: () => void) {

@@ -7,7 +7,7 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
@@ -29,7 +29,7 @@ export class PatrolControlBusiness
   implements IBusiness<GarbageStation[], PatrolControlModel[]>
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private srService: SRServerRequestService
   ) {

@@ -7,7 +7,7 @@ import {
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -29,16 +29,16 @@ import {
 @Injectable()
 export class GarbageStationStatisticTableBusiness
   implements
-  IBusiness<
-  GarbageStationStatisticTableSource,
-  GarbageStationStatisticModel[]
-  >
+    IBusiness<
+      GarbageStationStatisticTableSource,
+      GarbageStationStatisticModel[]
+    >
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) { }
+  ) {}
 
   Converter: IPromiseConverter<
     GarbageStationStatisticTableSource,

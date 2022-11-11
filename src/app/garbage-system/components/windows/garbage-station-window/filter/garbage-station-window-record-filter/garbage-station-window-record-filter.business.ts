@@ -5,7 +5,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -20,10 +20,10 @@ export class GarbageStationWindowRecordFilterBusiness
   implements IBusiness<IModel, GarbageStationWindowRecordFilterModel>
 {
   constructor(
-    private store: GlobalStoreService,
+    private store: GlobalStorageService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
-  ) { }
+  ) {}
   Converter: IConverter<IModel, GarbageStationWindowRecordFilterModel> =
     new GarbageStationWindowRecordFilterConverter();
   subscription?: ISubscription | undefined;

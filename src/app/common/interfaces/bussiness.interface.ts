@@ -21,3 +21,6 @@ export interface IUpdate<T> {
 export interface IDelete<T> {
   delete(...args: any[]): Promise<T>;
 }
+export interface IGet<T> {
+  get(...args: any[]): Promise<T>;
+}

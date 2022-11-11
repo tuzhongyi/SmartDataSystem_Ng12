@@ -22,7 +22,7 @@ export class CollectionVehicleConverter {
     model.onLineRatio =
       totalNum == 0 ? 100 : ((onLineNum / totalNum) * 100) >> 0;
 
-    // model.onLineRatio = 100;
+    // model.onLineRatio = 80;
     if (model.onLineRatio < 80) {
       model.state = CollectionDeviceStateRatioType.Bad;
     } else if (model.onLineRatio >= 80 && model.onLineRatio < 90) {

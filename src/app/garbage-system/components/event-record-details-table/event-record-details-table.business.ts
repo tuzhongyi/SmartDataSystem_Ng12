@@ -8,7 +8,7 @@ import {
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { SelectItemConverter } from 'src/app/converter/select-item.converter';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -26,10 +26,10 @@ export class EventRecordDetailsTableBusiness
   implements IBusiness<string, EventRecordDetailsTableModel>
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
-  ) { }
+  ) {}
   Converter = new EventRecordDetailsTableConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;

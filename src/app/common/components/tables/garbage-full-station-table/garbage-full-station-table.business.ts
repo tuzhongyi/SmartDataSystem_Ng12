@@ -4,7 +4,7 @@ import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -21,16 +21,16 @@ import { GarbageFullStationTableModel } from './garbage-full-station-table.model
 @Injectable()
 export class GarbageFullStationTableBusiness
   implements
-  IBusiness<
-  PagedList<GarbageStationNumberStatistic>,
-  PagedList<GarbageFullStationTableModel>
-  >
+    IBusiness<
+      PagedList<GarbageStationNumberStatistic>,
+      PagedList<GarbageFullStationTableModel>
+    >
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) { }
+  ) {}
   Converter: IPromiseConverter<
     PagedList<GarbageStationNumberStatistic>,
     PagedList<GarbageFullStationTableModel>

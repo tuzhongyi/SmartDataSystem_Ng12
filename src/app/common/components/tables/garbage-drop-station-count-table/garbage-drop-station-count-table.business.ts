@@ -9,7 +9,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,
@@ -29,13 +29,13 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
 @Injectable()
 export class GarbageDropStationCountTableBusiness
   implements
-  IBusiness<NumberStatisticV2Type[], GarbageDropStationCountTableModel[]>
+    IBusiness<NumberStatisticV2Type[], GarbageDropStationCountTableModel[]>
 {
   constructor(
-    private store: GlobalStoreService,
+    private store: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) { }
+  ) {}
 
   Converter: IPromiseConverter<
     NumberStatisticV2Type[],
@@ -50,7 +50,13 @@ export class GarbageDropStationCountTableBusiness
     type: UserResourceType
   ): Promise<GarbageDropStationCountTableModel[]> {
     let duration = DurationParams.TimeUnit(unit, date);
-    let data = await this.getData(parentId, this.store.divisionId, duration, type, unit);
+    let data = await this.getData(
+      parentId,
+      this.store.divisionId,
+      duration,
+      type,
+      unit
+    );
     let getter: ConvertGetter = {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -59,7 +65,11 @@ export class GarbageDropStationCountTableBusiness
         return this.divisionService.cache.get(id);
       },
     };
-    let model = await this.Converter.Convert(data, getter, this.store.defaultDivisionType);
+    let model = await this.Converter.Convert(
+      data,
+      getter,
+      this.store.defaultDivisionType
+    );
     return model;
   }
   async getData(
@@ -75,7 +85,11 @@ export class GarbageDropStationCountTableBusiness
       return this.getGarbageStationData(parentId, ids, duration, unit);
     } else {
       let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
-      let divisions = await this.getDivisionList(parentId, divisionId, divisionType);
+      let divisions = await this.getDivisionList(
+        parentId,
+        divisionId,
+        divisionType
+      );
       let ids = divisions.map((x) => x.Id);
       return this.getDivisionData(ids, duration, unit);
     }
@@ -88,7 +102,11 @@ export class GarbageDropStationCountTableBusiness
     let paged = await this.stationService.list(params);
     return paged.Data;
   }
-  async getDivisionList(parentId: string, divisionId: string, divisionType: DivisionType) {
+  async getDivisionList(
+    parentId: string,
+    divisionId: string,
+    divisionType: DivisionType
+  ) {
     let params = new GetDivisionsParams();
     params.DivisionType = divisionType;
     params.AncestorId = divisionId;
@@ -111,9 +129,8 @@ export class GarbageDropStationCountTableBusiness
       let res = await this.stationService.statistic.number.history.list(params);
       return res;
     } else {
-      return []
+      return [];
     }
-
   }
   getDivisionData(
     divisionIds: string[],

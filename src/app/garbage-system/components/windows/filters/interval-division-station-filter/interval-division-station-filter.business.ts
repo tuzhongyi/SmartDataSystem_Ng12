@@ -6,7 +6,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -25,10 +25,10 @@ export class EventRecordFilterBusiness
   implements IBusiness<string, DivisionStationFilteModel>
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService
-  ) { }
+  ) {}
 
   Converter: IConverter<string, DivisionStationFilteModel> =
     new EventRecordFilterConverter();
@@ -79,15 +79,9 @@ export class EventRecordFilterBusiness
 
     let model = this.Converter.Convert('', divisions, stations, cameras);
 
-    model.divisions.unshift(
-      new SelectItem('', undefined, '请选择')
-    );
-    model.stations.unshift(
-      new SelectItem('', undefined, '请选择')
-    );
-    model.cameras.unshift(
-      new SelectItem('', undefined, '请选择')
-    );
+    model.divisions.unshift(new SelectItem('', undefined, '请选择'));
+    model.stations.unshift(new SelectItem('', undefined, '请选择'));
+    model.cameras.unshift(new SelectItem('', undefined, '请选择'));
 
     return model;
   }

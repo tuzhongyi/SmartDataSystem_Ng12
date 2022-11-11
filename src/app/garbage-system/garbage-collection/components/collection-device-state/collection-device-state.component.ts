@@ -41,7 +41,6 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
     series: [
       {
         type: 'gauge',
-
         // 坐标轴数字
         axisLabel: {
           show: false,
@@ -69,13 +68,15 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
         },
         progress: {
           show: true,
-          width: 10,
+          width: 15,
         },
         // 坐标轴
         axisLine: {
           lineStyle: {
-            width: 10,
+            width: 15,
             color: [[1, '#6B7199']],
+            shadowColor: 'rgba(35, 95 ,164,1)',
+            shadowBlur: 5,
           },
         },
         data: [],
@@ -93,7 +94,6 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
   private async _init() {
     this.model = await this._business.init();
 
-    console.log(this.model);
     this.merge = {
       series: [
         {

@@ -18,7 +18,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
@@ -29,7 +29,8 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
   styleUrls: ['./division-tree-filter.component.less'],
 })
 export class DivisionTreeFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input()
   type: UserResourceType;
 
@@ -58,16 +59,16 @@ export class DivisionTreeFilterComponent
 
   HorizontalAlign = HorizontalAlign;
 
-  constructor(private store: GlobalStoreService) {
+  constructor(private store: GlobalStorageService) {
     this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {
       this.current = new FlatTreeNode(this.division.Id, this.division.Name, 3);
-      this.current.rawData = this.division
+      this.current.rawData = this.division;
     }
   }
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   ngAfterViewInit(): void {
     if (this.input) {
@@ -85,7 +86,7 @@ export class DivisionTreeFilterComponent
     });
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   selectTreeNode(nodes: FlatTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {

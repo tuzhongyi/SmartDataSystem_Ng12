@@ -19,7 +19,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { Division } from 'src/app/network/model/division.model';
@@ -34,7 +34,8 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
   styleUrls: ['./division-station-tree-filter.component.less'],
 })
 export class DivisionStationTreeFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges {
+  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+{
   @Input()
   type: UserResourceType;
 
@@ -50,7 +51,7 @@ export class DivisionStationTreeFilterComponent
   @Input()
   align: HorizontalAlign = HorizontalAlign.right;
 
-  filterTypes: UserResourceType[] = [UserResourceType.Station]
+  filterTypes: UserResourceType[] = [UserResourceType.Station];
 
   treeServiceModel = DistrictTreeEnum.Station;
   treeSelectModel = SelectStrategy.Single;
@@ -64,10 +65,12 @@ export class DivisionStationTreeFilterComponent
     top: '0',
   };
   HorizontalAlign = HorizontalAlign;
-  constructor(private store: GlobalStoreService, private _divisionRequest: DivisionRequestService) {
+  constructor(
+    private store: GlobalStorageService,
+    private _divisionRequest: DivisionRequestService
+  ) {
     this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
   }
-
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.station && this.station) {
@@ -81,7 +84,7 @@ export class DivisionStationTreeFilterComponent
       // console.log(this.currentTitle)
     }
   }
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {}
 
   ngAfterViewInit(): void {
     if (this.input) {
@@ -99,8 +102,7 @@ export class DivisionStationTreeFilterComponent
     // });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   selectTreeNode(nodes: FlatTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
@@ -122,9 +124,9 @@ export class DivisionStationTreeFilterComponent
   getLocalTitle(node: FlatTreeNode) {
     let title: string[] = [];
     if (node.type != this.type) {
-      title.unshift(node.name)
+      title.unshift(node.name);
       if (node.parentNode)
-        title.unshift(...(this.getLocalTitle(node.parentNode)));
+        title.unshift(...this.getLocalTitle(node.parentNode));
     }
     return title;
   }
@@ -132,17 +134,13 @@ export class DivisionStationTreeFilterComponent
   async getRemoteTitle(id: string | null) {
     if (id) {
       let division = await this._getDivision(id);
-      if (division.DivisionType == DivisionType.City) return
+      if (division.DivisionType == DivisionType.City) return;
       this.currentTitle.unshift(division.Name);
-      await this.getRemoteTitle(division.ParentId ?? null)
+      await this.getRemoteTitle(division.ParentId ?? null);
     }
   }
-
-
 
   private async _getDivision(id: string) {
     return await this._divisionRequest.get(id);
   }
-
-
 }

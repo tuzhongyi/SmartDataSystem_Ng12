@@ -8,7 +8,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
@@ -27,10 +27,10 @@ import { RetentionRankConverter } from './retention-rank.converter';
 @Injectable()
 export class RetentionRankBusiness
   implements
-  IBusiness<
-  Array<DivisionNumberStatistic | GarbageStationNumberStatistic>,
-  RankModel[]
-  >
+    IBusiness<
+      Array<DivisionNumberStatistic | GarbageStationNumberStatistic>,
+      RankModel[]
+    >
 {
   retentionType?: RetentionType;
 
@@ -39,9 +39,9 @@ export class RetentionRankBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     public subscription: SubscriptionService
-  ) { }
+  ) {}
   async getData(
     divisionId: string,
     divisionType: DivisionType

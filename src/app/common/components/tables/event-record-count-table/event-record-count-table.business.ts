@@ -6,7 +6,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,
@@ -32,9 +32,9 @@ export class EventRecordCountTableBusiness
   constructor(
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService,
-    private store: GlobalStoreService,
+    private store: GlobalStorageService,
     private local: LocalStorageService
-  ) { }
+  ) {}
 
   Converter = new EventRecordCountTableConverter();
   subscription?: ISubscription | undefined;

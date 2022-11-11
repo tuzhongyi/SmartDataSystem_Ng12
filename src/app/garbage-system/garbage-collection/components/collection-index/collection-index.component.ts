@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -50,60 +50,29 @@ export class GarbageCollectionIndexComponent {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
-    return this._storeService.HideButton;
+    return this._globalStoreService.HideButton;
   }
   get HideTitlebar(): boolean {
-    return this._storeService.HideTitlebar;
+    return this._globalStoreService.HideTitlebar;
   }
 
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: GlobalStoreService,
-    public window: WindowBussiness,
-    public trigger: MonitorEventTriggerBusiness,
-    public map: MapControlBusiness,
-    public patrol: PatrolControlBusiness,
-    public video: VideoControlWindowBusiness,
-    public statistic: StatisticCardBussiness,
-    private activatedRoute: ActivatedRoute
+    private _globalStoreService: GlobalStorageService
   ) {
-    this._titleService.setTitle('生活垃圾分类全程监管平台');
-  }
-  config(route: ActivatedRoute) {
-    route.queryParams.subscribe((param) => {
-      // console.log("HideButton:", param);
-      for (const key in param) {
-        let lower = key.toLocaleLowerCase();
-        let value: any;
-        try {
-          value = JSON.parse(param[key]);
-          switch (lower) {
-            case 'hidebutton':
-              this._storeService.HideButton = value;
-              break;
-            case 'hidetitlebar':
-              this._storeService.HideTitlebar = value;
-              break;
-            default:
-              break;
-          }
-        } catch {}
-      }
-    });
+    this._titleService.setTitle('垃圾清运平台');
   }
 
   ngOnInit(): void {
-    // this.config(this.activatedRoute);
-    // let user = this._localStorageService.user;
-    // if (user.Resources && user.Resources.length > 0) {
-    //   let userDivisionId = user.Resources[0].Id;
-    //   let resourceType = user.Resources[0].ResourceType;
-    //   let userDivisionType =
-    //     EnumHelper.ConvertUserResourceToDivision(resourceType);
-    //   this._storeService.divisionId = userDivisionId;
-    //   this._storeService.divisionType = userDivisionType;
-    // }
-    // this.statistic.loading.emit();
+    let user = this._localStorageService.user;
+    if (user.Resources && user.Resources.length > 0) {
+      let userDivisionId = user.Resources[0].Id;
+      let resourceType = user.Resources[0].ResourceType;
+      let userDivisionType =
+        EnumHelper.ConvertUserResourceToDivision(resourceType);
+      this._globalStoreService.divisionId = userDivisionId;
+      this._globalStoreService.divisionType = userDivisionType;
+    }
   }
 }

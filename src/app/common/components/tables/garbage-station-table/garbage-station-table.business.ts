@@ -8,7 +8,7 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -22,13 +22,13 @@ import { GarbageStationTableModel } from './garbage-station-table.model';
 @Injectable()
 export class GarbageStationTableBusiness
   implements
-  IBusiness<PagedList<GarbageStation>, PagedList<GarbageStationTableModel>>
+    IBusiness<PagedList<GarbageStation>, PagedList<GarbageStationTableModel>>
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) { }
+  ) {}
   Converter: IPromiseConverter<
     PagedList<GarbageStation>,
     PagedList<GarbageStationTableModel>
@@ -71,10 +71,10 @@ export class GarbageStationTableBusiness
 
 export class GarbageStationPagedConverter
   implements
-  IPromiseConverter<
-  PagedList<GarbageStation>,
-  PagedList<GarbageStationTableModel>
-  >
+    IPromiseConverter<
+      PagedList<GarbageStation>,
+      PagedList<GarbageStationTableModel>
+    >
 {
   converter = {
     item: new GarbageStationTableConverter(),

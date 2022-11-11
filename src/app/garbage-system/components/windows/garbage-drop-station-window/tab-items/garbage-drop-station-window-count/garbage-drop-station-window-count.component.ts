@@ -1,5 +1,10 @@
 import { formatDate } from '@angular/common';
-import { ChangeDetectorRef, Component, EventEmitter, OnInit } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  OnInit,
+} from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { GarbageDropStationCountTableModel } from 'src/app/common/components/tables/garbage-drop-station-count-table/garbage-drop-station-count-table.model';
@@ -14,25 +19,23 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { Language } from 'src/app/common/tools/language';
 import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 import { GarbageDropStationWindowCountBusiness } from './garbage-drop-station-window-count.business';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 
 @Component({
   selector: 'howell-garbage-drop-station-window-count',
   templateUrl: './garbage-drop-station-window-count.component.html',
   styleUrls: ['./garbage-drop-station-window-count.component.less'],
-  providers: [
-    GarbageDropStationWindowCountBusiness
-  ]
+  providers: [GarbageDropStationWindowCountBusiness],
 })
 export class GarbageDropStationWindowCountComponent implements OnInit {
   constructor(
     private local: LocalStorageService,
     private exports: ExportBusiness,
-    private store: GlobalStoreService,
+    private store: GlobalStorageService,
     private changeDetector: ChangeDetectorRef,
     private business: GarbageDropStationWindowCountBusiness
-  ) { }
+  ) {}
 
   UserResourceType = UserResourceType;
   DateTimePickerView = DateTimePickerView;
@@ -88,16 +91,15 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
         Language.UserResourceType(UserResourceType.Station)
       )
     );
-
   }
 
   async ngOnInit() {
-    let { Data } = await this.business.getCommittees(this.store.divisionId)
+    let { Data } = await this.business.getCommittees(this.store.divisionId);
 
-    this.counties = Data.map(division => {
-      return new SelectItem(division.Id, division.Id, division.Name)
-    })
-    this.counties.unshift(new SelectItem("", '', '全部'));
+    this.counties = Data.map((division) => {
+      return new SelectItem(division.Id, division.Id, division.Name);
+    });
+    this.counties.unshift(new SelectItem('', '', '全部'));
     this.initUnits();
     this.initUserResourceTypes();
 
@@ -136,8 +138,8 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
 
   onTypeChange(item: SelectItem) {
     this.type = item.value;
-    console.log(item)
-    this.parentId = ''
+    console.log(item);
+    this.parentId = '';
   }
 
   onCountyChange(item: SelectItem) {

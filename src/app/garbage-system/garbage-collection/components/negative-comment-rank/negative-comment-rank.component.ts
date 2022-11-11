@@ -22,7 +22,7 @@ import {
   RankResourceType,
 } from 'src/app/view-model/rank.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { NegativeCommentRankBusiness } from './negative-comment-rank.business';
@@ -65,7 +65,7 @@ export class NegativeCommentRankComponent implements OnInit, OnDestroy {
   public rankData: RankModel[] = [];
   constructor(
     public business: NegativeCommentRankBusiness,
-    private storeService: GlobalStoreService
+    private storeService: GlobalStorageService
   ) {}
 
   ngOnInit(): void {

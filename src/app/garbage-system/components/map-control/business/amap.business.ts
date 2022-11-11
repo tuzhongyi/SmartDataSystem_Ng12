@@ -5,7 +5,7 @@ import { Flags } from 'src/app/common/tools/flags';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -16,7 +16,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 @Injectable()
 export class AMapBusiness {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
   ) {

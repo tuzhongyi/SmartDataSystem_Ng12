@@ -8,7 +8,7 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -27,10 +27,10 @@ export class DeviceListTableBusiness
   implements IBusiness<PagedList<Camera>, PagedList<DeviceViewModel>>
 {
   constructor(
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService
-  ) { }
+  ) {}
   Converter: IPromiseConverter<PagedList<Camera>, PagedList<DeviceViewModel>> =
     new DevicePagedConverter();
 

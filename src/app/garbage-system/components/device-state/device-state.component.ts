@@ -18,7 +18,7 @@ import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import {

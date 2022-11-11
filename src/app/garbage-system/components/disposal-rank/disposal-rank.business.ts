@@ -6,7 +6,7 @@ import {
   SubscriptionService,
 } from 'src/app/common/interfaces/subscribe.interface';
 import { RankConverter } from 'src/app/converter/rank.converter';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
@@ -24,8 +24,8 @@ export class DisposalRankBusiness
   constructor(
     private stationRequest: GarbageStationRequestService,
     public subscription: SubscriptionService,
-    private storeService: GlobalStoreService
-  ) { }
+    private storeService: GlobalStorageService
+  ) {}
   Converter: IConverter<GarbageStationNumberStatistic[], RankModel[]> =
     new DisposalRankConverter();
 

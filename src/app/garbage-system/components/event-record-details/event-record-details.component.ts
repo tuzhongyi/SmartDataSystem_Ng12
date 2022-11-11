@@ -6,7 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 
 @Component({
@@ -28,14 +28,14 @@ export class EventRecordDetailsComponent implements OnInit, OnChanges {
   @Input()
   index = 0;
 
-  constructor(private storeService: GlobalStoreService) { }
+  constructor(private storeService: GlobalStorageService) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.type) {
       this.title = Language.EventType(this.type);
     }
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   indexChange(index: number) {
     this.index = index;
   }

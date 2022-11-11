@@ -13,7 +13,7 @@ import {
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
@@ -29,9 +29,9 @@ export class DeviceStateBusiness
 {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private storeService: GlobalStoreService,
+    private storeService: GlobalStorageService,
     public subscription: SubscriptionService
-  ) { }
+  ) {}
   Converter: IConverter<DivisionNumberStatistic, DeviceStateCountModel> =
     new DeviceStateConverter();
 

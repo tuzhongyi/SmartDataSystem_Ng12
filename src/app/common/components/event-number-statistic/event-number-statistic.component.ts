@@ -16,7 +16,7 @@ import {
 } from 'src/app/view-model/event-number-statistic.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
-import { GlobalStoreService } from '../../service/global-store.service';
+import { GlobalStorageService } from '../../service/global-storage.service';
 import { Language } from '../../tools/language';
 import { Time } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';

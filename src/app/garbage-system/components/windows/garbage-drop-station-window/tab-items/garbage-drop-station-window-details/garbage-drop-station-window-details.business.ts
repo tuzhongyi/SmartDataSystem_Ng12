@@ -6,7 +6,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -29,8 +29,8 @@ export class GarbageDropStationWindowDetailsBusiness
   constructor(
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService,
-    private store: GlobalStoreService
-  ) { }
+    private store: GlobalStorageService
+  ) {}
   Converter: IConverter<EventNumberStatistic[], ITimeData<number>[][]> =
     new GarbageDropStationWindowDetailsConverter();
 

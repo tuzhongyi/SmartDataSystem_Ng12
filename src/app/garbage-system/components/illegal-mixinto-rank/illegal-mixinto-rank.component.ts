@@ -22,7 +22,7 @@ import {
   RankResourceType,
 } from 'src/app/view-model/rank.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
@@ -65,33 +65,25 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   public rankData: RankModel[] = [];
   constructor(
     public business: IllegalMixintoRankBusiness,
-    private storeService: GlobalStoreService
-  ) { }
+    private storeService: GlobalStorageService
+  ) {}
 
   ngOnInit(): void {
     let child = EnumHelper.GetResourceChildTypeByDivisionType(
       this.storeService.divisionType
     );
     this.resourceTypes = [
-      new SelectItem(
-        child.toString(),
-        child,
-        Language.UserResourceType(child),
-      ),
+      new SelectItem(child.toString(), child, Language.UserResourceType(child)),
       new SelectItem(
         UserResourceType.Station.toString(),
         UserResourceType.Station,
-        Language.UserResourceType(UserResourceType.Station),
+        Language.UserResourceType(UserResourceType.Station)
       ),
     ];
 
     let eventTypeEnum = new Enum(RankEventType);
     this.eventTypes = eventTypeEnum.toArray((x) => {
-      return new SelectItem(
-        x,
-        x,
-        Language.EventType(x),
-      );
+      return new SelectItem(x, x, Language.EventType(x));
     });
 
     // 区划改变时触发

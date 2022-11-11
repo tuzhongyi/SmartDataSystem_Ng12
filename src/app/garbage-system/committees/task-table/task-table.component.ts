@@ -16,7 +16,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Component({
   selector: 'app-task-table',
@@ -26,9 +26,9 @@ import { GlobalStoreService } from 'src/app/common/service/global-store.service'
 })
 export class TaskTableComponent
   implements
-  OnInit,
-  OnChanges,
-  IComponent<GarbageDropEventRecord[], TaskTableViewModel[]>
+    OnInit,
+    OnChanges,
+    IComponent<GarbageDropEventRecord[], TaskTableViewModel[]>
 {
   @Input()
   Committees?: Division;
@@ -36,7 +36,10 @@ export class TaskTableComponent
   @Output()
   OnItemClicked: EventEmitter<GarbageDropEventRecord> = new EventEmitter();
 
-  constructor(business: TaskTableBusiness, private store: GlobalStoreService) {
+  constructor(
+    business: TaskTableBusiness,
+    private store: GlobalStorageService
+  ) {
     this.business = business;
   }
 

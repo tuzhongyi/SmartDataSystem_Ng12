@@ -8,7 +8,7 @@ import { LocalStorageService } from './local-storage.service';
 @Injectable({
   providedIn: 'root',
 })
-export class GlobalStoreService {
+export class GlobalStorageService {
   statusChange = new EventEmitter();
 
   password?: string;
@@ -32,16 +32,17 @@ export class GlobalStoreService {
     return this._divisionType;
   }
 
-
   private _defaultDivisionType: DivisionType = DivisionType.None;
   public get defaultDivisionType() {
     if (this._defaultDivisionType == DivisionType.None) {
       let user = this.localStorage.user;
-      let type = user.Resources && user.Resources.length > 0 ? user.Resources[0].ResourceType : undefined;
+      let type =
+        user.Resources && user.Resources.length > 0
+          ? user.Resources[0].ResourceType
+          : undefined;
       if (type)
-        this._defaultDivisionType = EnumHelper.ConvertUserResourceToDivision(
-          type
-        );
+        this._defaultDivisionType =
+          EnumHelper.ConvertUserResourceToDivision(type);
     }
     return this._defaultDivisionType;
   }

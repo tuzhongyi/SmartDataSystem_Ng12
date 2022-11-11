@@ -16,7 +16,7 @@ import {
 } from 'echarts';
 import { ResizedEvent } from 'angular-resize-event';
 import { Subscription } from 'rxjs';
-import { GlobalStoreService } from 'src/app/common/service/global-store.service';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehiclesEventStatisticBusiness } from './vehicles-event-statistic.business';
@@ -91,7 +91,7 @@ export class GarbageVehiclesEventStatisticComponent
   };
   merge: EChartOptions = {};
   constructor(
-    private _storeService: GlobalStoreService,
+    private _storeService: GlobalStorageService,
     private _business: GarbageVehiclesEventStatisticBusiness,
     private _converter: EventStatisticConverter
   ) {}
