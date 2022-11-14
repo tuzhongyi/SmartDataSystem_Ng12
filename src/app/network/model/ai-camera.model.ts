@@ -1,11 +1,14 @@
-import { CameraState } from "src/app/enum/camera-state.enum";
-import { CameraType } from "src/app/enum/camera-type.enum";
-import { OnlineStatus } from "src/app/enum/online-status.enum";
-import { CameraAIModel } from "./camera-ai.model";
-import { Resource } from "./resource.model";
+import { Transform } from 'class-transformer';
+import { CameraState } from 'src/app/enum/camera-state.enum';
+import { CameraType } from 'src/app/enum/camera-type.enum';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { CameraAIModel } from './camera-ai.model';
+import { ICamera } from './camera.interface';
+import { Resource } from './resource.model';
+import { transformDateTime } from './transform.model';
 
 /**监控点信息 */
-export class AICamera extends Resource {
+export class AICamera extends Resource implements ICamera {
   /**摄像机类型 */
   CameraType!: CameraType;
   /**摄像机状态 */
@@ -33,7 +36,8 @@ export class AICamera extends Resource {
   /**最近一次的抓图照片地址 */
   ImageUrl?: string;
   /**最近一次的抓图时间 */
-  ImageTime?: Date | string;
+  @Transform(transformDateTime)
+  ImageTime?: Date;
   /**AI模型列表(可选) */
   AIModels?: CameraAIModel[];
   /**流媒体ID */

@@ -1,37 +1,39 @@
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
+import { ICamera } from '../network/model/camera.interface';
 import { EventDataObject } from '../network/model/event-data-object.model';
 
-export class ImageControlModel<T = Camera | CameraImageUrl> {
-  constructor(
-    id: string,
-    stationId: string,
-    name: string,
-    src: string,
-    onerror: string,
-    status: OnlineStatus = OnlineStatus.Offline,
-    camera: T,
-    eventTime?: Date,
-    polygon?: EventDataObject[],
-    rules?: EventRule[]
-  ) {
-    this.id = id;
-    this.stationId = stationId;
-    this.name = name;
-    this.src = src;
-    this.onerror = onerror;
-    this.status = status;
-    this.camera = camera;
-    if (eventTime) {
-      this.eventTime = new Date(eventTime);
+export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
+  id: string;
+  stationId?: string;
+  name: string;
+  src: string;
+  onerror: string;
+  status: OnlineStatus;
+  camera: T;
+  eventTime?: Date;
+  polygon?: EventDataObject[];
+  rules?: EventRule[];
+}
+
+export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
+  constructor(args: ImageControlModelArgs<T>) {
+    this.id = args.id;
+    this.stationId = args.stationId;
+    this.name = args.name;
+    this.src = args.src;
+    this.onerror = args.onerror;
+    this.status = args.status;
+    this.camera = args.camera;
+    if (args.eventTime) {
+      this.eventTime = new Date(args.eventTime);
     }
-    this.polygon = polygon;
-    this.rules = rules;
+    this.polygon = args.polygon;
+    this.rules = args.rules;
   }
   eventTime?: Date;
-  stationId: string;
+  stationId?: string;
   camera: T;
   name: string;
   src: string;

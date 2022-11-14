@@ -1,0 +1,72 @@
+<div class="map-control">
+  <div class="map-control-content">
+    <iframe #iframe [src]="src" (load)="onLoad($event)" class=""></iframe>
+  </div>
+</div>
+
+<ul class="map-bar status" *ngIf="display.status">
+  <li class="normal">
+    <div></div>
+    正常
+  </li>
+  <li class="warm">
+    <div></div>
+    满溢
+  </li>
+  <li class="error">
+    <div></div>
+    异常
+  </li>
+</ul>
+
+<div class="map-bar video-list" *ngIf="display.videoList">
+  <div class="carousel prev" *ngIf="display.videoControl">
+    <a class="carousel-control-prev" #video_list_prev>
+      <div class="howell-icon-arrowleftbold blue-text arrow-wrap"></div>
+    </a>
+  </div>
+  <div class="list">
+    <ul class="ul">
+      <ng-container *ngFor="let image of images">
+        <!-- [ngClass]="{'error': camera.CameraState>0}" -->
+        <li class="video">
+          <app-image-control
+            [model]="image"
+            (Click)="onCameraClicked($event)"
+          ></app-image-control>
+        </li>
+      </ng-container>
+    </ul>
+  </div>
+  <div class="carousel next" *ngIf="display.videoControl">
+    <a class="carousel-control-next" #video_list_next>
+      <div class="howell-icon-arrowrightbold blue-text arrow-wrap"></div>
+    </a>
+  </div>
+</div>
+
+<!-- 
+  [dataSource]="this.childrenOfList"
+  (OnVisibilityChanged)="OnPanelVisibilityChanged($event)"
+  (OnItemClicked)="OnPanelItemClicked($event)"
+  (OnItemDoubleClicked)="OnPanelItemDoubleClicked($event)"
+  (OnItemHover)="OnPanelItemHover($event)"
+  (OnSearching)="OnSearching($event)" -->
+
+<app-point-info-panel
+  class="map-bar info-panel"
+  *ngIf="info.vehicle"
+  [business]="info"
+  [Source]="info.vehicle"
+  (GarbageRetentionClickedEvent)="
+    onPointInfoPanelGarbageRetentionClickedEvent($event)
+  "
+  (IllegalDropClickedEvent)="onPointInfoPanelIllegalDropClickedEvent($event)"
+  (MixedIntoClickedEvent)="onPointInfoPanelMixedIntoClickedEvent($event)"
+  (StateClickedEvent)="onPointInfoPanelStateClickedEvent($event)"
+></app-point-info-panel>
+
+<!-- (StateClickedEvent)="onPanelStateClicked($event)"
+(GarbageCountClickedEvent)="onPanelGarbageCountClicked($event)"
+(IllegalDropClickedEvent)="onPanelIllegalDropClicked($event)"
+(MixedIntoClickedEvent)="onPanelMixedIntoClicked($event)" -->

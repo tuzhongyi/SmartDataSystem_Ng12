@@ -163,7 +163,7 @@
 <app-point-info-panel
   class="map-bar info-panel"
   *ngIf="info.station"
-  [GarbageStation]="info.station"
+  [Source]="info.station"
   (GarbageRetentionClickedEvent)="
     onPointInfoPanelGarbageRetentionClickedEvent($event)
   "

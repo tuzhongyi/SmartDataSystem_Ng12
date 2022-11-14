@@ -98,6 +98,7 @@
   "garde": "达标率",
   "avg": "平均",
   "duration": "时长",
+  "vehicle":"清运车",
   "VehicleType": {
     "Tricycle": "三轮车",
     "Car": "汽车",

@@ -1,15 +1,16 @@
 import { ImageControlModel } from '../view-model/image-control.model';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { OnlineStatus } from '../enum/online-status.enum';
-import { Camera } from '../network/model/camera.model';
 import { Medium } from '../common/tools/medium';
 import { CameraImageUrlModel } from '../common/components/tables/event-record/event-record.model';
+import { ICamera } from '../network/model/camera.interface';
+import { Camera } from '../network/model/camera.model';
 
 export class ImageControlConverter
-  implements IConverter<Camera | CameraImageUrlModel, ImageControlModel>
+  implements IConverter<ICamera | CameraImageUrlModel, ImageControlModel>
 {
   Convert(
-    source: Camera,
+    source: ICamera,
     onerror?: boolean,
     eventTime?: Date
   ): ImageControlModel;
@@ -20,32 +21,42 @@ export class ImageControlConverter
   ): ImageControlModel;
 
   Convert(
-    source: Camera | CameraImageUrlModel,
+    source: ICamera | CameraImageUrlModel,
     onerror = true,
     eventTime?: Date
   ): ImageControlModel {
-    if (source instanceof Camera) {
-      return new ImageControlModel(
-        source.Id,
-        source.GarbageStationId,
-        source.Name,
-        Medium.jpg(source.ImageUrl),
-        onerror ? Medium.default : '',
-        source.OnlineStatus,
-        source,
-        eventTime
-      );
+    if (source instanceof CameraImageUrlModel) {
+      return new ImageControlModel({
+        id: source.CameraId,
+        stationId: source.StationId,
+        name: source.CameraName ?? '',
+        src: Medium.jpg(source.ImageUrl),
+        onerror: onerror ? Medium.default : '',
+        status: OnlineStatus.Online,
+        camera: source,
+        eventTime,
+      });
+    } else if (source instanceof Camera) {
+      return new ImageControlModel({
+        id: source.Id,
+        stationId: source.GarbageStationId,
+        name: source.Name,
+        src: Medium.jpg(source.ImageUrl),
+        onerror: onerror ? Medium.default : '',
+        status: source.OnlineStatus ?? OnlineStatus.Offline,
+        camera: source,
+        eventTime: eventTime,
+      });
     } else {
-      return new ImageControlModel(
-        source.CameraId,
-        source.StationId,
-        source.CameraName ?? '',
-        Medium.jpg(source.ImageUrl),
-        onerror ? Medium.default : '',
-        OnlineStatus.Online,
-        source,
-        eventTime
-      );
+      return new ImageControlModel({
+        id: source.Id,
+        name: source.Name,
+        src: Medium.jpg(source.ImageUrl),
+        onerror: onerror ? Medium.default : '',
+        status: source.OnlineStatus ?? OnlineStatus.Offline,
+        camera: source,
+        eventTime: eventTime,
+      });
     }
   }
 }

@@ -14,12 +14,9 @@ import { CameraOperateBusiness } from './camera-operate.business';
   selector: 'howell-camera-operate',
   templateUrl: './camera-operate.component.html',
   styleUrls: ['./camera-operate.component.less'],
-  providers: [
-    CameraOperateBusiness
-  ]
+  providers: [CameraOperateBusiness],
 })
 export class CameraOperateComponent implements OnInit {
-
   private _AICamera?: AICamera;
 
   myForm = this.fb.group({
@@ -29,14 +26,11 @@ export class CameraOperateComponent implements OnInit {
     ChannelNo: ['1', Validators.required],
     PTZControllable: [''],
     Storable: [''],
-  })
-
+  });
 
   encodeDevices: EncodeDevice[] = [];
   selectedLabels: ResourceLabel[] = [];
   resourceLabels: ResourceLabel[] = [];
-
-
 
   get title() {
     if (this.state == FormState.add) {
@@ -44,7 +38,7 @@ export class CameraOperateComponent implements OnInit {
     } else if (this.state == FormState.edit) {
       return '编辑 ' + this._AICamera?.Name;
     }
-    return ''
+    return '';
   }
 
   get Name() {
@@ -69,27 +63,31 @@ export class CameraOperateComponent implements OnInit {
   @Output()
   closeEvent = new EventEmitter<boolean>();
 
-
-  constructor(private fb: FormBuilder, private _business: CameraOperateBusiness, private _toastrService: ToastrService) { }
+  constructor(
+    private fb: FormBuilder,
+    private _business: CameraOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
 
   async ngOnInit() {
     this.encodeDevices = (await this._business.listEncodeDevice()).Data;
 
     if (this.state == FormState.edit) {
       this._AICamera = await this._business.getAICamera(this.cameraId);
-      console.log('摄像机', this._AICamera)
-      this.resourceLabels = await this._business.getResourceLabels(this.cameraId)
+      console.log('摄像机', this._AICamera);
+      this.resourceLabels = await this._business.getResourceLabels(
+        this.cameraId
+      );
     }
     this._updateForm();
-
   }
   touchSpinChange(num: string) {
     this.myForm.patchValue({
-      ChannelNo: num
-    })
+      ChannelNo: num,
+    });
   }
   selectLabelEvent(labels: ResourceLabel[]) {
-    this.selectedLabels = labels
+    this.selectedLabels = labels;
   }
   async onSubmit() {
     if (this._checkForm()) {
@@ -98,58 +96,61 @@ export class CameraOperateComponent implements OnInit {
         camera.Id = '';
         camera.ResourceType = ResourceType.Camera;
         camera.Name = this.myForm.value.Name ?? '';
-        camera.CameraType = this.myForm.value.CameraType!
-        camera.EncodeDeviceId = this.myForm.value.EncodeDeviceId!
+        camera.CameraType = this.myForm.value.CameraType!;
+        camera.EncodeDeviceId = this.myForm.value.EncodeDeviceId!;
         camera.CameraState = CameraState.None;
         camera.ChannelNo = +this.myForm.value.ChannelNo!;
-        camera.PTZControllable = this.myForm.value.PTZControllable === '1' ? true : false;
+        camera.PTZControllable =
+          this.myForm.value.PTZControllable === '1' ? true : false;
         camera.Storable = this.myForm.value.Storable === '1' ? true : false;
-        camera.CreateTime = new Date().toISOString();
-        camera.UpdateTime = new Date().toISOString();;
+        camera.CreateTime = new Date();
+        camera.UpdateTime = new Date();
 
         let res = await this._business.createAICamera(camera);
         if (res) {
           for (let i = 0; i < this.selectedLabels.length; i++) {
             let id = this.selectedLabels[i].Id;
-            await this._business.addResourceLabel(res.Id, id)
+            await this._business.addResourceLabel(res.Id, id);
           }
-          this._toastrService.success('添加成功')
-          this.closeEvent.emit(true)
+          this._toastrService.success('添加成功');
+          this.closeEvent.emit(true);
         }
       } else if (this.state == FormState.edit) {
         if (this._AICamera) {
           this._AICamera.Name = this.myForm.value.Name ?? '';
-          this._AICamera.CameraType = this.myForm.value.CameraType!
-          this._AICamera.EncodeDeviceId = this.myForm.value.EncodeDeviceId!
+          this._AICamera.CameraType = this.myForm.value.CameraType!;
+          this._AICamera.EncodeDeviceId = this.myForm.value.EncodeDeviceId!;
           this._AICamera.ChannelNo = +this.myForm.value.ChannelNo!;
-          this._AICamera.PTZControllable = this.myForm.value.PTZControllable === '1' ? true : false;
-          this._AICamera.Storable = this.myForm.value.Storable === '1' ? true : false;
-          this._AICamera.UpdateTime = new Date().toISOString();;
+          this._AICamera.PTZControllable =
+            this.myForm.value.PTZControllable === '1' ? true : false;
+          this._AICamera.Storable =
+            this.myForm.value.Storable === '1' ? true : false;
+          this._AICamera.UpdateTime = new Date();
           let res = await this._business.updateAICamera(this._AICamera);
           if (res) {
-            let filtered = this.selectedLabels.filter(selected => {
-              return !this.resourceLabels.some(resource => resource.Id == selected.Id)
-            })
+            let filtered = this.selectedLabels.filter((selected) => {
+              return !this.resourceLabels.some(
+                (resource) => resource.Id == selected.Id
+              );
+            });
             for (let i = 0; i < filtered.length; i++) {
               let id = filtered[i].Id;
-              await this._business.addResourceLabel(res.Id, id)
+              await this._business.addResourceLabel(res.Id, id);
             }
 
-            this._toastrService.success('编辑成功')
-            this.closeEvent.emit(true)
+            this._toastrService.success('编辑成功');
+            this.closeEvent.emit(true);
           }
         }
       }
     }
-
   }
   onReset() {
-    this.closeEvent.emit(false)
+    this.closeEvent.emit(false);
   }
 
   private _updateForm() {
     if (this.state == FormState.add) {
-
     } else if (this.state == FormState.edit) {
       if (this._AICamera) {
         this.myForm.patchValue({
@@ -158,8 +159,8 @@ export class CameraOperateComponent implements OnInit {
           EncodeDeviceId: this._AICamera.EncodeDeviceId,
           ChannelNo: this._AICamera.ChannelNo.toString(),
           PTZControllable: this._AICamera.PTZControllable === true ? '1' : '0',
-          Storable: this._AICamera.Storable === true ? '1' : '0'
-        })
+          Storable: this._AICamera.Storable === true ? '1' : '0',
+        });
       }
     }
   }
@@ -182,5 +183,4 @@ export class CameraOperateComponent implements OnInit {
     }
     return true;
   }
-
 }

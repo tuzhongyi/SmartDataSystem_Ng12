@@ -2,8 +2,10 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
+import { ICamera } from 'src/app/network/model/camera.interface';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GetPreviewUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { PatrolControlBusiness } from './patrol-control.business';
@@ -18,43 +20,18 @@ export class MapControlBusiness {
     private window: WindowBussiness
   ) {}
 
-  position: EventEmitter<GarbageStation> = new EventEmitter();
+  position: EventEmitter<GarbageVehicle> = new EventEmitter();
 
   async onpatrol() {
     this.patrol.show = true;
   }
 
-  onvideoplay(camera: Camera) {
+  onvideoplay(camera: ICamera) {
     this.video.show = true;
     this.video.load(camera);
   }
-  onIllegalDropClicked(station: GarbageStation) {
-    if (station) {
-      this.window.record.stationId = station.Id;
-    }
 
-    this.window.record.type = EventType.IllegalDrop;
-    this.window.record.show = true;
-  }
-  onMixedIntoClicked(station: GarbageStation) {
-    if (station) {
-      this.window.record.stationId = station.Id;
-    }
-    this.window.record.type = EventType.MixedInto;
-    this.window.record.show = true;
-  }
-  onGarbageCountClicked(station: GarbageStation) {
-    this.window.station.index = GarbageStationWindowIndex.station;
-    this.window.station.show = true;
-  }
-  onGarbageRetentionClicked(station: GarbageStation) {
-    this.window.drop.show = true;
-  }
-  onGarbageFullClicked(station: GarbageStation) {
-    this.window.full.show = true;
-  }
-
-  onposition(station: GarbageStation) {
+  onposition(station: GarbageVehicle) {
     this.window.close();
     this.position.emit(station);
   }

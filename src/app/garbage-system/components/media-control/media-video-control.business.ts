@@ -11,7 +11,6 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
 import { CameraImageUrl, VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
@@ -21,26 +20,28 @@ import {
   GetVodUrlParams,
 } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
+import { ICamera } from 'src/app/network/model/camera.interface';
+import { Camera } from 'src/app/network/model/camera.model';
 
 @Injectable()
 export class MediaVideoControlBussiness
   implements
-  IBusiness<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+    IBusiness<Array<ICamera | ImageControlModel>, ImageVideoControlModel[]>
 {
   constructor(
     private srService: SRServerRequestService,
     private stationService: GarbageStationRequestService
-  ) { }
+  ) {}
   manualCaptureEvent: EventEmitter<boolean> = new EventEmitter();
 
   Converter: IConverter<
-    Array<Camera | ImageControlModel>,
+    Array<ICamera | ImageControlModel>,
     ImageVideoControlModel[]
   > = new MediaVideoControlArrayConverter();
 
   subscription?: ISubscription | undefined;
   async load(
-    source: Array<Camera | ImageControlModel>
+    source: Array<ICamera | ImageControlModel>
   ): Promise<ImageVideoControlModel[]> {
     let model = this.Converter.Convert(source);
 
@@ -48,13 +49,13 @@ export class MediaVideoControlBussiness
   }
 
   async getData(
-    camera: Array<Camera | ImageControlModel>
-  ): Promise<Array<Camera | ImageControlModel>> {
+    camera: Array<ICamera | ImageControlModel>
+  ): Promise<Array<ICamera | ImageControlModel>> {
     return camera;
   }
 
   async getVideoUrl(
-    camera: Camera,
+    camera: ICamera,
     mode: PlayMode,
     streamType: StreamType = StreamType.sub,
     interval?: DurationParams
@@ -109,23 +110,23 @@ export class MediaVideoControlBussiness
 
 class MediaVideoControlArrayConverter
   implements
-  IConverter<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+    IConverter<Array<ICamera | ImageControlModel>, ImageVideoControlModel[]>
 {
   converter = {
     item: new MediaVideoControlConverter(),
   };
   Convert(
-    source: (Camera | ImageControlModel)[],
+    source: (ICamera | ImageControlModel)[],
     onerror = true
   ): ImageVideoControlModel[] {
     let array: ImageVideoControlModel[] = [];
     for (let i = 0; i < source.length; i++) {
       let model: ImageVideoControlModel;
       let item = source[i];
-      if (item instanceof Camera) {
-        model = this.converter.item.Convert(item, onerror);
-      } else {
+      if (item instanceof ImageControlModel) {
         model = this.converter.item.Convert(item, onerror, item.eventTime);
+      } else {
+        model = this.converter.item.Convert(item, onerror);
       }
 
       array.push(model);
@@ -135,23 +136,27 @@ class MediaVideoControlArrayConverter
 }
 
 class MediaVideoControlConverter
-  implements IConverter<Camera | ImageControlModel, ImageVideoControlModel>
+  implements IConverter<ICamera | ImageControlModel, ImageVideoControlModel>
 {
   private converter = {
     image: new ImageControlConverter(),
   };
   Convert(
-    source: Camera | ImageControlModel,
+    source: ICamera | ImageControlModel,
     onerror = true,
     eventTime?: Date
   ): ImageVideoControlModel {
     let model: ImageVideoControlModel;
-    if (source instanceof Camera) {
-      model = new ImageVideoControlModel(source.GarbageStationId, source.Id);
+
+    if (source instanceof ImageControlModel) {
+      model = new ImageVideoControlModel(source.id, source.stationId);
+      model.image = source;
+    } else if (source instanceof Camera) {
+      model = new ImageVideoControlModel(source.Id, source.GarbageStationId);
       model.image = this.converter.image.Convert(source, onerror, eventTime);
     } else {
-      model = new ImageVideoControlModel(source.stationId, source.id);
-      model.image = source;
+      model = new ImageVideoControlModel(source.Id);
+      model.image = this.converter.image.Convert(source, onerror, eventTime);
     }
 
     return model;

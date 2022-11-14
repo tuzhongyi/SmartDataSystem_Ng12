@@ -1,22 +1,24 @@
-<div class="map-bar marker-details" *ngIf="GarbageStation">
+<div class="map-bar marker-details" *ngIf="model">
   <div class="item">
     <i class="howell-icon-garbage icon"></i>
-    <div class="content">{{ GarbageStation.Name }}</div>
+    <div class="content">{{ model.name }}</div>
   </div>
 
   <div class="item">
     <i class="howell-icon-neighborhood icon"></i>
     <div class="content">
-      {{ roadName }}&nbsp;&nbsp;&nbsp;&nbsp;{{ committeeName }}
+      {{ model.roadName | async }}&nbsp;&nbsp;&nbsp;&nbsp;{{
+        model.committeeName | async
+      }}
     </div>
   </div>
 
-  <div class="item" *ngIf="GarbageStation.Address">
+  <div class="item" *ngIf="model.address">
     <i class="howell-icon-map5 icon"></i>
-    <div class="content">{{ GarbageStation.Address }}</div>
+    <div class="content">{{ model.address }}</div>
   </div>
 
-  <div class="item" *ngFor="let member of GarbageStation.Members">
+  <div class="item" *ngFor="let member of model.members">
     <div class="item-name">
       <i class="howell-icon-man icon"></i>
       <div class="item-name__info">
@@ -34,9 +36,13 @@
     </div>
   </div>
 
-  <div class="statistic">
+  <div class="statistic" *ngIf="!!model.statistic">
     <div class="left">
-      <div class="number">{{ GarbageStationGrade }}</div>
+      <div class="number">
+        {{
+          model.GarbageStationGrade ? (model.GarbageStationGrade | async) : "0"
+        }}
+      </div>
       <div class="suffix">分</div>
     </div>
     <div class="right">
@@ -55,7 +61,7 @@
         <div><i class="howell-icon-garbagebags"></i></div>
         <!-- GarbageCount -->
         <a class="hw-link-underline value green-text a-text">{{
-          GarbageInterval
+          (model.statistic | async)!.GarbageInterval
         }}</a>
       </div>
       <div
@@ -70,7 +76,7 @@
       >
         <div><i class="howell-icon-nolittering"></i></div>
         <a class="hw-link-underline value powder-red-text a-text">{{
-          IllegalDropCount
+          (model.statistic | async)!.IllegalDropCount
         }}</a>
       </div>
       <!-- "查看混合投放事件记录" -->
@@ -86,7 +92,7 @@
       >
         <div><i class="howell-icon-mixlittering"></i></div>
         <a class="hw-link-underline value light-purple-text a-text">{{
-          MixedIntoCount
+          (model.statistic | async)!.MixedIntoCount
         }}</a>
       </div>
     </div>
@@ -94,7 +100,11 @@
 
   <div class="statistic1" style="display: none">
     <div class="grade">
-      <div class="number">{{ GarbageStationGrade }}</div>
+      <div class="number">
+        {{
+          model.GarbageStationGrade ? (model.GarbageStationGrade | async) : "0"
+        }}
+      </div>
       <div class="suffix">分</div>
     </div>
     <div>
@@ -107,7 +117,7 @@
           <div><i class="howell-icon-garbagebags"></i></div>
           <!-- <div>垃圾滞留点</div> -->
           <a class="hw-link-underline value green-text a-text">{{
-            GarbageInterval
+            (model.statistic | async)!.GarbageInterval
           }}</a>
         </div>
       </div>
@@ -120,7 +130,7 @@
           <div><i class="howell-icon-nolittering"></i></div>
           <!-- <div>{{Language.json.EventType.IllegalDrop}}</div> -->
           <a class="hw-link-underline value powder-red-text a-text">{{
-            IllegalDropCount
+            (model.statistic | async)!.IllegalDropCount
           }}</a>
         </div>
         <div
@@ -131,14 +141,19 @@
           <div><i class="howell-icon-mixlittering"></i></div>
           <!-- <div>混合投放</div> -->
           <a class="hw-link-underline value light-purple-text a-text">{{
-            MixedIntoCount
+            (model.statistic | async)!.MixedIntoCount
           }}</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="state" [ngClass]="state.className" (click)="onStateClicked()">
-    {{ state.language }}
+  <div
+    *ngIf="!!model.state"
+    class="state"
+    [ngClass]="model.state.className"
+    (click)="onStateClicked()"
+  >
+    {{ model.state.language }}
   </div>
 </div>

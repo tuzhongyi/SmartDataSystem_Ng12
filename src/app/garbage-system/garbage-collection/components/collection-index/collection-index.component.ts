@@ -59,7 +59,8 @@ export class GarbageCollectionIndexComponent {
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _globalStoreService: GlobalStorageService
+    private _globalStoreService: GlobalStorageService,
+    public map: MapControlBusiness
   ) {
     this._titleService.setTitle('垃圾清运平台');
   }

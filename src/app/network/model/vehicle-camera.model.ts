@@ -2,11 +2,12 @@ import { Transform } from 'class-transformer';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
+import { ICamera } from './camera.interface';
 import { GisPoint } from './gis-point.model';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 /**	摄像机	*/
-export class VehicleCamera implements IModel {
+export class VehicleCamera implements ICamera, IModel {
   /**	String	摄像机ID	M	*/
   Id!: string;
   /**	String	摄像机名称	M	*/

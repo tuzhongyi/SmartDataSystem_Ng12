@@ -109,13 +109,6 @@ const routes: Routes = [
                 },
               },
               {
-                path: 'deploy-map',
-                component: DeployMapComponent,
-                data: {
-                  breadcrumb: '地图布控',
-                },
-              },
-              {
                 path: 'garbage-vehicle-manage',
                 component: GarbageVehicleManageComponent,
                 data: {

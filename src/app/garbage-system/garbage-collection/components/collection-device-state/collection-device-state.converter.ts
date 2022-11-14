@@ -16,7 +16,7 @@ export class CollectionVehicleConverter {
     let onLineNum = 0;
 
     source.forEach((item) => {
-      item.State == VehicleState.Online ? onLineNum++ : offLineNum++;
+      item.State == VehicleState.Offline ? offLineNum++ : onLineNum++;
     });
 
     model.onLineRatio =

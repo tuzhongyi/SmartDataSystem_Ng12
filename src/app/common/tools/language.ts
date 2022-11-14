@@ -40,6 +40,7 @@ import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -513,6 +514,15 @@ export class Language {
         return Language.json.TrashCanType.Hazard;
       default:
         return Language.json.TrashCanType.Default;
+    }
+  }
+
+  static VehicleState(type: VehicleState) {
+    switch (type) {
+      case VehicleState.Offline:
+        return Language.json.OnlineStatus.Offline;
+      default:
+        return '';
     }
   }
 

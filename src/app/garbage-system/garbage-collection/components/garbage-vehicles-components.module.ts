@@ -25,6 +25,7 @@ import { CollectionStatisticComponent } from './collection-statistic/collection-
 import { CollectionScoreComponent } from './collection-score/collection-score.component';
 import { CollectionScoreRankComponent } from './collection-score-rank/collection-score-rank.component';
 import { CollectionWeightRankComponent } from './collection-weight-rank/collection-weight-rank.component';
+import { CollectionMapControlComponent } from './collection-map-control/collection-map-control.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { CollectionWeightRankComponent } from './collection-weight-rank/collecti
     CollectionScoreComponent,
     CollectionScoreRankComponent,
     CollectionWeightRankComponent,
+    CollectionMapControlComponent,
   ],
   imports: [
     CommonModule,

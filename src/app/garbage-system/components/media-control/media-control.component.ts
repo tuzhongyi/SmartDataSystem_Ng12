@@ -17,18 +17,11 @@ import {
   ImageVideoControlModel,
   ImageVideoControlOperation,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
-import {
-  PlayMode,
-  VideoModel,
-} from 'src/app/common/components/video-player/video.model';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { wait } from 'src/app/common/tools/tool';
-import { StreamType } from 'src/app/enum/stream-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
-import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediaVideoControlBussiness } from './media-video-control.business';
+import { ICamera } from 'src/app/network/model/camera.interface';
 
 @Component({
   selector: 'app-media-control',
@@ -41,10 +34,10 @@ export class MediaControlComponent
     OnInit,
     OnChanges,
     AfterViewInit,
-    IComponent<Array<Camera | ImageControlModel>, ImageVideoControlModel[]>
+    IComponent<Array<ICamera | ImageControlModel>, ImageVideoControlModel[]>
 {
   @Input()
-  model?: Array<Camera | ImageControlModel> = [];
+  model?: Array<ICamera | ImageControlModel> = [];
   @Input()
   index = 0;
 
@@ -191,7 +184,11 @@ export class MediaControlComponent
           this.current = this.datas[this.index];
           this.title = this.current.image ? this.current.image.name : '';
 
-          if (this.current.image && !this.current.image.eventTime) {
+          if (
+            this.current.image &&
+            !this.current.image.eventTime &&
+            this.current.stationId
+          ) {
             this.business
               .manualCapture(this.current.stationId, this.datas)
               .then((y) => {
@@ -243,11 +240,13 @@ export class MediaControlComponent
         let interval = DurationParams.beforeAndAfter(
           this.current.image.eventTime
         );
-        this.download.video(
-          this.current.stationId,
-          this.current.cameraId,
-          interval
-        );
+        if (this.current.stationId) {
+          this.download.video(
+            this.current.stationId,
+            this.current.cameraId,
+            interval
+          );
+        }
       }
     }
   }

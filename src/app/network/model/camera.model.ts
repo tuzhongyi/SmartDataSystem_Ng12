@@ -1,11 +1,12 @@
 import { Transform } from 'class-transformer';
 import { CameraUsage } from '../../enum/camera-usage.enum';
 import { OnlineStatus } from '../../enum/online-status.enum';
+import { ICamera } from './camera.interface';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 摄像机 */
-export class Camera implements IModel {
+export class Camera implements ICamera, IModel {
   /**	String	摄像机ID	M */
   Id!: string;
   /**	String	摄像机名称	M */

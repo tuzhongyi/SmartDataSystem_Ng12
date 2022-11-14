@@ -36,11 +36,6 @@
           "path": "/aiop/aiop-manage/super-vision/garbage-collection/division-manage"
         },
         {
-          "title": "地图布控",
-          "id": "deploy-map",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/deploy-map"
-        },
-        {
           "title": "清运车管理",
           "id": "garbage-vehicle-manage",
           "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-manage"
