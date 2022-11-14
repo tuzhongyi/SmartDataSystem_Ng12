@@ -1,10 +1,14 @@
+import { Inject, Injectable } from '@angular/core';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { Division } from 'src/app/network/model/division.model';
-import { ElementListModel } from './element-list.model';
+import { ElementListModel } from '../common/components/element-list/element-list.model';
 
+@Injectable({
+  providedIn: 'root',
+})
 export class ElementListConverter extends AbstractCommonModelConverter<
   ElementListModel<any>
 > {

@@ -1,7 +1,13 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ElementListBusiness } from './element-list.business';
-import { ElementListConverter } from './element-list.converter';
 import {
   ElementListModel,
   ElementListToken,
@@ -17,24 +23,29 @@ import {
       provide: ElementListToken,
       useClass: ElementListBusiness,
     },
-    ElementListConverter,
   ],
 })
 export class ElementListComponent implements OnInit {
-  // @Input() business?: IElementListBusiness<any>;
+  @Input() business: IElementListBusiness<IModel>;
+
+  @Output() itemClick = new EventEmitter();
 
   model: ElementListModel<IModel> | null = null;
   selectedModel: ElementListModel<IModel> | null = null;
 
   constructor(
-    @Inject(ElementListToken) private _business: IElementListBusiness<IModel>
-  ) {}
+    @Inject(ElementListToken) business: IElementListBusiness<IModel>
+  ) {
+    this.business = business;
+  }
 
   async ngOnInit() {
-    this.model = await this._business.init();
+    this.model = await this.business.init();
   }
 
   click(model: ElementListModel<IModel>) {
     this.selectedModel = model;
+
+    this.itemClick.emit(model);
   }
 }

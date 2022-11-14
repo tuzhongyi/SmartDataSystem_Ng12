@@ -4,7 +4,7 @@ import { GetDivisionsParams } from 'src/app/network/request/division/division-re
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GlobalStorageService } from '../../service/global-storage.service';
 import { LocaleCompare } from '../../tools/locale-compare';
-import { ElementListConverter } from './element-list.converter';
+import { ElementListConverter } from '../../../converter/element-list.converter';
 import { ElementListModel, IElementListBusiness } from './element-list.model';
 
 @Injectable()
