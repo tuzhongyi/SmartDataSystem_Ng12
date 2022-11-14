@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
@@ -32,11 +33,17 @@ export class CollectionScoreRankComponent implements OnInit {
     BeginTime: Time.beginTime(this.today),
     EndTime: Time.endTime(this.today),
     Type: this.type,
+    DivisionIds: [],
   };
-  constructor(private _business: CollectionScoreRankBusiness) {}
+  constructor(
+    private _business: CollectionScoreRankBusiness,
+    private _globalStorage: GlobalStorageService
+  ) {}
 
   ngOnInit(): void {
     this._init();
+
+    this._globalStorage.statusChange.subscribe(() => {});
   }
   private async _init() {
     this.dataSource = await this._business.init(this.searchInfo);

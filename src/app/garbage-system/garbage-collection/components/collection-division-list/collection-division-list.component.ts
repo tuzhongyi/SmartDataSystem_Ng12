@@ -7,30 +7,21 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
-import { GarbageVehiclesDivisionListBusiness } from './collection-division-list.business';
+import { CollectionDivisionListBusiness } from './collection-division-list.business';
 
 @Component({
   selector: 'collection-division-list',
   templateUrl: './collection-division-list.component.html',
   styleUrls: ['./collection-division-list.component.less'],
-  providers: [GarbageVehiclesDivisionListBusiness],
+  providers: [CollectionDivisionListBusiness],
 })
 export class GarbageCollectionDivisionListComponent implements OnInit {
   parentDivision: Division | null = null;
 
-  constructor(
-    private _business: GarbageVehiclesDivisionListBusiness,
-    private _globalStorage: GlobalStorageService
-  ) {}
+  constructor(public business: CollectionDivisionListBusiness) {}
 
-  ngOnInit(): void {
-    this._init();
-  }
-
-  private async _init() {
-    let id = this._globalStorage.divisionId;
-    let division = await this._business.getDivision(id);
-
-    console.log(division);
+  ngOnInit(): void {}
+  itemClick(division: Division) {
+    this.business.notifyMessage(division);
   }
 }

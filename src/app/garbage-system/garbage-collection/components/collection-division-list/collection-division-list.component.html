@@ -1,16 +1,6 @@
-<!-- <div class="division-list">
-  <div class="edge-wrapper list-title">
-    <i class="howell-icon-map5"></i>
-    <span>&nbsp;{{ currentDivision?.Name }}&nbsp;</span>
-  </div>
-  <div class="list-wrapper">
-    <div
-      class="list-item edge-wrapper"
-      [class.selected]="selectedId == division.Id"
-      *ngFor="let division of childDivisions"
-      title="{{ division?.Name }}"
-    >
-      <p>{{ division?.Name }}</p>
-    </div>
-  </div>
-</div> -->
+<div class="collection-division-list">
+  <element-list
+    [business]="business"
+    (itemClick)="itemClick($event)"
+  ></element-list>
+</div>

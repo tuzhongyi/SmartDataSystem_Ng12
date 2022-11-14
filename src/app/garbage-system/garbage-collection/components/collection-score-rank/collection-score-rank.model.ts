@@ -11,4 +11,5 @@ export interface ICollectionScoreRankSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   Type: CollectionPointScore;
+  DivisionIds: string[];
 }
