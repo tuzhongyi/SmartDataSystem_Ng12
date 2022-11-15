@@ -44,6 +44,7 @@
     "ts-md5": "^1.2.9",
     "tslib": "^2.3.0",
     "underscore": "^1.13.6",
+    "uuid": "^9.0.0",
     "xlsx": "^0.18.5",
     "xml2js": "^0.4.23",
     "zone.js": "~0.11.4"
@@ -59,6 +60,7 @@
     "@types/jasmine": "~3.8.0",
     "@types/jquery": "^3.5.11",
     "@types/node": "^12.11.1",
+    "@types/uuid": "^8.3.4",
     "@types/video.js": "^7.3.26",
     "csv-loader": "^3.0.5",
     "excel-loader": "^1.0.1",

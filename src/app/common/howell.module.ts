@@ -12,9 +12,8 @@ import { CUSTOM_PIPES } from './pipes';
 
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { CUSTOM_DIRECTIVES } from './directives';
-import { FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule, SelectControlValueAccessor } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
-
 
 @NgModule({
   declarations: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
@@ -25,7 +24,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     AngularResizeEventModule,
     FormsModule,
     ReactiveFormsModule,
-    NgxEchartsModule
+    NgxEchartsModule,
   ],
 })
-export class HowellModule { }
+export class HowellModule {}

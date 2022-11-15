@@ -21,11 +21,18 @@
         <tbody>
           <ng-template ngFor [ngForOf]="dataSource" let-item>
             <tr>
-              <td [title]="item.VehicleName">{{ item.VehicleName }}</td>
-              <td [title]="item.MemberName">{{ item.MemberName }}</td>
+              <td [title]="item.Name">{{ item.Name }}</td>
               <td>
-                <span> <i class="howell-icon-picture"></i></span>
-                <span> <i class="howell-icon-account"></i></span>
+                {{ item.Type | vehicleType }}
+              </td>
+              <td>
+                <span>
+                  <i
+                    class="glyphicon glyphicon-map-marker"
+                    [style.fontSize.px]="15"
+                  ></i
+                ></span>
+                <span> <i class="howell-icon-route"></i></span>
               </td>
             </tr>
           </ng-template>

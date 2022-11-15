@@ -1,14 +1,15 @@
-export class CollectionVehicleModel {
-  VehicleName!: string;
-  MemberName!: string;
+import { VehicleType } from 'src/app/enum/vehicle-type.enum';
+
+export class CollectionVehicleModel<T = any> {
+  Id!: string;
+  Name!: string;
+  Type!: VehicleType;
+  rawData!: T;
 }
 
 export interface CollectionVehicleSearchInfo {
-  BeginTime: Date;
-  EndTime: Date;
+  DivisionIds: string[];
 
   PageIndex?: number;
   PageSize?: number;
-  VehicleName?: string;
-  MemberName?: string;
 }

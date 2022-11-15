@@ -26,8 +26,7 @@ export class CollectionVehicleComponent implements OnInit {
   dataSource: CollectionVehicleModel[] = [];
 
   searchInfo: CollectionVehicleSearchInfo = {
-    BeginTime: Time.beginTime(new Date()),
-    EndTime: Time.endTime(new Date()),
+    DivisionIds: [],
   };
 
   constructor(private _business: CollectionVehicleBusiness) {}
