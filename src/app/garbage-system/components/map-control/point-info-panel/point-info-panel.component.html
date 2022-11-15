@@ -7,9 +7,9 @@
   <div class="item">
     <i class="howell-icon-neighborhood icon"></i>
     <div class="content">
-      {{ model.roadName | async }}&nbsp;&nbsp;&nbsp;&nbsp;{{
-        model.committeeName | async
-      }}
+      {{ model.roadName | async
+      }}{{ model.roadName ? "&nbsp;&nbsp;&nbsp;&nbsp;" : ""
+      }}{{ model.committeeName | async }}
     </div>
   </div>
 
