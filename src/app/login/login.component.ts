@@ -180,7 +180,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
               ) {
                 this._router.navigateByUrl(RoutePath.garbage_system_committees);
               } else {
-                this._router.navigateByUrl(RoutePath.garbage_vehicle);
+                this._router.navigateByUrl(RoutePath.garbage_system);
               }
             }
           } else if (
