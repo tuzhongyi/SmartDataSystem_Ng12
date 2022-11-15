@@ -55,7 +55,7 @@ export class CollectionMapControlBusiness {
     promise.then((paged) => {
       let datas = paged.Data;
       this.source.all = datas;
-      this.PointClean(this.source.points);
+      // this.PointClean(this.source.points);
       this.PointUpdate(datas);
       this.setPointStatus(this.source.all);
     });
@@ -174,6 +174,7 @@ export class CollectionMapControlBusiness {
     mixedIntoClicked: new EventEmitter(),
     garbageCountClicked: new EventEmitter(),
     vehicleInformationClicked: new EventEmitter(),
+    routeClicked: new EventEmitter(),
   };
 
   setContentMenu() {
@@ -188,7 +189,7 @@ export class CollectionMapControlBusiness {
           const vehicle = await this.vehicleService.cache.get(id);
           this.source.all.push(vehicle);
         }
-        this.menuEvents.garbageCountClicked.emit(vehicle);
+        this.menuEvents.routeClicked.emit(vehicle);
       },
       2
     );

@@ -8,6 +8,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { MapControlBusiness } from './business/map-control.business';
+import { MapRouteBusiness } from './business/map-route.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
 import { PatrolControlBusiness } from './business/patrol-control.business';
 import { StatisticCardBussiness } from './business/statistic-card.bussiness';
@@ -41,6 +42,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     GarbageStationDropWindowBusiness,
     GarbageStationInfoWindowBusiness,
     WindowBussiness,
+    MapRouteBusiness,
   ],
 })
 export class GarbageCollectionIndexComponent {
@@ -60,7 +62,8 @@ export class GarbageCollectionIndexComponent {
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
     private _globalStoreService: GlobalStorageService,
-    public map: MapControlBusiness
+    public map: MapControlBusiness,
+    public route: MapRouteBusiness
   ) {
     this._titleService.setTitle('垃圾清运平台');
   }

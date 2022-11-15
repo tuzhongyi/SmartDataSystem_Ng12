@@ -55,6 +55,8 @@ export class CollectionMapControlComponent
   garbageFullClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
   @Input()
   position?: EventEmitter<GarbageVehicle>;
+  @Output()
+  route: EventEmitter<GarbageVehicle> = new EventEmitter();
 
   //#endregion
   //#region ViewChild
@@ -191,6 +193,9 @@ export class CollectionMapControlComponent
     });
     this.amap.menuEvents.garbageCountClicked.subscribe((x) => {
       this.garbageCountClicked.emit(x);
+    });
+    this.amap.menuEvents.routeClicked.subscribe((x) => {
+      this.route.emit(x);
     });
   }
   ngOnDestroy(): void {
