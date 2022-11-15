@@ -122,10 +122,13 @@ export class AMapBusiness {
     this.mapClient = new CesiumMapClient(iframe);
     this.mapClient.Events.OnLoaded = async () => {
       this.mapController = this.mapClient!.DataController;
+
       this.init().then(() => {
         timer(0.1 * 1000)
           .toPromise()
           .then(() => {
+            if (this.mapClient) {
+            }
             this.ChangePoint();
           });
       });
@@ -194,6 +197,7 @@ export class AMapBusiness {
 
   loadDivision(divisionId: string) {
     if (this.mapClient) {
+      this.mapClient.Village.Mask(divisionId);
       this.mapClient.Village.Select(divisionId, true);
       // this.mapClient.Viewer.Focus(divisionId);
       if (this.mapController) {

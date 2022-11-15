@@ -131,6 +131,7 @@ declare namespace CesiumMap {
     /// <param name="villageId" type="string">小区ID</param>
     Select(villageId: string, isBasic?: boolean): string;
     Reload(villageId: string): string;
+    Mask(villageId: string): void;
   }
   interface PointNameController {
     Show(id?: string, style?: CesiumDataController.GuideboardStyle): void;
