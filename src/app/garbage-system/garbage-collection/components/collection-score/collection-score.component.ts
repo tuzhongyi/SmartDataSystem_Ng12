@@ -35,7 +35,9 @@ export class CollectionScoreComponent implements OnInit {
     EndTime: Time.endTime(this.today),
     Type: this.type,
   };
+  
   theme = EChartsTheme.adsame;
+  
   lineSeriesData: number[] = [];
 
   options: EChartsOption = {

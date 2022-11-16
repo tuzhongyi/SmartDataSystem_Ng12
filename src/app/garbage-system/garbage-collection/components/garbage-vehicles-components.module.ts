@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-09 09:52:29
+ * @Last Modified time: 2022-11-16 17:03:46
  */
 
 import { NgModule } from '@angular/core';
@@ -29,6 +29,7 @@ import { CollectionMapControlComponent } from './collection-map-control/collecti
 import { CollectionMapRouteComponent } from './collection-map-route/collection-map-route.component';
 import { CollectionMapRouteDeviceListComponent } from './collection-map-route/collection-map-route-device-list/collection-map-route-device-list.component';
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
+import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CollectionMapRouteControlComponent } from './collection-map-route/colle
     CollectionMapRouteComponent,
     CollectionMapRouteDeviceListComponent,
     CollectionMapRouteControlComponent,
+    CollectionScorePieComponent
   ],
   imports: [
     CommonModule,
@@ -60,4 +62,4 @@ import { CollectionMapRouteControlComponent } from './collection-map-route/colle
   providers: [DownloadBusiness],
   exports: [],
 })
-export class GarbageCollectionComponentsModule {}
+export class GarbageCollectionComponentsModule { }

@@ -94,7 +94,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
   merge: EChartsOption = {};
 
   constructor(private _business: CollectionDeviceStateBusiness, private _globalStorage: GlobalStorageService) {
-    this.subscription = this._globalStorage.statusChange.subscribe(this._init.bind(this))
+    this.subscription = this._globalStorage.collectionStatusChange.subscribe(this._init.bind(this))
 
   }
 

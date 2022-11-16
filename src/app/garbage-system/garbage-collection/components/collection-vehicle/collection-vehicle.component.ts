@@ -27,7 +27,6 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
   dataSource: CollectionVehicleModel[] = [];
 
   searchInfo: ICollectionVehicleSearchInfo = {
-    DivisionId: "",
   };
   subscription: Subscription;
 

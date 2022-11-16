@@ -14,7 +14,6 @@ export class CollectionVehicleBusiness {
   async init(searchInfo: ICollectionVehicleSearchInfo) {
     let { Data } = await this._list(searchInfo);
 
-    console.log(Data);
     let res = this._converter.iterateToModel(Data);
 
     return res;

@@ -14,7 +14,6 @@ export class CollectionDeviceStateBusiness {
 
   async init(searchInfo: ICollectionDeviceStateSearchInfo) {
     let { Data } = await this._listGarbageVehicle(searchInfo);
-    console.log(Data)
     let res = this._converter.Convert(Data);
 
     return res;
