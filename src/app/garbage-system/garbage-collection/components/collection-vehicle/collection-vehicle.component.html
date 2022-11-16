@@ -6,8 +6,8 @@
         <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
         <thead>
           <tr>
-            <th>名称</th>
-            <th>清运人员</th>
+            <th>车辆名称</th>
+            <th>车辆类型</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -15,29 +15,11 @@
     </ng-container>
 
     <ng-container ngProjectAs="table-body">
-      <table>
-        <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
-
-        <tbody>
-          <ng-template ngFor [ngForOf]="dataSource" let-item>
-            <tr>
-              <td [title]="item.Name">{{ item.Name }}</td>
-              <td>
-                {{ item.Type | vehicleType }}
-              </td>
-              <td>
-                <span>
-                  <i
-                    class="glyphicon glyphicon-map-marker"
-                    [style.fontSize.px]="15"
-                  ></i
-                ></span>
-                <span> <i class="howell-icon-route"></i></span>
-              </td>
-            </tr>
-          </ng-template>
-        </tbody>
-      </table>
+      <ng-template
+        [ngIf]="dataSource.length"
+        [ngIfThen]="thenBlock"
+        [ngIfElse]="elseBlock"
+      ></ng-template>
     </ng-container>
   </small-table>
 </div>
@@ -46,4 +28,33 @@
   <colgroup>
     <col *ngFor="let item of tdWidth" [style.width]="item" />
   </colgroup>
+</ng-template>
+
+<ng-template #thenBlock>
+  <table>
+    <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+
+    <tbody>
+      <ng-template ngFor [ngForOf]="dataSource" let-item>
+        <tr>
+          <td [title]="item.Name">{{ item.Name }}</td>
+          <td>
+            {{ item.Type | vehicleType }}
+          </td>
+          <td>
+            <span>
+              <i
+                class="glyphicon glyphicon-map-marker"
+                [style.fontSize.px]="15"
+              ></i
+            ></span>
+            <span> <i class="howell-icon-route"></i></span>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="data-none">暂无数据</div>
 </ng-template>

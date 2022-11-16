@@ -22,7 +22,7 @@ export class GarbageVehicleDivisionUrl extends AbstractUrl {
     return `${this.basic()}/Tree`;
   }
   static garbage(id?: string) {
-    let base: string = id ? this.item(id) : this.basic();
+    let base: string = id ? this.item(id) : `${this.basic()}/Divisions`;
     return new GarbageUrl(base);
   }
 }

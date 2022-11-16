@@ -20,7 +20,7 @@ export class CollectionDivisionListBusiness
     private _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: GarbageVehicleDivisionRequestService,
     private _converter: ElementListConverter
-  ) {}
+  ) { }
   async init(...args: any): Promise<ElementListModel<Division>> {
     let id = this._globalStorage.divisionId;
     let current = await this.getCurrent(id);
@@ -33,7 +33,6 @@ export class CollectionDivisionListBusiness
 
     model.Children = this._converter.iterateToModel(children);
 
-    console.log(model);
     return model;
   }
   getCurrent(id: string) {
@@ -48,6 +47,6 @@ export class CollectionDivisionListBusiness
   notifyMessage(msg: Division) {
     this._globalStorage.divisionId = msg.Id;
     this._globalStorage.divisionType = msg.DivisionType;
-    this._globalStorage.statusChange.emit();
+    this._globalStorage.collectionStatusChange.emit();
   }
 }

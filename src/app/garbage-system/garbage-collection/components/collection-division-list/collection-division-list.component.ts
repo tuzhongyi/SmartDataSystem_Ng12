@@ -5,7 +5,6 @@
  * @Last Modified time: 2022-11-02 10:51:46
  */
 import { Component, OnInit } from '@angular/core';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { CollectionDivisionListBusiness } from './collection-division-list.business';
 
@@ -18,9 +17,9 @@ import { CollectionDivisionListBusiness } from './collection-division-list.busin
 export class GarbageCollectionDivisionListComponent implements OnInit {
   parentDivision: Division | null = null;
 
-  constructor(public business: CollectionDivisionListBusiness) {}
+  constructor(public business: CollectionDivisionListBusiness) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
   itemClick(division: Division) {
     this.business.notifyMessage(division);
   }

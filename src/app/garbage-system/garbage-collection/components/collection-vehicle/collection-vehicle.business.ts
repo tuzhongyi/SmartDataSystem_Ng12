@@ -1,27 +1,29 @@
 import { Injectable } from '@angular/core';
+import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
-import { CollectionVehicleSearchInfo } from './collection-vehicle.model';
+import { ICollectionVehicleSearchInfo } from './collection-vehicle.model';
 
 @Injectable()
 export class CollectionVehicleBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleConverter
-  ) {}
-  async init(searchInfo: CollectionVehicleSearchInfo) {
+  ) { }
+  async init(searchInfo: ICollectionVehicleSearchInfo) {
     let { Data } = await this._list(searchInfo);
 
+    console.log(Data);
     let res = this._converter.iterateToModel(Data);
 
     return res;
   }
-  private _list(searchInfo: CollectionVehicleSearchInfo) {
-    let params = new GetGarbageCollectionEventRecordsParams();
-
-    params.DivisionIds = searchInfo.DivisionIds;
+  private _list(searchInfo: ICollectionVehicleSearchInfo) {
+    let params = new GetGarbageVehiclesParams();
+    if (searchInfo.PageIndex) params.PageIndex = searchInfo.PageIndex;
+    if (searchInfo.PageSize) params.PageSize = searchInfo.PageSize;
+    if (searchInfo.DivisionId) params.AncestorId = searchInfo.DivisionId;
 
     return this._garbageVehicleRequest.list(params);
   }

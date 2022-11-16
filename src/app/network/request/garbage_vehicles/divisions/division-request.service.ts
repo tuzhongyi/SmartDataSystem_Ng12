@@ -11,7 +11,7 @@ import {
   BaseTypeRequestService,
 } from '../../base-request.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
-import { GetDivisionsParams } from './division-request.params';
+import { GetDivisionGarbageScoresParams, GetDivisionsParams } from './division-request.params';
 import { Cache } from '../../cache/cache';
 import { GetDivisionTreeParams } from '../../division/division-request.params';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
@@ -61,7 +61,7 @@ export class GarbageVehicleDivisionRequestService extends AbstractService<Divisi
 
   private _garbage?: DivisionGarbage;
   get garbage() {
-    if (this._garbage) {
+    if (!this._garbage) {
       this._garbage = new DivisionGarbage(this.basic);
     }
     return this._garbage;
@@ -82,11 +82,11 @@ class DivisionGarbage {
   weight = new GarbageVehicleWeightService(this.basic);
   score = new GarbageVehiclScoreService(this.basic);
 
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 }
 
 class GarbageVehicleWeightService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
   get() {
     let url = GarbageVehicleDivisionUrl.garbage().weight.basic();
@@ -95,10 +95,14 @@ class GarbageVehicleWeightService {
 }
 
 class GarbageVehiclScoreService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: BaseRequestService) { }
 
-  get() {
-    let url = GarbageVehicleDivisionUrl.garbage().score.basic();
+  get(divisionId: string) {
+    let url = GarbageVehicleDivisionUrl.garbage(divisionId).score.basic()
     return this.basic.get(url, DivisionGarbageScore);
+  }
+  list(params: GetDivisionGarbageScoresParams) {
+    let url = GarbageVehicleDivisionUrl.garbage().score.basic()
+    return this.basic.postArray(url, DivisionGarbageScore, params);
   }
 }

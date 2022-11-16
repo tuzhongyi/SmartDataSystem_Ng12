@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Time } from 'src/app/common/tools/time';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { interval, Subscription, timer } from 'rxjs';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {
   CollectionVehicleModel,
-  CollectionVehicleSearchInfo,
+  ICollectionVehicleSearchInfo,
 } from './collection-vehicle.model';
+
 
 @Component({
   selector: 'collection-vehicle',
@@ -20,26 +21,31 @@ import {
     CollectionVehicleConverter,
   ],
 })
-export class CollectionVehicleComponent implements OnInit {
-  tdWidth = ['15%', '10%', '5%'];
+export class CollectionVehicleComponent implements OnInit, OnDestroy {
+  tdWidth = ['10%', '10%', '5%'];
 
   dataSource: CollectionVehicleModel[] = [];
 
-  searchInfo: CollectionVehicleSearchInfo = {
-    DivisionIds: [],
+  searchInfo: ICollectionVehicleSearchInfo = {
+    DivisionId: "",
   };
+  subscription: Subscription;
 
-  constructor(private _business: CollectionVehicleBusiness) {}
+  constructor(private _business: CollectionVehicleBusiness, private _globalStorage: GlobalStorageService) {
+
+    this.subscription = this._globalStorage.collectionStatusChange.subscribe(this._init.bind(this))
+  }
 
   ngOnInit(): void {
+
     this._init();
-
-    // console.log(DurationParams.allDay(new Date()));
-
-    // console.log(Time.curWeek(new Date()));
   }
   private async _init() {
+    this.searchInfo.DivisionId = this._globalStorage.divisionId;
     this.dataSource = await this._business.init(this.searchInfo);
-    // console.log(this.dataSource);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { interval, Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
@@ -45,7 +46,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     MapRouteBusiness,
   ],
 })
-export class GarbageCollectionIndexComponent {
+export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
   TrashCanType = TrashCanType;
   CollectionScore = CollectionPointScore;
 
@@ -58,6 +59,9 @@ export class GarbageCollectionIndexComponent {
     return this._globalStoreService.HideTitlebar;
   }
 
+  subscription: Subscription;
+
+
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
@@ -66,6 +70,10 @@ export class GarbageCollectionIndexComponent {
     public route: MapRouteBusiness
   ) {
     this._titleService.setTitle('垃圾清运平台');
+
+    this.subscription = interval(1 * 60 * 1000).subscribe(() => {
+      this._globalStoreService.collectionStatusChange.emit()
+    })
   }
 
   ngOnInit(): void {
@@ -78,5 +86,8 @@ export class GarbageCollectionIndexComponent {
       this._globalStoreService.divisionId = userDivisionId;
       this._globalStoreService.divisionType = userDivisionType;
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

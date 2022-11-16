@@ -16,10 +16,12 @@ import * as echarts from 'echarts/core';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { NgxEchartsDirective } from 'ngx-echarts';
+import { Subscription } from 'rxjs';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { CollectionDeviceStateBusiness } from './collection-device-state.business';
 import { CollectionVehicleConverter } from './collection-device-state.converter';
-import { CollectionDeviceStateModel } from './collection-device-state.model';
+import { CollectionDeviceStateModel, ICollectionDeviceStateSearchInfo } from './collection-device-state.model';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -31,11 +33,16 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   styleUrls: ['./collection-device-state.component.less'],
   providers: [CollectionDeviceStateBusiness, CollectionVehicleConverter],
 })
-export class GarbageVehiclesDeviceStateComponent implements OnInit {
-  title: string = '设备运行状态';
+export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
+  title: string = '收运车运行状态';
   model: CollectionDeviceStateModel | null = null;
 
   theme: EChartsTheme = EChartsTheme.adsame;
+
+  searchInfo: ICollectionDeviceStateSearchInfo = {
+  };
+  subscription: Subscription;
+
 
   gaugeOption: EChartsOption = {
     series: [
@@ -86,13 +93,18 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
 
   merge: EChartsOption = {};
 
-  constructor(private _business: CollectionDeviceStateBusiness) {}
+  constructor(private _business: CollectionDeviceStateBusiness, private _globalStorage: GlobalStorageService) {
+    this.subscription = this._globalStorage.statusChange.subscribe(this._init.bind(this))
+
+  }
 
   ngOnInit() {
     this._init();
   }
   private async _init() {
-    this.model = await this._business.init();
+
+    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    this.model = await this._business.init(this.searchInfo);
 
     this.merge = {
       series: [
@@ -126,12 +138,13 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
                     },
                     {
                       offset: 0.5,
-                      color: '#ffba00', // 50% 处的颜色
+                      color: '#fac858', // 50% 处的颜色
                     },
                     {
                       offset: 1,
                       color: '#21e452', // 100% 处的颜色
                     },
+
                   ],
                 },
               },
@@ -141,4 +154,10 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit {
       ],
     };
   }
+
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
 }

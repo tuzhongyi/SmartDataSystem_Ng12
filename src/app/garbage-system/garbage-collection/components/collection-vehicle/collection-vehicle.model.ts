@@ -7,9 +7,8 @@ export class CollectionVehicleModel<T = any> {
   rawData!: T;
 }
 
-export interface CollectionVehicleSearchInfo {
-  DivisionIds: string[];
-
+export interface ICollectionVehicleSearchInfo {
+  DivisionId?: string;
   PageIndex?: number;
   PageSize?: number;
 }

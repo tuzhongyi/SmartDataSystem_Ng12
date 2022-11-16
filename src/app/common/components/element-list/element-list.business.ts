@@ -13,7 +13,7 @@ export class ElementListBusiness implements IElementListBusiness<Division> {
     private _divisionRequest: DivisionRequestService,
     private _globalStorage: GlobalStorageService,
     private _converter: ElementListConverter
-  ) {}
+  ) { }
   async init(...args: any): Promise<ElementListModel<Division>> {
     let id = this._globalStorage.divisionId;
 
@@ -27,7 +27,7 @@ export class ElementListBusiness implements IElementListBusiness<Division> {
 
     model.Children = this._converter.iterateToModel(children);
 
-    console.log(model);
+    // console.log(model);
     return model;
   }
 

@@ -9,6 +9,9 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class GlobalStorageService {
+  // 垃圾清运
+  collectionStatusChange = new EventEmitter();
+
   statusChange = new EventEmitter();
 
   password?: string;

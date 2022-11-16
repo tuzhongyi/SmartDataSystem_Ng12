@@ -8,7 +8,11 @@ module.exports = {
       {
         test: /\.xlsx?$/,
         loader: 'excel-loader'
-      }
+      },
+      {
+        test: /\.(mp3)$/i,
+        type: 'asset/resource',
+      },
     ]
   }
 }
