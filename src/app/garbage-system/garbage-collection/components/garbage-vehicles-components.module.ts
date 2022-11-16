@@ -27,6 +27,8 @@ import { CollectionScoreRankComponent } from './collection-score-rank/collection
 import { CollectionWeightRankComponent } from './collection-weight-rank/collection-weight-rank.component';
 import { CollectionMapControlComponent } from './collection-map-control/collection-map-control.component';
 import { CollectionMapRouteComponent } from './collection-map-route/collection-map-route.component';
+import { CollectionMapRouteDeviceListComponent } from './collection-map-route/collection-map-route-device-list/collection-map-route-device-list.component';
+import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,8 @@ import { CollectionMapRouteComponent } from './collection-map-route/collection-m
     CollectionWeightRankComponent,
     CollectionMapControlComponent,
     CollectionMapRouteComponent,
+    CollectionMapRouteDeviceListComponent,
+    CollectionMapRouteControlComponent,
   ],
   imports: [
     CommonModule,

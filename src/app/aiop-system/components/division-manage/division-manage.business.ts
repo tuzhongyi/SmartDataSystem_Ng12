@@ -33,7 +33,7 @@ export class DivisionManageBusiness implements IDivisionManageBusiness {
       division.ParentId = parent.Id;
     } else {
       division.DivisionType = DivisionType.City;
-      division.ParentId = null;
+      division.ParentId = undefined;
     }
 
     let res = await this.service.create(division);

@@ -1,7 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { wait } from 'src/app/common/tools/tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { IModel } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteBusiness } from './collection-map-route.business';
 
 @Component({
@@ -12,7 +14,7 @@ import { CollectionMapRouteBusiness } from './collection-map-route.business';
 })
 export class CollectionMapRouteComponent implements OnInit {
   @Input()
-  model?: GarbageVehicle;
+  model?: IModel;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -46,4 +48,8 @@ export class CollectionMapRouteComponent implements OnInit {
     );
   }
   //#endregion
+
+  onselected(item: IModel) {
+    this.model = item;
+  }
 }

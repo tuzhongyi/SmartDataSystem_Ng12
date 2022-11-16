@@ -32,8 +32,8 @@
       "children": [
         {
           "title": "区划管理",
-          "id": "division-manage",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/division-manage"
+          "id": "collection-division-manage",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/collection-division-manage"
         },
         {
           "title": "清运车管理",

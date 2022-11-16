@@ -35,7 +35,8 @@ export class GisRoutePoint implements IModel {
   /**	Int32	坐标系类型	O	*/
   GisType?: GisType;
   /**	DateTime	记录时间	M	*/
-  @Transform(transformDateTime) Time!: Date;
+  @Transform(transformDateTime)
+  Time!: Date;
   /**	String	称重垃圾桶ID	O	*/
   TrashCanId?: string;
 }

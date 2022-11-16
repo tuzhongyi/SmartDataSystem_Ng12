@@ -18,18 +18,41 @@
     }
   }
 
-  &-device-list {
+  .panel {
     position: absolute;
-    left: 10px;
-    top: 10px;
     background-color: #07062166;
+    border: 1px solid #5c6ebf;
+  }
+
+  @control-bar-height: 200px;
+  @control-bar-margin: 20px;
+  @padding: 30px;
+
+  &-device-list {
+    left: 30px;
+    top: 30px;
+    width: 300px;
+    height: calc(100% - @padding - @control-bar-height - @padding - @control-bar-margin);
+
   }
 
   &-controls {
     position: absolute;
-    height: 90px;
-    width: 90%;
-    bottom: 10px;
+    height: @control-bar-height;
+    width: calc(100% - 60px);
+    bottom: @padding;
     background-color: #07062166;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  &-video {
+    width: 500px;
+    height: 300px;
+    right: 30px;
+    bottom: calc(@padding + @control-bar-height + @control-bar-margin);
+    background-color: #07062166;
+
+    border: 1px solid #5c6ebf;
   }
 }

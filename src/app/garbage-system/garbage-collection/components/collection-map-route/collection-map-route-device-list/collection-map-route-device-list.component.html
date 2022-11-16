@@ -1,0 +1,17 @@
+<div class="collection-map-route-device-list">
+  <div class="collection-map-route-device-list-header">
+    <howell-simple-search
+      (searchEvent)="onsearch($event)"
+    ></howell-simple-search>
+  </div>
+  <div class="collection-map-route-device-list-content">
+    <div
+      class="collection-map-route-device-list-content-item"
+      [ngClass]="{ selected: selected === item }"
+      *ngFor="let item of datas"
+      (click)="onselect($event, item)"
+    >
+      {{ item.name }}
+    </div>
+  </div>
+</div>

@@ -3,6 +3,12 @@
     <iframe #iframe [src]="src" (load)="onLoad($event)" class=""></iframe>
   </div>
 
-  <div class="collection-map-route-controls"></div>
-  <div class="collection-map-route-device-list"></div>
+  <div class="collection-map-route-controls">
+    <collection-map-route-control> </collection-map-route-control>
+  </div>
+  <div class="panel collection-map-route-device-list">
+    <collection-map-route-device-list (select)="onselected($event)">
+    </collection-map-route-device-list>
+  </div>
+  <div class="panel collection-map-route-video"></div>
 </div>

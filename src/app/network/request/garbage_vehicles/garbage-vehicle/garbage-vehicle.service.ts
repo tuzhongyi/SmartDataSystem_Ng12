@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { GarbageVehicle } from '../../../model/garbage-vehicle.model';
-import { GisPoint } from '../../../model/gis-point.model';
+import { GisRoutePoint } from '../../../model/gis-point.model';
 import { PagedList } from '../../../model/page_list.model';
 import { VehicleCamera } from '../../../model/vehicle-camera.model';
 import { GarbageVehicleUrl } from '../../../url/garbage-vehicle/garbage-vehicle.url';
@@ -130,9 +130,9 @@ class VehicleCameraService {
 }
 
 class VehicleRouteService {
-  private basicType: BaseTypeRequestService<GisPoint>;
+  private basicType: BaseTypeRequestService<GisRoutePoint>;
   constructor(private basic: BaseRequestService) {
-    this.basicType = basic.type(GisPoint);
+    this.basicType = basic.type(GisRoutePoint);
   }
 
   list(

@@ -97,12 +97,7 @@ const routes: Routes = [
 
             children: [
               {
-                path: '',
-                redirectTo: 'division-manage',
-                pathMatch: 'full',
-              },
-              {
-                path: 'division-manage',
+                path: 'collection-division-manage',
                 component: GarbageVehicleDivisionManageComponent,
                 data: {
                   breadcrumb: '区划管理',
@@ -114,6 +109,11 @@ const routes: Routes = [
                 data: {
                   breadcrumb: '清运车管理',
                 },
+              },
+              {
+                path: '',
+                redirectTo: 'division-manage',
+                pathMatch: 'full',
               },
             ],
           },
