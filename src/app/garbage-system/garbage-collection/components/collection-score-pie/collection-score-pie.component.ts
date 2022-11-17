@@ -1,91 +1,66 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import * as echarts from 'echarts/core';
-import {
-  TitleComponent,
-  TitleComponentOption,
-  TooltipComponent,
-  TooltipComponentOption,
-  LegendComponent,
-  LegendComponentOption
-} from 'echarts/components';
-import { PieChart, PieSeriesOption } from 'echarts/charts';
-import { LabelLayout } from 'echarts/features';
-import { CanvasRenderer } from 'echarts/renderers';
-
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  CanvasRenderer,
-  LabelLayout
-]);
-
-type EChartsOption = echarts.ComposeOption<
-  | TitleComponentOption
-  | TooltipComponentOption
-  | LegendComponentOption
-  | PieSeriesOption
->;
 
 import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
-
-
-echarts.use([
-  TitleComponent,
-  TooltipComponent,
-  LegendComponent,
-  PieChart,
-  CanvasRenderer,
-  LabelLayout
-]);
-
-
+import { EChartsOption } from 'echarts';
 
 @Component({
   selector: 'collection-score-pie',
   templateUrl: './collection-score-pie.component.html',
-  styleUrls: ['./collection-score-pie.component.less']
+  styleUrls: ['./collection-score-pie.component.less'],
 })
 export class CollectionScorePieComponent implements OnInit {
-
   @ViewChild(NgxEchartsDirective) echarts!: any;
 
-
   theme = EChartsTheme.adsame;
-  options: EChartsOption = {
 
+  options: EChartsOption = {
+    title: {
+      text: '今日垃圾分类评分',
+    },
     series: [
       {
         name: 'Access From',
         type: 'pie',
-        radius: '50%',
+        center: ['50%', '60%'],
+        radius: ['20%', '60%'],
         data: [
-          { value: 1048, name: 'Search Engine' },
-          { value: 735, name: 'Direct' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Union Ads' },
-          { value: 300, name: 'Video Ads' }
+          { value: 1048, name: '好评' },
+          { value: 735, name: '中评' },
+          { value: 580, name: '差评' },
         ],
         emphasis: {
-          // disabled: true,
-          itemStyle: {
-            shadowBlur: 10,
-            shadowOffsetX: 0,
-            shadowColor: 'rgba(0, 0, 0, 0.5)'
-          }
-        }
-      }
-    ]
+          disabled: true,
+        },
+        label: {
+          formatter: '{a|{b}}\n{b|{c} 小时}',
+          fontSize: 15,
+          rich: {
+            a: {
+              color: 'white',
+            },
+            b: {
+              color: '#cfd7ff',
+            },
+          },
+        },
+        labelLine: {
+          length: 20,
+          length2: 50,
+        },
+        labelLayout(params) {
+          console.log(params);
+          return {
+            x: params.rect.x,
+            y: params.rect.y,
+          };
+        },
+      },
+    ],
   };
-  merge: EChartsOption = {
+  merge: EChartsOption = {};
 
-  };
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }
