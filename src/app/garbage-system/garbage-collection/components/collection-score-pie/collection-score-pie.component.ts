@@ -101,15 +101,15 @@ export class CollectionScorePieComponent implements OnInit {
         type: 'pie',
         data: [
           {
-            value: (Math.random() * 150) >> 0,
+            value: (Math.random() * 255) >> 0,
             name: '好评',
           },
           {
-            value: (Math.random() * 150) >> 0,
+            value: (Math.random() * 255) >> 0,
             name: '中评',
           },
           {
-            value: (Math.random() * 150) >> 0,
+            value: (Math.random() * 255) >> 0,
             name: '差评',
           },
         ],
@@ -134,22 +134,21 @@ export class CollectionScorePieComponent implements OnInit {
     this.searchInfo.DivisionId = this._globalStorage.divisionId;
 
     this.model = await this._business.init(this.searchInfo);
-    if (this.model) {
-      this.merge = {
-        series: [
-          {
-            type: 'pie',
-            data: [
-              ...this.model.CountDes.map((des) => {
-                return {
-                  value: des.Count,
-                  name: des.Label,
-                };
-              }),
-            ],
-          },
-        ],
-      };
-    }
+
+    this.merge = {
+      series: [
+        {
+          type: 'pie',
+          data: [
+            ...this.model.CountDes.map((des) => {
+              return {
+                value: des.Count,
+                name: des.Label,
+              };
+            }),
+          ],
+        },
+      ],
+    };
   }
 }

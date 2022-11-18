@@ -12,14 +12,10 @@ export class CollectionScorePieBusiness {
   ) {}
 
   async init(searchInfo: ICollectionScorePieSearchInfo) {
-    if (searchInfo.DivisionId) {
-      let Data = await this._getDivisionScore(searchInfo);
-      let res = this._converter.Convert(Data);
+    let Data = await this._getDivisionScore(searchInfo);
+    let res = this._converter.Convert(Data);
 
-      console.log(Data);
-      return res;
-    }
-    return null;
+    return res;
   }
   private _getDivisionScore(
     searchInfo: ICollectionScorePieSearchInfo
