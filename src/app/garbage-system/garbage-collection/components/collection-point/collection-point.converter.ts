@@ -6,10 +6,7 @@ import {
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { CollectionPointModel } from './collection-point.model';
 
-export class CollectionPointConverter extends AbstractCommonModelConverter<
-  CollectionPointModel,
-  GarbageCollectionEventRecord
-> {
+export class CollectionPointConverter extends AbstractCommonModelConverter<CollectionPointModel> {
   Convert(source: CommonModelSource, ...res: any[]): CollectionPointModel {
     if (source instanceof GarbageCollectionEventRecord) {
       return this._fromGarbageCollectionEventRecord(source);

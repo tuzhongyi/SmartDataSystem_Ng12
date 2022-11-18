@@ -5,10 +5,7 @@ import {
 import { ScoreTop } from 'src/app/network/model/score-top.model';
 import { CollectionScoreRankModel } from './collection-score-rank.model';
 
-export class CollectionScoreRankConverter extends AbstractCommonModelConverter<
-  CollectionScoreRankModel,
-  ScoreTop
-> {
+export class CollectionScoreRankConverter extends AbstractCommonModelConverter<CollectionScoreRankModel> {
   Convert(source: CommonModelSource, ...res: any[]): CollectionScoreRankModel {
     if (source instanceof ScoreTop) {
       return this._fromScoreTop(source);

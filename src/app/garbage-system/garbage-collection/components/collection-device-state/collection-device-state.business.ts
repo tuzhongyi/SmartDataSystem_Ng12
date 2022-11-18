@@ -10,7 +10,7 @@ export class CollectionDeviceStateBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleConverter
-  ) { }
+  ) {}
 
   async init(searchInfo: ICollectionDeviceStateSearchInfo) {
     let { Data } = await this._listGarbageVehicle(searchInfo);

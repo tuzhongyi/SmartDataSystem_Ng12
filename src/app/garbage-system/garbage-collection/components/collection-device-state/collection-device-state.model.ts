@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-08 10:04:09
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-16 16:30:50
+ * @Last Modified time: 2022-11-18 13:49:52
  */
 import {
   CollectionDeviceStateCountType,
@@ -23,6 +23,7 @@ export interface ICollectionDeviceStateDes {
   /**文本颜色 */
   tagCls: string;
 }
+
 export class CollectionDeviceStateModel {
   /**在线比 */
   onLineRatio: number = 0;
@@ -41,9 +42,8 @@ export class CollectionDeviceStateModel {
   /**全部车辆、在线车辆、离线车辆 */
   deviceStateArr: Array<ICollectionDeviceStateDes> = [];
 
-  constructor() { }
+  constructor() {}
 }
-
 
 export interface ICollectionDeviceStateSearchInfo {
   DivisionId?: string;

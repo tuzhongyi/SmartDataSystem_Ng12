@@ -15,10 +15,7 @@ type IllegalDropTotalSource = Division | GarbageStation;
 @Injectable({
   providedIn: 'root',
 })
-export class EventNumberStatisticConverter extends AbstractCommonModelConverter<
-  EventNumberStatisticModel,
-  IllegalDropTotalSource
-> {
+export class EventNumberStatisticConverter extends AbstractCommonModelConverter<EventNumberStatisticModel> {
   constructor() {
     super();
   }

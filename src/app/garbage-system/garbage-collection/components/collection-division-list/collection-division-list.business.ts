@@ -4,7 +4,6 @@ import {
   ElementListModel,
   IElementListBusiness,
 } from 'src/app/common/components/element-list/element-list.model';
-import { ICollectionDivisionListBusiness } from 'src/app/common/interfaces/collection-division-list.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { ElementListConverter } from 'src/app/converter/element-list.converter';
