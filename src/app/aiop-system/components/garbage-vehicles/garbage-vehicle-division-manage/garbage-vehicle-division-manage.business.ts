@@ -6,13 +6,13 @@ import {
   DivisionManageModel,
   IDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 
 @Injectable()
 export class GarbageVehicleDivisionManageBusiness
   implements IDivisionManageBusiness
 {
-  constructor(private service: GarbageVehicleDivisionRequestService) {}
+  constructor(private service: CollectionDivisionRequestService) {}
 
   async create(
     parentId: string,

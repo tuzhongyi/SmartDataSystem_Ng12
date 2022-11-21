@@ -12,7 +12,7 @@ import {
 } from 'src/app/network/request/division/division-request.params';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
@@ -26,7 +26,7 @@ export class GarbageVehicleDivisionTreeBusiness
   public nestedNodeMap = new Map<string, CommonNestNode<Division>>();
 
   constructor(
-    private _divisionRequest: GarbageVehicleDivisionRequestService,
+    private _divisionRequest: CollectionDivisionRequestService,
     private _stationRequest: GarbageStationRequestService,
     private _converter: DivisionTreeConverter
   ) {}

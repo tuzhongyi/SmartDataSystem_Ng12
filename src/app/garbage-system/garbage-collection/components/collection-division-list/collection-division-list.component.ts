@@ -17,9 +17,9 @@ import { CollectionDivisionListBusiness } from './collection-division-list.busin
 export class GarbageCollectionDivisionListComponent implements OnInit {
   parentDivision: Division | null = null;
 
-  constructor(public business: CollectionDivisionListBusiness) { }
+  constructor(public business: CollectionDivisionListBusiness) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   itemClick(division: Division) {
     this.business.notifyMessage(division);
   }

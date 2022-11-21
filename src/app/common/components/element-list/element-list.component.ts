@@ -10,7 +10,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { ElementListBusiness } from './element-list.business';
 import {
   ElementListModel,
-  ElementListToken,
+  ELEMENT_LIST_TOKEN,
   IElementListBusiness,
 } from './element-list.model';
 
@@ -20,27 +20,25 @@ import {
   styleUrls: ['./element-list.component.less'],
   providers: [
     {
-      provide: ElementListToken,
+      provide: ELEMENT_LIST_TOKEN,
       useClass: ElementListBusiness,
     },
   ],
 })
 export class ElementListComponent implements OnInit {
-  @Input() business: IElementListBusiness<IModel>;
+  @Input('business') _business: IElementListBusiness;
 
   @Output() itemClick = new EventEmitter();
 
   model: ElementListModel<IModel> | null = null;
   selectedModel: ElementListModel<IModel> | null = null;
 
-  constructor(
-    @Inject(ElementListToken) business: IElementListBusiness<IModel>
-  ) {
-    this.business = business;
+  constructor(@Inject(ELEMENT_LIST_TOKEN) business: IElementListBusiness) {
+    this._business = business;
   }
 
   async ngOnInit() {
-    this.model = await this.business.init();
+    this.model = await this._business.init();
   }
 
   click(model: ElementListModel<IModel>) {

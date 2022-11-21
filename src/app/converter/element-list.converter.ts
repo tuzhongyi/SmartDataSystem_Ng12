@@ -25,7 +25,7 @@ export class ElementListConverter extends AbstractCommonModelConverter<
     model.Name = item.Name;
     model.Children = [];
 
-    model.rawData = item;
+    model.RawData = item;
 
     return model;
   }

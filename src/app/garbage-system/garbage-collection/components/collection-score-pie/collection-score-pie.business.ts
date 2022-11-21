@@ -1,28 +1,32 @@
 import { Injectable } from '@angular/core';
+import { IHWPieCharBusiness } from 'src/app/common/components/hw-pie-chart/hw-pie-chart.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { HWPieChartConverter } from 'src/app/converter/hw-pie-chart.converter';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
-import { CollectionScorePieConverter } from './collection-score-pie.converter';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 
 @Injectable()
-export class CollectionScorePieBusiness {
+export class CollectionScorePieBusiness implements IHWPieCharBusiness {
+  searchInfo: ICollectionScorePieSearchInfo = {
+    DivisionId: this._globalStorage.divisionId,
+  };
+
   constructor(
-    private _collectionDivisionRequest: GarbageVehicleDivisionRequestService,
-    private _converter: CollectionScorePieConverter
+    private _globalStorage: GlobalStorageService,
+    private _collectionDivisionRequest: CollectionDivisionRequestService,
+    private _converter: HWPieChartConverter
   ) {}
 
-  async init(searchInfo: ICollectionScorePieSearchInfo) {
-    let Data = await this._getDivisionScore(searchInfo);
-    console.log('分类评分', Data);
+  async init() {
+    let Data = await this._getDivisionScore();
     let res = this._converter.Convert(Data);
 
     return res;
   }
-  private _getDivisionScore(
-    searchInfo: ICollectionScorePieSearchInfo
-  ): Promise<DivisionGarbageScore> {
+  private _getDivisionScore(): Promise<DivisionGarbageScore> {
     return this._collectionDivisionRequest.garbage.score.get(
-      searchInfo.DivisionId
+      this.searchInfo.DivisionId
     );
   }
 }

@@ -9,7 +9,7 @@ import { data } from 'jquery';
 import { GetCollectionPointScoreTopListParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { GetDivisionGarbageScoresParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {
   CollectionScoreRankModel,
@@ -20,9 +20,9 @@ import {
 export class CollectionScoreRankBusiness {
   constructor(
     private _collectionPointRequest: CollectionPointsRequestService,
-    private _collectionDivisionRequest: GarbageVehicleDivisionRequestService,
+    private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CollectionScoreRankConverter
-  ) { }
+  ) {}
 
   async init(searchInfo: ICollectionScoreRankSearchInfo) {
     let res = await this._list(searchInfo);

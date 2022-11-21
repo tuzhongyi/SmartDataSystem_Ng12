@@ -5,29 +5,24 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 import { GlobalStorageService } from '../../service/global-storage.service';
 import { LocaleCompare } from '../../tools/locale-compare';
 import { ElementListConverter } from '../../../converter/element-list.converter';
-import { ElementListModel, IElementListBusiness } from './element-list.model';
+import { IElementListBusiness } from './element-list.model';
 
+// 默认是生活垃圾区划列表
 @Injectable()
 export class ElementListBusiness implements IElementListBusiness<Division> {
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _globalStorage: GlobalStorageService,
     private _converter: ElementListConverter
-  ) { }
-  async init(...args: any): Promise<ElementListModel<Division>> {
+  ) {}
+
+  async init(...args: any) {
     let id = this._globalStorage.divisionId;
-
     let current = await this.getCurrent(id);
-
     let model = this._converter.Convert(current);
-
     let { Data: children } = await this.listChildren(model.Id);
-
     children.sort((a, b) => LocaleCompare.compare(a.Name, b.Name, true));
-
     model.Children = this._converter.iterateToModel(children);
-
-    // console.log(model);
     return model;
   }
 
@@ -37,7 +32,6 @@ export class ElementListBusiness implements IElementListBusiness<Division> {
   listChildren(parentId: string) {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
-
     return this._divisionRequest.list(params);
   }
 }

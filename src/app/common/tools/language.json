@@ -98,7 +98,7 @@
   "garde": "达标率",
   "avg": "平均",
   "duration": "时长",
-  "vehicle":"清运车",
+  "vehicle": "清运车",
   "VehicleType": {
     "Tricycle": "三轮车",
     "Car": "汽车",
@@ -155,6 +155,15 @@
     "Wet": "湿垃圾",
     "Recycle": "可回收垃圾",
     "Hazard": "有害垃圾",
+    "Default": "未知"
+  },
+  "CollectionPointClassification": {
+    "Other": "其他",
+    "Shop": "沿街商铺",
+    "Building": "商业广场",
+    "Residence": "住宅",
+    "Unit": "单位",
+    "PublicPlace": "公共场所",
     "Default": "未知"
   }
 }

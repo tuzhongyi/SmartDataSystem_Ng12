@@ -41,6 +41,7 @@ import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -523,6 +524,29 @@ export class Language {
         return Language.json.OnlineStatus.Offline;
       default:
         return '';
+    }
+  }
+
+  /**
+   *  垃圾收运点类型
+   * @param type
+   */
+  static CollectionPointClassification(type: CollectionPointClassification) {
+    switch (type) {
+      case CollectionPointClassification.Other:
+        return Language.json.CollectionPointClassification.Other;
+      case CollectionPointClassification.Shop:
+        return Language.json.CollectionPointClassification.Shop;
+      case CollectionPointClassification.Building:
+        return Language.json.CollectionPointClassification.Building;
+      case CollectionPointClassification.Residence:
+        return Language.json.CollectionPointClassification.Residence;
+      case CollectionPointClassification.Unit:
+        return Language.json.CollectionPointClassification.Unit;
+      case CollectionPointClassification.PublicPlace:
+        return Language.json.CollectionPointClassification.PublicPlace;
+      default:
+        return Language.json.CollectionPointClassification.Default;
     }
   }
 

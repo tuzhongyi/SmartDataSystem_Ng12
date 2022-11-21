@@ -11,7 +11,10 @@ import {
   BaseTypeRequestService,
 } from '../../base-request.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
-import { GetDivisionGarbageScoresParams, GetDivisionsParams } from './division-request.params';
+import {
+  GetDivisionGarbageScoresParams,
+  GetDivisionsParams,
+} from './division-request.params';
 import { Cache } from '../../cache/cache';
 import { GetDivisionTreeParams } from '../../division/division-request.params';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
@@ -20,7 +23,7 @@ import { DivisionTree } from 'src/app/network/model/division-tree.model';
 @Injectable({
   providedIn: 'root',
 })
-export class GarbageVehicleDivisionRequestService extends AbstractService<Division> {
+export class CollectionDivisionRequestService extends AbstractService<Division> {
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<Division>;
 
@@ -82,11 +85,11 @@ class DivisionGarbage {
   weight = new GarbageVehicleWeightService(this.basic);
   score = new GarbageVehiclScoreService(this.basic);
 
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 }
 
 class GarbageVehicleWeightService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   get() {
     let url = GarbageVehicleDivisionUrl.garbage().weight.basic();
@@ -95,14 +98,14 @@ class GarbageVehicleWeightService {
 }
 
 class GarbageVehiclScoreService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   get(divisionId: string) {
-    let url = GarbageVehicleDivisionUrl.garbage(divisionId).score.basic()
+    let url = GarbageVehicleDivisionUrl.garbage(divisionId).score.basic();
     return this.basic.get(url, DivisionGarbageScore);
   }
   list(params: GetDivisionGarbageScoresParams) {
-    let url = GarbageVehicleDivisionUrl.garbage().score.basic()
+    let url = GarbageVehicleDivisionUrl.garbage().score.basic();
     return this.basic.postArray(url, DivisionGarbageScore, params);
   }
 }

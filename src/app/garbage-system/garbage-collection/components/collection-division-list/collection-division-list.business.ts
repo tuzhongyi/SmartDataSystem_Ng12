@@ -9,7 +9,7 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { ElementListConverter } from 'src/app/converter/element-list.converter';
 import { Division } from 'src/app/network/model/division.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 
 @Injectable()
 export class CollectionDivisionListBusiness
@@ -17,9 +17,9 @@ export class CollectionDivisionListBusiness
 {
   constructor(
     private _globalStorage: GlobalStorageService,
-    private _collectionDivisionRequest: GarbageVehicleDivisionRequestService,
+    private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: ElementListConverter
-  ) { }
+  ) {}
   async init(...args: any): Promise<ElementListModel<Division>> {
     let id = this._globalStorage.divisionId;
     let current = await this.getCurrent(id);

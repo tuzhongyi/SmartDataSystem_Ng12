@@ -10,7 +10,7 @@ import {
 } from 'src/app/garbage-system/components/map-control/point-info-panel/point-info-panel.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { GarbageVehicleDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class GarbageVehiclePointInfoPanelBusiness
 {
   vehicle?: GarbageVehicle;
 
-  constructor(private divisionService: GarbageVehicleDivisionRequestService) {}
+  constructor(private divisionService: CollectionDivisionRequestService) {}
 
   Converter = new PointInfoPanelConverter();
   async load(source: GarbageVehicle): Promise<PointInfoPanelModel> {

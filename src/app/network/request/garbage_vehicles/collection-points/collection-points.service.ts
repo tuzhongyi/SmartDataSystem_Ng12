@@ -120,7 +120,7 @@ class StatisticsService {
   number(params: GetCollectionPointNumberParams) {
     let url = GarbageVehicleCollectionPointUrl.statistics.number();
     let data = classToPlain(params);
-    return this.basic.paged(url, ClassificationNumber, data);
+    return this.basic.postArray(url, ClassificationNumber, data);
   }
 
   scoreTopList(params: GetCollectionPointScoreTopListParams) {
