@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-11 13:11:58
  * @Last Modified by: pmx
- * @Last Modified time: 2021-11-09 09:44:40
+ * @Last Modified time: 2022-11-21 17:00:26
  */
 import { Component, OnInit } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
@@ -11,7 +11,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionListBusiness } from './division-list.business';
-import { ElementListConverter } from 'src/app/converter/element-list.converter';
+import { CommonElementListModel } from 'src/app/common/components/common-element-list/common-element-list.model';
 
 @Component({
   selector: 'app-division-list',
@@ -24,7 +24,8 @@ export class DivisionListComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  itemClick(division: Division) {
-    this.business.notifyMessage(division);
+  itemClick(model: CommonElementListModel) {
+    if (model.RawData && model.RawData instanceof Division)
+      this.business.notifyMessage(model.RawData);
   }
 }

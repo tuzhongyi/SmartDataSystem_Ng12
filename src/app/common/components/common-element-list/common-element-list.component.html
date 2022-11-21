@@ -1,11 +1,11 @@
-<div class="element-list" *ngIf="model">
-  <div class="element-list-title edge-wrapper" (click)="click(model)">
+<div class="common-element-list" *ngIf="model">
+  <div class="common-element-list__title edge-wrapper" (click)="click(model)">
     <i class="howell-icon-map5"></i> <span>{{ model.Name }}</span>
   </div>
-  <div class="element-list-wrapper">
+  <div class="common-element-list__wrapper">
     <div
       *ngFor="let item of model.Children"
-      class="element-list-item edge-wrapper"
+      class="common-element-list__item edge-wrapper"
       [class.selected]="selectedModel == item"
       (click)="click(item)"
     >

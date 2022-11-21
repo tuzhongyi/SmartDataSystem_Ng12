@@ -6,7 +6,7 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { Division } from 'src/app/network/model/division.model';
-import { ElementListModel } from '../common/components/element-list/element-list.model';
+import { CommonElementListModel } from '../common/components/common-element-list/common-element-list.model';
 import {
   HWPieChartData,
   HWPieChartModel,

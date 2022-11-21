@@ -2,9 +2,10 @@
  * @Author: pmx
  * @Date: 2021-10-11 13:11:58
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-02 10:51:46
+ * @Last Modified time: 2022-11-21 16:54:10
  */
 import { Component, OnInit } from '@angular/core';
+import { CommonElementListModel } from 'src/app/common/components/common-element-list/common-element-list.model';
 import { Division } from 'src/app/network/model/division.model';
 import { CollectionDivisionListBusiness } from './collection-division-list.business';
 
@@ -20,7 +21,8 @@ export class GarbageCollectionDivisionListComponent implements OnInit {
   constructor(public business: CollectionDivisionListBusiness) {}
 
   ngOnInit(): void {}
-  itemClick(division: Division) {
-    this.business.notifyMessage(division);
+  itemClick(model: CommonElementListModel) {
+    if (model.RawData && model.RawData instanceof Division)
+      this.business.notifyMessage(model.RawData);
   }
 }

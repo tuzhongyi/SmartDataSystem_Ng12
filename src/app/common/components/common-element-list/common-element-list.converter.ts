@@ -4,13 +4,13 @@ import {
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { Division } from 'src/app/network/model/division.model';
-import { ElementListModel } from '../common/components/element-list/element-list.model';
+import { CommonElementListModel } from './common-element-list.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ElementListConverter extends AbstractCommonModelConverter<
-  ElementListModel<any>
+export class CommonElementListConverter extends AbstractCommonModelConverter<
+  CommonElementListModel<any>
 > {
   Convert(source: CommonModelSource, ...res: any[]) {
     if (source instanceof Division) {
@@ -20,7 +20,7 @@ export class ElementListConverter extends AbstractCommonModelConverter<
   }
 
   private _fromDivision(item: Division) {
-    let model = new ElementListModel<Division>();
+    let model = new CommonElementListModel<Division>();
     model.Id = item.Id;
     model.Name = item.Name;
     model.Children = [];

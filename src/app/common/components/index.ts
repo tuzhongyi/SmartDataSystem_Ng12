@@ -53,7 +53,7 @@ import { EventNumberChartComponent } from './event-number-chart/event-number-cha
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 import { RankComponent } from './rank/rank.component';
 import { SmallTableComponent } from './small-table/small-table.component';
-import { ElementListComponent } from './element-list/element-list.component';
+import { CommonElementListComponent } from './common-element-list/common-element-list.component';
 import { HWPieChartComponent } from './hw-pie-chart/hw-pie-chart.component';
 
 export const CUSTOM_COMPONENTS = [
@@ -111,6 +111,6 @@ export const CUSTOM_COMPONENTS = [
   CoordinateManageComponent,
   RankComponent,
   SmallTableComponent,
-  ElementListComponent,
+  CommonElementListComponent,
   HWPieChartComponent,
 ];

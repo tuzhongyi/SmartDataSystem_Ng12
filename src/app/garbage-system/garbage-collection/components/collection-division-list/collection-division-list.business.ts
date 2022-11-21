@@ -1,26 +1,26 @@
 import { Injectable } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
 import {
-  ElementListModel,
-  IElementListBusiness,
-} from 'src/app/common/components/element-list/element-list.model';
+  CommonElementListModel,
+  ICommonElementListBusiness,
+} from 'src/app/common/components/common-element-list/common-element-list.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { ElementListConverter } from 'src/app/converter/element-list.converter';
+import { CommonElementListConverter } from 'src/app/common/components/common-element-list/common-element-list.converter';
 import { Division } from 'src/app/network/model/division.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 
 @Injectable()
 export class CollectionDivisionListBusiness
-  implements IElementListBusiness<Division>
+  implements ICommonElementListBusiness<Division>
 {
   constructor(
     private _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: CollectionDivisionRequestService,
-    private _converter: ElementListConverter
+    private _converter: CommonElementListConverter
   ) {}
-  async init(...args: any): Promise<ElementListModel<Division>> {
+  async init(...args: any): Promise<CommonElementListModel<Division>> {
     let id = this._globalStorage.divisionId;
     let current = await this.getCurrent(id);
 

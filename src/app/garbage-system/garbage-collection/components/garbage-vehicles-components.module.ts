@@ -31,6 +31,7 @@ import { CollectionMapRouteDeviceListComponent } from './collection-map-route/co
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
 import { CollectionPointPieComponent } from './collection-point-pie/collection-point-pie.component';
+import { CollectionEventLineComponent } from './collection-event-line/collection-event-line.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { CollectionPointPieComponent } from './collection-point-pie/collection-p
     CollectionMapRouteControlComponent,
     CollectionScorePieComponent,
     CollectionPointPieComponent,
+    CollectionEventLineComponent,
   ],
   imports: [
     CommonModule,
