@@ -30,7 +30,7 @@ import { CollectionMapRouteComponent } from './collection-map-route/collection-m
 import { CollectionMapRouteDeviceListComponent } from './collection-map-route/collection-map-route-device-list/collection-map-route-device-list.component';
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
-import { CollectionPointStatisticComponent } from './collection-point-statistic/collection-point-statistic.component';
+import { CollectionPointPieComponent } from './collection-point-pie/collection-point-pie.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +50,7 @@ import { CollectionPointStatisticComponent } from './collection-point-statistic/
     CollectionMapRouteDeviceListComponent,
     CollectionMapRouteControlComponent,
     CollectionScorePieComponent,
-    CollectionPointStatisticComponent,
+    CollectionPointPieComponent,
   ],
   imports: [
     CommonModule,

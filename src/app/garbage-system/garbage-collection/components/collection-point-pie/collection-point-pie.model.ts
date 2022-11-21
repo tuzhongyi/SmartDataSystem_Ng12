@@ -1,6 +1,6 @@
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 
-export interface ICollectionPointStatisticSearchInfo {
+export interface ICollectionPointPieSearchInfo {
   DivisionIds?: string[];
   Classifications?: CollectionPointClassification[];
 }
