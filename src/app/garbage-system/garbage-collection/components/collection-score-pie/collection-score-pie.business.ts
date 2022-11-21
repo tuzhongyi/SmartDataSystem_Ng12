@@ -13,6 +13,7 @@ export class CollectionScorePieBusiness {
 
   async init(searchInfo: ICollectionScorePieSearchInfo) {
     let Data = await this._getDivisionScore(searchInfo);
+    console.log('分类评分', Data);
     let res = this._converter.Convert(Data);
 
     return res;

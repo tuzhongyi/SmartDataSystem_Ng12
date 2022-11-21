@@ -19,7 +19,7 @@ import { GarbageVehiclesEventStatisticComponent } from './collection-event-stati
 import { GarbageComponentsModule } from 'src/app/garbage-system/components/garbage-components.module';
 import { GarbageVehiclesDeviceStateComponent } from './collection-device-state/collection-device-state.component';
 import { CollectionVehicleComponent } from './collection-vehicle/collection-vehicle.component';
-import { CollectionPointComponent } from './collection-point/collection-point.component';
+import { CollectionPointWeightComponent } from './collection-point-weight/collection-point-weight.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { CollectionStatisticComponent } from './collection-statistic/collection-statistic.component';
 import { CollectionScoreComponent } from './collection-score/collection-score.component';
@@ -30,6 +30,7 @@ import { CollectionMapRouteComponent } from './collection-map-route/collection-m
 import { CollectionMapRouteDeviceListComponent } from './collection-map-route/collection-map-route-device-list/collection-map-route-device-list.component';
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
+import { CollectionPointStatisticComponent } from './collection-point-statistic/collection-point-statistic.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { CollectionScorePieComponent } from './collection-score-pie/collection-s
     GarbageVehiclesEventStatisticComponent,
     GarbageVehiclesDeviceStateComponent,
     CollectionVehicleComponent,
-    CollectionPointComponent,
+    CollectionPointWeightComponent,
     CollectionStatisticComponent,
     CollectionScoreComponent,
     CollectionScoreRankComponent,
@@ -48,7 +49,8 @@ import { CollectionScorePieComponent } from './collection-score-pie/collection-s
     CollectionMapRouteComponent,
     CollectionMapRouteDeviceListComponent,
     CollectionMapRouteControlComponent,
-    CollectionScorePieComponent
+    CollectionScorePieComponent,
+    CollectionPointStatisticComponent,
   ],
   imports: [
     CommonModule,
@@ -62,4 +64,4 @@ import { CollectionScorePieComponent } from './collection-score-pie/collection-s
   providers: [DownloadBusiness],
   exports: [],
 })
-export class GarbageCollectionComponentsModule { }
+export class GarbageCollectionComponentsModule {}

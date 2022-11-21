@@ -1,10 +1,10 @@
-export class CollectionPointModel {
+export class CollectionPointWeightModel {
   CollectionPointName!: string;
   Weight!: number;
   EventTime!: Date;
 }
 
-export interface CollectionPointSearchInfo {
+export interface CollectionPointWeightSearchInfo {
   BeginTime: Date;
   EndTime: Date;
 
