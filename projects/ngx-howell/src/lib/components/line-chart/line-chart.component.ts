@@ -1,14 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { CommonLineChartBusiness } from './common-line-chart.business';
-
 @Component({
-  selector: 'common-line-chart',
-  templateUrl: './common-line-chart.component.html',
-  styleUrls: ['./common-line-chart.component.less'],
-  providers: [CommonLineChartBusiness],
+  selector: 'hw-line-chart',
+  templateUrl: './line-chart.component.html',
+  styleUrls: ['./line-chart.component.less'],
 })
-export class CommonLineChartComponent implements OnInit {
+export class LineChartComponent implements OnInit {
   @Input() title: string = '';
 
   lineOption: EChartsOption = {

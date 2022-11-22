@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-21 17:31:21
+ * @Last Modified time: 2022-11-22 14:00:09
  */
 
 import { NgModule } from '@angular/core';
@@ -45,7 +45,6 @@ import { MediaMultipleWindowComponent } from './windows/media-multiple-window/me
 import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-window.module';
 import { PlaybackConfigComponent } from './patrol-control/playback-config/playback-config.component';
 import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-station-window/filter/garbage-station-window-record-filter/garbage-station-window-record-filter.component';
-import { EventStatistic2Component } from './event-statistic2/event-statistic2.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +78,6 @@ import { EventStatistic2Component } from './event-statistic2/event-statistic2.co
     IntervalFilterComponent,
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
-    EventStatistic2Component,
   ],
   imports: [
     CommonModule,
@@ -120,7 +118,6 @@ import { EventStatistic2Component } from './event-statistic2/event-statistic2.co
     IntervalFilterComponent,
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
-    EventStatistic2Component,
   ],
 })
 export class GarbageComponentsModule {}

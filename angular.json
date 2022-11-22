@@ -139,7 +139,192 @@
           }
         }
       }
+    },
+    "ngx-howell": {
+      "projectType": "library",
+      "root": "projects/ngx-howell",
+      "sourceRoot": "projects/ngx-howell/src",
+      "prefix": "hw",
+      "schematics": {
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:component": {
+          "skipTests": true,
+          "skipImport": true,
+          "style": "less"
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true,
+          "flat": true
+        },
+        "@schematics/angular:application": {
+          "strict": true
+        },
+        "@schematics/angular:interface": {
+          "type": "interface"
+        },
+        "@schematics/angular:enum": {}
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/ngx-howell/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ngx-howell/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/ngx-howell/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-howell/src/test.ts",
+            "tsConfig": "projects/ngx-howell/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-howell/karma.conf.js"
+          }
+        }
+      }
+    },
+    "aiop": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "less",
+          "skipTests": true
+        },
+        "@schematics/angular:class": {
+          "skipTests": true
+        },
+        "@schematics/angular:directive": {
+          "skipTests": true
+        },
+        "@schematics/angular:guard": {
+          "skipTests": true
+        },
+        "@schematics/angular:interceptor": {
+          "skipTests": true
+        },
+        "@schematics/angular:pipe": {
+          "skipTests": true
+        },
+        "@schematics/angular:resolver": {
+          "skipTests": true
+        },
+        "@schematics/angular:service": {
+          "skipTests": true
+        }
+      },
+      "root": "projects/aiop",
+      "sourceRoot": "projects/aiop/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/aiop",
+            "index": "projects/aiop/src/index.html",
+            "main": "projects/aiop/src/main.ts",
+            "polyfills": "projects/aiop/src/polyfills.ts",
+            "tsConfig": "projects/aiop/tsconfig.app.json",
+            "inlineStyleLanguage": "less",
+            "assets": [
+              "projects/aiop/src/favicon.ico",
+              "projects/aiop/src/assets"
+            ],
+            "styles": [
+              "projects/aiop/src/styles.less"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "projects/aiop/src/environments/environment.ts",
+                  "with": "projects/aiop/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "aiop:build:production"
+            },
+            "development": {
+              "browserTarget": "aiop:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "aiop:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/aiop/src/test.ts",
+            "polyfills": "projects/aiop/src/polyfills.ts",
+            "tsConfig": "projects/aiop/tsconfig.spec.json",
+            "karmaConfig": "projects/aiop/karma.conf.js",
+            "inlineStyleLanguage": "less",
+            "assets": [
+              "projects/aiop/src/favicon.ico",
+              "projects/aiop/src/assets"
+            ],
+            "styles": [
+              "projects/aiop/src/styles.less"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
-  },
-  "defaultProject": "smart"
+  }
 }

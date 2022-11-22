@@ -29,7 +29,7 @@
           </ng-container>
         </div>
         <div class="map-control">
-          <!-- <app-map-control
+          <app-map-control
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)"
@@ -37,14 +37,14 @@
             (garbageCountClicked)="map.onGarbageCountClicked($event)"
             (garbageFullClicked)="map.onGarbageFullClicked($event)"
             [position]="map.position"
-          ></app-map-control> -->
+          ></app-map-control>
         </div>
       </div>
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
-        <!-- <app-patrol-control
+        <app-patrol-control
           (close)="patrol.onclose()"
           (fullscreen)="patrol.onfullscreen()"
-        ></app-patrol-control> -->
+        ></app-patrol-control>
       </div>
     </div>
     <div class="monitor-body__item">
@@ -86,7 +86,14 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <event-statistic2></event-statistic2>
+        <!-- <app-event-statistic-echarts
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></app-event-statistic-echarts> -->
+        <howell-event-statistic
+          [title]="'混合投放统计表'"
+          [type]="mixIntoType"
+        ></howell-event-statistic>
       </div>
     </div>
     <div class="monitor-body__item">

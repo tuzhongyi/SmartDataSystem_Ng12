@@ -5,7 +5,10 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build --base-href ./",
-    "watch": "ng build --watch --configuration development",
+    "build:hw": "ng build ngx-howell",
+    "pack:hw": "ng pack hw",
+    "package": "npm run build:hw && npm run pack:hw",
+    "watch:hw": "ng build hw --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
@@ -70,6 +73,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "ng-packagr": "^14.2.0",
     "typescript": "~4.7.3",
     "video.js": "^7.14.3"
   }

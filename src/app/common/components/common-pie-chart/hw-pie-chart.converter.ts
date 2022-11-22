@@ -5,20 +5,15 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { Division } from 'src/app/network/model/division.model';
-import { CommonElementListModel } from '../common/components/common-element-list/common-element-list.model';
 import {
   CommonPieChartData,
   CommonPieChartModel,
-} from '../common/components/common-pie-chart/common-pie-chart.model';
-import { Language } from '../common/tools/language';
-import {
-  CollectionScorePieModel,
-  CollectionScoreDes,
-} from '../garbage-system/garbage-collection/components/collection-score-pie/collection-score-pie.model';
-import { ClassificationNumber } from '../network/model/classification-number.mode';
-import { DivisionGarbageScore } from '../network/model/division-garbage-score.model';
-import { GarbageScoreNumber } from '../network/model/garbage-score-num.model';
+} from './common-pie-chart.model';
+import { Language } from '../../tools/language';
+import { CollectionScoreDes } from '../../../garbage-system/garbage-collection/components/collection-score-pie/collection-score-pie.model';
+import { ClassificationNumber } from '../../../network/model/classification-number.mode';
+import { DivisionGarbageScore } from '../../../network/model/division-garbage-score.model';
+import { GarbageScoreNumber } from '../../../network/model/garbage-score-num.model';
 
 @Injectable({
   providedIn: 'root',
