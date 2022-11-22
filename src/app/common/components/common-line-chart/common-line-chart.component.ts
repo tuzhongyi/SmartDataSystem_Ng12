@@ -11,17 +11,9 @@ export class CommonLineChartComponent implements OnInit {
 
   lineOption: EChartsOption = {
     title: {
-      text: '',
+      text: this.title,
     },
-    legend: {
-      left: '70%',
-      textStyle: {
-        color: 'inherit',
-        fontSize: 15,
-        fontWeight: 600,
-      },
-    },
-
+    legend: {},
     xAxis: {
       type: 'category',
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -35,7 +27,7 @@ export class CommonLineChartComponent implements OnInit {
       {
         data: [150, 230, 224, 218, 135, 147, 260],
         type: 'line',
-        name: '单位(吨)',
+        name: '单位(起)',
       },
     ],
   };

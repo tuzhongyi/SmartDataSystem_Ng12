@@ -15,7 +15,7 @@ import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
-import * as echarts from 'echarts';
+
 import 'src/assets/echart-theme/adsame.js';
 // echarts.registerTheme('adsame', Adsame);
 
