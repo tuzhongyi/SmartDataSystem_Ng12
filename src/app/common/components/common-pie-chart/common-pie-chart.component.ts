@@ -25,22 +25,21 @@ export class CommonPieChartComponent implements OnInit {
   @Input('business') _business: ICommonPieCharBusiness;
 
   model: CommonPieChartModel<IModel> | null = null;
-
   pieOption: EChartsOption = {
-    color: [
-      '#21e452',
-      '#fac858',
-      '#ef6464',
-      '#ee6666',
-      '#73c0de',
-      '#3ba272',
-      '#fc8452',
-      '#9a60b4',
-      '#ea7ccc',
-    ],
     series: [
       {
-        name: 'Collection Score',
+        color: [
+          '#21e452',
+          '#fac858',
+          '#ef6464',
+          '#ee6666',
+          '#73c0de',
+          '#3ba272',
+          '#fc8452',
+          '#9a60b4',
+          '#ea7ccc',
+        ],
+        name: 'Collection Pie',
         type: 'pie',
         center: ['50%', '50%'],
         radius: ['30%', '65%'],

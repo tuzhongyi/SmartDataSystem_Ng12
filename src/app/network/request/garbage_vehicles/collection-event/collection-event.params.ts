@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-06 14:50:26
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-06 15:05:54
+ * @Last Modified time: 2022-11-22 15:20:42
  */
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EventType } from 'src/app/enum/event-type.enum';

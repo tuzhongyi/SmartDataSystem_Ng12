@@ -1,5 +1,9 @@
 import { InjectionToken } from '@angular/core';
-import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import {
+  LineSeriesOption,
+  XAXisComponentOption,
+  YAXisComponentOption,
+} from 'echarts';
 import { IModel } from 'src/app/network/model/model.interface';
 
 export const COMMON_LINE_CHART_TOKEN = new InjectionToken<IModel>(
@@ -13,16 +17,14 @@ export interface ICommonLineCharBusiness<T = any> {
 }
 
 export class CommonLineChartModel<T = any> {
-  XData!: Array<string>;
+  /**x坐标轴信息 */
+  xAxis!: XAXisComponentOption;
 
-  // 数量详情
-  YData!: Array<string | number>;
+  /**y坐标轴信息 一般不用配置，留个坑 */
+  yAxis?: YAXisComponentOption;
 
-  RawData?: T;
-}
+  /**折线图数据 */
+  series!: LineSeriesOption[];
 
-export class CommonLineChartData<T = any> {
-  Count!: number;
-  Label!: string;
   RawData?: T;
 }

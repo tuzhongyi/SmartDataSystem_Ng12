@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
-import { VehicleEventRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.service';
+import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
+import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
 import { CollectionScoreConverter } from './collection-score.converter';
 import { CollectionScoreSearchInfo } from './collection-score.model';
 
 @Injectable()
 export class CollectionScoreBusiness {
   constructor(
-    private eventRequest: VehicleEventRequestService,
+    private eventRequest: CollectionEventRequestService,
     private _converter: CollectionScoreConverter
   ) {}
 

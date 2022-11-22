@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
-import { VehicleEventRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.service';
+import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
+import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
 import { CollectionPointWeightConverter } from './collection-point-weight.converter';
 import {
   CollectionPointWeightModel,
@@ -10,7 +10,7 @@ import {
 @Injectable()
 export class CollectionPointWeightBusiness {
   constructor(
-    private _vehicleEventRequest: VehicleEventRequestService,
+    private _vehicleEventRequest: CollectionEventRequestService,
     private _converter: CollectionPointWeightConverter
   ) {}
   async init(searchInfo: CollectionPointWeightSearchInfo) {

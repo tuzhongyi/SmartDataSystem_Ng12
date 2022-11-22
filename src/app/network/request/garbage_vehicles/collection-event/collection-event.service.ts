@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-11-06 15:08:52
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-11-06 15:08:52
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-11-22 15:13:02
  */
 import { Injectable } from '@angular/core';
 import { classToPlain } from 'class-transformer';
@@ -25,12 +25,12 @@ import {
   GetGarbageCollectionEventRecordsParams,
   GetRelayStateChangeEventRecordsParams,
   GetVehicleOnlineEventRecordsParams,
-} from './vehicle-event.params';
+} from './collection-event.params';
 
 @Injectable({
   providedIn: 'root',
 })
-export class VehicleEventRequestService {
+export class CollectionEventRequestService {
   private basic: BaseRequestService;
 
   constructor(private _http: HowellAuthHttpService) {

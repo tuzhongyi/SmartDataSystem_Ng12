@@ -11,7 +11,7 @@ export interface ICommonPieCharBusiness<T = any> {
 }
 
 export class CommonPieChartModel<T = any> {
-  // 数量详情
+  /* 数量详情 */
   Data!: CommonPieChartData[];
 
   RawData?: T;

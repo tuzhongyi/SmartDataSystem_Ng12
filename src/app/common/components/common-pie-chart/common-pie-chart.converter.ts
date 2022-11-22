@@ -10,7 +10,6 @@ import {
   CommonPieChartModel,
 } from './common-pie-chart.model';
 import { Language } from '../../tools/language';
-import { CollectionScoreDes } from '../../../garbage-system/garbage-collection/components/collection-score-pie/collection-score-pie.model';
 import { ClassificationNumber } from '../../../network/model/classification-number.mode';
 import { DivisionGarbageScore } from '../../../network/model/division-garbage-score.model';
 import { GarbageScoreNumber } from '../../../network/model/garbage-score-num.model';
@@ -18,7 +17,7 @@ import { GarbageScoreNumber } from '../../../network/model/garbage-score-num.mod
 @Injectable({
   providedIn: 'root',
 })
-export class HWPieChartConverter extends AbstractCommonModelConverter<
+export class CommonPieChartConverter extends AbstractCommonModelConverter<
   CommonPieChartModel<any>
 > {
   Convert(source: modelSource, ...res: any[]) {
@@ -60,7 +59,7 @@ export class HWPieChartConverter extends AbstractCommonModelConverter<
         return (a.Score - b.Score) * -1;
       });
       model.Data = item.Scores.map((score) => {
-        let data = new CollectionScoreDes<GarbageScoreNumber>();
+        let data = new CommonPieChartData<GarbageScoreNumber>();
         data.Count = score.Number;
         data.Label = Language.CollectionScore(score.Score);
         data.RawData = score;

@@ -17,7 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 import 'src/assets/echart-theme/adsame.js';
-// echarts.registerTheme('adsame', Adsame);
+import 'src/assets/echart-theme/dark.js';
 
 registerLocaleData(zh, 'zh-CN');
 

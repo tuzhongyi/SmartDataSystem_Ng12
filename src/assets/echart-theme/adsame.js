@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2022-11-10 14:57:10 
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-21 18:07:35
+ * @Last Modified time: 2022-11-22 15:51:18
  */
 
 (function (root, factory) {
@@ -341,7 +341,7 @@
       "textStyle": {
         "color": "inherit",
         "fontSize": 12
-      }
+      },
     },
     "tooltip": {
       "mainType": "tooltip",

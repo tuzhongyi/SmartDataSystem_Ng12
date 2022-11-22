@@ -14,7 +14,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   title = '今日垃圾分类评分';
   subscription: Subscription;
 
-  @ViewChild(CommonPieChartComponent) hwChart?: CommonPieChartComponent;
+  @ViewChild(CommonPieChartComponent) pieChart?: CommonPieChartComponent;
 
   constructor(
     public business: CollectionScorePieBusiness,
@@ -25,7 +25,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
         this.business.searchInfo = {
           DivisionId: this._globalStorage.divisionId,
         };
-        this.hwChart?.update();
+        this.pieChart?.update();
       }
     );
   }

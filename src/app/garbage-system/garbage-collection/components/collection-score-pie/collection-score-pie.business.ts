@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { HWPieChartConverter } from 'src/app/common/components/common-pie-chart/hw-pie-chart.converter';
+import { CommonPieChartConverter } from 'src/app/common/components/common-pie-chart/common-pie-chart.converter';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
-import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 
 @Injectable()
 export class CollectionScorePieBusiness implements ICommonPieCharBusiness {
@@ -15,7 +14,7 @@ export class CollectionScorePieBusiness implements ICommonPieCharBusiness {
   constructor(
     private _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: CollectionDivisionRequestService,
-    private _converter: HWPieChartConverter
+    private _converter: CommonPieChartConverter
   ) {}
 
   async init() {
@@ -29,4 +28,8 @@ export class CollectionScorePieBusiness implements ICommonPieCharBusiness {
       this.searchInfo.DivisionId
     );
   }
+}
+
+export interface ICollectionScorePieSearchInfo {
+  DivisionId: string;
 }

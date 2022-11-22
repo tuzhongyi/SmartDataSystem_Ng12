@@ -1,40 +1,65 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { EChartsOption } from 'echarts';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { EChartsOption, LineSeriesOption } from 'echarts';
+import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { CommonLineChartBusiness } from './common-line-chart.business';
+import {
+  CommonLineChartModel,
+  COMMON_LINE_CHART_TOKEN,
+  ICommonLineCharBusiness,
+} from './common-line-chart.model';
 
 @Component({
   selector: 'common-line-chart',
   templateUrl: './common-line-chart.component.html',
   styleUrls: ['./common-line-chart.component.less'],
-  providers: [CommonLineChartBusiness],
+  providers: [
+    {
+      provide: COMMON_LINE_CHART_TOKEN,
+      useClass: CommonLineChartBusiness,
+    },
+  ],
 })
 export class CommonLineChartComponent implements OnInit {
   @Input() title: string = '';
+  @Input() theme = EChartsTheme.adsame;
+  @Input('business') _business: ICommonLineCharBusiness;
+
+  model: CommonLineChartModel | null = null;
 
   lineOption: EChartsOption = {
     title: {
       text: this.title,
     },
     legend: {},
-    xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    },
+    xAxis: {},
     yAxis: {
       type: 'value',
     },
   };
-  merge: EChartsOption = {
-    series: [
-      {
-        data: [150, 230, 224, 218, 135, 147, 260],
-        type: 'line',
-        name: '单位(起)',
+  merge: EChartsOption = {};
+
+  constructor(
+    @Inject(COMMON_LINE_CHART_TOKEN) business: ICommonLineCharBusiness
+  ) {
+    this._business = business;
+  }
+
+  async ngOnInit() {
+    this._init();
+  }
+
+  private async _init() {
+    this.model = await this._business.init();
+
+    this.merge = {
+      title: {
+        text: this.title,
       },
-    ],
-  };
-
-  constructor() {}
-
-  ngOnInit(): void {}
+      xAxis: this.model.xAxis,
+      series: this.model.series,
+    };
+  }
+  update() {
+    this._init();
+  }
 }

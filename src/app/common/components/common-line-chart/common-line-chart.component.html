@@ -1,13 +1,11 @@
-<div class="common-line-chart vertical-layout">
-  <div class="common-line-chart__main vertical-main">
-    <div
-      class="chart-container"
-      id="chartContainer"
-      #chartContainer
-      echarts
-      [options]="lineOption"
-      [merge]="merge"
-      theme="adsame"
-    ></div>
-  </div>
+<div class="common-line-chart">
+  <div
+    class="chart-container"
+    id="chartContainer"
+    #chartContainer
+    echarts
+    [theme]="theme"
+    [options]="lineOption"
+    [merge]="merge"
+  ></div>
 </div>
