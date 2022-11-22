@@ -2,30 +2,63 @@
  * @Author: pmx
  * @Date: 2021-10-11 13:11:58
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-21 17:00:26
+ * @Last Modified time: 2022-11-22 14:06:36
  */
 import { Component, OnInit } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionListBusiness } from './division-list.business';
-import { CommonElementListModel } from 'src/app/common/components/common-element-list/common-element-list.model';
 
 @Component({
   selector: 'app-division-list',
   templateUrl: './division-list.component.html',
   styleUrls: ['./division-list.component.less'],
-  providers: [DivisionListBusiness],
+  providers: [
+    {
+      provide: DivisionListBusiness,
+      useFactory: function (business: IService<Division>) {
+        return new DivisionListBusiness(business);
+      },
+      deps: [DivisionRequestService],
+    },
+  ],
 })
 export class DivisionListComponent implements OnInit {
-  constructor(public business: DivisionListBusiness) {}
+  // 显式声明null类型，表示类实例一定有该属性
+  currentDivision: Division | null = null;
+  childDivisions: Division[] | null = null;
+  selectedId: string = '';
 
-  ngOnInit(): void {}
+  constructor(
+    private divisionListBusiness: DivisionListBusiness,
+    private storeService: GlobalStorageService
+  ) {}
 
-  itemClick(model: CommonElementListModel) {
-    if (model.RawData && model.RawData instanceof Division)
-      this.business.notifyMessage(model.RawData);
+  ngOnInit(): void {
+    this.loadData();
+  }
+  async loadData() {
+    let divisionId = this.storeService.divisionId;
+    this.currentDivision = await this.divisionListBusiness.get(divisionId);
+
+    // console.log('currentDivision', this.currentDivision);
+
+    this.childDivisions = await this.divisionListBusiness.listChildDivisions(
+      divisionId
+    );
+    // console.log('child divisions ', this.childDivisions);
+  }
+  itemClick(division: Division | null) {
+    // console.log(division);
+
+    if (division) {
+      this.selectedId = division.Id;
+      this.storeService.divisionId = division.Id;
+      this.storeService.divisionType = division.DivisionType;
+
+      this.storeService.statusChange.emit();
+    }
   }
 }
