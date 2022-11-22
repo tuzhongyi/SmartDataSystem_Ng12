@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IHWPieCharBusiness } from 'src/app/common/components/hw-pie-chart/hw-pie-chart.model';
+import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { HWPieChartConverter } from 'src/app/converter/hw-pie-chart.converter';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
@@ -7,7 +7,7 @@ import { CollectionDivisionRequestService } from 'src/app/network/request/garbag
 import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 
 @Injectable()
-export class CollectionScorePieBusiness implements IHWPieCharBusiness {
+export class CollectionScorePieBusiness implements ICommonPieCharBusiness {
   searchInfo: ICollectionScorePieSearchInfo = {
     DivisionId: this._globalStorage.divisionId,
   };

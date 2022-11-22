@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IHWPieCharBusiness } from 'src/app/common/components/hw-pie-chart/hw-pie-chart.model';
+import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { HWPieChartConverter } from 'src/app/converter/hw-pie-chart.converter';
 import { GetCollectionPointNumberParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
 
 @Injectable()
-export class CollectionPointPieBusiness implements IHWPieCharBusiness {
+export class CollectionPointPieBusiness implements ICommonPieCharBusiness {
   searchInfo: ICollectionPointPieSearchInfo = {};
 
   constructor(

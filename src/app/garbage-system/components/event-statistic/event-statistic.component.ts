@@ -132,7 +132,6 @@ export class EventStatisticComponent
       TimeUnit.Hour,
       this.currentDate
     );
-    // console.log(data);
 
     let res = data.map((v) => {
       return this._converter.Convert(v, this.currentType);

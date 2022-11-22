@@ -54,7 +54,8 @@ import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage
 import { RankComponent } from './rank/rank.component';
 import { SmallTableComponent } from './small-table/small-table.component';
 import { CommonElementListComponent } from './common-element-list/common-element-list.component';
-import { HWPieChartComponent } from './hw-pie-chart/hw-pie-chart.component';
+import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
+import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -112,5 +113,6 @@ export const CUSTOM_COMPONENTS = [
   RankComponent,
   SmallTableComponent,
   CommonElementListComponent,
-  HWPieChartComponent,
+  CommonPieChartComponent,
+  CommonLineChartComponent,
 ];

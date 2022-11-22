@@ -1,30 +1,30 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { IModel } from 'src/app/network/model/model.interface';
-import { HWPieChartBusiness } from './hw-pie-chart.business';
+import { CommonPieChartBusiness } from './common-pie-chart.business';
 import {
-  HWPieChartModel,
-  HW_PIE_CHART_TOKEN,
-  IHWPieCharBusiness,
-} from './hw-pie-chart.model';
+  CommonPieChartModel,
+  COMMON_PIE_CHART_TOKEN,
+  ICommonPieCharBusiness,
+} from './common-pie-chart.model';
 
 @Component({
-  selector: 'hw-pie-chart',
-  templateUrl: './hw-pie-chart.component.html',
-  styleUrls: ['./hw-pie-chart.component.less'],
+  selector: 'common-pie-chart',
+  templateUrl: './common-pie-chart.component.html',
+  styleUrls: ['./common-pie-chart.component.less'],
   providers: [
     {
-      provide: HW_PIE_CHART_TOKEN,
-      useClass: HWPieChartBusiness,
+      provide: COMMON_PIE_CHART_TOKEN,
+      useClass: CommonPieChartBusiness,
     },
   ],
 })
-export class HWPieChartComponent implements OnInit {
+export class CommonPieChartComponent implements OnInit {
   @Input() title: string = '';
 
-  @Input('business') _business: IHWPieCharBusiness;
+  @Input('business') _business: ICommonPieCharBusiness;
 
-  model: HWPieChartModel<IModel> | null = null;
+  model: CommonPieChartModel<IModel> | null = null;
 
   pieOption: EChartsOption = {
     color: [
@@ -95,7 +95,9 @@ export class HWPieChartComponent implements OnInit {
   };
   merge: EChartsOption = {};
 
-  constructor(@Inject(HW_PIE_CHART_TOKEN) business: IHWPieCharBusiness) {
+  constructor(
+    @Inject(COMMON_PIE_CHART_TOKEN) business: ICommonPieCharBusiness
+  ) {
     this._business = business;
   }
 

@@ -8,9 +8,9 @@ import {
 import { Division } from 'src/app/network/model/division.model';
 import { CommonElementListModel } from '../common/components/common-element-list/common-element-list.model';
 import {
-  HWPieChartData,
-  HWPieChartModel,
-} from '../common/components/hw-pie-chart/hw-pie-chart.model';
+  CommonPieChartData,
+  CommonPieChartModel,
+} from '../common/components/common-pie-chart/common-pie-chart.model';
 import { Language } from '../common/tools/language';
 import {
   CollectionScorePieModel,
@@ -24,7 +24,7 @@ import { GarbageScoreNumber } from '../network/model/garbage-score-num.model';
   providedIn: 'root',
 })
 export class HWPieChartConverter extends AbstractCommonModelConverter<
-  HWPieChartModel<any>
+  CommonPieChartModel<any>
 > {
   Convert(source: modelSource, ...res: any[]) {
     if (Array.isArray(source)) {
@@ -41,10 +41,10 @@ export class HWPieChartConverter extends AbstractCommonModelConverter<
   }
 
   private _fromClassificationNumber(numbers: ClassificationNumber[]) {
-    let model = new HWPieChartModel<ClassificationNumber[]>();
+    let model = new CommonPieChartModel<ClassificationNumber[]>();
 
     model.Data = numbers.map((num) => {
-      let data = new HWPieChartData();
+      let data = new CommonPieChartData();
       data.Count = num.Number;
       data.Label = Language.CollectionPointClassification(num.Classification);
       data.RawData = num;
@@ -57,7 +57,7 @@ export class HWPieChartConverter extends AbstractCommonModelConverter<
   }
 
   private _fromDivisionGarbageScore(item: DivisionGarbageScore) {
-    let model = new HWPieChartModel();
+    let model = new CommonPieChartModel();
 
     if (item.Scores) {
       // 好评，中评，差评顺序

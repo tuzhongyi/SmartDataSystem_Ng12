@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HWPieChartComponent } from 'src/app/common/components/hw-pie-chart/hw-pie-chart.component';
+import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionScorePieBusiness } from './collection-score-pie.business';
 
@@ -14,7 +14,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   title = '今日垃圾分类评分';
   subscription: Subscription;
 
-  @ViewChild(HWPieChartComponent) hwChart?: HWPieChartComponent;
+  @ViewChild(CommonPieChartComponent) hwChart?: CommonPieChartComponent;
 
   constructor(
     public business: CollectionScorePieBusiness,

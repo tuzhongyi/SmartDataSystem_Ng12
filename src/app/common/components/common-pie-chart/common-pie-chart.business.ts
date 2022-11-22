@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HWPieChartModel, IHWPieCharBusiness } from './hw-pie-chart.model';
+import {
+  CommonPieChartModel,
+  ICommonPieCharBusiness,
+} from './common-pie-chart.model';
 
 @Injectable()
-export class HWPieChartBusiness implements IHWPieCharBusiness {
+export class CommonPieChartBusiness implements ICommonPieCharBusiness {
   constructor() {}
   async init() {
-    let model = new HWPieChartModel();
+    let model = new CommonPieChartModel();
 
     model.Data = [
       {

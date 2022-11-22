@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-10 18:15:43
+ * @Last Modified time: 2022-11-21 17:45:31
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -138,6 +138,8 @@ export class Language {
 
   static EventType(type: EventType) {
     switch (type) {
+      case EventType.None:
+        return Language.json.EventType.None;
       case EventType.IllegalDrop:
         return Language.json.EventType.IllegalDrop;
       case EventType.MixedInto:
@@ -153,7 +155,7 @@ export class Language {
       case EventType.GarbageDropHandle:
         return Language.json.EventType.GarbageDropHandle;
       default:
-        return '';
+        return Language.json.EventType.Default;
     }
   }
 
