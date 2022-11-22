@@ -14,7 +14,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   title = '垃圾收运点位';
   subscription: Subscription;
 
-  @ViewChild(CommonPieChartComponent) hwChart?: CommonPieChartComponent;
+  @ViewChild(CommonPieChartComponent) chart?: CommonPieChartComponent;
 
   constructor(
     public business: CollectionPointPieBusiness,
@@ -25,7 +25,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
         this.business.searchInfo = {
           DivisionIds: [this._globalStorage.divisionId],
         };
-        this.hwChart?.update();
+        this.chart?.update();
       }
     );
   }

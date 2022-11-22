@@ -3,7 +3,7 @@ import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-cha
 import { CommonPieChartConverter } from 'src/app/common/components/common-pie-chart/common-pie-chart.converter';
 import { GetCollectionPointNumberParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
-import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 
 @Injectable()
 export class CollectionPointPieBusiness implements ICommonPieCharBusiness {
@@ -27,4 +27,8 @@ export class CollectionPointPieBusiness implements ICommonPieCharBusiness {
       params.Classifications = this.searchInfo.Classifications;
     return this._collectionPointsRequest.statistic.number(params);
   }
+}
+export interface ICollectionPointPieSearchInfo {
+  DivisionIds?: string[];
+  Classifications?: CollectionPointClassification[];
 }
