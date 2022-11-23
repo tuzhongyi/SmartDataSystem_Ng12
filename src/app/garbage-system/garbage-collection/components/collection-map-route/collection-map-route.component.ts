@@ -4,17 +4,19 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { wait } from 'src/app/common/tools/tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
+import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
+import { CollectionMapRouteControlSource } from './collection-map-route-control/collection-map-route-control.model';
 import { CollectionMapRouteBusiness } from './collection-map-route.business';
 
 @Component({
   selector: 'collection-map-route',
   templateUrl: './collection-map-route.component.html',
   styleUrls: ['./collection-map-route.component.less'],
-  providers: [CollectionMapRouteBusiness],
+  providers: [CollectionMapRouteBusiness, CollectionMapControlConverter],
 })
 export class CollectionMapRouteComponent implements OnInit {
   @Input()
-  model?: IModel;
+  model?: GarbageVehicle;
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -37,19 +39,30 @@ export class CollectionMapRouteComponent implements OnInit {
   }
 
   //#region template event
-  onLoad(event: Event) {
+  onIframeLoad(event: Event) {
     wait(
       () => {
         return !!this.iframe;
       },
       () => {
-        this.business.load(this.iframe!);
+        this.business.init(this.iframe!);
       }
     );
   }
   //#endregion
 
   onselected(item: IModel) {
-    this.model = item;
+    this.model = item as GarbageVehicle;
+    this.business.load(this.model);
+  }
+
+  onloaded(source: CollectionMapRouteControlSource) {
+    this.business.ready(source.points);
+  }
+  onscore(e: any) {
+    console.log(e);
+  }
+  onroute(date: Date) {
+    this.business.routing(date);
   }
 }

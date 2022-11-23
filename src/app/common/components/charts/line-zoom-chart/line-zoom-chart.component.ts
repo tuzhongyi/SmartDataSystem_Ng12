@@ -17,6 +17,7 @@ import {
   LineZoomChartModel,
   LineZoomLinePanel,
   LineZoomScatterPanel,
+  TimeString,
 } from './line-zoom-chart.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -261,16 +262,5 @@ export class LineZoomChartComponent
 
   onEventPanelClicked(model: ImageControlModel) {
     this.image.emit(model);
-  }
-}
-
-class TimeString extends Date {
-  constructor(date: Date) {
-    super(date);
-    this.date = date;
-  }
-  date: Date;
-  toString() {
-    return formatDate(this.date, 'H:mm', 'en');
   }
 }

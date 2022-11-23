@@ -25,15 +25,7 @@ export class GisPoint implements IModel {
 }
 
 /**	车辆行径坐标	*/
-export class GisRoutePoint implements IModel {
-  /**	Double	经度	M	*/
-  Longitude!: number;
-  /**	Double	纬度	M	*/
-  Latitude!: number;
-  /**	Double	高度	M	*/
-  Altitude!: number;
-  /**	Int32	坐标系类型	O	*/
-  GisType?: GisType;
+export class GisRoutePoint extends GisPoint {
   /**	DateTime	记录时间	M	*/
   @Transform(transformDateTime)
   Time!: Date;

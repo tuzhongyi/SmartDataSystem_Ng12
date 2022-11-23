@@ -25,7 +25,7 @@ export class CollectionMapRouteDeviceListBusiness
     let data = await this.getData(name);
     let model = this.Converter.Convert(data);
     model = model.sort((a, b) => {
-      return a.name.localeCompare(b.name) && a.name.length - b.name.length;
+      return a.name.length - b.name.length || a.name.localeCompare(b.name);
     });
     return model;
   }
