@@ -1,12 +1,12 @@
 <div class="garbage-station-manage hw-horizontal-layout">
   <ng-container *ngIf="showOperate">
     <toast-window>
-      <howell-garbage-vehicle-operate
-        [state]="state"
-        [vehicleId]="vehicleId"
-        [divisionId]="divisionId"
-        (closeEvent)="closeForm($event)"
-      ></howell-garbage-vehicle-operate>
+      <howell-garbage-vehicle-operate>
+        <!-- [state]="state"
+      [vehicleId]="vehicleId"
+      [divisionId]="divisionId"
+      (closeEvent)="closeForm($event)" -->
+      </howell-garbage-vehicle-operate>
     </toast-window>
   </ng-container>
   <ng-container *ngIf="showConfirm">

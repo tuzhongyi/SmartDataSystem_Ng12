@@ -1,4 +1,5 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { Language } from 'src/app/common/tools/language';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleModel } from './garbage-vehicle-manage.model';
@@ -31,8 +32,11 @@ class GarbageVehicleItemConverter
     let model = new GarbageVehicleModel<GarbageVehicle>();
     model.Id = source.Id;
     model.Name = source.Name;
-    model.Type = source.VehicleType;
+    model.Type = Language.VehicleType(source.VehicleType);
     model.data = source;
+    model.IMEI = source.IMEI ?? '-';
+    model.No = source.No;
+    model.PlateNo = source.PlateNo ?? '-';
     return model;
   }
 }

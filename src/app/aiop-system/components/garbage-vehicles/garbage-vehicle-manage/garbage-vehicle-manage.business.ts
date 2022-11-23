@@ -35,7 +35,7 @@ export class GarbageVehicleManageBusiness
     let model = this.Converter.Convert(data);
 
     model.Data = model.Data.sort((a, b) => {
-      return LocaleCompare.compare(a.Name ?? '', b.Name ?? '');
+      return LocaleCompare.compare(a.Name, b.Name, true);
     });
 
     return model;
