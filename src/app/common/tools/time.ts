@@ -1,12 +1,37 @@
 // new Date(time)不影响 time
 export class Time {
-  // 任意一天的开始时间
-  static beginTime(time: Date) {
-    return new Date(new Date(time).setHours(0, 0, 0, 0));
+  /**
+   *  日期起始：1970-1-1 00:00:00 UTC
+   * @param time
+   * @returns 任意一天的开始时间（中国区）
+   */
+  static beginTime(time: Date | string | number) {
+    if (time instanceof Date) {
+      return new Date(new Date(time).setHours(0, 0, 0, 0));
+    } else if (typeof time == 'string') {
+      // 有效的日期字符串
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        throw new TypeError('INVALID TIME');
+      }
+      return new Date(new Date(time).setHours(0, 0, 0, 0));
+    } else if (typeof time == 'number' && time > 0) {
+      return new Date(new Date(time).setHours(0, 0, 0, 0));
+    }
+    throw new TypeError('INVALID TYPE');
   }
   // 任意一天的结束时间
-  static endTime(time: Date) {
-    return new Date(new Date(time).setHours(23, 59, 59, 999));
+  static endTime(time: Date | string | number) {
+    if (time instanceof Date) {
+      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+    } else if (typeof time == 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        throw new TypeError('INVALID TIME');
+      }
+      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+    } else if (typeof time == 'number' && time > 0) {
+      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+    }
+    throw new TypeError('INVALID TYPE');
   }
   // 后退n天
   static backDate(time: Date, n: number) {

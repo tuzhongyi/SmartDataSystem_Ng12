@@ -14,7 +14,7 @@ import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
-import { EvemtStatisticEChartsComponent } from './event-statistic-echarts/event-statistic-echarts.component';
+import { EvemtStatisticLineComponent } from './event-statistic-line/event-statistic-line.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
@@ -53,7 +53,7 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    EvemtStatisticEChartsComponent,
+    EvemtStatisticLineComponent,
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsTableComponent,
@@ -96,7 +96,7 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    EvemtStatisticEChartsComponent,
+    EvemtStatisticLineComponent,
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsTableComponent,
