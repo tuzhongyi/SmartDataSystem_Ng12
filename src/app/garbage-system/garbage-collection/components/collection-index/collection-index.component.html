@@ -14,32 +14,9 @@
           <collection-division-list></collection-division-list>
         </div>
       </div>
-      <div class="monitor-body__item monitor-body__item--map">
-        <div class="monitor-body__wrapper">
-          <div></div>
-          <div class="map-control">
-            <collection-map-control
-              [position]="map.position"
-              (route)="map.onroute($event)"
-            ></collection-map-control>
-          </div>
-        </div>
-        <!-- <div class="monitor-body__wrapper patrol">
-        <app-patrol-control
-          (close)="patrol.onclose()"
-          (fullscreen)="patrol.onfullscreen()"
-        ></app-patrol-control>
-      </div> -->
-      </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
           <collection-device-state></collection-device-state>
-        </div>
-      </div>
-      <div class="monitor-body__item">
-        <div class="monitor-body__wrapper">
-          <!-- <app-negative-comment-rank> </app-negative-comment-rank> -->
-          <collection-score-rank></collection-score-rank>
         </div>
       </div>
       <div class="monitor-body__item">
@@ -49,26 +26,29 @@
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
+          <collection-score-pie></collection-score-pie>
+        </div>
+      </div>
+      <div class="monitor-body__item">
+        <div class="monitor-body__wrapper">
           <collection-score [type]="CollectionScore.Good"></collection-score>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-statistic
-            [type]="TrashCanType.Dry"
-          ></collection-statistic>
+          <collection-event-line></collection-event-line>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-statistic
+          <collection-event-line
             [type]="TrashCanType.Wet"
-          ></collection-statistic>
+          ></collection-event-line>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-point></collection-point>
+          <collection-point-pie></collection-point-pie>
         </div>
       </div>
     </div>
