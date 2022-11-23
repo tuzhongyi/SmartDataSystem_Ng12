@@ -1,20 +1,15 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { VehicleOnlineEventRecord } from 'src/app/network/model/vehicle-event-record.model';
-import { GetVehicleOnlineEventRecordsParams } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.params';
-import { VehicleEventRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-event/vehicle-event.service';
+import { GetVehicleOnlineEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
+import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class CollectionMapRouteControlOnlineBusiness
   implements IBusiness<VehicleOnlineEventRecord[]>
 {
-  constructor(private service: VehicleEventRequestService) {}
+  constructor(private service: CollectionEventRequestService) {}
 
   async load(
     vehicleId: string,
