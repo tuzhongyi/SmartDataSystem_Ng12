@@ -7,7 +7,7 @@
         <thead>
           <tr>
             <th>车辆名称</th>
-            <th>车辆类型</th>
+            <th>车牌号</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -39,7 +39,7 @@
         <tr>
           <td [title]="item.Name">{{ item.Name }}</td>
           <td>
-            {{ item.Type | vehicleType }}
+            {{ item.PlatNo }}
           </td>
           <td>
             <span>

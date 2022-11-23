@@ -18,7 +18,7 @@ export class CollectionVehicleConverter extends AbstractCommonModelConverter<Col
     let model = new CollectionVehicleModel<GarbageVehicle>();
     model.Id = item.Id;
     model.Name = item.Name;
-    model.Type = item.VehicleType;
+    model.PlatNo = item.PlateNo ?? '未知';
     model.rawData = item;
 
     return model;

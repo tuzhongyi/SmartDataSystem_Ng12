@@ -6,6 +6,7 @@ import {
 } from 'src/app/common/components/common-line-chart/common-line-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -17,18 +18,19 @@ export class EventStatisticLineBusiness implements ICommonLineCharBusiness {
     BeginTime: Time.beginTime(Date.now()),
     EndTime: Time.endTime(Date.now()),
     TimeUnit: TimeUnit.Hour,
+    EventType: EventType.IllegalDrop,
   };
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _globalStorage: GlobalStorageService,
     private _converter: CommonLineChartConverter
-  ) {
-    console.log('sdfsdf', this._globalStorage.divisionId);
-  }
+  ) {}
   async init() {
-    let res = await this._historyList();
-    console.log(res);
-    return new CommonLineChartModel();
+    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    let { Data } = await this._historyList();
+
+    let res = this._converter.Convert(Data, this.searchInfo.EventType, 'hello');
+    return res;
   }
   private _historyList() {
     let params = new GetDivisionEventNumbersParams();
@@ -48,4 +50,5 @@ export interface IEventStatisticLineSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   TimeUnit: TimeUnit;
+  EventType: EventType;
 }
