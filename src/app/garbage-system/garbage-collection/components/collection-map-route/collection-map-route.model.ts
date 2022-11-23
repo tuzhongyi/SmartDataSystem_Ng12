@@ -1,4 +1,7 @@
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+
 export interface ICollectionMapRouteBusiness {
   src: string;
-  load(iframe: HTMLIFrameElement): void;
+  init(iframe: HTMLIFrameElement): void;
+  load(source: GarbageVehicle): void;
 }

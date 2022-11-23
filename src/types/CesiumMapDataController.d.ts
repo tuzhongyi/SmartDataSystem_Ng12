@@ -192,7 +192,7 @@ declare namespace CesiumDataController {
   class DrawLineOptions extends DrawOptions {
     extrudedHeight: number;
     width: number;
-    img: string;
+    img?: string;
   }
 
   /**
@@ -518,6 +518,7 @@ declare namespace CesiumDataController {
   class PointOptions {
     id: string;
     color?: Color;
+    position: Position;
   }
 
   class LabelOptions {

@@ -1,10 +1,16 @@
 <div class="collection-map-route">
   <div class="collection-map-route-content">
-    <iframe #iframe [src]="src" (load)="onLoad($event)" class=""></iframe>
+    <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
   </div>
 
-  <div class="collection-map-route-controls">
-    <collection-map-route-control> </collection-map-route-control>
+  <div class="collection-map-route-controls" *ngIf="!!model">
+    <collection-map-route-control
+      [sourceId]="model.Id"
+      (loaded)="onloaded($event)"
+      (scoreclick)="onscore($event)"
+      (routeclick)="onroute($event)"
+    >
+    </collection-map-route-control>
   </div>
   <div class="panel collection-map-route-device-list">
     <collection-map-route-device-list (select)="onselected($event)">

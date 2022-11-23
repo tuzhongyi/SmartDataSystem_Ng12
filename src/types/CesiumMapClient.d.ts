@@ -162,7 +162,7 @@ declare namespace CesiumMap {
     /// <param name="point" type="CesiumMapClient.Point">点位信息</param>
     Create(point: CesiumDataController.Point): CesiumDataController.Point;
 
-    Set(opts: CesiumDataController.Point): CesiumDataController.Point;
+    Set(opts: CesiumDataController.PointOptions[]): CesiumDataController.Point;
     Select(pointId: string): CesiumDataController.Point;
     /// <summary>设置点位状态</summary>
     /// <param name="status" type="{id:string, status:number}">点位状态</param>
@@ -218,6 +218,57 @@ declare namespace CesiumMap {
     OnMouseDoubleClick(position: CesiumDataController.Position): void;
     OnPointVisibieChanged(pointId: string, value: boolean): void;
   }
+  interface Draw {
+    Line: DrawLine;
+    Polyline: DrawPolyline;
+    Route: DrawRoute;
+  }
+  interface DrawLine {
+    Drawing(
+      begin: CesiumDataController.Position,
+      end: CesiumDataController.Position,
+      opts: CesiumDataController.DrawLineOptions,
+      over: boolean
+    ): CesiumDataController.Polyline;
+    Redraw(
+      id: string,
+      begin: CesiumDataController.Position,
+      end: CesiumDataController.Position,
+      opts: any,
+      over: boolean
+    ): CesiumDataController.Polyline;
+    Remove(id: string): boolean;
+  }
+  interface DrawEllipsoid {}
+  interface DrawPolyline {
+    Drawing(
+      positions: Array<CesiumDataController.Position>,
+      opts?: CesiumDataController.DrawLineOptions,
+      over?: boolean
+    ): CesiumDataController.Polyline;
+    Redraw(
+      id: string,
+      positions: Array<CesiumDataController.Position>,
+      opts?: CesiumDataController.DrawLineOptions,
+      over?: boolean
+    ): CesiumDataController.Polyline;
+    Remove(id: string): boolean;
+  }
+  interface DrawPolygon {}
+  interface DrawHeatmap {}
+  interface DrawRouting {}
+  interface DrawRoute {
+    Create(
+      positions: CesiumDataController.Position[],
+      opts: CesiumDataController.DrawLineOptions
+    ): string;
+    Set(id: string, path: CesiumDataController.Position[]): void;
+    Start(id: string): void;
+    Pause(id: string): void;
+    Resume(id: string): void;
+    Stop(id: string): void;
+    Remove(id: string): void;
+  }
 
   class Client {
     constructor(iframeId: string);
@@ -235,6 +286,7 @@ declare namespace CesiumMap {
     Events: EventTriggers;
     ContextMenu: ContextMenu;
     Label: Label;
+    Draw: Draw;
   }
 }
 

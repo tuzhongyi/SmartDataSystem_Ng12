@@ -12,7 +12,7 @@ import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GisRoutePointModel } from 'src/app/network/view-model/gis-route-point.view-model';
 
 @Injectable()
-export class CollectionMapRouteControlBusiness
+export class CollectionMapRouteControlPointBusiness
   implements IBusiness<GisRoutePoint[]>
 {
   constructor(private service: GarbageVehicleRequestService) {}
