@@ -9,37 +9,42 @@ import { Time } from 'src/app/common/tools/time';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
+import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class CollectionEventLineBusiness implements ICommonLineCharBusiness {
+  today = new Date();
   searchInfo: ICollectionEventLineSearchInfo = {
-    BeginTime: Time.beginTime(new Date()),
-    EndTime: Time.beginTime(new Date()),
+    BeginTime: Time.curWeek(this.today).beginTime,
+    EndTime: Time.curWeek(this.today).endTime,
     DivisionIds: [this._globalStorage.divisionId],
     TrashCanType: TrashCanType.Dry,
   };
   constructor(
     private _globalStorage: GlobalStorageService,
-    private _collectionEventRequest: CollectionEventRequestService,
+    private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CommonLineChartConverter
   ) {}
   async init() {
-    let { Data } = await this._list();
+    let Data = await this._list();
 
-    let res = this._converter.Convert(Data);
+    let res = this._converter.Convert(
+      Data,
+      this.searchInfo.TrashCanType,
+      this.today
+    );
+
     return res;
   }
 
   private _list() {
-    let params = new GetGarbageCollectionEventRecordsParams();
+    let params = new GetDivisionGarbageWeightsParams();
     params.BeginTime = this.searchInfo.BeginTime;
     params.EndTime = this.searchInfo.EndTime;
-
-    if (this.searchInfo.DivisionIds)
-      params.DivisionIds = this.searchInfo.DivisionIds;
-    if (this.searchInfo.TrashCanType)
-      params.TrashCanType = this.searchInfo.TrashCanType;
-    return this._collectionEventRequest.record.garbageCollection.list(params);
+    params.DivisionIds = this.searchInfo.DivisionIds;
+    return this._collectionDivisionRequest.garbage.weight.list(params);
   }
 }
 

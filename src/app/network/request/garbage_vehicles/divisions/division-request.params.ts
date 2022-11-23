@@ -33,7 +33,7 @@ export class GetDivisionGarbageWeightsParams
   implements IParams
 {
   /**	String[]	区划ID	O */
-  DivisionIds?: string;
+  DivisionIds?: string[];
   /**	String	区划名称，支持LIKE	O */
   DivisionName?: string;
   /**	Int32	统计时间单位：2-Day,3-Week,4-Month	O */

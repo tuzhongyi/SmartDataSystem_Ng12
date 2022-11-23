@@ -13,6 +13,7 @@ import {
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetDivisionGarbageScoresParams,
+  GetDivisionGarbageWeightsParams,
   GetDivisionsParams,
 } from './division-request.params';
 import { Cache } from '../../cache/cache';
@@ -91,9 +92,13 @@ class DivisionGarbage {
 class GarbageVehicleWeightService {
   constructor(private basic: BaseRequestService) {}
 
-  get() {
-    let url = GarbageVehicleDivisionUrl.garbage().weight.basic();
+  get(divisionId: string) {
+    let url = GarbageVehicleDivisionUrl.garbage(divisionId).weight.basic();
     return this.basic.get(url, DivisionGarbageWeight);
+  }
+  list(params: GetDivisionGarbageWeightsParams) {
+    let url = GarbageVehicleDivisionUrl.garbage().weight.basic();
+    return this.basic.postArray(url, DivisionGarbageWeight, params);
   }
 }
 

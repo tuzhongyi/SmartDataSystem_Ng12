@@ -22,14 +22,14 @@ export class Time {
   // 任意一天的结束时间
   static endTime(time: Date | string | number) {
     if (time instanceof Date) {
-      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
     } else if (typeof time == 'string') {
       if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
         throw new TypeError('INVALID TIME');
       }
-      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
     } else if (typeof time == 'number' && time > 0) {
-      return new Date(new Date(time).setHours(23, 59, 59, 9527));
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
     }
     throw new TypeError('INVALID TYPE');
   }
@@ -44,10 +44,10 @@ export class Time {
   /**
    * 当前日期所在的周
    * @param time 当前时间
-   * @param firstIsSunday 默认0表示星期天
+   * @param firstIsSunday 服务器第一天是星期一
    * @returns \{beginTime:Date,endTime:Date}
    */
-  static curWeek(time: Date, firstIsSunday = true) {
+  static curWeek(time: Date, firstIsSunday = false) {
     let offset = time.getDay() - (firstIsSunday ? 0 : 1);
     let beginTime = Time.beginTime(this.backDate(time, offset));
     let endTime = Time.endTime(Time.forwardDate(beginTime, 6));
