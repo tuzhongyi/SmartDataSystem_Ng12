@@ -40,9 +40,10 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
   title: string = '收运车运行状态';
   model: CollectionDeviceStateModel | null = null;
 
-  theme: EChartsTheme = EChartsTheme.adsame;
+  searchInfo: ICollectionDeviceStateSearchInfo = {
+    DivisionId: this._globalStorage.divisionId,
+  };
 
-  searchInfo: ICollectionDeviceStateSearchInfo = {};
   subscription: Subscription;
 
   gaugeOption: EChartsOption = {

@@ -58,6 +58,7 @@ const routes: Routes = [
       import(
         './garbage-system/garbage-collection/garbage-collection.module'
       ).then((mode) => mode.GarbageCollectionModule),
+    canActivate: [AuthorizationService],
   },
   {
     path: '**',

@@ -18,7 +18,7 @@ export class CommonElementListBusiness implements ICommonElementListBusiness {
     let model = new CommonElementListModel();
     model.Id = uuid.v4();
 
-    model.Name = '栲霓桤蛙区';
+    model.Name = '上海市';
 
     model.Children = Array.from(Array(3), (v, i) => {
       let child = new CommonElementListModel();
