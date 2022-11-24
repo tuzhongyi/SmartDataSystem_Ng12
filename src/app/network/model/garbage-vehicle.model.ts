@@ -53,6 +53,9 @@ export class GarbageVehicle implements IModel {
     model.CreateTime = new Date();
     model.UpdateTime = new Date();
     model.VehicleType = VehicleType.Tricycle;
+    model.No = '10000';
+    model.HeartbeatInterval = 5;
+    model.ShutdownSeconds = 600;
     return model;
   }
 }

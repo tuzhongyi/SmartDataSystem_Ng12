@@ -1,0 +1,52 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.garbage-vehicle-operate {
+  width: 930px;
+
+  min-height: 508px;
+  max-height: 720px;
+  height: 720px;
+  padding: 20px;
+
+  .page-one {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    .inline-form {
+      display: flex;
+      flex-grow: 1;
+
+      .hw-form-group {
+        margin-right: 10px;
+      }
+
+      input {
+        width: auto;
+      }
+
+      select {
+        width: auto;
+      }
+    }
+  }
+
+  .page-two {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+  }
+}

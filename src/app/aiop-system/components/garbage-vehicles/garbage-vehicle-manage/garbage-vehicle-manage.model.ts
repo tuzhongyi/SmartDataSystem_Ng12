@@ -11,9 +11,12 @@ import { CommonModel } from 'src/app/view-model/common-model';
 
 export class GarbageVehicleModel<T = any> implements CommonModel {
   data?: T;
-  Id!: string;
-  Name!: string;
-  Type!: VehicleType;
+  Id: string = '';
+  Name: string = '';
+  Type: string = '';
+  PlateNo: string = '';
+  No: string = '';
+  IMEI: string = '';
 }
 
 export interface IGarbageVehicleManageComponent {
