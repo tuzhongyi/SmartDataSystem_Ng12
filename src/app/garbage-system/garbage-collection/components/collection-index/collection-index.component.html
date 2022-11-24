@@ -50,19 +50,21 @@
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-score [type]="CollectionScore.Good"></collection-score>
+          <collection-score-line
+            [type]="CollectionScore.Good"
+          ></collection-score-line>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-event-line></collection-event-line>
+          <collection-division-weight></collection-division-weight>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-event-line
+          <collection-division-weight
             [type]="TrashCanType.Wet"
-          ></collection-event-line>
+          ></collection-division-weight>
         </div>
       </div>
       <div class="monitor-body__item">

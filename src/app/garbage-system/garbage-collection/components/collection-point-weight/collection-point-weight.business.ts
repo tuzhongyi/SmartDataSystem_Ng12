@@ -10,7 +10,7 @@ import {
 @Injectable()
 export class CollectionPointWeightBusiness {
   constructor(
-    private _vehicleEventRequest: CollectionEventRequestService,
+    private _collectionEventRequest: CollectionEventRequestService,
     private _converter: CollectionPointWeightConverter
   ) {}
   async init(searchInfo: CollectionPointWeightSearchInfo) {
@@ -34,6 +34,6 @@ export class CollectionPointWeightBusiness {
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
 
-    return this._vehicleEventRequest.record.garbageCollection.list(params);
+    return this._collectionEventRequest.record.garbageCollection.list(params);
   }
 }

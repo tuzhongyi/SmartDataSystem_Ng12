@@ -16,8 +16,9 @@ export class Time {
       return new Date(new Date(time).setHours(0, 0, 0, 0));
     } else if (typeof time == 'number' && time > 0) {
       return new Date(new Date(time).setHours(0, 0, 0, 0));
+    } else {
+      throw new TypeError('INVALID TYPE');
     }
-    throw new TypeError('INVALID TYPE');
   }
   // 任意一天的结束时间
   static endTime(time: Date | string | number) {
@@ -30,8 +31,9 @@ export class Time {
       return new Date(new Date(time).setHours(23, 59, 59, 999));
     } else if (typeof time == 'number' && time > 0) {
       return new Date(new Date(time).setHours(23, 59, 59, 999));
+    } else {
+      throw new TypeError('INVALID TYPE');
     }
-    throw new TypeError('INVALID TYPE');
   }
   // 后退n天
   static backDate(time: Date, n: number) {
@@ -47,9 +49,22 @@ export class Time {
    * @param firstIsSunday 服务器第一天是星期一
    * @returns \{beginTime:Date,endTime:Date}
    */
-  static curWeek(time: Date, firstIsSunday = false) {
-    let offset = time.getDay() - (firstIsSunday ? 0 : 1);
-    let beginTime = Time.beginTime(this.backDate(time, offset));
+  static curWeek(time: Date | string | number, firstIsSunday = false) {
+    let t: Date;
+    if (time instanceof Date) {
+      t = new Date(time);
+    } else if (typeof time == 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        throw new TypeError('INVALID TIME');
+      }
+      t = new Date(time);
+    } else if (typeof time == 'number' && time > 0) {
+      t = new Date(time);
+    } else {
+      throw new TypeError('INVALID TYPE');
+    }
+    let offset = t.getDay() - (firstIsSunday ? 0 : 1);
+    let beginTime = Time.beginTime(this.backDate(t, offset));
     let endTime = Time.endTime(Time.forwardDate(beginTime, 6));
     return {
       beginTime,
@@ -57,7 +72,20 @@ export class Time {
     };
   }
   // 当前日期所在的月
-  static curMonth(t: Date) {
+  static curMonth(time: Date | string | number) {
+    let t: Date;
+    if (time instanceof Date) {
+      t = new Date(time);
+    } else if (typeof time == 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        throw new TypeError('INVALID TIME');
+      }
+      t = new Date(time);
+    } else if (typeof time == 'number' && time > 0) {
+      t = new Date(time);
+    } else {
+      throw new TypeError('INVALID TYPE');
+    }
     let beginTime = new Date(t.getFullYear(), t.getMonth(), 1, 0, 0, 0, 0);
     let endTime = new Date(t.getFullYear(), t.getMonth() + 1, 1, 0, 0, 0, 0);
     endTime = Time.endTime(Time.backDate(endTime, 1));

@@ -19,9 +19,12 @@ import { NgxEchartsDirective } from 'ngx-echarts';
 import { Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
-import { CollectionDeviceStateBusiness } from './collection-device-state.business';
+import {
+  CollectionDeviceStateBusiness,
+  ICollectionDeviceStateSearchInfo,
+} from './collection-device-state.business';
 import { CollectionVehicleConverter } from './collection-device-state.converter';
-import { CollectionDeviceStateModel, ICollectionDeviceStateSearchInfo } from './collection-device-state.model';
+import { CollectionDeviceStateModel } from './collection-device-state.model';
 
 echarts.use([GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -39,10 +42,8 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
 
   theme: EChartsTheme = EChartsTheme.adsame;
 
-  searchInfo: ICollectionDeviceStateSearchInfo = {
-  };
+  searchInfo: ICollectionDeviceStateSearchInfo = {};
   subscription: Subscription;
-
 
   gaugeOption: EChartsOption = {
     series: [
@@ -93,16 +94,19 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
 
   merge: EChartsOption = {};
 
-  constructor(private _business: CollectionDeviceStateBusiness, private _globalStorage: GlobalStorageService) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(this._init.bind(this))
-
+  constructor(
+    private _business: CollectionDeviceStateBusiness,
+    private _globalStorage: GlobalStorageService
+  ) {
+    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+      this._init.bind(this)
+    );
   }
 
   ngOnInit() {
     this._init();
   }
   private async _init() {
-
     this.searchInfo.DivisionId = this._globalStorage.divisionId;
     this.model = await this._business.init(this.searchInfo);
 
@@ -144,7 +148,6 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
                       offset: 1,
                       color: '#21e452', // 100% 处的颜色
                     },
-
                   ],
                 },
               },
@@ -155,9 +158,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     };
   }
 
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
-
 }

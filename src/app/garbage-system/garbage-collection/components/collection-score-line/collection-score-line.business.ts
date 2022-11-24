@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
-import { CollectionScoreConverter } from './collection-score.converter';
-import { CollectionScoreSearchInfo } from './collection-score.model';
+import { CollectionScoreConverter } from './collection-score-line.converter';
+import { CollectionScoreSearchInfo } from './collection-score-line.model';
 
 @Injectable()
 export class CollectionScoreBusiness {

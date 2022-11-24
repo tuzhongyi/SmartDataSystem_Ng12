@@ -1,35 +1,32 @@
-<div class="device-state">
-  <div class="device-state__head">
-    <div class="title">{{ title }}</div>
+<!-- 收运车运行状态 -->
+<div class="collection-device-state">
+  <div class="collection-device-state__head">
+    <div class="collection-device-state__head__title">{{ title }}</div>
   </div>
-  <div class="device-state__wrapper">
-    <div class="device-state__item">
-      <div class="device-state__body">
-        <div
-          class="chart-container"
-          id="chartContainer"
-          #chartContainer
-          echarts
-          [options]="gaugeOption"
-          [merge]="merge"
-        ></div>
-        <div class="chart-des">
-          <div class="chart-des__label">车辆在线比</div>
-          <div class="chart-des__ratio" [style.color]="model?.stateColor">
-            <span class="num">{{ model?.onLineRatio }}</span
-            ><span class="unit">{{ model?.unit }}</span>
-          </div>
+  <div class="collection-device-state__main">
+    <div class="collection-device-state__chart">
+      <div
+        class="chart-container"
+        id="chartContainer"
+        #chartContainer
+        echarts
+        [options]="gaugeOption"
+        [merge]="merge"
+      ></div>
+
+      <div class="chart-detail">
+        <div class="chart-detail__label">车辆在线比</div>
+        <div class="chart-detail__ratio" [style.color]="model?.stateColor">
+          <span class="num">{{ model?.onLineRatio }}</span
+          ><span class="unit">{{ model?.unit }}</span>
         </div>
       </div>
-      <div class="device-state__foot">
-        <div
-          *ngFor="let item of model?.deviceStateArr"
-          class="device-state__foot__item"
-        >
-          <div class="item-label">{{ item.label }}</div>
-          <div class="item-num" [class]="item.tagCls">
-            <span>{{ item.count }}</span>
-          </div>
+    </div>
+    <div class="collection-device-state__chips">
+      <div *ngFor="let item of model?.deviceStateArr" class="chip-item">
+        <div class="chip-item__label">{{ item.label }}</div>
+        <div class="chip-item__num" [class]="item.tagCls">
+          <span>{{ item.count }}</span>
         </div>
       </div>
     </div>

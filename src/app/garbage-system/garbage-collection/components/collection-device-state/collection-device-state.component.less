@@ -1,15 +1,15 @@
-.device-state {
+.collection-device-state {
   width: 100%;
   height: 100%;
   padding: 15px 20px;
   box-sizing: border-box;
 
-  .device-state__head {
+  &__head {
     margin-right: 10px;
     margin-bottom: 10px;
     height: 30px;
     max-height: 30px;
-    .title {
+    &__title {
       font-size: 24px;
       color: #fff;
       line-height: 1;
@@ -18,175 +18,167 @@
       text-overflow: ellipsis;
     }
   }
-  .device-state__wrapper {
+
+  &__main {
     height: calc(100% - 30px - 15px);
     overflow: auto;
-
-    .device-state__item {
-      width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  &__chart {
+    flex-grow: 1;
+    min-height: 117px;
+    display: flex;
+    align-items: center;
+    .chart-container {
+      width: 50%;
       height: 100%;
+    }
+    .chart-detail {
+      width: 50%;
+      height: 100%;
+
       display: flex;
       flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-      .device-state__body {
-        // background-color: cyan;
-        flex-grow: 2;
-        min-height: 117px;
-        display: flex;
-        align-items: center;
-        .chart-container {
-          // background-color: violet;
-          width: 50%;
-          height: 100%;
+      &__label {
+        color: #cfd7ff;
+        font-size: 23px;
+        overflow: hidden;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+      &__ratio {
+        overflow: hidden;
+        width: 100%;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-align: center;
+
+        &.Bad {
+          color: #ef6464;
         }
-        .chart-des {
-          // background-color: red;
-          width: 50%;
-          height: 100%;
+        &.Mild {
+          color: #ffba00;
+        }
+        &.Good {
+          color: #21e452;
+        }
 
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
+        .num {
+          font-size: 36px;
+        }
+        .unit {
+          font-size: 26px;
+          // color: #cfd7ff;
+        }
+      }
+    }
+  }
+  &__chips {
+    flex-shrink: 0;
+    flex-grow: 1;
+    max-height: 82px;
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
 
-          &__label {
-            color: #cfd7ff;
-            font-size: 23px;
-            overflow: hidden;
-            width: 100%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            text-align: center;
-          }
-          &__ratio {
-            overflow: hidden;
-            width: 100%;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-            text-align: center;
+    .chip-item {
+      height: 100%;
+      background-color: #1d275f;
+      flex-grow: 1;
+      cursor: pointer;
 
-            &.Bad {
-              color: #ef6464;
-            }
-            &.Mild {
-              color: #ffba00;
-            }
-            &.Good {
-              color: #21e452;
-            }
+      color: #7a8de6;
+      background-image: linear-gradient(0deg, currentColor, currentColor),
+        linear-gradient(90deg, currentColor, currentColor),
+        linear-gradient(90deg, currentColor, currentColor),
+        linear-gradient(180deg, currentColor, currentColor),
+        linear-gradient(180deg, currentColor, currentColor),
+        linear-gradient(270deg, currentColor, currentColor),
+        linear-gradient(270deg, currentColor, currentColor),
+        linear-gradient(0, currentColor, currentColor);
+      background-position: top left, top left, top right, top right,
+        bottom right, bottom right, bottom left, bottom left;
+      background-size: 1px 8px, 8px 1px, 8px 1px, 1px 8px, 1px 8px, 8px 1px,
+        8px 1px, 1px 8px;
+      background-repeat: no-repeat;
+      &:hover {
+        color: #cfd7ff;
+        background-image: linear-gradient(0deg, currentColor, currentColor),
+          linear-gradient(90deg, currentColor, currentColor),
+          linear-gradient(90deg, currentColor, currentColor),
+          linear-gradient(180deg, currentColor, currentColor),
+          linear-gradient(180deg, currentColor, currentColor),
+          linear-gradient(270deg, currentColor, currentColor),
+          linear-gradient(270deg, currentColor, currentColor),
+          linear-gradient(0, currentColor, currentColor);
 
-            .num {
-              font-size: 36px;
-            }
-            .unit {
-              font-size: 26px;
-              // color: #cfd7ff;
-            }
+        .item-num {
+          span {
+            text-decoration: underline;
+            color: #6997ff;
           }
         }
       }
-      .device-state__foot {
-        flex-grow: 1;
-        max-height: 82px;
+
+      &:not(:first-of-type, :last-of-type) {
+        margin: 0 10px;
+      }
+
+      box-sizing: border-box;
+      padding: 5px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+
+      &__label {
+        text-align: center;
+        color: #cfd7ff;
+        font-size: 18px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-bottom: 3px;
+
+        border-bottom: 1px solid transparent;
+        border-image-source: linear-gradient(
+          90deg,
+          transparent,
+          #6997ff,
+          transparent
+        );
+        border-image-slice: 1;
+        border-image-width: 1;
+        border-image-repeat: round;
+      }
+      &__num {
         display: flex;
-        justify-content: space-between;
-        // margin-top: 5px;
-        box-sizing: border-box;
+        justify-content: center;
+        align-items: center;
 
-        .device-state__foot__item {
-          height: 100%;
-          background-color: #1d275f;
-          flex-grow: 1;
-          cursor: pointer;
+        flex-grow: 1;
 
-          color: #7a8de6;
-          background-image: linear-gradient(0deg, currentColor, currentColor),
-            linear-gradient(90deg, currentColor, currentColor),
-            linear-gradient(90deg, currentColor, currentColor),
-            linear-gradient(180deg, currentColor, currentColor),
-            linear-gradient(180deg, currentColor, currentColor),
-            linear-gradient(270deg, currentColor, currentColor),
-            linear-gradient(270deg, currentColor, currentColor),
-            linear-gradient(0, currentColor, currentColor);
-          background-position: top left, top left, top right, top right,
-            bottom right, bottom right, bottom left, bottom left;
-          background-size: 1px 8px, 8px 1px, 8px 1px, 1px 8px, 1px 8px, 8px 1px,
-            8px 1px, 1px 8px;
-          background-repeat: no-repeat;
-          &:hover {
-            color: #cfd7ff;
-            background-image: linear-gradient(0deg, currentColor, currentColor),
-              linear-gradient(90deg, currentColor, currentColor),
-              linear-gradient(90deg, currentColor, currentColor),
-              linear-gradient(180deg, currentColor, currentColor),
-              linear-gradient(180deg, currentColor, currentColor),
-              linear-gradient(270deg, currentColor, currentColor),
-              linear-gradient(270deg, currentColor, currentColor),
-              linear-gradient(0, currentColor, currentColor);
+        text-overflow: ellipsis;
+        &.All {
+          color: #6997ff;
+        }
+        &.Online {
+          color: #21e452;
+        }
+        &.Offline {
+          color: #ef6464;
+        }
 
-            .item-num {
-              span {
-                text-decoration: underline;
-                color: #6997ff;
-              }
-            }
-          }
+        span {
+          font-size: 24px;
 
-          &:not(:first-of-type, :last-of-type) {
-            margin: 0 10px;
-          }
-
-          box-sizing: border-box;
-          padding: 5px;
-          display: flex;
-          flex-direction: column;
-          min-width: 0;
-
-          .item-label {
-            text-align: center;
-            color: #cfd7ff;
-            font-size: 18px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-bottom: 3px;
-
-            border-bottom: 1px solid transparent;
-            border-image-source: linear-gradient(
-              90deg,
-              transparent,
-              #6997ff,
-              transparent
-            );
-            border-image-slice: 1;
-            border-image-width: 1;
-            border-image-repeat: round;
-          }
-          .item-num {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            flex-grow: 1;
-
-            text-overflow: ellipsis;
-            &.All {
-              color: #6997ff;
-            }
-            &.Online {
-              color: #21e452;
-            }
-            &.Offline {
-              color: #ef6464;
-            }
-
-            span {
-              font-size: 24px;
-
-              white-space: nowrap;
-              overflow: hidden;
-            }
-          }
+          white-space: nowrap;
+          overflow: hidden;
         }
       }
     }

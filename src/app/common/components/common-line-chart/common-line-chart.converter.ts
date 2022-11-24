@@ -129,7 +129,6 @@ export class CommonLineChartConverter extends AbstractCommonModelConverter<
     arr: DivisionGarbageWeight[],
     args: [TrashCanType, Date]
   ) {
-    console.log(args);
     let model = new CommonLineChartModel();
     let [type, today] = args;
     let start = Time.curWeek(today).beginTime.getDate();
@@ -155,24 +154,12 @@ export class CommonLineChartConverter extends AbstractCommonModelConverter<
 
       return 0;
     });
-    if (data.length) data.unshift(0);
-    let max = Math.max(...data);
-    let step = 4;
     model.series = [
       {
         type: 'line',
         name: '单位(吨)',
         data: data,
         areaStyle: {},
-        label: {
-          formatter: (params: DefaultLabelFormatterCallbackParams) => {
-            if (params.value == max) return params.value.toString();
-            if (params.dataIndex % step !== 0) {
-              return '';
-            }
-            return params.value.toString();
-          },
-        },
       },
     ];
     return model;

@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { CollectionVehicleConverter } from './collection-device-state.converter';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
-import { ICollectionDeviceStateSearchInfo } from './collection-device-state.model';
 
 @Injectable()
 export class CollectionDeviceStateBusiness {
@@ -26,4 +25,11 @@ export class CollectionDeviceStateBusiness {
 
     return this._garbageVehicleRequest.list(params);
   }
+}
+
+export interface ICollectionDeviceStateSearchInfo {
+  DivisionId?: string;
+
+  PageIndex?: number;
+  PageSize?: number;
 }

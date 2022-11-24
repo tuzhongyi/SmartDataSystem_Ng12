@@ -6,20 +6,20 @@ import { Time } from 'src/app/common/tools/time';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { EChartOptions } from 'src/app/garbage-system/components/windows/charts/details-chart/details-chart.option';
-import { CollectionScoreBusiness } from './collection-score.business';
-import { CollectionScoreConverter } from './collection-score.converter';
+import { CollectionScoreBusiness } from './collection-score-line.business';
+import { CollectionScoreConverter } from './collection-score-line.converter';
 import {
   CollectionScoreModel,
   CollectionScoreSearchInfo,
-} from './collection-score.model';
+} from './collection-score-line.model';
 
 @Component({
-  selector: 'collection-score',
-  templateUrl: './collection-score.component.html',
-  styleUrls: ['./collection-score.component.less'],
+  selector: 'collection-score-line',
+  templateUrl: './collection-score-line.component.html',
+  styleUrls: ['./collection-score-line.component.less'],
   providers: [CollectionScoreBusiness, CollectionScoreConverter],
 })
-export class CollectionScoreComponent implements OnInit {
+export class CollectionScoreLineComponent implements OnInit {
   @Input() type: CollectionPointScore = CollectionPointScore.Good;
 
   @ViewChild(NgxEchartsDirective) echarts!: any;
@@ -35,9 +35,9 @@ export class CollectionScoreComponent implements OnInit {
     EndTime: Time.endTime(this.today),
     Type: this.type,
   };
-  
+
   theme = EChartsTheme.adsame;
-  
+
   lineSeriesData: number[] = [];
 
   options: EChartsOption = {

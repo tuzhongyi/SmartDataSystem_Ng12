@@ -8,7 +8,6 @@ import {
   CollectionDeviceStateCountType,
   CollectionDeviceStateRatioType,
 } from 'src/app/enum/collection-device-state.enum';
-import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 
 export interface ICollectionDeviceStateDes {
   /**标签文本 */
@@ -43,11 +42,4 @@ export class CollectionDeviceStateModel {
   deviceStateArr: Array<ICollectionDeviceStateDes> = [];
 
   constructor() {}
-}
-
-export interface ICollectionDeviceStateSearchInfo {
-  DivisionId?: string;
-
-  PageIndex?: number;
-  PageSize?: number;
 }

@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CommonLineChartConverter } from 'src/app/common/components/common-line-chart/common-line-chart.converter';
-import {
-  CommonLineChartModel,
-  ICommonLineCharBusiness,
-} from 'src/app/common/components/common-line-chart/common-line-chart.model';
+import { ICommonLineCharBusiness } from 'src/app/common/components/common-line-chart/common-line-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
-import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
 import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
-export class CollectionEventLineBusiness implements ICommonLineCharBusiness {
+export class CollectionDivisionWeightBusiness
+  implements ICommonLineCharBusiness
+{
   today = new Date();
   searchInfo: ICollectionEventLineSearchInfo = {
     BeginTime: Time.curWeek(this.today).beginTime,

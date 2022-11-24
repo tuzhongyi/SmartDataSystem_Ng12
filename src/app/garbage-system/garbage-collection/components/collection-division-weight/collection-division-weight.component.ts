@@ -4,15 +4,15 @@ import { CommonLineChartComponent } from 'src/app/common/components/common-line-
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { CollectionEventLineBusiness } from './collection-event-line.business';
+import { CollectionDivisionWeightBusiness } from './collection-division-weight.business';
 
 @Component({
-  selector: 'collection-event-line',
-  templateUrl: './collection-event-line.component.html',
-  styleUrls: ['./collection-event-line.component.less'],
-  providers: [CollectionEventLineBusiness],
+  selector: 'collection-division-weight',
+  templateUrl: './collection-division-weight.component.html',
+  styleUrls: ['./collection-division-weight.component.less'],
+  providers: [CollectionDivisionWeightBusiness],
 })
-export class CollectionEventLineComponent implements OnInit, OnDestroy {
+export class CollectionDivisionWeightComponent implements OnInit, OnDestroy {
   @Input() type: TrashCanType = TrashCanType.Dry;
 
   @ViewChild(CommonLineChartComponent) chart?: CommonLineChartComponent;
@@ -22,7 +22,7 @@ export class CollectionEventLineComponent implements OnInit, OnDestroy {
   title = '';
 
   constructor(
-    public business: CollectionEventLineBusiness,
+    public business: CollectionDivisionWeightBusiness,
     private _globalStorage: GlobalStorageService
   ) {
     this.subscription = this._globalStorage.collectionStatusChange.subscribe(
