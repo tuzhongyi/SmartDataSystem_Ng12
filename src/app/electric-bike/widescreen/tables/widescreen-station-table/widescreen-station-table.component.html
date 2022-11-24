@@ -28,7 +28,8 @@
           <td
             class="green-text"
             [ngClass]="{
-              'powder-red-text': item.status.contains(StationState.Error)
+              'powder-red-text': item.status.contains(StationState.Error),
+              'powder-orange-text': item.status.contains(StationState.Smoke)
             }"
           >
             {{ item.status | station_state_pipe }}
