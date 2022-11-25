@@ -1,3 +1,4 @@
+import { AiopCameraTableComponent } from './aiop-camera-table/aiop-camera-table.component';
 import { DeviceListTableComponent } from './device-list-table/device-list-table.component';
 import { EventRecordCountTableComponent } from './event-record-count-table/event-record-count-table.component';
 import { EventRecordListComponent } from './event-record/event-record-list/event-record-list.component';
@@ -21,4 +22,6 @@ export const Table_COMPONENTS = [
   GarbageStationStatisticTableComponent,
   EventRecordCountTableComponent,
   GarbageDropStationCountTableComponent,
+
+  AiopCameraTableComponent,
 ];

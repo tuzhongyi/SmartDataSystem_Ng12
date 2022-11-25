@@ -1,9 +1,12 @@
 import { Language } from 'src/app/common/tools/language';
 import { Page } from 'src/app/network/model/page_list.model';
-import { IConverter, IPromiseConverter } from '../../interfaces/converter.interface';
+import {
+  IConverter,
+  IPromiseConverter,
+} from '../../interfaces/converter.interface';
 
-export abstract class TableAbstractComponent<T> {
-  abstract width: Array<string>;
+export abstract class PagedTableAbstractComponent<T> {
+  abstract widths: Array<string>;
   Language = Language;
   datas: T[] = [];
   page?: Page;
@@ -28,9 +31,13 @@ export abstract class TableAbstractComponent<T> {
   }
 }
 
-export abstract class ListAbstractComponent<TData, TSource>
-  extends TableAbstractComponent<TData>{
+export abstract class ListAbstractComponent<
+  TData,
+  TSource
+> extends PagedTableAbstractComponent<TData> {
   pageSize = 15;
   list: TSource[] = [];
-  abstract converter: IConverter<TData[], TSource[]> | IPromiseConverter<TData[], TSource[]>;
+  abstract converter:
+    | IConverter<TData[], TSource[]>
+    | IPromiseConverter<TData[], TSource[]>;
 }

@@ -1,26 +1,27 @@
 import { Injectable } from '@angular/core';
-import {
-  IBusiness,
-  IDelete,
-} from 'src/app/common/interfaces/bussiness.interface';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { PagedList } from 'src/app/network/model/page_list.model';
+
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-import { GarbageStationManageModel } from 'src/app/view-model/garbage-station-manage.model';
+
 import { GarbageVehicleManageConverter } from './garbage-vehicle-manage.converter';
-import { GarbageVehicleModel } from './garbage-vehicle-manage.model';
+import { IGarbageVehicleManageBusiness } from './garbage-vehicle-manage.model';
 
 @Injectable()
 export class GarbageVehicleManageBusiness
-  implements
-    IBusiness<PagedList<GarbageVehicle>, PagedList<GarbageVehicleModel>>,
-    IDelete<GarbageVehicle>
+  implements IGarbageVehicleManageBusiness
 {
-  constructor(private vehicle: GarbageVehicleRequestService) {}
+  constructor(private service: GarbageVehicleRequestService) {}
+  create(model: GarbageVehicle, divisionId: string): Promise<GarbageVehicle> {
+    model.DivisionId = divisionId;
+    return this.service.create(model);
+  }
+  update(model: GarbageVehicle): Promise<GarbageVehicle> {
+    return this.service.update(model);
+  }
   delete(id: string): Promise<GarbageVehicle> {
-    return this.vehicle.delete(id);
+    return this.service.delete(id);
   }
   Converter = new GarbageVehicleManageConverter();
   async load(
@@ -51,6 +52,6 @@ export class GarbageVehicleManageBusiness
     params.PageSize = pageSize;
     params.Name = condition;
     params.DivisionId = divisionId;
-    return this.vehicle.list(params);
+    return this.service.list(params);
   }
 }

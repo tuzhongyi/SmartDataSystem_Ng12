@@ -14,7 +14,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { TableAbstractComponent } from '../table-abstract.component';
+import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationCountTableBusiness } from './garbage-drop-station-count-table.business';
 import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-table.model';
 
@@ -28,11 +28,12 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
   providers: [GarbageDropStationCountTableBusiness],
 })
 export class GarbageDropStationCountTableComponent
-  extends TableAbstractComponent<GarbageDropStationCountTableModel>
+  extends PagedTableAbstractComponent<GarbageDropStationCountTableModel>
   implements
-  IComponent<IModel, GarbageDropStationCountTableModel[]>,
-  OnInit,
-  OnChanges {
+    IComponent<IModel, GarbageDropStationCountTableModel[]>,
+    OnInit,
+    OnChanges
+{
   @Input()
   business: IBusiness<IModel, GarbageDropStationCountTableModel[]>;
   @Input()
@@ -63,7 +64,7 @@ export class GarbageDropStationCountTableComponent
       }
     }
   }
-  width: string[] = ['10%', '25%', '15%', '15%', '15%'];
+  widths: string[] = ['10%', '25%', '15%', '15%', '15%'];
   sort?: Sort;
 
   ngOnInit(): void {
@@ -72,18 +73,20 @@ export class GarbageDropStationCountTableComponent
 
   async loadData() {
     this.loading = true;
-    this.business.load(this.parentId, this.date, this.unit, this.type).then((x) => {
-      this.loading = false;
-      this.datas = x;
-      if (!this.sort) {
-        this.sort = {
-          active: 'EventCount',
-          direction: 'desc',
-        };
-      }
-      this.sortData(this.sort);
-      this.loaded.emit(this.datas);
-    });
+    this.business
+      .load(this.parentId, this.date, this.unit, this.type)
+      .then((x) => {
+        this.loading = false;
+        this.datas = x;
+        if (!this.sort) {
+          this.sort = {
+            active: 'EventCount',
+            direction: 'desc',
+          };
+        }
+        this.sortData(this.sort);
+        this.loaded.emit(this.datas);
+      });
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

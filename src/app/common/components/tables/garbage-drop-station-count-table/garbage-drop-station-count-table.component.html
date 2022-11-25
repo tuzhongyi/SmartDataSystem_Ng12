@@ -9,16 +9,16 @@
     >
       <thead>
         <tr>
-          <td [ngStyle]="{ width: width[0] }">序号</td>
+          <td [ngStyle]="{ width: widths[0] }">序号</td>
           <td
-            [ngStyle]="{ width: width[1] }"
+            [ngStyle]="{ width: widths[1] }"
             mat-sort-header="Name"
             [disableClear]="true"
           >
             名称
           </td>
           <td
-            [ngStyle]="{ width: width[2] }"
+            [ngStyle]="{ width: widths[2] }"
             mat-sort-header="Parent"
             [disableClear]="true"
             [start]="'desc'"
@@ -26,7 +26,7 @@
             行政区
           </td>
           <td
-            [ngStyle]="{ width: width[3] }"
+            [ngStyle]="{ width: widths[3] }"
             mat-sort-header="EventCount"
             [disableClear]="true"
             [start]="'desc'"
@@ -34,7 +34,7 @@
             垃圾滞留
           </td>
           <td
-            [ngStyle]="{ width: width[4] }"
+            [ngStyle]="{ width: widths[4] }"
             mat-sort-header="TimeoutCount"
             [disableClear]="true"
             [start]="'desc'"
@@ -42,7 +42,7 @@
             垃圾滞留超时
           </td>
           <td
-            [ngStyle]="{ width: width[5] }"
+            [ngStyle]="{ width: widths[5] }"
             mat-sort-header="TimeoutRatio"
             [disableClear]="true"
             [start]="'desc'"
@@ -56,22 +56,22 @@
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas; let i = index">
-            <td [ngStyle]="{ width: width[0] }">
+            <td [ngStyle]="{ width: widths[0] }">
               {{ i + 1 }}
             </td>
-            <td [ngStyle]="{ width: width[1] }">
+            <td [ngStyle]="{ width: widths[1] }">
               {{ item.Name }}
             </td>
-            <td [ngStyle]="{ width: width[2] }">
+            <td [ngStyle]="{ width: widths[2] }">
               {{ item.Parent ? item.Parent.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: width[3] }">
+            <td [ngStyle]="{ width: widths[3] }">
               {{ item.EventCount }}
             </td>
-            <td [ngStyle]="{ width: width[4] }">
+            <td [ngStyle]="{ width: widths[4] }">
               {{ item.TimeoutCount }}
             </td>
-            <td [ngStyle]="{ width: width[5] }">
+            <td [ngStyle]="{ width: widths[5] }">
               {{ item.TimeinRatio.toFixed(2) }}%
             </td>
           </tr>

@@ -1,0 +1,44 @@
+.aiop-camera-table {
+  height: 100%;
+  position: relative;
+
+  &-main {
+    height: 100%;
+
+    table {
+      thead {
+        tr {
+          height: 60px;
+        }
+      }
+    }
+
+    .body {
+      height: calc(100% - 60px);
+      overflow-y: auto;
+
+      table {
+
+        tbody {
+          tr {
+            height: 39px;
+
+            td {
+              padding: 0 12px;
+
+              &:first-child {
+                padding-left: 40px;
+              }
+            }
+          }
+        }
+      }
+
+
+      .selected {
+        background: linear-gradient(to right, rgb(117, 134, 224), rgb(50, 134, 229));
+      }
+    }
+  }
+
+}

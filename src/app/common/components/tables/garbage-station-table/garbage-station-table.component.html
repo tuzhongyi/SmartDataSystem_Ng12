@@ -3,13 +3,13 @@
     <table border="0" cellpadding="0" cellspacing="0">
       <thead>
         <tr>
-          <!-- <td [ngStyle]="{ width: width[0] }">序号</td> -->
-          <td [ngStyle]="{ width: width[1] }">图片</td>
-          <td [ngStyle]="{ width: width[2] }">投放点</td>
-          <td [ngStyle]="{ width: width[3] }">社区</td>
-          <td [ngStyle]="{ width: width[4] }">街道</td>
-          <td [ngStyle]="{ width: width[5] }">居委会</td>
-          <td [ngStyle]="{ width: width[6] }">状态</td>
+          <!-- <td [ngStyle]="{ width: widths[0] }">序号</td> -->
+          <td [ngStyle]="{ width: widths[1] }">图片</td>
+          <td [ngStyle]="{ width: widths[2] }">投放点</td>
+          <td [ngStyle]="{ width: widths[3] }">社区</td>
+          <td [ngStyle]="{ width: widths[4] }">街道</td>
+          <td [ngStyle]="{ width: widths[5] }">居委会</td>
+          <td [ngStyle]="{ width: widths[6] }">状态</td>
           <td class="operation"><div>操作</div></td>
         </tr>
       </thead>
@@ -18,8 +18,8 @@
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas; let i = index">
-            <!-- <td [ngStyle]="{ width: width[0] }">{{ i + 1 }}</td> -->
-            <td [ngStyle]="{ width: width[1] }">
+            <!-- <td [ngStyle]="{ width: widths[0] }">{{ i + 1 }}</td> -->
+            <td [ngStyle]="{ width: widths[1] }">
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
                   <app-image-control
@@ -33,13 +33,13 @@
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{ width: width[2] }">
+            <td [ngStyle]="{ width: widths[2] }">
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: width[3] }">
+            <td [ngStyle]="{ width: widths[3] }">
               {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
             </td>
-            <td [ngStyle]="{ width: width[4] }">
+            <td [ngStyle]="{ width: widths[4] }">
               {{
                 item.GarbageStation
                   ? item.GarbageStation.Committees
@@ -48,7 +48,7 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[5] }">
+            <td [ngStyle]="{ width: widths[5] }">
               {{
                 item.GarbageStation
                   ? item.GarbageStation.Committees
@@ -57,7 +57,7 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: width[6] }">
+            <td [ngStyle]="{ width: widths[6] }">
               {{
                 item.GarbageStation
                   ? Language.StationState(item.GarbageStation.StationState)

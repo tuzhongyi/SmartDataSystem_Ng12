@@ -21,7 +21,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../table-abstract.component';
+import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageFullStationTableBusiness } from './garbage-full-station-table.business';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
 
@@ -32,12 +32,13 @@ import { GarbageFullStationTableModel } from './garbage-full-station-table.model
   providers: [GarbageFullStationTableBusiness],
 })
 export class GarbageFullStationTableComponent
-  extends TableAbstractComponent<GarbageFullStationTableModel>
+  extends PagedTableAbstractComponent<GarbageFullStationTableModel>
   implements
-  IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
-  OnChanges,
-  OnInit {
-  width = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
+    IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
+    OnChanges,
+    OnInit
+{
+  widths = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
   constructor(business: GarbageFullStationTableBusiness) {
     super();
     this.business = business;
@@ -66,7 +67,12 @@ export class GarbageFullStationTableComponent
     }
   }
 
-  async loadData(index: number, size: number, opts?: SearchOptions, show = true) {
+  async loadData(
+    index: number,
+    size: number,
+    opts?: SearchOptions,
+    show = true
+  ) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;

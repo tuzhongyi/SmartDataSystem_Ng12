@@ -9,9 +9,9 @@
     >
       <thead>
         <tr>
-          <th [ngStyle]="{ width: width[0] }">序号</th>
+          <th [ngStyle]="{ width: widths[0] }">序号</th>
           <th
-            [ngStyle]="{ width: width[1] }"
+            [ngStyle]="{ width: widths[1] }"
             mat-sort-header="name"
             [disableClear]="true"
             [start]="'desc'"
@@ -19,7 +19,7 @@
             名称
           </th>
           <th
-            [ngStyle]="{ width: width[2] }"
+            [ngStyle]="{ width: widths[2] }"
             mat-sort-header="parent"
             [disableClear]="true"
             [start]="'desc'"
@@ -27,7 +27,7 @@
             行政区
           </th>
           <th
-            [ngStyle]="{ width: width[3] }"
+            [ngStyle]="{ width: widths[3] }"
             mat-sort-header="value"
             [disableClear]="true"
             [start]="'desc'"
@@ -41,12 +41,12 @@
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas; let i = index">
-            <td [ngStyle]="{ width: width[0] }">{{ i + 1 }}</td>
-            <td [ngStyle]="{ width: width[1] }">{{ item.name }}</td>
-            <td [ngStyle]="{ width: width[2] }">
+            <td [ngStyle]="{ width: widths[0] }">{{ i + 1 }}</td>
+            <td [ngStyle]="{ width: widths[1] }">{{ item.name }}</td>
+            <td [ngStyle]="{ width: widths[2] }">
               {{ item.parent ? item.parent.Name : "-" }}
             </td>
-            <td [ngStyle]="{ width: width[3] }">{{ item.value }}</td>
+            <td [ngStyle]="{ width: widths[3] }">{{ item.value }}</td>
           </tr>
         </tbody>
       </table>

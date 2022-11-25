@@ -17,7 +17,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../table-abstract.component';
+import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
 import {
   GarbageDropRecordFilter,
@@ -31,7 +31,7 @@ import {
   providers: [GarbageDropRecordTableBusiness],
 })
 export class GarbageDropRecordTableComponent
-  extends TableAbstractComponent<GarbageDropRecordViewModel>
+  extends PagedTableAbstractComponent<GarbageDropRecordViewModel>
   implements
     IComponent<IModel, PagedList<GarbageDropRecordViewModel>>,
     OnInit,
@@ -45,7 +45,7 @@ export class GarbageDropRecordTableComponent
   @Input()
   filter: GarbageDropRecordFilter;
 
-  width = [
+  widths = [
     '12%',
     '10%',
     '9%',

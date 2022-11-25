@@ -19,7 +19,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../table-abstract.component';
+import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationTableBusiness } from './garbage-station-table.business';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 
@@ -30,11 +30,12 @@ import { GarbageStationTableModel } from './garbage-station-table.model';
   providers: [GarbageStationTableBusiness],
 })
 export class GarbageStationTableComponent
-  extends TableAbstractComponent<GarbageStationTableModel>
+  extends PagedTableAbstractComponent<GarbageStationTableModel>
   implements
-  IComponent<IModel, PagedList<GarbageStationTableModel>>,
-  OnInit,
-  OnChanges {
+    IComponent<IModel, PagedList<GarbageStationTableModel>>,
+    OnInit,
+    OnChanges
+{
   @Input()
   load?: EventEmitter<SearchOptions>;
   @Output()
@@ -52,7 +53,7 @@ export class GarbageStationTableComponent
     this.business = business;
   }
 
-  width = ['10%', '20%', '15%', '15%', '15%', '15%', '10%', '10%'];
+  widths = ['10%', '20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 
   searchOpts?: SearchOptions;
 
