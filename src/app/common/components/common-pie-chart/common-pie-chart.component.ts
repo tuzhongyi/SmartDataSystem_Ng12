@@ -24,8 +24,7 @@ export class CommonPieChartComponent implements OnInit {
 
   @Input('business') _business: ICommonPieCharBusiness;
 
-  model: CommonPieChartModel<IModel> | null = null;
-  pieOption: EChartsOption = {
+  @Input() options: EChartsOption = {
     series: [
       {
         color: [
@@ -42,7 +41,7 @@ export class CommonPieChartComponent implements OnInit {
         name: 'Collection Pie',
         type: 'pie',
         center: ['50%', '50%'],
-        radius: ['30%', '65%'],
+        radius: ['40%', '75%'],
         emphasis: {
           disabled: true,
         },
@@ -83,7 +82,6 @@ export class CommonPieChartComponent implements OnInit {
            *  labelLinePoints?: number[][]
            **/
 
-          // console.log(params);
           if (params.labelLinePoints) {
             const points = params.labelLinePoints as number[][];
             const isLeft = params.labelRect.x < params.rect.x;
@@ -99,7 +97,30 @@ export class CommonPieChartComponent implements OnInit {
       },
     ],
   };
-  merge: EChartsOption = {};
+
+  @Input() merge: EChartsOption = {
+    series: [
+      {
+        type: 'pie',
+        data: [
+          {
+            name: 'Good',
+            value: 1,
+          },
+          {
+            name: 'Average',
+            value: 2,
+          },
+          {
+            name: 'Poor',
+            value: 3,
+          },
+        ],
+      },
+    ],
+  };
+
+  model?: CommonPieChartModel<IModel>;
 
   constructor(
     @Inject(COMMON_PIE_CHART_TOKEN) business: ICommonPieCharBusiness
@@ -108,11 +129,11 @@ export class CommonPieChartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this._init();
+    // this._init();
   }
 
   private async _init() {
-    this.model = await this._business.init();
+    if (!this.model) this.model = await this._business.init();
 
     this.merge = {
       series: [

@@ -5,29 +5,19 @@
   </div>
   <div class="collection-score-pie__main">
     <div class="main__left">
-      <common-pie-chart [business]="business"></common-pie-chart>
+      <common-pie-chart [merge]="merge"></common-pie-chart>
     </div>
     <div class="main__right">
       <div class="score-wrapper">
-        <div>
-          <div class="score-item">
-            <span class="score-item__label">好评</span>
-            <span class="score-item__count">122</span>
-          </div>
-          <div class="score-item">
-            <span class="score-item__label">中评</span>
-            <span class="score-item__count">122</span>
-          </div>
-          <div class="score-item">
-            <span class="score-item__label">中评</span>
-            <span class="score-item__count">122</span>
-          </div>
+        <div class="score-item" *ngFor="let item of model?.Data">
+          <span class="score-item__label" [class]="item.Tagcls">
+            {{ item.Label }}
+          </span>
+          <span class="score-item__count" [class]="item.Tagcls">{{
+            item.Count
+          }}</span>
         </div>
       </div>
     </div>
   </div>
 </div>
-
-<!-- <div class="collection-score-pie">
-  <common-pie-chart [business]="business"></common-pie-chart>
-</div> -->
