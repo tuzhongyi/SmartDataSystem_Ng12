@@ -3,7 +3,7 @@ import { CommonPieChartModel } from 'src/app/common/components/common-pie-chart/
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 
 export class CollectionScorePieModel<T = any> {
-  pieCharMerge: EChartsOption = {};
+  pieCharModel!: CommonPieChartModel;
 
   Data: ICollectionScorePieData[] = [];
 

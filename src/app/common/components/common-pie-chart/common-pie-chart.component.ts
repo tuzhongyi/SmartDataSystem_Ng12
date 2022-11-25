@@ -49,7 +49,7 @@ export class CommonPieChartComponent implements OnInit {
           show: false,
         },
         label: {
-          show: false,
+          show: true,
           alignTo: 'edge',
           edgeDistance: 10,
           lineHeight: 25,
@@ -129,27 +129,13 @@ export class CommonPieChartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    // this._init();
+    this._init();
   }
 
   private async _init() {
-    if (!this.model) this.model = await this._business.init();
+    this.model = await this._business.init();
 
-    this.merge = {
-      series: [
-        {
-          type: 'pie',
-          data: [
-            ...this.model.Data.map((entry) => {
-              return {
-                value: entry.Count,
-                name: entry.Label,
-              };
-            }),
-          ],
-        },
-      ],
-    };
+    this.merge = this.model.Merge;
   }
   update() {
     this._init();

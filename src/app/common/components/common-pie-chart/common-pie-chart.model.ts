@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+import { EChartsOption, PieSeriesOption } from 'echarts';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 
@@ -12,7 +13,7 @@ export interface ICommonPieCharBusiness<T = any> {
 
 export class CommonPieChartModel<T = any> {
   /* 数量详情 */
-  Data!: CommonPieChartData[];
+  Merge!: EChartsOption;
 
   RawData?: T;
 }

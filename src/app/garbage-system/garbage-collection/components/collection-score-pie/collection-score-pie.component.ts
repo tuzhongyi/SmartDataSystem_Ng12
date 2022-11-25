@@ -49,7 +49,9 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   private async _init() {
     this.model = await this._business.init(this.searchInfo);
 
-    this.merge = this.model.pieCharMerge;
+    this.merge = {
+      ...this.model.pieCharModel.Merge,
+    };
   }
 
   ngOnDestroy(): void {

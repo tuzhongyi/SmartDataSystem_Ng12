@@ -32,9 +32,6 @@ export class CollectionScorePieConverter extends AbstractCommonModelConverter<Co
   private _fromDivisionGarbageScore(item: DivisionGarbageScore) {
     let model = new CollectionScorePieModel();
 
-    // echart数据
-    // model.pieCharModel = this._commonPieChartConverter.Convert(item);
-
     if (item.Scores) {
       // 好评，中评，差评顺序
       item.Scores.sort((a, b) => {
@@ -50,21 +47,8 @@ export class CollectionScorePieConverter extends AbstractCommonModelConverter<Co
           RawData: score,
         };
       });
-      model.pieCharMerge = {
-        series: [
-          {
-            type: 'pie',
-            data: [
-              ...item.Scores.map((score) => {
-                return {
-                  name: Language.CollectionScore(score.Score),
-                  value: score.Number,
-                };
-              }),
-            ],
-          },
-        ],
-      };
+      // echart数据
+      model.pieCharModel = this._commonPieChartConverter.Convert(item);
     }
 
     model.RawData = item;

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
@@ -14,6 +15,16 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   title = '垃圾收运点位';
   subscription: Subscription;
 
+  merge: EChartsOption = {
+    series: [
+      {
+        type: 'pie',
+        label: {
+          show: true,
+        },
+      },
+    ],
+  };
   @ViewChild(CommonPieChartComponent) chart?: CommonPieChartComponent;
 
   constructor(

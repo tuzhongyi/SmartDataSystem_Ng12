@@ -37,14 +37,23 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
   private _fromClassificationNumber(numbers: ClassificationNumber[]) {
     let model = new CommonPieChartModel<ClassificationNumber[]>();
 
-    model.Data = numbers.map((num) => {
-      let data = new CommonPieChartData();
-      data.Count = num.Number;
-      data.Label = Language.CollectionPointClassification(num.Classification);
-      data.RawData = num;
-      return data;
-    });
-
+    model.Merge = {
+      series: [
+        {
+          type: 'pie',
+          data: [
+            ...numbers.map((num) => {
+              return {
+                name: Language.CollectionPointClassification(
+                  num.Classification
+                ),
+                value: (Math.random() * 10) >> 0,
+              };
+            }),
+          ],
+        },
+      ],
+    };
     model.RawData = numbers;
 
     return model;
@@ -58,13 +67,22 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
       item.Scores.sort((a, b) => {
         return (a.Score - b.Score) * -1;
       });
-      model.Data = item.Scores.map((score) => {
-        let data = new CommonPieChartData<GarbageScoreNumber>();
-        data.Count = score.Number;
-        data.Label = Language.CollectionScore(score.Score);
-        data.RawData = score;
-        return data;
-      });
+      // modK
+      model.Merge = {
+        series: [
+          {
+            type: 'pie',
+            data: [
+              ...item.Scores.map((score) => {
+                return {
+                  name: Language.CollectionScore(score.Score),
+                  value: score.Number,
+                };
+              }),
+            ],
+          },
+        ],
+      };
     }
 
     model.RawData = item;

@@ -10,20 +10,27 @@ export class CommonPieChartBusiness implements ICommonPieCharBusiness {
   async init() {
     let model = new CommonPieChartModel();
 
-    model.Data = [
-      {
-        Count: (Math.random() * 255) >> 0,
-        Label: 'Label One',
-      },
-      {
-        Count: (Math.random() * 255) >> 0,
-        Label: 'Label Two',
-      },
-      {
-        Count: (Math.random() * 255) >> 0,
-        Label: 'Label Three',
-      },
-    ];
+    model.Merge = {
+      series: [
+        {
+          type: 'pie',
+          data: [
+            {
+              name: 'Label One',
+              value: (Math.random() * 255) >> 0,
+            },
+            {
+              name: 'Label Two',
+              value: (Math.random() * 255) >> 0,
+            },
+            {
+              name: 'Label Three',
+              value: (Math.random() * 255) >> 0,
+            },
+          ],
+        },
+      ],
+    };
     return model;
   }
 }
