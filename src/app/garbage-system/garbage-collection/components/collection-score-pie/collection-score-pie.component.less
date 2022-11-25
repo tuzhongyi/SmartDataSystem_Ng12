@@ -3,4 +3,60 @@
   height: 100%;
   padding: 15px 20px;
   box-sizing: border-box;
+  &__head {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    max-height: 30px;
+    &__title {
+      font-size: 24px;
+      color: #fff;
+      line-height: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  &__main {
+    height: calc(100% - 30px - 15px);
+    overflow: auto;
+    display: flex;
+
+    .main__left {
+      width: 60%;
+      height: 100%;
+      // background-color: red;
+    }
+    .main__right {
+      width: 40%;
+      height: 100%;
+      // background-color: cyan;
+    }
+  }
+  .score-wrapper {
+    height: 100%;
+
+    margin-right: 25px;
+    overflow: auto;
+    background-color: red;
+
+    .box {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .score-item {
+      margin: 80px 0;
+
+      display: flex;
+      justify-content: space-between;
+      &__label {
+        color: #cfd7ff;
+        font-size: 18px;
+      }
+      &__count {
+        font-size: 20px;
+      }
+    }
+  }
 }

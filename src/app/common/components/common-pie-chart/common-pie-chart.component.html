@@ -1,15 +1,10 @@
-<div class="common-pie-chart vertical-layout">
-  <div class="common-pie-chart__header vertical-header">
-    <div class="title">{{ title }}</div>
-  </div>
-  <div class="common-pie-chart__main vertical-main">
-    <div
-      class="chart-container"
-      id="chartContainer"
-      #chartContainer
-      echarts
-      [options]="pieOption"
-      [merge]="merge"
-    ></div>
-  </div>
+<div class="common-pie-chart">
+  <div
+    class="chart-container"
+    id="chartContainer"
+    #chartContainer
+    echarts
+    [options]="pieOption"
+    [merge]="merge"
+  ></div>
 </div>

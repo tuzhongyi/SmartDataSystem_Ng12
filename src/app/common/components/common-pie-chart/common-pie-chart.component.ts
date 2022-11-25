@@ -46,7 +46,11 @@ export class CommonPieChartComponent implements OnInit {
         emphasis: {
           disabled: true,
         },
+        labelLine: {
+          show: false,
+        },
         label: {
+          show: false,
           alignTo: 'edge',
           edgeDistance: 10,
           lineHeight: 25,
@@ -80,14 +84,17 @@ export class CommonPieChartComponent implements OnInit {
            **/
 
           // console.log(params);
-          const points = params.labelLinePoints as number[][];
-          const isLeft = params.labelRect.x < params.rect.x;
-          points[2][0] = isLeft
-            ? params.labelRect.x
-            : params.labelRect.x + params.labelRect.width;
-          return {
-            labelLinePoints: points,
-          };
+          if (params.labelLinePoints) {
+            const points = params.labelLinePoints as number[][];
+            const isLeft = params.labelRect.x < params.rect.x;
+            points[2][0] = isLeft
+              ? params.labelRect.x
+              : params.labelRect.x + params.labelRect.width;
+            return {
+              labelLinePoints: points,
+            };
+          }
+          return params;
         },
       },
     ],
