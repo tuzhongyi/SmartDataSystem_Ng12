@@ -1,4 +1,26 @@
 <!-- 垃圾收运点位 -->
-<div class="collection-point-pie">
+<!-- <div class="collection-point-pie">
   <common-pie-chart [business]="business"></common-pie-chart>
+</div> -->
+<div class="collection-point-pie">
+  <div class="collection-point-pie__head">
+    <div class="collection-point-pie__head__title">{{ title }}</div>
+  </div>
+  <div class="collection-point-pie__main">
+    <div class="main__left">
+      <common-pie-chart [merge]="merge"></common-pie-chart>
+    </div>
+    <div class="main__right">
+      <div class="point-wrapper">
+        <div class="point-item" *ngFor="let item of model?.Data">
+          <span class="point-item__label" [class]="item.Tagcls">
+            {{ item.Label }}
+          </span>
+          <span class="point-item__count" [class]="item.Tagcls">{{
+            item.Count
+          }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

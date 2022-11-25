@@ -47,7 +47,7 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
                 name: Language.CollectionPointClassification(
                   num.Classification
                 ),
-                value: (Math.random() * 10) >> 0,
+                value: num.Number,
               };
             }),
           ],

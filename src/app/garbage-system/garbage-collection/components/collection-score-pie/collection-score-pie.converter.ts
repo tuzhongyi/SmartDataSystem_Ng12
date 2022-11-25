@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2022-11-25 19:35:21
+ * @Last Modified by:   pmx
+ * @Last Modified time: 2022-11-25 19:35:21
+ */
 import { Injectable } from '@angular/core';
 import { CommonPieChartConverter } from 'src/app/common/components/common-pie-chart/common-pie-chart.converter';
 import { Language } from 'src/app/common/tools/language';
@@ -7,11 +13,7 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { GarbageScoreNumber } from 'src/app/network/model/garbage-score-num.model';
-import {
-  ICollectionScorePieData,
-  CollectionScorePieModel,
-} from './collection-score-pie.model';
+import { CollectionScorePieModel } from './collection-score-pie.model';
 
 @Injectable()
 export class CollectionScorePieConverter extends AbstractCommonModelConverter<CollectionScorePieModel> {

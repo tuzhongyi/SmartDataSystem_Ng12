@@ -4,31 +4,26 @@ import { CommonPieChartConverter } from 'src/app/common/components/common-pie-ch
 import { GetCollectionPointNumberParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
+import { CollectionPointPieConverter } from './collection-point-pie.converte';
 
 @Injectable()
-export class CollectionPointPieBusiness implements ICommonPieCharBusiness {
-  searchInfo: ICollectionPointPieSearchInfo = {};
-
+export class CollectionPointPieBusiness {
   constructor(
     private _collectionPointsRequest: CollectionPointsRequestService,
-    private _converter: CommonPieChartConverter
+    private _converter: CollectionPointPieConverter
   ) {}
-  async init() {
-    let Data = await this._listClassificationNumber();
+  async init(searchInfo: ICollectionPointPieSearchInfo) {
+    let Data = await this._listClassificationNumber(searchInfo);
     let res = this._converter.Convert(Data);
     return res;
   }
 
-  private _listClassificationNumber() {
+  private _listClassificationNumber(searchInfo: ICollectionPointPieSearchInfo) {
     let params = new GetCollectionPointNumberParams();
-    if (this.searchInfo.DivisionIds)
-      params.DivisionIds = this.searchInfo.DivisionIds;
-    if (this.searchInfo.Classifications)
-      params.Classifications = this.searchInfo.Classifications;
+    if (searchInfo.DivisionIds) params.DivisionIds = searchInfo.DivisionIds;
+    if (searchInfo.Classifications)
+      params.Classifications = searchInfo.Classifications;
     return this._collectionPointsRequest.statistic.number(params);
   }
-}
-export interface ICollectionPointPieSearchInfo {
-  DivisionIds?: string[];
-  Classifications?: CollectionPointClassification[];
 }
