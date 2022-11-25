@@ -54,7 +54,7 @@ export class GarbageStationStatisticTableComponent
 
   Language = Language;
   Math = Math;
-  width = ['12%', '10%', '10%', '8%', '8%', '12%', '12%', '12%', '8%', '8%'];
+  widths = ['12%', '10%', '10%', '8%', '8%', '12%', '12%', '12%', '8%', '8%'];
   loading = false;
   ngOnInit() {
     this.loadData();

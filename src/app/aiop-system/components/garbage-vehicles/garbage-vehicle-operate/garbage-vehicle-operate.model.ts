@@ -14,19 +14,9 @@ export type TGarbageVehicleOperateBusiness = IBusiness<GarbageVehicle> &
   ICreate<GarbageVehicle> &
   IUpdate<GarbageVehicle>;
 
-export interface ICameraBusiness {
-  ai: IBusiness<AICamera[]>;
-  vehicle: IBusiness<VehicleCamera[]> &
-    ICreate<VehicleCamera> &
-    IDelete<VehicleCamera>;
-}
 export interface IGarbageVehicleOperateBusiness
   extends TGarbageVehicleOperateBusiness {
-  camera: IBusiness<
-    Array<VehicleCamera | AICamera>,
-    Array<AICameraManageModel>
-  > &
-    ICameraBusiness;
+  camera: IBusiness<AICamera, VehicleCamera>;
 }
 
 export interface IGarbageVehicleOperateComponent {

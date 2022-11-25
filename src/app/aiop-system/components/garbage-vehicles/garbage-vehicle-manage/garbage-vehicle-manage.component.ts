@@ -28,6 +28,7 @@ import { GarbageVehicleManageConf } from './garbage-vehicle-manage.config';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import {
   GarbageVehicleModel,
+  IGarbageVehicleManageBusiness,
   IGarbageVehicleManageComponent,
 } from './garbage-vehicle-manage.model';
 
@@ -77,8 +78,6 @@ export class GarbageVehicleManageComponent
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
   // 表单
-  state = FormState.none;
-  vehicleId = '';
   divisionId = '';
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
@@ -107,11 +106,7 @@ export class GarbageVehicleManageComponent
       )
     );
   }
-  business: IBusiness<
-    PagedList<GarbageVehicle>,
-    PagedList<GarbageVehicleModel<any>>
-  > &
-    IDelete<GarbageVehicle>;
+  business: IGarbageVehicleManageBusiness;
 
   async ngOnInit() {
     // let res = await this._business.listStations()
@@ -169,14 +164,8 @@ export class GarbageVehicleManageComponent
     this._init();
   }
 
-  closeForm(update: boolean) {
+  closeForm() {
     this.showOperate = false;
-    this.state = FormState.none;
-    this.vehicleId = '';
-    if (update) {
-      this.pageIndex = 1;
-      this._init();
-    }
   }
 
   dialogMsgEvent(status: DialogEnum) {
@@ -187,7 +176,7 @@ export class GarbageVehicleManageComponent
     }
   }
   addBtnClick() {
-    this.state = FormState.add;
+    this.selected = undefined;
     this.showOperate = true;
   }
   deleteBtnClick() {
@@ -226,7 +215,15 @@ export class GarbageVehicleManageComponent
   }
   private _clickEditBtn(row: GarbageVehicleModel) {
     this.showOperate = true;
-    this.state = FormState.edit;
-    this.vehicleId = row.Id;
+    this.selected = row.data;
+  }
+
+  onOperateConfirm(data: GarbageVehicle) {
+    if (this.selected) {
+      this.business.update(data);
+    } else {
+      this.business.create(data, this.divisionId);
+    }
+    this.showOperate = false;
   }
 }

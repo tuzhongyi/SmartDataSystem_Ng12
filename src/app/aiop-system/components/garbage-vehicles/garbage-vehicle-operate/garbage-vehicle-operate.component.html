@@ -1,87 +1,133 @@
 <div class="garbage-vehicle-operate">
   <div class="garbage-vehicle-operate-header hw-simple-title">添加</div>
-  <div class="garbage-vehicle-operate-content">
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>名称</span>
+  <div class="garbage-vehicle-operate-content" *ngIf="!!source">
+    <div class="garbage-vehicle-operate-content-form">
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>名称</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input type="text" [(ngModel)]="source.Name" />
+        </div>
       </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input type="text" [(ngModel)]="source.Name" />
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>类型</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <select name="vehicleType" [(ngModel)]="source.VehicleType">
+            <option *ngFor="let s of vehicleTypes" [ngValue]="s.value">
+              {{ s.language }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>编号</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input
+            type="number"
+            (touchSpinChange)="onNoChanged($event)"
+            appTouchSpin
+            [(ngModel)]="source.No"
+          />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>车牌号码</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input type="text" [(ngModel)]="source.PlateNo" />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>IMEI</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input type="text" [(ngModel)]="source.IMEI" />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>心跳间隔</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input
+            type="number"
+            (touchSpinChange)="onHeartbeatIntervalChanged($event)"
+            appTouchSpin
+            [(ngModel)]="source.HeartbeatInterval"
+          />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>自动关闭</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input
+            type="number"
+            (touchSpinChange)="onShutdownSecondsChanged($event)"
+            [options]="{
+              min: 600,
+              max: 14400,
+              verticalbuttons: true
+            }"
+            appTouchSpin
+            [(ngModel)]="source.ShutdownSeconds"
+          />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div class="garbage-vehicle-operate-content-form-item-title">
+          <span>描述信息</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input type="text" [(ngModel)]="source.Description" />
+        </div>
+      </div>
+
+      <div class="garbage-vehicle-operate-content-form-item full chip">
+        <div class="garbage-vehicle-operate-content-form-item-title chip">
+          <span>摄像机</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value chip">
+          <mat-chip-list class="mat-chip-list" #chipList>
+            <span *ngIf="!source.Cameras || source.Cameras.length == 0"
+              >请选择</span
+            >
+            <mat-chip
+              *ngFor="let item of source.Cameras"
+              (removed)="remove(item)"
+            >
+              <div class="mat-chip-name">{{ item.Name }}</div>
+
+              <button matChipRemove>
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip>
+          </mat-chip-list>
+        </div>
       </div>
     </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>类型</span>
+
+    <div class="garbage-vehicle-operate-content-table">
+      <div class="garbage-vehicle-operate-content-table-header">
+        <div class="hw-simple-title">选择摄像机</div>
+        <div class="operation">
+          <span>搜索</span> <howell-simple-search></howell-simple-search>
+        </div>
       </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <select name="vehicleType" [(ngModel)]="source.VehicleType">
-          <option *ngFor="let s of vehicleTypes" [ngValue]="s.value">
-            {{ s.language }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>编号</span>
-      </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input
-          type="number"
-          (touchSpinChange)="onNoChanged($event)"
-          appTouchSpin
-          [(ngModel)]="source.No"
-        />
-      </div>
-    </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>车牌号码</span>
-      </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input type="text" [(ngModel)]="source.PlateNo" />
-      </div>
-    </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>IMEI</span>
-      </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input type="text" [(ngModel)]="source.IMEI" />
-      </div>
-    </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>心跳间隔</span>
-      </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input
-          type="number"
-          (touchSpinChange)="onHeartbeatIntervalChanged($event)"
-          appTouchSpin
-          [(ngModel)]="source.HeartbeatInterval"
-        />
-      </div>
-    </div>
-    <div class="garbage-vehicle-operate-content-item">
-      <div class="garbage-vehicle-operate-content-item-title">
-        <span>自动关闭</span>
-      </div>
-      <div class="garbage-vehicle-operate-content-item-value">
-        <input
-          type="number"
-          (touchSpinChange)="onShutdownSecondsChanged($event)"
-          [options]="{
-            min: 600,
-            max: 14400,
-            verticalbuttons: true
-          }"
-          appTouchSpin
-          [(ngModel)]="source.ShutdownSeconds"
-        />
+      <div class="garbage-vehicle-operate-content-table-content">
+        <aiop-camera-table [(selected)]="cameras"> </aiop-camera-table>
       </div>
     </div>
   </div>
+
   <div class="garbage-vehicle-operate-footer">
     <button class="hw-green-m-btn" type="button" (click)="onConfirm()">
       <i class="howell-icon-Check"></i>

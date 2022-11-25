@@ -10,18 +10,18 @@
     <table border="0" cellpadding="0" cellspacing="0">
       <thead>
         <tr>
-          <th [ngStyle]="{ width: width[0] }">图片</th>
-          <th [ngStyle]="{ width: width[1] }">投放点</th>
-          <th [ngStyle]="{ width: width[2] }">居委会</th>
-          <th [ngStyle]="{ width: width[3] }">社区名称</th>
-          <th [ngStyle]="{ width: width[4] }">街道</th>
-          <th [ngStyle]="{ width: width[5] }">工单号</th>
-          <th [ngStyle]="{ width: width[6] }">发送时间</th>
-          <th [ngStyle]="{ width: width[7] }">处置时间</th>
-          <th [ngStyle]="{ width: width[8] }">滞留时长</th>
-          <th [ngStyle]="{ width: width[9] }">状态</th>
-          <th [ngStyle]="{ width: width[10] }">处置员</th>
-          <th [ngStyle]="{ width: width[11] }">操作</th>
+          <th [ngStyle]="{ width: widths[0] }">图片</th>
+          <th [ngStyle]="{ width: widths[1] }">投放点</th>
+          <th [ngStyle]="{ width: widths[2] }">居委会</th>
+          <th [ngStyle]="{ width: widths[3] }">社区名称</th>
+          <th [ngStyle]="{ width: widths[4] }">街道</th>
+          <th [ngStyle]="{ width: widths[5] }">工单号</th>
+          <th [ngStyle]="{ width: widths[6] }">发送时间</th>
+          <th [ngStyle]="{ width: widths[7] }">处置时间</th>
+          <th [ngStyle]="{ width: widths[8] }">滞留时长</th>
+          <th [ngStyle]="{ width: widths[9] }">状态</th>
+          <th [ngStyle]="{ width: widths[10] }">处置员</th>
+          <th [ngStyle]="{ width: widths[11] }">操作</th>
         </tr>
       </thead>
     </table>
@@ -29,7 +29,7 @@
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas">
-            <td [ngStyle]="{ width: width[0] }" [width]="width[0]">
+            <td [ngStyle]="{ width: widths[0] }" [width]="widths[0]">
               <div class="img-list">
                 <div class="img-list-content">
                   <div class="img" *ngFor="let img of item.images">
@@ -42,51 +42,54 @@
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{ width: width[1] }" [title]="item.Data.StationName">
+            <td
+              [ngStyle]="{ width: widths[1] }"
+              [title]="item.Data.StationName"
+            >
               {{ item.Data.StationName }}
             </td>
             <td
-              [ngStyle]="{ width: width[2] }"
+              [ngStyle]="{ width: widths[2] }"
               [title]="item.Data.DivisionName ?? '-'"
             >
               {{ item.Data.DivisionName ?? "-" }}
             </td>
             <td
-              [ngStyle]="{ width: width[3] }"
+              [ngStyle]="{ width: widths[3] }"
               [title]="item.Data.CommunityName ?? '-'"
             >
               {{ item.Data.CommunityName ?? "-" }}
             </td>
             <td
-              [ngStyle]="{ width: width[4] }"
+              [ngStyle]="{ width: widths[4] }"
               [title]="item.County ? item.County.Name : ''"
             >
               {{ item.County ? item.County.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: width[5], fontSize: '16px' }">
+            <td [ngStyle]="{ width: widths[5], fontSize: '16px' }">
               {{ item.Data.RecordNo ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: width[6] }">
+            <td [ngStyle]="{ width: widths[6] }">
               {{ item.SendTime }}
             </td>
-            <td [ngStyle]="{ width: width[7] }">
+            <td [ngStyle]="{ width: widths[7] }">
               {{ item.HandleTime }}
             </td>
-            <td [ngStyle]="{ width: width[8] }">
+            <td [ngStyle]="{ width: widths[8] }">
               {{ item.DropDuration ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: width[9] }">
+            <td [ngStyle]="{ width: widths[9] }">
               <div [class]="item.statusClass">
                 {{ item.status }}
               </div>
             </td>
             <td
-              [ngStyle]="{ width: width[10] }"
+              [ngStyle]="{ width: widths[10] }"
               [title]="item.Data.ProcessorName ?? '-'"
             >
               {{ item.Data.ProcessorName ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: width[11] }">
+            <td [ngStyle]="{ width: widths[11] }">
               <button
                 class="icon-button"
                 title="播放视频"

@@ -16,7 +16,10 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModel, ImageControlModelArray } from '../../../../../view-model/image-control.model';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from '../../../../../view-model/image-control.model';
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
 import { ListAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
@@ -37,9 +40,10 @@ import { EventRecordListConverter } from './event-record-list.converter';
 export class EventRecordListComponent
   extends ListAbstractComponent<EventRecordViewModel, EventRecordCardModel>
   implements
-  IComponent<IModel, PagedList<EventRecordViewModel>>,
-  OnInit,
-  OnChanges {
+    IComponent<IModel, PagedList<EventRecordViewModel>>,
+    OnInit,
+    OnChanges
+{
   converter = new EventRecordListConverter();
 
   @Input()
@@ -61,7 +65,7 @@ export class EventRecordListComponent
     this.filter = new EventRecordFilter();
   }
 
-  width: string[] = [];
+  widths: string[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
@@ -99,9 +103,9 @@ export class EventRecordListComponent
           return this.business.getDivision(id);
         },
         img: (id: string) => {
-          return this.business.getImage(id)
-        }
-      })
+          return this.business.getImage(id);
+        },
+      });
     });
     return promise;
   }
@@ -149,7 +153,7 @@ export class EventRecordListComponent
   }
   onCardClick(model: EventRecordCardModel) {
     if (model.source) {
-      let vm = (model.source as EventRecordViewModel);
+      let vm = model.source as EventRecordViewModel;
       if (vm.images && vm.images.length > 0) {
         this.imageClick(model.source, vm.images[0]);
       }

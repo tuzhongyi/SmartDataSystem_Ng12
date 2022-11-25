@@ -47,15 +47,4 @@ export class GarbageVehicle implements IModel {
   RelayState?: RelayState;
   /**	String	车牌号码	O	*/
   PlateNo?: string;
-
-  static Create() {
-    let model = new GarbageVehicle();
-    model.CreateTime = new Date();
-    model.UpdateTime = new Date();
-    model.VehicleType = VehicleType.Tricycle;
-    model.No = '10000';
-    model.HeartbeatInterval = 5;
-    model.ShutdownSeconds = 600;
-    return model;
-  }
 }

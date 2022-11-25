@@ -10,17 +10,17 @@
       <thead>
         <tr>
           <td
-            [style.width]="width[0]"
+            [style.width]="widths[0]"
             mat-sort-header="Name"
             [disableClear]="true"
           >
             名称
           </td>
-          <td [style.width]="width[1]">居委会</td>
-          <td [style.width]="width[2]">社区名称</td>
-          <td [style.width]="width[3]">街道</td>
+          <td [style.width]="widths[1]">居委会</td>
+          <td [style.width]="widths[2]">社区名称</td>
+          <td [style.width]="widths[3]">街道</td>
           <td
-            [style.width]="width[4]"
+            [style.width]="widths[4]"
             mat-sort-header="GarbageRatio"
             [disableClear]="true"
             [start]="'desc'"
@@ -28,35 +28,35 @@
             达标率
           </td>
           <td
-            [style.width]="width[5]"
+            [style.width]="widths[5]"
             mat-sort-header="AvgGarbageTime"
             [disableClear]="true"
           >
             平均滞留时长
           </td>
           <td
-            [style.width]="width[6]"
+            [style.width]="widths[6]"
             mat-sort-header="MaxGarbageTime"
             [disableClear]="true"
           >
             最大滞留时长
           </td>
           <td
-            [style.width]="width[7]"
+            [style.width]="widths[7]"
             mat-sort-header="GarbageDuration"
             [disableClear]="true"
           >
             总滞留时长
           </td>
           <td
-            [style.width]="width[8]"
+            [style.width]="widths[8]"
             mat-sort-header="IllegalDrop"
             [disableClear]="true"
           >
             垃圾落地
           </td>
           <td
-            [style.width]="width[9]"
+            [style.width]="widths[9]"
             mat-sort-header="MixedInto"
             [disableClear]="true"
           >
@@ -69,19 +69,19 @@
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <tbody>
           <tr *ngFor="let item of datas">
-            <td [style.width]="width[0]">
+            <td [style.width]="widths[0]">
               {{ item.Name }}
             </td>
-            <td [style.width]="width[1]">
+            <td [style.width]="widths[1]">
               {{ item.Committees ? item.Committees.Name : "" }}
             </td>
-            <td [style.width]="width[2]">
+            <td [style.width]="widths[2]">
               {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
             </td>
-            <td [style.width]="width[3]">
+            <td [style.width]="widths[3]">
               {{ item.County ? item.County.Name : "" }}
             </td>
-            <td [style.width]="width[4]">
+            <td [style.width]="widths[4]">
               <div class="value">
                 <span>{{ item.GarbageRatioTd.format }}</span>
                 <span
@@ -102,7 +102,7 @@
                 </span>
               </div>
             </td>
-            <td [style.width]="width[5]">
+            <td [style.width]="widths[5]">
               <div class="value long">
                 <span>{{ item.AvgGarbageTimeTd.format }}</span
                 ><span
@@ -123,7 +123,7 @@
                 >%
               </div>
             </td>
-            <td [style.width]="width[6]">
+            <td [style.width]="widths[6]">
               <div class="value long">
                 <span>{{ item.MaxGarbageTimeTd.format }}</span
                 ><span
@@ -144,7 +144,7 @@
                 >%
               </div>
             </td>
-            <td [style.width]="width[7]">
+            <td [style.width]="widths[7]">
               <div class="value long">
                 <span>{{ item.GarbageDurationTd.format }}</span
                 ><span
@@ -165,7 +165,7 @@
                 >%
               </div>
             </td>
-            <td [style.width]="width[8]" style="padding-left: 30px">
+            <td [style.width]="widths[8]" style="padding-left: 30px">
               <div class="value shot">
                 <span class="value">{{ item.IllegalDropTd.value }}</span
                 ><span
@@ -185,7 +185,7 @@
                 </span>
               </div>
             </td>
-            <td [style.width]="width[9]" style="padding-left: 30px">
+            <td [style.width]="widths[9]" style="padding-left: 30px">
               <div class="value shot">
                 <span class="value">{{ item.MixedIntoTd.value }}</span
                 ><span

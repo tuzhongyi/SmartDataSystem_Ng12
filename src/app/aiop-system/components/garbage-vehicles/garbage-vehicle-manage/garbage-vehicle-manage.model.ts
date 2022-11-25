@@ -1,6 +1,8 @@
 import {
   IBusiness,
+  ICreate,
   IDelete,
+  IUpdate,
 } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
@@ -19,10 +21,12 @@ export class GarbageVehicleModel<T = any> implements CommonModel {
   IMEI: string = '';
 }
 
+export interface IGarbageVehicleManageBusiness
+  extends IBusiness<PagedList<GarbageVehicle>, PagedList<GarbageVehicleModel>>,
+    IDelete<GarbageVehicle>,
+    ICreate<GarbageVehicle>,
+    IUpdate<GarbageVehicle> {}
+
 export interface IGarbageVehicleManageComponent {
-  business: IBusiness<
-    PagedList<GarbageVehicle>,
-    PagedList<GarbageVehicleModel>
-  > &
-    IDelete<GarbageVehicle>;
+  business: IGarbageVehicleManageBusiness;
 }

@@ -20,7 +20,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../../table-abstract.component';
+import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
@@ -36,7 +36,7 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
   ],
 })
 export class EventRecordTableComponent
-  extends TableAbstractComponent<EventRecordViewModel>
+  extends PagedTableAbstractComponent<EventRecordViewModel>
   implements
     IComponent<IModel, PagedList<EventRecordViewModel>>,
     OnInit,
@@ -59,7 +59,7 @@ export class EventRecordTableComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-  width = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
+  widths = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {

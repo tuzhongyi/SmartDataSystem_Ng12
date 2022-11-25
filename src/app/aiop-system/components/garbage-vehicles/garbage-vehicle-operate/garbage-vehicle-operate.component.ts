@@ -2,35 +2,24 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
-  ViewChild,
+  SimpleChanges,
 } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { FormState } from 'src/app/enum/form-state.enum';
-import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
-import { BehaviorSubject } from 'rxjs';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TableColumnModel } from 'src/app/view-model/table.model';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
 import {
   IGarbageVehicleOperateBusiness,
   IGarbageVehicleOperateComponent,
 } from './garbage-vehicle-operate.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { AiopCameraConf, VehicleCameraConf } from './garbage-vehicle.config';
 import { GarbageVehicleOperateCameraBusiness } from './business/garbage-vehicle-operate-camera.business';
-import { GarbageVehicleOperateAICameraBusiness } from './business/garbage-vehicle-operate-ai-camera.business';
-import { GarbageVehicleOperateVehicleCameraBusiness } from './business/garbage-vehicle-operate-vehicle-camera.business';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { Language } from 'src/app/common/tools/language';
 import { GarbageVehicleOperateBusiness } from './business/garbage-vehicle-operate.business';
+import { AICameraModel } from 'src/app/view-model/ai-camera.model';
+import { Creater } from 'src/app/common/tools/creater';
 
 @Component({
   selector: 'howell-garbage-vehicle-operate',
@@ -39,25 +28,53 @@ import { GarbageVehicleOperateBusiness } from './business/garbage-vehicle-operat
   providers: [
     GarbageVehicleOperateBusiness,
     GarbageVehicleOperateCameraBusiness,
-    GarbageVehicleOperateAICameraBusiness,
-    GarbageVehicleOperateVehicleCameraBusiness,
   ],
 })
 export class GarbageVehicleOperateComponent
-  implements IGarbageVehicleOperateComponent, OnInit
+  implements IGarbageVehicleOperateComponent, OnInit, OnChanges
 {
   @Input()
   business: IGarbageVehicleOperateBusiness;
   @Input()
-  source: GarbageVehicle = GarbageVehicle.Create();
+  source?: GarbageVehicle = Creater.GarbageVehicle();
+  @Output()
+  cancel: EventEmitter<void> = new EventEmitter();
+  @Output()
+  confirm: EventEmitter<GarbageVehicle> = new EventEmitter();
 
   constructor(business: GarbageVehicleOperateBusiness) {
     this.business = business;
   }
   vehicleTypes: SelectItem[] = [];
 
+  private _cameras: AICameraModel[] = [];
+  public get cameras(): AICameraModel[] {
+    return this._cameras;
+  }
+  public set cameras(v: AICameraModel[]) {
+    this._cameras = v;
+    if (this.source) {
+      this.source.Cameras = this._cameras.map((x) => {
+        let camera = this.business.camera.Converter!.Convert(
+          x
+        ) as VehicleCamera;
+        if (this.source) {
+          camera.GarbageVehicleId = this.source.Id;
+        }
+        return camera;
+      });
+    }
+  }
+
   ngOnInit(): void {
     this.initTypes();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.source) {
+      if (!this.source) {
+        this.source = Creater.GarbageVehicle();
+      }
+    }
   }
 
   initTypes() {
@@ -69,16 +86,49 @@ export class GarbageVehicleOperateComponent
     );
   }
 
-  onNoChanged(num: any) {
-    this.source.No = num;
-  }
-  onHeartbeatIntervalChanged(num: any) {
-    this.source.HeartbeatInterval = num;
-  }
-  onShutdownSecondsChanged(num: any) {
-    this.source.ShutdownSeconds = num;
+  remove(item: VehicleCamera): void {
+    if (this.source && this.source.Cameras) {
+      const index = this.source.Cameras.indexOf(item);
+      if (index >= 0) {
+        this.source.Cameras.splice(index, 1);
+        this.cameras.splice(index, 1);
+      }
+    }
   }
 
-  onCancel() {}
-  onConfirm() {}
+  // onNodeSelected(nodes: CommonFlatNode[]) {
+  //   this.nodes = [];
+  //   for (let i = 0; i < nodes.length; i++) {
+  //     const node = nodes[i];
+  //     if (this.nodes.map((x) => x.Id).includes(node.Id)) {
+  //       continue;
+  //     }
+  //     if (node.RawData instanceof RegionNode) {
+  //       this.nodes.push(node.RawData);
+  //     }
+  //   }
+  // }
+
+  onNoChanged(num: any) {
+    if (this.source) {
+      this.source.No = num;
+    }
+  }
+  onHeartbeatIntervalChanged(num: any) {
+    if (this.source) {
+      this.source.HeartbeatInterval = num;
+    }
+  }
+  onShutdownSecondsChanged(num: any) {
+    if (this.source) {
+      this.source.ShutdownSeconds = num;
+    }
+  }
+
+  onCancel() {
+    this.cancel.emit();
+  }
+  onConfirm() {
+    this.confirm.emit(this.source);
+  }
 }

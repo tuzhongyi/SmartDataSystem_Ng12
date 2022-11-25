@@ -21,7 +21,7 @@ import {
   ImageControlModel,
   ImageControlModelArray,
 } from '../../../../view-model/image-control.model';
-import { TableAbstractComponent } from '../table-abstract.component';
+import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import { DeviceViewModel } from './device.model';
 
@@ -32,10 +32,11 @@ import { DeviceViewModel } from './device.model';
   providers: [DeviceListTableBusiness],
 })
 export class DeviceListTableComponent
-  extends TableAbstractComponent<DeviceViewModel>
-  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy {
+  extends PagedTableAbstractComponent<DeviceViewModel>
+  implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
+{
   OnlineStatus = OnlineStatus;
-  width = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
+  widths = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
 
   @Input()
   filter: DeviceListTableFilter = {};
