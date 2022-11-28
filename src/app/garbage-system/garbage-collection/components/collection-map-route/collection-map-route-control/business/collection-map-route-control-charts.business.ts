@@ -24,6 +24,7 @@ export class CollectionMapRouteControlChartsBusiness
   implements ICollectionMapRouteControlChartsBusiness
 {
   scoreclick: EventEmitter<any> = new EventEmitter();
+  routetrigger: EventEmitter<Date> = new EventEmitter();
   routeclick: EventEmitter<Date> = new EventEmitter();
   private readonly formater = 'H:mm';
   private chart?: echarts.ECharts;
@@ -33,13 +34,16 @@ export class CollectionMapRouteControlChartsBusiness
     private point: CollectionMapRouteControlPointBusiness,
     private score: CollectionMapRouteControlScoreBusiness
   ) {}
+
+  speed = 1;
+
   run(date: Date, offset: number = 0) {
     this.handle = setTimeout(() => {
       let time = new Date(date.getTime() + offset);
       this.triggerByTime(time);
 
       this.run(date, (offset += 1000));
-    }, 10);
+    }, 1000 / this.speed);
   }
   stop() {
     if (this.handle) {
@@ -74,6 +78,8 @@ export class CollectionMapRouteControlChartsBusiness
     );
 
     let option: EChartsOption = {
+      grid: this.grid,
+      backgroundColor: 'rgba(0,0,0,0)',
       tooltip: this.tooltip,
       dataZoom: this.dataZoom,
       xAxis: this.xAxis,
@@ -108,11 +114,12 @@ export class CollectionMapRouteControlChartsBusiness
 
       // this.triggerByIndex(index, time.date);
       this.triggerByTime(time.date);
+      this.routeclick.emit(time.date);
     });
   }
 
   private triggerByIndex(index: number, now: Date) {
-    this.routeclick.emit(now);
+    this.routetrigger.emit(now);
     this.serieRoutePosition.data = [[index, 0]];
 
     this.serieRouted.data = (this.serieRoute.data as Array<any>).filter((x) => {
@@ -220,7 +227,7 @@ export class CollectionMapRouteControlChartsBusiness
       }
       last.status = record.Data.OnlineStatus;
       last.color =
-        record.Data.OnlineStatus === OnlineStatus.Offline ? 'green' : 'red';
+        record.Data.OnlineStatus === OnlineStatus.Offline ? '#28df69' : 'red';
       this.visualMap.pieces.push({
         gt: last.index,
         lte: index,
@@ -228,7 +235,7 @@ export class CollectionMapRouteControlChartsBusiness
       });
       last.index = index;
     }
-    let color = last.status === OnlineStatus.Online ? 'green' : 'red';
+    let color = last.status === OnlineStatus.Online ? '#28df69' : 'red';
     let endIndex = this.getXAxisIndex(end);
     if (last.index < endIndex) {
       this.visualMap.pieces.push({
@@ -238,7 +245,7 @@ export class CollectionMapRouteControlChartsBusiness
       });
     }
 
-    // let color = last.status === OnlineStatus.Online ? 'green' : 'red';
+    // let color = last.status === OnlineStatus.Online ? '#28df69' : 'red';
     this.visualMap.pieces.push({
       gt: endIndex,
       color: 'white',
@@ -251,6 +258,12 @@ export class CollectionMapRouteControlChartsBusiness
     );
   }
 
+  private grid: any = {
+    top: 30,
+    left: 50,
+    right: 50,
+    height: 70,
+  };
   private xAxis: any = {
     type: 'category',
     data: [],
@@ -317,7 +330,7 @@ export class CollectionMapRouteControlChartsBusiness
     pieces: [
       {
         lte: 60,
-        color: 'green',
+        color: '#28df69',
       },
       {
         gt: 60,
@@ -327,7 +340,7 @@ export class CollectionMapRouteControlChartsBusiness
       {
         gt: 80,
         lte: 140,
-        color: 'green',
+        color: '#28df69',
       },
       {
         gt: 140,
@@ -336,7 +349,7 @@ export class CollectionMapRouteControlChartsBusiness
       },
       {
         gt: 170,
-        color: 'green',
+        color: '#28df69',
       },
     ],
   };

@@ -1,0 +1,39 @@
+<div class="collection-map-route-query">
+  <div class="collection-map-route-query-header">
+    <div class="hw-simple-title">选择清运车辆</div>
+    <div class="collection-map-route-query-header-date">
+      <div class="collection-map-route-query-header-date-title">选择日期</div>
+      <input
+        type="text"
+        DateTimePicker
+        [format]="'yyyy年MM月dd日'"
+        [startView]="DateTimePickerView.month"
+        [minView]="DateTimePickerView.month"
+        [date]="date"
+        (change)="changeDate($event)"
+        class=""
+      />
+    </div>
+
+    <div class="split"></div>
+    <div>
+      <howell-simple-search
+        (searchEvent)="onsearch($event)"
+        [placeHolder]="'请输入...'"
+      ></howell-simple-search>
+    </div>
+  </div>
+  <div class="collection-map-route-query-content">
+    <div
+      class="collection-map-route-query-content-item"
+      [ngClass]="{ selected: selected === item }"
+      *ngFor="let item of datas"
+      (click)="onselect($event, item)"
+    >
+      {{ item.name }}
+    </div>
+  </div>
+  <div class="collection-map-route-query-footer">
+    <button class="hw-blue-btn" (click)="onquery()">确认</button>
+  </div>
+</div>

@@ -3,18 +3,21 @@
     <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
   </div>
 
-  <div class="collection-map-route-controls" *ngIf="!!model">
+  <div class="panel collection-map-route-controls" *ngIf="!!model">
     <collection-map-route-control
       [sourceId]="model.Id"
+      [date]="date"
       (loaded)="onloaded($event)"
       (scoreclick)="onscore($event)"
-      (routeclick)="onroute($event)"
+      (routetrigger)="onroute($event)"
     >
     </collection-map-route-control>
   </div>
-  <div class="panel collection-map-route-device-list">
-    <collection-map-route-device-list (select)="onselected($event)">
-    </collection-map-route-device-list>
+  <div class="panel collection-map-route-query">
+    <collection-map-route-query (select)="onselected($event)" [(date)]="date">
+    </collection-map-route-query>
   </div>
-  <div class="panel collection-map-route-video"></div>
+  <div class="panel collection-map-route-video">
+    <collection-map-route-video> </collection-map-route-video>
+  </div>
 </div>

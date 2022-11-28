@@ -1,9 +1,72 @@
 .collection-map-route-control {
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  &-container {
-    width: 100%;
+  @operation-width: 200px;
+
+  &-chart {
+    width: calc(100% - @operation-width);
     height: 100%;
+    padding-bottom: 30px;
+
+    &-container {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &-operation {
+    width: @operation-width;
+    height: calc(100% - 60px);
+    border-left: 1px solid #5c6ebf;
+    margin: 25px 0;
+    padding: 0 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    &-button {
+      border: 2px solid #3283e5;
+      border-radius: 50px;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      cursor: pointer;
+
+      i {
+        color: #5e98df;
+        font-size: 36px;
+      }
+
+      &:hover {
+        border-color: #65a2ee;
+
+        i {
+          color: #65a2ee;
+        }
+      }
+    }
+
+    &-speed {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      cursor: pointer;
+
+      &-value {
+        width: 26px;
+        align-self: center;
+        color: white;
+
+      }
+    }
+
   }
 }
