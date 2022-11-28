@@ -66,6 +66,19 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
             }),
           ],
         },
+        {
+          //利用数据圆实现黑色影音，必须有 value
+          type: 'pie',
+          radius: ['40%', '55%'],
+          data: [
+            {
+              value: 0,
+              itemStyle: {
+                color: 'rgba(0,0,0,0.5)',
+              },
+            },
+          ],
+        },
       ],
     };
     model.RawData = numbers;
@@ -97,6 +110,16 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
                 };
               }),
             ],
+          },
+          {
+            // 利用占位圆实现黑色影音 必须指定 z-index
+            type: 'pie',
+            z: 3,
+            radius: ['40%', '55%'],
+            emptyCircleStyle: {
+              color: 'black',
+              opacity: 0.5,
+            },
           },
         ],
       };

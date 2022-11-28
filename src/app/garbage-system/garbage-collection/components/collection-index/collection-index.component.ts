@@ -61,7 +61,6 @@ export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
 
   subscription: Subscription;
 
-
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
@@ -72,8 +71,8 @@ export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
     this._titleService.setTitle('垃圾清运平台');
 
     this.subscription = interval(1 * 60 * 1000).subscribe(() => {
-      this._globalStoreService.collectionStatusChange.emit()
-    })
+      this._globalStoreService.collectionStatusChange.emit();
+    });
   }
 
   ngOnInit(): void {

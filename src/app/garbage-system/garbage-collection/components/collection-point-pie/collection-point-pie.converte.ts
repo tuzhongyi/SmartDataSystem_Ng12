@@ -49,7 +49,7 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
       } else {
         let number = new ClassificationNumber();
         number.Classification = key;
-        number.Number = (Math.random() * 10) >> 0;
+        number.Number = 0;
         data.push(number);
       }
     }

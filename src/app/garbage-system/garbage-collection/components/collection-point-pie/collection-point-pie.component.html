@@ -13,7 +13,11 @@
     <div class="main__right">
       <div class="point-wrapper">
         <div class="point-item" *ngFor="let item of model?.Data">
-          <span class="point-item__label" [class]="item.Tagcls">
+          <span
+            class="point-item__label"
+            [class]="item.Tagcls"
+            [title]="item.Label"
+          >
             {{ item.Label }}
           </span>
           <span class="point-item__count" [class]="item.Tagcls">{{

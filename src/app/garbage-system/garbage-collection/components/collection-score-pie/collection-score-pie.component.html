@@ -10,7 +10,11 @@
     <div class="main__right">
       <div class="score-wrapper">
         <div class="score-item" *ngFor="let item of model?.Data">
-          <span class="score-item__label" [class]="item.Tagcls">
+          <span
+            class="score-item__label"
+            [class]="item.Tagcls"
+            [title]="item.Label"
+          >
             {{ item.Label }}
           </span>
           <span class="score-item__count" [class]="item.Tagcls">{{
