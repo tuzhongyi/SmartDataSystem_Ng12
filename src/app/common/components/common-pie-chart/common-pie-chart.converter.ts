@@ -12,7 +12,10 @@ import {
 import { Language } from '../../tools/language';
 import { ClassificationNumber } from '../../../network/model/classification-number.mode';
 import { DivisionGarbageScore } from '../../../network/model/division-garbage-score.model';
-import { GarbageScoreNumber } from '../../../network/model/garbage-score-num.model';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+
+import ColorPalette from 'src/assets/json/color-palette.json';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +38,9 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
   }
 
   private _fromClassificationNumber(numbers: ClassificationNumber[]) {
+    type ClassificationType =
+      keyof typeof ColorPalette.CollectionPointClassification;
+
     let model = new CommonPieChartModel<ClassificationNumber[]>();
 
     model.Merge = {
@@ -48,6 +54,14 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
                   num.Classification
                 ),
                 value: num.Number,
+                itemStyle: {
+                  color:
+                    ColorPalette.CollectionPointClassification[
+                      CollectionPointClassification[
+                        num.Classification
+                      ] as ClassificationType
+                    ],
+                },
               };
             }),
           ],
@@ -60,14 +74,11 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
   }
 
   private _fromDivisionGarbageScore(item: DivisionGarbageScore) {
+    type ScoreType = keyof typeof ColorPalette.CollectionPointScore;
+
     let model = new CommonPieChartModel();
 
     if (item.Scores) {
-      // 好评，中评，差评顺序
-      item.Scores.sort((a, b) => {
-        return (a.Score - b.Score) * -1;
-      });
-      // modK
       model.Merge = {
         series: [
           {
@@ -75,8 +86,14 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
             data: [
               ...item.Scores.map((score) => {
                 return {
-                  name: Language.CollectionScore(score.Score),
+                  name: Language.CollectionPointScore(score.Score),
                   value: score.Number,
+                  itemStyle: {
+                    color:
+                      ColorPalette.CollectionPointScore[
+                        CollectionPointScore[score.Score] as ScoreType
+                      ],
+                  },
                 };
               }),
             ],

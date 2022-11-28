@@ -29,9 +29,34 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
   }
 
   private _fromClassificationNumber(item: ClassificationNumber[]) {
+    // 排列顺序
+    let keys = [
+      CollectionPointClassification.PublicPlace,
+      CollectionPointClassification.Building,
+      CollectionPointClassification.Shop,
+      CollectionPointClassification.Residence,
+      CollectionPointClassification.Unit,
+      CollectionPointClassification.Other,
+    ];
+
+    // 数据可能不全
+    let data: ClassificationNumber[] = [];
+    for (let i = 0; i < keys.length; i++) {
+      let key = keys[i];
+      let tmp = item.find((num) => num.Classification == key);
+      if (tmp) {
+        data.push(tmp);
+      } else {
+        let number = new ClassificationNumber();
+        number.Classification = key;
+        number.Number = (Math.random() * 10) >> 0;
+        data.push(number);
+      }
+    }
+
     let model = new CollectionPointPieModel();
 
-    model.Data = item.map((num) => {
+    model.Data = data.map((num) => {
       return {
         Count: num.Number,
         Label: Language.CollectionPointClassification(num.Classification),
@@ -40,7 +65,7 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
         RawData: num,
       };
     });
-    model.pieCharModel = this._commonPieChartConverter.Convert(item);
+    model.pieCharModel = this._commonPieChartConverter.Convert(data);
     model.RawData = item;
 
     return model;
@@ -51,3 +76,10 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
     return data.length == 0 || data[0] instanceof ClassificationNumber;
   }
 }
+
+interface Person {
+  name: string;
+  age: number;
+  location: string;
+}
+type K1 = keyof Person; // "name" | "age" | "location"

@@ -122,7 +122,7 @@
     "GarbageVehicle": "清运车辆",
     "Default": "未知"
   },
-  "CollectionScore": {
+  "CollectionPointScore": {
     "Poor": "差评",
     "Average": "中评",
     "Good": "好评",

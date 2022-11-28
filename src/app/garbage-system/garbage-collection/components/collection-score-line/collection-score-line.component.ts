@@ -25,7 +25,7 @@ export class CollectionScoreLineComponent implements OnInit {
   @ViewChild(NgxEchartsDirective) echarts!: any;
 
   get title() {
-    return '今日清运' + Language.CollectionScore(this.type) + '数';
+    return '今日清运' + Language.CollectionPointScore(this.type) + '数';
   }
   model: CollectionScoreModel | null = null;
 

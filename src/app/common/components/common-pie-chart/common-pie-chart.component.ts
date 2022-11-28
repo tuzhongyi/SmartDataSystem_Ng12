@@ -27,17 +27,6 @@ export class CommonPieChartComponent implements OnInit {
   @Input() options: EChartsOption = {
     series: [
       {
-        color: [
-          '#21e452',
-          '#fac858',
-          '#ef6464',
-          '#ee6666',
-          '#73c0de',
-          '#3ba272',
-          '#fc8452',
-          '#9a60b4',
-          '#ea7ccc',
-        ],
         name: 'Collection Pie',
         type: 'pie',
         center: ['50%', '50%'],
@@ -49,7 +38,7 @@ export class CommonPieChartComponent implements OnInit {
           show: false,
         },
         label: {
-          show: true,
+          show: false,
           alignTo: 'edge',
           edgeDistance: 10,
           lineHeight: 25,

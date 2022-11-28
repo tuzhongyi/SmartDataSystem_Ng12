@@ -1,0 +1,15 @@
+{
+  "CollectionPointScore": {
+    "Poor": "#F06565",
+    "Average": "#FFBA3C",
+    "Good": "#68E888"
+  },
+  "CollectionPointClassification": {
+    "Other": "#B572FB",
+    "Shop": "#68E888",
+    "Building": "#4AF2F6",
+    "Residence": "#FFBA3B",
+    "Unit": "#F06565",
+    "PublicPlace": "#88BEFF"
+  }
+}

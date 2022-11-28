@@ -9,12 +9,17 @@ import {
   CollectionPointPieModel,
   ICollectionPointPieSearchInfo,
 } from './collection-point-pie.model';
+import { CollectionPointPieInnerBusiness } from './collection-point-pie-inner.business';
 
 @Component({
   selector: 'collection-point-pie',
   templateUrl: './collection-point-pie.component.html',
   styleUrls: ['./collection-point-pie.component.less'],
-  providers: [CollectionPointPieBusiness, CollectionPointPieConverter],
+  providers: [
+    CollectionPointPieBusiness,
+    CollectionPointPieConverter,
+    CollectionPointPieInnerBusiness,
+  ],
 })
 export class CollectionPointPieComponent implements OnInit, OnDestroy {
   title = '垃圾收运点位';
@@ -29,6 +34,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   merge: EChartsOption = {};
 
   constructor(
+    public innerBusiness: CollectionPointPieInnerBusiness,
     private _business: CollectionPointPieBusiness,
     private _globalStorage: GlobalStorageService
   ) {

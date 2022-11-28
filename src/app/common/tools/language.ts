@@ -431,16 +431,16 @@ export class Language {
     }
   }
 
-  static CollectionScore(type: CollectionPointScore) {
+  static CollectionPointScore(type: CollectionPointScore) {
     switch (type) {
       case CollectionPointScore.Poor:
-        return Language.json.CollectionScore.Poor;
+        return Language.json.CollectionPointScore.Poor;
       case CollectionPointScore.Average:
-        return Language.json.CollectionScore.Average;
+        return Language.json.CollectionPointScore.Average;
       case CollectionPointScore.Good:
-        return Language.json.CollectionScore.Good;
+        return Language.json.CollectionPointScore.Good;
       default:
-        return Language.json.CollectionScore.Default;
+        return Language.json.CollectionPointScore.Default;
     }
   }
   static VehicleRelayOperator(type: VehicleRelayOperator) {

@@ -13,7 +13,7 @@ export interface ICommonPieCharBusiness<T = any> {
 
 export class CommonPieChartModel<T = any> {
   /* 数量详情 */
-  Merge!: EChartsOption;
+  Merge: EChartsOption = {};
 
   RawData?: T;
 }

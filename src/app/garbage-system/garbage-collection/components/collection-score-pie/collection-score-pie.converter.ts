@@ -13,6 +13,7 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
+import { GarbageScoreNumber } from 'src/app/network/model/garbage-score-num.model';
 import { CollectionScorePieModel } from './collection-score-pie.model';
 
 @Injectable()
@@ -32,18 +33,34 @@ export class CollectionScorePieConverter extends AbstractCommonModelConverter<Co
   }
 
   private _fromDivisionGarbageScore(item: DivisionGarbageScore) {
+    let sortColumn = [
+      CollectionPointScore.Good,
+      CollectionPointScore.Average,
+      CollectionPointScore.Poor,
+    ];
     let model = new CollectionScorePieModel();
 
     if (item.Scores) {
-      // 好评，中评，差评顺序
-      item.Scores.sort((a, b) => {
-        return (a.Score - b.Score) * -1;
-      });
-      // 组件自身数据
+      let scores: GarbageScoreNumber[] = [];
+
+      for (let i = 0; i < sortColumn.length; i++) {
+        let key = sortColumn[i];
+        let tmp = item.Scores.find((score) => score.Score == key);
+        if (tmp) {
+          scores.push(tmp);
+        } else {
+          let score = new GarbageScoreNumber();
+          score.Score = key;
+          score.Number = 0;
+          scores.push(score);
+        }
+      }
+      // 不全数据+指定顺序
+      item.Scores = scores;
       model.Data = item.Scores.map((score) => {
         return {
           Count: score.Number,
-          Label: Language.CollectionScore(score.Score),
+          Label: Language.CollectionPointScore(score.Score),
           Type: score.Score,
           Tagcls: CollectionPointScore[score.Score],
           RawData: score,

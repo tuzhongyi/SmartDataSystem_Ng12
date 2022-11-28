@@ -1,6 +1,9 @@
-@Good: #68e888;
-@Average: #ffba3c;
-@Poor: #f06565;
+@Other: #b572fb;
+@Shop: #68e888;
+@Building: #4af2f6;
+@Residence: #ffba3b;
+@Unit: #f06565;
+@PublicPlace: #88beff;
 
 .collection-point-pie {
   width: 100%;
@@ -29,7 +32,6 @@
     .main__left {
       width: 60%;
       height: 100%;
-      // background-color: red;
     }
     .main__right {
       width: 40%;
@@ -42,10 +44,10 @@
   }
   .point-wrapper {
     margin-right: 30px;
-    margin-left: 30px;
+    // margin-left: 30px;
     overflow: auto;
     .point-item {
-      margin: 5px 0;
+      margin: 2.5px 0;
 
       display: flex;
       align-items: center;
@@ -61,32 +63,57 @@
           height: 10px;
         }
 
-        &.Good {
+        &.Other {
           &::before {
-            background-color: @Good;
+            background-color: @Other;
           }
         }
-        &.Average {
+        &.Shop {
           &::before {
-            background-color: @Average;
+            background-color: @Shop;
           }
         }
-        &.Poor {
+        &.Building {
           &::before {
-            background-color: @Poor;
+            background-color: @Building;
+          }
+        }
+        &.Residence {
+          &::before {
+            background-color: @Residence;
+          }
+        }
+        &.Unit {
+          &::before {
+            background-color: @Unit;
+          }
+        }
+        &.PublicPlace {
+          &::before {
+            background-color: @PublicPlace;
           }
         }
       }
       &__count {
         font-size: 20px;
-        &.Good {
-          color: @Good;
+
+        &.Other {
+          color: @Other;
         }
-        &.Average {
-          color: @Average;
+        &.Shop {
+          color: @Shop;
         }
-        &.Poor {
-          color: @Poor;
+        &.Building {
+          color: @Building;
+        }
+        &.Residence {
+          color: @Residence;
+        }
+        &.Unit {
+          color: @Unit;
+        }
+        &.PublicPlace {
+          color: @PublicPlace;
         }
       }
     }

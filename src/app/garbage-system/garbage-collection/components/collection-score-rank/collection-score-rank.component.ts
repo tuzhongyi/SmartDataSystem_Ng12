@@ -20,7 +20,7 @@ export class CollectionScoreRankComponent implements OnInit {
   @Input() type: CollectionPointScore = CollectionPointScore.Poor; // 默认好评榜
 
   get title() {
-    return '垃圾清运' + Language.CollectionScore(this.type) + '榜';
+    return '垃圾清运' + Language.CollectionPointScore(this.type) + '榜';
   }
   trackByFn = (index: number, item: CollectionScoreRankModel) => {
     return item.Id;
