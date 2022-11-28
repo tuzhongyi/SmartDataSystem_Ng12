@@ -8,8 +8,8 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-import { CollectionMapRouteDeviceListConverter } from './collection-map-route-device-list.converter';
-import { CollectionMapRouteDevice } from './collection-map-route-device-list.model';
+import { CollectionMapRouteDeviceListConverter } from './collection-map-route-query.converter';
+import { CollectionMapRouteDevice } from './collection-map-route-query.model';
 
 @Injectable()
 export class CollectionMapRouteDeviceListBusiness

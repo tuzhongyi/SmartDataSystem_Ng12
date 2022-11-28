@@ -53,27 +53,45 @@ export class CollectionMapRouteControlComponent
   @Output()
   scoreclick: EventEmitter<any> = new EventEmitter();
   @Output()
-  routeclick: EventEmitter<Date> = new EventEmitter();
+  routetrigger: EventEmitter<Date> = new EventEmitter();
 
   @Output()
   loaded: EventEmitter<CollectionMapRouteControlSource> = new EventEmitter();
   constructor(charts: CollectionMapRouteControlChartsBusiness) {
     this.business = charts;
     this.business.scoreclick.subscribe(this.scoreclick);
+    this.business.routetrigger.subscribe((x) => {
+      this.routetrigger.emit(x);
+    });
     this.business.routeclick.subscribe((x) => {
       this.time = x;
-      this.routeclick.emit(x);
+      if (this.playing) {
+        this.business.stop();
+        this.business.run(x);
+      }
     });
   }
 
   time?: Date;
+  playing = false;
+
+  private _level: number = 0;
+  public get level(): number {
+    return this._level;
+  }
+  public set level(v: number) {
+    this._level = v;
+    this.business.speed = this.speed;
+  }
+
+  get speed() {
+    return Math.pow(2, this.level);
+  }
 
   @ViewChild('container')
   container?: ElementRef;
 
-  ngOnInit(): void {
-    this.date = new Date(2022, 10, 18);
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.sourceId && !changes.sourceId.firstChange) {
@@ -100,8 +118,13 @@ export class CollectionMapRouteControlComponent
   }
 
   onrun() {
-    if (this.time) {
-      this.business.run(this.time);
+    this.playing = !this.playing;
+    if (this.playing) {
+      if (this.time) {
+        this.business.run(this.time);
+      }
+    } else {
+      this.business.stop();
     }
   }
 }

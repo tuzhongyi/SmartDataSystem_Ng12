@@ -26,11 +26,13 @@ import { CollectionScoreRankComponent } from './collection-score-rank/collection
 import { CollectionWeightRankComponent } from './collection-weight-rank/collection-weight-rank.component';
 import { CollectionMapControlComponent } from './collection-map-control/collection-map-control.component';
 import { CollectionMapRouteComponent } from './collection-map-route/collection-map-route.component';
-import { CollectionMapRouteDeviceListComponent } from './collection-map-route/collection-map-route-device-list/collection-map-route-device-list.component';
-import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
+import { CollectionMapRouteQueryComponent } from './collection-map-route/collection-map-route-query/collection-map-route-query.component';
+
 import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
 import { CollectionPointPieComponent } from './collection-point-pie/collection-point-pie.component';
 import { CollectionDivisionWeightComponent } from './collection-division-weight/collection-division-weight.component';
+import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
+import { CollectionMapRouteVideoComponent } from './collection-map-route/collection-map-route-video/collection-map-route-video.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { CollectionDivisionWeightComponent } from './collection-division-weight/
     CollectionWeightRankComponent,
     CollectionMapControlComponent,
     CollectionMapRouteComponent,
-    CollectionMapRouteDeviceListComponent,
+    CollectionMapRouteVideoComponent,
+    CollectionMapRouteQueryComponent,
     CollectionMapRouteControlComponent,
     CollectionScorePieComponent,
     CollectionPointPieComponent,

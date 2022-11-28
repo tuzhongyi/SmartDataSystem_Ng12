@@ -1,4 +1,32 @@
 <div class="collection-map-route-control">
-  <div class="collection-map-route-control-container" #container></div>
+  <div class="collection-map-route-control-chart">
+    <div class="collection-map-route-control-chart-container" #container></div>
+  </div>
+  <div class="collection-map-route-control-operation">
+    <div
+      class="collection-map-route-control-operation-button"
+      (click)="onrun()"
+    >
+      <i
+        class="mdi"
+        [ngClass]="{
+          'mdi-pause': playing,
+          'mdi-play': !playing
+        }"
+      ></i>
+    </div>
+    <div class="collection-map-route-control-operation-speed">
+      <mat-slider
+        class=""
+        [(ngModel)]="level"
+        [color]="'primary'"
+        [min]="0"
+        [max]="6"
+        aria-label="units"
+      ></mat-slider>
+      <div class="collection-map-route-control-operation-speed-value">
+        x{{ speed }}
+      </div>
+    </div>
+  </div>
 </div>
-<div (click)="onrun()">run</div>

@@ -1,4 +1,4 @@
-.collection-map-route-device-list {
+.collection-map-route-query {
   width: 100%;
   height: 100%;
   color: #cfd7ff;
@@ -7,14 +7,41 @@
 
   &-header {
     width: 100%;
-    height: 40px;
+    height: 131px;
+
+    &>* {
+      margin-bottom: 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+
+    &-date {
+      display: flex;
+      align-items: center;
+
+      &-title {
+        width: 74px;
+      }
+
+      input {
+        width: calc(100% - 74px);
+      }
+    }
+  }
+
+  .split {
+    border-bottom: 1px solid #5e6ebf;
   }
 
   &-content {
-    width: 100%;
-    height: calc(100% - 40px);
-    overflow-y: auto;
 
+    width: 100%;
+    height: calc(100% - 131px - 34px);
+    overflow-y: auto;
+    padding: 10px 0;
 
     &-item {
       width: 100%;
@@ -42,6 +69,17 @@
       &.selected {
         background-color: #1e88e5;
       }
+    }
+  }
+
+  &-footer {
+    height: 34px;
+    display: flex;
+    align-items: center;
+
+    button {
+      height: 100%;
+      width: 100%;
     }
   }
 }

@@ -22,6 +22,7 @@ export class CollectionMapRouteComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private business: CollectionMapRouteBusiness
   ) {}
+  date: Date = new Date();
   src?: SafeResourceUrl;
   @ViewChild('iframe')
   element?: ElementRef;
