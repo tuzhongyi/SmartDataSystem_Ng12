@@ -6,14 +6,9 @@
   </div>
   <div class="collection-device-state__main">
     <div class="collection-device-state__chart">
-      <div
-        class="chart-container"
-        id="chartContainer"
-        #chartContainer
-        echarts
-        [options]="gaugeOption"
-        [merge]="merge"
-      ></div>
+      <div class="chart-container">
+        <common-gauge-chart [merge]="merge"></common-gauge-chart>
+      </div>
 
       <div class="chart-detail">
         <div class="chart-detail__label">车辆在线比</div>
@@ -24,7 +19,7 @@
       </div>
     </div>
     <div class="collection-device-state__chips">
-      <div *ngFor="let item of model?.deviceStateArr" class="chip-item">
+      <div *ngFor="let item of model?.Data" class="chip-item">
         <div class="chip-item__label">{{ item.label }}</div>
         <div class="chip-item__num" [class]="item.tagCls">
           <span>{{ item.count }}</span>

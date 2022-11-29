@@ -27,8 +27,8 @@ export class CommonPieChartComponent implements OnInit {
   @Input() options: EChartsOption = {
     series: [
       {
-        name: 'Collection Pie',
         type: 'pie',
+        name: 'Common Pie',
         center: ['50%', '50%'],
         radius: ['40%', '75%'],
         emphasis: {
@@ -87,27 +87,7 @@ export class CommonPieChartComponent implements OnInit {
     ],
   };
 
-  @Input() merge: EChartsOption = {
-    series: [
-      {
-        type: 'pie',
-        data: [
-          {
-            name: 'Good',
-            value: 1,
-          },
-          {
-            name: 'Average',
-            value: 2,
-          },
-          {
-            name: 'Poor',
-            value: 3,
-          },
-        ],
-      },
-    ],
-  };
+  @Input() merge: EChartsOption = {};
 
   model?: CommonPieChartModel<IModel>;
 
@@ -125,8 +105,5 @@ export class CommonPieChartComponent implements OnInit {
     this.model = await this._business.init();
 
     this.merge = this.model.Merge;
-  }
-  update() {
-    this._init();
   }
 }

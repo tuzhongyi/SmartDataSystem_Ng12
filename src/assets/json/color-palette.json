@@ -11,5 +11,15 @@
     "Residence": "#FFBA3B",
     "Unit": "#F06565",
     "PublicPlace": "#88BEFF"
+  },
+  "CollectionDeviceStateRatioType": {
+    "Bad": "#EF6464",
+    "Mild": "#FFBA00",
+    "Good": "#21E452"
+  },
+  "CollectionDeviceStateCountType": {
+    "All": "#6997FF",
+    "Online": "#21E452",
+    "Offline": "#EF6464"
   }
 }

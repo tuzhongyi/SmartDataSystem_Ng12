@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { CommonPieChartConverter } from 'src/app/common/components/common-pie-chart/common-pie-chart.converter';
 import { GetCollectionPointNumberParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
-import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
-import { CollectionPointPieConverter } from './collection-point-pie.converte';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { ICommonPieCharBusiness } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 
 // 直接传给子组件调用
 @Injectable()
-export class CollectionPointPieInnerBusiness {
+export class CollectionPointPieInnerBusiness implements ICommonPieCharBusiness {
   searchInfo: ICollectionPointPieSearchInfo = {
     DivisionIds: [this._globalStorage.divisionId],
   };

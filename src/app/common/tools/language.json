@@ -141,12 +141,6 @@
     "Good": "正常",
     "Default": "未知"
   },
-  "CollectionDeviceStateRatioTypeColor": {
-    "Bad": "#ef6464",
-    "Mild": "#ffba00",
-    "Good": "#21e452",
-    "Default": "auto"
-  },
   "CollectionDeviceStateCountType": {
     "All": "全部车辆",
     "Online": "在线车辆",

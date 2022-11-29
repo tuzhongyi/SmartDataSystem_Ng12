@@ -67,7 +67,7 @@ export class CollectionScorePieConverter extends AbstractCommonModelConverter<Co
         };
       });
       // echart数据
-      model.pieCharModel = this._commonPieChartConverter.Convert(item);
+      model.PieCharModel = this._commonPieChartConverter.Convert(item);
     }
 
     model.RawData = item;

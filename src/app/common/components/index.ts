@@ -56,6 +56,7 @@ import { SmallTableComponent } from './small-table/small-table.component';
 import { CommonElementListComponent } from './common-element-list/common-element-list.component';
 import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
 import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
+import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -115,4 +116,5 @@ export const CUSTOM_COMPONENTS = [
   CommonElementListComponent,
   CommonPieChartComponent,
   CommonLineChartComponent,
+  CommonGaugeChartComponent,
 ];

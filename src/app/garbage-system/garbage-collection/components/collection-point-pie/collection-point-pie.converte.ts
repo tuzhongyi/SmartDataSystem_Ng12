@@ -65,7 +65,7 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
         RawData: num,
       };
     });
-    model.pieCharModel = this._commonPieChartConverter.Convert(data);
+    model.PieCharModel = this._commonPieChartConverter.Convert(data);
     model.RawData = item;
 
     return model;
@@ -76,10 +76,3 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
     return data.length == 0 || data[0] instanceof ClassificationNumber;
   }
 }
-
-interface Person {
-  name: string;
-  age: number;
-  location: string;
-}
-type K1 = keyof Person; // "name" | "age" | "location"

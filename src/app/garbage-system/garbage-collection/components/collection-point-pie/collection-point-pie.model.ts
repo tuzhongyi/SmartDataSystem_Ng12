@@ -4,7 +4,7 @@ import { CollectionPointClassification } from 'src/app/enum/collection-point-cla
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 
 export class CollectionPointPieModel<T = any> {
-  pieCharModel!: CommonPieChartModel;
+  PieCharModel!: CommonPieChartModel;
 
   Data: ICollectionPointPieData[] = [];
 

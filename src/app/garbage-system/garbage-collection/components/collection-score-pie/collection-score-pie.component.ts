@@ -33,12 +33,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
     private _globalStorage: GlobalStorageService
   ) {
     this.subscription = this._globalStorage.collectionStatusChange.subscribe(
-      () => {
-        this.searchInfo = {
-          DivisionId: this._globalStorage.divisionId,
-        };
-        this._init();
-      }
+      this._init.bind(this)
     );
   }
 
@@ -47,10 +42,13 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
+    this.searchInfo = {
+      DivisionId: this._globalStorage.divisionId,
+    };
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {
-      ...this.model.pieCharModel.Merge,
+      ...this.model.PieCharModel.Merge,
     };
   }
 

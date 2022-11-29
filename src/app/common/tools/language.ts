@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-21 17:45:31
+ * @Last Modified time: 2022-11-29 16:11:05
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -468,20 +468,6 @@ export class Language {
         return Language.json.CollectionDeviceStateRatioType.Good;
       default:
         return Language.json.CollectionDeviceStateRatioType.Default;
-    }
-  }
-  static CollectionDeviceStateRatioTypeColor(
-    type: CollectionDeviceStateRatioType
-  ) {
-    switch (type) {
-      case CollectionDeviceStateRatioType.Bad:
-        return Language.json.CollectionDeviceStateRatioTypeColor.Bad;
-      case CollectionDeviceStateRatioType.Mild:
-        return Language.json.CollectionDeviceStateRatioTypeColor.Mild;
-      case CollectionDeviceStateRatioType.Good:
-        return Language.json.CollectionDeviceStateRatioTypeColor.Good;
-      default:
-        return Language.json.CollectionDeviceStateRatioTypeColor.Default;
     }
   }
 

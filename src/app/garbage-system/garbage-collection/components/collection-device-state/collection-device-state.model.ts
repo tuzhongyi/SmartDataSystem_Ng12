@@ -2,26 +2,13 @@
  * @Author: pmx
  * @Date: 2022-11-08 10:04:09
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-18 13:49:52
+ * @Last Modified time: 2022-11-29 16:16:32
  */
+import { CommonGaugeChartModel } from 'src/app/common/components/common-gauge-chart/common-gauge-chart.model';
 import {
   CollectionDeviceStateCountType,
   CollectionDeviceStateRatioType,
 } from 'src/app/enum/collection-device-state.enum';
-
-export interface ICollectionDeviceStateDes {
-  /**标签文本 */
-  label: string;
-
-  /**标签数量 */
-  count: number;
-
-  /**标签类型 */
-  type: CollectionDeviceStateCountType;
-
-  /**文本颜色 */
-  tagCls: string;
-}
 
 export class CollectionDeviceStateModel {
   /**在线比 */
@@ -36,10 +23,33 @@ export class CollectionDeviceStateModel {
   /**等级颜色 */
   stateColor: string = '';
 
-  stateDes: string = '';
+  GaugeChartModel!: CommonGaugeChartModel;
 
   /**全部车辆、在线车辆、离线车辆 */
-  deviceStateArr: Array<ICollectionDeviceStateDes> = [];
+  Data: Array<ICollectionDeviceStateDes> = [];
 
   constructor() {}
+}
+export interface ICollectionDeviceStateDes {
+  /**标签文本 */
+  label: string;
+
+  /**标签数量 */
+  count: number;
+
+  /**标签类型 */
+  type: CollectionDeviceStateCountType;
+
+  /**文本颜色 */
+  tagCls: string;
+
+  /* 文本颜色 */
+  tagColor: string;
+}
+
+export interface ICollectionDeviceStateSearchInfo {
+  DivisionId?: string;
+
+  PageIndex?: number;
+  PageSize?: number;
 }
