@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
-import { MemberType, VehicleMemberType } from '../../enum/member-type.enum';
+import { MemberType, CollectionMemberType } from '../../enum/member-type.enum';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
@@ -33,7 +33,7 @@ export class Member implements IModel {
 }
 
 /**	垃圾房清运人员	*/
-export class VehicleMember implements IModel {
+export class CollectionMember implements IModel {
   /**	String	成员ID	M	*/
   Id!: string;
   /**	String	姓名	M	*/
@@ -45,7 +45,7 @@ export class VehicleMember implements IModel {
   /**	String	描述信息	O	*/
   Note?: string;
   /**	Int32	人员类型	M	*/
-  MemberType!: VehicleMemberType;
+  MemberType!: CollectionMemberType;
   /**	String	微信OpenId	O	*/
   WeChatOpenId?: string;
   /**	String	所属区划ID	O	*/

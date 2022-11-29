@@ -41,6 +41,14 @@ table {
 
       box-sizing: border-box;
 
+      &.selected {
+        background: linear-gradient(to right, rgb(117, 134, 224), rgb(50, 134, 229));
+
+        i {
+          color: #cfd7ff
+        }
+      }
+
       td {
         color: #cfd7ff;
         height: 100%;
@@ -50,6 +58,10 @@ table {
 
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &.center {
+          text-align: center;
+        }
 
         &:first-child {
           padding-left: 40px;
@@ -69,18 +81,23 @@ table {
         &.operation {
           color: #7586e0;
 
-          &:hover {
-            color: white;
+          &>* {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex-shrink: 0;
+
+            &:hover {
+              color: white;
+            }
           }
         }
       }
 
       &:hover {
-        background: linear-gradient(
-          to right,
-          rgba(117, 134, 224, 0.5),
-          rgba(50, 134, 229, 0.5)
-        );
+        background: linear-gradient(to right,
+            rgba(117, 134, 224, 0.5),
+            rgba(50, 134, 229, 0.5));
       }
 
       &.zoom:hover {

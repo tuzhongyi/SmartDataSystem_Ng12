@@ -101,6 +101,7 @@
   "avg": "平均",
   "duration": "时长",
   "vehicle": "清运车",
+  "unknow":"未知",
   "VehicleType": {
     "Tricycle": "三轮车",
     "Car": "汽车",
@@ -167,5 +168,9 @@
     "Unit": "单位",
     "PublicPlace": "公共场所",
     "Default": "未知"
+  },
+  "Gender":{
+    "Male":"男",
+    "Female":"女"
   }
 }

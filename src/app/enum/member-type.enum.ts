@@ -13,10 +13,10 @@ export enum MemberType {
   healthworker = 2,
 }
 
-export enum VehicleMemberType {
+export enum CollectionMemberType {
   // 其他人员
   other = 0,
 
   // 清运人员
-  volunteer = 1,
+  collection = 1,
 }

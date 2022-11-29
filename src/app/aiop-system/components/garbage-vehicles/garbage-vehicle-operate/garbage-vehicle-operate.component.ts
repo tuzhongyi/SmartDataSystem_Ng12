@@ -46,25 +46,7 @@ export class GarbageVehicleOperateComponent
     this.business = business;
   }
   vehicleTypes: SelectItem[] = [];
-
-  private _cameras: AICameraModel[] = [];
-  public get cameras(): AICameraModel[] {
-    return this._cameras;
-  }
-  public set cameras(v: AICameraModel[]) {
-    this._cameras = v;
-    if (this.source) {
-      this.source.Cameras = this._cameras.map((x) => {
-        let camera = this.business.camera.Converter!.Convert(
-          x
-        ) as VehicleCamera;
-        if (this.source) {
-          camera.GarbageVehicleId = this.source.Id;
-        }
-        return camera;
-      });
-    }
-  }
+  condition?: string;
 
   ngOnInit(): void {
     this.initTypes();
@@ -91,7 +73,6 @@ export class GarbageVehicleOperateComponent
       const index = this.source.Cameras.indexOf(item);
       if (index >= 0) {
         this.source.Cameras.splice(index, 1);
-        this.cameras.splice(index, 1);
       }
     }
   }
@@ -123,6 +104,10 @@ export class GarbageVehicleOperateComponent
     if (this.source) {
       this.source.ShutdownSeconds = num;
     }
+  }
+
+  onsearch(name: string) {
+    this.condition = name;
   }
 
   onCancel() {

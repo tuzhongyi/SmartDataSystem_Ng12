@@ -56,9 +56,13 @@
 
     &-speed {
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
       align-items: flex-start;
       cursor: pointer;
+
+      mat-slider {
+        width: calc(100% - 30px);
+      }
 
       &-value {
         width: 26px;

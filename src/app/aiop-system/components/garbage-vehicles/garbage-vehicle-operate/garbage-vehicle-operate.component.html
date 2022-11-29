@@ -119,11 +119,19 @@
       <div class="garbage-vehicle-operate-content-table-header">
         <div class="hw-simple-title">选择摄像机</div>
         <div class="operation">
-          <span>搜索</span> <howell-simple-search></howell-simple-search>
+          <span>搜索</span>
+          <howell-simple-search
+            (searchEvent)="onsearch($event)"
+          ></howell-simple-search>
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-table-content">
-        <aiop-camera-table [(selected)]="cameras"> </aiop-camera-table>
+        <garbage-vehicle-camera-table
+          [(selected)]="source.Cameras!"
+          [condition]="condition"
+          [vehicleId]="source.Id"
+        >
+        </garbage-vehicle-camera-table>
       </div>
     </div>
   </div>

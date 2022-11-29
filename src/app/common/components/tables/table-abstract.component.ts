@@ -1,3 +1,5 @@
+import { EventEmitter } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { Language } from 'src/app/common/tools/language';
 import { Page } from 'src/app/network/model/page_list.model';
 import {
@@ -7,6 +9,7 @@ import {
 
 export abstract class PagedTableAbstractComponent<T> {
   abstract widths: Array<string>;
+  abstract load?: EventEmitter<any>;
   Language = Language;
   datas: T[] = [];
   page?: Page;
@@ -28,6 +31,12 @@ export abstract class PagedTableAbstractComponent<T> {
       TotalRecordCount: count,
     };
     return page;
+  }
+
+  abstract loadData(index: number, size: number, ...args: any[]): void;
+
+  pageEvent(page: PageEvent) {
+    this.loadData(page.pageIndex + 1, this.pageSize);
   }
 }
 

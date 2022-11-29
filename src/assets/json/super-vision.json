@@ -39,6 +39,26 @@
           "title": "清运车管理",
           "id": "garbage-vehicle-manage",
           "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-manage"
+        },
+        {
+          "title": "摄像机绑定",
+          "id": "garbage-vehicle-camera-binding",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-camera-binding"
+        },
+        {
+          "title": "收运点管理",
+          "id": "garbage-collection-point",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-point"
+        },        
+        {
+          "title": "垃圾桶管理",
+          "id": "garbage-collection-point-trashcan-manager",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-point-trashcan-manager"
+        },
+        {
+          "title": "人员信息",
+          "id": "garbage-collection-member",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-member"
         }
       ]
     }

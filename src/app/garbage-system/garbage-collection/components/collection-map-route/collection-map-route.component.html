@@ -3,7 +3,14 @@
     <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
   </div>
 
-  <div class="panel collection-map-route-controls" *ngIf="!!model">
+  <div class="panel collection-map-route-query">
+    <collection-map-route-query (select)="onselected($event)" [(date)]="date">
+    </collection-map-route-query>
+  </div>
+  <div class="panel collection-map-route-video" *ngIf="!!model">
+    <collection-map-route-video [model]="model"> </collection-map-route-video>
+  </div>
+  <!-- <div class="panel collection-map-route-controls" *ngIf="!!model">
     <collection-map-route-control
       [sourceId]="model.Id"
       [date]="date"
@@ -12,12 +19,5 @@
       (routetrigger)="onroute($event)"
     >
     </collection-map-route-control>
-  </div>
-  <div class="panel collection-map-route-query">
-    <collection-map-route-query (select)="onselected($event)" [(date)]="date">
-    </collection-map-route-query>
-  </div>
-  <div class="panel collection-map-route-video">
-    <collection-map-route-video> </collection-map-route-video>
-  </div>
+  </div> -->
 </div>

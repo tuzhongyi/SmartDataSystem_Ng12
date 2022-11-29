@@ -1,0 +1,59 @@
+<div class="aiop-camera-table">
+  <div class="aiop-camera-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <!-- [(ngModel)]="checked" -->
+          <td>名称</td>
+          <td>类型</td>
+          <td>位置</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            [ngClass]="{
+              selected: selected.includes(item)
+            }"
+            *ngFor="let item of datas; let i = index"
+            (click)="onselect(item)"
+          >
+            <td>{{ item.Name }}</td>
+            <td>
+              <span
+                [ngClass]="{
+                  'green-text': item.OnlineStatus === OnlineStatus.Online,
+                  'powder-red-text': item.OnlineStatus === OnlineStatus.Offline
+                }"
+              >
+                {{ item.OnlineStatus | language_online_status_pipe }}
+              </span>
+            </td>
+            <td>
+              <select
+                [(ngModel)]="item.PositionNo"
+                (click)="onpositionselect($event)"
+              >
+                <option [ngValue]="item.value" *ngFor="let item of positions">
+                  {{ item.language }}
+                </option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

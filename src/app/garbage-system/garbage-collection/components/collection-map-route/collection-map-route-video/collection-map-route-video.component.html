@@ -1,1 +1,29 @@
-<p>collection-map-route-video works!</p>
+<div class="collection-map-route-video">
+  <div class="collection-map-route-video-header">
+    <div>
+      <select [(ngModel)]="position">
+        <option [ngValue]="item.value" *ngFor="let item of title">
+          {{ item.language }}
+        </option>
+      </select>
+    </div>
+    <div></div>
+  </div>
+  <div class="collection-map-route-video-content">
+    <div *ngIf="!!video">
+      <app-video-player [model]="video"></app-video-player>
+    </div>
+    <div *ngIf="!video" class="collection-map-route-video-content-info">
+      <div class="collection-map-route-video-content-info-pic">
+        <i class="howell-icon-dustcart"></i>
+      </div>
+      <div class="collection-map-route-video-content-info-props">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div>
+</div>

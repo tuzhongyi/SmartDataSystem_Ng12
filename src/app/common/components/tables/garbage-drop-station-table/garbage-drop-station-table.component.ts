@@ -96,7 +96,7 @@ export class GarbageDropStationTableComponent
     return promise;
   }
 
-  async pageEvent(page: PageEvent) {
+  override pageEvent(page: PageEvent) {
     this.loadData(page.pageIndex + 1, this.pageSize, this.searchOptions);
   }
 

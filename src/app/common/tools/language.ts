@@ -42,6 +42,7 @@ import language from './language.json';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { Gender } from 'src/app/enum/gender.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -360,17 +361,13 @@ export class Language {
   }
 
   static OnlineStatus(status?: OnlineStatus) {
-    if (status) {
-      switch (status as OnlineStatus) {
-        case OnlineStatus.Online:
-          return Language.json.OnlineStatus.online;
-        case OnlineStatus.Offline:
-          return Language.json.OnlineStatus.Offline;
-        default:
-          return Language.json.normal;
-      }
-    } else {
-      return Language.json.normal;
+    switch (status) {
+      case OnlineStatus.Online:
+        return Language.json.OnlineStatus.online;
+      case OnlineStatus.Offline:
+        return Language.json.OnlineStatus.Offline;
+      default:
+        return Language.json.unknow;
     }
   }
 
@@ -549,6 +546,17 @@ export class Language {
         return Language.json.CollectionPointClassification.PublicPlace;
       default:
         return Language.json.CollectionPointClassification.Default;
+    }
+  }
+
+  static Gender(gender?: Gender) {
+    switch (gender) {
+      case Gender.Male:
+        return Language.json.Gender.Male;
+      case Gender.Female:
+        return Language.json.Gender.Female;
+      default:
+        return Language.json.unknow;
     }
   }
 
