@@ -29,6 +29,7 @@
     "angular-resize-event": "^3.2.0",
     "axios": "^0.21.4",
     "class-transformer": "^0.4.0",
+    "color": "^4.2.3",
     "crypto-js": "^4.1.1",
     "echarts": "^5.4.0",
     "exceljs": "^4.3.0",
