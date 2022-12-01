@@ -103,7 +103,6 @@ export class CommonPieChartComponent implements OnInit {
 
   private async _init() {
     this.model = await this._business.init();
-
     this.merge = this.model.Merge;
   }
 }

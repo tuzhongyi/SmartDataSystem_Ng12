@@ -104,6 +104,7 @@ export class CommonGaugeChartConverter extends AbstractCommonModelConverter<
     return model;
   }
 
+  /**********************************************************/
   private _isGarbageVehicle(
     data: CommonModelSource[]
   ): data is GarbageVehicle[] {

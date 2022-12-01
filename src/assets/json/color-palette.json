@@ -1,8 +1,8 @@
 {
   "CollectionPointScore": {
-    "Poor": "#F06565",
+    "Good": "#F06565",
     "Average": "#FFBA3C",
-    "Good": "#68E888"
+    "Poor": "#68E888"
   },
   "CollectionPointClassification": {
     "Other": "#B572FB",

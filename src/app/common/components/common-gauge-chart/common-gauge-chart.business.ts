@@ -13,6 +13,13 @@ export class CommonGaugeChartBusiness implements ICommonGaugeCharBusiness {
           type: 'gauge',
           data: [
             {
+              /**
+               * x:1 右往左
+               * y:1  下往上
+               * x2:1 左往右
+               * y2:1 上往下
+               */
+
               name: 'Gauge',
               value: value,
               itemStyle: {

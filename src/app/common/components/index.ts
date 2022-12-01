@@ -57,6 +57,7 @@ import { CommonElementListComponent } from './common-element-list/common-element
 import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
 import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
 import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
+import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -117,4 +118,5 @@ export const CUSTOM_COMPONENTS = [
   CommonPieChartComponent,
   CommonLineChartComponent,
   CommonGaugeChartComponent,
+  CommonBarChartComponent,
 ];

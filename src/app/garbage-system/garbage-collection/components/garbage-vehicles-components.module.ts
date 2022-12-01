@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-23 18:52:36
+ * @Last Modified time: 2022-11-30 14:10:12
  */
 
 import { NgModule } from '@angular/core';
@@ -33,6 +33,7 @@ import { CollectionPointPieComponent } from './collection-point-pie/collection-p
 import { CollectionDivisionWeightComponent } from './collection-division-weight/collection-division-weight.component';
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionMapRouteVideoComponent } from './collection-map-route/collection-map-route-video/collection-map-route-video.component';
+import { CollectionScoreBarComponent } from './collection-score-bar/collection-score-bar.component';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { CollectionMapRouteVideoComponent } from './collection-map-route/collect
     CollectionScorePieComponent,
     CollectionPointPieComponent,
     CollectionDivisionWeightComponent,
+    CollectionScoreBarComponent,
   ],
   imports: [
     CommonModule,
