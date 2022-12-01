@@ -41,7 +41,7 @@ export class CommonBarChartComponent implements OnInit {
     },
     xAxis: {
       type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+
       axisLabel: {
         show: true,
         color: '#CFD7FE',

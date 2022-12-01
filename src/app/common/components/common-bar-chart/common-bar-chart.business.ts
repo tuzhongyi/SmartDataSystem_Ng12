@@ -8,6 +8,9 @@ export class CommonBarChartBusiness implements ICommonBarCharBusiness {
   init(): CommonChartModel<any> | Promise<CommonChartModel<any>> {
     let model = new CommonChartModel();
     model.Merge = {
+      xAxis: {
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      },
       series: [
         {
           name: '好评',
