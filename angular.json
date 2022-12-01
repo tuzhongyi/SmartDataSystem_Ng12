@@ -4,7 +4,8 @@
     "analytics": false,
     "cache": {
       "enabled": true
-    }
+    },
+    "packageManager": "yarn"
   },
   "version": 1,
   "newProjectRoot": "projects",
@@ -250,9 +251,7 @@
               "projects/aiop/src/favicon.ico",
               "projects/aiop/src/assets"
             ],
-            "styles": [
-              "projects/aiop/src/styles.less"
-            ],
+            "styles": ["projects/aiop/src/styles.less"],
             "scripts": []
           },
           "configurations": {
@@ -318,9 +317,7 @@
               "projects/aiop/src/favicon.ico",
               "projects/aiop/src/assets"
             ],
-            "styles": [
-              "projects/aiop/src/styles.less"
-            ],
+            "styles": ["projects/aiop/src/styles.less"],
             "scripts": []
           }
         }

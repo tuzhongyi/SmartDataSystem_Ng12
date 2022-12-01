@@ -1,5 +1,5 @@
-import { Md5 } from 'ts-md5/dist/md5';
 import { HttpHeaders } from '@angular/common/http';
+import { Md5 } from 'ts-md5';
 import { HowellRequest } from '../model/howell-request.model';
 
 export class Digest {
