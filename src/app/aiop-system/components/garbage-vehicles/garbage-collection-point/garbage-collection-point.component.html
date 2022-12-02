@@ -47,6 +47,20 @@
               <i class="howell-icon-delete-bin"></i>
               删除
             </button>
+            <upload-control
+              (upload)="onupload($event)"
+              [type]="FileReadType.ArrayBuffer"
+              [accept]="'.xlsx'"
+            >
+              <button class="hw-btn hw-blue-btn">
+                <i class="howell-icon-upload"></i>
+                导入
+              </button>
+            </upload-control>
+            <button class="hw-btn hw-cyan-btn" (click)="ondownload()">
+              <i class="howell-icon-upload"></i>
+              导出
+            </button>
           </div>
 
           <div class="search-wrapper">

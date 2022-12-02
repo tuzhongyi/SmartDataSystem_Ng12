@@ -58,9 +58,13 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
     return this.type.paged(url, data);
   }
 
-  excels(data: BinaryData) {
+  excels(data?: BinaryData) {
     let url = GarbageVehicleDivisionUrl.excles();
-    return this.basic.postReturnString(url, data);
+    if (data) {
+      return this.basic.postReturnString(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 
   private _garbage?: DivisionGarbage;

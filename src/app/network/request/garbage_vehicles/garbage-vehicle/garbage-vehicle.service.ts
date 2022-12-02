@@ -60,9 +60,13 @@ export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle
     let data = classToPlain(params);
     return this.type.paged(url, data);
   }
-  excels(data: BinaryData) {
+  excel(data?: BinaryData) {
     let url = GarbageVehicleUrl.excles();
-    return this.basic.postReturnString(url, data);
+    if (data) {
+      return this.basic.postReturnString(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 
   private _camera?: VehicleCameraService;
@@ -123,9 +127,13 @@ class VehicleCameraService {
     let url = GarbageVehicleUrl.camera(vehicleId).item(cameraId);
     return this.basicType.delete(url);
   }
-  excels(data: BinaryData) {
+  excels(data?: BinaryData) {
     let url = GarbageVehicleUrl.camera().excles();
-    return this.basic.postReturnString(url, data);
+    if (data) {
+      return this.basic.postReturnString(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 }
 

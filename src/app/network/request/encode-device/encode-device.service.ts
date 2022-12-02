@@ -41,6 +41,6 @@ export class EncodeDeviceRequestService {
   }
 
   protocol() {
-    return this.basic.get(EncodeDevicesUrl.protocols(), Protocol);
+    return this.basic.getArray(EncodeDevicesUrl.protocols(), Protocol);
   }
 }

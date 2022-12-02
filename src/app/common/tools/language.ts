@@ -43,6 +43,7 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Gender } from 'src/app/enum/gender.enum';
+import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -81,7 +82,7 @@ export class Language {
       case TimeUnit.Day:
         return Language.json.Date.month + Language.json.report;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -119,7 +120,7 @@ export class Language {
       case CameraType.AIO:
         return Language.json.CameraType.AIO;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
   static CameraUsage(usage: CameraUsage) {
@@ -133,7 +134,7 @@ export class Language {
       case CameraUsage.GarbageFull:
         return Language.json.CameraUsage.GarbageFull;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -178,7 +179,7 @@ export class Language {
       // case EventType.GarbageDropTimeoutHandle:
       //   return Language.json.timeout + Language.json.handle;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -196,7 +197,7 @@ export class Language {
         }
 
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -207,7 +208,7 @@ export class Language {
       case CameraState.PlatformError:
         return Language.json.platform + Language.json.fault;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -223,7 +224,7 @@ export class Language {
       case ResourceType.GarbageStation:
         return Language.json.garbage + Language.json.room;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
   static SearchOption(key: SearchOptionKey) {
@@ -233,7 +234,7 @@ export class Language {
       case SearchOptionKey.community:
         return '社区';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
   static StationType(type: StationType) {
@@ -243,7 +244,7 @@ export class Language {
       case StationType.Construction:
         return '建筑垃圾';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
   static DivisionType(type: DivisionType) {
@@ -307,7 +308,7 @@ export class Language {
       case DisposalCountType.timeout:
         return '超时任务';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -330,7 +331,7 @@ export class Language {
       case UserResourceType.Station:
         return '投放点';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -343,7 +344,7 @@ export class Language {
       case DeviceStateCountType.offLine:
         return '离线设备数量';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -356,7 +357,7 @@ export class Language {
       case DeviceStateRatioType.good:
         return '正常';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -378,7 +379,7 @@ export class Language {
       case ChartType.line:
         return '折线图';
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -470,6 +471,20 @@ export class Language {
         return Language.json.CollectionDeviceStateRatioType.Default;
     }
   }
+  static CollectionDeviceStateRatioTypeColor(
+    type: CollectionDeviceStateRatioType
+  ) {
+    switch (type) {
+      case CollectionDeviceStateRatioType.Bad:
+        return Language.json.CollectionDeviceStateRatioTypeColor.Bad;
+      case CollectionDeviceStateRatioType.Mild:
+        return Language.json.CollectionDeviceStateRatioTypeColor.Mild;
+      case CollectionDeviceStateRatioType.Good:
+        return Language.json.CollectionDeviceStateRatioTypeColor.Good;
+      default:
+        return Language.json.CollectionDeviceStateRatioTypeColor.Default;
+    }
+  }
 
   /**
    *  车辆在线数量
@@ -488,7 +503,7 @@ export class Language {
         return Language.json.CollectionDeviceStateCountType.Default;
     }
   }
-  static TrashCanType(type: TrashCanType) {
+  static TrashCanType(type?: TrashCanType) {
     switch (type) {
       case TrashCanType.Dry:
         return Language.json.TrashCanType.Dry;
@@ -499,7 +514,7 @@ export class Language {
       case TrashCanType.Hazard:
         return Language.json.TrashCanType.Hazard;
       default:
-        return Language.json.TrashCanType.Default;
+        return Language.json.unknow;
     }
   }
 
@@ -508,7 +523,7 @@ export class Language {
       case VehicleState.Offline:
         return Language.json.OnlineStatus.Offline;
       default:
-        return '';
+        return Language.json.unknow;
     }
   }
 
@@ -543,6 +558,16 @@ export class Language {
         return Language.json.Gender.Female;
       default:
         return Language.json.unknow;
+    }
+  }
+
+  static CollectionMemberType(value?: CollectionMemberType): string {
+    switch (value) {
+      case CollectionMemberType.collection:
+        return Language.json.CollectionMemberType.collection;
+      case CollectionMemberType.other:
+      default:
+        return Language.json.other;
     }
   }
 

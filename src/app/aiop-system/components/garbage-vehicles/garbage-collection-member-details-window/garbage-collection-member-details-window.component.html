@@ -1,0 +1,112 @@
+<app-window [style]="style" [Model]="Model" *ngIf="!!model">
+  <div class="garbage-collection-member-details-window">
+    <div class="garbage-collection-member-details-window-header">
+      <div class="hw-simple-title">人员信息</div>
+    </div>
+    <div class="garbage-collection-member-details-window-content">
+      <div class="garbage-collection-member-details-window-content-form">
+        <div
+          class="garbage-collection-member-details-window-content-form-item full"
+        >
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            姓名<span class="hw-form-icon">*</span>
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <input type="text" [(ngModel)]="model.Name" />
+          </div>
+        </div>
+        <div class="garbage-collection-member-details-window-content-form-item">
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            手机号码<span class="hw-form-icon">*</span>
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <input type="text" [(ngModel)]="model.MobileNo" />
+          </div>
+        </div>
+        <div class="garbage-collection-member-details-window-content-form-item">
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            编号<span class="hw-form-icon">*</span>
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <input
+              type="number"
+              (touchSpinChange)="onNoChanged($event)"
+              [min]="10000"
+              appTouchSpin
+              [(ngModel)]="model.No"
+            />
+          </div>
+        </div>
+        <div class="garbage-collection-member-details-window-content-form-item">
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            性别<span class="hw-form-icon">*</span>
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <select [(ngModel)]="model.Gender">
+              <option *ngFor="let item of genders" [ngValue]="item">
+                {{ item | language_gender_pipe }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="garbage-collection-member-details-window-content-form-item">
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            类型<span class="hw-form-icon">*</span>
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <select [(ngModel)]="model.MemberType">
+              <option *ngFor="let item of types" [ngValue]="item">
+                {{ item | language_collection_member_type_pipe }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div
+          class="garbage-collection-member-details-window-content-form-item full"
+        >
+          <div
+            class="garbage-collection-member-details-window-content-form-item-title hw-form-label"
+          >
+            描述信息
+          </div>
+          <div
+            class="garbage-collection-member-details-window-content-form-item-value"
+          >
+            <textarea [(ngModel)]="model.Note"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="garbage-collection-member-details-window-footer">
+      <button class="hw-green-m-btn" type="button" (click)="onyes()">
+        <i class="howell-icon-Check"></i>
+      </button>
+
+      <button class="hw-gray-m-btn" type="button" (click)="oncancel()">
+        <i class="howell-icon-Close"></i>
+      </button>
+    </div>
+  </div>
+</app-window>

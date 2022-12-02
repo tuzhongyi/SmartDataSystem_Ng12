@@ -58,6 +58,7 @@ import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.com
 import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
 import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
 import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.component';
+import { UploadControlComponent } from './upload-control/upload-control.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -119,4 +120,6 @@ export const CUSTOM_COMPONENTS = [
   CommonLineChartComponent,
   CommonGaugeChartComponent,
   CommonBarChartComponent,
+
+  UploadControlComponent,
 ];

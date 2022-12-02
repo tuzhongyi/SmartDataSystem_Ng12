@@ -31,7 +31,7 @@ export class GarbageCollectionPointDetailsWindowComponent
 
   constructor() {
     super();
-    this.style.width = '400px';
+    this.style.width = '800px';
     this.style.height = 'auto';
   }
 

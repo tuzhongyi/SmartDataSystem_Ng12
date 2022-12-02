@@ -5,16 +5,31 @@
     </div>
     <div class="garbage-collection-point-details-window-content">
       <div class="garbage-collection-point-details-window-content-form">
-        <div class="garbage-collection-point-details-window-content-form-item">
+        <div
+          class="garbage-collection-point-details-window-content-form-item full"
+        >
           <div
             class="garbage-collection-point-details-window-content-form-item-title hw-form-label"
           >
-            名称<span _ngcontent-qse-c216="" class="hw-form-icon">*</span>
+            名称<span class="hw-form-icon">*</span>
           </div>
           <div
             class="garbage-collection-point-details-window-content-form-item-value"
           >
             <input type="text" [(ngModel)]="model.Name" />
+          </div>
+        </div>
+
+        <div class="garbage-collection-point-details-window-content-form-item">
+          <div
+            class="garbage-collection-point-details-window-content-form-item-title hw-form-label"
+          >
+            地址
+          </div>
+          <div
+            class="garbage-collection-point-details-window-content-form-item-value"
+          >
+            <input type="text" [(ngModel)]="model.Address" />
           </div>
         </div>
         <div class="garbage-collection-point-details-window-content-form-item">
@@ -33,19 +48,9 @@
             </select>
           </div>
         </div>
-        <div class="garbage-collection-point-details-window-content-form-item">
-          <div
-            class="garbage-collection-point-details-window-content-form-item-title hw-form-label"
-          >
-            地址
-          </div>
-          <div
-            class="garbage-collection-point-details-window-content-form-item-value"
-          >
-            <input type="text" [(ngModel)]="model.Address" />
-          </div>
-        </div>
-        <div class="garbage-collection-point-details-window-content-form-item">
+        <div
+          class="garbage-collection-point-details-window-content-form-item full"
+        >
           <div
             class="garbage-collection-point-details-window-content-form-item-title hw-form-label"
           >
@@ -54,7 +59,7 @@
           <div
             class="garbage-collection-point-details-window-content-form-item-value"
           >
-            <input type="text" [(ngModel)]="model.Description" />
+            <textarea [(ngModel)]="model.Description"></textarea>
           </div>
         </div>
       </div>

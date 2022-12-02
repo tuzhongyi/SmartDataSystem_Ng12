@@ -1,5 +1,5 @@
-<div class="aiop-garbage-collection-point-table">
-  <div class="aiop-garbage-collection-point-table-main vertical-layout">
+<div class="aiop-garbage-collection-member-table">
+  <div class="aiop-garbage-collection-member-table-main vertical-layout">
     <table border="0" cellpadding="0" cellspacing="0">
       <colgroup>
         <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
@@ -32,7 +32,9 @@
               {{ item.Gender | language_gender_pipe }}
             </td>
             <td>{{ item.MobileNo }}</td>
-            <td>{{ item.MemberType }}</td>
+            <td>
+              {{ item.MemberType | language_collection_member_type_pipe }}
+            </td>
 
             <td class="operation center">
               <div (click)="onupdate($event, item)" class="center">
@@ -45,7 +47,7 @@
     </div>
 
     <div
-      class="vertical-footer aiop-garbage-collection-point-table-main-footer footer"
+      class="vertical-footer aiop-garbage-collection-member-table-main-footer footer"
       *ngIf="page"
     >
       <div class="footer-item">

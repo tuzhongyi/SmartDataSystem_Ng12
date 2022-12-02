@@ -1,5 +1,9 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import {
+  FileReadType,
+  FileResult,
+} from 'src/app/common/components/upload-control/upload-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { Creater } from 'src/app/common/tools/creater';
 import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
@@ -33,7 +37,8 @@ export class GarbageCollectionPointComponent
     this.business = business;
   }
 
-  ngOnInit(): void {}
+  FileReadType = FileReadType;
+
   state: FormState = FormState.none;
   load: EventEmitter<string> = new EventEmitter();
   open: EventEmitter<CollectionPoint> = new EventEmitter();
@@ -55,6 +60,7 @@ export class GarbageCollectionPointComponent
     this.enabled.delete = this._selected && this._selected.length > 0;
   }
 
+  ngOnInit(): void {}
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
     let division = nodes[0].RawData as Division;
@@ -67,7 +73,7 @@ export class GarbageCollectionPointComponent
     this.state = FormState.add;
   }
   toupdate(model: CollectionPoint) {
-    this.business.load(model.Id).then((point) => {
+    this.business.get(model.Id).then((point) => {
       this.open.emit(point);
       this.state = FormState.edit;
     });
@@ -130,5 +136,14 @@ export class GarbageCollectionPointComponent
       .catch((x) => {
         this.toastr.warning('修改失败');
       });
+  }
+
+  async onupload(data: FileResult) {
+    let result = await this.business.upload(data).then((x) => {
+      this.load.emit();
+    });
+  }
+  ondownload() {
+    this.business.download();
   }
 }

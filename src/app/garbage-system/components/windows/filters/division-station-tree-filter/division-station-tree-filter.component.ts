@@ -76,7 +76,7 @@ export class DivisionStationTreeFilterComponent
     if (changes.station && this.station) {
       this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
       this.current.rawData = this.station;
-      this.current.parentId = this.station.DivisionId ?? null;
+      this.current.parentId = this.station.DivisionId;
 
       this.currentTitle = [this.current.name];
 
@@ -131,12 +131,12 @@ export class DivisionStationTreeFilterComponent
     return title;
   }
 
-  async getRemoteTitle(id: string | null) {
+  async getRemoteTitle(id?: string) {
     if (id) {
       let division = await this._getDivision(id);
       if (division.DivisionType == DivisionType.City) return;
       this.currentTitle.unshift(division.Name);
-      await this.getRemoteTitle(division.ParentId ?? null);
+      await this.getRemoteTitle(division.ParentId);
     }
   }
 

@@ -102,6 +102,7 @@
   "duration": "时长",
   "vehicle": "清运车",
   "unknow":"未知",
+  "other":"其他",
   "VehicleType": {
     "Tricycle": "三轮车",
     "Car": "汽车",
@@ -141,6 +142,12 @@
     "Good": "正常",
     "Default": "未知"
   },
+  "CollectionDeviceStateRatioTypeColor": {
+    "Bad": "#ef6464",
+    "Mild": "#ffba00",
+    "Good": "#21e452",
+    "Default": "auto"
+  },
   "CollectionDeviceStateCountType": {
     "All": "全部车辆",
     "Online": "在线车辆",
@@ -151,8 +158,7 @@
     "Dry": "干垃圾",
     "Wet": "湿垃圾",
     "Recycle": "可回收垃圾",
-    "Hazard": "有害垃圾",
-    "Default": "未知"
+    "Hazard": "有害垃圾"
   },
   "CollectionPointClassification": {
     "Other": "其他",
@@ -166,5 +172,8 @@
   "Gender":{
     "Male":"男",
     "Female":"女"
+  },
+  "CollectionMemberType":{    
+    "collection":"清运人员"
   }
 }

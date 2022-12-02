@@ -24,3 +24,9 @@ export interface IDelete<T> {
 export interface IGet<T> {
   get(...args: any[]): Promise<T>;
 }
+export interface IUpload {
+  upload(...args: any[]): Promise<any>;
+}
+export interface IDownload {
+  download(...args: any[]): Promise<any>;
+}

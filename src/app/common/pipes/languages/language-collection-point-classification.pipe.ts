@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
-
-import { Language } from '../tools/language';
+import { Language } from '../../tools/language';
 
 @Pipe({
   name: 'language_collection_point_classification_pipe',

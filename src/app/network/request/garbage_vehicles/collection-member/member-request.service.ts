@@ -42,9 +42,12 @@ export class CollectionMemberRequsetService {
     return this.type.paged(url, params);
   }
 
-  excel(data: BinaryData) {
+  excel(data?: BinaryData) {
     let url = GarbageVehicleMemberUrl.excels();
-    if (data) return this.basic.postReturnString(url, data);
-    else return this.type.get(url);
+    if (data) {
+      return this.basic.postReturnString(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 }

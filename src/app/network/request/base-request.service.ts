@@ -7,7 +7,7 @@ import { ServiceHelper } from './service-helper';
 
 export class BaseRequestService {
   constructor(public http: HowellAuthHttpService) {}
-  async get<T>(url: string, type: ClassConstructor<T>) {
+  async get<T>(url: string, type: ClassConstructor<T>): Promise<T> {
     let response = await this.http.get(url).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
@@ -58,6 +58,11 @@ export class BaseRequestService {
       .toPromise();
     return ServiceHelper.ResponseProcess(response, true);
   }
+
+  postBinaryData<R>(url: string, data: BinaryData): Promise<R> {
+    return this.http.postBinaryData<R>(url, data).toPromise();
+  }
+
   async getArray<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http
       .get<IParams, HowellResponse<Array<T>>>(url)
@@ -72,6 +77,14 @@ export class BaseRequestService {
     return ServiceHelper.ResponseProcess(response, type);
   }
 
+  async getExcel(url: string) {
+    let response = (await this.http.getStream(url).toPromise()) as Blob;
+    let buffer = await response.arrayBuffer();
+    return new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+  }
+
   type<T>(type: ClassConstructor<T>): BaseTypeRequestService<T> {
     return new BaseTypeRequestService<T>(this, type);
   }
@@ -83,8 +96,8 @@ export class BaseTypeRequestService<T> {
     private type: ClassConstructor<T>
   ) {}
 
-  async get(url: string) {
-    return this._service.get(url, this.type);
+  async get(url: string): Promise<T> {
+    return this._service.get<T>(url, this.type);
   }
   async put(url: string, model: T) {
     return this._service.put(url, this.type, model);

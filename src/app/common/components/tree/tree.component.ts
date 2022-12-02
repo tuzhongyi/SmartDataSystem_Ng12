@@ -1,6 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -25,13 +32,9 @@ import { TreeBusinessProviders } from './tokens/tree-business.token';
   selector: 'howell-tree',
   templateUrl: './tree.component.html',
   styleUrls: ['./tree.component.less'],
-  providers: [
-    TreeBusinessFactory,
-    ...TreeBusinessProviders
-  ],
+  providers: [TreeBusinessFactory, ...TreeBusinessProviders],
 })
 export class TreeComponent implements OnInit {
-
   private _flatNodeMap = new Map<string, FlatTreeNode>();
   private _transformer = (nestNode: NestTreeNode, level: number) => {
     const existingNode = this._flatNodeMap.get(nestNode.id);
@@ -49,11 +52,11 @@ export class TreeComponent implements OnInit {
       nestNode.hasChildren,
       nestNode.parentId,
       nestNode.iconType,
-      nestNode.type,
+      nestNode.type
     );
 
     if (nestNode.parentId) {
-      let parentFlatNode = this._flatNodeMap.get(nestNode.parentId) ?? null;
+      let parentFlatNode = this._flatNodeMap.get(nestNode.parentId);
       flatNode.parentNode = parentFlatNode;
     }
     flatNode.rawData = nestNode.rawData;
@@ -88,9 +91,8 @@ export class TreeComponent implements OnInit {
   // 一定要返回对象
   trackBy = (index: number, node: FlatTreeNode) => node;
 
-  selection!: SelectionModel<FlatTreeNode>;// 保存选中节点
+  selection!: SelectionModel<FlatTreeNode>; // 保存选中节点
   TreeSelectEnum = SelectStrategy;
-
 
   // 高亮显示选中节点
   highLight = (node: FlatTreeNode) => {
@@ -105,16 +107,14 @@ export class TreeComponent implements OnInit {
     return false;
   };
 
-
   @Input('treeServiceModel')
   serviceModel = DistrictTreeEnum.Division; // 区划树或厢房树
 
   @Input('treeSelectModel')
-  selectModel = SelectStrategy.Single;// 单选或多选
+  selectModel = SelectStrategy.Single; // 单选或多选
 
   @Input('treeBusinessProvider')
-  businessProvider = TreeBusinessEnum.District
-
+  businessProvider = TreeBusinessEnum.District;
 
   // 请求数据的深度
   private _depth: number = 0;
@@ -122,12 +122,12 @@ export class TreeComponent implements OnInit {
   @Input()
   set depth(val: number) {
     if (val < 0) {
-      val = 0
+      val = 0;
     }
     this._depth = val;
   }
   get depth() {
-    return this._depth
+    return this._depth;
   }
 
   // 展示数据的深度，一般等于 depth
@@ -135,12 +135,12 @@ export class TreeComponent implements OnInit {
   @Input()
   set showDepth(val: number) {
     if (val < 0) {
-      val = 0
+      val = 0;
     }
     this._showDepth = val;
   }
   get showDepth() {
-    return this._showDepth
+    return this._showDepth;
   }
   // 强制最大深度节点为叶节点
   @Input()
@@ -151,19 +151,19 @@ export class TreeComponent implements OnInit {
   @Input()
   set resourceType(type: UserResourceType) {
     if (type !== UserResourceType.None) {
-      this._userResourceType = type
+      this._userResourceType = type;
     }
   }
   get resourceType() {
-    return this._userResourceType
+    return this._userResourceType;
   }
 
   // 默认选中列表
-  private _defaultIds: string[] = []
+  private _defaultIds: string[] = [];
   @Input()
   set defaultIds(ids: string[]) {
     // 排除空字符串
-    this._defaultIds = ids.filter(id => id);
+    this._defaultIds = ids.filter((id) => id);
   }
   get defaultIds() {
     return this._defaultIds;
@@ -172,18 +172,22 @@ export class TreeComponent implements OnInit {
   @Input() holdStatus: boolean = false;
 
   // 指定类型的节点会被选中
-  @Input() filterTypes: UserResourceType[] = []
+  @Input() filterTypes: UserResourceType[] = [];
 
   @Input() showSearchBar = true;
 
   @Output() holdStatusChange = new EventEmitter<boolean>();
 
-  @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<FlatTreeNode[]>();
+  @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<
+    FlatTreeNode[]
+  >();
 
   @Output() defaultIdsChange = new EventEmitter<string[]>();
 
-
-  constructor(private _businessFactory: TreeBusinessFactory, private _toastrService: ToastrService) {
+  constructor(
+    private _businessFactory: TreeBusinessFactory,
+    private _toastrService: ToastrService
+  ) {
     this._treeFlattener = new MatTreeFlattener(
       this._transformer,
       this._getLevel,
@@ -203,13 +207,16 @@ export class TreeComponent implements OnInit {
 
     this.dataChange.subscribe((data) => {
       this.dataSource.data = data;
-
     });
 
-    this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
+    this._excludeGuards = Deduplication.generateExcludeArray(
+      this._searchGuards
+    );
   }
   ngOnInit() {
-    this._business = this._businessFactory.createBusiness(this.businessProvider);
+    this._business = this._businessFactory.createBusiness(
+      this.businessProvider
+    );
 
     this._nestedNodeMap = this._business.nestedNodeMap;
 
@@ -224,31 +231,34 @@ export class TreeComponent implements OnInit {
       // console.log("当前节点", change.source.selected)
 
       let filtered: FlatTreeNode[] = [];
-      if (this.filterTypes.includes(UserResourceType.None) || this.filterTypes.length == 0) {
+      if (
+        this.filterTypes.includes(UserResourceType.None) ||
+        this.filterTypes.length == 0
+      ) {
         filtered = change.source.selected;
         this.selectTreeNode.emit(filtered);
-
       } else {
-        filtered = change.source.selected.filter(node => {
-          return this.filterTypes.some(type => node.type == type)
-        })
-        let has1 = change.added.some(node => this.filterTypes.some(type => node.type == type))
-        let has2 = change.removed.some(node => this.filterTypes.some(type => node.type == type))
+        filtered = change.source.selected.filter((node) => {
+          return this.filterTypes.some((type) => node.type == type);
+        });
+        let has1 = change.added.some((node) =>
+          this.filterTypes.some((type) => node.type == type)
+        );
+        let has2 = change.removed.some((node) =>
+          this.filterTypes.some((type) => node.type == type)
+        );
         if (has1 || has2) {
           this.selectTreeNode.emit(filtered);
-
         }
       }
-
     });
 
     this._business.model = this.serviceModel;
-    this._business.depthIsEnd = this.depthIsEnd
+    this._business.depthIsEnd = this.depthIsEnd;
 
     // 如果showDepth没有设置或者比depth大，则用depth的值
     if (this.showDepth == -1 || this.showDepth > this.depth)
       this.showDepth = this.depth;
-
 
     this._initialize();
   }
@@ -265,7 +275,7 @@ export class TreeComponent implements OnInit {
 
     this._condition = condition;
 
-    let res = await this.searchNode(condition)
+    let res = await this.searchNode(condition);
     if (res && res.length) {
       this._toastrService.success('操作成功');
     } else {
@@ -280,35 +290,33 @@ export class TreeComponent implements OnInit {
       this.resourceType,
       this.depth
     );
-    console.log('树节点: ', nodes)
+    console.log('树节点: ', nodes);
 
     this.dataChange.next(nodes);
 
     if (nodes.length == 1 && this.businessProvider == TreeBusinessEnum.Region) {
-      this.defaultIds.push(nodes[0].id)
+      this.defaultIds.push(nodes[0].id);
     }
     // 设置预选节点
-    this._setDefaultNodes()
+    this._setDefaultNodes();
 
     // 展开树
-    this._expandNodeRecursively(nodes)
-
+    this._expandNodeRecursively(nodes);
   }
   // 根据 showDepth 自动展开
   private _expandNodeRecursively(nodes: NestTreeNode[]) {
-    if (this.showDepth <= 0) return
+    if (this.showDepth <= 0) return;
 
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
       let flatNode = this._flatNodeMap.get(node.id);
       if (flatNode && flatNode.level < this.showDepth) {
-        this.treeControl.expand(flatNode)
-        this._expandNodeRecursively(node.childrenChange.value)
+        this.treeControl.expand(flatNode);
+        this._expandNodeRecursively(node.childrenChange.value);
       } else {
         break;
       }
     }
-
   }
 
   toggleSelect(ids: string[]) {
@@ -317,7 +325,7 @@ export class TreeComponent implements OnInit {
       let id = ids[i];
       let flatNode = this._flatNodeMap.get(id);
       if (flatNode) {
-        this.selection.toggle(flatNode)
+        this.selection.toggle(flatNode);
       }
     }
   }
@@ -326,9 +334,9 @@ export class TreeComponent implements OnInit {
 
     this.resourceType = type;
     if (depth) {
-      this.depth = depth
+      this.depth = depth;
     }
-    this._initialize()
+    this._initialize();
   }
   async loadChildren(node: FlatTreeNode) {
     if (this.treeControl.isExpanded(node)) {
@@ -343,20 +351,19 @@ export class TreeComponent implements OnInit {
 
         // 多选的时候
         this._checkAllDescendants(node);
-
       }
-      this._setDefaultNodes()
+      this._setDefaultNodes();
     } else {
       this.treeControl.collapseDescendants(node);
     }
   }
   singleSelectNode(node: FlatTreeNode) {
-    console.log(node)
+    console.log(node);
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;
       } else {
-        this.holdStatusChange.emit(false)
+        this.holdStatusChange.emit(false);
       }
     }
 
@@ -392,7 +399,6 @@ export class TreeComponent implements OnInit {
     return result && !this._descendantAllSelected(node);
   }
 
-
   /***增，删，改，查节点 */
 
   addNode(node: NestTreeNode) {
@@ -404,7 +410,6 @@ export class TreeComponent implements OnInit {
         }
         parentNode.hasChildren = true;
         parentNode.childrenChange.value.push(node);
-
       }
     } else {
       this.dataChange.value.push(node);
@@ -442,11 +447,9 @@ export class TreeComponent implements OnInit {
         if (node.parentId) {
           let parentNode = this._flatNodeMap.get(node.parentId);
           if (parentNode) {
-            this.selection.select(parentNode)
+            this.selection.select(parentNode);
           }
         }
-
-
       }
     }
   }
@@ -461,8 +464,12 @@ export class TreeComponent implements OnInit {
   async searchNode(condition: string) {
     let selected = this.selection.selected;
     this.selection.clear();
-    let nodes: NestTreeNode[] = []
-    nodes = await this._business.searchNode(condition, this.resourceType, this.depth);
+    let nodes: NestTreeNode[] = [];
+    nodes = await this._business.searchNode(
+      condition,
+      this.resourceType,
+      this.depth
+    );
 
     if (nodes.length) {
       this.dataChange.next(nodes);
@@ -474,18 +481,16 @@ export class TreeComponent implements OnInit {
       }
       let selected = this._flatNodeMap.get(nodes[0].id);
       if (this.businessProvider == TreeBusinessEnum.Region) {
-        selected && this.selection.select(selected)
+        selected && this.selection.select(selected);
       }
     } else {
       if (this.businessProvider == TreeBusinessEnum.Region) {
-        this.selection.select(...selected)
+        this.selection.select(...selected);
       }
     }
 
-
     return nodes;
   }
-
 
   private _setDefaultNodes() {
     if (this.defaultIds.length == 0) return;
@@ -497,41 +502,41 @@ export class TreeComponent implements OnInit {
 
     let res: string[] = [];
     for (let i = 0; i < len; i++) {
-      let id = this.defaultIds.shift();// 会改变数组长度
+      let id = this.defaultIds.shift(); // 会改变数组长度
       if (id) {
         let node = this._flatNodeMap.get(id);
         if (node) {
           // 最顶层节点，则直接选中状态
           if (node.parentId == null) {
-            this.selection.select(node)
+            this.selection.select(node);
           } else {
             // 上层节点为打开状态,否则没有打开树，就抛选中事件不合逻辑
             let parentNode = this._flatNodeMap.get(node.parentId);
             if (parentNode && this.treeControl.isExpanded(parentNode)) {
-              this.selection.select(node)
+              this.selection.select(node);
             } else {
-              res.push(id)
+              res.push(id);
             }
           }
         } else {
           // 还没有拉取到该节点
-          res.push(id)
+          res.push(id);
         }
       }
     }
     // 循环结束后，留下的都是没有匹配到的节点
     this.defaultIds = res;
-    if (len !== this.defaultIds.length) this.defaultIdsChange.emit(this.defaultIds)
+    if (len !== this.defaultIds.length)
+      this.defaultIdsChange.emit(this.defaultIds);
 
-    console.log('defaultIds', this.defaultIds)
-
+    console.log('defaultIds', this.defaultIds);
   }
   /**
-  *
-  * @param node
-  * @returns
-  * @description 当前节点所有后代节点都被选中
-  */
+   *
+   * @param node
+   * @returns
+   * @description 当前节点所有后代节点都被选中
+   */
   private _descendantAllSelected(node: FlatTreeNode) {
     const descendants = this.treeControl.getDescendants(node);
     const descAllSelected =

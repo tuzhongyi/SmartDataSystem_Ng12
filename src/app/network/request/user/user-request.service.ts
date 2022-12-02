@@ -101,7 +101,7 @@ class ConfigService {
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
-    return this.basic.http.getBase64String(url).toPromise();
+    return this.basic.http.getString(url).toPromise();
   }
 
   update(userId: string, type: UserConfigType, base64: string): Promise<Fault> {
@@ -118,7 +118,7 @@ class RolesService {
 
   list(userId: string, params?: PagedParams): Promise<PagedList<Role>> {
     let url = UserUrl.role(userId).basic(params);
-    return this.basic.get(url, PagedList);
+    return this.basic.get(url, PagedList<Role>);
   }
 
   get(userId: string, id: string): Promise<Role> {
@@ -188,7 +188,7 @@ class PasswordCheckService {
 
   code(mobileNo?: string) {
     let url = PasswordUrl.checkCode(mobileNo);
-    return this.basic.http.getBase64String(url).toPromise();
+    return this.basic.http.getString(url).toPromise();
   }
 
   check(params: CheckCodeParams): Promise<PasswordCheckCodeResult> {

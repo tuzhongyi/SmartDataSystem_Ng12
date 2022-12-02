@@ -36,6 +36,10 @@ import {
   IBusiness,
   IDelete,
 } from 'src/app/common/interfaces/bussiness.interface';
+import {
+  FileReadType,
+  FileResult,
+} from 'src/app/common/components/upload-control/upload-control.model';
 
 @Component({
   selector: 'howell-garbage-vehicle-manage',
@@ -225,5 +229,16 @@ export class GarbageVehicleManageComponent
       this.business.create(data, this.divisionId);
     }
     this.showOperate = false;
+  }
+
+  FileReadType = FileReadType;
+  onupload(data: FileResult) {
+    this.business.upload(data).then((x) => {
+      this.pageIndex = 1;
+      this._init();
+    });
+  }
+  ondownload() {
+    this.business.download();
   }
 }

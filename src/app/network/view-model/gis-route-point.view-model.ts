@@ -1,6 +1,6 @@
 import { GisRoutePoint } from '../model/gis-point.model';
-import { VehicleTrashCan } from '../model/trash-can.model';
+import { CollectionTrashCan } from '../model/trash-can.model';
 
 export class GisRoutePointModel extends GisRoutePoint {
-  TrashCan?: Promise<VehicleTrashCan>;
+  TrashCan?: Promise<CollectionTrashCan>;
 }

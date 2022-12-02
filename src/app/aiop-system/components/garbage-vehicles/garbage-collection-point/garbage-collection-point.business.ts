@@ -13,13 +13,23 @@ export class GarbageCollectionPointBusiness
   implements IGarbageCollectionPointBusiness
 {
   constructor(private service: CollectionPointsRequestService) {}
-  load(id: string): Promise<CollectionPoint> {
-    return this.getData(id);
+  async download() {
+    let data = (await this.service.excel()) as Blob;
+    let url = window.URL.createObjectURL(data);
+    let a = document.createElement('a');
+
+    document.body.appendChild(a);
+    a.href = url;
+    a.click();
+    a.download = '收运点信息';
+    document.body.removeChild(a);
   }
-  getData(id: string): Promise<CollectionPoint> {
+  upload(buffer: ArrayBuffer) {
+    return this.service.excel(buffer);
+  }
+  get(id: string): Promise<CollectionPoint> {
     return this.service.get(id);
   }
-
   create(model: CollectionPoint): Promise<CollectionPoint> {
     return this.service.create(model);
   }

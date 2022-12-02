@@ -87,7 +87,7 @@ export class HowellAuthHttpService {
     return this._http.get<R>(url, httpOptions);
   }
 
-  public getBase64String(url: string, params?: HttpParams): Observable<string> {
+  public getString(url: string, params?: HttpParams): Observable<string> {
     const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const httpOptions = {
       headers: myHeaders,
@@ -121,6 +121,18 @@ export class HowellAuthHttpService {
       params: params,
     };
     return this._http.post<R>(url, model, httpOptions);
+  }
+
+  public postBinaryData<T>(url: string, data: BinaryData) {
+    const myHeaders = this._authorizationService.generateHttpHeader(
+      'POST',
+      url
+    );
+    myHeaders.set('Content-Type', 'application/octet-stream');
+    const httpOptions = {
+      headers: myHeaders,
+    };
+    return this._http.post<T>(url, data, httpOptions);
   }
 
   public postReturnString<T = any>(

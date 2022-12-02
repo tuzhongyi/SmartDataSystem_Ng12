@@ -1,16 +1,18 @@
-import { Injectable } from "@angular/core";
-import { AICamera } from "../../model/ai-camera.model";
-import { CameraAIModel } from "../../model/camera-ai.model";
-import { AICamerasUrl } from "../../url/aiop/resources/cameras/cameras.url";
-import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
-import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { GetCamerasParams } from "./ai-camera.params";
+import { Injectable } from '@angular/core';
+import { AICamera } from '../../model/ai-camera.model';
+import { CameraAIModel } from '../../model/camera-ai.model';
+import { AICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
+import {
+  BaseRequestService,
+  BaseTypeRequestService,
+} from '../base-request.service';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
+import { GetCamerasParams } from './ai-camera.params';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AICameraRequestService {
-
   private basic: BaseRequestService;
   private type: BaseTypeRequestService<AICamera>;
 
@@ -23,7 +25,7 @@ export class AICameraRequestService {
     return this.type.paged(AICamerasUrl.list(), params);
   }
   create(item: AICamera) {
-    return this.type.post(AICamerasUrl.create(), item)
+    return this.type.post(AICamerasUrl.create(), item);
   }
 
   get(id: string) {
@@ -31,23 +33,31 @@ export class AICameraRequestService {
   }
 
   update(item: AICamera) {
-    return this.type.put(AICamerasUrl.item(item.Id), item)
+    return this.type.put(AICamerasUrl.item(item.Id), item);
   }
 
   delete(id: string) {
-    return this.type.delete(AICamerasUrl.item(id))
+    return this.type.delete(AICamerasUrl.item(id));
   }
   listAIModels(id: string) {
-    return this.basic.get(AICamerasUrl.AIModels(id), CameraAIModel)
+    return this.basic.getArray(AICamerasUrl.AIModels(id), CameraAIModel);
   }
   addAIModel(cameraId: string, modelId: string) {
-    return this.basic.post(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+    return this.basic.post(
+      AICamerasUrl.singleAIModel(cameraId, modelId),
+      CameraAIModel
+    );
   }
   getAIModel(cameraId: string, modelId: string) {
-    return this.basic.get(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+    return this.basic.get(
+      AICamerasUrl.singleAIModel(cameraId, modelId),
+      CameraAIModel
+    );
   }
   deleteAIModel(cameraId: string, modelId: string) {
-    return this.basic.delete(AICamerasUrl.singleAIModel(cameraId, modelId), CameraAIModel)
+    return this.basic.delete(
+      AICamerasUrl.singleAIModel(cameraId, modelId),
+      CameraAIModel
+    );
   }
-
 }

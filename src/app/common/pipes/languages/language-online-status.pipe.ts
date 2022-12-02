@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Language } from '../tools/language';
+import { Language } from '../../tools/language';
 
 @Pipe({
   name: 'language_online_status_pipe',

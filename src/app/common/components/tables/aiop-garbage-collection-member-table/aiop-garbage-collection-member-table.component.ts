@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { CollectionMember } from 'src/app/network/model/member.model';
@@ -18,7 +26,7 @@ import { AiopGarbageCollectionMemberTableBusiness } from './aiop-garbage-collect
 })
 export class AiopGarbageCollectionMemberTableComponent
   extends PagedTableAbstractComponent<CollectionMember>
-  implements IComponent<IModel, PagedList<CollectionMember>>, OnInit
+  implements IComponent<IModel, PagedList<CollectionMember>>, OnInit, OnChanges
 {
   @Input()
   business: IBusiness<IModel, PagedList<CollectionMember>>;
@@ -43,7 +51,20 @@ export class AiopGarbageCollectionMemberTableComponent
   widths = ['20%', '20%', '20%', '20%', '20%'];
 
   ngOnInit(): void {}
-
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.divisionId) {
+      if (this.divisionId) {
+        this.loadData(1, this.pageSize);
+      }
+    }
+    if (changes.load) {
+      if (this.load) {
+        this.load.subscribe((name) => {
+          this.loadData(1, this.pageSize, name);
+        });
+      }
+    }
+  }
   async loadData(index: number, size: number, name?: string) {
     this.selected = undefined;
 

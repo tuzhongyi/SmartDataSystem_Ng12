@@ -8,7 +8,7 @@ import { Transform } from 'class-transformer';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { GisPoint } from './gis-point.model';
 import { transformDateTime } from './transform.model';
-import { VehicleTrashCan } from './trash-can.model';
+import { CollectionTrashCan } from './trash-can.model';
 
 /**	收运点	*/
 export class CollectionPoint {
@@ -33,5 +33,5 @@ export class CollectionPoint {
   /**	String	所属区划ID	O	*/
   DivisionId?: string;
   /**	TrashCan[]	垃圾桶列表	O	*/
-  TrashCans?: VehicleTrashCan[];
+  TrashCans?: CollectionTrashCan[];
 }

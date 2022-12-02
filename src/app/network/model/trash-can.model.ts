@@ -34,7 +34,7 @@ export class TrashCan implements IModel {
 }
 
 /**	垃圾桶	*/
-export class VehicleTrashCan implements IModel {
+export class CollectionTrashCan implements IModel {
   /**	String	垃圾桶ID	M	*/
   Id!: string;
   /**	String	垃圾桶名称	O	*/

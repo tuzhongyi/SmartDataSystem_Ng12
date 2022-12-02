@@ -159,7 +159,7 @@ class CamerasService {
   private basicType: BaseTypeRequestService<Camera>;
   all(stationId: string): Promise<Camera[]> {
     let url = GarbageStationUrl.camera(stationId).basic();
-    return this.basicType.get(url);
+    return this.basicType.getArray(url);
   }
   create(camera: Camera): Promise<Camera> {
     let url = GarbageStationUrl.camera(camera.GarbageStationId).basic();
@@ -209,7 +209,7 @@ class CamerasTrashCansService {
   private basicType: BaseTypeRequestService<TrashCan>;
   all(stationId: string, cameraId: string): Promise<TrashCan[]> {
     let url = GarbageStationUrl.camera(stationId).trashcan(cameraId).basic();
-    return this.basicType.get(url);
+    return this.basicType.getArray(url);
   }
   create(data: TrashCan): Promise<TrashCan> {
     let url = GarbageStationUrl.camera(data.GarbageStationId)
@@ -279,7 +279,7 @@ class TrashCansService {
 
   all(stationId: string): Promise<TrashCan[]> {
     let url = GarbageStationUrl.trashcan(stationId).basic();
-    return this.basicType.get(url);
+    return this.basicType.getArray(url);
   }
   create(data: TrashCan): Promise<TrashCan> {
     let url = GarbageStationUrl.trashcan(data.GarbageStationId).basic();
@@ -303,7 +303,7 @@ class TrashCansService {
   }
 }
 class VolumesService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -327,7 +327,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -350,7 +350,7 @@ class EventNumbersHistoryService {
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
@@ -426,7 +426,7 @@ class StatisticNumberHistoryService {
   }
 }
 class StatistictGarbageCountService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _history?: StatistictGarbageCountHistoryService;
   public get history(): StatistictGarbageCountHistoryService {
     if (!this._history) {
@@ -454,7 +454,7 @@ class TypesService {
   private basicType: BaseTypeRequestService<GarbageStationType>;
   list(): Promise<GarbageStationType[]> {
     let url = GarbageStationUrl.type.basic();
-    return this.basicType.get(url);
+    return this.basicType.getArray(url);
   }
   create(type: GarbageStationType): Promise<GarbageStationType> {
     let url = GarbageStationUrl.type.basic();
@@ -480,7 +480,7 @@ class MumberService {
   private basicType: BaseTypeRequestService<Member>;
   all(stationId: string): Promise<Member[]> {
     let url = GarbageStationUrl.member(stationId).basic();
-    return this.basicType.get(url);
+    return this.basicType.getArray(url);
   }
   get(stationId: string, memberId: string): Promise<Member> {
     let url = GarbageStationUrl.member(stationId).item(memberId);

@@ -2,6 +2,15 @@
   display: flex;
   flex-wrap: wrap;
   flex-shrink: 0;
+
+
+  &>* {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }
 
 .hw-middle-btn-group {

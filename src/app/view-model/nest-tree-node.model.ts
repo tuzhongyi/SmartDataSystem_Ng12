@@ -1,6 +1,6 @@
 import { BehaviorSubject } from 'rxjs';
 
-export class NestTreeNode {
+export class NestTreeNode<T = any> {
   childrenChange = new BehaviorSubject<NestTreeNode[]>([]);
 
   constructor(
@@ -9,10 +9,10 @@ export class NestTreeNode {
     public description: string = '',
     public type: number = 0,
     public hasChildren = false,
-    public parentId: string | null = null,
+    public parentId?: string,
     public iconType: string = 'howell-icon-map5',
     public childrenLoaded = false,
-    public parentNode: NestTreeNode | null = null,
-    public rawData?: any
-  ) { }
+    public parentNode?: NestTreeNode,
+    public rawData?: T
+  ) {}
 }

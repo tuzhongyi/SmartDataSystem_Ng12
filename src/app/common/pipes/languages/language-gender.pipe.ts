@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Gender } from 'src/app/enum/gender.enum';
-import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
-import { Language } from '../tools/language';
+import { Language } from '../../tools/language';
 
 @Pipe({
   name: 'language_gender_pipe',

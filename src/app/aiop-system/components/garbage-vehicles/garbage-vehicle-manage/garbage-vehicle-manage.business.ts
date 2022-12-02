@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 
@@ -13,16 +14,7 @@ export class GarbageVehicleManageBusiness
   implements IGarbageVehicleManageBusiness
 {
   constructor(private service: GarbageVehicleRequestService) {}
-  create(model: GarbageVehicle, divisionId: string): Promise<GarbageVehicle> {
-    model.DivisionId = divisionId;
-    return this.service.create(model);
-  }
-  update(model: GarbageVehicle): Promise<GarbageVehicle> {
-    return this.service.update(model);
-  }
-  delete(id: string): Promise<GarbageVehicle> {
-    return this.service.delete(id);
-  }
+
   Converter = new GarbageVehicleManageConverter();
   async load(
     divisionId: string = '',
@@ -53,5 +45,30 @@ export class GarbageVehicleManageBusiness
     params.Name = condition;
     params.DivisionId = divisionId;
     return this.service.list(params);
+  }
+
+  async download(...args: any[]) {
+    let data = (await this.service.excel()) as Blob;
+    let url = window.URL.createObjectURL(data);
+    let a = document.createElement('a');
+
+    document.body.appendChild(a);
+    a.href = url;
+    a.click();
+    a.download = '区划信息';
+    document.body.removeChild(a);
+  }
+  upload(data: ArrayBuffer) {
+    return this.service.excel(data);
+  }
+  create(model: GarbageVehicle, divisionId: string): Promise<GarbageVehicle> {
+    model.DivisionId = divisionId;
+    return this.service.create(model);
+  }
+  update(model: GarbageVehicle): Promise<GarbageVehicle> {
+    return this.service.update(model);
+  }
+  delete(id: string): Promise<GarbageVehicle> {
+    return this.service.delete(id);
   }
 }

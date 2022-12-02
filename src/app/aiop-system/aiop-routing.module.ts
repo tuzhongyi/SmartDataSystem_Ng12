@@ -29,10 +29,10 @@ import { SRServerManageComponent } from './components/sr-server-manage/sr-server
 import { MixIntoManageComponent } from './components/mix-into-manage/mix-into-manage.component';
 import { GarbageVehicleDivisionManageComponent } from './components/garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
 import { GarbageVehicleManageComponent } from './components/garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
-import { GarbageVehicleMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
+import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
 import { GarbageVehicleCameraBindingComponent } from './components/garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding.component';
 import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
-import { GarbageCollectionPointTrashcanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
+import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 
 const routes: Routes = [
   {
@@ -130,14 +130,14 @@ const routes: Routes = [
               },
               {
                 path: 'garbage-collection-point-trashcan-manager',
-                component: GarbageCollectionPointTrashcanManagerComponent,
+                component: GarbageCollectionPointTrashCanManagerComponent,
                 data: {
                   breadcrumb: '垃圾桶管理',
                 },
               },
               {
                 path: 'garbage-collection-member',
-                component: GarbageVehicleMemberComponent,
+                component: GarbageCollectionMemberComponent,
                 data: {
                   breadcrumb: '人员信息',
                 },

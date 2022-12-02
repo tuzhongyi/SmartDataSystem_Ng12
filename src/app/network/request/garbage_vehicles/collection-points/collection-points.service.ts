@@ -10,7 +10,7 @@ import { ClassificationNumber } from '../../../model/classification-number.mode'
 import { CollectionPoint } from '../../../model/collection-point.model';
 import { PagedList } from '../../../model/page_list.model';
 import { ScoreTop } from '../../../model/score-top.model';
-import { VehicleTrashCan } from '../../../model/trash-can.model';
+import { CollectionTrashCan } from '../../../model/trash-can.model';
 import { WeightTop } from '../../../model/weight-top.model';
 import { GarbageVehicleCollectionPointUrl } from '../../../url/garbage-vehicle/collection-point.url';
 import {
@@ -61,10 +61,13 @@ export class CollectionPointsRequestService {
     return this.type.paged(url, params);
   }
 
-  excel(data: BinaryData) {
+  async excel(data?: BinaryData) {
     let url = GarbageVehicleCollectionPointUrl.excels();
-    if (data) return this.basic.postReturnString(url, data);
-    else return this.type.get(url);
+    if (data) {
+      return this.basic.postBinaryData<string>(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 
   private _trashCan?: TrashCanService;
@@ -85,17 +88,19 @@ export class CollectionPointsRequestService {
 
 class TrashCanService {
   constructor(private basic: BaseRequestService) {
-    this.type = basic.type(VehicleTrashCan);
+    this.type = basic.type(CollectionTrashCan);
   }
 
-  type: BaseTypeRequestService<VehicleTrashCan>;
+  type: BaseTypeRequestService<CollectionTrashCan>;
 
-  create(id: string, data: VehicleTrashCan): Promise<VehicleTrashCan> {
-    let url = GarbageVehicleCollectionPointUrl.trashcan(id).basic();
+  create(data: CollectionTrashCan): Promise<CollectionTrashCan> {
+    let url = GarbageVehicleCollectionPointUrl.trashcan(
+      data.CollectionPointId
+    ).basic();
     return this.type.post(url, data);
   }
 
-  list(params: GetTrashCansParams): Promise<PagedList<VehicleTrashCan>> {
+  list(params: GetTrashCansParams): Promise<PagedList<CollectionTrashCan>> {
     let url = GarbageVehicleCollectionPointUrl.trashcan().list();
     let data = classToPlain(params);
     return this.type.paged(url, data);
@@ -104,13 +109,21 @@ class TrashCanService {
     let url = GarbageVehicleCollectionPointUrl.trashcan().item(id);
     return this.type.get(url);
   }
-  update(data: VehicleTrashCan): Promise<VehicleTrashCan> {
+  update(data: CollectionTrashCan): Promise<CollectionTrashCan> {
     let url = GarbageVehicleCollectionPointUrl.trashcan().item(data.Id);
     return this.type.put(url, data);
   }
-  delete(id: string): Promise<VehicleTrashCan> {
+  delete(id: string): Promise<CollectionTrashCan> {
     let url = GarbageVehicleCollectionPointUrl.trashcan().item(id);
     return this.type.delete(url);
+  }
+  excel(data?: BinaryData) {
+    let url = GarbageVehicleCollectionPointUrl.trashcan().excels();
+    if (data) {
+      return this.basic.postReturnString(url, data);
+    } else {
+      return this.basic.getExcel(url);
+    }
   }
 }
 

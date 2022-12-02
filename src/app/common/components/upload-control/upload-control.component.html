@@ -1,0 +1,10 @@
+<div class="upload-control" (click)="onupload()">
+  <input
+    type="file"
+    (change)="fileChange()"
+    [accept]="accept"
+    #file
+    style="display: none"
+  />
+  <ng-content></ng-content>
+</div>

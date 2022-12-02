@@ -1,23 +1,47 @@
-import { AfterViewInit, Directive, ElementRef, EventEmitter, Input, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { HowellTouchSpinOptions } from './touch-spin.class';
 
 @Directive({
   selector: '[appTouchSpin]',
-
 })
-export class TouchSpinDirective implements AfterViewInit {
-
+export class TouchSpinDirective implements AfterViewInit, OnChanges {
   @Input() options: TouchSpinOptions = new HowellTouchSpinOptions();
+
+  @Input()
+  min: number = 1;
+  @Input()
+  max: number = 65535;
+  @Input()
+  verticalbuttons: boolean = true;
 
   @Output() touchSpinChange = new EventEmitter();
 
-  constructor(private _ele: ElementRef<HTMLInputElement>) {
-
+  constructor(private _ele: ElementRef<HTMLInputElement>) {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.min) {
+      this.options.min = this.min;
+    }
+    if (changes.max) {
+      this.options.max = this.max;
+    }
+    if (changes.verticalbuttons) {
+      this.options.verticalbuttons = this.verticalbuttons;
+    }
   }
   ngAfterViewInit(): void {
-    $(this._ele.nativeElement).TouchSpin(this.options).on('change', (e) => {
-      this.touchSpinChange.emit(this._ele.nativeElement.value)
-    })
+    $(this._ele.nativeElement)
+      .TouchSpin(this.options)
+      .on('change', (e) => {
+        this.touchSpinChange.emit(this._ele.nativeElement.value);
+      });
   }
-
 }

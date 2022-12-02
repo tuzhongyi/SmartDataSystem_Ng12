@@ -99,7 +99,7 @@ export class TreeConverter
   }
   recurseToNestTreeNode<T extends TreeSourceModel>(
     data: T[],
-    parentId: string | null = null
+    parentId?: string
   ) {
     let res: NestTreeNode[] = [];
     for (let i = 0; i < data.length; i++) {
@@ -203,10 +203,7 @@ export class TreeConverter
   }
 
   /******************* private *****************************/
-  private _fromDivisionNode(
-    item: DivisionNode,
-    parentId: string | null = null
-  ) {
+  private _fromDivisionNode(item: DivisionNode, parentId?: string) {
     const node = new NestTreeNode(
       item.Id,
       item.Name,
@@ -269,7 +266,7 @@ export class TreeConverter
     node.rawData = item;
     return node;
   }
-  private _fromRegionNode(item: RegionNode, parentId: string | null = null) {
+  private _fromRegionNode(item: RegionNode, parentId?: string) {
     const node = new NestTreeNode(
       item.Id,
       item.Name,
