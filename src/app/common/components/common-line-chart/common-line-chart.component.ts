@@ -1,5 +1,6 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { EChartsOption, LineSeriesOption } from 'echarts';
+import { NgxEchartsDirective } from 'ngx-echarts';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { CommonLineChartBusiness } from './common-line-chart.business';
 import {
@@ -20,23 +21,15 @@ import {
   ],
 })
 export class CommonLineChartComponent implements OnInit {
-  @Input() title: string = '';
-  @Input() theme = EChartsTheme.adsame;
   @Input('business') _business: ICommonLineCharBusiness;
 
-  model: CommonLineChartModel | null = null;
+  @Input() options: EChartsOption = {};
 
-  lineOption: EChartsOption = {
-    title: {
-      text: this.title,
-    },
-    legend: {},
-    xAxis: {},
-    yAxis: {
-      type: 'value',
-    },
-  };
-  merge: EChartsOption = {};
+  @Input() merge: EChartsOption = {};
+
+  @ViewChild(NgxEchartsDirective) ngxEcharts!: NgxEchartsDirective;
+
+  model?: CommonLineChartModel;
 
   constructor(
     @Inject(COMMON_LINE_CHART_TOKEN) business: ICommonLineCharBusiness
@@ -49,15 +42,7 @@ export class CommonLineChartComponent implements OnInit {
   }
 
   private async _init() {
-    this.model = await this._business.init();
-
-    this.merge = {
-      title: {
-        text: this.title,
-      },
-      xAxis: this.model.xAxis,
-      series: this.model.series,
-    };
+    // this.model = await this._business.init();
   }
   update() {
     this._init();

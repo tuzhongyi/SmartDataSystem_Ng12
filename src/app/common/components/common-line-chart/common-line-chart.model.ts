@@ -5,26 +5,16 @@ import {
   YAXisComponentOption,
 } from 'echarts';
 import { IModel } from 'src/app/network/model/model.interface';
+import { CommonChartModel } from 'src/app/view-model/common-chart.model';
+import { ICommonCharBusiness } from '../../interfaces/common-chart.business';
 
 export const COMMON_LINE_CHART_TOKEN = new InjectionToken<IModel>(
   'COMMON_LINE_CHART'
 );
 
-export interface ICommonLineCharBusiness<T = any> {
-  init(
-    ...args: any
-  ): Promise<CommonLineChartModel<T>> | CommonLineChartModel<T>;
+export interface ICommonLineCharBusiness<T = any>
+  extends ICommonCharBusiness<T> {}
+{
 }
 
-export class CommonLineChartModel<T = any> {
-  /**x坐标轴信息 */
-  xAxis!: XAXisComponentOption;
-
-  /**y坐标轴信息 一般不用配置，留个坑 */
-  yAxis?: YAXisComponentOption;
-
-  /**折线图数据 */
-  series!: LineSeriesOption[];
-
-  RawData?: T;
-}
+export class CommonLineChartModel<T = any> extends CommonChartModel<T> {}

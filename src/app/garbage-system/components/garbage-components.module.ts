@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-22 14:00:09
+ * @Last Modified time: 2022-12-02 15:00:28
  */
 
 import { NgModule } from '@angular/core';
@@ -14,7 +14,6 @@ import { DivisionListComponent } from './division-list/division-list.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
-import { EvemtStatisticLineComponent } from './event-statistic-line/event-statistic-line.component';
 import { AngularResizeEventModule } from 'angular-resize-event';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
@@ -53,7 +52,6 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    EvemtStatisticLineComponent,
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsTableComponent,
@@ -96,7 +94,6 @@ import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-sta
     IllegalMixintoRankComponent,
     RetentionRankComponent,
     DisposalRankComponent,
-    EvemtStatisticLineComponent,
     DeviceStateComponent,
     DisposalCountComponent,
     EventRecordDetailsTableComponent,
