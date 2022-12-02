@@ -22,6 +22,7 @@ import {
 })
 export class CommonBarChartComponent implements OnInit {
   @Input('business') business: ICommonBarCharBusiness;
+  @Input() title: string = '';
 
   @Input() options: EChartsOption = {
     grid: {
@@ -35,7 +36,7 @@ export class CommonBarChartComponent implements OnInit {
     title: {
       textStyle: {
         color: 'white',
-        fontSize: '24',
+        fontSize: 24,
         fontFamily: 'Source Han Sans CN Normal',
         fontWeight: 'normal',
         overflow: 'truncate',
@@ -53,14 +54,9 @@ export class CommonBarChartComponent implements OnInit {
     },
     xAxis: {
       type: 'category',
-
-      axisLabel: {
-        show: true,
-        color: '#CFD7FE',
-      },
       axisLine: {
         lineStyle: {
-          color: '#7d90bc',
+          color: '#CCC',
         },
       },
       axisTick: {
@@ -68,17 +64,53 @@ export class CommonBarChartComponent implements OnInit {
         lineStyle: {
           color: 'rgba(117,134,224,0.5)',
         },
-        alignWithLabel: true,
+      },
+      axisLabel: {
+        show: true,
+        color: '#CFD7FE',
+        fontSize: 14,
+      },
+      splitLine: {
+        show: false,
+        lineStyle: {
+          color: ['rgba(117,134,224,0.3)'],
+        },
+      },
+      splitArea: {
+        show: false,
+        areaStyle: {
+          color: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
+        },
       },
     },
     yAxis: {
       type: 'value',
+      axisLine: {
+        show: false,
+        lineStyle: {
+          color: '#CCC',
+        },
+      },
+      axisTick: {
+        show: false,
+        lineStyle: {
+          color: '#cfd7fe',
+        },
+      },
       axisLabel: {
         color: '#CFD7FE',
+        // fontSize: 16,
       },
       splitLine: {
+        show: true,
         lineStyle: {
-          color: 'rgba(117,134,224,0.3)',
+          color: ['rgba(117,134,224,0.3)'],
+        },
+      },
+      splitArea: {
+        show: false,
+        areaStyle: {
+          color: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)'],
         },
       },
     },
@@ -103,6 +135,11 @@ export class CommonBarChartComponent implements OnInit {
 
   private async _init() {
     this.model = await this.business.init();
-    this.merge = this.model.Merge;
+    this.merge = {
+      title: {
+        text: this.title,
+      },
+      ...this.model.Merge,
+    };
   }
 }

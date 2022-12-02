@@ -30,7 +30,7 @@ import { CollectionMapRouteQueryComponent } from './collection-map-route/collect
 
 import { CollectionScorePieComponent } from './collection-score-pie/collection-score-pie.component';
 import { CollectionPointPieComponent } from './collection-point-pie/collection-point-pie.component';
-import { CollectionDivisionWeightComponent } from './collection-division-weight/collection-division-weight.component';
+import { CollectionWeightLineComponent } from './collection-weight-line/collection-weight-line.component';
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionMapRouteVideoComponent } from './collection-map-route/collection-map-route-video/collection-map-route-video.component';
 import { CollectionScoreBarComponent } from './collection-score-bar/collection-score-bar.component';
@@ -54,7 +54,7 @@ import { CollectionScoreBarComponent } from './collection-score-bar/collection-s
     CollectionMapRouteControlComponent,
     CollectionScorePieComponent,
     CollectionPointPieComponent,
-    CollectionDivisionWeightComponent,
+    CollectionWeightLineComponent,
     CollectionScoreBarComponent,
   ],
   imports: [

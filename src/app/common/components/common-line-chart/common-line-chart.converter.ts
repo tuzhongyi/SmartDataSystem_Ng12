@@ -126,42 +126,67 @@ export class CommonLineChartConverter extends AbstractCommonModelConverter<
   }
 
   private _fromDivisionGarbageWeight(
-    arr: DivisionGarbageWeight[],
-    args: [TrashCanType, Date]
+    source: DivisionGarbageWeight[],
+    args: [TrashCanType]
   ) {
+    let [type] = args;
+    console.log('垃圾桶类型', type);
+
     let model = new CommonLineChartModel();
-    let [type, today] = args;
-    let start = Time.curWeek(today).beginTime.getDate();
-    let end = Time.curWeek(today).endTime.getDate();
-    let offset = end - start + 1;
 
-    // model.xAxis = {
-    //   type: 'category',
-    //   data: [
-    //     ...Array.from({ length: offset }, (v, i) =>
-    //       (i + start).toString().padStart(2, '0')
-    //     ),
-    //   ],
-    // };
+    source.sort((a, b) => {
+      return a.Date - b.Date;
+    });
 
-    // let data = arr.map((item) => {
-    //   if (item.Weights) {
-    //     let tmp = item.Weights.find((n) => n.CanType == type);
-    //     if (tmp) {
-    //       return tmp.Weight;
-    //     }
-    //   }
+    let xAxisData = [];
 
-    //   return 0;
-    // });
-    // model.series = [
-    //   {
-    //     type: 'line',
-    //     name: '单位(吨)',
-    //     data: data,
-    //     areaStyle: {},
-    //   },
-    // ];
+    let data = [];
+
+    for (let i = 0; i < source.length; i++) {
+      let item = source[i];
+      xAxisData.push(item.BeginTime.getDate() + '日');
+      if (item.Weights) {
+        let tmp = item.Weights.find((weight) => weight.CanType == type);
+        if (tmp) {
+          // tmp.Weight = (Math.random() * 300 + 100) >> 0;
+          data.push(tmp.Weight);
+        } else {
+          data.push(0);
+        }
+      } else {
+        data.push(0);
+      }
+    }
+
+    model.Merge = {
+      xAxis: {
+        type: 'category',
+        data: xAxisData,
+      },
+      series: [
+        {
+          type: 'line',
+          areaStyle: {},
+          data: data,
+          name: '单位(吨)',
+          label: {
+            show: true,
+            color: '#cfd7fe',
+            fontSize: 16,
+            distance: 10,
+          },
+          itemStyle: {
+            borderWidth: 1,
+          },
+          lineStyle: {
+            width: 4,
+          },
+          symbolSize: 4,
+          symbol: 'emptyCircle',
+          smooth: false,
+        },
+      ],
+    };
     return model;
   }
 

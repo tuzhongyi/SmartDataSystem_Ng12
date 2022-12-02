@@ -12,7 +12,6 @@ import {
 @Injectable()
 export class CollectionScoreBarBusiness {
   constructor(
-    private _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CollectionScoreBarConverter
   ) {}
