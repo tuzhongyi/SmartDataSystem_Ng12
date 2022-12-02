@@ -56,6 +56,9 @@ export class CollectionScoreBarComponent implements OnInit {
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {
+      title: {
+        text: this.title,
+      },
       ...this.model.BarChartModel.Merge,
     };
   }

@@ -7,7 +7,6 @@ import {
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
 import { CommonBarChartModel } from './common-bar-chart.model';
-// #F06565
 import ColorPalette from 'src/assets/json/color-palette.json';
 import { Language } from '../../tools/language';
 
@@ -218,4 +217,3 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
     return data.length == 0 || data[0] instanceof DivisionGarbageScore;
   }
 }
-

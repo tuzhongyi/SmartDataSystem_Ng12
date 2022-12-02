@@ -21,7 +21,6 @@ import {
   ],
 })
 export class CommonBarChartComponent implements OnInit {
-  @Input() title: string = '';
   @Input('business') business: ICommonBarCharBusiness;
 
   @Input() options: EChartsOption = {
@@ -99,11 +98,6 @@ export class CommonBarChartComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.merge = {
-      title: {
-        text: this.title,
-      },
-    };
     this._init();
   }
 

@@ -48,9 +48,8 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
-    this.searchInfo = {
-      DivisionIds: [this._globalStorage.divisionId],
-    };
+    this.searchInfo.DivisionIds = [this._globalStorage.divisionId];
+
     this.model = await this._business.init(this.searchInfo);
 
     // console.log(this.model);

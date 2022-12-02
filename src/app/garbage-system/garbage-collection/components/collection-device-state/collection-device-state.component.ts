@@ -51,9 +51,9 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     this.searchInfo.DivisionId = this._globalStorage.divisionId;
     this.model = await this._business.init(this.searchInfo);
 
-    // console.log(this.model);
-
-    this.merge = this.model.GaugeChartModel.Merge;
+    this.merge = {
+      ...this.model.GaugeChartModel.Merge,
+    };
   }
 
   ngOnDestroy(): void {

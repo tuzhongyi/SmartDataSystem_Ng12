@@ -42,9 +42,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
-    this.searchInfo = {
-      DivisionId: this._globalStorage.divisionId,
-    };
+    this.searchInfo.DivisionId = this._globalStorage.divisionId;
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {
