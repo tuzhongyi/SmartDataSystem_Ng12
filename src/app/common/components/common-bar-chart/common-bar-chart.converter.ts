@@ -11,7 +11,8 @@ import { CommonBarChartModel } from './common-bar-chart.model';
 import ColorPalette from 'src/assets/json/color-palette.json';
 import { Language } from '../../tools/language';
 
-// Color('#7743CE').alpha(0.5)
+import Color from 'color';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -69,7 +70,6 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
 
     let model = new CommonBarChartModel();
 
-    console.log(sortMap);
     model.Merge = {
       xAxis: {
         type: 'category',
@@ -96,11 +96,27 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
               colorStops: [
                 {
                   offset: 0,
-                  color: 'rgba(240,101,101,0.5)', // color at 0%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Good
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(0.5)
+                    .toString(), // color at 0%
                 },
                 {
                   offset: 1,
-                  color: 'rgba(240,101,101,1)', // color at 100%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Good
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(1)
+                    .toString(), // color at 100%
                 },
               ],
             },
@@ -122,11 +138,27 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
               colorStops: [
                 {
                   offset: 0,
-                  color: 'rgba(255,186,60,0.5)', // color at 0%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Average
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(0.5)
+                    .toString(), // color at 0%
                 },
                 {
                   offset: 1,
-                  color: 'rgba(255,186,60,1)', // color at 100%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Average
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(1)
+                    .toString(), // color at 100%
                 },
               ],
             },
@@ -148,11 +180,27 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
               colorStops: [
                 {
                   offset: 0,
-                  color: 'rgba(104,232,136,0.5)', // color at 0%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Poor
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(0.5)
+                    .toString(), // color at 0%
                 },
                 {
                   offset: 1,
-                  color: 'rgba(104,232,136,1)', // color at 100%
+                  color: Color(
+                    ColorPalette.CollectionPointScore[
+                      CollectionPointScore[
+                        CollectionPointScore.Poor
+                      ] as ScoreType
+                    ]
+                  )
+                    .alpha(1)
+                    .toString(), // color at 100%
                 },
               ],
             },
@@ -171,9 +219,3 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
   }
 }
 
-// DivisionGarbageScore
-
-// color:
-//   ColorPalette.CollectionPointScore[
-//     CollectionPointScore[CollectionPointScore.Good] as ScoreType
-//   ],

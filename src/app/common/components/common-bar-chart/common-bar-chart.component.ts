@@ -32,6 +32,19 @@ export class CommonBarChartComponent implements OnInit {
       bottom: 0,
       containLabel: true,
     },
+    tooltip: {},
+    title: {
+      textStyle: {
+        color: 'white',
+        fontSize: '24',
+        fontFamily: 'Source Han Sans CN Normal',
+        fontWeight: 'normal',
+        overflow: 'truncate',
+      },
+      subtextStyle: {
+        color: 'inherit',
+      },
+    },
     legend: {
       selectedMode: false,
       right: 0,
@@ -86,6 +99,11 @@ export class CommonBarChartComponent implements OnInit {
   }
 
   async ngOnInit() {
+    this.merge = {
+      title: {
+        text: this.title,
+      },
+    };
     this._init();
   }
 
