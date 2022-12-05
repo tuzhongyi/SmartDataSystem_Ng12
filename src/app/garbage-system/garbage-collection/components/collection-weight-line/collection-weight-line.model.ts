@@ -22,5 +22,5 @@ export interface ICollectionWeightLineSearchInfo {
 
   Type: TrashCanType;
 
-  TimeUnit?: TimeUnit;
+  TimeUnit: TimeUnit;
 }

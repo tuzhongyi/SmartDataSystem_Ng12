@@ -6,20 +6,31 @@
   <div class="collection-score-rank-body vertical-main">
     <div class="rank-container">
       <div class="rank-wrapper">
-        <div
-          class="rank-item"
-          *ngFor="let item of dataSource; let i = index; trackBy: trackByFn"
-        >
-          <div class="rank-prefix">
-            <div class="rank-order">{{ i + 1 }}</div>
-            <div class="rank-link">{{ item.Name }}</div>
-          </div>
-          <div class="rank-suffix">
-            <div class="rank-num">{{ item.Number }}</div>
-            <div class="rank-unit">{{ item.Unit }}</div>
-          </div>
-        </div>
+        <ng-template
+          [ngIf]="dataSource.length"
+          [ngIfThen]="thenBlock"
+          [ngIfElse]="elseBlock"
+        ></ng-template>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #thenBlock>
+  <div
+    class="rank-item"
+    *ngFor="let item of dataSource; let i = index; trackBy: trackByFn"
+  >
+    <div class="rank-prefix">
+      <div class="rank-order">{{ i + 1 }}</div>
+      <div class="rank-link">{{ item.Name }}</div>
+    </div>
+    <div class="rank-suffix">
+      <div class="rank-num">{{ item.Number }}</div>
+      <div class="rank-unit">{{ item.Unit }}</div>
+    </div>
+  </div></ng-template
+>
+<ng-template #elseBlock>
+  <div class="data-none">暂无数据</div>
+</ng-template>

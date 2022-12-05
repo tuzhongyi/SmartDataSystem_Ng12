@@ -20,10 +20,7 @@ import { GarbageVehiclesDeviceStateComponent } from './collection-device-state/c
 import { CollectionVehicleComponent } from './collection-vehicle/collection-vehicle.component';
 import { CollectionPointWeightComponent } from './collection-point-weight/collection-point-weight.component';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { CollectionStatisticComponent } from './collection-statistic/collection-statistic.component';
-import { CollectionScoreLineComponent } from './collection-score-line/collection-score-line.component';
 import { CollectionScoreRankComponent } from './collection-score-rank/collection-score-rank.component';
-import { CollectionWeightRankComponent } from './collection-weight-rank/collection-weight-rank.component';
 import { CollectionMapControlComponent } from './collection-map-control/collection-map-control.component';
 import { CollectionMapRouteComponent } from './collection-map-route/collection-map-route.component';
 import { CollectionMapRouteQueryComponent } from './collection-map-route/collection-map-route-query/collection-map-route-query.component';
@@ -43,10 +40,7 @@ import { CollectionScoreBarComponent } from './collection-score-bar/collection-s
     GarbageVehiclesDeviceStateComponent,
     CollectionVehicleComponent,
     CollectionPointWeightComponent,
-    CollectionStatisticComponent,
-    CollectionScoreLineComponent,
     CollectionScoreRankComponent,
-    CollectionWeightRankComponent,
     CollectionMapControlComponent,
     CollectionMapRouteComponent,
     CollectionMapRouteVideoComponent,

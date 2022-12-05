@@ -1,8 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionScoreRankBusiness } from './collection-score-rank.business';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {
@@ -17,10 +20,10 @@ import {
   providers: [CollectionScoreRankBusiness, CollectionScoreRankConverter],
 })
 export class CollectionScoreRankComponent implements OnInit {
-  @Input() type: CollectionPointScore = CollectionPointScore.Poor; // 默认好评榜
+  @Input() type: CollectionPointScore = CollectionPointScore.Poor;
 
   get title() {
-    return '垃圾清运' + Language.CollectionPointScore(this.type) + '榜';
+    return '垃圾分类' + Language.CollectionPointScore(this.type) + '月榜';
   }
   trackByFn = (index: number, item: CollectionScoreRankModel) => {
     return item.Id;
@@ -30,22 +33,28 @@ export class CollectionScoreRankComponent implements OnInit {
   today = new Date();
 
   searchInfo: ICollectionScoreRankSearchInfo = {
-    BeginTime: Time.beginTime(this.today),
-    EndTime: Time.endTime(this.today),
-    Type: this.type,
-    DivisionIds: [],
+    BeginTime: DurationParams.allMonth(this.today).BeginTime,
+    EndTime: DurationParams.allMonth(this.today).EndTime,
+    DivisionId: this._globalStorage.divisionId,
+    Type: CollectionPointScore.Poor,
   };
+  subscription: Subscription;
+
   constructor(
     private _business: CollectionScoreRankBusiness,
     private _globalStorage: GlobalStorageService
-  ) {}
+  ) {
+    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+      this._init.bind(this)
+    );
+  }
 
   ngOnInit(): void {
+    this.searchInfo.Type = this.type;
     this._init();
-
-    this._globalStorage.statusChange.subscribe(() => {});
   }
   private async _init() {
+    this.searchInfo.DivisionId = this._globalStorage.divisionId;
     this.dataSource = await this._business.init(this.searchInfo);
 
     // console.log(this.dataSource);

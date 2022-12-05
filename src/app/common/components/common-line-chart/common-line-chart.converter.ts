@@ -130,7 +130,7 @@ export class CommonLineChartConverter extends AbstractCommonModelConverter<
     args: [TrashCanType]
   ) {
     let [type] = args;
-    console.log('垃圾桶类型', type);
+    // console.log('垃圾桶类型', type);
 
     let model = new CommonLineChartModel();
 
