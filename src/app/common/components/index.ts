@@ -59,6 +59,7 @@ import { CommonLineChartComponent } from './common-line-chart/common-line-chart.
 import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
 import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.component';
 import { UploadControlComponent } from './upload-control/upload-control.component';
+import { CommonRankComponent } from './common-rank/common-rank.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -122,4 +123,5 @@ export const CUSTOM_COMPONENTS = [
   CommonBarChartComponent,
 
   UploadControlComponent,
+  CommonRankComponent,
 ];
