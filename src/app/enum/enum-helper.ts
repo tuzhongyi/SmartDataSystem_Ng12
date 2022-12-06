@@ -66,8 +66,8 @@ export class EnumHelper {
         return DivisionType.County;
       case DivisionType.County:
         return DivisionType.Committees;
-      case DivisionType.Committees:
-        return DivisionType.Community;
+      // case DivisionType.Committees:
+      //   return DivisionType.Community;
       default:
         return DivisionType.None;
     }

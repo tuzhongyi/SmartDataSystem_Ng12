@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GetDivisionsParams, GetDivisionTreeParams } from 'src/app/network/request/division/division-request.params';
+import {
+  GetDivisionsParams,
+  GetDivisionTreeParams,
+} from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
@@ -16,8 +19,6 @@ import { TreeBusinessInterface } from '../interface/tree-business.interface';
 
 @Injectable()
 export class DistrictTreeBusiness implements TreeBusinessInterface {
-
-
   public nestedNodeMap = new Map<string, NestTreeNode>();
   public depthIsEnd = false;
 
@@ -30,26 +31,24 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
   }
 
   getName(): TreeBusinessEnum {
-    return TreeBusinessEnum.District
+    return TreeBusinessEnum.District;
   }
 
   constructor(
     private _divisionRequest: DivisionRequestService,
     private _stationRequest: GarbageStationRequestService,
     private _converter: TreeConverter
-  ) {
-  }
+  ) {}
   // 设置区划等级和子区划深度
-  async initialize(
-    type: UserResourceType = UserResourceType.City,
-    depth: number = 0,
-  ) {
-    this.nestedNodeMap.clear()
-    return this._getDataRecursively(type, depth)
+  async initialize(type: DivisionType = DivisionType.City, depth: number = 0) {
+    this.nestedNodeMap.clear();
+    return this._getDataRecursively(type, depth);
   }
 
-  private async _getDataRecursively(type: UserResourceType = UserResourceType.City,
-    depth: number = 0,) {
+  private async _getDataRecursively(
+    type: DivisionType = DivisionType.City,
+    depth: number = 0
+  ) {
     // if (this.model == TreeServiceEnum.Division && (type !== UserResourceType.City && type !== UserResourceType.County && type !== UserResourceType.Committees)) {
     //   return [];
     // }
@@ -64,12 +63,11 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
 
     // 厢房树需要给居委会添加子节点
     if (
-      type == UserResourceType.Committees &&
+      type == DivisionType.Committees &&
       this.model == DistrictTreeEnum.Station
     ) {
       nodes.forEach((node) => {
         node.hasChildren = true;
-
       });
     }
 
@@ -80,12 +78,11 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
     if (depth == 0 && this.depthIsEnd) {
       nodes.forEach((node) => {
         node.hasChildren = false;
-
       });
     }
     try {
       let children = await this._getDataRecursively(
-        EnumHelper.GetResourceChildType(type),
+        EnumHelper.GetDivisionChildType(type),
         depth - 1
       );
 
@@ -109,35 +106,30 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
   }
 
   async loadChildren(node: NestTreeNode) {
-
     let children: NestTreeNode[] = [];
 
     try {
       let data = await this._loadData(
-        EnumHelper.GetResourceChildType(node.type),
+        EnumHelper.GetDivisionChildType(node.type),
         node.id
       );
       children = this._converter.iterateToNestTreeNode(data);
-      children.forEach(child => child.parentNode = node);
+      children.forEach((child) => (child.parentNode = node));
 
       this._register(children);
       if (
-        node.type == UserResourceType.County &&
+        node.type == DivisionType.County &&
         this.model == DistrictTreeEnum.Station
       ) {
         children.forEach((node) => (node.hasChildren = true));
       }
 
       // console.log('children: ', children)
-    } catch (e) {
-
-    }
+    } catch (e) {}
     return children;
   }
-  async searchNode(condition: string, type: UserResourceType,
-    depth: number) {
-
-    let nodes: NestTreeNode[] = []
+  async searchNode(condition: string, type: DivisionType, depth: number) {
+    let nodes: NestTreeNode[] = [];
     if (condition == '') {
       nodes = await this.initialize(type, depth);
     } else {
@@ -145,14 +137,12 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
       let divisionNodes = this._converter.recurseToNestTreeNode(data);
       if (this.model == DistrictTreeEnum.Division) {
         nodes = divisionNodes;
-      }
-      else if (this.model == DistrictTreeEnum.Station) {
+      } else if (this.model == DistrictTreeEnum.Station) {
         let stations = await this._searchStationData(condition);
         // 所有祖先区划
         let allDivisions: Division[] = [];
         let allStations: GarbageStation[] = [];
         let stationNodes: NestTreeNode[] = [];
-
 
         // stations = stations.filter(station => station.DivisionId);
 
@@ -160,13 +150,9 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
           let station = stations[i];
           if (station.DivisionId) {
             allStations.push(station);
-            let division = await this._getDivision(
-              station.DivisionId
-            );
+            let division = await this._getDivision(station.DivisionId);
             allDivisions.push(division);
-            let ancestors = await this._getAncestorDivision(
-              division
-            );
+            let ancestors = await this._getAncestorDivision(division);
             allDivisions.push(...ancestors);
           }
         }
@@ -192,41 +178,37 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
 
         // 将 stationNodes 和  divisionNodes 合并
 
-        let merged = this._converter.mergeNestedTree(divisionNodes, stationNodes);
+        let merged = this._converter.mergeNestedTree(
+          divisionNodes,
+          stationNodes
+        );
         // console.log(merged);
 
         nodes = merged;
-
       }
     }
-    this._updateNestedMap(nodes)
-    console.log(this.nestedNodeMap.values())
+    this._updateNestedMap(nodes);
+    console.log(this.nestedNodeMap.values());
     // console.log('search result: ', nodes)
     return nodes;
-
   }
-
 
   /************************* Private *************************/
 
-  private async _loadData(type: UserResourceType, divisionId?: string) {
+  private async _loadData(type: DivisionType, divisionId?: string) {
     switch (type) {
-      case UserResourceType.City:
-      case UserResourceType.County:
-      case UserResourceType.Committees:
+      case DivisionType.City:
+      case DivisionType.County:
+      case DivisionType.Committees:
         return this._loadDivision(type, divisionId);
-        break;
-      case UserResourceType.Station:
-        return this._loadStation(divisionId);
       default:
-        throw new TypeError('类型错误');
+        return this._loadStation(divisionId);
     }
   }
 
-  private async _loadDivision(type: UserResourceType, parentId?: string) {
-    let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
+  private async _loadDivision(type: DivisionType, parentId?: string) {
     let params = new GetDivisionsParams();
-    params.DivisionType = divisionType;
+    params.DivisionType = type;
     if (parentId) params.ParentId = parentId;
     let res = await this._divisionRequest.list(params);
     return res.Data;
@@ -269,8 +251,6 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
     return res.Data;
   }
 
-
-
   private _register(nodes: NestTreeNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
@@ -283,11 +263,8 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
       let node = nodes[i];
       this.nestedNodeMap.set(node.id, node);
       if (node.childrenChange.value.length > 0) {
-        this._updateNestedMap(node.childrenChange.value)
+        this._updateNestedMap(node.childrenChange.value);
       }
     }
-
   }
-
-
 }

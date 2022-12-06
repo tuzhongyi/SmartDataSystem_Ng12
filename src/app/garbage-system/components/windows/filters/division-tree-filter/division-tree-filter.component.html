@@ -1,6 +1,6 @@
 <div class="division-tree-filter">
   <div class="selected" (click)="onclick($event)">
-    <label #selected>{{ current ? current.name : "请选择" }}</label>
+    <label #selected>{{ current ? current.Name : "请选择" }}</label>
     <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
   </div>
 
@@ -11,12 +11,18 @@
     [ngStyle]="style"
     *ngIf="expand"
   >
-    <howell-tree
+    <howell-division-tree
+      [showStation]="true"
+      [resourceType]="type"
+      (selectTreeNode)="selectTreeNode($event)"
+      [depth]="1"
+    ></howell-division-tree>
+    <!-- <howell-tree
       [treeServiceModel]="treeServiceModel"
       [treeSelectModel]="treeSelectModel"
       [resourceType]="type"
       (selectTreeNode)="selectTreeNode($event)"
       [depth]="1"
-    ></howell-tree>
+    ></howell-tree> -->
   </div>
 </div>

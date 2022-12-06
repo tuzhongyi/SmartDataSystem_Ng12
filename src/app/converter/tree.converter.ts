@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-12-23 16:17:25
- * @Last Modified by: pmx
- * @Last Modified time: 2022-06-09 15:49:57
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-12-06 10:46:38
  *
  *
  *
@@ -41,6 +41,7 @@ import { GarbageStation } from '../network/model/garbage-station.model';
 import { Region, RegionNode } from '../network/model/region';
 import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
 import { NestTreeNode } from '../view-model/nest-tree-node.model';
+import { DivisionType } from '../enum/division-type.enum';
 
 type TreeSourceModel =
   | DivisionNode
@@ -208,7 +209,7 @@ export class TreeConverter
       item.Id,
       item.Name,
       item.Description,
-      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
+      item.DivisionType,
       item.Nodes.length > 0,
       parentId,
       DivisionNodeIconType.get(
@@ -225,7 +226,7 @@ export class TreeConverter
       item.Id,
       item.Name,
       item.Description,
-      EnumHelper.ConvertDivisionToUserResource(item.DivisionType),
+      item.DivisionType,
       !item.IsLeaf,
       item.ParentId,
       DivisionNodeIconType.get(
@@ -245,7 +246,7 @@ export class TreeConverter
       item.Id,
       item.Name,
       item.Description,
-      UserResourceType.Station,
+      DivisionType.None,
       false,
       item.DivisionId,
       DivisionNodeIconType.get(UserResourceType.Station)

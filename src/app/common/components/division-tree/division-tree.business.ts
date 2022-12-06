@@ -1,9 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { DivisionTreeConverter } from 'src/app/converter/division-tree.converter';
-import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -14,16 +12,9 @@ import {
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { IBusiness } from '../../interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from '../../interfaces/converter.interface';
-import { ISubscription } from '../../interfaces/subscribe.interface';
-import { LocaleCompare } from '../../tools/locale-compare';
+
 import { IDivisionTreeBusiness } from './division-tree.model';
 
 @Injectable()
@@ -40,7 +31,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   ) {}
 
   // 相当于默认请求 condition==''的区划
-  load(type: UserResourceType = UserResourceType.City, depth: number = 0) {
+  load(type: DivisionType = DivisionType.City, depth: number = 0) {
     this.nestedNodeMap.clear();
     return this._getDataRecursively(type, depth);
   }
@@ -52,11 +43,10 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
 
     let children: CommonNestNode[] = [];
     try {
-      let type = EnumHelper.ConvertDivisionToUserResource(
-        node.RawData.DivisionType
-      );
+      let type = node.RawData.DivisionType;
+
       let data = await this.getData(
-        EnumHelper.GetResourceChildType(type),
+        EnumHelper.GetDivisionChildType(type),
         node.Id
       );
       children = this._converter.iterateToNestNode(data);
@@ -65,7 +55,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       node.childrenChange.next(children);
       node.ChildrenLoaded = true;
       // 如果当前是请求街道下层的居委会信息，而且需要展示厢房，则居委会节点要能loadChildren
-      if (type == UserResourceType.County && this.showStation) {
+      if (type == DivisionType.County && this.showStation) {
         children.forEach((child) => (child.HasChildren = true));
       }
     } catch (e) {}
@@ -75,7 +65,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
 
   async searchNode(
     condition: string,
-    type: UserResourceType = UserResourceType.City,
+    type: DivisionType = DivisionType.City,
     depth: number = 0
   ) {
     this.nestedNodeMap.clear();
@@ -134,7 +124,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   }
 
   private async _getDataRecursively(
-    type: UserResourceType = UserResourceType.City,
+    type: DivisionType = DivisionType.City,
     depth: number = 0
   ) {
     if (depth < 0) return [];
@@ -143,7 +133,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     let nodes = this._converter.iterateToNestNode(data);
     this._register(nodes);
 
-    if (type == UserResourceType.Committees && this.showStation) {
+    if (type == DivisionType.Committees && this.showStation) {
       nodes.forEach((node) => (node.HasChildren = true));
     }
     if (depth == 0 && this.depthIsEnd) {
@@ -152,10 +142,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       });
     }
     try {
-      let children = await this._getDataRecursively(
-        EnumHelper.GetResourceChildType(type),
-        depth - 1
-      );
+      let children = await this._getDataRecursively(type, depth - 1);
 
       children.forEach((child) => {
         let parentId = child.ParentId;
@@ -176,24 +163,20 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     return nodes;
   }
 
-  async getData(type: UserResourceType, divisionId?: string) {
+  async getData(type: DivisionType, divisionId?: string) {
     switch (type) {
-      case UserResourceType.City:
-      case UserResourceType.County:
-      case UserResourceType.Committees:
+      case DivisionType.City:
+      case DivisionType.County:
+      case DivisionType.Committees:
         return this._loadDivision(type, divisionId);
-        break;
-      case UserResourceType.Station:
-        return this._loadStation(divisionId);
       default:
-        throw new TypeError('类型错误');
+        return this._loadStation(divisionId);
     }
   }
 
-  private async _loadDivision(type: UserResourceType, parentId?: string) {
-    let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
+  private async _loadDivision(type: DivisionType, parentId?: string) {
     let params = new GetDivisionsParams();
-    params.DivisionType = divisionType;
+    params.DivisionType = type;
     if (parentId) params.ParentId = parentId;
     let res = await this._divisionRequest.list(params);
     return res.Data;

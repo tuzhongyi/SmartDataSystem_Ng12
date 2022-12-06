@@ -47,9 +47,9 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = !item.IsLeaf;
-    node.ParentId = item.ParentId ? item.ParentId : null;
+    node.ParentId = item.ParentId;
     node.ChildrenLoaded = false;
-    node.ParentNode = null;
+    node.ParentNode = undefined;
     node.IconClass =
       DivisionNodeIconType.get(
         EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
@@ -62,9 +62,9 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = false;
-    node.ParentId = item.DivisionId ? item.DivisionId : null;
+    node.ParentId = item.DivisionId;
     node.ChildrenLoaded = false;
-    node.ParentNode = null;
+    node.ParentNode = undefined;
     node.IconClass = DivisionNodeIconType.get(UserResourceType.Station) ?? '';
     node.RawData = item;
     if (item.GisPoint) {
@@ -81,22 +81,22 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = false;
-    node.ParentId = item.DivisionId ? item.DivisionId : null;
+    node.ParentId = item.DivisionId;
     node.ChildrenLoaded = false;
-    node.ParentNode = null;
+    node.ParentNode = undefined;
     node.RawData = item;
 
     return node;
   }
 
-  private _fromDivisionNode(item: any, parentId: string | null = null) {
+  private _fromDivisionNode(item: any, parentId?: string) {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = item.Nodes.length > 0;
     node.ParentId = parentId;
     node.ChildrenLoaded = true;
-    node.ParentNode = null;
+    node.ParentNode = undefined;
     node.IconClass =
       DivisionNodeIconType.get(
         EnumHelper.ConvertDivisionToUserResource(item.DivisionType)

@@ -55,7 +55,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     flatNode.ButtonIconClasses = nestNode.ButtonIconClasses;
 
     if (nestNode.ParentId) {
-      let ParentNode = this._flatNodeMap.get(nestNode.ParentId) ?? null;
+      let ParentNode = this._flatNodeMap.get(nestNode.ParentId);
       flatNode.ParentNode = ParentNode;
     }
     this._flatNodeMap.set(flatNode.Id, flatNode);

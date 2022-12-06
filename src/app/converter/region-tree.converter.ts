@@ -1,9 +1,8 @@
-import { Injectable } from "@angular/core";
-import { RegionType } from "../enum/region-type.enum";
-import { Region, RegionNode } from "../network/model/region";
-import { CommonNestNode } from "../view-model/common-nest-node.model";
-import { CommonTreeConverter } from "./common-tree.converter";
-
+import { Injectable } from '@angular/core';
+import { RegionType } from '../enum/region-type.enum';
+import { Region, RegionNode } from '../network/model/region';
+import { CommonNestNode } from '../view-model/common-nest-node.model';
+import { CommonTreeConverter } from './common-tree.converter';
 
 const RegionNodeIconType = new Map([
   [RegionType.None, 'howell-icon-earth'],
@@ -11,20 +10,17 @@ const RegionNodeIconType = new Map([
   [RegionType.Leaf, 'howell-icon-map5'],
 ]);
 
-
-export type RegionTreeSource = Region | RegionNode
+export type RegionTreeSource = Region | RegionNode;
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class RegionTreeConverter extends CommonTreeConverter {
-
-
   Convert(source: RegionTreeSource, ...res: any[]): CommonNestNode {
     if (source instanceof Region) {
-      return this._fromRegion(source)
+      return this._fromRegion(source);
     } else if (source instanceof RegionNode) {
-      return this._fromRegionNode(source)
+      return this._fromRegionNode(source);
     }
 
     throw new Error('Method not implemented.');
@@ -35,22 +31,25 @@ export class RegionTreeConverter extends CommonTreeConverter {
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = false;
-    node.ParentId = item.ParentId ?? null;
+    node.ParentId = item.ParentId;
     node.ChildrenLoaded = true;
-    node.ParentNode = null;
-    node.IconClass = RegionNodeIconType.get(item.RegionType) ?? ''
+    node.ParentNode = undefined;
+    node.IconClass = RegionNodeIconType.get(item.RegionType) ?? '';
     node.RawData = item;
     return node;
   }
-  private _fromRegionNode(item: RegionNode, parentId: string | null = null): CommonNestNode<RegionNode> {
+  private _fromRegionNode(
+    item: RegionNode,
+    parentId?: string
+  ): CommonNestNode<RegionNode> {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = !!(item.Nodes && item.Nodes.length > 0);
-    node.ParentId = parentId
+    node.ParentId = parentId;
     node.ChildrenLoaded = true;
-    node.ParentNode = null;
-    node.IconClass = RegionNodeIconType.get(item.RegionType) ?? ''
+    node.ParentNode = undefined;
+    node.IconClass = RegionNodeIconType.get(item.RegionType) ?? '';
     node.RawData = item;
     return node;
   }

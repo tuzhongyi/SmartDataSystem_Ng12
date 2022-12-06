@@ -1,14 +1,15 @@
-import { DivisionNode } from "../network/model/division-tree.model";
-import { CommonNestNode } from "../view-model/common-nest-node.model";
-import { CommonTreeModel } from "../view-model/common-tree.model";
-import { DivisionTreeSource } from "./division-tree.converter";
+import { DivisionNode } from '../network/model/division-tree.model';
+import { CommonNestNode } from '../view-model/common-nest-node.model';
+import { CommonTreeModel } from '../view-model/common-tree.model';
+import { DivisionTreeSource } from './division-tree.converter';
 
 export abstract class CommonTreeConverter {
-
   abstract Convert(source: CommonTreeModel, ...res: any[]): CommonNestNode;
 
   // 数据以数组形式
-  iterateToNestNode<T extends Array<CommonTreeModel>>(data: T): CommonNestNode[] {
+  iterateToNestNode<T extends Array<CommonTreeModel>>(
+    data: T
+  ): CommonNestNode[] {
     let res: CommonNestNode[] = new Array<CommonNestNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -19,8 +20,7 @@ export abstract class CommonTreeConverter {
   }
 
   // 数据以递归形式
-  recurseToNestNode<T extends CommonTreeModel>(data: T[],
-    parentId: string | null = null) {
+  recurseToNestNode<T extends CommonTreeModel>(data: T[], parentId?: string) {
     let res: CommonNestNode[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
@@ -31,9 +31,8 @@ export abstract class CommonTreeConverter {
         let children = this.recurseToNestNode(item.Nodes, node.Id);
         node.childrenChange.value.push(...children);
         node.HasChildren = true;
-        children.forEach(child => child.ParentNode = node)
+        children.forEach((child) => (child.ParentNode = node));
       }
-
     }
     return res;
   }
@@ -56,7 +55,6 @@ export abstract class CommonTreeConverter {
       if (m.has(item.Id)) {
         node = m.get(item.Id)!;
       } else {
-
         if (item instanceof CommonNestNode) {
           node = item;
         } else {
@@ -66,7 +64,6 @@ export abstract class CommonTreeConverter {
       }
 
       if (node) {
-
         // 动态用Map,静态用Array
         for (let h of hanged.values()) {
           if (h.ParentId == node.Id) {
@@ -92,7 +89,6 @@ export abstract class CommonTreeConverter {
             parentNode.ChildrenLoaded = true;
             node.ParentNode = parentNode;
             parentNode.childrenChange.value.push(node);
-
           } else {
             // parentNode还没有创建
             hanged.set(node.Id, node);
@@ -120,5 +116,4 @@ export abstract class CommonTreeConverter {
     }
     return second;
   }
-
 }

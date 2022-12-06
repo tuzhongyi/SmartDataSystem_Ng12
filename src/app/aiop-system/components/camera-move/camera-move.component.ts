@@ -51,9 +51,9 @@ export class CameraMoveComponent implements OnInit {
       extra.Id = String(null);
       extra.Name = '未分配摄像机';
       extra.HasChildren = false;
-      extra.ParentId = null;
+      extra.ParentId = undefined;
       extra.ChildrenLoaded = true;
-      extra.ParentNode = null;
+      extra.ParentNode = undefined;
       extra.IconClass = 'howell-icon-video';
       this.regionTree.addNode(extra);
     }

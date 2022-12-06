@@ -23,6 +23,7 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 @Component({
   selector: 'howell-division-tree-filter',
@@ -34,6 +35,8 @@ export class DivisionTreeFilterComponent
 {
   @Input()
   type: DivisionType;
+
+  resourceType = UserResourceType.County;
 
   @Output()
   select: EventEmitter<Division> = new EventEmitter();
@@ -50,7 +53,8 @@ export class DivisionTreeFilterComponent
   treeServiceModel = DistrictTreeEnum.Division;
   treeSelectModel = SelectStrategy.Single;
 
-  current?: FlatTreeNode;
+  // current?: FlatTreeNode;
+  current?: CommonFlatNode<Division | GarbageStation>;
 
   expand = false;
 
@@ -65,8 +69,12 @@ export class DivisionTreeFilterComponent
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {
-      this.current = new FlatTreeNode(this.division.Id, this.division.Name, 3);
-      this.current.rawData = this.division;
+      this.current = new CommonFlatNode();
+      // this.division.Id, this.division.Name, 3
+      this.current.Id = this.division.Id;
+      this.current.Name = this.division.Name;
+      this.current.Level = 3;
+      this.current.RawData = this.division;
     }
   }
   ngOnDestroy(): void {}
@@ -89,11 +97,20 @@ export class DivisionTreeFilterComponent
 
   ngOnInit(): void {}
 
-  selectTreeNode(nodes: FlatTreeNode[]) {
+  // selectTreeNode(nodes: FlatTreeNode[]) {
+  //   for (let i = 0; i < nodes.length; i++) {
+  //     const node = nodes[i];
+  //     this.current = node;
+  //     this.select.emit(node.rawData);
+  //   }
+  // }
+
+  selectTreeNode(nodes: CommonFlatNode<Division | GarbageStation>[]) {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.current = node;
-      this.select.emit(node.rawData);
+      if (node.RawData instanceof Division)
+        this.select.emit(node.RawData as Division);
     }
   }
 

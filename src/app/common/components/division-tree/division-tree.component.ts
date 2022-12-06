@@ -7,18 +7,16 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { ClassConstructor } from 'class-transformer';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
-import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { IBusiness } from '../../interfaces/bussiness.interface';
-import { IComponent } from '../../interfaces/component.interfact';
+
 import { Deduplication } from '../../tools/deduplication';
 import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
@@ -107,20 +105,20 @@ export class DivisionTreeComponent
   }
 
   // 最高区划等级
-  private _userResourceType: UserResourceType = UserResourceType.City;
+  private _resourceType: DivisionType = DivisionType.City;
   @Input()
-  set resourceType(type: UserResourceType) {
-    if (type !== UserResourceType.None) {
-      this._userResourceType = type;
+  set resourceType(type: DivisionType) {
+    if (type !== DivisionType.None) {
+      this._resourceType = type;
     }
   }
   get resourceType() {
-    return this._userResourceType;
+    return this._resourceType;
   }
 
   // 抛出指定类型的节点
   @Input()
-  filterTypes: UserResourceType[] = [];
+  filterTypes: ClassConstructor<any>[] = [];
 
   @Output()
   defaultIdsChange = new EventEmitter<string[]>();
@@ -187,10 +185,7 @@ export class DivisionTreeComponent
     let nodes = change.source.selected;
     // console.log('选中节点', nodes)
     let filtered: CommonFlatNode<Division | GarbageStation>[] = [];
-    if (
-      this.filterTypes.includes(UserResourceType.None) ||
-      this.filterTypes.length == 0
-    ) {
+    if (this.filterTypes.length == 0) {
       filtered = nodes;
       this.selectTreeNode.emit(filtered);
     } else {
@@ -245,8 +240,8 @@ export class DivisionTreeComponent
     }
   }
 
-  changeDivisionTreeConfig(type: UserResourceType, depth?: number) {
-    if (type == UserResourceType.None) return;
+  changeDivisionTreeConfig(type: DivisionType, depth?: number) {
+    if (type == DivisionType.None) return;
 
     this.resourceType = type;
     if (depth) {
@@ -258,14 +253,13 @@ export class DivisionTreeComponent
     this.buttonIconClickEvent.emit(node);
   }
 
-  private _filterNode(type: UserResourceType, node: CommonFlatNode) {
+  private _filterNode<T>(type: ClassConstructor<T>, node: CommonFlatNode) {
     let raw = node.RawData;
-    let t: UserResourceType = UserResourceType.None;
     if (raw instanceof Division) {
-      t = EnumHelper.ConvertDivisionToUserResource(raw.DivisionType);
+      return type.name === Division.name;
     } else if (raw instanceof GarbageStation) {
-      t = UserResourceType.Station;
+      return type.name === GarbageStation.name;
     }
-    return t == type;
+    return false;
   }
 }
