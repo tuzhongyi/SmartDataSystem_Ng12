@@ -1,7 +1,13 @@
+import { ClassConstructor } from 'class-transformer';
 import { IService, IData } from 'src/app/business/Ibusiness';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Page, PagedList } from '../../model/page_list.model';
 import { IParams, PagedParams } from '../IParams.interface';
 import { AppCache } from './app-cache';
+
+export class ServicePool {
+  static [key: string]: AppCache;
+}
 
 export interface IServiceCache {
   cache: AppCache;
@@ -18,6 +24,17 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     private timeout = 1000 * 60 * 30,
     private init = true
   ) {
+    try {
+      console.log(key);
+      let cache = LocalStorageService.Get(key, AppCache);
+      if (!cache) {
+        cache = new AppCache(timeout);
+        LocalStorageService.Set(key, cache);
+      }
+      this.cache = cache;
+    } catch (error) {
+      console.error(error);
+    }
     this.cache = new AppCache(timeout);
   }
 

@@ -1,13 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
@@ -15,11 +8,8 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
@@ -27,6 +17,8 @@ import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 import { TreeBusinessFactory } from './business/tree-business.factory';
 import { TreeBusinessInterface } from './interface/tree-business.interface';
 import { TreeBusinessProviders } from './tokens/tree-business.token';
+import { ClassConstructor } from 'class-transformer';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Component({
   selector: 'howell-tree',
@@ -147,15 +139,15 @@ export class TreeComponent implements OnInit {
   depthIsEnd = false;
 
   // 最高区划等级
-  private _userResourceType: UserResourceType = UserResourceType.County;
+  private _divisionType: DivisionType = DivisionType.County;
   @Input()
-  set resourceType(type: UserResourceType) {
-    if (type !== UserResourceType.None) {
-      this._userResourceType = type;
+  set resourceType(type: DivisionType) {
+    if (type !== DivisionType.None) {
+      this._divisionType = type;
     }
   }
   get resourceType() {
-    return this._userResourceType;
+    return this._divisionType;
   }
 
   // 默认选中列表
@@ -172,7 +164,7 @@ export class TreeComponent implements OnInit {
   @Input() holdStatus: boolean = false;
 
   // 指定类型的节点会被选中
-  @Input() filterTypes: UserResourceType[] = [];
+  @Input() filterTypes: ClassConstructor<any>[] = [];
 
   @Input() showSearchBar = true;
 
@@ -231,21 +223,24 @@ export class TreeComponent implements OnInit {
       // console.log("当前节点", change.source.selected)
 
       let filtered: FlatTreeNode[] = [];
-      if (
-        this.filterTypes.includes(UserResourceType.None) ||
-        this.filterTypes.length == 0
-      ) {
+      if (this.filterTypes.length == 0) {
         filtered = change.source.selected;
         this.selectTreeNode.emit(filtered);
       } else {
         filtered = change.source.selected.filter((node) => {
-          return this.filterTypes.some((type) => node.type == type);
+          return this.filterTypes.some(
+            (type) => node.rawData.constructor.name == type.name
+          );
         });
         let has1 = change.added.some((node) =>
-          this.filterTypes.some((type) => node.type == type)
+          this.filterTypes.some(
+            (type) => node.rawData.constructor.name == type.name
+          )
         );
         let has2 = change.removed.some((node) =>
-          this.filterTypes.some((type) => node.type == type)
+          this.filterTypes.some(
+            (type) => node.rawData.constructor.name == type.name
+          )
         );
         if (has1 || has2) {
           this.selectTreeNode.emit(filtered);
@@ -329,8 +324,8 @@ export class TreeComponent implements OnInit {
       }
     }
   }
-  changeTreeConfig(type: UserResourceType, depth?: number) {
-    if (type == UserResourceType.None) return;
+  changeTreeConfig(type: DivisionType, depth?: number) {
+    if (type == DivisionType.None) return;
 
     this.resourceType = type;
     if (depth) {

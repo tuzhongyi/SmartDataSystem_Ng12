@@ -1,4 +1,10 @@
 import { Injectable } from '@angular/core';
+import {
+  ClassConstructor,
+  classToPlain,
+  ClassTransformer,
+  plainToClass,
+} from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { User, UserResource } from 'src/app/network/model/user.model';
 
@@ -12,7 +18,7 @@ import { User, UserResource } from 'src/app/network/model/user.model';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor() { }
+  constructor() {}
 
   set user(user: User) {
     localStorage.setItem('user', JSON.stringify(user));
@@ -21,6 +27,20 @@ export class LocalStorageService {
     let user = localStorage.getItem('user');
     return user ? JSON.parse(user) : null;
   }
+
+  static Get<T>(key: string, cls: ClassConstructor<T>): T | undefined {
+    let plain = localStorage.getItem(key);
+    if (plain) {
+      return plainToClass(cls, plain);
+    }
+    return;
+  }
+
+  static Set<T>(key: string, value: T) {
+    let plain = classToPlain(value);
+    localStorage.setItem(key, JSON.stringify(plain));
+  }
+
   clear(name?: string) {
     if (name) {
       localStorage.removeItem(name);

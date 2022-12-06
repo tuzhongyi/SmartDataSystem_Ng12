@@ -22,6 +22,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Component({
   selector: 'howell-division-tree-filter',
@@ -32,7 +33,7 @@ export class DivisionTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
-  type: UserResourceType;
+  type: DivisionType;
 
   @Output()
   select: EventEmitter<Division> = new EventEmitter();
@@ -60,7 +61,7 @@ export class DivisionTreeFilterComponent
   HorizontalAlign = HorizontalAlign;
 
   constructor(private store: GlobalStorageService) {
-    this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
+    this.type = store.divisionType;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {

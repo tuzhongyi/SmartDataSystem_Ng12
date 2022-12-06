@@ -14,19 +14,13 @@ import {
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
-import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { ClassConstructor } from 'class-transformer';
 
 @Component({
   selector: 'howell-division-station-tree-filter',
@@ -37,7 +31,7 @@ export class DivisionStationTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
-  type: UserResourceType;
+  type: DivisionType;
 
   @Output()
   select: EventEmitter<GarbageStation> = new EventEmitter();
@@ -51,7 +45,7 @@ export class DivisionStationTreeFilterComponent
   @Input()
   align: HorizontalAlign = HorizontalAlign.right;
 
-  filterTypes: UserResourceType[] = [UserResourceType.Station];
+  filterTypes: ClassConstructor<any>[] = [GarbageStation];
 
   treeServiceModel = DistrictTreeEnum.Station;
   treeSelectModel = SelectStrategy.Single;
@@ -69,7 +63,7 @@ export class DivisionStationTreeFilterComponent
     private store: GlobalStorageService,
     private _divisionRequest: DivisionRequestService
   ) {
-    this.type = EnumHelper.ConvertDivisionToUserResource(store.divisionType);
+    this.type = store.divisionType;
   }
 
   async ngOnChanges(changes: SimpleChanges) {
