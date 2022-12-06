@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
-import { CommonRankConverter } from 'src/app/common/components/common-rank/common-rank.converter';
-import { CommonRankData } from 'src/app/common/components/common-rank/common-rank.model';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { ScoreTop } from 'src/app/network/model/score-top.model';
-import { CollectionScoreRankModel } from './collection-score-rank.model';
+import { Guid } from '../../tools/guid';
+import { CommonRankData, CommonRankModel } from './common-rank.model';
 
-@Injectable()
-export class CollectionScoreRankConverter extends AbstractCommonModelConverter<CollectionScoreRankModel> {
-  constructor(private _commonRankConverter: CommonRankConverter) {
-    super();
-  }
-  Convert(source: modelSource, ...res: any[]) {
+@Injectable({
+  providedIn: 'root',
+})
+export class CommonRankConverter extends AbstractCommonModelConverter<
+  CommonRankModel<any>
+> {
+  Convert(source: modelSource, ...res: any[]): CommonRankModel<any> {
     if (Array.isArray(source)) {
       if (this._isScoreTop(source)) {
         return this._fromScoreTop(source);
@@ -26,8 +26,16 @@ export class CollectionScoreRankConverter extends AbstractCommonModelConverter<C
   }
 
   private _fromScoreTop(source: ScoreTop[]) {
-    let model = new CollectionScoreRankModel();
-    model.RankModel = this._commonRankConverter.Convert(source);
+    let model = new CommonRankModel();
+
+    model.Data = source.map((scoreTop) => {
+      let data = new CommonRankData();
+      data.Id = scoreTop.Id;
+      data.Name = scoreTop.Name;
+      data.Number = scoreTop.Number;
+      data.Unit = '起';
+      return data;
+    });
     model.RawData = source;
     return model;
   }
