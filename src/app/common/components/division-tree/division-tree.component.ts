@@ -24,6 +24,7 @@ import { DivisionTreeBusiness } from './division-tree.business';
 import {
   IDivisionTreeBusiness,
   IDivisionTreeComponent,
+  DivisionTreeSource,
 } from './division-tree.model';
 
 @Component({
@@ -123,8 +124,8 @@ export class DivisionTreeComponent
   @Output()
   defaultIdsChange = new EventEmitter<string[]>();
   @Output()
-  selectTreeNode: EventEmitter<CommonFlatNode<Division | GarbageStation>[]> =
-    new EventEmitter<CommonFlatNode<Division | GarbageStation>[]>();
+  selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
+    new EventEmitter<CommonFlatNode<DivisionTreeSource>[]>();
   @Output()
   holdStatusChange = new EventEmitter();
   @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
@@ -154,7 +155,7 @@ export class DivisionTreeComponent
     if (this.showDepth == -1 || this.showDepth > this.depth)
       this.showDepth = this.depth;
 
-    this.business.showStation = this.showStation;
+    this.business.showExtend = this.showStation;
     this.business.depthIsEnd = this.depthIsEnd;
     this._init();
   }
@@ -184,7 +185,7 @@ export class DivisionTreeComponent
   override selectTreeNodeHandler(change: SelectionChange<CommonFlatNode<any>>) {
     let nodes = change.source.selected;
     // console.log('选中节点', nodes)
-    let filtered: CommonFlatNode<Division | GarbageStation>[] = [];
+    let filtered: CommonFlatNode<DivisionTreeSource>[] = [];
     if (this.filterTypes.length == 0) {
       filtered = nodes;
       this.selectTreeNode.emit(filtered);

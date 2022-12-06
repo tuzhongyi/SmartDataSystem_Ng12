@@ -27,10 +27,6 @@
       &-item {
         padding: 0 10px;
         width: 50%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        height: 34px;
         margin: 5px 0;
 
         &.full {
@@ -46,27 +42,10 @@
         }
 
         &-title {
-          text-align: justify;
           color: #cfd7ff;
-          width: 74px;
           vertical-align: middle;
           padding-right: 10px;
 
-          &::after,
-          &::before {
-            display: inline-block;
-            width: 100%;
-            content: "";
-          }
-
-          &.chip {
-            height: @chip-height;
-            padding-top: 6px;
-
-            &::before {
-              content: none;
-            }
-          }
         }
 
 

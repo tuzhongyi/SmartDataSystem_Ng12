@@ -1,0 +1,19 @@
+<div class="garbage-vehicle-camera-binding-aicamera">
+  <div class="garbage-vehicle-camera-binding-aicamera-header">
+    <howell-simple-search
+      placeHolder="摄像机名称"
+      (searchEvent)="onsearch($event)"
+    ></howell-simple-search>
+  </div>
+  <div class="garbage-vehicle-camera-binding-aicamera-content">
+    <div class="garbage-vehicle-camera-binding-aicamera-content-overflow">
+      <div *ngFor="let item of datas" (click)="onselect($event, item)">
+        <input type="checkbox" [checked]="selected.includes(item)" />
+        {{ item.Name }}
+      </div>
+    </div>
+  </div>
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

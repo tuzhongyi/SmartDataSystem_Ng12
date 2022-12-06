@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import {
   FileReadType,
   FileResult,
 } from 'src/app/common/components/upload-control/upload-control.model';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { Creater } from 'src/app/common/tools/creater';
-import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';

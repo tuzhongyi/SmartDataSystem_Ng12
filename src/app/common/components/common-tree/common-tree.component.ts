@@ -24,6 +24,50 @@ import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
   styleUrls: ['./common-tree.component.less'],
 })
 export class CommonTreeComponent implements OnInit, OnChanges {
+  @Input()
+  dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
+
+  // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
+  @Input() holdStatus: boolean = false;
+
+  @Input('selectStrategy')
+  selectStrategy = SelectStrategy.Single; // 单选或多选
+
+  // 默认选中列表
+  @Input()
+  defaultIds: string[] = [];
+
+  @Input()
+  showButtonIcon = false;
+
+  @Output()
+  loadChildrenEvent = new EventEmitter<CommonFlatNode>();
+  @Output()
+  selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> =
+    new EventEmitter<SelectionChange<CommonFlatNode>>();
+  @Output()
+  defaultIdsChange = new EventEmitter<string[]>();
+  @Output()
+  buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
+
+  constructor() {
+    this._treeFlattener = new MatTreeFlattener(
+      this._transformer,
+      this._getLevel,
+      this._isExpandable,
+      this._getChildren
+    );
+
+    this.treeControl = new FlatTreeControl<CommonFlatNode>(
+      this._getLevel,
+      this._isExpandable
+    );
+
+    this.dataSource = new MatTreeFlatDataSource<CommonNestNode, CommonFlatNode>(
+      this.treeControl,
+      this._treeFlattener
+    );
+  }
   SelectStrategy = SelectStrategy;
 
   _flatNodeMap = new Map<string, CommonFlatNode>();
@@ -80,54 +124,6 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     }
     return false;
   };
-
-  @Input()
-  dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
-
-  // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
-  @Input() holdStatus: boolean = false;
-
-  @Input('selectStrategy')
-  selectStrategy = SelectStrategy.Single; // 单选或多选
-
-  // 默认选中列表
-  private _defaultIds: string[] = [];
-  @Input()
-  set defaultIds(ids: string[]) {
-    // 排除空字符串
-    this._defaultIds = ids; //ids.filter(id => id);
-  }
-  get defaultIds() {
-    return this._defaultIds;
-  }
-
-  @Input() showButtonIcon = false;
-
-  @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
-  @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> =
-    new EventEmitter<SelectionChange<CommonFlatNode>>();
-  @Output() defaultIdsChange = new EventEmitter<string[]>();
-  @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
-
-  constructor() {
-    this._treeFlattener = new MatTreeFlattener(
-      this._transformer,
-      this._getLevel,
-      this._isExpandable,
-      this._getChildren
-    );
-
-    this.treeControl = new FlatTreeControl<CommonFlatNode>(
-      this._getLevel,
-      this._isExpandable
-    );
-
-    this.dataSource = new MatTreeFlatDataSource<CommonNestNode, CommonFlatNode>(
-      this.treeControl,
-      this._treeFlattener
-    );
-  }
-
   ngOnInit(): void {
     if (this.selectStrategy == SelectStrategy.Single) {
       this.selection = new SelectionModel<CommonFlatNode>();

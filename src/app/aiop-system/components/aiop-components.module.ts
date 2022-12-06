@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-15 14:27:53
- * @Last Modified by: pmx
- * @Last Modified time: 2022-07-29 23:26:17
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-12-06 13:20:57
  */
 import { Injector, NgModule } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
@@ -46,6 +46,8 @@ import { GarbageCollectionMemberComponent } from './garbage-vehicles/garbage-col
 import { GarbageCollectionPointDetailsWindowComponent } from './garbage-vehicles/garbage-collection-point-details-window/garbage-collection-point-details-window.component';
 import { GarbageCollectionMemberDetailsWindowComponent } from './garbage-vehicles/garbage-collection-member-details-window/garbage-collection-member-details-window.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
+import { GarbageVehicleCameraBindingAICameraComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding-aicamera/garbage-vehicle-camera-binding-aicamera.component';
+import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-tree/garbage-vehicle-camera-tree.component';
 
 @NgModule({
   declarations: [
@@ -83,7 +85,11 @@ import { GarbageCollectionPointTrashCanManagerComponent } from './garbage-vehicl
 
     GarbageCollectionPointComponent,
     GarbageCollectionPointDetailsWindowComponent,
+
+    GarbageVehicleCameraTreeComponent,
     GarbageVehicleCameraBindingComponent,
+    GarbageVehicleCameraBindingAICameraComponent,
+
     GarbageCollectionMemberComponent,
     GarbageCollectionMemberDetailsWindowComponent,
     GarbageCollectionPointTrashCanManagerComponent,

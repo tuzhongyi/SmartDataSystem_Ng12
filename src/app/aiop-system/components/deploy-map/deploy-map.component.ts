@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { formatDate, Location, PlatformLocation } from '@angular/common';
 import { MessageBar } from 'src/app/common/tools/message-bar';
@@ -23,6 +22,7 @@ import { GisType } from 'src/app/enum/gis-type.enum';
 import { DeployMapBusiness } from './deploy-map.business';
 import { IDialogMessage } from 'src/app/common/interfaces/dialog-message.interface';
 import { ICoordinate } from 'src/app/common/interfaces/coordinate.interface';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 
 @Component({
   selector: 'howell-deploy-map',
@@ -53,10 +53,10 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
   srcUrl: SafeResourceUrl = '';
 
   // 当前选中节点
-  currentNode: CommonFlatNode<DivisionTreeSource> | null = null;
+  currentNode?: CommonFlatNode<DivisionTreeSource>;
 
-  point: CesiumDataController.Point | null = null;
-  position: CesiumDataController.Position | null = null;
+  point?: CesiumDataController.Point;
+  position?: CesiumDataController.Position;
 
   client!: CesiumMapClient;
   mapLoaded = false;
@@ -124,8 +124,8 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
   }
   selectTreeNode(node: CommonFlatNode<DivisionTreeSource>[]) {
     // console.log("selectTreeNode")
-    this.point = null;
-    this.position = null;
+    this.point = undefined;
+    this.position = undefined;
     if (!this.mapLoaded) return;
     if (node.length) {
       this.currentNode = node[0];
@@ -352,8 +352,8 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
           garbageStation.Id
         );
 
-        this.point = null;
-        this.position = null;
+        this.point = undefined;
+        this.position = undefined;
 
         this._toastrService.success('点位数据删除成功');
       } catch (e) {

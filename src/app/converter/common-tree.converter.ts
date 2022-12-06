@@ -1,7 +1,5 @@
-import { DivisionNode } from '../network/model/division-tree.model';
 import { CommonNestNode } from '../view-model/common-nest-node.model';
 import { CommonTreeModel } from '../view-model/common-tree.model';
-import { DivisionTreeSource } from './division-tree.converter';
 
 export abstract class CommonTreeConverter {
   abstract Convert(source: CommonTreeModel, ...res: any[]): CommonNestNode;

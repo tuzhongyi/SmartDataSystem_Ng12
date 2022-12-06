@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DivisionTreeConverter } from 'src/app/converter/division-tree.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
@@ -14,12 +13,13 @@ import { GetGarbageStationsParams } from 'src/app/network/request/garbage-statio
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
+import { DivisionTreeConverter } from './division-tree.converter';
 
 import { IDivisionTreeBusiness } from './division-tree.model';
 
 @Injectable()
 export class DivisionTreeBusiness implements IDivisionTreeBusiness {
-  public showStation = false;
+  public showExtend = false;
   public depthIsEnd = false;
 
   public nestedNodeMap = new Map<string, CommonNestNode<Division>>();
@@ -55,7 +55,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       node.childrenChange.next(children);
       node.ChildrenLoaded = true;
       // 如果当前是请求街道下层的居委会信息，而且需要展示厢房，则居委会节点要能loadChildren
-      if (type == DivisionType.County && this.showStation) {
+      if (type == DivisionType.County && this.showExtend) {
         children.forEach((child) => (child.HasChildren = true));
       }
     } catch (e) {}
@@ -76,7 +76,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       let data = await this._searchDivisionData(condition);
       let divisionNodes = this._converter.recurseToNestNode(data);
       nodes = divisionNodes;
-      if (this.showStation) {
+      if (this.showExtend) {
         let stations = await this._searchStationData(condition);
         // 所有祖先区划
         let allDivisions: Division[] = [];
@@ -133,7 +133,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     let nodes = this._converter.iterateToNestNode(data);
     this._register(nodes);
 
-    if (type == DivisionType.Committees && this.showStation) {
+    if (type == DivisionType.Committees && this.showExtend) {
       nodes.forEach((node) => (node.HasChildren = true));
     }
     if (depth == 0 && this.depthIsEnd) {

@@ -2,15 +2,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { GarbageVehicleDivisionTreeBusiness } from './garbage-vehicle-division-tree.business';
+import { GarbageVehicleCameraTreeBusiness } from './garbage-vehicle-camera-tree.business';
 
 @Component({
-  selector: 'garbage-vehicle-division-tree',
-  templateUrl: './garbage-vehicle-division-tree.component.html',
-  styleUrls: ['./garbage-vehicle-division-tree.component.less'],
-  providers: [GarbageVehicleDivisionTreeBusiness],
+  selector: 'garbage-vehicle-camera-tree',
+  templateUrl: './garbage-vehicle-camera-tree.component.html',
+  styleUrls: ['./garbage-vehicle-camera-tree.component.less'],
+  providers: [GarbageVehicleCameraTreeBusiness],
 })
-export class GarbageVehicleDivisionTreeComponent implements OnInit {
+export class GarbageVehicleCameraTreeComponent implements OnInit {
   @Input()
   defaultIds: string[] = [];
   @Input()
@@ -23,7 +23,7 @@ export class GarbageVehicleDivisionTreeComponent implements OnInit {
     new EventEmitter();
   @Output()
   holdStatusChange = new EventEmitter();
-  constructor(public business: GarbageVehicleDivisionTreeBusiness) {}
+  constructor(public business: GarbageVehicleCameraTreeBusiness) {}
 
   ngOnInit(): void {}
 

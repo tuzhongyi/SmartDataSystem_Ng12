@@ -1,22 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { TreeComponent } from 'src/app/common/components/tree/tree.component';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Deduplication } from 'src/app/common/tools/deduplication';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
-import {
-  GarbageStation,
-  GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+
 import { GarbageStationManageBusiness } from './garbage-station-manage.business';
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { Page } from 'src/app/network/model/page_list.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { GarbageStationTypesUrls } from 'src/app/network/url/aiop/garbage-management/garbage-stations/types/garbage-station-types.url';
 import { GarbageStationManageModel } from 'src/app/view-model/garbage-station-manage.model';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -33,6 +23,7 @@ import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 
 @Component({
   selector: 'howell-garbage-station-manage',

@@ -1,16 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { DivisionTreeSource } from 'src/app/converter/division-tree.converter';
-
-import { EnumHelper } from 'src/app/enum/enum-helper';
 
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { Page } from 'src/app/network/model/page_list.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
-import { FormState } from 'src/app/enum/form-state.enum';
-
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 
@@ -40,6 +34,7 @@ import {
   FileReadType,
   FileResult,
 } from 'src/app/common/components/upload-control/upload-control.model';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 
 @Component({
   selector: 'howell-garbage-vehicle-manage',

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DivisionTreeConverter } from 'src/app/common/components/division-tree/division-tree.converter';
 import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/division-tree.model';
+
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
@@ -14,14 +14,11 @@ import {
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
 @Injectable()
-export class GarbageVehicleDivisionTreeBusiness
-  implements IDivisionTreeBusiness
-{
+export class GarbageVehicleCameraTreeBusiness implements IDivisionTreeBusiness {
   public showExtend = false;
   public depthIsEnd = false;
 

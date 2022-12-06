@@ -20,14 +20,15 @@ import {
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { Division } from 'src/app/network/model/division.model';
-import {
-  DivisionTreeConverter,
-  DivisionTreeSource,
-} from 'src/app/converter/division-tree.converter';
+
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
-import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/division-tree.model';
+import {
+  DivisionTreeSource,
+  IDivisionTreeBusiness,
+} from 'src/app/common/components/division-tree/division-tree.model';
+import { DivisionTreeConverter } from 'src/app/common/components/division-tree/division-tree.converter';
 
 @Component({
   selector: 'howell-division-manage',
@@ -218,7 +219,7 @@ export class DivisionManageComponent
           Name: this._currentNode.Name,
           Id: this._currentNode.Id,
           ParentName: this._currentNode.ParentNode?.Name ?? '',
-          Description: data.Description ?? '',
+          Description: (data as Division).Description ?? '',
         });
       } else {
         this.myForm.reset();
@@ -241,7 +242,7 @@ export class DivisionManageComponent
           Name: this._currentNode.Name,
           Id: this._currentNode.Id,
           ParentName: this._currentNode.ParentNode?.Name ?? '',
-          Description: data.Description ?? '',
+          Description: (data as Division).Description ?? '',
         });
         this.Name.enable();
         this.Description.enable();

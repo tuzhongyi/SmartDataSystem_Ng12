@@ -1,9 +1,11 @@
 <div class="garbage-vehicle-operate">
-  <div class="garbage-vehicle-operate-header hw-simple-title">添加</div>
+  <div class="garbage-vehicle-operate-header hw-simple-title">清运车信息</div>
   <div class="garbage-vehicle-operate-content" *ngIf="!!source">
     <div class="garbage-vehicle-operate-content-form">
-      <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+      <div class="garbage-vehicle-operate-content-form-item full">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>名称</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -11,7 +13,19 @@
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
+          <span>车牌号码</span>
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <input type="text" [(ngModel)]="source.PlateNo" />
+        </div>
+      </div>
+      <div class="garbage-vehicle-operate-content-form-item">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>类型</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -23,7 +37,9 @@
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>编号</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -36,15 +52,9 @@
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
-          <span>车牌号码</span>
-        </div>
-        <div class="garbage-vehicle-operate-content-form-item-value">
-          <input type="text" [(ngModel)]="source.PlateNo" />
-        </div>
-      </div>
-      <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>IMEI</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -52,7 +62,9 @@
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>心跳间隔</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -65,7 +77,9 @@
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">
-        <div class="garbage-vehicle-operate-content-form-item-title">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
           <span>自动关闭</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
@@ -82,16 +96,26 @@
           />
         </div>
       </div>
-      <div class="garbage-vehicle-operate-content-form-item">
+      <div class="garbage-vehicle-operate-content-form-item full">
+        <div
+          class="garbage-vehicle-operate-content-form-item-title hw-form-label"
+        >
+          备注
+        </div>
+        <div class="garbage-vehicle-operate-content-form-item-value">
+          <textarea [(ngModel)]="source.Description"></textarea>
+        </div>
+      </div>
+      <!-- <div class="garbage-vehicle-operate-content-form-item">
         <div class="garbage-vehicle-operate-content-form-item-title">
           <span>描述信息</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
           <input type="text" [(ngModel)]="source.Description" />
         </div>
-      </div>
+      </div> -->
 
-      <div class="garbage-vehicle-operate-content-form-item full chip">
+      <!-- <div class="garbage-vehicle-operate-content-form-item full chip">
         <div class="garbage-vehicle-operate-content-form-item-title chip">
           <span>摄像机</span>
         </div>
@@ -112,10 +136,10 @@
             </mat-chip>
           </mat-chip-list>
         </div>
-      </div>
+      </div> -->
     </div>
 
-    <div class="garbage-vehicle-operate-content-table">
+    <!-- <div class="garbage-vehicle-operate-content-table">
       <div class="garbage-vehicle-operate-content-table-header">
         <div class="hw-simple-title">选择摄像机</div>
         <div class="operation">
@@ -133,7 +157,7 @@
         >
         </garbage-vehicle-camera-table>
       </div>
-    </div>
+    </div> -->
   </div>
 
   <div class="garbage-vehicle-operate-footer">

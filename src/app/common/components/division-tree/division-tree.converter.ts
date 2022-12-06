@@ -1,20 +1,15 @@
 import { Injectable } from '@angular/core';
-import { EnumHelper } from '../enum/enum-helper';
-import { IconTypeEnum } from '../enum/icon-type.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
-import { DivisionNode } from '../network/model/division-tree.model';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
-import { GarbageVehicle } from '../network/model/garbage-vehicle.model';
-import { CommonNestNode } from '../view-model/common-nest-node.model';
-import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
-import { CommonTreeConverter } from './common-tree.converter';
-
-export type DivisionTreeSource =
-  | Division
-  | GarbageStation
-  | DivisionNode
-  | GarbageVehicle;
+import { CommonTreeConverter } from 'src/app/converter/common-tree.converter';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { Division } from 'src/app/network/model/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
+import { DivisionTreeSource } from './division-tree.model';
 
 const DivisionNodeIconType = new Map([
   [UserResourceType.City, 'howell-icon-earth'],
@@ -37,9 +32,26 @@ export class DivisionTreeConverter extends CommonTreeConverter {
       return this._fromGarbageStation(source);
     } else if (source instanceof GarbageVehicle) {
       return this._fromGarbageVehicle(source);
+    } else if (source instanceof VehicleCamera) {
+      return this._fromVehicleCamera(source);
     }
 
     throw new Error('Method not implemented.');
+  }
+
+  private _fromVehicleCamera(item: VehicleCamera) {
+    const node = new CommonNestNode();
+    node.Id = item.Id;
+    node.Name = item.Name;
+    node.ParentId = item.GarbageVehicleId;
+    node.ChildrenLoaded = false;
+    node.ParentNode = undefined;
+    // node.IconClass =
+    //   DivisionNodeIconType.get(
+    //     EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+    //   ) ?? '';
+    node.RawData = item;
+    return node;
   }
 
   private _fromDivision(item: Division) {

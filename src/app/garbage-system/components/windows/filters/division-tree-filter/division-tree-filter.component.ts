@@ -105,7 +105,7 @@ export class DivisionTreeFilterComponent
   //   }
   // }
 
-  selectTreeNode(nodes: CommonFlatNode<Division | GarbageStation>[]) {
+  selectTreeNode(nodes: CommonFlatNode[]) {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.current = node;
