@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 09:56:29
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-22 14:17:01
+ * @Last Modified time: 2022-12-06 13:44:51
  */
 const PROXY_CONFIG = [
   {
@@ -12,9 +12,9 @@ const PROXY_CONFIG = [
       '/video/wsplayer/',
     ],
     // target: 'http://iebs.51hws.cn',
-    target: 'http://192.168.21.241:9000',
+    // target: 'http://192.168.21.241:9000',
     // target: 'http://garbage01.51hws.com',
-    // target: 'http://192.168.21.122:8080',
+    target: 'http://192.168.21.122:8080',
     changeOrigin: true,
     secure: false,
   },

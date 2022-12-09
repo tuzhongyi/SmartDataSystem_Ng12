@@ -1,13 +1,21 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { interval, Subscription, timer } from 'rxjs';
+import { IToastWindowEmitModel } from 'src/app/common/components/toast-window/toast-window.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { IModel } from 'src/app/network/model/model.interface';
+import { VehicleListComponent } from '../windows';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {
   CollectionVehicleModel,
   ICollectionVehicleSearchInfo,
 } from './collection-vehicle.model';
-
 
 @Component({
   selector: 'collection-vehicle',
@@ -22,21 +30,25 @@ import {
   ],
 })
 export class CollectionVehicleComponent implements OnInit, OnDestroy {
+  @Output() clickEvent = new EventEmitter();
+
   tdWidth = ['10%', '10%', '5%'];
 
   dataSource: CollectionVehicleModel[] = [];
 
-  searchInfo: ICollectionVehicleSearchInfo = {
-  };
+  searchInfo: ICollectionVehicleSearchInfo = {};
   subscription: Subscription;
 
-  constructor(private _business: CollectionVehicleBusiness, private _globalStorage: GlobalStorageService) {
-
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(this._init.bind(this))
+  constructor(
+    private _business: CollectionVehicleBusiness,
+    private _globalStorage: GlobalStorageService
+  ) {
+    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+      this._init.bind(this)
+    );
   }
 
   ngOnInit(): void {
-
     this._init();
   }
   private async _init() {
@@ -44,6 +56,9 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     this.dataSource = await this._business.init(this.searchInfo);
   }
 
+  clickItem(item: CollectionVehicleModel) {
+    this.clickEvent.emit(item);
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

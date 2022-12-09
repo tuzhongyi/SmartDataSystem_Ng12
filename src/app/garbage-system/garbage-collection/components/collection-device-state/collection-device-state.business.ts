@@ -4,6 +4,7 @@ import { CollectionDeviceStateConverter } from './collection-device-state.conver
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { ICollectionDeviceStateSearchInfo } from './collection-device-state.model';
+import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 
 @Injectable()
 export class CollectionDeviceStateBusiness {

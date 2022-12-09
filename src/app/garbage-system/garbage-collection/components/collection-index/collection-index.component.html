@@ -35,12 +35,16 @@
 
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-device-state></collection-device-state>
+          <collection-device-state
+            (clickEvent)="clickDeviceState($event)"
+          ></collection-device-state>
         </div>
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-vehicle></collection-vehicle>
+          <collection-vehicle
+            (clickEvent)="clickVehicle($event)"
+          ></collection-vehicle>
         </div>
       </div>
       <div class="monitor-body__item">
@@ -79,3 +83,9 @@
     <collection-map-route [model]="route.vehicle"></collection-map-route>
   </div>
 </div>
+
+<toast-window *ngIf="showToast" [showClose]="true" (closeEvent)="closeToast()">
+  <ng-container
+    *ngComponentOutlet="componentTypeExpression; injector: myInjector"
+  ></ng-container>
+</toast-window>

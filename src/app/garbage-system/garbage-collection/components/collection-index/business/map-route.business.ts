@@ -5,7 +5,7 @@ import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 export class MapRouteBusiness {
   constructor() {}
 
-  show: boolean = true;
+  show: boolean = false;
 
   vehicle?: GarbageVehicle;
 

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-08 10:04:09
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-29 16:16:32
+ * @Last Modified time: 2022-12-09 16:23:08
  */
 import { CommonGaugeChartModel } from 'src/app/common/components/common-gauge-chart/common-gauge-chart.model';
 import {
@@ -26,11 +26,11 @@ export class CollectionDeviceStateModel {
   GaugeChartModel!: CommonGaugeChartModel;
 
   /**全部车辆、在线车辆、离线车辆 */
-  Data: Array<ICollectionDeviceStateDes> = [];
+  Data: Array<ICollectionDeviceStateData> = [];
 
   constructor() {}
 }
-export interface ICollectionDeviceStateDes {
+export interface ICollectionDeviceStateData {
   /**标签文本 */
   label: string;
 

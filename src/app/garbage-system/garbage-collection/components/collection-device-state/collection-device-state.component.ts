@@ -1,12 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
+import { IToastWindowEmitModel } from 'src/app/common/components/toast-window/toast-window.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { IModel } from 'src/app/network/model/model.interface';
+import { DeviceListComponent } from '../windows';
 import { CollectionDeviceStateInnerBusiness } from './collection-device-state-inner.business';
 import { CollectionDeviceStateBusiness } from './collection-device-state.business';
 import { CollectionDeviceStateConverter } from './collection-device-state.converter';
 import {
   CollectionDeviceStateModel,
+  ICollectionDeviceStateData,
   ICollectionDeviceStateSearchInfo,
 } from './collection-device-state.model';
 
@@ -21,6 +31,8 @@ import {
   ],
 })
 export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
+  @Output() clickEvent = new EventEmitter();
+
   title: string = '收运车运行状态';
   model?: CollectionDeviceStateModel;
 
@@ -56,6 +68,10 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     };
   }
 
+  // 组件并不关心数据被谁接收，是否会弹窗
+  clickItem(item: ICollectionDeviceStateData) {
+    this.clickEvent.emit(item);
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

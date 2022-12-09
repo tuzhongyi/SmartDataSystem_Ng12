@@ -19,7 +19,11 @@
       </div>
     </div>
     <div class="collection-device-state__chips">
-      <div *ngFor="let item of model?.Data" class="chip-item">
+      <div
+        *ngFor="let item of model?.Data"
+        class="chip-item"
+        (click)="clickItem(item)"
+      >
         <div class="chip-item__label">{{ item.label }}</div>
         <div class="chip-item__num" [class]="item.tagCls">
           <span>{{ item.count }}</span>
