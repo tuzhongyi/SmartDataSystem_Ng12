@@ -38,7 +38,7 @@ export function transformTime(params: TransformFnParams) {
 }
 export function transformFlags(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    if (params.value) {
+    if (params.value != undefined) {
       return new Flags(params.value);
     }
     return undefined;
