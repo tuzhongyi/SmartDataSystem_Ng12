@@ -1,0 +1,96 @@
+<div class="region-node-match">
+  <div class="left-wrapper">
+    <div class="box-item">
+      <div class="hw-simple-title">区域列表</div>
+      <howell-region-tree
+        #regionTree
+        [load]="load"
+        (loaded)="onTreeLoaded($event)"
+        [holdStatus]="false"
+        [selectStrategy]="selectStrategy"
+        [showRegionNode]="true"
+        [disableItemType]="disableItemType"
+        (selectTreeNode)="selectRegionTreeNode($event)"
+      ></howell-region-tree>
+    </div>
+  </div>
+  <div class="middle-wrapper">
+    <ng-container [ngSwitch]="state">
+      <ng-template [ngSwitchCase]="MatchState.Add">
+        <div style="margin-bottom: 20px">
+          <button
+            class="hw-blue-btn"
+            title="添加模式"
+            (click)="changeToDelete()"
+          >
+            <i class="howell-icon-arrowleftbold"> </i>
+          </button>
+        </div>
+        <div>
+          <button class="hw-green-btn" (click)="createRegionNode()">
+            <i class="howell-icon-Link"> </i>
+          </button>
+        </div>
+      </ng-template>
+
+      <ng-template [ngSwitchCase]="MatchState.Delete">
+        <div style="margin-bottom: 20px">
+          <button
+            class="hw-blue-btn"
+            title="删除模式"
+            (click)="changeToCreate()"
+          >
+            <i class="howell-icon-arrowrightbold"> </i>
+          </button>
+        </div>
+        <div>
+          <button class="hw-red-btn" (click)="deleteRegionNode()">
+            <i class="howell-icon-Unlink"> </i>
+          </button>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div class="right-wrapper">
+    <div class="box-item vertical-layout">
+      <div class="vertical-header">
+        <div class="hw-simple-title">摄像机列表</div>
+      </div>
+
+      <div class="vertical-main vertical-layout">
+        <div class="vertical-header">
+          <div class="search-wrapper" style="width: 100%">
+            <howell-simple-search
+              placeHolder="名称"
+              (searchEvent)="searchEventHandler($event)"
+            ></howell-simple-search>
+          </div>
+        </div>
+
+        <div class="vertical-main">
+          <div
+            class="resource-item"
+            *ngFor="let model of dataSource"
+            [class.high-light]="highLight(model)"
+          >
+            <mat-checkbox
+              (change)="selectResource(model)"
+              [checked]="selection.isSelected(model)"
+            >
+              <i [class]="model.DetailIcon"></i>
+              {{ model.Name }}
+            </mat-checkbox>
+          </div>
+        </div>
+      </div>
+      <div class="vertical-footer">
+        <div class="left-wrapper">
+          <div class="footer-item">
+            <app-table-select (tableSelect)="tableSelect($event)">
+            </app-table-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

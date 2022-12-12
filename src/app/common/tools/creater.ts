@@ -1,11 +1,13 @@
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
+import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { CollectionMember } from 'src/app/network/model/member.model';
 import { CollectionTrashCan } from 'src/app/network/model/trash-can.model';
+import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 import { Guid } from './guid';
 
 export class Creater {
@@ -47,6 +49,17 @@ export class Creater {
     model.CreateTime = new Date();
     model.UpdateTime = new Date();
     model.MaxVolume = 240;
+    model.CanType = TrashCanType.Dry;
+    return model;
+  }
+
+  static VehicleCamera() {
+    let model = new VehicleCamera();
+    model.Id = Guid.NewGuid().ToString('N');
+    model.CreateTime = new Date();
+    model.UpdateTime = new Date();
+    model.CameraUsage = 0;
+    model.PositionNo = VehiclePositionNo.TrashCan;
     return model;
   }
 }

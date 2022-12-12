@@ -145,8 +145,7 @@ export class CollectionMapControlBusiness {
           id: vehicle.Id,
           status: 0,
         };
-        let flags = new Flags(vehicle.State ?? 0);
-        if (flags.contains(VehicleState.Offline)) {
+        if (vehicle.State && vehicle.State.contains(VehicleState.Offline)) {
           status.status = 2;
         } else {
           status.status = 0;

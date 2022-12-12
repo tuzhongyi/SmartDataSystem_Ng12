@@ -394,7 +394,7 @@ export class Language {
     }
   }
 
-  static VehiclePositionNo(type: VehiclePositionNo) {
+  static VehiclePositionNo(type?: VehiclePositionNo) {
     switch (type) {
       case VehiclePositionNo.CarFront:
         return Language.json.VehiclePositionNo.CarFront;
@@ -403,7 +403,7 @@ export class Language {
       case VehiclePositionNo.TrashCan:
         return Language.json.VehiclePositionNo.TrashCan;
       default:
-        return Language.json.VehiclePositionNo.Default;
+        return Language.json.unknow;
     }
   }
 
@@ -518,10 +518,20 @@ export class Language {
     }
   }
 
-  static VehicleState(type: VehicleState) {
+  static VehicleStateFlags(type?: Flags<VehicleState>) {
+    if (type) {
+      if (type.contains(VehicleState.Offline)) {
+        return Language.json.OnlineStatus.Offline;
+      }
+    }
+    return Language.json.OnlineStatus.online;
+  }
+
+  static VehicleState(type?: VehicleState) {
     switch (type) {
       case VehicleState.Offline:
         return Language.json.OnlineStatus.Offline;
+
       default:
         return Language.json.unknow;
     }

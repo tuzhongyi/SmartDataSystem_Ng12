@@ -54,8 +54,8 @@ export class GarbageVehicleManageBusiness
 
     document.body.appendChild(a);
     a.href = url;
+    a.download = '清运车信息';
     a.click();
-    a.download = '区划信息';
     document.body.removeChild(a);
   }
   upload(data: ArrayBuffer) {

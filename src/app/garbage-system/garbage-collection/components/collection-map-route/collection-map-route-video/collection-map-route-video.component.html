@@ -14,15 +14,32 @@
       <app-video-player [model]="video"></app-video-player>
     </div>
     <div *ngIf="!video" class="collection-map-route-video-content-info">
-      <div class="collection-map-route-video-content-info-pic">
-        <i class="howell-icon-dustcart"></i>
-      </div>
-      <div class="collection-map-route-video-content-info-props">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div class="collection-map-route-video-content-info-pic"></div>
+      <div
+        class="collection-map-route-video-content-info-props"
+        *ngIf="!!model"
+      >
+        <div>
+          {{ model.Name }}
+        </div>
+        <div>{{ model.VehicleType | language_vehicle_type_pipe }}</div>
+        <div>
+          {{ model.No }}
+        </div>
+        <div>
+          {{ (model.Division | async)?.Name }}
+        </div>
+        <div *ngIf="model.PlateNo">
+          {{ model.PlateNo }}
+        </div>
+        <div
+          [ngClass]="{
+            'green-text': !model.State,
+            'powder-red-text': model.State?.contains(VehicleState.Offline)
+          }"
+        >
+          {{ model.State | language_vehicle_state_pipe }}
+        </div>
       </div>
     </div>
   </div>

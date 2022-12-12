@@ -41,9 +41,9 @@
           "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-manage"
         },
         {
-          "title": "摄像机绑定",
-          "id": "garbage-vehicle-camera-binding",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-camera-binding"
+          "title": "摄像机管理",
+          "id": "garbage-vehicle-camera-manager",
+          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-camera-manager"
         },
         {
           "title": "收运点管理",

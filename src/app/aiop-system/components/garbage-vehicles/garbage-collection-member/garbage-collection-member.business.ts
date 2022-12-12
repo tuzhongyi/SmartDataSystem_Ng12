@@ -1,9 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { Injectable } from '@angular/core';
 import { CollectionMember } from 'src/app/network/model/member.model';
 import { CollectionMemberRequsetService } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.service';
 import { IGarbageCollectionMemberBusiness } from './garbage-collection-member.model';
@@ -20,8 +15,9 @@ export class GarbageCollectionMemberBusiness
 
     document.body.appendChild(a);
     a.href = url;
-    a.click();
     a.download = '人员信息';
+    a.click();
+
     document.body.removeChild(a);
   }
 

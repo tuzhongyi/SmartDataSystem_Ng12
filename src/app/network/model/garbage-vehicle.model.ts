@@ -1,10 +1,11 @@
 import { Transform, Type } from 'class-transformer';
+import { Flags } from 'src/app/common/tools/flags';
 import { RelayState } from 'src/app/enum/relay-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { GisPoint } from './gis-point.model';
 import { IModel } from './model.interface';
-import { transformDateTime } from './transform.model';
+import { transformDateTime, transformFlags } from './transform.model';
 import { VehicleCamera } from './vehicle-camera.model';
 /**	清运车辆	*/
 export class GarbageVehicle implements IModel {
@@ -36,7 +37,8 @@ export class GarbageVehicle implements IModel {
   /**	String	唯一编号	M	*/
   No!: string;
   /**	Int32	状态	O	*/
-  State?: VehicleState;
+  @Transform(transformFlags)
+  State?: Flags<VehicleState>;
   /**	Int32	心跳间隔，单位：秒，默认5秒	O	*/
   HeartbeatInterval?: number;
   /**	Int32	自动关闭时间，最小600，最大14400	O	*/

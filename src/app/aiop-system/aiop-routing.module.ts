@@ -33,6 +33,7 @@ import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/
 import { GarbageVehicleCameraBindingComponent } from './components/garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding.component';
 import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
+import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
 
 const routes: Routes = [
   {
@@ -115,10 +116,10 @@ const routes: Routes = [
                 },
               },
               {
-                path: 'garbage-vehicle-camera-binding',
-                component: GarbageVehicleCameraBindingComponent,
+                path: 'garbage-vehicle-camera-manager',
+                component: GarbageVehicleCameraManagerComponent,
                 data: {
-                  breadcrumb: '摄像机绑定',
+                  breadcrumb: '摄像机管理',
                 },
               },
               {

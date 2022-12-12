@@ -20,8 +20,8 @@ export class GarbageCollectionPointTrashCanManagerBusiness
 
     document.body.appendChild(a);
     a.href = url;
-    a.click();
     a.download = '垃圾桶信息';
+    a.click();
     document.body.removeChild(a);
   }
 

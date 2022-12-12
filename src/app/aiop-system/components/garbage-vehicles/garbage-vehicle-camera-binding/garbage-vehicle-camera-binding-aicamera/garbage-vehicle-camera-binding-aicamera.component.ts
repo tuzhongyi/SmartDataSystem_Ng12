@@ -24,48 +24,71 @@ export class GarbageVehicleCameraBindingAICameraComponent
 {
   @Input()
   business: IBusiness<IModel, AICamera[]>;
+  @Input()
+  canselect: boolean = true;
 
   @Input()
   selected: AICamera[] = [];
   @Output()
   selectedChange: EventEmitter<AICamera[]> = new EventEmitter();
 
+  @Input()
+  load?: EventEmitter<string[]> = new EventEmitter();
+
   constructor(business: GarbageVehicleCameraBindingAICameraBusiness) {
     this.business = business;
   }
+
+  name?: string;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.name && !changes.name.firstChange) {
       this.loadData();
+    }
+    if (changes.filter) {
+      if (this.datas) {
+        this.datas.map((x) => {});
+      }
+    }
+    if (changes.load) {
+      if (this.load) {
+        this.load.subscribe((x) => {
+          this.loadData(this.name, x);
+        });
+      }
     }
   }
 
   datas: AICamera[] = [];
   loading = false;
 
-  ngOnInit(): void {
-    this.loadData();
-  }
+  ngOnInit(): void {}
 
-  loadData(name?: string) {
+  loadData(name?: string, filter?: string[]) {
     this.loading = true;
     this.business.load(name).then((datas) => {
       this.loading = false;
+      if (filter) {
+        datas = datas.filter((x) => !filter.some((id) => x.Id === id));
+      }
       this.datas = datas;
     });
   }
 
-  onselect(e: Event, item: AICamera) {
-    let index = this.selected.indexOf(item);
-    if (index < 0) {
-      this.selected.push(item);
-    } else {
-      this.selected.splice(index, 1);
+  onselect(item: AICamera) {
+    if (this.canselect) {
+      let index = this.selected.indexOf(item);
+      if (index < 0) {
+        this.selected.push(item);
+      } else {
+        this.selected.splice(index, 1);
+      }
+      this.selectedChange.emit(this.selected);
     }
-    this.selectedChange.emit(this.selected);
-    e.stopPropagation();
   }
 
   onsearch(name: string) {
+    this.name = name;
     this.loadData(name);
   }
 }

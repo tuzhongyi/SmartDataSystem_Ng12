@@ -127,7 +127,7 @@ class VehicleCameraService {
     let url = GarbageVehicleUrl.camera(vehicleId).item(cameraId);
     return this.basicType.delete(url);
   }
-  excels(data?: BinaryData) {
+  excel(data?: BinaryData) {
     let url = GarbageVehicleUrl.camera().excles();
     if (data) {
       return this.basic.postReturnString(url, data);

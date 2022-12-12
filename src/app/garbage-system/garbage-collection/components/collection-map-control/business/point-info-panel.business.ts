@@ -73,8 +73,7 @@ export class PointInfoPanelConverter
       className: 'normal',
     };
     if (station.State) {
-      let flags = new Flags(station.State);
-      if (flags.contains(VehicleState.Offline)) {
+      if (station.State.contains(VehicleState.Offline)) {
         state.className = 'error';
         state.language = Language.VehicleState(VehicleState.Offline);
       } else {

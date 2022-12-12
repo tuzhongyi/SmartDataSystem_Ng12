@@ -11,6 +11,23 @@
   &-content {
     height: calc(100% - @header-height);
     overflow: auto;
+
+    &-item {
+      color: #cfd7ff;
+      padding: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      font-size: 18px;
+      height: 35px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background: linear-gradient(to right, rgba(117, 134, 224, 0.5), rgba(50, 134, 229, 0.5));
+      }
+    }
   }
 
   .loading {

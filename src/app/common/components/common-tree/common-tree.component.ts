@@ -144,6 +144,16 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     if ('defaultIds' in changes) {
       this.setDefaultNodes();
     }
+    if ('selectStrategy' in changes) {
+      if (this.selectStrategy == SelectStrategy.Single) {
+        this.selection = new SelectionModel<CommonFlatNode>();
+      } else {
+        this.selection = new SelectionModel<CommonFlatNode>(true);
+      }
+      this.selection.changed.subscribe((change) => {
+        this.selectTreeNode.emit(change);
+      });
+    }
   }
   buttonIconClick(node: CommonFlatNode, index: number, e: Event) {
     node.CurrentButtonIcon = index;

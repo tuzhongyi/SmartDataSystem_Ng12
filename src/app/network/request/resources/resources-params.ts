@@ -1,9 +1,5 @@
 /**获取资源信息请求参数 */
-export class GetResourcesParams {
-  /**页码[1-n](可选) */
-  PageIndex?: number;
-  /**分页大小[1-100](可选) */
-  PageSize?: number;
+export class GetResourcesParams extends PagedParams {
   /**资源ID列表(可选) */
   ResourceIds?: string[];
   /**资源名称，支持LIKE(可选) */
@@ -26,8 +22,8 @@ export class GetResourcesParams {
   RegionIdNullable?: boolean;
 }
 
-import { Type } from "class-transformer";
-
+import { Type } from 'class-transformer';
+import { PagedParams } from '../IParams.interface';
 
 /**批量操作结果 */
 export class BatchRequest {
@@ -43,7 +39,6 @@ export class BatchResult {
   @Type(() => SingleResult)
   Results?: SingleResult[];
 }
-
 
 /**单个操作结果 */
 export class SingleResult {

@@ -1,3 +1,4 @@
+import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -27,4 +28,5 @@ export type DivisionTreeSource =
   | GarbageStation
   | DivisionNode
   | GarbageVehicle
-  | VehicleCamera;
+  | VehicleCamera
+  | CollectionPoint;

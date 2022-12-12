@@ -6,7 +6,7 @@ import { Language } from '../../tools/language';
   name: 'language_position_no_pipe',
 })
 export class LanguagePositionNo implements PipeTransform {
-  transform(value: VehiclePositionNo, ...args: unknown[]): string {
+  transform(value?: VehiclePositionNo, ...args: unknown[]): string {
     return Language.VehiclePositionNo(value);
   }
 }

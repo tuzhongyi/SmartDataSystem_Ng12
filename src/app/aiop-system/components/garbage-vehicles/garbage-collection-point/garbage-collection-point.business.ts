@@ -20,8 +20,9 @@ export class GarbageCollectionPointBusiness
 
     document.body.appendChild(a);
     a.href = url;
-    a.click();
     a.download = '收运点信息';
+    a.click();
+
     document.body.removeChild(a);
   }
   upload(buffer: ArrayBuffer) {

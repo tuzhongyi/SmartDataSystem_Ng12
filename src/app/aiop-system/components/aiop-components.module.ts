@@ -39,7 +39,7 @@ import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.compon
 import { GarbageVehicleDivisionManageComponent } from './garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
 import { GarbageVehicleManageComponent } from './garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
 import { GarbageVehicleOperateComponent } from './garbage-vehicles/garbage-vehicle-operate/garbage-vehicle-operate.component';
-import { GarbageVehicleDivisionTreeComponent } from './garbage-vehicles/garbage-vehicle-division-tree/garbage-vehicle-division-tree.component';
+import { GarbageVehicleDivisionTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-division-tree/garbage-vehicle-division-tree.component';
 import { GarbageCollectionPointComponent } from './garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
 import { GarbageVehicleCameraBindingComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding.component';
 import { GarbageCollectionMemberComponent } from './garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
@@ -47,7 +47,12 @@ import { GarbageCollectionPointDetailsWindowComponent } from './garbage-vehicles
 import { GarbageCollectionMemberDetailsWindowComponent } from './garbage-vehicles/garbage-collection-member-details-window/garbage-collection-member-details-window.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 import { GarbageVehicleCameraBindingAICameraComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding-aicamera/garbage-vehicle-camera-binding-aicamera.component';
-import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-tree/garbage-vehicle-camera-tree.component';
+import { GarbageCollectionPointTrashcanDetailsWindowComponent } from './garbage-vehicles/garbage-collection-point-trashcan-details-window/garbage-collection-point-trashcan-details-window.component';
+import { GarbageCollectionPointTreeComponent } from './garbage-vehicles/trees/garbage-collection-point-tree/garbage-collection-point-tree.component';
+import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-camera-tree/garbage-vehicle-camera-tree.component';
+import { GarbageVehicleCameraManagerComponent } from './garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
+import { GarbageVehicleCameraDetailsWindowComponent } from './garbage-vehicles/garbage-vehicle-camera-details-window/garbage-vehicle-camera-details-window.component';
+import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-tree/garbage-vehicle-tree.component';
 
 @NgModule({
   declarations: [
@@ -93,6 +98,14 @@ import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/garbage-ve
     GarbageCollectionMemberComponent,
     GarbageCollectionMemberDetailsWindowComponent,
     GarbageCollectionPointTrashCanManagerComponent,
+    GarbageCollectionPointTrashcanDetailsWindowComponent,
+
+    GarbageCollectionPointTreeComponent,
+
+    GarbageVehicleCameraManagerComponent,
+    GarbageVehicleCameraDetailsWindowComponent,
+
+    GarbageVehicleTreeComponent,
   ],
   imports: [
     CommonModule,

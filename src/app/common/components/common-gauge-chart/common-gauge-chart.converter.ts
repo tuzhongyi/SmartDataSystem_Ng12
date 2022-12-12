@@ -39,7 +39,7 @@ export class CommonGaugeChartConverter extends AbstractCommonModelConverter<
     let onLineNum = 0;
 
     source.forEach((item) => {
-      item.State == VehicleState.Offline ? offLineNum++ : onLineNum++;
+      item.State?.contains(VehicleState.Offline) ? offLineNum++ : onLineNum++;
     });
 
     // 在线比

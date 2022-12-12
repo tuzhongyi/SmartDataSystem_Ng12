@@ -3,6 +3,7 @@ import { CommonTreeConverter } from 'src/app/converter/common-tree.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { DivisionNode } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -34,6 +35,8 @@ export class DivisionTreeConverter extends CommonTreeConverter {
       return this._fromGarbageVehicle(source);
     } else if (source instanceof VehicleCamera) {
       return this._fromVehicleCamera(source);
+    } else if (source instanceof CollectionPoint) {
+      return this._fromCollectionPoint(source);
     }
 
     throw new Error('Method not implemented.');
@@ -50,6 +53,7 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     //   DivisionNodeIconType.get(
     //     EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
     //   ) ?? '';
+    node.IconClass = 'howell-icon-video';
     node.RawData = item;
     return node;
   }
@@ -92,12 +96,24 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
-    node.HasChildren = false;
+    node.HasChildren = !!item.Cameras && item.Cameras.length > 0;
     node.ParentId = item.DivisionId;
     node.ChildrenLoaded = false;
     node.ParentNode = undefined;
     node.RawData = item;
+    node.IconClass = 'howell-icon-dustcart';
 
+    return node;
+  }
+
+  private _fromCollectionPoint(item: CollectionPoint) {
+    const node = new CommonNestNode();
+    node.Id = item.Id;
+    node.Name = item.Name;
+    node.ParentId = item.DivisionId;
+    node.ChildrenLoaded = false;
+    node.RawData = item;
+    node.IconClass = 'howell-icon-garbage2';
     return node;
   }
 

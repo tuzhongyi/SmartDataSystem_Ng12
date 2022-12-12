@@ -7,9 +7,25 @@
   </div>
   <div class="garbage-vehicle-camera-binding-aicamera-content">
     <div class="garbage-vehicle-camera-binding-aicamera-content-overflow">
-      <div *ngFor="let item of datas" (click)="onselect($event, item)">
-        <input type="checkbox" [checked]="selected.includes(item)" />
-        {{ item.Name }}
+      <div
+        class="garbage-vehicle-camera-binding-aicamera-content-item"
+        *ngFor="let item of datas"
+      >
+        <!-- <input type="checkbox" [checked]="selected.includes(item)" />
+        {{ item.Name }} -->
+        <mat-checkbox
+          *ngIf="canselect"
+          (click)="$event.stopPropagation()"
+          (change)="onselect(item)"
+          [checked]="selected.includes(item)"
+          [title]="item.Name"
+        >
+          <i class="howell-icon-video"></i>
+          {{ item.Name }}
+        </mat-checkbox>
+        <span class="mat-checkbox-label" *ngIf="!canselect"
+          ><i class="howell-icon-video"></i> {{ item.Name }}
+        </span>
       </div>
     </div>
   </div>

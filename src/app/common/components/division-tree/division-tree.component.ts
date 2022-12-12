@@ -3,8 +3,10 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ClassConstructor } from 'class-transformer';
@@ -16,6 +18,7 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
 import { Deduplication } from '../../tools/deduplication';
 import { CommonTree } from '../common-tree/common-tree';
@@ -35,7 +38,7 @@ import {
 })
 export class DivisionTreeComponent
   extends CommonTree
-  implements IDivisionTreeComponent, OnInit
+  implements IDivisionTreeComponent, OnInit, OnChanges
 {
   private _business?: IDivisionTreeBusiness;
   public get business(): IDivisionTreeBusiness {
@@ -130,6 +133,11 @@ export class DivisionTreeComponent
   holdStatusChange = new EventEmitter();
   @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
 
+  @Input()
+  load?: EventEmitter<void>;
+  @Output()
+  loaded: EventEmitter<CommonNestNode[]> = new EventEmitter();
+
   constructor(
     private defaultBusiness: DivisionTreeBusiness,
     private _toastrService: ToastrService
@@ -159,10 +167,21 @@ export class DivisionTreeComponent
     this.business.depthIsEnd = this.depthIsEnd;
     this._init();
   }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.load) {
+      if (this.load) {
+        this.load.subscribe((x) => {
+          this._init();
+        });
+      }
+    }
+  }
   private async _init() {
     this._nestedNodeMap = this.business.nestedNodeMap;
 
     let res = await this.business.load(this.resourceType, this.depth);
+    this.loaded.emit(res);
     this.dataSubject.next(res);
     if (this.tree) {
       this.tree.expandNodeRecursively(res, this.showDepth);

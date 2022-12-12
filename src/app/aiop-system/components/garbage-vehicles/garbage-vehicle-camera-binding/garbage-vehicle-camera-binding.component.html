@@ -14,10 +14,37 @@
       <div
         class="garbage-vehicle-camera-binding-content-left-content vertical-main"
       >
-        <garbage-vehicle-camera-tree> </garbage-vehicle-camera-tree>
+        <garbage-vehicle-camera-tree
+          [load]="treeLoad"
+          [selectStrategy]="selectStrategy"
+          (selectTreeNode)="onselect($event)"
+          (loaded)="ontreeloaded($event)"
+        >
+        </garbage-vehicle-camera-tree>
       </div>
     </div>
-    <div class="garbage-vehicle-camera-binding-content-center"></div>
+    <div class="garbage-vehicle-camera-binding-content-center">
+      <div *ngIf="binding">
+        <button class="hw-green-btn" (click)="onbinding()">
+          <i class="howell-icon-Link"></i>
+        </button>
+      </div>
+      <div *ngIf="!binding">
+        <button class="hw-green-btn" (click)="onunbind()">
+          <i class="howell-icon-Unlink"></i>
+        </button>
+      </div>
+      <div *ngIf="binding">
+        <button class="hw-blue-btn" (click)="onmodelchanged()">
+          <i class="howell-icon-arrowleftbold"></i>
+        </button>
+      </div>
+      <div *ngIf="!binding">
+        <button class="hw-blue-btn" (click)="onmodelchanged()">
+          <i class="howell-icon-arrowrightbold"></i>
+        </button>
+      </div>
+    </div>
     <div
       class="horizontal-right garbage-vehicle-camera-binding-content-right vertical-layout"
     >
@@ -29,7 +56,11 @@
       <div
         class="garbage-vehicle-camera-binding-content-right-content vertical-main"
       >
-        <garbage-vehicle-camera-binding-aicamera>
+        <garbage-vehicle-camera-binding-aicamera
+          [(selected)]="selectedUnbind"
+          [load]="cameraLoad"
+          [canselect]="binding"
+        >
         </garbage-vehicle-camera-binding-aicamera>
       </div>
     </div>
