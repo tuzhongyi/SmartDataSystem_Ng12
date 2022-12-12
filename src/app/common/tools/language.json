@@ -50,6 +50,10 @@
     "online": "在线",
     "Offline": "离线"
   },
+  "VehicleState": {
+    "Online": "运行",
+    "Offline": "离线"
+  },
   "StatisticType": {
     "Garde": "达标率",
     "AvgGarbageTime": "平均落地时长",
@@ -101,8 +105,8 @@
   "avg": "平均",
   "duration": "时长",
   "vehicle": "清运车",
-  "unknow":"未知",
-  "other":"其他",
+  "unknow": "未知",
+  "other": "其他",
   "VehicleType": {
     "Tricycle": "三轮车",
     "Car": "汽车",
@@ -150,7 +154,7 @@
   },
   "CollectionDeviceStateCountType": {
     "All": "全部车辆",
-    "Online": "在线车辆",
+    "Online": "运行车辆",
     "Offline": "离线车辆",
     "Default": "未知"
   },
@@ -169,11 +173,11 @@
     "PublicPlace": "公共场所",
     "Default": "未知"
   },
-  "Gender":{
-    "Male":"男",
-    "Female":"女"
+  "Gender": {
+    "Male": "男",
+    "Female": "女"
   },
-  "CollectionMemberType":{    
-    "collection":"清运人员"
+  "CollectionMemberType": {
+    "collection": "清运人员"
   }
 }

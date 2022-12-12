@@ -1,0 +1,84 @@
+<div class="device-list vertical-layout">
+  <div class="vertical-header">
+    <div class="hw-second-title">清运车列表</div>
+    <div class="search-wrapper">
+      <howell-simple-search
+        placeHolder="厢房名称"
+        (searchEvent)="searchEvent($event)"
+      ></howell-simple-search>
+    </div>
+  </div>
+  <div class="vertical-main">
+    <custom-table class="big-table">
+      <ng-container ngProjectAs="table-header">
+        <table>
+          <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+          <thead>
+            <tr>
+              <th>车辆名称</th>
+              <th>状态</th>
+              <th>车辆类型</th>
+              <th>区划</th>
+              <th>唯一编号</th>
+              <th>车牌号</th>
+            </tr>
+          </thead>
+        </table>
+      </ng-container>
+
+      <ng-container ngProjectAs="table-body">
+        <ng-template
+          [ngIf]="dataSource.length"
+          [ngIfThen]="thenBlock"
+          [ngIfElse]="elseBlock"
+        ></ng-template>
+      </ng-container>
+    </custom-table>
+  </div>
+
+  <div class="vertical-footer">
+    <div class="footer-item" style="margin-left: auto">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page.TotalRecordCount }}</div>
+      </div>
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="pagerCount"
+        [pageIndex]="page.PageIndex - 1"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+</div>
+
+<ng-template #colGroup>
+  <colgroup>
+    <col *ngFor="let item of tdWidth" [style.width]="item" />
+  </colgroup>
+</ng-template>
+<ng-template #thenBlock>
+  <table>
+    <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+
+    <tbody>
+      <ng-template ngFor [ngForOf]="dataSource" let-item>
+        <tr>
+          <td [title]="item.Name">{{ item.Name }}</td>
+          <td [class]="item.StateCls" [style]="item.StateStyle">
+            {{ item.State }}
+          </td>
+          <td>{{ item.Type }}</td>
+          <td>{{ item.DivisionName }}</td>
+          <td>{{ item.No }}</td>
+          <td>{{ item.PlatNo }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="data-none">暂无数据</div>
+</ng-template>

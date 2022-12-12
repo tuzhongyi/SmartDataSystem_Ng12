@@ -30,7 +30,9 @@ export class CollectionDeviceStateConverter extends AbstractCommonModelConverter
     let onLineNum = 0;
 
     source.forEach((item) => {
-      item.State?.contains(VehicleState.Offline) ? offLineNum++ : onLineNum++;
+      if (Reflect.has(item, 'State')) {
+        item.State?.contains(VehicleState.Offline) ? offLineNum++ : onLineNum++;
+      }
     });
 
     model.onLineRatio =

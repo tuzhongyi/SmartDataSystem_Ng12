@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-29 16:11:05
+ * @Last Modified time: 2022-12-12 17:15:17
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -521,10 +521,11 @@ export class Language {
   static VehicleStateFlags(type?: Flags<VehicleState>) {
     if (type) {
       if (type.contains(VehicleState.Offline)) {
-        return Language.json.OnlineStatus.Offline;
+        return Language.json.VehicleState.Offline;
       }
+      return Language.json.VehicleState.Online;
     }
-    return Language.json.OnlineStatus.online;
+    return Language.json.unknow;
   }
 
   static VehicleState(type?: VehicleState) {

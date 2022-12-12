@@ -2,9 +2,19 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-09 17:29:13
+ * @Last Modified time: 2022-12-12 16:26:28
  */
-import { Component, Injector, OnDestroy, OnInit, Type } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Injector,
+  OnDestroy,
+  OnInit,
+  TemplateRef,
+  Type,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { interval, Subscription } from 'rxjs';
 import {
@@ -21,7 +31,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import { VehicleListComponent } from '../windows';
-import { DeviceListComponent } from '../windows/device-list/device-list.component';
+import { DeviceListWindowComponent } from '../windows/device-list-window/device-list-window.component';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
@@ -60,7 +70,9 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     MapRouteBusiness,
   ],
 })
-export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
+export class GarbageCollectionIndexComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   TrashCanType = TrashCanType;
   CollectionScore = CollectionPointScore;
 
@@ -81,7 +93,10 @@ export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
 
   myInjector: Injector;
 
-  componentTypeExpression: Type<any> = DeviceListComponent;
+  componentTypeExpression: Type<any> = DeviceListWindowComponent;
+
+  @ViewChild('hello', { read: ViewContainerRef })
+  tmp!: any;
 
   constructor(
     private _titleService: Title,
@@ -128,17 +143,24 @@ export class GarbageCollectionIndexComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
+  ngAfterViewInit(): void {}
 
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
-    this.componentTypeExpression = DeviceListComponent;
+    this.componentTypeExpression = DeviceListWindowComponent;
 
-    this._updateToast(data);
+    this._updateToast({
+      divisionId: this._globalStoreService.divisionId,
+      type: data.type,
+    });
   }
 
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = VehicleListComponent;
-    this._updateToast(data);
+    this._updateToast({
+      DivisionId: this._globalStoreService.divisionId,
+      data,
+    });
   }
   private _updateToast(data: IModel) {
     this.myInjector.get(ToastWindowService).data = data;

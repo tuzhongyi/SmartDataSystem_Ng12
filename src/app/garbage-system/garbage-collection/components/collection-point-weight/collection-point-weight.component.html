@@ -1,6 +1,6 @@
 <!--  垃圾清运表 -->
 <div class="collection-point-weight">
-  <small-table>
+  <custom-table>
     <ng-container ngProjectAs="table-header">
       <table>
         <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
@@ -25,8 +25,8 @@
               <td [title]="item.CollectionPointName">
                 {{ item.CollectionPointName }}
               </td>
-              <td>{{ item.Weight | number: "1.0-2" }}</td>
-              <td>{{ item.EventTime | date: "MM-dd hh:mm:ss" }}</td>
+              <td>{{ item.Weight | number : "1.0-2" }}</td>
+              <td>{{ item.EventTime | date : "MM-dd hh:mm:ss" }}</td>
               <td>
                 <span> <i class="howell-icon-picture"></i></span>
                 <span> <i class="howell-icon-account"></i></span>
@@ -36,7 +36,7 @@
         </tbody>
       </table>
     </ng-container>
-  </small-table>
+  </custom-table>
 </div>
 
 <ng-template #colGroup>

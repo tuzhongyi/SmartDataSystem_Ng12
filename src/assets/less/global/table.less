@@ -1,0 +1,133 @@
+.small-table {
+  table {
+    color: #cfd7ff;
+    width: 100%;
+    table-layout: fixed;
+
+    thead {
+      background-color: rgba(58, 147, 255, 0.6);
+
+      tr th {
+        padding: 5px;
+        font-weight: normal;
+        color: white;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      tr th:first-child {
+        padding-left: 15px;
+      }
+      tr th:last-child {
+        text-align: center;
+      }
+    }
+    tbody {
+      tr {
+        cursor: pointer;
+      }
+      tr:hover {
+        background-color: rgba(58, 147, 255, 0.4);
+      }
+      tr td {
+        padding: 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      tr td:first-child {
+        padding-left: 15px;
+      }
+      tr td:last-child {
+        text-align: center;
+      }
+      span {
+        margin: 0 2.5px;
+      }
+      i {
+        color: #7586e0;
+        &:hover {
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.big-table {
+  table {
+    width: 100%;
+    thead {
+      color: white;
+      font-size: 24px;
+
+      background-color: #414b83;
+      border-bottom-color: rgba(0, 0, 0, 0.3);
+      height: 70px;
+      tr {
+        th {
+          padding: 5px;
+          font-weight: normal;
+          color: white;
+
+          &:first-child {
+            padding-left: 24px;
+          }
+        }
+      }
+    }
+    tbody {
+      color: #cfd7ff;
+      font-size: 18px;
+      tr {
+        height: 60px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #3d5492;
+          border-bottom-color: rgba(0, 0, 0, 0.3);
+          td {
+            height: 88px;
+            img {
+              width: 88px;
+              height: 60px;
+            }
+          }
+        }
+        &.high-light {
+          background: linear-gradient(
+            to right,
+            rgb(117, 134, 224),
+            rgb(50, 134, 229)
+          );
+          border-bottom-color: rgba(0, 0, 0, 0.3);
+        }
+
+        td {
+          padding: 5px;
+          span {
+            margin: 0 2.5px;
+          }
+          &:first-child {
+            padding-left: 24px;
+          }
+
+          img {
+            width: 69px;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.data-none {
+  width: 100%;
+  height: 100%;
+  color: #cfd7ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

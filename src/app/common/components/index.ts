@@ -52,7 +52,7 @@ import { EventNumberStatisticComponent } from './event-number-statistic/event-nu
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 import { RankComponent } from './rank/rank.component';
-import { SmallTableComponent } from './small-table/small-table.component';
+import { CustomTableComponent } from './custom-table/custom-table.component';
 import { CommonElementListComponent } from './common-element-list/common-element-list.component';
 import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
 import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
@@ -115,7 +115,7 @@ export const CUSTOM_COMPONENTS = [
   EventNumberChartComponent,
   CoordinateManageComponent,
   RankComponent,
-  SmallTableComponent,
+  CustomTableComponent,
   CommonElementListComponent,
   CommonPieChartComponent,
   CommonLineChartComponent,

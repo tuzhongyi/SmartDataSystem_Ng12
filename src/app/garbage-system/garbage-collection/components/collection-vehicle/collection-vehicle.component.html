@@ -1,6 +1,6 @@
 <!--  垃圾清运记录 车辆有关信息-->
 <div class="collection-vehicle">
-  <small-table>
+  <custom-table class="small-table">
     <ng-container ngProjectAs="table-header">
       <table>
         <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
@@ -21,7 +21,7 @@
         [ngIfElse]="elseBlock"
       ></ng-template>
     </ng-container>
-  </small-table>
+  </custom-table>
 </div>
 
 <ng-template #colGroup>

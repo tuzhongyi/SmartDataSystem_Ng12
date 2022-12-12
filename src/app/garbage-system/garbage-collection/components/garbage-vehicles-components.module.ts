@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-09 17:07:55
+ * @Last Modified time: 2022-12-12 10:37:16
  */
 
 import { NgModule } from '@angular/core';
@@ -31,6 +31,7 @@ import { CollectionWeightLineComponent } from './collection-weight-line/collecti
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionMapRouteVideoComponent } from './collection-map-route/collection-map-route-video/collection-map-route-video.component';
 import { CollectionScoreBarComponent } from './collection-score-bar/collection-score-bar.component';
+import { DeviceListWindowComponent } from './windows';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { CollectionScoreBarComponent } from './collection-score-bar/collection-s
     CollectionPointPieComponent,
     CollectionWeightLineComponent,
     CollectionScoreBarComponent,
+    DeviceListWindowComponent,
   ],
   imports: [
     CommonModule,

@@ -85,7 +85,9 @@
 </div>
 
 <toast-window *ngIf="showToast" [showClose]="true" (closeEvent)="closeToast()">
-  <ng-container
-    *ngComponentOutlet="componentTypeExpression; injector: myInjector"
-  ></ng-container>
+  <ng-template
+    [ngComponentOutlet]="componentTypeExpression"
+    [ngComponentOutletInjector]="myInjector"
+  >
+  </ng-template>
 </toast-window>
