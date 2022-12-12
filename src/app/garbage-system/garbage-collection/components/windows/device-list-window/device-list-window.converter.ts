@@ -22,25 +22,31 @@ export class DeviceListWindowConverter extends AbstractCommonModelConverter<Devi
     model.Name = item.Name;
     model.State = Language.VehicleStateFlags(item.State);
 
-    // if (item.State) {
-    //   if (item.State.contains(VehicleState.Offline)) {
-    //     model.StateStyle = ColorPalette.CollectionDeviceStateCountType.Offline;
-    //   } else
-    //     model.StateStyle = ColorPalette.CollectionDeviceStateCountType.Online;
-    // } else
-    //   model.StateStyle = ColorPalette.CollectionDeviceStateCountType.Offline;
+    if (item.State) {
+      if (item.State.contains(VehicleState.Offline)) {
+        model.StateStyle = {
+          color: ColorPalette.CollectionDeviceStateCountType.Offline,
+        };
+      } else {
+        model.StateStyle = {
+          color: ColorPalette.CollectionDeviceStateCountType.Online,
+        };
+      }
+    } else {
+      model.StateStyle = {
+        color: ColorPalette.CollectionDeviceStateCountType.Offline,
+      };
+    }
 
-    // if (item.State) {
-    //   if (item.State.contains(VehicleState.Offline)) {
-    //     model.StateCls = 'powder-red-text';
-    //   } else {
-    //     model.StateCls = 'green-text';
-    //   }
-    // } else {
-    //   model.StateCls = 'powder-red-text';
-    // }
-
-    // model.StateStyle = { color: 'red' };
+    if (item.State) {
+      if (item.State.contains(VehicleState.Offline)) {
+        model.StateCls = 'powder-red-text';
+      } else {
+        model.StateCls = 'green-text';
+      }
+    } else {
+      model.StateCls = 'powder-red-text';
+    }
 
     model.Type = Language.VehicleType(item.VehicleType);
     model.DivisionName = '杨浦区';

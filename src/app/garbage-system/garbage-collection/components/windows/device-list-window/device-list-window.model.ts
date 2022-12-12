@@ -11,7 +11,7 @@ export class DeviceListWindowModel<T = any> {
   // 车辆状态
   State!: string;
 
-  StateStyle: string = '';
+  StateStyle: Partial<CSSStyleDeclaration> = {};
 
   StateCls: string = '';
 
