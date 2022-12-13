@@ -1,19 +1,31 @@
 <div class="collection-map-route-video">
   <div class="collection-map-route-video-header">
     <div>
-      <select [(ngModel)]="position">
+      <select [(ngModel)]="position" (change)="onpositionchanged()">
         <option [ngValue]="item.value" *ngFor="let item of title">
           {{ item.language }}
         </option>
       </select>
     </div>
-    <div></div>
+    <div>
+      <div class="btn-close" (click)="onclose()">
+        <i class="howell-icon-Close"></i>
+      </div>
+    </div>
   </div>
   <div class="collection-map-route-video-content">
-    <div *ngIf="!!video">
-      <app-video-player [model]="video"></app-video-player>
+    <div
+      *ngIf="!!model && !!position"
+      class="collection-map-route-video-content-player"
+    >
+      <app-video-player
+        [name]="model.Name"
+        [play]="toplay"
+        [pause]="pause"
+        [stop]="stop"
+      ></app-video-player>
     </div>
-    <div *ngIf="!video" class="collection-map-route-video-content-info">
+    <div *ngIf="!position" class="collection-map-route-video-content-info">
       <div class="collection-map-route-video-content-info-pic"></div>
       <div
         class="collection-map-route-video-content-info-props"
@@ -32,12 +44,7 @@
         <div *ngIf="model.PlateNo">
           {{ model.PlateNo }}
         </div>
-        <div
-          [ngClass]="{
-            'green-text': !model.State,
-            'powder-red-text': model.State?.contains(VehicleState.Offline)
-          }"
-        >
+        <div [class]="model.State | classname_vehicle_state_pipe">
           {{ model.State | language_vehicle_state_pipe }}
         </div>
       </div>

@@ -127,7 +127,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       this.model.video = video;
       this.model.videoChanged = (x) => {
         if (this.player) {
-          if (!x) this.player.stop();
+          if (!x) this.player.onstop();
         }
       };
       this.onplay.emit(this.model);

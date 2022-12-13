@@ -54,6 +54,8 @@ export class CollectionMapRouteControlComponent
   scoreclick: EventEmitter<any> = new EventEmitter();
   @Output()
   routetrigger: EventEmitter<Date> = new EventEmitter();
+  @Output()
+  runclick: EventEmitter<boolean> = new EventEmitter();
 
   @Output()
   loaded: EventEmitter<CollectionMapRouteControlSource> = new EventEmitter();
@@ -119,6 +121,7 @@ export class CollectionMapRouteControlComponent
 
   onrun() {
     this.playing = !this.playing;
+    this.runclick.emit(this.playing);
     if (this.playing) {
       if (this.time) {
         this.business.run(this.time);

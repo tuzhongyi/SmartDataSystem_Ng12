@@ -1,10 +1,10 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-03 14:46:08 
- * @Last Modified by:   pmx 
- * @Last Modified time: 2022-11-03 14:46:08 
+ * @Author: pmx
+ * @Date: 2022-11-03 14:46:08
+ * @Last Modified by:   pmx
+ * @Last Modified time: 2022-11-03 14:46:08
  */
-import { BasicUrl.garbage.vehicle } from '../base.url';
+import { BasicUrl } from '../base.url';
 
 export abstract class GarbageVehicleSRServerUrl {
   static basic() {

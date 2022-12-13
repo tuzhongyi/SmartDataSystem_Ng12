@@ -38,6 +38,36 @@ export class VideoPlayerComponent
 
   @Input()
   name: string = '';
+
+  @Input()
+  play?: EventEmitter<VideoModel>;
+  @Input()
+  stop?: EventEmitter<void>;
+  @Input()
+  download?: EventEmitter<{ filename: string; type: string }>;
+  @Input()
+  resize?: EventEmitter<{ width: number; height: number }>;
+  @Input()
+  fullscreen?: EventEmitter<void>;
+  @Input()
+  frame?: EventEmitter<void>;
+  @Input()
+  resume?: EventEmitter<void>;
+  @Input()
+  speedResume?: EventEmitter<void>;
+  @Input()
+  pause?: EventEmitter<void>;
+  @Input()
+  capturePicture?: EventEmitter<void>;
+  @Input()
+  slow?: EventEmitter<void>;
+  @Input()
+  fast?: EventEmitter<void>;
+  @Input()
+  changeRuleState?: EventEmitter<boolean>;
+  @Input()
+  seek?: EventEmitter<number>;
+
   @Output()
   destroy: EventEmitter<VideoModel> = new EventEmitter();
 
@@ -86,6 +116,71 @@ export class VideoPlayerComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && !changes.model.firstChange) {
       this.loaded = false;
+    }
+    if (changes.stop && this.stop) {
+      this.stop.subscribe((x) => {
+        this.onstop();
+      });
+    }
+    if (changes.download && this.download) {
+      this.download.subscribe((x) => {
+        this.ondownload(x.filename, x.type);
+      });
+    }
+    if (changes.resize && this.resize) {
+      this.resize.subscribe((x) => {
+        this.onresize(x.width, x.height);
+      });
+    }
+    if (changes.fullscreen && this.fullscreen) {
+      this.fullscreen.subscribe((x) => {
+        this.onfullScreen();
+      });
+    }
+    if (changes.frame && this.frame) {
+      this.frame.subscribe((x) => {
+        this.onframe();
+      });
+    }
+    if (changes.resume && this.resume) {
+      this.resume.subscribe((x) => {
+        this.onresume();
+      });
+    }
+    if (changes.speedResume && this.speedResume) {
+      this.speedResume.subscribe((x) => {
+        this.onspeedResume();
+      });
+    }
+    if (changes.pause && this.pause) {
+      this.pause.subscribe((x) => {
+        this.onpause();
+      });
+    }
+    if (changes.capturePicture && this.capturePicture) {
+      this.capturePicture.subscribe((x) => {
+        this.oncapturePicture();
+      });
+    }
+    if (changes.slow && this.slow) {
+      this.slow.subscribe((x) => {
+        this.onslow();
+      });
+    }
+    if (changes.fast && this.fast) {
+      this.fast.subscribe((x) => {
+        this.onfast();
+      });
+    }
+    if (changes.changeRuleState && this.changeRuleState) {
+      this.changeRuleState.subscribe((x) => {
+        this.onchangeRuleState(x);
+      });
+    }
+    if (changes.seek && this.seek) {
+      this.seek.subscribe((x) => {
+        this.onseek(x);
+      });
     }
     this.load();
   }
@@ -185,7 +280,7 @@ export class VideoPlayerComponent
       this.player.onPlaying = () => {
         setTimeout(() => {
           if (this._ruleState !== undefined && this.player) {
-            this.changeRuleState(this._ruleState);
+            this.onchangeRuleState(this._ruleState);
           }
         }, 1000);
         this.onPlaying.emit();
@@ -209,75 +304,75 @@ export class VideoPlayerComponent
     }
   }
 
-  play(model: VideoModel) {
+  onplay(model: VideoModel) {
     this.model = model;
     this.loaded = false;
     this.load();
   }
 
-  async stop() {
+  async onstop() {
     if (this.player) {
       return this.player.stop();
     }
     return;
   }
 
-  download(filename: string, type: string) {
+  ondownload(filename: string, type: string) {
     if (this.player) {
       this.player.download(filename, type);
     }
   }
-  resize(width: number, height: number) {
+  onresize(width: number, height: number) {
     if (this.player) {
       this.player.resize(width, height);
     }
   }
-  fullScreen() {
+  onfullScreen() {
     if (this.player) {
       this.player.fullScreen();
     }
   }
-  frame() {
+  onframe() {
     if (this.player) {
       this.player.frame();
     }
   }
-  resume() {
+  onresume() {
     if (this.player) {
       this.player.resume();
     }
   }
-  speedResume() {
+  onspeedResume() {
     if (this.player) {
       this.player.speedResume();
     }
   }
-  pause() {
+  onpause() {
     if (this.player) {
       this.player.pause();
     }
   }
-  capturePicture() {
+  oncapturePicture() {
     if (this.player) {
       this.player.capturePicture();
     }
   }
-  slow() {
+  onslow() {
     if (this.player) {
       this.player.slow();
     }
   }
-  fast() {
+  onfast() {
     if (this.player) {
       this.player.fast();
     }
   }
-  changeRuleState(state: boolean) {
+  onchangeRuleState(state: boolean) {
     if (this.player) {
       this.player.changeRuleState(state);
     }
   }
-  seek(value: number) {
+  onseek(value: number) {
     if (this.player) {
       this.player.seek(value);
     }

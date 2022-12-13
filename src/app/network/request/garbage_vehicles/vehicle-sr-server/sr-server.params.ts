@@ -1,12 +1,12 @@
 /*
- * @Author: pmx 
- * @Date: 2022-11-06 15:08:30 
+ * @Author: pmx
+ * @Date: 2022-11-06 15:08:30
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-06 15:35:43
  */
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { VideoProtocol } from 'src/app/enum/video-protocol.enum';
-import { DurationParams, IParams } from '../IParams.interface';
+import { DurationParams, IParams } from '../../IParams.interface';
 
 export class GetVehiclePreviewUrlParams implements IParams {
   // 监控点ID

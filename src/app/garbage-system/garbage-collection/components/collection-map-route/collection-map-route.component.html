@@ -7,17 +7,27 @@
     <collection-map-route-query (select)="onselected($event)" [(date)]="date">
     </collection-map-route-query>
   </div>
-  <div class="panel collection-map-route-video" *ngIf="!!model">
-    <collection-map-route-video [source]="model"> </collection-map-route-video>
+  <div class="panel collection-map-route-video" *ngIf="display.video">
+    <collection-map-route-video
+      *ngIf="!!model"
+      [source]="model"
+      [begin]="duration?.begin"
+      [end]="duration?.end"
+      [play]="play"
+      [pause]="pause"
+      (close)="onclose()"
+    >
+    </collection-map-route-video>
   </div>
-  <!-- <div class="panel collection-map-route-controls" *ngIf="!!model">
+  <div class="panel collection-map-route-controls" *ngIf="!!model">
     <collection-map-route-control
       [sourceId]="model.Id"
       [date]="date"
       (loaded)="onloaded($event)"
       (scoreclick)="onscore($event)"
       (routetrigger)="onroute($event)"
+      (runclick)="toplay($event)"
     >
     </collection-map-route-control>
-  </div> -->
+  </div>
 </div>
