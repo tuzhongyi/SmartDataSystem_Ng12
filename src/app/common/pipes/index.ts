@@ -10,6 +10,7 @@ import { LanguageOnlineStatus } from './languages/language-online-status.pipe';
 import { LanguagePositionNo } from './languages/language-position-no.pipe';
 import { LanguageTrashCanType } from './languages/language-trashcan-type.pipe';
 import { LanguageVehicleState } from './languages/language-vehicle-state.pipe';
+import { ClassnameVehicleState } from './classnames/classname-vehicle-state.pipe';
 
 export const CUSTOM_PIPES = [
   HowellTimePipe,
@@ -24,4 +25,6 @@ export const CUSTOM_PIPES = [
   LanguageCollectionMemberType,
   LanguageTrashCanType,
   LanguageVehicleState,
+
+  ClassnameVehicleState,
 ];

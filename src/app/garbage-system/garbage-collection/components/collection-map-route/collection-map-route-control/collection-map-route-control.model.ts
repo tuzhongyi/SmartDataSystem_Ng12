@@ -24,7 +24,7 @@ export interface ICollectionMapRouteControlChartsBusiness
   scoreclick: EventEmitter<any>;
   routetrigger: EventEmitter<Date>;
   routeclick: EventEmitter<Date>;
-  speed:number
+  speed: number;
   run(time: Date): void;
   stop(): void;
 }
