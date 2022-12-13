@@ -15,11 +15,12 @@
           <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
           <thead>
             <tr>
+              <th>编号</th>
               <th>车辆名称</th>
               <th>状态</th>
               <th>车辆类型</th>
               <th>区划</th>
-              <th>唯一编号</th>
+
               <th>车牌号</th>
             </tr>
           </thead>
@@ -66,13 +67,14 @@
     <tbody>
       <ng-template ngFor [ngForOf]="dataSource" let-item>
         <tr>
+          <td>{{ item.No }}</td>
           <td [title]="item.Name">{{ item.Name }}</td>
           <td [class]="item.StateCls" [style]="item.StateStyle">
             {{ item.State }}
           </td>
           <td>{{ item.Type }}</td>
           <td>{{ item.DivisionName }}</td>
-          <td>{{ item.No }}</td>
+
           <td>{{ item.PlatNo }}</td>
         </tr>
       </ng-template>

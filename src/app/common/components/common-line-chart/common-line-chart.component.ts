@@ -32,7 +32,16 @@ export class CommonLineChartComponent implements OnInit {
       bottom: 0,
       containLabel: true,
     },
-    tooltip: {},
+    tooltip: {
+      trigger: 'axis',
+
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985',
+        },
+      },
+    },
     title: {
       textStyle: {
         color: 'white',

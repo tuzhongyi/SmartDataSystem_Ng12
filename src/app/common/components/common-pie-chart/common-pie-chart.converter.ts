@@ -1,5 +1,10 @@
-import { Inject, Injectable } from '@angular/core';
-import { number } from 'echarts';
+/*
+ * @Author: pmx
+ * @Date: 2022-12-13 09:59:17
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-12-13 10:43:51
+ */
+import { Injectable } from '@angular/core';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
@@ -65,12 +70,16 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
           ],
         },
         {
-          //利用数据圆实现黑色影音，必须有 value
+          //利用数据圆实现黑色阴影
           type: 'pie',
           radius: ['40%', '55%'],
+          z: 2,
+          emphasis: {
+            disabled: true,
+          },
           data: [
             {
-              value: 0,
+              value: 10,
               itemStyle: {
                 color: 'rgba(0,0,0,0.5)',
               },
@@ -110,7 +119,7 @@ export class CommonPieChartConverter extends AbstractCommonModelConverter<
             ],
           },
           {
-            // 利用占位圆实现黑色影音 必须指定 z-index
+            // 利用占位圆实现黑色阴影
             type: 'pie',
             z: 3,
             radius: ['40%', '55%'],

@@ -42,13 +42,15 @@
             {{ item.PlatNo }}
           </td>
           <td>
-            <span>
+            <span (click)="clickMap(item)">
               <i
                 class="glyphicon glyphicon-map-marker"
                 [style.fontSize.px]="15"
-              ></i
+              ></i>
+            </span>
+            <span (click)="clickLine(item)">
+              <i class="howell-icon-route"></i
             ></span>
-            <span> <i class="howell-icon-route"></i></span>
           </td>
         </tr>
       </ng-template>

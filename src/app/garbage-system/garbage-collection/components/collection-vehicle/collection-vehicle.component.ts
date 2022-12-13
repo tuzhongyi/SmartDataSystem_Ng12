@@ -32,6 +32,10 @@ import {
 export class CollectionVehicleComponent implements OnInit, OnDestroy {
   @Output() clickEvent = new EventEmitter();
 
+  @Output() clickMapEvent = new EventEmitter();
+
+  @Output() clickLineEvent = new EventEmitter();
+
   tdWidth = ['10%', '10%', '5%'];
 
   dataSource: CollectionVehicleModel[] = [];
@@ -58,6 +62,12 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
 
   clickItem(item: CollectionVehicleModel) {
     this.clickEvent.emit(item);
+  }
+  clickMap(item: CollectionVehicleModel) {
+    this.clickMapEvent.emit(item.Id);
+  }
+  clickLine(item: CollectionVehicleModel) {
+    this.clickLineEvent.emit(item.Id);
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

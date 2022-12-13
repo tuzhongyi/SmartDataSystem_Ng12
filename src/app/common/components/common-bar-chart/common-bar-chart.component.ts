@@ -32,7 +32,9 @@ export class CommonBarChartComponent implements OnInit {
       bottom: 0,
       containLabel: true,
     },
-    tooltip: {},
+    tooltip: {
+      trigger: 'axis',
+    },
     title: {
       textStyle: {
         color: 'white',
