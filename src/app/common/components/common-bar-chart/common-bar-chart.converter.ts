@@ -45,7 +45,7 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
 
     let xAxisData = [];
 
-    let max = 10;
+    let max = 5;
 
     for (let i = 0; i < source.length; i++) {
       let item = source[i];
@@ -57,7 +57,7 @@ export class CommonBarChartConverter extends AbstractCommonModelConverter<
           if (tmp) {
             // tmp.Number = (Math.random() * 300) >> 0;
             value.push(tmp.Number);
-            max = Math.max(max, Math.ceil(tmp.Number / 50) * 50);
+            max = Math.max(max, Math.ceil(tmp.Number / 5) * 5);
           } else {
             value.push(0);
           }

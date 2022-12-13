@@ -5,10 +5,10 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { DeviceListWindowModel } from './device-list-window.model';
+import { VehicleListWindowModel } from './vehicle-list-window.model';
 import ColorPalette from 'src/assets/json/color-palette.json';
 
-export class DeviceListWindowConverter extends AbstractCommonModelConverter<DeviceListWindowModel> {
+export class VehicleListWindowConverter extends AbstractCommonModelConverter<VehicleListWindowModel> {
   Convert(source: CommonModelSource, ...res: any[]) {
     if (source instanceof GarbageVehicle) {
       return this._fromGarbageVehicle(source);
@@ -17,7 +17,7 @@ export class DeviceListWindowConverter extends AbstractCommonModelConverter<Devi
   }
 
   private _fromGarbageVehicle(item: GarbageVehicle) {
-    let model = new DeviceListWindowModel<GarbageVehicle>();
+    let model = new VehicleListWindowModel<GarbageVehicle>();
     model.Id = item.Id;
     model.Name = item.Name;
     model.State = Language.VehicleStateFlags(item.State);
@@ -25,16 +25,16 @@ export class DeviceListWindowConverter extends AbstractCommonModelConverter<Devi
     if (item.State) {
       if (item.State.contains(VehicleState.Offline)) {
         model.StateStyle = {
-          color: ColorPalette.CollectionDeviceStateCountType.Offline,
+          color: ColorPalette.PowderRedText,
         };
       } else {
         model.StateStyle = {
-          color: ColorPalette.CollectionDeviceStateCountType.Online,
+          color: ColorPalette.GreenText,
         };
       }
     } else {
       model.StateStyle = {
-        color: ColorPalette.CollectionDeviceStateCountType.Offline,
+        color: ColorPalette.PowderRedText,
       };
     }
 

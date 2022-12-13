@@ -58,6 +58,9 @@
 .big-table {
   table {
     width: 100%;
+    table-layout: fixed;
+    color: #cfd7ff;
+
     thead {
       color: white;
       font-size: 24px;
@@ -65,20 +68,16 @@
       background-color: #414b83;
       border-bottom-color: rgba(0, 0, 0, 0.3);
       height: 70px;
-      tr {
-        th {
-          padding: 5px;
-          font-weight: normal;
-          color: white;
-
-          &:first-child {
-            padding-left: 24px;
-          }
-        }
+      tr th {
+        padding: 5px;
+        font-weight: normal;
+        color: white;
+      }
+      tr th:first-child {
+        padding-left: 24px;
       }
     }
     tbody {
-      color: #cfd7ff;
       font-size: 18px;
       tr {
         height: 60px;
@@ -106,6 +105,9 @@
 
         td {
           padding: 5px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
           span {
             margin: 0 2.5px;
           }

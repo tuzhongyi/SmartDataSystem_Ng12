@@ -9,7 +9,6 @@ import { interval, Subscription, timer } from 'rxjs';
 import { IToastWindowEmitModel } from 'src/app/common/components/toast-window/toast-window.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { IModel } from 'src/app/network/model/model.interface';
-import { VehicleListComponent } from '../windows';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {
@@ -63,13 +62,30 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
   clickItem(item: CollectionVehicleModel) {
     this.clickEvent.emit(item);
   }
-  clickMap(item: CollectionVehicleModel) {
+  clickMap(item: CollectionVehicleModel, e: MouseEvent) {
     this.position.emit(item.rawData);
+    e.stopPropagation();
   }
-  clickLine(item: CollectionVehicleModel) {
+  clickLine(item: CollectionVehicleModel, e: MouseEvent) {
     this.route.emit(item.rawData);
+    e.stopPropagation();
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 }
+
+// clickItem(item: CollectionVehicleModel) {
+//   this.clickEvent.emit(item);
+//   console.log('click item');
+// }
+// clickMap(item: CollectionVehicleModel, e: MouseEvent) {
+//   this.clickMapEvent.emit(item.Id);
+//   console.log('click map');
+//   e.stopPropagation();
+// }
+// clickLine(item: CollectionVehicleModel, e: MouseEvent) {
+//   this.clickLineEvent.emit(item.Id);
+//   console.log('click line');
+//   e.stopPropagation();
+// }

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-12 16:26:28
+ * @Last Modified time: 2022-12-13 11:21:08
  */
 import {
   AfterViewInit,
@@ -23,6 +23,7 @@ import {
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -30,8 +31,7 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
-import { VehicleListComponent } from '../windows';
-import { DeviceListWindowComponent } from '../windows/device-list-window/device-list-window.component';
+import { VehicleListWindowComponent } from '../windows/vehicle-list-window/vehicle-list-window.component';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
@@ -93,7 +93,7 @@ export class GarbageCollectionIndexComponent
 
   myInjector: Injector;
 
-  componentTypeExpression: Type<any> = DeviceListWindowComponent;
+  componentTypeExpression: Type<any> = VehicleListWindowComponent;
 
   @ViewChild('hello', { read: ViewContainerRef })
   tmp!: any;
@@ -147,7 +147,7 @@ export class GarbageCollectionIndexComponent
 
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
-    this.componentTypeExpression = DeviceListWindowComponent;
+    this.componentTypeExpression = VehicleListWindowComponent;
 
     this._updateToast({
       divisionId: this._globalStoreService.divisionId,
@@ -156,10 +156,10 @@ export class GarbageCollectionIndexComponent
   }
 
   clickVehicle(data: CollectionVehicleModel) {
-    this.componentTypeExpression = VehicleListComponent;
+    this.componentTypeExpression = VehicleListWindowComponent;
     this._updateToast({
-      DivisionId: this._globalStoreService.divisionId,
-      data,
+      divisionId: this._globalStoreService.divisionId,
+      type: CollectionDeviceStateCountType.All,
     });
   }
   private _updateToast(data: IModel) {

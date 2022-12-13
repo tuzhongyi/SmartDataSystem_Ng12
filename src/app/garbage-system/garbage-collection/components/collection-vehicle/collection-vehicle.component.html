@@ -42,13 +42,13 @@
             {{ item.PlatNo }}
           </td>
           <td>
-            <span (click)="clickMap(item)">
+            <span (click)="clickMap(item, $event)">
               <i
                 class="glyphicon glyphicon-map-marker"
                 [style.fontSize.px]="15"
               ></i>
             </span>
-            <span (click)="clickLine(item)">
+            <span (click)="clickLine(item, $event)">
               <i class="howell-icon-route"></i
             ></span>
           </td>

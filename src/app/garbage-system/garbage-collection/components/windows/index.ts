@@ -1,2 +1,1 @@
-export * from './device-list-window/device-list-window.component';
-export * from './vehicle-list/vehicle-list.component';
+export * from './vehicle-list-window/vehicle-list-window.component';

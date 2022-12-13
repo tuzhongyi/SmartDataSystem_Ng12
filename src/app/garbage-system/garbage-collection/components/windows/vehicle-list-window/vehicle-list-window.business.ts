@@ -9,32 +9,32 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-import { DeviceListWindowConverter } from './device-list-window.converter';
+import { VehicleListWindowConverter } from './vehicle-list-window.converter';
 import {
-  DeviceListWindowModel,
-  IDeviceListWindowSearchInfo,
-} from './device-list-window.model';
+  VehicleListWindowModel,
+  IVehicleListWindowSearchInfo,
+} from './vehicle-list-window.model';
 
 @Injectable()
-export class DeviceListWindowBusiness {
+export class VehicleListWindowBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
-    private _converter: DeviceListWindowConverter
+    private _converter: VehicleListWindowConverter
   ) {}
-  async init(searchInfo: IDeviceListWindowSearchInfo) {
+  async init(searchInfo: IVehicleListWindowSearchInfo) {
     let { Page, Data } = await this._list(searchInfo);
 
-    console.log(Data);
+    // console.log(Data);
 
     let data = this._converter.iterateToModel(Data);
-    let res: PagedList<DeviceListWindowModel> = {
+    let res: PagedList<VehicleListWindowModel> = {
       Page: Page,
       Data: data,
     };
 
     return res;
   }
-  private _list(searchInfo: IDeviceListWindowSearchInfo) {
+  private _list(searchInfo: IVehicleListWindowSearchInfo) {
     let params = new GetGarbageVehiclesParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;

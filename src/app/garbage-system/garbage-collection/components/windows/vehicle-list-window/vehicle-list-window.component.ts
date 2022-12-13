@@ -4,31 +4,31 @@ import { ToastWindowService } from 'src/app/common/components/toast-window/toast
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { DeviceListWindowBusiness } from './device-list-window.business';
-import { DeviceListWindowConverter } from './device-list-window.converter';
+import { VehicleListWindowBusiness } from './vehicle-list-window.business';
+import { VehicleListWindowConverter } from './vehicle-list-window.converter';
 import {
-  DeviceListWindowModel,
-  IDeviceListWindowSearchInfo,
-} from './device-list-window.model';
+  VehicleListWindowModel,
+  IVehicleListWindowSearchInfo,
+} from './vehicle-list-window.model';
 
 @Component({
-  selector: 'device-list-window',
-  templateUrl: './device-list-window.component.html',
-  styleUrls: ['./device-list-window.component.less'],
+  selector: 'vehicle-list-window',
+  templateUrl: './vehicle-list-window.component.html',
+  styleUrls: ['./vehicle-list-window.component.less'],
   providers: [
     {
-      provide: DeviceListWindowBusiness,
-      useClass: DeviceListWindowBusiness,
+      provide: VehicleListWindowBusiness,
+      useClass: VehicleListWindowBusiness,
     },
     {
-      provide: DeviceListWindowConverter,
-      useValue: new DeviceListWindowConverter(),
+      provide: VehicleListWindowConverter,
+      useValue: new VehicleListWindowConverter(),
     },
   ],
 })
-export class DeviceListWindowComponent implements OnInit {
+export class VehicleListWindowComponent implements OnInit {
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%'];
-  dataSource: DeviceListWindowModel[] = [];
+  dataSource: VehicleListWindowModel[] = [];
 
   // Paginator
   pagerCount: number = 4;
@@ -41,17 +41,17 @@ export class DeviceListWindowComponent implements OnInit {
     PageCount: 0,
   };
 
-  searchInfo: IDeviceListWindowSearchInfo = {
+  searchInfo: IVehicleListWindowSearchInfo = {
     DivisionId: this._globalStorage.divisionId,
     PageIndex: 1,
-    PageSize: 3,
+    PageSize: 9,
     Type: CollectionDeviceStateCountType.All,
     Condition: '',
   };
 
   constructor(
     private _globalStorage: GlobalStorageService,
-    private _business: DeviceListWindowBusiness,
+    private _business: VehicleListWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
     console.log(this._toastWindowService.data);

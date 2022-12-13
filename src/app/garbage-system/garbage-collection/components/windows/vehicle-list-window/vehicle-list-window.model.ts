@@ -1,9 +1,6 @@
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
-import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
 
-export class DeviceListWindowModel<T = any> {
+export class VehicleListWindowModel<T = any> {
   Id!: string;
 
   // 车辆名称
@@ -25,7 +22,7 @@ export class DeviceListWindowModel<T = any> {
   rawData!: T;
 }
 
-export interface IDeviceListWindowSearchInfo {
+export interface IVehicleListWindowSearchInfo {
   DivisionId: string;
   PageIndex: number;
   PageSize: number;
