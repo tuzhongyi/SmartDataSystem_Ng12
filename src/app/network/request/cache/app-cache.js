@@ -16,7 +16,7 @@ class AppCache {
       // for use when you need to clean up something when objects
       // are evicted from the cache
       dispose: (value, key) => {
-        freeFromMemoryOrWhatever(value)
+        // freeFromMemoryOrWhatever(value)
       },
 
       // how long to live in ms
