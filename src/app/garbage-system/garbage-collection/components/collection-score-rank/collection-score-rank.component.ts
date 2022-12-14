@@ -1,6 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CommonRankModel } from 'src/app/common/components/common-rank/common-rank.model';
+import {
+  CommonRankData,
+  CommonRankModel,
+} from 'src/app/common/components/common-rank/common-rank.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { Time } from 'src/app/common/tools/time';
@@ -28,6 +31,8 @@ import {
 export class CollectionScoreRankComponent implements OnInit {
   @Input() type: CollectionPointScore = CollectionPointScore.Poor;
 
+  @Output() clickEvent = new EventEmitter();
+
   model?: CollectionScoreRankModel;
   rankModel?: CommonRankModel;
 
@@ -38,7 +43,7 @@ export class CollectionScoreRankComponent implements OnInit {
   today = new Date();
 
   searchInfo: ICollectionScoreRankSearchInfo = {
-    BeginTime: DurationParams.allMonth(this.today).BeginTime,
+    BeginTime: Time.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
     DivisionId: this._globalStorage.divisionId,
     Type: CollectionPointScore.Poor,
@@ -68,5 +73,9 @@ export class CollectionScoreRankComponent implements OnInit {
     this.rankModel = this.model.RankModel;
 
     // console.log(this.dataSource);
+  }
+
+  clickRankItem(item: CommonRankData) {
+    this.clickEvent.emit(item);
   }
 }

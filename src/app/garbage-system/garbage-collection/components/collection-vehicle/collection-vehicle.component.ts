@@ -74,18 +74,3 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 }
-
-// clickItem(item: CollectionVehicleModel) {
-//   this.clickEvent.emit(item);
-//   console.log('click item');
-// }
-// clickMap(item: CollectionVehicleModel, e: MouseEvent) {
-//   this.clickMapEvent.emit(item.Id);
-//   console.log('click map');
-//   e.stopPropagation();
-// }
-// clickLine(item: CollectionVehicleModel, e: MouseEvent) {
-//   this.clickLineEvent.emit(item.Id);
-//   console.log('click line');
-//   e.stopPropagation();
-// }

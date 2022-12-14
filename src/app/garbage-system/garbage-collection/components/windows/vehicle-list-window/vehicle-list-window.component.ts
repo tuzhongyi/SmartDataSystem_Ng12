@@ -54,7 +54,7 @@ export class VehicleListWindowComponent implements OnInit {
     private _business: VehicleListWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
-    console.log(this._toastWindowService.data);
+    // console.log(this._toastWindowService.data);
     let data = this._toastWindowService.data;
     if (data) {
       if (data.type) this.searchInfo.Type = data.type;

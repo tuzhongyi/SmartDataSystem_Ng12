@@ -34,6 +34,9 @@ export class CommonRankConverter extends AbstractCommonModelConverter<
       data.Name = scoreTop.Name;
       data.Number = scoreTop.Number;
       data.Unit = '起';
+
+      data.RawData = scoreTop;
+
       return data;
     });
     model.RawData = source;

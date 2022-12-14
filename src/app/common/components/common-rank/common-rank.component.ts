@@ -1,4 +1,12 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { CollectionScoreRankComponent } from 'src/app/garbage-system/garbage-collection/components/collection-score-rank/collection-score-rank.component';
 import { CommonRankBusiness } from './common-rank.business';
 import {
   CommonRankData,
@@ -23,6 +31,8 @@ export class CommonRankComponent implements OnInit {
   @Input() title = '';
   @Input() model?: CommonRankModel;
 
+  @Output() clickEvent = new EventEmitter();
+
   trackByFn = (index: number, item: CommonRankData) => {
     return item.Id;
   };
@@ -37,5 +47,9 @@ export class CommonRankComponent implements OnInit {
 
   private async _init() {
     this.model = await this._business.init();
+  }
+
+  clickItem(item: CommonRankData) {
+    this.clickEvent.emit(item);
   }
 }

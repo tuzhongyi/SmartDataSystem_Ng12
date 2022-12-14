@@ -1,3 +1,13 @@
 <div class="collection-score-rank">
-  <common-rank [title]="title" [model]="rankModel"></common-rank>
+  <div class="collection-score-rank__head">
+    <div class="collection-score-rank__head__title">
+      {{ title }}
+    </div>
+  </div>
+  <div class="collection-score-rank__main">
+    <common-rank
+      [model]="rankModel"
+      (clickEvent)="clickRankItem($event)"
+    ></common-rank>
+  </div>
 </div>

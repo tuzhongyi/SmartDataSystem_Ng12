@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { interval, Subscription } from 'rxjs';
+import { CommonRankData } from 'src/app/common/components/common-rank/common-rank.model';
 import {
   ToastWindowService,
   TOAST_WINDOW_TOKEN,
@@ -31,6 +32,7 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
+import { CollectionListWindowComponent } from '../windows';
 import { VehicleListWindowComponent } from '../windows/vehicle-list-window/vehicle-list-window.component';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
@@ -161,6 +163,10 @@ export class GarbageCollectionIndexComponent
       divisionId: this._globalStoreService.divisionId,
       type: CollectionDeviceStateCountType.All,
     });
+  }
+  clickScoreRank(data: CommonRankData) {
+    this.componentTypeExpression = CollectionListWindowComponent;
+    this._updateToast({});
   }
   private _updateToast(data: IModel) {
     this.myInjector.get(ToastWindowService).data = data;

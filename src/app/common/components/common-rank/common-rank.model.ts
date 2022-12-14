@@ -16,4 +16,6 @@ export class CommonRankData {
   Name!: string;
   Number!: number;
   Unit: string = '';
+
+  RawData?: any;
 }

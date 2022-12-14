@@ -31,7 +31,10 @@ import { CollectionWeightLineComponent } from './collection-weight-line/collecti
 import { CollectionMapRouteControlComponent } from './collection-map-route/collection-map-route-control/collection-map-route-control.component';
 import { CollectionMapRouteVideoComponent } from './collection-map-route/collection-map-route-video/collection-map-route-video.component';
 import { CollectionScoreBarComponent } from './collection-score-bar/collection-score-bar.component';
-import { VehicleListWindowComponent } from './windows';
+import {
+  CollectionListWindowComponent,
+  VehicleListWindowComponent,
+} from './windows';
 
 @NgModule({
   declarations: [
@@ -52,6 +55,7 @@ import { VehicleListWindowComponent } from './windows';
     CollectionWeightLineComponent,
     CollectionScoreBarComponent,
     VehicleListWindowComponent,
+    CollectionListWindowComponent,
   ],
   imports: [
     CommonModule,
