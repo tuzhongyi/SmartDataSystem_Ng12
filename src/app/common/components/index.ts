@@ -46,13 +46,13 @@ import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
-import { TabHeaderComponent } from './tab-header/tab-header.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 import { RankComponent } from './rank/rank.component';
 import { SmallTableComponent } from './small-table/small-table.component';
+import { CommonTabComponent } from './common-tab/common-tab.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -102,7 +102,7 @@ export const CUSTOM_COMPONENTS = [
   ToastWindowComponent,
   MixIntoComponent,
   IllegalDropComponent,
-  TabHeaderComponent,
+  CommonTabComponent,
   IllegalDropEventComponent,
   EventNumberStatisticComponent,
   EventNumberChartComponent,
