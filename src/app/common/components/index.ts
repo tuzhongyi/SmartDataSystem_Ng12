@@ -46,7 +46,7 @@ import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 import { MixIntoComponent } from './mix-into/mix-into.component';
 import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
-import { TabHeaderComponent } from './tab-header/tab-header.component';
+import { CommonTabComponent } from './common-tab/common-tab.component';
 import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
@@ -109,7 +109,7 @@ export const CUSTOM_COMPONENTS = [
   ToastWindowComponent,
   MixIntoComponent,
   IllegalDropComponent,
-  TabHeaderComponent,
+  CommonTabComponent,
   IllegalDropEventComponent,
   EventNumberStatisticComponent,
   EventNumberChartComponent,

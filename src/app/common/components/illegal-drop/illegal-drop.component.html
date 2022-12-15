@@ -3,11 +3,12 @@
     <div class="hw-second-title">乱扔垃圾</div>
     <div class="operate-bar inline-bar">
       <div class="left-wrapper">
-        <howell-tab-header [headers]="tabHeaders" (tabHeaderEvent)="tabHeaderEvent($event)"></howell-tab-header>
+        <common-tab
+          [dataSource]="tabHeaders"
+          (clickEvent)="clickTab($event)"
+        ></common-tab>
       </div>
-      <div class="right-wrapper">
-
-      </div>
+      <div class="right-wrapper"></div>
     </div>
   </div>
   <div class="vertical-main">

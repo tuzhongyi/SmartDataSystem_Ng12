@@ -1,0 +1,11 @@
+<div class="common-tab">
+  <ng-template ngFor [ngForOf]="dataSource" let-item let-i="index">
+    <div
+      class="common-tab__title"
+      [class.selected]="i == curIndex"
+      (click)="clickTab(item, i, $event)"
+    >
+      {{ item.title }}
+    </div>
+  </ng-template>
+</div>

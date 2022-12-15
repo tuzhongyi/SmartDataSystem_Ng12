@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ClassConstructor } from 'class-transformer';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { TabHeaderModel } from 'src/app/view-model/tab-header.model';
+import { CommonTabModel } from 'src/app/common/components/common-tab/common-tab.model';
 import { EventNumberChartComponent } from '../event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from '../event-number-statistic/event-number-statistic.component';
 import { IllegalDropEventComponent } from '../illegal-drop-event/illegal-drop-event.component';
@@ -12,7 +12,7 @@ import { IllegalDropEventComponent } from '../illegal-drop-event/illegal-drop-ev
   styleUrls: ['./illegal-drop.component.less'],
 })
 export class IllegalDropComponent implements OnInit {
-  tabHeaders: TabHeaderModel[] = [];
+  tabHeaders: CommonTabModel[] = [];
 
   currentComponent = IllegalDropEventComponent;
   current = 2;
@@ -27,20 +27,18 @@ export class IllegalDropComponent implements OnInit {
   resourceDefault: UserResourceType = UserResourceType.Committees;
 
   constructor() {
-    this.tabHeaders.push(new TabHeaderModel('事件', IllegalDropEventComponent));
+    this.tabHeaders.push(new CommonTabModel('事件', IllegalDropEventComponent));
     this.tabHeaders.push(
-      new TabHeaderModel('总图表', EventNumberStatisticComponent)
+      new CommonTabModel('总图表', EventNumberStatisticComponent)
     );
     this.tabHeaders.push(
-      new TabHeaderModel('细分图表', EventNumberChartComponent)
+      new CommonTabModel('细分图表', EventNumberChartComponent)
     );
-    // this.tabHeaders.push(new TabHeaderModel('数据比较'));
   }
 
   ngOnInit(): void {}
 
-  tabHeaderEvent(header: TabHeaderModel) {
-    console.log('sdf', header);
-    this.currentComponent = header.dynamicComponent;
+  clickTab(tabModel: CommonTabModel) {
+    this.currentComponent = tabModel.componentExpression;
   }
 }
