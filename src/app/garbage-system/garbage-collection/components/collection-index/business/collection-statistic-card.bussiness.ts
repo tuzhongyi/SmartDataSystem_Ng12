@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-15 14:59:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-15 16:02:13
+ * @Last Modified time: 2022-12-15 17:09:26
  */
 import { Injectable } from '@angular/core';
 import { param } from 'jquery';
@@ -38,8 +38,11 @@ export class CollectionStatisticCardBusiness {
       this._listGarbagePoints(),
     ]);
 
+    // console.log(data);
     let res = this._converter.iterateToModel(data);
-    console.log(res);
+    // console.log(res);
+
+    return res;
   }
 
   // 获取垃圾清运车数量

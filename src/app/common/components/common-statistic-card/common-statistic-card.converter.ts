@@ -4,6 +4,10 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
+import {
+  CollectionMemberWindowComponent,
+  CollectionVehicleWindowComponent,
+} from 'src/app/garbage-system/garbage-collection/components/windows';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
@@ -34,28 +38,40 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
 
   private _fromGarbageVehicle(source: PagedList<GarbageVehicle>) {
     let model = new CommonStatisticCardModel();
-    model.title = '垃圾清运车数量';
-    model.content = '20';
+    model.componentExpression = CollectionVehicleWindowComponent;
+    model.Title = '垃圾清运车数量';
+    model.Content = source.Data.length.toString();
     return model;
   }
+  private _fromDivisionGarbageWeight(source: DivisionGarbageWeight) {
+    let model = new CommonStatisticCardModel();
+    model.Title = '垃圾清运数量(吨)';
 
+    if (source.Weights) {
+      let total = source.Weights.reduce((prev: number, cur) => {
+        return cur.Weight + prev;
+      }, 0);
+
+      // 遍历数组获得值
+      model.Content = total.toString();
+    }
+    // 直接使用属性值
+    model.Content = source.TotalWeight.toString();
+
+    return model;
+  }
   private _fromCollectionMember(source: PagedList<CollectionMember>) {
     let model = new CommonStatisticCardModel();
-    model.title = '垃圾清运车数量';
-    model.content = '20';
+    model.componentExpression = CollectionMemberWindowComponent;
+    model.Title = '清运人员';
+    model.Content = source.Data.length.toString();
     return model;
   }
 
   private _fromCollectionPoint(source: PagedList<CollectionPoint>) {
     let model = new CommonStatisticCardModel();
-    model.title = '垃圾清运车数量';
-    model.content = '20';
-    return model;
-  }
-  private _fromDivisionGarbageWeight(source: DivisionGarbageWeight) {
-    let model = new CommonStatisticCardModel();
-    model.title = '垃圾清运车数量';
-    model.content = '20';
+    model.Title = '垃圾收运点位';
+    model.Content = source.Data.length.toString();
     return model;
   }
 

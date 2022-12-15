@@ -7,7 +7,7 @@ import { CommonStatisticCardModel } from './common-statistic-card.model';
   styleUrls: ['./common-statistic-card.component.less'],
 })
 export class CommonStatisticCardComponent implements OnInit {
-  @Input() dataSource: CommonStatisticCardModel[] = [];
+  @Input() model?: CommonStatisticCardModel;
 
   @Output() clickEvent = new EventEmitter();
 
@@ -17,5 +17,6 @@ export class CommonStatisticCardComponent implements OnInit {
 
   clickCard(e: Event) {
     e.stopPropagation();
+    if (this.model) this.clickEvent.emit(this.model);
   }
 }

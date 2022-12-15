@@ -4,31 +4,31 @@ import { ToastWindowService } from 'src/app/common/components/toast-window/toast
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { VehicleListWindowBusiness } from './vehicle-list-window.business';
-import { VehicleListWindowConverter } from './vehicle-list-window.converter';
+import { CollectionVehicletWindowBusiness } from './collection-vehicle-window.business';
+import { CollectionVehicleWindowConverter } from './collection-vehicle-window.converter';
 import {
-  VehicleListWindowModel,
-  IVehicleListWindowSearchInfo,
-} from './vehicle-list-window.model';
+  CollectionVehicleWindowModel,
+  ICollectionVehicleWindowSearchInfo,
+} from './collection-vehicle-window.model';
 
 @Component({
-  selector: 'vehicle-list-window',
-  templateUrl: './vehicle-list-window.component.html',
-  styleUrls: ['./vehicle-list-window.component.less'],
+  selector: 'collection-vehicle-window',
+  templateUrl: './collection-vehicle-window.component.html',
+  styleUrls: ['./collection-vehicle-window.component.less'],
   providers: [
     {
-      provide: VehicleListWindowBusiness,
-      useClass: VehicleListWindowBusiness,
+      provide: CollectionVehicletWindowBusiness,
+      useClass: CollectionVehicletWindowBusiness,
     },
     {
-      provide: VehicleListWindowConverter,
-      useValue: new VehicleListWindowConverter(),
+      provide: CollectionVehicleWindowConverter,
+      useValue: new CollectionVehicleWindowConverter(),
     },
   ],
 })
-export class VehicleListWindowComponent implements OnInit {
+export class CollectionVehicleWindowComponent implements OnInit {
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%'];
-  dataSource: VehicleListWindowModel[] = [];
+  dataSource: CollectionVehicleWindowModel[] = [];
 
   // Paginator
   pagerCount: number = 4;
@@ -41,7 +41,7 @@ export class VehicleListWindowComponent implements OnInit {
     PageCount: 0,
   };
 
-  searchInfo: IVehicleListWindowSearchInfo = {
+  searchInfo: ICollectionVehicleWindowSearchInfo = {
     DivisionId: this._globalStorage.divisionId,
     PageIndex: 1,
     PageSize: 9,
@@ -51,7 +51,7 @@ export class VehicleListWindowComponent implements OnInit {
 
   constructor(
     private _globalStorage: GlobalStorageService,
-    private _business: VehicleListWindowBusiness,
+    private _business: CollectionVehicletWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
     // console.log(this._toastWindowService.data);

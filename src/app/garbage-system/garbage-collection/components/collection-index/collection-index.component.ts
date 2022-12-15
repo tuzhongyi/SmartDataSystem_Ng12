@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-15 15:51:31
+ * @Last Modified time: 2022-12-15 17:12:38
  */
 import {
   AfterViewInit,
@@ -18,6 +18,7 @@ import {
 import { Title } from '@angular/platform-browser';
 import { interval, Subscription } from 'rxjs';
 import { CommonRankData } from 'src/app/common/components/common-rank/common-rank.model';
+import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import {
   ToastWindowService,
   TOAST_WINDOW_TOKEN,
@@ -33,7 +34,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import { CollectionListWindowComponent } from '../windows';
-import { VehicleListWindowComponent } from '../windows/vehicle-list-window/vehicle-list-window.component';
+import { CollectionVehicleWindowComponent } from '../windows/collection-vehicle-window/collection-vehicle-window.component';
 import { CollectionStatisticCardBusiness } from './business/collection-statistic-card.bussiness';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
@@ -97,7 +98,9 @@ export class GarbageCollectionIndexComponent
 
   myInjector: Injector;
 
-  componentTypeExpression: Type<any> = VehicleListWindowComponent;
+  componentTypeExpression: Type<any> | null = CollectionVehicleWindowComponent;
+
+  statisticDataSource: CommonStatisticCardModel[] = [];
 
   constructor(
     private _titleService: Title,
@@ -128,7 +131,7 @@ export class GarbageCollectionIndexComponent
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
       let userDivisionId = user.Resources[0].Id;
@@ -138,7 +141,7 @@ export class GarbageCollectionIndexComponent
       this._globalStoreService.divisionId = userDivisionId;
       this._globalStoreService.divisionType = userDivisionType;
     }
-    this._statisticCardBussiness.init();
+    this.statisticDataSource = await this._statisticCardBussiness.init();
   }
 
   closeToast() {
@@ -153,7 +156,7 @@ export class GarbageCollectionIndexComponent
 
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
-    this.componentTypeExpression = VehicleListWindowComponent;
+    this.componentTypeExpression = CollectionVehicleWindowComponent;
 
     this._updateToast({
       divisionId: this._globalStoreService.divisionId,
@@ -162,7 +165,7 @@ export class GarbageCollectionIndexComponent
   }
 
   clickVehicle(data: CollectionVehicleModel) {
-    this.componentTypeExpression = VehicleListWindowComponent;
+    this.componentTypeExpression = CollectionVehicleWindowComponent;
     this._updateToast({
       divisionId: this._globalStoreService.divisionId,
       type: CollectionDeviceStateCountType.All,
@@ -172,6 +175,11 @@ export class GarbageCollectionIndexComponent
     this.componentTypeExpression = CollectionListWindowComponent;
     this._updateToast({});
   }
+  clickCard(data: CommonStatisticCardModel) {
+    this.componentTypeExpression = data.componentExpression;
+    this._updateToast({});
+  }
+
   private _updateToast(data: IModel) {
     this.myInjector.get(ToastWindowService).data = data;
     this.showToast = true;

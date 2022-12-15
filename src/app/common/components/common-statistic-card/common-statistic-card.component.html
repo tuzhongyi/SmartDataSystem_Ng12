@@ -1,4 +1,4 @@
 <div class="common-statistic-card" (click)="clickCard($event)">
-  <div class="title">12</div>
-  <div class="content">2121</div>
+  <div class="title" [class]="model?.TitleCls">{{ model?.Title }}</div>
+  <div class="content" [class]="model?.ContentCls">{{ model?.Content }}</div>
 </div>

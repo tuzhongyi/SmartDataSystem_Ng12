@@ -18,8 +18,17 @@
       <div class="monitor-body__item monitor-body__item--map">
         <div class="monitor-body__wrapper">
           <div class="statistic-card-group">
+            <!-- <common-statistic-card></common-statistic-card>
             <common-statistic-card></common-statistic-card>
             <common-statistic-card></common-statistic-card>
+            <common-statistic-card></common-statistic-card> -->
+
+            <ng-container *ngFor="let item of statisticDataSource">
+              <common-statistic-card
+                [model]="item"
+                (clickEvent)="clickCard($event)"
+              ></common-statistic-card
+            ></ng-container>
           </div>
           <div class="map-control">
             <!-- <collection-map-control
