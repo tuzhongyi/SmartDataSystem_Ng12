@@ -7,6 +7,7 @@ export class VideoControlConverter implements IConverter<VideoUrl, VideoModel> {
     let model = new VideoModel(source.Url);
     model.username = source.Username;
     model.password = source.Password;
+    model.web = source.WebUrl;
     return model;
   }
 }

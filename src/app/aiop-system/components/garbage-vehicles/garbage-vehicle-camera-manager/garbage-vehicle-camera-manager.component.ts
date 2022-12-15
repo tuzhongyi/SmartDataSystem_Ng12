@@ -107,6 +107,7 @@ export class GarbageVehicleCameraManagerComponent
         .delete(this.selected)
         .then((x) => {
           this.toastr.success('删除成功');
+          this.enabled.delete = false;
           this.load.emit();
         })
         .catch((x) => {

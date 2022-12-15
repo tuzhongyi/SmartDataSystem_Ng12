@@ -39,11 +39,12 @@ export class CollectionMapRouteComponent implements OnInit {
   play: EventEmitter<Duration> = new EventEmitter();
   pause: EventEmitter<void> = new EventEmitter();
 
+  duration?: Duration;
+
   date: Date = new Date();
   src?: SafeResourceUrl;
 
-  playing = false;
-  duration?: Duration;
+  wantplay = false;
 
   @ViewChild('iframe')
   element?: ElementRef;
@@ -58,6 +59,7 @@ export class CollectionMapRouteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log('CollectionMapRouteComponent', this.model);
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.business.src);
   }
 
@@ -73,13 +75,14 @@ export class CollectionMapRouteComponent implements OnInit {
     );
   }
   //#endregion
-
-  onselected(item: IModel) {
+  //#region list
+  onselect(item: IModel) {
     this.model = item as GarbageVehicle;
-    this.business.load(this.model);
     this.display.video = true;
+    this.business.load(this.model);
   }
-
+  //#endregion
+  //#region control
   onloaded(source: CollectionMapRouteControlSource) {
     if (source.points && source.points.length > 0) {
       this.duration = {
@@ -89,8 +92,16 @@ export class CollectionMapRouteComponent implements OnInit {
     }
     this.business.ready(source.points);
   }
-  onscore(e: any) {
-    console.log(e);
+  onscore(date: Date) {
+    if (this.duration) {
+      this.duration.begin = date;
+    }
+    if (this.display.video) {
+      this.play.emit(this.duration);
+    } else {
+      this.display.video = true;
+      this.wantplay = true;
+    }
   }
   onroute(date: Date) {
     if (this.duration) {
@@ -98,14 +109,27 @@ export class CollectionMapRouteComponent implements OnInit {
     }
     this.business.routing(date);
   }
-  toplay(play: boolean) {
-    if (play && this.duration) {
+  onrouteclick(date: Date) {
+    if (this.duration) {
+      this.duration.begin = date;
+    }
+    if (this.display.video) {
       this.play.emit(this.duration);
     } else {
-      this.pause.emit();
+      this.display.video = true;
+      this.wantplay = true;
     }
   }
-  onclose() {
+  //#endregion
+  onvideoclose() {
     this.display.video = false;
+    this.play.unsubscribe();
+    this.play = new EventEmitter();
+  }
+  onvideoopened() {
+    if (this.wantplay) {
+      this.play.emit(this.duration);
+    }
+    this.wantplay = false;
   }
 }

@@ -117,6 +117,12 @@ export class VideoPlayerComponent
     if (changes.model && !changes.model.firstChange) {
       this.loaded = false;
     }
+    if (changes.play && this.play) {
+      this.play.subscribe((x) => {
+        this.model = x;
+        this.onplay(x);
+      });
+    }
     if (changes.stop && this.stop) {
       this.stop.subscribe((x) => {
         this.onstop();
@@ -197,6 +203,9 @@ export class VideoPlayerComponent
     if (!this.loaded) {
       if (this.model) {
         this.url = this.model.toString();
+        if (this.model.web) {
+          this.webUrl = this.model.web;
+        }
       }
 
       if (this.url) {

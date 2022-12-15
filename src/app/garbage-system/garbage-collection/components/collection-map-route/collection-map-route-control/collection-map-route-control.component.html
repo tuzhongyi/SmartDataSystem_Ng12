@@ -1,4 +1,9 @@
-<div class="collection-map-route-control">
+<div
+  class="collection-map-route-control"
+  [ngStyle]="{
+    opacity: hasdata && !loading ? 1 : 0
+  }"
+>
   <div class="collection-map-route-control-chart">
     <div class="collection-map-route-control-chart-container" #container></div>
   </div>
@@ -30,3 +35,5 @@
     </div>
   </div>
 </div>
+<div class="nodata" *ngIf="!hasdata && !loading">暂无数据</div>
+<div class="loading" *ngIf="loading"><mat-spinner></mat-spinner></div>

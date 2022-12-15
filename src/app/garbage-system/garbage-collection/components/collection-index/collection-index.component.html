@@ -19,18 +19,18 @@
         <div class="monitor-body__wrapper">
           <div></div>
           <div class="map-control">
-            <!-- <collection-map-control
+            <collection-map-control
               [position]="map.position"
               (route)="map.onroute($event)"
-            ></collection-map-control> -->
+            ></collection-map-control>
           </div>
         </div>
-        <div class="monitor-body__wrapper patrol">
-          <!-- <app-patrol-control
+        <!-- <div class="monitor-body__wrapper patrol">
+          <app-patrol-control
             (close)="patrol.onclose()"
             (fullscreen)="patrol.onfullscreen()"
-          ></app-patrol-control> -->
-        </div>
+          ></app-patrol-control>
+        </div> -->
       </div>
 
       <div class="monitor-body__item">
@@ -44,6 +44,8 @@
         <div class="monitor-body__wrapper">
           <collection-vehicle
             (clickEvent)="clickVehicle($event)"
+            (position)="map.onposition($event)"
+            (route)="map.onroute($event)"
           ></collection-vehicle>
         </div>
       </div>

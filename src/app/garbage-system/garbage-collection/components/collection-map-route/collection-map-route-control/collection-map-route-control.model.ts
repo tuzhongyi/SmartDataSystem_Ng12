@@ -21,7 +21,7 @@ export interface ICollectionMapRouteControlComponent
 
 export interface ICollectionMapRouteControlChartsBusiness
   extends IBusiness<CollectionMapRouteControlSource> {
-  scoreclick: EventEmitter<any>;
+  scoreclick: EventEmitter<Date>;
   routetrigger: EventEmitter<Date>;
   routeclick: EventEmitter<Date>;
   speed: number;

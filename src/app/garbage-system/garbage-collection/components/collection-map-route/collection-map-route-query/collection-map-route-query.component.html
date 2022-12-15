@@ -26,7 +26,7 @@
   <div class="collection-map-route-query-content">
     <div
       class="collection-map-route-query-content-item"
-      [ngClass]="{ selected: selected === item }"
+      [ngClass]="{ selected: selected === item.data }"
       *ngFor="let item of datas"
       (click)="onselect($event, item)"
     >

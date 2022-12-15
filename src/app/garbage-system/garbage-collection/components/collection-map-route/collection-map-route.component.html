@@ -4,7 +4,11 @@
   </div>
 
   <div class="panel collection-map-route-query">
-    <collection-map-route-query (select)="onselected($event)" [(date)]="date">
+    <collection-map-route-query
+      (select)="onselect($event)"
+      [selected]="model"
+      [(date)]="date"
+    >
     </collection-map-route-query>
   </div>
   <div class="panel collection-map-route-video" *ngIf="display.video">
@@ -15,7 +19,8 @@
       [end]="duration?.end"
       [play]="play"
       [pause]="pause"
-      (close)="onclose()"
+      (close)="onvideoclose()"
+      (opened)="onvideoopened()"
     >
     </collection-map-route-video>
   </div>
@@ -26,7 +31,7 @@
       (loaded)="onloaded($event)"
       (scoreclick)="onscore($event)"
       (routetrigger)="onroute($event)"
-      (runclick)="toplay($event)"
+      (routeclick)="onrouteclick($event)"
     >
     </collection-map-route-control>
   </div>

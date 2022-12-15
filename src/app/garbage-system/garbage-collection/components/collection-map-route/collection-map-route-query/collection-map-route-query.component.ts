@@ -20,6 +20,8 @@ export class CollectionMapRouteQueryComponent
   @Output()
   select: EventEmitter<IModel> = new EventEmitter();
   @Input()
+  selected?: IModel;
+  @Input()
   date: Date = new Date();
   @Output()
   dateChange: EventEmitter<Date> = new EventEmitter();
@@ -31,9 +33,11 @@ export class CollectionMapRouteQueryComponent
   DateTimePickerView = DateTimePickerView;
 
   datas: CollectionMapRouteDevice[] = [];
-  selected?: CollectionMapRouteDevice;
+
   ngOnInit(): void {
-    this.loadData();
+    this.loadData().then((x) => {
+      this.onquery();
+    });
   }
   async loadData(name?: string) {
     this.datas = await this.business.load(name);
@@ -45,7 +49,7 @@ export class CollectionMapRouteQueryComponent
   }
 
   onselect(e: Event, item: CollectionMapRouteDevice) {
-    this.selected = item;
+    this.selected = item.data;
   }
   onsearch(text: string) {
     this.loadData(text);
@@ -53,7 +57,7 @@ export class CollectionMapRouteQueryComponent
 
   onquery() {
     if (this.selected) {
-      this.select.emit(this.selected.data);
+      this.select.emit(this.selected);
     }
   }
 }

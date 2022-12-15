@@ -29,6 +29,9 @@ export class VideoModel {
 
   /** 结束时间 */
   endTime?: Date;
+
+  web?: string;
+
   constructor(
     options?:
       | {

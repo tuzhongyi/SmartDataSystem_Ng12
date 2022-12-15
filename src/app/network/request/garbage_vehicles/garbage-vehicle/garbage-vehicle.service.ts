@@ -63,7 +63,7 @@ export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle
   excel(data?: BinaryData) {
     let url = GarbageVehicleUrl.excles();
     if (data) {
-      return this.basic.postReturnString(url, data);
+      return this.basic.postBinaryData(url, data);
     } else {
       return this.basic.getExcel(url);
     }
@@ -130,7 +130,7 @@ class VehicleCameraService {
   excel(data?: BinaryData) {
     let url = GarbageVehicleUrl.camera().excles();
     if (data) {
-      return this.basic.postReturnString(url, data);
+      return this.basic.postBinaryData(url, data);
     } else {
       return this.basic.getExcel(url);
     }

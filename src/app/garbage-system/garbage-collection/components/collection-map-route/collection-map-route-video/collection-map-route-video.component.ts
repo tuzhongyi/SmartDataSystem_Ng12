@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -47,6 +48,8 @@ export class CollectionMapRouteVideoComponent
   stop?: EventEmitter<void>;
   @Output()
   close: EventEmitter<void> = new EventEmitter();
+  @Output()
+  opened: EventEmitter<void> = new EventEmitter();
 
   constructor(
     business: CollectionMapRouteVideoBusiness,
@@ -56,16 +59,21 @@ export class CollectionMapRouteVideoComponent
   }
 
   toplay: EventEmitter<VideoModel> = new EventEmitter();
-
+  webUrl?: string;
   VehicleState = VehicleState;
   model?: GarbageVehicleModel;
   video?: VideoModel;
   title: SelectItem[] = [];
   position?: VehiclePositionNo;
   cameras: { [key: number]: VehicleCamera } = {};
+  playing = false;
 
   ngOnInit(): void {
     this.initTitle();
+    this.inited();
+  }
+  async inited() {
+    this.opened.emit();
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.source) {
@@ -74,21 +82,20 @@ export class CollectionMapRouteVideoComponent
         this.initTitle();
       }
     }
-    if (changes.play && this.play) {
-      this.play.subscribe((duration) => {
-        this.begin = duration.begin;
-        this.end = duration.end;
-        if (!this.position) {
-          this.position =
-            this.title.length > 1 ? this.title[1].value : undefined;
-        }
-        if (this.position) {
-          let camera = this.cameras[this.position];
-          this.business.load(camera.Id, this.begin, this.end).then((x) => {
-            this.toplay.emit(x);
-          });
-        }
-      });
+    if (changes.play && changes.play.firstChange && this.play) {
+      this.play.subscribe(this.onplay.bind(this));
+    }
+  }
+
+  onplay(duration: Duration) {
+    this.begin = duration.begin;
+    this.end = duration.end;
+    if (!this.position) {
+      this.position = this.title.length > 1 ? this.title[1].value : undefined;
+    }
+    if (this.position) {
+      let camera = this.cameras[this.position];
+      this.loadData(camera, this.begin, this.end);
     }
   }
 
@@ -124,12 +131,16 @@ export class CollectionMapRouteVideoComponent
   }
 
   async onpositionchanged() {
-    if (this.position) {
+    if (this.position && this.begin && this.end) {
       let camera = this.cameras[this.position];
-      console.log(camera);
-      this.video = await this.business.load(camera.Id, this.begin, this.end);
-      console.log(this.video);
+      this.loadData(camera, this.begin, this.end);
     }
+  }
+
+  loadData(camera: VehicleCamera, begin: Date, end: Date) {
+    this.business.load(camera.Id, begin, end).then((x) => {
+      this.toplay.emit(x);
+    });
   }
 
   onclose() {

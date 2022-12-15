@@ -10,10 +10,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
-import { IModel } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteControlChartsBusiness } from './business/collection-map-route-control-charts.business';
 import { CollectionMapRouteControlOnlineBusiness } from './business/collection-map-route-control-online.business';
 import { CollectionMapRouteControlScoreBusiness } from './business/collection-map-route-control-score.business';
@@ -51,9 +47,11 @@ export class CollectionMapRouteControlComponent
   @Input()
   load?: EventEmitter<void>;
   @Output()
-  scoreclick: EventEmitter<any> = new EventEmitter();
+  scoreclick: EventEmitter<Date> = new EventEmitter();
   @Output()
   routetrigger: EventEmitter<Date> = new EventEmitter();
+  @Output()
+  routeclick: EventEmitter<Date> = new EventEmitter();
   @Output()
   runclick: EventEmitter<boolean> = new EventEmitter();
 
@@ -71,11 +69,14 @@ export class CollectionMapRouteControlComponent
         this.business.stop();
         this.business.run(x);
       }
+      this.routeclick.emit(x);
     });
   }
 
   time?: Date;
   playing = false;
+  hasdata = false;
+  loading = false;
 
   private _level: number = 0;
   public get level(): number {
@@ -109,12 +110,17 @@ export class CollectionMapRouteControlComponent
   }
 
   async loadData() {
+    this.loading = true;
     if (this.container && this.sourceId) {
       let dom = this.container.nativeElement as HTMLDivElement;
       let datas = await this.business.load(dom, this.sourceId, this.date);
-      if (datas.points && datas.points.length > 0) {
+      this.loading = false;
+      this.hasdata = datas.points && datas.points.length > 0;
+      console.log('hasdata', this.hasdata);
+      if (this.hasdata) {
         this.time = datas.points[0].Time;
       }
+
       this.loaded.emit(datas);
     }
   }

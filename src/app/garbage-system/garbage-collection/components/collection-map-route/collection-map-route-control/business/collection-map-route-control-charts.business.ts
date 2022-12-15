@@ -29,6 +29,7 @@ export class CollectionMapRouteControlChartsBusiness
   private readonly formater = 'H:mm';
   private chart?: echarts.ECharts;
   private handle?: NodeJS.Timeout;
+  private registed = false;
   constructor(
     private online: CollectionMapRouteControlOnlineBusiness,
     private point: CollectionMapRouteControlPointBusiness,
@@ -63,7 +64,7 @@ export class CollectionMapRouteControlChartsBusiness
 
   async load(dom: HTMLDivElement, vehicleId: string, date: Date) {
     this.chart = echarts.init(dom, 'dark');
-
+    this.chart.clear();
     let data = await this.getData(vehicleId, date);
     if (data.points.length === 0) return data;
     this.loadXAxis(data.points);
@@ -78,23 +79,28 @@ export class CollectionMapRouteControlChartsBusiness
     );
 
     let option: EChartsOption = {
+      color: this.colors,
       grid: this.grid,
       backgroundColor: 'rgba(0,0,0,0)',
       tooltip: this.tooltip,
       dataZoom: this.dataZoom,
       xAxis: this.xAxis,
       yAxis: this.yAxis,
-      visualMap: this.visualMap,
+      // visualMap: this.visualMap,
       series: this.series,
     };
 
-    this.eventRegist(this.chart);
-
+    if (!this.registed) {
+      this.eventRegist(this.chart);
+      this.registed = true;
+    }
     // this.series[0].data = data;
     this.chart.setOption(option);
-
+    console.log(this.chart);
     return data;
   }
+
+  eventTrigger() {}
 
   private eventRegist(chart: echarts.ECharts) {
     // chart.on('click', 'series.line', this.onScoreClicked.bind(this));
@@ -102,16 +108,18 @@ export class CollectionMapRouteControlChartsBusiness
       console.log('series.line', e);
     });
     chart.on('click', 'series.scatter', (e: any) => {
-      this.scoreclick.emit(e);
+      console.log('series.scatter', e);
+      let index = this.getXAxisIndex(e.data[0]);
+      let time = this.xAxis.data[index] as TimeString;
+      console.log('series.scatter', time);
+      this.scoreclick.emit(time.date);
     });
     chart.getZr().on('click', (params: any) => {
+      console.log('zr');
       let pointInPixel = [params.offsetX, params.offsetY];
       let grid = chart.convertFromPixel({ seriesIndex: 0 }, pointInPixel);
       let index = grid[0];
       let time = this.xAxis.data[index] as TimeString;
-
-      console.log(time.date);
-
       // this.triggerByIndex(index, time.date);
       this.triggerByTime(time.date);
       this.routeclick.emit(time.date);
@@ -125,7 +133,11 @@ export class CollectionMapRouteControlChartsBusiness
     this.serieRouted.data = (this.serieRoute.data as Array<any>).filter((x) => {
       // let str = formatDate(now, 'yyyy-MM-dd', 'en');
       // let date = new Date(`${str} ${x[0]}`);
-      return x.name.getTime() > now.getTime();
+      if (x.name) {
+        return x.name.getTime() > now.getTime();
+      } else {
+        return true;
+      }
     });
 
     this.chart?.setOption({ series: this.series });
@@ -168,19 +180,81 @@ export class CollectionMapRouteControlChartsBusiness
     this.series[SerieIndex.end].data = [[last, 1]];
   }
   /** 加载路径线 */
+  // private loadRouteSerie(datas: GisRoutePoint[]) {
+  //   this.series[SerieIndex.route].data = datas.map((x) => {
+  //     let time = formatDate(x.Time, this.formater, 'en');
+  //     let value = {
+  //       name: x.Time,
+  //       value: [time, 0],
+  //     };
+  //     // let time = new TimeString(x.Time);
+  //     return value;
+  //   });
+
+  //   this.series[SerieIndex.routed].data = this.series[SerieIndex.route].data;
+
+  //   for (let i = 0; i < this.xAxis.data.length; i++) {
+  //     const x = (this.xAxis.data[i] as TimeString).toString();
+  //     let index = datas.findIndex((y) => {
+  //       let time = formatDate(y.Time, this.formater, 'en');
+  //       return time === x;
+  //     });
+  //     if (index < 0) {
+  //       this.series[SerieIndex.offline].data.push([x, 0]);
+  //     }
+  //   }
+  // }
+
   private loadRouteSerie(datas: GisRoutePoint[]) {
-    this.series[SerieIndex.route].data = datas.map((x) => {
-      let time = formatDate(x.Time, this.formater, 'en');
-      let value = {
-        name: x.Time,
-        value: [time, 0],
-      };
-      // let time = new TimeString(x.Time);
-      return value;
-    });
+    this.series[SerieIndex.route].data = [];
+    this.series[SerieIndex.offline].data = [];
+
+    let times = datas.map((x) => formatDate(x.Time, this.formater, 'en'));
+    let xAxis = (this.xAxis.data as Array<TimeString>).map((x) => x.toString());
+
+    let i = 0;
+    while (xAxis.length) {
+      let x = xAxis.shift()!;
+      let index = times.indexOf(x, i);
+      if (index < 0) {
+        this.series[SerieIndex.offline].data.push([x, 0]);
+        this.series[SerieIndex.route].data.push([x, null]);
+      } else {
+        let value = {
+          name: datas[index].Time,
+          value: [x, 0],
+        };
+        this.series[SerieIndex.route].data.push(value);
+        this.series[SerieIndex.offline].data.push([x, null]);
+      }
+      i++;
+    }
 
     this.series[SerieIndex.routed].data = this.series[SerieIndex.route].data;
+    // this.series[SerieIndex.route].data = datas.map((x) => {
+    //   let time = formatDate(x.Time, this.formater, 'en');
+    //   let value = {
+    //     name: x.Time,
+    //     value: [time, 0],
+    //   };
+    //   // let time = new TimeString(x.Time);
+    //   return value;
+    // });
+
+    // this.series[SerieIndex.routed].data = this.series[SerieIndex.route].data;
+
+    // for (let i = 0; i < this.xAxis.data.length; i++) {
+    //   const x = (this.xAxis.data[i] as TimeString).toString();
+    //   let index = datas.findIndex((y) => {
+    //     let time = formatDate(y.Time, this.formater, 'en');
+    //     return time === x;
+    //   });
+    //   if (index < 0) {
+    //     this.series[SerieIndex.offline].data.push([x, 0]);
+    //   }
+    // }
   }
+
   private loadScoreSerie(datas: GarbageCollectionEventRecord[]) {
     this.series[SerieIndex.good].data = datas
       .filter((x) => x.Data.Score === CollectionPointScore.Good)
@@ -251,8 +325,14 @@ export class CollectionMapRouteControlChartsBusiness
       color: 'white',
     });
   }
-  private getXAxisIndex(time: Date) {
-    let data = formatDate(time, this.formater, 'en');
+  private getXAxisIndex(time: Date | string) {
+    let data: string;
+    if (typeof time === 'string') {
+      data = time;
+    } else {
+      data = formatDate(time, this.formater, 'en');
+    }
+
     return (this.xAxis.data as TimeString[]).findIndex(
       (x) => x.toString() === data
     );
@@ -314,12 +394,35 @@ export class CollectionMapRouteControlChartsBusiness
   // };
   private tooltip: any = {
     trigger: 'axis',
-    position: function (pt: any) {
-      return [pt[0], '10%'];
+    position: (pt: any) => {
+      return [pt[0] - 28, '-10%'];
     },
     formatter: (params: any) => {
+      console.log(params);
       if (params && params.length > 0) {
-        return params[0].name;
+        let i = params.length - 1;
+        let item;
+        do {
+          item = params[i];
+          i--;
+        } while (item.data[1] === null);
+
+        let index = this.colors.indexOf(item.color);
+        switch (index) {
+          case SerieIndex.offline:
+            return `${item.name}</br>${item.marker}离线`;
+          case SerieIndex.position:
+            return item.name;
+          case SerieIndex.good:
+            return `${item.name}</br>${item.marker}评价：优`;
+          case SerieIndex.middle:
+            return `${item.name}</br>${item.marker}评价：中`;
+          case SerieIndex.bad:
+            return `${item.name}</br>${item.marker}评价：差`;
+          default:
+            break;
+        }
+        return `${item.marker}${item.name}`;
       }
       return '';
     },
@@ -369,6 +472,7 @@ export class CollectionMapRouteControlChartsBusiness
     data: [],
     type: 'line',
     lineStyle: {
+      color: '#28df69',
       width: 3,
     },
   };
@@ -379,6 +483,17 @@ export class CollectionMapRouteControlChartsBusiness
     type: 'line',
     lineStyle: {
       color: 'rgba(0,0,255,0.5)',
+      width: 3,
+    },
+  };
+  private serieOffline: any = {
+    symbol: 'none',
+    zlevel: 9,
+    data: [],
+    dataType: 'offline',
+    type: 'line',
+    lineStyle: {
+      color: 'rgba(255,0,0,1)',
       width: 3,
     },
   };
@@ -397,6 +512,7 @@ export class CollectionMapRouteControlChartsBusiness
       type: 'scatter',
       symbolSize: 30,
       symbol: `image://http://${location.host}/assets/img/route/good.png`,
+      encode: { tooltip: '1111111' },
     };
   }
   private get serieScoreMiddle(): any {
@@ -435,12 +551,22 @@ export class CollectionMapRouteControlChartsBusiness
   private series: any = [
     this.serieRoute,
     this.serieRouted,
+    this.serieOffline,
     this.serieRoutePosition,
-    this.serieScoreBegin,
-    this.serieScoreEnd,
     this.serieScoreGood,
     this.serieScoreMiddle,
     this.serieScoreBad,
+    this.serieScoreBegin,
+    this.serieScoreEnd,
+  ];
+  private colors = [
+    '#28df69',
+    '#4992ff',
+    'red',
+    'transparent',
+    '#a7272c',
+    '#a39d13',
+    '#06bc53',
   ];
 
   private datasetPoints: any = {
@@ -452,10 +578,11 @@ export class CollectionMapRouteControlChartsBusiness
 enum SerieIndex {
   route,
   routed,
+  offline,
   position,
-  begin,
-  end,
   good,
   middle,
   bad,
+  begin,
+  end,
 }

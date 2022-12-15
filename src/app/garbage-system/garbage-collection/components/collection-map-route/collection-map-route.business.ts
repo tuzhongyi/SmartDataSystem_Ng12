@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { wait } from 'src/app/common/tools/tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
@@ -14,9 +15,9 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
 
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+    return `http://${host}:${port}/amap/map_ts.html?maptype=2D&v=${date}`;
   }
-
+  private loaded = false;
   private client!: CesiumMapClient;
   private point?: CesiumDataController.Point;
   // private routeId?: string;
@@ -27,52 +28,81 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
 
   init(iframe: HTMLIFrameElement): void {
     this.client = new CesiumMapClient(iframe);
+    this.client.Events.OnLoaded = () => {
+      this.loaded = true;
+    };
     // this.client.Events.OnLoaded = this.loaded.bind(this);
   }
 
   load(source: GarbageVehicle) {
-    if (this.point) {
-      this.client.Point.Remove(this.point.id);
-    }
+    return new Promise<boolean>((resolve) => {
+      wait(
+        () => {
+          return !!this.client && this.loaded;
+        },
+        () => {
+          if (this.point) {
+            this.client.Point.Remove(this.point.id);
+          }
 
-    this.client.Village.Basic(source.DivisionId!);
-    this.point = this.converter.GarbageVehicle(source);
-    // this.client.Point.Create(this.point);
-    // this.client.Viewer.MoveTo(this.point.position);
+          this.client.Village.Basic(source.DivisionId!);
+          this.point = this.converter.GarbageVehicle(source);
+        }
+      );
+
+      resolve(true);
+      // this.client.Point.Create(this.point);
+      // this.client.Viewer.MoveTo(this.point.position);
+    });
   }
 
   ready(points: GisRoutePoint[]) {
-    if (this.route) {
-      this.client.Draw.Route.Remove(this.route.id);
-    }
-    let positions = points.map((x) => this.converter.GisPoint(x));
-    let opts = new CesiumDataController.DrawLineOptions();
-    opts.img = 'img/vehicle.png';
-    let routeId = this.client.Draw.Route.Create(positions, opts);
-    if (this.point) {
-      this.client.Point.Remove(this.point.id);
-      this.point.position = positions[0];
-      this.client.Point.Create(this.point);
-    }
-    this.route = {
-      id: routeId,
-      points: points,
-    };
+    wait(
+      () => {
+        return !!this.client && this.loaded;
+      },
+      () => {
+        if (this.route) {
+          this.client.Draw.Route.Remove(this.route.id);
+        }
+        let positions = points.map((x) => this.converter.GisPoint(x));
+        let opts = new CesiumDataController.DrawLineOptions();
+        opts.img = 'img/vehicle.png';
+        let routeId = this.client.Draw.Route.Create(positions, opts);
+        if (this.point) {
+          this.client.Point.Remove(this.point.id);
+          this.point.position = positions[0];
+          this.client.Point.Create(this.point);
+          this.client.Viewer.Focus(this.point.villageId);
+        }
+        this.route = {
+          id: routeId,
+          points: points,
+        };
+      }
+    );
   }
 
   routing(date: Date) {
-    if (this.route && this.client && this.point) {
-      let routed = this.route.points.filter(
-        (x) => x.Time.getTime() < date.getTime()
-      );
-      let positions = routed.map((x) => this.converter.GisPoint(x));
-      this.client.Draw.Route.Set(this.route.id, positions);
-      this.point.position = positions[positions.length - 1];
-      let opts: CesiumDataController.PointOptions = {
-        id: this.point.id,
-        position: this.point.position,
-      };
-      this.client.Point.Set([opts]);
-    }
+    wait(
+      () => {
+        return !!this.client && this.loaded;
+      },
+      () => {
+        if (this.route && this.client && this.point) {
+          let routed = this.route.points.filter(
+            (x) => x.Time.getTime() < date.getTime()
+          );
+          let positions = routed.map((x) => this.converter.GisPoint(x));
+          this.client.Draw.Route.Set(this.route.id, positions);
+          this.point.position = positions[positions.length - 1];
+          let opts: CesiumDataController.PointOptions = {
+            id: this.point.id,
+            position: this.point.position,
+          };
+          this.client.Point.Set([opts]);
+        }
+      }
+    );
   }
 }

@@ -45,7 +45,7 @@ export class CollectionMemberRequsetService {
   excel(data?: BinaryData) {
     let url = GarbageVehicleMemberUrl.excels();
     if (data) {
-      return this.basic.postReturnString(url, data);
+      return this.basic.postBinaryData(url, data);
     } else {
       return this.basic.getExcel(url);
     }
