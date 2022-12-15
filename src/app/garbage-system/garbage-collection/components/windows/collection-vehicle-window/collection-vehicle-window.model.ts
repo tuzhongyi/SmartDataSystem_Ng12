@@ -1,6 +1,6 @@
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 
-export class VehicleListWindowModel<T = any> {
+export class CollectionVehicleWindowModel<T = any> {
   Id!: string;
 
   // 车辆名称
@@ -22,7 +22,7 @@ export class VehicleListWindowModel<T = any> {
   rawData!: T;
 }
 
-export interface IVehicleListWindowSearchInfo {
+export interface ICollectionVehicleWindowSearchInfo {
   DivisionId: string;
   PageIndex: number;
   PageSize: number;

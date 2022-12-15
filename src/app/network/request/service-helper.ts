@@ -39,7 +39,7 @@ export class ServiceHelper {
         t,
         (response.Data as PagedList<T>).Data
       ) as unknown as T[];
-      return result;
+      return plainToClass(PagedList, result);
     } else {
       return plainToClass(t, response.Data);
     }

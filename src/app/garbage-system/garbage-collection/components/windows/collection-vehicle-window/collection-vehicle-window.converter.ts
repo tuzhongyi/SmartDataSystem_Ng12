@@ -5,10 +5,10 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleListWindowModel } from './vehicle-list-window.model';
+import { CollectionVehicleWindowModel } from './collection-vehicle-window.model';
 import ColorPalette from 'src/assets/json/color-palette.json';
 
-export class VehicleListWindowConverter extends AbstractCommonModelConverter<VehicleListWindowModel> {
+export class CollectionVehicleWindowConverter extends AbstractCommonModelConverter<CollectionVehicleWindowModel> {
   Convert(source: CommonModelSource, ...res: any[]) {
     if (source instanceof GarbageVehicle) {
       return this._fromGarbageVehicle(source);
@@ -17,7 +17,7 @@ export class VehicleListWindowConverter extends AbstractCommonModelConverter<Veh
   }
 
   private _fromGarbageVehicle(item: GarbageVehicle) {
-    let model = new VehicleListWindowModel<GarbageVehicle>();
+    let model = new CollectionVehicleWindowModel<GarbageVehicle>();
     model.Id = item.Id;
     model.Name = item.Name;
     model.State = Language.VehicleStateFlags(item.State);

@@ -2,7 +2,7 @@
  * @Author: pmx 
  * @Date: 2021-09-28 13:20:36 
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-01 10:32:56
+ * @Last Modified time: 2022-12-15 16:42:08
  */
 .monitor-container {
   width: 100%;
@@ -38,7 +38,7 @@
       // grid-template-columns: repeat(4, 1fr);
       // grid-template-rows: repeat(2, 1fr);
 
-      grid-template-areas: "a b c""d e f""g h i";
+      grid-template-areas: "a b c" "d e f" "g h i";
 
       &.hide-titlebar {
         height: 100%;
@@ -154,7 +154,11 @@
         background-color: #7a8de6;
         color: white;
       }
-
     }
   }
+}
+
+common-statistic-card {
+  width: 200px;
+  height: 71px;
 }

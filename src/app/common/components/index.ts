@@ -61,6 +61,7 @@ import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.com
 import { UploadControlComponent } from './upload-control/upload-control.component';
 import { CommonRankComponent } from './common-rank/common-rank.component';
 import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
+import { CommonStatisticCardComponent } from './common-statistic-card/common-statistic-card.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -126,4 +127,5 @@ export const CUSTOM_COMPONENTS = [
 
   UploadControlComponent,
   CommonRankComponent,
+  CommonStatisticCardComponent,
 ];

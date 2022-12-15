@@ -17,13 +17,25 @@
 
       <div class="monitor-body__item monitor-body__item--map">
         <div class="monitor-body__wrapper">
-          <div></div>
+          <div class="statistic-card-group">
+            <!-- <common-statistic-card></common-statistic-card>
+            <common-statistic-card></common-statistic-card>
+            <common-statistic-card></common-statistic-card>
+            <common-statistic-card></common-statistic-card> -->
+
+            <ng-container *ngFor="let item of statisticDataSource">
+              <common-statistic-card
+                [model]="item"
+                (clickEvent)="clickCard($event)"
+              ></common-statistic-card
+            ></ng-container>
+          </div>
           <div class="map-control">
-            <collection-map-control
+            <!-- <collection-map-control
               [position]="map.position"
               (route)="map.onroute($event)"
               (VideoPlay)="map.onvideoplay($event)"
-            ></collection-map-control>
+            ></collection-map-control> -->
           </div>
         </div>
         <!-- <div class="monitor-body__wrapper patrol">
@@ -99,7 +111,7 @@
 <app-video-window [model]="video.model" [window]="video" [title]="video.title">
 </app-video-window>
 
-<howell-video-player-window
+<!-- <howell-video-player-window
   *ngIf="window.video.show"
   [Model]="window.video"
   [style]="window.video.style"
@@ -109,4 +121,4 @@
   [title]="window.video.title"
   [mode]="window.video.mode"
   [time]="window.video.time"
-></howell-video-player-window>
+></howell-video-player-window> -->

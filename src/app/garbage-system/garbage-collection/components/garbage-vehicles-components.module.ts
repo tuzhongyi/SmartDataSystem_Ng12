@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-12 10:37:16
+ * @Last Modified time: 2022-12-15 17:15:51
  */
 
 import { NgModule } from '@angular/core';
@@ -33,7 +33,10 @@ import { CollectionMapRouteVideoComponent } from './collection-map-route/collect
 import { CollectionScoreBarComponent } from './collection-score-bar/collection-score-bar.component';
 import {
   CollectionListWindowComponent,
-  VehicleListWindowComponent,
+  CollectionMemberWindowComponent,
+  CollectionPointWindowComponent,
+  CollectionWeightWindowComponent,
+  CollectionVehicleWindowComponent,
 } from './windows';
 
 @NgModule({
@@ -54,8 +57,11 @@ import {
     CollectionPointPieComponent,
     CollectionWeightLineComponent,
     CollectionScoreBarComponent,
-    VehicleListWindowComponent,
+    CollectionVehicleWindowComponent,
     CollectionListWindowComponent,
+    CollectionMemberWindowComponent,
+    CollectionPointWindowComponent,
+    CollectionWeightWindowComponent,
   ],
   imports: [
     CommonModule,
