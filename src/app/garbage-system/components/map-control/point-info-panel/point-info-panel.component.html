@@ -8,8 +8,8 @@
     <i class="howell-icon-neighborhood icon"></i>
     <div class="content">
       {{ model.roadName | async
-      }}{{ model.roadName ? "&nbsp;&nbsp;&nbsp;&nbsp;" : ""
-      }}{{ model.committeeName | async }}
+      }}<span *ngIf="model.roadName | async">&nbsp;&nbsp;&nbsp;&nbsp;</span
+      >{{ model.committeeName | async }}
     </div>
   </div>
 

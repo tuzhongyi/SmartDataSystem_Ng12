@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-08-01 13:46:28
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-08-01 13:46:28
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-12-15 17:27:36
  */
 
 import { HttpHeaders } from '@angular/common/http';
@@ -252,10 +252,10 @@ export class AuthorizationService implements CanActivate {
     const nc = this._nc.toString(16).padStart(8, '0');
 
     // 16位随机数
-    const cnonce = Md5.hashStr(
-      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-    );
-
+    // const cnonce = Md5.hashStr(
+    //   ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
+    // );
+    var cnonce = ('00000000' + Math.random().toString(36).slice(2)).slice(-8);
     const qop = challenge.qop;
 
     const opaque = challenge.opaque;
