@@ -5,6 +5,7 @@ import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DeviceWindowBusiness } from './windows/device-window.business';
 import { RecordWindowBusiness } from './windows/event-record-window.business';
+import { IndexVideoPlayerWindow } from './windows/index-video-player-window.business';
 import { MediaWindowBusiness } from './windows/media-window.business';
 import { GarbageStationDropWindowBusiness } from './windows/station-drop-window.business';
 import { GarbageStationFullWindowBusiness } from './windows/station-full-window.business';
@@ -18,7 +19,8 @@ export class WindowBussiness {
     public device: DeviceWindowBusiness,
     public full: GarbageStationFullWindowBusiness,
     public drop: GarbageStationDropWindowBusiness,
-    public station: GarbageStationInfoWindowBusiness
+    public station: GarbageStationInfoWindowBusiness,
+    public video: IndexVideoPlayerWindow
   ) {}
   close() {
     this.record.show = false;
@@ -28,5 +30,6 @@ export class WindowBussiness {
     this.drop.show = false;
     this.full.show = false;
     this.station.show = false;
+    this.video.show = false;
   }
 }

@@ -30,8 +30,12 @@ export class TimeModel {
   minute: ViewValue<number> = new ViewValue(0, '00');
   second: ViewValue<number> = new ViewValue(0, '00');
 
-  toDate() {
-    let date = new Date();
+  toDate(date?: Date) {
+    if (date) {
+      date = new Date(date.getTime());
+    } else {
+      date = new Date();
+    }
     date.setHours(this.hour.value);
     date.setMinutes(this.minute.value);
     date.setSeconds(this.second.value);
@@ -53,4 +57,13 @@ class ViewValue<T> {
   }
   view: string;
   value: T;
+}
+
+export class TimeDurationModel {
+  constructor(begin: Date, end: Date) {
+    this.begin = new TimeModel(begin);
+    this.end = new TimeModel(end);
+  }
+  begin: TimeModel;
+  end: TimeModel;
 }

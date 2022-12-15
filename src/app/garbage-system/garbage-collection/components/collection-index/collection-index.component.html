@@ -22,6 +22,7 @@
             <collection-map-control
               [position]="map.position"
               (route)="map.onroute($event)"
+              (VideoPlay)="map.onvideoplay($event)"
             ></collection-map-control>
           </div>
         </div>
@@ -95,3 +96,17 @@
   >
   </ng-template>
 </toast-window>
+<app-video-window [model]="video.model" [window]="video" [title]="video.title">
+</app-video-window>
+
+<howell-video-player-window
+  *ngIf="window.video.show"
+  [Model]="window.video"
+  [style]="window.video.style"
+  [business]="window.video"
+  [autoplay]="window.video.autoplay"
+  [cameraId]="window.video.cameraId"
+  [title]="window.video.title"
+  [mode]="window.video.mode"
+  [time]="window.video.time"
+></howell-video-player-window>

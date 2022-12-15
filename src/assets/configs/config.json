@@ -1,0 +1,9 @@
+{
+  "playback":{
+    "begin":-15,
+    "end":15
+  },
+  "videoUrl":"http://127.0.0.1:9528/video/wsplayer/wsplayer.html",
+  "regionId":"310115140000",
+  "help":"http://garbage01.51hws.com/help/help.html"
+}

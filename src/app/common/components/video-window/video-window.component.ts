@@ -5,21 +5,13 @@ import {
   Output,
   EventEmitter,
   OnDestroy,
-  ViewChild,
-  ElementRef,
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { formatDate } from '@angular/common';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { PlayMode, VideoModel } from '../video-player/video.model';
-import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { UserRequestService } from 'src/app/network/request/user/user-request.service';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoWindowViewModel } from './video-window.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 declare var $: any;
 
@@ -96,6 +88,7 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
       this.model.endTime = interval.EndTime;
       let url = this.model.toString(StreamType.main);
       let model = VideoModel.fromUrl(url);
+      model.web = this.model.web;
       this.playback = model;
     }
   }

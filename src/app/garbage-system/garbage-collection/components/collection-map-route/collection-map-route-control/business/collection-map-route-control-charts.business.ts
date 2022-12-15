@@ -72,11 +72,11 @@ export class CollectionMapRouteControlChartsBusiness
     this.loadEndSerie(data.points);
     this.loadRouteSerie(data.points);
     this.loadScoreSerie(data.collectionRecord);
-    this.loadOnlineStatus(
-      data.onlineRecord,
-      data.points[0].Time,
-      data.points[data.points.length - 1].Time
-    );
+    // this.loadOnlineStatus(
+    //   data.onlineRecord,
+    //   data.points[0].Time,
+    //   data.points[data.points.length - 1].Time
+    // );
 
     let option: EChartsOption = {
       color: this.colors,
@@ -406,9 +406,7 @@ export class CollectionMapRouteControlChartsBusiness
           item = params[i];
           i--;
         } while (item.data[1] === null);
-
-        let index = this.colors.indexOf(item.color);
-        switch (index) {
+        switch (parseInt(item.seriesId)) {
           case SerieIndex.offline:
             return `${item.name}</br>${item.marker}离线`;
           case SerieIndex.position:
@@ -468,6 +466,7 @@ export class CollectionMapRouteControlChartsBusiness
     },
   ];
   private serieRoute: any = {
+    id: SerieIndex.route,
     symbol: 'none',
     data: [],
     type: 'line',
@@ -477,6 +476,7 @@ export class CollectionMapRouteControlChartsBusiness
     },
   };
   private serieRouted: any = {
+    id: SerieIndex.routed,
     symbol: 'none',
     zlevel: 8,
     data: [],
@@ -487,10 +487,10 @@ export class CollectionMapRouteControlChartsBusiness
     },
   };
   private serieOffline: any = {
+    id: SerieIndex.offline,
     symbol: 'none',
     zlevel: 9,
     data: [],
-    dataType: 'offline',
     type: 'line',
     lineStyle: {
       color: 'rgba(255,0,0,1)',
@@ -498,6 +498,7 @@ export class CollectionMapRouteControlChartsBusiness
     },
   };
   private serieRoutePosition: any = {
+    id: SerieIndex.position,
     data: [[0, 0]],
     type: 'scatter',
     symbolSize: 8,
@@ -508,6 +509,7 @@ export class CollectionMapRouteControlChartsBusiness
 
   private get serieScoreGood(): any {
     return {
+      id: SerieIndex.good,
       data: [],
       type: 'scatter',
       symbolSize: 30,
@@ -517,6 +519,7 @@ export class CollectionMapRouteControlChartsBusiness
   }
   private get serieScoreMiddle(): any {
     return {
+      id: SerieIndex.middle,
       data: [],
       type: 'scatter',
       symbolSize: 30,
@@ -525,6 +528,7 @@ export class CollectionMapRouteControlChartsBusiness
   }
   private get serieScoreBad(): any {
     return {
+      id: SerieIndex.bad,
       data: [],
       type: 'scatter',
       symbolSize: 30,
@@ -533,6 +537,7 @@ export class CollectionMapRouteControlChartsBusiness
   }
   private get serieScoreBegin(): any {
     return {
+      id: SerieIndex.begin,
       data: [[0, 1]],
       type: 'scatter',
       symbolSize: 30,
@@ -541,6 +546,7 @@ export class CollectionMapRouteControlChartsBusiness
   }
   private get serieScoreEnd(): any {
     return {
+      id: SerieIndex.end,
       data: [[0, 1]],
       type: 'scatter',
       symbolSize: 30,

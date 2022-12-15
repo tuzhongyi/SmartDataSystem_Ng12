@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
- * @Last Modified by: pmx
- * @Last Modified time: 2022-12-13 11:21:08
+ * @Last Modified by: zzl
+ * @Last Modified time: 2022-12-15 15:07:41
  */
 import {
   AfterViewInit,
@@ -42,6 +42,7 @@ import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
 import { DeviceWindowBusiness } from './business/windows/device-window.business';
 import { RecordWindowBusiness } from './business/windows/event-record-window.business';
+import { IndexVideoPlayerWindow } from './business/windows/index-video-player-window.business';
 import { MediaMultipleWindowBusiness } from './business/windows/media-multiple-window.business';
 import { MediaSingleWindowBusiness } from './business/windows/media-single-window.business';
 import { MediaWindowBusiness } from './business/windows/media-window.business';
@@ -69,6 +70,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     GarbageStationDropWindowBusiness,
     GarbageStationInfoWindowBusiness,
     WindowBussiness,
+    IndexVideoPlayerWindow,
     MapRouteBusiness,
   ],
 })
@@ -106,6 +108,8 @@ export class GarbageCollectionIndexComponent
     private _globalStoreService: GlobalStorageService,
     public map: MapControlBusiness,
     public route: MapRouteBusiness,
+    public video: VideoControlWindowBusiness,
+    public window: WindowBussiness,
     private injector: Injector
   ) {
     this._titleService.setTitle('垃圾清运平台');
