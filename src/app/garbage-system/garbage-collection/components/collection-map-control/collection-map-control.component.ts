@@ -182,8 +182,9 @@ export class CollectionMapControlComponent
       this.info.vehicle = undefined;
     });
     this.amap.menuEvents.vehicleInformationClicked.subscribe((x) => {
-      this.info.vehicle = x;
+      this.display.clear();
       this.display.status = false;
+      this.info.vehicle = x;
     });
     this.amap.menuEvents.illegalDropClicked.subscribe((x) => {
       this.illegalDropClicked.emit(x);
@@ -236,6 +237,8 @@ export class CollectionMapControlComponent
 
   //#region map event regist
   onPointDoubleClicked(vehicle: GarbageVehicle) {
+    this.display.clear();
+    this.info.vehicle = undefined;
     this.selected.vehicle = vehicle;
     this.display.status = false;
     this.display.videoList = true;
@@ -296,6 +299,11 @@ class MapControlDisplay {
   videoList = false;
   videoControl = false;
   label: MapControlLabelDisplay = new MapControlLabelDisplay(this.events);
+  clear() {
+    this.status = true;
+    this.videoList = false;
+    this.videoControl = false;
+  }
 }
 
 class MapControlLabelDisplay {
