@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
- * @Last Modified by: zzl
- * @Last Modified time: 2022-12-15 15:07:41
+ * @Last Modified by: pmx
+ * @Last Modified time: 2022-12-15 15:51:31
  */
 import {
   AfterViewInit,
@@ -34,11 +34,11 @@ import { ICollectionDeviceStateData } from '../collection-device-state/collectio
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import { CollectionListWindowComponent } from '../windows';
 import { VehicleListWindowComponent } from '../windows/vehicle-list-window/vehicle-list-window.component';
+import { CollectionStatisticCardBusiness } from './business/collection-statistic-card.bussiness';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
 import { PatrolControlBusiness } from './business/patrol-control.business';
-import { StatisticCardBussiness } from './business/statistic-card.bussiness';
 import { WindowBussiness } from './business/window.business';
 import { DeviceWindowBusiness } from './business/windows/device-window.business';
 import { RecordWindowBusiness } from './business/windows/event-record-window.business';
@@ -57,7 +57,7 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
   styleUrls: ['./collection-index.component.less'],
   providers: [
     MonitorEventTriggerBusiness,
-    StatisticCardBussiness,
+    CollectionStatisticCardBusiness,
     MapControlBusiness,
     PatrolControlBusiness,
     VideoControlWindowBusiness,
@@ -99,9 +99,6 @@ export class GarbageCollectionIndexComponent
 
   componentTypeExpression: Type<any> = VehicleListWindowComponent;
 
-  @ViewChild('hello', { read: ViewContainerRef })
-  tmp!: any;
-
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
@@ -110,6 +107,8 @@ export class GarbageCollectionIndexComponent
     public route: MapRouteBusiness,
     public video: VideoControlWindowBusiness,
     public window: WindowBussiness,
+    private _statisticCardBussiness: CollectionStatisticCardBusiness,
+
     private injector: Injector
   ) {
     this._titleService.setTitle('垃圾清运平台');
@@ -139,6 +138,7 @@ export class GarbageCollectionIndexComponent
       this._globalStoreService.divisionId = userDivisionId;
       this._globalStoreService.divisionType = userDivisionType;
     }
+    this._statisticCardBussiness.init();
   }
 
   closeToast() {
