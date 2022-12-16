@@ -49,6 +49,18 @@ export class GlobalStorageService {
     }
     return this._defaultDivisionType;
   }
+  private _defaultDivisionId?: string;
+  public get defaultDivisionId() {
+    if (!this._defaultDivisionId) {
+      let user = this.localStorage.user;
+      this._defaultDivisionId =
+        user.Resources && user.Resources.length > 0
+          ? user.Resources[0].Id
+          : undefined;
+    }
+    return this._defaultDivisionId;
+  }
+
   statistic = {
     illegalDrop: 0,
     mixedInto: 0,
