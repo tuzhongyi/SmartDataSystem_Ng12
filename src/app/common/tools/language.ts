@@ -574,9 +574,9 @@ export class Language {
 
   static CollectionMemberType(value?: CollectionMemberType): string {
     switch (value) {
-      case CollectionMemberType.collection:
-        return Language.json.CollectionMemberType.collection;
-      case CollectionMemberType.other:
+      case CollectionMemberType.Collection:
+        return Language.json.CollectionMemberType.Collection;
+      case CollectionMemberType.Other:
       default:
         return Language.json.other;
     }

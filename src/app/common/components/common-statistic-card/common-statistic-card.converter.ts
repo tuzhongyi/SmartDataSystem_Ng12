@@ -63,9 +63,9 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
   }
   private _fromCollectionMember(source: PagedList<CollectionMember>) {
     let model = new CommonStatisticCardModel();
-    model.componentExpression = CollectionMemberWindowComponent;
     model.Title = '清运人员';
     model.Content = source.Data.length.toString();
+    model.componentExpression = CollectionMemberWindowComponent;
     return model;
   }
 
