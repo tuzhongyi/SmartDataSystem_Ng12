@@ -38,7 +38,7 @@ export class Creater {
     model.Id = Guid.NewGuid().ToString('N');
     model.CreateTime = new Date();
     model.UpdateTime = new Date();
-    model.MemberType = CollectionMemberType.other;
+    model.MemberType = CollectionMemberType.Other;
     model.No = '10000';
     return model;
   }

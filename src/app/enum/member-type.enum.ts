@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2022-12-16 11:19:57
+ * @Last Modified by:   pmx
+ * @Last Modified time: 2022-12-16 11:19:57
+ */
 /**
  * 人员类型
  * 其他人员	0
@@ -15,8 +21,8 @@ export enum MemberType {
 
 export enum CollectionMemberType {
   // 其他人员
-  other = 0,
+  Other = 0,
 
   // 清运人员
-  collection = 1,
+  Collection = 1,
 }
