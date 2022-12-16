@@ -4,7 +4,7 @@ import { ToastWindowService } from 'src/app/common/components/toast-window/toast
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { CollectionVehicletWindowBusiness } from './collection-vehicle-window.business';
+import { CollectionVehicleWindowBusiness } from './collection-vehicle-window.business';
 import { CollectionVehicleWindowConverter } from './collection-vehicle-window.converter';
 import {
   CollectionVehicleWindowModel,
@@ -17,8 +17,8 @@ import {
   styleUrls: ['./collection-vehicle-window.component.less'],
   providers: [
     {
-      provide: CollectionVehicletWindowBusiness,
-      useClass: CollectionVehicletWindowBusiness,
+      provide: CollectionVehicleWindowBusiness,
+      useClass: CollectionVehicleWindowBusiness,
     },
     {
       provide: CollectionVehicleWindowConverter,
@@ -51,7 +51,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
 
   constructor(
     private _globalStorage: GlobalStorageService,
-    private _business: CollectionVehicletWindowBusiness,
+    private _business: CollectionVehicleWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
     // console.log(this._toastWindowService.data);

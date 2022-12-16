@@ -16,7 +16,7 @@ import {
 } from './collection-vehicle-window.model';
 
 @Injectable()
-export class CollectionVehicletWindowBusiness {
+export class CollectionVehicleWindowBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleWindowConverter
