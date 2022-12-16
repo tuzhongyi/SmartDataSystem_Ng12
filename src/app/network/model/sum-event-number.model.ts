@@ -1,7 +1,7 @@
-import { IModel } from './model.interface';
+import { Model } from './model.interface';
 
 /** 事件数量总和 */
-export class SumEventNumber implements IModel {
+export class SumEventNumber extends Model {
   /**	String	排名对象ID	M */
   Id!: string;
   /**	String	排名对象名称	M */

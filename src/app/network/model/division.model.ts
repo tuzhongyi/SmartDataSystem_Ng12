@@ -2,11 +2,11 @@ import { Transform } from 'class-transformer';
 import { DivisionType } from '../../enum/division-type.enum';
 import { GisArea } from './gis-area.model';
 import { GisPoint } from './gis-point.model';
-import { IModel } from './model.interface';
+import { Model } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 区划 */
-export class Division implements IModel {
+export class Division extends Model {
   /**	String	区划ID	M */
   Id!: string;
   /**	String	区划名称	M */

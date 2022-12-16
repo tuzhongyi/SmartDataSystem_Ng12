@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
+import { IModel, Model } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteDeviceListBusiness as CollectionMapRouteQueryBusiness } from './collection-map-route-query.business';
 import { CollectionMapRouteDevice } from './collection-map-route-query.model';
 
@@ -16,11 +16,11 @@ export class CollectionMapRouteQueryComponent
   implements IComponent<IModel, CollectionMapRouteDevice[]>, OnInit
 {
   @Input()
-  business: IBusiness<IModel, CollectionMapRouteDevice<IModel>[]>;
+  business: IBusiness<IModel, CollectionMapRouteDevice<Model>[]>;
   @Output()
   select: EventEmitter<IModel> = new EventEmitter();
   @Input()
-  selected?: IModel;
+  selected?: Model;
   @Input()
   date: Date = new Date();
   @Output()
@@ -38,6 +38,7 @@ export class CollectionMapRouteQueryComponent
     this.loadData().then((x) => {
       this.onquery();
     });
+    console.log('collection-map-route-query.component', this.selected);
   }
   async loadData(name?: string) {
     this.datas = await this.business.load(name);

@@ -2,11 +2,11 @@ import { Transform } from 'class-transformer';
 import { CellType } from '../../enum/cell-type.enum';
 import { GisArea } from './gis-area.model';
 import { GisPoint } from './gis-point.model';
-import { IModel } from './model.interface';
+import { Model } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 网格单元信息 */
-export class GridCell implements IModel {
+export class GridCell extends Model {
   /**	String	网格单元ID街道区划编号+3位社区顺序码+2位单元网格顺序码，如果是社区网格，最后两位为00	M */
   Id!: string;
   /**	String	网格单元名称	M */

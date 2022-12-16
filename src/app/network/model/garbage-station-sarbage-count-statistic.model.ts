@@ -1,9 +1,9 @@
 import { Transform } from 'class-transformer';
-import { IModel } from './model.interface';
+import { Model } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 垃圾房的垃圾堆数量统计信息 */
-export class GarbageStationGarbageCountStatistic implements IModel {
+export class GarbageStationGarbageCountStatistic extends Model {
   /**	String	垃圾房ID	M */
   Id!: string;
   /**	String	垃圾房名称	M */

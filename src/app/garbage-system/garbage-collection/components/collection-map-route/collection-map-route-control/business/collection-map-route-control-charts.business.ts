@@ -64,7 +64,7 @@ export class CollectionMapRouteControlChartsBusiness
 
   async load(dom: HTMLDivElement, vehicleId: string, date: Date) {
     this.chart = echarts.init(dom, 'dark');
-    this.chart.clear();
+
     let data = await this.getData(vehicleId, date);
     if (data.points.length === 0) return data;
     this.loadXAxis(data.points);
