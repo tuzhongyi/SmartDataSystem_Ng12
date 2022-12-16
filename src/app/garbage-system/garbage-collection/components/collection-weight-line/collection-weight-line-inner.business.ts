@@ -8,8 +8,8 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Time } from 'src/app/common/tools/time';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { ICollectionWeightLineSearchInfo } from './collection-weight-line.model';
 
 @Injectable()

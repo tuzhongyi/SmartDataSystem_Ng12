@@ -15,10 +15,11 @@ import {
   GetDivisionGarbageScoresParams,
   GetDivisionGarbageWeightsParams,
   GetDivisionsParams,
-} from './division-request.params';
+} from './collection-division-request.params';
 import { Cache } from '../../cache/cache';
 import { GetDivisionTreeParams } from '../../division/division-request.params';
 import { DivisionTree } from 'src/app/network/model/division-tree.model';
+import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 
 @Cache(GarbageVehicleDivisionUrl.basic(), Division)
 @Injectable({
@@ -75,6 +76,14 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
     return this._garbage;
   }
 
+  private _statistic?: CollectionDivisionStatisticSerivce;
+  public get statistic(): CollectionDivisionStatisticSerivce {
+    if (!this._statistic) {
+      this._statistic = new CollectionDivisionStatisticSerivce(this.basic);
+    }
+    return this._statistic;
+  }
+
   tree(params?: GetDivisionTreeParams): Promise<DivisionTree> {
     let url = GarbageVehicleDivisionUrl.tree();
     if (params) {
@@ -116,5 +125,14 @@ class GarbageVehiclScoreService {
   list(params: GetDivisionGarbageScoresParams) {
     let url = GarbageVehicleDivisionUrl.garbage().score.basic();
     return this.basic.postArray(url, DivisionGarbageScore, params);
+  }
+}
+
+class CollectionDivisionStatisticSerivce {
+  constructor(private basic: BaseRequestService) {}
+
+  number(divisionId: string) {
+    let url = GarbageVehicleDivisionUrl.statistic(divisionId).number();
+    return this.basic.get(url, CollectionDivisionStatisticNumber);
   }
 }

@@ -6,7 +6,7 @@ import {
   DivisionManageModel,
   IDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 
 @Injectable()
 export class GarbageVehicleDivisionManageBusiness

@@ -22,8 +22,8 @@ import { CollectionPointsRequestService } from 'src/app/network/request/garbage_
 import {
   GetDivisionGarbageScoresParams,
   GetDivisionsParams,
-} from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+} from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {

@@ -4,8 +4,8 @@ import { ICommonBarCharBusiness } from 'src/app/common/components/common-bar-cha
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GetDivisionGarbageScoresParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { GetDivisionGarbageScoresParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { CommonChartModel } from 'src/app/view-model/common-chart.model';
 import { ICollectionScoreBarSearchInfo } from './collection-score-bar.model';
 
