@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { CollectionWeightLineConverter } from './collection-weight-line.converter';
 import { ICollectionWeightLineSearchInfo } from './collection-weight-line.model';
 

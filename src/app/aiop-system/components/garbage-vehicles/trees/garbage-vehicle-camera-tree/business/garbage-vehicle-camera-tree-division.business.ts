@@ -5,7 +5,7 @@ import {
   GetDivisionsParams,
   GetDivisionTreeParams,
 } from 'src/app/network/request/division/division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 @Injectable()
 export class GarbageVehicleCameraTreeDivisionBusiness {
   constructor(private service: CollectionDivisionRequestService) {}

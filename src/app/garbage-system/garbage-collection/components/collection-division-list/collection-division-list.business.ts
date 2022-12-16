@@ -8,8 +8,8 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { CommonElementListConverter } from 'src/app/common/components/common-element-list/common-element-list.converter';
 import { Division } from 'src/app/network/model/division.model';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/division-request.service';
-import { GetDivisionsParams } from 'src/app/network/request/garbage_vehicles/divisions/division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
+import { GetDivisionsParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
 
 @Injectable()
 export class CollectionDivisionListBusiness

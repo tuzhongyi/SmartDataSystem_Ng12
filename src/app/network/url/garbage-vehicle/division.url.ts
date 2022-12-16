@@ -25,7 +25,23 @@ export class GarbageVehicleDivisionUrl extends AbstractUrl {
     let base: string = id ? this.item(id) : `${this.basic()}/Divisions`;
     return new GarbageUrl(base);
   }
+
+  static statistic(divisionId: string) {
+    let base = this.item(divisionId);
+    return new GarbageVehicleDivisionStatisticUrl(base);
+  }
 }
+
+class GarbageVehicleDivisionStatisticUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Statistic`);
+  }
+
+  number() {
+    return `${this.basic()}/Number`;
+  }
+}
+
 class GarbageUrl extends AbstractUrl {
   weight = new WeightUrl(this.basic());
   score = new ScoreUrl(this.basic());
