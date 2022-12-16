@@ -39,7 +39,10 @@ export function transformTime(params: TransformFnParams) {
 export function transformFlags(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
     if (params.value != undefined) {
-      return new Flags(params.value);
+      if (typeof params.value === 'number') {
+        return new Flags(params.value);
+      }
+      return params.value;
     }
     return undefined;
   } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
