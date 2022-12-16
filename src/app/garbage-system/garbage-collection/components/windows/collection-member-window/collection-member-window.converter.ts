@@ -7,11 +7,12 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { Division } from 'src/app/network/model/division.model';
+import { CollectionMember } from 'src/app/network/model/member.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
-import { CollectionPointWindowModel } from './collection-point-window.model';
+import { CollectionMemberWindowModel } from './collection-member-window.model';
 
 @Injectable()
-export class CollectionPointWindowConverter extends AbstractCommonModelPromiseConverter<CollectionPointWindowModel> {
+export class CollectionMemberWindowConverter extends AbstractCommonModelPromiseConverter<CollectionMemberWindowModel> {
   private _divisonMap = new Map<string, Division>();
 
   constructor(
@@ -20,20 +21,20 @@ export class CollectionPointWindowConverter extends AbstractCommonModelPromiseCo
     super();
   }
   Convert(source: CommonModelSource, ...res: any[]) {
-    if (source instanceof CollectionPoint) {
-      return this._fromCollectionPoint(source);
+    if (source instanceof CollectionMember) {
+      return this._fromCollectionMember(source);
     }
     throw new TypeError('类型出错');
   }
 
-  private async _fromCollectionPoint(source: CollectionPoint) {
-    let model = new CollectionPointWindowModel();
+  private async _fromCollectionMember(source: CollectionMember) {
+    let model = new CollectionMemberWindowModel();
+    model.No = source.No;
     model.Id = source.Id;
     model.Name = source.Name;
-    model.Address = source.Address ?? Language.json.unknow;
-    model.Classification = Language.CollectionPointClassification(
-      source.Classification
-    );
+    model.Gender = Language.Gender(source.Gender);
+    model.MobileNo = source.MobileNo ?? Language.json.unknow;
+    model.MemberType = Language.CollectionMemberType(source.MemberType);
     model.DivisionName = Language.json.unknow;
 
     if (source.DivisionId) {

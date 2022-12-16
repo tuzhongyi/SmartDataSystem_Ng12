@@ -18,7 +18,7 @@ export class CollectionPointWindowBusiness {
   ) {}
   async init(searchInfo: ICollectionPointWindowSearchInfo) {
     let { Page, Data } = await this._list(searchInfo);
-
+    // Data = [...Data, ...Data];
     let data = await this._converter.iterateToModel(Data);
     let res: PagedList<CollectionPointWindowModel> = {
       Page: Page,

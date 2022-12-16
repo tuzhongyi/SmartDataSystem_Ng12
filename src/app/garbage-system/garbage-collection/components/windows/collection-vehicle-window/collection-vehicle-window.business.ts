@@ -25,6 +25,7 @@ export class CollectionVehicleWindowBusiness {
     let { Page, Data } = await this._list(searchInfo);
 
     // console.log(Data);
+    // Data = [...Data, ...Data, ...Data];
 
     let data = this._converter.iterateToModel(Data);
     let res: PagedList<CollectionVehicleWindowModel> = {
