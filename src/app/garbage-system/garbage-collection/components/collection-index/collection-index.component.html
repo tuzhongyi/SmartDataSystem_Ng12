@@ -18,11 +18,6 @@
       <div class="monitor-body__item monitor-body__item--map">
         <div class="monitor-body__wrapper">
           <div class="statistic-card-group">
-            <!-- <common-statistic-card></common-statistic-card>
-            <common-statistic-card></common-statistic-card>
-            <common-statistic-card></common-statistic-card>
-            <common-statistic-card></common-statistic-card> -->
-
             <ng-container *ngFor="let item of statisticDataSource">
               <common-statistic-card
                 [model]="item"
@@ -100,9 +95,9 @@
     <collection-map-route [model]="route.vehicle"></collection-map-route>
   </div>
 </div>
-
 <toast-window *ngIf="showToast" [showClose]="true" (closeEvent)="closeToast()">
   <ng-template
+    #container
     [ngComponentOutlet]="componentTypeExpression"
     [ngComponentOutletInjector]="myInjector"
   >
@@ -110,6 +105,15 @@
 </toast-window>
 <app-video-window [model]="video.model" [window]="video" [title]="video.title">
 </app-video-window>
+
+<!-- <app-picture-window
+  *ngIf="window.picture.show"
+  [Model]="window.picture"
+  [style]="window.picture.style"
+  [title]="window.picture.title"
+  [picture]="window.picture.image"
+>
+</app-picture-window> -->
 
 <!-- <howell-video-player-window
   *ngIf="window.video.show"
@@ -122,3 +126,21 @@
   [mode]="window.video.mode"
   [time]="window.video.time"
 ></howell-video-player-window> -->
+
+<app-window
+  [Model]="window.media.single"
+  [style]="window.media.single.style"
+  [manualClose]="true"
+  (OnClosing)="window.media.single.onclosing()"
+>
+  <ng-container *ngIf="window.media.single.show">
+    <app-media-control
+      [autoplay]="window.media.single.autoplay"
+      [model]="window.media.single.camera"
+      [index]="window.media.single.index"
+      [stop]="window.media.single.closing"
+      (played)="window.media.single.onplay()"
+      (stoped)="window.media.single.onstop()"
+    ></app-media-control>
+  </ng-container>
+</app-window>

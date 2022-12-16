@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-16 14:57:54
+ * @Last Modified time: 2022-12-16 17:16:16
  */
 import {
   AfterViewInit,
@@ -31,12 +31,12 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { Md5 } from 'ts-md5';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import { CollectionListWindowComponent } from '../windows';
 import { CollectionVehicleWindowComponent } from '../windows/collection-vehicle-window/collection-vehicle-window.component';
 import { CollectionStatisticCardBusiness } from './business/collection-statistic-card.bussiness';
+import { IndexPictureWindow } from './business/index-picture-window.business';
 import { MapControlBusiness } from './business/map-control.business';
 import { MapRouteBusiness } from './business/map-route.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
@@ -74,11 +74,15 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
     WindowBussiness,
     IndexVideoPlayerWindow,
     MapRouteBusiness,
+    IndexPictureWindow,
   ],
 })
 export class GarbageCollectionIndexComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  @ViewChild('container', { read: ViewContainerRef })
+  viewContainer!: ViewContainerRef;
+
   TrashCanType = TrashCanType;
   CollectionScore = CollectionPointScore;
 
@@ -149,6 +153,14 @@ export class GarbageCollectionIndexComponent
     }
 
     this._init();
+
+    // this.window.media.single = {
+    //   url: '/assets/img/timg-pic.jpg',
+    //   error: false,
+    // };
+    // setTimeout(() => {
+    //   this.window.picture.show = true;
+    // }, 1000);
   }
 
   private async _init() {
@@ -197,5 +209,8 @@ export class GarbageCollectionIndexComponent
   private _updateToast(data: IModel) {
     this.myInjector.get(ToastWindowService).data = data;
     this.showToast = true;
+    setTimeout(() => {
+      console.log(this.viewContainer);
+    }, 1000);
   }
 }

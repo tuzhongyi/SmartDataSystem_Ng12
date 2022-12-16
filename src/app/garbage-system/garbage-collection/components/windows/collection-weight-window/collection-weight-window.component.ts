@@ -1,9 +1,16 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { Page } from 'src/app/network/model/page_list.model';
+import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
 import { CollectionWeightWindowBusiness } from './collection-weight-window.business';
 import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
 import {
@@ -18,7 +25,9 @@ import {
   providers: [CollectionWeightWindowBusiness, CollectionWeightWindowConverter],
 })
 export class CollectionWeightWindowComponent implements OnInit {
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'];
+  @Output() clickEvent = new EventEmitter();
+
+  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionWeightWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
@@ -69,5 +78,9 @@ export class CollectionWeightWindowComponent implements OnInit {
     this.searchInfo.Condition = condition;
     this.searchInfo.PageIndex = 1;
     this._init();
+  }
+
+  clickItem(item: CollectionWeightWindowModel) {
+    this.clickEvent.emit(item);
   }
 }

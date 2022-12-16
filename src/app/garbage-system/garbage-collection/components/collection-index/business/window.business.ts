@@ -3,6 +3,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { IndexPictureWindow } from './index-picture-window.business';
 import { DeviceWindowBusiness } from './windows/device-window.business';
 import { RecordWindowBusiness } from './windows/event-record-window.business';
 import { IndexVideoPlayerWindow } from './windows/index-video-player-window.business';
@@ -20,7 +21,8 @@ export class WindowBussiness {
     public full: GarbageStationFullWindowBusiness,
     public drop: GarbageStationDropWindowBusiness,
     public station: GarbageStationInfoWindowBusiness,
-    public video: IndexVideoPlayerWindow
+    public video: IndexVideoPlayerWindow,
+    public picture: IndexPictureWindow
   ) {}
   close() {
     this.record.show = false;

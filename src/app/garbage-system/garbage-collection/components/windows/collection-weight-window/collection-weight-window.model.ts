@@ -1,5 +1,6 @@
 export class CollectionWeightWindowModel<T = any> {
   Id!: string;
+  ImageUrl!: string;
   ResourceName!: string;
   VehicleName!: string;
   MemberName!: string;

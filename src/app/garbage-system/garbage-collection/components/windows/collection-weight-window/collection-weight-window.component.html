@@ -15,6 +15,7 @@
           <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
           <thead>
             <tr>
+              <th>图片</th>
               <th>资源名称</th>
               <th>车辆名称</th>
               <th>清运人员</th>
@@ -67,7 +68,10 @@
 
     <tbody>
       <ng-template ngFor [ngForOf]="dataSource" let-item>
-        <tr>
+        <tr (click)="clickItem(item)">
+          <td>
+            <img [src]="item.ImageUrl" alt="" />
+          </td>
           <td>{{ item.ResourceName }}</td>
           <td>{{ item.VehicleName }}</td>
           <td>{{ item.MemberName }}</td>

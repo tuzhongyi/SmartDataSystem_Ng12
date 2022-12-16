@@ -1,0 +1,23 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <div class="picture-window">
+      <div class="picture-window-head" *ngIf="!!title">
+        {{ title }}
+      </div>
+      <div
+        class="picture-window-content"
+        [ngClass]="{ notitle: !title }"
+        *ngIf="!!picture"
+      >
+        <div
+          class="picture"
+          [ngStyle]="{
+            backgroundImage: 'url(' + picture.url + ')',
+            opacity: picture.error ? 0.3 : 1,
+            backgroundSize: picture.error ? '60% 60%' : 'contain'
+          }"
+        ></div>
+      </div>
+    </div>
+  </ng-container>
+</app-window>

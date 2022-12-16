@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-09-15 14:43:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-15 17:15:51
+ * @Last Modified time: 2022-12-16 16:49:41
  */
 
 import { NgModule } from '@angular/core';
@@ -38,6 +38,7 @@ import {
   CollectionWeightWindowComponent,
   CollectionVehicleWindowComponent,
 } from './windows';
+import { PictureWindowComponent } from './windows/picture-window/picture-window.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import {
     CollectionMemberWindowComponent,
     CollectionPointWindowComponent,
     CollectionWeightWindowComponent,
+    PictureWindowComponent,
   ],
   imports: [
     CommonModule,

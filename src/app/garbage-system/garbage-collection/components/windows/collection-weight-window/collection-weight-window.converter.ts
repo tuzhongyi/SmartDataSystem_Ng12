@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
+import { Medium } from 'src/app/common/tools/medium';
 import {
   AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,
@@ -41,6 +42,8 @@ export class CollectionWeightWindowConverter extends AbstractCommonModelPromiseC
     model.Score = source.Data.Score
       ? Language.CollectionPointScore(source.Data.Score)
       : Language.json.Unknow;
+
+    model.ImageUrl = await Medium.img(source.ImageUrl);
     return model;
   }
 }

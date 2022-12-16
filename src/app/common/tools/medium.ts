@@ -1,7 +1,8 @@
 import { PicturesUrl } from 'src/app/network/url/aiop/medium/pictures/pictures.url';
+import { ImageResult } from 'src/app/view-model/image-result.model';
 
 export class Medium {
-  constructor() { }
+  constructor() {}
 
   static default = '/assets/img/timg-pic.jpg';
 
@@ -20,9 +21,7 @@ export class Medium {
 
   static img(url?: string): Promise<string> {
     return new Promise((resolve) => {
-      let img = url
-        ? Medium.jpg(url)
-        : '';
+      let img = url ? Medium.jpg(url) : '';
       var image = new Image();
       image.src = img;
       image.onerror = () => {
@@ -30,8 +29,34 @@ export class Medium {
       };
       image.onload = () => {
         resolve(img);
+      };
+    });
+  }
+  static image(url?: string): Promise<ImageResult> {
+    return new Promise((resolve) => {
+      let img = '';
+      if (url) {
+        if (url.includes('http') || url.includes('/')) {
+          img = url;
+        } else {
+          img = Medium.jpg(url);
+        }
       }
-    })
 
+      var image = new Image();
+      image.src = img;
+      image.onerror = () => {
+        resolve({
+          url: '/assets/img/timg-pic.png',
+          error: true,
+        });
+      };
+      image.onload = () => {
+        resolve({
+          url: img,
+          error: false,
+        });
+      };
+    });
   }
 }
