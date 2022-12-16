@@ -1,1 +1,84 @@
-<p>collection-member-window works!</p>
+<div class="collection-member-window vertical-layout">
+  <div class="vertical-header">
+    <div class="hw-second-title">清运车列表</div>
+    <div class="search-wrapper">
+      <howell-simple-search
+        placeHolder="厢房名称"
+        (searchEvent)="searchEvent($event)"
+      ></howell-simple-search>
+    </div>
+  </div>
+  <div class="vertical-main">
+    <custom-table class="big-table">
+      <ng-container ngProjectAs="table-header">
+        <table>
+          <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+          <thead>
+            <tr>
+              <th>编号</th>
+              <th>姓名</th>
+              <th>性别</th>
+              <th>手机号</th>
+              <th>人员类型</th>
+              <th>区划</th>
+            </tr>
+          </thead>
+        </table>
+      </ng-container>
+
+      <ng-container ngProjectAs="table-body">
+        <ng-template
+          [ngIf]="dataSource.length"
+          [ngIfThen]="thenBlock"
+          [ngIfElse]="elseBlock"
+        ></ng-template>
+      </ng-container>
+    </custom-table>
+  </div>
+
+  <div class="vertical-footer">
+    <div class="footer-item" style="margin-left: auto">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page.TotalRecordCount }}</div>
+      </div>
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="pagerCount"
+        [pageIndex]="page.PageIndex - 1"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+</div>
+
+<ng-template #colGroup>
+  <colgroup>
+    <col *ngFor="let item of tdWidth" [style.width]="item" />
+  </colgroup>
+</ng-template>
+<ng-template #thenBlock>
+  <table>
+    <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+
+    <tbody>
+      <ng-template ngFor [ngForOf]="dataSource" let-item>
+        <tr>
+          <td>{{ item.No }}</td>
+          <td>{{ item.Name }}</td>
+          <td>
+            {{ item.Gender }}
+          </td>
+          <td>{{ item.MobileNo }}</td>
+          <td>{{ item.MemberType }}</td>
+          <td>{{ item.DivisionName }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="data-none">暂无数据</div>
+</ng-template>

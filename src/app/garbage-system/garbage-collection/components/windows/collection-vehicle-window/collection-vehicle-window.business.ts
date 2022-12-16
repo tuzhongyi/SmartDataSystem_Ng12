@@ -16,7 +16,7 @@ import {
 } from './collection-vehicle-window.model';
 
 @Injectable()
-export class CollectionVehicletWindowBusiness {
+export class CollectionVehicleWindowBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleWindowConverter
@@ -25,6 +25,7 @@ export class CollectionVehicletWindowBusiness {
     let { Page, Data } = await this._list(searchInfo);
 
     // console.log(Data);
+    // Data = [...Data, ...Data, ...Data];
 
     let data = this._converter.iterateToModel(Data);
     let res: PagedList<CollectionVehicleWindowModel> = {

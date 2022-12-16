@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-15 17:12:38
+ * @Last Modified time: 2022-12-15 17:37:42
  */
 import {
   AfterViewInit,
@@ -31,6 +31,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
+import { Md5 } from 'ts-md5';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import { CollectionListWindowComponent } from '../windows';
@@ -177,6 +178,8 @@ export class GarbageCollectionIndexComponent
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;
+
+    // DivisionId可以通过GlobalService 获取，固并未显式传递
     this._updateToast({});
   }
 

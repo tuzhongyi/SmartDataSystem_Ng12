@@ -6,6 +6,7 @@ import {
 } from 'src/app/converter/common-model.converter';
 import {
   CollectionMemberWindowComponent,
+  CollectionPointWindowComponent,
   CollectionVehicleWindowComponent,
 } from 'src/app/garbage-system/garbage-collection/components/windows';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
@@ -72,6 +73,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
     let model = new CommonStatisticCardModel();
     model.Title = '垃圾收运点位';
     model.Content = source.Data.length.toString();
+    model.componentExpression = CollectionPointWindowComponent;
     return model;
   }
 
