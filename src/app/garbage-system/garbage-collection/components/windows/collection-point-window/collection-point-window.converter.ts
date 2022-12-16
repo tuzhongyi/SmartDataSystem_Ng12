@@ -30,11 +30,11 @@ export class CollectionPointWindowConverter extends AbstractCommonModelPromiseCo
     let model = new CollectionPointWindowModel();
     model.Id = source.Id;
     model.Name = source.Name;
-    model.Address = source.Address ?? Language.json.unknow;
+    model.Address = source.Address ?? Language.json.Unknow;
     model.Classification = Language.CollectionPointClassification(
       source.Classification
     );
-    model.DivisionName = Language.json.unknow;
+    model.DivisionName = Language.json.Unknow;
 
     if (source.DivisionId) {
       if (this._divisonMap.has(source.DivisionId)) {

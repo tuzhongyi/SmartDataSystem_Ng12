@@ -33,9 +33,9 @@ export class CollectionMemberWindowConverter extends AbstractCommonModelPromiseC
     model.Id = source.Id;
     model.Name = source.Name;
     model.Gender = Language.Gender(source.Gender);
-    model.MobileNo = source.MobileNo ?? Language.json.unknow;
+    model.MobileNo = source.MobileNo ?? Language.json.Unknow;
     model.MemberType = Language.CollectionMemberType(source.MemberType);
-    model.DivisionName = Language.json.unknow;
+    model.DivisionName = Language.json.Unknow;
 
     if (source.DivisionId) {
       if (this._divisonMap.has(source.DivisionId)) {

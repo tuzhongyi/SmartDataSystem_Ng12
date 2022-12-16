@@ -1,1 +1,86 @@
-<p>collection-weight-window works!</p>
+<div class="collection-weight-window vertical-layout">
+  <div class="vertical-header">
+    <div class="hw-second-title">清运记录</div>
+    <div class="search-wrapper">
+      <howell-simple-search
+        placeHolder="名称"
+        (searchEvent)="searchEvent($event)"
+      ></howell-simple-search>
+    </div>
+  </div>
+  <div class="vertical-main">
+    <custom-table class="big-table">
+      <ng-container ngProjectAs="table-header">
+        <table>
+          <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+          <thead>
+            <tr>
+              <th>资源名称</th>
+              <th>车辆名称</th>
+              <th>清运人员</th>
+              <th>区划</th>
+              <th>垃圾桶</th>
+              <th>收运点</th>
+              <th>重量</th>
+              <th>评分</th>
+            </tr>
+          </thead>
+        </table>
+      </ng-container>
+
+      <ng-container ngProjectAs="table-body">
+        <ng-template
+          [ngIf]="dataSource.length"
+          [ngIfThen]="thenBlock"
+          [ngIfElse]="elseBlock"
+        ></ng-template>
+      </ng-container>
+    </custom-table>
+  </div>
+
+  <div class="vertical-footer">
+    <div class="footer-item" style="margin-left: auto">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page.TotalRecordCount }}</div>
+      </div>
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="pagerCount"
+        [pageIndex]="page.PageIndex - 1"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+</div>
+
+<ng-template #colGroup>
+  <colgroup>
+    <col *ngFor="let item of tdWidth" [style.width]="item" />
+  </colgroup>
+</ng-template>
+<ng-template #thenBlock>
+  <table>
+    <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
+
+    <tbody>
+      <ng-template ngFor [ngForOf]="dataSource" let-item>
+        <tr>
+          <td>{{ item.ResourceName }}</td>
+          <td>{{ item.VehicleName }}</td>
+          <td>{{ item.MemberName }}</td>
+          <td>{{ item.DivisionName }}</td>
+          <td>{{ item.TrashCanName }}</td>
+          <td>{{ item.CollectionPointName }}</td>
+          <td>{{ item.Weight }}</td>
+          <td>{{ item.Score }}</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</ng-template>
+<ng-template #elseBlock>
+  <div class="data-none">暂无数据</div>
+</ng-template>

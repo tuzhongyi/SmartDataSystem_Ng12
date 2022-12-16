@@ -8,7 +8,9 @@ import {
   CollectionMemberWindowComponent,
   CollectionPointWindowComponent,
   CollectionVehicleWindowComponent,
+  CollectionWeightWindowComponent,
 } from 'src/app/garbage-system/garbage-collection/components/windows';
+import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
@@ -32,6 +34,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
       }
     } else if (source instanceof DivisionGarbageWeight) {
       return this._fromDivisionGarbageWeight(source);
+    } else if (source instanceof CollectionDivisionStatisticNumber) {
     }
 
     throw new TypeError();
@@ -59,6 +62,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
     // 直接使用属性值
     model.Content = source.TotalWeight.toString();
 
+    model.componentExpression = CollectionWeightWindowComponent;
     return model;
   }
   private _fromCollectionMember(source: PagedList<CollectionMember>) {
@@ -76,6 +80,10 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
     model.componentExpression = CollectionPointWindowComponent;
     return model;
   }
+
+  private _fromCollectionDivisionStatisticNumber(
+    source: CollectionDivisionStatisticNumber
+  ) {}
 
   private _isGarbageVehicle(
     data: CommonModelSource[]

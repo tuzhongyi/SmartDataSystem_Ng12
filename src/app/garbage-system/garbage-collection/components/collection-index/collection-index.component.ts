@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-15 17:37:42
+ * @Last Modified time: 2022-12-16 14:57:54
  */
 import {
   AfterViewInit,
@@ -85,15 +85,16 @@ export class GarbageCollectionIndexComponent
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
-    return this._globalStoreService.HideButton;
+    return this._globalStorage.HideButton;
   }
   get HideTitlebar(): boolean {
-    return this._globalStoreService.HideTitlebar;
+    return this._globalStorage.HideTitlebar;
   }
 
   /******kaoniqiwa**************/
 
   subscription: Subscription;
+  subscription2: Subscription;
 
   showToast = false;
 
@@ -106,7 +107,7 @@ export class GarbageCollectionIndexComponent
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _globalStoreService: GlobalStorageService,
+    private _globalStorage: GlobalStorageService,
     public map: MapControlBusiness,
     public route: MapRouteBusiness,
     public video: VideoControlWindowBusiness,
@@ -118,8 +119,12 @@ export class GarbageCollectionIndexComponent
     this._titleService.setTitle('垃圾清运平台');
 
     this.subscription = interval(1 * 60 * 1000).subscribe(() => {
-      this._globalStoreService.collectionStatusChange.emit();
+      this._globalStorage.collectionStatusChange.emit();
     });
+
+    this.subscription2 = this._globalStorage.collectionStatusChange.subscribe(
+      this._init.bind(this)
+    );
 
     this.myInjector = Injector.create({
       providers: [
@@ -139,9 +144,14 @@ export class GarbageCollectionIndexComponent
       let resourceType = user.Resources[0].ResourceType;
       let userDivisionType =
         EnumHelper.ConvertUserResourceToDivision(resourceType);
-      this._globalStoreService.divisionId = userDivisionId;
-      this._globalStoreService.divisionType = userDivisionType;
+      this._globalStorage.divisionId = userDivisionId;
+      this._globalStorage.divisionType = userDivisionType;
     }
+
+    this._init();
+  }
+
+  private async _init() {
     this.statisticDataSource = await this._statisticCardBussiness.init();
   }
 
@@ -152,6 +162,7 @@ export class GarbageCollectionIndexComponent
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+    this.subscription2.unsubscribe();
   }
   ngAfterViewInit(): void {}
 
@@ -160,7 +171,7 @@ export class GarbageCollectionIndexComponent
     this.componentTypeExpression = CollectionVehicleWindowComponent;
 
     this._updateToast({
-      divisionId: this._globalStoreService.divisionId,
+      divisionId: this._globalStorage.divisionId,
       type: data.type,
     });
   }
@@ -168,7 +179,7 @@ export class GarbageCollectionIndexComponent
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
     this._updateToast({
-      divisionId: this._globalStoreService.divisionId,
+      divisionId: this._globalStorage.divisionId,
       type: CollectionDeviceStateCountType.All,
     });
   }

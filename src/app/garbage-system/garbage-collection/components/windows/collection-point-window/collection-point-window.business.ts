@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
@@ -13,6 +14,7 @@ import {
 @Injectable()
 export class CollectionPointWindowBusiness {
   constructor(
+    private _globalStorageService: GlobalStorageService,
     private _collectionPointsRequest: CollectionPointsRequestService,
     private _converter: CollectionPointWindowConverter
   ) {}
@@ -31,7 +33,11 @@ export class CollectionPointWindowBusiness {
     let params = new GetCollectionPointsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
-    params.DivisionIds = searchInfo.DivisionIds;
+    if (
+      this._globalStorageService.defaultDivisionId !==
+      this._globalStorageService.divisionId
+    )
+      params.DivisionIds = searchInfo.DivisionIds;
     params.Name = searchInfo.Condition;
 
     return this._collectionPointsRequest.list(params);

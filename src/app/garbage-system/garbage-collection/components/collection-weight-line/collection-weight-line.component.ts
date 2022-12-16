@@ -49,9 +49,7 @@ export class CollectionWeightLineComponent implements OnInit, OnDestroy {
     private _globalStorage: GlobalStorageService
   ) {
     this.subscription = this._globalStorage.collectionStatusChange.subscribe(
-      () => {
-        this._init.bind(this);
-      }
+      this._init.bind(this)
     );
   }
 

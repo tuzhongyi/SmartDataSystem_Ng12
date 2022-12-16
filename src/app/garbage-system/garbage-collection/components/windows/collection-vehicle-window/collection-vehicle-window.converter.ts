@@ -51,7 +51,7 @@ export class CollectionVehicleWindowConverter extends AbstractCommonModelConvert
     model.Type = Language.VehicleType(item.VehicleType);
     model.DivisionName = '杨浦区';
     model.No = item.No;
-    model.PlatNo = item.PlateNo ?? Language.json.unknow;
+    model.PlatNo = item.PlateNo ?? Language.json.Unknow;
     model.rawData = item;
 
     return model;

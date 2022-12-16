@@ -3,7 +3,7 @@
     <div class="hw-second-title">清运车列表</div>
     <div class="search-wrapper">
       <howell-simple-search
-        placeHolder="厢房名称"
+        placeHolder="名称"
         (searchEvent)="searchEvent($event)"
       ></howell-simple-search>
     </div>
@@ -22,6 +22,7 @@
               <th>区划</th>
 
               <th>车牌号</th>
+              <th>操作</th>
             </tr>
           </thead>
         </table>
@@ -76,6 +77,17 @@
           <td>{{ item.DivisionName }}</td>
 
           <td>{{ item.PlatNo }}</td>
+          <td>
+            <span (click)="clickMap(item, $event)">
+              <i
+                class="glyphicon glyphicon-map-marker"
+                [style.fontSize.px]="15"
+              ></i>
+            </span>
+            <span (click)="clickLine(item, $event)">
+              <i class="howell-icon-route"></i
+            ></span>
+          </td>
         </tr>
       </ng-template>
     </tbody>

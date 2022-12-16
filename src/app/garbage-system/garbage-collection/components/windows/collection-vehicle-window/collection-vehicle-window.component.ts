@@ -1,4 +1,12 @@
-import { Component, Inject, Input, OnInit, Optional } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  OnInit,
+  Optional,
+  Output,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
@@ -27,7 +35,11 @@ import {
   ],
 })
 export class CollectionVehicleWindowComponent implements OnInit {
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%'];
+  @Output('position') clickMapEvent = new EventEmitter();
+
+  @Output('route') clickLineEvent = new EventEmitter();
+
+  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionVehicleWindowModel[] = [];
 
   // Paginator
@@ -82,5 +94,13 @@ export class CollectionVehicleWindowComponent implements OnInit {
     this.searchInfo.Condition = condition;
     this.searchInfo.PageIndex = 1;
     this._init();
+  }
+  clickMap(item: CollectionVehicleWindowModel, e: MouseEvent) {
+    this.clickMapEvent.emit(item.rawData);
+    e.stopPropagation();
+  }
+  clickLine(item: CollectionVehicleWindowModel, e: MouseEvent) {
+    this.clickLineEvent.emit(item.rawData);
+    e.stopPropagation();
   }
 }

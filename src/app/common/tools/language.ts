@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-12 17:15:17
+ * @Last Modified time: 2022-12-16 15:34:15
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -82,7 +82,7 @@ export class Language {
       case TimeUnit.Day:
         return Language.json.Date.month + Language.json.report;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -120,7 +120,7 @@ export class Language {
       case CameraType.AIO:
         return Language.json.CameraType.AIO;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
   static CameraUsage(usage: CameraUsage) {
@@ -134,7 +134,7 @@ export class Language {
       case CameraUsage.GarbageFull:
         return Language.json.CameraUsage.GarbageFull;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -179,7 +179,7 @@ export class Language {
       // case EventType.GarbageDropTimeoutHandle:
       //   return Language.json.timeout + Language.json.handle;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -197,7 +197,7 @@ export class Language {
         }
 
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -208,7 +208,7 @@ export class Language {
       case CameraState.PlatformError:
         return Language.json.platform + Language.json.fault;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -224,7 +224,7 @@ export class Language {
       case ResourceType.GarbageStation:
         return Language.json.garbage + Language.json.room;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
   static SearchOption(key: SearchOptionKey) {
@@ -234,7 +234,7 @@ export class Language {
       case SearchOptionKey.community:
         return '社区';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
   static StationType(type: StationType) {
@@ -244,7 +244,7 @@ export class Language {
       case StationType.Construction:
         return '建筑垃圾';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
   static DivisionType(type: DivisionType) {
@@ -308,7 +308,7 @@ export class Language {
       case DisposalCountType.timeout:
         return '超时任务';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -331,7 +331,7 @@ export class Language {
       case UserResourceType.Station:
         return '投放点';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -344,7 +344,7 @@ export class Language {
       case DeviceStateCountType.offLine:
         return '离线设备数量';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -357,7 +357,7 @@ export class Language {
       case DeviceStateRatioType.good:
         return '正常';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -368,7 +368,7 @@ export class Language {
       case OnlineStatus.Offline:
         return Language.json.OnlineStatus.Offline;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -379,7 +379,7 @@ export class Language {
       case ChartType.line:
         return '折线图';
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -403,7 +403,7 @@ export class Language {
       case VehiclePositionNo.TrashCan:
         return Language.json.VehiclePositionNo.TrashCan;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -514,7 +514,7 @@ export class Language {
       case TrashCanType.Hazard:
         return Language.json.TrashCanType.Hazard;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -525,7 +525,7 @@ export class Language {
       }
       return Language.json.VehicleState.Online;
     }
-    return Language.json.unknow;
+    return Language.json.Unknow;
   }
 
   static VehicleState(type?: VehicleState) {
@@ -534,7 +534,7 @@ export class Language {
         return Language.json.OnlineStatus.Offline;
 
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
@@ -568,7 +568,7 @@ export class Language {
       case Gender.Female:
         return Language.json.Gender.Female;
       default:
-        return Language.json.unknow;
+        return Language.json.Unknow;
     }
   }
 
