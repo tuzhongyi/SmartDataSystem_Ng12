@@ -29,6 +29,7 @@ export class MediaSingleWindowBusiness
     height: '64%',
     top: '56%',
     padding: '10px 20px',
+    zIndex: 9999,
   };
   camera: Array<Camera | ImageControlModel> = [];
   index: number = -1;

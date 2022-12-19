@@ -5,6 +5,7 @@ import { Medium } from '../common/tools/medium';
 import { CameraImageUrlModel } from '../common/components/tables/event-record/event-record.model';
 import { ICamera } from '../network/model/camera.interface';
 import { Camera } from '../network/model/camera.model';
+import { VehicleCamera } from '../network/model/vehicle-camera.model';
 
 export class ImageControlConverter
   implements IConverter<ICamera | CameraImageUrlModel, ImageControlModel>
@@ -40,6 +41,16 @@ export class ImageControlConverter
       return new ImageControlModel({
         id: source.Id,
         stationId: source.GarbageStationId,
+        name: source.Name,
+        src: Medium.jpg(source.ImageUrl),
+        onerror: onerror ? Medium.default : '',
+        status: source.OnlineStatus ?? OnlineStatus.Offline,
+        camera: source,
+        eventTime: eventTime,
+      });
+    } else if (source instanceof VehicleCamera) {
+      return new ImageControlModel({
+        id: source.Id,
         name: source.Name,
         src: Medium.jpg(source.ImageUrl),
         onerror: onerror ? Medium.default : '',

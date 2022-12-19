@@ -4,6 +4,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
 import { Time } from 'src/app/common/tools/time';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
@@ -23,7 +24,8 @@ export class CollectionWeightWindowBusiness {
   constructor(
     private _collectionEventRequest: CollectionEventRequestService,
     private _garbageVehicleRequest: GarbageVehicleRequestService,
-    private _converter: CollectionWeightWindowConverter
+    private _converter: CollectionWeightWindowConverter,
+    private _imageControlConverter: ImageControlConverter
   ) {}
   async init(searchInfo: ICollectionWeightWindowSearchInfo) {
     let { Page, Data } = await this._list(searchInfo);
@@ -65,7 +67,10 @@ export class CollectionWeightWindowBusiness {
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }
 
-  public getCamera(vehicleId: string, cameraId: string) {
-    return this._garbageVehicleRequest.camera.get(vehicleId, cameraId);
+  public async getCamera(vehicleId: string, cameraId: string) {
+    return this._garbageVehicleRequest.camera.get(
+      '1',
+      '83f688554c2e44d0b8b7a7237724b090'
+    );
   }
 }

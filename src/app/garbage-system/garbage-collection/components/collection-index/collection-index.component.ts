@@ -35,6 +35,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import {
@@ -150,7 +151,6 @@ export class GarbageCollectionIndexComponent
 
     this.myInjector.get(ToastWindowService).customEvent.subscribe((data) => {
       if (data.Close) this.closeToast();
-
       switch (data.Component) {
         case CollectionVehicleWindowComponent:
           if (data.Type == ToastWindowType.ClickMap) {
@@ -162,6 +162,12 @@ export class GarbageCollectionIndexComponent
           }
           break;
         case CollectionWeightWindowComponent:
+          let item = data.Data as ImageControlModelArray;
+          console.log(item);
+          this.window.media.single.camera = item.models;
+          this.window.media.single.autoplay = item.autoplay;
+          this.window.media.single.index = item.index;
+          this.window.media.single.show = true;
           break;
       }
     });

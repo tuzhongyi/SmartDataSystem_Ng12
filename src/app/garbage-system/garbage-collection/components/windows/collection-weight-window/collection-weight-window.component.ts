@@ -12,8 +12,14 @@ import {
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import {
+  ImageControlModel,
+  ImageControlModelArray,
+} from 'src/app/view-model/image-control.model';
 import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
 import { CollectionWeightWindowBusiness } from './collection-weight-window.business';
 import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
@@ -26,7 +32,11 @@ import {
   selector: 'collection-weight-window',
   templateUrl: './collection-weight-window.component.html',
   styleUrls: ['./collection-weight-window.component.less'],
-  providers: [CollectionWeightWindowBusiness, CollectionWeightWindowConverter],
+  providers: [
+    CollectionWeightWindowBusiness,
+    CollectionWeightWindowConverter,
+    ImageControlConverter,
+  ],
 })
 export class CollectionWeightWindowComponent implements OnInit {
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'];
@@ -54,7 +64,8 @@ export class CollectionWeightWindowComponent implements OnInit {
   constructor(
     private _globalStorage: GlobalStorageService,
     private _business: CollectionWeightWindowBusiness,
-    private _toastWindowService: ToastWindowService
+    private _toastWindowService: ToastWindowService,
+    private _imageControlConverter: ImageControlConverter
   ) {
     let data = this._toastWindowService.data;
     if (data) {
@@ -89,13 +100,40 @@ export class CollectionWeightWindowComponent implements OnInit {
       this._globalStorage.divisionId,
       item.Id
     );
+    console.log(camera);
+    let controlModel = this._imageControlConverter.Convert(
+      camera,
+      false,
+      item.RawData?.EventTime
+    );
+    let arr = new ImageControlModelArray([controlModel], 0);
+
     this._toastWindowService.customEvent.emit({
       Type: ToastWindowType.ClickImage,
-      Data: camera,
+      Data: arr,
       Component: CollectionWeightWindowComponent,
       Close: false,
     });
   }
 
-  clickVideoIcon(item: CollectionWeightWindowModel) {}
+  async clickVideoIcon(item: CollectionWeightWindowModel) {
+    let camera = await this._business.getCamera(
+      this._globalStorage.divisionId,
+      item.Id
+    );
+
+    let controlModel = this._imageControlConverter.Convert(
+      camera,
+      false,
+      item.RawData?.EventTime
+    );
+    let arr = new ImageControlModelArray([controlModel], 0, true);
+
+    this._toastWindowService.customEvent.emit({
+      Type: ToastWindowType.ClickImage,
+      Data: arr,
+      Component: CollectionWeightWindowComponent,
+      Close: false,
+    });
+  }
 }
