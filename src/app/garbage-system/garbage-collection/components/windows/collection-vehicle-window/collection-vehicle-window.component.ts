@@ -105,6 +105,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
       Type: ToastWindowType.ClickMap,
       Data: item.rawData,
       Component: CollectionVehicleWindowComponent,
+      Close: true,
     });
     this.clickMapEvent.emit(item.rawData);
   }
@@ -116,6 +117,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
       Type: ToastWindowType.ClickLine,
       Data: item.rawData,
       Component: CollectionVehicleWindowComponent,
+      Close: true,
     });
   }
 }

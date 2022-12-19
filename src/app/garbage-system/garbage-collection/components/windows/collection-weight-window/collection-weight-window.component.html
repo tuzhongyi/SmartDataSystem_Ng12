@@ -68,8 +68,8 @@
 
     <tbody>
       <ng-template ngFor [ngForOf]="dataSource" let-item>
-        <tr (click)="clickItem(item)">
-          <td>
+        <tr>
+          <td (click)="clickImage(item)">
             <img [src]="item.ImageUrl" alt="" />
           </td>
           <td>{{ item.ResourceName }}</td>
@@ -80,6 +80,17 @@
           <td>{{ item.CollectionPointName }}</td>
           <td>{{ item.Weight }}</td>
           <td>{{ item.Score }}</td>
+          <td>
+            <a class="td-icon" (click)="clickVideoIcon(item)"
+              ><i class="howell-icon-video"></i
+            ></a>
+            <a class="td-icon" (click)="clickVideoIcon(item)"
+              ><i class="howell-icon-picturedownload"></i
+            ></a>
+            <a class="td-icon" (click)="clickVideoIcon(item)"
+              ><i class="howell-icon-videodownload"></i
+            ></a>
+          </td>
         </tr>
       </ng-template>
     </tbody>

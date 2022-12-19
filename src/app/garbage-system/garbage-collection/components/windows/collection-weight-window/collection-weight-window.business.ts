@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { param } from 'jquery';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { Medium } from 'src/app/common/tools/medium';
 import { Time } from 'src/app/common/tools/time';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
@@ -29,6 +31,22 @@ export class CollectionWeightWindowBusiness {
 
     console.log(Data);
     let data = await this._converter.iterateToModel(Data);
+    for (let i = 0; i < 10; i++) {
+      let model = new CollectionWeightWindowModel();
+      model.Id = ((Math.random() * 1111) >> 0).toString();
+      model.ResourceName = Language.json.Unknow;
+      model.VehicleName = '121';
+      model.MemberName = '121';
+      model.DivisionName = '121';
+      model.TrashCanName = '121';
+      model.CollectionPointName = '121';
+      model.Weight = 12;
+      model.Score = '121';
+
+      model.ImageUrl = await Medium.img(void 0);
+
+      data.push(model);
+    }
     let res: PagedList<CollectionWeightWindowModel> = {
       Page: Page,
       Data: data,
@@ -47,5 +65,7 @@ export class CollectionWeightWindowBusiness {
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }
 
-  public getCamera() {}
+  public getCamera(vehicleId: string, cameraId: string) {
+    return this._garbageVehicleRequest.camera.get(vehicleId, cameraId);
+  }
 }

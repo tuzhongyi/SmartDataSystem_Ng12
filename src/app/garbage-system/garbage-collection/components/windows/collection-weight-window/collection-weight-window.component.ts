@@ -13,6 +13,7 @@ import {
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { Page } from 'src/app/network/model/page_list.model';
+import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
 import { CollectionWeightWindowBusiness } from './collection-weight-window.business';
 import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
@@ -28,8 +29,6 @@ import {
   providers: [CollectionWeightWindowBusiness, CollectionWeightWindowConverter],
 })
 export class CollectionWeightWindowComponent implements OnInit {
-  @Output() clickEvent = new EventEmitter();
-
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionWeightWindowModel[] = [];
   // Paginator
@@ -55,7 +54,7 @@ export class CollectionWeightWindowComponent implements OnInit {
   constructor(
     private _globalStorage: GlobalStorageService,
     private _business: CollectionWeightWindowBusiness,
-    @Optional() private _toastWindowService: ToastWindowService
+    private _toastWindowService: ToastWindowService
   ) {
     let data = this._toastWindowService.data;
     if (data) {
@@ -83,13 +82,20 @@ export class CollectionWeightWindowComponent implements OnInit {
     this._init();
   }
 
-  clickItem(item: CollectionWeightWindowModel) {
-    this.clickEvent.emit(item);
-
+  async clickImage(
+    item: CollectionWeightWindowModel<GarbageCollectionEventRecord>
+  ) {
+    let camera = await this._business.getCamera(
+      this._globalStorage.divisionId,
+      item.Id
+    );
     this._toastWindowService.customEvent.emit({
-      Type: ToastWindowType.ClickLine,
-      Data: item.Id,
+      Type: ToastWindowType.ClickImage,
+      Data: camera,
       Component: CollectionWeightWindowComponent,
+      Close: false,
     });
   }
+
+  clickVideoIcon(item: CollectionWeightWindowModel) {}
 }
