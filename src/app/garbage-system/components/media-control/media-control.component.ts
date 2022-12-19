@@ -22,6 +22,8 @@ import { wait } from 'src/app/common/tools/tool';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediaVideoControlBussiness } from './media-video-control.business';
 import { ICamera } from 'src/app/network/model/camera.interface';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IMediaControlBusiness } from './media-control.model';
 
 @Component({
   selector: 'app-media-control',
@@ -37,7 +39,10 @@ export class MediaControlComponent
     IComponent<Array<ICamera | ImageControlModel>, ImageVideoControlModel[]>
 {
   @Input()
+  business: IMediaControlBusiness;
+  @Input()
   model?: Array<ICamera | ImageControlModel> = [];
+
   @Input()
   index = 0;
 
@@ -97,7 +102,6 @@ export class MediaControlComponent
       this.playing = this.autoplay;
     }
   }
-  business: MediaVideoControlBussiness;
 
   datas: ImageVideoControlModel[] = [];
 
