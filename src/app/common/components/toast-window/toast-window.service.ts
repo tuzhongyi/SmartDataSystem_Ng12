@@ -29,9 +29,11 @@ export interface IToastWindowEvent {
   Type: ToastWindowType;
   Data: any;
   Component: Type<any>;
+  Close: boolean;
 }
 
 export enum ToastWindowType {
   ClickMap = 0,
   ClickLine = 1,
+  ClickImage = 2,
 }

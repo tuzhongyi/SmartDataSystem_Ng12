@@ -37,7 +37,10 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
-import { CollectionListWindowComponent } from '../windows';
+import {
+  CollectionListWindowComponent,
+  CollectionWeightWindowComponent,
+} from '../windows';
 import { CollectionVehicleWindowComponent } from '../windows/collection-vehicle-window/collection-vehicle-window.component';
 import { CollectionStatisticCardBusiness } from './business/collection-statistic-card.bussiness';
 import { IndexPictureWindow } from './business/index-picture-window.business';
@@ -146,15 +149,20 @@ export class GarbageCollectionIndexComponent
     });
 
     this.myInjector.get(ToastWindowService).customEvent.subscribe((data) => {
-      this.closeToast();
-      if (data.Component == CollectionVehicleWindowComponent) {
-        if (data.Type == ToastWindowType.ClickMap) {
-          this.map.onposition(data.Data);
-        } else {
-          if (data.Type == ToastWindowType.ClickLine) {
-            this.map.onroute(data.Data);
+      if (data.Close) this.closeToast();
+
+      switch (data.Component) {
+        case CollectionVehicleWindowComponent:
+          if (data.Type == ToastWindowType.ClickMap) {
+            this.map.onposition(data.Data);
+          } else {
+            if (data.Type == ToastWindowType.ClickLine) {
+              this.map.onroute(data.Data);
+            }
           }
-        }
+          break;
+        case CollectionWeightWindowComponent:
+          break;
       }
     });
   }
