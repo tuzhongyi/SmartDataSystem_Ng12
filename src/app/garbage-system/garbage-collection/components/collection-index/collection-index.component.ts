@@ -222,7 +222,7 @@ export class GarbageCollectionIndexComponent
     });
   }
   clickScoreRank(data: CommonRankData) {
-    this.componentTypeExpression = CollectionListWindowComponent;
+    this.componentTypeExpression = CollectionWeightWindowComponent;
     this.createToast({});
   }
   clickCard(data: CommonStatisticCardModel) {
