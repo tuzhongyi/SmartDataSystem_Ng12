@@ -22,7 +22,9 @@ import { CommonStatisticCardModel } from './common-statistic-card.model';
 @Injectable({
   providedIn: 'root',
 })
-export class CommonStatisticCardConverter extends AbstractCommonModelConverter<CommonStatisticCardModel> {
+export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
+  CommonStatisticCardModel | CommonStatisticCardModel[]
+> {
   Convert(source: modelSource, ...res: any[]) {
     if (source instanceof PagedList) {
       if (this._isGarbageVehicle(source.Data)) {
@@ -35,6 +37,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
     } else if (source instanceof DivisionGarbageWeight) {
       return this._fromDivisionGarbageWeight(source);
     } else if (source instanceof CollectionDivisionStatisticNumber) {
+      return this._fromCollectionDivisionStatisticNumber(source);
     }
 
     throw new TypeError();
@@ -83,21 +86,53 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<C
 
   private _fromCollectionDivisionStatisticNumber(
     source: CollectionDivisionStatisticNumber
-  ) {}
+  ) {
+    let res: CommonStatisticCardModel[] = [];
+
+    let model = new CommonStatisticCardModel();
+    model.Title = '垃圾清运车数量';
+    model.componentExpression = CollectionVehicleWindowComponent;
+    model.Content = source.GarbageVehicleNumber
+      ? source.GarbageVehicleNumber.toString()
+      : '0';
+    res.push(model);
+
+    model = new CommonStatisticCardModel();
+    model.Title = '垃圾清运数量(吨)';
+    model.componentExpression = CollectionWeightWindowComponent;
+    model.Content = source.Weight ? source.Weight.toString() : '0';
+    res.push(model);
+
+    model = new CommonStatisticCardModel();
+    model.Title = '清运人员';
+    model.componentExpression = CollectionMemberWindowComponent;
+    model.Content = source.MemberNumber ? source.MemberNumber.toString() : '0';
+    res.push(model);
+
+    model = new CommonStatisticCardModel();
+    model.Title = '垃圾收运点位';
+    model.componentExpression = CollectionPointWindowComponent;
+    model.Content = source.CollectionPointNumber
+      ? source.CollectionPointNumber.toString()
+      : '0';
+    res.push(model);
+
+    return res;
+  }
 
   private _isGarbageVehicle(
     data: CommonModelSource[]
   ): data is GarbageVehicle[] {
-    return data.length == 0 || data[0] instanceof GarbageVehicle;
+    return data.length > 0 && data[0] instanceof GarbageVehicle;
   }
   private _isCollectionMember(
     data: CommonModelSource[]
   ): data is CollectionMember[] {
-    return data.length == 0 || data[0] instanceof CollectionMember;
+    return data.length > 0 && data[0] instanceof CollectionMember;
   }
   private _isCollectionPoint(
     data: CommonModelSource[]
   ): data is CollectionPoint[] {
-    return data.length == 0 || data[0] instanceof CollectionPoint;
+    return data.length > 0 && data[0] instanceof CollectionPoint;
   }
 }

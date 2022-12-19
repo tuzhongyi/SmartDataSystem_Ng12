@@ -8,7 +8,10 @@ import {
   Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
+import {
+  ToastWindowService,
+  ToastWindowType,
+} from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -96,11 +99,23 @@ export class CollectionVehicleWindowComponent implements OnInit {
     this._init();
   }
   clickMap(item: CollectionVehicleWindowModel, e: MouseEvent) {
-    this.clickMapEvent.emit(item.rawData);
     e.stopPropagation();
+
+    this._toastWindowService.customEvent.emit({
+      Type: ToastWindowType.ClickMap,
+      Data: item.rawData,
+      Component: CollectionVehicleWindowComponent,
+    });
+    this.clickMapEvent.emit(item.rawData);
   }
   clickLine(item: CollectionVehicleWindowModel, e: MouseEvent) {
     this.clickLineEvent.emit(item.rawData);
     e.stopPropagation();
+
+    this._toastWindowService.customEvent.emit({
+      Type: ToastWindowType.ClickLine,
+      Data: item.rawData,
+      Component: CollectionVehicleWindowComponent,
+    });
   }
 }

@@ -8,6 +8,7 @@ import {
 import { interval, Subscription, timer } from 'rxjs';
 import { IToastWindowEmitModel } from 'src/app/common/components/toast-window/toast-window.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
@@ -37,7 +38,7 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
 
   tdWidth = ['10%', '10%', '5%'];
 
-  dataSource: CollectionVehicleModel[] = [];
+  dataSource: CollectionVehicleModel<GarbageVehicle>[] = [];
 
   searchInfo: ICollectionVehicleSearchInfo = {};
   subscription: Subscription;
@@ -59,14 +60,14 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     this.dataSource = await this._business.init(this.searchInfo);
   }
 
-  clickItem(item: CollectionVehicleModel) {
+  clickItem(item: CollectionVehicleModel<GarbageVehicle>) {
     this.clickEvent.emit(item);
   }
-  clickMap(item: CollectionVehicleModel, e: MouseEvent) {
+  clickMap(item: CollectionVehicleModel<GarbageVehicle>, e: MouseEvent) {
     this.clickMapEvent.emit(item.rawData);
     e.stopPropagation();
   }
-  clickLine(item: CollectionVehicleModel, e: MouseEvent) {
+  clickLine(item: CollectionVehicleModel<GarbageVehicle>, e: MouseEvent) {
     this.clickLineEvent.emit(item.rawData);
     e.stopPropagation();
   }

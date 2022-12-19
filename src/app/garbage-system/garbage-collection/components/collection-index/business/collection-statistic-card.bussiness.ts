@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { param } from 'jquery';
 import { Subscription } from 'rxjs';
 import { CommonStatisticCardConverter } from 'src/app/common/components/common-statistic-card/common-statistic-card.converter';
+import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
@@ -32,19 +33,23 @@ export class CollectionStatisticCardBusiness {
   ) {}
 
   async init() {
-    let data = await Promise.all([
-      this._listGarbageVehicle(),
-      this._listGarbageWeight(),
-      this._listGarbageMember(),
-      this._listGarbagePoints(),
-    ]);
+    // let data = await Promise.all([
+    //   this._listGarbageVehicle(),
+    //   this._listGarbageWeight(),
+    //   this._listGarbageMember(),
+    //   this._listGarbagePoints(),
+    // ]);
 
     // console.log(data);
-    let res = this._converter.iterateToModel(data);
+    // let res = this._converter.iterateToModel(data);
     // console.log(res);
 
     let statisticData = await this._listCollectionDivisionStatisticNumber();
-    // console.log(statisticData);
+    console.log(statisticData);
+
+    let res = this._converter.Convert(
+      statisticData
+    ) as CommonStatisticCardModel[];
 
     // this._converter.Convert(statisticData);
     // statisticData;

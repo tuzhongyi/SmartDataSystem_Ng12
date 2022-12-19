@@ -8,6 +8,7 @@ import { CollectionEventRequestService } from 'src/app/network/request/garbage_v
 import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
+import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 
 import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
 import {
@@ -19,6 +20,7 @@ import {
 export class CollectionWeightWindowBusiness {
   constructor(
     private _collectionEventRequest: CollectionEventRequestService,
+    private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionWeightWindowConverter
   ) {}
   async init(searchInfo: ICollectionWeightWindowSearchInfo) {
@@ -44,4 +46,6 @@ export class CollectionWeightWindowBusiness {
     params.ResourceName = searchInfo.Condition;
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }
+
+  public getCamera() {}
 }

@@ -29,10 +29,13 @@ export class MapControlBusiness {
   }
 
   onposition(vehicle: GarbageVehicle) {
+    console.log('position');
     this.window.close();
     this.position.emit(vehicle);
   }
   onroute(vehicle: GarbageVehicle) {
+    console.log('route');
+
     this.route.vehicle = vehicle;
     this.route.show = true;
   }

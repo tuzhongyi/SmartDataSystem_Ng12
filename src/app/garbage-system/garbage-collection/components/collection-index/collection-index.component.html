@@ -26,11 +26,11 @@
             ></ng-container>
           </div>
           <div class="map-control">
-            <collection-map-control
+            <!-- <collection-map-control
               [position]="map.position"
               (route)="map.onroute($event)"
               (VideoPlay)="map.onvideoplay($event)"
-            ></collection-map-control>
+            ></collection-map-control> -->
           </div>
         </div>
         <!-- <div class="monitor-body__wrapper patrol">
@@ -96,6 +96,7 @@
   </div>
 </div>
 <toast-window *ngIf="showToast" [showClose]="true" (closeEvent)="closeToast()">
+  <!-- ngComponentOutlet 无法在模板上监听事件 -->
   <ng-template
     #container
     [ngComponentOutlet]="componentTypeExpression"
@@ -103,8 +104,9 @@
   >
   </ng-template>
 </toast-window>
-<app-video-window [model]="video.model" [window]="video" [title]="video.title">
-</app-video-window>
+
+<!-- <app-video-window [model]="video.model" [window]="video" [title]="video.title">
+</app-video-window> -->
 
 <!-- <app-picture-window
   *ngIf="window.picture.show"
@@ -128,12 +130,13 @@
 ></howell-video-player-window> -->
 
 <app-window
+  *ngIf="window.media.single.show"
   [Model]="window.media.single"
   [style]="window.media.single.style"
   [manualClose]="true"
   (OnClosing)="window.media.single.onclosing()"
 >
-  <ng-container *ngIf="window.media.single.show">
+  <ng-container>
     <app-media-control
       [autoplay]="window.media.single.autoplay"
       [model]="window.media.single.camera"

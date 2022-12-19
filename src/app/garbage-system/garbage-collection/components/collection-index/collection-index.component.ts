@@ -6,7 +6,10 @@
  */
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
+  ComponentRef,
+  EmbeddedViewRef,
   Injector,
   OnDestroy,
   OnInit,
@@ -21,6 +24,7 @@ import { CommonRankData } from 'src/app/common/components/common-rank/common-ran
 import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import {
   ToastWindowService,
+  ToastWindowType,
   TOAST_WINDOW_TOKEN,
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
@@ -118,7 +122,8 @@ export class GarbageCollectionIndexComponent
     public window: WindowBussiness,
     private _statisticCardBussiness: CollectionStatisticCardBusiness,
 
-    private injector: Injector
+    private injector: Injector,
+    private changeDetector: ChangeDetectorRef
   ) {
     this._titleService.setTitle('垃圾清运平台');
 
@@ -138,6 +143,19 @@ export class GarbageCollectionIndexComponent
         },
       ],
       parent: this.injector,
+    });
+
+    this.myInjector.get(ToastWindowService).customEvent.subscribe((data) => {
+      this.closeToast();
+      if (data.Component == CollectionVehicleWindowComponent) {
+        if (data.Type == ToastWindowType.ClickMap) {
+          this.map.onposition(data.Data);
+        } else {
+          if (data.Type == ToastWindowType.ClickLine) {
+            this.map.onroute(data.Data);
+          }
+        }
+      }
     });
   }
 
@@ -167,11 +185,6 @@ export class GarbageCollectionIndexComponent
     this.statisticDataSource = await this._statisticCardBussiness.init();
   }
 
-  closeToast() {
-    this.showToast = false;
-    this.myInjector.get(ToastWindowService).reset();
-  }
-
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
     this.subscription2.unsubscribe();
@@ -181,8 +194,7 @@ export class GarbageCollectionIndexComponent
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-
-    this._updateToast({
+    this.createToast({
       divisionId: this._globalStorage.divisionId,
       type: data.type,
     });
@@ -190,27 +202,28 @@ export class GarbageCollectionIndexComponent
 
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-    this._updateToast({
+    this.createToast({
       divisionId: this._globalStorage.divisionId,
       type: CollectionDeviceStateCountType.All,
     });
   }
   clickScoreRank(data: CommonRankData) {
     this.componentTypeExpression = CollectionListWindowComponent;
-    this._updateToast({});
+    this.createToast({});
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;
 
-    // DivisionId可以通过GlobalService 获取，固并未显式传递
-    this._updateToast({});
+    this.createToast({});
   }
 
-  private _updateToast(data: IModel) {
+  private createToast(data: IModel) {
     this.myInjector.get(ToastWindowService).data = data;
     this.showToast = true;
-    setTimeout(() => {
-      console.log(this.viewContainer);
-    }, 1000);
+  }
+  closeToast() {
+    this.showToast = false;
+    this.componentTypeExpression = null;
+    this.myInjector.get(ToastWindowService).reset();
   }
 }

@@ -6,7 +6,10 @@ import {
   Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
+import {
+  ToastWindowService,
+  ToastWindowType,
+} from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -82,5 +85,11 @@ export class CollectionWeightWindowComponent implements OnInit {
 
   clickItem(item: CollectionWeightWindowModel) {
     this.clickEvent.emit(item);
+
+    this._toastWindowService.customEvent.emit({
+      Type: ToastWindowType.ClickLine,
+      Data: item.Id,
+      Component: CollectionWeightWindowComponent,
+    });
   }
 }
