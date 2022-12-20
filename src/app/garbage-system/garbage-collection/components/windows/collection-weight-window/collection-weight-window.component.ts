@@ -132,7 +132,7 @@ export class CollectionWeightWindowComponent implements OnInit {
     args.title = camera.Name;
 
     this._toastWindowService.customEvent.emit({
-      Type: ToastWindowType.ClickImage,
+      Type: ToastWindowType.ClickVideo,
       Data: args,
       Component: CollectionWeightWindowComponent,
       Close: false,

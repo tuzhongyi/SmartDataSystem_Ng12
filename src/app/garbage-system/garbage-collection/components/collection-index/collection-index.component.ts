@@ -36,6 +36,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
+import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
@@ -164,14 +165,29 @@ export class GarbageCollectionIndexComponent
           }
           break;
         case CollectionWeightWindowComponent:
-          let item = data.Data as PictureArgs;
-          console.log(item);
-          this.window.picture.title = item.title;
-          Medium.image(item.url).then((x) => {
-            this.window.picture.image = x;
-            this.window.picture.show = true;
-          });
+          let args: PictureArgs | VideoArgs;
+          switch (data.Type) {
+            case ToastWindowType.ClickImage:
+              args = data.Data as PictureArgs;
+              this.window.picture.title = args.title;
+              Medium.image(args.url).then((x) => {
+                this.window.picture.image = x;
+                this.window.picture.show = true;
+              });
 
+              break;
+            case ToastWindowType.ClickVideo:
+              args = data.Data as VideoArgs;
+              this.window.video.autoplay = args.autoplay;
+              this.window.video.cameraId = args.cameraId;
+              this.window.video.title = args.title;
+              this.window.video.mode = args.mode;
+              this.window.video.time = args.time;
+              this.window.video.show = true;
+              break;
+            default:
+              break;
+          }
           break;
       }
     });

@@ -36,4 +36,5 @@ export enum ToastWindowType {
   ClickMap = 0,
   ClickLine = 1,
   ClickImage = 2,
+  ClickVideo = 3,
 }

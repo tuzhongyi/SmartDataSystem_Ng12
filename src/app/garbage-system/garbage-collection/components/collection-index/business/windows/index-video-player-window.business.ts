@@ -32,6 +32,7 @@ export class IndexVideoPlayerWindow
   style = {
     width: '60%',
     height: '60%',
+    zIndex: 9999,
   };
 
   Converter: IConverter<VideoUrl, VideoModel> = new VideoControlConverter();
