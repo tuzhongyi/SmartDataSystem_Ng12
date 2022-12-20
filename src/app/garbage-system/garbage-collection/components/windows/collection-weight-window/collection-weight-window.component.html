@@ -1,11 +1,72 @@
 <div class="collection-weight-window vertical-layout">
   <div class="vertical-header">
     <div class="hw-second-title">清运记录</div>
-    <div class="search-wrapper">
-      <howell-simple-search
-        placeHolder="名称"
-        (searchEvent)="searchEvent($event)"
-      ></howell-simple-search>
+    <div class="operate-bar">
+      <div class="right-wrapper">
+        <div class="search-wrapper">
+          <input
+            [disabled]="disableSearch"
+            type="text"
+            placeholder="名称"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
+        </div>
+        <div class="hw-normal-btn-group">
+          <button class="hw-blue-btn" (click)="search()">
+            <i class="mdi mdi-magnify"></i>
+            查询
+          </button>
+          <button class="hw-cyan-m-btn" (click)="toggleFilterHandler()">
+            <i class="mdi mdi-filter-outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="filter-wrapper" *ngIf="searchInfo.Filter">
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">开始时间</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            [minView]="DateTimePickerView.hour"
+            [date]="searchInfo.BeginTime"
+            (change)="changeBegin($event)"
+            class="hw-form-control hw-form-input"
+          />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">结束时间</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            [minView]="DateTimePickerView.hour"
+            [date]="searchInfo.EndTime"
+            (change)="changeEnd($event)"
+          />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">结束时间</span>
+        </div>
+        <div class="content">
+          <howell-division-tree></howell-division-tree>
+        </div>
+      </div>
     </div>
   </div>
   <div class="vertical-main">

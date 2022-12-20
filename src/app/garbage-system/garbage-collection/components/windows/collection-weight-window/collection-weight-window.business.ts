@@ -22,6 +22,8 @@ import {
 @Injectable()
 export class CollectionWeightWindowBusiness {
   constructor(
+    private _globalStorageService: GlobalStorageService,
+
     private _collectionEventRequest: CollectionEventRequestService,
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionWeightWindowConverter,
@@ -62,7 +64,11 @@ export class CollectionWeightWindowBusiness {
     params.PageSize = searchInfo.PageSize;
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
-    params.DivisionIds = searchInfo.DivisionIds;
+    if (
+      this._globalStorageService.defaultDivisionId !==
+      this._globalStorageService.divisionId
+    )
+      params.DivisionIds = searchInfo.DivisionIds;
     params.ResourceName = searchInfo.Condition;
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }

@@ -19,4 +19,5 @@ export interface ICollectionWeightWindowSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   Condition: string;
+  Filter: boolean;
 }

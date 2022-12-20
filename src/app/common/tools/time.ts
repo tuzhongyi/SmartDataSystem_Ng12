@@ -1,3 +1,9 @@
+/*
+ * @Author: pmx
+ * @Date: 2022-12-20 14:01:27
+ * @Last Modified by:   pmx
+ * @Last Modified time: 2022-12-20 14:01:27
+ */
 // new Date(time)不影响 time
 export class Time {
   /**

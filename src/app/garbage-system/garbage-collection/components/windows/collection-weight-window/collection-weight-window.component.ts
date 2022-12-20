@@ -11,6 +11,7 @@ import {
   ToastWindowType,
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
@@ -55,6 +56,8 @@ export class CollectionWeightWindowComponent implements OnInit {
     PageCount: 0,
   };
 
+  disableSearch = false;
+  today = new Date();
   searchInfo: ICollectionWeightWindowSearchInfo = {
     DivisionIds: [this._globalStorage.divisionId],
     PageIndex: 1,
@@ -62,13 +65,17 @@ export class CollectionWeightWindowComponent implements OnInit {
     Condition: '',
     BeginTime: Time.beginTime(Date.now()),
     EndTime: Time.endTime(Date.now()),
+    Filter: false,
   };
+
+  DateTimePickerView = DateTimePickerView;
+
+  dateFormat: string = 'yyyy-MM-dd HH:mm';
 
   constructor(
     private _globalStorage: GlobalStorageService,
     private _business: CollectionWeightWindowBusiness,
-    private _toastWindowService: ToastWindowService,
-    private _imageControlConverter: ImageControlConverter
+    private _toastWindowService: ToastWindowService
   ) {
     let data = this._toastWindowService.data;
     if (data) {
@@ -90,8 +97,7 @@ export class CollectionWeightWindowComponent implements OnInit {
 
     this._init();
   }
-  searchEvent(condition: string) {
-    this.searchInfo.Condition = condition;
+  search() {
     this.searchInfo.PageIndex = 1;
     this._init();
   }
@@ -137,5 +143,19 @@ export class CollectionWeightWindowComponent implements OnInit {
       Component: CollectionWeightWindowComponent,
       Close: false,
     });
+  }
+
+  changeBegin(date: Date) {
+    this.searchInfo.BeginTime = date;
+  }
+  changeEnd(date: Date) {
+    this.searchInfo.EndTime = date;
+  }
+  toggleFilterHandler() {
+    this.disableSearch = this.searchInfo.Filter = !this.searchInfo.Filter;
+    if (!this.searchInfo.Filter) {
+      this.searchInfo.BeginTime = Time.beginTime(this.today);
+      this.searchInfo.EndTime = Time.endTime(this.today);
+    }
   }
 }
