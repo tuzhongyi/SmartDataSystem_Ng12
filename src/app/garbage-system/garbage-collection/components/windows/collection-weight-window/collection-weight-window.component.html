@@ -1,28 +1,6 @@
 <div class="collection-weight-window vertical-layout">
   <div class="vertical-header">
     <div class="hw-second-title">清运记录</div>
-    <div class="operate-bar">
-      <div class="right-wrapper">
-        <div class="search-wrapper">
-          <input
-            [disabled]="disableSearch"
-            type="text"
-            placeholder="名称"
-            [(ngModel)]="searchInfo.Condition"
-            (keyup.enter)="search()"
-          />
-        </div>
-        <div class="hw-normal-btn-group">
-          <button class="hw-blue-btn" (click)="search()">
-            <i class="mdi mdi-magnify"></i>
-            查询
-          </button>
-          <button class="hw-cyan-m-btn" (click)="toggleFilterHandler()">
-            <i class="mdi mdi-filter-outline"></i>
-          </button>
-        </div>
-      </div>
-    </div>
     <div class="filter-wrapper" *ngIf="searchInfo.Filter">
       <div class="filter-group">
         <div class="title">
@@ -58,21 +36,46 @@
           />
         </div>
       </div>
-
       <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">行政区</span>
+        </div>
+        <div class="content">
+          <tree-select [selectedNodes]="selectedNodes">
+            <!-- <howell-label-tree
+              #tree
+              [selectStrategy]="selectStrategy"
+              
+            ></howell-label-tree> -->
+            <collection-division-tree
+              [selectStrategy]="selectStrategy"
+              (selectTreeNode)="selectTreeNode($event)"
+            ></collection-division-tree>
+          </tree-select>
+        </div>
+      </div>
+
+      <div class="hw-normal-btn-group">
+        <button class="hw-blue-btn" (click)="search()">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button>
+      </div>
+
+      <!-- <div class="filter-group">
         <div class="title">
           <span class="hw-form-label">结束时间</span>
         </div>
         <div class="content">
-          <howell-division-tree></howell-division-tree>
+          <garbage-vehicle-division-tree></garbage-vehicle-division-tree>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <div class="vertical-main">
-    <custom-table class="big-table">
+    <custom-table>
       <ng-container ngProjectAs="table-header">
-        <table>
+        <table class="big-table">
           <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
           <thead>
             <tr>
@@ -124,7 +127,7 @@
   </colgroup>
 </ng-template>
 <ng-template #thenBlock>
-  <table>
+  <table class="big-table">
     <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
 
     <tbody>

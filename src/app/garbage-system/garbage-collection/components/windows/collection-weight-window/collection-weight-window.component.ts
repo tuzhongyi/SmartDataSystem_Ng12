@@ -16,10 +16,12 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Time } from 'src/app/common/tools/time';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
 import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { Page } from 'src/app/network/model/page_list.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -65,12 +67,16 @@ export class CollectionWeightWindowComponent implements OnInit {
     Condition: '',
     BeginTime: Time.beginTime(Date.now()),
     EndTime: Time.endTime(Date.now()),
-    Filter: false,
+    Filter: true,
   };
 
   DateTimePickerView = DateTimePickerView;
 
   dateFormat: string = 'yyyy-MM-dd HH:mm';
+  selectedNodes: CommonFlatNode[] = [];
+  selectStrategy = SelectStrategy.Multiple;
+  defaultIds: string[] = [];
+  labelIds: string[] = [];
 
   constructor(
     private _globalStorage: GlobalStorageService,
@@ -151,11 +157,10 @@ export class CollectionWeightWindowComponent implements OnInit {
   changeEnd(date: Date) {
     this.searchInfo.EndTime = date;
   }
-  toggleFilterHandler() {
-    this.disableSearch = this.searchInfo.Filter = !this.searchInfo.Filter;
-    if (!this.searchInfo.Filter) {
-      this.searchInfo.BeginTime = Time.beginTime(this.today);
-      this.searchInfo.EndTime = Time.endTime(this.today);
-    }
+  selectTreeNode(nodes: CommonFlatNode[]) {
+    // console.log('外部结果', nodes)
+    this.selectedNodes = nodes;
+
+    this.searchInfo.DivisionIds = this.selectedNodes.map((n) => n.Id);
   }
 }

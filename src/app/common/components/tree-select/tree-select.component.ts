@@ -1,4 +1,16 @@
-import { AfterViewInit, Component, ContentChild, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  ContentChild,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  Type,
+  ViewChild,
+} from '@angular/core';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -11,48 +23,35 @@ import { LabelTreeComponent } from '../label-tree/label-tree.component';
 @Component({
   selector: 'tree-select',
   templateUrl: './tree-select.component.html',
-  styleUrls: ['./tree-select.component.less']
+  styleUrls: ['./tree-select.component.less'],
 })
-export class TreeSelecComponent implements OnInit, AfterViewInit {
-
+export class TreeSelecComponent
+  implements OnInit, AfterViewInit, AfterContentInit
+{
   show = false;
-
 
   @Input()
   selectedNodes: CommonFlatNode[] = [];
 
   @Output() defaultIdsChange = new EventEmitter<string[]>();
 
-
   defaultIds: string[] = [];
 
-  @ContentChild(CommonTree) tree?: CommonTree;
+  @ContentChild('tree') tree?: CommonTree;
 
-  constructor() { }
+  constructor(private changeDetector: ChangeDetectorRef) {}
 
-  ngOnInit(): void {
-  }
-  ngAfterViewInit(): void {
-  }
-
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {}
+  ngAfterContentInit(): void {}
   toggleHandler() {
     this.show = !this.show;
-
   }
   removeNode(e: Event, node: CommonFlatNode) {
     e.stopPropagation();
-    if (this.tree) {
-      this.tree.toggleNodes([node.Id])
-    } else {
+    // this.changeDetector.detectChanges();
 
-      // let index = this.selectedNodes.findIndex(v => v.Id == node.Id)
-      // if (index != -1) {
-      //   this.selectedNodes.splice(index, 1);
-
-      //   this.defaultIds = this.selectedNodes.map(node => node.Id);
-      //   this.defaultIdsChange.emit(this.defaultIds)
-      // }
-    }
+    console.log(this.tree);
+    this.tree?.toggleNodes([node.Id]);
   }
-
 }
