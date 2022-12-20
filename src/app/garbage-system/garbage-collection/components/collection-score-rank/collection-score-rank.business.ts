@@ -41,7 +41,7 @@ export class CollectionScoreRankBusiness {
     let { Data } = await this._listScores(searchInfo);
     // console.log(Data);
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 0; i++) {
       let scoreTop = new ScoreTop();
       scoreTop.Id = uuid.v4();
       let unicode1 = Math.floor(Math.random() * (0x9fa5 - 0x4e00) + 0x4e00);

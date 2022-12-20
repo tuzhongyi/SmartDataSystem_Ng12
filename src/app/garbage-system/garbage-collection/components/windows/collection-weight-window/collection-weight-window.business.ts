@@ -33,7 +33,7 @@ export class CollectionWeightWindowBusiness {
 
     console.log(Data);
     let data = await this._converter.iterateToModel(Data);
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 0; i++) {
       let model = new CollectionWeightWindowModel();
       model.Id = ((Math.random() * 1111) >> 0).toString();
       model.ResourceName = Language.json.Unknow;
