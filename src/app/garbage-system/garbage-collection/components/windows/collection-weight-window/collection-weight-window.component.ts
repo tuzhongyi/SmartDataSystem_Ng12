@@ -27,6 +27,7 @@ import {
   ImageControlModelArray,
 } from 'src/app/view-model/image-control.model';
 import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
+import { CollectionDivisionTreeBusiness } from '../../../../../common/business/collection-division-tree.business';
 import { CollectionWeightWindowBusiness } from './collection-weight-window.business';
 import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
 import {
@@ -42,6 +43,7 @@ import {
     CollectionWeightWindowBusiness,
     CollectionWeightWindowConverter,
     ImageControlConverter,
+    CollectionDivisionTreeBusiness,
   ],
 })
 export class CollectionWeightWindowComponent implements OnInit {
@@ -74,11 +76,11 @@ export class CollectionWeightWindowComponent implements OnInit {
 
   dateFormat: string = 'yyyy-MM-dd HH:mm';
   selectedNodes: CommonFlatNode[] = [];
-  selectStrategy = SelectStrategy.Multiple;
   defaultIds: string[] = [];
   labelIds: string[] = [];
 
   constructor(
+    public collectionDivisionTreeBusiness: CollectionDivisionTreeBusiness,
     private _globalStorage: GlobalStorageService,
     private _business: CollectionWeightWindowBusiness,
     private _toastWindowService: ToastWindowService

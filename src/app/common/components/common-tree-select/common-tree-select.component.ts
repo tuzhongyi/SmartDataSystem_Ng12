@@ -21,11 +21,11 @@ import { LabelTreeComponent } from '../label-tree/label-tree.component';
  *  显示树的选中节点信息
  */
 @Component({
-  selector: 'tree-select',
-  templateUrl: './tree-select.component.html',
-  styleUrls: ['./tree-select.component.less'],
+  selector: 'common-tree-select',
+  templateUrl: './common-tree-select.component.html',
+  styleUrls: ['./common-tree-select.component.less'],
 })
-export class TreeSelecComponent
+export class CommonTreeSelecComponent
   implements OnInit, AfterViewInit, AfterContentInit
 {
   show = false;
@@ -51,7 +51,6 @@ export class TreeSelecComponent
     e.stopPropagation();
     // this.changeDetector.detectChanges();
 
-    console.log(this.tree);
     this.tree?.toggleNodes([node.Id]);
   }
 }

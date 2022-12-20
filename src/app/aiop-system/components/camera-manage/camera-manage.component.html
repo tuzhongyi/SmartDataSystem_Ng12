@@ -148,12 +148,12 @@
         <div class="filter-group">
           <div class="title"><span class="hw-form-label">选择标签:</span></div>
           <div class="content">
-            <tree-select [selectedNodes]="selectedNodes">
+            <common-tree-select [selectedNodes]="selectedNodes">
               <howell-label-tree
                 [defaultIds]="defaultIds"
                 (selectTreeNode)="selectLabelTreeNode($event)"
               ></howell-label-tree>
-            </tree-select>
+            </common-tree-select>
           </div>
         </div>
       </div>

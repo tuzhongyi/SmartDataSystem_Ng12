@@ -41,17 +41,14 @@
           <span class="hw-form-label">行政区</span>
         </div>
         <div class="content">
-          <tree-select [selectedNodes]="selectedNodes">
-            <!-- <howell-label-tree
+          <common-tree-select [selectedNodes]="selectedNodes">
+            <howell-division-tree
               #tree
-              [selectStrategy]="selectStrategy"
-              
-            ></howell-label-tree> -->
-            <collection-division-tree
-              [selectStrategy]="selectStrategy"
+              [business]="collectionDivisionTreeBusiness"
+              [depth]="1"
               (selectTreeNode)="selectTreeNode($event)"
-            ></collection-division-tree>
-          </tree-select>
+            ></howell-division-tree>
+          </common-tree-select>
         </div>
       </div>
 

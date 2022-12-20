@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-15 14:59:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-16 15:01:40
+ * @Last Modified time: 2022-12-20 17:31:12
  */
 import { Injectable } from '@angular/core';
 import { param } from 'jquery';
@@ -45,7 +45,7 @@ export class CollectionStatisticCardBusiness {
     // console.log(res);
 
     let statisticData = await this._listCollectionDivisionStatisticNumber();
-    console.log(statisticData);
+    // console.log(statisticData);
 
     let res = this._converter.Convert(
       statisticData

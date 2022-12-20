@@ -40,7 +40,7 @@ import { LabelTreeComponent } from './label-tree/label-tree.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
-import { TreeSelecComponent } from './tree-select/tree-select.component';
+import { CommonTreeSelecComponent } from './common-tree-select/common-tree-select.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
@@ -63,7 +63,6 @@ import { CommonRankComponent } from './common-rank/common-rank.component';
 import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
 import { CommonStatisticCardComponent } from './common-statistic-card/common-statistic-card.component';
 import { PictureWindowComponent } from './picture-window/picture-window.component';
-import { CollectionDivisionTreeComponent } from './collection-division-tree/collection-division-tree.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -109,7 +108,7 @@ export const CUSTOM_COMPONENTS = [
   DivisionTreeComponent,
   CommonTreeComponent,
   RegionTreeComponent,
-  TreeSelecComponent,
+  CommonTreeSelecComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
   ToastWindowComponent,
@@ -131,5 +130,4 @@ export const CUSTOM_COMPONENTS = [
   UploadControlComponent,
   CommonRankComponent,
   CommonStatisticCardComponent,
-  CollectionDivisionTreeComponent,
 ];

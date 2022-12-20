@@ -19,7 +19,7 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
 @Injectable()
-export class CollectionDivisionTreeBusiness  {
+export class CollectionDivisionTreeBusiness {
   public showExtend = false;
   public depthIsEnd = false;
 
