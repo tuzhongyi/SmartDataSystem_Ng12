@@ -133,7 +133,7 @@
 <ng-template #tableTemplate>
   <div class="table-layout">
     <div class="table-header">
-      <table>
+      <table class="big-table">
         <colgroup>
           <col *ngFor="let width of widths" [style.width]="width" />
         </colgroup>
@@ -152,7 +152,7 @@
       </table>
     </div>
     <div class="table-body">
-      <table>
+      <table class="big-table">
         <colgroup>
           <col *ngFor="let width of widths" [style.width]="width" />
         </colgroup>
