@@ -129,22 +129,19 @@
   [time]="window.video.time"
 ></howell-video-player-window> -->
 
-<app-window
-  *ngIf="window.media.single.show"
-  [Model]="window.media.single"
-  [style]="window.media.single.style"
-  [manualClose]="true"
-  (OnClosing)="window.media.single.onclosing()"
+<app-video-window
+  *ngIf="video.show"
+  [model]="video.model"
+  [window]="video"
+  [title]="video.title"
 >
-  <ng-container>
-    <app-media-control
-      [business]="window.media.single"
-      [autoplay]="window.media.single.autoplay"
-      [model]="window.media.single.camera"
-      [index]="window.media.single.index"
-      [stop]="window.media.single.closing"
-      (played)="window.media.single.onplay()"
-      (stoped)="window.media.single.onstop()"
-    ></app-media-control>
-  </ng-container>
-</app-window>
+</app-video-window>
+
+<app-picture-window
+  *ngIf="window.picture.show"
+  [Model]="window.picture"
+  [style]="window.picture.style"
+  [title]="window.picture.title"
+  [picture]="window.picture.image"
+>
+</app-picture-window>

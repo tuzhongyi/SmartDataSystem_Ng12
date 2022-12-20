@@ -62,6 +62,7 @@ import { UploadControlComponent } from './upload-control/upload-control.componen
 import { CommonRankComponent } from './common-rank/common-rank.component';
 import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
 import { CommonStatisticCardComponent } from './common-statistic-card/common-statistic-card.component';
+import { PictureWindowComponent } from './picture-window/picture-window.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -80,6 +81,7 @@ export const CUSTOM_COMPONENTS = [
   PaginatorComponent,
   TableSelectComponent,
   VideoWindowComponent,
+  PictureWindowComponent,
   VideoPlayerWindowComponent,
   InputSearchComponent,
   InputSearchOptionsComponent,

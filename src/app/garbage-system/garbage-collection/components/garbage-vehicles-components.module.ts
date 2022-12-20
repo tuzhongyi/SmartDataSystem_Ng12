@@ -38,7 +38,6 @@ import {
   CollectionWeightWindowComponent,
   CollectionVehicleWindowComponent,
 } from './windows';
-import { PictureWindowComponent } from './windows/picture-window/picture-window.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +62,6 @@ import { PictureWindowComponent } from './windows/picture-window/picture-window.
     CollectionMemberWindowComponent,
     CollectionPointWindowComponent,
     CollectionWeightWindowComponent,
-    PictureWindowComponent,
   ],
   imports: [
     CommonModule,
