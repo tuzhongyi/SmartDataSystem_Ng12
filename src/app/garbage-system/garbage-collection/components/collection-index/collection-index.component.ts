@@ -29,11 +29,13 @@ import {
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { PictureArgs } from 'src/app/network/model/args/picture.args';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
@@ -162,12 +164,14 @@ export class GarbageCollectionIndexComponent
           }
           break;
         case CollectionWeightWindowComponent:
-          let item = data.Data as ImageControlModelArray;
+          let item = data.Data as PictureArgs;
           console.log(item);
-          this.window.media.single.camera = item.models;
-          this.window.media.single.autoplay = item.autoplay;
-          this.window.media.single.index = item.index;
-          this.window.media.single.show = true;
+          this.window.picture.title = item.title;
+          Medium.image(item.url).then((x) => {
+            this.window.picture.image = x;
+            this.window.picture.show = true;
+          });
+
           break;
       }
     });

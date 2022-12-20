@@ -10,10 +10,13 @@ import {
   ToastWindowService,
   ToastWindowType,
 } from 'src/app/common/components/toast-window/toast-window.service';
+import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Time } from 'src/app/common/tools/time';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { PictureArgs } from 'src/app/network/model/args/picture.args';
+import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { Page } from 'src/app/network/model/page_list.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import {
@@ -100,17 +103,15 @@ export class CollectionWeightWindowComponent implements OnInit {
       this._globalStorage.divisionId,
       item.Id
     );
-    console.log(camera);
-    let controlModel = this._imageControlConverter.Convert(
-      camera,
-      false,
-      item.RawData?.EventTime
-    );
-    let arr = new ImageControlModelArray([controlModel], 0);
+
+    let args = new PictureArgs();
+    args.id = camera.Id;
+    args.title = camera.Name;
+    args.url = item.ImageUrl;
 
     this._toastWindowService.customEvent.emit({
       Type: ToastWindowType.ClickImage,
-      Data: arr,
+      Data: args,
       Component: CollectionWeightWindowComponent,
       Close: false,
     });
@@ -122,16 +123,17 @@ export class CollectionWeightWindowComponent implements OnInit {
       item.Id
     );
 
-    let controlModel = this._imageControlConverter.Convert(
-      camera,
-      false,
-      item.RawData?.EventTime
-    );
-    let arr = new ImageControlModelArray([controlModel], 0, true);
+    let args = new VideoArgs();
+    args.autoplay = true;
+    args.cameraId = camera.Id;
+    args.data = camera;
+    args.mode = PlayMode.vod;
+    args.time = item.RawData?.EventTime;
+    args.title = camera.Name;
 
     this._toastWindowService.customEvent.emit({
       Type: ToastWindowType.ClickImage,
-      Data: arr,
+      Data: args,
       Component: CollectionWeightWindowComponent,
       Close: false,
     });

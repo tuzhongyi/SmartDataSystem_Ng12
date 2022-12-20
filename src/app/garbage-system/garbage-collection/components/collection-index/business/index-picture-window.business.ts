@@ -12,5 +12,6 @@ export class IndexPictureWindow extends WindowViewModel {
   style = {
     width: '60%',
     height: '60%',
+    zIndex: 9999,
   };
 }

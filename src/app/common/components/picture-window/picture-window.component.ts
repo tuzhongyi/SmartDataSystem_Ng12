@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { ImageResult } from '../../../../../view-model/image-result.model';
+import { ImageResult } from '../../../view-model/image-result.model';
 
 @Component({
   selector: 'app-picture-window',
