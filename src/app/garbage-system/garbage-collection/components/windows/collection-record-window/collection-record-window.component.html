@@ -158,7 +158,9 @@
           <td>{{ item.DivisionName }}</td>
           <td>{{ item.CollectionPointName }}</td>
           <td>{{ item.Weight }}</td>
-          <td>{{ item.Score }}</td>
+          <td [class]="item.TagCls" [style]="item.TagStyle">
+            {{ item.Score }}
+          </td>
           <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
           <td>
             <a class="td-icon" (click)="clickVideoIcon(item)"

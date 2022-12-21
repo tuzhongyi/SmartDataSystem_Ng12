@@ -108,6 +108,8 @@ export class CollectionRecordWindowComponent implements OnInit {
     let data = this._toastWindowService.data;
     if (data) {
       if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
+      if (data.beginTime) this.searchInfo.BeginTime = data.beginTime;
+      if (data.endTime) this.searchInfo.EndTime = data.endTime;
     }
   }
   ngOnInit(): void {

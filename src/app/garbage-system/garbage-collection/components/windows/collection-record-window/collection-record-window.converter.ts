@@ -6,6 +6,7 @@ import {
   AbstractCommonModelPromiseConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
@@ -42,6 +43,10 @@ export class CollectionRecordWindowConverter extends AbstractCommonModelPromiseC
     model.Score = source.Data.Score
       ? Language.CollectionPointScore(source.Data.Score)
       : Language.json.Unknow;
+
+    model.TagCls = source.Data.Score
+      ? CollectionPointScore[source.Data.Score]
+      : '';
 
     model.ImageUrl = await Medium.img(source.ImageUrl);
     model.EventTime = source.EventTime;

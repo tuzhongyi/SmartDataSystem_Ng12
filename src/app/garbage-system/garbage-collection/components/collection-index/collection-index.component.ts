@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-16 17:16:16
+ * @Last Modified time: 2022-12-21 14:21:51
  */
 import {
   AfterViewInit,
@@ -30,6 +30,7 @@ import {
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Medium } from 'src/app/common/tools/medium';
+import { Time } from 'src/app/common/tools/time';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -243,7 +244,10 @@ export class GarbageCollectionIndexComponent
   }
   clickScoreRank(data: CommonRankData) {
     this.componentTypeExpression = CollectionRecordWindowComponent;
-    this.createToast({});
+    this.createToast({
+      beginTime: Time.curMonth(Date.now()).beginTime,
+      endTime: Time.curMonth(Date.now()).endTime,
+    });
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;

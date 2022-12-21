@@ -11,6 +11,10 @@ export class CollectionRecordWindowModel<T = any> {
   CollectionPointName!: string;
   Weight!: number;
   Score!: string;
+
+  TagStyle: Partial<CSSStyleDeclaration> = {};
+  TagCls: string = '';
+
   EventTime!: Date;
   RawData?: T;
 }
