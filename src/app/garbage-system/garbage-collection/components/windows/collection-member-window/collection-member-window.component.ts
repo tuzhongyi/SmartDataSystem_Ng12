@@ -2,6 +2,11 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Gender } from 'src/app/enum/gender.enum';
+import {
+  CollectionMemberType,
+  MemberType,
+} from 'src/app/enum/member-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CollectionMemberWindowBusiness } from './collection-member-window.business';
 import { CollectionMemberWindowConverter } from './collection-member-window.converter';
@@ -17,7 +22,11 @@ import {
   providers: [CollectionMemberWindowBusiness, CollectionMemberWindowConverter],
 })
 export class CollectionMemberWindowComponent implements OnInit {
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%'];
+  Gender = Gender;
+  CollectionMemberType = CollectionMemberType;
+  undefined = void 0;
+
+  tdWidth = ['10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionMemberWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
@@ -34,6 +43,8 @@ export class CollectionMemberWindowComponent implements OnInit {
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
+    Mobile: '',
+    Type: '',
   };
   constructor(
     private _globalStorage: GlobalStorageService,
@@ -52,7 +63,7 @@ export class CollectionMemberWindowComponent implements OnInit {
   private async _init() {
     let res = await this._business.init(this.searchInfo);
 
-    console.log(res);
+    // console.log(res);
     this.dataSource = res.Data;
     this.page = res.Page;
   }
@@ -62,8 +73,7 @@ export class CollectionMemberWindowComponent implements OnInit {
 
     this._init();
   }
-  searchEvent(condition: string) {
-    this.searchInfo.Condition = condition;
+  search() {
     this.searchInfo.PageIndex = 1;
     this._init();
   }

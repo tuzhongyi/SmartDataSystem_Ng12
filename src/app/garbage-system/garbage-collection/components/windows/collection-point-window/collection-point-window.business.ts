@@ -40,6 +40,9 @@ export class CollectionPointWindowBusiness {
       params.DivisionIds = searchInfo.DivisionIds;
     params.Name = searchInfo.Condition;
 
+    if (searchInfo.Type) {
+      params.Classification = searchInfo.Type;
+    }
     return this._collectionPointsRequest.list(params);
   }
 }

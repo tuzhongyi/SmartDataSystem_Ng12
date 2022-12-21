@@ -11,7 +11,7 @@ export class Member extends Model {
   /**	String	姓名	M */
   Name!: string;
   /**	Int32	性别，1-男性，2-女性	O */
-  Gender?: number;
+  Gender?: Gender;
   /**	String	手机号码	O */
   MobileNo?: string;
   /**	String	描述信息	O */

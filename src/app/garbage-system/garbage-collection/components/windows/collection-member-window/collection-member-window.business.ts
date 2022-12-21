@@ -33,6 +33,10 @@ export class CollectionMemberWindowBusiness {
     params.PageSize = searchInfo.PageSize;
     params.DivisionId = searchInfo.DivisionId;
     params.Name = searchInfo.Condition;
+    params.MobileNo = searchInfo.Mobile;
+    if (searchInfo.Type) {
+      params.MemberType = searchInfo.Type;
+    }
 
     return this._collectionMemberRequset.list(params);
   }

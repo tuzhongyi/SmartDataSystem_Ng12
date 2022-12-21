@@ -1,3 +1,6 @@
+import { Gender } from 'src/app/enum/gender.enum';
+import { CollectionMemberType } from 'src/app/enum/member-type.enum';
+
 export class CollectionMemberWindowModel<T = any> {
   Id!: string;
 
@@ -20,4 +23,6 @@ export interface ICollectionMemberWindowSearchInfo {
   PageIndex: number;
   PageSize: number;
   Condition: string;
+  Mobile: string;
+  Type: CollectionMemberType | '';
 }

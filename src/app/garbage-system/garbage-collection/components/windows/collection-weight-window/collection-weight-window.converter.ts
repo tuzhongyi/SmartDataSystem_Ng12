@@ -44,6 +44,7 @@ export class CollectionWeightWindowConverter extends AbstractCommonModelPromiseC
       : Language.json.Unknow;
 
     model.ImageUrl = await Medium.img(source.ImageUrl);
+    model.EventTime = source.EventTime;
 
     model.RawData = source;
     return model;

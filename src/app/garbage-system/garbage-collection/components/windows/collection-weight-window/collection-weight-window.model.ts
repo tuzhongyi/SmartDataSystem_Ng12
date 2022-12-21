@@ -9,6 +9,7 @@ export class CollectionWeightWindowModel<T = any> {
   CollectionPointName!: string;
   Weight!: number;
   Score!: string;
+  EventTime!: Date;
   RawData?: T;
 }
 
@@ -19,5 +20,4 @@ export interface ICollectionWeightWindowSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   Condition: string;
-  Filter: boolean;
 }

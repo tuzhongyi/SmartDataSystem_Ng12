@@ -1,3 +1,5 @@
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+
 export class CollectionPointWindowModel<T = any> {
   Id!: string;
 
@@ -17,4 +19,5 @@ export interface ICollectionPointWindowSearchInfo {
   PageIndex: number;
   PageSize: number;
   Condition: string;
+  Type: CollectionPointClassification | '';
 }

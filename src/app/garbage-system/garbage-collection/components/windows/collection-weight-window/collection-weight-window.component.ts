@@ -4,6 +4,7 @@ import {
   OnInit,
   Optional,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import {
@@ -34,6 +35,7 @@ import {
   CollectionWeightWindowModel,
   ICollectionWeightWindowSearchInfo,
 } from './collection-weight-window.model';
+import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
 
 @Component({
   selector: 'collection-weight-window',
@@ -47,7 +49,10 @@ import {
   ],
 })
 export class CollectionWeightWindowComponent implements OnInit {
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%', '10%'];
+  @ViewChild(CommonTreeSelecComponent)
+  commonTreeSelect!: CommonTreeSelecComponent;
+
+  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '15%', '10%'];
   dataSource: CollectionWeightWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
@@ -69,15 +74,12 @@ export class CollectionWeightWindowComponent implements OnInit {
     Condition: '',
     BeginTime: Time.beginTime(Date.now()),
     EndTime: Time.endTime(Date.now()),
-    Filter: true,
   };
 
   DateTimePickerView = DateTimePickerView;
 
   dateFormat: string = 'yyyy-MM-dd HH:mm';
   selectedNodes: CommonFlatNode[] = [];
-  defaultIds: string[] = [];
-  labelIds: string[] = [];
 
   constructor(
     public collectionDivisionTreeBusiness: CollectionDivisionTreeBusiness,
@@ -106,6 +108,7 @@ export class CollectionWeightWindowComponent implements OnInit {
     this._init();
   }
   search() {
+    this.commonTreeSelect.closeDropDown();
     this.searchInfo.PageIndex = 1;
     this._init();
   }

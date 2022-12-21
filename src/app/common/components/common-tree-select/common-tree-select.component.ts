@@ -28,29 +28,38 @@ import { LabelTreeComponent } from '../label-tree/label-tree.component';
 export class CommonTreeSelecComponent
   implements OnInit, AfterViewInit, AfterContentInit
 {
-  show = false;
+  @Input()
+  showDropDown = false;
 
   @Input()
   selectedNodes: CommonFlatNode[] = [];
 
-  @Output() defaultIdsChange = new EventEmitter<string[]>();
-
-  defaultIds: string[] = [];
+  @Output() toggleDropDown = new EventEmitter<boolean>();
+  @Output() removeDropItem = new EventEmitter();
 
   @ContentChild('tree') tree?: CommonTree;
 
-  constructor(private changeDetector: ChangeDetectorRef) {}
+  constructor() {}
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {}
   ngAfterContentInit(): void {}
-  toggleHandler() {
-    this.show = !this.show;
+  toggleHandler(e: Event) {
+    e.stopPropagation();
+    this.showDropDown = !this.showDropDown;
+    this.toggleDropDown.emit(this.showDropDown);
   }
   removeNode(e: Event, node: CommonFlatNode) {
     e.stopPropagation();
-    // this.changeDetector.detectChanges();
 
     this.tree?.toggleNodes([node.Id]);
+
+    this.removeDropItem.emit(node);
+  }
+  closeDropDown() {
+    this.showDropDown = false;
+  }
+  blur() {
+    this.showDropDown = false;
   }
 }

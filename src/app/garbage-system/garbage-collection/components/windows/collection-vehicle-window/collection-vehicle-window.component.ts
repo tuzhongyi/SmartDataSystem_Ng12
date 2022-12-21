@@ -6,15 +6,20 @@ import {
   OnInit,
   Optional,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { CollectionDivisionTreeBusiness } from 'src/app/common/business/collection-division-tree.business';
+import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
 import {
   ToastWindowService,
   ToastWindowType,
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
+import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CollectionVehicleWindowBusiness } from './collection-vehicle-window.business';
 import { CollectionVehicleWindowConverter } from './collection-vehicle-window.converter';
 import {
@@ -31,16 +36,20 @@ import {
       provide: CollectionVehicleWindowBusiness,
       useClass: CollectionVehicleWindowBusiness,
     },
-    {
-      provide: CollectionVehicleWindowConverter,
-      useValue: new CollectionVehicleWindowConverter(),
-    },
+    CollectionVehicleWindowConverter,
+    CollectionDivisionTreeBusiness,
   ],
 })
 export class CollectionVehicleWindowComponent implements OnInit {
+  CollectionDeviceStateCountType = CollectionDeviceStateCountType;
+  VehicleType = VehicleType;
+
   @Output('position') clickMapEvent = new EventEmitter();
 
   @Output('route') clickLineEvent = new EventEmitter();
+
+  @ViewChild(CommonTreeSelecComponent)
+  commonTreeSelect!: CommonTreeSelecComponent;
 
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionVehicleWindowModel[] = [];
@@ -60,11 +69,14 @@ export class CollectionVehicleWindowComponent implements OnInit {
     DivisionId: this._globalStorage.divisionId,
     PageIndex: 1,
     PageSize: 9,
-    Type: CollectionDeviceStateCountType.All,
+    State: CollectionDeviceStateCountType.All,
     Condition: '',
+    Type: '',
   };
+  selectedNodes: CommonFlatNode[] = [];
 
   constructor(
+    public collectionDivisionTreeBusiness: CollectionDivisionTreeBusiness,
     private _globalStorage: GlobalStorageService,
     private _business: CollectionVehicleWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
@@ -72,7 +84,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
     // console.log(this._toastWindowService.data);
     let data = this._toastWindowService.data;
     if (data) {
-      if (data.type) this.searchInfo.Type = data.type;
+      if (data.type) this.searchInfo.State = data.type;
       if (data.divisionId) this.searchInfo.DivisionId = data.divisionId;
     }
   }
@@ -93,8 +105,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
 
     this._init();
   }
-  searchEvent(condition: string) {
-    this.searchInfo.Condition = condition;
+  search() {
     this.searchInfo.PageIndex = 1;
     this._init();
   }
@@ -119,5 +130,15 @@ export class CollectionVehicleWindowComponent implements OnInit {
       Component: CollectionVehicleWindowComponent,
       Close: true,
     });
+  }
+  selectTreeNode(nodes: CommonFlatNode[]) {
+    // console.log('外部结果', nodes)
+    this.commonTreeSelect.closeDropDown();
+    this.selectedNodes = nodes;
+    if (nodes.length > 0) {
+      this.searchInfo.DivisionId = nodes[0].Id;
+    } else {
+      this.searchInfo.DivisionId = '';
+    }
   }
 }

@@ -26,8 +26,7 @@ export class CollectionWeightWindowBusiness {
 
     private _collectionEventRequest: CollectionEventRequestService,
     private _garbageVehicleRequest: GarbageVehicleRequestService,
-    private _converter: CollectionWeightWindowConverter,
-    private _imageControlConverter: ImageControlConverter
+    private _converter: CollectionWeightWindowConverter
   ) {}
   async init(searchInfo: ICollectionWeightWindowSearchInfo) {
     let { Page, Data } = await this._list(searchInfo);
@@ -64,11 +63,17 @@ export class CollectionWeightWindowBusiness {
     params.PageSize = searchInfo.PageSize;
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
-    if (
-      this._globalStorageService.defaultDivisionId !==
-      this._globalStorageService.divisionId
-    )
-      params.DivisionIds = searchInfo.DivisionIds;
+    params.DivisionIds = searchInfo.DivisionIds;
+
+    if (searchInfo.DivisionIds.length == 1) {
+      if (
+        searchInfo.DivisionIds[0] ==
+        this._globalStorageService.defaultDivisionId
+      ) {
+        params.DivisionIds = [];
+      }
+    }
+
     params.ResourceName = searchInfo.Condition;
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }

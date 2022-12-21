@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { param } from 'jquery';
 import { filter } from 'jszip';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Flags } from 'src/app/common/tools/flags';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
+import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
@@ -18,6 +20,8 @@ import {
 @Injectable()
 export class CollectionVehicleWindowBusiness {
   constructor(
+    private _globalStorageService: GlobalStorageService,
+
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleWindowConverter
   ) {}
@@ -27,7 +31,7 @@ export class CollectionVehicleWindowBusiness {
     // console.log(Data);
     // Data = [...Data, ...Data, ...Data];
 
-    let data = this._converter.iterateToModel(Data);
+    let data = await this._converter.iterateToModel(Data);
     let res: PagedList<CollectionVehicleWindowModel> = {
       Page: Page,
       Data: data,
@@ -39,12 +43,22 @@ export class CollectionVehicleWindowBusiness {
     let params = new GetGarbageVehiclesParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
-    params.DivisionId = searchInfo.DivisionId;
     params.Name = searchInfo.Condition;
 
-    if (searchInfo.Type == CollectionDeviceStateCountType.Online) {
+    if (
+      searchInfo.DivisionId &&
+      this._globalStorageService.defaultDivisionId != searchInfo.DivisionId
+    ) {
+      params.DivisionId = searchInfo.DivisionId;
+    }
+
+    if (searchInfo.Type) {
+      params.VehicleType = searchInfo.Type;
+    }
+
+    if (searchInfo.State == CollectionDeviceStateCountType.Online) {
       params.State = 0;
-    } else if (searchInfo.Type == CollectionDeviceStateCountType.Offline) {
+    } else if (searchInfo.State == CollectionDeviceStateCountType.Offline) {
       params.State = VehicleState.Offline;
     }
     return this._garbageVehicleRequest.list(params);

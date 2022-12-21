@@ -1,11 +1,68 @@
 <div class="collection-vehicle-window vertical-layout">
   <div class="vertical-header">
     <div class="hw-second-title">清运车列表</div>
-    <div class="search-wrapper">
-      <howell-simple-search
-        placeHolder="名称"
-        (searchEvent)="searchEvent($event)"
-      ></howell-simple-search>
+    <div class="filter-wrapper">
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">名称:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">状态:</span>
+        </div>
+        <div class="content">
+          <select [(ngModel)]="searchInfo.State">
+            <option [value]="CollectionDeviceStateCountType.All">全部</option>
+            <option [value]="CollectionDeviceStateCountType.Online">
+              正常
+            </option>
+            <option [value]="CollectionDeviceStateCountType.Offline">
+              离线
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">类型:</span>
+        </div>
+        <div class="content">
+          <select [(ngModel)]="searchInfo.Type">
+            <option value="">全部</option>
+            <option [value]="VehicleType.Tricycle">三轮车</option>
+            <option [value]="VehicleType.Car">汽车</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">行政区</span>
+        </div>
+        <div class="content">
+          <common-tree-select [selectedNodes]="selectedNodes">
+            <howell-division-tree
+              #tree
+              [business]="collectionDivisionTreeBusiness"
+              [depth]="1"
+              (selectTreeNode)="selectTreeNode($event)"
+            ></howell-division-tree>
+          </common-tree-select>
+        </div>
+      </div>
+      <div class="hw-normal-btn-group">
+        <button class="hw-blue-btn" (click)="search()">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button>
+      </div>
     </div>
   </div>
   <div class="vertical-main">
@@ -20,7 +77,6 @@
               <th>状态</th>
               <th>车辆类型</th>
               <th>区划</th>
-
               <th>车牌号</th>
               <th>操作</th>
             </tr>
@@ -75,7 +131,6 @@
           </td>
           <td>{{ item.Type }}</td>
           <td>{{ item.DivisionName }}</td>
-
           <td>{{ item.PlatNo }}</td>
           <td>
             <span (click)="clickMap(item, $event)">
