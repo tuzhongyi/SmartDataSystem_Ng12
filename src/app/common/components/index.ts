@@ -64,6 +64,8 @@ import { VideoPlayerWindowComponent } from './video-player-window/video-player-w
 import { CommonStatisticCardComponent } from './common-statistic-card/common-statistic-card.component';
 import { PictureWindowComponent } from './picture-window/picture-window.component';
 import { SelectComponents } from './selects/selects.modules';
+import { VideoPlayerListComponent } from './video-player-list/video-player-list.component';
+import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -132,5 +134,7 @@ export const CUSTOM_COMPONENTS = [
   CommonRankComponent,
   CommonStatisticCardComponent,
 
+  VideoPlayerListComponent,
+  VideoMultiplePlayerWindowComponent,
   ...SelectComponents,
 ];

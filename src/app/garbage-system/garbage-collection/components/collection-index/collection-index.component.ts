@@ -37,6 +37,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
+import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
 import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
@@ -166,7 +167,7 @@ export class GarbageCollectionIndexComponent
           }
           break;
         case CollectionRecordWindowComponent:
-          let args: PictureArgs | VideoArgs;
+          let args: PictureArgs | VideoListArgs;
           switch (data.Type) {
             case ToastWindowType.ClickImage:
               args = data.Data as PictureArgs;
@@ -178,9 +179,9 @@ export class GarbageCollectionIndexComponent
 
               break;
             case ToastWindowType.ClickVideo:
-              args = data.Data as VideoArgs;
+              args = data.Data as VideoListArgs;
               this.window.video.autoplay = args.autoplay;
-              this.window.video.cameraId = args.cameraId;
+              this.window.video.cameras = args.cameras;
               this.window.video.title = args.title;
               this.window.video.mode = args.mode;
               this.window.video.time = args.time;

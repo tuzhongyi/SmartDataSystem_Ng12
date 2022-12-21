@@ -38,6 +38,8 @@ export class VideoPlayerComponent
 
   @Input()
   name: string = '';
+  @Input()
+  index = 0;
 
   @Input()
   play?: EventEmitter<VideoModel>;
@@ -72,17 +74,19 @@ export class VideoPlayerComponent
   destroy: EventEmitter<VideoModel> = new EventEmitter();
 
   @Output()
-  onStoping: EventEmitter<void> = new EventEmitter();
+  onStoping: EventEmitter<number> = new EventEmitter();
   @Output()
-  onPlaying: EventEmitter<void> = new EventEmitter();
+  onPlaying: EventEmitter<number> = new EventEmitter();
   @Output()
   getPosition: EventEmitter<number> = new EventEmitter();
   @Output()
   onButtonClicked: EventEmitter<ButtonName> = new EventEmitter();
   @Output()
-  onViewerDoubleClicked: EventEmitter<void> = new EventEmitter();
+  onViewerDoubleClicked: EventEmitter<number> = new EventEmitter();
   @Output()
   onRuleStateChanged: EventEmitter<boolean> = new EventEmitter();
+  @Output()
+  onViewerClicked: EventEmitter<number> = new EventEmitter();
 
   src?: SafeResourceUrl;
 
@@ -92,6 +96,7 @@ export class VideoPlayerComponent
       let name = utf16to8(cameraName);
       result += '&name=' + base64encode(name);
     }
+    result += '&index=' + this.index;
     return result;
   }
 
@@ -281,12 +286,14 @@ export class VideoPlayerComponent
 
   eventRegist() {
     if (this.player) {
-      this.player.getPosition = (val: any) => {
+      this.player.getPosition = (index: number, val: any) => {
+        if (this.index != index) return;
         if (val >= 1) {
           this.playing = false;
         }
       };
-      this.player.onPlaying = () => {
+      this.player.onPlaying = (index: number) => {
+        if (this.index != index) return;
         setTimeout(() => {
           if (this._ruleState !== undefined && this.player) {
             this.onchangeRuleState(this._ruleState);
@@ -294,21 +301,31 @@ export class VideoPlayerComponent
         }, 1000);
         this.onPlaying.emit();
       };
-      this.player.onRuleStateChanged = (state: boolean) => {
+      this.player.onRuleStateChanged = (index: number, state: boolean) => {
+        if (this.index != index) return;
         // this.saveRuleState(state);
         this.onRuleStateChanged.emit(state);
       };
-      this.player.onStoping = () => {
-        this.onStoping.emit();
+      this.player.onStoping = (index: number) => {
+        if (this.index != index) return;
+        this.onStoping.emit(index);
       };
-      this.player.getPosition = (value: number) => {
+      this.player.getPosition = (index: number, value: number) => {
+        if (this.index != index) return;
         this.getPosition.emit(value);
       };
-      this.player.onButtonClicked = (btn: ButtonName) => {
+      this.player.onButtonClicked = (index: number, btn: ButtonName) => {
+        if (this.index != index) return;
         this.onButtonClicked.emit(btn);
       };
-      this.player.onViewerDoubleClicked = () => {
-        this.onViewerDoubleClicked.emit();
+
+      this.player.onViewerClicked = (index: number) => {
+        if (this.index != index) return;
+        this.onViewerClicked.emit(index);
+      };
+      this.player.onViewerDoubleClicked = (index: number) => {
+        if (this.index != index) return;
+        this.onViewerDoubleClicked.emit(index);
       };
     }
   }

@@ -1,0 +1,20 @@
+<div class="video-player-list">
+  <div
+    [ngClass]="{
+      four: screen === ScreenMode.four,
+      nine: screen === ScreenMode.nine
+    }"
+    [class.selected]="i === index"
+    class="video-player-list-screen"
+    *ngFor="let item of screens; let i = index"
+    (click)="onscreenclicked(i)"
+  >
+    <app-video-player
+      *ngIf="!!datas[i]"
+      [index]="i"
+      [model]="datas[i]"
+      (onViewerClicked)="onscreenclicked($event)"
+      (onStoping)="onstop($event)"
+    ></app-video-player>
+  </div>
+</div>

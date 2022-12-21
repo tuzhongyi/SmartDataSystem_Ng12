@@ -8,6 +8,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Duration } from 'src/app/network/model/duration.model';
+import { Model } from 'src/app/network/model/model.interface';
 import { VideoUrl } from 'src/app/network/model/url.model';
 
 import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
@@ -22,7 +23,7 @@ export class IndexVideoPlayerWindow
     super();
   }
 
-  cameraId?: string;
+  cameras: Model[] = [];
   mode: PlayMode = PlayMode.live;
 
   title: string = '';

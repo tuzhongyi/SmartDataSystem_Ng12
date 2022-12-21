@@ -117,7 +117,7 @@
 >
 </app-picture-window> -->
 
-<howell-video-player-window
+<!-- <howell-video-player-window
   *ngIf="window.video.show"
   [Model]="window.video"
   [style]="window.video.style"
@@ -127,7 +127,19 @@
   [title]="window.video.title"
   [mode]="window.video.mode"
   [time]="window.video.time"
-></howell-video-player-window>
+></howell-video-player-window> -->
+
+<video-multiple-player-window
+  *ngIf="window.video.show"
+  [Model]="window.video"
+  [style]="window.video.style"
+  [business]="window.video"
+  [autoplay]="window.video.autoplay"
+  [models]="window.video.cameras"
+  [title]="window.video.title"
+  [mode]="window.video.mode"
+  [time]="window.video.time"
+></video-multiple-player-window>
 
 <app-video-window
   *ngIf="video.show"

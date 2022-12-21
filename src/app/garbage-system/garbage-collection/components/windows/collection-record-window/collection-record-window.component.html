@@ -171,11 +171,7 @@
               【{{ item.Cameras.length }}】
             </a> -->
 
-            <a
-              class="td-icon"
-              *ngFor="let c of item.Cameras"
-              (click)="clickVideoIcon(item, c)"
-            >
+            <a class="td-icon" (click)="clickVideoIcon(item)">
               <i class="howell-icon-video"></i>
             </a>
           </td>

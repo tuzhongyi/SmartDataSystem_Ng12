@@ -17,14 +17,16 @@ declare class WSPlayerProxy {
   fast(): void;
   changeRuleState(state: boolean): void;
   seek(value: number): void;
-  onStoping: () => void;
-  onPlaying: () => void;
+  onStoping: (index: number) => void;
+  onPlaying: (index: number) => void;
   /** 获取已播放未知 */
-  getPosition: (value: number) => void;
-  onButtonClicked: (btn: ButtonName) => void;
+  getPosition: (index: number, value: number) => void;
+  onButtonClicked: (index: number, btn: ButtonName) => void;
   /** 双击全屏 返回值：是否触发全屏 */
-  onViewerDoubleClicked: () => void;
-  onRuleStateChanged: (state: boolean) => void;
+  onViewerDoubleClicked: (index: number) => void;
+  onViewerClicked: (index: number) => void;
+  onRuleStateChanged: (index: number, state: boolean) => void;
+  destory: () => void;
 }
 
 declare enum ButtonName {

@@ -32,6 +32,8 @@ export class VideoModel {
 
   web?: string;
 
+  index: number = 0;
+
   constructor(
     options?:
       | {
