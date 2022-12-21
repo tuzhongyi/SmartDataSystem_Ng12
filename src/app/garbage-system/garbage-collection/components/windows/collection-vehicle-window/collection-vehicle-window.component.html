@@ -133,7 +133,7 @@
           <td>{{ item.DivisionName }}</td>
           <td>{{ item.PlatNo }}</td>
           <td>
-            <span (click)="clickMap(item, $event)">
+            <!-- <span (click)="clickMap(item, $event)">
               <i
                 class="glyphicon glyphicon-map-marker"
                 [style.fontSize.px]="15"
@@ -141,7 +141,14 @@
             </span>
             <span (click)="clickLine(item, $event)">
               <i class="howell-icon-route"></i
-            ></span>
+            ></span> -->
+
+            <a class="td-icon" (click)="clickMap(item, $event)">
+              <i class="glyphicon glyphicon-map-marker"></i>
+            </a>
+            <a class="td-icon" (click)="clickLine(item, $event)">
+              <i class="howell-icon-route"></i>
+            </a>
           </td>
         </tr>
       </ng-template>

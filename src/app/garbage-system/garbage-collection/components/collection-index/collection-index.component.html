@@ -59,7 +59,9 @@
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-score-pie></collection-score-pie>
+          <collection-score-pie
+            (clickEvent)="clickScorePipe($event)"
+          ></collection-score-pie>
         </div>
       </div>
       <div class="monitor-body__item">
@@ -81,7 +83,9 @@
       </div>
       <div class="monitor-body__item">
         <div class="monitor-body__wrapper">
-          <collection-point-pie></collection-point-pie>
+          <collection-point-pie
+            (clickEvent)="clickPointPipe($event)"
+          ></collection-point-pie>
         </div>
       </div>
     </div>

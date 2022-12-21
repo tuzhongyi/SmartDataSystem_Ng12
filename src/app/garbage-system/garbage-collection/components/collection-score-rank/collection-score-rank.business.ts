@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-09 09:56:20
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-21 14:59:54
+ * @Last Modified time: 2022-12-21 17:12:11
  */
 import { Injectable } from '@angular/core';
 import { data } from 'jquery';
@@ -42,7 +42,7 @@ export class CollectionScoreRankBusiness {
 
   async init(searchInfo: ICollectionScoreRankSearchInfo) {
     let { Data } = await this._listScores(searchInfo);
-    console.log(Data);
+    // console.log(Data);
 
     for (let i = 0; i < 0; i++) {
       let scoreTop = new ScoreTop();

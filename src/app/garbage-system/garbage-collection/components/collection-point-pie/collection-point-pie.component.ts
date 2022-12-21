@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
@@ -7,21 +14,19 @@ import { CollectionPointPieBusiness } from './collection-point-pie.business';
 import { CollectionPointPieConverter } from './collection-point-pie.converte';
 import {
   CollectionPointPieModel,
+  ICollectionPointPieData,
   ICollectionPointPieSearchInfo,
 } from './collection-point-pie.model';
-import { CollectionPointPieInnerBusiness } from './collection-point-pie-inner.business';
 
 @Component({
   selector: 'collection-point-pie',
   templateUrl: './collection-point-pie.component.html',
   styleUrls: ['./collection-point-pie.component.less'],
-  providers: [
-    CollectionPointPieBusiness,
-    CollectionPointPieConverter,
-    CollectionPointPieInnerBusiness,
-  ],
+  providers: [CollectionPointPieBusiness, CollectionPointPieConverter],
 })
 export class CollectionPointPieComponent implements OnInit, OnDestroy {
+  @Output() clickEvent = new EventEmitter();
+
   title = '垃圾收运点位';
 
   searchInfo: ICollectionPointPieSearchInfo = {
@@ -34,7 +39,6 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   merge: EChartsOption = {};
 
   constructor(
-    public innerBusiness: CollectionPointPieInnerBusiness,
     private _business: CollectionPointPieBusiness,
     private _globalStorage: GlobalStorageService
   ) {
@@ -56,6 +60,10 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
     this.merge = {
       ...this.model.PieCharModel.Merge,
     };
+  }
+  clickItem(item: ICollectionPointPieData) {
+    // console.log(item);
+    this.clickEvent.emit(item);
   }
 
   ngOnDestroy(): void {

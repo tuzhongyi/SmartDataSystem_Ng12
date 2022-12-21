@@ -101,6 +101,9 @@ export class CollectionRecordWindowComponent implements OnInit {
       if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
       if (data.beginTime) this.searchInfo.BeginTime = data.beginTime;
       if (data.endTime) this.searchInfo.EndTime = data.endTime;
+      if (data.score) {
+        this.searchInfo.Score = data.score;
+      }
     }
   }
   ngOnInit(): void {

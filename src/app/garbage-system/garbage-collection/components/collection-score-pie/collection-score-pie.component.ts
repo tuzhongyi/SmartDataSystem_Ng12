@@ -1,4 +1,11 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
@@ -7,6 +14,7 @@ import { CollectionScorePieBusiness } from './collection-score-pie.business';
 import { CollectionScorePieConverter } from './collection-score-pie.converter';
 import {
   CollectionScorePieModel,
+  ICollectionScorePieData,
   ICollectionScorePieSearchInfo,
 } from './collection-score-pie.model';
 
@@ -17,6 +25,8 @@ import {
   providers: [CollectionScorePieBusiness, CollectionScorePieConverter],
 })
 export class CollectionScorePieComponent implements OnInit, OnDestroy {
+  @Output() clickEvent = new EventEmitter();
+
   title = '今日垃圾分类评分';
 
   searchInfo: ICollectionScorePieSearchInfo = {
@@ -49,7 +59,10 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
       ...this.model.PieCharModel.Merge,
     };
   }
-
+  clickItem(item: ICollectionScorePieData) {
+    // console.log(item);
+    this.clickEvent.emit(item);
+  }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

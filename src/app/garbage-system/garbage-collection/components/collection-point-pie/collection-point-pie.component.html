@@ -9,7 +9,11 @@
     </div>
     <div class="main__right">
       <div class="point-wrapper">
-        <div class="point-item" *ngFor="let item of model?.Data">
+        <div
+          class="point-item"
+          *ngFor="let item of model?.Data"
+          (click)="clickItem(item)"
+        >
           <span
             class="point-item__label"
             [class]="item.Tagcls"

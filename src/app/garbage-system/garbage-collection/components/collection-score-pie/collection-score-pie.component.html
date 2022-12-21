@@ -9,7 +9,11 @@
     </div>
     <div class="main__right">
       <div class="score-wrapper">
-        <div class="score-item" *ngFor="let item of model?.Data">
+        <div
+          class="score-item"
+          *ngFor="let item of model?.Data"
+          (click)="clickItem(item)"
+        >
           <span
             class="score-item__label"
             [class]="item.Tagcls"

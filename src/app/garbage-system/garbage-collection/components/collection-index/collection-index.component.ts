@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-09 14:38:46
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-21 14:21:51
+ * @Last Modified time: 2022-12-21 17:26:56
  */
 import {
   AfterViewInit,
@@ -42,9 +42,13 @@ import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
+import { ICollectionPointPieData } from '../collection-point-pie/collection-point-pie.model';
+import { CollectionPointWeightComponent } from '../collection-point-weight/collection-point-weight.component';
+import { ICollectionScorePieData } from '../collection-score-pie/collection-score-pie.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import {
   CollectionListWindowComponent,
+  CollectionPointWindowComponent,
   CollectionRecordWindowComponent,
 } from '../windows';
 import { CollectionVehicleWindowComponent } from '../windows/collection-vehicle-window/collection-vehicle-window.component';
@@ -249,6 +253,14 @@ export class GarbageCollectionIndexComponent
       beginTime: Time.curMonth(Date.now()).beginTime,
       endTime: Time.curMonth(Date.now()).endTime,
     });
+  }
+  clickScorePipe(data: ICollectionScorePieData) {
+    this.componentTypeExpression = CollectionRecordWindowComponent;
+    this.createToast({ score: data.Type });
+  }
+  clickPointPipe(data: ICollectionPointPieData) {
+    this.componentTypeExpression = CollectionPointWindowComponent;
+    this.createToast({ type: data.Type });
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
@@ -33,6 +34,7 @@ export class CollectionPointWindowBusiness {
     let params = new GetCollectionPointsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
+    params.Name = searchInfo.Condition;
     params.DivisionIds = searchInfo.DivisionIds;
 
     if (searchInfo.DivisionIds.length == 1) {
@@ -43,11 +45,8 @@ export class CollectionPointWindowBusiness {
         params.DivisionIds = [];
       }
     }
-    params.Name = searchInfo.Condition;
 
-    if (searchInfo.Type) {
-      params.Classification = searchInfo.Type;
-    }
+    if (searchInfo.Type !== '') params.Classification = searchInfo.Type;
     return this._collectionPointsRequest.list(params);
   }
 }

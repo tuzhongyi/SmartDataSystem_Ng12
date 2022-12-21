@@ -27,7 +27,7 @@ export class CollectionRecordWindowBusiness {
     let { Page, Data } = await this._list(searchInfo);
     // Data = [...Data, ...Data];
 
-    console.log(Data);
+    // console.log(Data);
     let data = await this._converter.iterateToModel(Data);
     let res: PagedList<CollectionRecordWindowModel> = {
       Page: Page,

@@ -1,7 +1,6 @@
 import { EChartsOption } from 'echarts';
 import { CommonPieChartModel } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 
 export class CollectionPointPieModel<T = any> {
   PieCharModel!: CommonPieChartModel;
@@ -19,7 +18,7 @@ export interface ICollectionPointPieData<T = any> {
   Count: number;
 
   /**标签类型 */
-  Type: CollectionPointScore;
+  Type: CollectionPointClassification;
 
   /**文本颜色 */
   Tagcls: string;

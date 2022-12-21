@@ -62,6 +62,7 @@ export class CollectionPointWindowComponent implements OnInit {
     let data = this._toastWindowService.data;
     if (data) {
       if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
+      if ('type' in data) this.searchInfo.Type = data.type;
     }
   }
 

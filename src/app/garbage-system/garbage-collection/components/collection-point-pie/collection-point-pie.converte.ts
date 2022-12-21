@@ -60,7 +60,7 @@ export class CollectionPointPieConverter extends AbstractCommonModelConverter<Co
       return {
         Count: num.Number,
         Label: Language.CollectionPointClassification(num.Classification),
-        Type: num.Number,
+        Type: num.Classification,
         Tagcls: CollectionPointClassification[num.Classification],
         RawData: num,
       };
