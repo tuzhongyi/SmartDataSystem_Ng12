@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-09 09:56:20
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-21 13:53:55
+ * @Last Modified time: 2022-12-21 14:59:54
  */
 import { Injectable } from '@angular/core';
 import { data } from 'jquery';
@@ -30,9 +30,12 @@ import {
 } from './collection-score-rank.model';
 
 import * as uuid from 'uuid';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 @Injectable()
 export class CollectionScoreRankBusiness {
   constructor(
+    private _globalStorageService: GlobalStorageService,
+
     private _collectionPointRequest: CollectionPointsRequestService,
     private _converter: CollectionScoreRankConverter
   ) {}
@@ -63,7 +66,17 @@ export class CollectionScoreRankBusiness {
     let params = new GetCollectionPointScoreTopListParams();
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
-    // params.DivisionIds = [searchInfo.DivisionId];
+    params.DivisionIds = searchInfo.DivisionIds;
+
+    if (searchInfo.DivisionIds.length == 1) {
+      if (
+        searchInfo.DivisionIds[0] ==
+        this._globalStorageService.defaultDivisionId
+      ) {
+        params.DivisionIds = [];
+      }
+    }
+
     params.Score = CollectionPointScore.Poor;
 
     return this._collectionPointRequest.statistic.scoreTopList(params);

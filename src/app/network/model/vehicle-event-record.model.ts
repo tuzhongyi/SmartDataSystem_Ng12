@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 16:13:14
  * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 16:45:00
+ * @Last Modified time: 2022-12-21 14:46:13
  */
 import { plainToClass, Transform, TransformFnParams } from 'class-transformer';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';

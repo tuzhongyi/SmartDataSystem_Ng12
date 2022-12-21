@@ -10,7 +10,6 @@ import { Time } from 'src/app/common/tools/time';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { CollectionScoreRankInnerBusiness } from './collection-score-rank-inner.business';
 import { CollectionScoreRankBusiness } from './collection-score-rank.business';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {
@@ -22,11 +21,7 @@ import {
   selector: 'collection-score-rank',
   templateUrl: './collection-score-rank.component.html',
   styleUrls: ['./collection-score-rank.component.less'],
-  providers: [
-    CollectionScoreRankBusiness,
-    CollectionScoreRankInnerBusiness,
-    CollectionScoreRankConverter,
-  ],
+  providers: [CollectionScoreRankBusiness, CollectionScoreRankConverter],
 })
 export class CollectionScoreRankComponent implements OnInit {
   @Input() type: CollectionPointScore = CollectionPointScore.Poor;
@@ -45,13 +40,12 @@ export class CollectionScoreRankComponent implements OnInit {
   searchInfo: ICollectionScoreRankSearchInfo = {
     BeginTime: Time.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
-    DivisionId: this._globalStorage.divisionId,
+    DivisionIds: [this._globalStorage.divisionId],
     Type: CollectionPointScore.Poor,
   };
   subscription: Subscription;
 
   constructor(
-    public innerBusiness: CollectionScoreRankInnerBusiness,
     private _business: CollectionScoreRankBusiness,
     private _globalStorage: GlobalStorageService
   ) {
@@ -65,14 +59,9 @@ export class CollectionScoreRankComponent implements OnInit {
     this._init();
   }
   private async _init() {
-    // this.innerBusiness.searchInfo.DivisionId = this._globalStorage.divisionId;
-    // this.innerBusiness.init();
-
-    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    this.searchInfo.DivisionIds = [this._globalStorage.divisionId];
     this.model = await this._business.init(this.searchInfo);
     this.rankModel = this.model.RankModel;
-
-    // console.log(this.dataSource);
   }
 
   clickRankItem(item: CommonRankData) {

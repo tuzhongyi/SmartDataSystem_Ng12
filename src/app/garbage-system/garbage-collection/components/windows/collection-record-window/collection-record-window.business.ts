@@ -78,9 +78,6 @@ export class CollectionRecordWindowBusiness {
   }
 
   public async getCamera(vehicleId: string, cameraId: string) {
-    return this._garbageVehicleRequest.camera.get(
-      '1',
-      '83f688554c2e44d0b8b7a7237724b090'
-    );
+    return this._garbageVehicleRequest.camera.get(vehicleId, cameraId);
   }
 }

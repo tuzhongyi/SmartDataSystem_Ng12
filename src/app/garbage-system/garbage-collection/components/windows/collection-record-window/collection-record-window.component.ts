@@ -58,18 +58,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   @ViewChild(CommonTreeSelecComponent)
   commonTreeSelect!: CommonTreeSelecComponent;
 
-  tdWidth = [
-    '10%',
-    '10%',
-    '10%',
-    '10%',
-    '10%',
-    '10%',
-    '10%',
-    '10%',
-    '15%',
-    '10%',
-  ];
+  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '15%', '10%'];
   dataSource: CollectionRecordWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
@@ -136,44 +125,52 @@ export class CollectionRecordWindowComponent implements OnInit {
   async clickImage(
     item: CollectionRecordWindowModel<GarbageCollectionEventRecord>
   ) {
-    let camera = await this._business.getCamera(
-      this._globalStorage.divisionId,
-      item.Id
-    );
+    if (item.RawData) {
+      try {
+      } catch (e) {
+        console.log('sdfdf');
+      }
+      let camera = await this._business.getCamera(
+        item.RawData.Data.VehicleId,
+        item.Id
+      );
 
-    let args = new PictureArgs();
-    args.id = camera.Id;
-    args.title = camera.Name;
-    args.url = item.ImageUrl;
+      let args = new PictureArgs();
+      args.id = camera.Id;
+      args.title = camera.Name;
+      args.url = item.ImageUrl;
 
-    this._toastWindowService.customEvent.emit({
-      Type: ToastWindowType.ClickImage,
-      Data: args,
-      Component: CollectionRecordWindowComponent,
-      Close: false,
-    });
+      this._toastWindowService.customEvent.emit({
+        Type: ToastWindowType.ClickImage,
+        Data: args,
+        Component: CollectionRecordWindowComponent,
+        Close: false,
+      });
+    }
   }
 
   async clickVideoIcon(item: CollectionRecordWindowModel) {
-    let camera = await this._business.getCamera(
-      this._globalStorage.divisionId,
-      item.Id
-    );
+    if (item.RawData) {
+      let camera = await this._business.getCamera(
+        item.RawData.Data.VehicleId,
+        item.Id
+      );
 
-    let args = new VideoArgs();
-    args.autoplay = true;
-    args.cameraId = camera.Id;
-    args.data = camera;
-    args.mode = PlayMode.vod;
-    args.time = item.RawData?.EventTime;
-    args.title = camera.Name;
+      let args = new VideoArgs();
+      args.autoplay = true;
+      args.cameraId = camera.Id;
+      args.data = camera;
+      args.mode = PlayMode.vod;
+      args.time = item.RawData?.EventTime;
+      args.title = camera.Name;
 
-    this._toastWindowService.customEvent.emit({
-      Type: ToastWindowType.ClickVideo,
-      Data: args,
-      Component: CollectionRecordWindowComponent,
-      Close: false,
-    });
+      this._toastWindowService.customEvent.emit({
+        Type: ToastWindowType.ClickVideo,
+        Data: args,
+        Component: CollectionRecordWindowComponent,
+        Close: false,
+      });
+    }
   }
 
   changeBegin(date: Date) {
