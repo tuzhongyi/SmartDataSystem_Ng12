@@ -4,6 +4,19 @@
     <div class="filter-wrapper">
       <div class="filter-group">
         <div class="title">
+          <span class="hw-form-label">资源名称:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="title">
           <span class="hw-form-label">开始时间</span>
         </div>
         <div class="content">
@@ -63,18 +76,6 @@
             <option [value]="CollectionPointScore.Average">中评</option>
             <option [value]="CollectionPointScore.Poor">差评</option>
           </select>
-        </div>
-      </div>
-      <div class="filter-group">
-        <div class="title">
-          <span class="hw-form-label">名称:</span>
-        </div>
-        <div class="content">
-          <input
-            type="text"
-            [(ngModel)]="searchInfo.Condition"
-            (keyup.enter)="search()"
-          />
         </div>
       </div>
 
