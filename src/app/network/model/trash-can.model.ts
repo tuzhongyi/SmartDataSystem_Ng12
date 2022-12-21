@@ -42,7 +42,7 @@ export class CollectionTrashCan implements IModel {
   /**	String	垃圾桶编号，RFID编号	M	*/
   No!: string;
   /**	Int32	垃圾桶类型	O	*/
-  CanType?: number;
+  CanType?: TrashCanType;
   /**	Double	容积，单位：L，默认：240	O	*/
   MaxVolume?: number;
   /**	String	垃圾桶地址	O	*/

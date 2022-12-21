@@ -50,7 +50,6 @@ export class GarbageVehicleCameraDetailsWindowComponent
   vehicles: GarbageVehicle[] = [];
 
   ngOnInit(): void {
-    this.initTypes();
     this.initVehicles();
   }
   ngOnChanges(changes: SimpleChanges): void {
@@ -64,14 +63,6 @@ export class GarbageVehicleCameraDetailsWindowComponent
     }
   }
 
-  initTypes() {
-    let e = new Enum(VehiclePositionNo);
-    let array = e.toArray();
-    array.unshift(undefined);
-    array.forEach((x) => {
-      this.positions.push(x);
-    });
-  }
   async initVehicles() {
     this.vehicles = await this.business.get();
   }

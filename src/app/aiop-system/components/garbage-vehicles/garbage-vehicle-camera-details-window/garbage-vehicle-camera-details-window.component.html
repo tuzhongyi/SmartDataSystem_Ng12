@@ -31,31 +31,11 @@
           <div
             class="garbage-vehicle-camera-details-window-content-form-item-value"
           >
-            <select [(ngModel)]="model.PositionNo">
-              <option *ngFor="let item of positions" [ngValue]="item">
-                {{ item | language_position_no_pipe }}
-              </option>
-            </select>
+            <collection-vehicle-position-no-select
+              [(selected)]="model.PositionNo"
+            ></collection-vehicle-position-no-select>
           </div>
         </div>
-        <!-- <div
-          class="garbage-vehicle-camera-details-window-content-form-item full"
-        >
-          <div
-            class="garbage-vehicle-camera-details-window-content-form-item-title hw-form-label"
-          >
-            清运车
-          </div>
-          <div
-            class="garbage-vehicle-camera-details-window-content-form-item-value"
-          >
-            <select [(ngModel)]="model.GarbageVehicleId">
-              <option [ngValue]="item.Id" *ngFor="let item of vehicles">
-                {{ item.Name }}
-              </option>
-            </select>
-          </div>
-        </div> -->
       </div>
     </div>
     <div class="garbage-vehicle-camera-details-window-footer">

@@ -11,7 +11,10 @@
     >
     </collection-map-route-query>
   </div>
-  <div class="panel collection-map-route-video" *ngIf="display.video">
+  <div
+    class="panel collection-map-route-video"
+    *ngIf="display.info || display.video"
+  >
     <collection-map-route-video
       *ngIf="!!model"
       [source]="model"
@@ -23,6 +26,14 @@
       (opened)="onvideoopened()"
     >
     </collection-map-route-video>
+  </div>
+  <div class="collection-map-route-operation" *ngIf="display.operation">
+    <div class="vehicle" (click)="onvehicleclick()">
+      <i class="howell-icon-dustcart"></i>
+    </div>
+    <div (click)="onvideoclick()">
+      <i class="howell-icon-video"></i>
+    </div>
   </div>
   <div class="panel collection-map-route-controls" *ngIf="!!model">
     <collection-map-route-control

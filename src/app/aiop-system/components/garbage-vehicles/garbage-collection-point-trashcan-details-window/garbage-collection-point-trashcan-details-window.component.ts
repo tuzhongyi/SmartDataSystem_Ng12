@@ -42,11 +42,7 @@ export class GarbageCollectionPointTrashcanDetailsWindowComponent
 
   model?: CollectionTrashCan;
 
-  types: TrashCanType[] = [];
-
-  ngOnInit(): void {
-    this.initTypes();
-  }
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.open) {
       if (this.open) {
@@ -56,14 +52,6 @@ export class GarbageCollectionPointTrashcanDetailsWindowComponent
         });
       }
     }
-  }
-
-  initTypes() {
-    let e = new Enum(TrashCanType);
-    let array = e.toArray();
-    array.forEach((x) => {
-      this.types.push(x);
-    });
   }
 
   onMaxVolumeChanged(value: any) {

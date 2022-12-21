@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
@@ -20,7 +21,7 @@ export class CollectionMapRouteDeviceListBusiness
     let data = await this.getData(name);
     let model = this.Converter.Convert(data);
     model = model.sort((a, b) => {
-      return a.name.length - b.name.length || a.name.localeCompare(b.name);
+      return LocaleCompare.compare(b.name, a.name);
     });
     return model;
   }

@@ -49,7 +49,6 @@ export class Creater {
     model.CreateTime = new Date();
     model.UpdateTime = new Date();
     model.MaxVolume = 240;
-    model.CanType = TrashCanType.Dry;
     return model;
   }
 

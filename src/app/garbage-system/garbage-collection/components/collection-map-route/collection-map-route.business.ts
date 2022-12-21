@@ -59,7 +59,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
   ready(points: GisRoutePoint[]) {
     wait(
       () => {
-        return !!this.client && this.loaded;
+        return !!this.client && this.loaded && !!this.point;
       },
       () => {
         if (this.route) {

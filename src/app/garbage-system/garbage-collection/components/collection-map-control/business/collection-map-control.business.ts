@@ -89,6 +89,7 @@ export class CollectionMapControlBusiness {
         const data = datas[i];
         if (!data.GisPoint) continue;
         let point = this.converter.GarbageVehicle(data);
+        point.url = 'img/route/vehicle.png';
         this.mapClient.Point.Create(point);
         this.source.points[point.id] = point;
       }
@@ -117,10 +118,15 @@ export class CollectionMapControlBusiness {
     }
   }
 
-  pointSelect(vehicleId: string) {
+  pointSelect(vehicle: GarbageVehicle) {
     if (this.mapClient) {
-      let point = this.source.points[vehicleId];
-      this.mapClient.Viewer.MoveTo(point.position);
+      let point = this.source.points[vehicle.Id];
+      if (vehicle.GisPoint) {
+        point.position = this.converter.GisPoint(vehicle.GisPoint);
+      }
+      if (point && point.position) {
+        this.mapClient.Viewer.MoveTo(point.position);
+      }
     }
   }
 

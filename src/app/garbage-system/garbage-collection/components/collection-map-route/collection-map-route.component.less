@@ -60,4 +60,50 @@
 
     border: 1px solid #5c6ebf;
   }
+
+  &-operation {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    right: 30px;
+    bottom: calc(@padding + @control-bar-height + @control-bar-margin);
+    font-size: 20px;
+    color: #cfd7ff;
+    position: absolute;
+
+    &>* {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: #07062166;
+      border: 1px solid #3283e5;
+      box-shadow: #3283e5 0px 0px 15px -1px inset;
+      margin: 0 6px;
+      cursor: pointer;
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      &:hover {
+        border-color: #65a2ee;
+        box-shadow: #65a2ee 0px 0px 15px -1px inset;
+      }
+    }
+
+    .vehicle {
+      font-size: 26px;
+      -moz-transform: scaleX(-1);
+      -webkit-transform: scaleX(-1);
+      -o-transform: scaleX(-1);
+      transform: scaleX(-1);
+      filter: FlipH;
+    }
+  }
 }

@@ -33,7 +33,9 @@ export class CollectionMapRouteComponent implements OnInit {
   ) {}
 
   display = {
+    info: false,
     video: false,
+    operation: false,
   };
 
   play: EventEmitter<Duration> = new EventEmitter();
@@ -78,7 +80,9 @@ export class CollectionMapRouteComponent implements OnInit {
   //#region list
   onselect(item: IModel) {
     this.model = item as GarbageVehicle;
-    this.display.video = true;
+    if (this.display.video === false) {
+      this.display.operation = true;
+    }
     this.business.load(this.model);
   }
   //#endregion
@@ -98,9 +102,6 @@ export class CollectionMapRouteComponent implements OnInit {
     }
     if (this.display.video) {
       this.play.emit(this.duration);
-    } else {
-      this.display.video = true;
-      this.wantplay = true;
     }
   }
   onroute(date: Date) {
@@ -115,14 +116,13 @@ export class CollectionMapRouteComponent implements OnInit {
     }
     if (this.display.video) {
       this.play.emit(this.duration);
-    } else {
-      this.display.video = true;
-      this.wantplay = true;
     }
   }
   //#endregion
   onvideoclose() {
     this.display.video = false;
+    this.display.info = false;
+    this.display.operation = true;
     this.play.unsubscribe();
     this.play = new EventEmitter();
   }
@@ -131,5 +131,17 @@ export class CollectionMapRouteComponent implements OnInit {
       this.play.emit(this.duration);
     }
     this.wantplay = false;
+
+    this.display.operation = false;
+  }
+
+  onvehicleclick() {
+    this.display.info = true;
+    this.display.video = false;
+  }
+  onvideoclick() {
+    this.wantplay = true;
+    this.display.video = true;
+    this.display.info = false;
   }
 }

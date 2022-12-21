@@ -46,11 +46,9 @@
           <div
             class="garbage-collection-point-trashcan-details-window-content-form-item-value"
           >
-            <select [(ngModel)]="model.CanType">
-              <option *ngFor="let item of types" [ngValue]="item">
-                {{ item | language_trashcan_type_pipe }}
-              </option>
-            </select>
+            <trashcan-type-select
+              [(selected)]="model.CanType"
+            ></trashcan-type-select>
           </div>
         </div>
 

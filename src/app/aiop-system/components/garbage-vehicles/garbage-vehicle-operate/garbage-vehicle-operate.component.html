@@ -29,14 +29,9 @@
           <span>类型</span>
         </div>
         <div class="garbage-vehicle-operate-content-form-item-value">
-          <select
-            name="language_vehicle_type_pipe"
-            [(ngModel)]="source.VehicleType"
-          >
-            <option *ngFor="let s of vehicleTypes" [ngValue]="s.value">
-              {{ s.language }}
-            </option>
-          </select>
+          <collection-vehicle-type-select
+            [(selected)]="source.VehicleType"
+          ></collection-vehicle-type-select>
         </div>
       </div>
       <div class="garbage-vehicle-operate-content-form-item">

@@ -41,14 +41,13 @@ export class CollectionMapRouteControlChartsBusiness
   run(date: Date, offset: number = 0) {
     this.handle = setTimeout(() => {
       let time = new Date(date.getTime() + offset);
-      this.triggerByTime(time);
-
+      let next = this.triggerByTime(time);
       this.run(date, (offset += 1000));
     }, 1000 / this.speed);
   }
   stop() {
     if (this.handle) {
-      clearInterval(this.handle);
+      clearTimeout(this.handle);
     }
   }
   async getData(
@@ -96,7 +95,6 @@ export class CollectionMapRouteControlChartsBusiness
     }
     // this.series[0].data = data;
     this.chart.setOption(option);
-    console.log(this.chart);
     return data;
   }
 
@@ -104,18 +102,14 @@ export class CollectionMapRouteControlChartsBusiness
 
   private eventRegist(chart: echarts.ECharts) {
     // chart.on('click', 'series.line', this.onScoreClicked.bind(this));
-    chart.on('click', 'series.line', (e: any) => {
-      console.log('series.line', e);
-    });
+    chart.on('click', 'series.line', (e: any) => {});
     chart.on('click', 'series.scatter', (e: any) => {
-      console.log('series.scatter', e);
       let index = this.getXAxisIndex(e.data[0]);
       let time = this.xAxis.data[index] as TimeString;
-      console.log('series.scatter', time);
+
       this.scoreclick.emit(time.date);
     });
     chart.getZr().on('click', (params: any) => {
-      console.log('zr');
       let pointInPixel = [params.offsetX, params.offsetY];
       let grid = chart.convertFromPixel({ seriesIndex: 0 }, pointInPixel);
       let index = grid[0];
@@ -139,13 +133,25 @@ export class CollectionMapRouteControlChartsBusiness
         return true;
       }
     });
-
     this.chart?.setOption({ series: this.series });
+
+    index = (this.serieRoute.data as Array<any>).findIndex((x) => {
+      let time = formatDate(now, this.formater, 'en');
+      if (x.name && x.value) {
+        return x.name.getTime() > now.getTime() && x.value[1] !== null;
+      }
+      return false;
+    });
+    if (index < 0) {
+      console.log('index < 0');
+    }
+    return this.serieRoute.data[index + 1];
   }
   private triggerByTime(time: Date) {
     let index = this.getXAxisIndex(time);
     if (index < 0) return;
-    this.triggerByIndex(index, time);
+
+    return this.triggerByIndex(index, time);
   }
 
   /** X 轴 */
@@ -398,7 +404,6 @@ export class CollectionMapRouteControlChartsBusiness
       return [pt[0] - 28, '-10%'];
     },
     formatter: (params: any) => {
-      console.log(params);
       if (params && params.length > 0) {
         let i = params.length - 1;
         let item;

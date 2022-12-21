@@ -147,7 +147,7 @@ export class CollectionMapControlComponent
     if (changes.position) {
       if (this.position) {
         this.position.subscribe((x) => {
-          this.amap.pointSelect(x.Id);
+          this.amap.pointSelect(x);
         });
       }
     }

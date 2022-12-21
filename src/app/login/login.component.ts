@@ -29,6 +29,7 @@ import { SessionStorageService } from '../common/service/session-storage.service
 import { GlobalStorageService } from '../common/service/global-storage.service';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
+import { Md5 } from 'ts-md5';
 
 /**
  *  LoginComponent 需要用到 form 指令，
@@ -156,7 +157,35 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl(RoutePath.password_get_back);
   }
 
+  test(
+    nonce: string,
+    nc: string,
+    cnonce: string,
+    username: string = 'yangpuqu',
+    password: string = '95buz5n8',
+    qop: string = 'auth',
+    method = 'GET',
+    uri = '/howell/ver10/data_service/user_system/Users/Login/yangpuqu',
+    realm: string = 'howell.net.cn'
+  ) {
+    const hash1 = Md5.hashStr(`${username}:${realm}:${password}`);
+    console.log('hash1:', hash1);
+    const hash2 = Md5.hashStr(`${method}:${uri}`);
+    console.log('hash2:', hash2);
+    let a = `${hash1}:${nonce}:${nc}:${cnonce}:${qop}:${hash2}`;
+    console.log(a);
+    const response = Md5.hashStr(a);
+    return response;
+  }
+
   async login() {
+    // let nonce = 'fc5f3c277dba491eaeedd77d25e41dd1'; //'ad2af40c5f244b77afa15b0e62e572c0';
+    // let nc = '00000001'; //'00000032';
+    // let cnonce = '9p9xmi9o'; //'ne02coyj';
+    // let request = this.test(nonce, nc, cnonce);
+    // console.log('response:', request);
+    // return;
+
     if (this._checkForm()) {
       this.disableLogin = true;
       try {
