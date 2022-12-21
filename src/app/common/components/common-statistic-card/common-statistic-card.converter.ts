@@ -8,7 +8,7 @@ import {
   CollectionMemberWindowComponent,
   CollectionPointWindowComponent,
   CollectionVehicleWindowComponent,
-  CollectionWeightWindowComponent,
+  CollectionRecordWindowComponent,
 } from 'src/app/garbage-system/garbage-collection/components/windows';
 import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
@@ -65,7 +65,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
     // 直接使用属性值
     model.Content = source.TotalWeight.toString();
 
-    model.componentExpression = CollectionWeightWindowComponent;
+    model.componentExpression = CollectionRecordWindowComponent;
     return model;
   }
   private _fromCollectionMember(source: PagedList<CollectionMember>) {
@@ -99,7 +99,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
 
     model = new CommonStatisticCardModel();
     model.Title = '垃圾清运数量(吨)';
-    model.componentExpression = CollectionWeightWindowComponent;
+    model.componentExpression = CollectionRecordWindowComponent;
     model.Content = source.Weight ? source.Weight.toString() : '0';
     res.push(model);
 

@@ -35,7 +35,7 @@ import {
   CollectionListWindowComponent,
   CollectionMemberWindowComponent,
   CollectionPointWindowComponent,
-  CollectionWeightWindowComponent,
+  CollectionRecordWindowComponent,
   CollectionVehicleWindowComponent,
 } from './windows';
 import { CollectionDivisionTreeComponent } from './collection-division-tree/collection-division-tree.component';
@@ -62,7 +62,7 @@ import { CollectionDivisionTreeComponent } from './collection-division-tree/coll
     CollectionListWindowComponent,
     CollectionMemberWindowComponent,
     CollectionPointWindowComponent,
-    CollectionWeightWindowComponent,
+    CollectionRecordWindowComponent,
     CollectionDivisionTreeComponent,
   ],
   imports: [

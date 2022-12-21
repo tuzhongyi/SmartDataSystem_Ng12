@@ -1,6 +1,7 @@
-import { Component, OnInit, Optional } from '@angular/core';
+import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { CollectionDivisionTreeBusiness } from 'src/app/common/business/collection-division-tree.business';
+import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
@@ -24,6 +25,9 @@ import {
   ],
 })
 export class CollectionPointWindowComponent implements OnInit {
+  @ViewChild(CommonTreeSelecComponent)
+  commonTreeSelect!: CommonTreeSelecComponent;
+
   CollectionPointClassification = CollectionPointClassification;
 
   tdWidth = ['10%', '10%', '10%', '10%'];
@@ -83,6 +87,8 @@ export class CollectionPointWindowComponent implements OnInit {
   }
   selectTreeNode(nodes: CommonFlatNode[]) {
     // console.log('外部结果', nodes)
+    this.commonTreeSelect.closeDropDown();
+
     this.selectedNodes = nodes;
 
     this.searchInfo.DivisionIds = this.selectedNodes.map((n) => n.Id);

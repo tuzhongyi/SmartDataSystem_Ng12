@@ -1,4 +1,6 @@
-export class CollectionWeightWindowModel<T = any> {
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
+
+export class CollectionRecordWindowModel<T = any> {
   Id!: string;
   ImageUrl!: string;
   ResourceName!: string;
@@ -13,11 +15,12 @@ export class CollectionWeightWindowModel<T = any> {
   RawData?: T;
 }
 
-export interface ICollectionWeightWindowSearchInfo {
+export interface ICollectionRecordWindowSearchInfo {
   DivisionIds: string[];
   PageIndex: number;
   PageSize: number;
   BeginTime: Date;
   EndTime: Date;
   Condition: string;
+  Score: CollectionPointScore | '';
 }

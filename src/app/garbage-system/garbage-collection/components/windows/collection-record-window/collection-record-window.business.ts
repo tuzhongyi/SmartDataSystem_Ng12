@@ -3,39 +3,34 @@ import { param } from 'jquery';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
-import { Time } from 'src/app/common/tools/time';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
-import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
-import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
-import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 
-import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
+import { CollectionRecordWindowConverter } from './collection-record-window.converter';
 import {
-  CollectionWeightWindowModel,
-  ICollectionWeightWindowSearchInfo,
-} from './collection-weight-window.model';
+  CollectionRecordWindowModel,
+  ICollectionRecordWindowSearchInfo,
+} from './collection-record-window.model';
 
 @Injectable()
-export class CollectionWeightWindowBusiness {
+export class CollectionRecordWindowBusiness {
   constructor(
     private _globalStorageService: GlobalStorageService,
 
     private _collectionEventRequest: CollectionEventRequestService,
     private _garbageVehicleRequest: GarbageVehicleRequestService,
-    private _converter: CollectionWeightWindowConverter
+    private _converter: CollectionRecordWindowConverter
   ) {}
-  async init(searchInfo: ICollectionWeightWindowSearchInfo) {
+  async init(searchInfo: ICollectionRecordWindowSearchInfo) {
     let { Page, Data } = await this._list(searchInfo);
     // Data = [...Data, ...Data];
 
     console.log(Data);
     let data = await this._converter.iterateToModel(Data);
     for (let i = 0; i < 0; i++) {
-      let model = new CollectionWeightWindowModel();
+      let model = new CollectionRecordWindowModel();
       model.Id = ((Math.random() * 1111) >> 0).toString();
       model.ResourceName = Language.json.Unknow;
       model.VehicleName = '121';
@@ -50,14 +45,14 @@ export class CollectionWeightWindowBusiness {
 
       data.push(model);
     }
-    let res: PagedList<CollectionWeightWindowModel> = {
+    let res: PagedList<CollectionRecordWindowModel> = {
       Page: Page,
       Data: data,
     };
 
     return res;
   }
-  private _list(searchInfo: ICollectionWeightWindowSearchInfo) {
+  private _list(searchInfo: ICollectionRecordWindowSearchInfo) {
     let params = new GetGarbageCollectionEventRecordsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
@@ -72,6 +67,10 @@ export class CollectionWeightWindowBusiness {
       ) {
         params.DivisionIds = [];
       }
+    }
+
+    if (searchInfo.Score) {
+      params.Score = searchInfo.Score;
     }
 
     params.ResourceName = searchInfo.Condition;

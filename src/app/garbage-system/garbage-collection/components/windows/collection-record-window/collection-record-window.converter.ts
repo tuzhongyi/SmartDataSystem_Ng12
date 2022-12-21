@@ -10,10 +10,10 @@ import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
-import { CollectionWeightWindowModel } from './collection-weight-window.model';
+import { CollectionRecordWindowModel } from './collection-record-window.model';
 
 @Injectable()
-export class CollectionWeightWindowConverter extends AbstractCommonModelPromiseConverter<CollectionWeightWindowModel> {
+export class CollectionRecordWindowConverter extends AbstractCommonModelPromiseConverter<CollectionRecordWindowModel> {
   private _divisonMap = new Map<string, Division>();
 
   constructor() {
@@ -29,7 +29,7 @@ export class CollectionWeightWindowConverter extends AbstractCommonModelPromiseC
   private async _fromGarbageCollectionEventRecord(
     source: GarbageCollectionEventRecord
   ) {
-    let model = new CollectionWeightWindowModel();
+    let model = new CollectionRecordWindowModel();
     model.Id = source.EventId;
     model.ResourceName = source.ResourceName ?? Language.json.Unknow;
     model.VehicleName = source.Data.VehicleName;

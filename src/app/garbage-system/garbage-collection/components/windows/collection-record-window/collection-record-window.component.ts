@@ -29,31 +29,48 @@ import {
 } from 'src/app/view-model/image-control.model';
 import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
 import { CollectionDivisionTreeBusiness } from '../../../../../common/business/collection-division-tree.business';
-import { CollectionWeightWindowBusiness } from './collection-weight-window.business';
-import { CollectionWeightWindowConverter } from './collection-weight-window.converter';
+import { CollectionRecordWindowBusiness } from './collection-record-window.business';
+import { CollectionRecordWindowConverter } from './collection-record-window.converter';
 import {
-  CollectionWeightWindowModel,
-  ICollectionWeightWindowSearchInfo,
-} from './collection-weight-window.model';
+  CollectionRecordWindowModel,
+  ICollectionRecordWindowSearchInfo,
+} from './collection-record-window.model';
 import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
+import { Language } from 'src/app/common/tools/language';
 
 @Component({
-  selector: 'collection-weight-window',
-  templateUrl: './collection-weight-window.component.html',
-  styleUrls: ['./collection-weight-window.component.less'],
+  selector: 'collection-record-window',
+  templateUrl: './collection-record-window.component.html',
+  styleUrls: ['./collection-record-window.component.less'],
   providers: [
-    CollectionWeightWindowBusiness,
-    CollectionWeightWindowConverter,
+    CollectionRecordWindowBusiness,
+    CollectionRecordWindowConverter,
     ImageControlConverter,
     CollectionDivisionTreeBusiness,
   ],
 })
-export class CollectionWeightWindowComponent implements OnInit {
+export class CollectionRecordWindowComponent implements OnInit {
+  CollectionPointScore = CollectionPointScore;
+  Language = Language;
+  SelectStrategy = SelectStrategy;
+
   @ViewChild(CommonTreeSelecComponent)
   commonTreeSelect!: CommonTreeSelecComponent;
 
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '15%', '10%'];
-  dataSource: CollectionWeightWindowModel[] = [];
+  tdWidth = [
+    '10%',
+    '10%',
+    '10%',
+    '10%',
+    '10%',
+    '10%',
+    '10%',
+    '10%',
+    '15%',
+    '10%',
+  ];
+  dataSource: CollectionRecordWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
 
@@ -67,13 +84,14 @@ export class CollectionWeightWindowComponent implements OnInit {
 
   disableSearch = false;
   today = new Date();
-  searchInfo: ICollectionWeightWindowSearchInfo = {
+  searchInfo: ICollectionRecordWindowSearchInfo = {
     DivisionIds: [this._globalStorage.divisionId],
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
     BeginTime: Time.beginTime(Date.now()),
     EndTime: Time.endTime(Date.now()),
+    Score: '',
   };
 
   DateTimePickerView = DateTimePickerView;
@@ -84,7 +102,7 @@ export class CollectionWeightWindowComponent implements OnInit {
   constructor(
     public collectionDivisionTreeBusiness: CollectionDivisionTreeBusiness,
     private _globalStorage: GlobalStorageService,
-    private _business: CollectionWeightWindowBusiness,
+    private _business: CollectionRecordWindowBusiness,
     private _toastWindowService: ToastWindowService
   ) {
     let data = this._toastWindowService.data;
@@ -114,7 +132,7 @@ export class CollectionWeightWindowComponent implements OnInit {
   }
 
   async clickImage(
-    item: CollectionWeightWindowModel<GarbageCollectionEventRecord>
+    item: CollectionRecordWindowModel<GarbageCollectionEventRecord>
   ) {
     let camera = await this._business.getCamera(
       this._globalStorage.divisionId,
@@ -129,12 +147,12 @@ export class CollectionWeightWindowComponent implements OnInit {
     this._toastWindowService.customEvent.emit({
       Type: ToastWindowType.ClickImage,
       Data: args,
-      Component: CollectionWeightWindowComponent,
+      Component: CollectionRecordWindowComponent,
       Close: false,
     });
   }
 
-  async clickVideoIcon(item: CollectionWeightWindowModel) {
+  async clickVideoIcon(item: CollectionRecordWindowModel) {
     let camera = await this._business.getCamera(
       this._globalStorage.divisionId,
       item.Id
@@ -151,7 +169,7 @@ export class CollectionWeightWindowComponent implements OnInit {
     this._toastWindowService.customEvent.emit({
       Type: ToastWindowType.ClickVideo,
       Data: args,
-      Component: CollectionWeightWindowComponent,
+      Component: CollectionRecordWindowComponent,
       Close: false,
     });
   }
@@ -163,7 +181,8 @@ export class CollectionWeightWindowComponent implements OnInit {
     this.searchInfo.EndTime = date;
   }
   selectTreeNode(nodes: CommonFlatNode[]) {
-    // console.log('外部结果', nodes)
+    this.commonTreeSelect.closeDropDown();
+
     this.selectedNodes = nodes;
 
     this.searchInfo.DivisionIds = this.selectedNodes.map((n) => n.Id);

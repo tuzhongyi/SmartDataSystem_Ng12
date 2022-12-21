@@ -33,11 +33,16 @@ export class CollectionPointWindowBusiness {
     let params = new GetCollectionPointsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
-    if (
-      this._globalStorageService.defaultDivisionId !==
-      this._globalStorageService.divisionId
-    )
-      params.DivisionIds = searchInfo.DivisionIds;
+    params.DivisionIds = searchInfo.DivisionIds;
+
+    if (searchInfo.DivisionIds.length == 1) {
+      if (
+        searchInfo.DivisionIds[0] ==
+        this._globalStorageService.defaultDivisionId
+      ) {
+        params.DivisionIds = [];
+      }
+    }
     params.Name = searchInfo.Condition;
 
     if (searchInfo.Type) {

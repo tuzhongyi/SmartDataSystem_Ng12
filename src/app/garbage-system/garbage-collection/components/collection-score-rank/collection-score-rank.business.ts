@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-09 09:56:20
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-13 11:15:18
+ * @Last Modified time: 2022-12-21 13:53:55
  */
 import { Injectable } from '@angular/core';
 import { data } from 'jquery';
@@ -39,7 +39,7 @@ export class CollectionScoreRankBusiness {
 
   async init(searchInfo: ICollectionScoreRankSearchInfo) {
     let { Data } = await this._listScores(searchInfo);
-    // console.log(Data);
+    console.log(Data);
 
     for (let i = 0; i < 0; i++) {
       let scoreTop = new ScoreTop();
@@ -63,8 +63,8 @@ export class CollectionScoreRankBusiness {
     let params = new GetCollectionPointScoreTopListParams();
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
-    params.DivisionIds = [searchInfo.DivisionId];
-    params.Score = CollectionPointScore.Good;
+    // params.DivisionIds = [searchInfo.DivisionId];
+    params.Score = CollectionPointScore.Poor;
 
     return this._collectionPointRequest.statistic.scoreTopList(params);
   }

@@ -1,4 +1,4 @@
-<div class="collection-weight-window vertical-layout">
+<div class="collection-record-window vertical-layout">
   <div class="vertical-header">
     <div class="hw-second-title">清运记录</div>
     <div class="filter-wrapper">
@@ -36,6 +36,7 @@
           />
         </div>
       </div>
+
       <div class="filter-group">
         <div class="title">
           <span class="hw-form-label">行政区</span>
@@ -49,6 +50,31 @@
               (selectTreeNode)="selectTreeNode($event)"
             ></howell-division-tree>
           </common-tree-select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">评分:</span>
+        </div>
+        <div class="content">
+          <select [(ngModel)]="searchInfo.Score">
+            <option value="">全部</option>
+            <option [value]="CollectionPointScore.Good">好评</option>
+            <option [value]="CollectionPointScore.Average">中评</option>
+            <option [value]="CollectionPointScore.Poor">差评</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">名称:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
         </div>
       </div>
 
@@ -74,7 +100,7 @@
               <th>区划</th>
               <th>收运点</th>
               <th>重量</th>
-              <!-- <th>评分</th> -->
+              <th>评分</th>
               <th>上报时间</th>
               <th>操作</th>
             </tr>
@@ -131,7 +157,7 @@
           <td>{{ item.DivisionName }}</td>
           <td>{{ item.CollectionPointName }}</td>
           <td>{{ item.Weight }}</td>
-          <!-- <td>{{ item.Score }}</td> -->
+          <td>{{ item.Score }}</td>
           <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
           <td>
             <a class="td-icon" (click)="clickVideoIcon(item)"

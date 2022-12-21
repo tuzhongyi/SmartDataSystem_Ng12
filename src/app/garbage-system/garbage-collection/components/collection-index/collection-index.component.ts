@@ -43,7 +43,7 @@ import { ICollectionDeviceStateData } from '../collection-device-state/collectio
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import {
   CollectionListWindowComponent,
-  CollectionWeightWindowComponent,
+  CollectionRecordWindowComponent,
 } from '../windows';
 import { CollectionVehicleWindowComponent } from '../windows/collection-vehicle-window/collection-vehicle-window.component';
 import { CollectionStatisticCardBusiness } from './business/collection-statistic-card.bussiness';
@@ -164,7 +164,7 @@ export class GarbageCollectionIndexComponent
             }
           }
           break;
-        case CollectionWeightWindowComponent:
+        case CollectionRecordWindowComponent:
           let args: PictureArgs | VideoArgs;
           switch (data.Type) {
             case ToastWindowType.ClickImage:
@@ -242,7 +242,7 @@ export class GarbageCollectionIndexComponent
     });
   }
   clickScoreRank(data: CommonRankData) {
-    this.componentTypeExpression = CollectionWeightWindowComponent;
+    this.componentTypeExpression = CollectionRecordWindowComponent;
     this.createToast({});
   }
   clickCard(data: CommonStatisticCardModel) {
