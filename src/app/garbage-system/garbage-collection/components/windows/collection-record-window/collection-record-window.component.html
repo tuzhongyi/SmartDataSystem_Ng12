@@ -95,7 +95,7 @@
           <thead>
             <tr>
               <!-- <th>图片</th> -->
-              <th>资源名称</th>
+              <!-- <th>资源名称</th> -->
               <th>车辆名称</th>
               <th>清运人员</th>
               <th>区划</th>
@@ -152,7 +152,7 @@
           <!-- <td (click)="clickImage(item)" style="display: none">
             <img [src]="item.ImageUrl" alt="" />
           </td> -->
-          <td>{{ item.ResourceName }}</td>
+          <!-- <td>{{ item.ResourceName }}</td> -->
           <td>{{ item.VehicleName }}</td>
           <td>{{ item.MemberName }}</td>
           <td>{{ item.DivisionName }}</td>
@@ -171,7 +171,11 @@
               【{{ item.Cameras.length }}】
             </a> -->
 
-            <a class="td-icon" (click)="clickVideoIcon(item)">
+            <a
+              class="td-icon"
+              (click)="clickVideoIcon(item)"
+              *ngIf="item.Cameras.length"
+            >
               <i class="howell-icon-video"></i>
             </a>
           </td>

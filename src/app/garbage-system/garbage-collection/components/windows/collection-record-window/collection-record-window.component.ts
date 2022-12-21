@@ -60,7 +60,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   @ViewChild(CommonTreeSelecComponent)
   commonTreeSelect!: CommonTreeSelecComponent;
 
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%', '15%', '10%'];
+  tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '15%', '5%'];
   dataSource: CollectionRecordWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
