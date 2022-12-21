@@ -38,6 +38,7 @@ import {
 import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { Language } from 'src/app/common/tools/language';
+import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 
 @Component({
   selector: 'collection-record-window',
@@ -149,13 +150,11 @@ export class CollectionRecordWindowComponent implements OnInit {
     }
   }
 
-  async clickVideoIcon(item: CollectionRecordWindowModel) {
+  async clickVideoIcon(
+    item: CollectionRecordWindowModel<GarbageCollectionEventRecord>,
+    camera: VehicleCamera
+  ) {
     if (item.RawData) {
-      let camera = await this._business.getCamera(
-        item.RawData.Data.VehicleId,
-        item.Id
-      );
-
       let args = new VideoArgs();
       args.autoplay = true;
       args.cameraId = camera.Id;
@@ -163,7 +162,6 @@ export class CollectionRecordWindowComponent implements OnInit {
       args.mode = PlayMode.vod;
       args.time = item.RawData?.EventTime;
       args.title = camera.Name;
-
       this._toastWindowService.customEvent.emit({
         Type: ToastWindowType.ClickVideo,
         Data: args,

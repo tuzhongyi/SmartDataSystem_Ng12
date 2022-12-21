@@ -163,9 +163,18 @@
           </td>
           <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
           <td>
-            <a class="td-icon" (click)="clickVideoIcon(item)"
-              ><i class="howell-icon-video"></i
-            ></a>
+            <!-- <a class="td-icon" (click)="clickVideoIcon(item)">
+              <i class="howell-icon-video"></i>
+              【{{ item.Cameras.length }}】
+            </a> -->
+
+            <a
+              class="td-icon"
+              *ngFor="let c of item.Cameras"
+              (click)="clickVideoIcon(item, c)"
+            >
+              <i class="howell-icon-video"></i>
+            </a>
           </td>
         </tr>
       </ng-template>

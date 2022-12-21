@@ -29,22 +29,6 @@ export class CollectionRecordWindowBusiness {
 
     console.log(Data);
     let data = await this._converter.iterateToModel(Data);
-    for (let i = 0; i < 0; i++) {
-      let model = new CollectionRecordWindowModel();
-      model.Id = ((Math.random() * 1111) >> 0).toString();
-      model.ResourceName = Language.json.Unknow;
-      model.VehicleName = '121';
-      model.MemberName = '121';
-      model.DivisionName = '121';
-      model.TrashCanName = '121';
-      model.CollectionPointName = '121';
-      model.Weight = 12;
-      model.Score = '121';
-
-      model.ImageUrl = await Medium.img(void 0);
-
-      data.push(model);
-    }
     let res: PagedList<CollectionRecordWindowModel> = {
       Page: Page,
       Data: data,
@@ -77,7 +61,10 @@ export class CollectionRecordWindowBusiness {
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }
 
-  public async getCamera(vehicleId: string, cameraId: string) {
+  getVehicle(vehicleId: string) {
+    return this._garbageVehicleRequest.get(vehicleId);
+  }
+  getCamera(vehicleId: string, cameraId: string) {
     return this._garbageVehicleRequest.camera.get(vehicleId, cameraId);
   }
 }

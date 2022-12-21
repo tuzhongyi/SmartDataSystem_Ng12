@@ -1,4 +1,5 @@
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
+import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 
 export class CollectionRecordWindowModel<T = any> {
   Id!: string;
@@ -14,6 +15,8 @@ export class CollectionRecordWindowModel<T = any> {
 
   TagStyle: Partial<CSSStyleDeclaration> = {};
   TagCls: string = '';
+
+  Cameras!: VehicleCamera[];
 
   EventTime!: Date;
   RawData?: T;

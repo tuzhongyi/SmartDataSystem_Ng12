@@ -11,13 +11,12 @@ import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
+import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionRecordWindowModel } from './collection-record-window.model';
 
 @Injectable()
 export class CollectionRecordWindowConverter extends AbstractCommonModelPromiseConverter<CollectionRecordWindowModel> {
-  private _divisonMap = new Map<string, Division>();
-
-  constructor() {
+  constructor(private _garbageVehicleRequest: GarbageVehicleRequestService) {
     super();
   }
   Convert(source: CommonModelSource, ...res: any[]) {
@@ -50,6 +49,10 @@ export class CollectionRecordWindowConverter extends AbstractCommonModelPromiseC
 
     model.ImageUrl = await Medium.img(source.ImageUrl);
     model.EventTime = source.EventTime;
+    let { Cameras } = await this._garbageVehicleRequest.get(
+      source.Data.VehicleId
+    );
+    model.Cameras = Cameras ?? [];
 
     model.RawData = source;
     return model;
