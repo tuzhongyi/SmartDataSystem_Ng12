@@ -295,7 +295,7 @@ export class VideoPlayerComponent
         this.onPlaying.emit();
       };
       this.player.onRuleStateChanged = (state: boolean) => {
-        this.saveRuleState(state);
+        // this.saveRuleState(state);
         this.onRuleStateChanged.emit(state);
       };
       this.player.onStoping = () => {

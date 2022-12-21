@@ -1,0 +1,5 @@
+<select [(ngModel)]="selected" (change)="onchange()">
+  <option *ngFor="let item of models; let i = index" [ngValue]="item">
+    {{ languages[i] }}
+  </option>
+</select>
