@@ -41,11 +41,9 @@
           <div
             class="garbage-collection-point-details-window-content-form-item-value"
           >
-            <select [(ngModel)]="model.Classification">
-              <option *ngFor="let item of classifications" [ngValue]="item">
-                {{ item | language_collection_point_classification_pipe }}
-              </option>
-            </select>
+            <collection-point-classification-select
+              [(selected)]="model.Classification"
+            ></collection-point-classification-select>
           </div>
         </div>
         <div

@@ -58,11 +58,13 @@
           <div
             class="garbage-collection-member-details-window-content-form-item-value"
           >
-            <select [(ngModel)]="model.Gender">
+            <!-- <select [(ngModel)]="model.Gender">
               <option *ngFor="let item of genders" [ngValue]="item">
                 {{ item | language_gender_pipe }}
               </option>
-            </select>
+            </select> -->
+
+            <gender-select [(selected)]="model.Gender"></gender-select>
           </div>
         </div>
 
@@ -75,11 +77,9 @@
           <div
             class="garbage-collection-member-details-window-content-form-item-value"
           >
-            <select [(ngModel)]="model.MemberType">
-              <option *ngFor="let item of types" [ngValue]="item">
-                {{ item | language_collection_member_type_pipe }}
-              </option>
-            </select>
+            <collection-member-type-select
+              [(selected)]="model.MemberType"
+            ></collection-member-type-select>
           </div>
         </div>
 

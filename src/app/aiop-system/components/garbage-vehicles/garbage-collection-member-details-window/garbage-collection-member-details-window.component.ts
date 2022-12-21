@@ -37,13 +37,8 @@ export class GarbageCollectionMemberDetailsWindowComponent
   }
 
   model?: CollectionMember;
-  genders: Gender[] = [];
-  types: CollectionMemberType[] = [];
 
-  ngOnInit(): void {
-    this.initGenders();
-    this.initTypes();
-  }
+  ngOnInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.open) {
       if (this.open) {
@@ -53,22 +48,6 @@ export class GarbageCollectionMemberDetailsWindowComponent
         });
       }
     }
-  }
-
-  initGenders() {
-    let e = new Enum(Gender);
-    let array = e.toArray();
-    array.unshift(undefined);
-    array.forEach((x) => {
-      this.genders.push(x);
-    });
-  }
-  initTypes() {
-    let e = new Enum(CollectionMemberType);
-    let array = e.toArray();
-    array.forEach((x) => {
-      this.types.push(x);
-    });
   }
 
   onNoChanged(value: any) {
