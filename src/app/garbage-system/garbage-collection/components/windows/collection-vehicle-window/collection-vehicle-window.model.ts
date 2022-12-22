@@ -30,5 +30,6 @@ export interface ICollectionVehicleWindowSearchInfo {
   PageSize: number;
   State: CollectionDeviceStateCountType;
   Condition: string;
+  PlatNo: string;
   Type: VehicleType | '';
 }

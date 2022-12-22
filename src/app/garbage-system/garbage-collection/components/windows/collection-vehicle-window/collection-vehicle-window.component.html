@@ -16,6 +16,18 @@
       </div>
       <div class="filter-group">
         <div class="title">
+          <span class="hw-form-label">车牌号:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.PlatNo"
+            (keyup.enter)="search()"
+          />
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
           <span class="hw-form-label">状态:</span>
         </div>
         <div class="content">
@@ -74,10 +86,11 @@
             <tr>
               <th>编号</th>
               <th>车辆名称</th>
-              <th>状态</th>
+              <th>车牌号</th>
+
               <th>车辆类型</th>
               <th>区划</th>
-              <th>车牌号</th>
+              <th>状态</th>
               <th>操作</th>
             </tr>
           </thead>
@@ -126,23 +139,14 @@
         <tr>
           <td>{{ item.No }}</td>
           <td [title]="item.Name">{{ item.Name }}</td>
+          <td>{{ item.PlatNo }}</td>
+
+          <td>{{ item.Type }}</td>
+          <td>{{ item.DivisionName }}</td>
           <td [class]="item.StateCls" [style]="item.StateStyle">
             {{ item.State }}
           </td>
-          <td>{{ item.Type }}</td>
-          <td>{{ item.DivisionName }}</td>
-          <td>{{ item.PlatNo }}</td>
           <td>
-            <!-- <span (click)="clickMap(item, $event)">
-              <i
-                class="glyphicon glyphicon-map-marker"
-                [style.fontSize.px]="15"
-              ></i>
-            </span>
-            <span (click)="clickLine(item, $event)">
-              <i class="howell-icon-route"></i
-            ></span> -->
-
             <a class="td-icon" (click)="clickMap(item, $event)">
               <i class="glyphicon glyphicon-map-marker"></i>
             </a>

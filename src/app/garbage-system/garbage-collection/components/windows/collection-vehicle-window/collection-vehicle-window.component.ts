@@ -72,6 +72,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
     State: CollectionDeviceStateCountType.All,
     Condition: '',
     Type: '',
+    PlatNo: '',
   };
   selectedNodes: CommonFlatNode[] = [];
 

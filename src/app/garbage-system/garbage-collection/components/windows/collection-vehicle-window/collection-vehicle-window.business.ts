@@ -44,7 +44,7 @@ export class CollectionVehicleWindowBusiness {
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
     params.Name = searchInfo.Condition;
-
+    params.PlateNo = searchInfo.PlatNo;
     if (
       searchInfo.DivisionId &&
       this._globalStorageService.defaultDivisionId != searchInfo.DivisionId
