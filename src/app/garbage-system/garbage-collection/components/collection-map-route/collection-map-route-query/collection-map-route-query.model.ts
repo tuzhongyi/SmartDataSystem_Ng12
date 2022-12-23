@@ -5,3 +5,6 @@ export class CollectionMapRouteDevice<T extends Model = any> {
   name: string = '';
   data?: T;
 }
+export class CollectionMapRouteConfig {
+  close: boolean = true;
+}

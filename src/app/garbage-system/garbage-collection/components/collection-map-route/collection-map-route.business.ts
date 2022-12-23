@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { MathTool } from 'src/app/common/tools/math.tool';
 import { wait } from 'src/app/common/tools/tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
@@ -17,6 +18,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
 
     return `http://${host}:${port}/amap/map_ts.html?maptype=2D&v=${date}`;
   }
+  seek: EventEmitter<GisRoutePoint> = new EventEmitter();
   private loaded = false;
   private client!: CesiumMapClient;
   private point?: CesiumDataController.Point;
@@ -25,11 +27,36 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     id: string;
     points: GisRoutePoint[];
   };
-
   init(iframe: HTMLIFrameElement): void {
     this.client = new CesiumMapClient(iframe);
     this.client.Events.OnLoaded = () => {
       this.loaded = true;
+    };
+    this.client.Events.OnRouteClick = (
+      position: CesiumDataController.Position
+    ) => {
+      if (this.route && this.route.points.length > 0) {
+        let distance = Number.MAX_VALUE;
+        let gis: GisRoutePoint = this.route.points[0];
+        let p = this.converter.Position(position, gis.GisType);
+        this.route.points.forEach((x) => {
+          let value = MathTool.distance_coordinate(
+            {
+              X: x.Longitude,
+              Y: x.Latitude,
+            },
+            {
+              X: p[0],
+              Y: p[1],
+            }
+          );
+          if (value < distance) {
+            gis = x;
+            distance = value;
+          }
+        });
+        this.seek.emit(gis);
+      }
     };
     // this.client.Events.OnLoaded = this.loaded.bind(this);
   }
@@ -67,7 +94,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
         }
         let positions = points.map((x) => this.converter.GisPoint(x));
         let opts = new CesiumDataController.DrawLineOptions();
-        opts.img = 'img/vehicle.png';
+        opts.img = 'img/route/vehicle.png';
         let routeId = this.client.Draw.Route.Create(positions, opts);
         if (this.point) {
           this.client.Point.Remove(this.point.id);
@@ -91,7 +118,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
       () => {
         if (this.route && this.client && this.point) {
           let routed = this.route.points.filter(
-            (x) => x.Time.getTime() < date.getTime()
+            (x) => x.Time.getTime() <= date.getTime()
           );
           let positions = routed.map((x) => this.converter.GisPoint(x));
           this.client.Draw.Route.Set(this.route.id, positions);

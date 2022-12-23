@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -11,6 +12,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { wait } from 'src/app/common/tools/tool';
 import { Duration } from 'src/app/network/model/duration.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
@@ -26,20 +28,38 @@ import { CollectionMapRouteBusiness } from './collection-map-route.business';
 export class CollectionMapRouteComponent implements OnInit {
   @Input()
   model?: GarbageVehicle;
+  @Output()
+  close: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private sanitizer: DomSanitizer,
     private business: CollectionMapRouteBusiness
-  ) {}
+  ) {
+    this.business.seek.subscribe((x) => {
+      if (this.display.video && this.duration) {
+        this.duration.begin = x.Time;
+        this.play.emit(this.duration);
+      }
+      // if (this.splitview) {
+      //   this.business.routing(x.Time);
+      // } else {
+      this.controlseek.emit(x);
+      // }
+    });
+  }
+
+  splitview = false;
 
   display = {
     info: false,
     video: false,
     operation: false,
+    query: true,
   };
 
   play: EventEmitter<Duration> = new EventEmitter();
   pause: EventEmitter<void> = new EventEmitter();
+  controlseek: EventEmitter<GisRoutePoint> = new EventEmitter();
 
   duration?: Duration;
 
@@ -78,12 +98,19 @@ export class CollectionMapRouteComponent implements OnInit {
   }
   //#endregion
   //#region list
-  onselect(item: IModel) {
+  onqueryselect(item: IModel) {
     this.model = item as GarbageVehicle;
     if (this.display.video === false) {
       this.display.operation = true;
     }
     this.business.load(this.model);
+  }
+
+  onqueryclose() {
+    this.display.query = false;
+  }
+  onquerybuttonclick() {
+    this.display.query = true;
   }
   //#endregion
   //#region control
@@ -138,10 +165,21 @@ export class CollectionMapRouteComponent implements OnInit {
   onvehicleclick() {
     this.display.info = true;
     this.display.video = false;
+    this.display.operation = false;
   }
   onvideoclick() {
     this.wantplay = true;
     this.display.video = true;
     this.display.info = false;
+  }
+  onvideosplitview(splited: boolean) {
+    this.splitview = splited;
+  }
+  oninfoclose() {
+    this.display.info = false;
+    this.display.operation = true;
+  }
+  onclose() {
+    this.close.emit();
   }
 }

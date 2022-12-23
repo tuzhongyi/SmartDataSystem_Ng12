@@ -25,6 +25,7 @@ export interface ICollectionMapRouteControlChartsBusiness
   routetrigger: EventEmitter<Date>;
   routeclick: EventEmitter<Date>;
   speed: number;
+  seek(point: GisRoutePoint): void;
   run(time: Date): void;
   stop(): void;
 }

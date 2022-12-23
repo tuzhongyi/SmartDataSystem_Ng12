@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -20,14 +19,13 @@ import { Duration } from 'src/app/network/model/duration.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
-import { GarbageVehicleModel } from 'src/app/network/view-model/garbage-vehicle.view-model';
 import { CollectionMapRouteVideoBusiness } from './collection-map-route-video.business';
 
 @Component({
   selector: 'collection-map-route-video',
   templateUrl: './collection-map-route-video.component.html',
   styleUrls: ['./collection-map-route-video.component.less'],
-  providers: [CollectionMapRouteVideoBusiness, GarbageVehicleModelConverter],
+  providers: [CollectionMapRouteVideoBusiness],
 })
 export class CollectionMapRouteVideoComponent
   implements IComponent<IModel, VideoModel>, OnInit, OnChanges
@@ -50,23 +48,22 @@ export class CollectionMapRouteVideoComponent
   close: EventEmitter<void> = new EventEmitter();
   @Output()
   opened: EventEmitter<void> = new EventEmitter();
+  @Output()
+  splitview: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(
-    business: CollectionMapRouteVideoBusiness,
-    private converter: GarbageVehicleModelConverter
-  ) {
+  constructor(business: CollectionMapRouteVideoBusiness) {
     this.business = business;
   }
 
   toplay: EventEmitter<VideoModel> = new EventEmitter();
   webUrl?: string;
   VehicleState = VehicleState;
-  model?: GarbageVehicleModel;
   video?: VideoModel;
   title: SelectItem[] = [];
   position?: VehiclePositionNo;
   cameras: { [key: number]: VehicleCamera } = {};
   playing = false;
+  splited = false;
 
   ngOnInit(): void {
     this.initTitle();
@@ -76,11 +73,8 @@ export class CollectionMapRouteVideoComponent
     this.opened.emit();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.source) {
-      if (this.source) {
-        this.model = this.converter.Convert(this.source);
-        this.initTitle();
-      }
+    if (changes.source && this.source) {
+      this.initTitle();
     }
     if (changes.play && changes.play.firstChange && this.play) {
       this.play.subscribe(this.onplay.bind(this));
@@ -91,7 +85,7 @@ export class CollectionMapRouteVideoComponent
     this.begin = duration.begin;
     this.end = duration.end;
     if (!this.position) {
-      this.position = this.title.length > 1 ? this.title[1].value : undefined;
+      this.position = this.title.length > 0 ? this.title[0].value : undefined;
     }
     if (this.position) {
       let camera = this.cameras[this.position];
@@ -101,31 +95,28 @@ export class CollectionMapRouteVideoComponent
 
   initTitle() {
     this.title = [];
-    let info = new SelectItem();
-    info.language = '车辆信息';
-    this.title.push(info);
     let index: number;
     let no: VehiclePositionNo;
-    if (this.model && this.model.Cameras) {
+    if (this.source && this.source.Cameras) {
       no = VehiclePositionNo.CarFront;
-      index = this.model.Cameras.findIndex((x) => x.PositionNo === no);
+      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
       if (index >= 0) {
         this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.model.Cameras[index];
+        this.cameras[no] = this.source.Cameras[index];
       }
 
       no = VehiclePositionNo.CarEnd;
-      index = this.model.Cameras.findIndex((x) => x.PositionNo === no);
+      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
       if (index >= 0) {
         this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.model.Cameras[index];
+        this.cameras[no] = this.source.Cameras[index];
       }
 
       no = VehiclePositionNo.TrashCan;
-      index = this.model.Cameras.findIndex((x) => x.PositionNo === no);
+      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
       if (index >= 0) {
         this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.model.Cameras[index];
+        this.cameras[no] = this.source.Cameras[index];
       }
     }
   }
@@ -145,5 +136,10 @@ export class CollectionMapRouteVideoComponent
 
   onclose() {
     this.close.emit();
+  }
+
+  onsplitview() {
+    this.splited = !this.splited;
+    this.splitview.emit(this.splited);
   }
 }

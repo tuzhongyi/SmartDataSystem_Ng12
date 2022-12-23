@@ -1,19 +1,42 @@
 <div class="collection-map-route">
-  <div class="collection-map-route-content">
+  <div
+    class="collection-map-route-close"
+    (click)="onclose()"
+    *ngIf="!splitview"
+  >
+    <i class="howell-icon-Close"></i>
+  </div>
+  <div
+    class="collection-map-route-content"
+    [ngClass]="{ splitview: splitview }"
+  >
     <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
   </div>
-
-  <div class="panel collection-map-route-query">
+  <div
+    *ngIf="!display.query"
+    class="route-button collection-map-route-query-button"
+    (click)="onquerybuttonclick()"
+  >
+    <i class="howell-icon-ul"></i>
+  </div>
+  <div
+    class="panel collection-map-route-query"
+    [ngStyle]="{
+      display: !display.query || splitview ? 'none' : ''
+    }"
+  >
     <collection-map-route-query
-      (select)="onselect($event)"
+      (select)="onqueryselect($event)"
       [selected]="model"
       [(date)]="date"
+      (close)="onqueryclose()"
     >
     </collection-map-route-query>
   </div>
   <div
     class="panel collection-map-route-video"
-    *ngIf="display.info || display.video"
+    [ngClass]="{ splitview: splitview }"
+    *ngIf="display.video"
   >
     <collection-map-route-video
       *ngIf="!!model"
@@ -24,21 +47,41 @@
       [pause]="pause"
       (close)="onvideoclose()"
       (opened)="onvideoopened()"
+      (splitview)="onvideosplitview($event)"
     >
     </collection-map-route-video>
   </div>
+  <div
+    class="panel collection-map-route-video"
+    [ngClass]="{ splitview: splitview }"
+    *ngIf="display.info"
+  >
+    <collection-map-route-info
+      *ngIf="!!model"
+      [source]="model"
+      (close)="oninfoclose()"
+    >
+    </collection-map-route-info>
+  </div>
   <div class="collection-map-route-operation" *ngIf="display.operation">
-    <div class="vehicle" (click)="onvehicleclick()">
+    <div class="route-button vehicle" (click)="onvehicleclick()">
       <i class="howell-icon-dustcart"></i>
     </div>
-    <div (click)="onvideoclick()">
+    <div class="route-button" (click)="onvideoclick()">
       <i class="howell-icon-video"></i>
     </div>
   </div>
-  <div class="panel collection-map-route-controls" *ngIf="!!model">
+  <div
+    class="panel collection-map-route-controls"
+    *ngIf="!!model"
+    [ngStyle]="{
+      display: splitview ? 'none' : ''
+    }"
+  >
     <collection-map-route-control
       [sourceId]="model.Id"
       [date]="date"
+      [seek]="controlseek"
       (loaded)="onloaded($event)"
       (scoreclick)="onscore($event)"
       (routetrigger)="onroute($event)"

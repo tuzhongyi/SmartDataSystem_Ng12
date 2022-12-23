@@ -1,6 +1,16 @@
 <div class="collection-map-route-query">
   <div class="collection-map-route-query-header">
-    <div class="hw-simple-title">选择清运车辆</div>
+    <div class="collection-map-route-query-header-title">
+      <div class="hw-simple-title">选择清运车辆</div>
+      <div
+        class="collection-map-route-query-header-title-operation"
+        *ngIf="config.close"
+      >
+        <div (click)="onclose()">
+          <i class="howell-icon-Close"></i>
+        </div>
+      </div>
+    </div>
     <div class="collection-map-route-query-header-date">
       <div class="collection-map-route-query-header-date-title">选择日期</div>
       <input

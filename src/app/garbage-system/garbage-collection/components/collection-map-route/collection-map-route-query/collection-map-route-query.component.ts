@@ -4,7 +4,10 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel, Model } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteDeviceListBusiness as CollectionMapRouteQueryBusiness } from './collection-map-route-query.business';
-import { CollectionMapRouteDevice } from './collection-map-route-query.model';
+import {
+  CollectionMapRouteConfig,
+  CollectionMapRouteDevice,
+} from './collection-map-route-query.model';
 
 @Component({
   selector: 'collection-map-route-query',
@@ -23,8 +26,12 @@ export class CollectionMapRouteQueryComponent
   selected?: Model;
   @Input()
   date: Date = new Date();
+  @Input()
+  config: CollectionMapRouteConfig = new CollectionMapRouteConfig();
   @Output()
   dateChange: EventEmitter<Date> = new EventEmitter();
+  @Output()
+  close: EventEmitter<void> = new EventEmitter();
 
   constructor(business: CollectionMapRouteQueryBusiness) {
     this.business = business;
@@ -60,5 +67,8 @@ export class CollectionMapRouteQueryComponent
     if (this.selected) {
       this.select.emit(this.selected);
     }
+  }
+  onclose() {
+    this.close.emit();
   }
 }

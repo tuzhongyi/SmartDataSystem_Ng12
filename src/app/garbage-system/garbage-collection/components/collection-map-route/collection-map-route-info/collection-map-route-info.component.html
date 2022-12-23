@@ -1,0 +1,34 @@
+<div class="collection-map-route-info">
+  <div class="collection-map-route-info-header">
+    <div class="hw-simple-title">车辆信息</div>
+
+    <div class="collection-map-route-info-header-operation">
+      <div class="route-button" (click)="onclose()">
+        <i class="howell-icon-Close"></i>
+      </div>
+    </div>
+  </div>
+  <div class="collection-map-route-info-content">
+    <div class="collection-map-route-info-content-info">
+      <div class="collection-map-route-info-content-info-pic"></div>
+      <div class="collection-map-route-info-content-info-props" *ngIf="!!model">
+        <div>
+          {{ model.Name }}
+        </div>
+        <div>{{ model.VehicleType | language_vehicle_type_pipe }}</div>
+        <div>
+          {{ model.No }}
+        </div>
+        <div>
+          {{ (model.Division | async)?.Name }}
+        </div>
+        <div *ngIf="model.PlateNo">
+          {{ model.PlateNo }}
+        </div>
+        <div [class]="model.State | classname_vehicle_state_pipe">
+          {{ model.State | language_vehicle_state_pipe }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

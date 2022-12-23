@@ -19,6 +19,7 @@ import {
   ICollectionMapRouteControlChartsBusiness,
   ICollectionMapRouteControlComponent,
 } from './collection-map-route-control.model';
+import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 
 @Component({
   selector: 'collection-map-route-control',
@@ -46,6 +47,9 @@ export class CollectionMapRouteControlComponent
   date: Date = new Date();
   @Input()
   load?: EventEmitter<void>;
+  @Input()
+  seek?: EventEmitter<GisRoutePoint>;
+
   @Output()
   scoreclick: EventEmitter<Date> = new EventEmitter();
   @Output()
@@ -103,6 +107,16 @@ export class CollectionMapRouteControlComponent
     if (changes.date && !changes.date.firstChange) {
       this.loadData();
     }
+    if (changes.load && this.load) {
+      this.load.subscribe((x) => {
+        this.loadData();
+      });
+    }
+    if (changes.seek && this.seek) {
+      this.seek.subscribe((x) => {
+        this.business.seek(x);
+      });
+    }
   }
 
   ngAfterViewInit(): void {
@@ -116,7 +130,6 @@ export class CollectionMapRouteControlComponent
       let datas = await this.business.load(dom, this.sourceId, this.date);
       this.loading = false;
       this.hasdata = datas.points && datas.points.length > 0;
-      console.log('hasdata', this.hasdata);
       if (this.hasdata) {
         this.time = datas.points[0].Time;
       }
