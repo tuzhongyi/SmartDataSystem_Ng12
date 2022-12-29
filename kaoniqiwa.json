@@ -1,0 +1,46 @@
+{
+  "ImageControlModel ": {
+    "status": 0,
+    "index": 0,
+    "id": "bc6939536ed6415ebb5dd21af31719b0",
+    "stationId": "310109009002001000",
+    "name": "欧二_四达99_1-1",
+    "src": "/api/howell/ver10/aiop_service/Medium/Pictures/63abe7e3000000190c00c7de.jpg",
+    "onerror": "/assets/img/timg-pic.jpg",
+    "camera": {
+      "Id": "bc6939536ed6415ebb5dd21af31719b0",
+      "Name": "欧二_四达99_1-1",
+      "CameraUsage": 4,
+      "CreateTime": "2021-04-28T10:13:41.444Z",
+      "UpdateTime": "2022-12-28T02:05:05.767Z",
+      "GarbageStationId": "310109009002001000",
+      "PositionNo": null,
+      "GarbageFullImageUrl": null,
+      "IsFull": null,
+      "OnlineStatus": 0,
+      "ImageUrl": "63abe7e3000000190c00c7de",
+      "ImageTime": "2022-12-28T06:53:23.691Z",
+      "SceneChange": 0,
+      "ImageQuality": 0,
+      "Brightness": 2,
+      "Aberration": 0,
+      "Disturbance": 0
+    }
+  },
+  "CameraPictureUrl": {
+    "Result": true,
+    "Id": "63abeaca000000190c00cce9",
+    "Url": "http://192.168.0.240:80/api/howell/ver10/aiop_service/medium/Pictures/63abeaca000000190c00cce9/Data",
+    "CreateTime": "2022-12-28T15:05:46.064+08:00",
+    "CameraId": "bc6939536ed6415ebb5dd21af31719b0",
+    "CameraName": "欧二_四达99_1-1"
+  },
+  "VideoUrl": {
+    "Url": "ws://garbage01.51hws.cn:8800/ws/video/howellps/live/00310101031111111000583000000000/1/1/live.h264",
+    "Username": "howell",
+    "Password": "123456",
+    "WebUrl": "http://garbage01.51hws.cn/video/wsplayer/WSPlayer.html"
+  },
+  "url": "ws://garbage01.51hws.cn:8800/ws/video/howellps/live/00310101031111111000583000000000/1/1/live.mp4?user=howell&password=123456",
+  "videoUrl": "/video/wsplayer/wsplayer.html?url=d3M6Ly9nYXJiYWdlMDEuNTFod3MuY246ODgwMC93cy92aWRlby9ob3dlbGxwcy9saXZlLzAwMzEwMTAxMDMxMTExMTExMDAwNTgzMDAwMDAwMDAwLzEvMS9saXZlLm1wND91c2VyPWhvd2VsbCZwYXNzd29yZD0xMjM0NTY="
+}
