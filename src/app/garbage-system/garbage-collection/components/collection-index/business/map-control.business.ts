@@ -4,8 +4,6 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GetPreviewUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';
-import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { PatrolControlBusiness } from './patrol-control.business';
 import { WindowBussiness } from './window.business';
 import { VideoControlWindowBusiness } from './windows/video-control-window.business';

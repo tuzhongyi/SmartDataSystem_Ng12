@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { LocaleCompare } from "src/app/common/tools/locale-compare";
 import { SRServerManageConverter } from "src/app/converter/sr-server-manage.converter";
-import { SRServerRequestService } from "src/app/network/request/ai-sr-server/sr-server.service";
+import { SRServerRequestService } from "src/app/network/request/sr-server/sr-server.service";
 
 @Injectable()
 export class SRServerManageBusiness {

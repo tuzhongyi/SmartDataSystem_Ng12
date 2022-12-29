@@ -19,7 +19,7 @@ import {
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { Medium } from 'src/app/common/tools/medium';
-import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
+import { SRServerRequestService } from 'src/app/network/request/sr-server/sr-server.service';
 import { PatrolArrayControlConverter } from './patrol-control.converter';
 
 import { PatrolControlModel } from './patrol-control.model';

@@ -16,7 +16,7 @@ import { VideoUrl } from 'src/app/network/model/url.model';
 import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
+import { SRServerRequestService } from 'src/app/network/request/sr-server/sr-server.service';
 
 @Injectable()
 export class CommitteesVideoControlWindowBusiness
