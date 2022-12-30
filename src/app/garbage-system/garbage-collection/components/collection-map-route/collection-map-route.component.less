@@ -1,14 +1,89 @@
 .collection-map-route {
+
+
+  @control-bar-height: 200px;
+  @control-bar-margin: 20px;
+  @padding: 30px;
+  @query-left: 30px;
+  @query-top: 30px;
+  @query-width: 300px;
+
+  @query-height: calc(100% - @padding - @control-bar-height - @padding - @control-bar-margin);
+  @splitview-left: 10px;
+  @splitview-width: calc((100% - 10px * 2) / 2 - 5px);
+  @splitview-height: calc(100% - 10px * 2);
   height: 100%;
   width: 100%;
   padding: 10px;
   position: relative;
+
+  &-close {
+    border-radius: 90px;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-color: #070621;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #7a8de6;
+    cursor: pointer;
+    top: 40px;
+    right: 40px;
+    border: 1px solid #7a8de6;
+    z-index: 1;
+
+    &:hover {
+      background-color: #7a8de6;
+      color: white;
+    }
+  }
+
+
+  .route-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background-color: #07062166;
+    border: 1px solid #3283e5;
+    box-shadow: #3283e5 0px 0px 15px -1px inset;
+    margin: 0 6px;
+    cursor: pointer;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &:hover {
+      border-color: #65a2ee;
+      box-shadow: #65a2ee 0px 0px 15px -1px inset;
+    }
+  }
+
+
+
+
 
   &-content {
     width: 100%;
     height: 100%;
 
     border: 1px solid #5c6ebf;
+
+
+    &.splitview {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: @splitview-width;
+      height: @splitview-height;
+    }
 
 
     iframe {
@@ -28,17 +103,23 @@
     box-shadow: #3283e5 0px 0px 15px -1px inset;
   }
 
-  @control-bar-height: 200px;
-  @control-bar-margin: 20px;
-  @padding: 30px;
 
   &-query {
-    left: 30px;
-    top: 30px;
-    width: 300px;
-    height: calc(100% - @padding - @control-bar-height - @padding - @control-bar-margin);
-
+    left: @query-left;
+    top: @query-top;
+    width: @query-width;
+    height: @query-height;
   }
+
+  &-query-button {
+    position: absolute;
+    top: @query-top;
+    left: @query-left;
+    width: 40px;
+    height: 40px;
+  }
+
+
 
   &-controls {
     position: absolute;
@@ -59,7 +140,15 @@
     background-color: #07062166;
 
     border: 1px solid #5c6ebf;
+
+    &.splitview {
+      bottom: 10px;
+      right: 10px;
+      width: @splitview-width;
+      height: @splitview-height;
+    }
   }
+
 
   &-operation {
     display: flex;
@@ -71,31 +160,8 @@
     color: #cfd7ff;
     position: absolute;
 
-    &>* {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background-color: #07062166;
-      border: 1px solid #3283e5;
-      box-shadow: #3283e5 0px 0px 15px -1px inset;
-      margin: 0 6px;
-      cursor: pointer;
 
-      &:first-child {
-        margin-left: 0;
-      }
 
-      &:last-child {
-        margin-right: 0;
-      }
-
-      &:hover {
-        border-color: #65a2ee;
-        box-shadow: #65a2ee 0px 0px 15px -1px inset;
-      }
-    }
 
     .vehicle {
       font-size: 26px;

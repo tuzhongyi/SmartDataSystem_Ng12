@@ -7,46 +7,31 @@
         </option>
       </select>
     </div>
-    <div class="btn-close" (click)="onclose()">
-      <i class="howell-icon-Close"></i>
+
+    <div class="collection-map-route-video-header-operation">
+      <div class="route-button" *ngIf="!splited" (click)="onsplitview()">
+        <i class="howell-icon-arrangebringforward"></i>
+      </div>
+      <div class="route-button" *ngIf="splited" (click)="onsplitview()">
+        <i class="howell-icon-arrangesendbackward"></i>
+      </div>
+      <div class="route-button" *ngIf="!splited" (click)="onclose()">
+        <i class="howell-icon-Close"></i>
+      </div>
     </div>
   </div>
   <div class="collection-map-route-video-content">
     <div
-      *ngIf="!!model && !!position"
+      *ngIf="!!source && !!position"
       class="collection-map-route-video-content-player"
     >
       <app-video-player
-        [name]="model.Name"
+        [name]="source.Name"
         [model]="video"
         [play]="toplay"
         [pause]="pause"
         [stop]="stop"
       ></app-video-player>
-    </div>
-    <div *ngIf="!position" class="collection-map-route-video-content-info">
-      <div class="collection-map-route-video-content-info-pic"></div>
-      <div
-        class="collection-map-route-video-content-info-props"
-        *ngIf="!!model"
-      >
-        <div>
-          {{ model.Name }}
-        </div>
-        <div>{{ model.VehicleType | language_vehicle_type_pipe }}</div>
-        <div>
-          {{ model.No }}
-        </div>
-        <div>
-          {{ (model.Division | async)?.Name }}
-        </div>
-        <div *ngIf="model.PlateNo">
-          {{ model.PlateNo }}
-        </div>
-        <div [class]="model.State | classname_vehicle_state_pipe">
-          {{ model.State | language_vehicle_state_pipe }}
-        </div>
-      </div>
     </div>
   </div>
 </div>

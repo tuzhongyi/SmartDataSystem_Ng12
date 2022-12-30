@@ -52,7 +52,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
   }
   private _fromDivisionGarbageWeight(source: DivisionGarbageWeight) {
     let model = new CommonStatisticCardModel();
-    model.Title = '垃圾清运数量(吨)';
+    model.Title = '垃圾清运数量(kg)';
 
     if (source.Weights) {
       let total = source.Weights.reduce((prev: number, cur) => {
@@ -98,7 +98,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
     res.push(model);
 
     model = new CommonStatisticCardModel();
-    model.Title = '垃圾清运数量(吨)';
+    model.Title = '垃圾清运数量(kg)';
     model.componentExpression = CollectionRecordWindowComponent;
     model.Content = source.Weight ? source.Weight.toString() : '0';
     res.push(model);

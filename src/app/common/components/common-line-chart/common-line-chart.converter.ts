@@ -168,7 +168,7 @@ export class CommonLineChartConverter extends AbstractCommonModelConverter<
           type: 'line',
           areaStyle: {},
           data: data,
-          name: '单位(吨)',
+          name: '单位(kg)',
           label: {
             show: true,
             color: '#cfd7fe',

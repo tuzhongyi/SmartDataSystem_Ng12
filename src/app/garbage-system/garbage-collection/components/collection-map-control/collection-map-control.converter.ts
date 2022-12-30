@@ -1,3 +1,4 @@
+import { classToPlain, plainToClass } from 'class-transformer';
 import { CoordinateTransform } from 'src/app/common/tools/coordinateTransform';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
@@ -20,6 +21,17 @@ export class CollectionMapControlConverter {
     return new CesiumDataController.Position(gcj02[0], gcj02[1], height);
   }
 
+  Position(gis: { lon: number; lat: number }, type?: GisType) {
+    switch (type) {
+      case GisType.BD09:
+        return CoordinateTransform.gcj02tobd09(gis.lon, gis.lat);
+      case GisType.WGS84:
+        return CoordinateTransform.gcj02towgs84(gis.lon, gis.lat);
+      default:
+        return [gis.lon, gis.lat];
+    }
+  }
+
   ElementType(type: VehicleType) {
     return CesiumDataController.ElementType.Vehicle;
   }
@@ -27,6 +39,7 @@ export class CollectionMapControlConverter {
   GarbageVehicle(vehicle: GarbageVehicle) {
     let type = this.ElementType(vehicle.VehicleType);
     let point = new CesiumDataController.Point(vehicle.Id, type);
+    point.url = 'img/route/vehicle.png';
     if (vehicle.GisPoint) {
       point.position = this.GisPoint(vehicle.GisPoint);
     }

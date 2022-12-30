@@ -39,6 +39,7 @@ import {
   CollectionVehicleWindowComponent,
 } from './windows';
 import { CollectionDivisionTreeComponent } from './collection-division-tree/collection-division-tree.component';
+import { CollectionMapRouteInfoComponent } from './collection-map-route/collection-map-route-info/collection-map-route-info.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CollectionDivisionTreeComponent } from './collection-division-tree/coll
     CollectionMapControlComponent,
     CollectionMapRouteComponent,
     CollectionMapRouteVideoComponent,
+    CollectionMapRouteInfoComponent,
     CollectionMapRouteQueryComponent,
     CollectionMapRouteControlComponent,
     CollectionScorePieComponent,

@@ -38,10 +38,19 @@ export class CollectionMapRouteControlChartsBusiness
 
   speed = 1;
 
+  seek(point: GisRoutePoint) {
+    if (this.handle) {
+      this.stop();
+      this.run(point.Time);
+    } else {
+      this.triggerByTime(point.Time);
+    }
+  }
+
   run(date: Date, offset: number = 0) {
     this.handle = setTimeout(() => {
       let time = new Date(date.getTime() + offset);
-      let next = this.triggerByTime(time);
+      this.triggerByTime(time);
       this.run(date, (offset += 1000));
     }, 1000 / this.speed);
   }
@@ -98,8 +107,6 @@ export class CollectionMapRouteControlChartsBusiness
     return data;
   }
 
-  eventTrigger() {}
-
   private eventRegist(chart: echarts.ECharts) {
     // chart.on('click', 'series.line', this.onScoreClicked.bind(this));
     chart.on('click', 'series.line', (e: any) => {});
@@ -123,35 +130,24 @@ export class CollectionMapRouteControlChartsBusiness
   private triggerByIndex(index: number, now: Date) {
     this.routetrigger.emit(now);
     this.serieRoutePosition.data = [[index, 0]];
-
+    let _now = new Date(now.getTime());
+    _now.setSeconds(0);
     this.serieRouted.data = (this.serieRoute.data as Array<any>).filter((x) => {
       // let str = formatDate(now, 'yyyy-MM-dd', 'en');
       // let date = new Date(`${str} ${x[0]}`);
       if (x.name) {
-        return x.name.getTime() > now.getTime();
+        return x.name.getTime() >= _now.getTime();
       } else {
         return true;
       }
     });
     this.chart?.setOption({ series: this.series });
-
-    index = (this.serieRoute.data as Array<any>).findIndex((x) => {
-      let time = formatDate(now, this.formater, 'en');
-      if (x.name && x.value) {
-        return x.name.getTime() > now.getTime() && x.value[1] !== null;
-      }
-      return false;
-    });
-    if (index < 0) {
-      console.log('index < 0');
-    }
-    return this.serieRoute.data[index + 1];
   }
   private triggerByTime(time: Date) {
     let index = this.getXAxisIndex(time);
     if (index < 0) return;
 
-    return this.triggerByIndex(index, time);
+    this.triggerByIndex(index, time);
   }
 
   /** X 轴 */

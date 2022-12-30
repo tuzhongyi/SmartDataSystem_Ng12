@@ -91,12 +91,10 @@
     </div>
   </div>
   <div class="monitor-content" *ngIf="route.show">
-    <div class="route-back" (click)="route.close()">
-      <div class="">
-        <i class="howell-icon-Close"></i>
-      </div>
-    </div>
-    <collection-map-route [model]="route.vehicle"></collection-map-route>
+    <collection-map-route
+      (close)="route.close()"
+      [model]="route.vehicle"
+    ></collection-map-route>
   </div>
 </div>
 <toast-window *ngIf="showToast" [showClose]="true" (closeEvent)="closeToast()">
