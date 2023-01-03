@@ -42,7 +42,7 @@ export class CollectionScoreRankBusiness {
 
   async init(searchInfo: ICollectionScoreRankSearchInfo) {
     let { Data } = await this._listScores(searchInfo);
-    console.log(Data);
+    // console.log(Data);
 
     for (let i = 0; i < 0; i++) {
       let scoreTop = new ScoreTop();

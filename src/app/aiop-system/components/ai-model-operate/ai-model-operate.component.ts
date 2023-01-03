@@ -20,7 +20,7 @@ import {
 import { AIModelOperateBusiness } from './ai-model-operate.business';
 import Icons from 'src/assets/json/ai-icon.json';
 import { BehaviorSubject, fromEvent, Subject, Subscription } from 'rxjs';
-import { DOCUMENT } from '@angular/common';
+import { DOCUMENT, KeyValue } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { encode, decode, Base64 } from 'js-base64';
 
@@ -31,7 +31,8 @@ import { encode, decode, Base64 } from 'js-base64';
   providers: [AIModelOperateBusiness],
 })
 export class AIModelOperateComponent
-  implements OnInit, AfterViewInit, OnDestroy {
+  implements OnInit, AfterViewInit, OnDestroy
+{
   private _operateModel?: CameraAIModel;
   private _parsedAIModel?: CameraAIModel;
 
@@ -50,12 +51,13 @@ export class AIModelOperateComponent
   imgBase = 'assets/img/ai-model/';
   selectedIconKey = '';
 
+  myIcons = Icons;
   iconsMap = new Map(Object.entries(Icons));
   iconsValue = Array.from(this.iconsMap.values());
   iconsKey = Array.from(this.iconsMap.keys());
   iconsEntries = Array.from(this.iconsMap.entries());
 
-  maskSub!: Subscription;
+  subscription!: Subscription;
 
   modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>([]);
 
@@ -86,14 +88,12 @@ export class AIModelOperateComponent
   closeEvent = new EventEmitter<boolean>();
 
   @ViewChild('fileBtn') fileBtn?: ElementRef<HTMLInputElement>;
-  @ViewChild('mask') mask!: ElementRef<HTMLDivElement>;
 
   constructor(
     private _business: AIModelOperateBusiness,
     private _toastrService: ToastrService,
     @Inject(DOCUMENT) private document: any
-  ) {
-  }
+  ) {}
 
   async ngOnInit() {
     if (this.state == FormState.edit) {
@@ -112,12 +112,12 @@ export class AIModelOperateComponent
   }
 
   ngAfterViewInit() {
-    this.maskSub = fromEvent(this.mask.nativeElement, 'click').subscribe(() => {
+    this.subscription = fromEvent(this.document.body, 'click').subscribe(() => {
       this.showList = false;
     });
   }
   ngOnDestroy(): void {
-    this.maskSub.unsubscribe();
+    this.subscription.unsubscribe();
   }
   // 选择ModelJson文件
   triggerSelect() {
@@ -140,7 +140,7 @@ export class AIModelOperateComponent
       FilePath: filePath,
       ModelJson: fileContent,
       Version: '',
-      TransformType: ''
+      TransformType: '',
     });
 
     if (this.state == FormState.edit) {
@@ -151,15 +151,13 @@ export class AIModelOperateComponent
         );
         this.myForm.patchValue({
           Version: this._operateModel?.Version,
-          TransformType: this._operateModel?.TransformType
-        })
+          TransformType: this._operateModel?.TransformType,
+        });
       }
     }
-
   }
   // 应用模型
   async parseFile() {
-
     if (this.myForm.value.FilePath) {
       let jsonData = this.myForm.value.ModelJson!;
       let res = (await this._business.parseAIModel(jsonData)) as CameraAIModel;
@@ -179,12 +177,12 @@ export class AIModelOperateComponent
     this.showList = !this.showList;
     e.stopPropagation();
   }
-  clickIcon(icon: [string, string], e: Event) {
-    this.selectedIconKey = icon[0];
+  clickIcon(icon: KeyValue<string, string>, e: Event) {
+    console.log(icon);
+    this.selectedIconKey = icon.key;
     this.myForm.patchValue({
       Label: this.selectedIconKey.toString(),
     });
-
     e.stopPropagation();
   }
 
@@ -257,9 +255,9 @@ export class AIModelOperateComponent
       const a = document.createElement('a');
       let url = URL.createObjectURL(blob);
       a.href = url;
-      a.download = (this.myForm.value.ModelName ?? 'demo') + ".txt"
+      a.download = (this.myForm.value.ModelName ?? 'demo') + '.txt';
       a.click();
-      URL.revokeObjectURL(url)
+      URL.revokeObjectURL(url);
     }
   }
 

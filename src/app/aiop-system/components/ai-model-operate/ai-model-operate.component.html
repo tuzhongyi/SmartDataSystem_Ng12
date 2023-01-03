@@ -1,4 +1,4 @@
-<div class="ai-model-operate" #mask>
+<div class="ai-model-operate">
   <div class="hw-simple-title" style="margin-bottom: 10px">{{ title }}</div>
   <form class="hw-form" [formGroup]="myForm">
     <div class="hw-form-group">
@@ -92,13 +92,13 @@
           <div class="ai-icon-list" *ngIf="showList">
             <div
               class="ai-icon"
-              *ngFor="let icon of iconsEntries"
+              *ngFor="let icon of myIcons | keyvalue"
               (click)="clickIcon(icon, $event)"
             >
-              <img [src]="imgBase + icon[1]" alt="" />
+              <img [src]="imgBase + icon.value" alt="" />
               <i
                 class="howell-icon-Check"
-                *ngIf="icon[0] == selectedIconKey"
+                *ngIf="icon.key == selectedIconKey"
               ></i>
             </div>
           </div>
