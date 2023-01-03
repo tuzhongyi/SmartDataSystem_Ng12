@@ -71,6 +71,8 @@ export class VideoPlayerComponent
   seek?: EventEmitter<number>;
 
   @Output()
+  loaded: EventEmitter<void> = new EventEmitter();
+  @Output()
   destroy: EventEmitter<VideoModel> = new EventEmitter();
 
   @Output()
@@ -120,7 +122,7 @@ export class VideoPlayerComponent
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && !changes.model.firstChange) {
-      this.loaded = false;
+      this.isloaded = false;
     }
     if (changes.play && this.play) {
       this.play.subscribe((x) => {
@@ -202,10 +204,10 @@ export class VideoPlayerComponent
     this.load();
   }
 
-  loaded = false;
+  isloaded = false;
 
   load() {
-    if (!this.loaded) {
+    if (!this.isloaded) {
       if (this.model) {
         this.url = this.model.toString();
         if (this.model.web) {
@@ -216,7 +218,8 @@ export class VideoPlayerComponent
       if (this.url) {
         let src = this.getSrc(this.webUrl, this.url, this.name);
         this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
-        this.loaded = true;
+        this.isloaded = true;
+        this.loaded.emit();
       }
     }
   }
@@ -332,7 +335,7 @@ export class VideoPlayerComponent
 
   onplay(model: VideoModel) {
     this.model = model;
-    this.loaded = false;
+    this.isloaded = false;
     this.load();
   }
 

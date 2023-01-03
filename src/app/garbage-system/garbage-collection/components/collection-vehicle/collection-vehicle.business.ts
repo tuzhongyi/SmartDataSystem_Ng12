@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
@@ -10,10 +11,12 @@ export class CollectionVehicleBusiness {
   constructor(
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CollectionVehicleConverter
-  ) { }
+  ) {}
   async init(searchInfo: ICollectionVehicleSearchInfo) {
     let { Data } = await this._list(searchInfo);
-
+    Data = Data.sort((a, b) => {
+      return LocaleCompare.compare(b.Name, a.Name);
+    });
     let res = this._converter.iterateToModel(Data);
 
     return res;

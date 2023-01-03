@@ -79,6 +79,20 @@ export class CollectionMapRouteVideoComponent
     if (changes.play && changes.play.firstChange && this.play) {
       this.play.subscribe(this.onplay.bind(this));
     }
+    if (this.begin && this.end) {
+      let duration: Duration = {
+        begin: this.begin,
+        end: this.end,
+      };
+      if (changes.begin && changes.end) {
+        this.onplay(duration);
+      } else if (changes.begin) {
+        this.onplay(duration);
+      } else if (changes.end) {
+        this.onplay(duration);
+      } else {
+      }
+    }
   }
 
   onplay(duration: Duration) {
@@ -94,6 +108,7 @@ export class CollectionMapRouteVideoComponent
   }
 
   initTitle() {
+    this.position = undefined;
     this.title = [];
     let index: number;
     let no: VehiclePositionNo;

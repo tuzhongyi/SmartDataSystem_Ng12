@@ -23,10 +23,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
   private client!: CesiumMapClient;
   private point?: CesiumDataController.Point;
   // private routeId?: string;
-  private route?: {
-    id: string;
-    points: GisRoutePoint[];
-  };
+  private path?: GisRoutePath;
   init(iframe: HTMLIFrameElement): void {
     this.client = new CesiumMapClient(iframe);
     this.client.Events.OnLoaded = () => {
@@ -35,11 +32,11 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     this.client.Events.OnRouteClick = (
       position: CesiumDataController.Position
     ) => {
-      if (this.route && this.route.points.length > 0) {
+      if (this.path && this.path.points.length > 0) {
         let distance = Number.MAX_VALUE;
-        let gis: GisRoutePoint = this.route.points[0];
+        let gis: GisRoutePoint = this.path.points[0];
         let p = this.converter.Position(position, gis.GisType);
-        this.route.points.forEach((x) => {
+        this.path.points.forEach((x) => {
           let value = MathTool.distance_coordinate(
             {
               X: x.Longitude,
@@ -89,8 +86,8 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
         return !!this.client && this.loaded && !!this.point;
       },
       () => {
-        if (this.route) {
-          this.client.Draw.Route.Remove(this.route.id);
+        if (this.path) {
+          this.client.Draw.Route.Remove(this.path.id);
         }
         let positions = points.map((x) => this.converter.GisPoint(x));
         let opts = new CesiumDataController.DrawLineOptions();
@@ -102,7 +99,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
           this.client.Point.Create(this.point);
           this.client.Viewer.Focus(this.point.villageId);
         }
-        this.route = {
+        this.path = {
           id: routeId,
           points: points,
         };
@@ -110,26 +107,42 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     );
   }
 
-  routing(date: Date) {
+  route(date: Date, position?: CesiumDataController.Position) {
     wait(
       () => {
         return !!this.client && this.loaded;
       },
       () => {
-        if (this.route && this.client && this.point) {
-          let routed = this.route.points.filter(
+        if (this.path && this.client && this.point) {
+          let routed = this.path.points.filter(
             (x) => x.Time.getTime() <= date.getTime()
           );
           let positions = routed.map((x) => this.converter.GisPoint(x));
-          this.client.Draw.Route.Set(this.route.id, positions);
+          if (position) {
+            positions.pop();
+            positions.push(position);
+          }
           this.point.position = positions[positions.length - 1];
-          let opts: CesiumDataController.PointOptions = {
-            id: this.point.id,
-            position: this.point.position,
-          };
-          this.client.Point.Set([opts]);
+          this.routing(this.path.id, this.point, positions);
         }
       }
     );
   }
+  private routing(
+    pathId: string,
+    point: CesiumDataController.Point,
+    positions: CesiumDataController.Position[]
+  ) {
+    this.client.Draw.Route.Set(pathId, positions);
+    let opts: CesiumDataController.PointOptions = {
+      id: point.id,
+      position: point.position,
+    };
+    this.client.Point.Set([opts]);
+  }
+}
+
+interface GisRoutePath {
+  id: string;
+  points: GisRoutePoint[];
 }
