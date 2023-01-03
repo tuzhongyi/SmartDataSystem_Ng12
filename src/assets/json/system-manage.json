@@ -1,0 +1,15 @@
+{
+  "$schema": "./system-mode.schema.json",
+  "data": [
+    {
+      "title": "垃圾管理",
+      "icon": "howell-icon-cam-all1",
+      "path": "waste-regulation"
+    },
+    {
+      "title": "垃圾清运",
+      "icon": "howell-icon-setting",
+      "path": "garbage_vehicle"
+    }
+  ]
+}

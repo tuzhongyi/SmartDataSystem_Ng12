@@ -40,6 +40,8 @@ import { Md5 } from 'ts-md5';
   styleUrls: ['./login.component.less'],
 })
 export class LoginComponent implements OnInit, AfterViewInit {
+  systemManage = false;
+
   @ViewChild('loginVideo')
   video?: ElementRef;
 
@@ -198,28 +200,35 @@ export class LoginComponent implements OnInit, AfterViewInit {
           // console.log('登录成功', result);
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
           // 区分权限
-          if (result.Role && result.Role.length > 0) {
-            if (result.Role[0].StaticData == StaticDataRole.enabled) {
-              this._router.navigateByUrl(RoutePath.aiop);
-            } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
-              if (
-                result.Resources &&
-                result.Resources.length > 0 &&
-                result.Resources[0].ResourceType === UserResourceType.Committees
-              ) {
-                this._router.navigateByUrl(RoutePath.garbage_system_committees);
-              } else {
-                this._router.navigateByUrl(RoutePath.garbage_system);
+          if (!this.systemManage) {
+            if (result.Role && result.Role.length > 0) {
+              if (result.Role[0].StaticData == StaticDataRole.enabled) {
+                this._router.navigateByUrl(RoutePath.aiop);
+              } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
+                if (
+                  result.Resources &&
+                  result.Resources.length > 0 &&
+                  result.Resources[0].ResourceType ===
+                    UserResourceType.Committees
+                ) {
+                  this._router.navigateByUrl(
+                    RoutePath.garbage_system_committees
+                  );
+                } else {
+                  this._router.navigateByUrl(RoutePath.garbage_system);
+                }
               }
+            } else if (
+              result.Resources &&
+              result.Resources.length > 0 &&
+              result.Resources[0].ResourceType === UserResourceType.Committees
+            ) {
+              this._router.navigateByUrl(RoutePath.garbage_system_committees);
+            } else {
+              this._router.navigateByUrl(RoutePath.garbage_vehicle);
             }
-          } else if (
-            result.Resources &&
-            result.Resources.length > 0 &&
-            result.Resources[0].ResourceType === UserResourceType.Committees
-          ) {
-            this._router.navigateByUrl(RoutePath.garbage_system_committees);
           } else {
-            this._router.navigateByUrl(RoutePath.garbage_vehicle);
+            this._router.navigateByUrl(RoutePath.system_manage);
           }
         }
       } catch (e: any) {

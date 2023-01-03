@@ -16,6 +16,14 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: RoutePath.system_manage,
+    loadChildren: () =>
+      import('./system-manage/system-manage.module').then(
+        (mod) => mod.SystemManageModule
+      ),
+    canActivate: [AuthorizationService],
+  },
+  {
     path: RoutePath.aiop,
     loadChildren: () =>
       import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
