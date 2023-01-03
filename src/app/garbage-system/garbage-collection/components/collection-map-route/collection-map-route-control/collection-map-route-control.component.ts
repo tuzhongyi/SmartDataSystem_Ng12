@@ -133,7 +133,6 @@ export class CollectionMapRouteControlComponent
       if (this.hasdata) {
         this.time = datas.points[0].Time;
       }
-
       this.loaded.emit(datas);
     }
   }

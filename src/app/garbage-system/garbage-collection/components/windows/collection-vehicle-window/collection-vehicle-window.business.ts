@@ -3,6 +3,7 @@ import { param } from 'jquery';
 import { filter } from 'jszip';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Flags } from 'src/app/common/tools/flags';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
@@ -30,7 +31,9 @@ export class CollectionVehicleWindowBusiness {
 
     // console.log(Data);
     // Data = [...Data, ...Data, ...Data];
-
+    Data = Data.sort((a, b) => {
+      return LocaleCompare.compare(b.Name, a.Name);
+    });
     let data = await this._converter.iterateToModel(Data);
     let res: PagedList<CollectionVehicleWindowModel> = {
       Page: Page,

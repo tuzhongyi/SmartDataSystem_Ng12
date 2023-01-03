@@ -103,7 +103,9 @@ export class CollectionMapRouteComponent implements OnInit {
     if (this.display.video === false) {
       this.display.operation = true;
     }
-    this.business.load(this.model);
+    this.business.load(this.model).then((x) => {
+      this.wantplay = this.display.video;
+    });
   }
 
   onqueryclose() {
@@ -114,14 +116,16 @@ export class CollectionMapRouteComponent implements OnInit {
   }
   //#endregion
   //#region control
-  onloaded(source: CollectionMapRouteControlSource) {
-    if (source.points && source.points.length > 0) {
-      this.duration = {
-        begin: source.points[0].Time,
-        end: source.points[source.points.length - 1].Time,
-      };
+  onloaded(source?: CollectionMapRouteControlSource) {
+    if (source) {
+      if (source.points && source.points.length > 0) {
+        this.duration = {
+          begin: source.points[0].Time,
+          end: source.points[source.points.length - 1].Time,
+        };
+      }
+      this.business.ready(source.points);
     }
-    this.business.ready(source.points);
   }
   onscore(date: Date) {
     if (this.duration) {
@@ -135,7 +139,7 @@ export class CollectionMapRouteComponent implements OnInit {
     if (this.duration) {
       this.duration.begin = date;
     }
-    this.business.routing(date);
+    this.business.route(date);
   }
   onrouteclick(date: Date) {
     if (this.duration) {

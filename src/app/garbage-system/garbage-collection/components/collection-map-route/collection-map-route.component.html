@@ -13,7 +13,7 @@
     <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
   </div>
   <div
-    *ngIf="!display.query"
+    *ngIf="!display.query && !splitview"
     class="route-button collection-map-route-query-button"
     (click)="onquerybuttonclick()"
   >
