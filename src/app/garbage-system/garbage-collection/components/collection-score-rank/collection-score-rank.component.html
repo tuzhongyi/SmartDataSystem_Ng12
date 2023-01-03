@@ -3,6 +3,16 @@
     <div class="collection-score-rank__head__title">
       {{ title }}
     </div>
+    <div class="collection-score-rank__head__select">
+      <select [(ngModel)]="searchInfo.Type" (ngModelChange)="selectChange()">
+        <option
+          *ngFor="let item of selectDataSource | keyvalue"
+          [value]="item.key"
+        >
+          {{ item.value }}
+        </option>
+      </select>
+    </div>
   </div>
   <div class="collection-score-rank__main">
     <common-rank

@@ -1,5 +1,7 @@
+import { KeyValue } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import {
   CommonRankData,
   CommonRankModel,
@@ -24,15 +26,30 @@ import {
   providers: [CollectionScoreRankBusiness, CollectionScoreRankConverter],
 })
 export class CollectionScoreRankComponent implements OnInit {
-  @Input() type: CollectionPointScore = CollectionPointScore.Poor;
+  Language = Language;
+  CollectionPointScore = CollectionPointScore;
 
   @Output() clickEvent = new EventEmitter();
 
   model?: CollectionScoreRankModel;
   rankModel?: CommonRankModel;
 
+  selectDataSource = new Map([
+    [
+      CollectionPointScore.Good,
+      Language.CollectionPointScore(CollectionPointScore.Good),
+    ],
+    [
+      CollectionPointScore.Average,
+      Language.CollectionPointScore(CollectionPointScore.Average),
+    ],
+    [
+      CollectionPointScore.Poor,
+      Language.CollectionPointScore(CollectionPointScore.Poor),
+    ],
+  ]);
   get title() {
-    return '垃圾分类' + Language.CollectionPointScore(this.type) + '月榜';
+    return '垃圾分类' + '' + '月榜';
   }
 
   today = new Date();
@@ -41,7 +58,7 @@ export class CollectionScoreRankComponent implements OnInit {
     BeginTime: Time.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
     DivisionIds: [this._globalStorage.divisionId],
-    Type: CollectionPointScore.Poor,
+    Type: CollectionPointScore.Good,
   };
   subscription: Subscription;
 
@@ -55,7 +72,6 @@ export class CollectionScoreRankComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.searchInfo.Type = this.type;
     this._init();
   }
   private async _init() {
@@ -66,5 +82,8 @@ export class CollectionScoreRankComponent implements OnInit {
 
   clickRankItem(item: CommonRankData) {
     this.clickEvent.emit(item);
+  }
+  selectChange() {
+    this._init();
   }
 }
