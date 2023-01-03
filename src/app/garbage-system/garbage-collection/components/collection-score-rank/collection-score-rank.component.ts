@@ -48,6 +48,12 @@ export class CollectionScoreRankComponent implements OnInit {
       Language.CollectionPointScore(CollectionPointScore.Poor),
     ],
   ]);
+  customCompare = (
+    keyValueA: KeyValue<number, string>,
+    keyValueB: KeyValue<number, string>
+  ): number => {
+    return (keyValueA.key - keyValueB.key) * -1;
+  };
   get title() {
     return '垃圾分类' + '' + '月榜';
   }

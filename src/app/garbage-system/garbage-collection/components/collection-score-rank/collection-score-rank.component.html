@@ -6,7 +6,7 @@
     <div class="collection-score-rank__head__select">
       <select [(ngModel)]="searchInfo.Type" (ngModelChange)="selectChange()">
         <option
-          *ngFor="let item of selectDataSource | keyvalue"
+          *ngFor="let item of selectDataSource | keyvalue : customCompare"
           [value]="item.key"
         >
           {{ item.value }}
