@@ -28,22 +28,6 @@
       </div>
       <div class="filter-group">
         <div class="title">
-          <span class="hw-form-label">状态:</span>
-        </div>
-        <div class="content">
-          <select [(ngModel)]="searchInfo.State">
-            <option [value]="CollectionDeviceStateCountType.All">全部</option>
-            <option [value]="CollectionDeviceStateCountType.Online">
-              正常
-            </option>
-            <option [value]="CollectionDeviceStateCountType.Offline">
-              离线
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="filter-group">
-        <div class="title">
           <span class="hw-form-label">类型:</span>
         </div>
         <div class="content">
@@ -67,6 +51,22 @@
               (selectTreeNode)="selectTreeNode($event)"
             ></howell-division-tree>
           </common-tree-select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">状态:</span>
+        </div>
+        <div class="content">
+          <select [(ngModel)]="searchInfo.State">
+            <option [value]="CollectionDeviceStateCountType.All">全部</option>
+            <option [value]="CollectionDeviceStateCountType.Online">
+              正常
+            </option>
+            <option [value]="CollectionDeviceStateCountType.Offline">
+              离线
+            </option>
+          </select>
         </div>
       </div>
       <div class="hw-normal-btn-group">

@@ -37,14 +37,16 @@ export class CollectionPointWindowBusiness {
     params.Name = searchInfo.Condition;
     params.DivisionIds = searchInfo.DivisionIds;
 
-    if (searchInfo.DivisionIds.length == 1) {
-      if (
-        searchInfo.DivisionIds[0] ==
-        this._globalStorageService.defaultDivisionId
-      ) {
-        params.DivisionIds = [];
-      }
-    }
+    // if (searchInfo.DivisionIds.length == 1) {
+    //   if (
+    //     searchInfo.DivisionIds[0] ==
+    //     this._globalStorageService.defaultDivisionId
+    //   ) {
+    //     params.DivisionIds = [];
+    //   }
+    // }
+
+    params.DivisionIds = searchInfo.DivisionIds;
 
     if (searchInfo.Type !== '') params.Classification = searchInfo.Type;
     return this._collectionPointsRequest.list(params);
