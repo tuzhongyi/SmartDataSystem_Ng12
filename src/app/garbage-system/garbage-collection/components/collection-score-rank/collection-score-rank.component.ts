@@ -33,6 +33,7 @@ export class CollectionScoreRankComponent implements OnInit {
 
   model?: CollectionScoreRankModel;
   rankModel?: CommonRankModel;
+  language: string = '';
 
   selectDataSource = new Map([
     [
@@ -55,7 +56,7 @@ export class CollectionScoreRankComponent implements OnInit {
     return (keyValueA.key - keyValueB.key) * -1;
   };
   get title() {
-    return '垃圾分类' + '' + '月榜';
+    return '垃圾分类' + this.language + '月榜';
   }
 
   today = new Date();
@@ -64,7 +65,7 @@ export class CollectionScoreRankComponent implements OnInit {
     BeginTime: Time.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
     DivisionIds: [this._globalStorage.divisionId],
-    Type: CollectionPointScore.Good,
+    Type: CollectionPointScore.Poor,
   };
   subscription: Subscription;
 
@@ -84,6 +85,7 @@ export class CollectionScoreRankComponent implements OnInit {
     this.searchInfo.DivisionIds = [this._globalStorage.divisionId];
     this.model = await this._business.init(this.searchInfo);
     this.rankModel = this.model.RankModel;
+    this.language = Language.CollectionPointScore(this.searchInfo.Type);
   }
 
   clickRankItem(item: CommonRankData) {

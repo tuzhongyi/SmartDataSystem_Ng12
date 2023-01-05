@@ -7,7 +7,7 @@
       <select [(ngModel)]="searchInfo.Type" (ngModelChange)="selectChange()">
         <option
           *ngFor="let item of selectDataSource | keyvalue : customCompare"
-          [value]="item.key"
+          [ngValue]="item.key"
         >
           {{ item.value }}
         </option>

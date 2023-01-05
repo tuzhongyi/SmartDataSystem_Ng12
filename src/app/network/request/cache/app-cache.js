@@ -15,10 +15,10 @@ class AppCache {
 
       // for use when you need to clean up something when objects
       // are evicted from the cache
-      dispose: (value, key) => {
-        // freeFromMemoryOrWhatever(value)
-        this.cache.clear()
-      },
+      // dispose: (value, key) => {
+      //   // freeFromMemoryOrWhatever(value)
+      //   this.cache.delete(key)
+      // },
 
       // how long to live in ms
       ttl: maxAge,
