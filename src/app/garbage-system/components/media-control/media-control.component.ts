@@ -225,15 +225,12 @@ export class MediaControlComponent
     this.display.preview = true;
   }
 
-  onimagedownload() {
+  async onimagedownload() {
     if (this.current) {
       if (this.current && this.current.image) {
         let time = this.current.image.eventTime ?? new Date();
-        this.download.image(
-          this.current.image.src,
-          this.current.image.name,
-          time
-        );
+        let src = await this.current.image.src;
+        this.download.image(src, this.current.image.name, time);
       }
     }
   }

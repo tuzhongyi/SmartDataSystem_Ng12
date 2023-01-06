@@ -73,7 +73,7 @@ export class PatrolControlBusiness
                     url.Id
                   ) {
                     media.fulled = false;
-                    media.image.src = Medium.jpg(url.Id);
+                    media.image.src = Medium.img(url.Id);
                   }
                 });
               });

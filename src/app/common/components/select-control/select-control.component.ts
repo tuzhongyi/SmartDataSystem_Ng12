@@ -27,7 +27,7 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Input()
   cansearch = false;
 
-  constructor() { }
+  constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
@@ -39,6 +39,13 @@ export class SelectControlComponent implements OnInit, OnChanges {
             }
           }
         });
+      }
+    }
+    if (changes.data) {
+      if (this.data && this.data.length > 0) {
+        if (!this.selected) {
+          this.selected = this.data[0];
+        }
       }
     }
   }
@@ -61,15 +68,16 @@ export class SelectControlComponent implements OnInit, OnChanges {
     this.opened = !this.opened;
     event.stopPropagation();
   }
-  onselect(item: SelectItem, event?: Event) {
-    if (this.selected === item) return;
-    this.selected = item;
-    this.opened = false;
-    this.select.emit(item);
-    if (this.standby) {
-      this.data = this.standby;
-      this.standby = undefined;
-    }
+  onselect(item?: SelectItem, event?: Event) {
+    // if (this.selected === item) return;
+    // this.selected = item;
+    // this.opened = false;
+    // this.select.emit(item);
+    // if (this.standby) {
+    //   this.data = this.standby;
+    //   this.standby = undefined;
+    // }
+    this.select.emit(this.selected);
   }
 
   clear(event: Event) {

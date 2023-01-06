@@ -40,10 +40,10 @@ export class EventRecordOperationComponent implements OnInit {
 
       switch (x) {
         case ListType.table:
-          item.language = '<i class="howell-icon-ul"></i>';
+          item.language = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
-          item.language = '<i class="howell-icon-cam-all1"></i>';
+          item.language = '&#xf225;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
           break;
 
         default:

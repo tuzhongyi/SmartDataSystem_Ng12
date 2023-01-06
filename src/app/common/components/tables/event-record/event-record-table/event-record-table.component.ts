@@ -59,7 +59,7 @@ export class EventRecordTableComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-  widths = ['10%', '15%', '15%', '15%', '10%', '15%', '10%', '10%'];
+  widths = ['10%', '15%', '15%', '13%', '10%', '15%', '12%', '10%'];
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
@@ -103,13 +103,10 @@ export class EventRecordTableComponent
     this.panel.record = model;
     this.panel.show = true;
   }
-  downloadImage(model: EventRecordViewModel) {
+  async downloadImage(model: EventRecordViewModel) {
     if (model.images && model.images.length > 0) {
-      this.download.image(
-        model.images[0].src,
-        model.ResourceName ?? '',
-        model.EventTime
-      );
+      let src = await model.images[0].src;
+      this.download.image(src, model.ResourceName ?? '', model.EventTime);
     }
   }
   playvideo(model: EventRecordViewModel) {

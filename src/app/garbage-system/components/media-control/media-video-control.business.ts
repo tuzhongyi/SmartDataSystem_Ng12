@@ -93,7 +93,7 @@ export class MediaVideoControlBussiness implements IMediaControlBusiness {
                     models[i].image &&
                     url.Id
                   ) {
-                    models[i].image!.src = Medium.jpg(url.Id);
+                    models[i].image!.src = Medium.img(url.Id);
                   }
                 }
               }

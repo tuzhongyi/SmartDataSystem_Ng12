@@ -84,7 +84,7 @@ export class EventRecordDetailsTableBusiness
   async getDivisions(parentId: string) {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
-    let response = await this.divisionService.list(params);
+    let response = await this.divisionService.cache.list(params);
     return response.Data;
   }
 

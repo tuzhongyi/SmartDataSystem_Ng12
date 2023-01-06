@@ -48,12 +48,12 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
       this.draw();
     }
   }
-  ngOnChanges(changes: SimpleChanges): void {
+  async ngOnChanges(changes: SimpleChanges) {
     if (changes.model) {
       if (this.model) {
-        this.image.backgroundImage = `url(${this.model.src})`;
+        this.image.backgroundImage = `url(${await this.model.src})`;
         let img = document.createElement('img');
-        img.src = this.model.src;
+        img.src = await this.model.src;
         img.onerror = () => {
           if (this.model) {
             this.image.backgroundImage += `, url(${this.model.onerror})`;

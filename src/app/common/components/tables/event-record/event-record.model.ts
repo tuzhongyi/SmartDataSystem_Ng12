@@ -77,5 +77,5 @@ export class CameraImageUrlModel extends CameraImageUrl {
     this.StationId = stationId;
   }
   StationId: string;
-  Camera!: Camera;
+  Camera!: Promise<Camera>;
 }

@@ -95,7 +95,7 @@ export class GarbageDropEventRecordConverter
             source.Data.DropImageUrls[i],
             source.Data.StationId
           );
-          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(
             url,
             true,
@@ -114,7 +114,7 @@ export class GarbageDropEventRecordConverter
             source.Data.TimeoutImageUrls[i],
             source.Data.StationId
           );
-          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(url, true, source.EventTime);
           model.images.push(image);
         } catch (error) {
@@ -129,7 +129,7 @@ export class GarbageDropEventRecordConverter
             source.Data.HandleImageUrls[i],
             source.Data.StationId
           );
-          url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
+          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(
             url,
             true,

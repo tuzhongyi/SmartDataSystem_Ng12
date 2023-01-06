@@ -48,7 +48,7 @@ export class EventRecordDetailsTableComponent
 
       switch (x) {
         case ListType.table:
-          item.language = '<i class="howell-icon-ul"></i>';
+          item.language = '&#xf08b;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
           item.language = '<i class="howell-icon-cam-all1"></i>';

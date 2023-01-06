@@ -10,7 +10,9 @@ export class CameraInnerUrl extends AbstractUrl {
     return `${this.basic()}/Excels`;
   }
   files(id: string, begin: string, end: string) {
-    return `${this.item(id)}/Files?BeginTime=${begin}&EndTime=${end}`;
+    return `${this.item(id)}/Files?BeginTime=${encodeURIComponent(
+      begin
+    )}&EndTime=${encodeURIComponent(end)}`;
   }
   trashcan(id: string) {
     return new TrashCanInnerUrl(this.item(id));

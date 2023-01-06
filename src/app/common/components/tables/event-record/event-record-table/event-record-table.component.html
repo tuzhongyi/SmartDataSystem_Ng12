@@ -122,6 +122,7 @@
   <ng-container *ngIf="panel.show">
     <howell-video-download-panel
       [business]="panel"
+      [type]="type"
       (download)="panel.download($event)"
       (cancel)="panel.cancel()"
     >

@@ -26,10 +26,10 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   ) {
     try {
       console.log(key);
-      let cache = LocalStorageService.Get(key, AppCache);
+      let cache = ServicePool[key];
       if (!cache) {
         cache = new AppCache(timeout);
-        LocalStorageService.Set(key, cache);
+        ServicePool[key] = cache;
       }
       this.cache = cache;
     } catch (error) {

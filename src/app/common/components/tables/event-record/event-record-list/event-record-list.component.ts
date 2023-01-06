@@ -117,13 +117,10 @@ export class EventRecordListComponent
     this.panel.record = model;
     this.panel.show = true;
   }
-  downloadImage(model: EventRecordViewModel) {
+  async downloadImage(model: EventRecordViewModel) {
     if (model.images && model.images.length > 0) {
-      this.download.image(
-        model.images[0].src,
-        model.ResourceName ?? '',
-        model.EventTime
-      );
+      let src = await model.images[0].src;
+      this.download.image(src, model.ResourceName ?? '', model.EventTime);
     }
   }
   playvideo(model: EventRecordViewModel) {

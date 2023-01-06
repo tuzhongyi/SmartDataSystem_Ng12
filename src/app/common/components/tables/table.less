@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  table-layout: fixed;
 
   thead {
     color: white;
@@ -58,6 +59,12 @@ table {
 
         overflow: hidden;
         text-overflow: ellipsis;
+
+        &.operation {
+          &>div {
+            overflow: visible;
+          }
+        }
 
         &.center {
           text-align: center;
@@ -138,6 +145,11 @@ table {
     }
   }
 }
+
+.body {
+  overflow-y: auto;
+}
+
 
 .loading {
   width: 100%;

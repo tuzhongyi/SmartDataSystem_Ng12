@@ -53,7 +53,7 @@ export class EventRecordListItemConverter
     if (model.station && model.station.DivisionId) {
       model.parent = await getter.division(model.station.DivisionId);
     }
-    model.img = await Medium.img(source.ImageUrl);
+    model.img = Medium.img(source.ImageUrl);
 
     return model;
   }

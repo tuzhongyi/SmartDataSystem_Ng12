@@ -8,7 +8,7 @@ export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
   id: string;
   stationId?: string;
   name: string;
-  src: string;
+  src: Promise<string>;
   onerror: string;
   status: OnlineStatus;
   camera: T;
@@ -36,7 +36,7 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
   stationId?: string;
   camera: T;
   name: string;
-  src: string;
+  src: Promise<string>;
   id: string;
   onerror: string;
   status: OnlineStatus = OnlineStatus.Offline;
