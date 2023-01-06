@@ -15,6 +15,7 @@ import {
   StatisticType,
 } from '../../statistic-card/statistic-card.model';
 import { WindowBussiness } from './window.business';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 
 @Injectable()
 export class StatisticCardBussiness
@@ -48,7 +49,11 @@ export class StatisticCardBussiness
   async load(...args: any): Promise<StatisticCardViewModel[]> {
     let data = await this.getData(this.storeService.divisionId);
     let array = this.Converter.Convert(data);
-    let stations = await this.garbageStationService.cache.all();
+    let params = new GetGarbageStationsParams();
+    params.DivisionId = this.storeService.divisionId;
+    let { Data: stations } = await this.garbageStationService.cache.list(
+      params
+    );
     let count = this.Converter.createGarbageStation(stations.length);
     array.unshift(count);
 
