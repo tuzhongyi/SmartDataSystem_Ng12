@@ -51,6 +51,7 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
 
   resourceTypes: SelectItem[] = [];
   eventTypes: SelectItem[] = [];
+  currentType: DivisionType;
 
   resourceType: UserResourceType = UserResourceType.Committees;
 
@@ -66,20 +67,15 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   constructor(
     public business: IllegalMixintoRankBusiness,
     private storeService: GlobalStorageService
-  ) {}
+  ) {
+    this.currentType = this.storeService.divisionType;
+  }
 
   ngOnInit(): void {
-    let child = EnumHelper.GetResourceChildTypeByDivisionType(
+    let type = EnumHelper.ConvertDivisionToUserResource(
       this.storeService.divisionType
     );
-    this.resourceTypes = [
-      new SelectItem(child.toString(), child, Language.UserResourceType(child)),
-      new SelectItem(
-        UserResourceType.Station.toString(),
-        UserResourceType.Station,
-        Language.UserResourceType(UserResourceType.Station)
-      ),
-    ];
+    this.initType(type);
 
     let eventTypeEnum = new Enum(RankEventType);
     this.eventTypes = eventTypeEnum.toArray((x) => {
@@ -88,7 +84,15 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
 
     // 区划改变时触发
     this.business.subscription.subscribe(() => {
+      let type = EnumHelper.ConvertDivisionToUserResource(
+        this.storeService.divisionType
+      );
+
+      if (this.storeService.divisionType !== this.currentType) {
+        this.initType(type);
+      }
       this.loadData();
+      this.currentType = this.storeService.divisionType;
     });
     this.loadData();
   }
@@ -101,11 +105,28 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     this.title = Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
       this.storeService.divisionId,
-      this.storeService.divisionType === DivisionType.Committees
-        ? UserResourceType.Station
-        : this.resourceType,
+      this.resourceType,
       this.eventType
     );
+  }
+
+  initType(type: UserResourceType) {
+    let child = EnumHelper.GetResourceChildType(type);
+    this.resourceTypes = [];
+    let resource = new SelectItem(
+      child.toString(),
+      child,
+      Language.UserResourceType(child)
+    );
+    this.resourceTypes.push(resource);
+    child = EnumHelper.GetResourceChildType(child);
+    resource = new SelectItem(
+      child.toString(),
+      child,
+      Language.UserResourceType(child)
+    );
+    this.resourceTypes.push(resource);
+    this.resourceType = this.resourceTypes[0].value;
   }
 
   onItemClicked(model: RankModel) {

@@ -56,7 +56,8 @@ export class IllegalMixintoRankBusiness
     switch (resourceType) {
       case UserResourceType.County:
       case UserResourceType.Committees:
-        data = await this.loadByDivision(divisionId);
+        let type = EnumHelper.ConvertUserResourceToDivision(resourceType);
+        data = await this.loadByDivision(divisionId, type);
         break;
       case UserResourceType.Station:
         data = await this.loadByStation(divisionId);
@@ -87,14 +88,15 @@ export class IllegalMixintoRankBusiness
     });
   }
 
-  getChildren(parentId: string) {
+  getChildren(parentId: string, type: DivisionType) {
     let params = new GetDivisionsParams();
-    params.ParentId = parentId;
+    params.AncestorId = parentId;
+    params.DivisionType = type;
     return this.divisionRequest.cache.list(params);
   }
 
-  async loadByDivision(divisionId: string) {
-    let children = await this.getChildren(divisionId);
+  async loadByDivision(divisionId: string, type: DivisionType) {
+    let children = await this.getChildren(divisionId, type);
     let params = new GetDivisionStatisticNumbersParams();
     params.Ids = children.Data.map((x) => x.Id);
     let list = await this.divisionRequest.statistic.number.cache.list(params);
