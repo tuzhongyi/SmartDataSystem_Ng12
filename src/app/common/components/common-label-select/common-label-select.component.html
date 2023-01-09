@@ -1,8 +1,8 @@
-<div class="tree-select" (blur)="blur()" tabindex="-1">
-  <div class="tree-select-header" (click)="toggleHandler($event)">
+<div class="label-select" (blur)="blur()" tabindex="-1">
+  <div class="label-select-header" (click)="toggleHandler($event)">
     <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
     <div class="wrapper">
-      <div class="tree-select-item" *ngFor="let node of selectedNodes">
+      <div class="label-select-item" *ngFor="let node of selectedNodes">
         <div class="title">{{ node.Name }}</div>
         <div class="close-btn" (click)="removeNode($event, node)">
           <i class="howell-icon-Close"></i>
@@ -19,7 +19,7 @@
       ></i>
     </button>
   </div>
-  <div class="tree-select-body" *ngIf="showDropDown">
+  <div class="label-select-body" *ngIf="showDropDown">
     <ng-content></ng-content>
   </div>
 </div>

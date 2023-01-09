@@ -15,7 +15,7 @@
 
       <div class="wrapper">
         <div
-          class="select-item select-item--green"
+          class="label-select-item select-item--green"
           [class.high-light]="highLight(label)"
           *ngFor="let label of allLables"
           (click)="selectLabel(label)"
@@ -38,7 +38,7 @@
 
       <div class="wrapper">
         <div
-          class="select-item select-item--blue"
+          class="label-select-item select-item--blue"
           *ngFor="let label of resourceLabels"
         >
           <div class="title">{{ label.Name }}</div>

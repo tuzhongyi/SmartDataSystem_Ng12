@@ -1,11 +1,11 @@
-.tree-select {
+.label-select {
   width: 100%;
   height: auto;
   position: relative;
 
   background-color: #1d233b;
 
-  .tree-select-header {
+  .label-select-header {
     display: flex;
     height: 34px;
     position: relative;
@@ -34,7 +34,7 @@
       font-size: 23px;
     }
   }
-  .tree-select-body {
+  .label-select-body {
     position: absolute;
     top: 34px;
     left: 0px;
@@ -56,7 +56,7 @@
   }
 }
 
-.tree-select-item {
+.label-select-item {
   cursor: pointer;
   // background: transparent;
   font-size: 14px;
@@ -87,13 +87,20 @@
   }
 }
 
-.select-item-green {
-  .tree-select-item {
+.green-label-select {
+  .label-select-item {
     background: #1e7925;
   }
 }
-.select-item-blue {
-  .tree-select-item {
+.blue-label-select {
+  .label-select-item {
     background: #3a94ff;
   }
+}
+
+.select-item--green {
+  background: #1e7925;
+}
+.select-item--blue {
+  background: #3a94ff;
 }

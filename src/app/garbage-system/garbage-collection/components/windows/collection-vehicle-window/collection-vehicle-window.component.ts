@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { CollectionDivisionTreeBusiness } from 'src/app/common/business/collection-division-tree.business';
-import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
+import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
 import {
   ToastWindowService,
   ToastWindowType,
@@ -48,8 +48,8 @@ export class CollectionVehicleWindowComponent implements OnInit {
 
   @Output('route') clickLineEvent = new EventEmitter();
 
-  @ViewChild(CommonTreeSelecComponent)
-  commonTreeSelect!: CommonTreeSelecComponent;
+  @ViewChild(CommonLabelSelecComponent)
+  commonTreeSelect!: CommonLabelSelecComponent;
 
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '10%', '10%'];
   dataSource: CollectionVehicleWindowModel[] = [];

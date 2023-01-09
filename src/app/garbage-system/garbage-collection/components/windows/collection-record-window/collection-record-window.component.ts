@@ -35,7 +35,7 @@ import {
   CollectionRecordWindowModel,
   ICollectionRecordWindowSearchInfo,
 } from './collection-record-window.model';
-import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
+import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { Language } from 'src/app/common/tools/language';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
@@ -57,8 +57,8 @@ export class CollectionRecordWindowComponent implements OnInit {
   Language = Language;
   SelectStrategy = SelectStrategy;
 
-  @ViewChild(CommonTreeSelecComponent)
-  commonTreeSelect!: CommonTreeSelecComponent;
+  @ViewChild(CommonLabelSelecComponent)
+  commonTreeSelect!: CommonLabelSelecComponent;
 
   tdWidth = ['10%', '10%', '10%', '10%', '10%', '15%', '10%', '5%'];
   dataSource: CollectionRecordWindowModel[] = [];

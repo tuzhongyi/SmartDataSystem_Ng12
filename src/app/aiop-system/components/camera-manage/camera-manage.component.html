@@ -45,7 +45,7 @@
   </div>
   <div class="horizontal-right vertical-layout">
     <div class="vertical-header">
-      <div class="hw-simple-title">监控点</div>
+      <div class="hw-simple-title" style="margin-right: 10px">监控点</div>
       <div class="operate-bar">
         <div class="left-wrapper">
           <div class="hw-normal-btn-group">
@@ -148,12 +148,12 @@
         <div class="filter-group">
           <div class="title"><span class="hw-form-label">选择标签:</span></div>
           <div class="content">
-            <common-tree-select [selectedNodes]="selectedNodes">
+            <common-label-select [selectedNodes]="selectedNodes">
               <howell-label-tree
                 [defaultIds]="defaultIds"
                 (selectTreeNode)="selectLabelTreeNode($event)"
               ></howell-label-tree>
-            </common-tree-select>
+            </common-label-select>
           </div>
         </div>
       </div>

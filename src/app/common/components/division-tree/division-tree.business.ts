@@ -142,7 +142,10 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       });
     }
     try {
-      let children = await this._getDataRecursively(type, depth - 1);
+      let children = await this._getDataRecursively(
+        EnumHelper.GetDivisionChildType(type),
+        depth - 1
+      );
 
       children.forEach((child) => {
         let parentId = child.ParentId;

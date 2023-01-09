@@ -15,39 +15,14 @@
           class=""
         />
       </div>
-      <!-- <div class="filter-item" *ngIf="userResourceType === UserResourceType.City">
-        <howell-division-filter
-          [type]="DivisionType.City"
-          [default]="userResourceType === UserResourceType.City"
-          (select)="onCountySelected($event)"
-          
-        >
-        </howell-division-filter>
-      </div>
-      <div class="filter-item">
-        <howell-division-filter
-          [type]="DivisionType.County"
-          [default]="userResourceType === UserResourceType.County"
-          (select)="onCountySelected($event)"
-        >
-        </howell-division-filter>
-      </div>
-      <div class="filter-item">
-        <howell-division-filter
-          [type]="DivisionType.Committees"
-          [parentId]="county ? county.Id : undefined"
-          (select)="onCommitteesSelected($event)"
-        >
-        </howell-division-filter>
-      </div>
-       -->
       <div class="filter-item">
         <span>行政区</span>
-        <howell-division-tree-filter
-          (select)="ondivisionselect($event)"
-          [align]="treeAlign"
-          [division]="division"
-        ></howell-division-tree-filter>
+
+        <div class="content" style="width: 200px">
+          <common-label-select>
+            <howell-division-tree #tree [depth]="1"></howell-division-tree>
+          </common-label-select>
+        </div>
       </div>
       <div class="filter-item">
         <howell-garbage-station-filter

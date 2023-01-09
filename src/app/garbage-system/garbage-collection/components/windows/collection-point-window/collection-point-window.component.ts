@@ -1,7 +1,7 @@
 import { Component, OnInit, Optional, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { CollectionDivisionTreeBusiness } from 'src/app/common/business/collection-division-tree.business';
-import { CommonTreeSelecComponent } from 'src/app/common/components/common-tree-select/common-tree-select.component';
+import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
@@ -25,8 +25,8 @@ import {
   ],
 })
 export class CollectionPointWindowComponent implements OnInit {
-  @ViewChild(CommonTreeSelecComponent)
-  commonTreeSelect!: CommonTreeSelecComponent;
+  @ViewChild(CommonLabelSelecComponent)
+  commonTreeSelect!: CommonLabelSelecComponent;
 
   CollectionPointClassification = CollectionPointClassification;
 

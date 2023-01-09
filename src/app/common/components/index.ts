@@ -40,7 +40,7 @@ import { LabelTreeComponent } from './label-tree/label-tree.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
-import { CommonTreeSelecComponent } from './common-tree-select/common-tree-select.component';
+import { CommonLabelSelecComponent } from './common-label-select/common-label-select.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
@@ -111,7 +111,7 @@ export const CUSTOM_COMPONENTS = [
   DivisionTreeComponent,
   CommonTreeComponent,
   RegionTreeComponent,
-  CommonTreeSelecComponent,
+  CommonLabelSelecComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
   ToastWindowComponent,
