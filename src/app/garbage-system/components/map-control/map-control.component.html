@@ -62,22 +62,53 @@
 <div class="map-bar btn-list">
   <div
     class="btn hw-link-tooltip"
-    (click)="Button1Clicked()"
+    (click)="onPatrolClicked()"
     title="投放点巡检"
   >
     <div class="inner">
       <i class="howell-icon-refresh"></i>
     </div>
   </div>
-  <div class="btn" (click)="Button2Clicked()" style="display: none">
+  <!-- <div class="btn" (click)="ButtonVSClicked()" style="display: none">
     <div class="inner" style="line-height: 26px">vs</div>
+  </div> -->
+  <div
+    class="btn"
+    (click)="display.filting.current.click.emit()"
+    [class.selected]="display.filting.current.selected"
+    title="投放点类型筛选"
+  >
+    <div class="inner" style="line-height: 26px">
+      <i class="mdi mdi-filter-outline"></i>
+    </div>
   </div>
   <div
     class="btn"
-    (click)="Button3Clicked()"
-    [ngStyle]="{
-      'background-color': display.label.current ? '#2bcf38' : '#2d76ce'
-    }"
+    (click)="display.filting.construction.click.emit()"
+    *ngIf="display.filting.construction.display"
+    [class.selected]="display.filting.construction.selected"
+    title="大件垃圾投放点"
+  >
+    <div class="inner" style="line-height: 26px">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    class="btn"
+    (click)="display.filting.station.click.emit()"
+    *ngIf="display.filting.station.display"
+    [class.selected]="display.filting.station.selected"
+    title="垃圾分类厢房"
+  >
+    <div class="inner" style="line-height: 26px">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    class="btn"
+    (click)="display.duration.current.click.emit()"
+    *ngIf="display.duration.current.display"
+    [class.selected]="display.duration.current.selected"
     title="小包垃圾滞留时长"
   >
     <div class="inner">
@@ -88,12 +119,10 @@
   </div>
   <div
     class="btn"
-    (click)="Button4Clicked()"
-    *ngIf="display.label.current"
+    (click)="display.duration.station.click.emit()"
+    *ngIf="display.duration.station.display"
+    [class.selected]="display.duration.station.selected"
     title="未有垃圾滞留投放点显示/隐藏"
-    [ngStyle]="{
-      'background-color': display.label.station.value ? '#2bcf38' : '#2d76ce'
-    }"
   >
     <div class="inner" style="line-height: 26px">
       <i class="howell-icon-garbage" style="line-height: 30px"></i>
@@ -102,13 +131,10 @@
 
   <div
     class="btn"
-    (click)="ButtonAllClicked()"
-    *ngIf="display.label.current"
+    (click)="display.duration.all.click.emit()"
+    *ngIf="display.duration.all.display"
+    [class.selected]="display.duration.all.selected"
     title="所有垃圾滞留投放点"
-    [ngStyle]="{
-      'background-color':
-        amap.labelFilter == GarbageTimeFilter.all ? '#2bcf38' : '#2d76ce'
-    }"
   >
     <div class="inner" style="line-height: 28px">
       <i class="mdi mdi-all-inclusive" style="line-height: 30px"></i>
@@ -116,37 +142,28 @@
   </div>
   <div
     class="btn"
-    (click)="Button30mClicked()"
-    *ngIf="display.label.current"
+    (click)="display.duration.m30.click.emit()"
+    *ngIf="display.duration.m30.display"
+    [class.selected]="display.duration.m30.selected"
     title="垃圾滞留30分钟以上投放点"
-    [ngStyle]="{
-      'background-color':
-        amap.labelFilter == GarbageTimeFilter.m30 ? '#2bcf38' : '#2d76ce'
-    }"
   >
     <div class="inner h" style="line-height: 28px">30m</div>
   </div>
   <div
     class="btn"
-    (click)="Button1hClicked()"
-    *ngIf="display.label.current"
+    (click)="display.duration.h1.click.emit()"
+    *ngIf="display.duration.h1.display"
+    [class.selected]="display.duration.h1.selected"
     title="垃圾滞留1小时以上投放点"
-    [ngStyle]="{
-      'background-color':
-        amap.labelFilter == GarbageTimeFilter.h1 ? '#2bcf38' : '#2d76ce'
-    }"
   >
     <div class="inner h" style="line-height: 28px">1h</div>
   </div>
   <div
     class="btn"
-    (click)="Button2hClicked()"
-    *ngIf="display.label.current"
+    (click)="display.duration.h2.click.emit()"
+    *ngIf="display.duration.h2.display"
+    [class.selected]="display.duration.h2.selected"
     title="垃圾滞留2小时以上投放点"
-    [ngStyle]="{
-      'background-color':
-        amap.labelFilter == GarbageTimeFilter.h2 ? '#2bcf38' : '#2d76ce'
-    }"
   >
     <div class="inner h" style="line-height: 28px">2h</div>
   </div>

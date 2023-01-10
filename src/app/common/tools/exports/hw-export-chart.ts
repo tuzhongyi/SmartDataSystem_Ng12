@@ -21,7 +21,7 @@ export class HowellExportChart {
         let data = new ExcelData();
         data.titles = [model.title];
         data.chartTitle = model.title;
-        data.dataLen = model.rowValues.length;
+        data.dataLen = model.rowValues.length + yDataIndex;
         data.dataKey = xDataIndex.map((x) => model.headers[x]);
         data.fields = model.rowValues.map((x) => x[yDataIndex].toString());
         data.data = new Object();

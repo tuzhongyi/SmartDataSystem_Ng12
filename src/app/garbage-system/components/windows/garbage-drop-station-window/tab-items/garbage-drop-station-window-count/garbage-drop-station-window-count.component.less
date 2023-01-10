@@ -27,7 +27,7 @@
         // justify-content: space-between;
         margin-right: 10px;
 
-        & > span {
+        &>span {
           max-width: @title-width;
           text-align: center;
           margin-right: 5px;
@@ -35,19 +35,19 @@
           font-size: 18px;
         }
 
-        & > input,
-        & > .input,
-        & > select,
-        & > button {
+        &>input,
+        &>.input,
+        &>select,
+        &>button {
           width: calc(100% - @title-width);
         }
 
-        & > input {
+        &>input {
           height: calc(100% - 2px);
           width: calc(100% - @title-width - 12px - 10px);
         }
 
-        & > button {
+        &>button {
           text-align: left;
           color: #cfd7ff;
           border: 1px solid #5e6ebf;
@@ -68,7 +68,7 @@
             border-color: #3a93ff;
           }
 
-          ::ng-deep & > .mat-button-wrapper {
+          ::ng-deep &>.mat-button-wrapper {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -88,6 +88,7 @@
           border: 1px solid #5e6ebf;
           font-size: 18px;
           height: 32px;
+          width: 100px;
 
           &.full {
             width: 250px;

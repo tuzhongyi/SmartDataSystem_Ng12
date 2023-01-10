@@ -29,7 +29,7 @@ export class AMapBusiness {
     });
     this.storeService.statusChange.subscribe((x) => {
       this.divisionSelect(this.storeService.divisionId);
-      let promise = this.GetPointCount(
+      let promise = this.getPointCount(
         this.storeService.divisionId,
         this.storeService.divisionType
       );
@@ -81,7 +81,7 @@ export class AMapBusiness {
     return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   loaded = false;
-  init() {
+  private init() {
     let promise = this.stationService.cache.all();
     promise.then((x) => {
       this.source.all = x;
@@ -100,7 +100,7 @@ export class AMapBusiness {
         });
       }
     });
-    let p = this.GetPointCount(
+    let p = this.getPointCount(
       this.storeService.divisionId,
       this.storeService.divisionType
     );
@@ -118,7 +118,7 @@ export class AMapBusiness {
         timer(0.1 * 1000)
           .toPromise()
           .then(() => {
-            this.ChangePoint();
+            this.changePoint();
           });
       });
 
@@ -139,7 +139,7 @@ export class AMapBusiness {
     };
   }
 
-  ChangePoint() {
+  changePoint() {
     if (!this.mapController) return;
     for (let i = 0; i < this.source.all.length; i++) {
       const point = this.mapController.Village.Point.Get(
@@ -245,7 +245,7 @@ export class AMapBusiness {
   }
 
   labelFilter = GarbageTimeFilter.all;
-  GarbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
+  garbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
     if (time === undefined || time <= 0) return false;
     return time >= filter;
   }
@@ -258,7 +258,7 @@ export class AMapBusiness {
     const list = await this.stationService.statistic.number.list(params);
 
     let drop = list.Data.filter((x) => {
-      return this.GarbageTimeFiltering(filter, x.CurrentGarbageTime);
+      return this.garbageTimeFiltering(filter, x.CurrentGarbageTime);
     });
     let dropIds = drop.map((x) => {
       return x.Id;
@@ -324,7 +324,10 @@ export class AMapBusiness {
 
     const ids = opts.map((x) => x.id);
 
-    this.mapClient.Label.Set(opts);
+    this.mapClient.Label.Set(
+      opts,
+      CesiumDataController.ImageResource.arcProgress
+    );
     for (const id in this.source.labels) {
       if (Object.prototype.hasOwnProperty.call(this.source.labels, id)) {
         const label = this.source.labels[id];
@@ -336,7 +339,7 @@ export class AMapBusiness {
     }
   }
 
-  async GetPointCount(villageId: string, divisionType: DivisionType) {
+  async getPointCount(villageId: string, divisionType: DivisionType) {
     let count = 0;
     if (this.mapController) {
       if (divisionType === DivisionType.Committees) {
@@ -477,6 +480,34 @@ export class AMapBusiness {
     );
 
     this.mapClient.ContextMenu.Enable();
+  }
+
+  garbageStationVisibility(value: boolean) {
+    this.source.all.forEach((x) => {
+      if (x.StationType === StationType.Garbage) {
+        if (this.mapClient) {
+          this.mapClient.Point.SetVisibility(x.Id, value);
+        }
+      }
+    });
+  }
+  constructionStationVisibility(value: boolean) {
+    this.source.all.forEach((x) => {
+      if (x.StationType === StationType.Construction) {
+        if (this.mapClient) {
+          this.mapClient.Point.SetVisibility(x.Id, value);
+          if (value) {
+            this.mapClient.Label.Show(
+              CesiumDataController.ImageResource.battery
+            );
+          } else {
+            this.mapClient.Label.Hide(
+              CesiumDataController.ImageResource.battery
+            );
+          }
+        }
+      }
+    });
   }
 }
 

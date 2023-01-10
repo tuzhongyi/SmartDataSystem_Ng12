@@ -538,6 +538,8 @@ declare namespace CesiumDataController {
 
   enum ImageResource {
     arcProgress = 'arc-progress',
+    battery = 'battery',
+    rippling = 'rippling',
   }
 
   // 路径规划类型

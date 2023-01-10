@@ -10,6 +10,7 @@ import {
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { StatisticToTimeDataConverter } from 'src/app/converter/statistic-to-timedata.converter';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -45,17 +46,17 @@ export class EventRecordComparisonBusiness
     if (opts.unit == TimeUnit.Day || opts.unit === TimeUnit.Hour) {
       unit = TimeUnit.Hour;
     }
-    let data = await this.getData(opts.userType, opts.ids, unit, interval);
+    let data = await this.getData(opts.divisionType, opts.ids, unit, interval);
     let model = this.Converter.Convert(data, opts.eventType);
     return model;
   }
   async getData(
-    type: UserResourceType,
+    type: DivisionType,
     ids: string[],
     unit: TimeUnit,
     interval: DurationParams
   ) {
-    if (type === UserResourceType.Station) {
+    if (type === DivisionType.None) {
       return this.getDataByStation(ids, unit, interval);
     } else {
       return this.getDataByDivision(ids, unit, interval);

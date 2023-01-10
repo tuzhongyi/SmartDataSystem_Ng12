@@ -35,6 +35,11 @@ export class TimeDataGroupExportConverter
       }
       model.rowValues.push(value);
     }
+    model.dataIndex = [];
+    for (let i = 0; i < source.length; i++) {
+      model.dataIndex.push(i + 3);
+    }
+    model.headIndex = 2;
 
     return model;
   }

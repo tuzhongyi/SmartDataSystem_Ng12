@@ -1,8 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
-import { CallbackDataParams } from 'echarts/types/dist/shared';
-import { ExportBusiness } from 'src/app/common/business/export.business';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -13,7 +11,6 @@ import { Enum } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
@@ -24,6 +21,8 @@ import {
 import { TimeDataGroupExportConverter } from '../../../../../../converter/exports/time-data-group-exports.converter';
 import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-details.business';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { ExportTool } from 'src/app/common/tools/export.tool';
 
 @Component({
   selector: 'howell-garbage-station-window-details',
@@ -38,7 +37,7 @@ export class GarbageStationWindowDetailsComponent
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   constructor(
     business: GarbageStationWindowDetailsBusiness,
-    private exports: ExportBusiness
+    private exports: ExportTool
   ) {
     this.business = business;
   }
@@ -54,7 +53,7 @@ export class GarbageStationWindowDetailsComponent
   selectIds: string[] = [];
   config: GarbageStationWindowDetailsComponentConfig = {};
 
-  UserResourceType = UserResourceType;
+  DivisionType = DivisionType;
   ChartType = ChartType;
   dateFormat: string = 'yyyy年MM月dd日';
   datas: ITimeDataGroup<number>[] = [];
@@ -298,7 +297,7 @@ export class GarbageStationWindowDetailsComponent
   }
 
   exportExcel() {
-    this.toExport(ExportType.excel);
+    this.toExport(ExportType.chart);
   }
   exportCSV() {
     this.toExport(ExportType.csv);

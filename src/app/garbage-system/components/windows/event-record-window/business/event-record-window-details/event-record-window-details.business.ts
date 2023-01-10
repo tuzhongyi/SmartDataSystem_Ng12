@@ -21,6 +21,7 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartLoadOptions } from '../../../charts/details-chart/details-chart.model';
 import { EventRecordWindowDetailsConverter } from './event-record-window-details.converter';
+import { ExportTool } from 'src/app/common/tools/export.tool';
 
 @Injectable()
 export class EventRecordWindowDetailsBusiness
@@ -29,7 +30,8 @@ export class EventRecordWindowDetailsBusiness
   constructor(
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService,
-    private store: GlobalStorageService
+    private store: GlobalStorageService,
+    private exportTool: ExportTool
   ) {}
   Converter: IConverter<EventNumberStatistic[], ITimeData<number>[][]> =
     new EventRecordWindowDetailsConverter();

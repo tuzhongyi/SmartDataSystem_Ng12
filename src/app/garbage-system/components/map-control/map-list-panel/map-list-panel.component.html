@@ -7,8 +7,8 @@
             class="item"
             [title]="item.Name"
             (mouseover)="itemHover(item)"
-            (click)="itemClick(item)"
-            (dblclick)="itemDoubleClick(item)"
+            (click)="itemClick($event, item)"
+            (dblclick)="itemDoubleClick($event, item)"
           >
             {{ item.Name }}
           </div>
@@ -23,7 +23,7 @@
     </div>
   </div>
 </div>
-<div class="btn" (click)="ButtonClick()" title="区域菜单栏">
+<div class="btn" (click)="ButtonClick($event)" title="区域菜单栏">
   <div class="inner">
     <i class="howell-icon-ul"></i>
   </div>

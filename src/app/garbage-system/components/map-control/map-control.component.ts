@@ -25,6 +25,8 @@ import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { Division } from 'src/app/network/model/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
+import { MapControlSelected, MapControlTools } from './map-control.model';
+import { wait } from 'src/app/common/tools/tool';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -142,7 +144,18 @@ export class MapControlComponent
     public amap: AMapBusiness,
     public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness
-  ) {}
+  ) {
+    this.display = this.initDisplay();
+    // {
+    //   current: this.onLabelDisplay.bind(this),
+    //   station: this.onLabelStationDisplay.bind(this),
+    // }
+  }
+
+  display: MapControlTools;
+
+  loadHandle?: NodeJS.Timer;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
       if (this.position) {
@@ -154,19 +167,100 @@ export class MapControlComponent
   }
   ngAfterViewInit(): void {}
 
-  //#region wait
-  loadHandle?: NodeJS.Timer;
-  private wait(reject: () => void) {
-    this.loadHandle = setTimeout(() => {
-      if (this.iframe) {
-        reject();
-      } else {
-        this.wait(reject);
-      }
-    }, 100);
-  }
-  //#endregion
+  private initDisplay() {
+    let display = new MapControlTools();
+    display.filting.construction.display = false;
+    display.filting.station.display = false;
+    display.duration.station.display = false;
+    display.duration.all.display = false;
+    display.duration.m30.display = false;
+    display.duration.h1.display = false;
+    display.duration.h2.display = false;
 
+    display.filting.current.click.subscribe((x) => {
+      display.filting.current.selected = !display.filting.current.selected;
+      display.duration.current.display = !display.filting.current.selected;
+      display.filting.construction.display = display.filting.current.selected;
+      display.filting.station.display = display.filting.current.selected;
+
+      display.filting.construction.selected = true;
+      display.filting.station.selected = true;
+    });
+    display.filting.construction.click.subscribe((x) => {
+      display.filting.construction.selected =
+        !display.filting.construction.selected;
+    });
+    display.filting.station.click.subscribe((x) => {
+      display.filting.station.selected = !display.filting.station.selected;
+    });
+    display.duration.current.click.subscribe((x) => {
+      display.duration.current.selected = !display.duration.current.selected;
+      display.duration.station.display = display.duration.current.selected;
+      display.duration.all.display = display.duration.current.selected;
+      display.duration.m30.display = display.duration.current.selected;
+      display.duration.h1.display = display.duration.current.selected;
+      display.duration.h2.display = display.duration.current.selected;
+
+      display.duration.station.selected = true;
+      display.duration.all.selected = true;
+      display.duration.m30.selected = false;
+      display.duration.h1.selected = false;
+      display.duration.h2.selected = false;
+    });
+    display.duration.station.click.subscribe((x) => {
+      display.duration.station.selected = !display.duration.station.selected;
+    });
+    display.duration.all.click.subscribe((x) => {
+      display.duration.all.selected = true;
+      display.duration.m30.selected = !display.duration.all.selected;
+      display.duration.h1.selected = !display.duration.all.selected;
+      display.duration.h2.selected = !display.duration.all.selected;
+    });
+    display.duration.m30.click.subscribe((x) => {
+      display.duration.m30.selected = true;
+      display.duration.all.selected = !display.duration.m30.selected;
+      display.duration.h1.selected = !display.duration.m30.selected;
+      display.duration.h2.selected = !display.duration.m30.selected;
+    });
+    display.duration.h1.click.subscribe((x) => {
+      display.duration.h1.selected = true;
+      display.duration.all.selected = !display.duration.h1.selected;
+      display.duration.m30.selected = !display.duration.h1.selected;
+      display.duration.h2.selected = !display.duration.h1.selected;
+    });
+    display.duration.h2.click.subscribe((x) => {
+      display.duration.h2.selected = true;
+      display.duration.all.selected = !display.duration.h2.selected;
+      display.duration.m30.selected = !display.duration.h2.selected;
+      display.duration.h1.selected = !display.duration.h2.selected;
+    });
+
+    display.filting.construction.change.subscribe((x) => {
+      this.amap.constructionStationVisibility(x);
+    });
+    display.filting.station.change.subscribe((x) => {
+      this.amap.garbageStationVisibility(x);
+    });
+    display.duration.all.change.subscribe((x) => {
+      if (x) this.GarbageTimeFilting(GarbageTimeFilter.all);
+    });
+    display.duration.m30.change.subscribe((x) => {
+      if (x) this.GarbageTimeFilting(GarbageTimeFilter.m30);
+    });
+    display.duration.h1.change.subscribe((x) => {
+      if (x) this.GarbageTimeFilting(GarbageTimeFilter.h1);
+    });
+    display.duration.h2.change.subscribe((x) => {
+      if (x) this.GarbageTimeFilting(GarbageTimeFilter.h2);
+    });
+    display.duration.station.change.subscribe((x) => {
+      this.amap.setPointVisibility(x);
+    });
+    display.duration.current.change.subscribe((x) => {
+      this.amap.setLabelVisibility(x);
+    });
+    return display;
+  }
   ngOnInit(): void {
     this.panel.init();
 
@@ -214,7 +308,7 @@ export class MapControlComponent
 
   onLabelDisplay = (value: boolean) => {
     if (!value) {
-      this.display.label.station.value = true;
+      this.display.duration.station.display = true;
     }
     this.amap.setLabelVisibility(value);
   };
@@ -222,24 +316,24 @@ export class MapControlComponent
     this.amap.setPointVisibility(value);
   };
 
-  display: MapControlDisplay = new MapControlDisplay({
-    current: this.onLabelDisplay,
-    station: this.onLabelStationDisplay,
-  });
-
   pointCount = 0;
 
   images: ImageControlModel[] = [];
 
   imageConverter = new ImageControlArrayConverter();
 
-  selected: Selected = {};
+  selected: MapControlSelected = {};
 
   //#region template event
   onLoad(event: Event) {
-    this.wait(() => {
-      this.amap.createMapClient(this.iframe!);
-    });
+    wait(
+      () => {
+        return !!this.iframe;
+      },
+      () => {
+        this.amap.createMapClient(this.iframe!);
+      }
+    );
   }
   //#endregion
 
@@ -269,15 +363,16 @@ export class MapControlComponent
     }
   }
 
-  Button1Clicked() {
+  onPatrolClicked() {
     this.patrol.emit();
   }
-  Button2Clicked() {}
   Button3Clicked() {
-    this.display.label.current = !this.display.label.current;
+    this.display.duration.current.selected =
+      !this.display.duration.current.selected;
   }
-  Button4Clicked() {
-    this.display.label.station.value = !this.display.label.station.value;
+  onDurationClicked() {
+    this.display.duration.station.selected =
+      !this.display.duration.station.selected;
   }
 
   onPointInfoPanelGarbageRetentionClickedEvent(station: IModel) {
@@ -298,9 +393,10 @@ export class MapControlComponent
   GarbageTimeFilting(filter: GarbageTimeFilter) {
     this.amap.labelFilter = filter;
     this.amap.setLabelVisibility(false).then((x) => {
-      this.display.label.current = this.display.label.current;
+      // this.display.duration.current = this.display.duration.current;
       this.amap.setLabelVisibility(true).then(() => {
-        this.display.label.station.value = this.display.label.station.value;
+        // this.display.duration.station.display =
+        //   this.display.duration.station.display;
       });
     });
   }
@@ -319,45 +415,4 @@ export class MapControlComponent
   Button2hClicked() {
     this.GarbageTimeFilting(GarbageTimeFilter.h2);
   }
-}
-
-class MapControlDisplay {
-  constructor(
-    private events: {
-      current: (state: boolean) => void;
-      station: (state: boolean) => void;
-    }
-  ) {}
-  status = true;
-  videoList = false;
-  videoControl = false;
-  label: MapControlLabelDisplay = new MapControlLabelDisplay(this.events);
-}
-
-class MapControlLabelDisplay {
-  constructor(
-    private events: {
-      current: (state: boolean) => void;
-      station: (state: boolean) => void;
-    }
-  ) {
-    this.station.onChange.subscribe((x) => {
-      events.station(x);
-    });
-  }
-
-  private _current: boolean = false;
-  public get current(): boolean {
-    return this._current;
-  }
-  public set current(v: boolean) {
-    this._current = v;
-    this.events.current(this._current);
-  }
-
-  station = new ChangeControlModel(true);
-}
-
-interface Selected {
-  station?: GarbageStation;
 }
