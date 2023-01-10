@@ -109,6 +109,7 @@
 </howell-station-window>
 
 <app-video-window
+  *ngIf="video.show"
   [model]="video.model"
   [window]="video"
   [title]="video.title"

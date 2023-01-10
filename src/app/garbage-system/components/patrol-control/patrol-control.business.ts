@@ -49,9 +49,12 @@ export class PatrolControlBusiness
 
     let statistic = await this.statistic(stations.map((x) => x.Id));
     let model = this.Converter.Convert(stations, statistic);
-    this.model = model[0];
-    this.model.media = await this.manualCapture(this.model);
-
+    if (model.length > 0) {
+      this.model = model[0];
+      if (this.model) {
+        this.model.media = await this.manualCapture(this.model);
+      }
+    }
     return model;
   }
 

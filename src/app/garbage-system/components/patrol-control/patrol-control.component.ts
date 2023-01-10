@@ -101,7 +101,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
   }
 
   async prev(event?: Event) {
-    if (this.models) {
+    if (this.models && this.models.length > 0) {
       this.index--;
       if (this.index < 0) {
         this.index = this.models.length - 1;
@@ -112,7 +112,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
     }
   }
   async next(event?: Event) {
-    if (this.models) {
+    if (this.models && this.models.length > 0) {
       this.index++;
       if (this.index >= this.models.length) {
         this.index = 0;

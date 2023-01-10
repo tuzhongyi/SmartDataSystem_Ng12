@@ -144,7 +144,7 @@ export class AMapBusiness {
         this.onMapClicked();
       };
 
-      this.loadDivision(this.storeService.divisionId);
+      this.loadDivision(this.storeService.defaultDivisionId);
 
       this.setContentMenu();
     };
