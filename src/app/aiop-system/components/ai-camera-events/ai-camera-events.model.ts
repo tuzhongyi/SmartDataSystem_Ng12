@@ -1,14 +1,18 @@
-import { EventType } from '../enum/event-type.enum';
-import { CommonModel } from './common-model';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { AICamera } from 'src/app/network/model/ai-camera.model';
 
-export class AICameraEventsModel implements CommonModel {
+export class AICameraEventsModel<T = any> {
   Id!: string;
-  ImageUrl!: string;
+  ImageUrl!: Promise<string>;
   EventType!: string;
   ModelName!: string;
-  EventTime!: string;
+  EventTime!: Date;
   ResourceType!: string;
   ResourceName!: string;
+
+  AICameraId?: string;
+
+  RawData?: T;
 }
 
 export interface AICameraEventsSearchInfo {

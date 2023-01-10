@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { Time } from 'src/app/common/tools/time';
-import { AICameraEventsConverter } from 'src/app/converter/ai-camera-events.converter';
+import { AICameraEventsConverter } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCameraAIEventRecordsParams } from 'src/app/network/request/ai-camera-event/camera-ai-event.params';
@@ -10,17 +10,44 @@ import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model
 import {
   AICameraEventsModel,
   AICameraEventsSearchInfo,
-} from 'src/app/view-model/ai-camera-events.model';
+} from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.model';
+import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 
 @Injectable()
 export class AICameraEventsBusiness {
   constructor(
     private _cameraAIEventRequest: CameraAIEventRequestService,
+    private _aiCameraRequest: AICameraRequestService,
     private _cameraAIModelRequest: AIModelRequestService,
     private _converter: AICameraEventsConverter
   ) {}
 
   async init(searchInfo: AICameraEventsSearchInfo) {
+    let { Data, Page } = await this._listCameraAIEvents(searchInfo);
+
+    console.log(Data);
+
+    let data = await this._converter.iterateToModel(Data);
+    data = data.sort((a, b) => {
+      return LocaleCompare.compare(a.EventTime, b.EventTime, true);
+    });
+
+    let res: PagedList<AICameraEventsModel> = {
+      Page: Page,
+      Data: data,
+    };
+
+    return res;
+  }
+
+  listAIModels() {
+    return this._cameraAIModelRequest.list();
+  }
+  getAICamera(id: string) {
+    return this._aiCameraRequest.get(id);
+  }
+
+  private async _listCameraAIEvents(searchInfo: AICameraEventsSearchInfo) {
     let params = new GetCameraAIEventRecordsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
@@ -36,25 +63,6 @@ export class AICameraEventsBusiness {
       params.ModelName = searchInfo.ModelName;
     }
 
-    let { Data, Page } = await this._listCameraAIEvents(params);
-    let data = await this._converter.iterateToModel(Data);
-    data = data.sort((a, b) => {
-      return LocaleCompare.compare(a.EventTime, b.EventTime, true);
-    });
-
-    let res: PagedList<AICameraEventsModel> = {
-      Page: Page,
-      Data: data,
-    };
-
-    return res;
-  }
-
-  async listAIModels() {
-    let res = await this._cameraAIModelRequest.list();
-    return res.Data;
-  }
-  private async _listCameraAIEvents(params: GetCameraAIEventRecordsParams) {
     return this._cameraAIEventRequest.list(params);
   }
 }

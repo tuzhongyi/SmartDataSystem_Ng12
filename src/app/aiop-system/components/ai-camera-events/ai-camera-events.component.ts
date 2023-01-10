@@ -18,22 +18,31 @@ import { Page } from 'src/app/network/model/page_list.model';
 import {
   AICameraEventsModel,
   AICameraEventsSearchInfo,
-} from 'src/app/view-model/ai-camera-events.model';
+} from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.model';
 import { AICameraEventsBusiness } from './ai-camera-events.business';
 import { ViewMode } from 'src/app/enum/view-mode.enum';
+import { AICameraEventsConverter } from './ai-camera-events.converter';
+import { KeyValue } from '@angular/common';
+import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
+import { PlayMode } from 'src/app/common/components/video-player/video.model';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 @Component({
   selector: 'howell-ai-camera-events',
   templateUrl: './ai-camera-events.component.html',
   styleUrls: ['./ai-camera-events.component.less'],
-  providers: [AICameraEventsBusiness],
+  providers: [AICameraEventsBusiness, AICameraEventsConverter],
 })
 export class AICameraEventsComponent implements OnInit, AfterViewInit {
   Language = Language;
   ViewMode = ViewMode;
+  EventType = EventType;
+  windowModel = new WindowViewModel();
+
+  widths = ['10%', '15%', '10%', '10%', '10%', '10%', '5%'];
 
   aiModels: CameraAIModel[] = [];
   dataSource: AICameraEventsModel[] = [];
-  widths = ['10%', '10%', '10%', '10%', '15%', '10%', '5%'];
   viewMode = ViewMode.table;
   template?: TemplateRef<HTMLElement>;
 
@@ -50,17 +59,21 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   pagerCount: number = 4;
 
   // 搜索
-  disableSearch = false;
   dateFormat: string = 'yyyy年MM月dd日';
+
+  selectDataSource = new Map<EventType, string>([
+    [EventType.IllegalDrop, Language.EventType(EventType.IllegalDrop)],
+    [EventType.MixedInto, Language.EventType(EventType.MixedInto)],
+    [EventType.GarbageVolume, Language.EventType(EventType.GarbageVolume)],
+  ]);
+  customCompare = (
+    keyValueA: KeyValue<number, string>,
+    keyValueB: KeyValue<number, string>
+  ): number => {
+    return (keyValueA.key - keyValueB.key) * -1;
+  };
+
   today = new Date();
-
-  eventTypes = [
-    EventType.IllegalDrop,
-    EventType.MixedInto,
-    EventType.GarbageVolume,
-  ];
-  eventType = EventType.None;
-
   searchInfo: AICameraEventsSearchInfo = {
     Condition: '',
     BeginTime: Time.beginTime(this.today),
@@ -81,20 +94,20 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   constructor(
     private _business: AICameraEventsBusiness,
     private _toastrService: ToastrService
-  ) {}
+  ) {
+    this.windowModel.show = true;
+  }
 
   async ngOnInit() {
-    this.aiModels = await this._business.listAIModels();
+    let { Data } = await this._business.listAIModels();
+    this.aiModels = Data;
     this._init();
   }
   private async _init() {
-    this.dataSource = [];
-
     let res = await this._business.init(this.searchInfo);
 
     this.page = res.Page;
 
-    // console.log(res);
     this.dataSource = res.Data;
   }
 
@@ -114,7 +127,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     this._init();
   }
   toggleFilterHandler() {
-    this.disableSearch = this.searchInfo.Filter = !this.searchInfo.Filter;
+    this.searchInfo.Filter = !this.searchInfo.Filter;
     if (!this.searchInfo.Filter) {
       this.searchInfo.BeginTime = Time.beginTime(this.today);
       this.searchInfo.EndTime = Time.endTime(this.today);
@@ -141,6 +154,21 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     }
     this._init();
     this._render();
+  }
+  async clickVideoIcon(item: AICameraEventsModel) {
+    if (item.RawData && item.AICameraId) {
+      let camera = await this._business.getAICamera(item.AICameraId);
+      console.log(camera);
+
+      let args = new VideoListArgs();
+      args.autoplay = true;
+      args.cameras = [camera];
+      args.mode = PlayMode.vod;
+      args.time = item.RawData?.EventTime;
+      args.title = item.ResourceName;
+      VideoControlConverter;
+      //"5bb6f7c353e944c8b51cc5ab5b137b60"
+    }
   }
   private _render() {
     if (this.viewMode == ViewMode.table) {

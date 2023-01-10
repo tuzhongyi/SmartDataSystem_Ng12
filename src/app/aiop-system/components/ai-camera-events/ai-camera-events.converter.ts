@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import {
   IConverter,
   IPromiseConverter,
-} from '../common/interfaces/converter.interface';
-import { Language } from '../common/tools/language';
-import { CameraAIEventRecord } from '../network/model/camera-ai-event-record.model';
-import { Medium } from '../common/tools/medium';
-import { AICameraEventsModel } from '../view-model/ai-camera-events.model';
-import { AbstractCommonModelPromiseConverter } from './common-model.converter';
+} from '../../../common/interfaces/converter.interface';
+import { Language } from '../../../common/tools/language';
+import { CameraAIEventRecord } from '../../../network/model/camera-ai-event-record.model';
+import { Medium } from '../../../common/tools/medium';
+import { AICameraEventsModel } from './ai-camera-events.model';
+import { AbstractCommonModelPromiseConverter } from '../../../converter/common-model.converter';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
+import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 
 type AICameraEventsSource = CameraAIEventRecord;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AICameraEventsConverter extends AbstractCommonModelPromiseConverter<AICameraEventsModel> {
-  constructor(private _datePipe: DatePipe) {
+  constructor(private _resourceRequest: AICameraRequestService) {
     super();
   }
 
@@ -33,9 +33,11 @@ export class AICameraEventsConverter extends AbstractCommonModelPromiseConverter
     model.ModelName = item.Data.ModelName ?? '';
     model.ResourceType = Language.ResourceType(item.ResourceType!);
     model.ResourceName = item.ResourceName ?? "'";
-    model.EventTime =
-      this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
-    model.ImageUrl = await Medium.img(item.ImageUrl);
+    model.EventTime = item.EventTime;
+    model.ImageUrl = Medium.img(item.ImageUrl);
+    model.AICameraId = item.ResourceId;
+
+    model.RawData = item;
     return model;
   }
 }

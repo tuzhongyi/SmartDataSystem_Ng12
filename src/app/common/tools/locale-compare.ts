@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-12-28 10:47:27
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-12-28 10:47:27
+ * @Last Modified by: pmx
+ * @Last Modified time: 2023-01-10 14:37:47
  */
 /**
  *   arr = [
@@ -21,17 +21,36 @@
  * 
  */
 export class LocaleCompare {
-  static compare(a: string, b: string, isAsc: boolean = false) {
-    if (this._localeCompareSupportsLocales()) {
-      let collator = new Intl.Collator('zh-CN', {
-        caseFirst: 'upper',
-        sensitivity: 'variant',
-        numeric: true,
-      });
-      return collator.compare(a, b) * (isAsc ? 1 : -1);
-    } else {
-      return (a.length - b.length || a.localeCompare(b)) * (isAsc ? 1 : -1);
+  static compare(a: any, b: any, isAsc: boolean = false) {
+    if (a === b) return 0;
+    if (a === undefined) return 1;
+    if (b === undefined) return -1;
+    if (a === null) return 1;
+    if (b === null) return -1;
+
+    if (typeof a == 'string' && typeof b == 'string') {
+      if (this._localeCompareSupportsLocales()) {
+        let collator = new Intl.Collator('zh-CN', {
+          caseFirst: 'upper',
+          sensitivity: 'variant',
+          numeric: true,
+        });
+        return collator.compare(a, b) * (isAsc ? 1 : -1);
+      } else {
+        return (a.length - b.length || a.localeCompare(b)) * (isAsc ? 1 : -1);
+      }
     }
+    if (typeof a == 'number' && typeof b == 'number') {
+      return a - b;
+    }
+    if (typeof a == 'boolean' && typeof b == 'boolean') {
+      return a < b ? -1 : 1;
+    }
+    const aString = String(a);
+    const bString = String(b);
+    return (
+      (aString == bString ? 0 : aString < bString ? -1 : 1) * (isAsc ? 1 : -1)
+    );
   }
   private static _localeCompareSupportsLocales() {
     try {
