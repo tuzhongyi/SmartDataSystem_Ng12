@@ -43,7 +43,7 @@ export class EventRecordOperationComponent implements OnInit {
           item.language = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
-          item.language = '&#xf225;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
+          item.language = '&#xf274;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
           break;
 
         default:

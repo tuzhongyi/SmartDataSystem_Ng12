@@ -1,45 +1,73 @@
 <div class="garbage-station-window-details">
-    <div class="garbage-station-window-details-header">
-        <div class="filter">
-            <div class="filter-item">
-                <span>选择时间</span>
-                <input type="text" DateTimePicker [format]="dateFormat" [date]="date" (change)="changeDate($event)"
-                    class="" />
-            </div>
-            <div class="filter-item">
-                <span>类型</span>
-                <app-select-control class="list-type-select" [data]="types" (select)="ontype($event)">
-                </app-select-control>
-            </div>
-            <div class="filter-item tree">
-                <span>投放点</span>
-                <howell-division-station-tree-mult-filter class="tree" 
-                [userType]="UserResourceType.Station"
-                    (onselect)="onTreeSelect($event)">
-                </howell-division-station-tree-mult-filter>
-            </div>
-            <button class="hw-blue-btn search" (click)="search()">
-                <i class="mdi mdi-magnify"></i> 查询
-            </button>
-            <button class="hw-blue-btn excel" (click)="exportExcel()">
-                <i class="howell-icon-export"></i> 导出
-            </button>
-            <button class="hw-blue-btn csv" (click)="exportCSV()">
-                <i class="howell-icon-export"></i> CSV
-            </button>
-        </div>
-        <div class="selection">
-            <app-select-control class="list-type-select" [data]="units" (select)="ontimeunit($event)">
-            </app-select-control>
-            <app-select-control class="list-type-select" [data]="chartTypes" (select)="oncharttype($event)">
-            </app-select-control>
-        </div>
+  <div class="garbage-station-window-details-header">
+    <div class="filter">
+      <div class="filter-item">
+        <span>选择时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="dateFormat"
+          [date]="date"
+          (change)="changeDate($event)"
+          class=""
+        />
+      </div>
+      <div class="filter-item">
+        <span>类型</span>
+        <app-select-control
+          class="list-type-select"
+          [data]="types"
+          (select)="ontype($event)"
+        >
+        </app-select-control>
+      </div>
+      <div class="filter-item tree">
+        <span>投放点</span>
+        <howell-division-station-tree-mult-filter
+          class="tree"
+          [divisionType]="DivisionType.None"
+          (onselect)="onTreeSelect($event)"
+        >
+        </howell-division-station-tree-mult-filter>
+      </div>
+      <button class="hw-blue-btn search" (click)="search()">
+        <i class="mdi mdi-magnify"></i> 查询
+      </button>
+      <button class="hw-blue-btn excel" (click)="exportExcel()">
+        <i class="howell-icon-export"></i> 导出
+      </button>
+      <button class="hw-blue-btn csv" (click)="exportCSV()">
+        <i class="howell-icon-export"></i> CSV
+      </button>
     </div>
-    <div class="garbage-station-window-details-content">
-        <howell-line-chart *ngIf="chartType === ChartType.line && config.line" [theme]="config.line.theme"
-            [options]="config.line.options" [merge]="config.line.merge"></howell-line-chart>
+    <div class="selection">
+      <app-select-control
+        class="list-type-select"
+        [data]="units"
+        (select)="ontimeunit($event)"
+      >
+      </app-select-control>
+      <app-select-control
+        class="list-type-select"
+        [data]="chartTypes"
+        (select)="oncharttype($event)"
+      >
+      </app-select-control>
+    </div>
+  </div>
+  <div class="garbage-station-window-details-content">
+    <howell-line-chart
+      *ngIf="chartType === ChartType.line && config.line"
+      [theme]="config.line.theme"
+      [options]="config.line.options"
+      [merge]="config.line.merge"
+    ></howell-line-chart>
 
-        <howell-bar-chart *ngIf="chartType === ChartType.bar && config.bar" [theme]="config.bar.theme"
-            [options]="config.bar.options" [merge]="config.bar.merge"></howell-bar-chart>
-    </div>
+    <howell-bar-chart
+      *ngIf="chartType === ChartType.bar && config.bar"
+      [theme]="config.bar.theme"
+      [options]="config.bar.options"
+      [merge]="config.bar.merge"
+    ></howell-bar-chart>
+  </div>
 </div>

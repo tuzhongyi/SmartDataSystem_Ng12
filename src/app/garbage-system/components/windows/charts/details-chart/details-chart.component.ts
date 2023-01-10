@@ -36,6 +36,7 @@ import { ExportExcelConverter } from './details-chart-export.converter';
 import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { ExportType } from 'src/app/enum/export-type.enum';
+import { ExportTool } from 'src/app/common/tools/export.tool';
 
 @Component({
   selector: 'howell-details-chart',
@@ -104,10 +105,7 @@ export class DetailsChartComponent
 
   DivisionType = DivisionType;
 
-  constructor(
-    public local: LocalStorageService,
-    private exports: ExportBusiness
-  ) {
+  constructor(public local: LocalStorageService, private exports: ExportTool) {
     if (local.user.Resources && local.user.Resources.length > 0) {
       this.userResourceType = local.user.Resources[0].ResourceType;
     }
@@ -356,7 +354,7 @@ export class DetailsChartComponent
   }
 
   exportExcel() {
-    this.toExport(ExportType.excel);
+    this.toExport(ExportType.chart);
   }
   exportCSV() {
     this.toExport(ExportType.csv);

@@ -31,7 +31,7 @@
                   width="100%"
                   height="100%"
                   (error)="onerror($event)"
-                  [src]="item.image.src"
+                  [src]="item.image.src | async"
                 />
               </div>
             </td>

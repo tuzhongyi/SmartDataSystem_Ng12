@@ -63,17 +63,18 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     switch (this.unit) {
       case TimeUnit.Week:
         this.dateTimePickerConfig.view = DateTimePickerView.month;
-        this.dateTimePickerConfig.format = 'yyyy-MM-dd';
+        this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
         this.dateTimePickerConfig.week = true;
-        break;
-      case TimeUnit.Day:
-        this.dateTimePickerConfig.view = DateTimePickerView.month;
-        this.dateTimePickerConfig.format = 'yyyy-MM-dd';
-        this.dateTimePickerConfig.week = false;
         break;
       case TimeUnit.Month:
         this.dateTimePickerConfig.view = DateTimePickerView.year;
-        this.dateTimePickerConfig.format = 'yyyy-MM';
+        this.dateTimePickerConfig.format = 'yyyy年MM月';
+        this.dateTimePickerConfig.week = false;
+        break;
+      case TimeUnit.Hour:
+      case TimeUnit.Day:
+        this.dateTimePickerConfig.view = DateTimePickerView.month;
+        this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
         this.dateTimePickerConfig.week = false;
         break;
       default:

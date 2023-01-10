@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ListItem } from './map-list-item';
@@ -8,9 +16,7 @@ import { ListItem } from './map-list-item';
   templateUrl: './map-list-panel.component.html',
   styleUrls: ['./map-list-panel.component.css'],
 })
-export class MapListPanelComponent implements OnInit {
-  visibility: boolean = false;
-
+export class MapListPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input()
   dataSource: Array<ListItem<Division | GarbageStation>> = [];
 
@@ -37,23 +43,42 @@ export class MapListPanelComponent implements OnInit {
   };
 
   constructor() {}
-
-  ngOnInit() {}
-
-  ButtonClick() {
-    this.visibility = !this.visibility;
+  ngAfterViewInit(): void {
+    window.addEventListener('click', this.handle);
   }
 
-  itemClick(item: ListItem<Division | GarbageStation>) {
+  visibility: boolean = false;
+  handle?: any;
+
+  ngOnDestroy(): void {
+    window.removeEventListener('click', this.handle);
+  }
+
+  ngOnInit() {
+    this.handle = this.onwindowclick.bind(this);
+  }
+
+  onwindowclick() {
+    this.visibility = false;
+  }
+
+  ButtonClick(e: Event) {
+    this.visibility = !this.visibility;
+    e.stopImmediatePropagation();
+  }
+
+  itemClick(e: Event, item: ListItem<Division | GarbageStation>) {
     if (this.OnItemClicked) {
       this.OnItemClicked.emit(item);
     }
+    e.stopImmediatePropagation();
   }
 
-  itemDoubleClick(item: ListItem<Division | GarbageStation>) {
+  itemDoubleClick(e: Event, item: ListItem<Division | GarbageStation>) {
     if (this.OnItemDoubleClicked) {
       this.OnItemDoubleClicked.emit(item);
     }
+    e.stopImmediatePropagation();
   }
 
   itemHover(item: ListItem<Division | GarbageStation>) {

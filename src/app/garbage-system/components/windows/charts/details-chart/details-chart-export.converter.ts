@@ -23,7 +23,7 @@ export class ExportExcelConverter
       if (unit === TimeUnit.Week) {
         value.push(Language.Week(source[0][i].time.getDay()));
       } else if (unit === TimeUnit.Hour) {
-        value.push(formatDate(source[0][i].time, 'HH:mm:ss', 'en'));
+        value.push(formatDate(source[0][i].time, 'HH:mm', 'en'));
       } else {
       }
       for (let j = 0; j < source.length; j++) {
@@ -32,6 +32,8 @@ export class ExportExcelConverter
       }
       model.rowValues.push(value);
     }
+    model.dataIndex = [3];
+    model.headIndex = 2;
     return model;
   }
 }

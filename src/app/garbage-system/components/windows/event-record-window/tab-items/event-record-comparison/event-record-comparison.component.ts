@@ -28,6 +28,8 @@ import {
 } from '../../../charts/details-chart/details-chart.option';
 import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'howell-event-record-comparison',
@@ -43,7 +45,7 @@ export class EventRecordComparisonComponent
   @Input()
   unit: TimeUnit = TimeUnit.Day;
   @Input()
-  userType: UserResourceType = UserResourceType.Station;
+  divisionType: DivisionType = DivisionType.None;
   @Input()
   eventType: EventType = EventType.IllegalDrop;
 
@@ -54,7 +56,9 @@ export class EventRecordComparisonComponent
   ) {
     this.business = business;
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      this.userType = this.local.user.Resources[0].ResourceType;
+      this.divisionType = EnumHelper.ConvertUserResourceToDivision(
+        this.local.user.Resources[0].ResourceType
+      );
     }
   }
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
@@ -143,7 +147,7 @@ export class EventRecordComparisonComponent
   async loadData() {
     if (!this.selectIds || this.selectIds.length <= 0) return;
     let opts: EventRecordComparisonOptions = {
-      userType: this.userType,
+      divisionType: this.divisionType,
       eventType: this.eventType,
       unit: this.unit,
       date: this.date,
@@ -236,7 +240,7 @@ export class EventRecordComparisonComponent
     this.loadData();
   }
   onusertype(item: SelectItem) {
-    this.userType = item.value;
+    this.divisionType = item.value;
   }
 
   onTreeSelect(ids: string[]) {
