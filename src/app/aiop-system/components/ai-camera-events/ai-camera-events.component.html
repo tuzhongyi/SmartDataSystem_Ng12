@@ -225,7 +225,12 @@
   </div>
 </ng-template>
 
-<!-- <howell-video-player-window
+<howell-video-player-window
   [Model]="windowModel"
-  [cameraId]="'5bb6f7c353e944c8b51cc5ab5b137b60'"
-></howell-video-player-window> -->
+  [style]="{ width: '60%', height: '60%' }"
+  [cameraId]="video.cameraId"
+  [mode]="video.mode"
+  [time]="video.time"
+  [title]="video.title"
+  [autoplay]="video.autoplay"
+></howell-video-player-window>

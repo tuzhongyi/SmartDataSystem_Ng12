@@ -23,10 +23,10 @@ import { AICameraEventsBusiness } from './ai-camera-events.business';
 import { ViewMode } from 'src/app/enum/view-mode.enum';
 import { AICameraEventsConverter } from './ai-camera-events.converter';
 import { KeyValue } from '@angular/common';
-import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
+import { VideoArgs } from 'src/app/network/model/args/video.args';
 @Component({
   selector: 'howell-ai-camera-events',
   templateUrl: './ai-camera-events.component.html',
@@ -40,6 +40,8 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   windowModel = new WindowViewModel();
 
   widths = ['10%', '15%', '10%', '10%', '10%', '10%', '5%'];
+
+  video = new VideoArgs();
 
   aiModels: CameraAIModel[] = [];
   dataSource: AICameraEventsModel[] = [];
@@ -94,9 +96,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   constructor(
     private _business: AICameraEventsBusiness,
     private _toastrService: ToastrService
-  ) {
-    this.windowModel.show = true;
-  }
+  ) {}
 
   async ngOnInit() {
     let { Data } = await this._business.listAIModels();
@@ -159,15 +159,15 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     if (item.RawData && item.AICameraId) {
       let camera = await this._business.getAICamera(item.AICameraId);
       console.log(camera);
+      console.log(item.RawData);
 
-      let args = new VideoListArgs();
-      args.autoplay = true;
-      args.cameras = [camera];
-      args.mode = PlayMode.vod;
-      args.time = item.RawData?.EventTime;
-      args.title = item.ResourceName;
-      VideoControlConverter;
-      //"5bb6f7c353e944c8b51cc5ab5b137b60"
+      this.video.autoplay = true;
+      this.video.cameraId = item.AICameraId;
+      this.video.mode = PlayMode.vod;
+      this.video.time = item.RawData?.EventTime;
+      this.video.title = item.ResourceName;
+
+      this.windowModel.show = true;
     }
   }
   private _render() {
