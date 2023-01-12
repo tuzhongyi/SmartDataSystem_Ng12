@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-11-01 16:41:30
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-24 10:50:05
+ * @Last Modified time: 2023-01-12 16:38:03
  */
 import {
   AfterViewInit,
@@ -40,6 +40,7 @@ import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 
 echarts.use([TitleComponent, GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -343,9 +344,10 @@ export class DisposalCountComponent
     //   { name: '处置率', value: this.data.handledPercentage },
     // ];
 
-    (this.option.series! as any)[0].data[0].value = this.data.handledPercentage;
+    (this.option.series! as any)[0].data[0].value =
+      this.data?.handledPercentage;
     (this.option.series! as any)[1].data[0].value =
-      this.data.timeoutRatio.toFixed(0);
+      this.data?.timeoutRatio.toFixed(0);
     this.myChart.setOption(this.option);
   }
   onResized(e: ResizedEvent) {
@@ -447,10 +449,10 @@ export class DisposalCountComponent
     };
     switch (item.tag) {
       case DisposalCountType.unhandled:
-        args.eventType = EventType.GarbageDrop;
+        args.status = GarbageTaskStatus.unhandled;
         break;
       case DisposalCountType.timeout:
-        args.eventType = EventType.GarbageDropTimeout;
+        args.status = GarbageTaskStatus.timeout;
         break;
       case DisposalCountType.total:
       default:

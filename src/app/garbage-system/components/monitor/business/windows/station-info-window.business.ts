@@ -7,6 +7,7 @@ import { MediaWindowBusiness } from './media-window.business';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 
 @Injectable()
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
@@ -19,7 +20,7 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   index = GarbageStationWindowIndex.station;
   stationId?: string;
   divisionId?: string;
-  eventType?: EventType;
+  status?: GarbageTaskStatus;
 
   constructor(private media: MediaWindowBusiness) {
     super();

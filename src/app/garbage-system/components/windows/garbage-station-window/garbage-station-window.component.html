@@ -61,6 +61,7 @@
           <ng-container *ngIf="index == Index.record">
             <howell-garbage-station-window-record
               [isfilter]="record.filter.show"
+              [status]="taskStatus"
               (image)="onimage($event)"
             ></howell-garbage-station-window-record>
           </ng-container>

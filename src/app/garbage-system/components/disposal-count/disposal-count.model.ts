@@ -1,5 +1,6 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { DisposalCountType } from './disposal-count.enum';
 
 // 设备数量接口
@@ -29,5 +30,5 @@ export class DisposalCountModel {
 
 export interface DisposalCountArgs {
   divisionId: string;
-  eventType?: EventType;
+  status?: GarbageTaskStatus;
 }

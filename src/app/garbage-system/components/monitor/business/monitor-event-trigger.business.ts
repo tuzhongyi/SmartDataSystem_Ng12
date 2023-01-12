@@ -61,7 +61,7 @@ class RisposalCountEventTrigger {
   ontask(args: DisposalCountArgs) {
     this.window.station.index = GarbageStationWindowIndex.record;
     this.window.station.divisionId = args.divisionId;
-    this.window.station.eventType = args.eventType;
+    this.window.station.status = args.status;
     this.window.station.show = true;
   }
 }

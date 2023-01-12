@@ -24,6 +24,7 @@ import { GarbageStationWindowRecordBusiness } from './business/garbage-station-w
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
 import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -47,7 +48,7 @@ export class GarbageStationWindowComponent
   @Input()
   divisionId?: string;
   @Input()
-  eventType?: EventType;
+  taskStatus?: GarbageTaskStatus;
 
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
@@ -68,32 +69,34 @@ export class GarbageStationWindowComponent
   Index = GarbageStationWindowIndex;
   isfilter = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // console.log('ppp', this.eventType);
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.eventType) {
       let filter = this.record.filter.filter as GarbageDropRecordFilter;
-      switch (this.eventType) {
-        case EventType.GarbageDrop:
-          filter.IsHandle = false;
-          filter.IsTimeout = false;
-          break;
-        case EventType.GarbageDropHandle:
-          filter.IsHandle = true;
-          filter.IsTimeout = false;
-          break;
-        case EventType.GarbageDropTimeout:
-        case EventType.GarbageDropSuperTimeout:
-          filter.IsTimeout = true;
-          break;
-        case EventType.GarbageDropTimeoutHandle:
-          filter.IsTimeout = true;
-          filter.IsHandle = true;
-          break;
+      // switch (this.eventType) {
+      //   case EventType.GarbageDrop:
+      //     filter.IsHandle = false;
+      //     filter.IsTimeout = false;
+      //     break;
+      //   case EventType.GarbageDropHandle:
+      //     filter.IsHandle = true;
+      //     filter.IsTimeout = false;
+      //     break;
+      //   case EventType.GarbageDropTimeout:
+      //   case EventType.GarbageDropSuperTimeout:
+      //     filter.IsTimeout = true;
+      //     break;
+      //   case EventType.GarbageDropTimeoutHandle:
+      //     filter.IsTimeout = true;
+      //     filter.IsHandle = true;
+      //     break;
 
-        default:
-          break;
-      }
+      //   default:
+      //     break;
+      // }
     }
     if (changes.divisionId) {
       this.record.filter.filter.divisionId = this.divisionId;
