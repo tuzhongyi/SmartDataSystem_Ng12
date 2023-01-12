@@ -25,7 +25,7 @@ export class MapControlTools {
   patrol = new MapControlToolButton();
   filting = new MapControlToolFilterButton();
   // duration: MapControlLabelDisplay = new MapControlLabelDisplay(this.events);
-  duration = new MapControlTooDurationButton();
+  retention = new MapControlTooDurationButton();
 }
 
 class MapControlToolFilterButton {

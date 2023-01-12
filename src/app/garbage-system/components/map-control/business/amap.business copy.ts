@@ -12,44 +12,9 @@ import { GetDivisionsParams } from 'src/app/network/request/division/division-re
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import {
-  AMapDataSource,
-  AMapVisibility,
-  GarbageTimeFilter,
-} from './amap.model';
-import { AMapLabelOptionConverter } from './amap-label-option.converter';
 
 @Injectable()
 export class AMapBusiness {
-  pointCountChanged: EventEmitter<number> = new EventEmitter();
-  pointDoubleClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  mapClicked: EventEmitter<void> = new EventEmitter();
-  menuEvents = {
-    illegalDropClicked: new EventEmitter(),
-    mixedIntoClicked: new EventEmitter(),
-    garbageCountClicked: new EventEmitter(),
-    stationInformationClicked: new EventEmitter(),
-  };
-
-  get src() {
-    const host = document.location.hostname;
-    const port = document.location.port;
-    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
-  }
-  visibility = new AMapVisibility();
-
-  private mapClient?: CesiumMapClient;
-  private mapController?: CesiumDataController.Controller;
-  private labelOptionConverter = new AMapLabelOptionConverter();
-
-  private source: AMapDataSource = {
-    all: [],
-    drop: [],
-    labels: {},
-    points: {},
-  };
-
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
@@ -58,8 +23,8 @@ export class AMapBusiness {
     this.storeService.interval.subscribe((x) => {
       this.init();
 
-      if (this.visibility.label.value) {
-        this.visibility.label.change.emit(true);
+      if (this.labelVisibility) {
+        this.setLabelVisibility(true);
       }
     });
     this.storeService.statusChange.subscribe((x) => {
@@ -72,47 +37,50 @@ export class AMapBusiness {
         this.pointCountChanged.emit(count);
       });
     });
-    this.initVisibility();
   }
 
-  private initVisibility() {
-    this.visibility.station.change.subscribe((x) => {});
-    this.visibility.construction.change.subscribe((x) => {});
-    this.visibility.label.retention.change.subscribe((x) => {
-      this.setLabels(this.source.all, x).then((x) => {
-        this.visibility.label.station.value =
-          this.visibility.label.station.value;
+  private mapClient?: CesiumMapClient;
+  private mapController?: CesiumDataController.Controller;
+
+  labelVisibility = false;
+
+  // 当显示垃圾落地时长的时候，是否显示其他厢房
+  private stationVisibilityByLabel = true;
+  get StationVisibilityByLabel() {
+    return this.stationVisibilityByLabel;
+  }
+  set StationVisibilityByLabel(val: boolean) {
+    //if (this.stationVisibilityByLabel === val) return;
+    this.stationVisibilityByLabel = val;
+    if (this.mapClient) {
+      this.source.all.forEach((x) => {
+        this.mapClient!.Point.SetVisibility(x.Id, val);
       });
-    });
-    // 当显示垃圾落地时长的时候，是否显示其他厢房
-    this.visibility.label.station.change.subscribe((value) => {
-      this.source.all.forEach((station) => {
-        if (!value) {
-          if (this.source.labels[station.Id]) {
-            this.mapClient!.Point.SetVisibility(station.Id, true);
-          } else {
-            this.mapClient!.Point.SetVisibility(station.Id, value);
-          }
-        } else {
-          this.mapClient!.Point.SetVisibility(station.Id, value);
-        }
-      });
-    });
-    this.visibility.label.change.subscribe((x) => {
-      if (this.mapClient) {
-        if (x) {
-          this.mapClient.Label.Show();
-          this.setLabels(
-            this.source.all,
-            this.visibility.label.retention.value
-          );
-        } else {
-          this.mapClient.Label.Hide();
-        }
-      }
-    });
+    }
   }
 
+  pointCountChanged: EventEmitter<number> = new EventEmitter();
+
+  pointDoubleClicked: EventEmitter<GarbageStation> = new EventEmitter();
+
+  mapClicked: EventEmitter<void> = new EventEmitter();
+
+  private source: AMapDataSource = {
+    all: [],
+    drop: [],
+    labels: {},
+    points: {},
+  };
+
+  getSrc() {
+    const host = document.location.hostname;
+    const port = document.location.port;
+    //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
+    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
+
+    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+  }
+  loaded = false;
   private init() {
     let promise = this.stationService.cache.all();
     promise.then((x) => {
@@ -276,78 +244,97 @@ export class AMapBusiness {
     this.mapClient.Point.Status(arrayStatus);
   }
 
+  labelFilter = GarbageTimeFilter.all;
   garbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
     if (time === undefined || time <= 0) return false;
     return time >= filter;
   }
 
-  private async getStatistic(stationIds: string[]) {
-    let params = new GetGarbageStationStatisticNumbersParams();
-    params.Ids = stationIds;
-    let paged = await this.stationService.statistic.number.list(params);
-    return paged.Data;
-  }
-
-  getPoint(stationId: string, divisionId?: string) {
-    let point = this.source.points[stationId];
-    if (point) {
-      return point;
-    }
-    if (this.mapClient && divisionId) {
-      point = this.mapClient.DataController.Village.Point.Get(
-        divisionId,
-        stationId
-      );
-      if (point) {
-        this.source.points[point.id] = point;
-      }
-    }
-    return this.source.points[stationId];
-  }
-
-  async setLabels(stations: GarbageStation[], filter: GarbageTimeFilter) {
+  async setLabel(stations: GarbageStation[], filter: GarbageTimeFilter) {
     if (!this.mapClient) return;
+    const params = new GetGarbageStationStatisticNumbersParams();
+    params.PageSize = 9999;
+    params.Ids = stations.map((x) => x.Id);
+    const list = await this.stationService.statistic.number.list(params);
 
-    // 获取统计数据
-    const list = await this.getStatistic(stations.map((x) => x.Id));
-    // 筛选需要的统计数据
-    let drop = list.filter((x) => {
+    let drop = list.Data.filter((x) => {
       return this.garbageTimeFiltering(filter, x.CurrentGarbageTime);
     });
     let dropIds = drop.map((x) => {
       return x.Id;
     });
-    // 记录被统计的厢房
-    this.source.drop = this.source.all.filter((x) => dropIds.includes(x.Id));
+
+    this.source.drop = stations.filter((x) => dropIds.includes(x.Id));
     const opts = new Array();
     for (let i = 0; i < drop.length; i++) {
       const data = drop[i];
-      const station = this.source.drop.find((x) => x.Id == data.Id);
+      const station = stations.find((x) => x.Id == data.Id);
 
       if (
         station &&
         data.CurrentGarbageTime != undefined &&
         data.CurrentGarbageTime > 0
       ) {
-        let point = this.getPoint(station.Id, station.DivisionId);
+        let point = this.source.points[data.Id];
+        if (!point) {
+          point = this.mapClient.DataController.Village.Point.Get(
+            station.DivisionId!,
+            station.Id
+          );
+          this.source.points[point.id] = point;
+        }
         if (!point) continue;
-        const opt = this.labelOptionConverter.Convert(data, point.position);
+        const opt = new CesiumDataController.LabelOptions();
+        opt.position = point.position;
+        opt.id = point.id;
+
+        let p = data.CurrentGarbageTime / 240;
+        p = p > 1 ? 1 : p;
+
+        const hours = parseInt((data.CurrentGarbageTime / 60).toString());
+        const minutes = parseInt(
+          (Math.ceil(data.CurrentGarbageTime) % 60).toString()
+        );
+
+        opt.text = hours
+          ? hours + Language.json.Time.hour
+          : minutes
+          ? minutes + Language.json.Time.minute
+          : '';
+
+        const color = new CesiumDataController.Color();
+        color.rgb = '#36e323';
+        color.hsl = new CesiumDataController.HSL();
+        color.hsl.h = 120 - parseInt((p * 90).toString());
+        color.hsl.s = 100;
+        color.hsl.l = 60;
+
+        opt.color = color;
+        opt.value = p;
+        if (opt.text) {
+          opt.image = new CesiumDataController.ImageOptions();
+          opt.image.color = color;
+          opt.image.value = p;
+          opt.image.resource = CesiumDataController.ImageResource.arcProgress;
+        }
         opts.push(opt);
         this.source.labels[opt.id] = opt;
       }
     }
 
+    const ids = opts.map((x) => x.id);
+
     this.mapClient.Label.Set(
       opts,
       CesiumDataController.ImageResource.arcProgress
     );
-
-    const ids = opts.map((x) => x.id);
     for (const id in this.source.labels) {
-      const label = this.source.labels[id];
-      if (label.value === 0 || !ids.includes(id)) {
-        this.mapClient.Label.Remove(id);
-        delete this.source.labels[id];
+      if (Object.prototype.hasOwnProperty.call(this.source.labels, id)) {
+        const label = this.source.labels[id];
+        if (label.value === 0 || !ids.includes(id)) {
+          this.mapClient.Label.Remove(id);
+          delete this.source.labels[id];
+        }
       }
     }
   }
@@ -373,6 +360,47 @@ export class AMapBusiness {
     }
     return count;
   }
+
+  setPointVisibility(value: boolean) {
+    this.source.all.forEach((x) => {
+      if (!value) {
+        if (this.source.labels[x.Id]) {
+          this.mapClient!.Point.SetVisibility(x.Id, true);
+        } else {
+          this.mapClient!.Point.SetVisibility(x.Id, value);
+        }
+      } else {
+        this.mapClient!.Point.SetVisibility(x.Id, value);
+      }
+    });
+  }
+
+  async setLabelVisibility(value: boolean) {
+    this.labelVisibility = value;
+    if (this.mapClient) {
+      if (value) {
+        this.mapClient.Label.Show();
+        return await this.setLabel(this.source.all, this.labelFilter).then(
+          () => {
+            timer(100)
+              .toPromise()
+              .then(() => {
+                this.setLabel(this.source.all, this.labelFilter);
+              });
+          }
+        );
+      } else {
+        this.mapClient.Label.Hide();
+      }
+    }
+  }
+
+  menuEvents = {
+    illegalDropClicked: new EventEmitter(),
+    mixedIntoClicked: new EventEmitter(),
+    garbageCountClicked: new EventEmitter(),
+    stationInformationClicked: new EventEmitter(),
+  };
 
   setContentMenu() {
     if (!this.mapClient) return;
@@ -481,4 +509,20 @@ export class AMapBusiness {
       }
     });
   }
+}
+
+interface AMapDataSource {
+  all: GarbageStation[];
+  drop: GarbageStation[];
+  labels: Global.Dictionary<CesiumDataController.LabelOptions>;
+  points: Global.Dictionary<CesiumDataController.Point>;
+}
+
+export enum GarbageTimeFilter {
+  all = 0,
+  m30 = 30 - 1,
+  h1 = 60 - 1,
+  h2 = 120 - 1,
+  h3 = 180 - 1,
+  h4 = 240 - 1,
 }

@@ -139,11 +139,10 @@ export class GarbageStationWindowRecordFilterComponent
       switch (item.value as GarbageTaskStatus) {
         case GarbageTaskStatus.handled:
           this.filter.IsHandle = true;
-          this.filter.IsTimeout = false;
           break;
+
         case GarbageTaskStatus.unhandled:
           this.filter.IsHandle = false;
-          this.filter.IsTimeout = false;
           break;
         case GarbageTaskStatus.timeout:
           this.filter.IsTimeout = true;

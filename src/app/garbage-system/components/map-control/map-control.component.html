@@ -106,9 +106,9 @@
   </div>
   <div
     class="btn"
-    (click)="display.duration.current.click.emit()"
-    *ngIf="display.duration.current.display"
-    [class.selected]="display.duration.current.selected"
+    (click)="display.retention.current.click.emit()"
+    *ngIf="display.retention.current.display"
+    [class.selected]="display.retention.current.selected"
     title="小包垃圾滞留时长"
   >
     <div class="inner">
@@ -119,9 +119,9 @@
   </div>
   <div
     class="btn"
-    (click)="display.duration.station.click.emit()"
-    *ngIf="display.duration.station.display"
-    [class.selected]="display.duration.station.selected"
+    (click)="display.retention.station.click.emit()"
+    *ngIf="display.retention.station.display"
+    [class.selected]="display.retention.station.selected"
     title="未有垃圾滞留投放点显示/隐藏"
   >
     <div class="inner" style="line-height: 26px">
@@ -131,9 +131,9 @@
 
   <div
     class="btn"
-    (click)="display.duration.all.click.emit()"
-    *ngIf="display.duration.all.display"
-    [class.selected]="display.duration.all.selected"
+    (click)="display.retention.all.click.emit()"
+    *ngIf="display.retention.all.display"
+    [class.selected]="display.retention.all.selected"
     title="所有垃圾滞留投放点"
   >
     <div class="inner" style="line-height: 28px">
@@ -142,27 +142,27 @@
   </div>
   <div
     class="btn"
-    (click)="display.duration.m30.click.emit()"
-    *ngIf="display.duration.m30.display"
-    [class.selected]="display.duration.m30.selected"
+    (click)="display.retention.m30.click.emit()"
+    *ngIf="display.retention.m30.display"
+    [class.selected]="display.retention.m30.selected"
     title="垃圾滞留30分钟以上投放点"
   >
     <div class="inner h" style="line-height: 28px">30m</div>
   </div>
   <div
     class="btn"
-    (click)="display.duration.h1.click.emit()"
-    *ngIf="display.duration.h1.display"
-    [class.selected]="display.duration.h1.selected"
+    (click)="display.retention.h1.click.emit()"
+    *ngIf="display.retention.h1.display"
+    [class.selected]="display.retention.h1.selected"
     title="垃圾滞留1小时以上投放点"
   >
     <div class="inner h" style="line-height: 28px">1h</div>
   </div>
   <div
     class="btn"
-    (click)="display.duration.h2.click.emit()"
-    *ngIf="display.duration.h2.display"
-    [class.selected]="display.duration.h2.selected"
+    (click)="display.retention.h2.click.emit()"
+    *ngIf="display.retention.h2.display"
+    [class.selected]="display.retention.h2.selected"
     title="垃圾滞留2小时以上投放点"
   >
     <div class="inner h" style="line-height: 28px">2h</div>

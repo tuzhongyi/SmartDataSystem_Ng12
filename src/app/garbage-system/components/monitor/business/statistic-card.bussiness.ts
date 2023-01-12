@@ -16,6 +16,7 @@ import {
 } from '../../statistic-card/statistic-card.model';
 import { WindowBussiness } from './window.business';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 
 @Injectable()
 export class StatisticCardBussiness
@@ -73,6 +74,7 @@ export class StatisticCardBussiness
     switch (model.type) {
       case StatisticType.stationCount:
         this.window.station.stationId = undefined;
+        this.window.station.index = GarbageStationWindowIndex.station;
         this.window.station.show = true;
         break;
       case StatisticType.stationDrop:

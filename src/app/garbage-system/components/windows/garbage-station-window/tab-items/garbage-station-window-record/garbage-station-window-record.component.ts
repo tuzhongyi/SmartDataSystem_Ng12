@@ -26,11 +26,28 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   filter = new GarbageDropRecordFilter();
 
   ngOnInit(): void {
-    console.log('sdf', this.status);
+    this.filter.IsTimeout = undefined;
+    this.filter.IsHandle = undefined;
+    switch (this.status) {
+      case GarbageTaskStatus.handled:
+        this.filter.IsHandle = true;
+        break;
 
-    // switch (this.status) {
-    //   case GarbageTaskStatus.timeout:
-    // }
+      case GarbageTaskStatus.unhandled:
+        this.filter.IsHandle = false;
+        break;
+      case GarbageTaskStatus.timeout:
+        this.filter.IsTimeout = true;
+        this.filter.IsHandle = false;
+        break;
+      case GarbageTaskStatus.timeout_handled:
+        this.filter.IsTimeout = true;
+        this.filter.IsHandle = true;
+        break;
+
+      default:
+        break;
+    }
   }
 
   onimage(item: ImageControlModelArray) {

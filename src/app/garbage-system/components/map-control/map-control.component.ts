@@ -11,15 +11,12 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ChangeControlModel } from 'src/app/view-model/change-control.model';
-import { AMapBusiness, GarbageTimeFilter } from './business/amap.business';
+import { AMapBusiness } from './business/amap.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
@@ -27,6 +24,7 @@ import { Division } from 'src/app/network/model/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { MapControlSelected, MapControlTools } from './map-control.model';
 import { wait } from 'src/app/common/tools/tool';
+import { GarbageTimeFilter } from './business/amap.model';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -171,15 +169,15 @@ export class MapControlComponent
     let display = new MapControlTools();
     display.filting.construction.display = false;
     display.filting.station.display = false;
-    display.duration.station.display = false;
-    display.duration.all.display = false;
-    display.duration.m30.display = false;
-    display.duration.h1.display = false;
-    display.duration.h2.display = false;
+    display.retention.station.display = false;
+    display.retention.all.display = false;
+    display.retention.m30.display = false;
+    display.retention.h1.display = false;
+    display.retention.h2.display = false;
 
     display.filting.current.click.subscribe((x) => {
       display.filting.current.selected = !display.filting.current.selected;
-      display.duration.current.display = !display.filting.current.selected;
+      display.retention.current.display = !display.filting.current.selected;
       display.filting.construction.display = display.filting.current.selected;
       display.filting.station.display = display.filting.current.selected;
 
@@ -193,46 +191,46 @@ export class MapControlComponent
     display.filting.station.click.subscribe((x) => {
       display.filting.station.selected = !display.filting.station.selected;
     });
-    display.duration.current.click.subscribe((x) => {
-      display.duration.current.selected = !display.duration.current.selected;
-      display.duration.station.display = display.duration.current.selected;
-      display.duration.all.display = display.duration.current.selected;
-      display.duration.m30.display = display.duration.current.selected;
-      display.duration.h1.display = display.duration.current.selected;
-      display.duration.h2.display = display.duration.current.selected;
+    display.retention.current.click.subscribe((x) => {
+      display.retention.current.selected = !display.retention.current.selected;
+      display.retention.station.display = display.retention.current.selected;
+      display.retention.all.display = display.retention.current.selected;
+      display.retention.m30.display = display.retention.current.selected;
+      display.retention.h1.display = display.retention.current.selected;
+      display.retention.h2.display = display.retention.current.selected;
 
-      display.duration.station.selected = true;
-      display.duration.all.selected = true;
-      display.duration.m30.selected = false;
-      display.duration.h1.selected = false;
-      display.duration.h2.selected = false;
+      display.retention.station.selected = true;
+      display.retention.all.selected = true;
+      display.retention.m30.selected = false;
+      display.retention.h1.selected = false;
+      display.retention.h2.selected = false;
     });
-    display.duration.station.click.subscribe((x) => {
-      display.duration.station.selected = !display.duration.station.selected;
+    display.retention.station.click.subscribe((x) => {
+      display.retention.station.selected = !display.retention.station.selected;
     });
-    display.duration.all.click.subscribe((x) => {
-      display.duration.all.selected = true;
-      display.duration.m30.selected = !display.duration.all.selected;
-      display.duration.h1.selected = !display.duration.all.selected;
-      display.duration.h2.selected = !display.duration.all.selected;
+    display.retention.all.click.subscribe((x) => {
+      display.retention.all.selected = true;
+      display.retention.m30.selected = !display.retention.all.selected;
+      display.retention.h1.selected = !display.retention.all.selected;
+      display.retention.h2.selected = !display.retention.all.selected;
     });
-    display.duration.m30.click.subscribe((x) => {
-      display.duration.m30.selected = true;
-      display.duration.all.selected = !display.duration.m30.selected;
-      display.duration.h1.selected = !display.duration.m30.selected;
-      display.duration.h2.selected = !display.duration.m30.selected;
+    display.retention.m30.click.subscribe((x) => {
+      display.retention.m30.selected = true;
+      display.retention.all.selected = !display.retention.m30.selected;
+      display.retention.h1.selected = !display.retention.m30.selected;
+      display.retention.h2.selected = !display.retention.m30.selected;
     });
-    display.duration.h1.click.subscribe((x) => {
-      display.duration.h1.selected = true;
-      display.duration.all.selected = !display.duration.h1.selected;
-      display.duration.m30.selected = !display.duration.h1.selected;
-      display.duration.h2.selected = !display.duration.h1.selected;
+    display.retention.h1.click.subscribe((x) => {
+      display.retention.h1.selected = true;
+      display.retention.all.selected = !display.retention.h1.selected;
+      display.retention.m30.selected = !display.retention.h1.selected;
+      display.retention.h2.selected = !display.retention.h1.selected;
     });
-    display.duration.h2.click.subscribe((x) => {
-      display.duration.h2.selected = true;
-      display.duration.all.selected = !display.duration.h2.selected;
-      display.duration.m30.selected = !display.duration.h2.selected;
-      display.duration.h1.selected = !display.duration.h2.selected;
+    display.retention.h2.click.subscribe((x) => {
+      display.retention.h2.selected = true;
+      display.retention.all.selected = !display.retention.h2.selected;
+      display.retention.m30.selected = !display.retention.h2.selected;
+      display.retention.h1.selected = !display.retention.h2.selected;
     });
 
     display.filting.construction.change.subscribe((x) => {
@@ -240,32 +238,32 @@ export class MapControlComponent
     });
     display.filting.station.change.subscribe((x) => {
       this.amap.garbageStationVisibility(x);
+      this.amap.visibility.label.station.value = x;
     });
-    display.duration.all.change.subscribe((x) => {
+    display.retention.all.change.subscribe((x) => {
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.all);
     });
-    display.duration.m30.change.subscribe((x) => {
+    display.retention.m30.change.subscribe((x) => {
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.m30);
     });
-    display.duration.h1.change.subscribe((x) => {
+    display.retention.h1.change.subscribe((x) => {
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.h1);
     });
-    display.duration.h2.change.subscribe((x) => {
+    display.retention.h2.change.subscribe((x) => {
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.h2);
     });
-    display.duration.station.change.subscribe((x) => {
-      this.amap.setPointVisibility(x);
+    display.retention.station.change.subscribe((x) => {
+      this.amap.visibility.label.station.value = x;
     });
-    display.duration.current.change.subscribe((x) => {
-      this.amap.setLabelVisibility(x);
+    display.retention.current.change.subscribe((x) => {
+      this.amap.visibility.label.value = x;
     });
     return display;
   }
   ngOnInit(): void {
     this.panel.init();
 
-    let src = this.amap.getSrc();
-    this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
+    this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.amap.src);
     this.amap.pointDoubleClicked.subscribe((x) => {
       this.onPointDoubleClicked(x);
       this.info.station = undefined;
@@ -308,12 +306,12 @@ export class MapControlComponent
 
   onLabelDisplay = (value: boolean) => {
     if (!value) {
-      this.display.duration.station.display = true;
+      this.display.retention.station.display = true;
     }
-    this.amap.setLabelVisibility(value);
+    this.amap.visibility.label.value = value;
   };
   onLabelStationDisplay = (value: boolean) => {
-    this.amap.setPointVisibility(value);
+    this.amap.visibility.label.value = value;
   };
 
   pointCount = 0;
@@ -367,12 +365,12 @@ export class MapControlComponent
     this.patrol.emit();
   }
   Button3Clicked() {
-    this.display.duration.current.selected =
-      !this.display.duration.current.selected;
+    this.display.retention.current.selected =
+      !this.display.retention.current.selected;
   }
   onDurationClicked() {
-    this.display.duration.station.selected =
-      !this.display.duration.station.selected;
+    this.display.retention.station.selected =
+      !this.display.retention.station.selected;
   }
 
   onPointInfoPanelGarbageRetentionClickedEvent(station: IModel) {
@@ -391,14 +389,14 @@ export class MapControlComponent
   GarbageTimeFilter = GarbageTimeFilter;
 
   GarbageTimeFilting(filter: GarbageTimeFilter) {
-    this.amap.labelFilter = filter;
-    this.amap.setLabelVisibility(false).then((x) => {
-      // this.display.duration.current = this.display.duration.current;
-      this.amap.setLabelVisibility(true).then(() => {
-        // this.display.duration.station.display =
-        //   this.display.duration.station.display;
-      });
-    });
+    this.amap.visibility.label.retention.value = filter;
+    // this.amap.setLabelVisibility(false).then((x) => {
+    //   // this.display.duration.current = this.display.duration.current;
+    //   this.amap.setLabelVisibility(true).then(() => {
+    //     // this.display.duration.station.display =
+    //     //   this.display.duration.station.display;
+    //   });
+    // });
   }
 
   ButtonAllClicked() {
