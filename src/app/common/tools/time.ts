@@ -1,26 +1,32 @@
 /*
  * @Author: pmx
  * @Date: 2022-12-20 14:01:27
- * @Last Modified by:   pmx
- * @Last Modified time: 2022-12-20 14:01:27
+ * @Last Modified by: pmx
+ * @Last Modified time: 2023-01-12 15:37:17
  */
 // new Date(time)不影响 time
-export class Time {
+export class TimeService {
   /**
    *  日期起始：1970-1-1 00:00:00 UTC
    * @param time
    * @returns 任意一天的开始时间（中国区）
    */
   static beginTime(time: Date | string | number) {
-    if (time instanceof Date) {
-      return new Date(new Date(time).setHours(0, 0, 0, 0));
-    } else if (typeof time == 'string') {
-      // 有效的日期字符串
-      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
-        throw new TypeError('INVALID TIME');
-      }
-      return new Date(new Date(time).setHours(0, 0, 0, 0));
-    } else if (typeof time == 'number' && time > 0) {
+    // if (time instanceof Date) {
+    //   return new Date(new Date(time).setHours(0, 0, 0, 0));
+    // } else if (typeof time == 'string') {
+    //   // 有效的日期字符串
+    //   if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+    //     throw new TypeError('INVALID TIME');
+    //   }
+    //   return new Date(new Date(time).setHours(0, 0, 0, 0));
+    // } else if (typeof time == 'number' && time > 0) {
+    //   return new Date(new Date(time).setHours(0, 0, 0, 0));
+    // } else {
+    //   throw new TypeError('INVALID TYPE');
+    // }
+
+    if (this.isValidDate(time)) {
       return new Date(new Date(time).setHours(0, 0, 0, 0));
     } else {
       throw new TypeError('INVALID TYPE');
@@ -70,8 +76,8 @@ export class Time {
       throw new TypeError('INVALID TYPE');
     }
     let offset = t.getDay() - (firstIsSunday ? 0 : 1);
-    let beginTime = Time.beginTime(this.backDate(t, offset));
-    let endTime = Time.endTime(Time.forwardDate(beginTime, 6));
+    let beginTime = TimeService.beginTime(this.backDate(t, offset));
+    let endTime = TimeService.endTime(TimeService.forwardDate(beginTime, 6));
     return {
       beginTime,
       endTime,
@@ -94,10 +100,20 @@ export class Time {
     }
     let beginTime = new Date(t.getFullYear(), t.getMonth(), 1, 0, 0, 0, 0);
     let endTime = new Date(t.getFullYear(), t.getMonth() + 1, 1, 0, 0, 0, 0);
-    endTime = Time.endTime(Time.backDate(endTime, 1));
+    endTime = TimeService.endTime(TimeService.backDate(endTime, 1));
     return {
       beginTime,
       endTime,
     };
+  }
+
+  static isValidDate(time: Date | string | number) {
+    if (typeof time === 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        return false;
+      }
+    } else if (typeof time == 'number' && time < 0) return false;
+
+    return true;
   }
 }

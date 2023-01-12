@@ -18,7 +18,7 @@ import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
 import { GlobalStorageService } from '../../service/global-storage.service';
 import { Language } from '../../tools/language';
-import { Time } from '../../tools/time';
+import { TimeService } from '../../tools/time';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
@@ -102,8 +102,8 @@ export class EventNumberStatisticComponent implements OnInit {
   curDate = new Date();
 
   searchInfo: EventNumberStatisticSearchInfo = {
-    BeginTime: Time.beginTime(this.curDate),
-    EndTime: Time.endTime(this.curDate),
+    BeginTime: TimeService.beginTime(this.curDate),
+    EndTime: TimeService.endTime(this.curDate),
     ResourceType: this.resourceDefault,
     ResourceId: this.resourceId,
     TimeUnit: TimeUnit.Day,
@@ -175,14 +175,14 @@ export class EventNumberStatisticComponent implements OnInit {
   }
   private _updateSearchInfo() {
     if (this.searchInfo.TimeUnit == TimeUnit.Day) {
-      this.searchInfo.BeginTime = Time.beginTime(this.curDate);
-      this.searchInfo.EndTime = Time.endTime(this.curDate);
+      this.searchInfo.BeginTime = TimeService.beginTime(this.curDate);
+      this.searchInfo.EndTime = TimeService.endTime(this.curDate);
     } else if (this.searchInfo.TimeUnit == TimeUnit.Week) {
-      this.searchInfo.BeginTime = Time.curWeek(this.curDate).beginTime;
-      this.searchInfo.EndTime = Time.curWeek(this.curDate).endTime;
+      this.searchInfo.BeginTime = TimeService.curWeek(this.curDate).beginTime;
+      this.searchInfo.EndTime = TimeService.curWeek(this.curDate).endTime;
     } else if (this.searchInfo.TimeUnit == TimeUnit.Month) {
-      this.searchInfo.BeginTime = Time.curMonth(this.curDate).beginTime;
-      this.searchInfo.EndTime = Time.curMonth(this.curDate).endTime;
+      this.searchInfo.BeginTime = TimeService.curMonth(this.curDate).beginTime;
+      this.searchInfo.EndTime = TimeService.curMonth(this.curDate).endTime;
     }
   }
 

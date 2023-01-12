@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { CollectionScoreBarInnerBusiness } from './collection-score-bar-inner.business';
 import { CollectionScoreBarBusiness } from './collection-score-bar.business';
@@ -27,8 +27,8 @@ export class CollectionScoreBarComponent implements OnInit {
   today = new Date();
 
   searchInfo: ICollectionScoreBarSearchInfo = {
-    BeginTime: Time.beginTime(Time.backDate(this.today, 7)),
-    EndTime: Time.endTime(Time.backDate(this.today, 1)),
+    BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
+    EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
     DivisionIds: [this._globalStorage.divisionId],
     TimeUnit: TimeUnit.Day,
   };

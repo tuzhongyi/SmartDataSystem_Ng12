@@ -2,7 +2,7 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { Page } from 'src/app/network/model/page_list.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionListWindowBusiness } from './collection-list-window.business';
@@ -38,8 +38,8 @@ export class CollectionListWindowComponent implements OnInit {
   searchInfo: ICollectionListWindowSearchInfo = {
     PageIndex: 1,
     PageSize: 9,
-    BeginTime: Time.curMonth(this.today).beginTime,
-    EndTime: Time.curMonth(this.today).endTime,
+    BeginTime: TimeService.curMonth(this.today).beginTime,
+    EndTime: TimeService.curMonth(this.today).endTime,
     CollectionPointIds: [],
     Condition: '',
   };

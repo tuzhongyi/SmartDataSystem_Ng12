@@ -4,7 +4,7 @@ import { EventStatisticConverter } from 'src/app/converter/event-statistic.conve
 import { StatisticLineEChartsConverter } from 'src/app/converter/statistic-line-eCharts.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
@@ -26,8 +26,8 @@ export class EventStatisticBusiness {
     timeUnit: TimeUnit,
     time: Date
   ): Promise<EventNumberStatistic[]> {
-    let beginTime = Time.beginTime(time);
-    let endTime = Time.endTime(time);
+    let beginTime = TimeService.beginTime(time);
+    let endTime = TimeService.endTime(time);
     const params = new GetDivisionEventNumbersParams();
     params.TimeUnit = timeUnit;
     params.BeginTime = beginTime;

@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { CommonLineChartComponent } from 'src/app/common/components/common-line-chart/common-line-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { CollectionWeightLineInnerBusiness } from './collection-weight-line-inner.business';
@@ -32,8 +32,8 @@ export class CollectionWeightLineComponent implements OnInit, OnDestroy {
   today = new Date();
 
   searchInfo: ICollectionWeightLineSearchInfo = {
-    BeginTime: Time.beginTime(Time.backDate(this.today, 7)),
-    EndTime: Time.endTime(Time.backDate(this.today, 1)),
+    BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
+    EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
     DivisionIds: [this._globalStorage.divisionId],
     TimeUnit: TimeUnit.Day,
     Type: TrashCanType.Dry,

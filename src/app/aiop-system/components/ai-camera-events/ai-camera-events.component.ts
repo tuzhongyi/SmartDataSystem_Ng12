@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Language } from 'src/app/common/tools/language';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -78,8 +78,8 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   today = new Date();
   searchInfo: AICameraEventsSearchInfo = {
     Condition: '',
-    BeginTime: Time.beginTime(this.today),
-    EndTime: Time.endTime(this.today),
+    BeginTime: TimeService.beginTime(this.today),
+    EndTime: TimeService.endTime(this.today),
     EventType: EventType.None,
     ModelName: '',
     Filter: false,
@@ -129,8 +129,8 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   toggleFilterHandler() {
     this.searchInfo.Filter = !this.searchInfo.Filter;
     if (!this.searchInfo.Filter) {
-      this.searchInfo.BeginTime = Time.beginTime(this.today);
-      this.searchInfo.EndTime = Time.endTime(this.today);
+      this.searchInfo.BeginTime = TimeService.beginTime(this.today);
+      this.searchInfo.EndTime = TimeService.endTime(this.today);
       this.searchInfo.EventType = EventType.None;
       this.searchInfo.ModelName = '';
     }

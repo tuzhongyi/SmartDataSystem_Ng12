@@ -14,7 +14,7 @@ import {
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -80,8 +80,8 @@ export class CollectionRecordWindowComponent implements OnInit {
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
-    BeginTime: Time.beginTime(Date.now()),
-    EndTime: Time.endTime(Date.now()),
+    BeginTime: TimeService.beginTime(Date.now()),
+    EndTime: TimeService.endTime(Date.now()),
     Score: '',
   };
 

@@ -11,7 +11,7 @@ import {
   TableColumnModel,
   TableOperateModel,
 } from 'src/app/view-model/table.model';
-import { Time } from '../../tools/time';
+import { TimeService } from '../../tools/time';
 import { IllegalDropEventBusiness } from './illegal-drop-event.business';
 
 import { IllegalDropEventConf } from './illegal-drop-event.conf';
@@ -41,8 +41,8 @@ export class IllegalDropEventComponent implements OnInit {
   today = new Date();
   searchInfo: IllegalDropEventSearchInfo = {
     Condition: '',
-    BeginTime: Time.beginTime(this.today),
-    EndTime: Time.endTime(this.today),
+    BeginTime: TimeService.beginTime(this.today),
+    EndTime: TimeService.endTime(this.today),
     // DivisionIds: ['310109000000', '310110018000', '310109011002'],
     DivisionIds: [],
     StationIds: [],

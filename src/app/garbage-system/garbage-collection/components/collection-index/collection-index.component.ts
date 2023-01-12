@@ -30,7 +30,7 @@ import {
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Medium } from 'src/app/common/tools/medium';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -250,8 +250,8 @@ export class GarbageCollectionIndexComponent
   clickScoreRank(data: CommonRankData) {
     this.componentTypeExpression = CollectionRecordWindowComponent;
     this.createToast({
-      beginTime: Time.curMonth(Date.now()).beginTime,
-      endTime: Time.curMonth(Date.now()).endTime,
+      beginTime: TimeService.curMonth(Date.now()).beginTime,
+      endTime: TimeService.curMonth(Date.now()).endTime,
     });
   }
   clickScorePipe(data: ICollectionScorePieData) {

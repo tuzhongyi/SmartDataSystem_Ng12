@@ -10,7 +10,7 @@ import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
-import { Time } from '../../tools/time';
+import { TimeService } from '../../tools/time';
 import { CommonLineChartModel } from './common-line-chart.model';
 
 @Injectable({

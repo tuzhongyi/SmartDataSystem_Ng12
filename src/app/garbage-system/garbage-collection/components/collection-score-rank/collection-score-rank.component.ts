@@ -8,7 +8,7 @@ import {
 } from 'src/app/common/components/common-rank/common-rank.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
@@ -62,7 +62,7 @@ export class CollectionScoreRankComponent implements OnInit {
   today = new Date();
 
   searchInfo: ICollectionScoreRankSearchInfo = {
-    BeginTime: Time.curMonth(this.today).beginTime,
+    BeginTime: TimeService.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
     DivisionIds: [this._globalStorage.divisionId],
     Type: CollectionPointScore.Poor,

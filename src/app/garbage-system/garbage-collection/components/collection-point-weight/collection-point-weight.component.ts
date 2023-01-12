@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Time } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/tools/time';
 import { CollectionPointWeightBusiness } from './collection-point-weight.business';
 import { CollectionPointWeightConverter } from './collection-point-weight.converter';
 import {
@@ -25,8 +25,8 @@ export class CollectionPointWeightComponent implements OnInit {
   dataSource: CollectionPointWeightModel[] = [];
 
   searchInfo: CollectionPointWeightSearchInfo = {
-    BeginTime: Time.beginTime(new Date()),
-    EndTime: Time.endTime(new Date()),
+    BeginTime: TimeService.beginTime(new Date()),
+    EndTime: TimeService.endTime(new Date()),
   };
 
   constructor(private _business: CollectionPointWeightBusiness) {}
