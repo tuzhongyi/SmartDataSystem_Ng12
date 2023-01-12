@@ -25,7 +25,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     private init = true
   ) {
     try {
-      console.log(key);
+      // console.log(key);
       let cache = ServicePool[key];
       if (!cache) {
         cache = new AppCache(timeout);

@@ -21,6 +21,12 @@ import {
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { WindowComponent } from '../window-control/window.component';
 import { VideoPlayerWindowBusiness } from './video-player-window.business';
+import videoConfig from 'src/assets/configs/config.json';
+import { plainToClass } from 'class-transformer';
+import { ViedeoConfigModel } from '../../models/video-config.model';
+
+// console.log(videoConfig);
+// console.log(plainToClass(ViedeoConfigModel, videoConfig));
 
 @Component({
   selector: 'howell-video-player-window',
@@ -64,6 +70,7 @@ export class VideoPlayerWindowComponent
 
   ngOnInit() {
     this.duration = this.config.getConfig().then((config) => {
+      console.log(config);
       if (this.time) {
         this.date = this.time;
       }

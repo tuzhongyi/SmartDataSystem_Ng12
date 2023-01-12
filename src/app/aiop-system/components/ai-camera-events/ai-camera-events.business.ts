@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { Time } from 'src/app/common/tools/time';
 import { AICameraEventsConverter } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -25,7 +24,7 @@ export class AICameraEventsBusiness {
   async init(searchInfo: AICameraEventsSearchInfo) {
     let { Data, Page } = await this._listCameraAIEvents(searchInfo);
 
-    console.log(Data);
+    // console.log(Data);
 
     let data = await this._converter.iterateToModel(Data);
     data = data.sort((a, b) => {

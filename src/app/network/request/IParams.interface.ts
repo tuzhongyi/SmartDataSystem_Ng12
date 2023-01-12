@@ -51,7 +51,7 @@ export class DurationParams {
     params.EndTime = next;
     return params;
   }
-  static allWeek(date: Date, firstDay = 0) {
+  static allWeek(date: Date, firstDay = 1) {
     let params = new DurationParams();
     let year = date.getFullYear();
     let month = date.getMonth();

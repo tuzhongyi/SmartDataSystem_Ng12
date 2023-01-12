@@ -4,9 +4,9 @@
     [ngClass]="{ 'custom-form-wrap': Background }"
     [ngStyle]="style"
   >
-    <a class="close-winow" (click)="closeButtonClick()" *ngIf="CloseButton"
-      ><i class="howell-icon-Close alert-window-close-btn"></i
-    ></a>
+    <a class="close-winow" (click)="closeButtonClick()" *ngIf="CloseButton">
+      <i class="howell-icon-Close alert-window-close-btn"></i>
+    </a>
     <ng-content></ng-content>
   </div>
 </div>

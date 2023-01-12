@@ -12,6 +12,7 @@ export class ImageControlArrayConverter
     let array: ImageControlModel[] = [];
     for (let i = 0; i < source.length; i++) {
       const item = this.itemConverter.Convert(source[i]);
+      item.index = i;
       array.push(item);
     }
     return array;
