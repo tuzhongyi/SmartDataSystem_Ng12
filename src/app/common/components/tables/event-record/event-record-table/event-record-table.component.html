@@ -43,7 +43,13 @@
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
             <td [ngStyle]="{ width: widths[3] }">
-              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
+              {{
+                item.Data
+                  ? item.Data.CommunityName
+                  : item.GarbageStation
+                  ? item.GarbageStation.CommunityName
+                  : ""
+              }}
             </td>
             <td [ngStyle]="{ width: widths[4] }">
               {{
