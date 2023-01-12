@@ -3,6 +3,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
+import { DisposalCountArgs } from '../../disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from '../../illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from '../../retention-rank/retention-rank.component';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
@@ -57,8 +58,10 @@ class IllegalMixintoRankEventTrigger {
 }
 class RisposalCountEventTrigger {
   constructor(private window: WindowBussiness) {}
-  ontask() {
+  ontask(args: DisposalCountArgs) {
     this.window.station.index = GarbageStationWindowIndex.record;
+    this.window.station.divisionId = args.divisionId;
+    this.window.station.eventType = args.eventType;
     this.window.station.show = true;
   }
 }

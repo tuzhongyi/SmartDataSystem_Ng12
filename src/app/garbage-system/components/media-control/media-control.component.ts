@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { classToClass } from 'class-transformer';
+import { classToPlain, plainToClass } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlComponent } from 'src/app/common/components/image-video-control/image-video-control.component';
@@ -22,7 +22,6 @@ import { wait } from 'src/app/common/tools/tool';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { MediaVideoControlBussiness } from './media-video-control.business';
 import { ICamera } from 'src/app/network/model/camera.interface';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IMediaControlBusiness } from './media-control.model';
 
 @Component({
@@ -197,7 +196,8 @@ export class MediaControlComponent
               .manualCapture(this.current.stationId, this.datas)
               .then((y) => {
                 this.datas = y;
-                this.current = classToClass(this.datas[this.index]);
+                let plain = classToPlain(this.datas[this.index]);
+                this.current = plainToClass(ImageVideoControlModel, plain);
               });
           }
         }

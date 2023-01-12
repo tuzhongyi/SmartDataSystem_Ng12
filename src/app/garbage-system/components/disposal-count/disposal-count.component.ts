@@ -24,7 +24,11 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { DisposalCountModel } from 'src/app/view-model/disposal-count.model';
+import {
+  DisposalCountArgs,
+  DisposalCountModel,
+  IDisposalCount,
+} from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
 import { DisposalCountBusiness } from './disposal-count.business';
 
 // 按需引入 Echarts
@@ -34,7 +38,8 @@ import { TitleComponent, TitleComponentOption } from 'echarts/components';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
+import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 echarts.use([TitleComponent, GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -49,6 +54,9 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
 export class DisposalCountComponent
   implements OnInit, OnDestroy, AfterViewInit
 {
+  @Output()
+  task: EventEmitter<DisposalCountArgs> = new EventEmitter();
+
   DisposalCountType = DisposalCountType;
   public title: string = '今日任务处置';
 
@@ -177,7 +185,7 @@ export class DisposalCountComponent
     data: [
       {
         value: 100,
-        name: '超时率',
+        name: '达标率',
         title: {
           offsetCenter: ['0%', '55%'],
         },
@@ -433,9 +441,21 @@ export class DisposalCountComponent
       this.myChart.setOption(this.option);
     }
   }
-  @Output()
-  task: EventEmitter<void> = new EventEmitter();
-  taskClick() {
-    this.task.emit();
+  taskClick(item: IDisposalCount) {
+    let args: DisposalCountArgs = {
+      divisionId: this.storeService.divisionId,
+    };
+    switch (item.tag) {
+      case DisposalCountType.unhandled:
+        args.eventType = EventType.GarbageDrop;
+        break;
+      case DisposalCountType.timeout:
+        args.eventType = EventType.GarbageDropTimeout;
+        break;
+      case DisposalCountType.total:
+      default:
+        break;
+    }
+    this.task.emit(args);
   }
 }

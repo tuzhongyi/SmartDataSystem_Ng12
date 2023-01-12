@@ -192,6 +192,7 @@ function EventRecordDataTransformer(params: TransformFnParams) {
     case EventType.GarbageDrop:
     case EventType.GarbageDropHandle:
     case EventType.GarbageDropTimeout:
+    case EventType.GarbageDropSuperTimeout:
       return plainToClass(GarbageDropEventData, params.value);
     case EventType.GarbageFull:
       return plainToClass(GarbageFullEventData, params.value);

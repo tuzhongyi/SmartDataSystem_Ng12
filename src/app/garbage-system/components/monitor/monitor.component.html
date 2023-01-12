@@ -99,7 +99,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-disposal-count
-          (task)="trigger.risposalCount.ontask()"
+          (task)="trigger.risposalCount.ontask($event)"
         ></app-disposal-count>
       </div>
     </div>
@@ -168,6 +168,8 @@
   [style]="window.station.style"
   [index]="window.station.index"
   [stationId]="window.station.stationId"
+  [divisionId]="window.station.divisionId"
+  [eventType]="window.station.eventType"
   (image)="window.station.onimage($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"

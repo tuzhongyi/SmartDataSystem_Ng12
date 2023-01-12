@@ -24,6 +24,7 @@ export class StatisticSummaryTaskChartConverter
               vm.TotalCount += number.DayNumber;
               break;
             case EventType.GarbageDropTimeout:
+            case EventType.GarbageDropSuperTimeout:
               vm.GarbageTimeoutCount += number.DayNumber;
               break;
             case EventType.GarbageDropHandle:

@@ -29,7 +29,7 @@
                 'powder-red-text':
                   disposalCount.tag === DisposalCountType.unhandled
               }"
-              (click)="taskClick()"
+              (click)="taskClick(disposalCount)"
             >
               {{ disposalCount.count }}
             </div>

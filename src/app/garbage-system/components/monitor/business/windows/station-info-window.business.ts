@@ -5,6 +5,8 @@ import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garba
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
 import { MediaWindowBusiness } from './media-window.business';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Injectable()
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
@@ -17,6 +19,7 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   index = GarbageStationWindowIndex.station;
   stationId?: string;
   divisionId?: string;
+  eventType?: EventType;
 
   constructor(private media: MediaWindowBusiness) {
     super();

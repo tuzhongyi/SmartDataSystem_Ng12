@@ -1,36 +1,16 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
 import {
-  ISubscription,
-  SubscriptionService,
-} from 'src/app/common/interfaces/subscribe.interface';
-import {
-  DisposalArrayCountConverter,
   DisposalCountConverter,
   NumberStatistic,
-} from 'src/app/converter/disposal-count.converter';
-
-import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { EventType } from 'src/app/enum/event-type.enum';
+} from 'src/app/garbage-system/components/disposal-count/disposal-count.converter';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import {
-  GetDivisionsParams,
-  GetDivisionStatisticNumbersParams,
-} from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import {
-  GetGarbageStationsParams,
-  GetGarbageStationStatisticNumbersParams,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DisposalCountModel } from 'src/app/view-model/disposal-count.model';
+import { DisposalCountModel } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Injectable()
 export class DisposalCountBusiness
@@ -39,7 +19,8 @@ export class DisposalCountBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
-    public subscription: SubscriptionService
+    public subscription: SubscriptionService,
+    private store: GlobalStorageService
   ) {}
   Converter: IConverter<NumberStatistic, DisposalCountModel> =
     new DisposalCountConverter();
@@ -49,7 +30,7 @@ export class DisposalCountBusiness
     resourceType: UserResourceType
   ): Promise<DisposalCountModel> {
     let data = await this.getData(resourceId, resourceType);
-    let result = this.Converter.Convert(data);
+    let result = this.Converter.Convert(data, this.store.defaultDivisionType);
     return result;
   }
   getData(

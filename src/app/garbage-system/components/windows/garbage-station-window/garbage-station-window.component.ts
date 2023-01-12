@@ -1,9 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import {
   ImageControlModel,
   ImageControlModelArray,
 } from 'src/app/view-model/image-control.model';
-import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
+import {
+  GarbageDropRecordFilter,
+  GarbageDropRecordViewModel,
+} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
@@ -12,6 +23,7 @@ import { EventRecordOperationFilterBusiness } from '../event-record-operation-fi
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
 import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -26,7 +38,7 @@ import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station
 })
 export class GarbageStationWindowComponent
   extends WindowComponent
-  implements OnInit
+  implements OnInit, OnChanges
 {
   @Input()
   index = GarbageStationWindowIndex.station;
@@ -34,11 +46,14 @@ export class GarbageStationWindowComponent
   stationId?: string;
   @Input()
   divisionId?: string;
+  @Input()
+  eventType?: EventType;
 
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
-  chartdblclick: EventEmitter<GarbageStationGarbageCountStatistic> = new EventEmitter();
+  chartdblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
+    new EventEmitter();
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
 
@@ -54,6 +69,36 @@ export class GarbageStationWindowComponent
   isfilter = false;
 
   ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.eventType) {
+      let filter = this.record.filter.filter as GarbageDropRecordFilter;
+      switch (this.eventType) {
+        case EventType.GarbageDrop:
+          filter.IsHandle = false;
+          filter.IsTimeout = false;
+          break;
+        case EventType.GarbageDropHandle:
+          filter.IsHandle = true;
+          filter.IsTimeout = false;
+          break;
+        case EventType.GarbageDropTimeout:
+        case EventType.GarbageDropSuperTimeout:
+          filter.IsTimeout = true;
+          break;
+        case EventType.GarbageDropTimeoutHandle:
+          filter.IsTimeout = true;
+          filter.IsHandle = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+    if (changes.divisionId) {
+      this.record.filter.filter.divisionId = this.divisionId;
+    }
+  }
 
   indexChange(index: number) {
     this.index = index;

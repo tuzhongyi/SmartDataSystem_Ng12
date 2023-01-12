@@ -1,4 +1,6 @@
-import { DisposalCountType } from '../enum/disposal-count.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { DisposalCountType } from './disposal-count.enum';
 
 // 设备数量接口
 export interface IDisposalCount {
@@ -23,4 +25,9 @@ export class DisposalCountModel {
   unit: string = '起';
 
   timeoutRatio: number = 0;
+}
+
+export interface DisposalCountArgs {
+  divisionId: string;
+  eventType?: EventType;
 }

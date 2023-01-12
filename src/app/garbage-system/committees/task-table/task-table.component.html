@@ -25,7 +25,9 @@
             <td [ngStyle]="{ width: bodyWidths[4] }">{{ item.Time }}</td>
             <td
               [ngClass]="{
-                'powder-red-text': item.State == EventType.GarbageDropTimeout,
+                'powder-red-text':
+                  item.State == EventType.GarbageDropTimeout ||
+                  item.State == EventType.GarbageDropSuperTimeout,
                 'green-text': item.State == EventType.GarbageDropHandle,
                 'orange-text': item.State == EventType.GarbageDrop
               }"

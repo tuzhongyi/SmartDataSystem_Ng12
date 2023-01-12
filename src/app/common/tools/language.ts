@@ -18,7 +18,7 @@ import {
   DeviceStateCountType,
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
-import { DisposalCountType } from 'src/app/enum/disposal-count.enum';
+import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -153,6 +153,7 @@ export class Language {
       case EventType.GarbageDrop:
         return Language.json.EventType.GarbageDrop;
       case EventType.GarbageDropTimeout:
+      case EventType.GarbageDropSuperTimeout:
         return Language.json.EventType.GarbageDropTimeout;
       case EventType.GarbageDropHandle:
         return Language.json.EventType.GarbageDropHandle;
@@ -166,6 +167,7 @@ export class Language {
       case EventType.GarbageDrop:
         return Language.json.wait + Language.json.handle;
       case EventType.GarbageDropTimeout:
+      case EventType.GarbageDropSuperTimeout:
         return (
           Language.json.timeout + Language.json.wait + Language.json.handle
         );
@@ -188,6 +190,7 @@ export class Language {
       case EventType.GarbageDrop:
         return 'orange-text';
       case EventType.GarbageDropTimeout:
+      case EventType.GarbageDropSuperTimeout:
         return 'powder-red-text';
       case EventType.GarbageDropHandle:
         if (isTimeout) {
@@ -306,7 +309,7 @@ export class Language {
       case DisposalCountType.unhandled:
         return '未完成任务';
       case DisposalCountType.timeout:
-        return '超时任务';
+        return '超时处置';
       default:
         return Language.json.Unknow;
     }

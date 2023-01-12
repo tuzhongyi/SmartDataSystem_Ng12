@@ -11,11 +11,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { Point } from 'src/app/network/model/point.model';
 import { Size } from 'src/app/network/model/size.model';
-import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlModel } from '../../../view-model/image-control.model';
 import { EventDataObject } from 'src/app/network/model/event-data-object.model';
 
@@ -48,21 +46,23 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
       this.draw();
     }
   }
-  async ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges(changes: SimpleChanges) {
     if (changes.model) {
       if (this.model) {
-        this.image.backgroundImage = `url(${await this.model.src})`;
-        let img = document.createElement('img');
-        img.src = await this.model.src;
-        img.onerror = () => {
-          if (this.model) {
-            this.image.backgroundImage += `, url(${this.model.onerror})`;
-          }
-        };
+        this.model.src.then((src) => {
+          this.image.backgroundImage = `url(${src})`;
+          let img = document.createElement('img');
+          img.src = src;
+          img.onerror = () => {
+            if (this.model) {
+              this.image.backgroundImage += `, url(${this.model.onerror})`;
+            }
+          };
 
-        if (this.isDraw) {
-          this.draw();
-        }
+          if (this.isDraw) {
+            this.draw();
+          }
+        });
       }
     }
     if (changes.isDraw) {
