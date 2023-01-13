@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
@@ -10,14 +18,14 @@ import { SearchOptions } from 'src/app/view-model/search-options.model';
   templateUrl: './garbage-station-window-record.component.html',
   styleUrls: ['./garbage-station-window-record.component.less'],
 })
-export class GarbageStationWindowRecordComponent implements OnInit {
+export class GarbageStationWindowRecordComponent implements OnInit, OnChanges {
   @Input()
   isfilter = false;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
   @Input()
-  search: EventEmitter<SearchOptions> = new EventEmitter();
+  search: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   @Input()
   status?: GarbageTaskStatus;
 
@@ -27,6 +35,16 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   filterChange: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
 
   constructor() {}
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.search) {
+      if (this.search) {
+        this.search.subscribe((x) => {
+          this.filter = x;
+          this.filterChange.emit(this.filter);
+        });
+      }
+    }
+  }
 
   ngOnInit(): void {
     this.filter.IsTimeout = undefined;
