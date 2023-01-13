@@ -20,8 +20,4 @@ export class EventRecordOperationFilterBusiness {
   display() {
     this.show = !this.show;
   }
-
-  onfilter(filter: EventRecordFilter) {
-    this.filter = filter;
-  }
 }

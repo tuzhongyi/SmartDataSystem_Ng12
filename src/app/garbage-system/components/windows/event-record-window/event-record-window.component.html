@@ -25,7 +25,7 @@
             <interval-division-station-filter
               *ngIf="record.filter.show"
               [divisionId]="divisionId"
-              (filter)="record.filter.onfilter($event)"
+              [(filter)]="record.filter.filter"
             >
             </interval-division-station-filter>
             <div class="event-record-table" [class.filter]="record.filter.show">

@@ -28,8 +28,10 @@ import {
 export class EventRecordFilterComponent
   implements IComponent<IModel, DivisionStationFilteModel>, OnInit, OnChanges
 {
-  @Output('filter')
-  filterEvent: EventEmitter<EventRecordFilter> = new EventEmitter();
+  @Input()
+  filter: EventRecordFilter;
+  @Output()
+  filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
   @Input()
   divisionId?: string;
 
@@ -68,18 +70,16 @@ export class EventRecordFilterComponent
 
   model: DivisionStationFilteModel = new DivisionStationFilteModel();
 
-  filter: EventRecordFilter;
-
   changeBegin(date: Date) {
     if (this.filter) {
       this.filter.BeginTime = date;
-      this.filterEvent.emit(this.filter);
+      this.filterChange.emit(this.filter);
     }
   }
   changeEnd(date: Date) {
     if (this.filter) {
       this.filter.EndTime = date;
-      this.filterEvent.emit(this.filter);
+      this.filterChange.emit(this.filter);
     }
   }
 
@@ -91,7 +91,7 @@ export class EventRecordFilterComponent
     this.filter.division = item;
     this.filter.camera = undefined;
     this.filter.station = undefined;
-    this.filterEvent.emit(this.filter);
+    this.filterChange.emit(this.filter);
     this.loadStation.emit(this.filter.station);
   }
   async onstation(item: SelectItem) {
@@ -102,11 +102,11 @@ export class EventRecordFilterComponent
     this.model = await this.business.load(opts);
     this.filter.station = item;
     this.filter.camera = undefined;
-    this.filterEvent.emit(this.filter);
+    this.filterChange.emit(this.filter);
     this.loadCamera.emit(this.filter.camera);
   }
   oncamera(item: SelectItem) {
     this.filter.camera = item;
-    this.filterEvent.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
 }
