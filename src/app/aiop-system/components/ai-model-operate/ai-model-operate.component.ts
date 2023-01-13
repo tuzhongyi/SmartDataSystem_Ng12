@@ -92,7 +92,7 @@ export class AIModelOperateComponent
   constructor(
     private _business: AIModelOperateBusiness,
     private _toastrService: ToastrService,
-    @Inject(DOCUMENT) private document: any
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   async ngOnInit() {

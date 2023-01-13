@@ -1,3 +1,4 @@
+import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
@@ -5,6 +6,7 @@ import {
   Component,
   ContentChild,
   EventEmitter,
+  Inject,
   Input,
   OnChanges,
   OnDestroy,
@@ -14,6 +16,7 @@ import {
   Type,
   ViewChild,
 } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -45,25 +48,23 @@ export class CommonLabelSelecComponent
 
   @ContentChild('tree') tree?: CommonTree;
 
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private document: Document) {}
 
   handle: any;
 
-  ngOnDestroy(): void {
-    if (this.handle) {
-      window.removeEventListener('click', this.handle);
-    }
-  }
+  subscription!: Subscription;
 
-  ngOnInit(): void {
-    if (this.autoclose) {
-      this.handle = this.closeDropDown.bind(this);
-
-      window.addEventListener('click', this.handle);
-    }
+  ngOnInit(): void {}
+  ngAfterViewInit(): void {
+    this.subscription = fromEvent(this.document.body, 'click').subscribe(() => {
+      if (this.autoclose) this.showDropDown = false;
+    });
   }
-  ngAfterViewInit(): void {}
   ngAfterContentInit(): void {}
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
   toggleHandler(e: Event) {
     e.stopPropagation();
     this.showDropDown = !this.showDropDown;

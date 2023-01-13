@@ -42,10 +42,25 @@
         <div class="right-wrapper">
           <div class="operate-item">
             <div class="title">
+              <span class="hw-form-label">GIS:&nbsp;</span>
+            </div>
+            <div class="content">
+              <select>
+                <option value="">a</option>
+                <option value="">a</option>
+                <option value="">a</option>
+              </select>
+            </div>
+          </div>
+          <div class="operate-item">
+            <div class="title">
               <span class="hw-form-label">选择标签:&nbsp;</span>
             </div>
             <div class="content" style="width: 0">
-              <common-label-select [selectedNodes]="selectedNodes">
+              <common-label-select
+                [selectedNodes]="selectedNodes"
+                [autoclose]="true"
+              >
                 <howell-label-tree
                   #tree
                   [defaultIds]="defaultIds"
