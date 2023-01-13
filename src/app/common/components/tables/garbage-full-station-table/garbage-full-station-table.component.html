@@ -53,11 +53,27 @@
               }}
             </td>
             <td [ngStyle]="{ width: widths[5] }">
-              {{
-                item.GarbageStation
-                  ? Language.StationStateFlags(item.GarbageStation.StationState)
-                  : ""
-              }}
+              <span
+                [ngClass]="{
+                  'green-text': item.GarbageStation?.StationState?.contains(
+                    StationState.Normal
+                  ),
+                  'orange-text': item.GarbageStation?.StationState?.contains(
+                    StationState.Full
+                  ),
+                  'powder-red-text':
+                    item.GarbageStation?.StationState?.contains(
+                      StationState.Error
+                    )
+                }"
+                >{{
+                  item.GarbageStation
+                    ? Language.StationStateFlags(
+                        item.GarbageStation.StationState
+                      )
+                    : ""
+                }}</span
+              >
             </td>
             <td [ngStyle]="{ width: widths[6] }">
               {{ item.FullDuration ? Language.Time(item.FullDuration) : "" }}

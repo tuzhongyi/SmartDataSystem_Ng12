@@ -1,17 +1,17 @@
 import { IModel } from './model.interface';
 
 /** 分页信息 */
-export interface Page {
+export class Page {
   /**	Int32	页码 1.2.3 …..	M */
-  PageIndex: number;
+  PageIndex!: number;
   /**	Int32	分页大小	M */
-  PageSize: number;
+  PageSize!: number;
   /**	Int32	总页数	M */
-  PageCount: number;
+  PageCount!: number;
   /**	Int32	当前页的记录数目	M */
-  RecordCount: number;
+  RecordCount!: number;
   /**	Int32	总记录数目	M */
-  TotalRecordCount: number;
+  TotalRecordCount!: number;
   /** */
 }
 /** 分页数据 */

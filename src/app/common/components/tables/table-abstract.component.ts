@@ -12,8 +12,7 @@ export abstract class PagedTableAbstractComponent<T> {
   abstract load?: EventEmitter<any>;
   Language = Language;
   datas: T[] = [];
-  page?: Page;
-
+  page: Page = new Page();
   loading = false;
   pageSize = 9;
 

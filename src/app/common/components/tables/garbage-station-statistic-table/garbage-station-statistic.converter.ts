@@ -62,18 +62,15 @@ export class GarbageStationStatisticConverter
       model.GarbageRatioTd.value = model.GarbageRatio;
       model.GarbageRatioTd.format = model.GarbageRatio.toFixed(2);
     }
-    if (model.AvgGarbageTime) {
-      model.AvgGarbageTimeTd.value = model.AvgGarbageTime;
-      model.AvgGarbageTimeTd.format = Language.Time(model.AvgGarbageTime);
-    }
-    if (model.MaxGarbageTime) {
-      model.MaxGarbageTimeTd.value = model.MaxGarbageTime;
-      model.MaxGarbageTimeTd.format = Language.Time(model.MaxGarbageTime);
-    }
-    if (model.GarbageDuration) {
-      model.GarbageDurationTd.value = model.GarbageDuration;
-      model.GarbageDurationTd.format = Language.Time(model.GarbageDuration);
-    }
+
+    model.AvgGarbageTimeTd.value = model.AvgGarbageTime ?? 0;
+    model.AvgGarbageTimeTd.format = Language.Time(model.AvgGarbageTime ?? 0);
+
+    model.MaxGarbageTimeTd.value = model.MaxGarbageTime ?? 0;
+    model.MaxGarbageTimeTd.format = Language.Time(model.MaxGarbageTime ?? 0);
+
+    model.GarbageDurationTd.value = model.GarbageDuration ?? 0;
+    model.GarbageDurationTd.format = Language.Time(model.GarbageDuration ?? 0);
 
     if (model.EventNumbers) {
       for (let i = 0; i < model.EventNumbers.length; i++) {

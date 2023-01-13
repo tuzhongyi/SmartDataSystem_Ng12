@@ -24,6 +24,7 @@ import {
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageFullStationTableBusiness } from './garbage-full-station-table.business';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
+import { StationState } from 'src/app/enum/station-state.enum';
 
 @Component({
   selector: 'howell-garbage-full-station-table',
@@ -38,12 +39,6 @@ export class GarbageFullStationTableComponent
     OnChanges,
     OnInit
 {
-  widths = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
-  constructor(business: GarbageFullStationTableBusiness) {
-    super();
-    this.business = business;
-  }
-
   @Input()
   business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
 
@@ -52,8 +47,16 @@ export class GarbageFullStationTableComponent
 
   @Input()
   load?: EventEmitter<SearchOptions>;
+  @Output()
+  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  constructor(business: GarbageFullStationTableBusiness) {
+    super();
+    this.business = business;
+  }
 
+  widths = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
   searchOptions?: SearchOptions;
+  StationState = StationState;
 
   ngOnInit(): void {
     this.loadData(1, this.pageSize);
@@ -99,8 +102,6 @@ export class GarbageFullStationTableComponent
     }
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageFullStationTableModel, img: ImageControlModel) {
     let array = new ImageControlModelArray(item.images, img.index);
     this.image.emit(array);
