@@ -15,15 +15,18 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   isfilter = false;
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  @Output()
-  changed: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+
   @Input()
   search: EventEmitter<SearchOptions> = new EventEmitter();
   @Input()
   status?: GarbageTaskStatus;
-  constructor() {}
 
+  @Input()
   filter = new GarbageDropRecordFilter();
+  @Output()
+  filterChange: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+
+  constructor() {}
 
   ngOnInit(): void {
     this.filter.IsTimeout = undefined;
@@ -52,9 +55,5 @@ export class GarbageStationWindowRecordComponent implements OnInit {
 
   onimage(item: ImageControlModelArray) {
     this.image.emit(item);
-  }
-  onfilterchanged(item: GarbageDropRecordFilter) {
-    this.filter = item;
-    this.changed.emit(item);
   }
 }

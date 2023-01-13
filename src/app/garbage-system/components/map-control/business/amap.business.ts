@@ -258,10 +258,10 @@ export class AMapBusiness {
           id: station.Id,
           status: 0,
         };
-        let flags = new Flags(station.StationState);
-        if (flags.contains(StationState.Error)) {
+
+        if (station.StationState.contains(StationState.Error)) {
           status.status = StationState.Error;
-        } else if (flags.contains(StationState.Full)) {
+        } else if (station.StationState.contains(StationState.Full)) {
           status.status = StationState.Full;
         } else {
           status.status = 0;

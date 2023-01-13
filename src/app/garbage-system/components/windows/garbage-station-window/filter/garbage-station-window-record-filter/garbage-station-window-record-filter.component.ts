@@ -26,13 +26,12 @@ export class GarbageStationWindowRecordFilterComponent
   @Input()
   business: IBusiness<IModel, GarbageStationWindowRecordFilterModel>;
   @Output()
-  changed: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
-
+  filterChange: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+  @Input()
+  filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
   constructor(business: GarbageStationWindowRecordFilterBusiness) {
     this.business = business;
   }
-
-  filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
 
   durations: SelectItem[] = [];
   statuses: SelectItem[] = [];
@@ -113,24 +112,24 @@ export class GarbageStationWindowRecordFilterComponent
   }
   changeBegin(date: Date) {
     this.filter.BeginTime = date;
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
   changeEnd(date: Date) {
     this.filter.EndTime = date;
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
   ondivision(item: Division) {
     this.filter.divisionId = item.Id;
     this.loadData(item.Id);
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
   onstation(item: SelectItem) {
     this.filter.stationId = item.key;
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
   onduration(item: SelectItem) {
     this.filter.duration = item.value;
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
   onstatus(item: SelectItem) {
     this.filter.IsTimeout = undefined;
@@ -157,6 +156,6 @@ export class GarbageStationWindowRecordFilterComponent
           break;
       }
     }
-    this.changed.emit(this.filter);
+    this.filterChange.emit(this.filter);
   }
 }

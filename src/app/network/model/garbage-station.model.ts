@@ -5,13 +5,14 @@ import { Camera } from './camera.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { TimeRange } from './time-range.model';
-import { transformDateTime } from './transform.model';
+import { transformDateTime, transformFlags } from './transform.model';
 import { TrashCan } from './trash-can.model';
 import 'reflect-metadata';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
 import { Model } from './model.interface';
 import { StationType } from 'src/app/enum/station-type.enum';
+import { Flags } from 'src/app/common/tools/flags';
 
 /** 垃圾房、投放点 */
 export class GarbageStation extends Model {
@@ -57,7 +58,8 @@ export class GarbageStation extends Model {
   /**	Double	最大湿垃圾容积，单位：L	M */
   MaxWetVolume!: number;
   /**	Int32	垃圾房状态	M */
-  StationState!: StationState;
+  @Transform(transformFlags)
+  StationState!: Flags<StationState>;
   /**	Int32	评级	O */
   Grade?: number;
   /**	TimeRange[]	计数时间段	O */

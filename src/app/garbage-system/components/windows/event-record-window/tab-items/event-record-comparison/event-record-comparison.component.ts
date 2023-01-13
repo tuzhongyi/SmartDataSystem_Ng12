@@ -86,7 +86,7 @@ export class EventRecordComparisonComponent
   ngOnInit(): void {
     this.initUnits();
     this.initChartTypes();
-    this.initUserTypes();
+    this.initDivisionTypes();
   }
 
   initUnits() {
@@ -116,30 +116,33 @@ export class EventRecordComparisonComponent
       )
     );
   }
-  initUserTypes() {
+  initDivisionTypes() {
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      if (this.local.user.Resources[0].ResourceType == UserResourceType.City) {
+      let divisionType = EnumHelper.ConvertUserResourceToDivision(
+        this.local.user.Resources[0].ResourceType
+      );
+      if (divisionType == DivisionType.City) {
         this.userTypes.push(
           new SelectItem(
-            UserResourceType.County.toString(),
-            UserResourceType.County,
-            Language.UserResourceType(UserResourceType.County)
+            DivisionType.County.toString(),
+            DivisionType.County,
+            Language.DivisionType(DivisionType.County)
           )
         );
       }
     }
     this.userTypes.push(
       new SelectItem(
-        UserResourceType.Committees.toString(),
-        UserResourceType.Committees,
-        Language.UserResourceType(UserResourceType.Committees)
+        DivisionType.Committees.toString(),
+        DivisionType.Committees,
+        Language.DivisionType(DivisionType.Committees)
       )
     );
     this.userTypes.push(
       new SelectItem(
-        UserResourceType.Station.toString(),
-        UserResourceType.Station,
-        Language.UserResourceType(UserResourceType.Station)
+        DivisionType.None.toString(),
+        DivisionType.None,
+        Language.DivisionType(DivisionType.None)
       )
     );
   }

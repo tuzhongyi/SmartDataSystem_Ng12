@@ -10,6 +10,7 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -52,7 +53,7 @@ export class GarbageStationTableComponent
     super();
     this.business = business;
   }
-
+  StationState = StationState;
   widths = ['10%', '20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 
   searchOpts?: SearchOptions;

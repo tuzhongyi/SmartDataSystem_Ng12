@@ -22,7 +22,13 @@ export class Flags<T extends number> {
     return result;
   }
   contains(t: T) {
-    return this.getValues().indexOf(t) >= 0;
+    let values = this.getValues();
+    if (t === 0) {
+      if (values.length === 0) {
+        return true;
+      }
+    }
+    return values.indexOf(t) >= 0;
     // return this.getValues().includes(t)
   }
   valueOf(): number {

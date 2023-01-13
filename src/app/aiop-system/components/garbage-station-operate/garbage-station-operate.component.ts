@@ -36,6 +36,7 @@ import {
   IGarbageStationOperateBusiness,
   IGarbageStationOperateComponent,
 } from './garbage-station-operate.model';
+import { Flags } from 'src/app/common/tools/flags';
 
 @Component({
   selector: 'howell-garbage-station-operate',
@@ -232,7 +233,7 @@ export class GarbageStationOperateComponent
         station.StationType = this.stationType;
         station.MaxDryVolume = 0;
         station.MaxWetVolume = 0;
-        station.StationState = 0;
+        station.StationState = new Flags(0);
         station.UpdateTime = new Date();
         station.CreateTime = new Date();
         let res = await this.business.create(station);

@@ -1,13 +1,13 @@
 <div class="garbage-station-window-record">
   <div class="garbage-station-window-record-filter" *ngIf="isfilter">
     <howell-garbage-station-window-record-filter
-      (changed)="onfilterchanged($event)"
+      [(filter)]="filter"
     ></howell-garbage-station-window-record-filter>
   </div>
   <div class="garbage-station-window-record-table" [class.filter]="isfilter">
     <howell-garbage-drop-record-table
       [filter]="filter"
-      [load]="changed"
+      [load]="filterChange"
       (image)="onimage($event)"
     >
     </howell-garbage-drop-record-table>

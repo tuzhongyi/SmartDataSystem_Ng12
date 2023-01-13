@@ -114,10 +114,9 @@ export class PointInfoPanelComponent
   onStateClicked() {
     if (!this.Source) return;
     if (this.Source instanceof GarbageStation) {
-      let flags = new Flags(this.Source.StationState);
       if (
-        flags.contains(StationState.Error) ||
-        flags.contains(StationState.Full)
+        this.Source.StationState.contains(StationState.Error) ||
+        this.Source.StationState.contains(StationState.Full)
       )
         if (this.StateClickedEvent) {
           this.StateClickedEvent.emit(this.Source);

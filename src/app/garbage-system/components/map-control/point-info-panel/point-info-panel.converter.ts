@@ -55,11 +55,11 @@ export class PointInfoPanelConverter
       language: '',
       className: 'normal',
     };
-    let flags = new Flags(station.StationState);
-    state.language = Language.StationStateFlags(flags);
-    if (flags.contains(StationState.Error)) {
+
+    state.language = Language.StationStateFlags(station.StationState);
+    if (station.StationState.contains(StationState.Error)) {
       state.className = 'error';
-    } else if (flags.contains(StationState.Full)) {
+    } else if (station.StationState.contains(StationState.Full)) {
       state.className = 'warm';
     } else {
       state.language = '';

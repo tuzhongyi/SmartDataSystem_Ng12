@@ -84,11 +84,12 @@ export class PatrolControlConverter
       }
       model.status.online = online;
     }
-    let flags = new Flags(source.StationState);
 
-    model.status.stationState = new ControlClass(source.StationState);
-    model.status.stationState.language = Language.StationStateFlags(flags);
-    model.status.stationState.class = EnumHelper.GetClass(flags);
+    model.status.stationState = new ControlClass(source.StationState.value);
+    model.status.stationState.language = Language.StationStateFlags(
+      source.StationState
+    );
+    model.status.stationState.class = EnumHelper.GetClass(source.StationState);
     model.status.illegalDrop = illegalDrop;
     model.status.mixedInto = mixedInto;
 
