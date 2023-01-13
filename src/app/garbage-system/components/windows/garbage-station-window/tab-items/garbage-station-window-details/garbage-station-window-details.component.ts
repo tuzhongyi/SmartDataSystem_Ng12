@@ -23,6 +23,7 @@ import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-de
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { ExportTool } from 'src/app/common/tools/export.tool';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'howell-garbage-station-window-details',
@@ -37,7 +38,8 @@ export class GarbageStationWindowDetailsComponent
   business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   constructor(
     business: GarbageStationWindowDetailsBusiness,
-    private exports: ExportTool
+    private exports: ExportTool,
+    private toastrService: ToastrService
   ) {
     this.business = business;
   }
@@ -246,16 +248,18 @@ export class GarbageStationWindowDetailsComponent
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
     if (this.selectIds.length > this.maxItem) {
-      MessageBar.response_warning(`最多查看个${this.maxItem}对象`);
+      this.toastrService.warning(`最多查看个${this.maxItem}对象`);
     }
   }
   search() {
     if (this.selectIds.length <= 0) {
-      MessageBar.response_warning(`请选择要查看的对象`);
+      // MessageBar.response_warning(`请选择要查看的对象`);
+      this.toastrService.warning('请选择要查看的对象');
       return;
     }
     if (this.selectIds.length > this.maxItem) {
-      MessageBar.response_warning(`最多查看个${this.maxItem}对象`);
+      this.toastrService.warning(`最多查看个${this.maxItem}对象`);
+
       return;
     }
     this.loadData();
