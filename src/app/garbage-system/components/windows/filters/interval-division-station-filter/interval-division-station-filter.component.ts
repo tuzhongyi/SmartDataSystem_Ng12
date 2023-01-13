@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -12,6 +13,7 @@ import { EventRecordFilter } from 'src/app/common/components/tables/event-record
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { IModel } from 'src/app/network/model/model.interface';
 import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
@@ -26,7 +28,11 @@ import {
   providers: [EventRecordFilterBusiness],
 })
 export class EventRecordFilterComponent
-  implements IComponent<IModel, DivisionStationFilteModel>, OnInit, OnChanges
+  implements
+    IComponent<IModel, DivisionStationFilteModel>,
+    OnInit,
+    OnChanges,
+    OnDestroy
 {
   @Input()
   filter: EventRecordFilter;
@@ -62,6 +68,16 @@ export class EventRecordFilterComponent
       }
     }
   }
+
+  ngOnDestroy(): void {
+    let duration = DateTimeTool.allDay(new Date());
+    this.filter.BeginTime = duration.begin;
+    this.filter.EndTime = duration.end;
+    this.filter.cameraId = undefined;
+    this.filter.community = undefined;
+    this.filter.divisionId = undefined;
+    this.filterChange.emit(this.filter);
+  }
   business: IBusiness<IModel, DivisionStationFilteModel>;
 
   async ngOnInit() {
@@ -87,7 +103,9 @@ export class EventRecordFilterComponent
     let opts: DivisionStationFilterOpts = {
       divisionId: item.key,
     };
-    this.model = await this.business.load(opts);
+    let model = await this.business.load(opts);
+    this.model.stations = model.stations;
+    this.model.cameras = model.cameras;
     this.filter.division = item;
     this.filter.camera = undefined;
     this.filter.station = undefined;
@@ -99,7 +117,8 @@ export class EventRecordFilterComponent
       divisionId: this.filter.divisionId!,
       stationId: item.key,
     };
-    this.model = await this.business.load(opts);
+    let model = await this.business.load(opts);
+    this.model.cameras = model.cameras;
     this.filter.station = item;
     this.filter.camera = undefined;
     this.filterChange.emit(this.filter);
