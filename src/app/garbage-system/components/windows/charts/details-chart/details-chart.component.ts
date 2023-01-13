@@ -1,5 +1,6 @@
 import {
   Component,
+  EventEmitter,
   Input,
   OnChanges,
   OnInit,
@@ -37,6 +38,8 @@ import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { ExportTool } from 'src/app/common/tools/export.tool';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 @Component({
   selector: 'howell-details-chart',
@@ -110,6 +113,9 @@ export class DetailsChartComponent
       this.userResourceType = local.user.Resources[0].ResourceType;
     }
   }
+  treeClose: EventEmitter<void> = new EventEmitter();
+  selectedNodes: CommonFlatNode[] = [];
+
   ngOnChanges(changes: SimpleChanges): void {
     this.loadData();
   }
@@ -225,6 +231,14 @@ export class DetailsChartComponent
   changeDate(date: Date) {
     this.date = date;
     this.loadData();
+  }
+
+  onDivisionSelected(nodes: CommonFlatNode<DivisionTreeSource>[]) {
+    this.selectedNodes = nodes;
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+      this.division = node.RawData as Division;
+    }
   }
 
   ontimeunit(unit: SelectItem) {

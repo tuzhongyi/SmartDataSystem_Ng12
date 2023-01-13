@@ -19,8 +19,15 @@
         <span>行政区</span>
 
         <div class="content" style="width: 200px">
-          <common-label-select>
-            <howell-division-tree #tree [depth]="1"></howell-division-tree>
+          <common-label-select
+            [selectedNodes]="selectedNodes"
+            [autoclose]="true"
+          >
+            <howell-division-tree
+              #tree
+              [depth]="1"
+              (selectTreeNode)="onDivisionSelected($event)"
+            ></howell-division-tree>
           </common-label-select>
         </div>
       </div>

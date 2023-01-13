@@ -6,8 +6,11 @@ import {
   ContentChild,
   EventEmitter,
   Input,
+  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
+  SimpleChanges,
   Type,
   ViewChild,
 } from '@angular/core';
@@ -26,13 +29,16 @@ import { LabelTreeComponent } from '../label-tree/label-tree.component';
   styleUrls: ['./common-label-select.component.less'],
 })
 export class CommonLabelSelecComponent
-  implements OnInit, AfterViewInit, AfterContentInit
+  implements OnInit, AfterViewInit, AfterContentInit, OnDestroy
 {
   @Input()
   showDropDown = false;
 
   @Input()
   selectedNodes: CommonFlatNode[] = [];
+
+  @Input()
+  autoclose = false;
 
   @Output() toggleDropDown = new EventEmitter<boolean>();
   @Output() removeDropItem = new EventEmitter();
@@ -41,7 +47,21 @@ export class CommonLabelSelecComponent
 
   constructor() {}
 
-  ngOnInit(): void {}
+  handle: any;
+
+  ngOnDestroy(): void {
+    if (this.handle) {
+      window.removeEventListener('click', this.handle);
+    }
+  }
+
+  ngOnInit(): void {
+    if (this.autoclose) {
+      this.handle = this.closeDropDown.bind(this);
+
+      window.addEventListener('click', this.handle);
+    }
+  }
   ngAfterViewInit(): void {}
   ngAfterContentInit(): void {}
   toggleHandler(e: Event) {
