@@ -21,6 +21,8 @@ import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-sta
 import { GarbageDropStationWindowCountBusiness } from './garbage-drop-station-window-count.business';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'howell-garbage-drop-station-window-count',
@@ -69,17 +71,19 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     );
   }
   initUserResourceTypes() {
-    if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      if (this.local.user.Resources[0].ResourceType === UserResourceType.City) {
-        this.types.push(
-          new SelectItem(
-            UserResourceType.County.toString(),
-            UserResourceType.County,
-            Language.UserResourceType(UserResourceType.County)
-          )
-        );
-      }
+    let type = EnumHelper.ConvertDivisionToUserResource(
+      this.store.divisionType
+    );
+    if (type === UserResourceType.City) {
+      this.types.push(
+        new SelectItem(
+          UserResourceType.County.toString(),
+          UserResourceType.County,
+          Language.UserResourceType(UserResourceType.County)
+        )
+      );
     }
+
     this.types.push(
       new SelectItem(
         UserResourceType.Committees.toString(),
@@ -95,6 +99,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
         Language.UserResourceType(UserResourceType.Station)
       )
     );
+    this.type = this.types[0].value;
   }
 
   async ngOnInit() {

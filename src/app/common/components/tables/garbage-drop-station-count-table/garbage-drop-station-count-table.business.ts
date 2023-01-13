@@ -47,9 +47,10 @@ export class GarbageDropStationCountTableBusiness
     parentId: string,
     date: Date,
     unit: TimeUnit,
-    type: UserResourceType
+    userType: UserResourceType
   ): Promise<GarbageDropStationCountTableModel[]> {
     let duration = DurationParams.TimeUnit(unit, date);
+    let type = EnumHelper.ConvertUserResourceToDivision(userType);
     let data = await this.getData(
       parentId,
       this.store.divisionId,
@@ -76,21 +77,22 @@ export class GarbageDropStationCountTableBusiness
     parentId: string,
     divisionId: string,
     duration: DurationParams,
-    type: UserResourceType,
+    type: DivisionType,
     unit: TimeUnit
   ): Promise<NumberStatisticV2Type[]> {
-    if (type === UserResourceType.Station) {
+    if (type === DivisionType.None) {
       let stations = await this.getGarbageStationList(parentId, divisionId);
       let ids = stations.map((x) => x.Id);
+      if (ids.length === 0) {
+        return [];
+      }
       return this.getGarbageStationData(parentId, ids, duration, unit);
     } else {
-      let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
-      let divisions = await this.getDivisionList(
-        parentId,
-        divisionId,
-        divisionType
-      );
+      let divisions = await this.getDivisionList(parentId, divisionId, type);
       let ids = divisions.map((x) => x.Id);
+      if (ids.length === 0) {
+        return [];
+      }
       return this.getDivisionData(ids, duration, unit);
     }
   }

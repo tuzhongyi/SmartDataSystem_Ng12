@@ -137,10 +137,12 @@ export class GarbageStationStatisticTableBusiness
     unit: TimeUnit
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let stations = await this.getStations(divisionId);
+    if (stations.length == 0) return [];
     let params = new GetGarbageStationStatisticNumbersParamsV2();
     params = Object.assign(params, duration);
     params.TimeUnit = unit;
     params.GarbageStationIds = stations.map((x) => x.Id);
+
     return this.stationService.statistic.number.history.list(params);
   }
 

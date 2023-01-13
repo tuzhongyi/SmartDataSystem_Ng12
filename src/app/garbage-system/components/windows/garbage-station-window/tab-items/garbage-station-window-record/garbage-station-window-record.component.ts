@@ -56,4 +56,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   onimage(item: ImageControlModelArray) {
     this.image.emit(item);
   }
+  onsearch(opts: SearchOptions) {
+    this.filter.opts = opts;
+    this.filterChange.emit(this.filter);
+  }
 }

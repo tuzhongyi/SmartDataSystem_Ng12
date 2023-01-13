@@ -62,6 +62,7 @@
             <howell-garbage-station-window-record
               [isfilter]="record.filter.show"
               [status]="taskStatus"
+              [(filter)]="record.filter.filter"
               (image)="onimage($event)"
             ></howell-garbage-station-window-record>
           </ng-container>
