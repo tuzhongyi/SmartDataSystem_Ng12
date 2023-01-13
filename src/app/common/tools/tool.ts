@@ -203,6 +203,11 @@ export function wait(
   }, timeout);
 }
 
+export function distinctArray(array: Array<any>) {
+  return array.filter((value, index, self) => {
+    return self.indexOf(value) === index;
+  });
+}
 export const ValidIP =
   /^(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$/;
 
