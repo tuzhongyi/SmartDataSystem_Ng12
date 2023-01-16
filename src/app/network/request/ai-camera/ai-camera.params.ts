@@ -1,4 +1,4 @@
-import { ResourceDeviceType } from 'src/app/enum/device-type.enum';
+import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 import { GetResourcesParams } from '../resources/resources-params';
 
 export class GetCamerasParams extends GetResourcesParams {
@@ -19,5 +19,5 @@ export class GetCamerasParams extends GetResourcesParams {
   /**编码设备ID列表 */
   EncodeDeviceIds?: string[];
 
-  DeviceType?: ResourceDeviceType;
+  DeviceType?: CameraDeviceType;
 }

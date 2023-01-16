@@ -180,15 +180,5 @@
   },
   "CollectionMemberType": {
     "Collection": "清运人员"
-  },
-  "AIModelTransformType": {
-    "None": "全部",
-    "G3": "G3",
-    "G5": "G5"
-  },
-  "ResourceDeviceType": {
-    "None": "全部",
-    "G3": "G3",
-    "G5": "G5"
   }
 }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AICameraModelManageConverter } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.converter';
 import { AIModelManageConverter } from 'src/app/aiop-system/components/ai-model-manage/ai-model-manage.converter';
-import { AIModelTransformType } from 'src/app/enum/transform-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
 import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
@@ -12,6 +11,8 @@ import {
   AICameraModelManageModel,
   AICameraModelManageSearchInfo,
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
+import { CameraDeviceType } from 'src/app/enum/device-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Injectable()
 export class AICameraModelManageBusiness {
@@ -29,6 +30,7 @@ export class AICameraModelManageBusiness {
     if (searchInfo.CameraName) params.Name = searchInfo.CameraName;
     params.LabelIds = searchInfo.LabelIds;
 
+    // EnumHelper.
     let tmp = await this._listCameras(params);
     console.log(tmp);
     let data = this._converter.iterateToModel(tmp.Data);

@@ -11,8 +11,7 @@ export enum EncodedDeviceType {
 /**
  * 支持的设备类型
  */
-export enum ResourceDeviceType {
-  None = '',
+export enum CameraDeviceType {
   G3 = 'G3',
   G5 = 'G5',
 }

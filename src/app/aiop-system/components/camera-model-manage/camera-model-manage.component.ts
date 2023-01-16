@@ -20,10 +20,10 @@ import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonTree } from 'src/app/common/components/common-tree/common-tree';
-import { AIModelTransformType } from 'src/app/enum/transform-type.enum';
 import { Language } from 'src/app/common/tools/language';
 import { AICameraModelManageConverter } from './camera-model-manage.converter';
 import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.converter';
+import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 
 @Component({
   selector: 'howell-camera-model-manage',
@@ -36,15 +36,9 @@ import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.conve
   ],
 })
 export class CameraModelManageComponent implements OnInit {
-  transformDataSource = new Map<AIModelTransformType, string>([
-    [
-      AIModelTransformType.G3,
-      Language.AIModelTransformType(AIModelTransformType.G3),
-    ],
-    [
-      AIModelTransformType.G5,
-      Language.AIModelTransformType(AIModelTransformType.G5),
-    ],
+  transformDataSource = new Map<CameraDeviceType, string>([
+    [CameraDeviceType.G3, CameraDeviceType.G3],
+    [CameraDeviceType.G5, CameraDeviceType.G5],
   ]);
 
   searchInfo: AICameraModelManageSearchInfo = {

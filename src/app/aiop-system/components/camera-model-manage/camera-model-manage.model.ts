@@ -1,4 +1,4 @@
-import { AIModelTransformType } from 'src/app/enum/transform-type.enum';
+import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 import { OnlineStatus } from '../../../enum/online-status.enum';
 import { ResourceLabel } from '../../../network/model/resource-label.model';
 import { AIModelManageModel } from '../../../view-model/ai-model-manage.model';
@@ -29,7 +29,7 @@ export interface AICameraModelManageEvent {
 
 export interface AICameraModelManageSearchInfo {
   ModelName: string;
-  TransformType: AIModelTransformType | '';
+  TransformType: CameraDeviceType | '';
 
   PageIndex?: number;
   PageSize?: number;

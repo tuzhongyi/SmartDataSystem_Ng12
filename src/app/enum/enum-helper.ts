@@ -1,5 +1,5 @@
 import { Flags } from '../common/tools/flags';
-import { ResourceDeviceType } from './device-type.enum';
+import { CameraDeviceType } from './device-type.enum';
 import { DivisionType } from './division-type.enum';
 import { StationState } from './station-state.enum';
 import { AIModelTransformType } from './transform-type.enum';
@@ -87,13 +87,13 @@ export class EnumHelper {
   static ConvertTransformTypeToAIDeviceType(type: AIModelTransformType) {
     switch (type) {
       case AIModelTransformType.G3:
-        return ResourceDeviceType.G3;
+        return CameraDeviceType.G3;
       case AIModelTransformType.G5:
-        return ResourceDeviceType.G5;
+        return CameraDeviceType.G5;
       case AIModelTransformType.None:
-        return ResourceDeviceType.None;
+        return CameraDeviceType.None;
       default:
-        return ResourceDeviceType.None;
+        return CameraDeviceType.None;
     }
   }
 }

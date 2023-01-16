@@ -44,7 +44,6 @@ import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
-import { AIModelTransformType } from 'src/app/enum/transform-type.enum';
 import { transformTime } from 'src/app/network/model/transform.model';
 
 export class Language {
@@ -582,19 +581,6 @@ export class Language {
       case CollectionMemberType.Collection:
         return Language.json.CollectionMemberType.Collection;
       case CollectionMemberType.Other:
-      default:
-        return Language.json.other;
-    }
-  }
-
-  static AIModelTransformType(type: AIModelTransformType) {
-    switch (type) {
-      case AIModelTransformType.G3:
-        return Language.json.AIModelTransformType.G3;
-      case AIModelTransformType.G5:
-        return Language.json.AIModelTransformType.G5;
-      case AIModelTransformType.None:
-        return Language.json.AIModelTransformType.None;
       default:
         return Language.json.other;
     }
