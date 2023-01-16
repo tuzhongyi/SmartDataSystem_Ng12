@@ -36,14 +36,14 @@ import { CameraDeviceType } from 'src/app/enum/device-type.enum';
   ],
 })
 export class CameraModelManageComponent implements OnInit {
-  transformDataSource = new Map<CameraDeviceType, string>([
+  selectDataSource = new Map<CameraDeviceType, string>([
     [CameraDeviceType.G3, CameraDeviceType.G3],
     [CameraDeviceType.G5, CameraDeviceType.G5],
   ]);
 
   searchInfo: AICameraModelManageSearchInfo = {
     ModelName: '',
-    TransformType: '',
+    CameraDeviceType: '',
     PageIndex: 1,
     PageSize: 9,
     CameraName: '',
@@ -163,7 +163,7 @@ export class CameraModelManageComponent implements OnInit {
       }
     }
   }
-  changeTransformType() {
+  changeCameraDeviceType() {
     this._init();
   }
 

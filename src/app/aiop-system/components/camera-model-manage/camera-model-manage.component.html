@@ -46,13 +46,11 @@
             </div>
             <div class="content">
               <select
-                [(ngModel)]="searchInfo.TransformType"
-                (ngModelChange)="changeTransformType()"
+                [(ngModel)]="searchInfo.CameraDeviceType"
+                (ngModelChange)="changeCameraDeviceType()"
               >
                 <option value="">全部</option>
-                <ng-container
-                  *ngFor="let item of transformDataSource | keyvalue"
-                >
+                <ng-container *ngFor="let item of selectDataSource | keyvalue">
                   <option [ngValue]="item.key">
                     {{ item.value }}
                   </option>

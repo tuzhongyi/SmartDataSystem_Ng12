@@ -29,7 +29,7 @@ export interface AICameraModelManageEvent {
 
 export interface AICameraModelManageSearchInfo {
   ModelName: string;
-  TransformType: CameraDeviceType | '';
+  CameraDeviceType: CameraDeviceType | '';
 
   PageIndex?: number;
   PageSize?: number;

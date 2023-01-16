@@ -29,8 +29,8 @@ export class AICameraModelManageBusiness {
     if (searchInfo.PageSize) params.PageSize = searchInfo.PageSize;
     if (searchInfo.CameraName) params.Name = searchInfo.CameraName;
     params.LabelIds = searchInfo.LabelIds;
-
-    // EnumHelper.
+    if (searchInfo.CameraDeviceType)
+      params.DeviceType = searchInfo.CameraDeviceType;
     let tmp = await this._listCameras(params);
     console.log(tmp);
     let data = this._converter.iterateToModel(tmp.Data);
@@ -50,8 +50,8 @@ export class AICameraModelManageBusiness {
   listAIModels(searchInfo: AICameraModelManageSearchInfo) {
     let params: GetAIModelsParams = new GetAIModelsParams();
     if (searchInfo.ModelName) params.ModelName = searchInfo.ModelName;
-    if (searchInfo.TransformType)
-      params.TransformType = searchInfo.TransformType;
+    if (searchInfo.CameraDeviceType)
+      params.TransformType = searchInfo.CameraDeviceType;
 
     return this._AIModelRequest.list(params);
   }
