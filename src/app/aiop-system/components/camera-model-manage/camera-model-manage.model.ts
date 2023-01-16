@@ -1,18 +1,26 @@
 import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 import { OnlineStatus } from '../../../enum/online-status.enum';
 import { ResourceLabel } from '../../../network/model/resource-label.model';
-import { AIModelManageModel } from '../../../view-model/ai-model-manage.model';
 import { CommonModel } from '../../../view-model/common-model';
 
-// 摄像机AI模型列表
-export class AICameraModelManageModel implements CommonModel {
+// 摄像机列表
+export class CameraManageModel<T = any> {
   Id!: string;
   Name!: string;
   OnlineStatus!: OnlineStatus;
-  AIModels!: AIModelManageModel[];
+  AIModels!: CameraAIModelManageModel[];
   Labels!: ResourceLabel[];
+
+  RawData?: T;
 }
 
+export class CameraAIModelManageModel<T = any> {
+  Id!: string;
+  Name!: string;
+  LabelIcon!: string;
+
+  RawData?: T;
+}
 export enum AICameraModelOperateType {
   delete = 'delete',
   add = 'add',

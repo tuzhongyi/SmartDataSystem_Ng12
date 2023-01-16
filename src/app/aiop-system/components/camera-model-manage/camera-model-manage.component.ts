@@ -6,24 +6,24 @@ import Conf from 'src/assets/json/ai-icon.json';
 import { Page } from 'src/app/network/model/page_list.model';
 import { BehaviorSubject } from 'rxjs';
 import {
+  CameraManageModel,
   AICameraModelManageEvent,
-  AICameraModelManageModel,
   AICameraModelManageSearchInfo,
   AICameraModelOperateType,
+  CameraAIModelManageModel,
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { PageEvent } from '@angular/material/paginator';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonTree } from 'src/app/common/components/common-tree/common-tree';
-import { Language } from 'src/app/common/tools/language';
 import { AICameraModelManageConverter } from './camera-model-manage.converter';
 import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.converter';
 import { CameraDeviceType } from 'src/app/enum/device-type.enum';
+import { AiIconConfig } from 'src/app/common/models/ai-icon.config';
 
 @Component({
   selector: 'howell-camera-model-manage',
@@ -59,15 +59,15 @@ export class CameraModelManageComponent implements OnInit {
   };
 
   // 模型列表
-  AIModels: CameraAIModel[] = [];
+  AIModels: CameraAIModelManageModel<CameraAIModel>[] = [];
   imgBase = 'assets/img/ai-model';
-  icons: any = Conf;
-  cameraModelCondition = '';
+  icons: AiIconConfig = Conf;
 
   // Table
-  dataSubject = new BehaviorSubject<AICameraModelManageModel[]>([]);
+  dataSubject = new BehaviorSubject<CameraManageModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
-  selectedRows: AICameraModelManageModel[] = []; //table选中项
+  selectType = TableSelectType.Cancel;
+  selectedRows: CameraManageModel[] = []; //table选中项
   // willBeDeleted: AIModelManageModel[] = [];
 
   disablehover = false;
@@ -97,6 +97,19 @@ export class CameraModelManageComponent implements OnInit {
     this._listAIModels();
     this._listCameraAIModels();
   }
+  // 拉取模型列表
+  private async _listAIModels() {
+    this.AIModels = await this._business.listAIModels(this.searchInfo);
+    console.log('模型列表', this.AIModels);
+  }
+  private async _listCameraAIModels() {
+    let { Data, Page } = await this._business.listCameraAIModels(
+      this.searchInfo
+    );
+    this.page = Page;
+    this.dataSubject.next(Data);
+    console.log('摄像机模型列表', Data);
+  }
 
   // 模型列表搜索
   searchAIModels(condition: string) {
@@ -109,21 +122,12 @@ export class CameraModelManageComponent implements OnInit {
     this._listCameraAIModels();
   }
 
-  selectTableRow(rows: AICameraModelManageModel[]) {
-    this.selectedRows = rows;
-    console.log('选中', rows);
-  }
-  pageEvent(pageInfo: PageEvent) {
-    if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
-    this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
-    this._listCameraAIModels();
-  }
-
-  dragstart(e: DragEvent, model: CameraAIModel) {
-    console.log('drag start');
-    if (e.dataTransfer) {
+  dragstart(e: DragEvent, model: CameraAIModelManageModel<CameraAIModel>) {
+    // console.log('drag start');
+    let rawData = model.RawData;
+    if (e.dataTransfer && rawData) {
       this.disablehover = true;
-      e.dataTransfer.setData('text/plain', JSON.stringify(model));
+      e.dataTransfer.setData('text/plain', JSON.stringify(rawData));
     }
   }
   dragend(e: DragEvent) {
@@ -146,22 +150,27 @@ export class CameraModelManageComponent implements OnInit {
     } else if (status == DialogEnum.cancel) {
     }
   }
-  tableSelect(type: TableSelectStateEnum) {
-    if (this.table) {
-      switch (type) {
-        case TableSelectStateEnum.All:
-          this.table.selectAll();
-          break;
-        case TableSelectStateEnum.Reverse:
-          this.table.selectReverse();
-          break;
-        case TableSelectStateEnum.Cancel:
-          this.table.selectCancel();
-          break;
-        default:
-          throw new TypeError('类型错误');
-      }
-    }
+
+  /***************************组件通用代码**********************************/
+
+  selectTableRow(rows: CameraManageModel[]) {
+    this.selectedRows = rows;
+    console.log('选中', rows);
+  }
+  pageEvent(pageInfo: PageEvent) {
+    if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
+    this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
+    this.selectType = TableSelectType.Cancel;
+    this._listCameraAIModels();
+  }
+
+  /**
+   *  手动调用方法或者修改属性值
+   * @param type
+   */
+  tableSelect(type: TableSelectType) {
+    this.table?.changeSelectType(type);
+    // this.selectType = type;
   }
   changeCameraDeviceType() {
     this._init();
@@ -171,23 +180,9 @@ export class CameraModelManageComponent implements OnInit {
   selectTreeNode(nodes: CommonFlatNode[]) {
     // console.log('外部结果', nodes)
     this.selectedNodes = nodes;
-    this.labelIds = this.selectedNodes.map((n) => n.Id);
+    this.searchInfo.LabelIds = this.selectedNodes.map((n) => n.Id);
   }
 
-  // 拉取模型列表
-  private async _listAIModels() {
-    let { Data } = await this._business.listAIModels(this.searchInfo);
-    this.AIModels = Data;
-    console.log('模型列表', this.AIModels);
-  }
-  private async _listCameraAIModels() {
-    let { Data, Page } = await this._business.listCameraAIModels(
-      this.searchInfo
-    );
-    this.page = Page;
-    this.dataSubject.next(Data);
-    console.log('摄像机模型列表', Data);
-  }
   private async _deleteAIModelFromCamera() {
     if (this.aiCameraManageEvent) {
       let data = this.aiCameraManageEvent.data;

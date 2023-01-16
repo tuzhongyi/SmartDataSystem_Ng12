@@ -17,7 +17,7 @@ import { CommonTableComponent } from 'src/app/common/components/common-table/com
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { PageEvent } from '@angular/material/paginator';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ToastrService } from 'ngx-toastr';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
@@ -114,16 +114,16 @@ export class PlatformManageComponent implements OnInit {
   selectTableRow(rows: PlatformManageModel[]) {
     this.selectedRows = rows;
   }
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:

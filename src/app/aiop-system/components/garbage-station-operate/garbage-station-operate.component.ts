@@ -20,7 +20,7 @@ import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableColumnModel } from 'src/app/view-model/table.model';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Camera } from 'src/app/network/model/camera.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
@@ -170,16 +170,16 @@ export class GarbageStationOperateComponent
   search() {
     this._init();
   }
-  aiopTableSelect(type: TableSelectStateEnum) {
+  aiopTableSelect(type: TableSelectType) {
     if (this.addTable) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.addTable.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.addTable.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.addTable.selectCancel();
           break;
         default:
@@ -187,16 +187,16 @@ export class GarbageStationOperateComponent
       }
     }
   }
-  stationTableSelect(type: TableSelectStateEnum) {
+  stationTableSelect(type: TableSelectType) {
     if (this.editTable) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.editTable.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.editTable.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.editTable.selectCancel();
           break;
         default:

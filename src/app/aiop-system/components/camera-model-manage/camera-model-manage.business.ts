@@ -8,20 +8,22 @@ import { GetAIModelsParams } from 'src/app/network/request/ai-model/ai-model.par
 import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model.service';
 import { LabelRequestService } from 'src/app/network/request/label/label.service';
 import {
-  AICameraModelManageModel,
+  CameraManageModel,
   AICameraModelManageSearchInfo,
+  CameraAIModelManageModel,
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
-import { CameraDeviceType } from 'src/app/enum/device-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
+import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
+import { AICamera } from 'src/app/network/model/ai-camera.model';
 
 @Injectable()
 export class AICameraModelManageBusiness {
+  private _aiModelMap = new Map<string, CameraAIModel>();
   constructor(
     private _cameraRequest: AICameraRequestService,
     private _AIModelRequest: AIModelRequestService,
     private _labelRequest: LabelRequestService,
-    private _converter: AICameraModelManageConverter,
-    private _AIModelManageConverter: AIModelManageConverter
+    private _converter: AICameraModelManageConverter
   ) {}
   async listCameraAIModels(searchInfo: AICameraModelManageSearchInfo) {
     let params = new GetCamerasParams();
@@ -31,29 +33,49 @@ export class AICameraModelManageBusiness {
     params.LabelIds = searchInfo.LabelIds;
     if (searchInfo.CameraDeviceType)
       params.DeviceType = searchInfo.CameraDeviceType;
-    let tmp = await this._listCameras(params);
-    console.log(tmp);
-    let data = this._converter.iterateToModel(tmp.Data);
 
-    for (let i = 0; i < data.length; i++) {
-      let model = data[i];
+    let { Page, Data } = await this._listCameras(params);
+    let models =
+      this._converter.iterateToModel<CameraManageModel<AICamera>>(Data);
+
+    for (let i = 0; i < models.length; i++) {
+      let model = models[i];
       let aiModels = await this._cameraRequest.listAIModels(model.Id);
-      model.AIModels = this._AIModelManageConverter.iterateToModel(aiModels);
+      model.AIModels =
+        this._converter.iterateToModel<CameraAIModelManageModel<CameraAIModel>>(
+          aiModels
+        );
     }
+    models.sort((a, b) => {
+      return LocaleCompare.compare(a.Name, b.Name);
+    });
 
-    let res: PagedList<AICameraModelManageModel> = {
-      Page: tmp.Page,
-      Data: data,
+    let res: PagedList<CameraManageModel> = {
+      Page: Page,
+      Data: models,
     };
     return res;
   }
-  listAIModels(searchInfo: AICameraModelManageSearchInfo) {
+  async listAIModels(searchInfo: AICameraModelManageSearchInfo) {
     let params: GetAIModelsParams = new GetAIModelsParams();
     if (searchInfo.ModelName) params.ModelName = searchInfo.ModelName;
     if (searchInfo.CameraDeviceType)
       params.TransformType = searchInfo.CameraDeviceType;
 
-    return this._AIModelRequest.list(params);
+    let { Data } = await this._AIModelRequest.list(params);
+
+    Data.forEach(this._register.bind(this));
+
+    // console.log(this._aiModelMap);
+    let models =
+      this._converter.iterateToModel<CameraAIModelManageModel<CameraAIModel>>(
+        Data
+      );
+    models.sort((a, b) => {
+      return LocaleCompare.compare(a.Name, b.Name);
+    });
+
+    return models;
   }
   listLabels() {
     return this._labelRequest.list();
@@ -71,8 +93,9 @@ export class AICameraModelManageBusiness {
   private _listCameras(params: GetCamerasParams = new GetCamerasParams()) {
     return this._cameraRequest.list(params);
   }
-
-  //"a442c3c007264eedbace2d21fc0ffc26" CameriD
-
-  // "0cc97f256ad347378a88b1fc806b53be" test
+  private _register(model: CameraAIModel) {
+    if (!this._aiModelMap.has(model.Id)) {
+      this._aiModelMap.set(model.Id, model);
+    }
+  }
 }

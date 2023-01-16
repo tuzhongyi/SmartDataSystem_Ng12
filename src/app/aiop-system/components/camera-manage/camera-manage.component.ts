@@ -15,7 +15,7 @@ import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { EncodeDevice } from 'src/app/network/model/encode-device';
 import { Page } from 'src/app/network/model/page_list.model';
 import {
@@ -182,16 +182,16 @@ export class CameraManageComponent implements OnInit, AfterViewInit {
       this.resourceName = e.row.Name;
     }
   }
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:

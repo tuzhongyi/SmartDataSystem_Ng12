@@ -6,11 +6,15 @@ import { CommonTableComponent } from 'src/app/common/components/common-table/com
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { SRServerManageModel } from 'src/app/view-model/sr-server-manage.model';
-import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import {
+  TableCellEvent,
+  TableColumnModel,
+  TableOperateModel,
+} from 'src/app/view-model/table.model';
 import { SRServerManageConf } from './sr-server-manage..config';
 import { SRServerManageBusiness } from './sr-server-manage.business';
 import { PageEvent } from '@angular/material/paginator';
@@ -19,23 +23,19 @@ import { PageEvent } from '@angular/material/paginator';
   selector: 'howell-sr-server-manage',
   templateUrl: './sr-server-manage.component.html',
   styleUrls: ['./sr-server-manage.component.less'],
-  providers: [
-    SRServerManageBusiness
-  ]
+  providers: [SRServerManageBusiness],
 })
 export class SRServerManageComponent implements OnInit {
   /**private */
   private _condition = '';
-
 
   // Table
   dataSubject = new BehaviorSubject<SRServerManageModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...SRServerManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  selectedRows: SRServerManageModel[] = [];//table选中项
+  selectedRows: SRServerManageModel[] = []; //table选中项
   willBeDeleted: SRServerManageModel[] = [];
-
 
   // 对话框
   showDialog = false;
@@ -44,17 +44,20 @@ export class SRServerManageComponent implements OnInit {
 
   // 表单
   state = FormState.none;
-  tableOperates: TableOperateModel[] = []
+  tableOperates: TableOperateModel[] = [];
   operateId: string = '';
 
   get enableDelBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
-  constructor(private _business: SRServerManageBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private _business: SRServerManageBusiness,
+    private _toastrService: ToastrService
+  ) {
     this.tableOperates.push(
       new TableOperateModel(
         'sync',
@@ -62,7 +65,7 @@ export class SRServerManageComponent implements OnInit {
         '同步',
         this._clickSyncBtn.bind(this)
       )
-    )
+    );
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -70,7 +73,7 @@ export class SRServerManageComponent implements OnInit {
         '编辑',
         this._clickEditBtn.bind(this)
       )
-    )
+    );
     this.tableOperates.push(
       new TableOperateModel(
         'delete',
@@ -78,7 +81,7 @@ export class SRServerManageComponent implements OnInit {
         '删除',
         this._clickDelBtn.bind(this)
       )
-    )
+    );
   }
 
   ngOnInit(): void {
@@ -86,7 +89,7 @@ export class SRServerManageComponent implements OnInit {
   }
   private async _init() {
     let res = await this._business.listServers(this._condition);
-    this.dataSubject.next(res)
+    this.dataSubject.next(res);
   }
 
   async searchEvent(condition: string) {
@@ -98,16 +101,16 @@ export class SRServerManageComponent implements OnInit {
     this.selectedRows = rows;
   }
 
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:
@@ -116,9 +119,8 @@ export class SRServerManageComponent implements OnInit {
     }
   }
 
-
   closeForm(update: boolean) {
-    this.showDialog = false
+    this.showDialog = false;
     this.state = FormState.none;
     this.operateId = '';
     if (update) {
@@ -131,26 +133,24 @@ export class SRServerManageComponent implements OnInit {
     this.showDialog = true;
   }
   deleteBtnClick() {
-    this.willBeDeleted = [...this.selectedRows]
+    this.willBeDeleted = [...this.selectedRows];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
     if (status == DialogEnum.confirm) {
-      this._deleteRows(this.willBeDeleted)
+      this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
-
     }
   }
   private async _deleteRows(rows: SRServerManageModel[]) {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      await this._business.delete(id)
+      await this._business.delete(id);
       this._toastrService.success('删除成功');
-
     }
     this._init();
   }
@@ -158,7 +158,7 @@ export class SRServerManageComponent implements OnInit {
   private async _clickSyncBtn(row: SRServerManageModel, event: Event) {
     let res = await this._business.sync(row.Id).catch(() => {
       this._toastrService.error('同步失败');
-    })
+    });
     if (res) {
       this._toastrService.success('同步成功');
     }
@@ -171,6 +171,6 @@ export class SRServerManageComponent implements OnInit {
   private _clickDelBtn(row: SRServerManageModel, event: Event) {
     this.willBeDeleted = [row];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 }

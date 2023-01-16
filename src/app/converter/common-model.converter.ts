@@ -4,14 +4,14 @@ export interface CommonModelSource {
 
 export type modelSource = CommonModelSource | CommonModelSource[];
 
-export abstract class AbstractCommonModelConverter<T> {
-  abstract Convert(source: modelSource, ...res: any[]): T;
+export abstract class AbstractCommonModelConverter<M> {
+  abstract Convert(source: modelSource, ...res: any[]): M;
 
-  iterateToModel(data: CommonModelSource[]) {
+  iterateToModel<T extends M>(data: CommonModelSource[]) {
     let res: T[] = [];
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      const model = this.Convert(item);
+      const model = this.Convert(item) as T;
       res.push(model);
     }
     return res;

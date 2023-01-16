@@ -1,4 +1,4 @@
-export class ViedeoConfigModel {
+export class VideoConfig {
   help!: string;
   regionId!: string;
   videoUrl!: string;

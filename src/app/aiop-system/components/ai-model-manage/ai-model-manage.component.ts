@@ -8,7 +8,7 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraAIUrl } from 'src/app/network/url/aiop/events/records/camera-ai/camera-ai.url';
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
@@ -103,16 +103,16 @@ export class AIModelManageComponent implements OnInit {
   selectTableRow(rows: AIModelManageModel[]) {
     this.selectedRows = rows;
   }
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:

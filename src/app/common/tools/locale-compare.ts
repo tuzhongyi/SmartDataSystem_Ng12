@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-12-28 10:47:27
  * @Last Modified by: pmx
- * @Last Modified time: 2023-01-10 14:37:47
+ * @Last Modified time: 2023-01-16 13:52:37
  */
 /**
  *   arr = [
@@ -21,7 +21,7 @@
  * 
  */
 export class LocaleCompare {
-  static compare(a: any, b: any, isAsc: boolean = false) {
+  static compare(a: any, b: any, isAsc: boolean = true) {
     if (a === b) return 0;
     if (a === undefined) return 1;
     if (b === undefined) return -1;

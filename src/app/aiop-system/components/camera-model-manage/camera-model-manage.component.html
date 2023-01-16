@@ -23,14 +23,10 @@
         (dragend)="dragend($event)"
       >
         <div class="hw-model-icon middle-round-btn">
-          <img
-            [src]="imgBase + '/' + icons[model.Label]"
-            alt=""
-            draggable="false"
-          />
+          <img [src]="model.LabelIcon" alt="" draggable="false" />
         </div>
         <div draggable="false">
-          {{ model.ModelName }}
+          {{ model.Name }}
         </div>
       </div>
     </div>
@@ -85,7 +81,7 @@
                 placeholder="摄像机名称"
                 type="text"
                 class="hw-form-input"
-                [(ngModel)]="cameraModelCondition"
+                [(ngModel)]="searchInfo.CameraName"
                 (keyup.enter)="searchCameraAIModels()"
               />
             </div>
@@ -103,6 +99,7 @@
         [disablehover]="disablehover"
         [dataSubject]="dataSubject"
         [selectStrategy]="selectStrategy"
+        [selectType]="selectType"
         (selectTableRow)="selectTableRow($event)"
         (operateTableRow)="operateTableRow($event)"
       ></howell-ai-camera-model-table>

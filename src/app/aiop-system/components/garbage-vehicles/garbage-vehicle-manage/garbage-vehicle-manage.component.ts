@@ -14,7 +14,7 @@ import {
 } from 'src/app/view-model/table.model';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { PageEvent } from '@angular/material/paginator';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { GarbageVehicleManageBusiness } from './garbage-vehicle-manage.business';
@@ -140,16 +140,16 @@ export class GarbageVehicleManageComponent
     this.pageIndex = 1;
     this._init();
   }
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:

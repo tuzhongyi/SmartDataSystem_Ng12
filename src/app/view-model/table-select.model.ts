@@ -1,5 +1,5 @@
-import { TableSelectStateEnum } from '../enum/table-select-state.enum';
+import { TableSelectType } from '../enum/table-select-type.enum';
 
 export class TableSelectStrategy {
-  constructor(public title: string, public type: TableSelectStateEnum) { }
+  constructor(public title: string, public type: TableSelectType) {}
 }

@@ -23,7 +23,7 @@ import { WindowComponent } from '../window-control/window.component';
 import { VideoPlayerWindowBusiness } from './video-player-window.business';
 import videoConfig from 'src/assets/configs/config.json';
 import { plainToClass } from 'class-transformer';
-import { ViedeoConfigModel } from '../../models/video-config.model';
+import { VideoConfig } from '../../models/video.config';
 
 // console.log(videoConfig);
 // console.log(plainToClass(ViedeoConfigModel, videoConfig));

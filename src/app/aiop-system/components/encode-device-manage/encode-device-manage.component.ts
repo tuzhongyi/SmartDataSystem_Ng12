@@ -4,12 +4,19 @@ import { PaginatorComponent } from 'src/app/common/components/paginator/paginato
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { EncodeDeviceManageModel, EncodeDeviceManageSearchInfo } from 'src/app/view-model/encode-device-manage.model';
-import { TableCellEvent, TableColumnModel, TableOperateModel } from 'src/app/view-model/table.model';
+import {
+  EncodeDeviceManageModel,
+  EncodeDeviceManageSearchInfo,
+} from 'src/app/view-model/encode-device-manage.model';
+import {
+  TableCellEvent,
+  TableColumnModel,
+  TableOperateModel,
+} from 'src/app/view-model/table.model';
 import { EncodeDeviceManageBusiness } from './encode-device-manage.business';
-import { EncodeDeviceManageConf } from './encode-device-manage.config'
+import { EncodeDeviceManageConf } from './encode-device-manage.config';
 import { PageEvent } from '@angular/material/paginator';
-import { TableSelectStateEnum } from 'src/app/enum/table-select-state.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ToastrService } from 'ngx-toastr';
@@ -22,30 +29,24 @@ import { ResourceLabel } from 'src/app/network/model/resource-label.model';
   selector: 'howell-encode-device-manage',
   templateUrl: './encode-device-manage.component.html',
   styleUrls: ['./encode-device-manage.component.less'],
-  providers: [
-    EncodeDeviceManageBusiness
-  ]
+  providers: [EncodeDeviceManageBusiness],
 })
 export class EncodeDeviceManageComponent implements OnInit {
-
   private _pageSize = 9;
-
 
   // Table
   dataSubject = new BehaviorSubject<EncodeDeviceManageModel[]>([]);
   selectStrategy = SelectStrategy.Multiple;
   columnModel: TableColumnModel[] = [...EncodeDeviceManageConf]; // 表格列配置详情
   displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  tableOperates: TableOperateModel[] = []
-  selectedRows: EncodeDeviceManageModel[] = [];//table选中项
+  tableOperates: TableOperateModel[] = [];
+  selectedRows: EncodeDeviceManageModel[] = []; //table选中项
   willBeDeleted: EncodeDeviceManageModel[] = [];
-
 
   // Paginator
   page: Page | null = null;
   pagerCount: number = 4;
   pageIndex = 1;
-
 
   // 对话框
   showOperate = false;
@@ -56,8 +57,7 @@ export class EncodeDeviceManageComponent implements OnInit {
   condition = '';
   showFilter = false;
   disableSearch = false;
-  placeHolder = '搜索编码器名称'
-
+  placeHolder = '搜索编码器名称';
 
   //AndLabelIds: ["1bb10bbfa1f546debf5237eeadb57777"]
   searchInfo: EncodeDeviceManageSearchInfo = {
@@ -65,16 +65,15 @@ export class EncodeDeviceManageComponent implements OnInit {
     deviceName: '',
     ip: '',
     online: '',
-    labelIds: [],//["1bb10bbfa1f546debf5237eeadb57777"],
-    filter: false
-  }
-
+    labelIds: [], //["1bb10bbfa1f546debf5237eeadb57777"],
+    filter: false,
+  };
 
   // 标签筛选器
   selectedNodes: CommonFlatNode[] = [];
   treeSelectStrategy = SelectStrategy.Multiple;
   defaultIds: string[] = [];
-  labelIds: string[] = []
+  labelIds: string[] = [];
 
   // 表单
   state = FormState.none;
@@ -84,22 +83,22 @@ export class EncodeDeviceManageComponent implements OnInit {
   // 绑定标签
   showBind = false;
 
-
   get enableDelBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
-
 
   get enableBindBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
-
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
-
-  constructor(private fb: FormBuilder, private _business: EncodeDeviceManageBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private fb: FormBuilder,
+    private _business: EncodeDeviceManageBusiness,
+    private _toastrService: ToastrService
+  ) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -111,15 +110,17 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-    this._init()
+    this._init();
   }
   private async _init() {
-    let res = await this._business.init(this.searchInfo, this.pageIndex, this._pageSize,);
+    let res = await this._business.init(
+      this.searchInfo,
+      this.pageIndex,
+      this._pageSize
+    );
     // console.log('编码设备', res)
     this.page = res.Page;
     this.dataSubject.next(res.Data);
-
   }
 
   search() {
@@ -129,26 +130,26 @@ export class EncodeDeviceManageComponent implements OnInit {
 
   selectTableRow(rows: EncodeDeviceManageModel[]) {
     this.selectedRows = rows;
-    console.log('选择', rows)
+    console.log('选择', rows);
   }
   selectTableCell(e: TableCellEvent<EncodeDeviceManageModel>) {
     console.log(e);
     if (e.column.columnDef == 'Labels') {
       this.resourceId = e.row.Id;
       this.showBind = true;
-      this.resourceName = e.row.Name
+      this.resourceName = e.row.Name;
     }
   }
-  tableSelect(type: TableSelectStateEnum) {
+  tableSelect(type: TableSelectType) {
     if (this.table) {
       switch (type) {
-        case TableSelectStateEnum.All:
+        case TableSelectType.All:
           this.table.selectAll();
           break;
-        case TableSelectStateEnum.Reverse:
+        case TableSelectType.Reverse:
           this.table.selectReverse();
           break;
-        case TableSelectStateEnum.Cancel:
+        case TableSelectType.Cancel:
           this.table.selectCancel();
           break;
         default:
@@ -162,26 +163,22 @@ export class EncodeDeviceManageComponent implements OnInit {
     this._init();
   }
 
-
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode[]) {
     // console.log('外部结果', nodes)
     this.selectedNodes = nodes;
-    this.searchInfo.labelIds = this.selectedNodes.map(n => n.Id)
-
+    this.searchInfo.labelIds = this.selectedNodes.map((n) => n.Id);
   }
-
 
   async dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
     if (status == DialogEnum.confirm) {
-      this._deleteRows(this.willBeDeleted)
+      this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
-
     }
   }
   closeForm(update: boolean) {
-    this.showOperate = false
+    this.showOperate = false;
     this.state = FormState.none;
     this.resourceId = '';
     if (update) {
@@ -190,7 +187,7 @@ export class EncodeDeviceManageComponent implements OnInit {
     }
   }
   closeBind(update: boolean) {
-    this.showBind = false
+    this.showBind = false;
     this.resourceId = '';
     if (update) {
       this.pageIndex = 1;
@@ -199,35 +196,33 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
   toggleFilter() {
     this.disableSearch = this.showFilter = !this.showFilter;
-    this.searchInfo.filter = this.showFilter
-
+    this.searchInfo.filter = this.showFilter;
   }
   addBtnClick() {
     this.state = FormState.add;
     this.showOperate = true;
   }
   deleteBtnClick() {
-    this.willBeDeleted = [...this.selectedRows]
+    this.willBeDeleted = [...this.selectedRows];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   bindBtnClick() {
     this.showBind = true;
     this.resourceId = this.selectedRows[0]?.Id || '';
-    this.resourceName = this.selectedRows[0]?.Name || "";
+    this.resourceName = this.selectedRows[0]?.Name || '';
   }
 
   private async _deleteRows(rows: EncodeDeviceManageModel[]) {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
-      let id = rows[i].Id
-      let res = await this._business.deleteEncodeDevice(id)
+      let id = rows[i].Id;
+      let res = await this._business.deleteEncodeDevice(id);
       if (res) this._toastrService.success('删除成功');
     }
     this.pageIndex = 1;
     this._init();
-
   }
 
   private _clickEditBtn(row: EncodeDeviceManageModel) {
@@ -235,5 +230,4 @@ export class EncodeDeviceManageComponent implements OnInit {
     this.state = FormState.edit;
     this.resourceId = row.Id;
   }
-
 }
