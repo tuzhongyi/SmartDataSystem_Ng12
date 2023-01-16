@@ -1,19 +1,16 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { CameraAIModel } from '../network/model/camera-ai.model';
-import { AIModelManageModel } from '../view-model/ai-model-manage.model';
+import { CameraAIModel } from '../../../network/model/camera-ai.model';
+import { AIModelManageModel } from '../../../view-model/ai-model-manage.model';
 import Conf from 'src/assets/json/ai-icon.json';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
-} from './common-model.converter';
+} from '../../../converter/common-model.converter';
 
 const imgBase = 'assets/img/ai-model';
 const icons: any = Conf;
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AIModelManageConverter extends AbstractCommonModelConverter<AIModelManageModel> {
   constructor(private _datePipe: DatePipe) {
     super();

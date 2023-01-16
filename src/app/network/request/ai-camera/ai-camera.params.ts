@@ -1,7 +1,7 @@
-import { GetResourcesParams } from "../resources/resources-params";
+import { ResourceDeviceType } from 'src/app/enum/device-type.enum';
+import { GetResourcesParams } from '../resources/resources-params';
 
 export class GetCamerasParams extends GetResourcesParams {
-
   /**在线状态 */
   OnlineStatus?: number;
   /**摄像机类型 */
@@ -19,4 +19,5 @@ export class GetCamerasParams extends GetResourcesParams {
   /**编码设备ID列表 */
   EncodeDeviceIds?: string[];
 
+  DeviceType?: ResourceDeviceType;
 }

@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
  * @Last Modified by: pmx
- * @Last Modified time: 2022-12-16 15:34:15
+ * @Last Modified time: 2023-01-13 21:03:25
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -44,6 +44,8 @@ import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
+import { AIModelTransformType } from 'src/app/enum/transform-type.enum';
+import { transformTime } from 'src/app/network/model/transform.model';
 
 export class Language {
   static StationState(state: StationState) {
@@ -580,6 +582,19 @@ export class Language {
       case CollectionMemberType.Collection:
         return Language.json.CollectionMemberType.Collection;
       case CollectionMemberType.Other:
+      default:
+        return Language.json.other;
+    }
+  }
+
+  static AIModelTransformType(type: AIModelTransformType) {
+    switch (type) {
+      case AIModelTransformType.G3:
+        return Language.json.AIModelTransformType.G3;
+      case AIModelTransformType.G5:
+        return Language.json.AIModelTransformType.G5;
+      case AIModelTransformType.None:
+        return Language.json.AIModelTransformType.None;
       default:
         return Language.json.other;
     }

@@ -19,12 +19,13 @@ import {
 } from 'src/app/view-model/table.model';
 import { AIModelManageBusiness } from './ai-model-manage.business';
 import { AIModelManageConf } from './ai-model-manage.config';
+import { AIModelManageConverter } from './ai-model-manage.converter';
 
 @Component({
   selector: 'howell-ai-model-manage',
   templateUrl: './ai-model-manage.component.html',
   styleUrls: ['./ai-model-manage.component.less'],
-  providers: [AIModelManageBusiness],
+  providers: [AIModelManageBusiness, AIModelManageConverter],
 })
 export class AIModelManageComponent implements OnInit {
   private _pageSize = 9;
@@ -52,15 +53,17 @@ export class AIModelManageComponent implements OnInit {
   state = FormState.none;
   operateId = '';
 
-
   get enableDelBtn() {
-    return !!this.selectedRows.length
+    return !!this.selectedRows.length;
   }
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
-  constructor(private _business: AIModelManageBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private _business: AIModelManageBusiness,
+    private _toastrService: ToastrService
+  ) {
     this.tableOperates.push(
       new TableOperateModel(
         'edit',
@@ -89,7 +92,6 @@ export class AIModelManageComponent implements OnInit {
     );
     this.page = res.Page;
     this.dataSubject.next(res.Data);
-
   }
 
   async searchEvent(condition: string) {
@@ -125,7 +127,7 @@ export class AIModelManageComponent implements OnInit {
   }
 
   closeForm(update: boolean) {
-    this.showOperate = false
+    this.showOperate = false;
     this.state = FormState.none;
     this.operateId = '';
     if (update) {
@@ -138,17 +140,16 @@ export class AIModelManageComponent implements OnInit {
     this.showOperate = true;
   }
   deleteBtnClick() {
-    this.willBeDeleted = [...this.selectedRows]
+    this.willBeDeleted = [...this.selectedRows];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   dialogMsgEvent(status: DialogEnum) {
     this.showConfirm = false;
     if (status == DialogEnum.confirm) {
-      this._deleteRows(this.willBeDeleted)
+      this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
-
     }
   }
 
@@ -156,7 +157,7 @@ export class AIModelManageComponent implements OnInit {
     this.table?.deleteRows(rows);
     for (let i = 0; i < rows.length; i++) {
       let id = rows[i].Id;
-      await this._business.delete(id)
+      await this._business.delete(id);
       this._toastrService.success('删除成功');
     }
 
@@ -171,7 +172,6 @@ export class AIModelManageComponent implements OnInit {
   private _clickDelBtn(row: AIModelManageModel) {
     this.willBeDeleted = [row];
     this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`
+    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
-
 }

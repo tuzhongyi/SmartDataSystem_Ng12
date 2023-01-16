@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { LocaleCompare } from "src/app/common/tools/locale-compare";
-import { AIModelManageConverter } from "src/app/converter/ai-model-manage.converter";
+import { AIModelManageConverter } from "src/app/aiop-system/components/ai-model-manage/ai-model-manage.converter";
 import { PagedList } from "src/app/network/model/page_list.model";
 import { GetAIModelsParams } from "src/app/network/request/ai-model/ai-model.params";
 import { AIModelRequestService } from "src/app/network/request/ai-model/ai-model.service";

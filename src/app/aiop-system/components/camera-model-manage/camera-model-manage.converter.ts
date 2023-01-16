@@ -1,16 +1,14 @@
 import { Injectable } from '@angular/core';
-import { IConverter } from '../common/interfaces/converter.interface';
-import { OnlineStatus } from '../enum/online-status.enum';
-import { AICamera } from '../network/model/ai-camera.model';
-import { AICameraRequestService } from '../network/request/ai-camera/ai-camera.service';
-import { AICameraModelManageModel } from '../view-model/ai-camera-model-manage.model';
-import { AbstractCommonModelConverter } from './common-model.converter';
+import { IConverter } from '../../../common/interfaces/converter.interface';
+import { OnlineStatus } from '../../../enum/online-status.enum';
+import { AICamera } from '../../../network/model/ai-camera.model';
+import { AICameraRequestService } from '../../../network/request/ai-camera/ai-camera.service';
+import { AICameraModelManageModel } from './camera-model-manage.model';
+import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
 
 type AICameraModelManageSource = AICamera;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class AICameraModelManageConverter extends AbstractCommonModelConverter<AICameraModelManageModel> {
   Convert(source: AICameraModelManageSource) {
     if (source instanceof AICamera) {

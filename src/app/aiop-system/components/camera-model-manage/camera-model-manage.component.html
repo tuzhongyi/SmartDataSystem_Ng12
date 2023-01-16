@@ -8,7 +8,7 @@
   </ng-container>
   <div class="horizontal-left">
     <div class="hw-simple-title">模型列表</div>
-    <div class="search-wrapper">
+    <div class="search-wrapper" [style.margin-bottom.px]="10">
       <howell-simple-search
         placeHolder="模型名称"
         (searchEvent)="searchAIModels($event)"
@@ -42,13 +42,21 @@
         <div class="right-wrapper">
           <div class="operate-item">
             <div class="title">
-              <span class="hw-form-label">GIS:&nbsp;</span>
+              <span class="hw-form-label">应用类型:&nbsp;</span>
             </div>
             <div class="content">
-              <select>
-                <option value="">a</option>
-                <option value="">a</option>
-                <option value="">a</option>
+              <select
+                [(ngModel)]="searchInfo.TransformType"
+                (ngModelChange)="changeTransformType()"
+              >
+                <option value="">全部</option>
+                <ng-container
+                  *ngFor="let item of transformDataSource | keyvalue"
+                >
+                  <option [ngValue]="item.key">
+                    {{ item.value }}
+                  </option>
+                </ng-container>
               </select>
             </div>
           </div>
@@ -74,7 +82,7 @@
             <div class="title">
               <span class="hw-form-label">名称:&nbsp;</span>
             </div>
-            <div class="content">
+            <div class="content" style="width: 200px">
               <input
                 placeholder="摄像机名称"
                 type="text"
@@ -119,8 +127,7 @@
           *ngIf="page"
           [length]="page.TotalRecordCount"
           [pageSize]="page.PageSize"
-          [pagerCount]="pagerCount"
-          [pageIndex]="pageIndex - 1"
+          [pageIndex]="page.PageIndex - 1"
           (page)="pageEvent($event)"
         >
         </app-paginator>

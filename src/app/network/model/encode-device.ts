@@ -1,9 +1,8 @@
-
-import { DeviceType } from "src/app/enum/device-type.enum";
-import { OnlineStatus } from "src/app/enum/online-status.enum";
-import { ProtocolType } from "src/app/enum/protocol-type.enum";
-import { TransType } from "src/app/enum/trans-type.enum";
-import { Resource } from "./resource.model";
+import { EncodedDeviceType } from 'src/app/enum/device-type.enum';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { ProtocolType } from 'src/app/enum/protocol-type.enum';
+import { TransType } from 'src/app/enum/trans-type.enum';
+import { Resource } from './resource.model';
 
 /**编码设备信息 */
 export class EncodeDevice extends Resource {
@@ -36,7 +35,7 @@ export class EncodeDevice extends Resource {
   /**固件版本号(可选) */
   HardwareVersion?: string;
   /**设备类型(可选) NVR，IPC，DVS */
-  DeviceType?: DeviceType;
+  DeviceType?: EncodedDeviceType;
   SRSId?: string; //String	流媒体ID
   SRServerId?: string; //String	流媒体服务器ID
 }

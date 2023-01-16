@@ -1,6 +1,8 @@
 import { Flags } from '../common/tools/flags';
+import { ResourceDeviceType } from './device-type.enum';
 import { DivisionType } from './division-type.enum';
 import { StationState } from './station-state.enum';
+import { AIModelTransformType } from './transform-type.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
@@ -79,6 +81,19 @@ export class EnumHelper {
       return 'orange-text';
     } else {
       return 'green-text';
+    }
+  }
+
+  static ConvertTransformTypeToAIDeviceType(type: AIModelTransformType) {
+    switch (type) {
+      case AIModelTransformType.G3:
+        return ResourceDeviceType.G3;
+      case AIModelTransformType.G5:
+        return ResourceDeviceType.G5;
+      case AIModelTransformType.None:
+        return ResourceDeviceType.None;
+      default:
+        return ResourceDeviceType.None;
     }
   }
 }

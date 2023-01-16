@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
-import { AICameraModelManageEvent, AICameraModelManageModel, AICameraModelOperateData, AICameraModelOperateType } from 'src/app/view-model/ai-camera-model-manage.model';
+import { AICameraModelManageEvent, AICameraModelManageModel, AICameraModelOperateData, AICameraModelOperateType } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
 
 @Component({

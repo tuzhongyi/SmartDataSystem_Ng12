@@ -7,7 +7,7 @@
     "GarbageFull": "垃圾满溢",
     "GarbageDrop": "小包垃圾待处置",
     "GarbageDropTimeout": "小包垃圾超时待处置",
-    "GarbageDropSuperTimeout":"小包垃圾超时待处置",
+    "GarbageDropSuperTimeout": "小包垃圾超时待处置",
     "GarbageDropHandle": "小包垃圾已处置",
     "Default": "未知"
   },
@@ -180,5 +180,15 @@
   },
   "CollectionMemberType": {
     "Collection": "清运人员"
+  },
+  "AIModelTransformType": {
+    "None": "全部",
+    "G3": "G3",
+    "G5": "G5"
+  },
+  "ResourceDeviceType": {
+    "None": "全部",
+    "G3": "G3",
+    "G5": "G5"
   }
 }

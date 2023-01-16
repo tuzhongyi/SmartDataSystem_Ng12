@@ -12,7 +12,7 @@ import { Protocol } from 'src/app/network/model/protocol.model';
 import { ToastrService } from 'ngx-toastr';
 import { ValidIP } from 'src/app/common/tools/tool';
 import { ProtocolType } from 'src/app/enum/protocol-type.enum';
-import { DeviceType } from 'src/app/enum/device-type.enum';
+import { EncodedDeviceType } from 'src/app/enum/device-type.enum';
 import { TransType } from 'src/app/enum/trans-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { ResourceLabel } from 'src/app/network/model/resource-label.model';
@@ -47,7 +47,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
     ],
     Username: [''],
     Password: [''],
-    DeviceType: [DeviceType.None],
+    DeviceType: [EncodedDeviceType.None],
     Model: [''],
     SerialNumber: [''],
     Manufactory: [''],

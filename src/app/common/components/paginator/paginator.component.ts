@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-12-30 15:27:11
  * @Last Modified by: pmx
- * @Last Modified time: 2022-01-26 15:18:41
+ * @Last Modified time: 2023-01-13 20:08:57
  */
 import {
   AfterViewChecked,
@@ -74,7 +74,7 @@ export class PaginatorComponent
 
   /***************** private ************************/
   // 显示几个分页按钮
-  private _pagerCount = 3; // 不能小于等于0，但可以超出 max pager count
+  private _pagerCount = 4; // 不能小于等于0，但可以超出 max pager count
 
   /***************** public ************************/
   public pagers: number[] = [];
