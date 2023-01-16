@@ -2,7 +2,6 @@ import { Flags } from '../common/tools/flags';
 import { CameraDeviceType } from './device-type.enum';
 import { DivisionType } from './division-type.enum';
 import { StationState } from './station-state.enum';
-import { AIModelTransformType } from './transform-type.enum';
 import { UserResourceType } from './user-resource-type.enum';
 
 export class EnumHelper {
@@ -81,19 +80,6 @@ export class EnumHelper {
       return 'orange-text';
     } else {
       return 'green-text';
-    }
-  }
-
-  static ConvertTransformTypeToAIDeviceType(type: AIModelTransformType) {
-    switch (type) {
-      case AIModelTransformType.G3:
-        return CameraDeviceType.G3;
-      case AIModelTransformType.G5:
-        return CameraDeviceType.G5;
-      case AIModelTransformType.None:
-        return CameraDeviceType.None;
-      default:
-        return CameraDeviceType.None;
     }
   }
 }
