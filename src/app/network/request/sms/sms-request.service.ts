@@ -1,20 +1,20 @@
-import { Injectable } from "@angular/core";
-import { SmsProtocolType } from "src/app/enum/sms-protocol-type.enum";
-import { AuthCode } from "../../model/auth-code.model";
-import { HowellResponse } from "../../model/howell-response.model";
-import { SmsUrl } from "../../url/sms/sms.url";
-import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { ServiceHelper } from "../service-helper";
+import { Injectable } from '@angular/core';
+import { SmsProtocolType } from 'src/app/enum/sms-protocol-type.enum';
+import { AuthCode } from '../../model/auth-code.model';
+import { HowellResponse } from '../../model/howell-response.model';
+import { SmsUrl } from '../../url/sms/sms.url';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
+import { ServiceHelper } from '../service-helper';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class SmsRequestService {
   constructor(private requestService: HowellAuthHttpService) {}
 
   async getAuthCodes(PhoneNo: string) {
     let response = await this.requestService
-      .get<AuthCode>(SmsUrl.authcodes(PhoneNo))
+      .getHowellResponse<AuthCode>(SmsUrl.authcodes(PhoneNo))
       .toPromise();
     return ServiceHelper.ResponseProcess(response, AuthCode);
   }

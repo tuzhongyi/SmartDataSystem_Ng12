@@ -1,6 +1,6 @@
-import { ResourcesURL } from "../resources.url";
+import { ResourcesURL } from '../resources.url';
 
-export abstract class EncodeDevicesUrl extends ResourcesURL {
+export abstract class ResourceEncodeDevicesUrl extends ResourcesURL {
   protected static get basic() {
     return `${super.basic}/EncodeDevices`;
   }

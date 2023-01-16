@@ -5,7 +5,7 @@ export abstract class ResourcesURL {
     return `${BasicUrl.aiop}/Resources`;
   }
 
-  static create() {
+  static base() {
     return this.basic;
   }
   static item(id: string) {
@@ -19,5 +19,9 @@ export abstract class ResourcesURL {
   }
   static singleLabel(resourceId: string, labelId: string) {
     return `${this.basic}/${resourceId}/Labels/${labelId}`;
+  }
+
+  static deviceTypes() {
+    return `${this.basic}/DeviceTypes`;
   }
 }

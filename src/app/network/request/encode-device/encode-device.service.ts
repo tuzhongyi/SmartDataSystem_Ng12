@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EncodeDevice } from '../../model/encode-device';
 import { Protocol } from '../../model/protocol.model';
-import { EncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
+import { ResourceEncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
 import {
   BaseRequestService,
   BaseTypeRequestService,
@@ -21,26 +21,26 @@ export class EncodeDeviceRequestService {
     this.type = this.basic.type(EncodeDevice);
   }
   create(item: EncodeDevice) {
-    return this.type.post(EncodeDevicesUrl.create(), item);
+    return this.type.post(ResourceEncodeDevicesUrl.create(), item);
   }
 
   get(id: string): Promise<EncodeDevice> {
-    return this.type.get(EncodeDevicesUrl.item(id));
+    return this.type.get(ResourceEncodeDevicesUrl.item(id));
   }
 
   update(item: EncodeDevice) {
-    return this.type.put(EncodeDevicesUrl.item(item.Id), item);
+    return this.type.put(ResourceEncodeDevicesUrl.item(item.Id), item);
   }
 
   delete(id: string) {
-    return this.type.delete(EncodeDevicesUrl.item(id));
+    return this.type.delete(ResourceEncodeDevicesUrl.item(id));
   }
 
   list(params: GetEncodeDevicesParams = new GetEncodeDevicesParams()) {
-    return this.type.paged(EncodeDevicesUrl.list(), params);
+    return this.type.paged(ResourceEncodeDevicesUrl.list(), params);
   }
 
   protocol() {
-    return this.basic.getArray(EncodeDevicesUrl.protocols(), Protocol);
+    return this.basic.getArray(ResourceEncodeDevicesUrl.protocols(), Protocol);
   }
 }

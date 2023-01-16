@@ -75,10 +75,14 @@ export class HowellAuthHttpService {
     });
   }
 
-  public get<T = any, R = HowellResponse<T>>(
+  public getHowellResponse<T = any, R = HowellResponse<T>>(
     url: string,
     params?: HttpParams
   ): Observable<R> {
+    return this.get<R>(url, params);
+  }
+
+  public get<R>(url: string, params?: HttpParams) {
     const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
     const httpOptions = {
       headers: myHeaders,

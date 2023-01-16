@@ -110,6 +110,7 @@ export class DeviceListTableComponent
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: DeviceViewModel) {
+    console.log(item);
     let img = new ImageControlModelArray([item.image], 0);
     this.image.emit(img);
   }

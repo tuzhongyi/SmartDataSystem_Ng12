@@ -8,7 +8,7 @@ import { ServiceHelper } from './service-helper';
 export class BaseRequestService {
   constructor(public http: HowellAuthHttpService) {}
   async get<T>(url: string, type: ClassConstructor<T>): Promise<T> {
-    let response = await this.http.get(url).toPromise();
+    let response = await this.http.getHowellResponse(url).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
   async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {
@@ -65,7 +65,7 @@ export class BaseRequestService {
 
   async getArray<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http
-      .get<IParams, HowellResponse<Array<T>>>(url)
+      .getHowellResponse<IParams, HowellResponse<Array<T>>>(url)
       .toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AICamera } from '../../model/ai-camera.model';
 import { CameraAIModel } from '../../model/camera-ai.model';
-import { AICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
+import { ResourceAICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
 import {
   BaseRequestService,
   BaseTypeRequestService,
@@ -22,41 +22,44 @@ export class AICameraRequestService {
   }
 
   list(params: GetCamerasParams = new GetCamerasParams()) {
-    return this.type.paged(AICamerasUrl.list(), params);
+    return this.type.paged(ResourceAICamerasUrl.list(), params);
   }
   create(item: AICamera) {
-    return this.type.post(AICamerasUrl.create(), item);
+    return this.type.post(ResourceAICamerasUrl.create(), item);
   }
 
   get(id: string) {
-    return this.type.get(AICamerasUrl.item(id));
+    return this.type.get(ResourceAICamerasUrl.item(id));
   }
 
   update(item: AICamera) {
-    return this.type.put(AICamerasUrl.item(item.Id), item);
+    return this.type.put(ResourceAICamerasUrl.item(item.Id), item);
   }
 
   delete(id: string) {
-    return this.type.delete(AICamerasUrl.item(id));
+    return this.type.delete(ResourceAICamerasUrl.item(id));
   }
   listAIModels(id: string) {
-    return this.basic.getArray(AICamerasUrl.AIModels(id), CameraAIModel);
+    return this.basic.getArray(
+      ResourceAICamerasUrl.AIModels(id),
+      CameraAIModel
+    );
   }
   addAIModel(cameraId: string, modelId: string) {
     return this.basic.post(
-      AICamerasUrl.singleAIModel(cameraId, modelId),
+      ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel
     );
   }
   getAIModel(cameraId: string, modelId: string) {
     return this.basic.get(
-      AICamerasUrl.singleAIModel(cameraId, modelId),
+      ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel
     );
   }
   deleteAIModel(cameraId: string, modelId: string) {
     return this.basic.delete(
-      AICamerasUrl.singleAIModel(cameraId, modelId),
+      ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel
     );
   }

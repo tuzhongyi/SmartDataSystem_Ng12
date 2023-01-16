@@ -156,12 +156,12 @@ export class MediaControlComponent
       if (model.image) {
         this.display.object = !!(model.image.polygon || model.image.rules);
         this.display.download.image = true;
-        this.display.download.video = true;
         if (model.image.eventTime) {
-          this.display.preview = false;
-          this.display.playback = true;
-        } else {
+          this.display.download.video = true;
           this.display.preview = true;
+          this.display.playback = false;
+        } else {
+          this.display.preview = false;
           this.display.playback = false;
         }
       } else {
