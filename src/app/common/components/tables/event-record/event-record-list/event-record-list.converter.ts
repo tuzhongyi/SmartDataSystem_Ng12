@@ -1,9 +1,7 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { Division } from 'src/app/network/model/division.model';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
 
 export class EventRecordListConverter
@@ -35,9 +33,6 @@ export class EventRecordListConverter
 export class EventRecordListItemConverter
   implements IPromiseConverter<EventRecordViewModel, EventRecordCardModel>
 {
-  converter = {
-    img: new ImageControlConverter(),
-  };
   async Convert(
     source: EventRecordViewModel,
     getter: {

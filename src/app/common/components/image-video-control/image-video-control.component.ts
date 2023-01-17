@@ -9,6 +9,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { wait } from '../../tools/tool';
@@ -46,7 +47,10 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Output()
   fullscreen: EventEmitter<ImageVideoControlModel> = new EventEmitter();
 
-  constructor(private business: ImageVideoControlBusiness) {}
+  constructor(
+    private business: ImageVideoControlBusiness,
+    private config: ConfigRequestService
+  ) {}
   OnlineStatus = OnlineStatus;
   playing = false;
   display = {
@@ -94,16 +98,27 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     this.display.operation.play = this.operation.play;
   }
 
-  playClicked(event: Event) {
+  async playClicked(event: Event) {
     this.display.image = false;
     this.display.operation.play = false;
     this.display.video = true;
 
     if (this.model) {
       if (!this.model.video) {
-        this.business.load(this.model.cameraId, PlayMode.live).then((x) => {
-          this.play(x);
-        });
+        if (this.model.image && this.model.image.eventTime) {
+          let config = await this.config.getConfig();
+          config.playback;
+          let begin = new Date(this.model.image.eventTime.getTime());
+          begin.setSeconds(begin.getSeconds() + config.playback.begin);
+          let end = new Date(this.model.image.eventTime.getTime());
+          end.setSeconds(end.getSeconds() + config.playback.end);
+          this.onplayback(this.model.cameraId, {
+            BeginTime: begin,
+            EndTime: end,
+          });
+        } else {
+          this.preview(this.model.cameraId);
+        }
       }
     }
   }

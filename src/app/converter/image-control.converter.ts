@@ -35,7 +35,7 @@ export class ImageControlConverter
         onerror: onerror ? Medium.default : '',
         status: OnlineStatus.Online,
         camera: source,
-        eventTime,
+        eventTime: eventTime,
       });
     } else if (source instanceof Camera) {
       return new ImageControlModel({
