@@ -31,7 +31,7 @@
       class="list-type-select"
       [data]="model.divisions"
       [load]="loadDivision"
-      (select)="ondivision($event)"
+      (selectedChange)="ondivision($event)"
     ></app-select-control> -->
     <howell-division-tree-filter
       (select)="ondivision($event)"
@@ -43,7 +43,7 @@
     <app-select-control
       class="list-type-select"
       [data]="model.stations"
-      (select)="onstation($event)"
+      (selectedChange)="onstation($event)"
     ></app-select-control>
   </div>
   <div class="filter-item duration">
@@ -51,7 +51,7 @@
     <app-select-control
       class="list-type-select"
       [data]="durations"
-      (select)="onduration($event)"
+      (selectedChange)="onduration($event)"
     ></app-select-control>
   </div>
   <div class="filter-item">
@@ -59,7 +59,7 @@
     <app-select-control
       class="list-type-select"
       [data]="statuses"
-      (select)="onstatus($event)"
+      (selectedChange)="onstatus($event)"
     ></app-select-control>
   </div>
 </div>

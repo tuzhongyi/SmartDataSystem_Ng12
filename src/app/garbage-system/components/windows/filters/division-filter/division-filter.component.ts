@@ -22,17 +22,29 @@ export class DivisionFilterComponent
   type: DivisionType = DivisionType.Committees;
   @Input()
   parentId?: string;
-  @Output()
-  select: EventEmitter<Division> = new EventEmitter();
   @Input()
   default: boolean = false;
+
+  private _selected?: SelectItem;
+  public get selected(): SelectItem | undefined {
+    return this._selected;
+  }
+  @Input()
+  public set selected(v: SelectItem | undefined) {
+    if (this._selected === v) return;
+    this._selected = v;
+    this.selectedChange.emit(v);
+  }
+  @Output()
+  selectedChange: EventEmitter<SelectItem> = new EventEmitter();
+
+  @Output()
+  select: EventEmitter<Division> = new EventEmitter();
 
   title?: string;
   items: SelectItem[] = [];
 
   business: IBusiness<IModel, SelectItem[]>;
-
-  loading: EventEmitter<string> = new EventEmitter();
 
   constructor(business: DivisionFilterBusiness) {
     this.business = business;
@@ -42,18 +54,10 @@ export class DivisionFilterComponent
     this.items = await this.business.load(this.type, this.parentId);
     this.title = Language.DivisionType(this.type);
     if (this.default) {
-      let first: SelectItem | undefined = undefined;
       if (this.items && this.items.length > 0) {
-        this.loading.emit(this.items[0].key);
+        this.selected = this.items[0].value;
       }
     }
-  }
-
-  onselected(selected: SelectItem) {
-    if (selected) {
-      this.select.emit(selected.value);
-    } else {
-      this.select.emit();
-    }
+    this.selectedChange.subscribe(this.select);
   }
 }

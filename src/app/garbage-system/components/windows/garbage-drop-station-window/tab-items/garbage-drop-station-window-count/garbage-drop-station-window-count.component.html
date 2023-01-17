@@ -21,7 +21,7 @@
           class="list-type-select full"
           [data]="types"
           [selected]="typeSelected"
-          (select)="onTypeChange($event)"
+          (selectedChange)="onTypeChange($event)"
         ></app-select-control>
       </div>
       <div class="filter-item" *ngIf="type != UserResourceType.County">
@@ -29,7 +29,7 @@
         <app-select-control
           class="list-type-select full"
           [data]="counties"
-          (select)="onCountyChange($event)"
+          (selectedChange)="onCountyChange($event)"
         ></app-select-control>
       </div>
       <button class="hw-blue-btn search" (click)="search()">
@@ -47,7 +47,7 @@
         <app-select-control
           class="list-type-select"
           [data]="units"
-          (select)="ontimeunit($event)"
+          (selectedChange)="ontimeunit($event)"
         ></app-select-control>
       </div>
     </div>

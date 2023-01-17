@@ -1,34 +1,54 @@
 <div class="event-record-count">
-    <div class="event-record-count-header">
-        <div class="filter">
-            <div class="filter-item">
-                <span>选择时间</span>
-                <input type="text" DateTimePicker [format]="dateFormat" [date]="date" (change)="changeDate($event)"
-                    class="" />
-            </div>
-            <div class="filter-item">
-                <span>行政区</span>
-                <app-select-control class="list-type-select" [data]="userTypes" (select)="onresourcetype($event)">
-                </app-select-control>
-            </div>
-            <button class="hw-blue-btn search" (click)="search()">
-                <i class="mdi mdi-magnify"></i> 查询
-            </button>
-            <button class="hw-blue-btn excel" (click)="exportExcel()">
-                <i class="howell-icon-export"></i> 导出
-            </button>
-            <button class="hw-blue-btn csv" (click)="exportCSV()">
-                <i class="howell-icon-export"></i> CSV
-            </button>
-        </div>
-        <div class="selection">
-            <app-select-control class="list-type-select" [data]="units" (select)="ontimeunit($event)">
-            </app-select-control>
-        </div>
+  <div class="event-record-count-header">
+    <div class="filter">
+      <div class="filter-item">
+        <span>选择时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="dateFormat"
+          [date]="date"
+          (change)="changeDate($event)"
+          class=""
+        />
+      </div>
+      <div class="filter-item">
+        <span>行政区</span>
+        <app-select-control
+          class="list-type-select"
+          [data]="userTypes"
+          (selectedChange)="onresourcetype($event)"
+        >
+        </app-select-control>
+      </div>
+      <button class="hw-blue-btn search" (click)="search()">
+        <i class="mdi mdi-magnify"></i> 查询
+      </button>
+      <button class="hw-blue-btn excel" (click)="exportExcel()">
+        <i class="howell-icon-export"></i> 导出
+      </button>
+      <button class="hw-blue-btn csv" (click)="exportCSV()">
+        <i class="howell-icon-export"></i> CSV
+      </button>
     </div>
-    <div class="event-record-count-content">
-        <howell-event-record-count-table [unit]="unit" [eventType]="eventType" [date]="date" [type]="userType"
-            [load]="load" (loaded)="onloaded($event)">
-        </howell-event-record-count-table>
+    <div class="selection">
+      <app-select-control
+        class="list-type-select"
+        [data]="units"
+        (selectedChange)="ontimeunit($event)"
+      >
+      </app-select-control>
     </div>
+  </div>
+  <div class="event-record-count-content">
+    <howell-event-record-count-table
+      [unit]="unit"
+      [eventType]="eventType"
+      [date]="date"
+      [type]="userType"
+      [load]="load"
+      (loaded)="onloaded($event)"
+    >
+    </howell-event-record-count-table>
+  </div>
 </div>

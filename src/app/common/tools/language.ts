@@ -262,7 +262,7 @@ export class Language {
       case DivisionType.Committees:
         return Language.json.DivisionType.Committees;
       default:
-        throw new Error(type.toString());
+        return Language.json.Unknow;
     }
   }
 

@@ -19,72 +19,41 @@ import { SelectItem } from './select-control.model';
 export class SelectControlComponent implements OnInit, OnChanges {
   @Input()
   data?: SelectItem[];
-
-  @Input()
-  load?: EventEmitter<string>;
-  @Output()
-  select: EventEmitter<SelectItem> = new EventEmitter();
   @Input()
   cannull: boolean = false;
   @Input()
-  cansearch = false;
+  default: boolean = true;
+
+  private _selected?: SelectItem;
+  public get selected(): SelectItem | undefined {
+    return this._selected;
+  }
+  @Input()
+  public set selected(v: SelectItem | undefined) {
+    this._selected = v;
+    this.selectedChange.emit(v);
+  }
+  @Output()
+  selectedChange: EventEmitter<SelectItem> = new EventEmitter();
 
   constructor() {}
   @ViewChild('element')
   element?: ElementRef;
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange) {
-      if (this.load) {
-        this.load.subscribe((key) => {
-          if (key && this.data) {
-            let index = this.data.findIndex((x) => x.key === key);
-            if (index >= 0) {
-              this.onselect(this.data[index]);
-            }
-          }
-        });
-      }
-    }
     if (changes.data) {
-      if (this.data && this.data.length > 0) {
-        if (!this.selected) {
-          this.selected = this.data[0];
+      if (this.default) {
+        if (this.data && this.data.length > 0) {
+          if (!this.selected) {
+            this.selected = this.data[0];
+          }
+        } else {
+          this.selected = undefined;
         }
-      } else {
-        this.selected = undefined;
       }
     }
   }
 
-  ngOnInit(): void {
-    window.addEventListener('click', () => {
-      this.opened = false;
-    });
-    if (this.data && this.data.length > 0 && !this.load) {
-      this.onselect(this.data[0]);
-    }
-  }
-
-  @Input()
-  selected?: SelectItem;
-
-  opened = false;
-
-  toggle(event: Event) {
-    this.opened = !this.opened;
-    event.stopPropagation();
-  }
-  onselect(item?: SelectItem, event?: Event) {
-    // if (this.selected === item) return;
-    // this.selected = item;
-    // this.opened = false;
-    // this.select.emit(item);
-    // if (this.standby) {
-    //   this.data = this.standby;
-    //   this.standby = undefined;
-    // }
-    this.select.emit(this.selected);
-  }
+  ngOnInit(): void {}
 
   onclear(e: Event) {
     if (this.element) {

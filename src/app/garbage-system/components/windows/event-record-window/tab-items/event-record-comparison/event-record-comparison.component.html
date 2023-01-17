@@ -17,7 +17,7 @@
         <app-select-control
           class="list-type-select"
           [data]="userTypes"
-          (select)="onusertype($event)"
+          (selectedChange)="onusertype($event)"
         >
         </app-select-control>
       </div>
@@ -44,13 +44,13 @@
       <app-select-control
         class="list-type-select"
         [data]="units"
-        (select)="ontimeunit($event)"
+        (selectedChange)="ontimeunit($event)"
       >
       </app-select-control>
       <app-select-control
         class="list-type-select"
         [data]="chartTypes"
-        (select)="oncharttype($event)"
+        (selectedChange)="oncharttype($event)"
       >
       </app-select-control>
     </div>

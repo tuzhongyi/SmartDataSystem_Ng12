@@ -10,14 +10,15 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { EventRecordCountExportConverter } from './event-record-count-export.converter';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'howell-event-record-count',
   templateUrl: './event-record-count.component.html',
-  styleUrls: ['./event-record-count.component.less']
+  styleUrls: ['./event-record-count.component.less'],
 })
 export class EventRecordCountComponent implements OnInit {
-
   @Input()
   date: Date = new Date();
   @Input()
@@ -27,70 +28,61 @@ export class EventRecordCountComponent implements OnInit {
   @Input()
   eventType: EventType = EventType.IllegalDrop;
 
-
-  constructor(private local: LocalStorageService, private exports: ExportBusiness) {
-
+  constructor(
+    private local: LocalStorageService,
+    private global: GlobalStorageService,
+    private exports: ExportBusiness
+  ) {
     if (local.user.Resources && local.user.Resources.length > 0) {
       this.userType = local.user.Resources[0].ResourceType;
     }
   }
 
   DateTimePickerView = DateTimePickerView;
-  dateFormat = "yyyy年MM月dd日"
-  units: SelectItem[] = []
-  userTypes: SelectItem[] = []
+  dateFormat = 'yyyy年MM月dd日';
+  units: SelectItem[] = [];
+  userTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
   datas: EventRecordCountTableModel[] = [];
   converter = new EventRecordCountExportConverter();
   ngOnInit(): void {
     this.initUnits();
-    this.initUserResourceType()
+    this.initUserResourceType();
   }
 
   initUnits() {
     this.units.push(
-      new SelectItem(
-        TimeUnit.Day.toString(),
-        TimeUnit.Day,
-        '日报表',
-      )
+      new SelectItem(TimeUnit.Day.toString(), TimeUnit.Day, '日报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Week.toString(),
-        TimeUnit.Week,
-        '周报表',
-      )
+      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
     );
     this.units.push(
-      new SelectItem(
-        TimeUnit.Month.toString(),
-        TimeUnit.Month,
-        '月报表',
-      )
+      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
   }
   initUserResourceType() {
-    if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      if (this.local.user.Resources[0].ResourceType == UserResourceType.City) {
-        this.userTypes.push(
-          new SelectItem(
-            UserResourceType.County.toString(),
-            UserResourceType.County,
-            Language.UserResourceType(UserResourceType.County)
-          )
-        )
-      }
-    }
-
-    for (let i = UserResourceType.Committees; i <= UserResourceType.Station; i++) {
+    let type = EnumHelper.ConvertDivisionToUserResource(
+      this.global.divisionType
+    );
+    if (type == UserResourceType.City) {
       this.userTypes.push(
         new SelectItem(
-          i.toString(),
-          i,
-          Language.UserResourceType(i)
+          UserResourceType.County.toString(),
+          UserResourceType.County,
+          Language.UserResourceType(UserResourceType.County)
         )
-      )
+      );
+    }
+
+    for (
+      let i = UserResourceType.Committees;
+      i <= UserResourceType.Station;
+      i++
+    ) {
+      this.userTypes.push(
+        new SelectItem(i.toString(), i, Language.UserResourceType(i))
+      );
     }
   }
 
@@ -101,7 +93,7 @@ export class EventRecordCountComponent implements OnInit {
     this.unit = unit.value;
   }
   onresourcetype(item: SelectItem) {
-    this.userType = item.value
+    this.userType = item.value;
   }
   search() {
     this.load.emit();
@@ -110,21 +102,20 @@ export class EventRecordCountComponent implements OnInit {
     this.datas = datas;
   }
   private getTitle() {
-    let eventType = Language.EventType(this.eventType)
-    let date = formatDate(this.date, this.dateFormat, "en");
+    let eventType = Language.EventType(this.eventType);
+    let date = formatDate(this.date, this.dateFormat, 'en');
     let userType = Language.UserResourceType(this.userType);
-    return `${date}${userType}${eventType}总数据`
+    return `${date}${userType}${eventType}总数据`;
   }
   exportExcel() {
     let title = this.getTitle();
-    let headers = ["序号", "名称", "行政区", "单位（起）"]
-    this.exports.excel(title, headers, this.datas, this.converter)
+    let headers = ['序号', '名称', '行政区', '单位（起）'];
+    this.exports.excel(title, headers, this.datas, this.converter);
   }
 
   exportCSV() {
     let title = this.getTitle();
-    let headers = ["序号", "名称", "行政区", "单位（起）"]
+    let headers = ['序号', '名称', '行政区', '单位（起）'];
     this.exports.csv(title, headers, this.datas, this.converter);
   }
-
 }

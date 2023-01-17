@@ -3,9 +3,8 @@
   <app-select-control
     class="list-type-select"
     [data]="items"
-    [load]="loading"
     [cannull]="true"
-    [cansearch]="true"
-    (select)="onselected($event)"
+    [default]="false"
+    (selectedChange)="onselected($event)"
   ></app-select-control>
 </div>

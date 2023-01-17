@@ -117,20 +117,31 @@ export class DetailsChartComponent
   selectedNodes: CommonFlatNode[] = [];
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.loadData();
+    if (changes.eventType && !changes.eventType.firstChange) {
+      this.loadData();
+    }
+    if (changes.types && !changes.types.firstChange) {
+      this.loadData();
+    }
+    if (changes.station && !changes.station.firstChange) {
+      this.loadData();
+    }
+    if (changes.division && !changes.division.firstChange) {
+      this.loadData();
+    }
   }
 
   async ngOnInit() {
     this.initUnits();
     this.initCharts();
-    wait(
-      () => {
-        return !!this.station || !!this.division;
-      },
-      () => {
-        this.loadData();
-      }
-    );
+    // wait(
+    //   () => {
+    //     return !!this.station || !!this.division;
+    //   },
+    //   () => {
+    //     this.loadData();
+    //   }
+    // );
   }
 
   async loadData() {

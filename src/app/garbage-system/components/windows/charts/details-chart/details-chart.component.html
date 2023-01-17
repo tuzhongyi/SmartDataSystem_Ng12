@@ -53,12 +53,12 @@
       <app-select-control
         class="list-type-select"
         [data]="units"
-        (select)="ontimeunit($event)"
+        (selectedChange)="ontimeunit($event)"
       ></app-select-control>
       <app-select-control
         class="list-type-select"
         [data]="charts"
-        (select)="onchartselected($event)"
+        (selectedChange)="onchartselected($event)"
       ></app-select-control>
     </div>
   </div>

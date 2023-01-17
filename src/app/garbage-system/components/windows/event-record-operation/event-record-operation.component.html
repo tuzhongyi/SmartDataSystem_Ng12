@@ -3,7 +3,7 @@
     <app-select-control
       class="search-option-select"
       [data]="searchOpts"
-      (select)="onSearchOptionSelect($event)"
+      (selectedChange)="onSearchOptionSelect($event)"
     ></app-select-control>
     <input
       type="text"
@@ -19,7 +19,7 @@
   <app-select-control
     class="list-type-select"
     [data]="listTypes"
-    (select)="onListTypeSelect($event)"
+    (selectedChange)="onListTypeSelect($event)"
   ></app-select-control>
   <button class="hw-cyan-m-btn" (click)="onfilter()">
     <i class="mdi mdi-filter-outline"></i>

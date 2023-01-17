@@ -48,10 +48,6 @@ export class EventRecordFilterComponent
     this.filter = new EventRecordFilter();
   }
 
-  loadDivision: EventEmitter<string> = new EventEmitter();
-  loadStation: EventEmitter<string> = new EventEmitter();
-  loadCamera: EventEmitter<string> = new EventEmitter();
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionId) {
       if (this.divisionId) {
@@ -63,7 +59,6 @@ export class EventRecordFilterComponent
           this.filter.divisionId = this.divisionId;
           this.filter.camera = undefined;
           this.filter.station = undefined;
-          this.loadDivision.emit(this.filter.divisionId);
         });
       }
     }
@@ -110,7 +105,6 @@ export class EventRecordFilterComponent
     this.filter.camera = undefined;
     this.filter.station = undefined;
     this.filterChange.emit(this.filter);
-    this.loadStation.emit(this.filter.station);
   }
   async onstation(item: SelectItem) {
     let opts: DivisionStationFilterOpts = {
@@ -122,7 +116,6 @@ export class EventRecordFilterComponent
     this.filter.station = item;
     this.filter.camera = undefined;
     this.filterChange.emit(this.filter);
-    this.loadCamera.emit(this.filter.camera);
   }
   oncamera(item: SelectItem) {
     this.filter.camera = item;

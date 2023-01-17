@@ -23,7 +23,7 @@
       <div class="interval" [class.hide]="!config.interval">
         <app-select-control
           [data]="interval.times"
-          (select)="timeSelect($event)"
+          (selectedChange)="timeSelect($event)"
         >
         </app-select-control>
       </div>
