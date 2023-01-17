@@ -34,7 +34,11 @@ export class GarbageStationFilterComponent implements OnInit, OnChanges {
     this.business = business;
   }
   async ngOnChanges(changes: SimpleChanges) {
-    this.items = await this.business.load(this.divisionId);
+    if (this.divisionId) {
+      this.items = await this.business.load(this.divisionId);
+    } else {
+      this.items = [];
+    }
   }
 
   async ngOnInit() {}

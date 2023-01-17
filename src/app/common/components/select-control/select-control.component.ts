@@ -50,6 +50,8 @@ export class SelectControlComponent implements OnInit, OnChanges {
         if (!this.selected) {
           this.selected = this.data[0];
         }
+      } else {
+        this.selected = undefined;
       }
     }
   }
