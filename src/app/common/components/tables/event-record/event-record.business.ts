@@ -97,8 +97,18 @@ export class EventRecordBusiness
       params.ResourceIds = [opts.cameraId];
     }
     if (opts.opts) {
-      params.ResourceName = opts.opts.text;
+      switch (opts.opts.propertyName) {
+        case 'Name':
+          params.StationName = opts.opts.text;
+          break;
+        case 'CommunityName':
+          params.CommunityName = opts.opts.text;
+          break;
+        default:
+          break;
+      }
     }
+
     return params;
   }
 

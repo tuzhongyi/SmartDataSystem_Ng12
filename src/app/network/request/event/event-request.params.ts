@@ -38,6 +38,10 @@ export class GetEventRecordsParams
   GridCellIds?: string[];
   /**	String	网格名称，支持LIKE	O */
   GridCellName?: string;
+  /**	String[]	所属小区ID列表	O */
+  CommunityIds?: string[];
+  /**	String	小区名称，支持LIKE	O */
+  CommunityName?: string;
 }
 
 export class GetGarbageDropEventRecordsParams
