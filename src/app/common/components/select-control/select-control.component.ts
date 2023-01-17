@@ -1,11 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { SelectItem } from './select-control.model';
 
@@ -28,6 +30,8 @@ export class SelectControlComponent implements OnInit, OnChanges {
   cansearch = false;
 
   constructor() {}
+  @ViewChild('element')
+  element?: ElementRef;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange) {
       if (this.load) {
@@ -80,28 +84,12 @@ export class SelectControlComponent implements OnInit, OnChanges {
     this.select.emit(this.selected);
   }
 
-  clear(event: Event) {
-    this.selected = undefined;
-    event.cancelBubble = true;
-    this.opened = false;
-    this.select.emit(undefined);
-  }
-  standby?: SelectItem[];
-  search(text: string) {
-    if (this.standby) {
-      this.data = this.standby;
-      this.standby = undefined;
+  onclear(e: Event) {
+    if (this.element) {
+      let control = this.element.nativeElement as HTMLSelectElement;
+      this.selected = undefined;
+      control.value = '请选择';
     }
-    if (text) {
-      if (this.data) {
-        this.standby = this.data;
-        this.data = this.data.filter((x) => {
-          return x.language.indexOf(text) >= 0;
-        });
-      }
-    }
-  }
-  onsearching(event: Event) {
-    event.cancelBubble = true;
+    e.stopImmediatePropagation();
   }
 }

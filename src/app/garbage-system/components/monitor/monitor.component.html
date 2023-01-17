@@ -30,6 +30,7 @@
         </div>
         <div class="map-control">
           <app-map-control
+            *ngIf="false"
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)"

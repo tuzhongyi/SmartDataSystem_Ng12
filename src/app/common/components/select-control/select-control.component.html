@@ -58,14 +58,21 @@
     {{ item.language }}
   </mat-option>
 </mat-select> -->
-<select
-  [(ngModel)]="selected"
-  (change)="onselect()"
-  style="font-family: HowellFont"
->
-  <option
-    [ngValue]="item"
-    *ngFor="let item of data"
-    [innerHTML]="item.language"
-  ></option>
-</select>
+<div class="select-control">
+  <select
+    #element
+    [(ngModel)]="selected"
+    (change)="onselect()"
+    style="font-family: HowellFont"
+  >
+    <option
+      [ngValue]="item"
+      *ngFor="let item of data"
+      [innerHTML]="item.language"
+    ></option>
+  </select>
+  <div class="clear" *ngIf="cannull && !!selected" (click)="onclear($event)">
+    <i class="howell-icon-Close"></i>
+  </div>
+  <div class="default" *ngIf="!selected">请选择</div>
+</div>
