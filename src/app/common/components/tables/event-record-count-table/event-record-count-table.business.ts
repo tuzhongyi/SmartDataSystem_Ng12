@@ -72,11 +72,13 @@ export class EventRecordCountTableBusiness
     interval.EndTime = opts.EndTime;
     if (opts.type === UserResourceType.Station) {
       let stations = await this.getGarbageStationList(id);
+      if (stations.length == 0) return [];
       let ids = stations.map((x) => x.Id);
       return this.getGarbageStationData(ids, interval, opts.unit);
     } else {
       let divisionType = EnumHelper.ConvertUserResourceToDivision(type);
       let divisions = await this.getDivisionList(id, divisionType);
+      if (divisions.length == 0) return [];
       let ids = divisions.map((x) => x.Id);
       return this.getDivisionData(ids, interval, opts.unit);
     }

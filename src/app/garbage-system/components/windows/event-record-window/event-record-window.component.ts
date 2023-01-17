@@ -18,6 +18,7 @@ import { EventRecordWindowRecordBusiness } from './business/event-record-window-
 import { EventRecordWindowBusiness } from './event-record-window.business';
 import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { ListType } from '../event-record-operation/event-record-operation.component';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Component({
   selector: 'howell-event-record-window',
@@ -50,6 +51,7 @@ export class EventRecordWindowComponent
   constructor(
     public record: EventRecordWindowRecordBusiness,
     public details: EventRecordWindowDetailsBusiness,
+    private globalStorage: GlobalStorageService,
     private business: EventRecordWindowBusiness
   ) {
     super();
@@ -70,7 +72,10 @@ export class EventRecordWindowComponent
 
   load: EventEmitter<string> = new EventEmitter();
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (!this.filter.divisionId)
+      this.filter.divisionId = this.globalStorage.divisionId;
+  }
 
   ngOnDestroy(): void {}
 
