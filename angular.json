@@ -5,7 +5,7 @@
     "cache": {
       "enabled": true
     },
-    "packageManager": "yarn"
+    "packageManager": "npm"
   },
   "version": 1,
   "newProjectRoot": "projects",
