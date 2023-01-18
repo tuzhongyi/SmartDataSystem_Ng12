@@ -18,27 +18,29 @@ export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
 }
 
 export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
-  constructor(args: ImageControlModelArgs<T>) {
-    this.id = args.id;
-    this.stationId = args.stationId;
-    this.name = args.name;
-    this.src = args.src;
-    this.onerror = args.onerror;
-    this.status = args.status;
-    this.camera = args.camera;
-    if (args.eventTime) {
-      this.eventTime = new Date(args.eventTime);
+  constructor(args?: ImageControlModelArgs<T>) {
+    if (args) {
+      this.id = args.id;
+      this.stationId = args.stationId;
+      this.name = args.name;
+      this.src = args.src;
+      this.onerror = args.onerror;
+      this.status = args.status;
+      this.camera = args.camera;
+      if (args.eventTime) {
+        this.eventTime = new Date(args.eventTime);
+      }
+      this.polygon = args.polygon;
+      this.rules = args.rules;
     }
-    this.polygon = args.polygon;
-    this.rules = args.rules;
   }
   eventTime?: Date;
   stationId?: string;
-  camera: T;
-  name: string;
-  src: Promise<string>;
-  id: string;
-  onerror: string;
+  camera!: T;
+  name!: string;
+  src!: Promise<string>;
+  id!: string;
+  onerror!: string;
   status: OnlineStatus = OnlineStatus.Offline;
   index = 0;
   polygon?: EventDataObject[];
