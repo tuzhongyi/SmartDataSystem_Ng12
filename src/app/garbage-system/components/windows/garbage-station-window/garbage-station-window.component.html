@@ -7,11 +7,11 @@
           </app-input-search-options>
         </div>
         <div class="operation" *ngIf="index === Index.record">
-          <howell-event-record-operation
+          <howell-garbage-station-window-record-operation
             (filter)="record.filter.display()"
             (search)="record.filter.onsearch($event)"
           >
-          </howell-event-record-operation>
+          </howell-garbage-station-window-record-operation>
         </div>
       </div>
     </app-tab-title>
