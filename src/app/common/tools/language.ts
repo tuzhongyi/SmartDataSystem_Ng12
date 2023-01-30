@@ -44,7 +44,7 @@ import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
-import { transformTime } from 'src/app/network/model/transform.model';
+import { transformTimespan } from 'src/app/network/model/transform.model';
 
 export class Language {
   static StationState(state: StationState) {
