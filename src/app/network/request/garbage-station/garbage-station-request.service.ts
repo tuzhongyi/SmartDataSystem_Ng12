@@ -37,7 +37,7 @@ import { GarbageVolume } from '../../model/garbage-volume.model';
 import { EventNumberStatistic } from '../../model/event-number-statistic.model';
 import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
 import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
 import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
 import { Member } from '../../model/member.model';
@@ -250,7 +250,7 @@ class CamerasFilesService {
     // percent: (percent: number) => void,
     // completely: (completely: boolean) => void
   ): Promise<RecordFileUrl> {
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     let url = GarbageStationUrl.camera(params.GarbageStationId).files(
       params.CameraId,
       data.BeginTime,
@@ -261,7 +261,7 @@ class CamerasFilesService {
     // this.basic.http.downloadFile(url, percent, completely);
   }
   upload(params: CameraUploadFileParams): Promise<RecordFileUrl> {
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     let url = GarbageStationUrl.camera(params.GarbageStationId).files(
       params.CameraId,
       data.BeginTime,

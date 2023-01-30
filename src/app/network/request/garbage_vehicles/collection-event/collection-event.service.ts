@@ -5,7 +5,7 @@
  * @Last Modified time: 2022-11-22 15:13:02
  */
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { VehicleEventInfo } from '../../../model/event-info.model';
 import { PagedList } from '../../../model/page_list.model';
 import {
@@ -62,7 +62,7 @@ class InfosService {
 
   list(params: GetEventInfosParams): Promise<PagedList<VehicleEventInfo>> {
     let url = GarbageVehicleEventUrl.info.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(type: number): Promise<VehicleEventInfo> {
@@ -94,7 +94,7 @@ class RecordsGarbageCollectionService {
     params: GetGarbageCollectionEventRecordsParams
   ): Promise<PagedList<GarbageCollectionEventRecord>> {
     let url = GarbageVehicleEventUrl.record.garbageCollection.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string): Promise<GarbageCollectionEventRecord> {
@@ -114,7 +114,7 @@ class RecordsRelayStateChangeService {
     params: GetRelayStateChangeEventRecordsParams
   ): Promise<PagedList<RelayStateChangeEventRecord>> {
     let url = GarbageVehicleEventUrl.record.relayStateChange.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string): Promise<RelayStateChangeEventRecord> {
@@ -134,7 +134,7 @@ class RecordsVehicleOnlineService {
     params: GetVehicleOnlineEventRecordsParams
   ): Promise<PagedList<VehicleOnlineEventRecord>> {
     let url = GarbageVehicleEventUrl.record.vehicleOnline.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string): Promise<VehicleOnlineEventRecord> {
@@ -154,7 +154,7 @@ class RecordsCameraOnlineService {
     params: GetVehicleOnlineEventRecordsParams
   ): Promise<PagedList<CameraOnlineEventRecord>> {
     let url = GarbageVehicleEventUrl.record.cameraOnline.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string): Promise<CameraOnlineEventRecord> {

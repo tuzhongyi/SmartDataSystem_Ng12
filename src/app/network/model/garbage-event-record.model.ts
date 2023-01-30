@@ -1,5 +1,5 @@
 import {
-  plainToClass,
+  plainToInstance,
   Transform,
   TransformationType,
   TransformFnParams,
@@ -193,13 +193,13 @@ function EventRecordDataTransformer(params: TransformFnParams) {
     case EventType.GarbageDropHandle:
     case EventType.GarbageDropTimeout:
     case EventType.GarbageDropSuperTimeout:
-      return plainToClass(GarbageDropEventData, params.value);
+      return plainToInstance(GarbageDropEventData, params.value);
     case EventType.GarbageFull:
-      return plainToClass(GarbageFullEventData, params.value);
+      return plainToInstance(GarbageFullEventData, params.value);
     case EventType.IllegalDrop:
-      return plainToClass(IllegalDropEventData, params.value);
+      return plainToInstance(IllegalDropEventData, params.value);
     case EventType.MixedInto:
-      return plainToClass(MixedIntoEventData, params.value);
+      return plainToInstance(MixedIntoEventData, params.value);
 
     default:
       throw new Error('EventRecordDataTransformer unknow eventtype');

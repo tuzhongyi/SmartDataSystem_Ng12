@@ -5,7 +5,7 @@
  * @Last Modified time: 2022-11-04 15:39:45
  */
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { GarbageVehicle } from '../../../model/garbage-vehicle.model';
 import { GisRoutePoint } from '../../../model/gis-point.model';
@@ -57,7 +57,7 @@ export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle
     params: GetGarbageVehiclesParams = new GetGarbageVehiclesParams()
   ): Promise<PagedList<GarbageVehicle>> {
     let url = GarbageVehicleUrl.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   excel(data?: BinaryData) {
@@ -107,7 +107,7 @@ class VehicleCameraService {
     params: GetGarbageVehicleCamerasParams = new GetGarbageVehicleCamerasParams()
   ) {
     let url = GarbageVehicleUrl.camera().list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basicType.paged(url, data);
   }
   create(camera: VehicleCamera) {
@@ -147,7 +147,7 @@ class VehicleRouteService {
     params: GetGarbageVehicleRouteParams = new GetGarbageVehicleRouteParams()
   ) {
     let url = GarbageVehicleUrl.route().list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basicType.paged(url, data);
   }
 }
@@ -157,7 +157,7 @@ class VehicleRelayService {
 
   reset(vehicleId: string, params: ResetRelayParams) {
     let url = GarbageVehicleUrl.relay(vehicleId).reset();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.postReturnString(url, data);
   }
 }

@@ -1,4 +1,4 @@
-import { classToClass } from 'class-transformer';
+import { instanceToInstance } from 'class-transformer';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 import { GisRoutePointModel } from 'src/app/network/view-model/gis-route-point.view-model';
@@ -19,7 +19,7 @@ export class CollectionMapRouteControlItemConverter
 {
   Convert(source: GisRoutePoint, ...res: any[]): GisRoutePointModel {
     let model = new GisRoutePointModel();
-    model = classToClass(source);
+    model = instanceToInstance(source);
     return model;
   }
 }

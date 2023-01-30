@@ -1,4 +1,4 @@
-import { ClassConstructor, classToPlain } from 'class-transformer';
+import { ClassConstructor, instanceToPlain } from 'class-transformer';
 import { HowellResponse } from '../model/howell-response.model';
 import { PagedList } from '../model/page_list.model';
 import { HowellAuthHttpService } from './howell-auth-http.service';
@@ -12,7 +12,7 @@ export class BaseRequestService {
     return ServiceHelper.ResponseProcess(response, type);
   }
   async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {
-    let data = classToPlain(model) as T;
+    let data = instanceToPlain(model) as T;
     let response = await this.http.put(url, data).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
@@ -24,7 +24,7 @@ export class BaseRequestService {
   async post<T>(url: string, type: ClassConstructor<T>, model?: T): Promise<T>;
 
   async post<T>(url: string, type: ClassConstructor<T>, args?: T | IParams) {
-    let data = classToPlain(args) as T | IParams;
+    let data = instanceToPlain(args) as T | IParams;
     let response = await this.http.post(url, data).toPromise();
     return ServiceHelper.ResponseProcess(response, type);
   }
@@ -41,7 +41,7 @@ export class BaseRequestService {
   async postArray<T>(url: string, type: ClassConstructor<T>, params?: IParams) {
     let data: IParams | undefined;
     if (params) {
-      data = classToPlain(params) as IParams;
+      data = instanceToPlain(params) as IParams;
     }
     let response = await this.http
       .post<IParams, HowellResponse<Array<T>>>(url, data)
@@ -51,7 +51,7 @@ export class BaseRequestService {
   async postReturnString(url: string, params?: IParams) {
     let data: IParams | undefined;
     if (params) {
-      data = classToPlain(params) as IParams;
+      data = instanceToPlain(params) as IParams;
     }
     let response = await this.http
       .post<IParams, HowellResponse<string>>(url, data)
@@ -70,7 +70,7 @@ export class BaseRequestService {
     return ServiceHelper.ResponseProcess(response, type);
   }
   async paged<T>(url: string, type: ClassConstructor<T>, params: IParams) {
-    let data = classToPlain(params) as IParams;
+    let data = instanceToPlain(params) as IParams;
     let response = await this.http
       .post<IParams, HowellResponse<PagedList<T>>>(url, data)
       .toPromise();

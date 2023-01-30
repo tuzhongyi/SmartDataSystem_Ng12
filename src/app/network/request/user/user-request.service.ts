@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
@@ -59,7 +59,7 @@ export class UserRequestService {
     params: GetUsersParams = new GetUsersParams()
   ): Promise<PagedList<User>> {
     let url = UserUrl.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
 
@@ -132,7 +132,7 @@ class LabelsService {
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.post<PagedList<UserLabel>>(url, PagedList, data);
   }
 
@@ -159,13 +159,13 @@ class PasswordsService {
 
   random(userId: string, params: RandomUserPaswordParams): Promise<string> {
     let url = UserUrl.password(userId).random();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.http.postReturnString(url, data).toPromise();
   }
 
   change(userId: string, params: ChangeUserPasswordParams) {
     let url = UserUrl.password(userId).change();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.post(url, User, data);
   }
 
@@ -192,7 +192,7 @@ class PasswordCheckService {
   }
 
   check(params: CheckCodeParams): Promise<PasswordCheckCodeResult> {
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     let url = PasswordUrl.checkCode();
     return this.basic.post(url, PasswordCheckCodeResult, data);
   }

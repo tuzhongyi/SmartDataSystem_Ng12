@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { IConverter } from '../../common/interfaces/converter.interface';
 import { CollectionPoint } from '../../network/model/collection-point.model';
@@ -13,8 +13,8 @@ export class CollectionPointModelConverter
 {
   constructor(private service: CollectionDivisionRequestService) {}
   Convert(source: CollectionPoint, ...res: any[]): CollectionPointModel {
-    let plain = classToPlain(source);
-    let model = plainToClass(CollectionPointModel, plain);
+    let plain = instanceToPlain(source);
+    let model = plainToInstance(CollectionPointModel, plain);
     if (source.DivisionId) {
       model.Division = this.service.get(source.DivisionId);
     }

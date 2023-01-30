@@ -5,7 +5,7 @@
  * @Last Modified time: 2022-11-06 16:13:36
  */
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { ClassificationNumber } from '../../../model/classification-number.mode';
 import { CollectionPoint } from '../../../model/collection-point.model';
 import { PagedList } from '../../../model/page_list.model';
@@ -102,7 +102,7 @@ class TrashCanService {
 
   list(params: GetTrashCansParams): Promise<PagedList<CollectionTrashCan>> {
     let url = GarbageVehicleCollectionPointUrl.trashcan().list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string) {
@@ -132,18 +132,18 @@ class StatisticsService {
 
   number(params: GetCollectionPointNumberParams) {
     let url = GarbageVehicleCollectionPointUrl.statistics.number();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.postArray(url, ClassificationNumber, data);
   }
 
   scoreTopList(params: GetCollectionPointScoreTopListParams) {
     let url = GarbageVehicleCollectionPointUrl.statistics.scoreTopList();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.paged(url, ScoreTop, data);
   }
   WeightTopList(params: GetCollectionPointWeightTopListParams) {
     let url = GarbageVehicleCollectionPointUrl.statistics.weightTopList();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.paged(url, WeightTop, data);
   }
 }

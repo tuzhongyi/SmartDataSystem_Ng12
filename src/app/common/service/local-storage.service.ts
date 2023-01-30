@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   ClassConstructor,
-  classToPlain,
+  instanceToPlain,
   ClassTransformer,
-  plainToClass,
+  plainToInstance,
 } from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { User, UserResource } from 'src/app/network/model/user.model';
@@ -31,13 +31,13 @@ export class LocalStorageService {
   static Get<T>(key: string, cls: ClassConstructor<T>): T | undefined {
     let plain = localStorage.getItem(key);
     if (plain) {
-      return plainToClass(cls, plain);
+      return plainToInstance(cls, plain);
     }
     return;
   }
 
   static Set<T>(key: string, value: T) {
-    // let plain = classToPlain(value);
+    // let plain = instanceToPlain(value);
     // localStorage.setItem(key, JSON.stringify(plain));
     localStorage.setItem(key, JSON.stringify(value));
   }

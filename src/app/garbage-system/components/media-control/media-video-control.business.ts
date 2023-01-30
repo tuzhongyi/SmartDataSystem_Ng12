@@ -24,7 +24,7 @@ import { ICamera } from 'src/app/network/model/camera.interface';
 import { Camera } from 'src/app/network/model/camera.model';
 import { MediaVideoControlArrayConverter } from './media-control.converter';
 import { IMediaControlBusiness } from './media-control.model';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class MediaVideoControlBussiness implements IMediaControlBusiness {
@@ -94,8 +94,8 @@ export class MediaVideoControlBussiness implements IMediaControlBusiness {
                     models[i].image &&
                     url.Id
                   ) {
-                    let plain = classToPlain(models[i].image);
-                    let img = plainToClass(ImageControlModel, plain);
+                    let plain = instanceToPlain(models[i].image);
+                    let img = plainToInstance(ImageControlModel, plain);
                     img.src = Medium.img(url.Id);
                     models[i].image = img;
                   }

@@ -5,7 +5,7 @@
  * @Last Modified time: 2022-11-06 15:35:53
  */
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { SRServer } from 'src/app/network/model/sr-server';
 import { VideoUrl } from 'src/app/network/model/url.model';
@@ -39,9 +39,9 @@ export class VehicleSRServerRequestService {
       let params = new GetVehiclePreviewUrlParams();
       params.CameraId = args;
       params.StreamType = stream;
-      data = classToPlain(params);
+      data = instanceToPlain(params);
     } else {
-      data = classToPlain(args);
+      data = instanceToPlain(args);
     }
 
     let url = GarbageVehicleSRServerUrl.preview();
@@ -61,9 +61,9 @@ export class VehicleSRServerRequestService {
       params.BeginTime = interval!.BeginTime;
       params.EndTime = interval!.EndTime;
       params.StreamType = stream;
-      data = classToPlain(params);
+      data = instanceToPlain(params);
     } else {
-      data = classToPlain(args);
+      data = instanceToPlain(args);
     }
 
     let url = GarbageVehicleSRServerUrl.vod();

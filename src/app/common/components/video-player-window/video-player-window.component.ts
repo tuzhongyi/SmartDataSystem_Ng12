@@ -22,11 +22,11 @@ import { PlayMode, VideoModel } from '../video-player/video.model';
 import { WindowComponent } from '../window-control/window.component';
 import { VideoPlayerWindowBusiness } from './video-player-window.business';
 import videoConfig from 'src/assets/configs/config.json';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { VideoConfig } from '../../models/video.config';
 
 // console.log(videoConfig);
-// console.log(plainToClass(ViedeoConfigModel, videoConfig));
+// console.log(plainToInstance(ViedeoConfigModel, videoConfig));
 
 @Component({
   selector: 'howell-video-player-window',

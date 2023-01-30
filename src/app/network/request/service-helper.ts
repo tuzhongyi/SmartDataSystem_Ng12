@@ -1,4 +1,4 @@
-import { ClassConstructor, plainToClass } from 'class-transformer';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { HowellResponse } from '../model/howell-response.model';
 import { PagedList } from '../model/page_list.model';
 
@@ -35,13 +35,13 @@ export class ServiceHelper {
       return response.Data;
     } else if ((response.Data as PagedList<T>).Page) {
       let result = response.Data as PagedList<T>;
-      result.Data = plainToClass(
+      result.Data = plainToInstance(
         t,
         (response.Data as PagedList<T>).Data
       ) as unknown as T[];
-      return plainToClass(PagedList, result);
+      return plainToInstance(PagedList, result);
     } else {
-      return plainToClass(t, response.Data);
+      return plainToInstance(t, response.Data);
     }
   }
 }

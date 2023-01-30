@@ -4,7 +4,11 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-12-21 14:46:13
  */
-import { plainToClass, Transform, TransformFnParams } from 'class-transformer';
+import {
+  plainToInstance,
+  Transform,
+  TransformFnParams,
+} from 'class-transformer';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleEventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -18,13 +22,13 @@ function EventRecordDataTransformer(params: TransformFnParams) {
   let record = params.obj as EventRecordData<any>;
   switch (record.EventType) {
     case VehicleEventType.Collection:
-      return plainToClass(GarbageCollectionEventData, params.value);
+      return plainToInstance(GarbageCollectionEventData, params.value);
     case VehicleEventType.RelayStateChange:
-      return plainToClass(RelayStateChangeEventData, params.value);
+      return plainToInstance(RelayStateChangeEventData, params.value);
     case VehicleEventType.VehicleOnline:
-      return plainToClass(VehicleOnlineEventData, params.value);
+      return plainToInstance(VehicleOnlineEventData, params.value);
     case VehicleEventType.CameraOnline:
-      return plainToClass(CameraOnlineEventData, params.value);
+      return plainToInstance(CameraOnlineEventData, params.value);
     default:
       throw new Error('EventRecordDataTransformer unknow eventtype');
   }

@@ -11,7 +11,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StatisticSummaryViewModel } from '../../statistic-summary.model';
@@ -39,7 +39,8 @@ export class StatisticSummaryTaskChartComponent
   @Input()
   EventTrigger?: EventEmitter<void>;
   @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryTaskChartViewModel> = new EventEmitter();
+  OnTriggerEvent: EventEmitter<StatisticSummaryTaskChartViewModel> =
+    new EventEmitter();
 
   @Input()
   Data?: StatisticSummaryViewModel[];

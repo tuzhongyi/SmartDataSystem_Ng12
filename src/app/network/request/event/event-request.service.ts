@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { EventInfo } from '../../model/event-info.model';
 import {
   GarbageDropEventRecord,
@@ -56,7 +56,7 @@ class InfosService {
 
   list(params: GetEventInfosParams): Promise<PagedList<EventInfo>> {
     let url = EventUrl.info.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(type: number): Promise<EventInfo> {
@@ -116,7 +116,7 @@ class RecordsIllegalDropService {
     params: GetEventRecordsParams
   ): Promise<PagedList<IllegalDropEventRecord>> {
     let url = EventUrl.record.illegaldrop.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
   get(id: string): Promise<IllegalDropEventRecord> {

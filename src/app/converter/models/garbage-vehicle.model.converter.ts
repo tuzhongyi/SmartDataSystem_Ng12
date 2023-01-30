@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain, plainToClass } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 import { IConverter } from '../../common/interfaces/converter.interface';
 import { GarbageVehicle } from '../../network/model/garbage-vehicle.model';
@@ -14,8 +14,8 @@ export class GarbageVehicleModelConverter
 {
   constructor(private service: CollectionDivisionRequestService) {}
   Convert(source: GarbageVehicle, ...res: any[]): GarbageVehicleModel {
-    let plain = classToPlain(source);
-    let model = plainToClass(GarbageVehicleModel, plain);
+    let plain = instanceToPlain(source);
+    let model = plainToInstance(GarbageVehicleModel, plain);
     if (source.DivisionId) {
       model.Division = this.service.get(source.DivisionId);
     }

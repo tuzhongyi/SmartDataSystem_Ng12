@@ -8,7 +8,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { plainToClass } from 'class-transformer';
+import { plainToInstance } from 'class-transformer';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -120,7 +120,7 @@ export class AuthorizationServiceModify implements CanActivate {
         );
         this._sessionStorageService.challenge = challenge;
         return axios(this._config).then((res: AxiosResponse<User>) => {
-          let result = plainToClass(User, res.data);
+          let result = plainToInstance(User, res.data);
           this._storeUserInfo(result, password);
           return result;
         });

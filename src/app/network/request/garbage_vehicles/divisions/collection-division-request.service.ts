@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
 import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
@@ -55,7 +55,7 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
     params: GetDivisionsParams = new GetDivisionsParams()
   ): Promise<PagedList<Division>> {
     let url = GarbageVehicleDivisionUrl.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
 
@@ -87,7 +87,7 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
   tree(params?: GetDivisionTreeParams): Promise<DivisionTree> {
     let url = GarbageVehicleDivisionUrl.tree();
     if (params) {
-      let data = classToPlain(params);
+      let data = instanceToPlain(params);
       return this.basic.post(url, DivisionTree, data);
     } else {
       return this.basic.get(url, DivisionTree);

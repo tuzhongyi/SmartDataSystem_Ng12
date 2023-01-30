@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { classToPlain } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
 import { IService } from 'src/app/business/Ibusiness';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
@@ -52,7 +52,7 @@ export class GridCellRequestService {
   }
   list(params: GetGridCellsParams): Promise<PagedList<GridCell>> {
     let url = GridCellUrl.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.type.paged(url, data);
   }
 
@@ -78,7 +78,7 @@ export class GridCellRequestService {
 }
 
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -88,18 +88,18 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   list(
     gridCellId: string,
     params: GetGridCellEventNumbersParams
   ): Promise<PagedList<EventNumberStatistic>> {
     let url = GridCellUrl.eventNumber(gridCellId).history.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.paged(url, EventNumberStatistic, data);
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -109,13 +109,13 @@ class StatisticService {
   }
 }
 class StatisticNumberService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
 
   list(
     params: GetGridCellStatisticNumbersParams
   ): Promise<PagedList<GridCellNumberStatistic>> {
     let url = GridCellUrl.statistic.number.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.paged(url, GridCellNumberStatistic, data);
   }
 
@@ -123,7 +123,7 @@ class StatisticNumberService {
     params: GetGridCellStatisticComparisonParams
   ): Promise<GridCellNumberStatisticComparison[]> {
     let url = GridCellUrl.statistic.number.comparison();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.postArray(url, GridCellNumberStatisticComparison, data);
   }
 
@@ -136,12 +136,12 @@ class StatisticNumberService {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   list(
     params: GetGridCellStatisticNumbersParamsV2
   ): Promise<GridCellNumberStatisticV2[]> {
     let url = GridCellUrl.statistic.number.history.list();
-    let data = classToPlain(params);
+    let data = instanceToPlain(params);
     return this.basic.postArray(url, GridCellNumberStatisticV2, data);
   }
 }
