@@ -33,7 +33,8 @@ export class GarbageStationWindowStayComponent
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
-  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> = new EventEmitter();
+  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
+    new EventEmitter();
 
   date: Date = new Date();
 
@@ -41,7 +42,7 @@ export class GarbageStationWindowStayComponent
 
   model: GarbageStationWindowStayModel = new GarbageStationWindowStayModel();
 
-  chartLoad: EventEmitter<void> = new EventEmitter();
+  chartLoad: EventEmitter<string> = new EventEmitter();
 
   constructor(business: GarbageStationWindowStayBusiness) {
     this.business = business;
@@ -55,21 +56,19 @@ export class GarbageStationWindowStayComponent
 
   async loadData(stationId: string, date: Date) {
     this.model = await this.business.load(stationId, date);
-    console.log(this.model);
-    this.chartLoad.emit();
+    // console.log(this.model);
+    this.chartLoad.emit(stationId);
   }
 
   changeDate(date: Date) {
     this.date = date;
     if (this.stationId) {
       this.loadData(this.stationId, this.date);
-      this.chartLoad.emit();
     }
   }
   onstationselect(station: GarbageStation) {
     this.stationId = station.Id;
-    this.loadData(this.stationId, this.date);
-    this.chartLoad.emit();
+    if (this.stationId) this.loadData(this.stationId, this.date);
   }
   onimage(model: ImageControlModel) {
     let array = new ImageControlModelArray([model], 0, true);

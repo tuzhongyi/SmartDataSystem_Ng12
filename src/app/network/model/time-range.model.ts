@@ -1,6 +1,6 @@
-import { Time } from '@angular/common';
 import { Transform } from 'class-transformer';
 import { IModel } from './model.interface';
+import { Time } from './time.model';
 import { transformTime } from './transform.model';
 
 /** 计数时间段 */

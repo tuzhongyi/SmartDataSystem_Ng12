@@ -63,6 +63,7 @@ export class GarbageStation extends Model {
   /**	Int32	评级	O */
   Grade?: number;
   /**	TimeRange[]	计数时间段	O */
+  @Type(() => TimeRange)
   CountSchedule?: TimeRange[];
   /**	String	地址	O */
   Address?: string;

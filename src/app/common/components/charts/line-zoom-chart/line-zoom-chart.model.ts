@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { TimeRange } from 'src/app/network/model/time-range.model';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
 import { ImageTimeData, ITimeData } from '../chart.model';
@@ -13,6 +14,7 @@ export type LineZoomChartSource = {
 export class LineZoomChartModel {
   count: ITimeData<GarbageStationGarbageCountStatistic>[] = [];
   record: ImageTimeData<IllegalDropEventRecord>[] = [];
+  timeRange?: TimeRange;
 }
 
 export class LineZoomLinePanel {

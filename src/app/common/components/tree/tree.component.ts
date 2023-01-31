@@ -285,7 +285,7 @@ export class TreeComponent implements OnInit {
       this.resourceType,
       this.depth
     );
-    console.log('树节点: ', nodes);
+    // console.log('树节点: ', nodes);
 
     this.dataChange.next(nodes);
 
@@ -353,7 +353,7 @@ export class TreeComponent implements OnInit {
     }
   }
   singleSelectNode(node: FlatTreeNode) {
-    console.log(node);
+    // console.log(node);
     if (this.holdStatus) {
       if (this.selection.isSelected(node)) {
         return;

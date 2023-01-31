@@ -51,13 +51,14 @@ export class LineZoomChartComponent
   business: IBusiness<IModel, LineZoomChartModel>;
 
   @Input()
-  load?: EventEmitter<void>;
+  load?: EventEmitter<string>;
 
   @Output()
   image: EventEmitter<ImageControlModel> = new EventEmitter();
 
   @Output()
-  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> = new EventEmitter();
+  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
+    new EventEmitter();
 
   @ViewChild('echarts')
   echarts?: ElementRef<HTMLDivElement>;
@@ -75,13 +76,11 @@ export class LineZoomChartComponent
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load) {
       if (this.load) {
-        this.load.subscribe((x) => {
-          this.business
-            .load(this.stationId, this.date, this.unit)
-            .then((data) => {
-              this.data = data;
-              this.setOption(this.data, option);
-            });
+        this.load.subscribe((stationId: string) => {
+          this.business.load(stationId, this.date, this.unit).then((data) => {
+            this.data = data;
+            this.setOption(this.data, option);
+          });
         });
       }
     }
@@ -120,7 +119,7 @@ export class LineZoomChartComponent
             });
             this.chart.getZr().on('dblclick', (params: any) => {
               if (this.chart && this.data) {
-                console.log(params);
+                // console.log(params);
                 let pointInPixel = [params.offsetX, params.offsetY];
                 let grid = this.chart.convertFromPixel(
                   { seriesIndex: 0 },
@@ -141,12 +140,14 @@ export class LineZoomChartComponent
               }
             });
           }
-          this.data = await this.business.load(
-            this.stationId,
-            this.date,
-            this.unit
-          );
-          this.setOption(this.data, option);
+          if (this.stationId) {
+            this.data = await this.business.load(
+              this.stationId,
+              this.date,
+              this.unit
+            );
+            this.setOption(this.data, option);
+          }
         }
       }
     );
@@ -203,13 +204,19 @@ export class LineZoomChartComponent
   }
 
   optionProcess(model: LineZoomChartModel, option: any) {
+    console.log(model);
     let begin = new Date(
       this.date.getFullYear(),
       this.date.getMonth(),
       this.date.getDate(),
-      9
+      model.timeRange ? model.timeRange.BeginTime.hour : 9
     );
-    let minutes = 12 * 60;
+    let minutes =
+      (model.timeRange
+        ? Math.abs(
+            model.timeRange.EndTime.hour - model.timeRange.BeginTime.hour
+          )
+        : 12) * 60;
     this.xAxisData = [];
     let counts = new Array();
     let records = new Array();
@@ -256,6 +263,7 @@ export class LineZoomChartComponent
     if (this.chart) {
       this.chart.resize();
       let option = this.optionProcess(data, opt);
+      // console.log(option);
       this.chart.setOption(option);
     }
   }
