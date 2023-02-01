@@ -4,6 +4,10 @@ export interface CommonModelSource {
 
 export type modelSource = CommonModelSource | CommonModelSource[];
 
+/**
+ *  Generic Type Parameter List <T1,T2,T3,...>
+ */
+
 export abstract class AbstractCommonModelConverter<M> {
   abstract Convert(source: modelSource, ...res: any[]): M;
 
@@ -30,4 +34,9 @@ export abstract class AbstractCommonModelPromiseConverter<T> {
     }
     return res;
   }
+}
+
+// Generic Constraints in term of another type parameter
+function getProperty<T, M extends keyof T>(obj: T, key: M) {
+  return obj[key];
 }
