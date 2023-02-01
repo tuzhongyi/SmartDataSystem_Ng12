@@ -35,3 +35,12 @@ export class AIModelManageConverter extends AbstractCommonModelConverter<AIModel
     return model;
   }
 }
+
+type Icon = typeof Conf;
+type Label = keyof Icon;
+
+function getIcon<T, M extends keyof T>(icons: T, key: M) {
+  return icons[key];
+}
+
+// getIcon(Conf, '11');
