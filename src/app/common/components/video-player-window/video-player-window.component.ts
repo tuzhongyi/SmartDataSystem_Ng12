@@ -70,7 +70,7 @@ export class VideoPlayerWindowComponent
 
   ngOnInit() {
     this.duration = this.config.getConfig().then((config) => {
-      console.log(config);
+      // console.log(config);
       if (this.time) {
         this.date = this.time;
       }

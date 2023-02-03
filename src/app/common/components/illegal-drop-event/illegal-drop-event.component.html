@@ -1,31 +1,184 @@
+<!-- 垃圾落地事件 -->
 <div class="illegal-drop-event vertical-layout">
+  <div class="operation">
+    <div class="operate-bar">
+      <div class="right-wrapper">
+        <div class="select-wrapper">
+          <select name="" id="">
+            <option value="">投放点</option>
+            <option value="">社区</option>
+          </select>
+        </div>
+        <div class="search-wrapper" style="width: 300px">
+          <input
+            [disabled]="searchInfo.Filter"
+            type="text"
+            placeholder="输入关键字"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
+        </div>
+        <div class="hw-normal-btn-group">
+          <button class="hw-blue-btn">
+            <i class="mdi mdi-magnify"></i>
+            查询
+          </button>
+          <div class="list-container">
+            <button class="hw-blue-m-btn" (click)="showMode = !showMode">
+              <i class="howell-icon-ul"></i>
+              <i class="mdi mdi-menu-down"></i>
+            </button>
+            <div class="list-body" *ngIf="showMode">
+              <ul>
+                <li>
+                  <a (click)="changeViewMode(ViewMode.table)">
+                    <i class="howell-icon-ul"></i>
+                  </a>
+                </li>
+                <li>
+                  <a (click)="changeViewMode(ViewMode.card)">
+                    <i class="howell-icon-cam-all1"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <button class="hw-cyan-m-btn" (click)="toggleFilterHandler()">
+            <i class="mdi mdi-filter-outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="filter-wrapper" *ngIf="searchInfo.Filter">
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">开始时间:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            [date]="searchInfo.BeginTime"
+            class="hw-form-control hw-form-input"
+          />
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">结束时间:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            readonly
+            DateTimePicker
+            [format]="dateFormat"
+            [date]="searchInfo.EndTime"
+            class="hw-form-control hw-form-input"
+          />
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">行政区:</span>
+        </div>
+        <div class="content">
+          <common-label-select
+            [selectedNodes]="selectedNodes"
+            [autoclose]="true"
+          >
+            <howell-division-tree
+              #tree
+              (selectTreeNode)="selectTreeNode($event)"
+            ></howell-division-tree>
+          </common-label-select>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="vertical-main">
-    <common-table
-      [dataSubject]="dataSubject"
-      [columnModel]="columnModel"
-      [displayedColumns]="displayedColumns"
-      [selectStrategy]="selectStrategy"
-      [tableOperates]="tableOperates"
-      [zoomIn]="zoomIn"
-      (selectTableRow)="selectTableRow($event)"
-    ></common-table>
+    <ng-template *ngIf="template" [ngTemplateOutlet]="template"></ng-template>
   </div>
 
   <div class="vertical-footer" style="justify-content: flex-end">
     <div class="footer-item">
       <div class="footer-info">
-        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+        <div class="info-item">当前数量: {{ page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page.TotalRecordCount }}</div>
       </div>
       <app-paginator
-        *ngIf="page"
         [length]="page.TotalRecordCount"
         [pageSize]="page.PageSize"
-        [pagerCount]="pagerCount"
-        [pageIndex]="pageIndex - 1"
+        [pageIndex]="page.PageIndex - 1"
         (page)="pageEvent($event)"
       >
       </app-paginator>
     </div>
   </div>
 </div>
+
+<ng-template #tableTemplate>
+  <div class="table-layout">
+    <div class="table-header">
+      <table class="big-table">
+        <colgroup>
+          <col *ngFor="let width of widths" [style.width]="width" />
+        </colgroup>
+
+        <thead>
+          <tr>
+            <th>图片</th>
+            <th>资源名称</th>
+            <th>投放点</th>
+            <th>街道</th>
+            <th>居委会</th>
+            <th>社区</th>
+            <th>上报时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="table-body zoomIn">
+      <table class="big-table">
+        <colgroup>
+          <col *ngFor="let width of widths" [style.width]="width" />
+        </colgroup>
+
+        <tbody>
+          <ng-template ngFor [ngForOf]="dataSource" let-item>
+            <tr>
+              <td>
+                <img
+                  [src]="item.ImageUrl | async"
+                  alt=""
+                  *ngIf="item.ImageUrl | async"
+                />
+              </td>
+              <td [title]="item.ResourceName">{{ item.ResourceName }}</td>
+              <td [title]="item.StationName">{{ item.StationName }}</td>
+              <td>{{ item.CountyName }}</td>
+              <td>{{ item.CommitteeName }}</td>
+              <td>{{ item.CommunityName }}</td>
+
+              <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
+              <td>
+                <a class="td-icon">
+                  <i class="howell-icon-video"></i>
+                </a>
+                <a class="td-icon">
+                  <i class="howell-icon-video"></i>
+                </a>
+                <a class="td-icon">
+                  <i class="howell-icon-video"></i>
+                </a>
+              </td>
+            </tr>
+          </ng-template>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-template>

@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
 import { CommonStatisticCardConverter } from 'src/app/common/components/common-statistic-card/common-statistic-card.converter';
 import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionMembersParams } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.params';

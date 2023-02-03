@@ -8,7 +8,7 @@ import {
 } from 'src/app/common/components/common-rank/common-rank.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';

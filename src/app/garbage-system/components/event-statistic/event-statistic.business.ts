@@ -4,7 +4,7 @@ import { EventStatisticConverter } from 'src/app/converter/event-statistic.conve
 import { StatisticLineEChartsConverter } from 'src/app/converter/statistic-line-eCharts.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { EventNumber } from 'src/app/network/model/event-number.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';

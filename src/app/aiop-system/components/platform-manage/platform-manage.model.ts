@@ -1,6 +1,5 @@
-import { CommonModel } from './common-model';
 
-export class PlatformManageModel implements CommonModel {
+export class PlatformManageModel {
   Id!: string;
   Name!: string;
   Url!: string;

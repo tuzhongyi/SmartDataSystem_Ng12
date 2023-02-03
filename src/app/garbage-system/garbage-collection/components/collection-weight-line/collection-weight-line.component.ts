@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { CommonLineChartComponent } from 'src/app/common/components/common-line-chart/common-line-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { CollectionWeightLineInnerBusiness } from './collection-weight-line-inner.business';

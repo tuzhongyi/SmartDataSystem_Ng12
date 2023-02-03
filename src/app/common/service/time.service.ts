@@ -5,6 +5,12 @@
  * @Last Modified time: 2023-01-12 15:37:17
  */
 // new Date(time)不影响 time
+
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class TimeService {
   /**
    *  日期起始：1970-1-1 00:00:00 UTC
@@ -108,6 +114,38 @@ export class TimeService {
   }
 
   static isValidDate(time: Date | string | number) {
+    if (typeof time === 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        return false;
+      }
+    } else if (typeof time == 'number' && time < 0) return false;
+
+    return true;
+  }
+
+  beginTime(time: Date | string | number) {
+    if (this.isValidDate(time)) {
+      return new Date(new Date(time).setHours(0, 0, 0, 0));
+    } else {
+      throw new TypeError('INVALID TYPE');
+    }
+  }
+  endTime(time: Date | string | number) {
+    if (time instanceof Date) {
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
+    } else if (typeof time == 'string') {
+      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
+        throw new TypeError('INVALID TIME');
+      }
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
+    } else if (typeof time == 'number' && time > 0) {
+      return new Date(new Date(time).setHours(23, 59, 59, 999));
+    } else {
+      throw new TypeError('INVALID TYPE');
+    }
+  }
+
+  isValidDate(time: Date | string | number) {
     if (typeof time === 'string') {
       if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
         return false;

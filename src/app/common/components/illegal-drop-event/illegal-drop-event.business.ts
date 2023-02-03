@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { count } from 'console';
-import { IllegalDropEventConverter } from 'src/app/converter/illegal-drop-event.converter';
+import { IllegalDropEventConverter } from 'src/app/common/components/illegal-drop-event/illegal-drop-event.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
@@ -8,7 +8,7 @@ import { EventRequestService } from 'src/app/network/request/event/event-request
 import {
   IllegalDropEventModel,
   IllegalDropEventSearchInfo,
-} from 'src/app/view-model/illegal-drop-event.model';
+} from 'src/app/common/components/illegal-drop-event/illegal-drop-event.model';
 import { LocaleCompare } from '../../tools/locale-compare';
 
 @Injectable()
@@ -20,19 +20,35 @@ export class IllegalDropEventBusiness {
     private _divisionRequest: DivisionRequestService,
     private _converter: IllegalDropEventConverter
   ) {}
-  async init(
-    searchInfo: IllegalDropEventSearchInfo,
-    pageIndex: number = 1,
-    pageSize: number = 9
-  ) {
+  async init(searchInfo: IllegalDropEventSearchInfo) {
+    let { Data, Page } = await this._listEventRecords(searchInfo);
+
+    // console.log(Data);
+
+    //  一定要等 County Division 注册后再 iterateToModel
+    await this._converter.getAllCounty();
+    let data = await this._converter.iterateToModel(Data);
+    data = data.sort((a, b) => {
+      return LocaleCompare.compare(a.EventTime, b.EventTime);
+    });
+
+    let res: PagedList<IllegalDropEventModel> = {
+      Page: Page,
+      Data: data,
+    };
+
+    return res;
+  }
+  private _listEventRecords(searchInfo: IllegalDropEventSearchInfo) {
     let params = new GetEventRecordsParams();
-    params.PageIndex = pageIndex;
-    params.PageSize = pageSize;
+    params.PageIndex = searchInfo.PageIndex;
+    params.PageSize = searchInfo.PageSize;
 
     if (!searchInfo.Filter) {
       params.BeginTime = searchInfo.BeginTime;
       params.EndTime = searchInfo.EndTime;
       params.ResourceName = searchInfo.Condition;
+      params.DivisionIds = searchInfo.DivisionIds;
     } else {
       params.BeginTime = searchInfo.BeginTime;
       params.EndTime = searchInfo.EndTime;
@@ -41,41 +57,6 @@ export class IllegalDropEventBusiness {
       params.ResourceIds = searchInfo.CameraIds;
     }
 
-    let tmp = await this._listEventRecords(params);
-
-    // console.log(tmp);
-    let data = await this._converter.iterateToModel(tmp.Data);
-    data = data.sort((a, b) => {
-      return LocaleCompare.compare(a.EventTime, b.EventTime);
-    });
-
-    for (let i = 0; i < data.length; i++) {
-      let model = data[i];
-      if (model.CommitteeId) {
-        let division = await this._getDivision(model.CommitteeId);
-        // console.log(division);
-        if (division.ParentId) {
-          model.CountyId = division.ParentId;
-
-          if (this._divisionMap.has(division.ParentId)) {
-            model.CountyName = this._divisionMap.get(division.ParentId)!;
-          } else {
-            let county = await this._getDivision(division.ParentId);
-            this._divisionMap.set(county.Id, county.Name);
-            model.CountyName = county.Name;
-          }
-        }
-      }
-    }
-
-    let res: PagedList<IllegalDropEventModel> = {
-      Page: tmp.Page,
-      Data: data,
-    };
-
-    return res;
-  }
-  private _listEventRecords(params: GetEventRecordsParams) {
     return this._eventRequest.record.IllegalDrop.list(params);
   }
   private _getDivision(id: string) {

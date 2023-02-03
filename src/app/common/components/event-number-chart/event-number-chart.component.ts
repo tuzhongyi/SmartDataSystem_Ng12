@@ -35,7 +35,7 @@ type ECOption = echarts.ComposeOption<
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EventNumberChartSearchInfo } from 'src/app/view-model/event-number-chart.model';
-import { TimeService } from '../../tools/time';
+import { TimeService } from '../../service/time.service';
 import { EventNumberChartBusiness } from './event-number-chart.business';
 
 @Component({

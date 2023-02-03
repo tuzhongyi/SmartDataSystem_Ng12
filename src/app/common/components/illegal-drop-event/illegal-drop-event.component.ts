@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -6,69 +6,143 @@ import { Page } from 'src/app/network/model/page_list.model';
 import {
   IllegalDropEventModel,
   IllegalDropEventSearchInfo,
-} from 'src/app/view-model/illegal-drop-event.model';
+} from 'src/app/common/components/illegal-drop-event/illegal-drop-event.model';
 import {
   TableColumnModel,
   TableOperateModel,
 } from 'src/app/view-model/table.model';
-import { TimeService } from '../../tools/time';
+import { TimeService } from '../../service/time.service';
 import { IllegalDropEventBusiness } from './illegal-drop-event.business';
 
-import { IllegalDropEventConf } from './illegal-drop-event.conf';
+import { IllegalDropEventConverter } from './illegal-drop-event.converter';
+import { ViewMode } from 'src/app/enum/view-mode.enum';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { DivisionTreeSource } from '../division-tree/division-tree.model';
+import { Division } from 'src/app/network/model/division.model';
+import { Language } from '../../tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Component({
   selector: 'howell-illegal-drop-event',
   templateUrl: './illegal-drop-event.component.html',
   styleUrls: ['./illegal-drop-event.component.less'],
-  providers: [IllegalDropEventBusiness],
+  providers: [IllegalDropEventBusiness, IllegalDropEventConverter],
 })
 export class IllegalDropEventComponent implements OnInit {
-  // Table
-  dataSubject = new BehaviorSubject<IllegalDropEventModel[]>([]);
-  selectStrategy = SelectStrategy.Single;
-  columnModel: TableColumnModel[] = [...IllegalDropEventConf]; // 表格列配置详情
-  displayedColumns: string[] = this.columnModel.map((model) => model.columnDef); // 表格列 id
-  tableOperates: TableOperateModel[] = [];
-  zoomIn = true;
-  selectedRows: IllegalDropEventModel[] = []; //table选中项
-  willBeDeleted: IllegalDropEventModel[] = [];
+  Language = Language;
+  ViewMode = ViewMode;
+  EventType = EventType;
 
-  // Paginator
-  page: Page | null = null;
-  pagerCount: number = 4;
-  pageIndex = 1;
+  dateFormat: string = 'yyyy年MM月dd日';
+  showMode = false;
+
+  widths = ['7%', '13%', '10%', '10%', '10%', '10%', '10%', '5%'];
+  dataSource: IllegalDropEventModel[] = [];
+  selectedNodes: CommonFlatNode[] = [];
+
+  page: Page = {
+    PageIndex: 0,
+    PageSize: 0,
+    RecordCount: 0,
+    TotalRecordCount: 0,
+    PageCount: 0,
+  };
 
   today = new Date();
   searchInfo: IllegalDropEventSearchInfo = {
     Condition: '',
-    BeginTime: TimeService.beginTime(this.today),
-    EndTime: TimeService.endTime(this.today),
+    BeginTime: this._timeService.beginTime(this.today),
+    EndTime: this._timeService.endTime(this.today),
     // DivisionIds: ['310109000000', '310110018000', '310109011002'],
-    DivisionIds: [],
+    DivisionIds: ['310109000000'],
     StationIds: [],
     CameraIds: [],
-    Filter: true,
+    Filter: false,
+    PageIndex: 1,
+    PageSize: 9,
   };
-  constructor(private _business: IllegalDropEventBusiness) {}
+
+  viewMode = ViewMode.table;
+  template?: TemplateRef<HTMLElement>;
+
+  @ViewChild('tableTemplate') tableTemplate?: TemplateRef<HTMLElement>;
+  @ViewChild('cardTemplate') cardTemplate?: TemplateRef<HTMLElement>;
+
+  constructor(
+    private _business: IllegalDropEventBusiness,
+    private _timeService: TimeService
+  ) {}
 
   async ngOnInit() {
     this._init();
   }
   private async _init() {
-    let res = await this._business.init(this.searchInfo, this.pageIndex);
-    console.log(res);
+    let res = await this._business.init(this.searchInfo);
 
+    // console.log(res);
     this.page = res.Page;
-    this.dataSubject.next(res.Data);
+
+    this.dataSource = res.Data;
+  }
+  ngAfterViewInit(): void {
+    // template 加载完后，再进行一次 change detection
+    setTimeout(() => {
+      this._render();
+    }, 0);
   }
 
-  selectTableRow(rows: IllegalDropEventModel[]) {
-    this.selectedRows = rows;
+  search() {
+    this.searchInfo.PageIndex = 1;
+    this._init();
   }
 
   pageEvent(pageInfo: PageEvent) {
-    if (this.pageIndex == pageInfo.pageIndex + 1) return;
-    this.pageIndex = pageInfo.pageIndex + 1;
+    if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
+    this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
     this._init();
+  }
+  toggleFilterHandler() {
+    this.searchInfo.Filter = !this.searchInfo.Filter;
+    if (!this.searchInfo.Filter) {
+      // 重置状态
+      this.searchInfo.BeginTime = TimeService.beginTime(this.today);
+      this.searchInfo.EndTime = TimeService.endTime(this.today);
+    }
+  }
+  changeBegin(date: Date) {
+    this.searchInfo.BeginTime = date;
+  }
+  changeEnd(date: Date) {
+    this.searchInfo.EndTime = date;
+  }
+  changeViewMode(viewMode: ViewMode) {
+    console.log(viewMode);
+    this.viewMode = viewMode;
+    this.showMode = false;
+    if (viewMode == ViewMode.table) {
+      this.searchInfo.PageIndex = 1;
+      this.searchInfo.PageSize = 9;
+    } else if (viewMode == ViewMode.card) {
+      this.searchInfo.PageIndex = 1;
+      this.searchInfo.PageSize = 12;
+    }
+    this._init();
+    this._render();
+  }
+
+  selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
+    this.selectedNodes = nodes;
+    // for (let i = 0; i < nodes.length; i++) {
+    //   const node = nodes[i];
+    //   this.division = node.RawData as Division;
+    // }
+  }
+
+  private _render() {
+    if (this.viewMode == ViewMode.table) {
+      this.template = this.tableTemplate;
+    } else if (this.viewMode == ViewMode.card) {
+      this.template = this.cardTemplate;
+    }
   }
 }

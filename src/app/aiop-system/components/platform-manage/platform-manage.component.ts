@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import {
   PlatformManageModel,
   PlatformManageSearch,
-} from 'src/app/view-model/platform-manage.model';
+} from 'src/app/aiop-system/components/platform-manage/platform-manage.model';
 import {
   TableCellEvent,
   TableColumnModel,

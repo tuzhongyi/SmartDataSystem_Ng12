@@ -5,7 +5,7 @@ import {
   ICommonLineCharBusiness,
 } from 'src/app/common/components/common-line-chart/common-line-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { GetDivisionGarbageWeightsParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';

@@ -5,7 +5,7 @@ import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { TimeService } from '../../tools/time';
+import { TimeService } from '../../service/time.service';
 
 @Injectable()
 export class EventNumberChartBusiness {

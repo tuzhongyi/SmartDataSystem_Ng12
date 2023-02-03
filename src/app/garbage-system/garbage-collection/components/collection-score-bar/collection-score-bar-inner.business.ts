@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CommonBarChartConverter } from 'src/app/common/components/common-bar-chart/common-bar-chart.converter';
 import { ICommonBarCharBusiness } from 'src/app/common/components/common-bar-chart/common-bar-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GetDivisionGarbageScoresParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';

@@ -11,7 +11,7 @@ import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Language } from 'src/app/common/tools/language';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -37,6 +37,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   Language = Language;
   ViewMode = ViewMode;
   EventType = EventType;
+  
   windowModel = new WindowViewModel();
 
   widths = ['10%', '15%', '10%', '10%', '10%', '10%', '5%'];
@@ -57,8 +58,6 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     TotalRecordCount: 0,
     PageCount: 0,
   };
-
-  pagerCount: number = 4;
 
   // 搜索
   dateFormat: string = 'yyyy年MM月dd日';
@@ -90,13 +89,12 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
 
-  @ViewChild('tableTemplate') tableTemplate?: TemplateRef<HTMLElement>;
-  @ViewChild('cardTemplate') cardTemplate?: TemplateRef<HTMLElement>;
+  @ViewChild('tableTemplate', { static: false })
+  tableTemplate?: TemplateRef<HTMLElement>;
+  @ViewChild('cardTemplate', { static: false })
+  cardTemplate?: TemplateRef<HTMLElement>;
 
-  constructor(
-    private _business: AICameraEventsBusiness,
-    private _toastrService: ToastrService
-  ) {}
+  constructor(private _business: AICameraEventsBusiness) {}
 
   async ngOnInit() {
     let { Data } = await this._business.listAIModels();
@@ -112,11 +110,12 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    // template 加载完后，再进行一次 change detection
     setTimeout(() => {
       this._render();
     }, 0);
   }
-  async search() {
+  search() {
     this.searchInfo.PageIndex = 1;
     this._init();
   }
@@ -129,6 +128,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   toggleFilterHandler() {
     this.searchInfo.Filter = !this.searchInfo.Filter;
     if (!this.searchInfo.Filter) {
+      // 重置状态
       this.searchInfo.BeginTime = TimeService.beginTime(this.today);
       this.searchInfo.EndTime = TimeService.endTime(this.today);
       this.searchInfo.EventType = EventType.None;
@@ -170,9 +170,5 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     } else if (this.viewMode == ViewMode.card) {
       this.template = this.cardTemplate;
     }
-  }
-
-  private _clickPlay(row: AICameraEventsModel) {
-    console.log(row);
   }
 }

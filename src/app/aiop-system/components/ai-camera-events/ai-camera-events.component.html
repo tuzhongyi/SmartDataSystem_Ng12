@@ -1,9 +1,9 @@
 <div class="ai-camera-events">
   <div class="vertical-layout">
-    <div class="vertical-header">
+    <div class="vertical-header" style="margin-bottom: 5px">
       <div class="hw-second-title">AI事件</div>
 
-      <div class="operate-bar inline-bar">
+      <div class="operate-bar">
         <div class="right-wrapper">
           <div class="search-wrapper">
             <input
@@ -121,7 +121,6 @@
           *ngIf="page"
           [length]="page.TotalRecordCount"
           [pageSize]="page.PageSize"
-          [pagerCount]="pagerCount"
           [pageIndex]="page.PageIndex - 1"
           (page)="pageEvent($event)"
         >
@@ -208,11 +207,18 @@
                 <i class="m-r-5 howell-icon-video"></i>
               </a>
             </div>
-            <div style="font-size: 14px">{{ item.EventTime }}</div>
+            <div style="font-size: 14px">
+              {{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </div>
           </div>
         </div>
         <div class="hw-card-body">
-          <img [src]="item.ImageUrl" alt="" />
+          <img
+            [src]="item.ImageUrl | async"
+            alt=""
+            *ngIf="item.ImageUrl | async"
+            alt=""
+          />
         </div>
         <div class="hw-card-footer">
           <div>{{ item.EventType }}</div>

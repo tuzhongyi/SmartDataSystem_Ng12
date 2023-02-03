@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { CollectionPointWeightBusiness } from './collection-point-weight.business';
 import { CollectionPointWeightConverter } from './collection-point-weight.converter';
 import {

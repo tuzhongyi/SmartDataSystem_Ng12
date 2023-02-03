@@ -7,7 +7,7 @@ import { GetPlatformsParams } from 'src/app/network/request/platform/platforms.p
 import {
   PlatformManageModel,
   PlatformManageSearch,
-} from 'src/app/view-model/platform-manage.model';
+} from 'src/app/aiop-system/components/platform-manage/platform-manage.model';
 
 @Injectable()
 export class PlatformManageBusiness {

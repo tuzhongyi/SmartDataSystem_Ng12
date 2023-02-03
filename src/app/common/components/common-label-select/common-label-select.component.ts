@@ -17,11 +17,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonTree } from '../common-tree/common-tree';
-import { LabelTreeComponent } from '../label-tree/label-tree.component';
 
 /**
  *  显示树的选中节点信息
@@ -79,8 +76,5 @@ export class CommonLabelSelecComponent
   }
   closeDropDown() {
     this.showDropDown = false;
-  }
-  blur() {
-    // this.showDropDown = false;
   }
 }

@@ -18,7 +18,7 @@ import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
 import { GlobalStorageService } from '../../service/global-storage.service';
 import { Language } from '../../tools/language';
-import { TimeService } from '../../tools/time';
+import { TimeService } from '../../service/time.service';
 import { SelectItem } from '../select-control/select-control.model';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';

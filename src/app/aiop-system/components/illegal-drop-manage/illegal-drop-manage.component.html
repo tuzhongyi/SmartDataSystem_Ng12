@@ -1,3 +1,12 @@
 <div class="illegal-drop-manage">
-  <howell-illegal-drop></howell-illegal-drop>
+  <div class="illegal-drop-header">
+    <div class="hw-second-title">垃圾落地</div>
+    <common-tab
+      [dataSource]="tabHeaders"
+      (clickEvent)="clickTab($event)"
+    ></common-tab>
+  </div>
+  <div class="illegal-drop-main">
+    <ng-container *ngComponentOutlet="componentExpression"></ng-container>
+  </div>
 </div>

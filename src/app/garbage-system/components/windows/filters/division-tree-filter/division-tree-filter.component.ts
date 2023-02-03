@@ -34,7 +34,7 @@ export class DivisionTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
   @Input()
-  type: DivisionType;
+  type: DivisionType = DivisionType.City;
 
   resourceType = UserResourceType.County;
 
@@ -65,7 +65,7 @@ export class DivisionTreeFilterComponent
   HorizontalAlign = HorizontalAlign;
 
   constructor(private store: GlobalStorageService) {
-    this.type = store.divisionType;
+    // this.type = store.divisionType;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {

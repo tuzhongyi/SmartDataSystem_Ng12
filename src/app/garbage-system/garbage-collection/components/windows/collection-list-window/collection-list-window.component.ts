@@ -2,7 +2,7 @@ import { Component, OnInit, Optional } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { TimeService } from 'src/app/common/tools/time';
+import { TimeService } from 'src/app/common/service/time.service';
 import { Page } from 'src/app/network/model/page_list.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionListWindowBusiness } from './collection-list-window.business';

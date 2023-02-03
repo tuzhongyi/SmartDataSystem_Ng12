@@ -1,4 +1,4 @@
-import { PlatformManageModel } from 'src/app/view-model/platform-manage.model';
+import { PlatformManageModel } from 'src/app/aiop-system/components/platform-manage/platform-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 /**
