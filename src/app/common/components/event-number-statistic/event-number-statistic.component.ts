@@ -161,7 +161,6 @@ export class EventNumberStatisticComponent implements OnInit {
 
   // 更改日期,重新计算开始/结束时间
   changeDate(date: Date) {
-    this.curDate = date;
     this._updateSearchInfo();
   }
 

@@ -7,21 +7,21 @@
       [format]="'yyyy-MM-dd HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [date]="filter.BeginTime"
-      (change)="changeBegin($event)"
+      [(date)]="filter.BeginTime"
+      (dateChange)="changeBegin($event)"
       class=""
     />
   </div>
   <div class="filter-item datetime">
-    <span>开始时间</span>
+    <span>结束时间</span>
     <input
       type="text"
       DateTimePicker
       [format]="'yyyy-MM-dd HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [date]="filter.EndTime"
-      (change)="changeEnd($event)"
+      [(date)]="filter.EndTime"
+      (dateChange)="changeEnd($event)"
       class=""
     />
   </div>

@@ -228,9 +228,6 @@ export class GarbageStationWindowDetailsComponent
     );
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
   ontype(item: SelectItem) {
     this.type = item.value;
   }

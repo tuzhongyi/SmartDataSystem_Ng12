@@ -30,8 +30,7 @@
             [format]="'yyyy-MM-dd'"
             [startView]="DateTimePickerView.month"
             [minView]="DateTimePickerView.month"
-            [date]="date"
-            (change)="changeDate($event)"
+            [(date)]="date"
             class=""
           />
         </div>

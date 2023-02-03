@@ -86,9 +86,6 @@ export class EventRecordCountComponent implements OnInit {
     }
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
   ontimeunit(unit: SelectItem) {
     this.unit = unit.value;
   }

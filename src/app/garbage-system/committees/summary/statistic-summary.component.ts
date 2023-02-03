@@ -20,6 +20,7 @@ import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { StatisticSummaryExportExcelBusiness } from './business/statistic-summary-export-excel.business';
 import { StatisticSummaryViewModel } from './statistic-summary.model';
 import { StatisticSummaryService } from './statistic-summary.service';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 
 @Component({
   selector: 'app-statistic-summary',
@@ -66,7 +67,7 @@ export class StatisticSummaryComponent
     return this._unit;
   }
 
-  dateView = 2;
+  dateView = DateTimePickerView.month;
 
   language = {
     format: 'yyyy年MM月dd日',

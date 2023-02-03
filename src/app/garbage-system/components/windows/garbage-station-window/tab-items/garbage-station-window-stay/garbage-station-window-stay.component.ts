@@ -61,9 +61,8 @@ export class GarbageStationWindowStayComponent
   }
 
   changeDate(date: Date) {
-    this.date = date;
     if (this.stationId) {
-      this.loadData(this.stationId, this.date);
+      this.loadData(this.stationId, date);
     }
   }
   onstationselect(station: GarbageStation) {

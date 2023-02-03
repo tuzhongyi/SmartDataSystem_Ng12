@@ -174,12 +174,6 @@ export class CollectionRecordWindowComponent implements OnInit {
     }
   }
 
-  changeBegin(date: Date) {
-    this.searchInfo.BeginTime = date;
-  }
-  changeEnd(date: Date) {
-    this.searchInfo.EndTime = date;
-  }
   selectTreeNode(nodes: CommonFlatNode[]) {
     this.commonTreeSelect.closeDropDown();
 

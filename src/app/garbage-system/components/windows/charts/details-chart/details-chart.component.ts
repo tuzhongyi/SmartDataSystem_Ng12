@@ -240,7 +240,6 @@ export class DetailsChartComponent
   }
 
   changeDate(date: Date) {
-    this.date = date;
     this.loadData();
   }
 

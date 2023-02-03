@@ -120,9 +120,6 @@ export class VideoPlayerWindowComponent
       }
     }
   }
-  changeDate(date: Date) {
-    this.date = date;
-  }
   changeMode(mode: PlayMode) {
     this.mode = mode;
     if (mode == PlayMode.live) {

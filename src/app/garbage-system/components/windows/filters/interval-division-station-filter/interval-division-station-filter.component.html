@@ -7,8 +7,8 @@
       [format]="'yyyy-MM-dd HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [date]="filter.BeginTime"
-      (change)="changeBegin($event)"
+      [(date)]="filter.BeginTime"
+      (dateChange)="changeBegin($event)"
       class=""
     />
   </div>
@@ -20,8 +20,8 @@
       [format]="'yyyy-MM-dd HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [date]="filter.EndTime"
-      (change)="changeEnd($event)"
+      [(date)]="filter.EndTime"
+      (dateChange)="changeEnd($event)"
       class=""
     />
   </div>

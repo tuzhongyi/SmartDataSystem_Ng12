@@ -83,13 +83,11 @@ export class EventRecordFilterComponent
 
   changeBegin(date: Date) {
     if (this.filter) {
-      this.filter.BeginTime = date;
       this.filterChange.emit(this.filter);
     }
   }
   changeEnd(date: Date) {
     if (this.filter) {
-      this.filter.EndTime = date;
       this.filterChange.emit(this.filter);
     }
   }

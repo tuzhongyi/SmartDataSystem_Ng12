@@ -93,17 +93,6 @@ export class EventRecordDetailsTableComponent
 
   searchEvent: EventEmitter<EventRecordFilter> = new EventEmitter();
 
-  changeBegin(date: Date) {
-    if (this.filter) {
-      this.filter.BeginTime = date;
-    }
-  }
-  changeEnd(date: Date) {
-    if (this.filter) {
-      this.filter.EndTime = date;
-    }
-  }
-
   search() {
     this.searchEvent.emit(this.filter);
   }

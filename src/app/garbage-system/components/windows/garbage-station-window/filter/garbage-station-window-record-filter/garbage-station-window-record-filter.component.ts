@@ -111,11 +111,9 @@ export class GarbageStationWindowRecordFilterComponent
     this.model = await this.business.load(divisionId);
   }
   changeBegin(date: Date) {
-    this.filter.BeginTime = date;
     this.filterChange.emit(this.filter);
   }
   changeEnd(date: Date) {
-    this.filter.EndTime = date;
     this.filterChange.emit(this.filter);
   }
   ondivision(item: Division) {

@@ -52,7 +52,6 @@ export class CollectionMapRouteQueryComponent
   }
 
   changeDate(date: Date) {
-    this.date = date;
     this.dateChange.emit(date);
   }
 

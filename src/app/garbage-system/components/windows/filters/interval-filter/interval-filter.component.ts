@@ -27,10 +27,4 @@ export class IntervalFilterComponent implements OnInit, OnChanges {
   model: DurationParams = new DurationParams();
 
   ngOnInit(): void {}
-  changeBegin(date: Date) {
-    this.model.BeginTime = date;
-  }
-  changeEnd(date: Date) {
-    this.model.EndTime = date;
-  }
 }
