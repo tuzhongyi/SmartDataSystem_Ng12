@@ -177,10 +177,6 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
     }
     this.myChart?.setOption(this.option);
   }
-  changeDate(date: Date) {
-    this.curDate = date;
-    // this._updateSearchInfo();
-  }
   search() {}
 
   selectTreeNode(data: any) {

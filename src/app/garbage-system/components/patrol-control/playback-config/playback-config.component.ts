@@ -86,10 +86,6 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
     });
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
-
   changeBeginTime(date: Date) {
     this.beginTime = date;
   }

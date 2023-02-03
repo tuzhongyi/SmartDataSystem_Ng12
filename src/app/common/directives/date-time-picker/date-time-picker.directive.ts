@@ -22,14 +22,24 @@ export class DateTimePickerDirective
 {
   private ele: HTMLInputElement;
   @Input('format') format = 'yyyy-MM-dd';
-  @Input('date') date: Date = new Date();
+
   // @Input('changeDate') changeDate: (val: any) => void;
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;
   @Input('minView') minView: DateTimePickerView = DateTimePickerView.month;
   @Input('week') week: boolean = false;
 
-  @Output('change')
-  change: EventEmitter<Date> = new EventEmitter();
+  private _date: Date = new Date();
+  public get date(): Date {
+    return this._date;
+  }
+  @Input('date')
+  public set date(v: Date) {
+    this._date = v;
+    this.dateChange.emit(v);
+  }
+
+  @Output()
+  dateChange: EventEmitter<Date> = new EventEmitter();
 
   changing = false;
 
@@ -81,7 +91,7 @@ export class DateTimePickerDirective
           initialDate: value,
         })
         .on('changeDate', (ev: { date: Date }) => {
-          this.change.emit(ev.date);
+          this.date = ev.date;
           this.changing = true;
           const week_ = OneWeekDate(ev.date);
           $(this.ele).val(
@@ -135,7 +145,9 @@ export class DateTimePickerDirective
           initialDate: value,
         })
         .on('changeDate', (ev: { date: Date | undefined }) => {
-          this.change.emit(ev.date);
+          if (ev.date) {
+            this.date = ev.date;
+          }
           this.changing = true;
         })
         .on('show', (ev: any) => {

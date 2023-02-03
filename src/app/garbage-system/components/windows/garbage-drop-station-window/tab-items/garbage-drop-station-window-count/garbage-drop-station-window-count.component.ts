@@ -142,10 +142,6 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     }
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
-
   onTypeChange(item: SelectItem) {
     this.type = item.value;
     console.log(item);

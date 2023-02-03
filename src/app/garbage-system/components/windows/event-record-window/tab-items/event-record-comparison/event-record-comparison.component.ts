@@ -231,9 +231,6 @@ export class EventRecordComparisonComponent
     }
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
   ontimeunit(item: SelectItem) {
     this.unit = item.value;
     this.loadData();

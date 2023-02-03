@@ -53,10 +53,6 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     this.initUnits();
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
-
   ontimeunit(unit: SelectItem) {
     this.unit = unit.value;
     this.unitSelected = unit;

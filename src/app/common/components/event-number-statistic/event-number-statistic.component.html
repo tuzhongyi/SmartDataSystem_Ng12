@@ -13,9 +13,9 @@
               readonly
               DateTimePicker
               [format]="dateFormat"
-              [date]="curDate"
+              [(date)]="curDate"
               [week]="week"
-              (change)="changeDate($event)"
+              (dateChange)="changeDate($event)"
               class="hw-form-control hw-form-input"
             />
           </div>

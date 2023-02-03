@@ -26,8 +26,7 @@
             DateTimePicker
             [format]="dateFormat"
             [minView]="DateTimePickerView.hour"
-            [date]="searchInfo.BeginTime"
-            (change)="changeBegin($event)"
+            [(date)]="searchInfo.BeginTime"
             class="hw-form-control hw-form-input"
           />
         </div>
@@ -44,8 +43,7 @@
             DateTimePicker
             [format]="dateFormat"
             [minView]="DateTimePickerView.hour"
-            [date]="searchInfo.EndTime"
-            (change)="changeEnd($event)"
+            [(date)]="searchInfo.EndTime"
           />
         </div>
       </div>

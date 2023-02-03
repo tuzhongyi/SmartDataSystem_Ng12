@@ -10,8 +10,7 @@
           [startView]="dateTimePickerConfig.view"
           [minView]="dateTimePickerConfig.view"
           [week]="dateTimePickerConfig.week"
-          [date]="date"
-          (change)="changeDate($event)"
+          [(date)]="date"
           class=""
         />
       </div>

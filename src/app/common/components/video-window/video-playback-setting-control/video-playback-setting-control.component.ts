@@ -46,10 +46,6 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
     this.time.begin = new TimeModel(temp);
   }
 
-  changeDate(date: Date) {
-    this.date = date;
-  }
-
   @Output()
   playback: EventEmitter<DurationParams> = new EventEmitter();
   @Output()

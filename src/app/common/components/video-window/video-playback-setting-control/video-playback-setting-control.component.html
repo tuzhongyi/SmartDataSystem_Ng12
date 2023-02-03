@@ -12,8 +12,7 @@
           type="text"
           DateTimePicker
           [format]="'yyyy-MM-dd'"
-          [date]="date"
-          (change)="changeDate($event)"
+          [(date)]="date"
           class="date"
         />
       </div>
