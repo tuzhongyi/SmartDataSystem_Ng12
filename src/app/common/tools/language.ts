@@ -45,6 +45,7 @@ import { CollectionPointClassification } from 'src/app/enum/collection-point-cla
 import { Gender } from 'src/app/enum/gender.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { transformTimespan } from 'src/app/network/model/transform.model';
+import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -583,6 +584,21 @@ export class Language {
       case CollectionMemberType.Other:
       default:
         return Language.json.other;
+    }
+  }
+
+  static SearchOptionKey(key?: SearchConditionKey) {
+    switch (key) {
+      case SearchConditionKey.None:
+        return Language.json.SearchConditionKey.None;
+      case SearchConditionKey.Name:
+        return Language.json.SearchConditionKey.Name;
+      case SearchConditionKey.StationName:
+        return Language.json.SearchConditionKey.StationName;
+      case SearchConditionKey.CommunityName:
+        return Language.json.SearchConditionKey.CommunityName;
+      default:
+        return '';
     }
   }
 

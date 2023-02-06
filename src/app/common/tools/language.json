@@ -180,5 +180,11 @@
   },
   "CollectionMemberType": {
     "Collection": "清运人员"
+  },
+  "SearchConditionKey": {
+    "None": "请选择",
+    "Name": "名称",
+    "StationName": "投放点",
+    "CommunityName": "社区"
   }
 }

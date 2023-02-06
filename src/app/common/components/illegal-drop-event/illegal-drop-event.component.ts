@@ -109,12 +109,7 @@ export class IllegalDropEventComponent implements OnInit {
       this.searchInfo.EndTime = TimeService.endTime(this.today);
     }
   }
-  changeBegin(date: Date) {
-    this.searchInfo.BeginTime = date;
-  }
-  changeEnd(date: Date) {
-    this.searchInfo.EndTime = date;
-  }
+
   changeViewMode(viewMode: ViewMode) {
     console.log(viewMode);
     this.viewMode = viewMode;
