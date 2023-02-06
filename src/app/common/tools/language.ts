@@ -587,7 +587,7 @@ export class Language {
     }
   }
 
-  static SearchOptionKey(key?: SearchConditionKey) {
+  static SearchConditionKey(key?: SearchConditionKey) {
     switch (key) {
       case SearchConditionKey.None:
         return Language.json.SearchConditionKey.None;

@@ -4,14 +4,23 @@
     <div class="operate-bar">
       <div class="right-wrapper">
         <div class="select-wrapper">
-          <select name="" id="">
-            <option value="">投放点</option>
-            <option value="">社区</option>
+          <select [(ngModel)]="searchInfo.SearchConditionKey">
+            <ng-template
+              ngFor
+              [ngForOf]="
+                searchConditionKeyDataSource | keyvalue : customCompare
+              "
+              let-item
+              let-i="index"
+            >
+              <option [ngValue]="item.key">
+                {{ item.value }}
+              </option>
+            </ng-template>
           </select>
         </div>
         <div class="search-wrapper" style="width: 300px">
           <input
-            [disabled]="searchInfo.Filter"
             type="text"
             placeholder="输入关键字"
             [(ngModel)]="searchInfo.Condition"
@@ -19,7 +28,7 @@
           />
         </div>
         <div class="hw-normal-btn-group">
-          <button class="hw-blue-btn">
+          <button class="hw-blue-btn" (click)="search()">
             <i class="mdi mdi-magnify"></i>
             查询
           </button>
@@ -60,6 +69,8 @@
             readonly
             DateTimePicker
             [format]="dateFormat"
+            [startView]="DateTimePickerView.month"
+            [minView]="DateTimePickerView.hour"
             [(date)]="searchInfo.BeginTime"
             class="hw-form-control hw-form-input"
           />
@@ -75,6 +86,8 @@
             readonly
             DateTimePicker
             [format]="dateFormat"
+            [startView]="DateTimePickerView.month"
+            [minView]="DateTimePickerView.hour"
             [(date)]="searchInfo.EndTime"
             class="hw-form-control hw-form-input"
           />
@@ -94,6 +107,27 @@
               (selectTreeNode)="selectTreeNode($event)"
             ></howell-division-tree>
           </common-label-select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">投放点:</span>
+        </div>
+        <div class="content">
+          <select>
+            <option value="">请选择</option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">摄像机:</span>
+        </div>
+        <div class="content">
+          <select>
+            <option value="">请选择</option>
+          </select>
         </div>
       </div>
     </div>

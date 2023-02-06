@@ -10,6 +10,8 @@ import {
   IllegalDropEventSearchInfo,
 } from 'src/app/common/components/illegal-drop-event/illegal-drop-event.model';
 import { LocaleCompare } from '../../tools/locale-compare';
+import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
+import { param } from 'jquery';
 
 @Injectable()
 export class IllegalDropEventBusiness {
@@ -43,26 +45,33 @@ export class IllegalDropEventBusiness {
     let params = new GetEventRecordsParams();
     params.PageIndex = searchInfo.PageIndex;
     params.PageSize = searchInfo.PageSize;
+    params.DivisionIds = searchInfo.DivisionIds;
+
+    if (searchInfo.Condition) {
+      switch (searchInfo.SearchConditionKey) {
+        case SearchConditionKey.StationName:
+          params.StationName = searchInfo.Condition;
+          break;
+        case SearchConditionKey.CommunityName:
+          params.CommunityName = searchInfo.Condition;
+          break;
+      }
+    }
 
     if (!searchInfo.Filter) {
       params.BeginTime = searchInfo.BeginTime;
       params.EndTime = searchInfo.EndTime;
-      params.ResourceName = searchInfo.Condition;
-      params.DivisionIds = searchInfo.DivisionIds;
     } else {
       params.BeginTime = searchInfo.BeginTime;
       params.EndTime = searchInfo.EndTime;
-      params.DivisionIds = searchInfo.DivisionIds;
       params.StationIds = searchInfo.StationIds;
       params.ResourceIds = searchInfo.CameraIds;
     }
 
     return this._eventRequest.record.IllegalDrop.list(params);
   }
-  private _getDivision(id: string) {
-    return this._divisionRequest.get(id);
-  }
-  private _register(id: string, name: string) {
-    this._divisionMap.set(id, name);
+
+  public listStations(divisionId: string) {
+    
   }
 }

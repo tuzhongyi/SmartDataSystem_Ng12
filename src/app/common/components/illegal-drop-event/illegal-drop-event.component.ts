@@ -21,6 +21,11 @@ import { DivisionTreeSource } from '../division-tree/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { Language } from '../../tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
+import { KeyValue } from '@angular/common';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/camera.model';
+import { DateTimePickerView } from '../../directives/date-time-picker/date-time-picker.directive';
 
 @Component({
   selector: 'howell-illegal-drop-event',
@@ -32,13 +37,39 @@ export class IllegalDropEventComponent implements OnInit {
   Language = Language;
   ViewMode = ViewMode;
   EventType = EventType;
+  DateTimePickerView = DateTimePickerView;
 
-  dateFormat: string = 'yyyy年MM月dd日';
+  dateFormat: string = 'yyyy-MM-dd HH:mm';
   showMode = false;
 
   widths = ['7%', '13%', '10%', '10%', '10%', '10%', '10%', '5%'];
   dataSource: IllegalDropEventModel[] = [];
   selectedNodes: CommonFlatNode[] = [];
+
+  // 搜索字段名数据源
+  searchConditionKeyDataSource: Map<SearchConditionKey, string> = new Map([
+    [
+      SearchConditionKey.StationName,
+      Language.SearchConditionKey(SearchConditionKey.StationName),
+    ],
+    [
+      SearchConditionKey.CommunityName,
+      Language.SearchConditionKey(SearchConditionKey.CommunityName),
+    ],
+  ]);
+  customCompare = (
+    keyValueA: KeyValue<string, string>,
+    keyValueB: KeyValue<string, string>
+  ): number => {
+    // console.log(keyValueA);
+
+    // 返回0表示按照书写顺序
+    return 0;
+  };
+
+  // 投放点数据源
+  stationDataSource: GarbageStation[] = [];
+  cameraDataSource: Camera[] = [];
 
   page: Page = {
     PageIndex: 0,
@@ -60,6 +91,7 @@ export class IllegalDropEventComponent implements OnInit {
     Filter: false,
     PageIndex: 1,
     PageSize: 9,
+    SearchConditionKey: SearchConditionKey.StationName,
   };
 
   viewMode = ViewMode.table;

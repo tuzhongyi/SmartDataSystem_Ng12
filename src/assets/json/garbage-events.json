@@ -10,11 +10,6 @@
           "title": "垃圾落地",
           "id": "illegal-drop-manage",
           "path": "/aiop/aiop-manage/garbage-events/events/illegal-drop-manage"
-        },
-        {
-          "title": "混合投放",
-          "id": "mix-into-manage",
-          "path": "/aiop/aiop-manage/garbage-events/events/mix-into-manage"
         }
       ]
     }

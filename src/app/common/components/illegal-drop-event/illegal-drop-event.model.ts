@@ -1,3 +1,5 @@
+import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
+
 /**垃圾落地事件 */
 export class IllegalDropEventModel<T = any> {
   /** 事件Id*/
@@ -20,6 +22,7 @@ export class IllegalDropEventModel<T = any> {
 }
 
 export interface IllegalDropEventSearchInfo {
+  SearchConditionKey: SearchConditionKey;
   Condition: string;
   BeginTime: Date;
   EndTime: Date;
