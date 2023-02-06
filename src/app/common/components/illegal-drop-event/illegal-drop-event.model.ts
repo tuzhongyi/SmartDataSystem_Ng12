@@ -27,8 +27,8 @@ export interface IllegalDropEventSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   DivisionIds: string[];
-  StationIds: string[];
-  CameraIds: string[];
+  StationId: string;
+  CameraId: string;
   Filter: boolean;
   PageIndex: number;
   PageSize: number;

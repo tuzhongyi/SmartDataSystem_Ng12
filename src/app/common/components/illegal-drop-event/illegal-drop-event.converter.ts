@@ -24,7 +24,7 @@ export class IllegalDropEventConverter extends AbstractCommonModelPromiseConvert
   constructor(private _divisionRequest: DivisionRequestService) {
     super();
   }
-  // 一次性得到所有街道信息，减少街道请求次数
+  // 街道数量少，一次性得到所有街道信息，减少街道请求次数
   async getAllCounty() {
     let params = new GetDivisionsParams();
     params.DivisionType = DivisionType.County;

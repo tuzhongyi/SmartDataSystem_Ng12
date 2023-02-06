@@ -97,13 +97,14 @@
         <div class="title">
           <span class="hw-form-label">行政区:</span>
         </div>
-        <div class="content">
+        <div class="content" style="width: 250px">
           <common-label-select
             [selectedNodes]="selectedNodes"
             [autoclose]="true"
           >
             <howell-division-tree
               #tree
+              [selectStrategy]="SelectStrategy.Single"
               (selectTreeNode)="selectTreeNode($event)"
             ></howell-division-tree>
           </common-label-select>
@@ -115,8 +116,14 @@
           <span class="hw-form-label">投放点:</span>
         </div>
         <div class="content">
-          <select>
+          <select
+            [(ngModel)]="searchInfo.StationId"
+            (ngModelChange)="changeStation($event)"
+          >
             <option value="">请选择</option>
+            <option *ngFor="let item of stationDataSource" [ngValue]="item.Id">
+              {{ item.Name }}
+            </option>
           </select>
         </div>
       </div>
@@ -125,8 +132,11 @@
           <span class="hw-form-label">摄像机:</span>
         </div>
         <div class="content">
-          <select>
+          <select [(ngModel)]="searchInfo.CameraId">
             <option value="">请选择</option>
+            <option *ngFor="let item of cameraDataSource" [ngValue]="item.Id">
+              {{ item.Name }}
+            </option>
           </select>
         </div>
       </div>

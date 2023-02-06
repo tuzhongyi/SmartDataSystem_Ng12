@@ -35,6 +35,7 @@ import { DateTimePickerView } from '../../directives/date-time-picker/date-time-
 })
 export class IllegalDropEventComponent implements OnInit {
   Language = Language;
+  SelectStrategy = SelectStrategy;
   ViewMode = ViewMode;
   EventType = EventType;
   DateTimePickerView = DateTimePickerView;
@@ -85,9 +86,9 @@ export class IllegalDropEventComponent implements OnInit {
     BeginTime: this._timeService.beginTime(this.today),
     EndTime: this._timeService.endTime(this.today),
     // DivisionIds: ['310109000000', '310110018000', '310109011002'],
-    DivisionIds: ['310109000000'],
-    StationIds: [],
-    CameraIds: [],
+    DivisionIds: [], // IllegalDrop事件参数规定不能为空字符串 ""
+    StationId: '', //"310109009002001000"
+    CameraId: '', //"f13000a3662d462da1bf755f32d526ce"
     Filter: false,
     PageIndex: 1,
     PageSize: 9,
@@ -117,7 +118,7 @@ export class IllegalDropEventComponent implements OnInit {
     this.dataSource = res.Data;
   }
   ngAfterViewInit(): void {
-    // template 加载完后，再进行一次 change detection
+    // template 加载完后，需要再进行一次 change detection
     setTimeout(() => {
       this._render();
     }, 0);
@@ -133,12 +134,21 @@ export class IllegalDropEventComponent implements OnInit {
     this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
     this._init();
   }
-  toggleFilterHandler() {
+  async toggleFilterHandler() {
     this.searchInfo.Filter = !this.searchInfo.Filter;
-    if (!this.searchInfo.Filter) {
+    if (this.searchInfo.Filter) {
+      this._initSelectionDataSource();
+    } else {
       // 重置状态
       this.searchInfo.BeginTime = TimeService.beginTime(this.today);
       this.searchInfo.EndTime = TimeService.endTime(this.today);
+      this.searchInfo.DivisionIds = [];
+      this.searchInfo.StationId = '';
+      this.searchInfo.CameraId = '';
+      this.stationDataSource = [];
+      this.cameraDataSource = [];
+      this.selectedNodes = [];
+      this._initSelectionDataSource();
     }
   }
 
@@ -158,13 +168,37 @@ export class IllegalDropEventComponent implements OnInit {
   }
 
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
+    console.log('select');
     this.selectedNodes = nodes;
-    // for (let i = 0; i < nodes.length; i++) {
-    //   const node = nodes[i];
-    //   this.division = node.RawData as Division;
-    // }
+
+    this.searchInfo.DivisionIds = nodes.map((node) => node.Id);
+
+    this.searchInfo.StationId = '';
+    this.searchInfo.CameraId = '';
+    this.stationDataSource = [];
+    this.cameraDataSource = [];
+
+    this._initSelectionDataSource();
   }
 
+  changeStation(stationId: string) {
+    this.searchInfo.CameraId = '';
+    this._initCameraDataSource();
+  }
+  private async _initSelectionDataSource() {
+    await this._initStationDataSource();
+    this._initCameraDataSource();
+  }
+  private async _initStationDataSource() {
+    let { Data } = await this._business.listTotalStations(this.searchInfo);
+    this.stationDataSource = Data;
+  }
+  private _initCameraDataSource() {
+    this.cameraDataSource =
+      this.stationDataSource.find(
+        (station) => station.Id == this.searchInfo.StationId
+      )?.Cameras || [];
+  }
   private _render() {
     if (this.viewMode == ViewMode.table) {
       this.template = this.tableTemplate;
