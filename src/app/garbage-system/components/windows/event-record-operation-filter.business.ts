@@ -19,5 +19,8 @@ export class EventRecordOperationFilterBusiness {
 
   display() {
     this.show = !this.show;
+    if (!this.show) {
+      this.filter.reset();
+    }
   }
 }

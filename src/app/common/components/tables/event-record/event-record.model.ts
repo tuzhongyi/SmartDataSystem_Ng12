@@ -66,6 +66,15 @@ export class EventRecordFilter extends DurationParams {
     propertyName: SearchOptionKey.name,
   };
   community?: SelectItem;
+
+  reset() {
+    let interval = DurationParams.allDay(new Date());
+    this.BeginTime = interval.BeginTime;
+    this.EndTime = interval.EndTime;
+    this.division = undefined;
+    this.station = undefined;
+    this.camera = undefined;
+  }
 }
 
 export class CameraImageUrlModel extends CameraImageUrl {
