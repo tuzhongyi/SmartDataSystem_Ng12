@@ -19,6 +19,7 @@
   <app-select-control
     class="list-type-select"
     [data]="listTypes"
+    [style]="{ fontFamily: 'HowellFont' }"
     (selectedChange)="onListTypeSelect($event)"
   ></app-select-control>
   <button class="hw-cyan-m-btn" (click)="onfilter()">

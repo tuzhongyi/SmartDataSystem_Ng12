@@ -59,7 +59,7 @@
   </mat-option>
 </mat-select> -->
 <div class="select-control">
-  <select #element [(ngModel)]="selected" style="font-family: HowellFont">
+  <select #element [(ngModel)]="selected" [style]="style">
     <option
       [ngValue]="item"
       *ngFor="let item of data"

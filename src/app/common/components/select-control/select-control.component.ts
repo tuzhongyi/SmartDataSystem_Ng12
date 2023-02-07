@@ -1,4 +1,6 @@
 import {
+  AfterViewChecked,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -9,6 +11,8 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { timingSafeEqual } from 'crypto';
+import { timer } from 'rxjs';
 import { SelectItem } from './select-control.model';
 
 @Component({
@@ -16,7 +20,9 @@ import { SelectItem } from './select-control.model';
   templateUrl: './select-control.component.html',
   styleUrls: ['./select-control.component.less'],
 })
-export class SelectControlComponent implements OnInit, OnChanges {
+export class SelectControlComponent
+  implements OnInit, OnChanges, AfterViewChecked
+{
   @Input()
   data?: SelectItem[];
   @Input()
@@ -24,7 +30,16 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Input()
   default: boolean = true;
 
-  private _selected?: SelectItem;
+  @Input()
+  public set style(v: any) {
+    this._style = Object.assign(this._style, v);
+  }
+  private _style: any = {};
+  public get style(): any {
+    return this._style;
+  }
+
+  private _selected?: SelectItem = undefined;
   public get selected(): SelectItem | undefined {
     return this._selected;
   }
@@ -36,31 +51,37 @@ export class SelectControlComponent implements OnInit, OnChanges {
   @Output()
   selectedChange: EventEmitter<SelectItem> = new EventEmitter();
 
-  constructor() {}
+  constructor(public detector: ChangeDetectorRef) {}
+  ngAfterViewChecked(): void {
+    if (this.element && this.cannull) {
+      if (this.selected === undefined) {
+        (this.element.nativeElement as HTMLSelectElement).value = '';
+      }
+    }
+  }
+
   @ViewChild('element')
   element?: ElementRef;
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data) {
       if (this.default) {
         if (this.data && this.data.length > 0) {
           if (!this.selected) {
             this.selected = this.data[0];
+            return;
           }
-        } else {
-          this.selected = undefined;
         }
       }
+      this.selected = undefined;
     }
   }
 
   ngOnInit(): void {}
 
   onclear(e: Event) {
-    if (this.element) {
-      let control = this.element.nativeElement as HTMLSelectElement;
-      this.selected = undefined;
-      control.value = '请选择';
-    }
+    this.selected = undefined;
+
     e.stopImmediatePropagation();
   }
 }

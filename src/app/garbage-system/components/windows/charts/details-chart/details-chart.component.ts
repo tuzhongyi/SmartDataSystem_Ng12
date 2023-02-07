@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   EventEmitter,
   Input,
@@ -40,6 +41,7 @@ import { ExportType } from 'src/app/enum/export-type.enum';
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Component({
   selector: 'howell-details-chart',
@@ -47,7 +49,11 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, ITimeData<IModel>[][]>, OnChanges
+  implements
+    OnInit,
+    IComponent<IModel, ITimeData<IModel>[][]>,
+    OnChanges,
+    AfterViewInit
 {
   @Input()
   business!: IBusiness<IModel, ITimeData<IModel>[][]>;
@@ -57,8 +63,6 @@ export class DetailsChartComponent
   types?: EventType[];
   @Input()
   station?: GarbageStation;
-
-  treeAlign = HorizontalAlign.left;
 
   @Input()
   division?: Division;
@@ -84,8 +88,23 @@ export class DetailsChartComponent
   //   this._division = v;
   // }
 
+  constructor(
+    public local: LocalStorageService,
+    private exports: ExportTool,
+    global: GlobalStorageService
+  ) {
+    if (local.user.Resources && local.user.Resources.length > 0) {
+      this.userResourceType = local.user.Resources[0].ResourceType;
+    }
+    this.type = global.defaultDivisionType;
+    this.config.dateTimePicker.format = 'yyyy年MM月dd日';
+  }
+  treeClose: EventEmitter<void> = new EventEmitter();
+  selectedNodes: CommonFlatNode[] = [];
+
   options?: DetailsChartLoadOptions;
 
+  treeAlign = HorizontalAlign.left;
   date: Date = new Date();
 
   unit: TimeUnit = TimeUnit.Hour;
@@ -107,15 +126,14 @@ export class DetailsChartComponent
   UserResourceType = UserResourceType;
 
   DivisionType = DivisionType;
+  type: DivisionType;
 
-  constructor(public local: LocalStorageService, private exports: ExportTool) {
-    if (local.user.Resources && local.user.Resources.length > 0) {
-      this.userResourceType = local.user.Resources[0].ResourceType;
-    }
+  private loaded = false;
+
+  ngAfterViewInit(): void {
+    this.loaded = true;
+    this.loadData();
   }
-  treeClose: EventEmitter<void> = new EventEmitter();
-  selectedNodes: CommonFlatNode[] = [];
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.eventType && !changes.eventType.firstChange) {
       this.loadData();
@@ -142,9 +160,11 @@ export class DetailsChartComponent
     //     this.loadData();
     //   }
     // );
+    console.log('init');
   }
 
   async loadData() {
+    if (this.loaded === false) return;
     let interval = this.getInterval();
     let types = this.types ?? [this.eventType];
     this.options = {
@@ -241,6 +261,7 @@ export class DetailsChartComponent
 
   changeDate(date: Date) {
     this.loadData();
+    console.log('date');
   }
 
   onDivisionSelected(nodes: CommonFlatNode<DivisionTreeSource>[]) {
@@ -273,6 +294,7 @@ export class DetailsChartComponent
         break;
     }
     this.loadData();
+    console.log('timeunit');
   }
 
   initUnits() {
@@ -302,6 +324,7 @@ export class DetailsChartComponent
   onchartselected(item: SelectItem) {
     this.chartType = item.value;
     this.loadData();
+    console.log('chart');
   }
 
   search() {

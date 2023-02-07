@@ -7,6 +7,7 @@ import { SelectItemConverter } from 'src/app/converter/select-item.converter';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { GarbageStationFilterConverter } from './garbage-station-filter.converter';
 
 @Injectable()
 export class GarbageStationFilterBusiness
@@ -27,22 +28,5 @@ export class GarbageStationFilterBusiness
     params.DivisionId = divisionId;
     let paged = await this.stationService.cache.list(params);
     return paged.Data;
-  }
-}
-
-class GarbageStationFilterConverter
-  implements IConverter<GarbageStation[], SelectItem[]>
-{
-  converter = {
-    item: new SelectItemConverter(),
-  };
-  Convert(source: GarbageStation[]): SelectItem[] {
-    let array: SelectItem[] = [];
-    for (let i = 0; i < source.length; i++) {
-      const division = source[i];
-      let item = this.converter.item.Convert(division);
-      array.push(item);
-    }
-    return array;
   }
 }
