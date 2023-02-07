@@ -87,7 +87,7 @@ export class EventRecordWindowDetailsBusiness
   }
 
   async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
-    let divisionId = this.store.divisionId;
+    let divisionId = this.store.defaultDivisionId!;
     this.loadDefault(divisionId);
 
     let interval = new DurationParams();
