@@ -40,6 +40,9 @@ export class CommonLabelSelecComponent
   @Input()
   autoclose = false;
 
+  @Input()
+  showCloseIcon = true;
+
   @Output() toggleDropDown = new EventEmitter<boolean>();
   @Output() removeDropItem = new EventEmitter();
 

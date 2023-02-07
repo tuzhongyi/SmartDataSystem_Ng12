@@ -4,7 +4,11 @@
     <div class="wrapper">
       <div class="label-select-item" *ngFor="let node of selectedNodes">
         <div class="title">{{ node.Name }}</div>
-        <div class="close-btn" (click)="removeNode($event, node)">
+        <div
+          class="close-btn"
+          *ngIf="showCloseIcon"
+          (click)="removeNode($event, node)"
+        >
           <i class="howell-icon-Close"></i>
         </div>
       </div>
