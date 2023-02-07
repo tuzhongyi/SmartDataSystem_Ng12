@@ -57,7 +57,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   typeSelected?: SelectItem;
 
   counties: SelectItem[] = [];
-  parentId: string = '';
+  parent?: SelectItem;
 
   initUnits() {
     this.units.push(
@@ -145,11 +145,11 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   onTypeChange(item: SelectItem) {
     this.type = item.value;
     console.log(item);
-    this.parentId = '';
+    this.parent = undefined;
   }
 
   onCountyChange(item: SelectItem) {
-    this.parentId = item.value;
+    this.parent = item;
   }
   search() {
     this.load.emit();

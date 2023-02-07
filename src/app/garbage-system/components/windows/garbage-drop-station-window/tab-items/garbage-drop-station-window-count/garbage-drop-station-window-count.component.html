@@ -28,6 +28,7 @@
         <app-select-control
           class="list-type-select full"
           [data]="counties"
+          [(selected)]="parent"
           (selectedChange)="onCountyChange($event)"
         ></app-select-control>
       </div>
@@ -53,7 +54,7 @@
   </div>
   <div class="garbage-drop-station-window-count-content">
     <howell-garbage-drop-station-count-table
-      [parentId]="parentId"
+      [parentId]="parent?.value"
       [date]="date"
       [unit]="unit"
       [type]="type"
