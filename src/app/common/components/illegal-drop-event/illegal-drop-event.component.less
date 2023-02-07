@@ -5,6 +5,7 @@
     // 生效条件：外层不能有BFC
     margin-top: -40px;
     margin-bottom: 10px;
+    pointer-events: none;
   }
 }
 
@@ -39,6 +40,13 @@
   }
 }
 
-.illegal-drop-event .filter-wrapper .filter-group {
-  flex-basis: 18%;
+.illegal-drop-event .filter-wrapper {
+  // display: none;
+  overflow: hidden;
+  .filter-group {
+    flex-basis: 18%;
+  }
+  // &.show {
+  //   display: flex;
+  // }
 }

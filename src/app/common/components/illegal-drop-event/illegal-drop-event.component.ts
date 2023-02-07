@@ -7,10 +7,15 @@ import {
   IllegalDropEventModel,
   IllegalDropEventSearchInfo,
 } from 'src/app/common/components/illegal-drop-event/illegal-drop-event.model';
+
 import {
-  TableColumnModel,
-  TableOperateModel,
-} from 'src/app/view-model/table.model';
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+
 import { TimeService } from '../../service/time.service';
 import { IllegalDropEventBusiness } from './illegal-drop-event.business';
 
@@ -18,7 +23,6 @@ import { IllegalDropEventConverter } from './illegal-drop-event.converter';
 import { ViewMode } from 'src/app/enum/view-mode.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionTreeSource } from '../division-tree/division-tree.model';
-import { Division } from 'src/app/network/model/division.model';
 import { Language } from '../../tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
@@ -26,11 +30,29 @@ import { KeyValue } from '@angular/common';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Camera } from 'src/app/network/model/camera.model';
 import { DateTimePickerView } from '../../directives/date-time-picker/date-time-picker.directive';
+import { DivisionTreeComponent } from '../division-tree/division-tree.component';
 
 @Component({
   selector: 'howell-illegal-drop-event',
   templateUrl: './illegal-drop-event.component.html',
   styleUrls: ['./illegal-drop-event.component.less'],
+  animations: [
+    trigger('openClose', [
+      state(
+        'open',
+        style({
+          height: '45px',
+        })
+      ),
+      state(
+        'close',
+        style({
+          height: '0',
+        })
+      ),
+      transition('open<=>close', [animate(100)]),
+    ]),
+  ],
   providers: [IllegalDropEventBusiness, IllegalDropEventConverter],
 })
 export class IllegalDropEventComponent implements OnInit {
@@ -93,6 +115,7 @@ export class IllegalDropEventComponent implements OnInit {
     PageIndex: 1,
     PageSize: 9,
     SearchConditionKey: SearchConditionKey.StationName,
+    State: 'close',
   };
 
   viewMode = ViewMode.table;
@@ -100,6 +123,7 @@ export class IllegalDropEventComponent implements OnInit {
 
   @ViewChild('tableTemplate') tableTemplate?: TemplateRef<HTMLElement>;
   @ViewChild('cardTemplate') cardTemplate?: TemplateRef<HTMLElement>;
+  @ViewChild(DivisionTreeComponent) divisionTree?: DivisionTreeComponent;
 
   constructor(
     private _business: IllegalDropEventBusiness,
@@ -135,11 +159,18 @@ export class IllegalDropEventComponent implements OnInit {
     this._init();
   }
   async toggleFilterHandler() {
+    // 使用 *ngIf="Filter" 会重复渲染 divisionTree,慢
     this.searchInfo.Filter = !this.searchInfo.Filter;
+
+    this.searchInfo.State = this.searchInfo.Filter ? 'open' : 'close';
     if (this.searchInfo.Filter) {
       this._initSelectionDataSource();
     } else {
       // 重置状态
+      this.divisionTree?.reset();
+
+      this.divisionTree?.collapseAll();
+
       this.searchInfo.BeginTime = TimeService.beginTime(this.today);
       this.searchInfo.EndTime = TimeService.endTime(this.today);
       this.searchInfo.DivisionIds = [];
@@ -148,7 +179,6 @@ export class IllegalDropEventComponent implements OnInit {
       this.stationDataSource = [];
       this.cameraDataSource = [];
       this.selectedNodes = [];
-      this._initSelectionDataSource();
     }
   }
 

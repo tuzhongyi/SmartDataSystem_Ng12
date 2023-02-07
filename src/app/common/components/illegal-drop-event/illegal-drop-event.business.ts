@@ -93,7 +93,7 @@ export class IllegalDropEventBusiness {
       res = await this._listStation('');
     }
 
-    console.log(res);
+    // console.log(res);
 
     return res;
   }

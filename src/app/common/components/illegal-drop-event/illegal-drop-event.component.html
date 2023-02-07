@@ -2,7 +2,7 @@
 <div class="illegal-drop-event vertical-layout">
   <div class="operation">
     <div class="operate-bar">
-      <div class="right-wrapper">
+      <div class="right-wrapper" style="pointer-events: all">
         <div class="select-wrapper">
           <select [(ngModel)]="searchInfo.SearchConditionKey">
             <ng-template
@@ -58,7 +58,11 @@
         </div>
       </div>
     </div>
-    <div class="filter-wrapper" *ngIf="searchInfo.Filter">
+    <div
+      class="filter-wrapper"
+      [@openClose]="searchInfo.State"
+      style="pointer-events: all"
+    >
       <div class="filter-group">
         <div class="title">
           <span class="hw-form-label">开始时间:</span>

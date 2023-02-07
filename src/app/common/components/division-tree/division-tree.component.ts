@@ -273,6 +273,12 @@ export class DivisionTreeComponent
     this.buttonIconClickEvent.emit(node);
   }
 
+  collapseAll() {
+    this.tree?.collapseAll();
+  }
+  reset() {
+    this.tree?.reset();
+  }
   private _filterNode<T>(type: ClassConstructor<T>, node: CommonFlatNode) {
     let raw = node.RawData;
     if (raw instanceof Division) {

@@ -32,4 +32,5 @@ export interface IllegalDropEventSearchInfo {
   Filter: boolean;
   PageIndex: number;
   PageSize: number;
+  State: 'open' | 'close';
 }
