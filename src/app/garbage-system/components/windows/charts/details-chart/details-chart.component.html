@@ -27,6 +27,7 @@
               #tree
               [depth]="1"
               [resourceType]="type"
+              [defaultIds]="division ? [division.Id] : []"
               (selectTreeNode)="onDivisionSelected($event)"
             ></howell-division-tree>
           </common-label-select>

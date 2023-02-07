@@ -160,7 +160,6 @@ export class DetailsChartComponent
     //     this.loadData();
     //   }
     // );
-    console.log('init');
   }
 
   async loadData() {
@@ -175,7 +174,6 @@ export class DetailsChartComponent
       divisionId: this.station ? undefined : this.division?.Id,
       type: types,
     };
-    console.log(this.options);
     this.data = await this.business.load(this.options);
     // if (this.unit === TimeUnit.Hour) {
     //   let first: TimeData<IModel> = {
@@ -261,7 +259,6 @@ export class DetailsChartComponent
 
   changeDate(date: Date) {
     this.loadData();
-    console.log('date');
   }
 
   onDivisionSelected(nodes: CommonFlatNode<DivisionTreeSource>[]) {
@@ -294,7 +291,6 @@ export class DetailsChartComponent
         break;
     }
     this.loadData();
-    console.log('timeunit');
   }
 
   initUnits() {
@@ -324,7 +320,6 @@ export class DetailsChartComponent
   onchartselected(item: SelectItem) {
     this.chartType = item.value;
     this.loadData();
-    console.log('chart');
   }
 
   search() {
