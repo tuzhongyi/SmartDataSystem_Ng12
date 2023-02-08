@@ -1,29 +1,26 @@
 <div class="aiop-manage">
-    <div class="aiop-manage-header">
-        <mat-toolbar>
-            <div>
-                <img src="/assets/img/logo.png" alt="">
-            </div>
-            <div class='spacer'>
-            </div>
-            <app-header-nav></app-header-nav>
-            <app-time></app-time>
-            <app-account-operation></app-account-operation>
-        </mat-toolbar>
+  <div class="aiop-manage-header">
+    <mat-toolbar>
+      <div>
+        <img src="/assets/img/logo.png" alt="" />
+      </div>
+      <div class="spacer"></div>
+      <app-header-nav></app-header-nav>
+      <common-time></common-time>
+      <app-account-operation></app-account-operation>
+    </mat-toolbar>
+  </div>
+  <div class="aiop-manage-body">
+    <div class="sidenav">
+      <howell-sidenav></howell-sidenav>
     </div>
-    <div class="aiop-manage-body">
-        <div class="sidenav">
-            <howell-sidenav></howell-sidenav>
-        </div>
-        <main class='sidenav-main'>
-            <div class="sidenav-nav">
-                <howell-breadcrumb></howell-breadcrumb>
-            </div>
-            <div class="sidenav-content">
-                <router-outlet></router-outlet>
-            </div>
-
-        </main>
-    </div>
-
+    <main class="sidenav-main">
+      <div class="sidenav-nav">
+        <howell-breadcrumb></howell-breadcrumb>
+      </div>
+      <div class="sidenav-content">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
 </div>

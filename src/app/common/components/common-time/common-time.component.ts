@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { interval, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-time',
-  templateUrl: './time.component.html',
-  styleUrls: ['./time.component.less'],
+  selector: 'common-time',
+  templateUrl: './common-time.component.html',
+  styleUrls: ['./common-time.component.less'],
 })
-export class TimeComponent implements OnInit, OnDestroy {
+export class CommonTimeComponent implements OnInit, OnDestroy {
   today: number = Date.now();
 
   private _subscription: Subscription | null = null;

@@ -15,11 +15,11 @@ export class AccountInfoComponent implements OnInit {
 
   ngOnInit(): void {
     let user = this._localStorageService.user;
-    if (user.Resources && user.Resources.length > 0) {
+    if (user.Resources?.length) {
       this.title = user.Resources[0].Name ?? '';
     }
 
-    if (user.Role && user.Role.length > 0) {
+    if (user.Role.length) {
       let role = user.Role[0];
       if (
         role.PictureData &&

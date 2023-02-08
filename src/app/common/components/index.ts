@@ -5,7 +5,7 @@ import { SelectControlComponent } from './select-control/select-control.componen
 import { StatisticLineEChartsComponent } from './statistic-line-echarts/statistic-line-echarts.component';
 import { TabTitleComponent } from './tab-title/tab-title.component';
 import { CommonTableComponent } from './common-table/common.component';
-import { TimeComponent } from './time/time.component';
+import { CommonTimeComponent } from './common-time/common-time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
@@ -70,7 +70,7 @@ import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-pla
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
   TreeComponent,
-  TimeComponent,
+  CommonTimeComponent,
   AccountInfoComponent,
   AccountOperationComponent,
   TotalWasteComponent,
