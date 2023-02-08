@@ -58,8 +58,8 @@
     {{ item.language }}
   </mat-option>
 </mat-select> -->
-<div class="select-control">
-  <select #element [(ngModel)]="selected" [ngStyle]="style">
+<div class="select-control" [ngStyle]="style">
+  <select #element [(ngModel)]="selected">
     <option
       [ngValue]="item"
       *ngFor="let item of data"

@@ -21,16 +21,25 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+
     .select-group {
       display: flex;
+
+      .retention-type {
+        min-width: 106px
+      }
+
+
       .select-item {
         display: flex;
         align-items: center;
         cursor: pointer;
         margin: 0 12px;
+
         &:first-child {
           margin-left: 0;
         }
+
         &:last-child {
           margin-right: 0;
         }
@@ -39,6 +48,7 @@
           color: #cfd7ff;
           font-size: 18px;
         }
+
         .select-item__button {
           width: 0;
           height: 0;
@@ -54,6 +64,7 @@
       }
     }
   }
+
   .retention__content {
     height: calc(100% - 30px);
     overflow: auto;
