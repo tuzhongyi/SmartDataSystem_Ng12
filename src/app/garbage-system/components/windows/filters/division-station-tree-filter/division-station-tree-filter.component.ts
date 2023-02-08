@@ -82,7 +82,7 @@ export class DivisionStationTreeFilterComponent
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.station && this.station) {
-      console.log(this.station);
+      // console.log(this.station);
       // this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
       // this.current.rawData = this.station;
       // this.current.parentId = this.station.DivisionId;
