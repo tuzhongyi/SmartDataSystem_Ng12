@@ -30,6 +30,7 @@ import { EventRecordComparisonBusiness } from './event-record-comparison.busines
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'howell-event-record-comparison',
@@ -52,7 +53,8 @@ export class EventRecordComparisonComponent
   constructor(
     private local: LocalStorageService,
     private exports: ExportBusiness,
-    business: EventRecordComparisonBusiness
+    business: EventRecordComparisonBusiness,
+    private toastrService: ToastrService
   ) {
     this.business = business;
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
@@ -139,11 +141,7 @@ export class EventRecordComparisonComponent
       )
     );
     this.userTypes.push(
-      new SelectItem(
-        DivisionType.None.toString(),
-        DivisionType.None,
-        Language.DivisionType(DivisionType.None)
-      )
+      new SelectItem(DivisionType.None.toString(), DivisionType.None, '投放点')
     );
   }
 
@@ -248,6 +246,10 @@ export class EventRecordComparisonComponent
   }
 
   search() {
+    if (!this.selectIds || this.selectIds.length > 3) {
+      this.toastrService.warning('最大3个对象');
+      return;
+    }
     this.loadData();
   }
 
