@@ -1,7 +1,11 @@
 import { ClassConstructor } from 'class-transformer';
 
 export interface IModel {}
-export class Model implements IModel {
+export interface IObjectModel {
+  Id: string;
+  Name: string;
+}
+export class Model implements IObjectModel {
   Id!: string;
   Name!: string;
 

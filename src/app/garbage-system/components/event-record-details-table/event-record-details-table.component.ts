@@ -11,13 +11,12 @@ import { EventRecordFilter } from 'src/app/common/components/tables/event-record
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { Language } from 'src/app/common/tools/language';
 import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/common/tools/language';
-import { IModel } from 'src/app/network/model/model.interface';
+import { IModel, IObjectModel } from 'src/app/network/model/model.interface';
 import { EventRecordDetailsTableBusiness } from './event-record-details-table.business';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
-import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 
 @Component({
   selector: 'howell-event-record-details-table',
@@ -97,11 +96,11 @@ export class EventRecordDetailsTableComponent
     this.searchEvent.emit(this.filter);
   }
 
-  async ondivisionselect(item: SelectItem) {
+  async ondivisionselect(item: IObjectModel) {
     this.filter.division = item;
     this.filter.camera = undefined;
     this.filter.station = undefined;
-    this.model = await this.business.load({ divisionId: item.key });
+    this.model = await this.business.load({ divisionId: item.Id });
   }
   async onstationselect(item: SelectItem) {
     this.filter.station = item;

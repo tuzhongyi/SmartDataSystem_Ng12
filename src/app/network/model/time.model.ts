@@ -39,4 +39,8 @@ export class Time {
   hour: number = 0;
   minute: number = 0;
   second: number = 0;
+
+  toMinutes() {
+    return this.hour * 60 + this.minute;
+  }
 }

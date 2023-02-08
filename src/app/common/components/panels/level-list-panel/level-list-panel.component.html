@@ -1,0 +1,23 @@
+<div class="level-list-panel">
+  <div class="level-list-panel-selection" (click)="onclick($event)">
+    <div class="level-list-panel-selection-selected" *ngIf="selected">
+      {{ selected.Name }}
+    </div>
+    <div class="level-list-panel-selection-please" *ngIf="!selected">
+      请选择
+    </div>
+    <div
+      class="level-list-panel-selection-clear"
+      *ngIf="cannull && !!selected"
+      (click)="onclear($event)"
+    >
+      <i class="howell-icon-Close"></i>
+    </div>
+  </div>
+
+  <div class="level-list-panel-nodes" *ngIf="opened">
+    <div *ngFor="let node of nodes" (click)="onselect($event, node)">
+      {{ node.Language ?? node.Name }}
+    </div>
+  </div>
+</div>

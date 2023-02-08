@@ -1,16 +1,12 @@
 import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { Page } from 'src/app/network/model/page_list.model';
+import { IObjectModel } from 'src/app/network/model/model.interface';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { ImageControlModel } from '../../../../view-model/image-control.model';
-import { SelectItem } from '../../select-control/select-control.model';
-import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 import {
   SearchOptionKey,
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
+import { SelectItem } from '../../select-control/select-control.model';
 
 export class EventRecordFilter extends DurationParams {
   constructor() {
@@ -24,14 +20,14 @@ export class EventRecordFilter extends DurationParams {
   stationId?: string;
   cameraId?: string;
 
-  private _division?: SelectItem;
-  public get division(): SelectItem | undefined {
+  private _division?: IObjectModel;
+  public get division(): IObjectModel | undefined {
     return this._division;
   }
-  public set division(v: SelectItem | undefined) {
+  public set division(v: IObjectModel | undefined) {
     this._division = v;
     if (v) {
-      this.divisionId = v.key;
+      this.divisionId = v.Id;
     } else {
       this.divisionId = v;
     }

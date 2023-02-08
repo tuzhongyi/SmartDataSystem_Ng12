@@ -1,24 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { mode } from 'crypto-js';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
-import { Time } from 'src/app/network/model/time.model';
-import {
-  GetEventRecordsParams,
-  GetGarbageDropEventRecordsParams,
-} from 'src/app/network/request/event/event-request.params';
+import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import {
-  GetGarbageStationStatisticGarbageCountsParams,
-  GetGarbageStationStatisticNumbersParamsV2,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GetGarbageStationStatisticGarbageCountsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { LineZoomChartConverter } from './line-zoom-chart.converter';

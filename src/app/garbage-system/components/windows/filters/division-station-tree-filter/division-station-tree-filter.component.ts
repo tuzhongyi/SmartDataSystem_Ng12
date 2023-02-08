@@ -21,11 +21,15 @@ import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { ClassConstructor } from 'class-transformer';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { DivisionStationTreeFilterBusiness } from './division-station-tree-filter.business';
 
 @Component({
   selector: 'howell-division-station-tree-filter',
   templateUrl: './division-station-tree-filter.component.html',
   styleUrls: ['./division-station-tree-filter.component.less'],
+  providers: [DivisionStationTreeFilterBusiness],
 })
 export class DivisionStationTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
@@ -50,10 +54,15 @@ export class DivisionStationTreeFilterComponent
   treeServiceModel = DistrictTreeEnum.Station;
   treeSelectModel = SelectStrategy.Single;
 
-  current?: FlatTreeNode;
+  current?: DivisionTreeSource[];
   currentTitle: string[] = [];
 
   expand = false;
+
+  tree = {
+    depth: 2,
+    loaded: false,
+  };
 
   style = {
     top: '0',
@@ -61,20 +70,24 @@ export class DivisionStationTreeFilterComponent
   HorizontalAlign = HorizontalAlign;
   constructor(
     private store: GlobalStorageService,
+    private business: DivisionStationTreeFilterBusiness,
     private _divisionRequest: DivisionRequestService
   ) {
     this.type = store.divisionType;
+
+    if (this.type === DivisionType.City) {
+      this.tree.depth = 3;
+    }
   }
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.station && this.station) {
-      this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
-      this.current.rawData = this.station;
-      this.current.parentId = this.station.DivisionId;
-
-      this.currentTitle = [this.current.name];
-
-      await this.getRemoteTitle(this.current.parentId);
+      console.log(this.station);
+      // this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
+      // this.current.rawData = this.station;
+      // this.current.parentId = this.station.DivisionId;
+      // this.currentTitle = [this.current.name];
+      // await this.getRemoteTitle(this.current.parentId);
       // console.log(this.currentTitle)
     }
   }
@@ -96,17 +109,31 @@ export class DivisionStationTreeFilterComponent
     // });
   }
 
-  ngOnInit(): void {}
-
-  selectTreeNode(nodes: FlatTreeNode[]) {
-    for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      this.current = node;
-      this.select.emit(node.rawData);
-    }
-    this.expand = false;
-    if (this.current) {
+  ngOnInit(): void {
+    this.business.load(this.type).then((datas) => {
+      this.current = datas;
       this.currentTitle = this.getLocalTitle(this.current);
+      let station = datas.find((x) => x instanceof GarbageStation);
+      this.select.emit(station as GarbageStation);
+    });
+  }
+
+  selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
+    if (nodes.length > 0) {
+      let station = nodes[0].RawData as GarbageStation;
+      this.select.emit(station);
+
+      this.business.load(this.type, station.Id).then((datas) => {
+        this.current = datas;
+        this.currentTitle = this.getLocalTitle(this.current);
+      });
+    }
+
+    if (this.tree.loaded) {
+      this.expand = false;
+      this.tree.loaded = false;
+    } else {
+      this.tree.loaded = true;
     }
   }
 
@@ -115,14 +142,10 @@ export class DivisionStationTreeFilterComponent
     event.cancelBubble = true;
   }
 
-  getLocalTitle(node: FlatTreeNode) {
-    let title: string[] = [];
-    if (node.type != this.type) {
-      title.unshift(node.name);
-      if (node.parentNode)
-        title.unshift(...this.getLocalTitle(node.parentNode));
-    }
-    return title;
+  getLocalTitle(nodes: DivisionTreeSource[]) {
+    return nodes.map((x) => {
+      return x.Name;
+    });
   }
 
   async getRemoteTitle(id?: string) {

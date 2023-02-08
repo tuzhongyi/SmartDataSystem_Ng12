@@ -204,23 +204,21 @@ export class LineZoomChartComponent
   }
 
   optionProcess(model: LineZoomChartModel, option: any) {
-    console.log(model);
     let begin = new Date(
       this.date.getFullYear(),
       this.date.getMonth(),
       this.date.getDate(),
-      model.timeRange ? model.timeRange.BeginTime.hour : 9
+      model.timeRange ? model.timeRange.BeginTime.hour : 9,
+      model.timeRange ? model.timeRange.BeginTime.minute : 0
     );
-    let minutes =
-      (model.timeRange
-        ? Math.abs(
-            model.timeRange.EndTime.hour - model.timeRange.BeginTime.hour
-          )
-        : 12) * 60;
+    let minutes = model.timeRange
+      ? model.timeRange.EndTime.toMinutes() -
+        model.timeRange.BeginTime.toMinutes()
+      : 12 * 60;
     this.xAxisData = [];
     let counts = new Array();
     let records = new Array();
-    for (let i = 0, offset = { count: 0, record: 0 }; i < minutes; i++) {
+    for (let i = 0, offset = { count: 0, record: 0 }; i <= minutes; i++) {
       let now = new Date(begin.getTime());
       now.setMinutes(i);
 
