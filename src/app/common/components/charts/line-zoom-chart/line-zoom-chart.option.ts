@@ -50,6 +50,7 @@ export let option = {
     axisLabel: {
       color: '#CFD7FE',
       fontSize: '16',
+      margin: -5,
     },
   },
   yAxis: {
@@ -97,6 +98,7 @@ export let option = {
       symbol: 'image://assets/img/arrow-tag.png',
       symbolKeepAspect: true,
       select: {},
+      symbolOffset: [0, 25],
     },
   ],
 };

@@ -3,7 +3,7 @@
     <div class="title">{{ title }}</div>
     <div class="select-group" *ngIf="typeEnabled">
       <app-select-control
-        style="min-width: 106px"
+        class="retention-type"
         [data]="retentionTypes"
         (selectedChange)="onRetentionTypeSelected($event)"
       ></app-select-control>

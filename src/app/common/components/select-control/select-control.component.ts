@@ -11,8 +11,6 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { timingSafeEqual } from 'crypto';
-import { timer } from 'rxjs';
 import { SelectItem } from './select-control.model';
 
 @Component({
@@ -32,9 +30,12 @@ export class SelectControlComponent
 
   @Input()
   public set style(v: any) {
+    if (this._style === undefined) {
+      this._style = {};
+    }
     this._style = Object.assign(this._style, v);
   }
-  private _style: any = {};
+  private _style: any;
   public get style(): any {
     return this._style;
   }
