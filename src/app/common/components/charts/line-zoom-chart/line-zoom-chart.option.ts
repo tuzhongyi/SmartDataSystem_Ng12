@@ -47,6 +47,10 @@ export let option = {
     minInterval: 1 * 1000 * 60,
     data: [],
     axisLine: { onZero: true },
+    axisLabel: {
+      color: '#CFD7FE',
+      fontSize: '16',
+    },
   },
   yAxis: {
     show: false,

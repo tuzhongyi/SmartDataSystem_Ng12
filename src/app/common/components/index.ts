@@ -66,6 +66,8 @@ import { PictureWindowComponent } from './picture-window/picture-window.componen
 import { SelectComponents } from './selects/selects.modules';
 import { VideoPlayerListComponent } from './video-player-list/video-player-list.component';
 import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
+import { LevelListPanelComponent } from './panels/level-list-panel/level-list-panel.component';
+import { LevelDivisionPanelComponent } from './panels/level-division-panel/level-division-panel.component';
 
 export const CUSTOM_COMPONENTS = [
   StatisticLineEChartsComponent,
@@ -137,4 +139,7 @@ export const CUSTOM_COMPONENTS = [
   VideoPlayerListComponent,
   VideoMultiplePlayerWindowComponent,
   ...SelectComponents,
+
+  LevelListPanelComponent,
+  LevelDivisionPanelComponent,
 ];

@@ -11,13 +11,21 @@
     [ngStyle]="style"
     *ngIf="expand"
   >
-    <howell-tree
+    <!-- <howell-tree
       [treeServiceModel]="treeServiceModel"
       [treeSelectModel]="treeSelectModel"
       [resourceType]="type"
       (selectTreeNode)="selectTreeNode($event)"
       [depth]="1"
       [filterTypes]="filterTypes"
-    ></howell-tree>
+    ></howell-tree> -->
+    <howell-division-tree
+      [resourceType]="type"
+      [depth]="tree.depth"
+      [showStation]="true"
+      [defaultIds]="station ? [station.Id] : []"
+      (selectTreeNode)="selectTreeNode($event)"
+    >
+    </howell-division-tree>
   </div>
 </div>

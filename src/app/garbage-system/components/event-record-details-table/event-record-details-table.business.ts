@@ -1,23 +1,16 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { async } from '@angular/core/testing';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { SelectItemConverter } from 'src/app/converter/select-item.converter';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { SelectItemConverter } from 'src/app/converter/select-item.converter';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IModel } from 'src/app/network/model/model.interface';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { ListPanelBusiness } from '../map-control/business/map-list-panel.business';
 import { EventRecordDetailsTableOpts } from './event-record-details-table.component';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
 
@@ -116,9 +109,7 @@ class EventRecordDetailsTableConverter
     let model = new EventRecordDetailsTableModel();
 
     if (divisions) {
-      model.divisions = divisions.map((x) => {
-        return this.converter.item.Convert(x);
-      });
+      model.divisions = divisions;
     }
 
     if (stations) {

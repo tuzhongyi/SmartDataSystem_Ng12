@@ -29,7 +29,7 @@
         <input
           type="text"
           DateTimePicker
-          [format]="'yyyy-MM-dd HH:mm'"
+          [format]="'yyyy年MM月dd日 HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
           [(date)]="filter.BeginTime"
@@ -42,7 +42,7 @@
         <input
           type="text"
           DateTimePicker
-          [format]="'yyyy-MM-dd HH:mm'"
+          [format]="'yyyy年MM月dd日 HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
           [(date)]="filter.EndTime"
@@ -67,7 +67,7 @@
           disableRipple="true"
         >
           <div>
-            {{ filter.division ? filter.division.language : "请选择" }}
+            {{ filter.division ? filter.division.Name : "请选择" }}
           </div>
           <i class="mdi mdi-menu-down"></i>
         </button>
@@ -76,7 +76,7 @@
             mat-menu-item
             *ngFor="let item of model.divisions"
             (click)="ondivisionselect(item)"
-            >{{ item.language }}</menu
+            >{{ item.Name }}</menu
           >
         </mat-menu>
       </div>
