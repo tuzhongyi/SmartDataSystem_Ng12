@@ -6,8 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Language } from 'src/app/common/tools/language';
@@ -27,6 +25,7 @@ import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { VideoArgs } from 'src/app/network/model/args/video.args';
+import { Medium } from 'src/app/common/tools/medium';
 @Component({
   selector: 'howell-ai-camera-events',
   templateUrl: './ai-camera-events.component.html',
@@ -35,9 +34,10 @@ import { VideoArgs } from 'src/app/network/model/args/video.args';
 })
 export class AICameraEventsComponent implements OnInit, AfterViewInit {
   Language = Language;
+  Medium = Medium;
   ViewMode = ViewMode;
   EventType = EventType;
-  
+
   windowModel = new WindowViewModel();
 
   widths = ['10%', '15%', '10%', '10%', '10%', '10%', '5%'];
@@ -148,6 +148,9 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     }
     this._init();
     this._render();
+  }
+  imageError(img: HTMLImageElement) {
+    img.src = Medium.default;
   }
   async clickVideoIcon(item: AICameraEventsModel) {
     if (item.RawData && item.AICameraId) {

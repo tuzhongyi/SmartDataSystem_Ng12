@@ -3,7 +3,8 @@ import { AICamera } from 'src/app/network/model/ai-camera.model';
 
 export class AICameraEventsModel<T = any> {
   Id!: string;
-  ImageUrl!: Promise<string>;
+  ImageUrl!: string;
+  AsyncImageUrl!: Promise<string>;
   EventType!: string;
   ModelName!: string;
   EventTime!: Date;

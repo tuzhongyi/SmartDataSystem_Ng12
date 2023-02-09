@@ -37,7 +37,8 @@ export class AICameraEventsConverter extends AbstractCommonModelConverter<AICame
     model.ResourceType = Language.ResourceType(item.ResourceType!);
     model.ResourceName = item.ResourceName ?? "'";
     model.EventTime = item.EventTime;
-    model.ImageUrl = Medium.img(item.ImageUrl);
+    model.ImageUrl = Medium.jpg(item.ImageUrl);
+    model.AsyncImageUrl = Medium.img(item.ImageUrl);
     model.AICameraId = item.ResourceId;
 
     model.RawData = item;

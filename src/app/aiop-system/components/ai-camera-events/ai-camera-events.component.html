@@ -162,9 +162,10 @@
             <tr>
               <td>
                 <img
-                  [src]="item.ImageUrl | async"
+                  #img
+                  [src]="item.ImageUrl"
                   alt=""
-                  *ngIf="item.ImageUrl | async"
+                  (error)="imageError(img)"
                 />
               </td>
               <td>{{ item.ResourceName }}</td>
@@ -214,10 +215,8 @@
         </div>
         <div class="hw-card-body">
           <img
-            [src]="item.ImageUrl | async"
-            alt=""
-            *ngIf="item.ImageUrl | async"
-            alt=""
+            [src]="item.AsyncImageUrl | async"
+            *ngIf="item.AsyncImageUrl | async"
           />
         </div>
         <div class="hw-card-footer">
