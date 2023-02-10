@@ -1,12 +1,10 @@
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ImageControlModel } from './image-control.model';
 
 export class GarbageStationModel extends GarbageStation {
-  /** 居委会 */
-  Committees?: Division;
-  /** 街道 */
-  County?: Division;
-  /** 区 */
-  City?: Division;
+  Division?: Promise<DivisionModel>;
+}
+
+export class DivisionModel extends Division {
+  Parent?: Promise<DivisionModel>;
 }

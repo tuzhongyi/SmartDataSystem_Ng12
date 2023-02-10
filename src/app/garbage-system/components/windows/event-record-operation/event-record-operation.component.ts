@@ -2,7 +2,6 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { Language } from 'src/app/common/tools/language';
 import { Enum } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import {
   SearchOptionKey,
   SearchOptions,
@@ -36,14 +35,14 @@ export class EventRecordOperationComponent implements OnInit {
     let typeEnum = new Enum(ListType);
     this.listTypes = typeEnum.toArray().map((x) => {
       let item = new SelectItem();
-      item.key = x;
+      item.Id = x;
 
       switch (x) {
         case ListType.table:
-          item.language = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
+          item.Name = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
-          item.language = '&#xf225;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
+          item.Name = '&#xf225;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
           break;
 
         default:

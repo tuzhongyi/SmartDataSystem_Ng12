@@ -1,14 +1,16 @@
+import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
+import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GarbageStationConverter } from '../../../../converter/garbage-station.converter';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
 
+@Injectable()
 export class GarbageFullStationPagedTableConverter
   implements
     IPromiseConverter<
@@ -16,9 +18,7 @@ export class GarbageFullStationPagedTableConverter
       PagedList<GarbageFullStationTableModel>
     >
 {
-  private converter = {
-    item: new GarbageFullStationTableConverter(),
-  };
+  constructor(private item: GarbageFullStationTableConverter) {}
 
   async Convert(
     source: PagedList<GarbageStationNumberStatistic>,
@@ -29,7 +29,7 @@ export class GarbageFullStationPagedTableConverter
   ): Promise<PagedList<GarbageFullStationTableModel>> {
     let array: GarbageFullStationTableModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
-      let item = await this.converter.item.Convert(source.Data[i], getter);
+      let item = await this.item.Convert(source.Data[i], getter);
 
       array.push(item);
     }
@@ -40,6 +40,7 @@ export class GarbageFullStationPagedTableConverter
   }
 }
 
+@Injectable()
 export class GarbageFullStationTableConverter
   implements
     IPromiseConverter<
@@ -47,9 +48,9 @@ export class GarbageFullStationTableConverter
       GarbageFullStationTableModel
     >
 {
+  constructor(private stationConverter: GarbageStationModelConverter) {}
   converter = {
     image: new ImageControlArrayConverter(),
-    station: new GarbageStationConverter(),
   };
 
   async Convert(
@@ -65,7 +66,7 @@ export class GarbageFullStationTableConverter
       model.FullDuration = new Date(source.FullDuration * 1000 * 60);
     }
     let station = await getter.station(source.Id);
-    model.GarbageStation = await this.converter.station.Convert(
+    model.GarbageStation = await this.stationConverter.Convert(
       station,
       getter.division
     );

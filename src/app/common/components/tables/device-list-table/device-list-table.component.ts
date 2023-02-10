@@ -10,26 +10,26 @@ import { PageEvent } from '@angular/material/paginator';
 
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Language } from 'src/app/common/tools/language';
-import { IModel } from 'src/app/network/model/model.interface';
-import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { Medium } from 'src/app/common/tools/medium';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { IModel } from 'src/app/network/model/model.interface';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../view-model/image-control.model';
+import { ImageControlModelArray } from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
+import {
+  DeviceConverter,
+  DevicePagedConverter,
+} from './device-list-table.converter';
 import { DeviceViewModel } from './device.model';
 
 @Component({
   selector: 'howell-device-list-table',
   templateUrl: './device-list-table.component.html',
   styleUrls: ['./device-list-table.component.less', '../table.less'],
-  providers: [DeviceListTableBusiness],
+  providers: [DeviceListTableBusiness, DeviceConverter, DevicePagedConverter],
 })
 export class DeviceListTableComponent
   extends PagedTableAbstractComponent<DeviceViewModel>

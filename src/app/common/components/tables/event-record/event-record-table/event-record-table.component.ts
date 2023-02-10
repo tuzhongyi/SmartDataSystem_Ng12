@@ -22,6 +22,10 @@ import {
 } from '../../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
+import {
+  EventRecordConverter,
+  EventRecordPagedConverter,
+} from '../event-record.converter';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
 
@@ -33,6 +37,8 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
     EventRecordBusiness,
     DownloadBusiness,
     VideoDownloadPanelBusiness,
+    EventRecordConverter,
+    EventRecordPagedConverter,
   ],
 })
 export class EventRecordTableComponent
@@ -111,6 +117,7 @@ export class EventRecordTableComponent
   }
   playvideo(model: EventRecordViewModel) {
     let array = new ImageControlModelArray(model.images, 0, true);
+    array.data = model;
     this.image.emit(array);
   }
 

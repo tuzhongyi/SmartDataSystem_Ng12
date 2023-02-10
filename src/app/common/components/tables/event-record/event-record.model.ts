@@ -39,7 +39,7 @@ export class EventRecordFilter extends DurationParams {
   public set station(v: SelectItem | undefined) {
     this._station = v;
     if (v) {
-      this.stationId = v.key;
+      this.stationId = v.Id;
     } else {
       this.stationId = v;
     }
@@ -51,7 +51,7 @@ export class EventRecordFilter extends DurationParams {
   public set camera(v: SelectItem | undefined) {
     this._camera = v;
     if (v) {
-      this.cameraId = v.key;
+      this.cameraId = v.Id;
     } else {
       this.cameraId = v;
     }

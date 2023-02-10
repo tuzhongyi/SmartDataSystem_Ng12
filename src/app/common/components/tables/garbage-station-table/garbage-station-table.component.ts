@@ -22,13 +22,21 @@ import {
 } from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationTableBusiness } from './garbage-station-table.business';
+import {
+  GarbageStationPagedConverter,
+  GarbageStationTableConverter,
+} from './garbage-station-table.converter';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 
 @Component({
   selector: 'howell-garbage-station-table',
   templateUrl: './garbage-station-table.component.html',
   styleUrls: ['../table.less', './garbage-station-table.component.less'],
-  providers: [GarbageStationTableBusiness],
+  providers: [
+    GarbageStationTableBusiness,
+    GarbageStationTableConverter,
+    GarbageStationPagedConverter,
+  ],
 })
 export class GarbageStationTableComponent
   extends PagedTableAbstractComponent<GarbageStationTableModel>

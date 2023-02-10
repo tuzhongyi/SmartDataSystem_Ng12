@@ -111,7 +111,7 @@ export class EventRecordFilterComponent
   async onstation(item: SelectItem) {
     let opts: DivisionStationFilterOpts = {
       divisionId: this.filter.divisionId!,
-      stationId: item.key,
+      stationId: item.Id,
     };
     let model = await this.business.load(opts);
     this.model.cameras = model.cameras;

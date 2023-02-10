@@ -6,10 +6,10 @@ import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
+import { Language } from 'src/app/common/tools/language';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/common/tools/language';
 import { Division } from 'src/app/network/model/division.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowGeneralExportConverter } from './garbage-station-window-general-export.converter';
@@ -109,7 +109,7 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     title += ' 投放点';
 
     if (this.unitSelected) {
-      title += ' ' + this.unitSelected.language;
+      title += ' ' + this.unitSelected.Name;
     }
     return title;
   }

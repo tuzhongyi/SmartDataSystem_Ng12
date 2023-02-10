@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { VehicleCameraModelConverter } from 'src/app/converter/view-models/garbage-vehicle/vehicle-camera.model.converter';
+import { VehicleCameraModelConverter } from 'src/app/converter/view-models/vehicle-camera.model.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 import { GetGarbageVehicleCamerasParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';

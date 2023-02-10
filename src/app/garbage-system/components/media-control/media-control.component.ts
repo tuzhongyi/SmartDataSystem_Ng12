@@ -7,13 +7,12 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { ImageVideoControlComponent } from 'src/app/common/components/image-video-control/image-video-control.component';
 import {
   ImageVideoControlModel,
   ImageVideoControlOperation,
+  PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { wait } from 'src/app/common/tools/tool';
@@ -59,14 +58,16 @@ export class MediaControlComponent
 
   constructor(
     bussiness: MediaVideoControlBussiness,
-    private download: DownloadBusiness
+    protected download: DownloadBusiness
   ) {
     this.business = bussiness;
   }
 
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
-  @ViewChild(ImageVideoControlComponent)
-  player!: ImageVideoControlComponent;
+
+  preview: EventEmitter<string> = new EventEmitter();
+  playback: EventEmitter<PlaybackInterval> = new EventEmitter();
+
   ngAfterViewInit(): void {
     if (this.autoplay) {
       wait(
@@ -202,7 +203,7 @@ export class MediaControlComponent
 
   onpreview(event?: Event) {
     if (this.current) {
-      this.player.topreview(this.current.cameraId);
+      this.preview.emit(this.current.cameraId);
     }
     this.display.preview = false;
   }
@@ -211,7 +212,11 @@ export class MediaControlComponent
       let interval = DurationParams.beforeAndAfter(
         this.current.image.eventTime
       );
-      this.player.toplayback(this.current.cameraId, interval);
+      this.playback.emit({
+        CameraId: this.current.cameraId,
+        BeginTime: interval.BeginTime,
+        EndTime: interval.EndTime,
+      });
     }
     this.display.playback = false;
     this.display.preview = true;
@@ -253,6 +258,7 @@ export class MediaControlComponent
     if (this.current.image) {
       this.title = this.current.image.name;
     }
+    this.prev.emit();
   }
   onnext() {
     this.index++;
@@ -263,6 +269,7 @@ export class MediaControlComponent
     if (this.current.image) {
       this.title = this.current.image.name;
     }
+    this.next.emit();
   }
   onplayed(model: ImageVideoControlModel) {
     this.playing = true;

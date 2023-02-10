@@ -1,4 +1,3 @@
-import { DatePipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -10,9 +9,9 @@ import {
 } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import {
   IllegalDropEventRecord,
@@ -20,17 +19,14 @@ import {
 } from 'src/app/network/model/garbage-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
-import {
-  CommitteesHistoryTableTypes,
-  CommitteesHistoryTableViewModel,
-} from './committees-history-table.model';
+import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 import { CommitteesHistroyTableService } from './committees-history-table.service';
 
 @Component({
   selector: 'app-histroy-table',
   templateUrl: './committees-history-table.component.html',
   styleUrls: ['./committees-history-table.component.css'],
-  providers: [CommitteesHistroyTableService],
+  providers: [CommitteesHistroyTableService, CommitteesHistoryTableConverter],
 })
 export class CommitteesHistroyTableComponent
   implements

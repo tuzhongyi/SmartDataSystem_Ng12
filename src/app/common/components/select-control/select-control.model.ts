@@ -1,12 +1,12 @@
 export class SelectItem {
   constructor(key?: string, value?: any, language?: string) {
-    this.key = key ?? '';
+    this.Id = key ?? '';
     this.value = value ?? undefined;
-    this.language = language ?? '';
+    this.Name = language ?? '';
   }
-  key: string = '';
+  Id: string = '';
   value!: any;
-  language!: string;
+  Name!: string;
 
   static create<T>(t: T, language: string | ((t: T) => string)) {
     let key = t === undefined ? '' : (t as any).toString();

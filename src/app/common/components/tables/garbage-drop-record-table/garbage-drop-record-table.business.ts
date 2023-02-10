@@ -1,12 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
 import { OrderType } from 'src/app/enum/order-type.enum';
-import { CompareRange } from 'src/app/network/model/compare-range.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -77,7 +73,7 @@ export class GarbageDropRecordTableBusiness
       params.ResourceIds = [opts.cameraId];
     }
     if (opts.community) {
-      params.CommunityIds = [opts.community.key];
+      params.CommunityIds = [opts.community.Id];
     }
     if (opts.opts) {
       params.ResourceName = opts.opts.text;

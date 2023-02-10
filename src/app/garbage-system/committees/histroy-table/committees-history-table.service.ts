@@ -1,9 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import {
@@ -31,14 +27,9 @@ export class CommitteesHistroyTableService
   constructor(
     private eventService: EventRequestService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService
+    private divisionService: DivisionRequestService,
+    public Converter: CommitteesHistoryTableConverter
   ) {}
-  Converter: IPromiseConverter<
-    (IllegalDropEventRecord | MixedIntoEventRecord)[],
-    CommitteesHistoryTableViewModel<
-      IllegalDropEventRecord | MixedIntoEventRecord
-    >[]
-  > = new CommitteesHistoryTableConverter();
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async getData(divisionId: string, eventType: EventType): Promise<any[]> {

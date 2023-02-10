@@ -38,14 +38,14 @@ export class GarbageStationWindowRecordOperationComponent implements OnInit {
     let typeEnum = new Enum(ListType);
     this.listTypes = typeEnum.toArray().map((x) => {
       let item = new SelectItem();
-      item.key = x;
+      item.Id = x;
 
       switch (x) {
         case ListType.table:
-          item.language = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
+          item.Name = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
-          item.language = '&#xf274;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
+          item.Name = '&#xf274;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
           break;
 
         default:

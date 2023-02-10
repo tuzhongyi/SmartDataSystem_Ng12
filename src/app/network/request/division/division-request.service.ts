@@ -1,6 +1,25 @@
 import { Division } from 'src/app/network/model/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 
+import { Injectable } from '@angular/core';
+import { instanceToPlain } from 'class-transformer';
+import { AbstractService } from 'src/app/business/Ibusiness';
+import { BatchRequest } from '../../model/batch-request.model';
+import { BatchResult } from '../../model/batch-result.model';
+import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
+import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
+import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
+import { DivisionTree } from '../../model/division-tree.model';
+import { EventNumberStatistic } from '../../model/event-number-statistic.model';
+import { GarbageVolume } from '../../model/garbage-volume.model';
+import { SumEventNumber } from '../../model/sum-event-number.model';
+import { DivisionUrl } from '../../url/garbage/division.url';
+import {
+  BaseRequestService,
+  BaseTypeRequestService,
+} from '../base-request.service';
+import { Cache } from '../cache/cache';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   GetDivisionEventNumbersParams,
   GetDivisionsParams,
@@ -11,25 +30,6 @@ import {
   GetDivisionTreeParams,
   GetDivisionVolumesParams,
 } from './division-request.params';
-import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { AbstractService } from 'src/app/business/Ibusiness';
-import { DivisionUrl } from '../../url/garbage/division.url';
-import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
-import { BatchRequest } from '../../model/batch-request.model';
-import { BatchResult } from '../../model/batch-result.model';
-import { DivisionTree } from '../../model/division-tree.model';
-import { GarbageVolume } from '../../model/garbage-volume.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
-import { SumEventNumber } from '../../model/sum-event-number.model';
-import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
-import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
-import { Injectable } from '@angular/core';
-import { Cache } from '../cache/cache';
-import { instanceToPlain } from 'class-transformer';
 
 @Cache(DivisionUrl.basic(), Division)
 @Injectable({

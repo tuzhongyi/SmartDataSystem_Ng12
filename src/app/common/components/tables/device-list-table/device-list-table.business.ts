@@ -1,25 +1,16 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
+
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationCamerasParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import { DeviceListTableFilter } from './device-list-table.component';
+import { DevicePagedConverter } from './device-list-table.converter';
 import { DeviceViewModel } from './device.model';
 
 @Injectable()
@@ -29,10 +20,9 @@ export class DeviceListTableBusiness
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService
+    private divisionService: DivisionRequestService,
+    public Converter: DevicePagedConverter
   ) {}
-  Converter: IPromiseConverter<PagedList<Camera>, PagedList<DeviceViewModel>> =
-    new DevicePagedConverter();
 
   loading?: EventEmitter<void> | undefined;
   async load(
@@ -49,9 +39,6 @@ export class DeviceListTableBusiness
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
-      },
-      division: (id: string) => {
-        return this.divisionService.cache.get(id);
       },
     });
     return model;
@@ -70,60 +57,5 @@ export class DeviceListTableBusiness
     }
     params.DivisionIds = [divisionId];
     return this.stationService.camera.list(params);
-  }
-}
-
-class DevicePagedConverter
-  implements IPromiseConverter<PagedList<Camera>, PagedList<DeviceViewModel>>
-{
-  private converter = {
-    item: new DeviceConverter(),
-  };
-  async Convert(
-    source: PagedList<Camera>,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-    }
-  ): Promise<PagedList<DeviceViewModel>> {
-    let array: DeviceViewModel[] = [];
-
-    for (let i = 0; i < source.Data.length; i++) {
-      let item = await this.converter.item.Convert(source.Data[i], getter);
-
-      array.push(item);
-    }
-
-    return {
-      Page: source.Page,
-      Data: array,
-    };
-  }
-}
-
-class DeviceConverter implements IPromiseConverter<Camera, DeviceViewModel> {
-  converter = {
-    station: new GarbageStationConverter(),
-    image: new ImageControlConverter(),
-  };
-  async Convert(
-    source: Camera,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-    }
-  ): Promise<DeviceViewModel> {
-    let model = new DeviceViewModel();
-    model = Object.assign(model, source);
-
-    let station = await getter.station(source.GarbageStationId);
-    model.GarbageStation = await this.converter.station.Convert(
-      station,
-      getter.division
-    );
-
-    model.image = this.converter.image.Convert(source);
-
-    return model;
   }
 }

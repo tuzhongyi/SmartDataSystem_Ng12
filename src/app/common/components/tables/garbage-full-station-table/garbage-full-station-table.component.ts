@@ -3,7 +3,6 @@ import {
   EventEmitter,
   Input,
   OnChanges,
-  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -11,11 +10,11 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { Language } from 'src/app/common/tools/language';
+import { Medium } from 'src/app/common/tools/medium';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
@@ -23,14 +22,21 @@ import {
 } from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageFullStationTableBusiness } from './garbage-full-station-table.business';
+import {
+  GarbageFullStationPagedTableConverter,
+  GarbageFullStationTableConverter,
+} from './garbage-full-station-table.converter';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
-import { StationState } from 'src/app/enum/station-state.enum';
 
 @Component({
   selector: 'howell-garbage-full-station-table',
   templateUrl: './garbage-full-station-table.component.html',
   styleUrls: ['../table.less', './garbage-full-station-table.component.less'],
-  providers: [GarbageFullStationTableBusiness],
+  providers: [
+    GarbageFullStationTableConverter,
+    GarbageFullStationPagedTableConverter,
+    GarbageFullStationTableBusiness,
+  ],
 })
 export class GarbageFullStationTableComponent
   extends PagedTableAbstractComponent<GarbageFullStationTableModel>

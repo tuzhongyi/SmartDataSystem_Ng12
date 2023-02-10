@@ -47,12 +47,13 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
   rules?: EventRule[];
 }
 
-export class ImageControlModelArray {
+export class ImageControlModelArray<T = any> {
   constructor(models: ImageControlModel[], index: number, autoplay = false) {
     this.models = models;
     this.index = index;
     this.autoplay = autoplay;
   }
+  data?: T;
   models: ImageControlModel[];
   autoplay: boolean;
   index: number;

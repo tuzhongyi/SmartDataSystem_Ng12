@@ -1,14 +1,12 @@
 import { formatDate } from '@angular/common';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Language } from 'src/app/common/tools/language';
+import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { EventRecordConverter } from '../event-record/event-record.converter';
 import { CameraImageUrlModel } from '../event-record/event-record.model';
 import { GarbageDropRecordViewModel } from './garbage-drop-record.model';
 
@@ -53,7 +51,6 @@ export class GarbageDropEventRecordConverter
     IPromiseConverter<GarbageDropEventRecord, GarbageDropRecordViewModel>
 {
   converter = {
-    record: new EventRecordConverter(),
     image: new ImageControlConverter(),
   };
   async Convert(

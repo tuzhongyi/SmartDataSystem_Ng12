@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { NgModel } from '@angular/forms';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
@@ -7,10 +6,8 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
-import { CompareRange } from 'src/app/network/model/compare-range.model';
 import { Division } from 'src/app/network/model/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowRecordFilterBusiness } from './garbage-station-window-record-filter.business';
 import { GarbageStationWindowRecordFilterModel } from './garbage-station-window-record-filter.model';
 
@@ -122,7 +119,7 @@ export class GarbageStationWindowRecordFilterComponent
     this.filterChange.emit(this.filter);
   }
   onstation(item: SelectItem) {
-    this.filter.stationId = item.key;
+    this.filter.stationId = item.Id;
     this.filterChange.emit(this.filter);
   }
   onduration(item: SelectItem) {
@@ -132,7 +129,7 @@ export class GarbageStationWindowRecordFilterComponent
   onstatus(item: SelectItem) {
     this.filter.IsTimeout = undefined;
     this.filter.IsHandle = undefined;
-    if (item.key) {
+    if (item.Id) {
       switch (item.value as GarbageTaskStatus) {
         case GarbageTaskStatus.handled:
           this.filter.IsHandle = true;

@@ -3,7 +3,7 @@
     <div>
       <select [(ngModel)]="position" (change)="onpositionchanged()">
         <option [ngValue]="item.value" *ngFor="let item of title">
-          {{ item.language }}
+          {{ item.Name }}
         </option>
       </select>
     </div>

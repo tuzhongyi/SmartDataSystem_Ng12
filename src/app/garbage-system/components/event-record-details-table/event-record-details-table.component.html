@@ -89,7 +89,7 @@
           disableRipple="true"
         >
           <div>
-            {{ filter.station ? filter.station.language : "请选择" }}
+            {{ filter.station ? filter.station.Name : "请选择" }}
           </div>
           <i class="mdi mdi-menu-down"></i>
         </button>
@@ -98,7 +98,7 @@
             mat-menu-item
             *ngFor="let item of model.stations"
             (click)="onstationselect(item)"
-            >{{ item.language }}</menu
+            >{{ item.Name }}</menu
           >
         </mat-menu>
       </div>
@@ -110,7 +110,7 @@
           [disabled]="!model.cameras || model.cameras.length === 0"
           disableRipple="true"
         >
-          <div>{{ filter.camera ? filter.camera.language : "请选择" }}</div>
+          <div>{{ filter.camera ? filter.camera.Name : "请选择" }}</div>
           <div><i class="mdi mdi-menu-down"></i></div>
         </button>
         <mat-menu #cameras>
@@ -118,7 +118,7 @@
             mat-menu-item
             *ngFor="let item of model.cameras"
             (click)="oncameraselect(item)"
-            >{{ item.language }}</menu
+            >{{ item.Name }}</menu
           >
         </mat-menu>
       </div>

@@ -54,18 +54,15 @@
             <td [ngStyle]="{ width: widths[4] }">
               {{
                 item.GarbageStation
-                  ? item.GarbageStation.County
-                    ? item.GarbageStation.County.Name
-                    : ""
+                  ? ((item.GarbageStation.Division | async)?.Parent | async)
+                      ?.Name
                   : ""
               }}
             </td>
             <td [ngStyle]="{ width: widths[5] }">
               {{
                 item.GarbageStation
-                  ? item.GarbageStation.Committees
-                    ? item.GarbageStation.Committees.Name
-                    : ""
+                  ? (item.GarbageStation.Division | async)?.Name
                   : ""
               }}
             </td>

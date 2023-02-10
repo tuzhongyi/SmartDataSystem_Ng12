@@ -1,4 +1,5 @@
 import { formatDate } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { EventRecordConverter } from 'src/app/common/components/tables/event-record/event-record.converter';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -8,9 +9,9 @@ import {
   MixedIntoEventRecord,
 } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 
+@Injectable()
 export class CommitteesHistoryTableConverter
   implements
     IPromiseConverter<
@@ -20,6 +21,8 @@ export class CommitteesHistoryTableConverter
       >[]
     >
 {
+  constructor(private eventConverter: EventRecordConverter) {}
+
   async Convert(
     input: Array<IllegalDropEventRecord | MixedIntoEventRecord>,
     getter: {
@@ -41,10 +44,6 @@ export class CommitteesHistoryTableConverter
     return array;
   }
 
-  converter = {
-    event: new EventRecordConverter(),
-  };
-
   async ConvertItem(
     input: IllegalDropEventRecord | MixedIntoEventRecord,
     getter: {
@@ -61,7 +60,7 @@ export class CommitteesHistoryTableConverter
       IllegalDropEventRecord | MixedIntoEventRecord
     >();
 
-    let event = await this.converter.event.Convert(input, getter);
+    let event = await this.eventConverter.Convert(input, getter);
     vm = Object.assign(vm, event);
     vm.Data = input;
     vm.Id = input.EventId;

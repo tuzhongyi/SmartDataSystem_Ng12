@@ -51,8 +51,10 @@
       (onstop)="onstoped($event)"
       [stop]="stop"
       [operation]="operation"
+      [preview]="preview"
+      [playback]="playback"
     ></app-image-video-control>
-    <div class="page" *ngIf="(datas.length > 1 && playing === false) || page">
+    <div class="page" *ngIf="page || (datas.length > 1 && playing === false)">
       <div class="prev">
         <div
           class="howell-icon-arrowleftbold blue-text arrow-wrap"

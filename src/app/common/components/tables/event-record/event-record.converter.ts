@@ -1,7 +1,8 @@
 import { formatDate } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
+import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
@@ -21,6 +22,7 @@ export type EventRecordType =
   | IllegalDropEventRecord
   | GarbageFullEventRecord;
 
+@Injectable()
 export class EventRecordPagedConverter
   implements
     IPromiseConverter<
@@ -28,9 +30,7 @@ export class EventRecordPagedConverter
       PagedList<EventRecordViewModel>
     >
 {
-  private converter = {
-    item: new EventRecordConverter(),
-  };
+  constructor(private item: EventRecordConverter) {}
 
   async Convert(
     source: PagedList<EventRecordType>,
@@ -44,7 +44,7 @@ export class EventRecordPagedConverter
     for (let i = 0; i < source.Data.length; i++) {
       const data = source.Data[i];
       try {
-        let model = await this.converter.item.Convert(data, get);
+        let model = await this.item.Convert(data, get);
         array.push(model);
       } catch (error) {
         console.error(error, this, data);
@@ -56,12 +56,12 @@ export class EventRecordPagedConverter
     };
   }
 }
-
+@Injectable()
 export class EventRecordConverter
   implements IPromiseConverter<EventRecordType, EventRecordViewModel>
 {
+  constructor(private stationConverter: GarbageStationModelConverter) {}
   converter = {
-    station: new GarbageStationConverter(),
     image: new ImageControlConverter(),
   };
 
@@ -93,10 +93,7 @@ export class EventRecordConverter
     let model = new EventRecordViewModel();
     model = Object.assign(model, source);
     let station = await getter.station(source.Data.StationId);
-    model.GarbageStation = await this.converter.station.Convert(
-      station,
-      getter.division
-    );
+    model.GarbageStation = await this.stationConverter.Convert(station);
 
     let img: CameraImageUrl = {
       CameraId: source.ResourceId ?? '',

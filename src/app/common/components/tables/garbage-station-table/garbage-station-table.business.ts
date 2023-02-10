@@ -1,15 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { Flags } from 'src/app/common/tools/flags';
-import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
-import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
+
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -17,6 +10,7 @@ import { GetGarbageStationsParams } from 'src/app/network/request/garbage-statio
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { GarbageStationPagedConverter } from './garbage-station-table.converter';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 
 @Injectable()
@@ -27,12 +21,10 @@ export class GarbageStationTableBusiness
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService
+    private divisionService: DivisionRequestService,
+    public Converter: GarbageStationPagedConverter
   ) {}
-  Converter: IPromiseConverter<
-    PagedList<GarbageStation>,
-    PagedList<GarbageStationTableModel>
-  > = new GarbageStationPagedConverter();
+
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async load(
@@ -67,56 +59,4 @@ export class GarbageStationTableBusiness
     }
     return this.stationService.list(params);
   }
-}
-
-export class GarbageStationPagedConverter
-  implements
-    IPromiseConverter<
-      PagedList<GarbageStation>,
-      PagedList<GarbageStationTableModel>
-    >
-{
-  converter = {
-    item: new GarbageStationTableConverter(),
-  };
-
-  async Convert(
-    source: PagedList<GarbageStation>,
-    getter: (id: string) => Promise<Division>
-  ): Promise<PagedList<GarbageStationTableModel>> {
-    let array: GarbageStationTableModel[] = [];
-    for (let i = 0; i < source.Data.length; i++) {
-      const item = source.Data[i];
-      let model = await this.converter.item.Convert(item, getter);
-      array.push(model);
-    }
-    return {
-      Page: source.Page,
-      Data: array,
-    };
-  }
-}
-
-export class GarbageStationTableConverter
-  implements IPromiseConverter<GarbageStation, GarbageStationTableModel>
-{
-  async Convert(
-    source: GarbageStation,
-    getter: (id: string) => Promise<Division>
-  ): Promise<GarbageStationTableModel> {
-    let model = new GarbageStationTableModel();
-    model.GarbageStation = await this.converter.station.Convert(source, getter);
-    if (model.GarbageStation) {
-      if (model.GarbageStation.Cameras) {
-        model.images = this.converter.image.Convert(
-          model.GarbageStation.Cameras
-        );
-      }
-    }
-    return model;
-  }
-  converter = {
-    image: new ImageControlArrayConverter(),
-    station: new GarbageStationConverter(),
-  };
 }

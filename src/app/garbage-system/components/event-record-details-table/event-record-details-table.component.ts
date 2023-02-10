@@ -43,14 +43,14 @@ export class EventRecordDetailsTableComponent
     let typeEnum = new Enum(ListType);
     this.listTypes = typeEnum.toArray().map((x) => {
       let item = new SelectItem();
-      item.key = x;
+      item.Id = x;
 
       switch (x) {
         case ListType.table:
-          item.language = '&#xf08b;'; //'<i class="howell-icon-ul"></i>';
+          item.Name = '&#xf08b;'; //'<i class="howell-icon-ul"></i>';
           break;
         case ListType.card:
-          item.language = '<i class="howell-icon-cam-all1"></i>';
+          item.Name = '<i class="howell-icon-cam-all1"></i>';
           break;
 
         default:
@@ -107,7 +107,7 @@ export class EventRecordDetailsTableComponent
 
     this.model = await this.business.load({
       divisionId: this.filter.division,
-      stationId: item.key,
+      stationId: item.Id,
     });
     this.filter.camera = undefined;
   }

@@ -1,8 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { interval } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({

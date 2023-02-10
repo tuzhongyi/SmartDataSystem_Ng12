@@ -7,12 +7,14 @@ import {
   Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { Medium } from 'src/app/common/tools/medium';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { Medium } from 'src/app/common/tools/medium';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import {
   ImageControlModel,
@@ -20,15 +22,21 @@ import {
 } from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
+import {
+  GarbageDropStationPagedTableConverter,
+  GarbageDropStationTableConverter,
+} from './garbage-drop-station-table.converter';
 import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'howell-garbage-drop-station-table',
   templateUrl: './garbage-drop-station-table.component.html',
   styleUrls: ['../table.less', './garbage-drop-station-table.component.less'],
-  providers: [GarbageDropStationTableBusiness],
+  providers: [
+    GarbageDropStationTableBusiness,
+    GarbageDropStationPagedTableConverter,
+    GarbageDropStationTableConverter,
+  ],
 })
 export class GarbageDropStationTableComponent
   extends PagedTableAbstractComponent<GarbageDropStationTableModel>

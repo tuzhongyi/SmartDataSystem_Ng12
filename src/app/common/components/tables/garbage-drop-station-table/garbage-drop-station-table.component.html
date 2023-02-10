@@ -50,7 +50,11 @@
             <td>
               <div class="img-list">
                 <div class="img" *ngFor="let img of item.images">
-                  <app-image-control [nosignal]="false" [model]="img" (Click)="imageClick(item, img)">
+                  <app-image-control
+                    [nosignal]="false"
+                    [model]="img"
+                    (Click)="imageClick(item, img)"
+                  >
                   </app-image-control>
                 </div>
               </div>
@@ -61,20 +65,17 @@
 
             <td>
               {{
-              item.GarbageStation
-              ? item.GarbageStation.County
-              ? item.GarbageStation.County.Name
-              : ""
-              : ""
+                item.GarbageStation
+                  ? ((item.GarbageStation.Division | async)?.Parent | async)
+                      ?.Name
+                  : ""
               }}
             </td>
             <td>
               {{
-              item.GarbageStation
-              ? item.GarbageStation.Committees
-              ? item.GarbageStation.Committees.Name
-              : ""
-              : ""
+                item.GarbageStation
+                  ? (item.GarbageStation.Division | async)?.Name
+                  : ""
               }}
             </td>
             <td>
@@ -85,19 +86,23 @@
             </td>
             <td>
               {{
-              item.GarbageDuration ? Language.Time(item.GarbageDuration) : ""
+                item.GarbageDuration ? Language.Time(item.GarbageDuration) : ""
               }}
             </td>
             <td>
               {{
-              item.MaxGarbageDuration
-              ? Language.Time(item.MaxGarbageDuration)
-              : ""
+                item.MaxGarbageDuration
+                  ? Language.Time(item.MaxGarbageDuration)
+                  : ""
               }}
             </td>
             <td>
-              <div style="width: 16px" *ngFor="let member of item.members" [matTooltip]="member.view"
-                [matTooltipPosition]="'above'">
+              <div
+                style="width: 16px"
+                *ngFor="let member of item.members"
+                [matTooltip]="member.view"
+                [matTooltipPosition]="'above'"
+              >
                 <i class="howell-icon-user-anonymous"></i>
               </div>
             </td>
@@ -119,8 +124,14 @@
         <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
 
-      <app-paginator [length]="page.TotalRecordCount" [pageSize]="page.PageSize" [pagerCount]="5" [pageIndex]="0"
-        [showFirstLastButtons]="true" (page)="pageEvent($event)">
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="5"
+        [pageIndex]="0"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
       </app-paginator>
     </div>
   </div>

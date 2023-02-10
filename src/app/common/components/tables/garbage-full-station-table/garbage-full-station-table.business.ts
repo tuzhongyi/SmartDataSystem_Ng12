@@ -1,9 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { Flags } from 'src/app/common/tools/flags';
-import { StationState } from 'src/app/enum/station-state.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -29,12 +25,9 @@ export class GarbageFullStationTableBusiness
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService
+    private divisionService: DivisionRequestService,
+    public Converter: GarbageFullStationPagedTableConverter
   ) {}
-  Converter: IPromiseConverter<
-    PagedList<GarbageStationNumberStatistic>,
-    PagedList<GarbageFullStationTableModel>
-  > = new GarbageFullStationPagedTableConverter();
   loading?: EventEmitter<void> | undefined;
   async load(
     page: PagedParams,

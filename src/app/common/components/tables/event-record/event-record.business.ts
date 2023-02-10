@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
+import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -9,7 +9,6 @@ import { GetEventRecordsParams } from 'src/app/network/request/event/event-reque
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { Medium } from 'src/app/common/tools/medium';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
   EventRecordPagedConverter,
@@ -26,12 +25,9 @@ export class EventRecordBusiness
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService,
-    public subscription: SubscriptionService
+    public subscription: SubscriptionService,
+    public Converter: EventRecordPagedConverter
   ) {}
-  Converter: IPromiseConverter<
-    PagedList<EventRecordType>,
-    PagedList<EventRecordViewModel>
-  > = new EventRecordPagedConverter();
 
   async load(
     type: EventType,
