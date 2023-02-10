@@ -10,9 +10,10 @@
   </div>
   <div class="image-video-control-video" *ngIf="display.video">
     <app-video-player
-      [model]="model.video"
+      [stop]="stop"
+      [play]="videoPlay"
       (destroy)="onVideoDestroy($event)"
-      (onStoping)="stop()"
+      (onStoping)="tostop()"
     >
     </app-video-player>
   </div>

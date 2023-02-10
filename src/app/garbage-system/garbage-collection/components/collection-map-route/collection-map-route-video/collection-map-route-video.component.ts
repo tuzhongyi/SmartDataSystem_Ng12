@@ -12,7 +12,6 @@ import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { GarbageVehicleModelConverter } from 'src/app/converter/models/garbage-vehicle.model.converter';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { Duration } from 'src/app/network/model/duration.model';

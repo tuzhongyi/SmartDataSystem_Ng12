@@ -9,8 +9,7 @@ import {
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { VehicleCameraModelConverter } from 'src/app/converter/models/vehicle-camera.model.converter';
-import { Enum } from 'src/app/enum/enum-helper';
+import { VehicleCameraModelConverter } from 'src/app/converter/view-models/garbage-vehicle/vehicle-camera.model.converter';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';

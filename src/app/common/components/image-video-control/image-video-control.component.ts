@@ -6,14 +6,10 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { ChangeControlModel } from 'src/app/view-model/change-control.model';
-import { wait } from '../../tools/tool';
-import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { ImageVideoControlBusiness } from './image-video-control.business';
 import {
@@ -39,6 +35,10 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   draw: boolean = false;
   @Input()
   playback?: EventEmitter<PlaybackInterval>;
+  @Input()
+  preview?: EventEmitter<string>;
+  @Input()
+  stop: EventEmitter<void> = new EventEmitter();
 
   @Output()
   onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
@@ -61,8 +61,8 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     image: true,
     video: false,
   };
-  @ViewChild(VideoPlayerComponent)
-  player?: VideoPlayerComponent;
+
+  videoPlay: EventEmitter<VideoModel> = new EventEmitter();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && this.model) {
@@ -79,16 +79,14 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       this.display.operation.fullscreen = this.operation.fullscreen;
       this.display.operation.play = this.operation.play;
     }
-    if (changes.playback && changes.playback.firstChange && this.playback) {
-      if (this.playback.length > 0) {
-        this.playback.unsubscribe();
-      }
+    if (changes.playback && this.playback) {
       this.playback.subscribe((x) => {
-        this.stop();
-        if (this.model) {
-          this.model.videoChanged = undefined;
-        }
-        this.onplayback(x.CameraId, x);
+        this.toplayback(x.CameraId, x);
+      });
+    }
+    if (changes.playback && this.preview) {
+      this.preview.subscribe((cameraId) => {
+        this.topreview(cameraId);
       });
     }
   }
@@ -98,39 +96,42 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     this.display.operation.play = this.operation.play;
   }
 
+  private async getDuration(date: Date) {
+    let config = await this.config.getConfig();
+
+    let begin = new Date(date.getTime());
+    begin.setSeconds(begin.getSeconds() + config.playback.begin);
+    let end = new Date(date.getTime());
+    end.setSeconds(end.getSeconds() + config.playback.end);
+    return {
+      BeginTime: begin,
+      EndTime: end,
+    };
+  }
+
   async playClicked(event: Event) {
     this.display.image = false;
     this.display.operation.play = false;
     this.display.video = true;
 
     if (this.model) {
-      if (!this.model.video) {
-        if (this.model.image && this.model.image.eventTime) {
-          let config = await this.config.getConfig();
-          config.playback;
-          let begin = new Date(this.model.image.eventTime.getTime());
-          begin.setSeconds(begin.getSeconds() + config.playback.begin);
-          let end = new Date(this.model.image.eventTime.getTime());
-          end.setSeconds(end.getSeconds() + config.playback.end);
-          this.onplayback(this.model.cameraId, {
-            BeginTime: begin,
-            EndTime: end,
-          });
-        } else {
-          this.preview(this.model.cameraId);
-        }
+      if (this.model.image && this.model.image.eventTime) {
+        let duration = await this.getDuration(this.model.image.eventTime);
+        this.toplayback(this.model.cameraId, duration);
+      } else {
+        this.topreview(this.model.cameraId);
       }
     }
   }
 
-  preview(cameraId: string) {
+  topreview(cameraId: string) {
     this.display.image = false;
     this.display.video = true;
     this.business.load(cameraId, PlayMode.live).then((x) => {
       this.play(x);
     });
   }
-  onplayback(cameraId: string, interval: DurationParams) {
+  toplayback(cameraId: string, interval: DurationParams) {
     this.display.image = false;
     this.display.video = true;
     this.business.load(cameraId, PlayMode.vod, interval).then((x) => {
@@ -138,22 +139,13 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     });
   }
   play(video: VideoModel) {
-    if (this.model) {
-      this.model.video = video;
-      this.model.videoChanged = (x) => {
-        if (this.player) {
-          if (!x) this.player.onstop();
-        }
-      };
-      this.onplay.emit(this.model);
-      this.playing = true;
-    }
+    this.videoPlay.emit(video);
+    this.playing = true;
+    this.onplay.emit(this.model);
   }
 
-  stop() {
-    if (this.model) {
-      this.model.video = undefined;
-    }
+  tostop() {
+    this.stop.emit();
     this.playing = false;
     this.display.image = true;
     this.display.video = false;

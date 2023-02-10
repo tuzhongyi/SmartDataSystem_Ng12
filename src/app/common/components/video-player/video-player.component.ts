@@ -12,9 +12,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { wait } from '../../tools/tool';
 import { VideoModel } from './video.model';
@@ -289,13 +289,13 @@ export class VideoPlayerComponent
 
   eventRegist() {
     if (this.player) {
-      this.player.getPosition = (index: number, val: any) => {
+      this.player.getPosition = (index: number = 0, val: any) => {
         if (this.index != index) return;
         if (val >= 1) {
           this.playing = false;
         }
       };
-      this.player.onPlaying = (index: number) => {
+      this.player.onPlaying = (index: number = 0) => {
         if (this.index != index) return;
         setTimeout(() => {
           if (this._ruleState !== undefined && this.player) {
@@ -304,29 +304,29 @@ export class VideoPlayerComponent
         }, 1000);
         this.onPlaying.emit();
       };
-      this.player.onRuleStateChanged = (index: number, state: boolean) => {
+      this.player.onRuleStateChanged = (index: number = 0, state: boolean) => {
         if (this.index != index) return;
         // this.saveRuleState(state);
         this.onRuleStateChanged.emit(state);
       };
-      this.player.onStoping = (index: number) => {
+      this.player.onStoping = (index: number = 0) => {
         if (this.index != index) return;
         this.onStoping.emit(index);
       };
-      this.player.getPosition = (index: number, value: number) => {
+      this.player.getPosition = (index: number = 0, value: number) => {
         if (this.index != index) return;
         this.getPosition.emit(value);
       };
-      this.player.onButtonClicked = (index: number, btn: ButtonName) => {
+      this.player.onButtonClicked = (index: number = 0, btn: ButtonName) => {
         if (this.index != index) return;
         this.onButtonClicked.emit(btn);
       };
 
-      this.player.onViewerClicked = (index: number) => {
+      this.player.onViewerClicked = (index: number = 0) => {
         if (this.index != index) return;
         this.onViewerClicked.emit(index);
       };
-      this.player.onViewerDoubleClicked = (index: number) => {
+      this.player.onViewerDoubleClicked = (index: number = 0) => {
         if (this.index != index) return;
         this.onViewerDoubleClicked.emit(index);
       };

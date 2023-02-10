@@ -63,7 +63,7 @@ export class DateTimeTool {
     return duration;
   }
 
-  static beforeAndAfter(date: Date, seconds: number = 30): Duration {
+  static beforeOrAfter(date: Date, seconds: number = 30): Duration {
     let duration = {
       begin: new Date(),
       end: new Date(),

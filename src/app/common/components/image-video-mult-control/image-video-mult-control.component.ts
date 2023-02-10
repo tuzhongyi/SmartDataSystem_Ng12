@@ -7,7 +7,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import {
   ImageVideoControlModel,
   ImageVideoControlOperation,
@@ -42,7 +41,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       this.sqrt = Math.ceil(Math.sqrt(this.models.length));
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
-        this.models.push(new ImageVideoControlModel('', ''));
+        this.models.push(new ImageVideoControlModel(''));
       }
     }
   }
@@ -52,7 +51,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       this.sqrt = Math.ceil(Math.sqrt(this.models.length));
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
-        this.models.push(new ImageVideoControlModel('', ''));
+        this.models.push(new ImageVideoControlModel(''));
       }
     }
   }
@@ -62,9 +61,6 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   }
 
   onplay(item: ImageVideoControlModel) {
-    if (this.played) {
-      this.played.video = undefined;
-    }
     this.played = item;
     this.onplayed.emit(this.played);
   }

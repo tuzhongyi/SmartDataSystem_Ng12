@@ -11,7 +11,7 @@
       ></div>
     </div>
     <div class="operation">
-      <label class="" *ngIf="display.object">目标信息</label>
+      <div class="label" *ngIf="display.object">目标信息</div>
       <hw-switch
         *ngIf="display.object"
         (onChanged)="ondrawchange($event)"
@@ -49,9 +49,10 @@
       [draw]="draw"
       (onplay)="onplayed($event)"
       (onstop)="onstoped($event)"
+      [stop]="stop"
       [operation]="operation"
     ></app-image-video-control>
-    <div class="page" *ngIf="datas.length > 1 && playing === false">
+    <div class="page" *ngIf="(datas.length > 1 && playing === false) || page">
       <div class="prev">
         <div
           class="howell-icon-arrowleftbold blue-text arrow-wrap"

@@ -10,7 +10,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlComponent } from 'src/app/common/components/image-video-control/image-video-control.component';
 import {
   ImageVideoControlModel,
@@ -18,10 +17,11 @@ import {
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { wait } from 'src/app/common/tools/tool';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { MediaVideoControlBussiness } from './media-video-control.business';
 import { ICamera } from 'src/app/network/model/camera.interface';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IMediaControlBusiness } from './media-control.model';
+import { MediaVideoControlBussiness } from './media-video-control.business';
 
 @Component({
   selector: 'app-media-control',
@@ -40,24 +40,22 @@ export class MediaControlComponent
   business: IMediaControlBusiness;
   @Input()
   model?: Array<ICamera | ImageControlModel> = [];
-
   @Input()
   index = 0;
-
   @Input()
-  stop?: EventEmitter<void>;
+  stop: EventEmitter<void> = new EventEmitter();
   @Input()
   autoplay: boolean = false;
-
-  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
-
   @Output()
   played: EventEmitter<void> = new EventEmitter();
   @Output()
   stoped: EventEmitter<void> = new EventEmitter();
-
-  @ViewChild(ImageVideoControlComponent)
-  player!: ImageVideoControlComponent;
+  @Input()
+  page = true;
+  @Output()
+  next: EventEmitter<ICamera | ImageControlModel> = new EventEmitter();
+  @Output()
+  prev: EventEmitter<ICamera | ImageControlModel> = new EventEmitter();
 
   constructor(
     bussiness: MediaVideoControlBussiness,
@@ -65,6 +63,10 @@ export class MediaControlComponent
   ) {
     this.business = bussiness;
   }
+
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
+  @ViewChild(ImageVideoControlComponent)
+  player!: ImageVideoControlComponent;
   ngAfterViewInit(): void {
     if (this.autoplay) {
       wait(
@@ -84,15 +86,6 @@ export class MediaControlComponent
     }
   }
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.stop && changes.stop.firstChange) {
-      if (this.stop) {
-        this.stop.subscribe((x) => {
-          if (this.playing) {
-            this.player.stop();
-          }
-        });
-      }
-    }
     if (this.model) {
       this.operation.fullscreen = this.model.length > 1;
     }
@@ -189,10 +182,10 @@ export class MediaControlComponent
           if (
             this.current.image &&
             !this.current.image.eventTime &&
-            this.current.stationId
+            this.current.source
           ) {
             this.business
-              .manualCapture(this.current.stationId, this.datas)
+              .manualCapture(this.current.source, this.datas)
               .then((y) => {
                 if (this.current) {
                   this.current.image = this.datas[this.index].image;
@@ -209,7 +202,7 @@ export class MediaControlComponent
 
   onpreview(event?: Event) {
     if (this.current) {
-      this.player.preview(this.current.cameraId);
+      this.player.topreview(this.current.cameraId);
     }
     this.display.preview = false;
   }
@@ -218,7 +211,7 @@ export class MediaControlComponent
       let interval = DurationParams.beforeAndAfter(
         this.current.image.eventTime
       );
-      this.player.onplayback(this.current.cameraId, interval);
+      this.player.toplayback(this.current.cameraId, interval);
     }
     this.display.playback = false;
     this.display.preview = true;
@@ -240,9 +233,9 @@ export class MediaControlComponent
         let interval = DurationParams.beforeAndAfter(
           this.current.image.eventTime
         );
-        if (this.current.stationId) {
+        if (this.current.source) {
           this.download.video(
-            this.current.stationId,
+            this.current.source,
             this.current.cameraId,
             interval
           );

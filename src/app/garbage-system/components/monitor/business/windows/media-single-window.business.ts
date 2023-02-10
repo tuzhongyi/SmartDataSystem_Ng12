@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { Camera } from 'src/app/network/model/camera.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 @Injectable()
 export class MediaSingleWindowBusiness extends WindowViewModel {
@@ -14,6 +14,7 @@ export class MediaSingleWindowBusiness extends WindowViewModel {
   camera: Array<Camera | ImageControlModel> = [];
   index: number = -1;
   autoplay = false;
+  page = true;
 
   closing: EventEmitter<void> = new EventEmitter();
   playing = false;
@@ -33,4 +34,7 @@ export class MediaSingleWindowBusiness extends WindowViewModel {
   onstop() {
     this.playing = false;
   }
+
+  onnext() {}
+  onprev() {}
 }

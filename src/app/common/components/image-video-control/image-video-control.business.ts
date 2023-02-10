@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GetVodUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
@@ -21,22 +21,23 @@ export class ImageVideoControlBusiness
     private srService: SRServerRequestService,
     private local: LocalStorageService,
     private userService: UserRequestService
-  ) { }
+  ) {}
   Converter: IConverter<VideoUrl, VideoModel> = new VideoControlConverter();
   subscription?: ISubscription | undefined;
   async load(
     cameraId: string,
     mode: PlayMode,
-    interval?: DurationParams
+    duration?: DurationParams
   ): Promise<VideoModel> {
     let stream = await this.loadSteam();
     if (!stream) {
       stream = mode == PlayMode.live ? StreamType.sub : StreamType.main;
     }
-    let url = await this.getData(cameraId, mode, stream, interval);
+    if (duration) {
+    }
+    let url = await this.getData(cameraId, mode, stream, duration);
     return this.Converter.Convert(url);
   }
-
   async loadSteam() {
     try {
       let result = await this.userService.config.get(
