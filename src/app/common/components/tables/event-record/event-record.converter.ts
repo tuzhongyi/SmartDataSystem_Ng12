@@ -103,7 +103,7 @@ export class EventRecordConverter
     let url = new CameraImageUrlModel(img, source.Data.StationId);
     url.Camera = getter.camera(source.Data.StationId, url.CameraId);
     let image = this.converter.image.Convert(url, true, source.EventTime);
-
+    image.name = model.GarbageStation.Name;
     model.images = [image];
 
     model.DateFormatter = formatDate(
@@ -150,6 +150,7 @@ export class EventRecordConverter
           );
           url.Camera = getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(url, true, source.EventTime);
+          image.name = source.Data.StationName;
           image.index = i;
           model.images.push(image);
         } catch (error) {

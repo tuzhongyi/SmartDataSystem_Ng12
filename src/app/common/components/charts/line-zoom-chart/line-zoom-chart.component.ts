@@ -203,6 +203,7 @@ export class LineZoomChartComponent
           return trigger.name == key;
         });
         if (data) {
+          data.image.eventTime = data.time;
           this.panel.scatter.model = data.image;
         }
       }

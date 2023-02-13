@@ -62,6 +62,7 @@ export class LineZoomChartEventRecordConverter
         let img = this.converter.image.Convert(
           new CameraImageUrlModel(url, record.Data.StationId)
         );
+        img.name = record.Data.StationName;
         datas.push({
           time: time,
           value: record,

@@ -35,6 +35,11 @@ export class MediaMultipleWindowComponent
   }
 
   async ngOnInit() {
+    let now: Date = new Date();
+    if (this.date && this.date >= now) {
+      this.date = undefined;
+    }
+
     if (this.statistic) {
       this.model = await this.business.load(this.statistic, this.date);
     }
