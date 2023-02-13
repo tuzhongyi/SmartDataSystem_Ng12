@@ -35,6 +35,8 @@
                   [load]="record.filter.load"
                   (image)="onimage($event)"
                   [filter]="filter"
+                  [getData]="getData"
+                  (gotData)="onGotData($event)"
                 >
                 </howell-event-record-table>
               </ng-container>

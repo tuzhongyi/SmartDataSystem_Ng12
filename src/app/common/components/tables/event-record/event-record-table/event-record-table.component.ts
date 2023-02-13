@@ -13,7 +13,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
@@ -56,6 +56,11 @@ export class EventRecordTableComponent
   load?: EventEmitter<EventRecordFilter>;
   @Input()
   filter: EventRecordFilter;
+  @Input()
+  getData?: EventEmitter<Page>;
+  @Output()
+  gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
+
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -74,6 +79,17 @@ export class EventRecordTableComponent
           this.filter = x;
         }
         this.loadData(-1, this.pageSize, this.filter);
+      });
+    }
+    if (changes.getData && this.getData) {
+      this.getData.subscribe((page) => {
+        let params = new PagedParams();
+        params.PageSize = page.PageSize;
+        params.PageIndex = page.PageIndex;
+        let promise = this.business.load(this.type, params, this.filter);
+        promise.then((data) => {
+          this.gotData.emit(data);
+        });
       });
     }
   }
@@ -123,8 +139,22 @@ export class EventRecordTableComponent
 
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  imageClick(item: EventRecordViewModel, img: ImageControlModel) {
+  imageClick(
+    item: EventRecordViewModel,
+    img: ImageControlModel,
+    index: number
+  ) {
+    let number = this.page.PageSize * (this.page.PageIndex - 1) + index + 1;
     let array = new ImageControlModelArray(item.images, img.index);
+    array.data = item;
+    array.page = new Page();
+    array.page.PageCount = this.page.TotalRecordCount;
+    array.page.PageIndex = number;
+    array.page.PageSize = 1;
+    array.page.RecordCount = 1;
+    array.page.TotalRecordCount = this.page.TotalRecordCount;
+
+    array.data = item;
     this.image.emit(array);
   }
 }

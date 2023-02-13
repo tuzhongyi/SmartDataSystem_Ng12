@@ -8,17 +8,18 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
+import { ListType } from '../event-record-operation/event-record-operation.component';
 import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 import { EventRecordWindowBusiness } from './event-record-window.business';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
-import { ListType } from '../event-record-operation/event-record-operation.component';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Component({
   selector: 'howell-event-record-window',
@@ -47,6 +48,10 @@ export class EventRecordWindowComponent
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Input()
   listType = ListType.table;
+  @Input()
+  getData?: EventEmitter<Page>;
+  @Output()
+  gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
 
   constructor(
     public record: EventRecordWindowRecordBusiness,
@@ -90,6 +95,10 @@ export class EventRecordWindowComponent
 
   onTypeChange(type: ListType) {
     this.listType = type;
+  }
+
+  onGotData(data: any) {
+    this.gotData.emit(data);
   }
 }
 

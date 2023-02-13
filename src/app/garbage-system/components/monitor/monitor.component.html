@@ -132,6 +132,8 @@
   [stationId]="window.record.stationId"
   [divisionId]="window.record.divisionId"
   (image)="window.record.onimage($event)"
+  [getData]="window.media.single.pageChange"
+  (gotData)="window.media.single.got($event)"
 >
 </howell-event-record-window>
 
@@ -189,7 +191,7 @@
       [model]="window.media.single.camera"
       [index]="window.media.single.index"
       [stop]="window.media.single.closing"
-      [page]="window.media.single.page"
+      [page]="window.media.single.showPage"
       (played)="window.media.single.onplay()"
       (stoped)="window.media.single.onstop()"
       (prev)="window.media.single.onprev()"

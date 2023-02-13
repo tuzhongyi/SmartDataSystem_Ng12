@@ -3,6 +3,7 @@ import { EventRule } from 'src/app/network/model/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { ICamera } from '../network/model/camera.interface';
 import { EventDataObject } from '../network/model/event-data-object.model';
+import { Page } from '../network/model/page_list.model';
 
 export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
   id: string;
@@ -53,6 +54,7 @@ export class ImageControlModelArray<T = any> {
     this.index = index;
     this.autoplay = autoplay;
   }
+  page?: Page;
   data?: T;
   models: ImageControlModel[];
   autoplay: boolean;

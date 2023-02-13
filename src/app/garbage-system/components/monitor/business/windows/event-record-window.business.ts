@@ -31,6 +31,7 @@ export class RecordWindowBusiness extends WindowViewModel {
     this.media.single.index = model.index;
     this.media.single.autoplay = model.autoplay;
     this.media.single.eventType = this.type;
+    this.media.single.paged = model.page;
     this.media.single.show = true;
   }
 }

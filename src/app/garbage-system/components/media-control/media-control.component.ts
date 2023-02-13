@@ -61,39 +61,13 @@ export class MediaControlComponent
     protected download: DownloadBusiness
   ) {
     this.business = bussiness;
+    this.operation.fullscreen = false;
   }
 
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
 
   preview: EventEmitter<string> = new EventEmitter();
   playback: EventEmitter<PlaybackInterval> = new EventEmitter();
-
-  ngAfterViewInit(): void {
-    if (this.autoplay) {
-      wait(
-        () => {
-          return !!(this.current && this.current.image);
-        },
-        () => {
-          if (this.current && this.current.image) {
-            if (this.current.image.eventTime) {
-              this.onplayback();
-            } else {
-              this.onpreview();
-            }
-          }
-        }
-      );
-    }
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (this.model) {
-      this.operation.fullscreen = this.model.length > 1;
-    }
-    if (changes.autoplay && changes.autoplay.firstChange) {
-      this.playing = this.autoplay;
-    }
-  }
 
   datas: ImageVideoControlModel[] = [];
 
@@ -144,6 +118,40 @@ export class MediaControlComponent
     this.operation.play = !this._playing;
   }
 
+  ngAfterViewInit(): void {
+    if (this.autoplay) {
+      wait(
+        () => {
+          return !!(this.current && this.current.image);
+        },
+        () => {
+          if (this.current && this.current.image) {
+            if (this.current.image.eventTime) {
+              this.onplayback();
+            } else {
+              this.onpreview();
+            }
+          }
+        }
+      );
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (this.model) {
+      this.operation.fullscreen = this.model.length > 1;
+
+      if (!changes.model.firstChange) {
+        this.loadData();
+      }
+    }
+    if (changes.autoplay && changes.autoplay.firstChange) {
+      this.playing = this.autoplay;
+    }
+  }
+
+  ngOnInit() {
+    this.loadData();
+  }
   displayConfig(model?: ImageVideoControlModel) {
     if (model) {
       if (model.image) {
@@ -171,7 +179,7 @@ export class MediaControlComponent
     }
   }
 
-  ngOnInit() {
+  loadData() {
     if (this.model) {
       let promise = this.business.load(this.model);
       promise.then((x) => {
