@@ -1,7 +1,9 @@
 import {
   AfterViewInit,
   Component,
+  ElementRef,
   OnInit,
+  Renderer2,
   TemplateRef,
   ViewChild,
 } from '@angular/core';
@@ -87,14 +89,22 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   };
 
   @ViewChild(CommonTableComponent) table?: CommonTableComponent;
+
   @ViewChild(PaginatorComponent) paginator?: PaginatorComponent;
+
+  @ViewChild('filterWrapper', { static: true })
+  filterWrapper?: ElementRef<HTMLDivElement>;
 
   @ViewChild('tableTemplate', { static: false })
   tableTemplate?: TemplateRef<HTMLElement>;
+
   @ViewChild('cardTemplate', { static: false })
   cardTemplate?: TemplateRef<HTMLElement>;
 
-  constructor(private _business: AICameraEventsBusiness) {}
+  constructor(
+    private _business: AICameraEventsBusiness,
+    private renderer: Renderer2
+  ) {}
 
   async ngOnInit() {
     let { Data } = await this._business.listAIModels();
@@ -133,6 +143,17 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
       this.searchInfo.EndTime = TimeService.endTime(this.today);
       this.searchInfo.EventType = EventType.None;
       this.searchInfo.ModelName = '';
+
+      this.renderer.setAttribute(
+        this.filterWrapper?.nativeElement,
+        'hidden',
+        ''
+      );
+    } else {
+      this.renderer.removeAttribute(
+        this.filterWrapper?.nativeElement,
+        'hidden'
+      );
     }
   }
   changeViewMode(viewMode: ViewMode) {

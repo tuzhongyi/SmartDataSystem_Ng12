@@ -130,14 +130,7 @@ export class TimeService {
     }
   }
   endTime(time: Date | string | number) {
-    if (time instanceof Date) {
-      return new Date(new Date(time).setHours(23, 59, 59, 999));
-    } else if (typeof time == 'string') {
-      if (isNaN(Date.parse(time)) || Date.parse(time) < 0) {
-        throw new TypeError('INVALID TIME');
-      }
-      return new Date(new Date(time).setHours(23, 59, 59, 999));
-    } else if (typeof time == 'number' && time > 0) {
+    if (this.isValidDate(time)) {
       return new Date(new Date(time).setHours(23, 59, 59, 999));
     } else {
       throw new TypeError('INVALID TYPE');

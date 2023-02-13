@@ -42,12 +42,14 @@ import { DivisionTreeComponent } from '../division-tree/division-tree.component'
         'open',
         style({
           height: '45px',
+          overflow: 'visible',
         })
       ),
       state(
         'close',
         style({
           height: '0',
+          overflow: 'hidden',
         })
       ),
       transition('open<=>close', [animate(100)]),
