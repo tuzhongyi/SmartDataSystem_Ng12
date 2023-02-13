@@ -1,5 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
@@ -21,10 +20,11 @@ export class MediaMultipleWindowBusiness
   > = new MediaMultipleWindowConverter();
 
   async load(
-    statistic: GarbageStationGarbageCountStatistic
+    statistic: GarbageStationGarbageCountStatistic,
+    date?: Date
   ): Promise<MediaMultipleWindowModel> {
     let station = await this.getStation(statistic.Id);
-    let model = this.Converter.Convert(statistic, station);
+    let model = this.Converter.Convert(statistic, station, date);
     return model;
   }
   getData(stationId: string): Promise<GarbageStationGarbageCountStatistic> {

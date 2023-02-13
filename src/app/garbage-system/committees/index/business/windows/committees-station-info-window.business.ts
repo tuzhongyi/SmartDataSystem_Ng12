@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
 
 @Injectable()
@@ -27,8 +25,9 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
     this.media.single.autoplay = model.autoplay;
     this.media.single.show = true;
   }
-  onchartdblclick(statistic: GarbageStationGarbageCountStatistic) {
-    this.media.multiple.statistic = statistic;
+  onchartdblclick(args: LineZoomChartArgs) {
+    this.media.multiple.statistic = args.statistic;
+    this.media.multiple.date = args.date;
     this.media.multiple.show = true;
   }
 }

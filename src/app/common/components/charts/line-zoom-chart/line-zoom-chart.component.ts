@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -9,29 +10,25 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { option } from './line-zoom-chart.option';
 import * as echarts from 'echarts/core';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { Language } from 'src/app/common/tools/language';
 import { wait } from 'src/app/common/tools/tool';
-import { formatDate } from '@angular/common';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { IModel } from 'src/app/network/model/model.interface';
+import { ImageControlModel } from '../../../../view-model/image-control.model';
+import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
+import { LineZoomChartBusiness } from './line-zoom-chart.business';
 import {
+  LineZoomChartArgs,
   LineZoomChartModel,
   LineZoomLinePanel,
   LineZoomScatterPanel,
   TimeString,
 } from './line-zoom-chart.model';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { LineZoomChartBusiness } from './line-zoom-chart.business';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { count } from 'console';
-import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
-import { Language } from 'src/app/common/tools/language';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../view-model/image-control.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { option } from './line-zoom-chart.option';
 @Component({
   selector: 'howell-line-zoom-chart',
   templateUrl: './line-zoom-chart.component.html',
@@ -57,8 +54,7 @@ export class LineZoomChartComponent
   image: EventEmitter<ImageControlModel> = new EventEmitter();
 
   @Output()
-  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
-    new EventEmitter();
+  ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
 
   @ViewChild('echarts')
   echarts?: ElementRef<HTMLDivElement>;
@@ -127,16 +123,26 @@ export class LineZoomChartComponent
                 );
                 let index = grid[0];
                 let data = this.data.count.find((x) => x.index == index);
+                let model: LineZoomChartArgs;
+
                 if (data) {
-                  this.ondblclick.emit(data.value);
+                  model = {
+                    date: data.time,
+                    statistic: data.value,
+                  };
                 } else {
                   let xData = this.xAxisData[index];
                   let statistic = new GarbageStationGarbageCountStatistic();
                   statistic.BeginTime = xData.date;
                   statistic.GarbageCount = 0;
                   statistic.Id = this.stationId ?? '';
-                  this.ondblclick.emit(statistic);
+                  model = {
+                    date: xData.date,
+                    statistic: statistic,
+                  };
                 }
+
+                this.ondblclick.emit(model);
               }
             });
           }

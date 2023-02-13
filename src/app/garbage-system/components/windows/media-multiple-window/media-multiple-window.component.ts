@@ -1,11 +1,9 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { MediaMultipleWindowBusiness } from './media-multiple-window.business';
 import { MediaMultipleWindowModel } from './media-multiple-window.model';
@@ -27,6 +25,8 @@ export class MediaMultipleWindowComponent
   statistic?: GarbageStationGarbageCountStatistic;
   @Input()
   business: IBusiness<IModel, MediaMultipleWindowModel>;
+  @Input()
+  date?: Date;
 
   model?: MediaMultipleWindowModel;
 
@@ -36,7 +36,7 @@ export class MediaMultipleWindowComponent
 
   async ngOnInit() {
     if (this.statistic) {
-      this.model = await this.business.load(this.statistic);
+      this.model = await this.business.load(this.statistic, this.date);
     }
   }
 

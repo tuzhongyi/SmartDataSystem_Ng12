@@ -12,4 +12,5 @@ export class CommitteesMediaMultipleWindowBusiness extends WindowViewModel {
   };
 
   statistic?: GarbageStationGarbageCountStatistic;
+  date?: Date;
 }

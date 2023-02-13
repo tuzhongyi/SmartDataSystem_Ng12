@@ -17,7 +17,8 @@ export class MediaMultipleWindowConverter
 
   Convert(
     source: GarbageStationGarbageCountStatistic,
-    station: GarbageStation
+    station: GarbageStation,
+    eventTime: Date
   ): MediaMultipleWindowModel {
     let model = new MediaMultipleWindowModel();
     if (station.Cameras) {
@@ -26,7 +27,11 @@ export class MediaMultipleWindowConverter
         let flags = new Flags(camera.CameraUsage);
         if (!flags.contains(CameraUsage.GarbageFull)) {
           let media = new ImageVideoControlModel(camera.Id, source.Id);
-          media.image = this.converter.image.Convert(camera);
+          media.image = this.converter.image.Convert(
+            camera,
+            undefined,
+            eventTime
+          );
           model.medias.push(media);
         }
       }

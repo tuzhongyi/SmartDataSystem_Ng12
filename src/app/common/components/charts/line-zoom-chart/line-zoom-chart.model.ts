@@ -6,6 +6,11 @@ import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';
 import { ImageTimeData, ITimeData } from '../chart.model';
 
+export interface LineZoomChartArgs {
+  statistic: GarbageStationGarbageCountStatistic;
+  date: Date;
+}
+
 export type LineZoomChartSource = {
   count?: GarbageStationGarbageCountStatistic[];
   record?: IllegalDropEventRecord[];

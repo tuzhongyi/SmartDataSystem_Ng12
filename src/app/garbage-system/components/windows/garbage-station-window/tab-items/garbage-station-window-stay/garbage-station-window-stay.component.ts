@@ -1,17 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { IModel } from 'src/app/network/model/model.interface';
 import {
   ImageControlModel,
   ImageControlModelArray,
 } from 'src/app/view-model/image-control.model';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IModel } from 'src/app/network/model/model.interface';
 import { GarbageStationWindowStayBusiness } from './garbage-station-window-stay.business';
 import { GarbageStationWindowStayModel } from './garbage-station-window-stay.model';
 
@@ -33,8 +30,7 @@ export class GarbageStationWindowStayComponent
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
-  ondblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
-    new EventEmitter();
+  ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
 
   date: Date = new Date();
 
@@ -73,7 +69,7 @@ export class GarbageStationWindowStayComponent
     let array = new ImageControlModelArray([model], 0, true);
     this.image.emit(array);
   }
-  onchartdblclick(statistic: GarbageStationGarbageCountStatistic) {
-    this.ondblclick.emit(statistic);
+  onchartdblclick(args: LineZoomChartArgs) {
+    this.ondblclick.emit(args);
   }
 }

@@ -1,13 +1,10 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { Injectable } from '@angular/core';
+import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
 import { MediaWindowBusiness } from './media-window.business';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 
 @Injectable()
 export class GarbageStationInfoWindowBusiness extends WindowViewModel {
@@ -31,8 +28,9 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
     this.media.single.autoplay = model.autoplay;
     this.media.single.show = true;
   }
-  onchartdblclick(statistic: GarbageStationGarbageCountStatistic) {
-    this.media.multiple.statistic = statistic;
+  onchartdblclick(args: LineZoomChartArgs) {
+    this.media.multiple.statistic = args.statistic;
+    this.media.multiple.date = args.date;
     this.media.multiple.show = true;
   }
 }

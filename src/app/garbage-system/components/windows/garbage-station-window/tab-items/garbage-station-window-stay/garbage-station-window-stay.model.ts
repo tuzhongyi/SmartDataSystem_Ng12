@@ -1,3 +1,4 @@
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class GarbageStationWindowStayModel {
@@ -9,4 +10,9 @@ export class GarbageStationWindowStayModel {
     '<div class="statistic-item-value-number">-</div>';
   eventCount: number = 0;
   taskCount: number = 0;
+}
+
+export interface GarbageStationWindowStayModel {
+  statistic: GarbageStationGarbageCountStatistic;
+  date: Date;
 }

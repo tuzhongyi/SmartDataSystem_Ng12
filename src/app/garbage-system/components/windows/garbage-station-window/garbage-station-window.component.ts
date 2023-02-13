@@ -7,24 +7,16 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
-import {
-  GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
-} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
-import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
+import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
+import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
 import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -53,8 +45,7 @@ export class GarbageStationWindowComponent
   @Output()
   image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
-  chartdblclick: EventEmitter<GarbageStationGarbageCountStatistic> =
-    new EventEmitter();
+  chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
 
@@ -113,7 +104,7 @@ export class GarbageStationWindowComponent
     this.image.emit(item);
   }
 
-  onstaydblclick(item: GarbageStationGarbageCountStatistic) {
+  onstaydblclick(item: LineZoomChartArgs) {
     this.chartdblclick.emit(item);
   }
 
