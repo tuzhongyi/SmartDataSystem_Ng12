@@ -34,7 +34,7 @@ import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-dev
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
 import { CameraOperateComponent } from './camera-operate/camera-operate.component';
 import { CameraMoveComponent } from './camera-move/camera-move.component';
-import { IllegalDropManage } from './illegal-drop-manage/illegal-drop-manage.component';
+import { IllegalDropAbout } from './illegal-drop-about/illegal-drop-about.component';
 import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.component';
 import { GarbageVehicleDivisionManageComponent } from './garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
 import { GarbageVehicleManageComponent } from './garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
@@ -53,6 +53,9 @@ import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/trees/garb
 import { GarbageVehicleCameraManagerComponent } from './garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
 import { GarbageVehicleCameraDetailsWindowComponent } from './garbage-vehicles/garbage-vehicle-camera-details-window/garbage-vehicle-camera-details-window.component';
 import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-tree/garbage-vehicle-tree.component';
+import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
+import { IllegalDropComponent } from 'src/app/common/components/illegal-drop/illegal-drop.component';
+import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
 
 @NgModule({
   declarations: [
@@ -80,8 +83,11 @@ import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-ve
     GarbageStationOperateComponent,
     CameraOperateComponent,
     CameraMoveComponent,
-    IllegalDropManage,
+    IllegalDropAbout,
     MixIntoManageComponent,
+    GarbageStationAboutComponent,
+    IllegalDropComponent,
+    GarbageStationListComponent,
 
     GarbageVehicleManageComponent,
     GarbageVehicleOperateComponent,

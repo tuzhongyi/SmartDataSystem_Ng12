@@ -9,7 +9,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiopComponent } from './aiop.component';
 import { AiopSystemManageComponent } from './components/aiop-manage/aiop-manage.component';
-import { IllegalDropManage } from './components/illegal-drop-manage/illegal-drop-manage.component';
+import { IllegalDropAbout } from './components/illegal-drop-about/illegal-drop-about.component';
 import { DivisionManageComponent } from './components/division-manage/division-manage.component';
 import { StationStatusComponent } from './components/station-status/station-status.component';
 import { AIOPSystemModeComponent } from './components/system-mode/system-mode.component';
@@ -34,6 +34,7 @@ import { GarbageVehicleCameraBindingComponent } from './components/garbage-vehic
 import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
+import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
 
 const routes: Routes = [
   {
@@ -166,12 +167,12 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'illegal-drop-manage',
+                redirectTo: 'illegal-drop-about',
                 pathMatch: 'full',
               },
               {
-                path: 'illegal-drop-manage',
-                component: IllegalDropManage,
+                path: 'illegal-drop-about',
+                component: IllegalDropAbout,
                 data: {
                   breadcrumb: '垃圾落地',
                 },
@@ -181,6 +182,13 @@ const routes: Routes = [
                 component: MixIntoManageComponent,
                 data: {
                   breadcrumb: '混合投放',
+                },
+              },
+              {
+                path: 'garbage-station-about',
+                component: GarbageStationAboutComponent,
+                data: {
+                  breadcrumb: '投放点',
                 },
               },
             ],

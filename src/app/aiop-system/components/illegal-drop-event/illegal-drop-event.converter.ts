@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { IConverter } from '../../interfaces/converter.interface';
+import { IConverter } from '../../../common/interfaces/converter.interface';
 import { IllegalDropEventRecord } from '../../../network/model/garbage-event-record.model';
 import { IllegalDropRecordModel } from '../../../view-model/illegal-drop-record.model';
 import { mode } from 'crypto-js';
 import { DatePipe } from '@angular/common';
-import { Medium } from '../../tools/medium';
+import { Medium } from '../../../common/tools/medium';
 import {
   AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,

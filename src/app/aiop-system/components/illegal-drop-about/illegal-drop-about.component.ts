@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonTabModel } from 'src/app/common/components/common-tab/common-tab.model';
 import { EventNumberChartComponent } from 'src/app/common/components/event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from 'src/app/common/components/event-number-statistic/event-number-statistic.component';
-import { IllegalDropEventComponent } from 'src/app/common/components/illegal-drop-event/illegal-drop-event.component';
+import { IllegalDropEventComponent } from 'src/app/aiop-system/components/illegal-drop-event/illegal-drop-event.component';
 import { Enum } from 'src/app/enum/enum-helper';
 
 @Component({
-  selector: 'app-illegal-drop-manage',
-  templateUrl: './illegal-drop-manage.component.html',
-  styleUrls: ['./illegal-drop-manage.component.less'],
+  selector: 'app-illegal-drop-about',
+  templateUrl: './illegal-drop-about.component.html',
+  styleUrls: ['./illegal-drop-about.component.less'],
   providers: [],
 })
-export class IllegalDropManage implements OnInit {
+export class IllegalDropAbout implements OnInit {
   tabHeaders: CommonTabModel[] = [];
   componentExpression = IllegalDropEventComponent;
 
