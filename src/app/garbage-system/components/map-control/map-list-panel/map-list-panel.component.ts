@@ -109,4 +109,8 @@ export class MapListPanelComponent implements OnInit, OnDestroy, AfterViewInit {
       this.OnSearching.emit(text);
     }
   }
+
+  onpanelclick(e: Event) {
+    e.stopImmediatePropagation();
+  }
 }
