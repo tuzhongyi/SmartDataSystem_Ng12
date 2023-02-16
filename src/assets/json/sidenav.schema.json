@@ -17,10 +17,14 @@
           "path": {
             "type": "string"
           },
+          "icon": {
+            "type": "string"
+          },
           "children": {
             "$ref": "#/properties/data"
           }
         },
+        "required": ["title", "id", "path"],
         "additionalProperties": false
       }
     }

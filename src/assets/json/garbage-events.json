@@ -8,8 +8,13 @@
       "children": [
         {
           "title": "垃圾落地",
-          "id": "illegal-drop-manage",
-          "path": "/aiop/aiop-manage/garbage-events/events/illegal-drop-manage"
+          "id": "illegal-drop-about",
+          "path": "/aiop/aiop-manage/garbage-events/events/illegal-drop-about"
+        },
+        {
+          "title": "投放点",
+          "id": "garbage-station-about",
+          "path": "/aiop/aiop-manage/garbage-events/events/garbage-station-about"
         }
       ]
     }

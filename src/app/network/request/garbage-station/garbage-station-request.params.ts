@@ -34,6 +34,8 @@ export class GetGarbageStationsParams extends PagedParams implements IParams {
   WetFull?: boolean;
   /**祖辈ID(可选)，返回该ID下的所有子孙区划及其本身的垃圾房 */
   AncestorId?: string;
+  /**小区名称，支持LIKE */
+  CommunityName?: string;
 }
 
 export class GetGarbageStationCamerasParams
