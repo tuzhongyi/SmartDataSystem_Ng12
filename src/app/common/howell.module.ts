@@ -14,6 +14,7 @@ import { AngularResizeEventModule } from 'angular-resize-event';
 import { CUSTOM_DIRECTIVES } from './directives';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [...CUSTOM_COMPONENTS, ...CUSTOM_PIPES, ...CUSTOM_DIRECTIVES],
@@ -25,6 +26,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
     FormsModule,
     ReactiveFormsModule,
     NgxEchartsModule,
+    RouterModule,
   ],
 })
 export class HowellModule {}

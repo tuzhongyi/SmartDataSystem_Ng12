@@ -67,8 +67,10 @@ import { VideoPlayerListComponent } from './video-player-list/video-player-list.
 import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
 import { LevelListPanelComponent } from './panels/level-list-panel/level-list-panel.component';
 import { LevelDivisionPanelComponent } from './panels/level-division-panel/level-division-panel.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 export const CUSTOM_COMPONENTS = [
+  SidenavComponent,
   StatisticLineEChartsComponent,
   TreeComponent,
   CommonTimeComponent,

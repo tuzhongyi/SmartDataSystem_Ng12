@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SidenavModel } from 'src/app/view-model/sidenav.model';
+import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
 
 @Component({
   selector: 'howell-sidenav',
