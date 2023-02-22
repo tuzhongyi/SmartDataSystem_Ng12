@@ -17,7 +17,7 @@ import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './platform-manage/platform-manage.component';
 import { SystemSettingComponent } from './system-setting/system-setting.component';
-import { MonitorComponent } from './monitor-platform/monitor-platform.component';
+import { MonitorPlatformComponent } from './monitor-platform/monitor-platform.component';
 import { RegionManageComponent } from './region-manage/region-manage.component';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
@@ -66,7 +66,7 @@ import { GarbageStationListComponent } from './garbage-station-list/garbage-stat
     GarbageStationManageComponent,
     SystemSettingComponent,
     PlatformManageComponent,
-    MonitorComponent,
+    MonitorPlatformComponent,
     RegionManageComponent,
     CameraManageComponent,
     EncodeDeviceManageComponent,

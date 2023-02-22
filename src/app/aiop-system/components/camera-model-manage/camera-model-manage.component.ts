@@ -100,7 +100,7 @@ export class CameraModelManageComponent implements OnInit {
   // 拉取模型列表
   private async _listAIModels() {
     this.AIModels = await this._business.listAIModels(this.searchInfo);
-    console.log('模型列表', this.AIModels);
+    // console.log('模型列表', this.AIModels);
   }
   private async _listCameraAIModels() {
     let { Data, Page } = await this._business.listCameraAIModels(
@@ -108,7 +108,7 @@ export class CameraModelManageComponent implements OnInit {
     );
     this.page = Page;
     this.dataSubject.next(Data);
-    console.log('摄像机模型列表', Data);
+    // console.log('摄像机模型列表', Data);
   }
 
   // 模型列表搜索
@@ -155,7 +155,7 @@ export class CameraModelManageComponent implements OnInit {
 
   selectTableRow(rows: CameraManageModel[]) {
     this.selectedRows = rows;
-    console.log('选中', rows);
+    // console.log('选中', rows);
   }
   pageEvent(pageInfo: PageEvent) {
     if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;

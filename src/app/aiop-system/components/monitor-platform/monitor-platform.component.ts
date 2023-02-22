@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'monitor-platform',
   template: '<router-outlet></router-outlet>',
 })
-export class MonitorComponent implements OnInit {
+export class MonitorPlatformComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

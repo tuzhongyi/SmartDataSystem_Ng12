@@ -13,7 +13,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
 
@@ -49,17 +49,18 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
 
   private _subscription!: Subscription;
 
+  // 后行断言+捕获+量词+非捕获
+  private regExp =
+    /(?<=\/[\w-]+\/[\w-]+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
+
   models: Array<SidenavModel> = [];
 
-  constructor(private _router: Router) {
+  constructor(private _router: Router, private _activeRoute: ActivatedRoute) {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         // console.log('router', e);
-        // 后行断言+捕获+量词+非捕获
-        let reg =
-          /(?<=\/\w+\/\w+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
 
-        let mode = e.urlAfterRedirects.match(reg);
+        let mode = e.urlAfterRedirects.match(this.regExp);
         // console.log('mode: ', mode);
         if (mode && mode.groups && mode.groups.first) {
           Object.assign(this.groups, mode.groups);
@@ -87,10 +88,13 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
       this.state = 'grow';
     }
   }
-  navigate(e: Event) {
-    let target = e.target as HTMLElement;
+  clickBtn(model: SidenavModel) {
+    let mode = model.path.match(this.regExp);
+    if (mode?.groups?.second == this.groups.second) {
+      console.log('同一父标签');
+      return;
+    }
 
-    // this._router.navigateByUrl(target.dataset.link!);
+    this._router.navigateByUrl(model.path);
   }
-  clickHandler() {}
 }
