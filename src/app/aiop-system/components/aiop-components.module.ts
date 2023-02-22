@@ -10,14 +10,14 @@ import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { RouterModule } from '@angular/router';
 import { AIOPSystemModeComponent } from './system-mode/system-mode.component';
-import { AiopSystemManageComponent } from './aiop-manage/aiop-manage.component';
+import { UnderwaterComponent } from './underwater/underwater.component';
 import { DivisionManageComponent } from './division-manage/division-manage.component';
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './platform-manage/platform-manage.component';
 import { SystemSettingComponent } from './system-setting/system-setting.component';
-import { SuperVisionComponent } from './super-vision/super-vision.component';
+import { MonitorComponent } from './monitor-platform/monitor-platform.component';
 import { RegionManageComponent } from './region-manage/region-manage.component';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
@@ -59,14 +59,14 @@ import { GarbageStationListComponent } from './garbage-station-list/garbage-stat
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
-    AiopSystemManageComponent,
+    UnderwaterComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
     DeployMapComponent,
     GarbageStationManageComponent,
     SystemSettingComponent,
     PlatformManageComponent,
-    SuperVisionComponent,
+    MonitorComponent,
     RegionManageComponent,
     CameraManageComponent,
     EncodeDeviceManageComponent,

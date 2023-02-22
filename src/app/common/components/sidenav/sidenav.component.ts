@@ -13,7 +13,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
 
@@ -55,12 +55,13 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         // console.log('router', e);
+        // 后行断言+捕获+量词+非捕获
         let reg =
-          /(?<=\/aiop\/aiop-manage\/)(?<first>[\w-]*)\/(?<second>[\w-]*)\/(?<third>[\w-]*)(?=\/?)$/;
+          /(?<=\/\w+\/\w+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
 
         let mode = e.urlAfterRedirects.match(reg);
         // console.log('mode: ', mode);
-        if (mode && mode.groups) {
+        if (mode && mode.groups && mode.groups.first) {
           Object.assign(this.groups, mode.groups);
           import(`src/assets/json/${mode.groups['first']}.json`).then(
             (config) => {
@@ -74,8 +75,8 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnInit(): void { }
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {}
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
@@ -91,5 +92,5 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
 
     // this._router.navigateByUrl(target.dataset.link!);
   }
-  clickHandler() { }
+  clickHandler() {}
 }
