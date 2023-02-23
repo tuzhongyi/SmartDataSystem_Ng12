@@ -1,6 +1,7 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
   "title": "Sidenav  Configuration",
+  "description": "sidenav",
   "type": "object",
   "properties": {
     "data": {
@@ -22,6 +23,14 @@
           },
           "children": {
             "$ref": "#/properties/data"
+          },
+          "hideChildren": {
+            "type": "boolean",
+            "default": false
+          },
+          "CanNavigate": {
+            "type": "boolean",
+            "default": false
           }
         },
         "required": ["title", "id", "path"],

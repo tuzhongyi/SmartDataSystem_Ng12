@@ -16,6 +16,7 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
+import { ISideNavConfig } from '../../models/sidenav-config';
 
 @Component({
   selector: 'howell-sidenav',
@@ -53,7 +54,7 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
   private regExp =
     /(?<=\/[\w-]+\/[\w-]+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
 
-  models: Array<SidenavModel> = [];
+  models: Array<ISideNavConfig> = [];
 
   constructor(private _router: Router, private _activeRoute: ActivatedRoute) {
     this._subscription = this._router.events.subscribe((e) => {
@@ -88,7 +89,7 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
       this.state = 'grow';
     }
   }
-  clickBtn(model: SidenavModel) {
+  clickBtn(model: ISideNavConfig) {
     let mode = model.path.match(this.regExp);
     if (mode?.groups?.second == this.groups.second) {
       console.log('同一父标签');
