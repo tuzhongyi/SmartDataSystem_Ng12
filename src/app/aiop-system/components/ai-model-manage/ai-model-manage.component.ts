@@ -12,7 +12,7 @@ import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CameraAIUrl } from 'src/app/network/url/aiop/events/records/camera-ai/camera-ai.url';
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import {
   TableColumnModel,
   TableOperateModel,

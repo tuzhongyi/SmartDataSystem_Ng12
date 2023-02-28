@@ -14,7 +14,7 @@ import {
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { PageEvent } from '@angular/material/paginator';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';

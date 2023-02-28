@@ -8,7 +8,7 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { CollectionTrashCan } from 'src/app/network/model/trash-can.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { GarbageCollectionPointTrashCanManagerBusiness } from './garbage-collection-point-trashcan-manager.business';
 import {
   IGarbageCollectionPointTrashCanManagerBusiness,
