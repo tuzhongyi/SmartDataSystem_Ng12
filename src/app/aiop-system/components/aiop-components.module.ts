@@ -55,6 +55,7 @@ import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-ve
 import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
 import { IllegalDropComponent } from 'src/app/common/components/illegal-drop/illegal-drop.component';
 import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
+import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +87,7 @@ import { GarbageStationListComponent } from './garbage-station-list/garbage-stat
     GarbageStationAboutComponent,
     IllegalDropComponent,
     GarbageStationListComponent,
+    PictureUploadComponent,
 
     GarbageVehicleManageComponent,
     GarbageVehicleOperateComponent,
