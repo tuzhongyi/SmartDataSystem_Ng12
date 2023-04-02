@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Breadcrumb } from 'src/app/view-model/breadcrumb.model';
+import { Breadcrumb } from 'src/app/common/components/breadcrumb/breadcrumb.model';
 import { BreadcrumbService } from './breadcrumb.service';
 
 @Component({
@@ -16,12 +16,12 @@ export class BreadcrumbComponent implements OnInit {
   constructor(
     private _breadcrumbService: BreadcrumbService,
     private _router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.breadcrumbs = this._breadcrumbService.breadcrumbs$;
   }
   navigate(url: string) {
-    this._router.navigate([url]);
+    this._router.navigateByUrl(url)
   }
 }

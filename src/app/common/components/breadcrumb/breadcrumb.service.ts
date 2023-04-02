@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Breadcrumb } from 'src/app/view-model/breadcrumb.model';
-
+import { Breadcrumb } from 'src/app/common/components/breadcrumb/breadcrumb.model';
+import qs from 'qs';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +18,18 @@ export class BreadcrumbService {
         const breadcrumbs: Breadcrumb[] = [];
 
         this._addBreadCrumb(routeSnapshot, [], breadcrumbs);
+
+
+        if (breadcrumbs.length) {
+          let last = breadcrumbs.at(breadcrumbs.length - 1)!;
+
+          if (routeSnapshot.queryParams) {
+            last.url += "?" + qs.stringify(routeSnapshot.queryParams)
+          }
+          if (routeSnapshot.fragment) {
+            last.url += '#' + routeSnapshot.fragment
+          }
+        }
 
         this.breadcrumbs$.next(breadcrumbs);
       });
