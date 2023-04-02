@@ -1,7 +1,7 @@
 import { Type } from '@angular/core';
 import { IModel } from 'src/app/network/model/model.interface';
 
-export interface IToastWindowData extends IModel {
+export interface IToastWindowData {
   [key: string]: any;
 }
 

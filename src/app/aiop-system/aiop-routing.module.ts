@@ -8,17 +8,17 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AiopComponent } from './aiop.component';
-import { AiopSystemManageComponent } from './components/aiop-manage/aiop-manage.component';
-import { IllegalDropManage } from './components/illegal-drop-manage/illegal-drop-manage.component';
+import { UnderwaterComponent } from './components/underwater/underwater.component';
+import { IllegalDropAbout } from './components/illegal-drop-about/illegal-drop-about.component';
 import { DivisionManageComponent } from './components/division-manage/division-manage.component';
 import { StationStatusComponent } from './components/station-status/station-status.component';
-import { AIOPSystemModeComponent } from './components/system-mode/system-mode.component';
+import { AIOPSystemModeComponent as SystemModeComponent } from './components/system-mode/system-mode.component';
 import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './components/platform-manage/platform-manage.component';
 import { SystemSettingComponent } from './components/system-setting/system-setting.component';
-import { SuperVisionComponent } from './components/super-vision/super-vision.component';
+import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
 import { RegionManageComponent } from './components/region-manage/region-manage.component';
 import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
@@ -34,6 +34,7 @@ import { GarbageVehicleCameraBindingComponent } from './components/garbage-vehic
 import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
+import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
 
 const routes: Routes = [
   {
@@ -43,30 +44,30 @@ const routes: Routes = [
   },
   {
     path: 'system-mode',
-    component: AIOPSystemModeComponent,
+    component: SystemModeComponent,
   },
   {
-    path: 'aiop-manage',
-    component: AiopSystemManageComponent,
+    path: 'underwater',
+    component: UnderwaterComponent,
 
     children: [
       {
         path: '',
-        redirectTo: 'super-vision',
+        redirectTo: 'monitor-platform',
         pathMatch: 'full',
       },
       {
-        path: 'super-vision',
-        component: SuperVisionComponent,
+        path: 'monitor-platform',
+        component: MonitorPlatformComponent,
 
         children: [
           {
             path: '',
-            redirectTo: 'supervise-platform',
+            redirectTo: 'garbage-classify',
             pathMatch: 'full',
           },
           {
-            path: 'supervise-platform',
+            path: 'garbage-classify',
 
             children: [
               {
@@ -101,6 +102,11 @@ const routes: Routes = [
             path: 'garbage-collection',
 
             children: [
+              {
+                path: '',
+                redirectTo: 'collection-division-manage',
+                pathMatch: 'full',
+              },
               {
                 path: 'collection-division-manage',
                 component: GarbageVehicleDivisionManageComponent,
@@ -166,12 +172,12 @@ const routes: Routes = [
             children: [
               {
                 path: '',
-                redirectTo: 'illegal-drop-manage',
+                redirectTo: 'illegal-drop-about',
                 pathMatch: 'full',
               },
               {
-                path: 'illegal-drop-manage',
-                component: IllegalDropManage,
+                path: 'illegal-drop-about',
+                component: IllegalDropAbout,
                 data: {
                   breadcrumb: '垃圾落地',
                 },
@@ -181,6 +187,13 @@ const routes: Routes = [
                 component: MixIntoManageComponent,
                 data: {
                   breadcrumb: '混合投放',
+                },
+              },
+              {
+                path: 'garbage-station-about',
+                component: GarbageStationAboutComponent,
+                data: {
+                  breadcrumb: '投放点',
                 },
               },
             ],
@@ -199,7 +212,11 @@ const routes: Routes = [
           {
             path: 'platform',
             children: [
-              { path: '', redirectTo: 'platform-manage', pathMatch: 'full' },
+              {
+                path: '',
+                redirectTo: 'platform-manage',
+                pathMatch: 'full',
+              },
               {
                 path: 'platform-manage',
                 component: PlatformManageComponent,
@@ -238,6 +255,11 @@ const routes: Routes = [
             path: 'device',
             children: [
               {
+                path: '',
+                redirectTo: 'camera-manage',
+                pathMatch: 'full',
+              },
+              {
                 path: 'camera-manage',
                 component: CameraManageComponent,
                 data: {
@@ -258,16 +280,16 @@ const routes: Routes = [
                   breadcrumb: '监控点模型',
                 },
               },
-              {
-                path: '',
-                redirectTo: 'camera-manage',
-                pathMatch: 'full',
-              },
             ],
           },
           {
             path: 'ai',
             children: [
+              {
+                path: '',
+                redirectTo: 'ai-model-manage',
+                pathMatch: 'full',
+              },
               {
                 path: 'ai-model-manage',
                 component: AIModelManageComponent,
@@ -280,6 +302,11 @@ const routes: Routes = [
           {
             path: 'ai-events',
             children: [
+              {
+                path: '',
+                redirectTo: 'ai-camera-events',
+                pathMatch: 'full',
+              },
               {
                 path: 'ai-camera-events',
                 component: AICameraEventsComponent,

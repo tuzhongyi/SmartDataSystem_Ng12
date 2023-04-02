@@ -4,7 +4,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CommonTabModel } from 'src/app/common/components/common-tab/common-tab.model';
 import { EventNumberChartComponent } from '../event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from '../event-number-statistic/event-number-statistic.component';
-import { IllegalDropEventComponent } from '../illegal-drop-event/illegal-drop-event.component';
+import { IllegalDropEventComponent } from '../../../aiop-system/components/illegal-drop-event/illegal-drop-event.component';
 
 @Component({
   selector: 'howell-illegal-drop',

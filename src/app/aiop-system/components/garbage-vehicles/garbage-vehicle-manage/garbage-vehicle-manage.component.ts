@@ -4,7 +4,7 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { Page } from 'src/app/network/model/page_list.model';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 

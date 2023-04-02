@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import Config from 'src/assets/json/system-mode.json';
 
 @Component({
-  selector: 'app-system-mode',
+  selector: 'system-mode',
   templateUrl: './system-mode.component.html',
   styleUrls: ['./system-mode.component.less'],
 })

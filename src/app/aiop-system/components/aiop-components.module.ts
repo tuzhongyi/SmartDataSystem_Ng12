@@ -10,16 +10,15 @@ import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { RouterModule } from '@angular/router';
 import { AIOPSystemModeComponent } from './system-mode/system-mode.component';
-import { AiopSystemManageComponent } from './aiop-manage/aiop-manage.component';
+import { UnderwaterComponent } from './underwater/underwater.component';
 import { DivisionManageComponent } from './division-manage/division-manage.component';
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './platform-manage/platform-manage.component';
 import { SystemSettingComponent } from './system-setting/system-setting.component';
-import { SuperVisionComponent } from './super-vision/super-vision.component';
+import { MonitorPlatformComponent } from './monitor-platform/monitor-platform.component';
 import { RegionManageComponent } from './region-manage/region-manage.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
@@ -34,7 +33,7 @@ import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-dev
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
 import { CameraOperateComponent } from './camera-operate/camera-operate.component';
 import { CameraMoveComponent } from './camera-move/camera-move.component';
-import { IllegalDropManage } from './illegal-drop-manage/illegal-drop-manage.component';
+import { IllegalDropAbout } from './illegal-drop-about/illegal-drop-about.component';
 import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.component';
 import { GarbageVehicleDivisionManageComponent } from './garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
 import { GarbageVehicleManageComponent } from './garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
@@ -53,20 +52,23 @@ import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/trees/garb
 import { GarbageVehicleCameraManagerComponent } from './garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
 import { GarbageVehicleCameraDetailsWindowComponent } from './garbage-vehicles/garbage-vehicle-camera-details-window/garbage-vehicle-camera-details-window.component';
 import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-tree/garbage-vehicle-tree.component';
+import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
+import { IllegalDropComponent } from 'src/app/common/components/illegal-drop/illegal-drop.component';
+import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
+import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
-    AiopSystemManageComponent,
+    UnderwaterComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
     DeployMapComponent,
     GarbageStationManageComponent,
     SystemSettingComponent,
     PlatformManageComponent,
-    SuperVisionComponent,
+    MonitorPlatformComponent,
     RegionManageComponent,
-    SidenavComponent,
     CameraManageComponent,
     EncodeDeviceManageComponent,
     CameraModelManageComponent,
@@ -80,8 +82,12 @@ import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-ve
     GarbageStationOperateComponent,
     CameraOperateComponent,
     CameraMoveComponent,
-    IllegalDropManage,
+    IllegalDropAbout,
     MixIntoManageComponent,
+    GarbageStationAboutComponent,
+    IllegalDropComponent,
+    GarbageStationListComponent,
+    PictureUploadComponent,
 
     GarbageVehicleManageComponent,
     GarbageVehicleOperateComponent,

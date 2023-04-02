@@ -9,7 +9,7 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { GarbageVehicleCameraManagerBusiness } from './garbage-vehicle-camera-manager.business';
 import {
   IGarbageVehicleCameraManagerBusiness,

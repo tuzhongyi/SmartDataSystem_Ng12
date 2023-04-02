@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from './confirm-dialog.model';
 
 @Component({
   selector: 'howell-confirm-dialog',

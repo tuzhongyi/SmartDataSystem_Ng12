@@ -45,9 +45,8 @@ import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { ToastWindowComponent } from './toast-window/toast-window.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 import { MixIntoComponent } from './mix-into/mix-into.component';
-import { IllegalDropComponent } from './illegal-drop/illegal-drop.component';
 import { CommonTabComponent } from './common-tab/common-tab.component';
-import { IllegalDropEventComponent } from './illegal-drop-event/illegal-drop-event.component';
+import { IllegalDropEventComponent } from '../../aiop-system/components/illegal-drop-event/illegal-drop-event.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
@@ -68,8 +67,10 @@ import { VideoPlayerListComponent } from './video-player-list/video-player-list.
 import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
 import { LevelListPanelComponent } from './panels/level-list-panel/level-list-panel.component';
 import { LevelDivisionPanelComponent } from './panels/level-division-panel/level-division-panel.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 export const CUSTOM_COMPONENTS = [
+  SidenavComponent,
   StatisticLineEChartsComponent,
   TreeComponent,
   CommonTimeComponent,
@@ -118,7 +119,6 @@ export const CUSTOM_COMPONENTS = [
   LabelManageFormComponent,
   ToastWindowComponent,
   MixIntoComponent,
-  IllegalDropComponent,
   CommonTabComponent,
   IllegalDropEventComponent,
   EventNumberStatisticComponent,

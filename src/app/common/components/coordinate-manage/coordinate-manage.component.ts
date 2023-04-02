@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ICoordinate } from '../../interfaces/coordinate.interface';
 import { IDialogMessage } from '../../interfaces/dialog-message.interface';
-import { ValidLatitude, ValidLogitude } from '../../tools/tool';
+import { ValidLatitudeExp, ValidLogitudeExp } from '../../tools/tool';
 
 @Component({
   selector: 'coordinate-manage',
@@ -59,11 +59,11 @@ export class CoordinateManageComponent implements OnInit {
     }
   }
   private _checkForm() {
-    if (!ValidLogitude.test(this.lon)) {
+    if (!ValidLogitudeExp.test(this.lon)) {
       this._toastrService.error('请输入正确的经度');
       return false;
     }
-    if (!ValidLatitude.test(this.lat)) {
+    if (!ValidLatitudeExp.test(this.lat)) {
       this._toastrService.error('请输入正确的纬度');
       return false;
     }

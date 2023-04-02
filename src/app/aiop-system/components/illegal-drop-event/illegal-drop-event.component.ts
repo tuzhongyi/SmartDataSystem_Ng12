@@ -6,7 +6,7 @@ import { Page } from 'src/app/network/model/page_list.model';
 import {
   IllegalDropEventModel,
   IllegalDropEventSearchInfo,
-} from 'src/app/common/components/illegal-drop-event/illegal-drop-event.model';
+} from 'src/app/aiop-system/components/illegal-drop-event/illegal-drop-event.model';
 
 import {
   animate,
@@ -16,21 +16,21 @@ import {
   trigger,
 } from '@angular/animations';
 
-import { TimeService } from '../../service/time.service';
+import { TimeService } from '../../../common/service/time.service';
 import { IllegalDropEventBusiness } from './illegal-drop-event.business';
 
 import { IllegalDropEventConverter } from './illegal-drop-event.converter';
 import { ViewMode } from 'src/app/enum/view-mode.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { DivisionTreeSource } from '../division-tree/division-tree.model';
-import { Language } from '../../tools/language';
+import { DivisionTreeSource } from '../../../common/components/division-tree/division-tree.model';
+import { Language } from '../../../common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
 import { KeyValue } from '@angular/common';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { Camera } from 'src/app/network/model/camera.model';
-import { DateTimePickerView } from '../../directives/date-time-picker/date-time-picker.directive';
-import { DivisionTreeComponent } from '../division-tree/division-tree.component';
+import { DateTimePickerView } from '../../../common/directives/date-time-picker/date-time-picker.directive';
+import { DivisionTreeComponent } from '../../../common/components/division-tree/division-tree.component';
 
 @Component({
   selector: 'howell-illegal-drop-event',

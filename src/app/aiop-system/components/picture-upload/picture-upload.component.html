@@ -1,0 +1,13 @@
+<div
+  class="picture-upload"
+  [style.backgroundImage]="'url(' + imageUrl + ')'"
+  (click)="trigger(fileInput)"
+>
+  <div *ngIf="!imageUrl">点击上传图片</div>
+  <input
+    type="file"
+    [accept]="accept"
+    #fileInput
+    (change)="onChange(fileInput)"
+  />
+</div>

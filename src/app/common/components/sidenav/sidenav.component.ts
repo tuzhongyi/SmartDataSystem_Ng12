@@ -15,7 +15,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SidenavModel } from 'src/app/view-model/sidenav.model';
+import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
+import { ISideNavConfig } from '../../models/sidenav-config';
 
 @Component({
   selector: 'howell-sidenav',
@@ -49,18 +50,20 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
 
   private _subscription!: Subscription;
 
-  models: Array<SidenavModel> = [];
+  // 后行断言+捕获+量词+非捕获
+  private regExp =
+    /(?<=\/[\w-]+\/[\w-]+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
 
-  constructor(private _router: Router) {
+  models: Array<ISideNavConfig> = [];
+
+  constructor(private _router: Router, private _activeRoute: ActivatedRoute) {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         // console.log('router', e);
-        let reg =
-          /(?<=\/aiop\/aiop-manage\/)(?<first>[\w-]*)\/(?<second>[\w-]*)\/(?<third>[\w-]*)(?=\/?)$/;
 
-        let mode = e.urlAfterRedirects.match(reg);
+        let mode = e.urlAfterRedirects.match(this.regExp);
         // console.log('mode: ', mode);
-        if (mode && mode.groups) {
+        if (mode && mode.groups && mode.groups.first) {
           Object.assign(this.groups, mode.groups);
           import(`src/assets/json/${mode.groups['first']}.json`).then(
             (config) => {
@@ -74,8 +77,8 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnInit(): void { }
-  ngOnChanges(changes: SimpleChanges): void { }
+  ngOnInit(): void {}
+  ngOnChanges(changes: SimpleChanges): void {}
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
@@ -86,10 +89,13 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
       this.state = 'grow';
     }
   }
-  navigate(e: Event) {
-    let target = e.target as HTMLElement;
+  clickBtn(model: ISideNavConfig) {
+    let mode = model.path.match(this.regExp);
+    if (mode?.groups?.second == this.groups.second) {
+      console.log('同一父标签');
+      return;
+    }
 
-    // this._router.navigateByUrl(target.dataset.link!);
+    this._router.navigateByUrl(model.path);
   }
-  clickHandler() { }
 }

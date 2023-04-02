@@ -3,62 +3,62 @@
   "data": [
     {
       "title": "垃圾分类",
-      "id": "supervise-platform",
-      "path": "/aiop/aiop-manage/super-vision/supervise-platform",
-      "icon":"howell-icon-garbagebags",
+      "id": "garbage-classify",
+      "path": "/aiop/underwater/monitor-platform/garbage-classify",
+      "icon": "howell-icon-garbagebags",
       "children": [
         {
           "title": "区划管理",
           "id": "division-manage",
-          "path": "/aiop/aiop-manage/super-vision/supervise-platform/division-manage"
+          "path": "/aiop/underwater/monitor-platform/garbage-classify/division-manage"
         },
         {
           "title": "地图布控",
           "id": "deploy-map",
-          "path": "/aiop/aiop-manage/super-vision/supervise-platform/deploy-map"
+          "path": "/aiop/underwater/monitor-platform/garbage-classify/deploy-map"
         },
         {
           "title": "垃圾厢房管理",
           "id": "garbage-station-manage",
-          "path": "/aiop/aiop-manage/super-vision/supervise-platform/garbage-station-manage"
+          "path": "/aiop/underwater/monitor-platform/garbage-classify/garbage-station-manage"
         }
       ]
     },
     {
       "title": "垃圾清运",
       "id": "garbage-collection",
-      "path": "/aiop/aiop-manage/super-vision/garbage-collection",
-      "icon":"howell-icon-dustcart",
+      "path": "/aiop/underwater/monitor-platform/garbage-collection",
+      "icon": "howell-icon-dustcart",
       "children": [
         {
           "title": "区划管理",
           "id": "collection-division-manage",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/collection-division-manage"
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/collection-division-manage"
         },
         {
           "title": "清运车管理",
           "id": "garbage-vehicle-manage",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-manage"
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/garbage-vehicle-manage"
         },
         {
           "title": "摄像机管理",
           "id": "garbage-vehicle-camera-manager",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-vehicle-camera-manager"
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/garbage-vehicle-camera-manager"
         },
         {
           "title": "收运点管理",
           "id": "garbage-collection-point",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-point"
-        },        
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/garbage-collection-point"
+        },
         {
           "title": "垃圾桶管理",
           "id": "garbage-collection-point-trashcan-manager",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-point-trashcan-manager"
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/garbage-collection-point-trashcan-manager"
         },
         {
           "title": "人员信息",
           "id": "garbage-collection-member",
-          "path": "/aiop/aiop-manage/super-vision/garbage-collection/garbage-collection-member"
+          "path": "/aiop/underwater/monitor-platform/garbage-collection/garbage-collection-member"
         }
       ]
     }

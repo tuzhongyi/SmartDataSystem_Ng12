@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ConfirmDialogComponent } from 'src/app/common/components/confirm-dialog/confirm-dialog.component';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
 import { CoordinateTransform } from 'src/app/common/tools/coordinateTransform';
