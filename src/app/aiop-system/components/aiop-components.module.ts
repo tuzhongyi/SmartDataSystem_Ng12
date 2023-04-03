@@ -10,16 +10,15 @@ import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { RouterModule } from '@angular/router';
 import { AIOPSystemModeComponent } from './system-mode/system-mode.component';
-import { AiopSystemManageComponent } from './aiop-manage/aiop-manage.component';
+import { UnderwaterComponent } from './underwater/underwater.component';
 import { DivisionManageComponent } from './division-manage/division-manage.component';
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { DeployMapComponent } from './deploy-map/deploy-map.component';
 import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
 import { PlatformManageComponent } from './platform-manage/platform-manage.component';
 import { SystemSettingComponent } from './system-setting/system-setting.component';
-import { SuperVisionComponent } from './super-vision/super-vision.component';
+import { MonitorPlatformComponent } from './monitor-platform/monitor-platform.component';
 import { RegionManageComponent } from './region-manage/region-manage.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { EncodeDeviceManageComponent } from './encode-device-manage/encode-device-manage.component';
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
@@ -56,20 +55,20 @@ import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-ve
 import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
 import { IllegalDropComponent } from 'src/app/common/components/illegal-drop/illegal-drop.component';
 import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
+import { PictureUploadComponent } from './picture-upload/picture-upload.component';
 
 @NgModule({
   declarations: [
     AIOPSystemModeComponent,
-    AiopSystemManageComponent,
+    UnderwaterComponent,
     DivisionManageComponent,
     GarbageEventsComponent,
     DeployMapComponent,
     GarbageStationManageComponent,
     SystemSettingComponent,
     PlatformManageComponent,
-    SuperVisionComponent,
+    MonitorPlatformComponent,
     RegionManageComponent,
-    SidenavComponent,
     CameraManageComponent,
     EncodeDeviceManageComponent,
     CameraModelManageComponent,
@@ -88,6 +87,7 @@ import { GarbageStationListComponent } from './garbage-station-list/garbage-stat
     GarbageStationAboutComponent,
     IllegalDropComponent,
     GarbageStationListComponent,
+    PictureUploadComponent,
 
     GarbageVehicleManageComponent,
     GarbageVehicleOperateComponent,

@@ -4,71 +4,75 @@
     {
       "title": "平台",
       "id": "platform",
-      "path": "/aiop/aiop-manage/system-setting/platform",
+      "path": "/aiop/underwater/system-setting/platform",
       "children": [
         {
           "title": "平台管理",
           "id": "platform-manage",
-          "path": "/aiop/aiop-manage/system-setting/platform/platform-manage"
+          "path": "/aiop/underwater/system-setting/platform/platform-manage"
         },
         {
           "title": "流转服务管理",
           "id": "srserver-manage",
-          "path": "/aiop/aiop-manage/system-setting/platform/srserver-manage"
+          "path": "/aiop/underwater/system-setting/platform/srserver-manage"
         }
       ]
     },
     {
       "title": "区域",
       "id": "region",
+      "path": "/aiop/underwater/system-setting/region",
       "children": [
         {
           "title": "区域管理",
           "id": "region-manage",
-          "path": "/aiop/aiop-manage/system-setting/region/region-manage"
+          "path": "/aiop/underwater/system-setting/region/region-manage"
         }
       ]
     },
     {
       "title": "设备管理",
       "id": "device",
+      "path": "/aiop/underwater/system-setting/device",
       "children": [
         {
           "title": "监控点",
           "id": "camera-manage",
-          "path": "/aiop/aiop-manage/system-setting/device/camera-manage"
+          "path": "/aiop/underwater/system-setting/device/camera-manage"
         },
         {
           "title": "编码器",
           "id": "encode-device-manage",
-          "path": "/aiop/aiop-manage/system-setting/device/encode-device-manage"
+          "path": "/aiop/underwater/system-setting/device/encode-device-manage"
         },
         {
           "title": "监控点模型",
           "id": "camera-model-manage",
-          "path": "/aiop/aiop-manage/system-setting/device/camera-model-manage"
+          "path": "/aiop/underwater/system-setting/device/camera-model-manage"
         }
       ]
     },
     {
       "title": "AI模型",
       "id": "ai",
+      "path": "/aiop/underwater/system-setting/ai",
       "children": [
         {
           "title": "AI模型列表",
           "id": "ai-model-manage",
-          "path": "/aiop/aiop-manage/system-setting/ai/ai-model-manage"
+          "path": "/aiop/underwater/system-setting/ai/ai-model-manage"
         }
       ]
     },
     {
       "title": "事件",
       "id": "ai-events",
+      "path": "/aiop/underwater/system-setting/ai-events",
       "children": [
         {
           "title": "AI摄像机事件",
           "id": "ai-camera-events",
-          "path": "/aiop/aiop-manage/system-setting/ai-events/ai-camera-events"
+          "path": "/aiop/underwater/system-setting/ai-events/ai-camera-events"
         }
       ]
     }

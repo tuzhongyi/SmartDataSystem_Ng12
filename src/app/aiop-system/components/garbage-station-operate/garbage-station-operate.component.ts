@@ -23,7 +23,7 @@ import { TableColumnModel } from 'src/app/view-model/table.model';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
 import { Camera } from 'src/app/network/model/camera.model';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';

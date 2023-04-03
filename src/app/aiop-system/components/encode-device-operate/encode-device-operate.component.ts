@@ -10,7 +10,7 @@ import { EncodeDeviceOperateBusiness } from './encode-device-operate.business';
 import { EncodeDevice } from 'src/app/network/model/encode-device';
 import { Protocol } from 'src/app/network/model/protocol.model';
 import { ToastrService } from 'ngx-toastr';
-import { ValidIP } from 'src/app/common/tools/tool';
+import { ValidIPExp } from 'src/app/common/tools/tool';
 import { ProtocolType } from 'src/app/enum/protocol-type.enum';
 import { EncodedDeviceType } from 'src/app/enum/device-type.enum';
 import { TransType } from 'src/app/enum/trans-type.enum';
@@ -35,7 +35,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
     Name: ['', Validators.required],
     TransType: [TransType.TCP],
     ProtocolType: [ProtocolType.NVR],
-    Hostname: ['', [Validators.required, Validators.pattern(ValidIP)]],
+    Hostname: ['', [Validators.required, Validators.pattern(ValidIPExp)]],
     Port: [
       '',
       [

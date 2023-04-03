@@ -21,7 +21,7 @@ import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ToastrService } from 'ngx-toastr';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { ThisReceiver } from '@angular/compiler';
 
 @Component({

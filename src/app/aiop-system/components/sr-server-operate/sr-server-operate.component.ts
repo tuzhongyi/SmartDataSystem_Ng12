@@ -1,32 +1,44 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Protocol } from 'src/app/network/model/protocol.model';
 import { SRServer, SRServerAddress } from 'src/app/network/model/sr-server';
 import { SRServerOperateBusiness } from './sr-server-operate.business';
-import { ValidIP } from 'src/app/common/tools/tool';
-
+import { ValidIPExp } from 'src/app/common/tools/tool';
 
 @Component({
   selector: 'howell-sr-server-operate',
   templateUrl: './sr-server-operate.component.html',
   styleUrls: ['./sr-server-operate.component.less'],
-  providers: [
-    SRServerOperateBusiness
-  ]
+  providers: [SRServerOperateBusiness],
 })
 export class SRServerOperateComponent implements OnInit, AfterViewInit {
   private _operateModel?: SRServer;
-
 
   myForm = this._fb.group({
     Name: ['', Validators.required],
     ProtocolType: ['Howell', Validators.required],
     Username: '',
     Password: '',
-    Address: this._fb.array<FormGroup>([], [Validators.required, Validators.maxLength(7)])
-  })
+    Address: this._fb.array<FormGroup>(
+      [],
+      [Validators.required, Validators.maxLength(7)]
+    ),
+  });
 
   currentIndex = 0;
   maxLength = 7;
@@ -35,7 +47,7 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     return this.myForm.get('Name') as FormControl;
   }
   get Address() {
-    return this.myForm.get('Address') as FormArray
+    return this.myForm.get('Address') as FormArray;
   }
 
   get title() {
@@ -44,7 +56,7 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     } else if (this.state == FormState.edit) {
       return '编辑 ' + this._operateModel?.Name;
     }
-    return ''
+    return '';
   }
 
   @Input()
@@ -54,9 +66,13 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
   operateId: string = '';
 
   @Output()
-  closeEvent = new EventEmitter<boolean>()
+  closeEvent = new EventEmitter<boolean>();
 
-  constructor(private _business: SRServerOperateBusiness, private _toastrService: ToastrService, private _fb: FormBuilder) { }
+  constructor(
+    private _business: SRServerOperateBusiness,
+    private _toastrService: ToastrService,
+    private _fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.init();
@@ -66,29 +82,28 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
   }
   async init() {
     if (this.state == FormState.add) {
-      this.addAddress()
+      this.addAddress();
     } else if (this.state == FormState.edit) {
       this._operateModel = await this._business.getServer(this.operateId);
-      console.log(this._operateModel)
+      console.log(this._operateModel);
     }
     this._updateForm();
   }
   newAddress() {
     return this._fb.group({
-      IPAddress: ['', [Validators.required, Validators.pattern(ValidIP)]],
+      IPAddress: ['', [Validators.required, Validators.pattern(ValidIPExp)]],
       Port: ['', Validators.required],
       IsInternet: '1',
       IsDefault: '1',
-      RtspPort: "554",
-      RtmpPort: "1935",
+      RtspPort: '554',
+      RtmpPort: '1935',
       HttpPort: '',
-      WsPort: ''
-    })
+      WsPort: '',
+    });
   }
 
   addAddress() {
-    if (this.Address.length < 7)
-      this.Address.push(this.newAddress())
+    if (this.Address.length < 7) this.Address.push(this.newAddress());
   }
   deleteAddress(index: number, e: Event) {
     e.stopPropagation();
@@ -98,29 +113,27 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
         this.currentIndex = index - 1;
       }
     } else {
-      this._toastrService.warning('请依次删除')
+      this._toastrService.warning('请依次删除');
     }
   }
   touchSpinChange(value: string, index: number, propertyName: string) {
     let group = this.Address.at(index) as FormGroup;
     group.patchValue({
-      [propertyName]: value
-    })
+      [propertyName]: value,
+    });
   }
   async onSubmit() {
-
     if (this._checkForm()) {
       if (this.state == FormState.add) {
         let model = new SRServer();
         model.Id = '';
         model.Name = this.myForm.value.Name ?? '';
-        model.ProtocolType = this.myForm.value.ProtocolType ?? "";
-        model.Username = this.myForm.value.Username ?? "";
-        model.Password = this.myForm.value.Password ?? "";
-
+        model.ProtocolType = this.myForm.value.ProtocolType ?? '';
+        model.Username = this.myForm.value.Username ?? '';
+        model.Password = this.myForm.value.Password ?? '';
 
         let arr = <IAddress[]>(this.myForm.value.Address ?? []);
-        let address_arr = arr.map(item => {
+        let address_arr = arr.map((item) => {
           let address = new SRServerAddress();
           address.IPAddress = item.IPAddress;
           address.Port = +item.Port;
@@ -131,10 +144,9 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
           address.HttpPort = +item.HttpPort;
           address.WsPort = +item.WsPort;
 
-          return address
-        })
+          return address;
+        });
         model.Addresses = address_arr;
-
 
         let res = await this._business.createServer(model);
         if (res) {
@@ -144,12 +156,13 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
       } else if (this.state == FormState.edit) {
         if (this._operateModel) {
           this._operateModel.Name = this.myForm.value.Name ?? '';
-          this._operateModel.ProtocolType = this.myForm.value.ProtocolType ?? "";
-          this._operateModel.Username = this.myForm.value.Username ?? "";
-          this._operateModel.Password = this.myForm.value.Password ?? "";
+          this._operateModel.ProtocolType =
+            this.myForm.value.ProtocolType ?? '';
+          this._operateModel.Username = this.myForm.value.Username ?? '';
+          this._operateModel.Password = this.myForm.value.Password ?? '';
 
           let arr = <IAddress[]>(this.myForm.value.Address ?? []);
-          let address_arr = arr.map(item => {
+          let address_arr = arr.map((item) => {
             let address = new SRServerAddress();
             address.IPAddress = item.IPAddress;
             address.Port = +item.Port;
@@ -160,10 +173,9 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
             address.HttpPort = +item.HttpPort;
             address.WsPort = +item.WsPort;
 
-            return address
-          })
+            return address;
+          });
           this._operateModel.Addresses = address_arr;
-
 
           let res = await this._business.updateServer(this._operateModel);
           if (res) {
@@ -173,16 +185,12 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
         }
       }
     }
-
-
   }
   onReset() {
-    this.closeEvent.emit(false)
-
+    this.closeEvent.emit(false);
   }
   private _updateForm() {
     if (this.state == FormState.add) {
-
     } else if (this.state == FormState.edit) {
       if (this._operateModel) {
         this.myForm.patchValue({
@@ -190,10 +198,10 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
           ProtocolType: this._operateModel.ProtocolType,
           Username: this._operateModel.Username,
           Password: this._operateModel.Password,
-        })
+        });
 
         this.Address.clear();
-        this._operateModel.Addresses.forEach(item => {
+        this._operateModel.Addresses.forEach((item) => {
           let address = this.newAddress();
           address.setValue({
             IPAddress: item.IPAddress,
@@ -203,12 +211,11 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
             RtspPort: item.RtspPort ? item.RtspPort.toString() : '',
             RtmpPort: item.RtmpPort ? item.RtmpPort.toString() : '',
             HttpPort: item.HttpPort ? item.HttpPort.toString() : '',
-            WsPort: item.WsPort ? item.WsPort.toString() : ''
-          })
+            WsPort: item.WsPort ? item.WsPort.toString() : '',
+          });
 
-          this.Address.push(address)
-        })
-
+          this.Address.push(address);
+        });
       }
     }
   }
@@ -227,7 +234,9 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
             return false;
           }
           if (IPAddress.errors && 'pattern' in IPAddress.errors) {
-            this._toastrService.warning('地址' + (i + 1) + ': 请输入正确的IP地址');
+            this._toastrService.warning(
+              '地址' + (i + 1) + ': 请输入正确的IP地址'
+            );
             return false;
           }
 
@@ -238,12 +247,10 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
           }
         }
       }
-
     }
 
     return true;
   }
-
 }
 
 interface IAddress {

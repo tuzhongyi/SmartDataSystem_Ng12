@@ -4,17 +4,17 @@
     {
       "title": "事件",
       "id": "events",
-      "path": "/aiop/aiop-manage/garbage-events/events",
+      "path": "/aiop/underwater/garbage-events/events",
       "children": [
         {
           "title": "垃圾落地",
           "id": "illegal-drop-about",
-          "path": "/aiop/aiop-manage/garbage-events/events/illegal-drop-about"
+          "path": "/aiop/underwater/garbage-events/events/illegal-drop-about"
         },
         {
           "title": "投放点",
           "id": "garbage-station-about",
-          "path": "/aiop/aiop-manage/garbage-events/events/garbage-station-about"
+          "path": "/aiop/underwater/garbage-events/events/garbage-station-about"
         }
       ]
     }

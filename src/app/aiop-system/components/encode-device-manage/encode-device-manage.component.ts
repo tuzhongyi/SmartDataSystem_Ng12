@@ -17,7 +17,7 @@ import { EncodeDeviceManageBusiness } from './encode-device-manage.business';
 import { EncodeDeviceManageConf } from './encode-device-manage.config';
 import { PageEvent } from '@angular/material/paginator';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { ConfirmDialogModel } from 'src/app/view-model/confirm-dialog.model';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { ToastrService } from 'ngx-toastr';
 import { FormState } from 'src/app/enum/form-state.enum';
