@@ -90,6 +90,11 @@ export class VideoPlayerComponent
   @Output()
   onViewerClicked: EventEmitter<number> = new EventEmitter();
 
+  constructor(
+    private sanitizer: DomSanitizer,
+    private local: LocalStorageService,
+    private userService: UserRequestService
+  ) {}
   src?: SafeResourceUrl;
 
   getSrc(webUrl: string, url: string, cameraName?: string) {
@@ -115,11 +120,6 @@ export class VideoPlayerComponent
     return this._player;
   }
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private local: LocalStorageService,
-    private userService: UserRequestService
-  ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && !changes.model.firstChange) {
       this.isloaded = false;

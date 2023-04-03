@@ -14,7 +14,7 @@ import { ListItem } from './map-list-item';
 @Component({
   selector: 'app-map-list-panel',
   templateUrl: './map-list-panel.component.html',
-  styleUrls: ['./map-list-panel.component.css'],
+  styleUrls: ['./map-list-panel.component.less'],
 })
 export class MapListPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input()

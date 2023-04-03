@@ -1,18 +1,19 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
+import { ViewModelConverter } from 'src/app/converter/view-models/view-model.converter';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
+import { DivisionModel } from 'src/app/network/view-model/division.view-model';
 import {
   ListPanelConverter,
   ListPanelType,
 } from '../converter/map-list-panel.converter';
+import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
 
 @Injectable()
 export class ListPanelBusiness
@@ -23,7 +24,8 @@ export class ListPanelBusiness
   constructor(
     private storeService: GlobalStorageService,
     private divisionService: DivisionRequestService,
-    private stationService: GarbageStationRequestService
+    private stationService: GarbageStationRequestService,
+    private vmConverter: ViewModelConverter
   ) {}
   Converter: IConverter<ListPanelType[], ListItem<ListPanelType>[]> =
     new ListPanelConverter();
@@ -60,12 +62,12 @@ export class ListPanelBusiness
     let data: ListPanelType = item.Data;
     switch (item.type) {
       case ListItemType.Division:
-        data = await this.loadByDivision(item.Data as Division);
+        data = await this.loadByDivision(item.Data as DivisionModel);
         break;
       case ListItemType.GarbageStation:
         break;
       case ListItemType.Parent:
-        data = await this.loadByParent(item.Data as Division);
+        data = await this.loadByParent(item.Data as DivisionModel);
         break;
       default:
         break;
@@ -74,14 +76,14 @@ export class ListPanelBusiness
     this.itemSelected.emit(data);
   }
 
-  async loadByDivision(division: Division) {
+  async loadByDivision(division: DivisionModel) {
     let source = await this.load(division.Id, division.DivisionType);
     let parentItem = this.createParentItem(division);
     source.unshift(parentItem);
     this.datasource = source;
     return division;
   }
-  async loadByParent(division: Division) {
+  async loadByParent(division: DivisionModel) {
     let parent = await this.divisionService.cache.get(division.ParentId!);
     let source = await this.load(parent.Id, parent.DivisionType);
     if (parent.DivisionType !== this.storeService.divisionType) {
@@ -96,17 +98,21 @@ export class ListPanelBusiness
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
     let response = await this.divisionService.cache.list(params);
-    return response.Data;
+    return response.Data.map((x) => {
+      return this.vmConverter.Division(x);
+    });
   }
 
   async loadGarbageStation(divisionId: string) {
     let params = new GetGarbageStationsParams();
     params.DivisionId = divisionId;
     let response = await this.stationService.cache.list(params);
-    return response.Data;
+    return response.Data.map((x) => {
+      return this.vmConverter.GarbageStation(x);
+    });
   }
 
-  createParentItem(division: Division) {
+  createParentItem(division: DivisionModel) {
     return new ListItem(division.Id, '上一级', ListItemType.Parent, division);
   }
 

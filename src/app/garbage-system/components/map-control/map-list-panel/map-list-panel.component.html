@@ -10,7 +10,10 @@
             (click)="itemClick($event, item)"
             (dblclick)="itemDoubleClick($event, item)"
           >
-            {{ item.Name }}
+            <div class="name">{{ item.Name }}</div>
+            <div class="child" *ngIf="item.hasChild">
+              <i class="howell-icon-arrow2right"></i>
+            </div>
           </div>
         </ng-container>
       </div>

@@ -13,18 +13,19 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
+import { wait } from 'src/app/common/tools/tool';
 import { Camera } from 'src/app/network/model/camera.model';
+import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { IModel } from 'src/app/network/model/model.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
+import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { AMapBusiness } from './business/amap.business';
+import { GarbageTimeFilter } from './business/amap.model';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
-import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
-import { Division } from 'src/app/network/model/division.model';
-import { IModel } from 'src/app/network/model/model.interface';
 import { MapControlSelected, MapControlTools } from './map-control.model';
-import { wait } from 'src/app/common/tools/tool';
-import { GarbageTimeFilter } from './business/amap.model';
+import { ListItemType } from './map-list-panel/map-list-item';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -292,6 +293,13 @@ export class MapControlComponent
     this.panel.itemSelected.subscribe((x) => {
       if (x instanceof Division) {
         this.amap.divisionSelect(x.Id);
+        this.panel.datasource.forEach((y) => {
+          if (y.type != ListItemType.Parent) {
+            y.hasChild = !!this.amap.source.all.find(
+              (g) => g.DivisionId! === y.Id
+            );
+          }
+        });
       } else if (x instanceof GarbageStation) {
         this.amap.pointSelect(x.Id);
       } else {

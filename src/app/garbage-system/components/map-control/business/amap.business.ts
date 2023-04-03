@@ -1,28 +1,27 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { timer } from 'rxjs';
-import { Flags } from 'src/app/common/tools/flags';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
+import { AMapLabelOptionConverter } from './amap-label-option.converter';
 import {
   AMapDataSource,
   AMapVisibility,
   GarbageTimeFilter,
 } from './amap.model';
-import { AMapLabelOptionConverter } from './amap-label-option.converter';
 
 @Injectable()
 export class AMapBusiness {
   pointCountChanged: EventEmitter<number> = new EventEmitter();
-  pointDoubleClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  pointDoubleClicked: EventEmitter<GarbageStationModel> = new EventEmitter();
   mapClicked: EventEmitter<void> = new EventEmitter();
   menuEvents = {
     illegalDropClicked: new EventEmitter(),
@@ -43,7 +42,7 @@ export class AMapBusiness {
   private mapController?: CesiumDataController.Controller;
   private labelOptionConverter = new AMapLabelOptionConverter();
 
-  private source: AMapDataSource = {
+  public source: AMapDataSource = {
     all: [],
     drop: [],
     labels: {},
@@ -246,7 +245,7 @@ export class AMapBusiness {
     this.mapClicked.emit();
   }
 
-  setPointStatus(stations: GarbageStation[]) {
+  setPointStatus(stations: GarbageStationModel[]) {
     console.log('setPointStatus');
     if (!this.mapClient || !stations || stations.length === 0) return;
 
@@ -305,7 +304,7 @@ export class AMapBusiness {
     return this.source.points[stationId];
   }
 
-  async setLabels(stations: GarbageStation[], filter: GarbageTimeFilter) {
+  async setLabels(stations: GarbageStationModel[], filter: GarbageTimeFilter) {
     if (!this.mapClient) return;
 
     // 获取统计数据

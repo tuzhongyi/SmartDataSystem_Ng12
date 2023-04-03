@@ -1,9 +1,13 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import {
+  DivisionModel,
+  GarbageStationModel,
+} from 'src/app/view-model/garbage-station.model';
 import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
 
-export type ListPanelType = Division | GarbageStation;
+export type ListPanelType = DivisionModel | GarbageStationModel;
 export class ListPanelConverter
   implements IConverter<ListPanelType[], ListItem<ListPanelType>[]>
 {
@@ -25,15 +29,22 @@ export class ListPanelConverter
       throw new Error('source is not MapListPanelType');
     }
   }
-  fromDivision(source: Division) {
-    return new ListItem(source.Id, source.Name, ListItemType.Division, source);
+  fromDivision(source: DivisionModel) {
+    let item = new ListItem(
+      source.Id,
+      source.Name,
+      ListItemType.Division,
+      source
+    );
+    return item;
   }
-  fromGarbageStation(source: GarbageStation) {
-    return new ListItem(
+  fromGarbageStation(source: GarbageStationModel) {
+    let item = new ListItem(
       source.Id,
       source.Name,
       ListItemType.GarbageStation,
       source
     );
+    return item;
   }
 }

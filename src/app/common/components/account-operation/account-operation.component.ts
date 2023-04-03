@@ -1,12 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { RoutePath } from 'src/app/app-routing.path';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { AccountOperationDisplay } from './account-operation.model';
-import { RoutePath } from 'src/app/app-routing.path';
 
 @Component({
   selector: 'app-account-operation',
@@ -32,7 +32,10 @@ export class AccountOperationComponent implements OnInit {
 
   ngOnInit(): void {
     let userName = this._cookieService.get('userName');
-    if (!userName) this._router.navigateByUrl(RoutePath.login);
+    if (!userName) {
+      this._router.navigateByUrl(RoutePath.login);
+      return;
+    }
     userName = atob(userName);
 
     let res = userName.match(
