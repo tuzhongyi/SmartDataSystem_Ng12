@@ -5,31 +5,13 @@
  * @Last Modified time: 2022-12-21 17:12:11
  */
 import { Injectable } from '@angular/core';
-import { data } from 'jquery';
-import { ICommonRankBusiness } from 'src/app/common/components/common-rank/common-rank.model';
 import { Guid } from 'src/app/common/tools/guid';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { ScoreTop } from 'src/app/network/model/score-top.model';
-import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
-import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
-import {
-  GetCollectionPointNumberParams,
-  GetCollectionPointScoreTopListParams,
-  GetCollectionPointsParams,
-} from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
+import { GetCollectionPointScoreTopListParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
-import {
-  GetDivisionGarbageScoresParams,
-  GetDivisionsParams,
-} from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
-import {
-  CollectionScoreRankModel,
-  ICollectionScoreRankSearchInfo,
-} from './collection-score-rank.model';
+import { ICollectionScoreRankSearchInfo } from './collection-score-rank.model';
 
-import * as uuid from 'uuid';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 @Injectable()
 export class CollectionScoreRankBusiness {
@@ -46,7 +28,7 @@ export class CollectionScoreRankBusiness {
 
     for (let i = 0; i < 0; i++) {
       let scoreTop = new ScoreTop();
-      scoreTop.Id = uuid.v4();
+      scoreTop.Id = Guid.NewGuid().ToString('N');
       let unicode1 = Math.floor(Math.random() * (0x9fa5 - 0x4e00) + 0x4e00);
       let unicode2 = Math.floor(Math.random() * (0x9fa5 - 0x4e00) + 0x4e00);
       let unicode3 = Math.floor(Math.random() * (0x9fa5 - 0x4e00) + 0x4e00);

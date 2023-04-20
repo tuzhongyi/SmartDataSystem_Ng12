@@ -5,36 +5,23 @@
  * @Last Modified time: 2023-01-13 20:08:57
  */
 import {
-  AfterViewChecked,
   AfterViewInit,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  DoCheck,
-  ElementRef,
   Inject,
-  Injector,
   Input,
-  NgZone,
   OnChanges,
-  OnInit,
   Optional,
-  Renderer2,
   SimpleChanges,
-  ViewChild,
-  ViewContainerRef,
   ViewEncapsulation,
 } from '@angular/core';
-import { MatButton } from '@angular/material/button';
 import {
   MatPaginatorDefaultOptions,
   MAT_PAGINATOR_DEFAULT_OPTIONS,
   _MatPaginatorBase,
 } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
-import { fromEvent } from 'rxjs';
 import { PaginatorIntl } from './paginator-intl';
 
 export type Constructor<T> = new (...args: any[]) => T;

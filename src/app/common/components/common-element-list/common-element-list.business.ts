@@ -4,7 +4,6 @@ import {
   ICommonElementListBusiness,
 } from './common-element-list.model';
 
-import * as uuid from 'uuid';
 import { Guid } from '../../tools/guid';
 
 @Injectable()
@@ -12,11 +11,8 @@ export class CommonElementListBusiness implements ICommonElementListBusiness {
   constructor() {}
 
   async init() {
-    console.log(Guid.NewGuid().ToString('N'));
-    console.log(uuid.v4());
-
     let model = new CommonElementListModel();
-    model.Id = uuid.v4();
+    model.Id = Guid.NewGuid().ToString('N');
 
     model.Name = '上海市';
 

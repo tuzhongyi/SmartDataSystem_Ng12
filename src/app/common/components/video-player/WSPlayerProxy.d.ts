@@ -31,25 +31,25 @@ declare class WSPlayerProxy {
 
 declare enum ButtonName {
   /** 播放 */
-  play = 'play',
+  play = "play",
   /** 恢复 */
-  resume = 'resume',
+  resume = "resume",
   /** 暂停 */
-  pause = 'pause',
+  pause = "pause",
   /** 停止 */
-  stop = 'stop',
+  stop = "stop",
   /** 全屏 */
-  fullscreen = 'fullscreen',
+  fullscreen = "fullscreen",
   /** 截图 */
-  capturepicture = 'capturepicture',
+  capturepicture = "capturepicture",
   /** 慢放 */
-  slow = 'slow',
+  slow = "slow",
   /** 快放 */
-  fast = 'fast',
+  fast = "fast",
   /** 单帧 */
-  forward = 'forward',
+  forward = "forward",
   /** 回跳 */
-  jump_back = 'jump_back',
+  jump_back = "jump_back",
   /** 跳进 */
-  jump_forward = 'jump_forward',
+  jump_forward = "jump_forward",
 }
