@@ -5,10 +5,10 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { plainToClass } from 'class-transformer';
+import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -16,7 +16,6 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import { StoreService } from 'src/app/common/service/store.service';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
-import CryptoJS from 'crypto-js';
 import { Md5 } from 'ts-md5';
 import { User, UserResource } from '../../model/user.model';
 import { DigestResponse } from './digest-response.class';
@@ -76,7 +75,18 @@ export class AuthorizationService implements CanActivate {
       try {
         let result = await this.login(url);
         if (result instanceof User) {
-          return this._router.parseUrl(`/${RoutePath.garbage_system}`);
+          console.log(this._router);
+          if (location.pathname.includes(RoutePath.garbage_system)) {
+            return this._router.parseUrl(`/${RoutePath.garbage_system}`);
+          } else if (
+            location.pathname.includes(RoutePath.electric_bike_widescreen)
+          ) {
+            return this._router.parseUrl(
+              `/${RoutePath.electric_bike_widescreen}`
+            );
+          } else if (location.pathname.includes(RoutePath.electric_bike)) {
+            return this._router.parseUrl(`/${RoutePath.electric_bike}`);
+          }
         }
       } catch (error) {
         return this._router.parseUrl(this._store.loginPath);
