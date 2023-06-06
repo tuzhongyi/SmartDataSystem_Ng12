@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { MediaWindowBusiness } from './media-window.business';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-station-window/garbage-drop-station-window.component';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 
 @Injectable()
-export class GarbageStationDropWindowBusiness extends WindowViewModel {
-  constructor(private media: MediaWindowBusiness) {
+export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
+  constructor(private media: MonitorMediaWindowBusiness) {
     super();
   }
   divisionId?: string;

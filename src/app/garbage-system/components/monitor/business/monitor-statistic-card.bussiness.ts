@@ -2,31 +2,29 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { Enum } from 'src/app/enum/enum-helper';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GetDivisionStatisticNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import {
   StatisticCardViewModel,
   StatisticType,
 } from '../../statistic-card/statistic-card.model';
-import { WindowBussiness } from './window.business';
-import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
+import { MonitorWindowBussiness } from './window.business';
 
 @Injectable()
-export class StatisticCardBussiness
+export class MonitorStatisticCardBussiness
   implements IBusiness<DivisionNumberStatistic, StatisticCardViewModel[]>
 {
   constructor(
     private divisionService: DivisionRequestService,
     private garbageStationService: GarbageStationRequestService,
     private storeService: GlobalStorageService,
-    private window: WindowBussiness
+    private window: MonitorWindowBussiness
   ) {
     this.loading.subscribe(async (x) => {
       this.cards = await this.load();

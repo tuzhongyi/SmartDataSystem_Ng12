@@ -26,10 +26,9 @@
     }"
   >
     <collection-map-route-query
-      (select)="onqueryselect($event)"
-      [selected]="model"
-      [(date)]="date"
+      [args]="args"
       (close)="onqueryclose()"
+      (query)="onquery($event)"
     >
     </collection-map-route-query>
   </div>
@@ -64,10 +63,22 @@
     </collection-map-route-info>
   </div>
   <div class="collection-map-route-operation" *ngIf="display.operation">
-    <div class="route-button vehicle" (click)="onvehicleclick()">
+    <div
+      class="route-button"
+      [ngClass]="{ selected: focus }"
+      title="清运车跟踪"
+      (click)="onfocus()"
+    >
+      <i class="mdi mdi-crosshairs-gps"></i>
+    </div>
+    <div
+      title="清运车信息"
+      class="route-button vehicle"
+      (click)="onvehicleclick()"
+    >
       <i class="howell-icon-dustcart"></i>
     </div>
-    <div class="route-button" (click)="onvideoclick()">
+    <div title="视频" class="route-button" (click)="onvideoclick()">
       <i class="howell-icon-video"></i>
     </div>
   </div>
@@ -79,13 +90,13 @@
     }"
   >
     <collection-map-route-control
-      [sourceId]="model.Id"
-      [date]="date"
       [seek]="controlseek"
       (loaded)="onloaded($event)"
       (scoreclick)="onscore($event)"
       (routetrigger)="onroute($event)"
       (routeclick)="onrouteclick($event)"
+      [load]="loadControl"
+      [(focus)]="focus"
     >
     </collection-map-route-control>
   </div>

@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DeviceWindowBusiness } from './windows/device-window.business';
-import { RecordWindowBusiness } from './windows/event-record-window.business';
-import { MediaWindowBusiness } from './windows/media-window.business';
-import { GarbageStationDropWindowBusiness } from './windows/station-drop-window.business';
-import { GarbageStationFullWindowBusiness } from './windows/station-full-window.business';
-import { GarbageStationInfoWindowBusiness } from './windows/station-info-window.business';
+import { MonitorCardRecordEpisodeWindow } from './windows/monitor-card-record-episode-window.business';
+import { MonitorDeviceWindowBusiness } from './windows/monitor-device-window.business';
+import { MonitorRecordWindowBusiness } from './windows/monitor-event-record-window.business';
+import { MonitorMediaMultipleWindowBusiness } from './windows/monitor-media-multiple-window.business';
+import { MonitorMediaSingleWindowBusiness } from './windows/monitor-media-single-window.business';
+import { MonitorMediaWindowBusiness } from './windows/monitor-media-window.business';
+import { MonitorGarbageStationDropWindowBusiness } from './windows/monitor-station-drop-window.business';
+import { MonitorGarbageStationFullWindowBusiness } from './windows/monitor-station-full-window.business';
+import { MonitorGarbageStationInfoWindowBusiness } from './windows/monitor-station-info-window.business';
 
 @Injectable()
-export class WindowBussiness {
+export class MonitorWindowBussiness {
   constructor(
-    public record: RecordWindowBusiness,
-    public media: MediaWindowBusiness,
-    public device: DeviceWindowBusiness,
-    public full: GarbageStationFullWindowBusiness,
-    public drop: GarbageStationDropWindowBusiness,
-    public station: GarbageStationInfoWindowBusiness
+    public record: MonitorRecordWindowBusiness,
+    public media: MonitorMediaWindowBusiness,
+    public device: MonitorDeviceWindowBusiness,
+    public full: MonitorGarbageStationFullWindowBusiness,
+    public drop: MonitorGarbageStationDropWindowBusiness,
+    public station: MonitorGarbageStationInfoWindowBusiness,
+    public card: MonitorCardRecordEpisodeWindow
   ) {}
   close() {
     this.record.show = false;
@@ -28,5 +28,18 @@ export class WindowBussiness {
     this.drop.show = false;
     this.full.show = false;
     this.station.show = false;
+    this.card.show = false;
   }
 }
+
+export const WindowBusinesses = [
+  MonitorRecordWindowBusiness,
+  MonitorMediaWindowBusiness,
+  MonitorMediaSingleWindowBusiness,
+  MonitorMediaMultipleWindowBusiness,
+  MonitorDeviceWindowBusiness,
+  MonitorGarbageStationFullWindowBusiness,
+  MonitorGarbageStationDropWindowBusiness,
+  MonitorGarbageStationInfoWindowBusiness,
+  MonitorCardRecordEpisodeWindow,
+];

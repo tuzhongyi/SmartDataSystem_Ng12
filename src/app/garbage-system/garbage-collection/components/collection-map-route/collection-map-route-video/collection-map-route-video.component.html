@@ -1,8 +1,8 @@
-<div class="collection-map-route-video">
+<div class="collection-map-route-video" *ngIf="!!source">
   <div class="collection-map-route-video-header">
     <div>
-      <select [(ngModel)]="position" (change)="onpositionchanged()">
-        <option [ngValue]="item.value" *ngFor="let item of title">
+      <select [(ngModel)]="camera" (change)="onpositionchanged()">
+        <option [ngValue]="item" *ngFor="let item of source.Cameras">
           {{ item.Name }}
         </option>
       </select>
@@ -22,7 +22,7 @@
   </div>
   <div class="collection-map-route-video-content">
     <div
-      *ngIf="!!source && !!position"
+      *ngIf="!!source && !!camera"
       class="collection-map-route-video-content-player"
     >
       <app-video-player

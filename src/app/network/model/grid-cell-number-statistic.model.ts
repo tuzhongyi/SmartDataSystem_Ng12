@@ -1,8 +1,8 @@
 import { EventNumber } from './event-number.model';
-import { Model } from './model.interface';
+import { IdNameModel } from './model.interface';
 
 /** 网格单元的数量统计信息 */
-export class GridCellNumberStatistic extends Model {
+export class GridCellNumberStatistic extends IdNameModel {
   /**	String	网格单元ID	M */
   Id!: string;
   /**	String	网格单元名称	M */

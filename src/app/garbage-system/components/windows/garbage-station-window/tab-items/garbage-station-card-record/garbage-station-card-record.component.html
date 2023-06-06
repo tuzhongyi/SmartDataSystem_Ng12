@@ -1,0 +1,61 @@
+<div class="garbage-station-card-record">
+  <div class="garbage-station-card-record-head">
+    <div class="filter">
+      <div class="filter-item">
+        <span>开始时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日 HH:mm'"
+          [(date)]="args.duration.begin"
+          class=""
+        />
+      </div>
+      <div class="filter-item">
+        <span>结束时间</span>
+        <input
+          type="text"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日 HH:mm'"
+          [(date)]="args.duration.end"
+          class=""
+        />
+      </div>
+      <div class="filter-item tree">
+        <span>投放点</span>
+        <div class="content" style="width: 300px">
+          <common-label-select
+            [selectedNodes]="divisiontree.nodes"
+            [autoclose]="true"
+            [showCloseIcon]="false"
+            [single]="true"
+            [height]="'325px'"
+            [(showDropDown)]="divisiontree.expand"
+          >
+            <howell-division-tree
+              #tree
+              [depth]="divisiontree.depth"
+              [resourceType]="divisiontree.type"
+              [showStation]="true"
+              [defaultIds]="divisiontree.ids"
+              (selectTreeNode)="divisiontree.onselected($event)"
+            ></howell-division-tree>
+          </common-label-select>
+        </div>
+      </div>
+
+      <button class="hw-blue-btn search" (click)="search()">
+        <i class="mdi mdi-magnify"></i> 查询
+      </button>
+    </div>
+  </div>
+  <div class="garbage-station-card-record-body">
+    <card-record-table
+      [init]="false"
+      [args]="args"
+      [load]="load"
+      (video)="onvideo($event)"
+    >
+    </card-record-table>
+  </div>
+</div>

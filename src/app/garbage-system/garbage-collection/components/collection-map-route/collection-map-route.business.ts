@@ -69,7 +69,8 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
             this.client.Point.Remove(this.point.id);
           }
 
-          this.client.Village.Basic(source.DivisionId!);
+          this.client.Village.Basic(source.DivisionId!, false);
+          this.client.Viewer.Focus(source.DivisionId!);
           this.point = this.converter.GarbageVehicle(source);
         }
       );
@@ -89,15 +90,32 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
         if (this.path) {
           this.client.Draw.Route.Remove(this.path.id);
         }
+        if (!points || points.length === 0) return;
         let positions = points.map((x) => this.converter.GisPoint(x));
-        let opts = new CesiumDataController.DrawLineOptions();
-        opts.img = 'img/route/vehicle.png';
+        let opts = new CesiumDataController.DrawRouteOptions();
+
+        opts.route = new CesiumDataController.DrawLineOptions();
+        opts.route.img = 'img/route/vehicle_route.png';
+        opts.route.alpha = 1;
+        opts.route.width = 8;
+        opts.route.color = '#666666';
+        opts.route.outline = new CesiumDataController.DrawOutlineOptions();
+        opts.route.outline.enabled = true;
+        opts.route.outline.color = '#888888';
+
+        opts.passed = new CesiumDataController.DrawLineOptions();
+        opts.passed.alpha = 0.5;
+        opts.passed.color = '#23e353';
+        opts.passed.width = 8;
+        opts.passed.outline = new CesiumDataController.DrawOutlineOptions();
+        opts.passed.outline.enabled = true;
+        opts.passed.outline.color = '#adff2f';
+
         let routeId = this.client.Draw.Route.Create(positions, opts);
         if (this.point) {
           this.client.Point.Remove(this.point.id);
           this.point.position = positions[0];
           this.client.Point.Create(this.point);
-          this.client.Viewer.Focus(this.point.villageId);
         }
         this.path = {
           id: routeId,
@@ -107,7 +125,11 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     );
   }
 
-  route(date: Date, position?: CesiumDataController.Position) {
+  route(
+    date: Date,
+    position?: CesiumDataController.Position,
+    focus: boolean = false
+  ) {
     wait(
       () => {
         return !!this.client && this.loaded;
@@ -123,7 +145,7 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
             positions.push(position);
           }
           this.point.position = positions[positions.length - 1];
-          this.routing(this.path.id, this.point, positions);
+          this.routing(this.path.id, this.point, positions, focus);
         }
       }
     );
@@ -131,7 +153,8 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
   private routing(
     pathId: string,
     point: CesiumDataController.Point,
-    positions: CesiumDataController.Position[]
+    positions: CesiumDataController.Position[],
+    focus: boolean
   ) {
     this.client.Draw.Route.Set(pathId, positions);
     let opts: CesiumDataController.PointOptions = {
@@ -139,6 +162,9 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
       position: point.position,
     };
     this.client.Point.Set([opts]);
+    if (focus) {
+      this.client.Viewer.MoveTo(point.position);
+    }
   }
 }
 

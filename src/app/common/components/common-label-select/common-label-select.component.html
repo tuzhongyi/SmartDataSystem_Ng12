@@ -2,7 +2,13 @@
   <div class="label-select-header" (click)="toggleHandler($event)">
     <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
     <div class="wrapper">
-      <div class="label-select-item" *ngFor="let node of selectedNodes">
+      <div
+        class="label-select-item"
+        [ngClass]="{
+          single: single
+        }"
+        *ngFor="let node of selectedNodes"
+      >
         <div class="title">{{ node.Name }}</div>
         <div
           class="close-btn"
@@ -26,6 +32,10 @@
   <div
     class="label-select-body"
     *ngIf="showDropDown"
+    [ngStyle]="{
+      height: height,
+      borderWidth: height === 'auto' ? '2px' : '1px'
+    }"
     (click)="$event.stopPropagation()"
   >
     <ng-content></ng-content>

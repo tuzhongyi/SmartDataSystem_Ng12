@@ -60,7 +60,8 @@ export class EventRecordTableComponent
   getData?: EventEmitter<Page>;
   @Output()
   gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
-
+  @Output()
+  card: EventEmitter<EventRecordViewModel> = new EventEmitter();
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -71,7 +72,7 @@ export class EventRecordTableComponent
     this.filter = new EventRecordFilter();
   }
   widths = ['10%', '15%', '15%', '13%', '10%', '15%', '12%', '10%'];
-
+  EventType = EventType;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((x) => {
@@ -135,6 +136,9 @@ export class EventRecordTableComponent
     let array = new ImageControlModelArray(model.images, 0, true);
     array.data = model;
     this.image.emit(array);
+  }
+  oncardrecord(model: EventRecordViewModel) {
+    this.card.emit(model);
   }
 
   @Output()

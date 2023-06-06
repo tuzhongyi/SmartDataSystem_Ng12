@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
-import { WindowBussiness } from './window.business';
+import { MonitorWindowBussiness } from './window.business';
 
 @Injectable()
-export class DeviceStateBusiness {
-  constructor(private window: WindowBussiness) {}
+export class MonitorDeviceStateBusiness {
+  constructor(private window: MonitorWindowBussiness) {}
 
   onclick(args: IDeviceStateDes) {
     this.window.device.status = args.status;

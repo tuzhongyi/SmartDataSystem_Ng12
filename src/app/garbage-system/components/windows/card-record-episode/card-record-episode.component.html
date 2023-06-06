@@ -1,0 +1,33 @@
+<div class="card-record-episode" *ngIf="!!record">
+  <div class="card-record-episode-head" *ngIf="!!station">
+    <div class="hw-simple-title" *ngIf="!!station.CommunityName">
+      {{ station.CommunityName }}-
+    </div>
+    <div class="hw-simple-title">{{ station.Name }}</div>
+  </div>
+  <div class="card-record-episode-body">
+    <div class="panel card-record-episode-body-list">
+      <div>
+        <div class="hw-simple-title-1">
+          {{ record.EventTime | date : "yyyy年MM月dd日" }}
+        </div>
+      </div>
+      <div></div>
+    </div>
+    <div class="panel card-record-episode-body-video">
+      <img *ngIf="url.image && !url.video" [src]="url.image" />
+      <div
+        *ngIf="url.image && !url.video"
+        class="control howell-icon-play"
+        (click)="toplay()"
+      ></div>
+      <app-video-player
+        class="player"
+        *ngIf="url.video"
+        [webUrl]="url.web"
+        [url]="url.video"
+        (onStoping)="onstop()"
+      ></app-video-player>
+    </div>
+  </div>
+</div>

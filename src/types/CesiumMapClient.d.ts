@@ -126,10 +126,10 @@ declare namespace CesiumMap {
   }
 
   interface Village {
-    Basic(Id: string): void;
+    Basic(Id: string, loadPoint: boolean): void;
     /// <summary>选中小区</summary>
     /// <param name="villageId" type="string">小区ID</param>
-    Select(villageId: string, isBasic?: boolean): string;
+    Select(villageId: string, isBasic?: boolean, loadPoint?: boolean): string;
     Reload(villageId: string): string;
   }
   interface PointNameController {
@@ -267,7 +267,7 @@ declare namespace CesiumMap {
   interface DrawRoute {
     Create(
       positions: CesiumDataController.Position[],
-      opts: CesiumDataController.DrawLineOptions
+      opts: CesiumDataController.DrawRouteOptions
     ): string;
     Set(id: string, path: CesiumDataController.Position[]): void;
     Start(id: string): void;

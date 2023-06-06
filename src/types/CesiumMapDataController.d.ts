@@ -186,6 +186,10 @@ declare namespace CesiumDataController {
     color: string;
     alpha: number;
   }
+  class DrawOutlineOptions {
+    color: string;
+    enabled: boolean;
+  }
   /**
    *  绘制线段参数
    **/
@@ -193,8 +197,12 @@ declare namespace CesiumDataController {
     extrudedHeight: number;
     width: number;
     img?: string;
+    outline?: DrawOutlineOptions;
   }
-
+  class DrawRouteOptions {
+    route: DrawLineOptions;
+    passed: DrawLineOptions;
+  }
   /**
    *  绘制线段参数
    **/

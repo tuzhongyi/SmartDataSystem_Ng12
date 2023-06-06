@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { MediaWindowBusiness } from './media-window.business';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 
 @Injectable()
-export class DeviceWindowBusiness extends WindowViewModel {
-  constructor(private media: MediaWindowBusiness) {
+export class MonitorDeviceWindowBusiness extends WindowViewModel {
+  constructor(private media: MonitorMediaWindowBusiness) {
     super();
   }
   style = {

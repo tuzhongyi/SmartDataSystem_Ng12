@@ -1,8 +1,8 @@
 import { EventNumber } from './event-number.model';
-import { Model } from './model.interface';
+import { IdNameModel } from './model.interface';
 
 /** 区划的数量统计信息 */
-export class DivisionNumberStatistic extends Model {
+export class DivisionNumberStatistic extends IdNameModel {
   /**	String	区划ID	M */
   Id!: string;
   /**	String	区划名称	M */

@@ -5,11 +5,14 @@ export interface IObjectModel {
   Id: string;
   Name: string;
 }
-export class Model implements IObjectModel {
+export class IdNameModel implements IObjectModel {
   Id!: string;
   Name!: string;
 
-  equals<T extends Model>(value?: Model, type?: ClassConstructor<T>) {
+  equals<T extends IdNameModel>(
+    value?: IdNameModel,
+    type?: ClassConstructor<T>
+  ) {
     if (!value) return false;
     if (type) {
       if (type.name !== value.constructor.name) {

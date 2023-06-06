@@ -5,12 +5,15 @@ import * as echarts from 'echarts/core';
 import { TimeString } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { Duration } from 'src/app/network/model/duration.model';
 import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 import {
   GarbageCollectionEventRecord,
   VehicleOnlineEventRecord,
 } from 'src/app/network/model/vehicle-event-record.model';
+import { CollectionMapRouteQuery } from '../../collection-map-route-query/collection-map-route-query.model';
 import {
+  ArrayItem,
   CollectionMapRouteControlSource,
   ICollectionMapRouteControlChartsBusiness,
 } from '../collection-map-route-control.model';
@@ -26,10 +29,11 @@ export class CollectionMapRouteControlChartsBusiness
   scoreclick: EventEmitter<any> = new EventEmitter();
   routetrigger: EventEmitter<Date> = new EventEmitter();
   routeclick: EventEmitter<Date> = new EventEmitter();
-  private readonly formater = 'H:mm';
+  private readonly formater = 'H:mm:ss';
   private chart?: echarts.ECharts;
   private handle?: NodeJS.Timeout;
   private registed = false;
+  private data?: CollectionMapRouteControlSource;
   constructor(
     private online: CollectionMapRouteControlOnlineBusiness,
     private point: CollectionMapRouteControlPointBusiness,
@@ -49,62 +53,90 @@ export class CollectionMapRouteControlChartsBusiness
 
   run(date: Date, offset: number = 0) {
     this.handle = setTimeout(() => {
-      let time = new Date(date.getTime() + offset);
-      this.triggerByTime(time);
-      this.run(date, (offset += 1000));
+      if (this.data) {
+        if (offset) {
+          let time: Date;
+          if (this.data.points[offset].Time.getTime() === date.getTime()) {
+            time = this.data.points[offset].Time;
+            this.triggerByTime(time);
+            this.run(time, offset + 1);
+          } else if (offset < this.data.points.length - 1) {
+            let next = this.data.points[offset];
+            let interval = next.Time.getTime() - date.getTime();
+            if (interval >= 1000 * 5) {
+              this.run(next.Time, offset);
+            }
+          } else {
+            time = new Date(date.getTime() + 1000);
+            this.run(time, offset);
+          }
+        } else {
+          let item = this.getDataByTime(date);
+          this.triggerByTime(item.data);
+          this.run(item.data, item.index + 1);
+        }
+      } else {
+        let time = new Date(date.getTime() + offset);
+        this.triggerByTime(time);
+        this.run(date, (offset += 1000));
+      }
     }, 1000 / this.speed);
   }
   stop() {
     if (this.handle) {
       clearTimeout(this.handle);
+      this.handle = undefined;
     }
   }
   async getData(
     vehicleId: string,
-    date: Date
+    duration: Duration
   ): Promise<CollectionMapRouteControlSource> {
     let source = new CollectionMapRouteControlSource();
-    source.points = await this.point.load(vehicleId, date);
-    source.collectionRecord = await this.score.load(vehicleId, date);
-    source.onlineRecord = await this.online.load(vehicleId, date);
+    source.points = await this.point.load(vehicleId, duration);
+    source.collectionRecord = await this.score.load(vehicleId, duration);
+    // source.onlineRecord = await this.online.load(vehicleId, duration);
     return source;
   }
 
-  async load(dom: HTMLDivElement, vehicleId: string, date: Date) {
+  load(dom: HTMLDivElement, query: CollectionMapRouteQuery) {
     this.chart = echarts.init(dom, 'dark');
 
-    let data = await this.getData(vehicleId, date);
-    if (data.points.length === 0) return data;
-    this.loadXAxis(data.points);
-    this.loadDataZoom(data.points);
-    this.loadEndSerie(data.points);
-    this.loadRouteSerie(data.points);
-    this.loadScoreSerie(data.collectionRecord);
-    // this.loadOnlineStatus(
-    //   data.onlineRecord,
-    //   data.points[0].Time,
-    //   data.points[data.points.length - 1].Time
-    // );
+    return this.getData(query.model.Id, query.duration).then((data) => {
+      this.data = data;
+      if (data.points.length === 0) return data;
+      this.loadXAxis(data.points);
+      this.loadDataZoom(data.points);
+      this.loadEndSerie(data.points);
+      this.loadRouteSerie(data.points, query.duration.begin);
+      this.loadScoreSerie(data.collectionRecord);
+      // this.loadOnlineStatus(
+      //   data.onlineRecord,
+      //   data.points[0].Time,
+      //   data.points[data.points.length - 1].Time
+      // );
 
-    let option: EChartsOption = {
-      color: this.colors,
-      grid: this.grid,
-      backgroundColor: 'rgba(0,0,0,0)',
-      tooltip: this.tooltip,
-      dataZoom: this.dataZoom,
-      xAxis: this.xAxis,
-      yAxis: this.yAxis,
-      // visualMap: this.visualMap,
-      series: this.series,
-    };
-
-    if (!this.registed) {
-      this.eventRegist(this.chart);
-      this.registed = true;
-    }
-    // this.series[0].data = data;
-    this.chart.setOption(option);
-    return data;
+      let option: EChartsOption = {
+        color: this.colors,
+        grid: this.grid,
+        backgroundColor: 'rgba(0,0,0,0)',
+        tooltip: this.tooltip,
+        dataZoom: this.dataZoom,
+        xAxis: this.xAxis,
+        yAxis: this.yAxis,
+        // visualMap: this.visualMap,
+        series: this.series,
+      };
+      if (this.chart) {
+        if (!this.registed) {
+          this.eventRegist(this.chart);
+          this.registed = true;
+        }
+        // this.series[0].data = data;
+        this.chart.setOption(option);
+      }
+      return data;
+    });
   }
 
   private eventRegist(chart: echarts.ECharts) {
@@ -120,23 +152,45 @@ export class CollectionMapRouteControlChartsBusiness
       let pointInPixel = [params.offsetX, params.offsetY];
       let grid = chart.convertFromPixel({ seriesIndex: 0 }, pointInPixel);
       let index = grid[0];
-      let time = this.xAxis.data[index] as TimeString;
+      let str = this.xAxis.data[index] as TimeString;
       // this.triggerByIndex(index, time.date);
-      this.triggerByTime(time.date);
-      this.routeclick.emit(time.date);
+      let item = this.getDataByTime(str.date);
+      this.triggerByTime(item.data);
+      this.routeclick.emit(item.data);
     });
+  }
+
+  private getDataByTime(date: Date): ArrayItem<Date> {
+    if (this.data && this.data.points && this.data.points.length > 0) {
+      let min = Number.MAX_VALUE;
+      let index = -1;
+      this.data.points.forEach((x, i) => {
+        let interval = Math.abs(x.Time.getTime() - date.getTime());
+        if (interval < min) {
+          index = i;
+          min = interval;
+        }
+      });
+      return {
+        index: index,
+        data: this.data.points[index].Time,
+      };
+    }
+    return {
+      index: -1,
+      data: date,
+    };
   }
 
   private triggerByIndex(index: number, now: Date) {
     this.routetrigger.emit(now);
     this.serieRoutePosition.data = [[index, 0]];
-    let _now = new Date(now.getTime());
-    _now.setSeconds(0);
+    let _now = now.getTime();
     this.serieRouted.data = (this.serieRoute.data as Array<any>).filter((x) => {
-      // let str = formatDate(now, 'yyyy-MM-dd', 'en');
-      // let date = new Date(`${str} ${x[0]}`);
       if (x.name) {
-        return x.name.getTime() >= _now.getTime();
+        let time = x.name.getTime();
+        let result = time >= _now;
+        return result;
       } else {
         return true;
       }
@@ -156,20 +210,17 @@ export class CollectionMapRouteControlChartsBusiness
     let offset = 0;
     this.xAxis.data = [];
     let begin = new Date(datas[0].Time.getTime());
-    begin.setSeconds(0);
-    begin.setMilliseconds(0);
+    // begin.setSeconds(0);
+    // begin.setMilliseconds(0);
     let time = begin.getTime();
 
     while (time <= end) {
       let str = new TimeString(time);
       str.formater = this.formater;
       this.xAxis.data.push(str);
-      offset = 1 * 1000 * 60;
+      offset = 5 * 1000;
       time += offset;
     }
-    // this.xAxis.data = datas.map((x) => {
-    //   return formatDate(x.Time, this.formater, 'en');
-    // });
   }
   /** 缩放组件 */
   private loadDataZoom(datas: GisRoutePoint[]) {
@@ -207,29 +258,44 @@ export class CollectionMapRouteControlChartsBusiness
   //   }
   // }
 
-  private loadRouteSerie(datas: GisRoutePoint[]) {
+  private loadRouteSerie(datas: GisRoutePoint[], date: Date) {
     this.series[SerieIndex.route].data = [];
     this.series[SerieIndex.offline].data = [];
 
     let times = datas.map((x) => formatDate(x.Time, this.formater, 'en'));
     let xAxis = (this.xAxis.data as Array<TimeString>).map((x) => x.toString());
 
+    let todayStr = formatDate(date, 'yyyy-MM-dd', 'en');
+    for (let i = 1; i < times.length; i++) {
+      let current = new Date(`${todayStr} ${times[i - 1]}`);
+      let next = new Date(`${todayStr} ${times[i]}`);
+      let interval = next.getTime() - current.getTime();
+      if (1000 < interval && interval < 15 * 1000) {
+        let time = new Date(current.getTime());
+        time.setSeconds(time.getSeconds() + 1);
+        times.splice(i, 0, formatDate(time, this.formater, 'en'));
+        i--;
+      }
+    }
+
     let i = 0;
     while (xAxis.length) {
       let x = xAxis.shift()!;
       let index = times.indexOf(x, i);
+
       if (index < 0) {
         this.series[SerieIndex.offline].data.push([x, 0]);
         this.series[SerieIndex.route].data.push([x, null]);
       } else {
         let value = {
-          name: datas[index].Time,
+          name: new Date(`${todayStr} ${times[index]}`),
           value: [x, 0],
         };
         this.series[SerieIndex.route].data.push(value);
         this.series[SerieIndex.offline].data.push([x, null]);
+
+        i++;
       }
-      i++;
     }
 
     this.series[SerieIndex.routed].data = this.series[SerieIndex.route].data;
@@ -483,7 +549,7 @@ export class CollectionMapRouteControlChartsBusiness
     data: [],
     type: 'line',
     lineStyle: {
-      color: 'rgba(0,0,255,0.5)',
+      color: '#aaaaaa', //'rgba(0,0,255,0.5)',
       width: 3,
     },
   };

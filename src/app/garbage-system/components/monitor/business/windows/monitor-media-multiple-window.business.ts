@@ -3,7 +3,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 
 @Injectable()
-export class MediaMultipleWindowBusiness extends WindowViewModel {
+export class MonitorMediaMultipleWindowBusiness extends WindowViewModel {
   style = {
     width: '64%',
     height: '64%',

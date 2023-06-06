@@ -1,14 +1,14 @@
 import { Transform } from 'class-transformer';
-import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
 import { PictureDataRole } from 'src/app/enum/role-picture-data.enum';
+import { PrivacyDataRole } from 'src/app/enum/role-privacy-data.enum';
 import { StaticDataRole } from 'src/app/enum/role-static-data.enum';
 import { UserDataRole } from '../../enum/role-user-data.enum';
+import { IdNameModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 import { UserResource } from './user.model';
-import { Model } from './model.interface';
 
 /** 角色信息 */
-export class Role extends Model {
+export class Role extends IdNameModel {
   /**	String	唯一标识符	M	R */
   Id!: string;
   /**	String	角色名称	M	RW */

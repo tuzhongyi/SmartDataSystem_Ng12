@@ -133,6 +133,7 @@
   (image)="window.record.onimage($event)"
   [getData]="window.media.single.pageChange"
   (gotData)="window.media.single.got($event)"
+  (card)="window.record.oncard($event)"
 >
 </howell-event-record-window>
 
@@ -206,3 +207,10 @@
   [statistic]="window.media.multiple.statistic"
   [date]="window.media.multiple.date"
 ></howell-media-multiple-window>
+<app-window
+  [Model]="window.card"
+  *ngIf="window.card.show"
+  [style]="window.card.style"
+>
+  <card-record-episode [record]="window.card.record"></card-record-episode>
+</app-window>

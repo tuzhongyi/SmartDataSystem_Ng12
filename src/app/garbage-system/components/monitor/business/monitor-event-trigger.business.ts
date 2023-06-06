@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { DisposalCountArgs } from '../../disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from '../../illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from '../../retention-rank/retention-rank.component';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
-import { WindowBussiness } from './window.business';
+import { MonitorWindowBussiness } from './window.business';
 
 @Injectable()
 export class MonitorEventTriggerBusiness {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window);
@@ -20,7 +19,7 @@ export class MonitorEventTriggerBusiness {
 }
 
 export class DeviceStateEventTrigger {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   onclick(args: IDeviceStateDes) {
     this.window.device.status = args.status;
     this.window.device.show = true;
@@ -28,7 +27,7 @@ export class DeviceStateEventTrigger {
 }
 
 export class RetentionRankEventTrigger {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   onclick(args: RetentionRankArgs) {
     this.window.drop.divisionId = args.model.id;
     this.window.drop.show = true;
@@ -36,7 +35,7 @@ export class RetentionRankEventTrigger {
 }
 
 class IllegalMixintoRankEventTrigger {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   onItemClicked(args: IllegalMixintoRankArgs) {
     this.window.record.count = args.model.value;
     this.window.record.type = args.eventType;
@@ -57,7 +56,7 @@ class IllegalMixintoRankEventTrigger {
   }
 }
 class RisposalCountEventTrigger {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   ontask(args: DisposalCountArgs) {
     this.window.station.index = GarbageStationWindowIndex.record;
     this.window.station.divisionId = args.divisionId;
@@ -66,7 +65,7 @@ class RisposalCountEventTrigger {
   }
 }
 class RisposalRankEventTrigger {
-  constructor(private window: WindowBussiness) {}
+  constructor(private window: MonitorWindowBussiness) {}
   onItemClicked(item: RankModel) {
     this.window.station.index = GarbageStationWindowIndex.stay;
     this.window.station.stationId = item.id;

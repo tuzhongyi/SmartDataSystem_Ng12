@@ -10,7 +10,7 @@ import {
 } from 'src/app/view-model/image-control.model';
 
 @Injectable()
-export class MediaSingleWindowBusiness extends WindowViewModel {
+export class MonitorMediaSingleWindowBusiness extends WindowViewModel {
   style = {
     width: '64%',
     height: '64%',

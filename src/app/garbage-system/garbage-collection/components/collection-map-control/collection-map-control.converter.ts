@@ -1,4 +1,3 @@
-import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { CoordinateTransform } from 'src/app/common/tools/coordinateTransform';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
@@ -39,7 +38,7 @@ export class CollectionMapControlConverter {
   GarbageVehicle(vehicle: GarbageVehicle) {
     let type = this.ElementType(vehicle.VehicleType);
     let point = new CesiumDataController.Point(vehicle.Id, type);
-    point.url = 'img/route/vehicle.png';
+    point.url = 'img/route/vehicle_route.png';
     if (vehicle.GisPoint) {
       point.position = this.GisPoint(vehicle.GisPoint);
     }

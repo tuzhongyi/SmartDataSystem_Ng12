@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
-import * as XLSX from 'xlsx';
 
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -16,13 +15,12 @@ import {
 } from 'src/app/view-model/event-number-statistic.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { ExportBusiness } from '../../business/export.business';
-import { GlobalStorageService } from '../../service/global-storage.service';
-import { Language } from '../../tools/language';
 import { TimeService } from '../../service/time.service';
+import { Language } from '../../tools/language';
 import { SelectItem } from '../select-control/select-control.model';
+import { EventNumberStatisticExportConverter } from './event-number-statistic-export.converter';
 import { IllegalDropTotalBusiness } from './event-number-statistic.business';
 import { IllegalDropStatisticConf } from './event-number-statistic.config';
-import { EventNumberStatisticExportConverter } from './event-number-statistic-export.converter';
 
 @Component({
   selector: 'event-number-statistic',

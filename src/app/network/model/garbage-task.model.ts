@@ -1,10 +1,10 @@
 import { Transform } from 'class-transformer';
-import { Model } from './model.interface';
+import { IdNameModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
 
 /** 垃圾任务 */
-export class GarbageTask extends Model {
+export class GarbageTask extends IdNameModel {
   /**	String	任务ID	M */
   Id!: string;
   /**	String	任务名称	M */

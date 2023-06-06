@@ -4,22 +4,21 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
+import { CollectionMapRouteQuery } from '../collection-map-route-query/collection-map-route-query.model';
 import { CollectionMapRouteControlChartsBusiness } from './business/collection-map-route-control-charts.business';
 import { CollectionMapRouteControlOnlineBusiness } from './business/collection-map-route-control-online.business';
-import { CollectionMapRouteControlScoreBusiness } from './business/collection-map-route-control-score.business';
 import { CollectionMapRouteControlPointBusiness } from './business/collection-map-route-control-point.business';
+import { CollectionMapRouteControlScoreBusiness } from './business/collection-map-route-control-score.business';
 import {
   CollectionMapRouteControlSource,
   ICollectionMapRouteControlChartsBusiness,
   ICollectionMapRouteControlComponent,
 } from './collection-map-route-control.model';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
 
 @Component({
   selector: 'collection-map-route-control',
@@ -33,23 +32,20 @@ import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
   ],
 })
 export class CollectionMapRouteControlComponent
-  implements
-    ICollectionMapRouteControlComponent,
-    OnInit,
-    AfterViewInit,
-    OnChanges
+  implements ICollectionMapRouteControlComponent, OnInit, AfterViewInit
 {
   @Input()
   business: ICollectionMapRouteControlChartsBusiness;
   @Input()
-  sourceId?: string;
+  query?: CollectionMapRouteQuery;
   @Input()
-  date: Date = new Date();
-  @Input()
-  load?: EventEmitter<void>;
+  load?: EventEmitter<CollectionMapRouteQuery>;
   @Input()
   seek?: EventEmitter<GisRoutePoint>;
-
+  @Input()
+  focus: boolean = false;
+  @Output()
+  focusChange: EventEmitter<boolean> = new EventEmitter();
   @Output()
   scoreclick: EventEmitter<Date> = new EventEmitter();
   @Output()
@@ -98,21 +94,14 @@ export class CollectionMapRouteControlComponent
   @ViewChild('container')
   container?: ElementRef;
 
-  ngOnInit(): void {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.sourceId && !changes.sourceId.firstChange) {
-      this.loadData();
-    }
-    if (changes.date && !changes.date.firstChange) {
-      this.loadData();
-    }
-    if (changes.load && this.load) {
+  ngOnInit(): void {
+    if (this.load) {
       this.load.subscribe((x) => {
-        this.loadData();
+        this.query = x;
+        this.loadData(this.query);
       });
     }
-    if (changes.seek && this.seek) {
+    if (this.seek) {
       this.seek.subscribe((x) => {
         this.business.seek(x);
       });
@@ -120,20 +109,24 @@ export class CollectionMapRouteControlComponent
   }
 
   ngAfterViewInit(): void {
-    this.loadData();
+    if (this.query) {
+      this.loadData(this.query);
+    }
   }
 
-  async loadData() {
-    this.loading = true;
-    if (this.container && this.sourceId) {
+  loadData(query: CollectionMapRouteQuery) {
+    this.hasdata = false;
+    if (this.container) {
+      this.loading = true;
       let dom = this.container.nativeElement as HTMLDivElement;
-      let datas = await this.business.load(dom, this.sourceId, this.date);
-      this.loading = false;
-      this.hasdata = datas.points && datas.points.length > 0;
-      if (this.hasdata) {
-        this.time = datas.points[0].Time;
-      }
-      this.loaded.emit(datas);
+      this.business.load(dom, query).then((datas) => {
+        this.loading = false;
+        this.hasdata = datas.points && datas.points.length > 0;
+        if (this.hasdata) {
+          this.time = datas.points[0].Time;
+        }
+        this.loaded.emit(datas);
+      });
     }
   }
 
@@ -146,6 +139,20 @@ export class CollectionMapRouteControlComponent
       }
     } else {
       this.business.stop();
+    }
+  }
+
+  onfocus() {
+    this.focusChange.emit(this.focus);
+  }
+  onmousewheel(e: Event) {
+    if (e instanceof WheelEvent) {
+      if (e.deltaY > 0 && this.level < 6) {
+        this.level++;
+      } else if (e.deltaY < 0 && this.level > 0) {
+        this.level--;
+      } else {
+      }
     }
   }
 }

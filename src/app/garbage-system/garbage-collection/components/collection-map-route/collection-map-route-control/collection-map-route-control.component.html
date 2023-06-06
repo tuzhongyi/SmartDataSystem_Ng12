@@ -28,6 +28,7 @@
         [min]="0"
         [max]="6"
         aria-label="units"
+        (mousewheel)="onmousewheel($event)"
       ></mat-slider>
       <div class="collection-map-route-control-operation-speed-value">
         x{{ speed }}

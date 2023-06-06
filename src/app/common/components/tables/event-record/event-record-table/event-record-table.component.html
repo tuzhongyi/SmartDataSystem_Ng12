@@ -17,7 +17,7 @@
           <th [ngStyle]="{ width: widths[4] }">街道</th>
           <th [ngStyle]="{ width: widths[5] }">居委会</th>
           <th [ngStyle]="{ width: widths[6] }">上报时间</th>
-          <th [ngStyle]="{ width: widths[7] }">操作</th>
+          <th [ngStyle]="{ width: widths[7] }" class="center">操作</th>
         </tr>
       </thead>
     </table>
@@ -67,7 +67,7 @@
               }}
             </td>
             <td [ngStyle]="{ width: widths[6] }">{{ item.DateFormatter }}</td>
-            <td [ngStyle]="{ width: widths[7] }">
+            <td [ngStyle]="{ width: widths[7] }" class="center">
               <div>
                 <button
                   class="icon-button"
@@ -86,7 +86,14 @@
                   title="下载视频"
                   (click)="downloadVideo(item)"
                 >
-                  <i class="howell-icon-videodownload"></i>
+                  <i class="howell-icon-videodownload"></i></button
+                ><button
+                  *ngIf="type === EventType.MixedInto"
+                  class="icon-button"
+                  title="刷卡记录"
+                  (click)="oncardrecord(item)"
+                >
+                  <i class="howell-icon-garbage_card"></i>
                 </button>
               </div>
             </td>

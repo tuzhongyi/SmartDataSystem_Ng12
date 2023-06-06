@@ -1,6 +1,5 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnChanges,
   OnDestroy,
@@ -12,7 +11,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 
-import { IModel, Model } from 'src/app/network/model/model.interface';
+import { IdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
 import {
   TimeDurationModel,
@@ -36,7 +35,7 @@ export class VideoMultiplePlayerWindowComponent
   @Input()
   business: IBusiness<IModel, VideoModel>;
   @Input()
-  models: Model[] = [];
+  models: IdNameModel[] = [];
   @Input()
   mode: PlayMode = PlayMode.live;
   @Input()
@@ -54,7 +53,7 @@ export class VideoMultiplePlayerWindowComponent
     this.business = business;
   }
 
-  selected?: Model;
+  selected?: IdNameModel;
 
   ngOnDestroy(): void {
     this.data = undefined;

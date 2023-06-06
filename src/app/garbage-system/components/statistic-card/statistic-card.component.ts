@@ -1,9 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-
-import { IModel } from 'src/app/network/model/model.interface';
-import { StatisticCardBussiness } from '../monitor/business/statistic-card.bussiness';
 import { StatisticCardViewModel } from './statistic-card.model';
 
 @Component({

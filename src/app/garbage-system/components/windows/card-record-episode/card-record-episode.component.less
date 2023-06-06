@@ -1,0 +1,62 @@
+.card-record-episode {
+  height: 100%;
+  width: 100%;
+  @head-height: 40px;
+
+  &-head {
+    height: @head-height;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+    display: flex;
+    justify-content: space-between;
+
+    &-list {
+      width: 25%;
+
+      &>div {
+        box-sizing: border-box;
+        padding: 10px;
+      }
+    }
+
+    &-video {
+      width: 75%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+
+      .control {
+        position: absolute;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 70px;
+        cursor: pointer;
+      }
+
+      .player {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .panel {
+      border: 1px solid #5e6ebf;
+      margin-right: 15px;
+      box-sizing: border-box;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

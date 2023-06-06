@@ -4,10 +4,10 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
-import { MediaWindowBusiness } from './media-window.business';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 
 @Injectable()
-export class GarbageStationInfoWindowBusiness extends WindowViewModel {
+export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
   style = {
     height: '88%',
     width: '93%',
@@ -19,7 +19,7 @@ export class GarbageStationInfoWindowBusiness extends WindowViewModel {
   divisionId?: string;
   status?: GarbageTaskStatus;
 
-  constructor(private media: MediaWindowBusiness) {
+  constructor(private media: MonitorMediaWindowBusiness) {
     super();
   }
   onimage(model: ImageControlModelArray) {

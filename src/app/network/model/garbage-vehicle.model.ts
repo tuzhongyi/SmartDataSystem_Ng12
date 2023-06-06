@@ -4,11 +4,11 @@ import { RelayState } from 'src/app/enum/relay-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { GisPoint } from './gis-point.model';
-import { Model } from './model.interface';
+import { IdNameModel } from './model.interface';
 import { transformDateTime, transformFlags } from './transform.model';
 import { VehicleCamera } from './vehicle-camera.model';
 /**	清运车辆	*/
-export class GarbageVehicle extends Model {
+export class GarbageVehicle extends IdNameModel {
   /**	String	车辆ID	M	*/
   Id!: string;
   /**	String	车辆名称	M	*/

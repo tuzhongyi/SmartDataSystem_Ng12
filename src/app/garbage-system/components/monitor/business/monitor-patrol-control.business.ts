@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 
 @Injectable()
-export class PatrolControlBusiness extends WindowViewModel {
+export class MonitorPatrolControlBusiness extends WindowViewModel {
   fullscreen = false;
   constructor() {
     super();

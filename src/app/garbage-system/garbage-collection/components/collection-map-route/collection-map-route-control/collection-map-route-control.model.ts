@@ -29,3 +29,8 @@ export interface ICollectionMapRouteControlChartsBusiness
   run(time: Date): void;
   stop(): void;
 }
+
+export interface ArrayItem<T> {
+  index: number;
+  data: T;
+}

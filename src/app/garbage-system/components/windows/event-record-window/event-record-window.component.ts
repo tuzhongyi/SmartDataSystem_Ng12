@@ -52,6 +52,8 @@ export class EventRecordWindowComponent
   getData?: EventEmitter<Page>;
   @Output()
   gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
+  @Output()
+  card: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   constructor(
     public record: EventRecordWindowRecordBusiness,
@@ -99,6 +101,9 @@ export class EventRecordWindowComponent
 
   onGotData(data: any) {
     this.gotData.emit(data);
+  }
+  oncard(args: EventRecordViewModel) {
+    this.card.emit(args);
   }
 }
 

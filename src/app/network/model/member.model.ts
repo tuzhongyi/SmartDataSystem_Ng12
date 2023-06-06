@@ -1,11 +1,11 @@
 import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
-import { MemberType, CollectionMemberType } from '../../enum/member-type.enum';
-import { Model } from './model.interface';
+import { CollectionMemberType, MemberType } from '../../enum/member-type.enum';
+import { IdNameModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 
 /** 垃圾房管理人员 */
-export class Member extends Model {
+export class Member extends IdNameModel {
   /**	String	成员ID	M */
   Id!: string;
   /**	String	姓名	M */
@@ -33,7 +33,7 @@ export class Member extends Model {
 }
 
 /**	垃圾房清运人员	*/
-export class CollectionMember extends Model {
+export class CollectionMember extends IdNameModel {
   /**	String	成员ID	M	*/
   Id!: string;
   /**	String	姓名	M	*/

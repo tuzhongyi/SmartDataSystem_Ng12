@@ -44,7 +44,7 @@ export class TimeString extends Date {
     }
   }
 
-  formater = 'H:mm';
+  formater = 'H:mm:ss';
 
   date: Date;
   toString() {

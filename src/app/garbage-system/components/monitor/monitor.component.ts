@@ -4,29 +4,22 @@
  * @Last Modified by: zzl
  * @Last Modified time: 2022-01-10 16:08:27
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { AuthorizationService } from 'src/app/network/request/auth/auth-request.service';
-import { StatisticCardViewModel } from '../statistic-card/statistic-card.model';
-import { MapControlBusiness } from './business/map-control.business';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
-import { PatrolControlBusiness } from './business/patrol-control.business';
-import { StatisticCardBussiness } from './business/statistic-card.bussiness';
-import { WindowBussiness } from './business/window.business';
-import { DeviceWindowBusiness } from './business/windows/device-window.business';
-import { RecordWindowBusiness } from './business/windows/event-record-window.business';
-import { MediaMultipleWindowBusiness } from './business/windows/media-multiple-window.business';
-import { MediaSingleWindowBusiness } from './business/windows/media-single-window.business';
-import { MediaWindowBusiness } from './business/windows/media-window.business';
-import { GarbageStationDropWindowBusiness } from './business/windows/station-drop-window.business';
-import { GarbageStationFullWindowBusiness } from './business/windows/station-full-window.business';
-import { GarbageStationInfoWindowBusiness } from './business/windows/station-info-window.business';
-import { VideoControlWindowBusiness } from './business/windows/video-control-window.business';
+import { MonitorMapControlBusiness } from './business/monitor-map-control.business';
+import { MonitorPatrolControlBusiness } from './business/monitor-patrol-control.business';
+import { MonitorStatisticCardBussiness } from './business/monitor-statistic-card.bussiness';
+import {
+  MonitorWindowBussiness,
+  WindowBusinesses,
+} from './business/window.business';
+import { MonitorVideoControlWindowBusiness } from './business/windows/monitor-video-control-window.business';
 
 @Component({
   selector: 'app-waste-monitor',
@@ -34,19 +27,12 @@ import { VideoControlWindowBusiness } from './business/windows/video-control-win
   styleUrls: ['./monitor.component.less'],
   providers: [
     MonitorEventTriggerBusiness,
-    StatisticCardBussiness,
-    MapControlBusiness,
-    PatrolControlBusiness,
-    VideoControlWindowBusiness,
-    RecordWindowBusiness,
-    MediaSingleWindowBusiness,
-    MediaMultipleWindowBusiness,
-    MediaWindowBusiness,
-    DeviceWindowBusiness,
-    GarbageStationFullWindowBusiness,
-    GarbageStationDropWindowBusiness,
-    GarbageStationInfoWindowBusiness,
-    WindowBussiness,
+    MonitorStatisticCardBussiness,
+    MonitorMapControlBusiness,
+    MonitorPatrolControlBusiness,
+    MonitorVideoControlWindowBusiness,
+    ...WindowBusinesses,
+    MonitorWindowBussiness,
   ],
 })
 export class MonitorComponent implements OnInit {
@@ -63,12 +49,12 @@ export class MonitorComponent implements OnInit {
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
     private _storeService: GlobalStorageService,
-    public window: WindowBussiness,
+    public window: MonitorWindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
-    public map: MapControlBusiness,
-    public patrol: PatrolControlBusiness,
-    public video: VideoControlWindowBusiness,
-    public statistic: StatisticCardBussiness,
+    public map: MonitorMapControlBusiness,
+    public patrol: MonitorPatrolControlBusiness,
+    public video: MonitorVideoControlWindowBusiness,
+    public statistic: MonitorStatisticCardBussiness,
     private activatedRoute: ActivatedRoute
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');

@@ -2,19 +2,14 @@ import { DOCUMENT } from '@angular/common';
 import {
   AfterContentInit,
   AfterViewInit,
-  ChangeDetectorRef,
   Component,
   ContentChild,
   EventEmitter,
   Inject,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
-  Type,
-  ViewChild,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -33,6 +28,8 @@ export class CommonLabelSelecComponent
 {
   @Input()
   showDropDown = false;
+  @Output()
+  showDropDownChange: EventEmitter<boolean> = new EventEmitter();
 
   @Input()
   selectedNodes: CommonFlatNode[] = [];
@@ -41,7 +38,12 @@ export class CommonLabelSelecComponent
   autoclose = false;
 
   @Input()
+  single = false;
+
+  @Input()
   showCloseIcon = true;
+  @Input()
+  height = 'auto';
 
   @Output() toggleDropDown = new EventEmitter<boolean>();
   @Output() removeDropItem = new EventEmitter();
@@ -57,7 +59,10 @@ export class CommonLabelSelecComponent
   ngOnInit(): void {}
   ngAfterViewInit(): void {
     this.subscription = fromEvent(this.document.body, 'click').subscribe(() => {
-      if (this.autoclose) this.showDropDown = false;
+      if (this.autoclose) {
+        this.showDropDown = false;
+        this.showDropDownChange.emit(this.showDropDown);
+      }
     });
   }
   ngAfterContentInit(): void {}
@@ -68,6 +73,7 @@ export class CommonLabelSelecComponent
   toggleHandler(e: Event) {
     e.stopPropagation();
     this.showDropDown = !this.showDropDown;
+    this.showDropDownChange.emit(this.showDropDown);
     this.toggleDropDown.emit(this.showDropDown);
   }
   removeNode(e: Event, node: CommonFlatNode) {
@@ -79,5 +85,6 @@ export class CommonLabelSelecComponent
   }
   closeDropDown() {
     this.showDropDown = false;
+    this.showDropDownChange.emit(this.showDropDown);
   }
 }

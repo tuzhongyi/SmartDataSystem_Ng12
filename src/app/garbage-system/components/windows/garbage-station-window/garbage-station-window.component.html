@@ -68,6 +68,13 @@
             ></howell-garbage-station-window-record>
           </ng-container>
         </mat-tab>
+        <mat-tab label="刷卡记录">
+          <ng-container *ngIf="index == Index.card">
+            <hw-garbage-station-card-record
+              (video)="onvideo($event)"
+            ></hw-garbage-station-card-record>
+          </ng-container>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </ng-container>

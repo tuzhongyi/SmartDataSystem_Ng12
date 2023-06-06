@@ -1,4 +1,4 @@
-import { Exclude, Transform } from 'class-transformer';
+import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
@@ -72,6 +72,8 @@ export class User implements IModel {
   CreatorId?: string;
   /**	Int32[]	停止推送的事件类型	O	RW */
   OffEvents?: number[];
+  /** 默认：厢房 1：厢房 2:车  3：车+厢房 */
+  UserType?: number;
 }
 
 export class UserResource implements IModel {

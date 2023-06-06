@@ -12,15 +12,15 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { SafeResourceUrl, DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { ICamera } from 'src/app/network/model/camera.interface';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { IModel } from 'src/app/network/model/model.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { GarbageVehiclePointInfoPanelBusiness } from './business/point-info-panel.business';
 import { CollectionMapControlBusiness } from './business/collection-map-control.business';
-import { IModel } from 'src/app/network/model/model.interface';
+import { GarbageVehiclePointInfoPanelBusiness } from './business/point-info-panel.business';
 declare var $: any;
 @Component({
   selector: 'collection-map-control',

@@ -31,14 +31,15 @@ export enum VehicleEventType {
   None = 0,
 
   // 清运称重事件
-  Collection = 1,
+  Collection = 21,
 
   // 继电器状态变更事件
-  RelayStateChange = 2,
+  RelayStateChange = 22,
 
   // 清运车辆上下线记录
   VehicleOnline = 3,
+  VehicleOnline2 = 23,
 
   // 摄像机上下线记录
-  CameraOnline = 4,
+  CameraOnline = 24,
 }

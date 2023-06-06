@@ -48,7 +48,8 @@ export class GarbageStationWindowComponent
   chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
-
+  @Output()
+  video: EventEmitter<any> = new EventEmitter();
   constructor(
     public station: GarbageStationWindowStationBusiness,
     public record: GarbageStationWindowRecordBusiness,
@@ -111,6 +112,10 @@ export class GarbageStationWindowComponent
   onposition(item: GarbageStation) {
     this.position.emit(item);
   }
+
+  onvideo(args: any) {
+    this.video.emit(args);
+  }
 }
 
 export enum GarbageStationWindowIndex {
@@ -124,4 +129,5 @@ export enum GarbageStationWindowIndex {
   details = 3,
   /** 报警事件处置 */
   record = 4,
+  card = 5,
 }

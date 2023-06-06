@@ -9,14 +9,14 @@ import {
   Transform,
   TransformFnParams,
 } from 'class-transformer';
-import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { VehicleEventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehicleResourceType } from 'src/app/enum/resource-type.enum';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { transformDateTime } from './transform.model';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { GisPoint } from './gis-point.model';
-import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { transformDateTime } from './transform.model';
 
 function EventRecordDataTransformer(params: TransformFnParams) {
   let record = params.obj as EventRecordData<any>;
@@ -26,6 +26,7 @@ function EventRecordDataTransformer(params: TransformFnParams) {
     case VehicleEventType.RelayStateChange:
       return plainToInstance(RelayStateChangeEventData, params.value);
     case VehicleEventType.VehicleOnline:
+    case VehicleEventType.VehicleOnline2:
       return plainToInstance(VehicleOnlineEventData, params.value);
     case VehicleEventType.CameraOnline:
       return plainToInstance(CameraOnlineEventData, params.value);

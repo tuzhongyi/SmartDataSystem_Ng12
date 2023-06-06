@@ -5,21 +5,18 @@ import {
   VideoModel,
 } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 
 @Injectable()
-export class VideoControlWindowBusiness
+export class MonitorVideoControlWindowBusiness
   extends VideoWindowViewModel
   implements IBusiness<VideoUrl, VideoModel>
 {

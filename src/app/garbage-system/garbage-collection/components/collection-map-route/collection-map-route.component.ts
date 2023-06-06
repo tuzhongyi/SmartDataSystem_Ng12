@@ -8,15 +8,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { wait } from 'src/app/common/tools/tool';
 import { Duration } from 'src/app/network/model/duration.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
-import { IModel } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
 import { CollectionMapRouteControlSource } from './collection-map-route-control/collection-map-route-control.model';
+import {
+  CollectionMapRouteQuery,
+  CollectionMapRouteQueryArgs,
+} from './collection-map-route-query/collection-map-route-query.model';
 import { CollectionMapRouteBusiness } from './collection-map-route.business';
 
 @Component({
@@ -60,13 +61,16 @@ export class CollectionMapRouteComponent implements OnInit {
   play: EventEmitter<Duration> = new EventEmitter();
   pause: EventEmitter<void> = new EventEmitter();
   controlseek: EventEmitter<GisRoutePoint> = new EventEmitter();
+  loadControl: EventEmitter<CollectionMapRouteQuery> = new EventEmitter();
 
   duration?: Duration;
 
-  date: Date = new Date();
   src?: SafeResourceUrl;
 
+  args: CollectionMapRouteQueryArgs = new CollectionMapRouteQueryArgs();
+
   wantplay = false;
+  focus = false;
 
   @ViewChild('iframe')
   element?: ElementRef;
@@ -81,8 +85,8 @@ export class CollectionMapRouteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('CollectionMapRouteComponent', this.model);
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.business.src);
+    this.args.model = this.model;
   }
 
   //#region template event
@@ -98,14 +102,18 @@ export class CollectionMapRouteComponent implements OnInit {
   }
   //#endregion
   //#region list
-  onqueryselect(item: IModel) {
-    this.model = item as GarbageVehicle;
+  onquery(query: CollectionMapRouteQuery) {
     if (this.display.video === false) {
       this.display.operation = true;
     }
-    this.business.load(this.model).then((x) => {
-      this.wantplay = this.display.video;
-    });
+
+    if (query.model instanceof GarbageVehicle) {
+      this.model = query.model;
+      this.business.load(query.model).then((x) => {
+        this.wantplay = this.display.video;
+        this.loadControl.emit(query);
+      });
+    }
   }
 
   onqueryclose() {
@@ -136,10 +144,7 @@ export class CollectionMapRouteComponent implements OnInit {
     }
   }
   onroute(date: Date) {
-    if (this.duration) {
-      this.duration.begin = date;
-    }
-    this.business.route(date);
+    this.business.route(date, undefined, this.focus);
   }
   onrouteclick(date: Date) {
     if (this.duration) {
@@ -185,5 +190,8 @@ export class CollectionMapRouteComponent implements OnInit {
   }
   onclose() {
     this.close.emit();
+  }
+  onfocus() {
+    this.focus = !this.focus;
   }
 }

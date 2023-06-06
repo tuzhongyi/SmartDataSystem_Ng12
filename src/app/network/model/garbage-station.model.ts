@@ -1,21 +1,21 @@
 import { Transform, Type } from 'class-transformer';
+import 'reflect-metadata';
+import { Flags } from 'src/app/common/tools/flags';
+import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
+import { StationState } from 'src/app/enum/station-state.enum';
+import { StationType } from 'src/app/enum/station-type.enum';
 import { CameraUsage } from '../../enum/camera-usage.enum';
 import { TrashCanType } from '../../enum/trashcan-type.enum';
 import { Camera } from './camera.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
+import { IdNameModel } from './model.interface';
 import { TimeRange } from './time-range.model';
 import { transformDateTime, transformFlags } from './transform.model';
 import { TrashCan } from './trash-can.model';
-import 'reflect-metadata';
-import { StationState } from 'src/app/enum/station-state.enum';
-import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
-import { Model } from './model.interface';
-import { StationType } from 'src/app/enum/station-type.enum';
-import { Flags } from 'src/app/common/tools/flags';
 
 /** 垃圾房、投放点 */
-export class GarbageStation extends Model {
+export class GarbageStation extends IdNameModel {
   /**	String	垃圾房ID	M */
   Id!: string;
   /**	String	垃圾房名称	M */

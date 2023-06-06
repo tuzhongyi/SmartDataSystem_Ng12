@@ -3,16 +3,16 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
-import { PatrolControlBusiness } from './patrol-control.business';
-import { WindowBussiness } from './window.business';
-import { VideoControlWindowBusiness } from './windows/video-control-window.business';
+import { MonitorPatrolControlBusiness } from './monitor-patrol-control.business';
+import { MonitorWindowBussiness } from './window.business';
+import { MonitorVideoControlWindowBusiness } from './windows/monitor-video-control-window.business';
 
 @Injectable()
-export class MapControlBusiness {
+export class MonitorMapControlBusiness {
   constructor(
-    private patrol: PatrolControlBusiness,
-    private video: VideoControlWindowBusiness,
-    private window: WindowBussiness
+    private patrol: MonitorPatrolControlBusiness,
+    private video: MonitorVideoControlWindowBusiness,
+    private window: MonitorWindowBussiness
   ) {}
 
   position: EventEmitter<GarbageStation> = new EventEmitter();

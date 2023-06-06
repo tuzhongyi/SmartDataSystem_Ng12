@@ -4,10 +4,11 @@
   color: #cfd7ff;
   padding: 10px;
   box-sizing: border-box;
+  @head-height: 210px;
 
   &-header {
     width: 100%;
-    height: 131px;
+    height: @head-height;
 
     &-title {
 
@@ -39,16 +40,28 @@
     }
 
 
-    &-date {
-      display: flex;
-      align-items: center;
+    &-datetime {
 
       &-title {
         width: 74px;
       }
 
-      input {
-        width: calc(100% - 74px);
+      &>div {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+    }
+
+    &-time {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      app-time-control {
+        width: 48%;
       }
     }
   }
@@ -60,7 +73,7 @@
   &-content {
 
     width: 100%;
-    height: calc(100% - 131px - 34px);
+    height: calc(100% - @head-height - 34px);
     overflow-y: auto;
     padding: 10px 0;
 

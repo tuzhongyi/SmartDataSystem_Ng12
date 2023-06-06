@@ -11,18 +11,32 @@
         </div>
       </div>
     </div>
-    <div class="collection-map-route-query-header-date">
-      <div class="collection-map-route-query-header-date-title">选择日期</div>
-      <input
-        type="text"
-        DateTimePicker
-        [format]="'yyyy年MM月dd日'"
-        [startView]="DateTimePickerView.month"
-        [minView]="DateTimePickerView.month"
-        [(date)]="date"
-        (dateChange)="changeDate($event)"
-        class=""
-      />
+    <div class="collection-map-route-query-header-datetime">
+      <div class="collection-map-route-query-header-datetime-title">
+        选择日期
+      </div>
+      <div class="collection-map-route-query-header-date">
+        <input
+          type="text"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日'"
+          [startView]="DateTimePickerView.month"
+          [minView]="DateTimePickerView.month"
+          [(date)]="date"
+          class=""
+        />
+      </div>
+      <div class="collection-map-route-query-header-time">
+        <app-time-control
+          [time]="time.begin"
+          [endTime]="time.end"
+        ></app-time-control>
+        -
+        <app-time-control
+          [time]="time.end"
+          [beginTime]="time.begin"
+        ></app-time-control>
+      </div>
     </div>
 
     <div class="split"></div>

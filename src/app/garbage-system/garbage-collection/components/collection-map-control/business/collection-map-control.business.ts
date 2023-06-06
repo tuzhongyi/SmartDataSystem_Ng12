@@ -1,14 +1,9 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
-import { timer } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionMapControlConverter } from '../collection-map-control.converter';
@@ -28,7 +23,18 @@ export class CollectionMapControlBusiness {
     });
   }
   private converter = new CollectionMapControlConverter();
-  private mapClient?: CesiumMapClient;
+  private iframe?: HTMLIFrameElement;
+
+  private _mapClient: CesiumMapClient | undefined;
+  public get mapClient(): CesiumMapClient | undefined {
+    if (!this.iframe || !this.iframe.contentWindow) {
+      return undefined;
+    }
+    return this._mapClient;
+  }
+  public set mapClient(v: CesiumMapClient | undefined) {
+    this._mapClient = v;
+  }
 
   pointCountChanged: EventEmitter<number> = new EventEmitter();
 
@@ -50,6 +56,7 @@ export class CollectionMapControlBusiness {
     return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   loaded = false;
+
   async init() {
     let promise = this.vehicleService.list();
     promise.then((paged) => {
@@ -62,6 +69,7 @@ export class CollectionMapControlBusiness {
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
+    this.iframe = iframe;
     this.mapClient = new CesiumMapClient(iframe);
     this.mapClient.Events.OnLoaded = async () => {
       this.init();
@@ -106,14 +114,14 @@ export class CollectionMapControlBusiness {
   }
   loadDivision(divisionId: string) {
     if (this.mapClient) {
-      this.mapClient.Village.Select(divisionId, true);
+      this.mapClient.Village.Select(divisionId, true, false);
       this.mapClient.Viewer.Focus(divisionId);
     }
   }
 
   divisionSelect(divisionId: string) {
     if (this.mapClient) {
-      this.mapClient.Village.Select(divisionId, false);
+      this.mapClient.Village.Select(divisionId, false, false);
       this.mapClient.Viewer.Focus(divisionId);
     }
   }

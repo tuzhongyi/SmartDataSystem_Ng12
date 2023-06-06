@@ -14,22 +14,21 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AxiosError } from 'axios';
 import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
+import { Md5 } from 'ts-md5';
 import videojs, { VideoJsPlayer } from 'video.js';
 import { RoutePath } from '../app-routing.path';
-import { EnumHelper } from '../enum/enum-helper';
-import { StaticDataRole } from '../enum/role-static-data.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
+import { GlobalStorageService } from '../common/service/global-storage.service';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
-import { GlobalStorageService } from '../common/service/global-storage.service';
+import { StaticDataRole } from '../enum/role-static-data.enum';
+import { UserResourceType } from '../enum/user-resource-type.enum';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
-import { Md5 } from 'ts-md5';
 
 /**
  *  LoginComponent 需要用到 form 指令，
@@ -192,43 +191,56 @@ export class LoginComponent implements OnInit, AfterViewInit {
       this.disableLogin = true;
       try {
         // console.log(this.formGroup.value);
-        let result: any = await this._authorizationService.login(
+        let user: any = await this._authorizationService.login(
           this.formGroup.get('userName')?.value ?? '',
           this.formGroup.get('passWord')?.value ?? ''
         );
-        if (result instanceof User) {
+        if (user instanceof User) {
           // console.log('登录成功', result);
-          this._storeUserInfo(result, result.Id, result.Resources ?? []);
-          // 区分权限
-          if (!this.systemManage) {
-            if (result.Role && result.Role.length > 0) {
-              if (result.Role[0].StaticData == StaticDataRole.enabled) {
-                this._router.navigateByUrl(RoutePath.aiop);
-              } else if (result.Role[0].StaticData == StaticDataRole.disabled) {
-                if (
-                  result.Resources &&
-                  result.Resources.length > 0 &&
-                  result.Resources[0].ResourceType ===
-                    UserResourceType.Committees
+          switch (user.UserType) {
+            case 2:
+              this._router.navigateByUrl(RoutePath.garbage_vehicle);
+              break;
+            case 3:
+            case 1:
+            default:
+              this._storeUserInfo(user, user.Id, user.Resources ?? []);
+
+              // 区分权限
+              if (!this.systemManage) {
+                if (user.Role && user.Role.length > 0) {
+                  if (user.Role[0].StaticData == StaticDataRole.enabled) {
+                    this._router.navigateByUrl(RoutePath.aiop);
+                  } else if (
+                    user.Role[0].StaticData == StaticDataRole.disabled
+                  ) {
+                    if (
+                      user.Resources &&
+                      user.Resources.length > 0 &&
+                      user.Resources[0].ResourceType ===
+                        UserResourceType.Committees
+                    ) {
+                      this._router.navigateByUrl(
+                        RoutePath.garbage_system_committees
+                      );
+                    } else {
+                      this._router.navigateByUrl(RoutePath.garbage_system);
+                    }
+                  }
+                } else if (
+                  user.Resources &&
+                  user.Resources.length > 0 &&
+                  user.Resources[0].ResourceType === UserResourceType.Committees
                 ) {
                   this._router.navigateByUrl(
                     RoutePath.garbage_system_committees
                   );
                 } else {
-                  this._router.navigateByUrl(RoutePath.garbage_system);
                 }
+              } else {
+                this._router.navigateByUrl(RoutePath.system_manage);
               }
-            } else if (
-              result.Resources &&
-              result.Resources.length > 0 &&
-              result.Resources[0].ResourceType === UserResourceType.Committees
-            ) {
-              this._router.navigateByUrl(RoutePath.garbage_system_committees);
-            } else {
-              this._router.navigateByUrl(RoutePath.garbage_vehicle);
-            }
-          } else {
-            this._router.navigateByUrl(RoutePath.system_manage);
+              break;
           }
         }
       } catch (e: any) {

@@ -1,9 +1,9 @@
 import { EventNumber } from './event-number.model';
-import { Model } from './model.interface';
+import { IdNameModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
 /** 垃圾房的数量统计信息 */
-export class GarbageStationNumberStatisticV2 extends Model {
+export class GarbageStationNumberStatisticV2 extends IdNameModel {
   /**	String	垃圾房ID	M */
   Id!: string;
   /**	String	垃圾房名称	M */

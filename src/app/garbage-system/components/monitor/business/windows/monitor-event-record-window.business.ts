@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { MediaWindowBusiness } from './media-window.business';
+import { MonitorCardRecordEpisodeWindow } from './monitor-card-record-episode-window.business';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 
 @Injectable()
-export class RecordWindowBusiness extends WindowViewModel {
+export class MonitorRecordWindowBusiness extends WindowViewModel {
   constructor(
-    private media: MediaWindowBusiness,
-    private stationService: GarbageStationRequestService
+    private media: MonitorMediaWindowBusiness,
+    private card: MonitorCardRecordEpisodeWindow
   ) {
     super();
   }
@@ -33,5 +34,10 @@ export class RecordWindowBusiness extends WindowViewModel {
     this.media.single.eventType = this.type;
     this.media.single.paged = model.page;
     this.media.single.show = true;
+  }
+
+  oncard(model: EventRecordViewModel) {
+    this.card.record = model;
+    this.card.show = true;
   }
 }

@@ -9,39 +9,35 @@ import {
 } from '@angular/core';
 
 import { CallbackDataParams } from 'echarts/types/dist/shared';
-import { IModel } from 'src/app/network/model/model.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { ITimeData } from 'src/app/common/components/charts/chart.model';
+import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { ChartType } from 'src/app/enum/chart-type.enum';
+import { IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { ITimeData } from 'src/app/common/components/charts/chart.model';
-import { Language } from 'src/app/common/tools/language';
-import { ChartConfig } from './details-chart.option';
 import { DetailsChartLoadOptions } from './details-chart.model';
-import { wait } from 'src/app/common/tools/tool';
+import { ChartConfig } from './details-chart.option';
 
-import { formatDate } from '@angular/common';
-import { HorizontalAlign } from 'src/app/enum/direction.enum';
-import { ExportExcelConverter } from './details-chart-export.converter';
-import { HowellExcel } from 'src/app/common/tools/exports/hw-export-excel';
-import { ExportBusiness } from 'src/app/common/business/export.business';
-import { ExportType } from 'src/app/enum/export-type.enum';
-import { ExportTool } from 'src/app/common/tools/export.tool';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
-import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { ExportTool } from 'src/app/common/tools/export.tool';
+import { HorizontalAlign } from 'src/app/enum/direction.enum';
+import { ExportType } from 'src/app/enum/export-type.enum';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { ExportExcelConverter } from './details-chart-export.converter';
 
 @Component({
   selector: 'howell-details-chart',
@@ -101,6 +97,7 @@ export class DetailsChartComponent
   }
   treeClose: EventEmitter<void> = new EventEmitter();
   selectedNodes: CommonFlatNode[] = [];
+  showDropDown: boolean = false;
 
   options?: DetailsChartLoadOptions;
 
@@ -266,6 +263,8 @@ export class DetailsChartComponent
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.division = node.RawData as Division;
+      this.showDropDown = false;
+      return;
     }
   }
 

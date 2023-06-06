@@ -7,12 +7,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { Language } from 'src/app/common/tools/language';
-import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { Duration } from 'src/app/network/model/duration.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
@@ -58,9 +56,7 @@ export class CollectionMapRouteVideoComponent
   webUrl?: string;
   VehicleState = VehicleState;
   video?: VideoModel;
-  title: SelectItem[] = [];
-  position?: VehiclePositionNo;
-  cameras: { [key: number]: VehicleCamera } = {};
+  camera?: VehicleCamera;
   playing = false;
   splited = false;
 
@@ -97,48 +93,25 @@ export class CollectionMapRouteVideoComponent
   onplay(duration: Duration) {
     this.begin = duration.begin;
     this.end = duration.end;
-    if (!this.position) {
-      this.position = this.title.length > 0 ? this.title[0].value : undefined;
-    }
-    if (this.position) {
-      let camera = this.cameras[this.position];
-      this.loadData(camera, this.begin, this.end);
+    if (this.camera) {
+      this.loadData(this.camera, this.begin, this.end);
     }
   }
 
   initTitle() {
-    this.position = undefined;
-    this.title = [];
-    let index: number;
-    let no: VehiclePositionNo;
-    if (this.source && this.source.Cameras) {
-      no = VehiclePositionNo.CarFront;
-      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
-      if (index >= 0) {
-        this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.source.Cameras[index];
-      }
-
-      no = VehiclePositionNo.CarEnd;
-      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
-      if (index >= 0) {
-        this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.source.Cameras[index];
-      }
-
-      no = VehiclePositionNo.TrashCan;
-      index = this.source.Cameras.findIndex((x) => x.PositionNo === no);
-      if (index >= 0) {
-        this.title.push(SelectItem.create(no, Language.VehiclePositionNo));
-        this.cameras[no] = this.source.Cameras[index];
+    if (this.source && this.source.Cameras && this.source.Cameras.length > 0) {
+      this.source.Cameras = this.source.Cameras.sort((a, b) => {
+        return LocaleCompare.compare(a.Name, b.Name);
+      });
+      if (!this.camera) {
+        this.camera = this.source.Cameras[0];
       }
     }
   }
 
   async onpositionchanged() {
-    if (this.position && this.begin && this.end) {
-      let camera = this.cameras[this.position];
-      this.loadData(camera, this.begin, this.end);
+    if (this.camera && this.begin && this.end) {
+      this.loadData(this.camera, this.begin, this.end);
     }
   }
 
