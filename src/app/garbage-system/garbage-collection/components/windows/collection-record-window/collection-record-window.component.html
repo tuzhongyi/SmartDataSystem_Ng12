@@ -4,19 +4,6 @@
     <div class="filter-wrapper">
       <div class="filter-group">
         <div class="title">
-          <span class="hw-form-label">名称:</span>
-        </div>
-        <div class="content">
-          <input
-            type="text"
-            [(ngModel)]="searchInfo.Condition"
-            (keyup.enter)="search()"
-          />
-        </div>
-      </div>
-
-      <div class="filter-group">
-        <div class="title">
           <span class="hw-form-label">开始时间</span>
         </div>
         <div class="content">
@@ -25,7 +12,7 @@
             readonly
             DateTimePicker
             [format]="dateFormat"
-            [minView]="DateTimePickerView.hour"
+            [minView]="DateTimePickerView.day"
             [(date)]="searchInfo.BeginTime"
             class="hw-form-control hw-form-input"
           />
@@ -42,7 +29,7 @@
             readonly
             DateTimePicker
             [format]="dateFormat"
-            [minView]="DateTimePickerView.hour"
+            [minView]="DateTimePickerView.day"
             [(date)]="searchInfo.EndTime"
           />
         </div>
@@ -65,6 +52,28 @@
       </div>
       <div class="filter-group">
         <div class="title">
+          <span class="hw-form-label">清运类型:</span>
+        </div>
+        <div class="content">
+          <select [(ngModel)]="searchInfo.type">
+            <option [ngValue]="undefined">全部</option>
+            <option [ngValue]="TrashCanType.Dry">
+              {{ Language.TrashCanType(TrashCanType.Dry) }}
+            </option>
+            <option [ngValue]="TrashCanType.Wet">
+              {{ Language.TrashCanType(TrashCanType.Wet) }}
+            </option>
+            <option [ngValue]="TrashCanType.Recycle">
+              {{ Language.TrashCanType(TrashCanType.Recycle) }}
+            </option>
+            <option [ngValue]="TrashCanType.Hazard">
+              {{ Language.TrashCanType(TrashCanType.Hazard) }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="filter-group">
+        <div class="title">
           <span class="hw-form-label">评分:</span>
         </div>
         <div class="content">
@@ -74,6 +83,19 @@
             <option [value]="CollectionPointScore.Average">中评</option>
             <option [value]="CollectionPointScore.Poor">差评</option>
           </select>
+        </div>
+      </div>
+
+      <div class="filter-group">
+        <div class="title">
+          <span class="hw-form-label">收运点:</span>
+        </div>
+        <div class="content">
+          <input
+            type="text"
+            [(ngModel)]="searchInfo.Condition"
+            (keyup.enter)="search()"
+          />
         </div>
       </div>
 
@@ -88,20 +110,39 @@
   <div class="vertical-main">
     <custom-table>
       <ng-container ngProjectAs="table-header">
-        <table class="big-table">
+        <table class="big-table" matSort (matSortChange)="sortData($event)">
           <ng-template [ngTemplateOutlet]="colGroup"></ng-template>
           <thead>
             <tr>
               <!-- <th>图片</th> -->
               <!-- <th>资源名称</th> -->
-              <th>车辆名称</th>
-              <th>清运人员</th>
-              <th>区划</th>
-              <th>收运点</th>
-              <th>重量</th>
-
-              <th>上报时间</th>
-              <th>评分</th>
+              <th [mat-sort-header]="'Data.VehicleName'" [disableClear]="true">
+                车辆名称
+              </th>
+              <th [mat-sort-header]="'Data.MemberName'" [disableClear]="true">
+                清运人员
+              </th>
+              <th [mat-sort-header]="'Data.DivisionName'" [disableClear]="true">
+                区划
+              </th>
+              <th
+                [mat-sort-header]="'Data.CollectionPointName'"
+                [disableClear]="true"
+              >
+                收运点
+              </th>
+              <th [mat-sort-header]="'Data.Weight'" [disableClear]="true">
+                重量(kg)
+              </th>
+              <th [mat-sort-header]="'Data.TrashCanType'" [disableClear]="true">
+                类型
+              </th>
+              <th [mat-sort-header]="'EventTime'" [disableClear]="true">
+                上报时间
+              </th>
+              <th [mat-sort-header]="'Data.Score'" [disableClear]="true">
+                评分
+              </th>
               <th>操作</th>
             </tr>
           </thead>
@@ -156,8 +197,16 @@
           <td>{{ item.MemberName }}</td>
           <td>{{ item.DivisionName }}</td>
           <td>{{ item.CollectionPointName }}</td>
-          <td>{{ item.Weight }}</td>
-
+          <td>
+            <div class="number">{{ item.Weight.toFixed(2) }}</div>
+          </td>
+          <td
+            [ngStyle]="{
+              color: item.TrashCanType | can_type_color_pipe
+            }"
+          >
+            {{ Language.TrashCanType(item.TrashCanType) }}
+          </td>
           <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
           <td [class]="item.TagCls" [style]="item.TagStyle">
             {{ item.Score }}

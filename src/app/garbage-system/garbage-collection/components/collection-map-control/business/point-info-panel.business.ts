@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import {
@@ -11,7 +10,6 @@ import {
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
-import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 
 @Injectable()
 export class GarbageVehiclePointInfoPanelBusiness
@@ -62,18 +60,27 @@ export class PointInfoPanelConverter
         });
       });
     }
-
+    model.powerTime = source.NBPowerOnTime;
     model.state = this.getState(source);
+    model.options = [
+      {
+        className: 'glyphicon glyphicon-off',
+        command: 'power',
+        data: source,
+        title: '远程唤醒',
+        language: '',
+      },
+    ];
     return model;
   }
 
-  private getState(station: GarbageVehicle) {
+  private getState(source: GarbageVehicle) {
     let state: PointInfoPanelModelState = {
       language: '',
       className: 'normal',
     };
-    if (station.State) {
-      if (station.State.contains(VehicleState.Offline)) {
+    if (source.State) {
+      if (source.State.contains(VehicleState.Offline)) {
         state.className = 'error';
         state.language = Language.VehicleState(VehicleState.Offline);
       } else {

@@ -1,23 +1,23 @@
-import { DatePipe } from '@angular/common';
-import { Output, EventEmitter, Injectable } from '@angular/core';
-import { Component, Input, OnInit } from '@angular/core';
-import { Flags } from 'src/app/common/tools/flags';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { StationState } from 'src/app/enum/station-state.enum';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { IModel } from 'src/app/network/model/model.interface';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { PointInfoPanelModel } from './point-info-panel.model';
 import { PointInfoPanelBusiness } from './point-info-panel.business';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import {
+  PointInfoPanelModel,
+  PointInfoPanelModelOption,
+} from './point-info-panel.model';
 
 @Component({
   selector: 'app-point-info-panel',
   templateUrl: './point-info-panel.component.html',
-  styleUrls: ['./point-info-panel.component.css'],
+  styleUrls: ['./point-info-panel.component.less'],
   providers: [PointInfoPanelBusiness],
 })
 export class PointInfoPanelComponent
@@ -26,11 +26,6 @@ export class PointInfoPanelComponent
   @Input()
   business: IBusiness<IModel, PointInfoPanelModel>;
 
-  Language = Language;
-
-  visibility: boolean = false;
-
-  source?: IModel;
   @Input()
   set Source(val) {
     this.source = val;
@@ -67,7 +62,8 @@ export class PointInfoPanelComponent
 
   @Output()
   MixedIntoClickedEvent: EventEmitter<IModel> = new EventEmitter();
-
+  @Output()
+  option: EventEmitter<PointInfoPanelModelOption> = new EventEmitter();
   constructor(
     private divisionService: DivisionRequestService,
     private garbageStationService: GarbageStationRequestService,
@@ -77,6 +73,11 @@ export class PointInfoPanelComponent
     // this.GarbageStation.Members
   }
 
+  Language = Language;
+
+  visibility: boolean = false;
+
+  source?: IModel;
   model: PointInfoPanelModel = new PointInfoPanelModel();
 
   ngOnInit() {}
@@ -121,6 +122,12 @@ export class PointInfoPanelComponent
         if (this.StateClickedEvent) {
           this.StateClickedEvent.emit(this.Source);
         }
+    } else if (this.Source instanceof GarbageVehicle) {
+      this.Source.State;
     }
+  }
+
+  onoption(item: PointInfoPanelModelOption) {
+    this.option.emit(item);
   }
 }

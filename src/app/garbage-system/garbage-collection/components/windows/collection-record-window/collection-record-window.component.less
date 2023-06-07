@@ -1,12 +1,25 @@
 .collection-record-window {
   width: 80vw;
   height: 75vh;
+
   .filter-wrapper {
     .filter-group {
-      flex-basis: 17%;
+      flex-basis: 14%;
     }
   }
+
+  .number {
+    text-align: right;
+    width: 86px;
+  }
+
+  app-root .big-table table tbody tr,
+  app-root table.big-table tbody tr {
+    height: calc(100% / 9);
+  }
+
 }
+
 @Good: #f06565;
 @Average: #ffba3c;
 @Poor: #68e888;
@@ -14,9 +27,11 @@
 .Good {
   color: @Good;
 }
+
 .Average {
   color: @Average;
 }
+
 .Poor {
   color: @Poor;
 }

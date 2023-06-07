@@ -39,7 +39,6 @@ export class CollectionMapControlBusiness {
   pointCountChanged: EventEmitter<number> = new EventEmitter();
 
   pointDoubleClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
-
   mapClicked: EventEmitter<void> = new EventEmitter();
 
   private source: AMapDataSource = {
@@ -188,6 +187,7 @@ export class CollectionMapControlBusiness {
     garbageCountClicked: new EventEmitter(),
     vehicleInformationClicked: new EventEmitter(),
     routeClicked: new EventEmitter(),
+    powerClicked: new EventEmitter(),
   };
 
   setContentMenu() {
@@ -238,8 +238,24 @@ export class CollectionMapControlBusiness {
       },
       4
     );
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="glyphicon glyphicon-off" style="font-size: 14px"></i> 远程唤醒`,
+      async (id: string) => {
+        let vehicle = this.source.all.find((x) => x.Id === id);
+        if (!vehicle) {
+          const vehicle = await this.vehicleService.cache.get(id);
+          this.source.all.push(vehicle);
+        }
+        this.menuEvents.powerClicked.emit(vehicle);
+      },
+      5
+    );
 
     this.mapClient.ContextMenu.Enable();
+  }
+
+  power(id: string) {
+    return this.vehicleService.nb.power(id);
   }
 }
 

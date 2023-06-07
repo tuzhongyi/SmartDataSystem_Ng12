@@ -4,14 +4,11 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-04 15:40:27
  */
-import { Transform } from 'class-transformer';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { GisRoutePoint } from '../../../model/gis-point.model';
-import { transformDateTime } from '../../../model/transform.model';
 import {
   IParams,
   PagedDurationParams,
@@ -76,4 +73,9 @@ export class ResetRelayParams implements IParams {
   No!: number[];
   /**	Int32	操作：1：复位，2：打开，3：关闭	M */
   Operator!: VehicleRelayOperator;
+}
+
+export class NBPowerOnParams {
+  /**	Boolean	是否上电，false关闭，true表示上电	M */
+  PowerOn: boolean = true;
 }

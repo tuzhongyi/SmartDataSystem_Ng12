@@ -12,6 +12,8 @@ export class PointInfoPanelModel<T = IModel> {
   GarbageStationGrade?: Promise<string>;
   statistic?: Promise<PointInfoPanelModelStatistic>;
   state?: PointInfoPanelModelState;
+  powerTime?: Date;
+  options: PointInfoPanelModelOption<T>[] = [];
 }
 
 export interface PointInfoPanelModelStatistic {
@@ -25,4 +27,10 @@ export interface PointInfoPanelModelStatistic {
 export interface PointInfoPanelModelState {
   language: string;
   className: string;
+}
+export interface PointInfoPanelModelOption<T = any>
+  extends PointInfoPanelModelState {
+  command: string;
+  title: string;
+  data: T;
 }

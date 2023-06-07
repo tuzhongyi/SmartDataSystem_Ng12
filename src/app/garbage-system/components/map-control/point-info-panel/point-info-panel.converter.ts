@@ -1,5 +1,4 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';

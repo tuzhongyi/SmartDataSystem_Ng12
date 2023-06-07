@@ -1,7 +1,14 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { EChartsOption, LineSeriesOption } from 'echarts';
+import {
+  Component,
+  Inject,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import { EChartsOption } from 'echarts';
 import { NgxEchartsDirective } from 'ngx-echarts';
-import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { CommonLineChartBusiness } from './common-line-chart.business';
 import {
   CommonLineChartModel,
@@ -20,7 +27,7 @@ import {
     },
   ],
 })
-export class CommonLineChartComponent implements OnInit {
+export class CommonLineChartComponent implements OnInit, OnChanges {
   @Input('business') _business: ICommonLineCharBusiness;
   @Input() title: string = '';
 
@@ -72,7 +79,7 @@ export class CommonLineChartComponent implements OnInit {
       axisTick: {
         show: false,
         lineStyle: {
-          color: 'rgba(117,134,224,0.5)',
+          color: 'red', //'rgba(117,134,224,0.5)',
         },
       },
       axisLabel: {
@@ -140,6 +147,20 @@ export class CommonLineChartComponent implements OnInit {
 
   async ngOnInit() {
     this._init();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.title && !changes.title.firstChange) {
+      if (this.merge) {
+        if (this.merge.title) {
+          (this.merge.title as any).text = this.title;
+        } else {
+          this.merge.title = {
+            text: this.title,
+          };
+        }
+      }
+    }
   }
 
   private async _init() {

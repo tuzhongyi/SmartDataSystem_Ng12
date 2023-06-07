@@ -54,7 +54,8 @@ export class GetGarbageCollectionEventRecordsParams
   /**	String	垃圾收运点名称	O */
   CollectionPointName?: string;
   /**	Boolean	是否倒序时间排列	O */
-  Desc?: boolean;
+  Desc?: string;
+  Asc?: string;
 }
 
 export class GetRelayStateChangeEventRecordsParams

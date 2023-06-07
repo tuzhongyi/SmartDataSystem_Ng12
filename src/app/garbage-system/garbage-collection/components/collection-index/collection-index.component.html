@@ -101,7 +101,7 @@
   <!-- ngComponentOutlet 无法在模板上监听事件 -->
   <ng-template
     #container
-    [ngComponentOutlet]="componentTypeExpression"
+    [ngComponentOutlet]="componentTypeExpression!"
     [ngComponentOutletInjector]="myInjector"
   >
   </ng-template>

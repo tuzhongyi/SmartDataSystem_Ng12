@@ -13,7 +13,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
+import { PointInfoPanelModelOption } from 'src/app/garbage-system/components/map-control/point-info-panel/point-info-panel.model';
 import { ICamera } from 'src/app/network/model/camera.interface';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -21,11 +23,15 @@ import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { CollectionMapControlBusiness } from './business/collection-map-control.business';
 import { GarbageVehiclePointInfoPanelBusiness } from './business/point-info-panel.business';
+import { MapControlWindow } from './collection-map-control.model';
 declare var $: any;
 @Component({
   selector: 'collection-map-control',
   templateUrl: './collection-map-control.component.html',
-  styleUrls: ['./collection-map-control.component.less'],
+  styleUrls: [
+    '../../../../../assets/less/confirm.less',
+    './collection-map-control.component.less',
+  ],
   providers: [
     CollectionMapControlBusiness,
     GarbageVehiclePointInfoPanelBusiness,
@@ -57,6 +63,8 @@ export class CollectionMapControlComponent
   position?: EventEmitter<GarbageVehicle>;
   @Output()
   route: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output()
+  wakeOnLAN: EventEmitter<GarbageVehicle> = new EventEmitter();
 
   //#endregion
   //#region ViewChild
@@ -141,7 +149,8 @@ export class CollectionMapControlComponent
     private sanitizer: DomSanitizer,
     private changeDetectorRef: ChangeDetectorRef,
     public amap: CollectionMapControlBusiness,
-    public info: GarbageVehiclePointInfoPanelBusiness
+    public info: GarbageVehiclePointInfoPanelBusiness,
+    private toastr: ToastrService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
@@ -198,6 +207,9 @@ export class CollectionMapControlComponent
     this.amap.menuEvents.routeClicked.subscribe((x) => {
       this.route.emit(x);
     });
+    this.amap.menuEvents.powerClicked.subscribe((x) => {
+      this.topower(x);
+    });
   }
   ngOnDestroy(): void {
     if (this.loadHandle) {
@@ -226,7 +238,7 @@ export class CollectionMapControlComponent
   imageConverter = new ImageControlArrayConverter();
 
   selected: Selected = {};
-
+  window = new MapControlWindow();
   //#region template event
   onLoad(event: Event) {
     this.wait(() => {
@@ -285,6 +297,34 @@ export class CollectionMapControlComponent
   }
   onPointInfoPanelStateClickedEvent(vehicle: IModel) {
     this.garbageFullClicked.emit(vehicle as GarbageVehicle);
+  }
+  onpaneloption(item: PointInfoPanelModelOption) {
+    this.topower(item.data);
+  }
+
+  onwindowclose() {
+    this.window.clear();
+    this.window.close();
+  }
+  topower(vehicle: GarbageVehicle) {
+    this.window.confirm.model = vehicle;
+    this.window.confirm.show = true;
+  }
+  onpower(vehicle?: GarbageVehicle) {
+    if (vehicle) {
+      this.amap
+        .power(vehicle.Id)
+        .then((x) => {
+          this.toastr.success('操作成功');
+        })
+        .catch((x) => {
+          console.error(x);
+          this.toastr.error('操作失败');
+        })
+        .finally(() => {
+          this.onwindowclose();
+        });
+    }
   }
 }
 

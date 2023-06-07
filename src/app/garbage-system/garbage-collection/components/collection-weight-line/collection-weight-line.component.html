@@ -1,4 +1,14 @@
 <!-- 区划垃圾收运量-->
 <div class="collection-weight-line">
   <common-line-chart [title]="title" [merge]="merge"></common-line-chart>
+  <div class="type">
+    <select [(ngModel)]="type" (change)="ontype()">
+      <option [ngValue]="TrashCanType.Dry">
+        {{ Language.TrashCanType(TrashCanType.Dry) }}
+      </option>
+      <option [ngValue]="TrashCanType.Wet">
+        {{ Language.TrashCanType(TrashCanType.Wet) }}
+      </option>
+    </select>
+  </div>
 </div>

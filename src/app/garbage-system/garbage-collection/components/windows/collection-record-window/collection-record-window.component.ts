@@ -1,12 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Optional,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
 import {
   ToastWindowService,
   ToastWindowType,
@@ -15,19 +10,16 @@ import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { TimeService } from 'src/app/common/service/time.service';
+import { Language } from 'src/app/common/tools/language';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
-import { VideoArgs } from 'src/app/network/model/args/video.args';
+import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
 import { Page } from 'src/app/network/model/page_list.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
-import { GarbageCollectionIndexComponent } from '../../collection-index/collection-index.component';
 import { CollectionDivisionTreeBusiness } from '../../../../../common/business/collection-division-tree.business';
 import { CollectionRecordWindowBusiness } from './collection-record-window.business';
 import { CollectionRecordWindowConverter } from './collection-record-window.converter';
@@ -35,11 +27,6 @@ import {
   CollectionRecordWindowModel,
   ICollectionRecordWindowSearchInfo,
 } from './collection-record-window.model';
-import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { Language } from 'src/app/common/tools/language';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
-import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
 
 @Component({
   selector: 'collection-record-window',
@@ -53,6 +40,9 @@ import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
   ],
 })
 export class CollectionRecordWindowComponent implements OnInit {
+  @Input()
+  type?: TrashCanType;
+
   CollectionPointScore = CollectionPointScore;
   Language = Language;
   SelectStrategy = SelectStrategy;
@@ -60,7 +50,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   @ViewChild(CommonLabelSelecComponent)
   commonTreeSelect!: CommonLabelSelecComponent;
 
-  tdWidth = ['10%', '10%', '10%', '10%', '10%', '15%', '10%', '5%'];
+  tdWidth = ['8%', '8%', '8%', '8%', '8%', '10%', '15%', '10%', '5%'];
   dataSource: CollectionRecordWindowModel[] = [];
   // Paginator
   pagerCount: number = 4;
@@ -86,6 +76,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   };
 
   DateTimePickerView = DateTimePickerView;
+  TrashCanType = TrashCanType;
 
   dateFormat: string = 'yyyy-MM-dd HH:mm';
   selectedNodes: CommonFlatNode[] = [];
@@ -107,6 +98,7 @@ export class CollectionRecordWindowComponent implements OnInit {
     }
   }
   ngOnInit(): void {
+    this.searchInfo.type = this.type;
     this._init();
   }
   private async _init() {
@@ -180,5 +172,17 @@ export class CollectionRecordWindowComponent implements OnInit {
     this.selectedNodes = nodes;
 
     this.searchInfo.DivisionIds = this.selectedNodes.map((n) => n.Id);
+  }
+
+  sortData(sort: Sort) {
+    const isAsc = sort.direction === 'asc';
+    this.searchInfo.desc = undefined;
+    this.searchInfo.asc = undefined;
+    if (isAsc) {
+      this.searchInfo.asc = sort.active;
+    } else {
+      this.searchInfo.desc = sort.active;
+    }
+    this._init();
   }
 }

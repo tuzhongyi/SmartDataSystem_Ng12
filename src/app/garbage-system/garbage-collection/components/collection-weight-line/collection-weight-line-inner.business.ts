@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CommonLineChartConverter } from 'src/app/common/components/common-line-chart/common-line-chart.converter';
-import {
-  CommonLineChartModel,
-  ICommonLineCharBusiness,
-} from 'src/app/common/components/common-line-chart/common-line-chart.model';
+import { ICommonLineCharBusiness } from 'src/app/common/components/common-line-chart/common-line-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { TimeService } from 'src/app/common/service/time.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';

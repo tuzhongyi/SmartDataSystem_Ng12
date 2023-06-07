@@ -2,15 +2,11 @@ import { Injectable } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
 import {
-  AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionRecordWindowModel } from './collection-record-window.model';
 
@@ -53,6 +49,8 @@ export class CollectionRecordWindowConverter extends AbstractCommonModelPromiseC
       source.Data.VehicleId
     );
     model.Cameras = Cameras ?? [];
+
+    model.TrashCanType = source.Data.TrashCanType;
 
     model.RawData = source;
     return model;

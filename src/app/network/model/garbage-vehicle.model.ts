@@ -7,6 +7,11 @@ import { GisPoint } from './gis-point.model';
 import { IdNameModel } from './model.interface';
 import { transformDateTime, transformFlags } from './transform.model';
 import { VehicleCamera } from './vehicle-camera.model';
+export class GarbageVehicleParameter {
+  /**	Double	皮重，单位：KG	O */
+  Tare?: number;
+}
+
 /**	清运车辆	*/
 export class GarbageVehicle extends IdNameModel {
   /**	String	车辆ID	M	*/
@@ -49,4 +54,10 @@ export class GarbageVehicle extends IdNameModel {
   RelayState?: RelayState;
   /**	String	车牌号码	O	*/
   PlateNo?: string;
+  /**	DateTime	最后一次NB上电请求时间	O */
+  @Transform(transformDateTime)
+  NBPowerOnTime?: Date;
+  /**	GarbageVehicleParameters	清运车参数	O */
+  @Type(() => GarbageVehicleParameter)
+  GarbageVehicleParameters?: GarbageVehicleParameter;
 }

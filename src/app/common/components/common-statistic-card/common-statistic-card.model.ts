@@ -1,4 +1,5 @@
 import { Type } from '@angular/core';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 
 export class CommonStatisticCardModel {
   Title!: string;
@@ -10,7 +11,8 @@ export class CommonStatisticCardModel {
   ContentStyle: Partial<CSSStyleDeclaration> = {};
   ContentCls: string = 'sky-blue-text2';
 
-  componentExpression: Type<any> | null = null;
+  componentExpression?: Type<any>;
+  type?: TrashCanType;
 
   constructor() {}
 }

@@ -31,6 +31,9 @@ export abstract class GarbageVehicleUrl {
   static relay(id: string) {
     return new RelayUrl(this.item(id));
   }
+  static nb(id: string) {
+    return new NBUrl(this.item(id));
+  }
 }
 
 class CameraUrl extends AbstractUrl {
@@ -55,5 +58,14 @@ class RelayUrl extends AbstractUrl {
 
   reset() {
     return `${this.basic()}/Reset`;
+  }
+}
+
+class NBUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/NB`);
+  }
+  power() {
+    return `${this.basic()}/PowerOn`;
   }
 }

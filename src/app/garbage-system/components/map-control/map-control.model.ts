@@ -1,6 +1,5 @@
 import { EventEmitter } from '@angular/core';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 
 export class MapControlToolButton {
   click: EventEmitter<void> = new EventEmitter();

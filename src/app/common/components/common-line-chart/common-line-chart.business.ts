@@ -16,7 +16,7 @@ export class CommonLineChartBusiness implements ICommonLineCharBusiness {
         {
           type: 'line',
           areaStyle: {},
-          data: [150, 230, 224, 218, 135, 147, 261],
+          data: [],
           name: '单位(起)',
           label: {
             show: true,

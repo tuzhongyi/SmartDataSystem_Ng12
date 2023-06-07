@@ -17,6 +17,12 @@
     <i class="howell-icon-map5 icon"></i>
     <div class="content">{{ model.address }}</div>
   </div>
+  <div class="item" *ngIf="model.powerTime" title="最后一次NB上电请求时间">
+    <i class="howell-icon-time icon"></i>
+    <div class="content">
+      {{ model.powerTime | date : "yyyy-MM-dd HH:mm:ss" }}
+    </div>
+  </div>
 
   <div class="item" *ngFor="let member of model.members">
     <div class="item-name">
@@ -61,7 +67,9 @@
         <div><i class="howell-icon-garbagebags"></i></div>
         <!-- GarbageCount -->
         <a class="hw-link-underline value green-text a-text">{{
-          (model.statistic | async)!.GarbageInterval
+          model.statistic === undefined
+            ? 0
+            : (model.statistic | async)!.GarbageInterval
         }}</a>
       </div>
       <div
@@ -76,7 +84,9 @@
       >
         <div><i class="howell-icon-nolittering"></i></div>
         <a class="hw-link-underline value powder-red-text a-text">{{
-          (model.statistic | async)!.IllegalDropCount
+          model.statistic === undefined
+            ? 0
+            : (model.statistic | async)!.IllegalDropCount
         }}</a>
       </div>
       <!-- "查看混合投放事件记录" -->
@@ -92,7 +102,9 @@
       >
         <div><i class="howell-icon-mixlittering"></i></div>
         <a class="hw-link-underline value light-purple-text a-text">{{
-          (model.statistic | async)!.MixedIntoCount
+          model.statistic === undefined
+            ? 0
+            : (model.statistic | async)!.MixedIntoCount
         }}</a>
       </div>
     </div>
@@ -117,7 +129,9 @@
           <div><i class="howell-icon-garbagebags"></i></div>
           <!-- <div>垃圾滞留点</div> -->
           <a class="hw-link-underline value green-text a-text">{{
-            (model.statistic | async)!.GarbageInterval
+            model.statistic === undefined
+              ? 0
+              : (model.statistic | async)!.GarbageInterval
           }}</a>
         </div>
       </div>
@@ -130,7 +144,9 @@
           <div><i class="howell-icon-nolittering"></i></div>
           <!-- <div>{{Language.json.EventType.IllegalDrop}}</div> -->
           <a class="hw-link-underline value powder-red-text a-text">{{
-            (model.statistic | async)!.IllegalDropCount
+            model.statistic === undefined
+              ? 0
+              : (model.statistic | async)!.IllegalDropCount
           }}</a>
         </div>
         <div
@@ -141,19 +157,31 @@
           <div><i class="howell-icon-mixlittering"></i></div>
           <!-- <div>混合投放</div> -->
           <a class="hw-link-underline value light-purple-text a-text">{{
-            (model.statistic | async)!.MixedIntoCount
+            model.statistic === undefined
+              ? 0
+              : (model.statistic | async)!.MixedIntoCount
           }}</a>
         </div>
       </div>
     </div>
   </div>
 
-  <div
-    *ngIf="!!model.state"
-    class="state"
-    [ngClass]="model.state.className"
-    (click)="onStateClicked()"
-  >
-    {{ model.state.language }}
+  <div class="options">
+    <div
+      *ngIf="!!model.state"
+      class="state"
+      [ngClass]="model.state.className"
+      (click)="onStateClicked()"
+    >
+      {{ model.state.language }}
+    </div>
+    <div
+      *ngFor="let item of model.options"
+      class="state"
+      [ngClass]="item.className"
+      (click)="onoption(item)"
+      [title]="item.title"
+      [innerHTML]="item.language"
+    ></div>
   </div>
 </div>

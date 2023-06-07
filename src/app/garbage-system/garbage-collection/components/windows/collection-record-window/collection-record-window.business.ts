@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import { param } from 'jquery';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
-import { Medium } from 'src/app/common/tools/medium';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageCollectionEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
@@ -56,8 +53,11 @@ export class CollectionRecordWindowBusiness {
     if (searchInfo.Score) {
       params.Score = searchInfo.Score;
     }
+    params.TrashCanType = searchInfo.type;
 
-    params.ResourceName = searchInfo.Condition;
+    params.CollectionPointName = searchInfo.Condition;
+    params.Desc = searchInfo.desc;
+    params.Asc = searchInfo.asc;
     return this._collectionEventRequest.record.garbageCollection.list(params);
   }
 

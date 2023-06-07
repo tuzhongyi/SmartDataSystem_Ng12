@@ -8,12 +8,9 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
-  ComponentRef,
-  EmbeddedViewRef,
   Injector,
   OnDestroy,
   OnInit,
-  TemplateRef,
   Type,
   ViewChild,
   ViewContainerRef,
@@ -25,12 +22,11 @@ import { CommonStatisticCardModel } from 'src/app/common/components/common-stati
 import {
   ToastWindowService,
   ToastWindowType,
-  TOAST_WINDOW_TOKEN,
 } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { Medium } from 'src/app/common/tools/medium';
 import { TimeService } from 'src/app/common/service/time.service';
+import { Medium } from 'src/app/common/tools/medium';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -38,16 +34,12 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
 import { VideoListArgs } from 'src/app/network/model/args/video-list.args';
-import { VideoArgs } from 'src/app/network/model/args/video.args';
 import { IModel } from 'src/app/network/model/model.interface';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { ICollectionPointPieData } from '../collection-point-pie/collection-point-pie.model';
-import { CollectionPointWeightComponent } from '../collection-point-weight/collection-point-weight.component';
 import { ICollectionScorePieData } from '../collection-score-pie/collection-score-pie.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import {
-  CollectionListWindowComponent,
   CollectionPointWindowComponent,
   CollectionRecordWindowComponent,
 } from '../windows';
@@ -121,7 +113,7 @@ export class GarbageCollectionIndexComponent
 
   myInjector: Injector;
 
-  componentTypeExpression: Type<any> | null = CollectionVehicleWindowComponent;
+  componentTypeExpression?: Type<any> = CollectionVehicleWindowComponent;
 
   statisticDataSource: CommonStatisticCardModel[] = [];
 
@@ -264,7 +256,9 @@ export class GarbageCollectionIndexComponent
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;
-
+    if (this.componentTypeExpression) {
+      this.componentTypeExpression.prototype.type = data.type;
+    }
     this.createToast({});
   }
 
@@ -274,7 +268,7 @@ export class GarbageCollectionIndexComponent
   }
   closeToast() {
     this.showToast = false;
-    this.componentTypeExpression = null;
+    this.componentTypeExpression = undefined;
     this.myInjector.get(ToastWindowService).reset();
   }
 }

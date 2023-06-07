@@ -4,11 +4,12 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import {
   CollectionMemberWindowComponent,
   CollectionPointWindowComponent,
-  CollectionVehicleWindowComponent,
   CollectionRecordWindowComponent,
+  CollectionVehicleWindowComponent,
 } from 'src/app/garbage-system/garbage-collection/components/windows';
 import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
@@ -25,7 +26,7 @@ import { CommonStatisticCardModel } from './common-statistic-card.model';
 export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
   CommonStatisticCardModel | CommonStatisticCardModel[]
 > {
-  Convert(source: modelSource, ...res: any[]) {
+  Convert(source: modelSource, type?: TrashCanType) {
     if (source instanceof PagedList) {
       if (this._isGarbageVehicle(source.Data)) {
         return this._fromGarbageVehicle(source);
@@ -35,7 +36,7 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
         return this._fromCollectionPoint(source);
       }
     } else if (source instanceof DivisionGarbageWeight) {
-      return this._fromDivisionGarbageWeight(source);
+      return this._fromDivisionGarbageWeight(source, type!);
     } else if (source instanceof CollectionDivisionStatisticNumber) {
       return this._fromCollectionDivisionStatisticNumber(source);
     }
@@ -50,20 +51,22 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
     model.Content = source.Data.length.toString();
     return model;
   }
-  private _fromDivisionGarbageWeight(source: DivisionGarbageWeight) {
+  private _fromDivisionGarbageWeight(
+    source: DivisionGarbageWeight,
+    type: TrashCanType
+  ) {
     let model = new CommonStatisticCardModel();
-    model.Title = '垃圾清运数量(kg)';
+    model.Title = Language.TrashCanType(type) + '清运量(kg)';
 
-    if (source.Weights) {
-      let total = source.Weights.reduce((prev: number, cur) => {
-        return cur.Weight + prev;
-      }, 0);
-
-      // 遍历数组获得值
-      model.Content = total.toString();
-    }
     // 直接使用属性值
-    model.Content = source.TotalWeight.toString();
+    let count = 0;
+    if (source.Weights) {
+      source.Weights.filter((x) => x.CanType === type).forEach((x) => {
+        count += x.Weight;
+      });
+    }
+
+    model.Content = count.toFixed(2);
 
     model.componentExpression = CollectionRecordWindowComponent;
     return model;
@@ -97,11 +100,23 @@ export class CommonStatisticCardConverter extends AbstractCommonModelConverter<
       : '0';
     res.push(model);
 
-    model = new CommonStatisticCardModel();
-    model.Title = '垃圾清运数量(kg)';
-    model.componentExpression = CollectionRecordWindowComponent;
-    model.Content = source.Weight ? source.Weight.toString() : '0';
-    res.push(model);
+    if (source.Weights) {
+      model = new CommonStatisticCardModel();
+      model.Title = '干垃圾清运量(kg)';
+      model.type = TrashCanType.Dry;
+      model.componentExpression = CollectionRecordWindowComponent;
+      let weight = source.Weights.find((x) => x.CanType === TrashCanType.Dry);
+      model.Content = weight ? weight.Weight.toFixed(2) : '0';
+      res.push(model);
+
+      model = new CommonStatisticCardModel();
+      model.Title = '湿垃圾清运量(kg)';
+      model.type = TrashCanType.Wet;
+      model.componentExpression = CollectionRecordWindowComponent;
+      weight = source.Weights.find((x) => x.CanType === TrashCanType.Wet);
+      model.Content = weight ? weight.Weight.toFixed(2) : '0';
+      res.push(model);
+    }
 
     model = new CommonStatisticCardModel();
     model.Title = '清运人员';

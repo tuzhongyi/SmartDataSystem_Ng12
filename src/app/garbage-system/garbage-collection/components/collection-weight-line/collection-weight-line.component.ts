@@ -1,10 +1,9 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
-import { CommonLineChartComponent } from 'src/app/common/components/common-line-chart/common-line-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
 import { TimeService } from 'src/app/common/service/time.service';
+import { Language } from 'src/app/common/tools/language';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { CollectionWeightLineInnerBusiness } from './collection-weight-line-inner.business';
@@ -42,7 +41,8 @@ export class CollectionWeightLineComponent implements OnInit, OnDestroy {
   model?: CollectionWeightLineModel;
 
   merge: EChartsOption = {};
-
+  TrashCanType = TrashCanType;
+  Language = Language;
   constructor(
     public innerBusiness: CollectionWeightLineInnerBusiness,
     private _business: CollectionWeightLineBusiness,
@@ -72,5 +72,9 @@ export class CollectionWeightLineComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  ontype() {
+    this.ngOnInit();
   }
 }
