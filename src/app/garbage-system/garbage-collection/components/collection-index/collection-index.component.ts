@@ -17,7 +17,6 @@ import {
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { interval, Subscription } from 'rxjs';
-import { CommonRankData } from 'src/app/common/components/common-rank/common-rank.model';
 import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import {
   ToastWindowService,
@@ -38,6 +37,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { ICollectionDeviceStateData } from '../collection-device-state/collection-device-state.model';
 import { ICollectionPointPieData } from '../collection-point-pie/collection-point-pie.model';
 import { ICollectionScorePieData } from '../collection-score-pie/collection-score-pie.model';
+import { CollectionScoreRankArgs } from '../collection-score-rank/collection-score-rank.model';
 import { CollectionVehicleModel } from '../collection-vehicle/collection-vehicle.model';
 import {
   CollectionPointWindowComponent,
@@ -239,11 +239,13 @@ export class GarbageCollectionIndexComponent
       type: CollectionDeviceStateCountType.All,
     });
   }
-  clickScoreRank(data: CommonRankData) {
+  clickScoreRank(data: CollectionScoreRankArgs) {
     this.componentTypeExpression = CollectionRecordWindowComponent;
     this.createToast({
       beginTime: TimeService.curMonth(Date.now()).beginTime,
       endTime: TimeService.curMonth(Date.now()).endTime,
+      score: data.score,
+      name: data.model.Name,
     });
   }
   clickScorePipe(data: ICollectionScorePieData) {
@@ -256,10 +258,7 @@ export class GarbageCollectionIndexComponent
   }
   clickCard(data: CommonStatisticCardModel) {
     this.componentTypeExpression = data.componentExpression;
-    if (this.componentTypeExpression) {
-      this.componentTypeExpression.prototype.type = data.type;
-    }
-    this.createToast({});
+    this.createToast({ type: data.type });
   }
 
   private createToast(data: IModel) {

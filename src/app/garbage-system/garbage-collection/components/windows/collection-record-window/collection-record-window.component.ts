@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
 import { CommonLabelSelecComponent } from 'src/app/common/components/common-label-select/common-label-select.component';
@@ -40,9 +40,6 @@ import {
   ],
 })
 export class CollectionRecordWindowComponent implements OnInit {
-  @Input()
-  type?: TrashCanType;
-
   CollectionPointScore = CollectionPointScore;
   Language = Language;
   SelectStrategy = SelectStrategy;
@@ -72,7 +69,6 @@ export class CollectionRecordWindowComponent implements OnInit {
     Condition: '',
     BeginTime: TimeService.beginTime(Date.now()),
     EndTime: TimeService.endTime(Date.now()),
-    Score: '',
   };
 
   DateTimePickerView = DateTimePickerView;
@@ -95,10 +91,15 @@ export class CollectionRecordWindowComponent implements OnInit {
       if (data.score) {
         this.searchInfo.Score = data.score;
       }
+      if (data.type) {
+        this.searchInfo.type = data.type;
+      }
+      if (data.name) {
+        this.searchInfo.Condition = data.name;
+      }
     }
   }
   ngOnInit(): void {
-    this.searchInfo.type = this.type;
     this._init();
   }
   private async _init() {

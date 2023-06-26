@@ -78,10 +78,10 @@
         </div>
         <div class="content">
           <select [(ngModel)]="searchInfo.Score">
-            <option value="">全部</option>
-            <option [value]="CollectionPointScore.Good">好评</option>
-            <option [value]="CollectionPointScore.Average">中评</option>
-            <option [value]="CollectionPointScore.Poor">差评</option>
+            <option [ngValue]="undefined">全部</option>
+            <option [ngValue]="CollectionPointScore.Good">好评</option>
+            <option [ngValue]="CollectionPointScore.Average">中评</option>
+            <option [ngValue]="CollectionPointScore.Poor">差评</option>
           </select>
         </div>
       </div>

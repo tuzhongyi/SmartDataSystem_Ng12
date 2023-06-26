@@ -14,13 +14,16 @@ import {
   CollectionDeviceStateCountType,
   CollectionDeviceStateRatioType,
 } from 'src/app/enum/collection-device-state.enum';
+import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
-import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { Gender } from 'src/app/enum/gender.enum';
+import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { RelayState } from 'src/app/enum/relay-state.enum';
@@ -29,23 +32,19 @@ import {
   VehicleResourceType,
 } from 'src/app/enum/resource-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
+import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
+import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
+import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import language from './language.json';
-import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
-import { Gender } from 'src/app/enum/gender.enum';
-import { CollectionMemberType } from 'src/app/enum/member-type.enum';
-import { transformTimespan } from 'src/app/network/model/transform.model';
-import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
 
 export class Language {
   static StationState(state: StationState) {
@@ -434,7 +433,7 @@ export class Language {
     }
   }
 
-  static CollectionPointScore(type: CollectionPointScore) {
+  static CollectionPointScore(type?: CollectionPointScore) {
     switch (type) {
       case CollectionPointScore.Poor:
         return Language.json.CollectionPointScore.Poor;

@@ -30,7 +30,7 @@ export interface ICollectionRecordWindowSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   Condition: string;
-  Score: CollectionPointScore | '';
+  Score?: CollectionPointScore;
   type?: TrashCanType;
   asc?: string;
   desc?: string;

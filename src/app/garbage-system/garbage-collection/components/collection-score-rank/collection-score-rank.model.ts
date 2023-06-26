@@ -1,6 +1,8 @@
-import { CommonRankModel } from 'src/app/common/components/common-rank/common-rank.model';
+import {
+  CommonRankData,
+  CommonRankModel,
+} from 'src/app/common/components/common-rank/common-rank.model';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
 
 export class CollectionScoreRankModel {
   RankModel!: CommonRankModel;
@@ -10,6 +12,11 @@ export class CollectionScoreRankModel {
 export interface ICollectionScoreRankSearchInfo {
   BeginTime: Date;
   EndTime: Date;
-  Type: CollectionPointScore;
+  Type?: CollectionPointScore;
   DivisionIds: string[];
+}
+
+export class CollectionScoreRankArgs {
+  model!: CommonRankData;
+  score?: CollectionPointScore;
 }

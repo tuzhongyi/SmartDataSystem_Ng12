@@ -1,5 +1,5 @@
 import { KeyValue } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
@@ -7,14 +7,14 @@ import {
   CommonRankModel,
 } from 'src/app/common/components/common-rank/common-rank.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
 import { TimeService } from 'src/app/common/service/time.service';
+import { Language } from 'src/app/common/tools/language';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionScoreRankBusiness } from './collection-score-rank.business';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {
+  CollectionScoreRankArgs,
   CollectionScoreRankModel,
   ICollectionScoreRankSearchInfo,
 } from './collection-score-rank.model';
@@ -29,7 +29,8 @@ export class CollectionScoreRankComponent implements OnInit {
   Language = Language;
   CollectionPointScore = CollectionPointScore;
 
-  @Output() clickEvent = new EventEmitter();
+  @Output() clickEvent: EventEmitter<CollectionScoreRankArgs> =
+    new EventEmitter();
 
   model?: CollectionScoreRankModel;
   rankModel?: CommonRankModel;
@@ -89,7 +90,10 @@ export class CollectionScoreRankComponent implements OnInit {
   }
 
   clickRankItem(item: CommonRankData) {
-    this.clickEvent.emit(item);
+    let args = new CollectionScoreRankArgs();
+    args.model = item;
+    args.score = this.searchInfo.Type;
+    this.clickEvent.emit(args);
   }
   selectChange() {
     this._init();
