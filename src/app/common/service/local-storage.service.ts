@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { User, UserResource } from 'src/app/network/model/user.model';
+import { User } from 'src/app/network/model/user.model';
 
 /*
  * @Author: pmx

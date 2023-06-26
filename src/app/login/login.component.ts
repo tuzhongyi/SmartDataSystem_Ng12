@@ -14,21 +14,19 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AxiosError } from 'axios';
 import CryptoJS from 'crypto-js';
-import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import videojs, { VideoJsPlayer } from 'video.js';
 import { RoutePath } from '../app-routing.path';
-import { EnumHelper } from '../enum/enum-helper';
-import { StaticDataRole } from '../enum/role-static-data.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
+import { StoreService } from '../common/service/store.service';
+import { StaticDataRole } from '../enum/role-static-data.enum';
+import { UserResourceType } from '../enum/user-resource-type.enum';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
-import { StoreService } from '../common/service/store.service';
 
 /**
  *  LoginComponent 需要用到 form 指令，
@@ -62,7 +60,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _router: Router,
     private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
-    private _cookieService: CookieService,
     private _storeService: StoreService
   ) {
     this._titleService.setTitle('智能车棚管理平台');
@@ -98,20 +95,21 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
   fillForm() {
     let autoLogin = false;
-    if (this._cookieService.check('autoLogin')) {
-      autoLogin = JSON.parse(this._cookieService.get('autoLogin'));
+
+    if (localStorage.getItem('autoLogin')) {
+      autoLogin = JSON.parse(localStorage.getItem('autoLogin')!);
     }
 
     let savePassWord = false;
-    if (this._cookieService.check('savePassWord')) {
-      savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
+    if (localStorage.getItem('savePassWord')) {
+      savePassWord = JSON.parse(localStorage.getItem('savePassWord')!);
     }
 
     // console.log(autoLogin, savePassWord);
     this.savePassWord = savePassWord;
     this.autoLogin = autoLogin;
     if (savePassWord) {
-      let userName = this._cookieService.get('userName');
+      let userName = localStorage.getItem('userName')!;
       // console.log(userName);
       userName = atob(userName);
       // console.log(userName);
@@ -123,7 +121,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
 
       console.log(userName);
 
-      let passWord = this._cookieService.get('passWord');
+      let passWord = localStorage.getItem('passWord')!;
       // console.log(passWord);
       passWord = atob(passWord);
       // console.log(passWord);
@@ -246,16 +244,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
       path: '/',
       secure: false,
     };
-    this._cookieService.set(
-      'savePassWord',
-      JSON.stringify(this.savePassWord),
-      options
-    );
-    this._cookieService.set(
-      'autoLogin',
-      JSON.stringify(this.autoLogin),
-      options
-    );
+    localStorage.setItem('savePassWord', JSON.stringify(this.savePassWord));
+    localStorage.setItem('autoLogin', JSON.stringify(this.autoLogin));
     // username
     let prefix = CryptoJS.MD5(
       ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
@@ -267,7 +257,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     let userName = btoa(
       prefix + this.formGroup.get('userName')!.value + suffix
     );
-    this._cookieService.set('userName', userName, options);
+    localStorage.setItem('userName', userName);
 
     //password
     prefix = CryptoJS.MD5(
@@ -279,7 +269,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     let passWord = btoa(
       prefix + this.formGroup.get('passWord')!.value + suffix
     );
-    this._cookieService.set('passWord', passWord, options);
+    localStorage.setItem('passWord', passWord);
 
     this._localStorageService.user = user;
     this._storeService.password = passWord;

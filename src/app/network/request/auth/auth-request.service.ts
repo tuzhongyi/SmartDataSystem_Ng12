@@ -9,7 +9,6 @@ import {
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { plainToClass } from 'class-transformer';
 import CryptoJS from 'crypto-js';
-import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
@@ -33,12 +32,11 @@ export class AuthorizationService implements CanActivate {
     private _localStorageService: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
 
-    private _cookieService: CookieService,
     private _router: Router,
     private _store: StoreService
   ) {
-    if (this._cookieService.check('userName')) {
-      let userName = this._cookieService.get('userName');
+    if (localStorage.getItem('userName')) {
+      let userName = localStorage.getItem('userName')!;
       userName = atob(userName);
       let res = userName.match(
         /[a-zA-Z0-9+/=]{32}(?<userName>[\w.]+)[a-zA-Z0-9+/=]{32}/
@@ -48,8 +46,8 @@ export class AuthorizationService implements CanActivate {
       this._username = userName;
     }
 
-    if (this._cookieService.check('passWord')) {
-      let passWord = this._cookieService.get('passWord');
+    if (localStorage.getItem('passWord')) {
+      let passWord = localStorage.getItem('passWord')!;
       passWord = atob(passWord);
       let res2 = passWord.match(
         /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
@@ -64,7 +62,7 @@ export class AuthorizationService implements CanActivate {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
     let user = this._localStorageService.user;
-    let holdCookie = this._cookieService.check('userName');
+    let holdCookie = localStorage.getItem('userName');
     // console.log(userResource);
     if (challenge && user && user.Id && holdCookie) {
       return true;
@@ -76,15 +74,13 @@ export class AuthorizationService implements CanActivate {
         let result = await this.login(url);
         if (result instanceof User) {
           console.log(this._router);
-          if (location.pathname.includes(RoutePath.garbage_system)) {
+          if (url.includes(RoutePath.garbage_system)) {
             return this._router.parseUrl(`/${RoutePath.garbage_system}`);
-          } else if (
-            location.pathname.includes(RoutePath.electric_bike_widescreen)
-          ) {
+          } else if (url.includes(RoutePath.electric_bike_widescreen)) {
             return this._router.parseUrl(
               `/${RoutePath.electric_bike_widescreen}`
             );
-          } else if (location.pathname.includes(RoutePath.electric_bike)) {
+          } else if (url.includes(RoutePath.electric_bike)) {
             return this._router.parseUrl(`/${RoutePath.electric_bike}`);
           }
         }
@@ -169,7 +165,7 @@ export class AuthorizationService implements CanActivate {
     ).toString();
 
     let userName = btoa(prefix + user.Username + suffix);
-    this._cookieService.set('userName', userName, options);
+    localStorage.setItem('userName', userName);
 
     //password
     prefix = CryptoJS.MD5(
@@ -179,7 +175,7 @@ export class AuthorizationService implements CanActivate {
       ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
     ).toString();
     let passWord = btoa(prefix + password + suffix);
-    this._cookieService.set('passWord', passWord, options);
+    localStorage.setItem('passWord', passWord);
 
     this._localStorageService.user = user;
     this._store.password = passWord;

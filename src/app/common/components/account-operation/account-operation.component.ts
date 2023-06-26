@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { StoreService } from 'src/app/common/service/store.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { AccountOperationDisplay } from './account-operation.model';
 
 @Component({
@@ -25,14 +24,13 @@ export class AccountOperationComponent implements OnInit {
     private _sessionStorageService: SessionStorageService,
     private _localStorageService: LocalStorageService,
     private _store: StoreService,
-    private _cookieService: CookieService,
     private _router: Router
   ) {}
 
   userName: string = '';
 
   ngOnInit(): void {
-    let userName = this._cookieService.get('userName');
+    let userName = localStorage.getItem('userName')!;
     userName = atob(userName);
 
     let res = userName.match(
@@ -54,7 +52,13 @@ export class AccountOperationComponent implements OnInit {
     this._sessionStorageService.clear();
     this._localStorageService.clear();
     this._store.clear();
-    this._cookieService.deleteAll('/');
+    while (localStorage.length > 0) {
+      let key = localStorage.key(0);
+      if (key != null) {
+        localStorage.removeItem(key);
+      }
+    }
+
     this._router.navigateByUrl(path);
   }
   navigateToHelp() {
