@@ -21,10 +21,11 @@ import { EventRecordDetailsTableComponent } from './event-record-details-table/e
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
+import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.component';
+import { PointInfoPanelComponent } from './map-control-point-info-panel/point-info-panel.component';
 import { MapControlComponent } from './map-control/map-control.component';
-import { MapListPanelComponent } from './map-control/map-list-panel/map-list-panel.component';
-import { PointInfoPanelComponent } from './map-control/point-info-panel/point-info-panel.component';
 import { MediaControlComponent } from './media-control/media-control.component';
+import { MediaImageControlComponent } from './media-image-control/media-image-control.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { PatrolControlComponent } from './patrol-control/patrol-control.component';
 import { PlaybackConfigComponent } from './patrol-control/playback-config/playback-config.component';
@@ -56,7 +57,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapListPanelComponent,
 
     MediaControlComponent,
-
+    MediaImageControlComponent,
     PointInfoPanelComponent,
 
     PatrolControlComponent,
@@ -100,6 +101,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapControlComponent,
     MapListPanelComponent,
     MediaControlComponent,
+    MediaImageControlComponent,
     PointInfoPanelComponent,
 
     PatrolControlComponent,

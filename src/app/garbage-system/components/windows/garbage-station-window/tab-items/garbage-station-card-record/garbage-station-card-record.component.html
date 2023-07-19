@@ -43,7 +43,14 @@
           </common-label-select>
         </div>
       </div>
-
+      <div class="filter-item">
+        <span>楼栋</span>
+        <input type="text" [(ngModel)]="args.building" />
+      </div>
+      <div class="filter-item">
+        <span>房屋</span>
+        <input type="text" [(ngModel)]="args.room" />
+      </div>
       <button class="hw-blue-btn search" (click)="search()">
         <i class="mdi mdi-magnify"></i> 查询
       </button>
@@ -51,9 +58,9 @@
   </div>
   <div class="garbage-station-card-record-body">
     <card-record-table
-      [init]="false"
       [args]="args"
       [load]="load"
+      [isinit]="false"
       (video)="onvideo($event)"
     >
     </card-record-table>

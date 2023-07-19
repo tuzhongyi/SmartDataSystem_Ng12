@@ -3,7 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  OnDestroy,
+  Input,
   OnInit,
   Output,
   ViewChild,
@@ -14,12 +14,9 @@ import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
 import * as echarts from 'echarts/core';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DeviceStateRatioType } from 'src/app/enum/device-state-count.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import {
   DeviceStateCountModel,
@@ -38,12 +35,9 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
   providers: [DeviceStateBusiness],
 })
 export class DeviceStateComponent
-  implements
-    IComponent<IModel, DeviceStateCountModel>,
-    OnInit,
-    OnDestroy,
-    AfterViewInit
+  implements IComponent<IModel, DeviceStateCountModel>, OnInit, AfterViewInit
 {
+  @Input() load?: EventEmitter<void>;
   @Output()
   Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
 
@@ -71,12 +65,14 @@ export class DeviceStateComponent
   business: IBusiness<IModel, DeviceStateCountModel>;
 
   ngOnInit(): void {
-    if (this.business.subscription) {
-      this.business.subscription.subscribe(() => {
-        this.loadData();
-      });
+    if (this.load) {
+      {
+        this.load.subscribe((x) => {
+          this.loadData();
+        });
+      }
+      this.loadData();
     }
-    this.loadData();
 
     this.option = {
       series: [
@@ -122,11 +118,6 @@ export class DeviceStateComponent
         },
       ],
     };
-  }
-  ngOnDestroy() {
-    if (this.business.subscription) {
-      this.business.subscription.destroy();
-    }
   }
   ngAfterViewInit() {
     // console.log('chartContainers', this.chartContainer);

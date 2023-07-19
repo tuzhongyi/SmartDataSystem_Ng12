@@ -6,11 +6,11 @@
  */
 
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export abstract class GarbageVehicleCollectionPointUrl {
   static basic() {
-    return `${BasicUrl.garbage.vehicle}/CollectionPoints`;
+    return `${BaseUrl.garbage.garbage_vehicles}/CollectionPoints`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

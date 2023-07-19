@@ -5,7 +5,10 @@ import {
   DivisionModel,
   GarbageStationModel,
 } from 'src/app/view-model/garbage-station.model';
-import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
+import {
+  ListItem,
+  ListItemType,
+} from '../../map-control-list-panel/map-list-item';
 
 export type ListPanelType = DivisionModel | GarbageStationModel;
 export class ListPanelConverter

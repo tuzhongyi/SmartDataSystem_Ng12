@@ -27,6 +27,7 @@ export class MediaMultipleWindowComponent
   business: IBusiness<IModel, MediaMultipleWindowModel>;
   @Input()
   date?: Date;
+  @Input() fullplay = true;
 
   model?: MediaMultipleWindowModel;
 

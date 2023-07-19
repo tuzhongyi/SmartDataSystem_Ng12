@@ -4,22 +4,24 @@
  * @Last Modified by: zzl
  * @Last Modified time: 2022-01-10 16:08:27
  */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommitteesIndexEventTriggerBusiness } from './business/committees-index-event-trigger.business';
-import { CommitteesIndexService } from './index.component.service';
 import { CommitteesIndexNavicationBusiness } from './business/committees-index-navication.business';
 import { CommitteesIndexPatrolControlBusiness } from './business/committees-index-patrol-control.business';
 import { CommitteesWindowBussiness } from './business/committees-window.business';
 import { CommitteesDeviceWindowBusiness } from './business/windows/committees-device-window.business';
 import { CommitteesRecordWindowBusiness } from './business/windows/committees-event-record-window.business';
+import { CommitteesIndexImageArrayWindowBusiness } from './business/windows/committees-image-array-window.business';
+import { CommitteesIndexImagePageWindowBusiness } from './business/windows/committees-image-page-window.business';
+import { CommitteesIndexImageWindowBusiness } from './business/windows/committees-image-window.business';
 import { CommitteesMediaMultipleWindowBusiness } from './business/windows/committees-media-multiple-window.business';
 import { CommitteesMediaSingleWindowBusiness } from './business/windows/committees-media-single-window.business';
 import { CommitteesMediaWindowBusiness } from './business/windows/committees-media-window.business';
@@ -27,7 +29,9 @@ import { CommitteesGarbageStationDropWindowBusiness } from './business/windows/c
 import { CommitteesGarbageStationFullWindowBusiness } from './business/windows/committees-station-full-window.business';
 import { CommitteesGarbageStationInfoWindowBusiness } from './business/windows/committees-station-info-window.business';
 import { CommitteesVideoControlWindowBusiness } from './business/windows/committees-video-control-window.business';
+import { CommitteesVideoWindowBusiness } from './business/windows/committees-video-window.business';
 import { CommitteesIndexBusiness } from './index.component.business';
+import { CommitteesIndexService } from './index.component.service';
 
 @Component({
   selector: 'app-committees-index',
@@ -38,6 +42,7 @@ import { CommitteesIndexBusiness } from './index.component.business';
     CommitteesIndexEventTriggerBusiness,
     CommitteesIndexPatrolControlBusiness,
     CommitteesVideoControlWindowBusiness,
+    CommitteesVideoWindowBusiness,
     CommitteesRecordWindowBusiness,
     CommitteesMediaSingleWindowBusiness,
     CommitteesMediaMultipleWindowBusiness,
@@ -49,6 +54,10 @@ import { CommitteesIndexBusiness } from './index.component.business';
     CommitteesWindowBussiness,
     CommitteesIndexNavicationBusiness,
     CommitteesIndexBusiness,
+
+    CommitteesIndexImageWindowBusiness,
+    CommitteesIndexImagePageWindowBusiness,
+    CommitteesIndexImageArrayWindowBusiness,
   ],
 })
 export class CommitteesIndexComponent implements OnInit {

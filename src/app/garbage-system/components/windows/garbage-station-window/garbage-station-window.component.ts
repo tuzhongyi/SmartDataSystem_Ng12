@@ -8,7 +8,11 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
-import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
+import {
+  GarbageDropRecordFilter,
+  GarbageDropRecordViewModel,
+} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
+import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -43,13 +47,17 @@ export class GarbageStationWindowComponent
   taskStatus?: GarbageTaskStatus;
 
   @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  image: EventEmitter<
+    ImageControlModelArray<
+      GarbageDropRecordViewModel | GarbageStationTableModel
+    >
+  > = new EventEmitter();
   @Output()
   chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Output()
-  video: EventEmitter<any> = new EventEmitter();
+  video: EventEmitter<GarbageDropRecordViewModel> = new EventEmitter();
   constructor(
     public station: GarbageStationWindowStationBusiness,
     public record: GarbageStationWindowRecordBusiness,
@@ -113,7 +121,7 @@ export class GarbageStationWindowComponent
     this.position.emit(item);
   }
 
-  onvideo(args: any) {
+  onvideo(args: GarbageDropRecordViewModel) {
     this.video.emit(args);
   }
 }

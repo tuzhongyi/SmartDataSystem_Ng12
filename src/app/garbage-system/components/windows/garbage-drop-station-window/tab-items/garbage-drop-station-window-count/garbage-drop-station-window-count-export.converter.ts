@@ -20,7 +20,7 @@ export class GarbageDropStationWindowCountExportConverter
       }
       value.push(data.EventCount);
       value.push(data.TimeoutCount);
-      value.push(data.TimeoutRatio.toFixed(2) + '%');
+      value.push((1 - data.TimeoutRatio).toFixed(2) + '%');
       model.rowValues.push(value);
     }
     return model;

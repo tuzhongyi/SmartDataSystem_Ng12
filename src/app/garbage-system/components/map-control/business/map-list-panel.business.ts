@@ -10,10 +10,13 @@ import { GetGarbageStationsParams } from 'src/app/network/request/garbage-statio
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DivisionModel } from 'src/app/network/view-model/division.view-model';
 import {
+  ListItem,
+  ListItemType,
+} from '../../map-control-list-panel/map-list-item';
+import {
   ListPanelConverter,
   ListPanelType,
 } from '../converter/map-list-panel.converter';
-import { ListItem, ListItemType } from '../map-list-panel/map-list-item';
 
 @Injectable()
 export class ListPanelBusiness

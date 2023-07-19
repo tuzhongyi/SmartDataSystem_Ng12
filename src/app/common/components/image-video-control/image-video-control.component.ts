@@ -26,8 +26,6 @@ import {
 })
 export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Input()
-  fulled = false;
-  @Input()
   model?: ImageVideoControlModel;
   @Input()
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
@@ -39,13 +37,14 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   preview?: EventEmitter<string>;
   @Input()
   stop: EventEmitter<void> = new EventEmitter();
-
+  @Input()
+  fulled = false;
+  @Output()
+  fulledChange: EventEmitter<boolean> = new EventEmitter();
   @Output()
   onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
   @Output()
   onstop: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  fullscreen: EventEmitter<ImageVideoControlModel> = new EventEmitter();
 
   constructor(
     private business: ImageVideoControlBusiness,
@@ -153,12 +152,14 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     this.onstop.emit(this.playing);
   }
 
-  fullscreenClicked(event: Event) {
-    this.fullscreen.emit(this.model);
-  }
   onVideoDestroy(model: VideoModel) {
     this.playing = false;
     this.display.image = true;
     this.display.video = false;
+  }
+
+  onfull() {
+    this.fulled = !this.fulled;
+    this.fulledChange.emit(this.fulled);
   }
 }

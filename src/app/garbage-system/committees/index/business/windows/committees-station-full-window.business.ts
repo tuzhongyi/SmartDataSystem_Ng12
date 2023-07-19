@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
-import {
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 
+import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
+import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
+import { CommitteesVideoWindowBusiness } from './committees-video-window.business';
 
 @Injectable()
 export class CommitteesGarbageStationFullWindowBusiness extends WindowViewModel {
-  constructor(private media: CommitteesMediaWindowBusiness) {
+  constructor(
+    private image: CommitteesIndexImageWindowBusiness,
+    private video: CommitteesVideoWindowBusiness
+  ) {
     super();
   }
   style = {
@@ -19,10 +24,25 @@ export class CommitteesGarbageStationFullWindowBusiness extends WindowViewModel 
 
   eventCount = 0;
 
-  onimage(model: ImageControlModelArray) {
-    this.media.single.camera = model.models;
-    this.media.single.index = model.index;
-    this.media.single.autoplay = model.autoplay;
-    this.media.single.show = true;
+  onimage(
+    model: ImageControlModelArray<
+      GarbageFullStationTableModel | EventRecordViewModel
+    >
+  ) {
+    this.image.array.models = model.models;
+    this.image.array.index = model.index;
+    if (model.models.length > 0) {
+      this.image.array.current = model.models[0];
+    }
+    this.image.array.show = true;
+  }
+  onvideo(item: EventRecordViewModel) {
+    if (item.ResourceId) {
+      this.video.title = item.ResourceName ?? '';
+      this.video.playback(
+        item.ResourceId,
+        DateTimeTool.beforeOrAfter(item.EventTime)
+      );
+    }
   }
 }

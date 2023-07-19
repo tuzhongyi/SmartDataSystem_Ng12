@@ -11,11 +11,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { EventDataObject } from 'src/app/network/model/event-data-object.model';
 import { EventRule } from 'src/app/network/model/event-rule';
 import { Point } from 'src/app/network/model/point.model';
 import { Size } from 'src/app/network/model/size.model';
 import { ImageControlModel } from '../../../view-model/image-control.model';
-import { EventDataObject } from 'src/app/network/model/event-data-object.model';
 
 @Component({
   selector: 'app-image-control',
@@ -23,24 +23,15 @@ import { EventDataObject } from 'src/app/network/model/event-data-object.model';
   styleUrls: ['./image-control.component.less'],
 })
 export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
-  OnlineStatus = OnlineStatus;
-
-  @Input()
-  model?: ImageControlModel;
-
-  @Input()
-  nosignal = true;
-
-  @Output()
-  Click: EventEmitter<ImageControlModel> = new EventEmitter();
-
-  @ViewChild('canvas')
-  canvas?: ElementRef;
-
-  @Input('draw')
-  isDraw = false;
+  @Input() model?: ImageControlModel;
+  @Input() nosignal = true;
+  @Output() Click: EventEmitter<ImageControlModel> = new EventEmitter();
+  @Input('draw') isDraw = false;
 
   constructor() {}
+  OnlineStatus = OnlineStatus;
+  @ViewChild('canvas')
+  canvas?: ElementRef;
   ngAfterViewInit(): void {
     if (this.isDraw) {
       this.draw();

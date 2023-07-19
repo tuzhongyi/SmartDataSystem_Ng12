@@ -10,19 +10,19 @@
       style="margin-left: -3px; margin-right: 3px"
       class="howell-icon-garbage"
     ></i
-    >{{ pointCount }}
+    >总数 {{ pointCount.count }}
   </li>
   <li class="normal">
     <div></div>
-    正常
+    正常 {{ pointCount.normal }}
   </li>
   <li class="warm">
     <div></div>
-    满溢
+    满溢 {{ pointCount.warm }}
   </li>
   <li class="error">
     <div></div>
-    异常
+    异常 {{ pointCount.error }}
   </li>
 </ul>
 
@@ -36,7 +36,7 @@
     <ul class="ul">
       <ng-container *ngFor="let image of images">
         <!-- [ngClass]="{'error': camera.CameraState>0}" -->
-        <li class="video">
+        <li class="video" [title]="image.name">
           <app-image-control
             [model]="image"
             (Click)="onCameraClicked($event)"

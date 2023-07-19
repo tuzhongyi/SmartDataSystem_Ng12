@@ -13,6 +13,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
@@ -20,12 +21,12 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
+import { ListItemType } from '../map-control-list-panel/map-list-item';
 import { AMapBusiness } from './business/amap.business';
-import { GarbageTimeFilter } from './business/amap.model';
+import { GarbageTimeFilter, PointCount } from './business/amap.model';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { MapControlSelected, MapControlTools } from './map-control.model';
-import { ListItemType } from './map-list-panel/map-list-item';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -322,7 +323,7 @@ export class MapControlComponent
     this.amap.visibility.label.value = value;
   };
 
-  pointCount = 0;
+  pointCount: PointCount = { count: 0, normal: 0, warm: 0, error: 0 };
 
   images: ImageControlModel[] = [];
 
@@ -351,6 +352,11 @@ export class MapControlComponent
     this.images = station.Cameras
       ? this.imageConverter.Convert(station.Cameras)
       : [];
+    if (this.images.length > 1) {
+      this.images = this.images.sort((a, b) => {
+        return LocaleCompare.compare(a.name, b.name);
+      });
+    }
     this.display.videoControl = this.images.length > 5;
     this.changeDetectorRef.detectChanges();
   }

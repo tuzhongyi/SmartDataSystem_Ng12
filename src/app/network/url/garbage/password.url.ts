@@ -1,8 +1,8 @@
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export class PasswordUrl {
   static basic() {
-    return `${BasicUrl.user}/Passwords`;
+    return `${BaseUrl.user_system}/Passwords`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

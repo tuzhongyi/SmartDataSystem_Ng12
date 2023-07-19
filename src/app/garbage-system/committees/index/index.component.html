@@ -193,6 +193,7 @@
   [type]="window.record.type"
   [stationId]="window.record.stationId"
   (image)="window.record.onimage($event)"
+  (video)="window.record.onvideo($event)"
 >
 </howell-event-record-window>
 
@@ -236,3 +237,43 @@
   [statistic]="window.media.multiple.statistic"
   [date]="window.media.multiple.date"
 ></howell-media-multiple-window>
+<app-video-control-window
+  *ngIf="window.video"
+  [window]="window.video"
+  [style]="window.video.style"
+  [title]="window.video.title"
+></app-video-control-window>
+
+<app-window
+  [Model]="window.image.page"
+  *ngIf="window.image.page.show"
+  [style]="window.image.page.style"
+>
+  <app-media-image-control
+    [model]="window.image.page.model"
+    [first]="window.image.page.first"
+    [last]="window.image.page.last"
+    (prev)="window.image.page.onprev()"
+    (next)="window.image.page.onnext()"
+  ></app-media-image-control>
+</app-window>
+<app-window
+  [Model]="window.image.array"
+  *ngIf="window.image.array.show"
+  [style]="window.image.array.style"
+>
+  <app-media-image-control
+    [model]="window.image.array.current"
+    [first]="window.image.array.first"
+    [last]="window.image.array.last"
+    (prev)="window.image.array.onprev()"
+    (next)="window.image.array.onnext()"
+  ></app-media-image-control>
+</app-window>
+<app-video-window
+  [window]="window.video"
+  *ngIf="window.video.show"
+  [style]="window.video.style"
+  [title]="window.video.title"
+>
+</app-video-window>

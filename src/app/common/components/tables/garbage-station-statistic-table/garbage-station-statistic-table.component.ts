@@ -10,16 +10,21 @@ import {
 import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { Language } from 'src/app/common/tools/language';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 
 import { OrderModel } from 'src/app/view-model/order.model';
 import { SelectItem } from '../../select-control/select-control.model';
 import { GarbageStationStatisticTableBusiness } from './garbage-station-statistic-table.business';
 import { GarbageStationStatisticModel } from './garbage-station-statistic.model';
+
+interface TableWidth {
+  current: number;
+  signal: number;
+  differ: number;
+}
 
 @Component({
   selector: 'howell-garbage-station-statistic-table',
@@ -54,7 +59,33 @@ export class GarbageStationStatisticTableComponent
 
   Language = Language;
   Math = Math;
-  widths = ['12%', '10%', '10%', '8%', '8%', '12%', '12%', '12%', '8%', '8%'];
+  widths = [
+    '200px', // 1
+    undefined, // 2
+    undefined, // 3
+    undefined, // 4
+    '60px', // 5
+    '16px', // 6
+    '60px', // 7
+    '127px', // 8
+    '16px', // 9
+    '87px', // 10
+    '127px', // 11
+    '16px', // 12
+    '87px', // 13
+    '127px', // 14
+    '16px', // 15
+    '87px', // 16
+    '60px', // 17
+    '16px', // 18
+    '60px', // 19
+    '60px', // 20
+    '16px', // 21
+    '60px', // 22
+  ];
+
+  tabelWidth: TableWidth[] = [{ current: 60, signal: 16, differ: 60 }];
+
   loading = false;
   ngOnInit() {
     this.loadData();
@@ -101,7 +132,7 @@ export class GarbageStationStatisticTableComponent
       if (!this.sort) {
         this.sort = {
           active: 'GarbageRatio',
-          direction: 'desc',
+          direction: 'asc',
         };
       }
       this.sortData(this.sort);

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { IService } from 'src/app/business/Ibusiness';
 import { Member } from '../../model/member.model';
 import { PagedList } from '../../model/page_list.model';
 import { MemberUrl } from '../../url/garbage/member.url';
@@ -8,7 +7,6 @@ import {
   BaseTypeRequestService,
 } from '../base-request.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { IParams } from '../IParams.interface';
 import { GetMembersParams } from './member-request.params';
 @Injectable({
   providedIn: 'root',
@@ -54,10 +52,10 @@ export class MemberRequsetService {
 }
 
 class RelationsService {
-  constructor(private basic: BaseRequestService) { }
+  constructor(private basic: BaseRequestService) {}
   async sync(): Promise<string> {
     let url = MemberUrl.relation.sync();
-    let response = await this.basic.http.post(url).toPromise();
+    let response = await this.basic.http.howellPost(url).toPromise();
     return response.Data;
   }
 }

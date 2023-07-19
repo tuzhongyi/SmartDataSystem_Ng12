@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IndexPictureWindow } from './index-picture-window.business';
 import { DeviceWindowBusiness } from './windows/device-window.business';
 import { RecordWindowBusiness } from './windows/event-record-window.business';
@@ -21,7 +17,7 @@ export class WindowBussiness {
     public full: GarbageStationFullWindowBusiness,
     public drop: GarbageStationDropWindowBusiness,
     public station: GarbageStationInfoWindowBusiness,
-    public video: IndexVideoPlayerWindow,
+    public player: IndexVideoPlayerWindow,
     public picture: IndexPictureWindow
   ) {}
   close() {
@@ -32,6 +28,6 @@ export class WindowBussiness {
     this.drop.show = false;
     this.full.show = false;
     this.station.show = false;
-    this.video.show = false;
+    this.player.show = false;
   }
 }

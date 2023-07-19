@@ -6,36 +6,25 @@
  */
 
 import { Injectable } from '@angular/core';
-import { mode } from 'crypto-js';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import {
-  ISubscription,
-  SubscriptionService,
-} from 'src/app/common/interfaces/subscribe.interface';
-import { RankConverter } from 'src/app/converter/rank.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import {
-  GetGarbageStationsParams,
-  GetGarbageStationStatisticNumbersParams,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 
 import { RankModel } from 'src/app/view-model/rank.model';
 import {
-  IllegalMixintoRankConverter,
   IllegalMixintoDataResource,
+  IllegalMixintoRankConverter,
 } from './illegal-mixinto-rank.converter';
 
 @Injectable()
@@ -44,8 +33,7 @@ export class IllegalMixintoRankBusiness
 {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private stationRequest: GarbageStationRequestService,
-    public subscription: SubscriptionService
+    private stationRequest: GarbageStationRequestService
   ) {}
 
   async getData(

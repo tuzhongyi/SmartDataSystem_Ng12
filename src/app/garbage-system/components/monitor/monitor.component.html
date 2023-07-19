@@ -50,6 +50,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-device-state
+          [load]="load"
           (Click)="trigger.deviceState.onclick($event)"
         ></app-device-state>
       </div>
@@ -57,6 +58,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-illegal-mixinto-rank
+          [load]="load"
           (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
         >
         </app-illegal-mixinto-rank>
@@ -65,6 +67,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-retention-rank
+          [load]="load"
           (Click)="trigger.retentionRank.onclick($event)"
         ></app-retention-rank>
       </div>
@@ -72,6 +75,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-disposal-rank
+          [load]="load"
           (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
         ></app-disposal-rank>
       </div>
@@ -80,6 +84,7 @@
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
         <howell-event-statistic
+          [load]="load"
           [title]="'乱扔垃圾统计表'"
         ></howell-event-statistic>
       </div>
@@ -91,6 +96,7 @@
           [type]="mixIntoType"
         ></app-event-statistic-echarts> -->
         <howell-event-statistic
+          [load]="load"
           [title]="'混合投放统计表'"
           [type]="mixIntoType"
         ></howell-event-statistic>
@@ -99,6 +105,7 @@
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-disposal-count
+          [load]="load"
           (task)="trigger.risposalCount.ontask($event)"
         ></app-disposal-count>
       </div>
@@ -106,13 +113,13 @@
   </div>
 </div>
 
-<app-video-window
+<app-video-control-window
   [model]="video.model"
   [window]="video"
   [title]="video.title"
   (download)="video.ondownload($event)"
 >
-</app-video-window>
+</app-video-control-window>
 
 <!-- <app-window [Model]="window.record" [style]="window.record.style">
   <ng-container *ngIf="window.record.show">
@@ -131,8 +138,9 @@
   [stationId]="window.record.stationId"
   [divisionId]="window.record.divisionId"
   (image)="window.record.onimage($event)"
-  [getData]="window.media.single.pageChange"
-  (gotData)="window.media.single.got($event)"
+  (video)="window.record.onvideo($event)"
+  [get]="window.image.page.getData"
+  (got)="window.image.page.gotData($event)"
   (card)="window.record.oncard($event)"
 >
 </howell-event-record-window>
@@ -162,6 +170,7 @@
   [Model]="window.full"
   [style]="window.full.style"
   (image)="window.full.onimage($event)"
+  (video)="window.full.onvideo($event)"
 >
 </howell-garbage-full-station-window>
 
@@ -174,6 +183,7 @@
   [divisionId]="window.station.divisionId"
   [taskStatus]="window.station.status"
   (image)="window.station.onimage($event)"
+  (video)="window.station.onvideo($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
 >
@@ -187,6 +197,7 @@
 >
   <ng-container *ngIf="window.media.single.show">
     <app-media-control
+      [operation]="window.media.single.operation"
       [autoplay]="window.media.single.autoplay"
       [model]="window.media.single.camera"
       [index]="window.media.single.index"
@@ -206,6 +217,7 @@
   [style]="window.media.multiple.style"
   [statistic]="window.media.multiple.statistic"
   [date]="window.media.multiple.date"
+  [fullplay]="window.media.multiple.fullplay"
 ></howell-media-multiple-window>
 <app-window
   [Model]="window.card"
@@ -214,3 +226,40 @@
 >
   <card-record-episode [record]="window.card.record"></card-record-episode>
 </app-window>
+<app-window
+  [Model]="window.image.page"
+  *ngIf="window.image.page.show"
+  [style]="window.image.page.style"
+>
+  <app-media-image-control
+    [model]="window.image.page.model"
+    [first]="window.image.page.first"
+    [last]="window.image.page.last"
+    (prev)="window.image.page.onprev()"
+    (next)="window.image.page.onnext()"
+    (play)="window.image.page.onvideo()"
+  ></app-media-image-control>
+</app-window>
+<app-window
+  [Model]="window.image.array"
+  *ngIf="window.image.array.show"
+  [style]="window.image.array.style"
+>
+  <app-media-image-control
+    [model]="window.image.array.current"
+    [first]="window.image.array.first"
+    [last]="window.image.array.last"
+    [captureing]="window.image.array.captureing"
+    (prev)="window.image.array.onprev()"
+    (next)="window.image.array.onnext()"
+    (play)="window.image.array.onvideo()"
+  ></app-media-image-control>
+</app-window>
+<app-video-window
+  [window]="window.video"
+  *ngIf="window.video.show"
+  [style]="window.video.style"
+  [title]="window.video.title"
+  [model]="window.video.model"
+>
+</app-video-window>

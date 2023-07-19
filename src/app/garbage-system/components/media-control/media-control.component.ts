@@ -45,6 +45,8 @@ export class MediaControlComponent
   stop: EventEmitter<void> = new EventEmitter();
   @Input()
   autoplay: boolean = false;
+  @Input()
+  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
   @Output()
   played: EventEmitter<void> = new EventEmitter();
   @Output()
@@ -63,8 +65,6 @@ export class MediaControlComponent
     this.business = bussiness;
     this.operation.fullscreen = false;
   }
-
-  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
 
   preview: EventEmitter<string> = new EventEmitter();
   playback: EventEmitter<PlaybackInterval> = new EventEmitter();

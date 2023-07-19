@@ -26,30 +26,43 @@ declare class WSPlayerProxy {
   onViewerDoubleClicked: (index: number) => void;
   onViewerClicked: (index: number) => void;
   onRuleStateChanged: (index: number, state: boolean) => void;
+  onStatusChanged: (index: number, state: PlayerState) => void;
   destory: () => void;
 }
 
 declare enum ButtonName {
   /** 播放 */
-  play = "play",
+  play = 'play',
   /** 恢复 */
-  resume = "resume",
+  resume = 'resume',
   /** 暂停 */
-  pause = "pause",
+  pause = 'pause',
   /** 停止 */
-  stop = "stop",
+  stop = 'stop',
   /** 全屏 */
-  fullscreen = "fullscreen",
+  fullscreen = 'fullscreen',
   /** 截图 */
-  capturepicture = "capturepicture",
+  capturepicture = 'capturepicture',
   /** 慢放 */
-  slow = "slow",
+  slow = 'slow',
   /** 快放 */
-  fast = "fast",
+  fast = 'fast',
   /** 单帧 */
-  forward = "forward",
+  forward = 'forward',
   /** 回跳 */
-  jump_back = "jump_back",
+  jump_back = 'jump_back',
   /** 跳进 */
-  jump_forward = "jump_forward",
+  jump_forward = 'jump_forward',
+}
+declare enum PlayerState {
+  ready = 0,
+  playing = 1,
+  pause = 2,
+  slow = 3,
+  fast = 4,
+  end = 5,
+  opening = 6,
+  closing = 7,
+  frame = 8,
+  closed = 255,
 }

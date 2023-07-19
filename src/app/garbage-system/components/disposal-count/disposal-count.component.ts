@@ -10,20 +10,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
-import { interval, Subscription } from 'rxjs';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import {
   DisposalCountArgs,
   DisposalCountModel,
@@ -34,13 +27,12 @@ import { DisposalCountBusiness } from './disposal-count.business';
 // 按需引入 Echarts
 import * as echarts from 'echarts/core';
 
-import { TitleComponent, TitleComponentOption } from 'echarts/components';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
+import { TitleComponent, TitleComponentOption } from 'echarts/components';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 
 echarts.use([TitleComponent, GaugeChart, UniversalTransition, CanvasRenderer]);
 
@@ -52,11 +44,9 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption | TitleComponentOption>;
   styleUrls: ['./disposal-count.component.less'],
   providers: [DisposalCountBusiness],
 })
-export class DisposalCountComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
-  @Output()
-  task: EventEmitter<DisposalCountArgs> = new EventEmitter();
+export class DisposalCountComponent implements OnInit, AfterViewInit {
+  @Input() load?: EventEmitter<void>;
+  @Output() task: EventEmitter<DisposalCountArgs> = new EventEmitter();
 
   DisposalCountType = DisposalCountType;
   public title: string = '今日任务处置';
@@ -222,13 +212,11 @@ export class DisposalCountComponent
   };
 
   ngOnInit(): void {
-    this.business.subscription.subscription =
-      this.storeService.statusChange.subscribe((x) => {
+    if (this.load) {
+      this.load.subscribe((x) => {
         this.loadData();
       });
-    this.storeService.interval.subscribe((x) => {
-      this.loadData();
-    });
+    }
     this.loadData();
 
     this.gaugeOption = {
@@ -320,11 +308,6 @@ export class DisposalCountComponent
       backgroundColor: 'transparent',
       series: [this.taskSerie, this.timeoutSerie],
     };
-  }
-  ngOnDestroy() {
-    if (this.business.subscription) {
-      this.business.subscription.destroy();
-    }
   }
 
   ngAfterViewInit() {

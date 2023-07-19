@@ -34,24 +34,28 @@
               </div>
             </td>
             <td [ngStyle]="{ width: widths[2] }">
-              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+              {{ item.GarbageStation ? item.GarbageStation.Name : "-" }}
             </td>
             <td [ngStyle]="{ width: widths[3] }">
-              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
+              {{
+                item.GarbageStation
+                  ? item.GarbageStation.CommunityName ?? "-"
+                  : "-"
+              }}
             </td>
             <td [ngStyle]="{ width: widths[4] }">
               {{
                 item.GarbageStation
                   ? ((item.GarbageStation.Division | async)?.Parent | async)
                       ?.Name
-                  : ""
+                  : "-"
               }}
             </td>
             <td [ngStyle]="{ width: widths[5] }">
               {{
                 item.GarbageStation
                   ? (item.GarbageStation.Division | async)?.Name
-                  : ""
+                  : "-"
               }}
             </td>
             <td [ngStyle]="{ width: widths[6] }">
@@ -74,7 +78,7 @@
                     ? Language.StationStateFlags(
                         item.GarbageStation.StationState
                       )
-                    : ""
+                    : "-"
                 }}
               </span>
             </td>

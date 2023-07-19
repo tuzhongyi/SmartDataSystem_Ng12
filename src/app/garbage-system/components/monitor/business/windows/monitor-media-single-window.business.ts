@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { ImageVideoControlOperation } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -20,6 +21,7 @@ export class MonitorMediaSingleWindowBusiness extends WindowViewModel {
   camera: Array<Camera | ImageControlModel> = [];
   index: number = -1;
   autoplay = false;
+  operation = new ImageVideoControlOperation();
 
   eventType?: EventType;
 
@@ -81,8 +83,7 @@ export class MonitorMediaSingleWindowBusiness extends WindowViewModel {
   got(record: PagedList<EventRecordViewModel>) {
     if (record.Data && record.Data.length) {
       let data = record.Data[0];
-      let array = new ImageControlModelArray(data.images, 0);
-      array.data = record;
+      let array = new ImageControlModelArray(data.images, 0, record);
       this.camera = array.models;
     }
     console.log(record.Page);

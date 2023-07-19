@@ -4,41 +4,16 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-11-01 14:44:12
  */
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  DropListModel,
-  DropListObj,
-  RankDropListType,
-  RankEventModel,
-  RankEventType,
-  RankModel,
-  RankResourceType,
-} from 'src/app/view-model/rank.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { Division } from 'src/app/network/model/division.model';
-import { NegativeCommentRankBusiness } from './negative-comment-rank.business';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { EventNumber } from 'src/app/network/model/event-number.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { User } from 'src/app/network/model/user.model';
-import { Language } from 'src/app/common/tools/language';
-import { Subscription } from 'rxjs';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { NegativeCommentResource } from './negative-comment-rank.converter';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { RankEventType, RankModel } from 'src/app/view-model/rank.model';
+import { NegativeCommentRankBusiness } from './negative-comment-rank.business';
 
 @Component({
   selector: 'app-negative-comment-rank',
@@ -46,7 +21,9 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
   styleUrls: ['./negative-comment-rank.component.less'],
   providers: [NegativeCommentRankBusiness],
 })
-export class NegativeCommentRankComponent implements OnInit, OnDestroy {
+export class NegativeCommentRankComponent implements OnInit {
+  @Input() load?: EventEmitter<void>;
+
   public title: string = '垃圾清运差评榜';
 
   resourceTypes: SelectItem[] = [];
@@ -87,13 +64,12 @@ export class NegativeCommentRankComponent implements OnInit, OnDestroy {
     });
 
     // 区划改变时触发
-    this.business.subscription.subscribe(() => {
-      this.loadData();
-    });
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.loadData();
+      });
+    }
     this.loadData();
-  }
-  ngOnDestroy() {
-    this.business.subscription.destroy();
   }
   async loadData() {
     this.resourceTypeDisplay =

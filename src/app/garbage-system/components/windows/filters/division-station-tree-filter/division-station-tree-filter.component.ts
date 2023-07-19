@@ -11,17 +11,16 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { ClassConstructor } from 'class-transformer';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { ClassConstructor } from 'class-transformer';
-import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionStationTreeFilterBusiness } from './division-station-tree-filter.business';
 
@@ -41,7 +40,7 @@ export class DivisionStationTreeFilterComponent
   select: EventEmitter<GarbageStation> = new EventEmitter();
 
   @Input()
-  station?: GarbageStation;
+  stationId?: string;
 
   @ViewChild('selected')
   input?: ElementRef<HTMLLabelElement>;
@@ -81,7 +80,7 @@ export class DivisionStationTreeFilterComponent
   }
 
   async ngOnChanges(changes: SimpleChanges) {
-    if (changes.station && this.station) {
+    if (changes.stationId && this.stationId) {
       // console.log(this.station);
       // this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
       // this.current.rawData = this.station;
@@ -110,7 +109,7 @@ export class DivisionStationTreeFilterComponent
   }
 
   ngOnInit(): void {
-    this.business.load(this.type).then((datas) => {
+    this.business.load(this.type, this.stationId).then((datas) => {
       this.current = datas;
       this.currentTitle = this.getLocalTitle(this.current);
       let station = datas.find((x) => x instanceof GarbageStation);

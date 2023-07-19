@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import {
   ImageControlModelArray,
+  ImageControlModelPage,
 } from 'src/app/view-model/image-control.model';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
+import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
 
 @Injectable()
 export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel {
-  constructor(private media: CommitteesMediaWindowBusiness) {
+  constructor(private image: CommitteesIndexImageWindowBusiness) {
     super();
   }
   divisionId?: string;
@@ -18,10 +19,19 @@ export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel 
     transform: 'translate(-50%, -44.5%)',
   };
 
-  onimage(model: ImageControlModelArray) {
-    this.media.single.camera = model.models;
-    this.media.single.index = model.index;
-    this.media.single.autoplay = model.autoplay;
-    this.media.single.show = true;
+  onimage(model: ImageControlModelArray | ImageControlModelPage) {
+    if (model instanceof ImageControlModelPage) {
+      this.image.page.model = model;
+      this.image.page.page = model.page;
+      this.image.page.show = true;
+    } else if (model instanceof ImageControlModelArray) {
+      this.image.array.models = model.models;
+      this.image.array.index = model.index;
+      if (model.models && model.models.length > 0) {
+        this.image.array.current = model.models[0];
+      }
+      this.image.array.show = true;
+    } else {
+    }
   }
 }

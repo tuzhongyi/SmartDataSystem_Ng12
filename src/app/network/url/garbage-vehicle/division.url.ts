@@ -1,9 +1,9 @@
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export class GarbageVehicleDivisionUrl extends AbstractUrl {
   private static url = new GarbageVehicleDivisionUrl(
-    `${BasicUrl.garbage.vehicle}/Divisions`
+    `${BaseUrl.garbage.garbage_vehicles}/Divisions`
   );
   static basic() {
     return this.url.basic();

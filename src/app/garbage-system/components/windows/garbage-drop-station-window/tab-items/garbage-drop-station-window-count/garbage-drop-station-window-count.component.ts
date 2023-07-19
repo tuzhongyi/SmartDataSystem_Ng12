@@ -12,17 +12,15 @@ import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { Language } from 'src/app/common/tools/language';
 import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 import { GarbageDropStationWindowCountBusiness } from './garbage-drop-station-window-count.business';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'howell-garbage-drop-station-window-count',
@@ -177,7 +175,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
       '行政区',
       '垃圾滞留',
       '垃圾滞留超时',
-      '超时率',
+      '达标率',
     ];
     this.exports.export(type, title, headers, this.datas, this.converter);
   }

@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { EventRecord } from 'src/app/network/model/event-record.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/rfid-card-record.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { CardRecordTableBusiness } from './card-record-table.business';
 import { CardRecordTableArgs } from './card-record-table.model';
@@ -15,45 +15,55 @@ import { CardRecordTableArgs } from './card-record-table.model';
   providers: [CardRecordTableBusiness],
 })
 export class CardRecordTableComponent
-  extends PagedTableAbstractComponent<EventRecord>
-  implements IComponent<IModel, PagedList<EventRecord>>, OnInit
+  extends PagedTableAbstractComponent<AIGarbageRfidCardRecord>
+  implements IComponent<IModel, PagedList<AIGarbageRfidCardRecord>>, OnInit
 {
-  widths = [];
   @Input()
-  init = true;
-
+  business: IBusiness<IModel, PagedList<AIGarbageRfidCardRecord>>;
   @Input()
   args: CardRecordTableArgs = new CardRecordTableArgs();
-
-  @Input()
-  business: IBusiness<IModel, PagedList<EventRecord>>;
-
   @Input()
   load?: EventEmitter<CardRecordTableArgs>;
+  @Input()
+  isinit: boolean = true;
   @Output()
-  video: EventEmitter<EventRecord> = new EventEmitter();
+  loaded: EventEmitter<PagedList<AIGarbageRfidCardRecord>> = new EventEmitter();
+  @Output()
+  video: EventEmitter<AIGarbageRfidCardRecord> = new EventEmitter();
 
   constructor(business: CardRecordTableBusiness) {
     super();
     this.business = business;
   }
 
+  widths: string[] = [
+    '12%',
+    '12%',
+    '10%',
+    '10%',
+    '10%',
+    '12%',
+    '12%',
+    '12%',
+    '10%',
+  ];
+
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((args) => {
-        if (args) this.args = args;
-        this.loadData(1, this.pageSize, this.args);
+        this.args = args;
+        this.loadData(1, this.pageSize);
       });
     }
-    if (this.init) {
-      this.loadData(1, this.pageSize, this.args);
+    if (this.isinit) {
+      this.loadData(1);
     }
   }
 
-  loadData(index: number, size: number, args: CardRecordTableArgs) {
+  loadData(index: number, size: number = 10) {
     this.loading = true;
 
-    let promise = this.business.load(index, size, args);
+    let promise = this.business.load(index, size, this.args);
     this.loading = true;
     promise.then((paged) => {
       this.page = paged.Page;
@@ -63,7 +73,7 @@ export class CardRecordTableComponent
     return promise;
   }
 
-  onvideo(e: Event, item: EventRecord) {
+  onvideo(e: Event, item: AIGarbageRfidCardRecord) {
     e.stopImmediatePropagation();
     this.video.emit(item);
   }

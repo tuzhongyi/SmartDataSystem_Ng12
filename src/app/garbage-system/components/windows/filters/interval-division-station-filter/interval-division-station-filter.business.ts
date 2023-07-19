@@ -1,10 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -43,7 +40,11 @@ export class EventRecordFilterBusiness
 
     if (opts) {
       divisions = await this.getDivisions(this.storeService.divisionId);
-      stations = await this.getStation(opts.divisionId);
+      let divisionId = opts.divisionId;
+      if (!divisionId) {
+        divisionId = this.storeService.divisionId;
+      }
+      stations = await this.getStation(divisionId);
       if (opts.stationId) {
         let station = stations.find((x) => x.Id === opts.stationId);
         if (station && station.Cameras) {

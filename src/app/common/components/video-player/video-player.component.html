@@ -1,5 +1,6 @@
 <div class="video-control">
   <iframe
+    *ngIf="!!src"
     #iframe
     [src]="src"
     (load)="onLoad($event)"

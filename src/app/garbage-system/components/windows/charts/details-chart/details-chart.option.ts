@@ -1,6 +1,3 @@
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import * as echarts from 'echarts/core';
-import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import {
   BarSeriesOption,
   GridComponentOption,
@@ -9,10 +6,12 @@ import {
   TitleComponentOption,
   TooltipComponentOption,
 } from 'echarts';
-import { LegendOption, XAXisOption } from 'echarts/types/dist/shared';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import * as echarts from 'echarts/core';
+import { XAXisOption } from 'echarts/types/dist/shared';
 import { Language } from 'src/app/common/tools/language';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 export type EChartOptions = echarts.ComposeOption<
   | TitleComponentOption
@@ -37,6 +36,7 @@ export class ChartConfig {
 
   theme: EChartsTheme = EChartsTheme.adsame;
   static color = ['#7586e0', '#ffba00', '#21E452'];
+  static title = ['垃圾滞留', '垃圾滞留超时'];
   getOption(
     unit: TimeUnit,
     date: Date,

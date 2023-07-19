@@ -88,7 +88,7 @@
                 >
                   <i class="howell-icon-videodownload"></i></button
                 ><button
-                  *ngIf="type === EventType.MixedInto"
+                  *ngIf="filter.type === EventType.MixedInto"
                   class="icon-button"
                   title="刷卡记录"
                   (click)="oncardrecord(item)"
@@ -132,7 +132,7 @@
   <ng-container *ngIf="panel.show">
     <howell-video-download-panel
       [business]="panel"
-      [type]="type"
+      [type]="filter.type"
       (download)="panel.download($event)"
       (cancel)="panel.cancel()"
     >

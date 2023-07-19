@@ -1,18 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { DisposalRankBusiness } from './disposal-rank.business';
@@ -24,10 +12,10 @@ import { DisposalRankBusiness } from './disposal-rank.business';
   providers: [DisposalRankBusiness],
 })
 export class DisposalRankComponent
-  implements OnInit, OnDestroy, IComponent<IModel, RankModel[]>
+  implements OnInit, IComponent<IModel, RankModel[]>
 {
-  @Output()
-  itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
+  @Input() load?: EventEmitter<void>;
+  @Output() itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
 
   public title: string = '小包垃圾处置达标率排名';
 
@@ -40,13 +28,12 @@ export class DisposalRankComponent
   business: IBusiness<IModel, RankModel[]>;
 
   ngOnInit(): void {
-    this.business.subscription?.subscribe(() => {
-      this.loadData();
-    });
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.loadData();
+      });
+    }
     this.loadData();
-  }
-  ngOnDestroy() {
-    this.business.subscription?.destroy();
   }
   async loadData() {
     this.rankData = await this.business.load();

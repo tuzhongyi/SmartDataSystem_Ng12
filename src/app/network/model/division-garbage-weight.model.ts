@@ -1,5 +1,5 @@
 import { Transform } from 'class-transformer';
-import { GarbageWeight } from './garbage-weight.model';
+import { CollectionGarbageWeight } from './garbage-weight.model';
 import { transformDateTime } from './transform.model';
 /**	区划垃圾重量	*/
 export class DivisionGarbageWeight {
@@ -16,7 +16,7 @@ export class DivisionGarbageWeight {
   /**	Double	总重量，单位：KG	M	*/
   TotalWeight!: number;
   /**	GarbageWeight[]	分类垃圾重量	O	*/
-  Weights?: GarbageWeight[];
+  Weights?: CollectionGarbageWeight[];
   /**	Int64	日期	M	*/
   Date!: number;
   /**	Int32	周	M	*/

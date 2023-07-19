@@ -1,7 +1,7 @@
-import { BasicUrl } from '../../base.url';
+import { BaseUrl } from '../../base.url';
 
 export abstract class EventsUrl {
   static get basic(): string {
-    return `${BasicUrl.aiop}/Events`;
+    return `${BaseUrl.aiop_service}/Events`;
   }
 }

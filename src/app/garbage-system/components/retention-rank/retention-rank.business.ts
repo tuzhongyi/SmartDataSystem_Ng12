@@ -1,14 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
-import { RankConverter } from 'src/app/converter/rank.converter';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { RetentionType } from 'src/app/enum/retention-type.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
@@ -16,10 +11,7 @@ import {
   GetDivisionStatisticNumbersParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import {
-  GetGarbageStationsParams,
-  GetGarbageStationStatisticNumbersParams,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { RetentionRankConverter } from './retention-rank.converter';
@@ -39,8 +31,7 @@ export class RetentionRankBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
-    private storeService: GlobalStorageService,
-    public subscription: SubscriptionService
+    private storeService: GlobalStorageService
   ) {}
   async getData(
     divisionId: string,

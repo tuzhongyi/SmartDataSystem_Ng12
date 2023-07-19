@@ -73,6 +73,8 @@ export class LineZoomChartComponent
     if (changes.load) {
       if (this.load) {
         this.load.subscribe((stationId: string) => {
+          this.panel.line.display = false;
+          this.panel.scatter.display = false;
           this.business.load(stationId, this.date, this.unit).then((data) => {
             this.data = data;
             this.setOption(this.data, option);
@@ -169,7 +171,7 @@ export class LineZoomChartComponent
       // trigger.event.offsetY - 82 - 20 - 5 + 'px';
       if (this.data) {
         let data = this.data.count.find((x) => {
-          let key = formatDate(x.time, 'H:mm', 'en');
+          let key = formatDate(x.time, 'HH:mm', 'en');
           return trigger.name == key;
         });
         if (data) {
@@ -199,7 +201,7 @@ export class LineZoomChartComponent
       // trigger.event.offsetY - 120 - 20 - 5 + 'px';
       if (this.data) {
         let data = this.data.record.find((x) => {
-          let key = formatDate(x.time, 'H:mm', 'en');
+          let key = formatDate(x.time, 'HH:mm', 'en');
           return trigger.name == key;
         });
         if (data) {
@@ -225,33 +227,37 @@ export class LineZoomChartComponent
     this.xAxisData = [];
     let counts = new Array();
     let records = new Array();
+    let last: TimeString | undefined;
     for (let i = 0, offset = { count: 0, record: 0 }; i <= minutes; i++) {
       let now = new Date(begin.getTime());
       now.setMinutes(i);
-
-      this.xAxisData.push(new TimeString(now));
+      last = new TimeString(now, 'HH:mm');
+      this.xAxisData.push(last);
       if (
         model.count &&
         model.count[offset.count] &&
         model.count[offset.count].time.getTime() === now.getTime()
       ) {
-        let value = model.count[offset.count].value.GarbageCount > 0 ? 1 : 0;
+        let value =
+          model.count[offset.count].value.GarbageCount > 0 ? 1 : 0.001;
         model.count[offset.count].index = i;
         counts.push(value);
         offset.count++;
       } else {
-        counts.push(0);
+        counts.push(-0.001);
       }
-      if (
-        model.record &&
-        model.record[offset.record] &&
-        model.record[offset.record].time.getTime() === now.getTime()
-      ) {
-        model.record[offset.record].index = i;
-        let formatter = formatDate(now, 'H:mm', 'en');
+    }
+
+    if (model.record) {
+      for (let i = 0; i < model.record.length; i++) {
+        model.record[i].index = i;
+        let formatter = formatDate(model.record[i].time, 'HH:mm', 'en');
         records.push([formatter, -0.1]);
-        offset.record++;
       }
+    }
+
+    if (this.xAxisData.length % 2 === 0 && last) {
+      this.xAxisData.push(last);
     }
 
     option.xAxis.data = this.xAxisData;

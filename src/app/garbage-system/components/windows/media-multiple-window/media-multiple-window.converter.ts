@@ -23,7 +23,7 @@ export class MediaMultipleWindowConverter
     let model = new MediaMultipleWindowModel();
     if (station.Cameras) {
       for (let i = 0; i < station.Cameras.length; i++) {
-        const camera = station.Cameras[i];
+        const camera = station.Cameras![i];
         let flags = new Flags(camera.CameraUsage);
         if (!flags.contains(CameraUsage.GarbageFull)) {
           let media = new ImageVideoControlModel(camera.Id, source.Id);

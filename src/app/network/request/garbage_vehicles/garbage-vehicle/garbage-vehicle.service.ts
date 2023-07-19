@@ -179,7 +179,7 @@ class VehicleNBService {
     let url = GarbageVehicleUrl.nb(id).power();
     let data = instanceToPlain(params);
     return this.basic.http
-      .post<NBPowerOnParams, HowellResponse<string>>(
+      .howellPost<NBPowerOnParams, HowellResponse<string>>(
         url,
         data as NBPowerOnParams
       )

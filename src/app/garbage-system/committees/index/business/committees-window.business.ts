@@ -3,10 +3,13 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommitteesDeviceWindowBusiness } from './windows/committees-device-window.business';
 import { CommitteesRecordWindowBusiness } from './windows/committees-event-record-window.business';
+import { CommitteesIndexImageWindowBusiness } from './windows/committees-image-window.business';
+
 import { CommitteesMediaWindowBusiness } from './windows/committees-media-window.business';
 import { CommitteesGarbageStationDropWindowBusiness } from './windows/committees-station-drop-window.business';
 import { CommitteesGarbageStationFullWindowBusiness } from './windows/committees-station-full-window.business';
 import { CommitteesGarbageStationInfoWindowBusiness } from './windows/committees-station-info-window.business';
+import { CommitteesVideoWindowBusiness } from './windows/committees-video-window.business';
 import { MobileWindowViewModel } from './windows/mobile-window';
 import { PasswordWindowViewModel } from './windows/password-window';
 import { SummaryWindowViewModel } from './windows/summary-window';
@@ -20,7 +23,8 @@ export class CommitteesWindowBussiness {
     public full: CommitteesGarbageStationFullWindowBusiness,
     public drop: CommitteesGarbageStationDropWindowBusiness,
     public stationInfo: CommitteesGarbageStationInfoWindowBusiness,
-
+    public video: CommitteesVideoWindowBusiness,
+    public image: CommitteesIndexImageWindowBusiness,
     private local: LocalStorageService
   ) {
     this.password = new PasswordWindowViewModel();

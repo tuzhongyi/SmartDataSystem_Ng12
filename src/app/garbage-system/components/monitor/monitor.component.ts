@@ -4,10 +4,13 @@
  * @Last Modified by: zzl
  * @Last Modified time: 2022-01-10 16:08:27
  */
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import {
+  GlobalStorageService,
+  SystemType,
+} from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -39,16 +42,18 @@ export class MonitorComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
-    return this._storeService.HideButton;
+    return this.global.HideButton;
   }
   get HideTitlebar(): boolean {
-    return this._storeService.HideTitlebar;
+    return this.global.HideTitlebar;
   }
+
+  load: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: GlobalStorageService,
+    private global: GlobalStorageService,
     public window: MonitorWindowBussiness,
     public trigger: MonitorEventTriggerBusiness,
     public map: MonitorMapControlBusiness,
@@ -58,6 +63,9 @@ export class MonitorComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
+    this.global.system = SystemType.garbage;
+    this.global.interval.subscribe(this.load);
+    this.global.statusChange.subscribe(this.load);
   }
 
   config(route: ActivatedRoute) {
@@ -70,10 +78,10 @@ export class MonitorComponent implements OnInit {
           value = JSON.parse(param[key]);
           switch (lower) {
             case 'hidebutton':
-              this._storeService.HideButton = value;
+              this.global.HideButton = value;
               break;
             case 'hidetitlebar':
-              this._storeService.HideTitlebar = value;
+              this.global.HideTitlebar = value;
               break;
             default:
               break;
@@ -92,8 +100,8 @@ export class MonitorComponent implements OnInit {
       let userDivisionType =
         EnumHelper.ConvertUserResourceToDivision(resourceType);
 
-      this._storeService.divisionId = userDivisionId;
-      this._storeService.divisionType = userDivisionType;
+      this.global.divisionId = userDivisionId;
+      this.global.divisionType = userDivisionType;
     }
 
     this.statistic.loading.emit();

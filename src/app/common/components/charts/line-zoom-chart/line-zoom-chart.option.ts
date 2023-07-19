@@ -15,14 +15,19 @@ export let option = {
     type: 'piecewise',
     pieces: [
       {
-        gt: 0.005,
+        gt: 0.01,
         lte: 1,
         color: '#CD661D',
       },
       {
-        gte: 0,
-        lte: 0.005,
+        gte: 0.0000000000000000000000001,
+        lte: 0.01,
         color: '#28ce38',
+      },
+      {
+        gte: -1,
+        lte: 0,
+        color: '#cccccc',
       },
     ],
     seriesIndex: 0,
@@ -51,6 +56,9 @@ export let option = {
       color: '#CFD7FE',
       fontSize: '16',
       margin: -5,
+      formatter: function (value: any, index: number) {
+        return value;
+      },
     },
   },
   yAxis: {

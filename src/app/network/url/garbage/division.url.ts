@@ -1,11 +1,11 @@
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 import { EventNumberInnerUrl } from './inner/event_number.url';
 import { StatisticInnerUrl } from './inner/statistic.url';
 import { VolumeInnerUrl } from './inner/volume.url';
 
 export class DivisionUrl {
   static basic() {
-    return `${BasicUrl.garbage.management}/Divisions`;
+    return `${BaseUrl.garbage.garbage_management}/Divisions`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

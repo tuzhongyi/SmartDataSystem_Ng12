@@ -1,10 +1,6 @@
 .garbage-station-statistic-table {
   height: 100%;
 
-  label {
-    margin-bottom: 0;
-  }
-
   &-main {
     height: 100%;
 
@@ -12,43 +8,41 @@
       table-layout: fixed;
     }
 
-    .value {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+
+    .current {
+      padding-right: 0 !important;
+      text-align: right;
+    }
+
+    .signal {
+
+      padding: 0 !important;
 
       .mdi {
         width: 16px;
+        font-size: 16px;
+      }
+    }
+
+    .differ {
+      padding-left: 0 !important;
+      text-align: right;
+      font-size: 16px;
+      color: #6997ff !important;
+
+      &:last-child {
+        padding-right: 12px;
       }
 
-      &.long {
-        width: 100%;
+      &.number {
+        &>div {
+          display: flex;
+          align-items: flex-start;
 
-        span:first-child {
-          width: 115px;
-          white-space: nowrap;
-          text-align: right;
-        }
-      }
-
-      &.shot {
-        span:first-child {
-          width: 27px;
-        }
-      }
-
-      span:first-child {
-        width: 60px;
-        white-space: nowrap;
-      }
-
-      .differ {
-        display: inline-block;
-        width: 30px;
-        text-align: right;
-
-        &.long {
-          width: 60px;
+          &>div {
+            width: 32px;
+            text-align: right;
+          }
         }
       }
     }
@@ -67,6 +61,11 @@
 
       .mat-sort-header-stem {
         display: none;
+      }
+
+      .center .mat-sort-header-container {
+        justify-content: center;
+        transform: translateX(18px);
       }
     }
   }

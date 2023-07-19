@@ -16,6 +16,7 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { ImagePaged } from 'src/app/view-model/paged.model';
 import {
   ImageControlModel,
   ImageControlModelArray,
@@ -48,20 +49,19 @@ export class EventRecordTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
-  @Input()
-  type: EventType = EventType.IllegalDrop;
-  @Input()
-  load?: EventEmitter<EventRecordFilter>;
-  @Input()
-  filter: EventRecordFilter;
-  @Input()
-  getData?: EventEmitter<Page>;
-  @Output()
-  gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
-  @Output()
-  card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
+  @Input() type: EventType = EventType.IllegalDrop;
+  @Input() load?: EventEmitter<EventRecordFilter>;
+  @Input() filter: EventRecordFilter;
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
+    new EventEmitter();
+  @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() image: EventEmitter<
+    | ImagePaged<EventRecordViewModel>
+    | ImageControlModelArray<EventRecordViewModel>
+  > = new EventEmitter();
+  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -82,14 +82,14 @@ export class EventRecordTableComponent
         this.loadData(-1, this.pageSize, this.filter);
       });
     }
-    if (changes.getData && this.getData) {
-      this.getData.subscribe((page) => {
+    if (changes.get && this.get) {
+      this.get.subscribe((page) => {
         let params = new PagedParams();
         params.PageSize = page.PageSize;
         params.PageIndex = page.PageIndex;
         let promise = this.business.load(this.type, params, this.filter);
         promise.then((data) => {
-          this.gotData.emit(data);
+          this.got.emit(data);
         });
       });
     }
@@ -132,33 +132,43 @@ export class EventRecordTableComponent
       this.download.image(src, model.ResourceName ?? '', model.EventTime);
     }
   }
-  playvideo(model: EventRecordViewModel) {
-    let array = new ImageControlModelArray(model.images, 0, true);
-    array.data = model;
-    this.image.emit(array);
-  }
   oncardrecord(model: EventRecordViewModel) {
     this.card.emit(model);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  playvideo(model: EventRecordViewModel) {
+    this.video.emit(model);
+  }
   imageClick(
     item: EventRecordViewModel,
     img: ImageControlModel,
     index: number
   ) {
-    let number = this.page.PageSize * (this.page.PageIndex - 1) + index + 1;
-    let array = new ImageControlModelArray(item.images, img.index);
-    array.data = item;
-    array.page = new Page();
-    array.page.PageCount = this.page.TotalRecordCount;
-    array.page.PageIndex = number;
-    array.page.PageSize = 1;
-    array.page.RecordCount = 1;
-    array.page.TotalRecordCount = this.page.TotalRecordCount;
+    switch (this.type) {
+      case EventType.GarbageFull:
+        let array = new ImageControlModelArray<EventRecordViewModel>(
+          item.images,
+          img.index,
+          item
+        );
+        array.data = item;
+        this.image.emit(array);
+        break;
 
-    array.data = item;
-    this.image.emit(array);
+      default:
+        let paged = new ImagePaged<EventRecordViewModel>();
+        let number = this.page.PageSize * (this.page.PageIndex - 1) + index + 1;
+        paged.Data = item;
+        paged.Page = new Page();
+        paged.Page.PageCount = this.page.TotalRecordCount;
+        paged.Page.PageIndex = number;
+        paged.Page.PageSize = 1;
+        paged.Page.RecordCount = 1;
+        paged.Page.TotalRecordCount = this.page.TotalRecordCount;
+        paged.Image = img;
+
+        this.image.emit(paged);
+        break;
+    }
   }
 }

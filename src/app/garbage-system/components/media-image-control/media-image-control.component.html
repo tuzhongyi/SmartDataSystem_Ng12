@@ -1,0 +1,60 @@
+<div class="video-control" *ngIf="!!model">
+  <div class="header">
+    <div class="title">
+      <div>{{ model.name }}</div>
+      <div
+        class="spinner-border green-text"
+        [ngClass]="{
+          'spinner-border': captureing,
+          circle: !captureing
+        }"
+      ></div>
+    </div>
+    <div class="operation">
+      <div class="label" *ngIf="display.object">目标信息</div>
+      <hw-switch
+        *ngIf="display.object"
+        (onChanged)="ondrawchange($event)"
+        [on]="draw"
+      ></hw-switch>
+      <div
+        *ngIf="display.download.video"
+        title="下载视频"
+        (click)="onvideodownload()"
+      >
+        <i class="howell-icon-videodownload sky-blue-text"></i>
+      </div>
+      <div
+        *ngIf="display.download.image"
+        title="下载图片"
+        (click)="onimagedownload()"
+      >
+        <i class="howell-icon-picturedownload sky-blue-text"></i>
+      </div>
+      <div title="播放视频" (click)="onplay($event)">
+        <i class="howell-icon-video sky-blue-text"></i>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <app-image-control [model]="model" [draw]="draw"></app-image-control>
+    <div
+      class="page"
+      [ngStyle]="{ 'justify-content': isfirst ? 'flex-end' : 'space-between' }"
+    >
+      <div class="prev" *ngIf="!isfirst">
+        <div
+          class="howell-icon-arrowleftbold blue-text arrow-wrap"
+          (click)="onprev()"
+        ></div>
+      </div>
+      <div class="next" *ngIf="!islast">
+        <div
+          class="howell-icon-arrowrightbold blue-text arrow-wrap"
+          (click)="onnext()"
+        ></div>
+      </div>
+    </div>
+  </div>
+  <div class="content" *ngIf="img"></div>
+</div>

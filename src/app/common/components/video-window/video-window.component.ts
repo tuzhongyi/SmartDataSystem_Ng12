@@ -1,38 +1,21 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  OnDestroy,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
-import { PlayMode, VideoModel } from '../video-player/video.model';
-import { StreamType } from 'src/app/enum/stream-type.enum';
-import { VideoWindowViewModel } from './video-window.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-
-declare var $: any;
+import { wait } from '../../tools/tool';
+import { PlayMode, VideoModel } from '../video-player/video.model';
+import { VideoWindowViewModel } from './video-window.model';
 
 @Component({
   selector: 'app-video-window',
   templateUrl: './video-window.component.html',
   styleUrls: ['./video-window.component.less'],
 })
-export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
+export class VideoWindowComponent implements OnInit {
   PlayMode = PlayMode;
 
   @Input()
   title: string = '';
   @Input()
-  mode: PlayMode = PlayMode.live;
-
-  @Input()
   model?: VideoModel;
-
-  preview?: VideoModel;
-  playback?: VideoModel;
 
   @Input()
   window: VideoWindowViewModel = new VideoWindowViewModel();
@@ -40,64 +23,44 @@ export class VideoWindowComponent implements OnInit, OnDestroy, OnChanges {
   @Output()
   download: EventEmitter<DurationParams> = new EventEmitter();
 
-  ngOnDestroy(): void {
-    this.playback = undefined;
-    this.preview = undefined;
-  }
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.model && this.model) {
-      this.model.mode = this.mode;
-      switch (this.mode) {
-        case PlayMode.live:
-          this.preview = this.model;
+  constructor() {}
 
-          break;
-        case PlayMode.vod:
-          this.playback = this.model;
+  loaded = false;
 
-          break;
+  play: EventEmitter<VideoModel> = new EventEmitter();
 
-        default:
-          break;
+  ngOnInit(): void {
+    wait(
+      () => {
+        return this.loaded || this.window.show;
+      },
+      () => {
+        if (!this.window.show) return;
+        if (this.model) {
+          switch (location.hostname) {
+            case 'localhost':
+            case '127.0.0.1':
+              this.model.web = undefined;
+              break;
+            default:
+              break;
+          }
+
+          this.play.emit(this.model);
+        }
       }
-    }
+    );
   }
   onclose() {
     this.window.show = false;
   }
-
-  modechange() {
-    this.mode = this.mode == PlayMode.live ? PlayMode.vod : PlayMode.live;
+  topreview() {
     if (this.model) {
-      this.model.mode = this.mode;
-    }
-    this.preview = undefined;
-    this.playback = undefined;
-    if (this.mode === PlayMode.live) {
-      this.preview = this.model;
+      this.model.mode = PlayMode.live;
+      this.play.emit(this.model);
     }
   }
-
-  ondownload(interval: DurationParams) {
-    this.download.emit(interval);
-  }
-  onplayback(interval: DurationParams) {
-    if (this.model) {
-      this.model.beginTime = interval.BeginTime;
-      this.model.endTime = interval.EndTime;
-      let url = this.model.toString(StreamType.main);
-      let model = VideoModel.fromUrl(url);
-      model.web = this.model.web;
-      this.playback = model;
-    }
-  }
-  onstreamchange(stream: StreamType) {
-    if (this.model) {
-      this.model.stream = stream;
-      let url = this.model.toString(stream);
-      let model = VideoModel.fromUrl(url);
-      this.preview = model;
-    }
+  onloaded() {
+    this.loaded = true;
   }
 }

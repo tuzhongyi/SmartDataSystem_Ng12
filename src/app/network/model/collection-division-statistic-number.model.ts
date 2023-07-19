@@ -1,4 +1,4 @@
-import { GarbageWeight } from './garbage-weight.model';
+import { CollectionGarbageWeight } from './garbage-weight.model';
 
 /** 区划统计数据 */
 export class CollectionDivisionStatisticNumber {
@@ -14,5 +14,5 @@ export class CollectionDivisionStatisticNumber {
   CollectionPointNumber?: number;
   /**	Double	总垃圾清运重量，单位：KG	O */
   Weight?: number;
-  Weights?: GarbageWeight[];
+  Weights?: CollectionGarbageWeight[];
 }

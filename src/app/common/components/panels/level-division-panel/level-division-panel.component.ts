@@ -36,15 +36,17 @@ export class LevelDivisionPanelComponent
   rename = false;
 
   async onchange(node?: ILevelListNode) {
-    if (node) {
-      let division = node as Division;
-      if (division.DivisionType === DivisionType.Committees) {
-        return;
+    try {
+      if (node) {
+        let division = node as Division;
+        if (division.DivisionType === DivisionType.Committees) {
+          return;
+        }
       }
+      this.loadData(node);
+    } finally {
+      this.selectedChange.emit(node);
     }
-
-    this.loadData(node);
-    this.selectedChange.emit(node);
   }
 
   loadData(node?: ILevelListNode) {

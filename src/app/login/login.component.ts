@@ -9,6 +9,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -38,7 +39,7 @@ import { AuthorizationService } from '../network/request/auth/auth-request.servi
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   systemManage = false;
 
   @ViewChild('loginVideo')
@@ -70,8 +71,18 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this._titleService.setTitle('用户登录');
   }
 
+  keypressHandle?: (e: KeyboardEvent) => void;
+
   ngOnInit() {
     this.fillForm();
+    this.keypressHandle = this.onkeypress.bind(this);
+    window.addEventListener('keypress', this.keypressHandle);
+  }
+
+  ngOnDestroy(): void {
+    if (this.keypressHandle) {
+      window.removeEventListener('keypress', this.keypressHandle);
+    }
   }
   ngAfterViewInit() {
     const _this = this;
@@ -96,6 +107,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         // console.log('onPlayerReady', this);
       }
     );
+  }
+  onkeypress(e: KeyboardEvent) {
+    if (e.key === 'Enter') {
+      this.login();
+    }
   }
   fillForm() {
     let autoLogin = false;
@@ -198,10 +214,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
         if (user instanceof User) {
           // console.log('登录成功', result);
           switch (user.UserType) {
+            case 3:
             case 2:
               this._router.navigateByUrl(RoutePath.garbage_vehicle);
               break;
-            case 3:
+
             case 1:
             default:
               this._storeUserInfo(user, user.Id, user.Resources ?? []);

@@ -4,41 +4,16 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2021-11-09 09:46:40
  */
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  DropListModel,
-  DropListObj,
-  RankDropListType,
-  RankEventModel,
-  RankEventType,
-  RankModel,
-  RankResourceType,
-} from 'src/app/view-model/rank.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { Division } from 'src/app/network/model/division.model';
-import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { EventNumber } from 'src/app/network/model/event-number.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { User } from 'src/app/network/model/user.model';
-import { Language } from 'src/app/common/tools/language';
-import { Subscription } from 'rxjs';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IllegalMixintoDataResource } from './illegal-mixinto-rank.converter';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { FormControl } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { RankEventType, RankModel } from 'src/app/view-model/rank.model';
+import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
 
 @Component({
   selector: 'app-illegal-mixinto-rank',
@@ -46,7 +21,9 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
   styleUrls: ['./illegal-mixinto-rank.component.less'],
   providers: [IllegalMixintoRankBusiness],
 })
-export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
+export class IllegalMixintoRankComponent implements OnInit {
+  @Input() load?: EventEmitter<void>;
+
   public title: string = '乱扔垃圾排名';
 
   resourceTypes: SelectItem[] = [];
@@ -83,21 +60,20 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
     });
 
     // 区划改变时触发
-    this.business.subscription.subscribe(() => {
-      let type = EnumHelper.ConvertDivisionToUserResource(
-        this.storeService.divisionType
-      );
+    if (this.load) {
+      this.load.subscribe((x) => {
+        let type = EnumHelper.ConvertDivisionToUserResource(
+          this.storeService.divisionType
+        );
 
-      if (this.storeService.divisionType !== this.currentType) {
-        this.initType(type);
-      }
-      this.loadData();
-      this.currentType = this.storeService.divisionType;
-    });
+        if (this.storeService.divisionType !== this.currentType) {
+          this.initType(type);
+        }
+        this.loadData();
+        this.currentType = this.storeService.divisionType;
+      });
+    }
     this.loadData();
-  }
-  ngOnDestroy() {
-    this.business.subscription.destroy();
   }
   async loadData() {
     this.resourceTypeDisplay =
@@ -138,9 +114,11 @@ export class IllegalMixintoRankComponent implements OnInit, OnDestroy {
   }
 
   onResourceTypeSelected(item: SelectItem) {
-    if (this.resourceType === item.value) return;
-    this.resourceType = item.value;
-    this.loadData();
+    if (item) {
+      if (this.resourceType === item.value) return;
+      this.resourceType = item.value;
+      this.loadData();
+    }
   }
   onEventTypeSelected(item: SelectItem) {
     if (this.eventType == item.value) return;

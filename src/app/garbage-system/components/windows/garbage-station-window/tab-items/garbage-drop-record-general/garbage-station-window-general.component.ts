@@ -20,10 +20,13 @@ import { GarbageStationWindowGeneralExportConverter } from './garbage-station-wi
   styleUrls: ['./garbage-station-window-general.component.less'],
 })
 export class GarbageStationWindowGeneralComponent implements OnInit {
-  constructor(private exports: ExportBusiness) {}
+  constructor(private exports: ExportBusiness) {
+    this.dateTimePickerConfig = new DateTimePickerConfig();
+    this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
+  }
 
   DateTimePickerView = DateTimePickerView;
-  dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
+  dateTimePickerConfig: DateTimePickerConfig;
   TimeUnit = TimeUnit;
 
   units: SelectItem[] = [];

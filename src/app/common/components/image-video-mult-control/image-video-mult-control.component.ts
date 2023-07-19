@@ -1,11 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import {
   ImageVideoControlModel,
@@ -19,12 +21,14 @@ import {
   styleUrls: ['./image-video-mult-control.component.less'],
 })
 export class ImageVideoMultControlComponent implements OnInit, OnChanges {
-  @Input()
+  @Input('models')
   models?: ImageVideoControlModel[];
   @Input()
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
   @Input()
   playback?: EventEmitter<PlaybackInterval>;
+  @Input()
+  fullplay = false;
 
   @Output()
   onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
@@ -35,6 +39,9 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
 
   sqrt = 1;
   played?: ImageVideoControlModel;
+
+  @ViewChild('element')
+  element?: ElementRef;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.models && this.models) {
@@ -56,12 +63,11 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
     }
   }
 
-  onfullscreen(item: ImageVideoControlModel) {
-    item.fulled = !item.fulled;
-  }
-
   onplay(item: ImageVideoControlModel) {
     this.played = item;
+    if (this.fullplay) {
+      item.fulled = true;
+    }
     this.onplayed.emit(this.played);
   }
   onstop(playing: boolean) {

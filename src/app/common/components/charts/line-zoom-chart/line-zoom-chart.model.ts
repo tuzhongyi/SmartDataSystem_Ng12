@@ -35,8 +35,11 @@ export class LineZoomScatterPanel {
 }
 
 export class TimeString extends Date {
-  constructor(date: Date | number) {
+  constructor(date: Date | number, format?: string) {
     super(date);
+    if (format) {
+      this.formater = format;
+    }
     if (typeof date === 'number') {
       this.date = new Date(date);
     } else {

@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
 import {
   HttpClient,
   HttpEventType,
@@ -8,9 +6,11 @@ import {
   HttpRequest,
   HttpResponse,
 } from '@angular/common/http';
-import { Digest } from './digest';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { HowellResponse } from '../model/howell-response.model';
 import { AuthorizationService } from './auth/auth-request.service';
+import { Digest } from './digest';
 
 @Injectable({
   providedIn: 'root',
@@ -110,12 +110,11 @@ export class HowellAuthHttpService {
     return this._http.get<R>(url, httpOptions);
   }
 
-  public post<T = any, R = HowellResponse<T>>(
+  post<T = any, R = any>(
     url: string,
     model?: T,
     params?: HttpParams
   ): Observable<R> {
-    // const myHeaders = this.getHttpHeaders('POST', url);
     const myHeaders = this._authorizationService.generateHttpHeader(
       'POST',
       url
@@ -125,6 +124,14 @@ export class HowellAuthHttpService {
       params: params,
     };
     return this._http.post<R>(url, model, httpOptions);
+  }
+
+  public howellPost<T = any, R = HowellResponse<T>>(
+    url: string,
+    model?: T,
+    params?: HttpParams
+  ): Observable<R> {
+    return this.post<T, R>(url, model, params);
   }
 
   public postBinaryData<T>(url: string, data: BinaryData) {
@@ -171,11 +178,7 @@ export class HowellAuthHttpService {
     return this._http.post<R>(url, base64, httpOptions);
   }
 
-  public put<T = any, R = HowellResponse<T>>(
-    url: string,
-    model: T,
-    params?: HttpParams
-  ): Observable<R> {
+  public put<T = any, R = any>(url: string, model: T, params?: HttpParams) {
     const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
     const httpOptions = {
       headers: myHeaders,
@@ -184,7 +187,15 @@ export class HowellAuthHttpService {
     return this._http.put<R>(url, model, httpOptions);
   }
 
-  public delete<T = any, R = HowellResponse<T>>(url: string): Observable<R> {
+  public howellPut<T = any, R = HowellResponse<T>>(
+    url: string,
+    model: T,
+    params?: HttpParams
+  ): Observable<R> {
+    return this.put<T, R>(url, model, params);
+  }
+
+  delete<R = any>(url: string): Observable<R> {
     const myHeaders = this._authorizationService.generateHttpHeader(
       'DELETE',
       url
@@ -193,6 +204,12 @@ export class HowellAuthHttpService {
       headers: myHeaders,
     };
     return this._http.delete<R>(url, httpOptions);
+  }
+
+  public howellDelete<T = any, R = HowellResponse<T>>(
+    url: string
+  ): Observable<R> {
+    return this.delete<R>(url);
   }
 
   public auth(

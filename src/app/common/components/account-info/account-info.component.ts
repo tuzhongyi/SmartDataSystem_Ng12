@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import {
+  GlobalStorageService,
+  SystemType,
+} from '../../service/global-storage.service';
 
 @Component({
   selector: 'app-account-info',
@@ -11,7 +14,22 @@ export class AccountInfoComponent implements OnInit {
   desc: string = '生活垃圾分类全程监管平台';
   title: string = '';
 
-  constructor(private _localStorageService: LocalStorageService) {}
+  constructor(
+    private _localStorageService: LocalStorageService,
+    store: GlobalStorageService
+  ) {
+    switch (store.system) {
+      case SystemType.garbage:
+        this.desc = '生活垃圾分类全程监管平台';
+        break;
+      case SystemType.vehicle:
+        this.desc = '生活垃圾清运监管平台';
+        break;
+
+      default:
+        break;
+    }
+  }
 
   ngOnInit(): void {
     let user = this._localStorageService.user;

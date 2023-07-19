@@ -1,9 +1,9 @@
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export abstract class GarbageVehicleEventUrl {
   static basic() {
-    return `${BasicUrl.garbage.vehicle}/Events`;
+    return `${BaseUrl.garbage.garbage_vehicles}/Events`;
   }
   static get info() {
     return new InfoUrl(this.basic());

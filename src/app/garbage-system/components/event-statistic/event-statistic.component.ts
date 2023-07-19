@@ -1,30 +1,27 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
-  OnDestroy,
   OnInit,
 } from '@angular/core';
-import * as echarts from 'echarts/core';
 import {
-  EChartsOption,
   GridComponentOption,
   LegendComponentOption,
   LineSeriesOption,
   TitleComponentOption,
   TooltipComponentOption,
 } from 'echarts';
-import { ResizedEvent } from 'angular-resize-event';
-import { Subscription } from 'rxjs';
+import * as echarts from 'echarts/core';
+import { CallbackDataParams } from 'echarts/types/dist/shared';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { EventStatisticConverter } from 'src/app/converter/event-statistic.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { EventStatisticBusiness } from './event-statistic.business';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { EventStatisticConverter } from 'src/app/converter/event-statistic.converter';
-import { CallbackDataParams } from 'echarts/types/dist/shared';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { Division } from 'src/app/network/model/division.model';
+import { EventStatisticBusiness } from './event-statistic.business';
 
 type EChartOptions = echarts.ComposeOption<
   | TitleComponentOption
@@ -40,11 +37,8 @@ type EChartOptions = echarts.ComposeOption<
   styleUrls: ['./event-statistic.component.less'],
   providers: [EventStatisticBusiness],
 })
-export class EventStatisticComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
-  // 在销毁组件时，取消订阅
-  private subscription: Subscription | null = null;
+export class EventStatisticComponent implements OnInit, AfterViewInit {
+  @Input() load?: EventEmitter<void>;
 
   // 当前区划id
   private divisionId: string = '';
@@ -97,22 +91,15 @@ export class EventStatisticComponent
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this._storeService.statusChange.subscribe(() => {
-      this._changeData();
-    });
-    this._storeService.interval.subscribe((x) => {
-      this._changeData();
-    });
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this._changeData();
+      });
+    }
     this._changeData();
     this.options.title = {
       text: this.title,
     };
-  }
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
   }
   ngAfterViewInit(): void {}
 

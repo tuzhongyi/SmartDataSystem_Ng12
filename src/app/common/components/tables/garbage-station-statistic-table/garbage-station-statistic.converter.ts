@@ -1,10 +1,6 @@
-import { formatDate } from '@angular/common';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { EventType } from 'src/app/enum/event-type.enum';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
 import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import {
@@ -60,7 +56,11 @@ export class GarbageStationStatisticConverter
 
     if (model.GarbageRatio) {
       model.GarbageRatioTd.value = model.GarbageRatio;
-      model.GarbageRatioTd.format = model.GarbageRatio.toFixed(2);
+      if (model.GarbageRatio === 100) {
+        model.GarbageRatioTd.format = model.GarbageRatio.toFixed(0);
+      } else {
+        model.GarbageRatioTd.format = model.GarbageRatio.toFixed(2);
+      }
     }
 
     model.AvgGarbageTimeTd.value = model.AvgGarbageTime ?? 0;
@@ -96,6 +96,15 @@ export class GarbageStationStatisticConverter
       if (before.GarbageRatio) {
         model.GarbageRatioTd.differ =
           model.GarbageRatioTd.value - before.GarbageRatio;
+        let abs = Math.abs(model.GarbageRatioTd.differ);
+        if (
+          model.GarbageRatioTd.value === 100 ||
+          model.GarbageRatioTd.value === 0
+        ) {
+          model.GarbageRatioTd.differView = abs.toFixed(0);
+        } else {
+          model.GarbageRatioTd.differView = abs.toFixed(2);
+        }
       }
 
       model.AvgGarbageTimeTd.differ = this.getQoQ(

@@ -45,17 +45,15 @@ export class GarbageStationTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  load?: EventEmitter<SearchOptions>;
-  @Output()
-  position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input() load?: EventEmitter<SearchOptions>;
 
-  @Input()
-  business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
-  @Input()
-  stationId?: string;
-  @Input()
-  divisionId?: string;
+  @Input() business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
+  @Input() stationId?: string;
+  @Input() divisionId?: string;
+  @Output() image: EventEmitter<
+    ImageControlModelArray<GarbageStationTableModel>
+  > = new EventEmitter();
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
 
   constructor(business: GarbageStationTableBusiness) {
     super();
@@ -110,10 +108,8 @@ export class GarbageStationTableComponent
     this.loadData(page.pageIndex + 1, this.pageSize, this.searchOpts);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageStationTableModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index);
+    let array = new ImageControlModelArray(item.images, img.index, item);
     this.image.emit(array);
   }
 

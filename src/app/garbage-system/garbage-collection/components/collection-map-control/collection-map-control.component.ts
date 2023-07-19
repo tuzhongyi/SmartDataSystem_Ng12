@@ -15,7 +15,7 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
-import { PointInfoPanelModelOption } from 'src/app/garbage-system/components/map-control/point-info-panel/point-info-panel.model';
+import { PointInfoPanelModelOption } from 'src/app/garbage-system/components/map-control-point-info-panel/point-info-panel.model';
 import { ICamera } from 'src/app/network/model/camera.interface';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';

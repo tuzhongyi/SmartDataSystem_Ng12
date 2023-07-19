@@ -3,15 +3,9 @@ import {
   ImageVideoControlOperation,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { Flags } from 'src/app/common/tools/flags';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { StationState } from 'src/app/enum/station-state.enum';
 import { Camera } from 'src/app/network/model/camera.model';
-import {
-  GarbageStation,
-  GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class PatrolControlModel {
   constructor(id: string) {
@@ -19,7 +13,7 @@ export class PatrolControlModel {
   }
   id: string;
   title: string = '';
-  media?: ImageVideoControlModel[];
+  media!: Promise<ImageVideoControlModel[]>;
   status: PatrolControlStatus = new PatrolControlStatus();
 }
 

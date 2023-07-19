@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -25,18 +24,15 @@ export class EventRecordBusiness
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService,
-    public subscription: SubscriptionService,
     public Converter: EventRecordPagedConverter
   ) {}
 
   async load(
     type: EventType,
     page: PagedParams,
-    opts: EventRecordFilter,
-    divisionId?: string,
-    stationId?: string
+    opts: EventRecordFilter
   ): Promise<PagedList<EventRecordViewModel>> {
-    let data = await this.getData(type, page, opts, divisionId, stationId);
+    let data = await this.getData(type, page, opts);
     let models = await this.Converter.Convert(data, {
       station: (id: string) => {
         return this.stationService.cache.get(id);
@@ -54,12 +50,10 @@ export class EventRecordBusiness
   getData(
     type: EventType,
     page: PagedParams,
-    opts: EventRecordFilter,
-    divisionId?: string,
-    stationId?: string
+    opts: EventRecordFilter
   ): Promise<PagedList<EventRecordType>> {
     this.eventService.record.IllegalDrop;
-    let params = this.getParams(page, opts, divisionId, stationId);
+    let params = this.getParams(page, opts);
 
     switch (type) {
       case EventType.IllegalDrop:
@@ -73,12 +67,7 @@ export class EventRecordBusiness
     }
   }
 
-  getParams(
-    page: PagedParams,
-    opts: EventRecordFilter,
-    divisionId?: string,
-    stationId?: string
-  ) {
+  getParams(page: PagedParams, opts: EventRecordFilter) {
     let params = new GetEventRecordsParams();
     params = Object.assign(params, page);
     params.BeginTime = opts.BeginTime;

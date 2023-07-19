@@ -45,19 +45,12 @@ export class GarbageDropStationTableComponent
     OnDestroy,
     OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
-  @Input()
-  divisionId?: string;
-  @Input()
-  count: number = 0;
-
-  @Input()
-  load?: EventEmitter<SearchOptions>;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  @Output()
-  position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input() business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
+  @Input() divisionId?: string;
+  @Input() count: number = 0;
+  @Input() load?: EventEmitter<SearchOptions>;
+  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
 
   sort?: Sort;
 
@@ -115,7 +108,7 @@ export class GarbageDropStationTableComponent
   }
 
   imageClick(item: GarbageDropStationTableModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index);
+    let array = new ImageControlModelArray(item.images, img.index, item);
     this.image.emit(array);
   }
 

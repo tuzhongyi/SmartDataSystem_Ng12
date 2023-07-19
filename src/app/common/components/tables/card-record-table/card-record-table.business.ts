@@ -1,19 +1,22 @@
 import { Injectable } from '@angular/core';
-import { EventRecord } from 'src/app/network/model/event-record.model';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
-import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/rfid-card-record.model';
+import { GetAIGarbageStationRfidCardRecordsParams } from 'src/app/network/request/ai-garbage/ai-garbage.params';
+import { AIGarbageRequestService } from 'src/app/network/request/ai-garbage/ai-garbage.service';
 
 import { CardRecordTableArgs } from './card-record-table.model';
 
 @Injectable()
-export class CardRecordTableBusiness {
-  constructor(private service: EventRequestService) {}
+export class CardRecordTableBusiness
+  implements IBusiness<PagedList<AIGarbageRfidCardRecord>>
+{
+  constructor(private service: AIGarbageRequestService) {}
   async load(
     index: number,
     size: number = 10,
     args: CardRecordTableArgs
-  ): Promise<PagedList<EventRecord>> {
+  ): Promise<PagedList<AIGarbageRfidCardRecord>> {
     let data = await this.getData(index, size, args);
     return data;
   }
@@ -21,15 +24,18 @@ export class CardRecordTableBusiness {
     index: number,
     size: number = 10,
     args: CardRecordTableArgs
-  ): Promise<PagedList<EventRecord>> {
-    let params = new GetEventRecordsParams();
+  ): Promise<PagedList<AIGarbageRfidCardRecord>> {
+    let params = new GetAIGarbageStationRfidCardRecordsParams();
     params.PageIndex = index;
     params.PageSize = size;
     params.BeginTime = args.duration.begin;
     params.EndTime = args.duration.end;
     if (args.stationId) {
-      params.StationIds = [args.stationId];
+      params.GarbageStationIds = [args.stationId];
     }
-    return this.service.record.MixedInto.list(params);
+
+    params.BuildingNo = args.building;
+    params.RoomNo = args.room;
+    return this.service.rfid.cards.records.list(params);
   }
 }

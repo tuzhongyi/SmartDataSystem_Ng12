@@ -1,3 +1,4 @@
+import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { IObjectModel } from 'src/app/network/model/model.interface';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
@@ -16,6 +17,7 @@ export class EventRecordFilter extends DurationParams {
     this.EndTime = interval.EndTime;
   }
 
+  type: EventType = EventType.None;
   divisionId?: string;
   stationId?: string;
   cameraId?: string;

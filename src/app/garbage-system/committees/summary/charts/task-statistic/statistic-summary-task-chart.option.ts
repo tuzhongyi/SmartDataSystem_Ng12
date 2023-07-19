@@ -110,7 +110,7 @@ let timeoutSerie = {
   data: [
     {
       value: 0,
-      name: '超时率',
+      name: '达标率',
       title: {
         offsetCenter: ['0%', '55%'],
       },

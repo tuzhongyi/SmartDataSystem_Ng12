@@ -1,20 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { Language } from 'src/app/common/tools/language';
+import { Enum } from 'src/app/enum/enum-helper';
+import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 
 import { RankModel } from 'src/app/view-model/rank.model';
@@ -27,13 +17,11 @@ import { RetentionRankBusiness } from './retention-rank.business';
   providers: [RetentionRankBusiness],
 })
 export class RetentionRankComponent
-  implements OnInit, OnDestroy, IComponent<IModel, RankModel[]>
+  implements OnInit, IComponent<IModel, RankModel[]>
 {
-  @Output()
-  Click: EventEmitter<RetentionRankArgs> = new EventEmitter();
-
-  @Input()
-  typeEnabled = true;
+  @Input() load?: EventEmitter<void>;
+  @Input() typeEnabled = true;
+  @Output() Click: EventEmitter<RetentionRankArgs> = new EventEmitter();
 
   public title: string = '垃圾滞留时长排名';
 
@@ -57,18 +45,13 @@ export class RetentionRankComponent
     });
 
     // 区划改变时触发
-    if (this.business.subscription) {
-      this.business.subscription.subscribe(() => {
+    if (this.load) {
+      this.load.subscribe((x) => {
         this.loadData();
       });
     }
 
     this.loadData();
-  }
-  ngOnDestroy() {
-    if (this.business.subscription) {
-      this.business.subscription.destroy();
-    }
   }
   async loadData() {
     this.rankData = await this.business.load(this.retentionType);

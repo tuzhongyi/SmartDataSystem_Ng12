@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import {
   DisposalCountConverter,
   NumberStatistic,
 } from 'src/app/garbage-system/components/disposal-count/disposal-count.converter';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { DisposalCountModel } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DisposalCountModel } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
 @Injectable()
 export class DisposalCountBusiness
@@ -19,7 +18,6 @@ export class DisposalCountBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
-    public subscription: SubscriptionService,
     private store: GlobalStorageService
   ) {}
   Converter: IConverter<NumberStatistic, DisposalCountModel> =

@@ -4,7 +4,10 @@
       {{ model.station ? model.station.Name : "" }}
     </div>
     <div class="media-multiple-window-content">
-      <app-image-video-mult-control [models]="model.medias">
+      <app-image-video-mult-control
+        [models]="model.medias"
+        [fullplay]="fullplay"
+      >
       </app-image-video-mult-control>
     </div>
     <div class="media-multiple-window-footer">

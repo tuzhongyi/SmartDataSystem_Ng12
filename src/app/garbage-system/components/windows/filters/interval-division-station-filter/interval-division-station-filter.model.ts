@@ -6,6 +6,6 @@ export class DivisionStationFilteModel {
   cameras: SelectItem[] = [];
 }
 export interface DivisionStationFilterOpts {
-  divisionId: string;
+  divisionId?: string;
   stationId?: string;
 }

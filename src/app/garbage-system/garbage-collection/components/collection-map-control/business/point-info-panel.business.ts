@@ -6,7 +6,7 @@ import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import {
   PointInfoPanelModel,
   PointInfoPanelModelState,
-} from 'src/app/garbage-system/components/map-control/point-info-panel/point-info-panel.model';
+} from 'src/app/garbage-system/components/map-control-point-info-panel/point-info-panel.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';

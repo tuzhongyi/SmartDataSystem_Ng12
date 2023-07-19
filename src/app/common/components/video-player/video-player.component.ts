@@ -16,8 +16,10 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
+import { HowellUrl } from 'src/app/view-model/howell-url.model';
 import { wait } from '../../tools/tool';
 import { VideoModel } from './video.model';
+import { ButtonName } from './WSPlayerProxyButtonName';
 
 @Component({
   selector: 'app-video-player',
@@ -27,89 +29,48 @@ import { VideoModel } from './video.model';
 export class VideoPlayerComponent
   implements OnDestroy, OnInit, AfterViewInit, OnChanges
 {
-  @Input()
-  url?: string;
+  @Input() url?: string;
+  @Input() model?: VideoModel;
+  @Input() webUrl: string = '/video/wsplayer/wsplayer.html';
+  @Input() name: string = '';
+  @Input() index = 0;
+  @Input() play?: EventEmitter<VideoModel>;
+  @Input() stop?: EventEmitter<void>;
+  @Input() download?: EventEmitter<{ filename: string; type: string }>;
+  @Input() resize?: EventEmitter<{ width: number; height: number }>;
+  @Input() fullscreen?: EventEmitter<void>;
+  @Input() frame?: EventEmitter<void>;
+  @Input() resume?: EventEmitter<void>;
+  @Input() speedResume?: EventEmitter<void>;
+  @Input() pause?: EventEmitter<void>;
+  @Input() capturePicture?: EventEmitter<void>;
+  @Input() slow?: EventEmitter<void>;
+  @Input() fast?: EventEmitter<void>;
+  @Input() changeRuleState?: EventEmitter<boolean>;
+  @Input() seek?: EventEmitter<number>;
 
-  @Input()
-  model?: VideoModel;
-
-  @Input()
-  webUrl: string = '/video/wsplayer/wsplayer.html';
-
-  @Input()
-  name: string = '';
-  @Input()
-  index = 0;
-
-  @Input()
-  play?: EventEmitter<VideoModel>;
-  @Input()
-  stop?: EventEmitter<void>;
-  @Input()
-  download?: EventEmitter<{ filename: string; type: string }>;
-  @Input()
-  resize?: EventEmitter<{ width: number; height: number }>;
-  @Input()
-  fullscreen?: EventEmitter<void>;
-  @Input()
-  frame?: EventEmitter<void>;
-  @Input()
-  resume?: EventEmitter<void>;
-  @Input()
-  speedResume?: EventEmitter<void>;
-  @Input()
-  pause?: EventEmitter<void>;
-  @Input()
-  capturePicture?: EventEmitter<void>;
-  @Input()
-  slow?: EventEmitter<void>;
-  @Input()
-  fast?: EventEmitter<void>;
-  @Input()
-  changeRuleState?: EventEmitter<boolean>;
-  @Input()
-  seek?: EventEmitter<number>;
-
-  @Output()
-  loaded: EventEmitter<void> = new EventEmitter();
-  @Output()
-  destroy: EventEmitter<VideoModel> = new EventEmitter();
-
-  @Output()
-  onStoping: EventEmitter<number> = new EventEmitter();
-  @Output()
-  onPlaying: EventEmitter<number> = new EventEmitter();
-  @Output()
-  getPosition: EventEmitter<number> = new EventEmitter();
-  @Output()
-  onButtonClicked: EventEmitter<ButtonName> = new EventEmitter();
-  @Output()
-  onViewerDoubleClicked: EventEmitter<number> = new EventEmitter();
-  @Output()
-  onRuleStateChanged: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  onViewerClicked: EventEmitter<number> = new EventEmitter();
+  @Output() loaded: EventEmitter<void> = new EventEmitter();
+  @Output() destroy: EventEmitter<VideoModel> = new EventEmitter();
+  @Output() onStoping: EventEmitter<number> = new EventEmitter();
+  @Output() onPlaying: EventEmitter<number> = new EventEmitter();
+  @Output() getPosition: EventEmitter<number> = new EventEmitter();
+  @Output() onButtonClicked: EventEmitter<ButtonName> = new EventEmitter();
+  @Output() onViewerDoubleClicked: EventEmitter<number> = new EventEmitter();
+  @Output() onRuleStateChanged: EventEmitter<boolean> = new EventEmitter();
+  @Output() onViewerClicked: EventEmitter<number> = new EventEmitter();
 
   constructor(
     private sanitizer: DomSanitizer,
     private local: LocalStorageService,
     private userService: UserRequestService
   ) {}
+  reserve: number = 15 * 1000;
   src?: SafeResourceUrl;
-
-  getSrc(webUrl: string, url: string, cameraName?: string) {
-    let result = webUrl + '?url=' + base64encode(url);
-    if (cameraName) {
-      let name = utf16to8(cameraName);
-      result += '&name=' + base64encode(name);
-    }
-    result += '&index=' + this.index;
-    return result;
-  }
-
-  @ViewChild('iframe')
-  iframe!: ElementRef;
-
+  isloaded = false;
+  playing = false;
+  stream: StreamType = StreamType.main;
+  registHandle?: NodeJS.Timer;
+  private _ruleState: boolean = false;
   private _player?: WSPlayerProxy;
   private get player(): WSPlayerProxy | undefined {
     if (!this.iframe || !this.iframe.nativeElement.contentWindow)
@@ -120,6 +81,17 @@ export class VideoPlayerComponent
     return this._player;
   }
 
+  @ViewChild('iframe') iframe!: ElementRef;
+
+  getSrc(webUrl: string, url: string, cameraName?: string) {
+    let result = webUrl + '?url=' + base64encode(url);
+    if (cameraName) {
+      let name = utf16to8(cameraName);
+      result += '&name=' + base64encode(name);
+    }
+    result += '&index=' + this.index;
+    return result;
+  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && !changes.model.firstChange) {
       this.isloaded = false;
@@ -203,9 +175,12 @@ export class VideoPlayerComponent
   ngOnInit(): void {
     this.load();
   }
-
-  isloaded = false;
-
+  ngOnDestroy(): void {
+    if (this.registHandle) {
+      clearTimeout(this.registHandle);
+    }
+    this.destroy.emit(this.model);
+  }
   load() {
     if (!this.isloaded) {
       if (this.model) {
@@ -237,16 +212,6 @@ export class VideoPlayerComponent
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.registHandle) {
-      clearTimeout(this.registHandle);
-    }
-    this.destroy.emit(this.model);
-  }
-
-  playing = false;
-
-  _ruleState: boolean = false;
   async loadRuleState() {
     try {
       const strRule = await this.userService.config.get(
@@ -270,7 +235,6 @@ export class VideoPlayerComponent
       this._ruleState = state;
     }
   }
-  stream: StreamType = StreamType.main;
   async loadStream() {
     try {
       let result = await this.userService.config.get(
@@ -284,9 +248,6 @@ export class VideoPlayerComponent
       console.warn('loadSteam error', ex);
     }
   }
-
-  registHandle?: NodeJS.Timer;
-
   eventRegist() {
     if (this.player) {
       this.player.getPosition = (index: number = 0, val: any) => {
@@ -320,6 +281,27 @@ export class VideoPlayerComponent
       this.player.onButtonClicked = (index: number = 0, btn: ButtonName) => {
         if (this.index != index) return;
         this.onButtonClicked.emit(btn);
+
+        new Promise((x) => {
+          let url = new HowellUrl(this.webUrl);
+          if (
+            location.hostname !== url.Host &&
+            location.port != url.Port.toString()
+          ) {
+            switch (btn) {
+              case ButtonName.fullscreen:
+                if (this.iframe) {
+                  (
+                    this.iframe.nativeElement as HTMLIFrameElement
+                  ).requestFullscreen();
+                }
+                break;
+
+              default:
+                break;
+            }
+          }
+        });
       };
 
       this.player.onViewerClicked = (index: number = 0) => {
@@ -329,10 +311,33 @@ export class VideoPlayerComponent
       this.player.onViewerDoubleClicked = (index: number = 0) => {
         if (this.index != index) return;
         this.onViewerDoubleClicked.emit(index);
+        new Promise((x) => {
+          let url = new HowellUrl(this.webUrl);
+          if (
+            location.hostname !== url.Host &&
+            location.port != url.Port.toString()
+          ) {
+            if (this.iframe) {
+              (
+                this.iframe.nativeElement as HTMLIFrameElement
+              ).requestFullscreen();
+            }
+          }
+        });
+      };
+      this.player.onStatusChanged = (index: number = 0, state: PlayerState) => {
+        if (this.index != index) return;
+        switch (state) {
+          case PlayerState.playing:
+            this.onseek(this.reserve);
+            break;
+
+          default:
+            break;
+        }
       };
     }
   }
-
   onplay(model: VideoModel) {
     this.model = model;
     this.isloaded = false;

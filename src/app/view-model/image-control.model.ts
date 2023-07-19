@@ -49,14 +49,15 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
 }
 
 export class ImageControlModelArray<T = any> {
-  constructor(models: ImageControlModel[], index: number, autoplay = false) {
+  constructor(models: ImageControlModel[], index: number, data?: T) {
     this.models = models;
     this.index = index;
-    this.autoplay = autoplay;
+    this.data = data;
   }
-  page?: Page;
   data?: T;
   models: ImageControlModel[];
-  autoplay: boolean;
   index: number;
+}
+export class ImageControlModelPage extends ImageControlModel {
+  page?: Page;
 }

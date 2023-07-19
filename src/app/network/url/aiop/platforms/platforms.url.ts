@@ -1,8 +1,8 @@
-import { BasicUrl } from '../../base.url';
+import { BaseUrl } from '../../base.url';
 
 export abstract class PlatformsURL {
   protected static get basic(): string {
-    return `${BasicUrl.aiop}/Platforms`;
+    return `${BaseUrl.aiop_service}/Platforms`;
   }
 
   static create() {

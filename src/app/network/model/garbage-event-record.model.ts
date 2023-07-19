@@ -1,7 +1,6 @@
 import {
   plainToInstance,
   Transform,
-  TransformationType,
   TransformFnParams,
 } from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
@@ -9,9 +8,12 @@ import { ResourceType } from '../../enum/resource-type.enum';
 import { EventDataObject } from './event-data-object.model';
 import { EventRule } from './event-rule';
 import { IModel } from './model.interface';
-import { Point } from './point.model';
 import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
+
+export interface IEventRecord<T> extends IModel {
+  Data: T;
+}
 
 /** 事件基础类型 */
 export class BaseEventRecord implements IModel {
@@ -45,7 +47,7 @@ export class BaseEventRecord implements IModel {
   EventIndexes?: string[];
 }
 
-class EventRecordData<T> extends BaseEventRecord {
+class EventRecordData<T> extends BaseEventRecord implements IEventRecord<T> {
   @Transform((x) => EventRecordDataTransformer(x), { toClassOnly: true })
   Data!: T;
 }

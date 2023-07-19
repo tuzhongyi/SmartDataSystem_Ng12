@@ -1,8 +1,8 @@
-import { BasicUrl } from '../../base.url';
+import { BaseUrl } from '../../base.url';
 
 export abstract class RegionsURL {
   protected static get basic(): string {
-    return `${BasicUrl.aiop}/Regions`;
+    return `${BaseUrl.aiop_service}/Regions`;
   }
 
   static create() {

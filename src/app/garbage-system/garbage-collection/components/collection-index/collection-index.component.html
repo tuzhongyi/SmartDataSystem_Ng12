@@ -120,36 +120,36 @@
 </app-picture-window> -->
 
 <!-- <howell-video-player-window
-  *ngIf="window.video.show"
-  [Model]="window.video"
-  [style]="window.video.style"
-  [business]="window.video"
-  [autoplay]="window.video.autoplay"
-  [cameraId]="window.video.cameraId"
-  [title]="window.video.title"
-  [mode]="window.video.mode"
-  [time]="window.video.time"
+  *ngIf="window.player.show"
+  [Model]="window.player"
+  [style]="window.player.style"
+  [business]="window.player"
+  [autoplay]="window.player.autoplay"
+  [cameraId]="window.player.cameraId"
+  [title]="window.player.title"
+  [mode]="window.player.mode"
+  [time]="window.player.time"
 ></howell-video-player-window> -->
 
 <video-multiple-player-window
-  *ngIf="window.video.show"
-  [Model]="window.video"
-  [style]="window.video.style"
-  [business]="window.video"
-  [autoplay]="window.video.autoplay"
-  [models]="window.video.cameras"
-  [title]="window.video.title"
-  [mode]="window.video.mode"
-  [time]="window.video.time"
+  *ngIf="window.player.show"
+  [Model]="window.player"
+  [style]="window.player.style"
+  [business]="window.player"
+  [autoplay]="window.player.autoplay"
+  [models]="window.player.cameras"
+  [title]="window.player.title"
+  [mode]="window.player.mode"
+  [time]="window.player.time"
 ></video-multiple-player-window>
 
-<app-video-window
+<app-video-control-window
   *ngIf="video.show"
   [model]="video.model"
   [window]="video"
   [title]="video.title"
 >
-</app-video-window>
+</app-video-control-window>
 
 <app-picture-window
   *ngIf="window.picture.show"

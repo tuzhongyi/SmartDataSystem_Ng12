@@ -51,10 +51,13 @@ export class CommitteesHistroyTableComponent
   @Input()
   Type: EventType = EventType.IllegalDrop;
 
-  @Output()
-  OnPictureClicked: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  @Output()
-  OnVideoClicked: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() OnPictureClicked: EventEmitter<ImageControlModelArray> =
+    new EventEmitter();
+  @Output() OnVideoClicked: EventEmitter<
+    CommitteesHistoryTableViewModel<
+      IllegalDropEventRecord | MixedIntoEventRecord
+    >
+  > = new EventEmitter();
 
   constructor(
     business: CommitteesHistroyTableService,
@@ -106,7 +109,8 @@ export class CommitteesHistroyTableComponent
       IllegalDropEventRecord | MixedIntoEventRecord
     >
   ) {
-    let array = new ImageControlModelArray(item.images, 0, false);
+    event.stopImmediatePropagation();
+    let array = new ImageControlModelArray(item.images, 0, item);
     this.OnPictureClicked.emit(array);
   }
   videoClick(
@@ -115,7 +119,7 @@ export class CommitteesHistroyTableComponent
       IllegalDropEventRecord | MixedIntoEventRecord
     >
   ) {
-    let array = new ImageControlModelArray(item.images, 0, true);
-    this.OnVideoClicked.emit(array);
+    event.stopImmediatePropagation();
+    this.OnVideoClicked.emit(item);
   }
 }

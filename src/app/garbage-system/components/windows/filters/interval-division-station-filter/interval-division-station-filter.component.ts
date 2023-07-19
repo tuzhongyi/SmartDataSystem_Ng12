@@ -108,18 +108,20 @@ export class EventRecordFilterComponent
     this.filter.station = undefined;
     this.filterChange.emit(this.filter);
   }
-  async onstation(item: SelectItem) {
-    let opts: DivisionStationFilterOpts = {
-      divisionId: this.filter.divisionId!,
-      stationId: item.Id,
-    };
-    let model = await this.business.load(opts);
-    this.model.cameras = model.cameras;
-    this.filter.station = item;
-    this.filter.camera = undefined;
-    this.filterChange.emit(this.filter);
+  async onstation(item?: SelectItem) {
+    if (item) {
+      let opts: DivisionStationFilterOpts = {
+        divisionId: this.filter.divisionId,
+        stationId: item.Id,
+      };
+      let model = await this.business.load(opts);
+      this.model.cameras = model.cameras;
+      this.filter.station = item;
+      this.filter.camera = undefined;
+      this.filterChange.emit(this.filter);
+    }
   }
-  oncamera(item: SelectItem) {
+  oncamera(item?: SelectItem) {
     this.filter.camera = item;
     this.filterChange.emit(this.filter);
   }

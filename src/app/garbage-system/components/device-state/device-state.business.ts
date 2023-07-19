@@ -1,27 +1,16 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import {
-  ISubscription,
-  SubscriptionService,
-} from 'src/app/common/interfaces/subscribe.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
 import {
   DeviceStateCountType,
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Language } from 'src/app/common/tools/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import {
-  DeviceStateCountModel,
-  IDeviceStateDes,
-} from 'src/app/view-model/device-state-count.model';
+import { DeviceStateCountModel } from 'src/app/view-model/device-state-count.model';
 
 @Injectable()
 export class DeviceStateBusiness
@@ -29,8 +18,7 @@ export class DeviceStateBusiness
 {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private storeService: GlobalStorageService,
-    public subscription: SubscriptionService
+    private storeService: GlobalStorageService
   ) {}
   Converter: IConverter<DivisionNumberStatistic, DeviceStateCountModel> =
     new DeviceStateConverter();

@@ -6,14 +6,14 @@
  */
 
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 import { ConfigInnerUrl } from './inner/config.url';
 import { LabelInnerUrl } from './inner/label.url';
 import { PasswordInnerUrl } from './inner/password.url';
 import { RoleInnerUrl } from './inner/role.url';
 
 export class UserUrl extends AbstractUrl {
-  private static url = new UserUrl(`${BasicUrl.user}/Users`);
+  private static url = new UserUrl(`${BaseUrl.user_system}/Users`);
 
   static basic() {
     return this.url.basic();

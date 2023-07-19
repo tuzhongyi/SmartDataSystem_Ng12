@@ -1,9 +1,7 @@
+import { Injectable } from '@angular/core';
+import { AbstractService } from 'src/app/business/Ibusiness';
 import { Division } from 'src/app/network/model/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-
-import { Injectable } from '@angular/core';
-import { instanceToPlain } from 'class-transformer';
-import { AbstractService } from 'src/app/business/Ibusiness';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
 import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
@@ -65,8 +63,7 @@ export class DivisionRequestService extends AbstractService<Division> {
     params: GetDivisionsParams = new GetDivisionsParams()
   ): Promise<PagedList<Division>> {
     let url = DivisionUrl.list();
-    let data = instanceToPlain(params);
-    return this.type.paged(url, data);
+    return this.type.paged(url, params);
   }
 
   garbageStations(
@@ -80,8 +77,7 @@ export class DivisionRequestService extends AbstractService<Division> {
   tree(params?: GetDivisionTreeParams): Promise<DivisionTree> {
     let url = DivisionUrl.tree();
     if (params) {
-      let data = instanceToPlain(params);
-      return this.basic.post(url, DivisionTree, data);
+      return this.basic.post(url, DivisionTree, params);
     } else {
       return this.basic.get(url, DivisionTree);
     }
@@ -130,8 +126,7 @@ class VolumesHistoryService {
     params: GetDivisionVolumesParams
   ): Promise<PagedList<GarbageVolume>> {
     let url = DivisionUrl.volume(divisionId).history.list();
-    let data = instanceToPlain(params);
-    return this.basic.paged(url, GarbageVolume, data);
+    return this.basic.paged(url, GarbageVolume, params);
   }
 }
 class EventNumbersService {
@@ -139,8 +134,7 @@ class EventNumbersService {
 
   sum(params: GetDivisionSumEventNumberParams): Promise<SumEventNumber[]> {
     let url = DivisionUrl.eventnumber().sum();
-    let data = instanceToPlain(params);
-    return this.basic.postArray(url, SumEventNumber, data);
+    return this.basic.postArray(url, SumEventNumber, params);
   }
 
   private _history?: EventNumbersHistoryService;
@@ -158,8 +152,7 @@ class EventNumbersHistoryService {
     params: GetDivisionEventNumbersParams
   ): Promise<PagedList<EventNumberStatistic>> {
     let url = DivisionUrl.eventnumber(divisionId).history.list();
-    let data = instanceToPlain(params);
-    return this.basic.paged(url, EventNumberStatistic, data);
+    return this.basic.paged(url, EventNumberStatistic, params);
   }
 }
 
@@ -188,15 +181,13 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
     params: GetDivisionStatisticNumbersParams = new GetDivisionStatisticNumbersParams()
   ): Promise<PagedList<DivisionNumberStatistic>> {
     let url = DivisionUrl.statistic().number.list();
-    let data = instanceToPlain(params);
-    return this.type.paged(url, data);
+    return this.type.paged(url, params);
   }
   comparison(
     params: GetDivisionStatisticComparisonParams
   ): Promise<DivisionNumberStatisticComparison[]> {
     let url = DivisionUrl.statistic().number.comparison();
-    let data = instanceToPlain(params);
-    return this.basic.postArray(url, DivisionNumberStatisticComparison, data);
+    return this.basic.postArray(url, DivisionNumberStatisticComparison, params);
   }
 
   private _history?: StatisticNumberHistoryService;
@@ -213,7 +204,6 @@ class StatisticNumberHistoryService {
     params: GetDivisionStatisticNumbersParamsV2
   ): Promise<DivisionNumberStatisticV2[]> {
     let url = DivisionUrl.statistic().number.history.list();
-    let data = instanceToPlain(params);
-    return this.basic.postArray(url, DivisionNumberStatisticV2, data);
+    return this.basic.postArray(url, DivisionNumberStatisticV2, params);
   }
 }

@@ -10,7 +10,7 @@ export class MonitorMediaMultipleWindowBusiness extends WindowViewModel {
     top: '56%',
     padding: '10px 20px',
   };
-
+  fullplay = true;
   statistic?: GarbageStationGarbageCountStatistic;
   date?: Date;
 }

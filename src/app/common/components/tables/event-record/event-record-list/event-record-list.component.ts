@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -23,6 +22,10 @@ import {
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
 import { ListAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
+import {
+  EventRecordConverter,
+  EventRecordPagedConverter,
+} from '../event-record.converter';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
 import { EventRecordListConverter } from './event-record-list.converter';
@@ -35,6 +38,8 @@ import { EventRecordListConverter } from './event-record-list.converter';
     EventRecordBusiness,
     DownloadBusiness,
     VideoDownloadPanelBusiness,
+    EventRecordPagedConverter,
+    EventRecordConverter,
   ],
 })
 export class EventRecordListComponent
@@ -46,14 +51,11 @@ export class EventRecordListComponent
 {
   converter = new EventRecordListConverter();
 
-  @Input()
-  type: EventType = EventType.IllegalDrop;
-  @Input()
-  load?: EventEmitter<EventRecordFilter>;
-  @Input()
-  filter: EventRecordFilter;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input() type: EventType = EventType.IllegalDrop;
+  @Input() load?: EventEmitter<EventRecordFilter>;
+  @Input() filter: EventRecordFilter;
+  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   constructor(
     public business: EventRecordBusiness,
@@ -124,12 +126,11 @@ export class EventRecordListComponent
     }
   }
   playvideo(model: EventRecordViewModel) {
-    let array = new ImageControlModelArray(model.images, 0, true);
-    this.image.emit(array);
+    this.video.emit(model);
   }
 
   imageClick(item: EventRecordViewModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index);
+    let array = new ImageControlModelArray(item.images, img.index, item);
     this.image.emit(array);
   }
 

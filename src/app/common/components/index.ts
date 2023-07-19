@@ -1,73 +1,74 @@
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { AccountOperationComponent } from './account-operation/account-operation.component';
+import { CommonTableComponent } from './common-table/common.component';
+import { CommonTimeComponent } from './common-time/common-time.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { SelectControlComponent } from './select-control/select-control.component';
 import { StatisticLineEChartsComponent } from './statistic-line-echarts/statistic-line-echarts.component';
 import { TabTitleComponent } from './tab-title/tab-title.component';
-import { CommonTableComponent } from './common-table/common.component';
-import { CommonTimeComponent } from './common-time/common-time.component';
 import { TotalWasteComponent } from './total-waste/total-waste.component';
 import { TreeComponent } from './tree/tree.component';
 import { VideoPlayerComponent } from './video-player/video-player.component';
 
-import { WindowComponent } from './window-control/window.component';
-import { ImageControlComponent } from './image-control/image-control.component';
-import { PaginatorComponent } from './paginator/paginator.component';
-import { TableSelectComponent } from './table-select/table-select.component';
-import { VideoWindowComponent } from './video-window/video-window.component';
-import { InputSearchComponent } from './input-search/input-search.component';
-import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
-import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
-import { SortHeaderComponent } from './sort-header/sort-header.component';
-import { VideoSettingControlComponent } from './video-window/video-setting-control/video-setting-control.component';
-import { VideoPresetPointControlComponent } from './video-window/video-preset-point-control/video-preset-point-control.component';
-import { VideoPlaybackSettingControlComponent } from './video-window/video-playback-setting-control/video-playback-setting-control.component';
-import { TimeControlComponent } from './time-control/time-control.component';
-import { Table_COMPONENTS } from './tables/tables.module';
-import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
-import { CHART_COMPONENTS } from './charts/chart-component';
-import { SwitchComponent } from './switch/switch.component';
-import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
-import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
+import { IllegalDropEventComponent } from '../../aiop-system/components/illegal-drop-event/illegal-drop-event.component';
+import { AICameraModelTableComponent } from './ai-camera-model-table/ai-camera-model-table.component';
+import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { SimpleSearchComponent } from './simple-search/simple-search.component';
-import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
-import { AIModelTreeComponent } from './ai-model-tree/ai-model-tree.component';
-import { AICameraModelTableComponent } from './ai-camera-model-table/ai-camera-model-table.component';
-import { LabelTreeComponent } from './label-tree/label-tree.component';
-import { DivisionTreeComponent } from './division-tree/division-tree.component';
-import { CommonTreeComponent } from './common-tree/common-tree.component';
-import { RegionTreeComponent } from './region-tree/region-tree.component';
-import { CommonLabelSelecComponent } from './common-label-select/common-label-select.component';
-import { LabelOperateComponent } from './label-operate/label-operate.component';
-import { ToastWindowComponent } from './toast-window/toast-window.component';
-import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
-import { MixIntoComponent } from './mix-into/mix-into.component';
-import { CommonTabComponent } from './common-tab/common-tab.component';
-import { IllegalDropEventComponent } from '../../aiop-system/components/illegal-drop-event/illegal-drop-event.component';
-import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
-import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
-import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
-import { RankComponent } from './rank/rank.component';
-import { CustomTableComponent } from './custom-table/custom-table.component';
-import { CommonElementListComponent } from './common-element-list/common-element-list.component';
-import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
-import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
-import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
+import { CHART_COMPONENTS } from './charts/chart-component';
 import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.component';
-import { UploadControlComponent } from './upload-control/upload-control.component';
+import { CommonElementListComponent } from './common-element-list/common-element-list.component';
+import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
+import { CommonLabelSelecComponent } from './common-label-select/common-label-select.component';
+import { CommonLineChartComponent } from './common-line-chart/common-line-chart.component';
+import { CommonPieChartComponent } from './common-pie-chart/common-pie-chart.component';
 import { CommonRankComponent } from './common-rank/common-rank.component';
-import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
 import { CommonStatisticCardComponent } from './common-statistic-card/common-statistic-card.component';
-import { PictureWindowComponent } from './picture-window/picture-window.component';
-import { SelectComponents } from './selects/selects.modules';
-import { VideoPlayerListComponent } from './video-player-list/video-player-list.component';
-import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
-import { LevelListPanelComponent } from './panels/level-list-panel/level-list-panel.component';
+import { CommonTabComponent } from './common-tab/common-tab.component';
+import { CommonTreeComponent } from './common-tree/common-tree.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
+import { CustomTableComponent } from './custom-table/custom-table.component';
+import { DivisionTreeComponent } from './division-tree/division-tree.component';
+import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
+import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
+import { ImageControlComponent } from './image-control/image-control.component';
+import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
+import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
+import { InputSearchOptionsComponent } from './input-search-options/input-search-options.component';
+import { InputSearchComponent } from './input-search/input-search.component';
+import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
+import { LabelOperateComponent } from './label-operate/label-operate.component';
+import { LabelTreeComponent } from './label-tree/label-tree.component';
+import { MixIntoComponent } from './mix-into/mix-into.component';
+import { PaginatorComponent } from './paginator/paginator.component';
+import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
+import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
 import { LevelDivisionPanelComponent } from './panels/level-division-panel/level-division-panel.component';
+import { LevelListPanelComponent } from './panels/level-list-panel/level-list-panel.component';
+import { VideoDownloadPanelComponent } from './panels/video-download-panel/video-download-panel.component';
+import { PictureWindowComponent } from './picture-window/picture-window.component';
+import { RankComponent } from './rank/rank.component';
+import { RegionTreeComponent } from './region-tree/region-tree.component';
+import { SelectComponents } from './selects/selects.modules';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { SimpleSearchComponent } from './simple-search/simple-search.component';
+import { SortHeaderComponent } from './sort-header/sort-header.component';
+import { SwitchComponent } from './switch/switch.component';
+import { TableSelectComponent } from './table-select/table-select.component';
+import { Table_COMPONENTS } from './tables/tables.module';
+import { TimeControlComponent } from './time-control/time-control.component';
+import { ToastWindowComponent } from './toast-window/toast-window.component';
+import { UploadControlComponent } from './upload-control/upload-control.component';
+import { VideoControlWindowComponent } from './video-control-window/video-control-window.component';
+import { VideoPlaybackSettingControlComponent } from './video-control-window/video-playback-setting-control/video-playback-setting-control.component';
+import { VideoPresetPointControlComponent } from './video-control-window/video-preset-point-control/video-preset-point-control.component';
+import { VideoSettingControlComponent } from './video-control-window/video-setting-control/video-setting-control.component';
+import { VideoPlayerListComponent } from './video-player-list/video-player-list.component';
+import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
+import { VideoWindowComponent } from './video-window/video-window.component';
+import { WindowComponent } from './window-control/window.component';
+import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
 
 export const CUSTOM_COMPONENTS = [
   SidenavComponent,
@@ -87,6 +88,7 @@ export const CUSTOM_COMPONENTS = [
   PaginatorComponent,
   TableSelectComponent,
   VideoWindowComponent,
+  VideoControlWindowComponent,
   PictureWindowComponent,
   VideoPlayerWindowComponent,
   InputSearchComponent,

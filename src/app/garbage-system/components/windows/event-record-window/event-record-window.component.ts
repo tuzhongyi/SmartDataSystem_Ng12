@@ -15,6 +15,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { ImagePaged } from 'src/app/view-model/paged.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
 import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
@@ -36,25 +37,21 @@ export class EventRecordWindowComponent
   extends WindowComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  @Input()
-  type = EventType.IllegalDrop;
-  @Input()
-  index = EventRecordWindowIndex.record;
-  @Input()
-  stationId?: string;
-  @Input()
-  divisionId?: string;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  @Input()
-  listType = ListType.table;
-  @Input()
-  getData?: EventEmitter<Page>;
-  @Output()
-  gotData: EventEmitter<PagedList<EventRecordViewModel>> = new EventEmitter();
-  @Output()
-  card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Input() type = EventType.IllegalDrop;
+  @Input() index = EventRecordWindowIndex.record;
+  @Input() stationId?: string;
+  @Input() divisionId?: string;
 
+  @Input() listType = ListType.table;
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
+    new EventEmitter();
+  @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() image: EventEmitter<
+    | ImageControlModelArray<EventRecordViewModel>
+    | ImagePaged<EventRecordViewModel>
+  > = new EventEmitter();
   constructor(
     public record: EventRecordWindowRecordBusiness,
     public details: EventRecordWindowDetailsBusiness,
@@ -91,16 +88,23 @@ export class EventRecordWindowComponent
     this.stationId = undefined;
   }
 
-  onimage(model: ImageControlModelArray) {
+  onimage(
+    model:
+      | ImageControlModelArray<EventRecordViewModel>
+      | ImagePaged<EventRecordViewModel>
+  ) {
     this.image.emit(model);
+  }
+  onvideo(model: EventRecordViewModel) {
+    this.video.emit(model);
   }
 
   onTypeChange(type: ListType) {
     this.listType = type;
   }
 
-  onGotData(data: any) {
-    this.gotData.emit(data);
+  ongot(data: any) {
+    this.got.emit(data);
   }
   oncard(args: EventRecordViewModel) {
     this.card.emit(args);

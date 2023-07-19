@@ -1,14 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import {
-  ISubscription,
-  SubscriptionService,
-} from 'src/app/common/interfaces/subscribe.interface';
-import { RankConverter } from 'src/app/converter/rank.converter';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParams,
@@ -23,7 +17,6 @@ export class DisposalRankBusiness
 {
   constructor(
     private stationRequest: GarbageStationRequestService,
-    public subscription: SubscriptionService,
     private storeService: GlobalStorageService
   ) {}
   Converter: IConverter<GarbageStationNumberStatistic[], RankModel[]> =

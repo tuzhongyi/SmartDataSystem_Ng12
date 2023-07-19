@@ -1,5 +1,4 @@
 import { Flags } from '../common/tools/flags';
-import { CameraDeviceType } from './device-type.enum';
 import { DivisionType } from './division-type.enum';
 import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
@@ -47,14 +46,14 @@ export class EnumHelper {
   }
   static GetResourceChildType(type: UserResourceType) {
     switch (type) {
-      case UserResourceType.None:
-        return UserResourceType.City;
       case UserResourceType.City:
         return UserResourceType.County;
       case UserResourceType.County:
         return UserResourceType.Committees;
       case UserResourceType.Committees:
         return UserResourceType.Station;
+      case UserResourceType.Station:
+        return UserResourceType.None;
       default:
         throw new Error('There Is No UserResourceType');
     }

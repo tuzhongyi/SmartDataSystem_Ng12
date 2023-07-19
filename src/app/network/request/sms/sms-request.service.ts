@@ -23,7 +23,7 @@ export class SmsRequestService {
     protocolType: SmsProtocolType = SmsProtocolType.aliyun
   ) {
     let response = await this.requestService
-      .post<any, HowellResponse<AuthCode>>(
+      .howellPost<any, HowellResponse<AuthCode>>(
         SmsUrl.authcodes(phoneNo, protocolType)
       )
       .toPromise();

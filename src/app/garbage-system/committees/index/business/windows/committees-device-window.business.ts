@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
-import {
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
 
 @Injectable()
 export class CommitteesDeviceWindowBusiness extends WindowViewModel {
-  constructor(private media: CommitteesMediaWindowBusiness) {
+  constructor(private image: CommitteesIndexImageWindowBusiness) {
     super();
   }
   style = {
@@ -18,9 +16,11 @@ export class CommitteesDeviceWindowBusiness extends WindowViewModel {
   };
   status?: OnlineStatus;
   onimage(model: ImageControlModelArray) {
-    this.media.single.camera = model.models;
-    this.media.single.index = model.index;
-    this.media.single.autoplay = model.autoplay;
-    this.media.single.show = true;
+    this.image.array.models = model.models;
+    this.image.array.index = model.index;
+    if (model.models.length > 0) {
+      this.image.array.current = model.models[0];
+    }
+    this.image.array.show = true;
   }
 }

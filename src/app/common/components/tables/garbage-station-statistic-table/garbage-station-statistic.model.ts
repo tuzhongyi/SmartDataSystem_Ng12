@@ -29,6 +29,7 @@ export class GarbageStationStatisticTd {
   value: number = 0;
   format: string = '0';
   differ: number = 0;
+  differView: string = '';
 }
 
 export class GarbageStationStatisticTableSource {

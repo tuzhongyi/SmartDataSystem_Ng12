@@ -11,18 +11,15 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { wait } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 @Component({
@@ -65,7 +62,7 @@ export class DivisionTreeFilterComponent
   HorizontalAlign = HorizontalAlign;
 
   constructor(private store: GlobalStorageService) {
-    // this.type = store.divisionType;
+    this.type = store.defaultDivisionType;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {

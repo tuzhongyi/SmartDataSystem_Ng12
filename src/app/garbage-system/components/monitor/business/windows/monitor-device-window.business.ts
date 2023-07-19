@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
+import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 
 @Injectable()
 export class MonitorDeviceWindowBusiness extends WindowViewModel {
-  constructor(private media: MonitorMediaWindowBusiness) {
+  constructor(private image: MonitorImageWindowBusiness) {
     super();
   }
   style = {
@@ -16,10 +16,12 @@ export class MonitorDeviceWindowBusiness extends WindowViewModel {
   };
   status?: OnlineStatus;
   onimage(model: ImageControlModelArray) {
-    this.media.single.camera = model.models;
-    this.media.single.index = model.index;
-    this.media.single.autoplay = model.autoplay;
-    this.media.single;
-    this.media.single.show = true;
+    this.image.array.index = model.index;
+    if (model.models.length > 0) {
+      this.image.array.stationId = model.models[0].stationId;
+    }
+    this.image.array.manualcapture = true;
+    this.image.array.models = model.models;
+    this.image.array.show = true;
   }
 }

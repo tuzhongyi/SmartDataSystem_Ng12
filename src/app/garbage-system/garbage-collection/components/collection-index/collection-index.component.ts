@@ -22,7 +22,10 @@ import {
   ToastWindowService,
   ToastWindowType,
 } from 'src/app/common/components/toast-window/toast-window.service';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import {
+  GlobalStorageService,
+  SystemType,
+} from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { TimeService } from 'src/app/common/service/time.service';
 import { Medium } from 'src/app/common/tools/medium';
@@ -131,7 +134,7 @@ export class GarbageCollectionIndexComponent
     private changeDetector: ChangeDetectorRef
   ) {
     this._titleService.setTitle('垃圾清运平台');
-
+    this._globalStorage.system = SystemType.vehicle;
     this.subscription = interval(1 * 60 * 1000).subscribe(() => {
       this._globalStorage.collectionStatusChange.emit();
     });
@@ -176,12 +179,12 @@ export class GarbageCollectionIndexComponent
               break;
             case ToastWindowType.ClickVideo:
               args = data.Data as VideoListArgs;
-              this.window.video.autoplay = args.autoplay;
-              this.window.video.cameras = args.cameras;
-              this.window.video.title = args.title;
-              this.window.video.mode = args.mode;
-              this.window.video.time = args.time;
-              this.window.video.show = true;
+              this.window.player.autoplay = args.autoplay;
+              this.window.player.cameras = args.cameras;
+              this.window.player.title = args.title;
+              this.window.player.mode = args.mode;
+              this.window.player.time = args.time;
+              this.window.player.show = true;
               break;
             default:
               break;

@@ -30,6 +30,7 @@ declare namespace CesiumDataController {
       current: string[];
     };
     List: (villageId?: string) => Dictionary<Point>;
+    All: (villageId: string) => Point[];
     Get: (villageId: string, pointId: string) => Point;
     Create: (villageId: string, pointId: string, point: Point) => boolean;
     Update: (villageId: string, pointId: string, point: Point) => boolean;

@@ -1,7 +1,5 @@
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
-import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { CompareRange } from '../../model/compare-range.model';
 import {
   IParams,
@@ -48,6 +46,7 @@ export class GetGarbageDropEventRecordsParams
   extends PagedDurationParams
   implements IParams
 {
+  [key: string]: any;
   /**	String[]	所属区划ID列表	O */
   DivisionIds?: string[];
   /**	String[]	垃圾房ID列表	O */

@@ -1,4 +1,7 @@
+import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { EventNumber } from './event-number.model';
+import { GarbageWeight } from './garbage-weight.model';
 import { IdNameModel } from './model.interface';
 
 /** 垃圾房的数量统计信息 */
@@ -57,4 +60,11 @@ export class GarbageStationNumberStatistic extends IdNameModel {
   CompleteTaskCount?: number;
   /**	Int32	未完成任务数量	O */
   TimeoutTaskCount?: number;
+  /**	Double	垃圾滞留处置率处置完成(非超时)/总滞留数量	O */
+  GarbageDropHandleRatio?: number;
+  /**	Double	垃圾滞留处置率处置完成(非超时)/总滞留数量超级超时处置	O */
+  GarbageDropHandleRatio2?: number;
+  /**	GarbageWeight[]	当日垃圾重量	O */
+  @Type(() => GarbageWeight)
+  GarbageWeights?: GarbageWeight[];
 }

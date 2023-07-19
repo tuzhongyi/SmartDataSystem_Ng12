@@ -31,12 +31,13 @@
             <div class="event-record-table" [class.filter]="record.filter.show">
               <ng-container *ngIf="listType === ListType.table">
                 <howell-event-record-table
-                  [type]="type"
                   [load]="record.filter.load"
-                  (image)="onimage($event)"
+                  [type]="type"
                   [filter]="filter"
-                  [getData]="getData"
-                  (gotData)="onGotData($event)"
+                  [get]="get"
+                  (image)="onimage($event)"
+                  (video)="onvideo($event)"
+                  (got)="ongot($event)"
                   (card)="oncard($event)"
                 >
                 </howell-event-record-table>
@@ -46,6 +47,7 @@
                   [type]="type"
                   [load]="record.filter.load"
                   (image)="onimage($event)"
+                  (video)="onvideo($event)"
                   [filter]="filter"
                 >
                 </howell-event-record-list>

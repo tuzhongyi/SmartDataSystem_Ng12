@@ -190,8 +190,12 @@ export class DetailsChartComponent
           this.unit,
           this.date,
           {
-            formatter: function () {
-              return '单位(起)';
+            orient: 'vertical',
+            right: 0,
+            top: 50,
+            icon: 'circle',
+            textStyle: {
+              color: '#fff',
             },
           }
         );
@@ -199,7 +203,7 @@ export class DetailsChartComponent
           series: this.data.map((x, i) => {
             let item: any = {
               type: 'line',
-              name: '单位(起)',
+              name: ChartConfig.title[i],
               data: x.map((y) => y.value),
               color: ChartConfig.color[i],
               areaStyle: {},
@@ -219,8 +223,15 @@ export class DetailsChartComponent
           this.unit,
           this.date,
           {
-            formatter: function () {
-              return '单位(起)';
+            formatter: function (e) {
+              return e;
+            },
+            orient: 'vertical',
+            right: 0,
+            top: 50,
+            icon: 'circle',
+            textStyle: {
+              color: '#fff',
             },
           }
         );
@@ -228,7 +239,7 @@ export class DetailsChartComponent
           series: this.data.map((data, i) => {
             let item: any = {
               type: 'bar',
-              name: '单位(起)',
+              name: ChartConfig.title[i],
               data: data.map((x) => x.value),
               color: ChartConfig.color[i],
               barWidth: `${32 / this.data.length}px`,

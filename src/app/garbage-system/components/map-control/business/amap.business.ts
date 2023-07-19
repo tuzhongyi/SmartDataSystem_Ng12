@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { timer } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { wait } from 'src/app/common/tools/tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
@@ -16,11 +17,12 @@ import {
   AMapDataSource,
   AMapVisibility,
   GarbageTimeFilter,
+  PointCount,
 } from './amap.model';
 
 @Injectable()
 export class AMapBusiness {
-  pointCountChanged: EventEmitter<number> = new EventEmitter();
+  pointCountChanged: EventEmitter<PointCount> = new EventEmitter();
   pointDoubleClicked: EventEmitter<GarbageStationModel> = new EventEmitter();
   mapClicked: EventEmitter<void> = new EventEmitter();
   menuEvents = {
@@ -41,6 +43,7 @@ export class AMapBusiness {
   private mapClient?: CesiumMapClient;
   private mapController?: CesiumDataController.Controller;
   private labelOptionConverter = new AMapLabelOptionConverter();
+  private inited = false;
 
   public source: AMapDataSource = {
     all: [],
@@ -63,10 +66,7 @@ export class AMapBusiness {
     });
     this.storeService.statusChange.subscribe((x) => {
       this.divisionSelect(this.storeService.divisionId);
-      let promise = this.getPointCount(
-        this.storeService.divisionId,
-        this.storeService.divisionType
-      );
+      let promise = this.getPointCount(this.storeService.divisionId);
       promise.then((count) => {
         this.pointCountChanged.emit(count);
       });
@@ -112,33 +112,41 @@ export class AMapBusiness {
     });
   }
 
-  private init() {
-    let promise = this.stationService.cache.all();
-    promise.then((x) => {
-      this.source.all = x;
-      this.setPointStatus(this.source.all);
-      if (this.mapClient) {
-        this.source.all.forEach((x) => {
-          if (this.mapController) {
-            this.mapController.Village.Point.Asyn.Get(
-              x.DivisionId!,
-              x.Id,
-              (point) => {
-                this.source.points[point.id] = point;
-              }
-            );
+  async initStations() {
+    this.source.all = await this.stationService.cache.all();
+    return this.source.all;
+  }
+  async initPoints() {
+    return new Promise<CesiumDataController.Point[]>((resolve) => {
+      wait(
+        () => {
+          return !!(this.mapClient && this.mapController);
+        },
+        () => {
+          let points = this.mapController!.Village.Point.All(
+            this.storeService.defaultDivisionId!
+          );
+          for (let i = 0; i < points.length; i++) {
+            const point = points[i];
+            this.source.points[point.id] = point;
           }
-        });
-      }
+          resolve(points);
+        }
+      );
     });
-    let p = this.getPointCount(
-      this.storeService.divisionId,
-      this.storeService.divisionType
-    );
-    p.then((count) => {
-      this.pointCountChanged.emit(count);
+  }
+
+  private async init() {
+    let all = [this.initStations(), this.initPoints()];
+    return Promise.all(all).then((x) => {
+      this.setPointStatus(this.source.all);
+      this.inited = true;
+      let p = this.getPointCount(this.storeService.divisionId);
+      p.then((count) => {
+        this.pointCountChanged.emit(count);
+      });
+      return p;
     });
-    return p;
   }
 
   createMapClient(iframe: HTMLIFrameElement) {
@@ -351,7 +359,7 @@ export class AMapBusiness {
     }
   }
 
-  async getPointCount(villageId: string, divisionType: DivisionType) {
+  async getPointCount1(villageId: string, divisionType: DivisionType) {
     let count = 0;
     if (this.mapController) {
       if (divisionType === DivisionType.Committees) {
@@ -371,6 +379,47 @@ export class AMapBusiness {
       }
     }
     return count;
+  }
+  async getPointCount(villageId: string): Promise<PointCount> {
+    return new Promise((resolve) => {
+      wait(
+        () => {
+          return !!this.mapController && this.inited;
+        },
+        () => {
+          let count = 0;
+          let normal = 0;
+          let warm = 0;
+          let error = 0;
+          if (this.mapController) {
+            let points = this.mapController.Village.Point.All(villageId);
+            count = points.length;
+            for (let i = 0; i < points.length; i++) {
+              const point = points[i];
+              let station = this.source.all.find((x) => x.Id === point.id);
+              if (station) {
+                let contain = false;
+                if (station.StationState.contains(StationState.Error)) {
+                  error++;
+                  contain = true;
+                }
+                if (station.StationState.contains(StationState.Full)) {
+                  warm++;
+                  contain = true;
+                }
+                if (contain == false) {
+                  normal++;
+                }
+              } else {
+                console.warn('地图上多出点位：', station);
+              }
+            }
+          }
+
+          resolve({ count: count, normal: normal, warm: warm, error: error });
+        }
+      );
+    });
   }
 
   setContentMenu() {

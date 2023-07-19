@@ -43,3 +43,10 @@ export enum GarbageTimeFilter {
   h4 = 240 - 1,
   none = -1,
 }
+
+export interface PointCount {
+  count: number;
+  normal: number;
+  warm: number;
+  error: number;
+}

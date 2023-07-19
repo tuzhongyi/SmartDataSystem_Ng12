@@ -1,4 +1,4 @@
-<div class="image-video-mult-control">
+<div class="image-video-mult-control" #element>
   <ng-container *ngFor="let item of models">
     <div
       class="item"
@@ -9,8 +9,7 @@
           fulled: item.fulled
         }"
         [model]="item"
-        [fulled]="item.fulled"
-        (fullscreen)="onfullscreen($event)"
+        [(fulled)]="item.fulled"
         (onplay)="onplay($event)"
         (onstop)="onstop($event)"
         [operation]="operation"

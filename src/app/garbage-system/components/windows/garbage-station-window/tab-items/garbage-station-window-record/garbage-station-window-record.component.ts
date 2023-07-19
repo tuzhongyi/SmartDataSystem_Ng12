@@ -7,8 +7,10 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
-import { EventType } from 'src/app/enum/event-type.enum';
+import {
+  GarbageDropRecordFilter,
+  GarbageDropRecordViewModel,
+} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
@@ -19,20 +21,18 @@ import { SearchOptions } from 'src/app/view-model/search-options.model';
   styleUrls: ['./garbage-station-window-record.component.less'],
 })
 export class GarbageStationWindowRecordComponent implements OnInit, OnChanges {
-  @Input()
-  isfilter = false;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input() isfilter = false;
 
-  @Input()
-  search: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
-  @Input()
-  status?: GarbageTaskStatus;
+  @Input() search: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+  @Input() status?: GarbageTaskStatus;
 
-  @Input()
-  filter = new GarbageDropRecordFilter();
-  @Output()
-  filterChange: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+  @Input() filter = new GarbageDropRecordFilter();
+  @Output() filterChange: EventEmitter<GarbageDropRecordFilter> =
+    new EventEmitter();
+
+  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() video: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
@@ -73,6 +73,9 @@ export class GarbageStationWindowRecordComponent implements OnInit, OnChanges {
 
   onimage(item: ImageControlModelArray) {
     this.image.emit(item);
+  }
+  onvideo(item: GarbageDropRecordViewModel) {
+    this.video.emit(item);
   }
   onsearch(opts: SearchOptions) {
     this.filter.opts = opts;

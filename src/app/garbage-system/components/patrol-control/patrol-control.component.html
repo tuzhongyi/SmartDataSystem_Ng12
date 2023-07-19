@@ -5,8 +5,8 @@
       <div
         class="spinner-border green-text"
         [ngClass]="{
-          'spinner-border': manualCaptureing,
-          circle: !manualCaptureing
+          'spinner-border': captureing,
+          circle: !captureing
         }"
       ></div>
     </div>
@@ -49,7 +49,7 @@
   </div>
   <div class="patrol-control-content">
     <app-image-video-mult-control
-      [models]="selected.media"
+      [models]="(selected.media | async)!"
       [operation]="config.operation"
       [playback]="toPlayback"
       (onplayed)="onvideoplayed($event)"
@@ -75,10 +75,7 @@
       </div>
     </div>
     <div class="operation">
-      <div
-        class="howell-icon-arrowleftbold arrow-wrap"
-        (click)="prev($event)"
-      ></div>
+      <div class="howell-icon-arrowleftbold arrow-wrap" (click)="prev()"></div>
 
       <div
         class="arrow-wrap howell-icon-play center"
@@ -95,12 +92,11 @@
         (click)="stop()"
       ></div>
 
-      <div
-        class="howell-icon-arrowrightbold arrow-wrap"
-        (click)="next($event)"
-      ></div>
+      <div class="howell-icon-arrowrightbold arrow-wrap" (click)="next()"></div>
     </div>
-    <div class="paged">{{ index + 1 }}/{{ models ? models.length : 0 }}</div>
+    <div class="paged">
+      {{ page ? page.PageIndex : 0 }}/{{ page ? page.TotalRecordCount : 0 }}
+    </div>
   </div>
 </div>
 

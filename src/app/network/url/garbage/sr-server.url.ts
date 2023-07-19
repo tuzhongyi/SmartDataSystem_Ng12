@@ -1,9 +1,9 @@
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export class SRServiceUrl extends AbstractUrl {
   private static url = new SRServiceUrl(
-    `${BasicUrl.garbage.management}/SRServers`
+    `${BaseUrl.garbage.garbage_management}/SRServers`
   );
   static basic() {
     return this.url.basic();

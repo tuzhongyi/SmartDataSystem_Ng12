@@ -1,4 +1,7 @@
+import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { EventNumber } from './event-number.model';
+import { GarbageWeight } from './garbage-weight.model';
 import { IdNameModel } from './model.interface';
 
 /** 区划的数量统计信息 */
@@ -49,4 +52,9 @@ export class DivisionNumberStatistic extends IdNameModel {
   TimeoutTaskCount?: number;
   /**	Double	当前垃圾堆滞留时间，单位：分钟，区划下当前最大时长	O */
   CurrentGarbageTime?: number;
+  /**	Int32	小区数量	O */
+  CommunityNumber?: number;
+  /**	GarbageWeight[]	当日垃圾重量	O */
+  @Type(() => GarbageWeight)
+  GarbageWeights?: GarbageWeight[];
 }

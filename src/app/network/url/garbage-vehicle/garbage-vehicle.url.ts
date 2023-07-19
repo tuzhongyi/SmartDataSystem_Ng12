@@ -5,11 +5,11 @@
  * @Last Modified time: 2022-11-04 15:38:46
  */
 import { AbstractUrl } from '../abstract.url';
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 
 export abstract class GarbageVehicleUrl {
   static basic() {
-    return `${BasicUrl.garbage.vehicle}/GarbageVehicles`;
+    return `${BaseUrl.garbage.garbage_vehicles}/GarbageVehicles`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

@@ -7,7 +7,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root',
 })
 export class GlobalStorageService {
-  // 垃圾清运
+  system?: SystemType; // 垃圾清运
   collectionStatusChange = new EventEmitter();
 
   statusChange = new EventEmitter();
@@ -90,4 +90,10 @@ export class GlobalStorageService {
   constructor(private localStorage: LocalStorageService) {
     this.runInterval();
   }
+}
+
+export enum SystemType {
+  aiop,
+  garbage,
+  vehicle,
 }

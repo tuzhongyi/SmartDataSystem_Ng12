@@ -1,0 +1,53 @@
+.video-control-window {
+  color: white;
+  height: calc(100%);
+  padding: 20px 10px 10px 10px;
+
+  .video-control-window-header {
+    height: 20px;
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 20px;
+
+    .operation {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      &>div {
+        margin: 0 5px;
+        cursor: pointer;
+      }
+
+      & .close:hover {
+        color: red;
+      }
+    }
+  }
+
+  .video-control-window-content {
+    height: calc(100% - 20px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .video {
+      border: 2px solid #3283e5;
+      background-color: black;
+      width: calc(100% - 180px - 10px - 4px);
+      height: calc(100%);
+    }
+
+    .controls {
+      width: 180px;
+      height: 100%;
+      box-sizing: content-box;
+    }
+  }
+}

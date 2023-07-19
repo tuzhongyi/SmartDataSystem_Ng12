@@ -37,14 +37,14 @@ export class GarbageDropRecordTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<GarbageDropRecordViewModel>>;
-  @Input()
-  load?: EventEmitter<GarbageDropRecordFilter>;
-
-  @Input()
-  filter: GarbageDropRecordFilter;
-
+  @Input() business: IBusiness<IModel, PagedList<GarbageDropRecordViewModel>>;
+  @Input() load?: EventEmitter<GarbageDropRecordFilter>;
+  @Input() filter: GarbageDropRecordFilter;
+  @Output() video: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
+  @Output() image: EventEmitter<
+    ImageControlModelArray<GarbageDropRecordViewModel>
+  > = new EventEmitter();
   widths = [
     '12%',
     '10%',
@@ -101,15 +101,12 @@ export class GarbageDropRecordTableComponent
     return promise;
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
   imageClick(item: GarbageDropRecordViewModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index);
+    let array = new ImageControlModelArray(item.images, img.index, item);
     this.image.emit(array);
   }
 
   videoClick(item: GarbageDropRecordViewModel) {
-    let array = new ImageControlModelArray(item.images, 0, true);
-    this.image.emit(array);
+    this.video.emit(item);
   }
 }

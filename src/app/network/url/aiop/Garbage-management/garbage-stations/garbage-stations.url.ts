@@ -1,8 +1,8 @@
-import { BasicUrl } from '../../../base.url';
+import { BaseUrl } from '../../../base.url';
 
 export abstract class GarbageStationsUrls {
   protected static get basic(): string {
-    return `${BasicUrl.garbage.management}/GarbageStations`;
+    return `${BaseUrl.garbage.garbage_management}/GarbageStations`;
   }
 
   static item(id: string) {

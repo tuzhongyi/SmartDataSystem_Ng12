@@ -3,16 +3,19 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { timer } from 'rxjs';
 import {
   ImageVideoControlModel,
   PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { Page } from 'src/app/network/model/page_list.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 import { PatrolControlBusiness } from './patrol-control.business';
@@ -29,30 +32,27 @@ import { PlaybackConfigWindowViewModel } from './playback-config-window.model';
   styleUrls: ['./patrol-control.component.less'],
   providers: [PatrolControlBusiness],
 })
-export class PatrolControlComponent implements OnInit, OnChanges {
-  @Input()
-  id?: string;
-  @Input()
-  config: PatrolControlConfig = new PatrolControlConfig();
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
+  @Input() load?: EventEmitter<void>;
+  // @Input() id?: string;
+  @Input() config: PatrolControlConfig = new PatrolControlConfig();
+  @Output() close: EventEmitter<void> = new EventEmitter();
 
-  @Output()
-  fullscreen: EventEmitter<void> = new EventEmitter();
-  @Output()
-  onselected: EventEmitter<PatrolControlModel> = new EventEmitter();
+  @Output() fullscreen: EventEmitter<void> = new EventEmitter();
+  @Output() onselected: EventEmitter<PatrolControlModel> = new EventEmitter();
 
   constructor(private business: PatrolControlBusiness) {}
+
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.id && this.id) {
-      if (this.models && this.models.length > 0) {
-        let index = this.models.findIndex((x) => x.id == this.id);
-        if (index >= 0) {
-          this.selected = this.models[index];
-          this.onselected.emit(this.selected);
-        }
-      }
-    }
+    // if (changes.id && this.id) {
+    //   if (this.models && this.models.length > 0) {
+    //     let index = this.models.findIndex((x) => x.id == this.id);
+    //     if (index >= 0) {
+    //       this.selected = this.models[index];
+    //       this.onselected.emit(this.selected);
+    //     }
+    //   }
+    // }
     if (changes.config) {
       if (this.config.autoplay) {
         this.run();
@@ -63,10 +63,9 @@ export class PatrolControlComponent implements OnInit, OnChanges {
   }
 
   OnlineStatus = OnlineStatus;
-  models?: PatrolControlModel[];
   selected?: PatrolControlModel;
-  index = 0;
-  manualCaptureing = false;
+  page?: Page;
+  captureing = false;
   interval = new PatrolIntervalControl();
   playback = new PlaybackConfigWindowViewModel();
   playing?: ImageVideoControlModel;
@@ -80,49 +79,74 @@ export class PatrolControlComponent implements OnInit, OnChanges {
     }
 
     this.business.manualCaptureEvent.subscribe((x) => {
-      this.manualCaptureing = x;
+      this.captureing = x;
     });
-    this.models = await this.business.load();
-    if (this.models.length > 0) {
-      this.selected = this.models[this.index];
-      this.onselected.emit(this.selected);
-    }
 
-    if (this.config.autoplay) {
-      this.run();
+    if (this.load) {
+      this.load.subscribe((x) => {
+        let index = this.page ? this.page.PageIndex : 1;
+        this.loadData(index);
+      });
     }
+    this.loadData(1);
+
+    // if (this.config.autoplay) {
+    //   this.run();
+    // }
 
     this.playback.onOkClicked.subscribe((x) => {
       this.onplayback(x);
     });
   }
+  ngOnDestroy(): void {
+    if (this.interval.handle) {
+      clearInterval(this.interval.handle);
+    }
+    this.interval.runing = false;
+  }
+
+  async loadData(index: number) {
+    let paged = await this.business.load(index);
+    this.selected = paged.Data;
+    this.page = paged.Page;
+    this.onselected.emit(this.selected);
+    timer(1000).subscribe((x) => {
+      this.onreflush();
+    });
+  }
 
   async prev(event?: Event) {
-    if (this.models) {
-      this.index--;
-      if (this.index < 0) {
-        this.index = this.models.length - 1;
+    if (this.selected && this.page) {
+      this.page.PageIndex--;
+      if (this.page.PageIndex <= 0) {
+        this.page.PageIndex = this.page.TotalRecordCount;
       }
-      this.selected = this.models[this.index];
-      this.onselected.emit(this.selected);
-      this.selected.media = await this.business.manualCapture(this.selected);
+      this.loadData(this.page.PageIndex);
     }
+    this.stop();
+    this.run();
   }
-  async next(event?: Event) {
-    if (this.models) {
-      this.index++;
-      if (this.index >= this.models.length) {
-        this.index = 0;
+  async next(fromrun: boolean = false) {
+    if (this.selected && this.page) {
+      this.page.PageIndex++;
+      if (this.page.PageIndex > this.page.TotalRecordCount) {
+        this.page.PageIndex = 1;
       }
-      this.selected = this.models[this.index];
-      this.onselected.emit(this.selected);
-      this.selected.media = await this.business.manualCapture(this.selected);
+      this.loadData(this.page.PageIndex);
+    }
+    if (!fromrun) {
+      this.stop();
+      this.run();
     }
   }
 
   async onreflush() {
     if (this.selected) {
-      this.selected.media = await this.business.manualCapture(this.selected);
+      let media = await this.selected.media;
+      this.selected.media = this.business.manualCapture(
+        this.selected.id,
+        media
+      );
     }
   }
   onfullscreen() {
@@ -135,7 +159,7 @@ export class PatrolControlComponent implements OnInit, OnChanges {
   run() {
     this.interval.runing = true;
     this.interval.handle = setInterval(() => {
-      this.next();
+      this.next(true);
     }, this.interval.time * 1000);
   }
   stop() {

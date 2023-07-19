@@ -45,16 +45,16 @@ export class GarbageFullStationTableComponent
     OnChanges,
     OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
+  @Input() business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
 
-  @Input()
-  count: number = 0;
+  @Input() count: number = 0;
 
-  @Input()
-  load?: EventEmitter<SearchOptions>;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input() load?: EventEmitter<SearchOptions>;
+  @Output() image: EventEmitter<
+    ImageControlModelArray<GarbageFullStationTableModel>
+  > = new EventEmitter();
+  @Output() video: EventEmitter<GarbageFullStationTableModel> =
+    new EventEmitter();
   constructor(business: GarbageFullStationTableBusiness) {
     super();
     this.business = business;
@@ -109,7 +109,7 @@ export class GarbageFullStationTableComponent
   }
 
   imageClick(item: GarbageFullStationTableModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index);
+    let array = new ImageControlModelArray(item.images, img.index, item);
     this.image.emit(array);
   }
 }

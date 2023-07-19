@@ -1,7 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { SubscriptionService } from 'src/app/common/interfaces/subscribe.interface';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -27,8 +26,7 @@ export class GarbageDropRecordTableBusiness
   constructor(
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
-    private stationService: GarbageStationRequestService,
-    public subscription: SubscriptionService
+    private stationService: GarbageStationRequestService
   ) {}
   Converter: IPromiseConverter<
     PagedList<GarbageDropEventRecord>,
@@ -76,7 +74,18 @@ export class GarbageDropRecordTableBusiness
       params.CommunityIds = [opts.community.Id];
     }
     if (opts.opts) {
-      params.ResourceName = opts.opts.text;
+      if (opts.opts.propertyName) {
+        switch (opts.opts.propertyName) {
+          case 'Name':
+            params.StationName = opts.opts.text;
+            break;
+          default:
+            params[opts.opts.propertyName] = opts.opts.text;
+            break;
+        }
+      } else {
+        params.ResourceName = opts.opts.text;
+      }
     }
     params.TakeMinutes = opts.duration;
     params.DropTimeOrderBy = OrderType.Asc;

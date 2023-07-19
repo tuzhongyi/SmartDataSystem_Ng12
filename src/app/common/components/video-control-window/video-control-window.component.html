@@ -1,0 +1,44 @@
+<app-window [Model]="window" [style]="window.style" [CloseButton]="false">
+  <ng-container *ngIf="window.show">
+    <div class="video-control-window">
+      <div class="video-control-window-header">
+        <div class="title">{{ title }}</div>
+        <div class="operation">
+          <div class="mode" (click)="modechange()">
+            <i class="howell-icon-replay"></i>
+          </div>
+          <div class="close-winow" (click)="onclose()">
+            <i class="howell-icon-Close alert-window-close-btn"></i>
+          </div>
+        </div>
+      </div>
+      <div
+        class="video-control-window-content preview"
+        *ngIf="mode === PlayMode.live"
+      >
+        <div class="video">
+          <app-video-player [model]="preview"></app-video-player>
+        </div>
+        <div class="controls">
+          <app-video-setting-control (streamChange)="onstreamchange($event)">
+          </app-video-setting-control>
+        </div>
+      </div>
+      <div
+        class="video-control-window-content playback"
+        *ngIf="mode === PlayMode.vod"
+      >
+        <div class="video">
+          <app-video-player [model]="playback"></app-video-player>
+        </div>
+        <div class="controls">
+          <app-video-playback-setting-control
+            (download)="ondownload($event)"
+            (playback)="onplayback($event)"
+          >
+          </app-video-playback-setting-control>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</app-window>

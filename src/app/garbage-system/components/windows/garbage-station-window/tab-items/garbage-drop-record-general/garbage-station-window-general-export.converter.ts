@@ -26,25 +26,32 @@ export class GarbageStationWindowGeneralExportConverter
         row.push(data.County.Name);
       }
       row.push(
-        this.GetValue(data.GarbageRatioTd.format, data.GarbageRatioTd.differ)
+        this.GetValue(
+          data.GarbageRatioTd.format + '%',
+          data.GarbageRatioTd.differ,
+          true
+        )
       );
       row.push(
         this.GetValue(
           data.AvgGarbageTimeTd.format,
-          data.AvgGarbageTimeTd.differ
+          data.AvgGarbageTimeTd.differ,
+          true
         )
       );
 
       row.push(
         this.GetValue(
           data.MaxGarbageTimeTd.format,
-          data.MaxGarbageTimeTd.differ
+          data.MaxGarbageTimeTd.differ,
+          true
         )
       );
       row.push(
         this.GetValue(
           data.GarbageDurationTd.format,
-          data.GarbageDurationTd.differ
+          data.GarbageDurationTd.differ,
+          true
         )
       );
 
@@ -59,7 +66,7 @@ export class GarbageStationWindowGeneralExportConverter
     return model;
   }
 
-  GetValue(value: string, differ: number) {
+  GetValue(value: string, differ: number, percent = false) {
     let up = '↑';
     let down = '↓';
     let n = '';
@@ -70,6 +77,6 @@ export class GarbageStationWindowGeneralExportConverter
     } else {
     }
 
-    return `${value}${n}`;
+    return `${value}${n}${percent ? '%' : ''}`;
   }
 }
