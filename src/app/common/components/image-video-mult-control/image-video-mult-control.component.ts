@@ -34,6 +34,8 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
   @Output()
   onstoped: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Input()
+  change?: EventEmitter<ImageVideoControlModel[]>;
 
   constructor() {}
 
@@ -59,6 +61,30 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
         this.models.push(new ImageVideoControlModel(''));
+      }
+    }
+    if (this.change) {
+      this.change.subscribe((x) => {
+        this.onchange(x);
+      });
+    }
+  }
+
+  onchange(models: ImageVideoControlModel[]) {
+    if (this.models) {
+      for (let i = 0; i < models.length; i++) {
+        let index = this.models.findIndex(
+          (x) => x.cameraId === models[i].cameraId
+        );
+        if (index >= 0) {
+          let model = new ImageVideoControlModel(
+            models[i].cameraId,
+            models[i].source
+          );
+          model.image = models[i].image;
+          model.fulled = models[i].fulled;
+          this.models[index] = model;
+        }
       }
     }
   }

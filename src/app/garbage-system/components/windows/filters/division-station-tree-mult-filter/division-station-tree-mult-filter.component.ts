@@ -9,17 +9,14 @@ import {
   ViewChild,
 } from '@angular/core';
 import { TreeComponent } from 'src/app/common/components/tree/tree.component';
-import { HorizontalAlign } from 'src/app/enum/direction.enum';
-import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { HorizontalAlign } from 'src/app/enum/direction.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-filter.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Component({
   selector: 'howell-division-station-tree-mult-filter',
@@ -50,11 +47,8 @@ export class DivisionStationTreeMultFilterComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionType) {
-      if (this.divisionType === DivisionType.None) {
-        this.config.tree.treeServiceModel = DistrictTreeEnum.Station;
-      } else {
-        this.config.tree.treeServiceModel = DistrictTreeEnum.Division;
-      }
+      this.config.tree.showStation = this.divisionType === DivisionType.None;
+
       switch (this.divisionType) {
         case DivisionType.Committees:
           this.config.tree.depth = 1;
@@ -118,17 +112,20 @@ export class DivisionStationTreeMultFilterComponent
     event.cancelBubble = true;
   }
 
-  selectTree(nodes: FlatTreeNode[]) {
+  selectTree(nodes: CommonFlatNode[]) {
     this.selected = [];
     this.selectedIds = [];
 
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      if (node.type !== this.divisionType) {
-        continue;
+      if (node.RawData instanceof Division) {
+        if (node.RawData.DivisionType !== this.divisionType) {
+          continue;
+        }
       }
-      this.selected.push(node.rawData);
-      this.selectedIds.push(node.id);
+
+      this.selected.push(node.RawData);
+      this.selectedIds.push(node.Id);
     }
 
     this.onselect.emit(this.selectedIds);

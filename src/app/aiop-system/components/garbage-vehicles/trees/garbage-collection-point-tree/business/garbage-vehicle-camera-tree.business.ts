@@ -50,11 +50,6 @@ export class GarbageCollectionPointTreeBusiness
     this._updateNestedMap(nodes);
 
     return nodes;
-
-    return this._getDataRecursively(type, depth).then((x) => {
-      this.loaded.emit(this.datas);
-      return x;
-    });
   }
 
   async loadChildren(flat: CommonFlatNode<Division>) {

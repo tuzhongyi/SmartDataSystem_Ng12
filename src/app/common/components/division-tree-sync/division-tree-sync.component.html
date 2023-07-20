@@ -1,0 +1,43 @@
+<div class="division-tree hw-tree">
+  <div class="search-wrapper" *ngIf="showSearchBar">
+    <howell-simple-search
+      placeHolder="名称"
+      (searchEvent)="searchEventHandler($event)"
+    ></howell-simple-search>
+  </div>
+  <div class="tree-container">
+    <howell-common-tree
+      [dataSubject]="dataSubject"
+      [defaultIds]="defaultIds"
+      [showButtonIcon]="showButtonIcon"
+      [selectStrategy]="selectStrategy"
+      (selectTreeNode)="selectTreeNodeHandler($event)"
+      (defaultIdsChange)="onDefaultIdsChange($event)"
+      (buttonIconClickEvent)="onButtonIconClickEvent($event)"
+      [holdStatus]="holdStatus"
+      [loaded]="load"
+      [isAsync]="false"
+    ></howell-common-tree>
+  </div>
+</div>
+
+<!-- <howell-division-tree
+  [business]="business"
+  [defaultIds]="defaultIds"
+  [depth]="depth"
+  [depthIsEnd]="depthIsEnd"
+  [showDepth]="showDepth"
+  [holdStatus]="holdStatus"
+  [selectStrategy]="selectStrategy"
+  [showStation]="showStation"
+  [showSearchBar]="showSearchBar"
+  [showButtonIcon]="showButtonIcon"
+  [resourceType]="resourceType"
+  [filterTypes]="filterTypes"
+  [load]="load"
+  (selectTreeNode)="onSelectTreeNode($event)"
+  (defaultIdsChange)="onDefaultIdsChange($event)"
+  (holdStatusChange)="onHoldStatusChange($event)"
+  (buttonIconClickEvent)="onButtonIconClickEvent($event)"
+  (loaded)="onLoaded($event)"
+></howell-division-tree> -->

@@ -70,6 +70,7 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   playback = new PlaybackConfigWindowViewModel();
   playing?: ImageVideoControlModel;
   toPlayback: EventEmitter<PlaybackInterval> = new EventEmitter();
+  change: EventEmitter<ImageVideoControlModel[]> = new EventEmitter();
 
   async ngOnInit() {
     for (let i = 1; i <= 4; i++) {
@@ -142,11 +143,11 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
 
   async onreflush() {
     if (this.selected) {
-      let media = await this.selected.media;
-      this.selected.media = this.business.manualCapture(
-        this.selected.id,
-        media
-      );
+      this.business
+        .manualCapture(this.selected.id, this.selected.media)
+        .then((x) => {
+          this.change.emit(x);
+        });
     }
   }
   onfullscreen() {

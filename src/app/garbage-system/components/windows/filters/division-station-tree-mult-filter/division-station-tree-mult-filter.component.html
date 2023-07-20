@@ -20,7 +20,19 @@
     [class.left]="align == HorizontalAlign.left"
     *ngIf="expand"
   >
-    <howell-tree
+    <howell-division-tree-sync
+      #tree
+      [depth]="config.tree.depth"
+      [depthIsEnd]="config.tree.depthIsEnd"
+      [showDepth]="config.tree.showDepth"
+      [selectStrategy]="config.tree.treeSelectModel"
+      [resourceType]="config.tree.divisionType"
+      (selectTreeNode)="selectTree($event)"
+      [defaultIds]="selectedIds"
+      [showStation]="config.tree.showStation"
+    >
+    </howell-division-tree-sync>
+    <!-- <howell-tree
       #tree
       [treeServiceModel]="config.tree.treeServiceModel"
       [depth]="config.tree.depth"
@@ -30,6 +42,6 @@
       [resourceType]="config.tree.divisionType"
       (selectTreeNode)="selectTree($event)"
       [defaultIds]="selectedIds"
-    ></howell-tree>
+    ></howell-tree> -->
   </div>
 </div>

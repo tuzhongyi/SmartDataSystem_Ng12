@@ -12,7 +12,9 @@
         [(fulled)]="item.fulled"
         (onplay)="onplay($event)"
         (onstop)="onstop($event)"
-        [operation]="operation"
+        [operation]="
+          item.cameraId ? operation : { play: false, fullscreen: false }
+        "
         [playback]="playback"
       ></app-image-video-control>
     </div>

@@ -49,9 +49,11 @@
   </div>
   <div class="patrol-control-content">
     <app-image-video-mult-control
-      [models]="(selected.media | async)!"
+      [models]="selected.media"
       [operation]="config.operation"
       [playback]="toPlayback"
+      [fullplay]="false"
+      [change]="change"
       (onplayed)="onvideoplayed($event)"
       (onstoped)="onvideostoped($event)"
     >

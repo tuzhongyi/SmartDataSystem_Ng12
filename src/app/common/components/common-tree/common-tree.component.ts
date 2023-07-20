@@ -40,6 +40,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Input()
   showButtonIcon = false;
 
+  @Input()
+  isAsync = true;
   @Output()
   loadChildrenEvent = new EventEmitter<CommonFlatNode>();
   @Output()
@@ -49,6 +51,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   defaultIdsChange = new EventEmitter<string[]>();
   @Output()
   buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
+  @Input()
+  loaded: EventEmitter<void> = new EventEmitter();
 
   constructor() {
     this._treeFlattener = new MatTreeFlattener(
@@ -68,6 +72,9 @@ export class CommonTreeComponent implements OnInit, OnChanges {
       this._treeFlattener
     );
   }
+
+  defaultIdLoaded = false;
+
   SelectStrategy = SelectStrategy;
 
   _flatNodeMap = new Map<string, CommonFlatNode>();
@@ -138,12 +145,19 @@ export class CommonTreeComponent implements OnInit, OnChanges {
       // console.log('树数据', data)
       this.dataSource.data = data;
     });
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    // 动态设置默认Id时
-    if ('defaultIds' in changes) {
+
+    if (this.defaultIds && this.defaultIds.length > 0) {
       this.setDefaultNodes();
     }
+    if (this.loaded) {
+      this.loaded.subscribe((x) => {
+        if (!this.defaultIdLoaded) {
+          this.setDefaultNodes();
+        }
+      });
+    }
+  }
+  ngOnChanges(changes: SimpleChanges): void {
     if ('selectStrategy' in changes) {
       if (this.selectStrategy == SelectStrategy.Single) {
         this.selection = new SelectionModel<CommonFlatNode>();
@@ -153,6 +167,10 @@ export class CommonTreeComponent implements OnInit, OnChanges {
       this.selection.changed.subscribe((change) => {
         this.selectTreeNode.emit(change);
       });
+    }
+    // 动态设置默认Id时
+    if ('defaultIds' in changes && !changes['defaultIds'].firstChange) {
+      this.setDefaultNodes();
     }
   }
   buttonIconClick(node: CommonFlatNode, index: number, e: Event) {
@@ -254,39 +272,58 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   }
 
   setDefaultNodes() {
-    if (this.defaultIds.length == 0) return;
+    if (this.defaultIds.length == 0) {
+      if (this.selection) {
+        this.selection.clear();
+      }
+      return;
+    }
     if (this.selectStrategy == SelectStrategy.Single) {
       this.defaultIds.length = 1;
     }
 
     let len = this.defaultIds.length;
-
-    let res: string[] = [];
+    let parentIds: string[] = [];
     for (let i = 0; i < len; i++) {
-      let id = this.defaultIds.shift(); // 会改变数组长度
+      let id = this.defaultIds[i]; // 会改变数组长度
       if (id) {
         let node = this._flatNodeMap.get(id);
         if (node) {
+          this.defaultIdLoaded = true;
           // 最顶层节点，则直接选中状态
           if (!node.ParentId) {
             this.selection.select(node);
           } else {
             // 上层节点为打开状态,否则没有打开树，就抛选中事件不合逻辑
             let parentNode = this._flatNodeMap.get(node.ParentId);
-            if (parentNode && this.treeControl.isExpanded(parentNode)) {
+            if (
+              parentNode &&
+              (this.isAsync === false ||
+                this.treeControl.isExpanded(parentNode))
+            ) {
               this.selection.select(node);
-            } else {
-              res.push(id);
+              // this._checkAllParentsSelection(node);
+              if (this._descendantAllSelected(parentNode)) {
+                this.selection.select(parentNode);
+                parentIds.push(parentNode.Id);
+              }
             }
           }
-        } else {
-          // 还没有拉取到该节点
-          res.push(id);
         }
       }
     }
     // 循环结束后，留下的都是没有匹配到的节点
-    this.defaultIds = res;
+
+    for (let i = 0; i < this.selection.selected.length; i++) {
+      const selected = this.selection.selected[i];
+      if (
+        !this.defaultIds.includes(selected.Id) &&
+        !parentIds.includes(selected.Id)
+      ) {
+        this.selection.deselect(selected);
+      }
+    }
+
     if (len !== this.defaultIds.length)
       this.defaultIdsChange.emit(this.defaultIds);
   }

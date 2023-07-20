@@ -13,7 +13,7 @@ export class PatrolControlModel {
   }
   id: string;
   title: string = '';
-  media!: Promise<ImageVideoControlModel[]>;
+  media!: ImageVideoControlModel[];
   status: PatrolControlStatus = new PatrolControlStatus();
 }
 

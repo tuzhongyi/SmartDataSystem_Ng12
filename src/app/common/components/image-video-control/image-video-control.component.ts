@@ -25,26 +25,17 @@ import {
   providers: [ImageVideoControlBusiness],
 })
 export class ImageVideoControlComponent implements OnInit, OnChanges {
-  @Input()
-  model?: ImageVideoControlModel;
-  @Input()
-  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
-  @Input()
-  draw: boolean = false;
-  @Input()
-  playback?: EventEmitter<PlaybackInterval>;
-  @Input()
-  preview?: EventEmitter<string>;
-  @Input()
-  stop: EventEmitter<void> = new EventEmitter();
-  @Input()
-  fulled = false;
-  @Output()
-  fulledChange: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-  @Output()
-  onstop: EventEmitter<boolean> = new EventEmitter();
+  @Input() model?: ImageVideoControlModel;
+  @Input() operation: ImageVideoControlOperation =
+    new ImageVideoControlOperation();
+  @Input() draw: boolean = false;
+  @Input() playback?: EventEmitter<PlaybackInterval>;
+  @Input() preview?: EventEmitter<string>;
+  @Input() stop: EventEmitter<void> = new EventEmitter();
+  @Input() fulled = false;
+  @Output() fulledChange: EventEmitter<boolean> = new EventEmitter();
+  @Output() onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Output() onstop: EventEmitter<boolean> = new EventEmitter();
 
   constructor(
     private business: ImageVideoControlBusiness,

@@ -29,6 +29,7 @@ import { CommonTreeComponent } from './common-tree/common-tree.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { CoordinateManageComponent } from './coordinate-manage/coordinate-manage.component';
 import { CustomTableComponent } from './custom-table/custom-table.component';
+import { DivisionTreeSyncComponent } from './division-tree-sync/division-tree-sync.component';
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
@@ -114,6 +115,7 @@ export const CUSTOM_COMPONENTS = [
   AICameraModelTableComponent,
   LabelTreeComponent,
   DivisionTreeComponent,
+  DivisionTreeSyncComponent,
   CommonTreeComponent,
   RegionTreeComponent,
   CommonLabelSelecComponent,

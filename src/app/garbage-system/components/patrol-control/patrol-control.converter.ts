@@ -23,24 +23,22 @@ export class PatrolControlConverter
     let model = new PatrolControlModel(source.Id);
     model.title = source.Name;
 
-    model.media = new Promise((resolve) => {
-      let medias = [];
-      if (source.Cameras) {
-        let online: OnlineStatus = OnlineStatus.Offline;
-        for (let i = 0; i < source.Cameras.length; i++) {
-          const camera = source.Cameras[i];
-          if (online === OnlineStatus.Offline) {
-            online = camera.OnlineStatus ?? OnlineStatus.Offline;
-          }
-          let img = this.converter.image.Convert(camera, false);
-          let media = new ImageVideoControlModel(camera.Id, source.Id);
-          media.image = img;
-          medias.push(media);
+    model.media = [];
+
+    if (source.Cameras) {
+      let online: OnlineStatus = OnlineStatus.Offline;
+      for (let i = 0; i < source.Cameras.length; i++) {
+        const camera = source.Cameras[i];
+        if (online === OnlineStatus.Offline) {
+          online = camera.OnlineStatus ?? OnlineStatus.Offline;
         }
-        model.status.online = online;
-        resolve(medias);
+        let img = this.converter.image.Convert(camera, false);
+        let media = new ImageVideoControlModel(camera.Id, source.Id);
+        media.image = img;
+        model.media.push(media);
       }
-    });
+      model.status.online = online;
+    }
 
     model.status.stationState = new ControlClass(source.StationState.value);
     model.status.stationState.language = Language.StationStateFlags(
