@@ -88,4 +88,16 @@ export class DateTimeTool {
     duration.end.setSeconds(duration.end.getSeconds() + after);
     return duration;
   }
+  static before(date: Date, seconds: number = 30): Duration {
+    let duration = {
+      begin: new Date(),
+      end: new Date(date.getTime()),
+    };
+
+    let begin = new Date(date.getTime());
+    begin.setSeconds(begin.getSeconds() - seconds);
+    duration.begin = new Date(begin.getTime());
+
+    return duration;
+  }
 }

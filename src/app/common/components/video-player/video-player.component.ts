@@ -31,7 +31,17 @@ export class VideoPlayerComponent
 {
   @Input() url?: string;
   @Input() model?: VideoModel;
-  @Input() webUrl: string = '/video/wsplayer/wsplayer.html';
+  private _webUrl: string = '/video/wsplayer/wsplayer.html';
+  public get webUrl(): string | undefined {
+    return this._webUrl;
+  }
+  @Input()
+  public set webUrl(v: string | undefined) {
+    if (v) {
+      this._webUrl = v;
+    }
+  }
+
   @Input() name: string = '';
   @Input() index = 0;
   @Input() play?: EventEmitter<VideoModel>;
@@ -191,7 +201,7 @@ export class VideoPlayerComponent
       }
 
       if (this.url) {
-        let src = this.getSrc(this.webUrl, this.url, this.name);
+        let src = this.getSrc(this.webUrl!, this.url, this.name);
         this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
         this.isloaded = true;
         this.loaded.emit();
@@ -210,6 +220,7 @@ export class VideoPlayerComponent
         }
       );
     });
+    this.loadStream();
   }
 
   async loadRuleState() {
@@ -283,7 +294,7 @@ export class VideoPlayerComponent
         this.onButtonClicked.emit(btn);
 
         new Promise((x) => {
-          let url = new HowellUrl(this.webUrl);
+          let url = new HowellUrl(this.webUrl!);
           if (
             location.hostname !== url.Host &&
             location.port != url.Port.toString()
@@ -312,7 +323,7 @@ export class VideoPlayerComponent
         if (this.index != index) return;
         this.onViewerDoubleClicked.emit(index);
         new Promise((x) => {
-          let url = new HowellUrl(this.webUrl);
+          let url = new HowellUrl(this.webUrl!);
           if (
             location.hostname !== url.Host &&
             location.port != url.Port.toString()
@@ -340,6 +351,7 @@ export class VideoPlayerComponent
   }
   onplay(model: VideoModel) {
     this.model = model;
+    this.model.stream = this.stream;
     this.isloaded = false;
     this.load();
   }

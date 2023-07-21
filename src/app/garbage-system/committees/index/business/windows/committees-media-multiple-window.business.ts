@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
 
 @Injectable()
 export class CommitteesMediaMultipleWindowBusiness extends WindowViewModel {
@@ -11,6 +11,6 @@ export class CommitteesMediaMultipleWindowBusiness extends WindowViewModel {
     padding: '10px 20px',
   };
 
-  statistic?: GarbageStationGarbageCountStatistic;
+  args?: MediaMultipleWindowArgs;
   date?: Date;
 }

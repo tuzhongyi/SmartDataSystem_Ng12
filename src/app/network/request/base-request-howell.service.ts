@@ -1,19 +1,20 @@
 import { ClassConstructor, instanceToPlain } from 'class-transformer';
+import { HowellResponse } from '../model/howell-response.model';
 import { PagedList } from '../model/page_list.model';
 import { HowellAuthHttpService } from './howell-auth-http.service';
 import { IParams } from './IParams.interface';
 import { ServiceHelper } from './service-helper';
 
-export class BaseRequestService {
+export class HowellBaseRequestService {
   constructor(public http: HowellAuthHttpService) {}
   async get<T>(url: string, type: ClassConstructor<T>): Promise<T> {
-    let response = await this.http.get<T>(url).toPromise();
-    return ServiceHelper.ResponseProcess<T>(response, type);
+    let response = await this.http.getHowellResponse(url).toPromise();
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
   async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {
     let data = instanceToPlain(model) as T;
-    let response = await this.http.put(url, data).toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    let response = await this.http.howellPut(url, data).toPromise();
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
   async post<T>(
     url: string,
@@ -24,18 +25,18 @@ export class BaseRequestService {
 
   async post<T>(url: string, type: ClassConstructor<T>, args?: T | IParams) {
     let data = instanceToPlain(args) as T | IParams;
-    let response = await this.http.post(url, data).toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    let response = await this.http.howellPost(url, data).toPromise();
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
 
   async poststring<T>(url: string, type: ClassConstructor<T>, args: string) {
-    let response = await this.http.post<string>(url, args).toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    let response = await this.http.postString(url, args).toPromise();
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
 
   async delete<T>(url: string, type: ClassConstructor<T>) {
-    let response = await this.http.delete(url).toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    let response = await this.http.howellDelete(url).toPromise();
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
   async postArray<T>(url: string, type: ClassConstructor<T>, params?: IParams) {
     let data: IParams | undefined;
@@ -43,17 +44,19 @@ export class BaseRequestService {
       data = instanceToPlain(params) as IParams;
     }
     let response = await this.http
-      .post<IParams, Array<T>>(url, data)
+      .howellPost<IParams, HowellResponse<Array<T>>>(url, data)
       .toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
   async postReturnString(url: string, params?: IParams) {
     let data: IParams | undefined;
     if (params) {
       data = instanceToPlain(params) as IParams;
     }
-    let response = await this.http.post<IParams, string>(url, data).toPromise();
-    return ServiceHelper.ResponseProcess(response, true);
+    let response = await this.http
+      .howellPost<IParams, HowellResponse<string>>(url, data)
+      .toPromise();
+    return ServiceHelper.HowellResponseProcess(response, true);
   }
 
   postBinaryData<R>(url: string, data: BinaryData): Promise<R> {
@@ -62,16 +65,16 @@ export class BaseRequestService {
 
   async getArray<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http
-      .getHowellResponse<IParams, Array<T>>(url)
+      .getHowellResponse<IParams, HowellResponse<Array<T>>>(url)
       .toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
   async paged<T>(url: string, type: ClassConstructor<T>, params: IParams) {
     let data = instanceToPlain(params) as IParams;
     let response = await this.http
-      .post<IParams, PagedList<T>>(url, data)
+      .howellPost<IParams, HowellResponse<PagedList<T>>>(url, data)
       .toPromise();
-    return ServiceHelper.ResponseProcess(response, type);
+    return ServiceHelper.HowellResponseProcess(response, type);
   }
 
   async getExcel(url: string) {
@@ -82,14 +85,14 @@ export class BaseRequestService {
     });
   }
 
-  type<T>(type: ClassConstructor<T>): BaseTypeRequestService<T> {
-    return new BaseTypeRequestService<T>(this, type);
+  type<T>(type: ClassConstructor<T>): HowellBaseTypeRequestService<T> {
+    return new HowellBaseTypeRequestService<T>(this, type);
   }
 }
 
-export class BaseTypeRequestService<T> {
+export class HowellBaseTypeRequestService<T> {
   constructor(
-    private service: BaseRequestService,
+    private service: HowellBaseRequestService,
     private type: ClassConstructor<T>
   ) {}
 

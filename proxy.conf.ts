@@ -9,6 +9,7 @@ const PROXY_CONFIG = [
     context: [
       '/howell/ver10/data_service/',
       '/api/howell/ver10/aiop_service/',
+      '/api/howell/ver10/device_service',
       '/video/',
       'ng-cli-ws',
       '/amap/',

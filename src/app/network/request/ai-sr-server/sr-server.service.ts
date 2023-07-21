@@ -6,9 +6,9 @@ import { VideoUrl } from '../../model/url.model';
 import { SRServersURL } from '../../url/aiop/sr-servers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { DurationParams } from '../IParams.interface';
 import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
@@ -17,13 +17,13 @@ import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
   providedIn: 'root',
 })
 export class SRServerRequestService {
-  private type: BaseTypeRequestService<SRServer>;
+  private type: HowellBaseTypeRequestService<SRServer>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(SRServer);
   }
-  private basic: BaseRequestService;
+  private basic: HowellBaseRequestService;
 
   preview(cameraId: string, stream?: StreamType): Promise<VideoUrl>;
   preview(params: GetPreviewUrlParams): Promise<VideoUrl>;

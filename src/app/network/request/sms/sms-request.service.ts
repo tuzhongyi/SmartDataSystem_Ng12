@@ -16,7 +16,7 @@ export class SmsRequestService {
     let response = await this.requestService
       .getHowellResponse<AuthCode>(SmsUrl.authcodes(PhoneNo))
       .toPromise();
-    return ServiceHelper.ResponseProcess(response, AuthCode);
+    return ServiceHelper.HowellResponseProcess(response, AuthCode);
   }
   async postAuthCodes(
     phoneNo: string,
@@ -27,6 +27,6 @@ export class SmsRequestService {
         SmsUrl.authcodes(phoneNo, protocolType)
       )
       .toPromise();
-    return ServiceHelper.ResponseProcess(response, AuthCode);
+    return ServiceHelper.HowellResponseProcess(response, AuthCode);
   }
 }

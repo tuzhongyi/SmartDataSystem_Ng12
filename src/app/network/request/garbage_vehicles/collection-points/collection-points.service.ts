@@ -14,9 +14,9 @@ import { CollectionTrashCan } from '../../../model/trash-can.model';
 import { WeightTop } from '../../../model/weight-top.model';
 import { GarbageVehicleCollectionPointUrl } from '../../../url/garbage-vehicle/collection-point.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../../base-request-howell.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetCollectionPointNumberParams,
@@ -30,11 +30,11 @@ import {
   providedIn: 'root',
 })
 export class CollectionPointsRequestService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<CollectionPoint>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<CollectionPoint>;
 
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(CollectionPoint);
   }
 
@@ -87,11 +87,11 @@ export class CollectionPointsRequestService {
 }
 
 class TrashCanService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(CollectionTrashCan);
   }
 
-  type: BaseTypeRequestService<CollectionTrashCan>;
+  type: HowellBaseTypeRequestService<CollectionTrashCan>;
 
   create(data: CollectionTrashCan): Promise<CollectionTrashCan> {
     let url = GarbageVehicleCollectionPointUrl.trashcan(
@@ -128,7 +128,7 @@ class TrashCanService {
 }
 
 class StatisticsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   number(params: GetCollectionPointNumberParams) {
     let url = GarbageVehicleCollectionPointUrl.statistics.number();

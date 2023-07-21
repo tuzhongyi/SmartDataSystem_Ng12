@@ -10,9 +10,9 @@ import {
 import { PagedList } from '../../model/page_list.model';
 import { EventUrl } from '../../url/garbage/event.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   GetEventInfosParams,
@@ -25,10 +25,10 @@ import {
 })
 export class EventRequestService {
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
   }
 
-  private basic: BaseRequestService;
+  private basic: HowellBaseRequestService;
 
   private _info?: InfosService;
   public get info(): InfosService {
@@ -48,11 +48,11 @@ export class EventRequestService {
 }
 
 class InfosService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(EventInfo);
   }
 
-  type: BaseTypeRequestService<EventInfo>;
+  type: HowellBaseTypeRequestService<EventInfo>;
 
   list(params: GetEventInfosParams): Promise<PagedList<EventInfo>> {
     let url = EventUrl.info.list();
@@ -70,7 +70,7 @@ class InfosService {
 }
 
 class RecordsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   private _IllegalDrop?: RecordsIllegalDropService;
   public get IllegalDrop(): RecordsIllegalDropService {
@@ -106,11 +106,11 @@ class RecordsService {
 }
 
 class RecordsIllegalDropService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(IllegalDropEventRecord);
   }
 
-  type: BaseTypeRequestService<IllegalDropEventRecord>;
+  type: HowellBaseTypeRequestService<IllegalDropEventRecord>;
 
   list(
     params: GetEventRecordsParams
@@ -125,11 +125,11 @@ class RecordsIllegalDropService {
   }
 }
 class RecordsMixedIntoService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(MixedIntoEventRecord);
   }
 
-  type: BaseTypeRequestService<MixedIntoEventRecord>;
+  type: HowellBaseTypeRequestService<MixedIntoEventRecord>;
 
   list(
     params: GetEventRecordsParams
@@ -143,11 +143,11 @@ class RecordsMixedIntoService {
   }
 }
 class RecordsGarbageFullService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(GarbageFullEventRecord);
   }
 
-  type: BaseTypeRequestService<GarbageFullEventRecord>;
+  type: HowellBaseTypeRequestService<GarbageFullEventRecord>;
 
   list(
     params: GetEventRecordsParams
@@ -161,11 +161,11 @@ class RecordsGarbageFullService {
   }
 }
 class RecordsGarbageDropService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(GarbageDropEventRecord);
   }
 
-  type: BaseTypeRequestService<GarbageDropEventRecord>;
+  type: HowellBaseTypeRequestService<GarbageDropEventRecord>;
 
   list(
     params: GetGarbageDropEventRecordsParams

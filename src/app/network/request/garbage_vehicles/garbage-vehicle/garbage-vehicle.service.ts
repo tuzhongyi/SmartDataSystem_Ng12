@@ -14,9 +14,9 @@ import { PagedList } from '../../../model/page_list.model';
 import { VehicleCamera } from '../../../model/vehicle-camera.model';
 import { GarbageVehicleUrl } from '../../../url/garbage-vehicle/garbage-vehicle.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../../base-request-howell.service';
 import { Cache } from '../../cache/cache';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
@@ -32,11 +32,11 @@ import {
   providedIn: 'root',
 })
 export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle> {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<GarbageVehicle>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<GarbageVehicle>;
   constructor(_http: HowellAuthHttpService) {
     super();
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(GarbageVehicle);
   }
   create(data: GarbageVehicle): Promise<GarbageVehicle> {
@@ -103,8 +103,8 @@ export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle
 }
 
 class VehicleCameraService {
-  private basicType: BaseTypeRequestService<VehicleCamera>;
-  constructor(private basic: BaseRequestService) {
+  private basicType: HowellBaseTypeRequestService<VehicleCamera>;
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(VehicleCamera);
   }
 
@@ -148,8 +148,8 @@ class VehicleCameraService {
 }
 
 class VehicleRouteService {
-  private basicType: BaseTypeRequestService<GisRoutePoint>;
-  constructor(private basic: BaseRequestService) {
+  private basicType: HowellBaseTypeRequestService<GisRoutePoint>;
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(GisRoutePoint);
   }
 
@@ -163,7 +163,7 @@ class VehicleRouteService {
 }
 
 class VehicleRelayService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   reset(vehicleId: string, params: ResetRelayParams) {
     let url = GarbageVehicleUrl.relay(vehicleId).reset();
@@ -173,7 +173,7 @@ class VehicleRelayService {
 }
 
 class VehicleNBService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   power(id: string, params: NBPowerOnParams = new NBPowerOnParams()) {
     let url = GarbageVehicleUrl.nb(id).power();

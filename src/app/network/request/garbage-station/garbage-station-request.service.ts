@@ -5,7 +5,31 @@
  * @Last Modified time: 2021-12-14 14:36:27
  */
 import { Injectable } from '@angular/core';
-import { PagedList, Page } from 'src/app/network/model/page_list.model';
+import { instanceToPlain } from 'class-transformer';
+import { AbstractService } from 'src/app/business/Ibusiness';
+import {
+  GarbageStation,
+  GarbageStationType,
+} from 'src/app/network/model/garbage-station.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { Camera } from '../../model/camera.model';
+import { EventNumberStatistic } from '../../model/event-number-statistic.model';
+import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
+import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
+import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
+import { GarbageTask } from '../../model/garbage-task.model';
+import { GarbageVolume } from '../../model/garbage-volume.model';
+import { Member } from '../../model/member.model';
+import { SumEventNumber } from '../../model/sum-event-number.model';
+import { TrashCan } from '../../model/trash-can.model';
+import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
+import { GarbageStationUrl } from '../../url/garbage/garbage-station.url';
+import {
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
+import { Cache } from '../cache/cache';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   CameraDownloadFileParams,
@@ -21,31 +45,6 @@ import {
   GetGarbageStationTrashCansParams,
   GetGarbageStationVolumesParams,
 } from './garbage-station-request.params';
-import { AbstractService, IService } from 'src/app/business/Ibusiness';
-import {
-  GarbageStation,
-  GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
-import { GarbageStationUrl } from '../../url/garbage/garbage-station.url';
-import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
-import { Camera } from '../../model/camera.model';
-import { TrashCan } from '../../model/trash-can.model';
-import { GarbageVolume } from '../../model/garbage-volume.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
-import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
-import { instanceToPlain } from 'class-transformer';
-import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
-import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
-import { Member } from '../../model/member.model';
-import { GarbageTask } from '../../model/garbage-task.model';
-import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
-import { SumEventNumber } from '../../model/sum-event-number.model';
-import { Cache } from '../cache/cache';
-import { ServiceHelper } from '../service-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -54,12 +53,12 @@ import { ServiceHelper } from '../service-helper';
 export class GarbageStationRequestService extends AbstractService<GarbageStation> {
   constructor(_http: HowellAuthHttpService) {
     super();
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.typeBasic = this.basic.type(GarbageStation);
   }
 
-  private basic: BaseRequestService;
-  private typeBasic: BaseTypeRequestService<GarbageStation>;
+  private basic: HowellBaseRequestService;
+  private typeBasic: HowellBaseTypeRequestService<GarbageStation>;
 
   get(id: string): Promise<GarbageStation> {
     let url = GarbageStationUrl.item(id);
@@ -152,11 +151,11 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
 }
 
 class CamerasService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(Camera);
   }
 
-  private basicType: BaseTypeRequestService<Camera>;
+  private basicType: HowellBaseTypeRequestService<Camera>;
   all(stationId: string): Promise<Camera[]> {
     let url = GarbageStationUrl.camera(stationId).basic();
     return this.basicType.getArray(url);
@@ -202,11 +201,11 @@ class CamerasService {
   }
 }
 class CamerasTrashCansService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(TrashCan);
   }
 
-  private basicType: BaseTypeRequestService<TrashCan>;
+  private basicType: HowellBaseTypeRequestService<TrashCan>;
   all(stationId: string, cameraId: string): Promise<TrashCan[]> {
     let url = GarbageStationUrl.camera(stationId).trashcan(cameraId).basic();
     return this.basicType.getArray(url);
@@ -240,11 +239,11 @@ class CamerasTrashCansService {
   }
 }
 class CamerasFilesService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = this.basic.type(RecordFileUrl);
   }
 
-  private basicType: BaseTypeRequestService<RecordFileUrl>;
+  private basicType: HowellBaseTypeRequestService<RecordFileUrl>;
   async download(
     params: CameraDownloadFileParams
     // percent: (percent: number) => void,
@@ -271,11 +270,11 @@ class CamerasFilesService {
   }
 }
 class TrashCansService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(TrashCan);
   }
 
-  private basicType: BaseTypeRequestService<TrashCan>;
+  private basicType: HowellBaseTypeRequestService<TrashCan>;
 
   all(stationId: string): Promise<TrashCan[]> {
     let url = GarbageStationUrl.trashcan(stationId).basic();
@@ -303,7 +302,7 @@ class TrashCansService {
   }
 }
 class VolumesService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -314,10 +313,10 @@ class VolumesService {
   }
 }
 class VolumesHistoryService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(GarbageVolume);
   }
-  private basicType: BaseTypeRequestService<GarbageVolume>;
+  private basicType: HowellBaseTypeRequestService<GarbageVolume>;
   list(
     stationId: string,
     params: GetGarbageStationVolumesParams
@@ -327,7 +326,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -337,10 +336,10 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(basic: BaseRequestService) {
+  constructor(basic: HowellBaseRequestService) {
     this.basicType = basic.type(EventNumberStatistic);
   }
-  private basicType: BaseTypeRequestService<EventNumberStatistic>;
+  private basicType: HowellBaseTypeRequestService<EventNumberStatistic>;
   list(
     stationId: string,
     params: GetGarbageStationVolumesParams
@@ -350,7 +349,7 @@ class EventNumbersHistoryService {
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
@@ -373,11 +372,11 @@ class StatisticService {
   GarbageStationNumberStatistic
 )
 class StatisticNumberService extends AbstractService<GarbageStationNumberStatistic> {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     super();
     this.basicType = basic.type(GarbageStationNumberStatistic);
   }
-  private basicType: BaseTypeRequestService<GarbageStationNumberStatistic>;
+  private basicType: HowellBaseTypeRequestService<GarbageStationNumberStatistic>;
   get(stationId: string): Promise<GarbageStationNumberStatistic> {
     let url = GarbageStationUrl.statistic(stationId).number.basic();
     return this.basicType.get(url);
@@ -414,10 +413,10 @@ class StatisticNumberService extends AbstractService<GarbageStationNumberStatist
   }
 }
 class StatisticNumberHistoryService {
-  constructor(basic: BaseRequestService) {
+  constructor(basic: HowellBaseRequestService) {
     this.basicType = basic.type(GarbageStationNumberStatisticV2);
   }
-  private basicType: BaseTypeRequestService<GarbageStationNumberStatisticV2>;
+  private basicType: HowellBaseTypeRequestService<GarbageStationNumberStatisticV2>;
   list(
     params: GetGarbageStationStatisticNumbersParamsV2
   ): Promise<GarbageStationNumberStatisticV2[]> {
@@ -426,7 +425,7 @@ class StatisticNumberHistoryService {
   }
 }
 class StatistictGarbageCountService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   private _history?: StatistictGarbageCountHistoryService;
   public get history(): StatistictGarbageCountHistoryService {
     if (!this._history) {
@@ -436,10 +435,10 @@ class StatistictGarbageCountService {
   }
 }
 class StatistictGarbageCountHistoryService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(GarbageStationGarbageCountStatistic);
   }
-  private basicType: BaseTypeRequestService<GarbageStationGarbageCountStatistic>;
+  private basicType: HowellBaseTypeRequestService<GarbageStationGarbageCountStatistic>;
   list(
     params: GetGarbageStationStatisticGarbageCountsParams
   ): Promise<GarbageStationGarbageCountStatistic[]> {
@@ -448,10 +447,10 @@ class StatistictGarbageCountHistoryService {
   }
 }
 class TypesService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(GarbageStationType);
   }
-  private basicType: BaseTypeRequestService<GarbageStationType>;
+  private basicType: HowellBaseTypeRequestService<GarbageStationType>;
   list(): Promise<GarbageStationType[]> {
     let url = GarbageStationUrl.type.basic();
     return this.basicType.getArray(url);
@@ -474,10 +473,10 @@ class TypesService {
   }
 }
 class MumberService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(Member);
   }
-  private basicType: BaseTypeRequestService<Member>;
+  private basicType: HowellBaseTypeRequestService<Member>;
   all(stationId: string): Promise<Member[]> {
     let url = GarbageStationUrl.member(stationId).basic();
     return this.basicType.getArray(url);
@@ -497,10 +496,10 @@ class MumberService {
 }
 
 class TaskService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(GarbageTask);
   }
-  private basicType: BaseTypeRequestService<GarbageTask>;
+  private basicType: HowellBaseTypeRequestService<GarbageTask>;
   finish(
     stationId: string,
     taskId: string,

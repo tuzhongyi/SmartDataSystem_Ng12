@@ -4,10 +4,7 @@ import { PagedList } from '../../model/page_list.model';
 import { Role } from '../../model/role.model';
 import { User } from '../../model/user.model';
 import { RoleUrl } from '../../url/garbage/role.url';
-import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+import { HowellBaseRequestService } from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { PagedParams } from '../IParams.interface';
 
@@ -16,10 +13,10 @@ import { PagedParams } from '../IParams.interface';
 })
 export class RoleRequestService {
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
   }
 
-  private basic: BaseRequestService;
+  private basic: HowellBaseRequestService;
 
   get(id: string): Promise<Role> {
     let url = RoleUrl.item(id);
@@ -51,7 +48,7 @@ export class RoleRequestService {
   }
 }
 class UsersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(roleId: string, params: PagedParams): Promise<PagedList<User>> {
     let url = RoleUrl.user(roleId).basic(params);
     return this.basic.get(url, PagedList);

@@ -1,6 +1,7 @@
 .card-record-episode {
   height: 100%;
   width: 100%;
+  color: #cfd7ff;
   @head-height: 40px;
 
   &-head {
@@ -20,7 +21,79 @@
       &>div {
         box-sizing: border-box;
         padding: 10px;
+        @date-height: 38px;
+        @camera-height: 76px;
+
+        &.event {
+          height: calc(100% - @camera-height - 10px);
+
+          &.nodata {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+          }
+
+          &-date {
+            height: @date-height;
+          }
+
+          .rfid {
+            height: calc(100% - @date-height);
+
+            .record {
+              display: flex;
+              justify-content: space-between;
+
+              background-color: rgba(117, 134, 224, 0.15);
+              margin-bottom: 5px;
+              padding: 0 5px;
+              cursor: pointer;
+
+              &>div {
+                display: flex;
+                align-items: center;
+
+                i {
+                  font-size: 24px;
+                }
+              }
+
+              &:last-child {
+                margin-bottom: 0;
+              }
+
+              &:hover {
+                background: linear-gradient(to right, rgb(117, 134, 224, .5), rgb(50, 134, 229, .5));
+              }
+
+              &.selected {
+                background: linear-gradient(to right, rgb(117, 134, 224), rgb(50, 134, 229));
+              }
+
+            }
+          }
+        }
+
+        &.cameras {
+          height: @camera-height;
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          padding: 10px;
+          box-sizing: border-box;
+
+          .title {
+            width: 50px;
+            margin: 5px;
+          }
+
+          .value {
+            width: calc(100% - 55px);
+          }
+        }
       }
+
     }
 
     &-video {
@@ -51,11 +124,22 @@
 
     .panel {
       border: 1px solid #5e6ebf;
-      margin-right: 15px;
       box-sizing: border-box;
 
-      &:last-child {
-        margin-right: 0;
+      &.h {
+        margin-left: 10px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
+      &.v {
+        margin-top: 10px;
+
+        &:first-child {
+          margin-top: 0;
+        }
       }
     }
   }

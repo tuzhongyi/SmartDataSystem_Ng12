@@ -1,21 +1,22 @@
-import { Injectable } from "@angular/core";
-import { CameraAIModel } from "../../model/camera-ai.model";
-import { AIModelsUrl } from "../../url/aiop/ai-models/ai-models.url";
-import { CameraAIUrl } from "../../url/aiop/events/records/camera-ai/camera-ai.url";
-import { BaseRequestService, BaseTypeRequestService } from "../base-request.service";
-import { HowellAuthHttpService } from "../howell-auth-http.service";
-import { GetAIModelsParams } from "./ai-model.params";
+import { Injectable } from '@angular/core';
+import { CameraAIModel } from '../../model/camera-ai.model';
+import { AIModelsUrl } from '../../url/aiop/ai-models/ai-models.url';
+import {
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
+import { GetAIModelsParams } from './ai-model.params';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class AIModelRequestService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<CameraAIModel>;
-
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<CameraAIModel>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(CameraAIModel);
   }
   list(params: GetAIModelsParams = new GetAIModelsParams()) {
@@ -23,7 +24,7 @@ export class AIModelRequestService {
   }
 
   create(item: CameraAIModel) {
-    return this.type.post(AIModelsUrl.create(), item)
+    return this.type.post(AIModelsUrl.create(), item);
   }
 
   get(id: string): Promise<CameraAIModel> {
@@ -31,16 +32,18 @@ export class AIModelRequestService {
   }
 
   update(item: CameraAIModel) {
-    return this.type.put(AIModelsUrl.item(item.Id), item)
+    return this.type.put(AIModelsUrl.item(item.Id), item);
   }
 
   delete(id: string) {
-    return this.type.delete(AIModelsUrl.item(id))
+    return this.type.delete(AIModelsUrl.item(id));
   }
-
 
   parse(base64JSONData: string) {
-    return this.basic.poststring(AIModelsUrl.parse(), CameraAIModel, base64JSONData)
+    return this.basic.poststring(
+      AIModelsUrl.parse(),
+      CameraAIModel,
+      base64JSONData
+    );
   }
-
 }

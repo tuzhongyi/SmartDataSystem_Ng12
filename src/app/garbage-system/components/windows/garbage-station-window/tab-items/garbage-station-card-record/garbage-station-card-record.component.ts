@@ -3,6 +3,7 @@ import { CardRecordTableArgs } from 'src/app/common/components/tables/card-recor
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 
 import { GarbageStationCardRecordBusiness } from './garbage-station-card-record.business';
 import { LabelTreeManager } from './garbage-station-card-record.model';
@@ -14,7 +15,7 @@ import { LabelTreeManager } from './garbage-station-card-record.model';
 })
 export class GarbageStationCardRecordComponent implements OnInit {
   @Output()
-  video: EventEmitter<any> = new EventEmitter();
+  video: EventEmitter<AIGarbageRfidCardRecord> = new EventEmitter();
   constructor(
     public business: GarbageStationCardRecordBusiness,
     global: GlobalStorageService
@@ -45,7 +46,7 @@ export class GarbageStationCardRecordComponent implements OnInit {
     this.load.emit(this.args);
   }
 
-  onvideo(record: any) {
+  onvideo(record: AIGarbageRfidCardRecord) {
     this.video.emit(record);
   }
 }

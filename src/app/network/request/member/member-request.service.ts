@@ -3,19 +3,19 @@ import { Member } from '../../model/member.model';
 import { PagedList } from '../../model/page_list.model';
 import { MemberUrl } from '../../url/garbage/member.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { GetMembersParams } from './member-request.params';
 @Injectable({
   providedIn: 'root',
 })
 export class MemberRequsetService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Member>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<Member>;
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(Member);
   }
 
@@ -52,7 +52,7 @@ export class MemberRequsetService {
 }
 
 class RelationsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   async sync(): Promise<string> {
     let url = MemberUrl.relation.sync();
     let response = await this.basic.http.howellPost(url).toPromise();

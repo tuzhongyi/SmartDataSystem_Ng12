@@ -13,9 +13,9 @@ import { GarbageVolume } from '../../model/garbage-volume.model';
 import { SumEventNumber } from '../../model/sum-event-number.model';
 import { DivisionUrl } from '../../url/garbage/division.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { Cache } from '../cache/cache';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
@@ -34,12 +34,12 @@ import {
   providedIn: 'root',
 })
 export class DivisionRequestService extends AbstractService<Division> {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Division>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<Division>;
 
   constructor(_http: HowellAuthHttpService) {
     super();
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(Division);
   }
 
@@ -109,7 +109,7 @@ export class DivisionRequestService extends AbstractService<Division> {
 }
 
 class VolumesService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   private _history?: VolumesHistoryService;
   public get history(): VolumesHistoryService {
@@ -120,7 +120,7 @@ class VolumesService {
   }
 }
 class VolumesHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(
     divisionId: string,
     params: GetDivisionVolumesParams
@@ -130,7 +130,7 @@ class VolumesHistoryService {
   }
 }
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   sum(params: GetDivisionSumEventNumberParams): Promise<SumEventNumber[]> {
     let url = DivisionUrl.eventnumber().sum();
@@ -146,7 +146,7 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(
     divisionId: string,
     params: GetDivisionEventNumbersParams
@@ -157,7 +157,7 @@ class EventNumbersHistoryService {
 }
 
 class StatisticService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -168,11 +168,11 @@ class StatisticService {
 }
 @Cache(DivisionUrl.statistic().number.basic(), DivisionNumberStatistic)
 class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     super();
     this.type = basic.type(DivisionNumberStatistic);
   }
-  type: BaseTypeRequestService<DivisionNumberStatistic>;
+  type: HowellBaseTypeRequestService<DivisionNumberStatistic>;
   get(divisionId: string): Promise<DivisionNumberStatistic> {
     let url = DivisionUrl.statistic(divisionId).number.basic();
     return this.type.get(url);
@@ -199,7 +199,7 @@ class StatisticNumberService extends AbstractService<DivisionNumberStatistic> {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(
     params: GetDivisionStatisticNumbersParamsV2
   ): Promise<DivisionNumberStatisticV2[]> {

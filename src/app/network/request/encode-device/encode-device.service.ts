@@ -3,9 +3,9 @@ import { EncodeDevice } from '../../model/encode-device';
 import { Protocol } from '../../model/protocol.model';
 import { ResourceEncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { GetEncodeDevicesParams } from './encode-devices-params';
 
@@ -13,11 +13,11 @@ import { GetEncodeDevicesParams } from './encode-devices-params';
   providedIn: 'root',
 })
 export class EncodeDeviceRequestService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<EncodeDevice>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<EncodeDevice>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(EncodeDevice);
   }
   create(item: EncodeDevice) {

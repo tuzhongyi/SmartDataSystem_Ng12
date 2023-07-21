@@ -2,20 +2,20 @@ import { Injectable } from '@angular/core';
 import { GarbageStationType } from '../../model/garbage-station.model';
 import { GarbageStationTypesUrls } from '../../url/aiop/garbage-management/garbage-stations/types/garbage-station-types.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GarbageStationTypesService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<GarbageStationType>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<GarbageStationType>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(GarbageStationType);
   }
   list(): Promise<GarbageStationType[]> {

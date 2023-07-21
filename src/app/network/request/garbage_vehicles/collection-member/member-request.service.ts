@@ -3,19 +3,19 @@ import { CollectionMember } from 'src/app/network/model/member.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleMemberUrl } from 'src/app/network/url/garbage-vehicle/member.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../../base-request-howell.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import { GetCollectionMembersParams } from './member-request.params';
 @Injectable({
   providedIn: 'root',
 })
 export class CollectionMemberRequsetService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<CollectionMember>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<CollectionMember>;
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(CollectionMember);
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AIGarbageRfidCardRecord } from '../../model/ai-garbage/rfid-card-record.model';
 import { AIGarbageRfidCard } from '../../model/ai-garbage/rfid-card.model';
 import { AIGarbageUrl } from '../../url/ai-garbage/ai-garbage.url';
+
 import {
   BaseRequestService,
   BaseTypeRequestService,

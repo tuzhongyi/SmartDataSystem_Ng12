@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
-import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { Platform } from 'src/app/network/model/platform.model';
-import { GetPlatformsParams } from './platforms.params';
-import { AbstractService } from 'src/app/business/Ibusiness';
-import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
-import { PlatformsURL } from '../../url/aiop/platforms/platforms.url';
-import { instanceToPlain } from 'class-transformer';
 import { Protocol } from '../../model/protocol.model';
+import { PlatformsURL } from '../../url/aiop/platforms/platforms.url';
+import {
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
+import { HowellAuthHttpService } from '../howell-auth-http.service';
+import { GetPlatformsParams } from './platforms.params';
 @Injectable({
   providedIn: 'root',
 })
 export class PlatformRequestSerivce {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Platform>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<Platform>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(Platform);
   }
 

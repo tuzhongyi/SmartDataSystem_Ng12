@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain } from 'class-transformer';
-import { AbstractService } from 'src/app/business/Ibusiness';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 import { Fault } from '../../model/howell-response.model';
@@ -11,12 +10,11 @@ import { User } from '../../model/user.model';
 import { PasswordUrl } from '../../url/garbage/password.url';
 import { UserUrl } from '../../url/garbage/user.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { PagedParams } from '../IParams.interface';
-import { ServiceHelper } from '../service-helper';
 import {
   ChangeUserPasswordParams,
   CheckCodeParams,
@@ -31,12 +29,12 @@ import {
 })
 export class UserRequestService {
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(User);
   }
 
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<User>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<User>;
 
   get(id: string): Promise<User> {
     let url = UserUrl.item(id);
@@ -97,7 +95,7 @@ export class UserRequestService {
 }
 
 class ConfigService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
@@ -111,10 +109,10 @@ class ConfigService {
 }
 
 class RolesService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.basicType = basic.type(Role);
   }
-  private basicType: BaseTypeRequestService<Role>;
+  private basicType: HowellBaseTypeRequestService<Role>;
 
   list(userId: string, params?: PagedParams): Promise<PagedList<Role>> {
     let url = UserUrl.role(userId).basic(params);
@@ -128,7 +126,7 @@ class RolesService {
 }
 
 class LabelsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
@@ -155,7 +153,7 @@ class LabelsService {
 }
 
 class PasswordsService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   random(userId: string, params: RandomUserPaswordParams): Promise<string> {
     let url = UserUrl.password(userId).random();
@@ -179,7 +177,7 @@ class PasswordsService {
 }
 
 class PasswordCheckService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   mobileNo(mobileNo: string): Promise<Fault> {
     let url = PasswordUrl.checkMobileNo(mobileNo);

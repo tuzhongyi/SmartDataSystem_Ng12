@@ -15,6 +15,7 @@ import {
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
@@ -57,7 +58,8 @@ export class GarbageStationWindowComponent
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Output()
-  video: EventEmitter<GarbageDropRecordViewModel> = new EventEmitter();
+  video: EventEmitter<GarbageDropRecordViewModel | AIGarbageRfidCardRecord> =
+    new EventEmitter();
   constructor(
     public station: GarbageStationWindowStationBusiness,
     public record: GarbageStationWindowRecordBusiness,
@@ -121,7 +123,7 @@ export class GarbageStationWindowComponent
     this.position.emit(item);
   }
 
-  onvideo(args: GarbageDropRecordViewModel) {
+  onvideo(args: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
     this.video.emit(args);
   }
 }

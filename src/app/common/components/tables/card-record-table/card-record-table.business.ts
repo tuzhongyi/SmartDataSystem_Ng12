@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { AIGarbageRfidCardRecord } from 'src/app/network/model/rfid-card-record.model';
 import { GetAIGarbageStationRfidCardRecordsParams } from 'src/app/network/request/ai-garbage/ai-garbage.params';
 import { AIGarbageRequestService } from 'src/app/network/request/ai-garbage/ai-garbage.service';
 

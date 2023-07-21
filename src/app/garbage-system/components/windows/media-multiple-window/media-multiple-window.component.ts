@@ -3,10 +3,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { MediaMultipleWindowBusiness } from './media-multiple-window.business';
-import { MediaMultipleWindowModel } from './media-multiple-window.model';
+import {
+  MediaMultipleWindowArgs,
+  MediaMultipleWindowModel,
+} from './media-multiple-window.model';
 
 @Component({
   selector: 'howell-media-multiple-window',
@@ -22,7 +24,7 @@ export class MediaMultipleWindowComponent
   @Input()
   style = {};
   @Input()
-  statistic?: GarbageStationGarbageCountStatistic;
+  args?: MediaMultipleWindowArgs;
   @Input()
   business: IBusiness<IModel, MediaMultipleWindowModel>;
   @Input()
@@ -41,8 +43,8 @@ export class MediaMultipleWindowComponent
       this.date = undefined;
     }
 
-    if (this.statistic) {
-      this.model = await this.business.load(this.statistic, this.date);
+    if (this.args) {
+      this.model = await this.business.load(this.args, this.date);
     }
   }
 

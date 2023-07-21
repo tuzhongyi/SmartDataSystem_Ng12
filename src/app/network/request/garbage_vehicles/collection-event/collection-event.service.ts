@@ -16,9 +16,9 @@ import {
 } from '../../../model/vehicle-event-record.model';
 import { GarbageVehicleEventUrl } from '../../../url/garbage-vehicle/events.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../../base-request-howell.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetEventInfosParams,
@@ -31,10 +31,10 @@ import {
   providedIn: 'root',
 })
 export class CollectionEventRequestService {
-  private basic: BaseRequestService;
+  private basic: HowellBaseRequestService;
 
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
   }
 
   private _info?: InfosService;
@@ -54,11 +54,11 @@ export class CollectionEventRequestService {
 }
 
 class InfosService {
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(VehicleEventInfo);
   }
 
-  type: BaseTypeRequestService<VehicleEventInfo>;
+  type: HowellBaseTypeRequestService<VehicleEventInfo>;
 
   list(params: GetEventInfosParams): Promise<PagedList<VehicleEventInfo>> {
     let url = GarbageVehicleEventUrl.info.list();
@@ -81,12 +81,12 @@ class RecordsService {
   vehicleOnline = new RecordsVehicleOnlineService(this.basic);
   cameraOnline = new RecordsCameraOnlineService(this.basic);
 
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 }
 class RecordsGarbageCollectionService {
-  type: BaseTypeRequestService<GarbageCollectionEventRecord>;
+  type: HowellBaseTypeRequestService<GarbageCollectionEventRecord>;
 
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(GarbageCollectionEventRecord);
   }
 
@@ -104,9 +104,9 @@ class RecordsGarbageCollectionService {
 }
 
 class RecordsRelayStateChangeService {
-  type: BaseTypeRequestService<RelayStateChangeEventRecord>;
+  type: HowellBaseTypeRequestService<RelayStateChangeEventRecord>;
 
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(RelayStateChangeEventRecord);
   }
 
@@ -124,9 +124,9 @@ class RecordsRelayStateChangeService {
 }
 
 class RecordsVehicleOnlineService {
-  type: BaseTypeRequestService<VehicleOnlineEventRecord>;
+  type: HowellBaseTypeRequestService<VehicleOnlineEventRecord>;
 
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(VehicleOnlineEventRecord);
   }
 
@@ -144,9 +144,9 @@ class RecordsVehicleOnlineService {
 }
 
 class RecordsCameraOnlineService {
-  type: BaseTypeRequestService<CameraOnlineEventRecord>;
+  type: HowellBaseTypeRequestService<CameraOnlineEventRecord>;
 
-  constructor(private basic: BaseRequestService) {
+  constructor(private basic: HowellBaseRequestService) {
     this.type = basic.type(CameraOnlineEventRecord);
   }
 

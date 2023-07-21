@@ -7,7 +7,7 @@ import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duratio
 import { ImageTimeData, ITimeData } from '../chart.model';
 
 export interface LineZoomChartArgs {
-  statistic: GarbageStationGarbageCountStatistic;
+  statistic?: GarbageStationGarbageCountStatistic;
   date: Date;
 }
 

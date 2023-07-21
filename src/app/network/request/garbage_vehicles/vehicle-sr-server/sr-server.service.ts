@@ -7,13 +7,9 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { SRServer } from 'src/app/network/model/sr-server';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageVehicleSRServerUrl } from 'src/app/network/url/garbage-vehicle/sr-server.url';
-import {
-  BaseTypeRequestService,
-  BaseRequestService,
-} from '../../base-request.service';
+import { HowellBaseRequestService } from '../../base-request-howell.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import { DurationParams } from '../../IParams.interface';
 import {
@@ -26,9 +22,9 @@ import {
 })
 export class VehicleSRServerRequestService {
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
   }
-  private basic: BaseRequestService;
+  private basic: HowellBaseRequestService;
 
   preview(
     args: GetVehiclePreviewUrlParams | string,

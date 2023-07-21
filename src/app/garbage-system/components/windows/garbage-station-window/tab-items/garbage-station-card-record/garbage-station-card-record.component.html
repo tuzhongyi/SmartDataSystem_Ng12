@@ -7,6 +7,8 @@
           type="text"
           DateTimePicker
           [format]="'yyyy年MM月dd日 HH:mm'"
+          [startView]="1"
+          [minView]="1"
           [(date)]="args.duration.begin"
           class=""
         />
@@ -17,6 +19,8 @@
           type="text"
           DateTimePicker
           [format]="'yyyy年MM月dd日 HH:mm'"
+          [startView]="1"
+          [minView]="1"
           [(date)]="args.duration.end"
           class=""
         />

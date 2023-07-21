@@ -3,9 +3,9 @@ import { AICamera } from '../../model/ai-camera.model';
 import { CameraAIModel } from '../../model/camera-ai.model';
 import { ResourceAICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { GetCamerasParams } from './ai-camera.params';
 
@@ -13,11 +13,11 @@ import { GetCamerasParams } from './ai-camera.params';
   providedIn: 'root',
 })
 export class AICameraRequestService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<AICamera>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<AICamera>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(AICamera);
   }
 

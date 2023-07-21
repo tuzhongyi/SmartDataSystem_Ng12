@@ -1,37 +1,37 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
+import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
 import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
+import { DivisionTree } from 'src/app/network/model/division-tree.model';
 import { Division } from 'src/app/network/model/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleDivisionUrl } from 'src/app/network/url/garbage-vehicle/division.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../../base-request-howell.service';
+import { Cache } from '../../cache/cache';
+import { GetDivisionTreeParams } from '../../division/division-request.params';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetDivisionGarbageScoresParams,
   GetDivisionGarbageWeightsParams,
   GetDivisionsParams,
 } from './collection-division-request.params';
-import { Cache } from '../../cache/cache';
-import { GetDivisionTreeParams } from '../../division/division-request.params';
-import { DivisionTree } from 'src/app/network/model/division-tree.model';
-import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
 
 @Cache(GarbageVehicleDivisionUrl.basic(), Division)
 @Injectable({
   providedIn: 'root',
 })
 export class CollectionDivisionRequestService extends AbstractService<Division> {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Division>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<Division>;
 
   constructor(_http: HowellAuthHttpService) {
     super();
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(Division);
   }
 
@@ -99,11 +99,11 @@ class DivisionGarbage {
   weight = new GarbageVehicleWeightService(this.basic);
   score = new GarbageVehiclScoreService(this.basic);
 
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 }
 
 class GarbageVehicleWeightService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   get(divisionId: string) {
     let url = GarbageVehicleDivisionUrl.garbage(divisionId).weight.basic();
@@ -116,7 +116,7 @@ class GarbageVehicleWeightService {
 }
 
 class GarbageVehiclScoreService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   get(divisionId: string) {
     let url = GarbageVehicleDivisionUrl.garbage(divisionId).score.basic();
@@ -129,7 +129,7 @@ class GarbageVehiclScoreService {
 }
 
 class CollectionDivisionStatisticSerivce {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   number(divisionId: string) {
     let url = GarbageVehicleDivisionUrl.statistic(divisionId).number();

@@ -3,16 +3,22 @@
     <div class="media-multiple-window-header">
       {{ model.station ? model.station.Name : "" }}
     </div>
-    <div class="media-multiple-window-content">
+    <div
+      class="media-multiple-window-content"
+      [ngClass]="{
+        hasfoot: !!model.statistic
+      }"
+    >
       <app-image-video-mult-control
         [models]="model.medias"
         [fullplay]="fullplay"
       >
       </app-image-video-mult-control>
     </div>
-    <div class="media-multiple-window-footer">
+    <div class="media-multiple-window-footer" *ngIf="!!model.statistic">
       <div class="">
-        垃圾堆数 <label class="orange-text">{{ model.garbageCount }}</label> 堆
+        垃圾堆数
+        <label class="orange-text">{{ model.statistic.GarbageCount }}</label> 堆
       </div>
       <div class="">{{ formatDate(model.date, "yyyy-MM-dd HH:mm") }}</div>
     </div>

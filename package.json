@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href ./",
+    "build": "ng build --base-href /",
     "build:hw": "ng build ngx-howell",
     "pack:hw": "ng pack hw",
     "package": "npm run build:hw && npm run pack:hw",

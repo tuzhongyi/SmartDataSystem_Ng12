@@ -12,11 +12,10 @@ import { Resource } from '../../model/resource.model';
 import { ResourceLabelsUrl } from '../../url/aiop/resources/labels/labels.url';
 import { ResourcesURL } from '../../url/aiop/resources/resources.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { IParams } from '../IParams.interface';
 import { GetResourceLabelsParams } from '../label/label.params';
 import { GetResourcesParams } from './resources-params';
 
@@ -24,11 +23,11 @@ import { GetResourcesParams } from './resources-params';
   providedIn: 'root',
 })
 export class ResourceRequestService {
-  private basic: BaseRequestService;
-  private type: BaseTypeRequestService<Resource>;
+  private basic: HowellBaseRequestService;
+  private type: HowellBaseTypeRequestService<Resource>;
 
   constructor(_http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(Resource);
   }
   create(item: Resource) {
@@ -71,8 +70,8 @@ class ResourceLabelRequestService
     IUpdate<ResourceLabel>,
     IDelete<ResourceLabel>
 {
-  private type: BaseTypeRequestService<ResourceLabel>;
-  constructor(private basic: BaseRequestService) {
+  private type: HowellBaseTypeRequestService<ResourceLabel>;
+  constructor(private basic: HowellBaseRequestService) {
     super();
     this.type = basic.type(ResourceLabel);
   }

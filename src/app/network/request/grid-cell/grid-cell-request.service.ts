@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain } from 'class-transformer';
-import { IService } from 'src/app/business/Ibusiness';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
 import { EventNumberStatistic } from '../../model/event-number-statistic.model';
@@ -11,11 +10,10 @@ import { GridCell } from '../../model/grid-cell.model';
 import { PagedList } from '../../model/page_list.model';
 import { GridCellUrl } from '../../url/garbage/grid-cells.url';
 import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
+  HowellBaseRequestService,
+  HowellBaseTypeRequestService,
+} from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { IParams } from '../IParams.interface';
 import {
   GetGridCellEventNumbersParams,
   GetGridCellsParams,
@@ -28,10 +26,10 @@ import {
   providedIn: 'root',
 })
 export class GridCellRequestService {
-  basic: BaseRequestService;
-  type: BaseTypeRequestService<GridCell>;
+  basic: HowellBaseRequestService;
+  type: HowellBaseTypeRequestService<GridCell>;
   constructor(private _http: HowellAuthHttpService) {
-    this.basic = new BaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(_http);
     this.type = this.basic.type(GridCell);
   }
   delete(id: string): Promise<GridCell> {
@@ -78,7 +76,7 @@ export class GridCellRequestService {
 }
 
 class EventNumbersService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   private _history?: EventNumbersHistoryService;
   public get history(): EventNumbersHistoryService {
     if (!this._history) {
@@ -88,7 +86,7 @@ class EventNumbersService {
   }
 }
 class EventNumbersHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(
     gridCellId: string,
     params: GetGridCellEventNumbersParams
@@ -99,7 +97,7 @@ class EventNumbersHistoryService {
   }
 }
 class StatisticService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   private _number?: StatisticNumberService;
   public get number(): StatisticNumberService {
     if (!this._number) {
@@ -109,7 +107,7 @@ class StatisticService {
   }
 }
 class StatisticNumberService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
 
   list(
     params: GetGridCellStatisticNumbersParams
@@ -136,7 +134,7 @@ class StatisticNumberService {
   }
 }
 class StatisticNumberHistoryService {
-  constructor(private basic: BaseRequestService) {}
+  constructor(private basic: HowellBaseRequestService) {}
   list(
     params: GetGridCellStatisticNumbersParamsV2
   ): Promise<GridCellNumberStatisticV2[]> {
