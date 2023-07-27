@@ -1,11 +1,11 @@
-export class SelectItem {
-  constructor(key?: string, value?: any, language?: string) {
+export class SelectItem<T = any> {
+  constructor(key?: string, value?: T, language?: string) {
     this.Id = key ?? '';
     this.value = value ?? undefined;
     this.Name = language ?? '';
   }
   Id: string = '';
-  value!: any;
+  value?: T;
   Name!: string;
 
   static create<T>(t: T, language: string | ((t: T) => string)) {

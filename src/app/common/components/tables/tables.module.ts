@@ -10,6 +10,7 @@ import { AiopGarbageCollectionPointTrashCanTableComponent } from './aiop-garbage
 import { AiopGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
+import { GarbageDropRecordTaskTableComponent } from './garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageDropStationCountTableComponent } from './garbage-drop-station-count-table/garbage-drop-station-count-table.component';
 import { GarbageDropStationTableComponent } from './garbage-drop-station-table/garbage-drop-station-table.component';
 import { GarbageFullStationTableComponent } from './garbage-full-station-table/garbage-full-station-table.component';
@@ -24,7 +25,10 @@ export const Table_COMPONENTS = [
   GarbageDropStationTableComponent,
   GarbageFullStationTableComponent,
   GarbageStationTableComponent,
+
   GarbageDropRecordTableComponent,
+  GarbageDropRecordTaskTableComponent,
+
   GarbageStationStatisticTableComponent,
   EventRecordCountTableComponent,
   GarbageDropStationCountTableComponent,

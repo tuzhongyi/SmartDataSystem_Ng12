@@ -1,0 +1,87 @@
+<div class="garbage-drop-record-task-table">
+  <div class="garbage-drop-record-task-table-main vertical-layout">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td
+            mat-sort-header="CreationTime"
+            [disableClear]="true"
+            [start]="'desc'"
+          >
+            {{ Language.DivisionType(type) }}
+          </td>
+          <td>全部任务</td>
+          <td>未完成任务</td>
+          <td>超时处置</td>
+          <td>处置率</td>
+          <td class="operation right">
+            <div (click)="ondownload()" class="download">
+              <i class="howell-icon-export"></i> 导出
+            </div>
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>{{ item.name }}</td>
+            <td>
+              <div class="blue-text">{{ item.count }}</div>
+            </td>
+            <td>
+              <div class="powder-red-text">{{ item.unhandle }}</div>
+            </td>
+            <td>
+              <div class="orange-text">{{ item.timeout }}</div>
+            </td>
+            <td>
+              <div class="sky-blue-text2">{{ item.ratio }}</div>
+            </td>
+            <td class="operation center"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="garbage-drop-record-task-table-main-footer footer"
+      *ngIf="!!total"
+    >
+      <table border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr>
+            <td>{{ total.name }}</td>
+            <td>{{ total.count }}</td>
+            <td>{{ total.unhandle }}</td>
+            <td>{{ total.timeout }}</td>
+            <td>
+              <div class="sky-blue-text2">{{ total.ratio }}</div>
+            </td>
+            <td class="operation center"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

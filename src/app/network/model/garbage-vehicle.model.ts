@@ -57,7 +57,11 @@ export class GarbageVehicle extends IdNameModel {
   /**	DateTime	最后一次NB上电请求时间	O */
   @Transform(transformDateTime)
   NBPowerOnTime?: Date;
+
   /**	GarbageVehicleParameters	清运车参数	O */
   @Type(() => GarbageVehicleParameter)
   GarbageVehicleParameters?: GarbageVehicleParameter;
+
+  /**	Boolean	最后一次NB请求命令，True：远程唤醒，False：电源关闭	O */
+  PowerOn?: boolean;
 }

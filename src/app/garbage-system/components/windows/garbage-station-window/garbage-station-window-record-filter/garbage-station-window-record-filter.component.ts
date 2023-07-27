@@ -6,7 +6,9 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { CompareRange } from 'src/app/network/model/compare-range.model';
 import { Division } from 'src/app/network/model/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { GarbageStationWindowRecordFilterBusiness } from './garbage-station-window-record-filter.business';
 import { GarbageStationWindowRecordFilterModel } from './garbage-station-window-record-filter.model';
@@ -118,19 +120,21 @@ export class GarbageStationWindowRecordFilterComponent
     this.loadData(item.Id);
     this.filterChange.emit(this.filter);
   }
-  onstation(item: SelectItem) {
-    this.filter.stationId = item.Id;
+  onstation(item?: SelectItem<GarbageStation>) {
+    if (item) {
+      this.filter.stationId = item.Id;
+      this.filterChange.emit(this.filter);
+    }
+  }
+  onrange(item: SelectItem<CompareRange<number>>) {
+    this.filter.range = item.value;
     this.filterChange.emit(this.filter);
   }
-  onduration(item: SelectItem) {
-    this.filter.duration = item.value;
-    this.filterChange.emit(this.filter);
-  }
-  onstatus(item: SelectItem) {
+  onstatus(item: SelectItem<GarbageTaskStatus>) {
     this.filter.IsTimeout = undefined;
     this.filter.IsHandle = undefined;
     if (item.Id) {
-      switch (item.value as GarbageTaskStatus) {
+      switch (item.value) {
         case GarbageTaskStatus.handled:
           this.filter.IsHandle = true;
           break;

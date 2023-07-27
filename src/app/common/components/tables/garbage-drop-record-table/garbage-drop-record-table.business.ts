@@ -57,8 +57,8 @@ export class GarbageDropRecordTableBusiness
   ): Promise<PagedList<GarbageDropEventRecord>> {
     let params = new GetGarbageDropEventRecordsParams();
     params = Object.assign(params, page);
-    params.BeginTime = opts.BeginTime;
-    params.EndTime = opts.EndTime;
+    params.BeginTime = opts.duration.begin;
+    params.EndTime = opts.duration.end;
     params.IsHandle = opts.IsHandle;
     params.IsTimeout = opts.IsTimeout;
     if (opts.divisionId) {
@@ -87,7 +87,7 @@ export class GarbageDropRecordTableBusiness
         params.ResourceName = opts.opts.text;
       }
     }
-    params.TakeMinutes = opts.duration;
+    params.TakeMinutes = opts.range;
     params.DropTimeOrderBy = OrderType.Asc;
 
     return this.eventService.record.GarbageDrop.list(params);

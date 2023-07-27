@@ -9,7 +9,9 @@ import {
 } from 'src/app/garbage-system/components/map-control-point-info-panel/point-info-panel.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { NBStatus } from 'src/app/network/model/nb-status.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
+import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 
 @Injectable()
 export class GarbageVehiclePointInfoPanelBusiness
@@ -17,19 +19,26 @@ export class GarbageVehiclePointInfoPanelBusiness
 {
   vehicle?: GarbageVehicle;
 
-  constructor(private divisionService: CollectionDivisionRequestService) {}
+  constructor(
+    private divisionService: CollectionDivisionRequestService,
+    private vehicleService: GarbageVehicleRequestService
+  ) {}
 
   Converter = new PointInfoPanelConverter();
   async load(source: GarbageVehicle): Promise<PointInfoPanelModel> {
-    let model = this.Converter.Convert(source, {
+    let data = await this.getData(source.Id);
+    let model = this.Converter.Convert(data, {
       division: (id: string) => {
         return this.divisionService.get(id);
+      },
+      nbstatus: (id: string) => {
+        return this.vehicleService.nb.status(id);
       },
     });
     return model;
   }
-  getData(...args: any): Promise<GarbageVehicle> {
-    throw new Error('Method not implemented.');
+  getData(id: string): Promise<GarbageVehicle> {
+    return this.vehicleService.get(id);
   }
 }
 
@@ -40,6 +49,7 @@ export class PointInfoPanelConverter
     source: GarbageVehicle,
     getter: {
       division: (id: string) => Promise<Division>;
+      nbstatus: (id: string) => Promise<NBStatus>;
     }
   ): PointInfoPanelModel {
     let model = new PointInfoPanelModel();
@@ -61,16 +71,27 @@ export class PointInfoPanelConverter
       });
     }
     model.powerTime = source.NBPowerOnTime;
-    model.state = this.getState(source);
+    model.powerOn = source.PowerOn;
+    model.state = [this.getState(source)];
     model.options = [
       {
-        className: 'glyphicon glyphicon-off',
-        command: 'power',
+        className: 'mdi mdi-power-plug',
+        command: 'powerOn',
         data: source,
         title: '远程唤醒',
-        language: '',
+        language: '远程唤醒',
+      },
+      {
+        className: 'mdi mdi-power-plug-off',
+        command: 'powerOff',
+        data: source,
+        title: '远程关闭',
+        language: '远程关闭',
       },
     ];
+    getter.nbstatus(source.Id).then((status) => {
+      model.heartbeatTime = status.LastHeartbeatTime;
+    });
     return model;
   }
 

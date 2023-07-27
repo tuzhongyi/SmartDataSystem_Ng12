@@ -82,11 +82,16 @@
       <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 请确认</div>
     </div>
     <div class="confirm-body">
-      <div class="hw-simple-title">是否确定 远程唤醒？</div>
+      <div class="hw-simple-title">
+        是否确定 远程{{ window.confirm.power ? "唤醒" : "关闭" }}？
+      </div>
     </div>
 
     <div class="confirm-foot">
-      <button class="hw-green-btn" (click)="onpower(window.confirm.model)">
+      <button
+        class="hw-green-btn"
+        (click)="onpower(window.confirm.model!, window.confirm.power)"
+      >
         <i class="howell-icon-Check"></i> 确定
       </button>
       <button class="hw-blue-btn" (click)="onwindowclose()">

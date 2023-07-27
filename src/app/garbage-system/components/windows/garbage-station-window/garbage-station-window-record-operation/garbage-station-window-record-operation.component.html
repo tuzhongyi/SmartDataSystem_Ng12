@@ -1,0 +1,28 @@
+<div class="event-record-operation">
+  <div class="event-record-operation-search">
+    <app-select-control
+      class="search-option-select"
+      [data]="searchOpts"
+      (selectedChange)="onSearchOptionSelect($event)"
+    ></app-select-control>
+    <input
+      type="text"
+      placeholder="输入关键字"
+      class=""
+      [(ngModel)]="searchOption.text"
+    />
+  </div>
+  <button type="button" class="hw-blue-btn search" (click)="onsearch()">
+    <i class="mdi mdi-magnify"></i>
+    查询
+  </button>
+  <app-select-control
+    class="list-type-select"
+    [data]="listTypes"
+    [style]="{ fontFamily: 'HowellFont' }"
+    (selectedChange)="onListTypeSelect($event)"
+  ></app-select-control>
+  <button class="hw-cyan-m-btn" (click)="onfilter()">
+    <i class="mdi mdi-filter-outline"></i>
+  </button>
+</div>

@@ -19,6 +19,7 @@ import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-c
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
+import { ListType } from '../event-record-operation/event-record-operation.component';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
 import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
 import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
@@ -70,6 +71,7 @@ export class GarbageStationWindowComponent
 
   Index = GarbageStationWindowIndex;
   isfilter = false;
+  table: ListType = ListType.table;
 
   ngOnInit(): void {
     // console.log('ppp', this.eventType);
@@ -101,7 +103,8 @@ export class GarbageStationWindowComponent
       // }
     }
     if (changes.divisionId) {
-      this.record.filter.filter.divisionId = this.divisionId;
+      (this.record.filter.filter as GarbageDropRecordFilter).divisionId =
+        this.divisionId;
     }
   }
 

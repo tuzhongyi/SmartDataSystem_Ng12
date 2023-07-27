@@ -45,7 +45,7 @@ export class PointInfoPanelConverter
     model.statistic = getter.statistic(source.Id).then((statistic) => {
       return this.getStatistic(statistic);
     });
-    model.state = this.getState(source);
+    model.state = [this.getState(source)];
     return model;
   }
 

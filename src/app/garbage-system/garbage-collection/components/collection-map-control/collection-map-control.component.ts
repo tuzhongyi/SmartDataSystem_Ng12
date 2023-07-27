@@ -207,8 +207,11 @@ export class CollectionMapControlComponent
     this.amap.menuEvents.routeClicked.subscribe((x) => {
       this.route.emit(x);
     });
-    this.amap.menuEvents.powerClicked.subscribe((x) => {
-      this.topower(x);
+    this.amap.menuEvents.powerOnClicked.subscribe((x) => {
+      this.topower(x, true);
+    });
+    this.amap.menuEvents.powerOffClicked.subscribe((x) => {
+      this.topower(x, false);
     });
   }
   ngOnDestroy(): void {
@@ -299,21 +302,32 @@ export class CollectionMapControlComponent
     this.garbageFullClicked.emit(vehicle as GarbageVehicle);
   }
   onpaneloption(item: PointInfoPanelModelOption) {
-    this.topower(item.data);
+    switch (item.command) {
+      case 'powerOn':
+        this.topower(item.data, true);
+        break;
+      case 'powerOff':
+        this.topower(item.data, false);
+        break;
+
+      default:
+        break;
+    }
   }
 
   onwindowclose() {
     this.window.clear();
     this.window.close();
   }
-  topower(vehicle: GarbageVehicle) {
+  topower(vehicle: GarbageVehicle, power: boolean) {
     this.window.confirm.model = vehicle;
+    this.window.confirm.power = power;
     this.window.confirm.show = true;
   }
-  onpower(vehicle?: GarbageVehicle) {
+  onpower(vehicle: GarbageVehicle, power: boolean) {
     if (vehicle) {
       this.amap
-        .power(vehicle.Id)
+        .power(vehicle.Id, power)
         .then((x) => {
           this.toastr.success('操作成功');
         })

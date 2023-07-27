@@ -8,6 +8,7 @@ import { Injectable } from '@angular/core';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { HowellResponse } from 'src/app/network/model/howell-response.model';
+import { NBStatus } from 'src/app/network/model/nb-status.model';
 import { GarbageVehicle } from '../../../model/garbage-vehicle.model';
 import { GisRoutePoint } from '../../../model/gis-point.model';
 import { PagedList } from '../../../model/page_list.model';
@@ -174,8 +175,16 @@ class VehicleRelayService {
 
 class VehicleNBService {
   constructor(private basic: HowellBaseRequestService) {}
-
-  power(id: string, params: NBPowerOnParams = new NBPowerOnParams()) {
+  power(id: string, params: NBPowerOnParams): Promise<boolean>;
+  power(id: string, power: boolean): Promise<boolean>;
+  power(id: string, args: NBPowerOnParams | boolean) {
+    let params: NBPowerOnParams;
+    if (typeof args === 'boolean') {
+      params = new NBPowerOnParams();
+      params.PowerOn = args;
+    } else {
+      params = args;
+    }
     let url = GarbageVehicleUrl.nb(id).power();
     let data = instanceToPlain(params);
     return this.basic.http
@@ -186,6 +195,15 @@ class VehicleNBService {
       .toPromise()
       .then((x) => {
         return x.FaultCode === 0;
+      });
+  }
+  status(id: string) {
+    let url = GarbageVehicleUrl.nb(id).status();
+    return this.basic.http
+      .getHowellResponse<NBPowerOnParams, HowellResponse<NBStatus>>(url)
+      .toPromise()
+      .then((x) => {
+        return x.Data!;
       });
   }
 }

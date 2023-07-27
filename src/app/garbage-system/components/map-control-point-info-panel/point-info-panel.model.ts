@@ -11,8 +11,11 @@ export class PointInfoPanelModel<T = IModel> {
   roadName?: Promise<string>;
   GarbageStationGrade?: Promise<string>;
   statistic?: Promise<PointInfoPanelModelStatistic>;
-  state?: PointInfoPanelModelState;
+  state: PointInfoPanelModelState[] = [];
   powerTime?: Date;
+  signal?: number;
+  heartbeatTime?: Date;
+  powerOn?: boolean;
   options: PointInfoPanelModelOption<T>[] = [];
 }
 

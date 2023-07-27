@@ -254,7 +254,6 @@ export class AMapBusiness {
   }
 
   setPointStatus(stations: GarbageStationModel[]) {
-    console.log('setPointStatus');
     if (!this.mapClient || !stations || stations.length === 0) return;
 
     const arrayStatus = new Array();

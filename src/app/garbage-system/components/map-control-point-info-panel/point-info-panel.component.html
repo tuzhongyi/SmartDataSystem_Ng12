@@ -23,6 +23,24 @@
       {{ model.powerTime | date : "yyyy-MM-dd HH:mm:ss" }}
     </div>
   </div>
+  <div class="item" *ngIf="model.heartbeatTime" title="最后一次心跳时间">
+    <i class="howell-icon-heartbeat icon"></i>
+    <div class="content">
+      {{ model.heartbeatTime | date : "yyyy-MM-dd HH:mm:ss" }}
+    </div>
+  </div>
+  <div class="item" *ngIf="model.heartbeatTime" title="信号">
+    <i class="mdi mdi-signal icon"></i>
+    <div class="content">{{ model.signal ?? 0 }} %</div>
+  </div>
+  <div
+    class="item"
+    *ngIf="!(model.powerOn === undefined)"
+    title="最后一次NB请求命令"
+  >
+    <i class="mdi mdi-apple-keyboard-command icon"></i>
+    <div class="content">{{ model.powerOn ? "唤醒" : "关闭" }}</div>
+  </div>
 
   <div class="item" *ngFor="let member of model.members">
     <div class="item-name">
@@ -168,12 +186,12 @@
 
   <div class="options">
     <div
-      *ngIf="!!model.state"
+      *ngFor="let item of model.state"
       class="state"
-      [ngClass]="model.state.className"
-      (click)="onStateClicked()"
+      [ngClass]="item.className"
+      (click)="onStateClicked(item)"
     >
-      {{ model.state.language }}
+      {{ item.language }}
     </div>
     <div
       *ngFor="let item of model.options"

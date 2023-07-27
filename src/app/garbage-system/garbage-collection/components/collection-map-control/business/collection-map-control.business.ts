@@ -187,7 +187,8 @@ export class CollectionMapControlBusiness {
     garbageCountClicked: new EventEmitter(),
     vehicleInformationClicked: new EventEmitter(),
     routeClicked: new EventEmitter(),
-    powerClicked: new EventEmitter(),
+    powerOnClicked: new EventEmitter(),
+    powerOffClicked: new EventEmitter(),
   };
 
   setContentMenu() {
@@ -239,23 +240,35 @@ export class CollectionMapControlBusiness {
       4
     );
     this.mapClient.ContextMenu.AddItem(
-      `<i class="glyphicon glyphicon-off" style="font-size: 14px"></i> 远程唤醒`,
+      `<i class="mdi mdi-power-plug" style="font-size: 14px"></i> &nbsp;远程唤醒`,
       async (id: string) => {
         let vehicle = this.source.all.find((x) => x.Id === id);
         if (!vehicle) {
           const vehicle = await this.vehicleService.cache.get(id);
           this.source.all.push(vehicle);
         }
-        this.menuEvents.powerClicked.emit(vehicle);
+        this.menuEvents.powerOnClicked.emit(vehicle);
       },
       5
+    );
+    this.mapClient.ContextMenu.AddItem(
+      `<i class="mdi mdi-power-plug-off" style="font-size: 14px"></i> &nbsp;远程关闭`,
+      async (id: string) => {
+        let vehicle = this.source.all.find((x) => x.Id === id);
+        if (!vehicle) {
+          const vehicle = await this.vehicleService.cache.get(id);
+          this.source.all.push(vehicle);
+        }
+        this.menuEvents.powerOffClicked.emit(vehicle);
+      },
+      6
     );
 
     this.mapClient.ContextMenu.Enable();
   }
 
-  power(id: string) {
-    return this.vehicleService.nb.power(id);
+  power(id: string, power: boolean) {
+    return this.vehicleService.nb.power(id, power);
   }
 }
 

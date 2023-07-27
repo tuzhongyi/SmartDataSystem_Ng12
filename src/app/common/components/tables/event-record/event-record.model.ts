@@ -1,21 +1,21 @@
+import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
+import { Duration } from 'src/app/network/model/duration.model';
 import { IObjectModel } from 'src/app/network/model/model.interface';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import {
   SearchOptionKey,
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
 import { SelectItem } from '../../select-control/select-control.model';
 
-export class EventRecordFilter extends DurationParams {
+export class EventRecordFilter {
   constructor() {
-    super();
-    let interval = DurationParams.allDay(new Date());
-    this.BeginTime = interval.BeginTime;
-    this.EndTime = interval.EndTime;
+    this.duration = DateTimeTool.allDay(new Date());
   }
+
+  duration: Duration;
 
   type: EventType = EventType.None;
   divisionId?: string;
@@ -66,9 +66,7 @@ export class EventRecordFilter extends DurationParams {
   community?: SelectItem;
 
   reset() {
-    let interval = DurationParams.allDay(new Date());
-    this.BeginTime = interval.BeginTime;
-    this.EndTime = interval.EndTime;
+    this.duration = DateTimeTool.allDay(new Date());
     this.division = undefined;
     this.station = undefined;
     this.camera = undefined;

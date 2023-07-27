@@ -31,17 +31,7 @@ export class VideoPlayerComponent
 {
   @Input() url?: string;
   @Input() model?: VideoModel;
-  private _webUrl: string = '/video/wsplayer/wsplayer.html';
-  public get webUrl(): string | undefined {
-    return this._webUrl;
-  }
-  @Input()
-  public set webUrl(v: string | undefined) {
-    if (v) {
-      this._webUrl = v;
-    }
-  }
-
+  @Input() webUrl: string;
   @Input() name: string = '';
   @Input() index = 0;
   @Input() play?: EventEmitter<VideoModel>;
@@ -73,7 +63,17 @@ export class VideoPlayerComponent
     private sanitizer: DomSanitizer,
     private local: LocalStorageService,
     private userService: UserRequestService
-  ) {}
+  ) {
+    let protocol = location.protocol;
+    if (!protocol.includes(':')) {
+      protocol += ':';
+    }
+    let port = '';
+    if (location.port) {
+      port = ':' + location.port;
+    }
+    this.webUrl = `${protocol}//${location.hostname}${port}/video/wsplayer/wsplayer.html`;
+  }
   reserve: number = 15 * 1000;
   src?: SafeResourceUrl;
   isloaded = false;
@@ -201,7 +201,7 @@ export class VideoPlayerComponent
       }
 
       if (this.url) {
-        let src = this.getSrc(this.webUrl!, this.url, this.name);
+        let src = this.getSrc(this.webUrl, this.url, this.name);
         this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
         this.isloaded = true;
         this.loaded.emit();
@@ -294,7 +294,7 @@ export class VideoPlayerComponent
         this.onButtonClicked.emit(btn);
 
         new Promise((x) => {
-          let url = new HowellUrl(this.webUrl!);
+          let url = new HowellUrl(this.webUrl);
           if (
             location.hostname !== url.Host &&
             location.port != url.Port.toString()
@@ -323,7 +323,7 @@ export class VideoPlayerComponent
         if (this.index != index) return;
         this.onViewerDoubleClicked.emit(index);
         new Promise((x) => {
-          let url = new HowellUrl(this.webUrl!);
+          let url = new HowellUrl(this.webUrl);
           if (
             location.hostname !== url.Host &&
             location.port != url.Port.toString()

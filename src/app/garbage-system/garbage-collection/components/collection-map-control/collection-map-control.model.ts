@@ -19,4 +19,5 @@ class MapcontrolConfirmWindow extends WindowViewModel {
     height: 'auto',
   };
   model?: GarbageVehicle;
+  power: boolean = true;
 }

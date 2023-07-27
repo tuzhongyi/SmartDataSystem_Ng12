@@ -68,4 +68,7 @@ class NBUrl extends AbstractUrl {
   power() {
     return `${this.basic()}/PowerOn`;
   }
+  status() {
+    return `${this.basic()}/Status`;
+  }
 }

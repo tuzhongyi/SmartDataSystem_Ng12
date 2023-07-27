@@ -8,8 +8,9 @@
         </div>
         <div class="operation" *ngIf="index === Index.record">
           <howell-garbage-station-window-record-operation
-            (filter)="record.filter.display()"
             (search)="record.filter.onsearch($event)"
+            [(table)]="table"
+            [(isfilter)]="record.filter.show"
           >
           </howell-garbage-station-window-record-operation>
         </div>
@@ -63,6 +64,7 @@
               [isfilter]="record.filter.show"
               [status]="taskStatus"
               [(filter)]="record.filter.filter"
+              [table]="table"
               [search]="record.filter.load"
               (image)="onimage($event)"
               (video)="onvideo($event)"

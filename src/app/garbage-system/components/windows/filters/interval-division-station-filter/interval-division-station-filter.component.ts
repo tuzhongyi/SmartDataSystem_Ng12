@@ -65,9 +65,7 @@ export class EventRecordFilterComponent
   }
 
   ngOnDestroy(): void {
-    let duration = DateTimeTool.allDay(new Date());
-    this.filter.BeginTime = duration.begin;
-    this.filter.EndTime = duration.end;
+    this.filter.duration = DateTimeTool.allDay(new Date());
     this.filter.cameraId = undefined;
     this.filter.community = undefined;
     this.filter.divisionId = undefined;

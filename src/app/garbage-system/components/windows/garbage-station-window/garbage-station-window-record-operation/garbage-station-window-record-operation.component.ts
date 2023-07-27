@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { Language } from 'src/app/common/tools/language';
 import { Enum } from 'src/app/enum/enum-helper';
@@ -9,17 +9,17 @@ import {
 
 @Component({
   selector: 'howell-garbage-station-window-record-operation',
-  templateUrl:
-    '../../../event-record-operation/event-record-operation.component.html',
-  styleUrls: [
-    '../../../event-record-operation/event-record-operation.component.less',
-  ],
+  templateUrl: './garbage-station-window-record-operation.component.html',
+  styleUrls: ['./garbage-station-window-record-operation.component.less'],
 })
 export class GarbageStationWindowRecordOperationComponent implements OnInit {
   @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
-  @Output() filter: EventEmitter<void> = new EventEmitter();
-  @Output() typeChange: EventEmitter<ListType> = new EventEmitter();
 
+  @Input() table: ListType = ListType.table;
+  @Output() tableChange: EventEmitter<ListType> = new EventEmitter();
+
+  @Input() isfilter: boolean = false;
+  @Output() isfilterChange: EventEmitter<boolean> = new EventEmitter();
   constructor() {}
 
   listTypes: SelectItem[] = [];
@@ -68,15 +68,16 @@ export class GarbageStationWindowRecordOperationComponent implements OnInit {
   onsearch() {
     this.search.emit(this.searchOption);
   }
-  onfilter() {
-    this.filter.emit();
-  }
 
   onListTypeSelect(item: SelectItem) {
-    this.typeChange.emit(item.value);
+    this.tableChange.emit(item.value);
   }
   onSearchOptionSelect(item: SelectItem) {
     this.searchOption.propertyName = item.value;
+  }
+  onfilter() {
+    this.isfilter = !this.isfilter;
+    this.isfilterChange.emit(this.isfilter);
   }
 }
 

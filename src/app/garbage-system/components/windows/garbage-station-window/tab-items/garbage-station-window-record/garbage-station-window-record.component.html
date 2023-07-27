@@ -6,11 +6,19 @@
   </div>
   <div class="garbage-station-window-record-table" [class.filter]="isfilter">
     <howell-garbage-drop-record-table
+      *ngIf="table === TableType.table"
       [filter]="filter"
       [load]="filterChange"
       (image)="onimage($event)"
       (video)="onvideo($event)"
     >
     </howell-garbage-drop-record-table>
+    <garbage-drop-record-task-table
+      #task
+      *ngIf="table === TableType.card"
+      [args]="filter"
+      [load]="load"
+    >
+    </garbage-drop-record-task-table>
   </div>
 </div>

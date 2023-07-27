@@ -7,7 +7,7 @@
       [format]="'yyyy年MM月dd日 HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [(date)]="filter.BeginTime"
+      [(date)]="filter.duration.begin"
       (dateChange)="changeBegin($event)"
       class=""
     />
@@ -20,7 +20,7 @@
       [format]="'yyyy年MM月dd日 HH:mm'"
       [startView]="DateTimePickerView.day"
       [minView]="DateTimePickerView.hour"
-      [(date)]="filter.EndTime"
+      [(date)]="filter.duration.end"
       (dateChange)="changeEnd($event)"
       class=""
     />
@@ -51,7 +51,7 @@
     <app-select-control
       class="list-type-select"
       [data]="durations"
-      (selectedChange)="onduration($event)"
+      (selectedChange)="onrange($event)"
     ></app-select-control>
   </div>
   <div class="filter-item">

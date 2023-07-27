@@ -70,8 +70,8 @@ export class EventRecordBusiness
   getParams(page: PagedParams, opts: EventRecordFilter) {
     let params = new GetEventRecordsParams();
     params = Object.assign(params, page);
-    params.BeginTime = opts.BeginTime;
-    params.EndTime = opts.EndTime;
+    params.BeginTime = opts.duration.begin;
+    params.EndTime = opts.duration.end;
     if (opts.divisionId) {
       params.DivisionIds = [opts.divisionId];
     }

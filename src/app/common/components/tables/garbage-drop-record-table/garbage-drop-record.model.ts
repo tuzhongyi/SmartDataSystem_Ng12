@@ -22,7 +22,10 @@ export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
 }
 
 export class GarbageDropRecordFilter extends EventRecordFilter {
+  constructor() {
+    super();
+  }
   IsHandle?: boolean;
   IsTimeout?: boolean;
-  duration?: CompareRange<number>;
+  range?: CompareRange<number>;
 }

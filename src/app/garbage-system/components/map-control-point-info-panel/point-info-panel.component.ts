@@ -12,6 +12,7 @@ import { PointInfoPanelBusiness } from './point-info-panel.business';
 import {
   PointInfoPanelModel,
   PointInfoPanelModelOption,
+  PointInfoPanelModelState,
 } from './point-info-panel.model';
 
 @Component({
@@ -112,7 +113,7 @@ export class PointInfoPanelComponent
       });
     }
   }
-  onStateClicked() {
+  onStateClicked(item: PointInfoPanelModelState) {
     if (!this.Source) return;
     if (this.Source instanceof GarbageStation) {
       if (

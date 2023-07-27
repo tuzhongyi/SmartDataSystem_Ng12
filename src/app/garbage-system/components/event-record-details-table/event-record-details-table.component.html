@@ -32,7 +32,7 @@
           [format]="'yyyy年MM月dd日 HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
-          [(date)]="filter.BeginTime"
+          [(date)]="filter.duration.begin"
           [style]="{ fontFamily: 'HowellFont' }"
           class=""
         />
@@ -45,7 +45,7 @@
           [format]="'yyyy年MM月dd日 HH:mm'"
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
-          [(date)]="filter.EndTime"
+          [(date)]="filter.duration.end"
           class=""
         />
       </div>
