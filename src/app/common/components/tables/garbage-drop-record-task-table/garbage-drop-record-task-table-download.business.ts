@@ -39,6 +39,7 @@ class Converter implements IExportConverter<GarbageDropRecordTaskTableModel[]> {
     ...res: any[]
   ): HowellExportModel {
     let model = new HowellExportModel();
+    let total = source.pop();
     for (let i = 0; i < source.length; i++) {
       const data = source[i];
       let row = new Array();
@@ -46,7 +47,18 @@ class Converter implements IExportConverter<GarbageDropRecordTaskTableModel[]> {
       row.push(data.name);
       row.push(data.count);
       row.push(data.unhandle);
+      row.push(data.timeout);
       row.push(data.ratio);
+      model.rowValues.push(row);
+    }
+    let row = new Array();
+    if (total) {
+      row.push('');
+      row.push(total.name);
+      row.push(total.count);
+      row.push(total.unhandle);
+      row.push(total.timeout);
+      row.push(total.ratio);
       model.rowValues.push(row);
     }
     return model;

@@ -92,6 +92,15 @@ declare namespace CesiumDataController {
     GarbageClassificationCamera = 'garbageClassificationCamera', //垃圾分类
     NucleicAcid = 'acid', //核酸
     LargeWaste = 'largewaste', //大件垃圾
+    Face = 'face',
+    Rfid = 'rfid',
+    SmartStation = 'smart_station',
+  }
+
+  enum BatteryLevel {
+    empty = 0, //空的
+    half = 1, //一半
+    full = 2, //满得
   }
 
   enum ShapeType {

@@ -8,7 +8,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -60,25 +59,23 @@ export class EventRecordWindowComponent
   ) {
     super();
   }
-
-  filter: EventRecordFilter = new EventRecordFilter();
   Index = EventRecordWindowIndex;
   ListType = ListType;
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.stationId) {
-      this.filter.stationId = this.stationId;
+      this.record.filter.filter.stationId = this.stationId;
     }
     if (changes.divisionId) {
-      this.filter.divisionId = this.divisionId;
+      this.record.filter.filter.divisionId = this.divisionId;
     }
   }
 
   load: EventEmitter<string> = new EventEmitter();
 
   ngOnInit(): void {
-    if (!this.filter.divisionId)
-      this.filter.divisionId = this.globalStorage.divisionId;
+    if (!this.record.filter.filter.divisionId)
+      this.record.filter.filter.divisionId = this.globalStorage.divisionId;
   }
 
   ngOnDestroy(): void {}

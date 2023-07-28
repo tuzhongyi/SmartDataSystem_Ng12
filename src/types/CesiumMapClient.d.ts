@@ -277,7 +277,23 @@ declare namespace CesiumMap {
     Remove(id: string): void;
   }
 
-  class Client {
+  interface IClient {
+    ExtendWindow: ExtendWindow;
+    AlarmPoint: AlarmPoint;
+    Alarm: Alarm;
+    Map: Map;
+    Viewer: Viewer;
+    Overlay: Overlay;
+    Village: Village;
+    Point: Point;
+    DataController: CesiumDataController.Controller;
+
+    Events: EventTriggers;
+    ContextMenu: ContextMenu;
+    Label: Label;
+    Draw: Draw;
+  }
+  class Client implements IClient {
     constructor(iframeId: string);
 
     ExtendWindow: ExtendWindow;

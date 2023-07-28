@@ -107,8 +107,8 @@ export class PointInfoPanelComponent
     if (this.model.statistic) {
       this.model.statistic.then((statistic) => {
         if (statistic.MixedIntoCount <= 0) return;
-        if (this.IllegalDropClickedEvent) {
-          this.IllegalDropClickedEvent.emit(this.Source);
+        if (this.MixedIntoClickedEvent) {
+          this.MixedIntoClickedEvent.emit(this.Source);
         }
       });
     }

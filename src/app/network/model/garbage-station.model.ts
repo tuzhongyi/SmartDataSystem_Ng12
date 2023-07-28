@@ -7,6 +7,7 @@ import { StationType } from 'src/app/enum/station-type.enum';
 import { CameraUsage } from '../../enum/camera-usage.enum';
 import { TrashCanType } from '../../enum/trashcan-type.enum';
 import { Camera } from './camera.model';
+import { ConstructionData } from './construction-data';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { IdNameModel } from './model.interface';
@@ -84,6 +85,8 @@ export class GarbageStation extends IdNameModel {
   CommunityName?: string;
   /**	String	小区ID	O */
   CommunityId?: string;
+  /**	ConstructionData	建筑垃圾箱体数据	O */
+  ConstructionData?: ConstructionData;
 }
 
 /** 垃圾相关参数 */

@@ -24,6 +24,13 @@ import { ImageControlArrayConverter } from '../../../converter/image-control-arr
 import { ListItemType } from '../map-control-list-panel/map-list-item';
 import { AMapBusiness } from './business/amap.business';
 import { GarbageTimeFilter, PointCount } from './business/amap.model';
+import { AMapDivisionBusiness } from './business/amap/amap-division.business';
+import { AMapPointLabelBusiness } from './business/amap/amap-point-label.business';
+import { AMapPointContextMenuBusiness } from './business/amap/amap-point-menu.business';
+import { AMapPointBusiness } from './business/amap/amap-point.business';
+import { AMapClient } from './business/amap/amap.client';
+import { AMapEvent } from './business/amap/amap.event';
+import { AMapService } from './business/amap/amap.service';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { MapControlSelected, MapControlTools } from './map-control.model';
@@ -32,7 +39,18 @@ declare var $: any;
   selector: 'app-map-control',
   templateUrl: './map-control.component.html',
   styleUrls: ['./map-control.component.less'],
-  providers: [AMapBusiness, ListPanelBusiness, PointInfoPanelBusiness],
+  providers: [
+    AMapEvent,
+    AMapClient,
+    AMapService,
+    AMapDivisionBusiness,
+    AMapPointBusiness,
+    AMapPointLabelBusiness,
+    AMapPointContextMenuBusiness,
+    AMapBusiness,
+    ListPanelBusiness,
+    PointInfoPanelBusiness,
+  ],
 })
 export class MapControlComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy
@@ -160,7 +178,7 @@ export class MapControlComponent
     if (changes.position) {
       if (this.position) {
         this.position.subscribe((x) => {
-          this.amap.pointSelect(x.Id);
+          this.amap.point.select(x.Id);
         });
       }
     }
@@ -179,12 +197,18 @@ export class MapControlComponent
 
     display.filting.current.click.subscribe((x) => {
       display.filting.current.selected = !display.filting.current.selected;
-      display.retention.current.display = !display.filting.current.selected;
       display.filting.construction.display = display.filting.current.selected;
       display.filting.station.display = display.filting.current.selected;
 
       display.filting.construction.selected = true;
       display.filting.station.selected = true;
+
+      if (
+        display.filting.current.selected &&
+        display.retention.current.selected
+      ) {
+        display.retention.current.click.emit();
+      }
     });
     display.filting.construction.click.subscribe((x) => {
       display.filting.construction.selected =
@@ -206,6 +230,12 @@ export class MapControlComponent
       display.retention.m30.selected = false;
       display.retention.h1.selected = false;
       display.retention.h2.selected = false;
+      if (
+        display.filting.current.selected &&
+        display.retention.current.selected
+      ) {
+        display.filting.current.click.emit();
+      }
     });
     display.retention.station.click.subscribe((x) => {
       display.retention.station.selected = !display.retention.station.selected;
@@ -236,11 +266,11 @@ export class MapControlComponent
     });
 
     display.filting.construction.change.subscribe((x) => {
-      this.amap.constructionStationVisibility(x);
+      this.amap.point.constructionStationVisibility(x);
     });
     display.filting.station.change.subscribe((x) => {
-      this.amap.garbageStationVisibility(x);
-      this.amap.visibility.label.station.value = x;
+      this.amap.point.garbageStationVisibility(x);
+      // this.amap.point.visibility.label.station.value = x;
     });
     display.retention.all.change.subscribe((x) => {
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.all);
@@ -255,45 +285,56 @@ export class MapControlComponent
       if (x) this.GarbageTimeFilting(GarbageTimeFilter.h2);
     });
     display.retention.station.change.subscribe((x) => {
-      this.amap.visibility.label.station.value = x;
+      this.amap.point.visibility.label.station.value = x;
+      this.amap.point.constructionStationVisibility(x);
     });
     display.retention.current.change.subscribe((x) => {
-      this.amap.visibility.label.value = x;
+      this.amap.point.visibility.label.value = x;
     });
+
     return display;
   }
   ngOnInit(): void {
     this.panel.init();
 
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.amap.src);
-    this.amap.pointDoubleClicked.subscribe((x) => {
-      this.onPointDoubleClicked(x);
-      this.info.station = undefined;
-    });
-    this.amap.pointCountChanged.subscribe((count) => {
-      this.pointCount = count;
-    });
-    this.amap.mapClicked.subscribe(() => {
+
+    this.amap.event.mapclick.subscribe(() => {
       this.onMapClicked();
       this.info.station = undefined;
     });
-    this.amap.menuEvents.stationInformationClicked.subscribe((x) => {
+    this.amap.event.point.count.subscribe((count) => {
+      this.pointCount = count;
+    });
+    this.amap.event.menu.click.subscribe((x) => {
+      this.onMapClicked();
+      this.info.station = undefined;
+    });
+    this.amap.event.menu.information.subscribe((x) => {
       this.info.station = x;
       this.display.status = false;
     });
-    this.amap.menuEvents.illegalDropClicked.subscribe((x) => {
+    this.amap.event.menu.illegaldrop.subscribe((x) => {
       this.illegalDropClicked.emit(x);
     });
-    this.amap.menuEvents.mixedIntoClicked.subscribe((x) => {
+    this.amap.event.menu.mixedinto.subscribe((x) => {
       this.mixedIntoClicked.emit(x);
     });
-    this.amap.menuEvents.garbageCountClicked.subscribe((x) => {
+    this.amap.event.menu.garbagedrop.subscribe((x) => {
       this.garbageCountClicked.emit(x);
+    });
+    this.amap.event.menu.video.subscribe((x) => {
+      this.onPointDoubleClicked(x);
+      this.info.station = undefined;
+    });
+    this.amap.event.point.doubleclick.subscribe((x) => {
+      this.onPointDoubleClicked(x);
+      this.info.station = undefined;
     });
 
     this.panel.itemSelected.subscribe((x) => {
       if (x instanceof Division) {
-        this.amap.divisionSelect(x.Id);
+        this.amap.division.select(x.Id);
         this.panel.datasource.forEach((y) => {
           if (y.type != ListItemType.Parent) {
             y.hasChild = !!this.amap.source.all.find(
@@ -302,7 +343,7 @@ export class MapControlComponent
           }
         });
       } else if (x instanceof GarbageStation) {
-        this.amap.pointSelect(x.Id);
+        this.amap.point.select(x.Id);
       } else {
       }
     });
@@ -317,10 +358,10 @@ export class MapControlComponent
     if (!value) {
       this.display.retention.station.display = true;
     }
-    this.amap.visibility.label.value = value;
+    this.amap.point.visibility.label.value = value;
   };
   onLabelStationDisplay = (value: boolean) => {
-    this.amap.visibility.label.value = value;
+    this.amap.point.visibility.label.value = value;
   };
 
   pointCount: PointCount = { count: 0, normal: 0, warm: 0, error: 0 };
@@ -338,7 +379,7 @@ export class MapControlComponent
         return !!this.iframe;
       },
       () => {
-        this.amap.createMapClient(this.iframe!);
+        this.amap.init(this.iframe!);
       }
     );
   }
@@ -403,7 +444,7 @@ export class MapControlComponent
   GarbageTimeFilter = GarbageTimeFilter;
 
   GarbageTimeFilting(filter: GarbageTimeFilter) {
-    this.amap.visibility.label.retention.value = filter;
+    this.amap.point.visibility.label.retention.value = filter;
     // this.amap.setLabelVisibility(false).then((x) => {
     //   // this.display.duration.current = this.display.duration.current;
     //   this.amap.setLabelVisibility(true).then(() => {

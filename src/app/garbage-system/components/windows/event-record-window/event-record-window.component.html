@@ -33,7 +33,7 @@
                 <howell-event-record-table
                   [load]="record.filter.load"
                   [type]="type"
-                  [filter]="filter"
+                  [filter]="record.filter.filter"
                   [get]="get"
                   (image)="onimage($event)"
                   (video)="onvideo($event)"
@@ -48,7 +48,7 @@
                   [load]="record.filter.load"
                   (image)="onimage($event)"
                   (video)="onvideo($event)"
-                  [filter]="filter"
+                  [filter]="record.filter.filter"
                 >
                 </howell-event-record-list>
               </ng-container>
