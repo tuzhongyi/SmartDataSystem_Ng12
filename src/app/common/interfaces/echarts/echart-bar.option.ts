@@ -1,8 +1,9 @@
-import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/common/tools/language';
 import * as echarts from 'echarts/core';
+import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 export var EchartBarOption = {
+  color: ['#7586e0', '#ffba00', '#21E452'],
   backgroundColor: 'transparent',
   title: {
     text: '投放点事件',
@@ -42,7 +43,6 @@ export var EchartBarOption = {
   xAxis: {
     type: 'category',
     axisLabel: { interval: 0, color: '#cfd7ff' },
-    data: [],
     splitLine: { show: false },
     axisLine: {
       lineStyle: {

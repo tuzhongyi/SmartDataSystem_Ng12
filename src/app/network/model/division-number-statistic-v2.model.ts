@@ -1,4 +1,7 @@
+import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { EventNumber } from './event-number.model';
+import { GarbageWeight } from './garbage-weight.model';
 import { IdNameModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
@@ -31,4 +34,7 @@ export class DivisionNumberStatisticV2 extends IdNameModel {
   CompleteTaskCount?: number;
   /**	Int32	未完成任务数量	O */
   TimeoutTaskCount?: number;
+  /**	GarbageWeight[]	当日垃圾重量	O */
+  @Type(() => GarbageWeight)
+  GarbageWeights?: GarbageWeight[];
 }

@@ -22,6 +22,7 @@ import {
 } from 'src/app/enum/device-state-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -44,9 +45,24 @@ import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
+import { DateTimeTool } from './datetime.tool';
 import language from './language.json';
 
 export class Language {
+  static GarbageType(type: GarbageType): string {
+    switch (type) {
+      case GarbageType.Dry:
+        return '干垃圾';
+      case GarbageType.Wet:
+        return '湿垃圾';
+      case GarbageType.Recycle:
+        return '可回收垃圾';
+      case GarbageType.Hazard:
+        return '有害垃圾';
+      default:
+        return Language.json.Unknow;
+    }
+  }
   static StationState(state: StationState) {
     switch (state) {
       case StationState.Full:
@@ -82,18 +98,64 @@ export class Language {
         return Language.json.Date.day + Language.json.report;
       case TimeUnit.Day:
         return Language.json.Date.month + Language.json.report;
+      case TimeUnit.Week:
+        return '周报表';
+      case TimeUnit.Month:
+        return '月报表';
+      case TimeUnit.Year:
+        return '年报表';
       default:
         return Language.json.Unknow;
     }
   }
 
-  static Week(day: number) {
-    let name = ['日', '一', '二', '三', '四', '五', '六', '日'];
-    return `周${name[day]}`;
+  static Week(day: number | string) {
+    if (typeof day === 'number') {
+      let name = ['日', '一', '二', '三', '四', '五', '六', '日'];
+      return `周${name[day]}`;
+    } else {
+      switch (day) {
+        case 'Monday':
+          return '周一';
+        case 'Tuesday':
+          return '周二';
+        case 'Wednesday':
+          return '周三';
+        case 'Thursday':
+          return '周四';
+        case 'Friday':
+          return '周五';
+        case 'Saturday':
+          return '周六';
+        case 'Sunday':
+          return '周日';
+        default:
+          return Language.json.Unknow;
+      }
+    }
   }
 
-  static Date(date: Date) {
-    return formatDate(date, 'yyyy年MM月dd日', 'en');
+  static Date(date: Date, unit?: TimeUnit): string {
+    let format = '';
+    switch (unit) {
+      case TimeUnit.Year:
+        format = 'yyyy年';
+        break;
+      case TimeUnit.Month:
+        format = 'yyyy年MM月';
+        break;
+      case TimeUnit.Week:
+        let duration = DateTimeTool.allWeek(date);
+        return `${Language.Date(
+          duration.begin,
+          TimeUnit.Day
+        )} 至 ${Language.Date(duration.end, TimeUnit.Day)}`;
+      case TimeUnit.Day:
+      default:
+        format = 'yyyy年MM月dd日';
+        break;
+    }
+    return formatDate(date, format, 'en');
   }
 
   static Duration(begin: Date, end: Date) {

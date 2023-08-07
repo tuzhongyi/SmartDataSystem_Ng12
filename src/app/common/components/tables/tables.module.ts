@@ -16,6 +16,7 @@ import { GarbageDropStationTableComponent } from './garbage-drop-station-table/g
 import { GarbageFullStationTableComponent } from './garbage-full-station-table/garbage-full-station-table.component';
 import { GarbageStationStatisticTableComponent } from './garbage-station-statistic-table/garbage-station-statistic-table.component';
 import { GarbageStationTableComponent } from './garbage-station-table/garbage-station-table.component';
+import { GarbageStationWeightTableComponent } from './garbage-station-weight-table/garbage-station-weight-table.component';
 import { GarbageVehicleCameraTableComponent } from './garbage-vehicle-camera-table/garbage-vehicle-camera-table.component';
 
 export const Table_COMPONENTS = [
@@ -41,4 +42,6 @@ export const Table_COMPONENTS = [
   AiopGarbageVehicleCameraTableComponent,
 
   CardRecordTableComponent,
+
+  GarbageStationWeightTableComponent,
 ];

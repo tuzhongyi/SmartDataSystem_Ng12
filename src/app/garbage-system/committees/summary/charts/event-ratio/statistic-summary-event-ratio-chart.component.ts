@@ -10,16 +10,15 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { EventType } from 'src/app/enum/event-type.enum';
+import { EChartPieOption } from 'src/app/common/interfaces/echarts/echart-pie.option';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { StatisticSummaryViewModel } from '../../statistic-summary.model';
-import { EChartPieOption } from './echart-pie.option';
 import { StatisticSummaryEventRatioChartBusiness } from './statistic-summary-event-ratio-chart.business';
-import { StatisticSummaryEventRatioChartConverter } from './statistic-summary-event-ratio-chart.converter';
 import { StatisticSummaryEventRatioChartViewModel } from './statistic-summary-event-ratio-chart.model';
-import * as echarts from 'echarts/core';
 
 @Component({
   selector: 'app-statistic-summary-event-ratio-chart',
@@ -50,7 +49,8 @@ export class StatisticSummaryEventRatioChartComponent
   @Input()
   EventTrigger?: EventEmitter<void>;
   @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryEventRatioChartViewModel> = new EventEmitter();
+  OnTriggerEvent: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
+    new EventEmitter();
 
   data?: StatisticSummaryEventRatioChartViewModel;
 

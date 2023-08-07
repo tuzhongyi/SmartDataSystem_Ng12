@@ -1,0 +1,107 @@
+<div class="garbage-station-weight-chart">
+  <div class="garbage-station-weight-chart-head">
+    <div class="head-filter">
+      <div class="head-filter-item">
+        <div class="head-filter-item-title">选择日期</div>
+        <div class="head-filter-item-value">
+          <input
+            type="text"
+            DateTimePicker
+            [(date)]="args.date"
+            [format]="dateArgs.format"
+            class="custom form-control time"
+            [startView]="dateArgs.view"
+            [minView]="dateArgs.view"
+            [week]="dateArgs.isweek"
+            (dateChange)="onchange()"
+          />
+        </div>
+      </div>
+      <div class="head-filter-item" style="width: 300px">
+        <div class="head-filter-item-title">行政区</div>
+        <div class="head-filter-item-value">
+          <level-division-panel
+            class="list-type-select"
+            (selectedChange)="ondivision($event)"
+          >
+          </level-division-panel>
+        </div>
+      </div>
+      <div class="head-filter-item" style="width: 300px">
+        <div class="head-filter-item-title three">投放点</div>
+        <div class="head-filter-item-value three">
+          <select class="" [(ngModel)]="selected.station">
+            <option [ngValue]="undefined">请选择</option>
+            <option [ngValue]="item" *ngFor="let item of stations">
+              {{ item.Name }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div>
+        <button class="hw-blue-btn m-r-10" (click)="onsearch()">
+          <i class="mdi mdi-magnify"></i> 查询
+        </button>
+        <button
+          class="hw-blue-btn m-r-10"
+          (click)="ondownload(ExportType.chart)"
+        >
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn" (click)="ondownload(ExportType.csv)">
+          <i class="howell-icon-export"></i> CSV
+        </button>
+      </div>
+    </div>
+    <div class="head-search">
+      <select class="" [(ngModel)]="args.type.garbage" (change)="onchange()">
+        <option [ngValue]="GarbageType.Dry">
+          {{ Language.GarbageType(GarbageType.Dry) }}
+        </option>
+        <option [ngValue]="GarbageType.Wet">
+          {{ Language.GarbageType(GarbageType.Wet) }}
+        </option>
+      </select>
+      <select class="" [(ngModel)]="args.unit" (change)="onchange()">
+        <option [ngValue]="TimeUnit.Week">
+          {{ Language.TimeUnit(TimeUnit.Week) }}
+        </option>
+        <option [ngValue]="TimeUnit.Month">
+          {{ Language.TimeUnit(TimeUnit.Month) }}
+        </option>
+        <option [ngValue]="TimeUnit.Year">
+          {{ Language.TimeUnit(TimeUnit.Year) }}
+        </option>
+      </select>
+      <select class="" [(ngModel)]="args.type.chart" (change)="onchange()">
+        <option [ngValue]="ChartType.line">
+          {{ Language.ChartType(ChartType.line) }}
+        </option>
+        <option [ngValue]="ChartType.bar">
+          {{ Language.ChartType(ChartType.bar) }}
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="garbage-station-weight-chart-body" *ngIf="!!chart">
+    <ng-container *ngIf="args.type.chart === ChartType.line">
+      <!-- <div #echarts class="echart"></div> -->
+      <howell-line-chart
+        [theme]="chart.theme"
+        [options]="chart.options"
+        [merge]="chart.merge"
+      ></howell-line-chart>
+      <!-- <common-bar-chart [merge]="option"></common-bar-chart> -->
+    </ng-container>
+
+    <ng-container *ngIf="args.type.chart === ChartType.bar">
+      <!-- <div #echarts class="echart"></div> -->
+      <!-- <common-bar-chart [merge]="option"></common-bar-chart> -->
+      <howell-line-chart
+        [theme]="chart.theme"
+        [options]="chart.options"
+        [merge]="chart.merge"
+      ></howell-line-chart>
+    </ng-container>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import {
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
 import { MonitorMapControlBusiness } from './business/monitor-map-control.business';
 import { MonitorPatrolControlBusiness } from './business/monitor-patrol-control.business';
@@ -105,5 +106,10 @@ export class MonitorComponent implements OnInit {
     }
 
     this.statistic.loading.emit();
+  }
+
+  onweight(type: GarbageType) {
+    this.window.weight.type = type;
+    this.window.weight.show = true;
   }
 }

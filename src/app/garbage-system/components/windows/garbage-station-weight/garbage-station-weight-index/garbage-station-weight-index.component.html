@@ -1,0 +1,41 @@
+<div class="garbage-station-weight-index">
+  <div class="garbage-station-weight-index-head">
+    <div><div class="second-title-bg pull-left text">垃圾称重</div></div>
+    <div>
+      <ul class="hw-ul pull-left m-t-10">
+        <li class="pull-left">
+          <a (click)="page = Page.list">
+            <div
+              class="second-menu-btn text"
+              [ngClass]="{
+                selected: page === Page.list
+              }"
+            >
+              &nbsp;&nbsp;总图表
+            </div>
+          </a>
+        </li>
+        <li class="pull-left">
+          <a (click)="page = Page.chart">
+            <div
+              class="second-menu-btn text"
+              [ngClass]="{
+                selected: page === Page.chart
+              }"
+            >
+              &nbsp;细分图表
+            </div>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="garbage-station-weight-index-body">
+    <garbage-station-weight-list
+      *ngIf="page === Page.list"
+    ></garbage-station-weight-list>
+    <garbage-station-weight-chart
+      *ngIf="page === Page.chart"
+    ></garbage-station-weight-chart>
+  </div>
+</div>

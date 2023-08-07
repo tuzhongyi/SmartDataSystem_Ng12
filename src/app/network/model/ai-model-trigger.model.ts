@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { AIModelType } from '../../enum/ai-model-type.enum';
 import { IModel } from './model.interface';
 

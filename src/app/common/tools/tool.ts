@@ -202,6 +202,16 @@ export function wait(
     }
   }, timeout);
 }
+export function Group(arr: any, key: string | number) {
+  return key
+    ? arr.reduce(
+        (t: any, v: any) => (
+          !t[v[key]] && (t[v[key]] = []), t[v[key]].push(v), t
+        ),
+        {}
+      )
+    : {};
+}
 
 export function distinctArray(array: Array<any>) {
   return array.filter((value, index, self) => {

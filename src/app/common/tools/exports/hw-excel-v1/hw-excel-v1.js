@@ -399,7 +399,7 @@ class HowellExcelV1 {
           "c:cat": {
             "c:strRef": {
               //	"c:f": "Table!$A$" + (row + 2) + ":$A$" + (me.fields.length + row),
-              "c:f": "Table!$C$" + (row + 1) + ":$C$" + (me.dataLen),//Table!$A$2:$A$4 me.fields.length + row
+              "c:f": "Table!$C$" + (row + 1) + ":$C$" + (me.dataLen + row - 1),//Table!$A$2:$A$4 me.fields.length + row
               "c:strCache": {
                 "c:ptCount": {
                   $: {
@@ -421,7 +421,7 @@ class HowellExcelV1 {
             "c:numRef": {
               //	"c:f": "Table!$" + me.getColName(i + col) + "$" + (row + 2) + ":$" + me.getColName(i + col) + "$" + (me.fields.length + row),
               //Table!$B$2:$B$4
-              "c:f": "Table!$" + me.getColName(i + col) + "$" + (row + 1) + ":$" + me.getColName(i + col) + "$" + (me.dataLen),//(me.fields.length + row)
+              "c:f": "Table!$" + me.getColName(i + col) + "$" + (row + 1) + ":$" + me.getColName(i + col) + "$" + (me.dataLen + row - 1),//(me.fields.length + row)
               "c:numCache": {
                 "c:formatCode": "General",
                 "c:ptCount": {

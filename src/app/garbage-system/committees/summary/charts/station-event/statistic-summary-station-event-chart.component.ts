@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -11,15 +10,14 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { instanceToPlain } from 'class-transformer';
+import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { EchartBarOption } from './echart-bar.option';
+import { EchartBarOption } from '../../../../../common/interfaces/echarts/echart-bar.option';
 import { StatisticSummaryStationEventChartBusiness } from './statistic-summary-station-event-chart.business';
-import { StatisticSummaryStationEventChartConverter } from './statistic-summary-station-event-chart.converter';
 import { StatisticSummaryStationEventChartViewModel } from './statistic-summary-station-event-chart.model';
-import * as echarts from 'echarts/core';
 
 @Component({
   selector: 'app-statistic-summary-station-event-chart',
@@ -43,9 +41,9 @@ export class StatisticSummaryStationEventChartComponent
   OnTriggerEvent: EventEmitter<StatisticSummaryStationEventChartViewModel[]> =
     new EventEmitter();
 
-  myChart: any;
+  echart: any;
   @ViewChild('echarts')
-  private echarts?: ElementRef<HTMLDivElement>;
+  private echartElement?: ElementRef<HTMLDivElement>;
 
   @Input()
   Data?: GarbageStationNumberStatisticV2[];
@@ -88,17 +86,17 @@ export class StatisticSummaryStationEventChartComponent
   }
 
   ngAfterViewInit(): void {
-    if (this.echarts) {
-      this.myChart = echarts.init(this.echarts.nativeElement, 'dark');
+    if (this.echartElement) {
+      this.echart = echarts.init(this.echartElement.nativeElement, 'dark');
       this.onLoaded();
     }
   }
 
   setOption() {
-    if (this.myChart) {
-      this.myChart.resize();
+    if (this.echart) {
+      this.echart.resize();
       console.log(this.option);
-      this.myChart.setOption(this.option, true);
+      this.echart.setOption(this.option, true);
     }
   }
 

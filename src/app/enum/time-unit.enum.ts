@@ -6,4 +6,5 @@ export enum TimeUnit {
   Day = 2,
   Week = 3,
   Month = 4,
+  Year = 5,
 }

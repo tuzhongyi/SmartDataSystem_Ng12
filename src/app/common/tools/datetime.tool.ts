@@ -4,6 +4,8 @@ import { Duration } from 'src/app/network/model/duration.model';
 export class DateTimeTool {
   static TimeUnit(unit: TimeUnit, date: Date, firstDay = 1): Duration {
     switch (unit) {
+      case TimeUnit.Year:
+        return this.allYear(date);
       case TimeUnit.Month:
         return this.allMonth(date);
       case TimeUnit.Week:
@@ -14,7 +16,18 @@ export class DateTimeTool {
         return this.allDay(date);
     }
   }
-
+  static allYear(date: Date): Duration {
+    let duration = {
+      begin: new Date(),
+      end: new Date(),
+    };
+    duration.begin = new Date(date.getFullYear(), 0, 1);
+    let next = new Date(duration.begin.getTime());
+    next.setFullYear(next.getFullYear() + 1);
+    next.setMilliseconds(-1);
+    duration.end = next;
+    return duration;
+  }
   static allMonth(date: Date): Duration {
     let duration = {
       begin: new Date(),

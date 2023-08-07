@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { IModel } from '../model.interface';
 
 import { AIGarbageRoom } from './room.model';

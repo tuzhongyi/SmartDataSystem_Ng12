@@ -3,7 +3,7 @@
     <mat-toolbar>
       <app-account-info></app-account-info>
       <div class="spacer">
-        <app-total-waste></app-total-waste>
+        <app-total-waste (details)="onweight($event)"></app-total-waste>
       </div>
       <common-time></common-time>
       <app-account-operation *ngIf="!HideButton"></app-account-operation>
@@ -263,3 +263,11 @@
   [model]="window.video.model"
 >
 </app-video-window>
+<app-window
+  [Model]="window.weight"
+  *ngIf="window.weight.show"
+  [style]="window.weight.style"
+>
+  <garbage-station-weight-index [type]="window.weight.type">
+  </garbage-station-weight-index>
+</app-window>

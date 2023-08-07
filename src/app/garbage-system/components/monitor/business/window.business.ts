@@ -13,6 +13,7 @@ import { MonitorGarbageStationDropWindowBusiness } from './windows/monitor-stati
 import { MonitorGarbageStationFullWindowBusiness } from './windows/monitor-station-full-window.business';
 import { MonitorGarbageStationInfoWindowBusiness } from './windows/monitor-station-info-window.business';
 import { MonitorVideoWindowBusiness } from './windows/monitor-video-window.business';
+import { MonitorWeightWindowBusiness } from './windows/monitor-weight-window.business';
 
 @Injectable()
 export class MonitorWindowBussiness {
@@ -25,7 +26,8 @@ export class MonitorWindowBussiness {
     public station: MonitorGarbageStationInfoWindowBusiness,
     public card: MonitorCardRecordEpisodeWindow,
     public image: MonitorImageWindowBusiness,
-    public video: MonitorVideoWindowBusiness
+    public video: MonitorVideoWindowBusiness,
+    public weight: MonitorWeightWindowBusiness
   ) {}
   close() {
     this.record.show = false;
@@ -40,6 +42,7 @@ export class MonitorWindowBussiness {
     this.full.show = false;
     this.station.show = false;
     this.card.show = false;
+    this.weight.show = false;
   }
 }
 
@@ -62,4 +65,5 @@ export const WindowBusinesses = [
   MonitorGarbageStationDropWindowBusiness,
   MonitorGarbageStationInfoWindowBusiness,
   MonitorCardRecordEpisodeWindow,
+  MonitorWeightWindowBusiness,
 ];

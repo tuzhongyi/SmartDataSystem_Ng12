@@ -21,8 +21,8 @@ export class GetResourcesParams extends PagedParams {
   /**区域ID必须为NULL */
   RegionIdNullable?: boolean;
 }
-
 import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { PagedParams } from '../IParams.interface';
 
 /**批量操作结果 */

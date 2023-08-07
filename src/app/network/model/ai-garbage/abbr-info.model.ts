@@ -1,4 +1,5 @@
 import { Type } from 'class-transformer';
+import 'reflect-metadata';
 import { IdModel } from '../model.model';
 import { PagedList } from '../page_list.model';
 

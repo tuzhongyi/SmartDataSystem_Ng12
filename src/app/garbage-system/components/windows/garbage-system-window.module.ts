@@ -7,6 +7,7 @@ import { EventRecordCountComponent } from './event-record-window/tab-items/event
 import { GarbageDropStationWindowComponent } from './garbage-drop-station-window/garbage-drop-station-window.component';
 import { GarbageDropStationWindowCountComponent } from './garbage-drop-station-window/tab-items/garbage-drop-station-window-count/garbage-drop-station-window-count.component';
 import { GarbageFullStationWindowComponent } from './garbage-full-station-window/garbage-full-station-window.component';
+import { GarbageStationWeightComponents } from './garbage-station-weight/garbage-station-weight-components';
 import { GarbageStationWindowComponent } from './garbage-station-window/garbage-station-window.component';
 import { GarbageStationCardRecordComponent } from './garbage-station-window/tab-items/garbage-station-card-record/garbage-station-card-record.component';
 import { GarbageStationWindowDetailsComponent } from './garbage-station-window/tab-items/garbage-station-window-details/garbage-station-window-details.component';
@@ -32,4 +33,6 @@ export const GARBAGE_SYSTEM_WINDOW_COMPONENTS = [
   GarbageDropStationWindowCountComponent,
 
   CardRecordEpisodeComponent,
+
+  ...GarbageStationWeightComponents,
 ];

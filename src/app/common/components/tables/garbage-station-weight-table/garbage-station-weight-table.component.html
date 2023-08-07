@@ -1,0 +1,50 @@
+<div class="garbage-station-ai-device-rfid-record-table">
+  <div class="garbage-station-ai-device-rfid-record-table-main vertical-layout">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>序号</td>
+          <td>名称</td>
+          <td>行政区</td>
+          <td mat-sort-header="dry" start="desc" disableClear="true">
+            干垃圾重量(KG)
+          </td>
+          <td mat-sort-header="wet" start="desc" disableClear="true">
+            湿垃圾重量(KG)
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>
+              {{ item.name }}
+            </td>
+            <td>
+              {{ (item.division | async)?.Name }}
+            </td>
+            <td>{{ item.weight.dry }}</td>
+            <td>{{ item.weight.wet }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

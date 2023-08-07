@@ -1,29 +1,29 @@
 export var EChartPieOption = {
-  color: ["#3a93ff", "#ffba00", "#ef6464"],
-  backgroundColor: "transparent",
+  color: ['#3a93ff', '#ffba00', '#ef6464'],
+  backgroundColor: 'transparent',
   tooltip: {
-    trigger: "item",
+    trigger: 'item',
   },
   legend: {
-    top: "5%",
-    left: "center",
+    top: '5%',
+    left: 'center',
     show: false,
   },
   series: [
     {
-      name: "",
-      type: "pie",
-      radius: ["76%", "90%"],
+      name: '',
+      type: 'pie',
+      radius: ['76%', '90%'],
       avoidLabelOverlap: false,
       label: {
         show: false,
-        position: "center",
+        position: 'center',
       },
       emphasis: {
         label: {
           show: false,
-          fontSize: "40",
-          fontWeight: "bold",
+          fontSize: '40',
+          fontWeight: 'bold',
         },
       },
       labelLine: {
@@ -32,21 +32,21 @@ export var EChartPieOption = {
       data: [],
     },
     {
-      name: "",
-      type: "pie",
-      radius: ["63%", "75%"],
+      name: '',
+      type: 'pie',
+      radius: ['63%', '75%'],
       avoidLabelOverlap: false,
       label: {
         show: false,
-        position: "center",
+        position: 'center',
       },
 
       silent: true,
       emphasis: {
         label: {
           show: false,
-          fontSize: "40",
-          fontWeight: "bold",
+          fontSize: '40',
+          fontWeight: 'bold',
         },
       },
       labelLine: {
@@ -58,19 +58,19 @@ export var EChartPieOption = {
       },
     },
     {
-      name: "",
-      type: "pie",
-      radius: ["52%", "62%"],
+      name: '',
+      type: 'pie',
+      radius: ['52%', '62%'],
       avoidLabelOverlap: false,
       label: {
         show: false,
-        position: "center",
+        position: 'center',
       },
       emphasis: {
         label: {
           show: false,
-          fontSize: "40",
-          fontWeight: "bold",
+          fontSize: '40',
+          fontWeight: 'bold',
         },
       },
       labelLine: {

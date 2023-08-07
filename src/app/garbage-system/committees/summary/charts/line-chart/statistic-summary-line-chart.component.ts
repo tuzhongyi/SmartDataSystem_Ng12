@@ -1,27 +1,23 @@
-import { DatePipe } from '@angular/common';
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
   OnChanges,
-  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
+import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { EChartLineOption } from 'src/app/common/interfaces/echarts/echart-line.option';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { EChartLineOption } from './echart-line.option';
 import { StatisticSummaryIllegalDropChartBusiness } from './statistic-summary-line-chart.business';
-import { StatisticSummaryIllegalDropChartConverter } from './statistic-summary-line-chart.converter';
 import { StatisticSummaryLineChartViewModel } from './statistic-summary-line-chart.model';
-import * as echarts from 'echarts/core';
 
 @Component({
   selector: 'app-statistic-summary-line-chart',
@@ -36,9 +32,9 @@ export class StatisticSummaryIllegalDropChartComponent
     IComponent<EventNumberStatistic[], StatisticSummaryLineChartViewModel>
 {
   @ViewChild('echarts')
-  private echarts?: ElementRef<HTMLDivElement>;
+  private echartElement?: ElementRef<HTMLDivElement>;
 
-  myChart: any;
+  echarts: any;
 
   @Input()
   Data?: EventNumberStatistic[];
@@ -51,7 +47,8 @@ export class StatisticSummaryIllegalDropChartComponent
   @Input()
   EventTrigger?: EventEmitter<void>;
   @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryLineChartViewModel> = new EventEmitter();
+  OnTriggerEvent: EventEmitter<StatisticSummaryLineChartViewModel> =
+    new EventEmitter();
 
   private data: StatisticSummaryLineChartViewModel =
     new StatisticSummaryLineChartViewModel();
@@ -78,8 +75,8 @@ export class StatisticSummaryIllegalDropChartComponent
   }
 
   ngAfterViewInit(): void {
-    if (this.echarts) {
-      this.myChart = echarts.init(this.echarts.nativeElement, 'dark');
+    if (this.echartElement) {
+      this.echarts = echarts.init(this.echartElement.nativeElement, 'dark');
       this.onLoaded();
     }
   }
@@ -92,11 +89,11 @@ export class StatisticSummaryIllegalDropChartComponent
   }
 
   setOption() {
-    if (this.myChart) {
-      this.myChart.resize();
+    if (this.echarts) {
+      this.echarts.resize();
       let option = this.getOption(this.data);
 
-      this.myChart.setOption(option);
+      this.echarts.setOption(option);
     }
   }
 
@@ -105,9 +102,9 @@ export class StatisticSummaryIllegalDropChartComponent
       let max = Math.max(...viewModel.data);
 
       for (let i = 0; i < this.option.series.length; i++) {
-        const serie = this.option.series[i];
+        const serie = this.option.series[i] as any;
         serie.data = viewModel.data;
-        serie.label.formatter = (params) => {
+        serie.label.formatter = (params: any) => {
           if (params.value === max) {
             return params.value;
           }
@@ -117,7 +114,7 @@ export class StatisticSummaryIllegalDropChartComponent
           return params.value;
         };
       }
-      this.option.xAxis.data = viewModel.xAxis;
+      (this.option.xAxis as any).data = viewModel.xAxis;
       return this.option;
     }
     return undefined;

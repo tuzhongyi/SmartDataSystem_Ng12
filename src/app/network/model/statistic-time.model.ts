@@ -13,7 +13,7 @@ export class StatisticTime {
     return new Date(
       time.Year || 0,
       time.Month ? time.Month - 1 : 0,
-      time.Day || 0
+      time.Day || 1
     );
   }
 }

@@ -1,6 +1,7 @@
 import { Language } from 'src/app/common/tools/language';
 
 export var EChartLineOption = {
+  color: ['#7586e0', '#ffba00', '#21E452'],
   backgroundColor: 'transparent',
   title: {
     text: Language.json.EventType.IllegalDrop,
@@ -45,33 +46,6 @@ export var EChartLineOption = {
   xAxis: {
     type: 'category',
     boundaryGap: true,
-    data: [
-      '0:00',
-      '1:00',
-      '2:00',
-      '3:00',
-      '4:00',
-      '5:00',
-      '6:00',
-      '7:00',
-      '8:00',
-      '9:00',
-      '10:00',
-      '11:00',
-      '12:00',
-      '13:00',
-      '14:00',
-      '15:00',
-      '16:00',
-      '17:00',
-      '18:00',
-      '19:00',
-      '20:00',
-      '21:00',
-      '22:00',
-      '23:00',
-      '24:00',
-    ],
     axisLine: {
       onZero: false,
     },
@@ -104,7 +78,6 @@ export var EChartLineOption = {
     {
       type: 'line',
       name: '单位(起)',
-      data: new Array(),
       areaStyle: {},
       lineStyle: {
         width: 4,
@@ -118,7 +91,10 @@ export var EChartLineOption = {
         color: '#fff',
         fontSize: 16,
         formatter: function (params: any) {
-          return params.value;
+          if (params) {
+            return params.value;
+          }
+          return '';
         },
       },
     },

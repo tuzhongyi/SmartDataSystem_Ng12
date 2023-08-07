@@ -1,16 +1,12 @@
 import {
-  AfterViewInit,
   Component,
-  ElementRef,
   Input,
   OnChanges,
   OnInit,
   SimpleChanges,
-  ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { EChartsOption } from 'echarts';
-import * as echarts from 'echarts/core';
 
 @Component({
   selector: 'howell-bar-chart',
@@ -21,13 +17,15 @@ export class BarChartComponent implements OnInit, OnChanges {
   @Input() theme: string = '';
   @Input() options: EChartsOption = {};
   @Input() merge: EChartsOption = {};
-  
-  constructor() { }
 
-  ngOnInit(): void { }
-  ngOnChanges(changes: SimpleChanges): void {
-    
+  constructor() {}
+
+  ngOnInit(): void {
+    console.log('theme', this.theme);
+    console.log('options', this.options);
+    console.log('merge', this.merge);
   }
+  ngOnChanges(changes: SimpleChanges): void {}
   onResized(e: ResizedEvent) {
     let w = e.newRect.width;
     if (this.merge) {
@@ -35,7 +33,7 @@ export class BarChartComponent implements OnInit, OnChanges {
         textStyle: {
           width: w,
         },
-      }
+      };
     }
   }
 }

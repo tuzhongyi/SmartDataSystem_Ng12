@@ -90,6 +90,7 @@ export class PointInfoPanelConverter
       },
     ];
     getter.nbstatus(source.Id).then((status) => {
+      model.signal = status.Signal;
       model.heartbeatTime = status.LastHeartbeatTime;
     });
     return model;
