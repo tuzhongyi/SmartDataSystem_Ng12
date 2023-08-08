@@ -1,3 +1,5 @@
+import { StationType } from 'src/app/enum/station-type.enum';
+import { ConstructionData } from 'src/app/network/model/construction-data';
 import { Member } from 'src/app/network/model/member.model';
 import { IModel } from 'src/app/network/model/model.interface';
 
@@ -17,7 +19,12 @@ export class PointInfoPanelModel<T = IModel> {
   heartbeatTime?: Date;
   powerOn?: boolean;
   options: PointInfoPanelModelOption<T>[] = [];
+  largeWaste?: LargeWastePointInfoPanelModel;
+  type: StationType = StationType.Garbage;
+  location: string = '';
 }
+
+export class LargeWastePointInfoPanelModel extends ConstructionData {}
 
 export interface PointInfoPanelModelStatistic {
   GarbageStationGrade: string;

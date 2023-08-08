@@ -26,6 +26,15 @@ export class PointInfoPanelConverter
     model.name = source.Name;
     model.address = source.Address ?? '';
     model.members = source.Members;
+    model.type = source.StationType;
+    if (source.GisPoint) {
+      model.location = `${source.GisPoint.Longitude.toFixed(
+        6
+      )}, ${source.GisPoint.Latitude.toFixed(6)}`;
+    }
+
+    model.largeWaste = source.ConstructionData;
+
     if (source.DivisionId) {
       model.committeeName = new Promise((got) => {
         getter.division(source.DivisionId!).then((division) => {

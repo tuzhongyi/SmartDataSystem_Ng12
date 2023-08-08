@@ -6,7 +6,15 @@ export class ImageVideoControlModel<T = any> {
     this.cameraId = cameraId;
     this.source = source;
   }
-  fulled = false;
+
+  private _fulled: boolean = false;
+  public get fulled(): boolean {
+    return this._fulled;
+  }
+  public set fulled(v: boolean) {
+    this._fulled = v;
+  }
+
   image?: ImageControlModel;
   source?: T;
   cameraId: string;

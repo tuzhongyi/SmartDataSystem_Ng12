@@ -30,8 +30,7 @@
       <div
         class="playback"
         (click)="openplayback()"
-        *ngIf="!!playing"
-        [class.hide]="!config.playback"
+        *ngIf="!!playing && config.playback"
         title="回放预览中的视频"
       >
         <i class="howell-icon-film text-white"></i>

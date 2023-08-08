@@ -111,7 +111,7 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
     this.selected = paged.Data;
     this.page = paged.Page;
     this.onselected.emit(this.selected);
-    timer(1000).subscribe((x) => {
+    timer(0).subscribe((x) => {
       this.onreflush();
     });
   }
@@ -184,11 +184,9 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
 
   onvideoplayed(video: ImageVideoControlModel) {
     this.playing = video;
-    this.playing.fulled = true;
   }
   onvideostoped(video: ImageVideoControlModel) {
     if (this.playing) {
-      this.playing.fulled = false;
       this.playing = undefined;
     }
   }

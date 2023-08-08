@@ -83,7 +83,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
           );
           model.image = models[i].image;
           model.fulled = models[i].fulled;
-          this.models[index] = model;
+          this.models[index].image = model.image;
         }
       }
     }

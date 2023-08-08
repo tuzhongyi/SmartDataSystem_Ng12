@@ -12,8 +12,10 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { PatrolControlConverter } from './patrol-control.converter';
 
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { Paged } from 'src/app/view-model/paged.model';
 import { PatrolControlModel } from './patrol-control.model';
 
@@ -61,6 +63,8 @@ export class PatrolControlBusiness
                 url.Id
               ) {
                 media.fulled = false;
+                let plain = instanceToPlain(media.image);
+                media.image = plainToInstance(ImageControlModel, plain);
                 media.image.src = Medium.img(url.Id);
               }
             });

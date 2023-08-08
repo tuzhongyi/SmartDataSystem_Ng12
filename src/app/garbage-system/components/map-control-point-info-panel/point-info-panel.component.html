@@ -41,6 +41,39 @@
     <i class="mdi mdi-apple-keyboard-command icon"></i>
     <div class="content">{{ model.powerOn ? "唤醒" : "关闭" }}</div>
   </div>
+  <ng-container *ngIf="!!model.largeWaste">
+    <div class="item" title="设备ID">
+      <div class="icon"><i class="mdi mdi-barcode"></i></div>
+      <div class="content" [title]="model.largeWaste.MatchGuid">
+        {{ model.largeWaste.MatchGuid }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="mdi mdi-tag"></i></div>
+      <div>{{ model.largeWaste.Manufacturer }}</div>
+    </div>
+    <div class="item">
+      <div class="icon">
+        <i class="howell-icon-fullgarbage"></i>
+      </div>
+      <div class="content">
+        {{ model.largeWaste.PercentageOfCapacity?.toFixed(2) }} %
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="icon"><i class="mdi mdi-clock"></i></div>
+      <div class="content">
+        {{ model.largeWaste.UpdateTime | date : "yyyy-MM-dd HH:mm:ss" }}
+      </div>
+    </div>
+    <div class="item">
+      <div class="icon"><i class="mdi mdi-map-marker"></i></div>
+      <div class="content">
+        {{ model.location }}
+      </div>
+    </div>
+  </ng-container>
 
   <div class="item" *ngFor="let member of model.members">
     <div class="item-name">
@@ -60,7 +93,10 @@
     </div>
   </div>
 
-  <div class="statistic" *ngIf="!!model.statistic">
+  <div
+    class="statistic"
+    *ngIf="!!model.statistic && model.type !== StationType.Construction"
+  >
     <div class="left">
       <div class="number">
         {{
@@ -186,14 +222,6 @@
 
   <div class="options">
     <div
-      *ngFor="let item of model.state"
-      class="state"
-      [ngClass]="item.className"
-      (click)="onStateClicked(item)"
-    >
-      {{ item.language }}
-    </div>
-    <div
       *ngFor="let item of model.options"
       class="state"
       [ngClass]="item.className"
@@ -201,5 +229,14 @@
       [title]="item.title"
       [innerHTML]="item.language"
     ></div>
+
+    <div
+      *ngFor="let item of model.state"
+      class="state"
+      [ngClass]="item.className"
+      (click)="onStateClicked(item)"
+    >
+      {{ item.language }}
+    </div>
   </div>
 </div>

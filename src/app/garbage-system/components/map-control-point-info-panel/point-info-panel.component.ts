@@ -3,6 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { StationType } from 'src/app/enum/station-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -80,7 +81,7 @@ export class PointInfoPanelComponent
 
   source?: IModel;
   model: PointInfoPanelModel = new PointInfoPanelModel();
-
+  StationType = StationType;
   ngOnInit() {}
 
   onGarbageRetentionClicked() {
