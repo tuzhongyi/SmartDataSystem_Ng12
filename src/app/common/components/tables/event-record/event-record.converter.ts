@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import {
@@ -115,7 +114,7 @@ export class EventRecordConverter
 
     model.BeginTimeFormatter = formatDate(
       source.EventTime,
-      'yyyy-MM-dd HH:mm:dd',
+      'yyyy-MM-dd HH:mm:ss',
       'en'
     );
     return model;
@@ -178,14 +177,14 @@ export class EventRecordConverter
     if (source.Data.EndTime) {
       model.EndTimeFormatter = formatDate(
         source.Data.EndTime,
-        'yyyy-MM-dd HH:mm:dd',
+        'yyyy-MM-dd HH:mm:ss',
         'en'
       );
     }
     if (source.Data.BeginTime) {
       model.BeginTimeFormatter = formatDate(
         source.Data.BeginTime,
-        'yyyy-MM-dd HH:mm:dd',
+        'yyyy-MM-dd HH:mm:ss',
         'en'
       );
     }
