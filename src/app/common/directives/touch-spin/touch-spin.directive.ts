@@ -25,7 +25,12 @@ export class TouchSpinDirective implements AfterViewInit, OnChanges {
 
   @Output() touchSpinChange = new EventEmitter();
 
-  constructor(private _ele: ElementRef<HTMLInputElement>) {}
+  @Input()
+  number?: number = 1;
+  @Output()
+  numberChange: EventEmitter<number> = new EventEmitter();
+
+  constructor(private ele: ElementRef<HTMLInputElement>) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.min) {
       this.options.min = this.min;
@@ -38,10 +43,13 @@ export class TouchSpinDirective implements AfterViewInit, OnChanges {
     }
   }
   ngAfterViewInit(): void {
-    $(this._ele.nativeElement)
+    $(this.ele.nativeElement)
       .TouchSpin(this.options)
       .on('change', (e) => {
-        this.touchSpinChange.emit(this._ele.nativeElement.value);
+        this.touchSpinChange.emit(this.ele.nativeElement.value);
+        this.numberChange.emit(parseInt(this.ele.nativeElement.value));
       });
+
+    $(this.ele).val(this.number ?? 1);
   }
 }

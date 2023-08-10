@@ -1,0 +1,88 @@
+<div class="ai-garbage-station-device-record-command-table">
+  <div
+    class="ai-garbage-station-device-record-command-table-main vertical-layout"
+  >
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>执行时间</td>
+          <td>设备名称</td>
+          <td>垃圾厢房</td>
+          <td>所属区域</td>
+          <td>命令名称</td>
+          <td>命令参数</td>
+          <td>执行结果</td>
+          <td>错误原因</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>
+              {{ item.ExecutionTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ item.DeviceName }}
+            </td>
+            <td>
+              {{ item.GarbageStationName }}
+            </td>
+            <td>
+              {{ item.RegionName }}
+            </td>
+            <td>
+              <div [title]="item.CommandId">{{ item.CommandName }}</div>
+            </td>
+            <td>{{ item.Arguments }}</td>
+
+            <td>
+              {{ item.Result === 1 ? "成功" : "失败" }}
+            </td>
+            <td [title]="item.FailedReason">
+              {{ item.FailedReason }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="ai-garbage-station-device-record-command-table-main-footer footer"
+      *ngIf="page"
+    >
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

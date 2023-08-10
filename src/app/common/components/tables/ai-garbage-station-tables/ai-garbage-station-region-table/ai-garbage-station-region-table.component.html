@@ -1,0 +1,97 @@
+<div class="ai-garbage-station-region-table">
+  <div class="ai-garbage-station-region-table-main vertical-layout">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>编号</td>
+          <td>名称</td>
+          <td>区域名称</td>
+          <td class="center">楼栋</td>
+          <td class="center">垃圾厢房</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{
+              selected: selecteds.includes(item)
+            }"
+            (click)="onselected(item)"
+          >
+            <td>{{ item.Id }}</td>
+            <td>{{ item.Name }}</td>
+            <td [title]="item.DivisionId">{{ item.DivisionName }}</td>
+            <td class="center">
+              <div
+                title="楼栋数量"
+                class="td-icon"
+                (click)="onbuilding($event, item)"
+              >
+                【{{ item.Buildings ? item.Buildings.length : 0 }}】
+              </div>
+            </td>
+
+            <td class="center">
+              <div
+                title="垃圾厢房数量"
+                class="td-icon"
+                (click)="onstation($event, item)"
+              >
+                【{{ item.GarbageStations ? item.GarbageStations.length : 0 }}】
+              </div>
+            </td>
+            <td class="operation center">
+              <!-- <div (click)="ondetails($event, item)">
+                <i class="howell-icon-modification td-icon"></i>
+              </div> -->
+              <div (click)="onremove($event, item)" title="删除">
+                <i class="howell-icon-delete-bin td-icon"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="ai-garbage-station-region-table-main-footer footer"
+      *ngIf="page"
+    >
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

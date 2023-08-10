@@ -1,0 +1,122 @@
+.ai-garbage-station-region-building {
+  height: 100%;
+  width: 100%;
+  color: #cfd7ff;
+
+  @head-height: 32px;
+
+
+  &-head {
+    height: @head-height;
+
+    .title {
+      display: flex;
+
+      h3 {
+        color: #cfd7ff;
+      }
+    }
+
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+
+    &-buildings {
+      width: calc(30% - 10px);
+      height: 100%;
+
+      border: 1px solid #5e6ebf;
+      margin-right: 10px;
+      padding: 10px;
+
+      .building {
+        width: 100%;
+
+        &-title {
+          height: 38px;
+        }
+
+        &-list {
+          height: calc(100% - 38px);
+          margin: 0 -10px;
+          overflow-y: scroll;
+        }
+
+        &-item {
+          height: 35px;
+          width: 100%;
+          padding: 0 10px;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          &:hover {
+            background: #2e3459;
+          }
+
+          &.selected {
+            background: #2d76ce;
+          }
+        }
+      }
+    }
+
+    &-rooms {
+      width: 70%;
+      height: 100%;
+      border: 1px solid #5e6ebf;
+      padding: 10px;
+
+      .room {
+
+
+        &-title {
+          height: 38px;
+        }
+
+        &-list {
+          overflow-y: scroll;
+          height: calc(100% - 38px);
+
+          &-content {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+
+            align-content: flex-start;
+          }
+        }
+
+        &-item {
+          width: calc(100% / 4 - 10px);
+          height: 70px;
+          border: 1px solid #5e6ebf;
+          padding: 5px;
+          margin: 5px;
+          border-radius: 6px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+
+          &.des {
+            background: conic-gradient(from 90deg at 95% 0, orange 0, orange 45deg, transparent 45.1deg);
+          }
+
+          &-info {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+
+}

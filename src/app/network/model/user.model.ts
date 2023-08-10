@@ -2,29 +2,11 @@ import { Transform } from 'class-transformer';
 import { Gender } from 'src/app/enum/gender.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
+import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { IModel } from './model.interface';
 import { Role } from './role.model';
 import { transformDateTime } from './transform.model';
 export class User implements IModel {
-  /// <signature>
-  /// <summary>User</summary>
-  /// <field name='Id' type='String'>唯一标识符 M</field>
-  /// <field name='Username' type='String'>用户名 M</field>
-  /// <field name='Password' type='String'>密码 O</field>
-  /// <field name='PasswordHash' type='String'>密码HASH值 O</field>
-  /// <field name='PasswordSalt' type='String'>密码SALT值 O</field>
-  /// <field name='FirstName' type='String'>名字 O</field>
-  /// <field name='LastName' type='String'>性 O</field>
-  /// <field name='Gender' type='Int32'>性别 O</field>
-  /// <field name='MobileNo' type='String'>手机号码 O</field>
-  /// <field name='Email' type='String'>邮箱 O</field>
-  /// <field name='Note' type='String'>描述信息 O</field>
-  /// <field name='ExpiredTime' type='DateTime'>过期时间 M</field>
-  /// <field name='CreateTime' type='DateTime'>创建时间 M</field>
-  /// <field name='UpdateTime' type='DateTime'>更新时间 M</field>
-  /// <field name='State' type='Int32'>0-正常 M</field>
-  /// <field name='Role' type='Role[]'>用户角色列表 M</field>
-  /// </signature>
   /**	String	唯一标识符	M	R */
   Id!: string;
   /**	String	用户名	M	RW */
@@ -74,6 +56,8 @@ export class User implements IModel {
   OffEvents?: number[];
   /** 默认：厢房 1：厢房 2:车  3：车+厢房 */
   UserType?: number;
+  /** Int32	1：美丽城市助手标准UI 2：打浦桥订制接单处置UI	O	RW */
+  UIType?: UserUIType;
 }
 
 export class UserResource implements IModel {

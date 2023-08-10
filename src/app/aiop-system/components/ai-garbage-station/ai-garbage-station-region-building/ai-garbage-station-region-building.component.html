@@ -1,0 +1,51 @@
+<div class="ai-garbage-station-region-building" *ngIf="!!model">
+  <div class="ai-garbage-station-region-building-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model.Name }}</div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-region-building-body">
+    <div class="ai-garbage-station-region-building-body-buildings">
+      <div class="building-title"><h3>楼栋</h3></div>
+      <div class="building-list">
+        <div *ngIf="model.Buildings" class="building-list-content">
+          <div
+            class="building-item"
+            *ngFor="let building of model.Buildings"
+            [ngClass]="{
+              selected: building === selected
+            }"
+            (click)="onselect(building)"
+          >
+            楼栋{{ building.BuildingNo }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      *ngIf="!!selected"
+      class="ai-garbage-station-region-building-body-rooms"
+    >
+      <div class="room-title">
+        <h3>房屋</h3>
+      </div>
+      <div class="room-list">
+        <div class="room-list-content">
+          <div
+            class="room-item"
+            *ngFor="let room of selected.Rooms"
+            [title]="room.Description"
+            [ngClass]="{
+              des: !!room.Description
+            }"
+          >
+            <div class="room-item-info" matBadge="4">
+              <div>{{ room.Floor }}</div>
+              <div>{{ room.RoomNo }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

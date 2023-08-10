@@ -1,0 +1,57 @@
+<div class="ai-garbage-station-device-camera" *ngIf="!!model">
+  <div class="ai-garbage-station-device-camera-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model.GarbageStationName }}摄像机</div>
+    </div>
+    <ul class="hw-ul" *ngIf="model.Cameras">
+      <li *ngFor="let item of model.Cameras">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: selected === item
+          }"
+          (click)="selected = item"
+        >
+          摄像机 {{ item.SerialNo }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ai-garbage-station-device-camera-body">
+    <div class="info" *ngIf="selected">
+      <div class="info-item">
+        <div class="info-item-title">摄像机名称</div>
+        <div class="info-item-value">
+          {{ selected.Name ? selected.Name : "无" }}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">摄像机对应的窗口</div>
+        <div class="info-item-value">
+          <span *ngIf="selected.DropWindowNo"
+            >窗口 {{ selected.DropWindowNo }}</span
+          >
+          <span *ngIf="!selected.DropWindowNo">无</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">摄像机机位</div>
+        <div class="info-item-value">
+          {{ selected.Position ? selected.Position : "无" }}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">状态</div>
+        <div
+          class="info-item-value"
+          [ngClass]="{
+            'powder-red-text': selected.OnlineState !== 0,
+            'green-text': selected.OnlineState === 0
+          }"
+        >
+          {{ selected.OnlineState === 0 ? "在线" : "异常" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

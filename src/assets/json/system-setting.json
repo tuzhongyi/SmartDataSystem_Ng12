@@ -65,6 +65,38 @@
       ]
     },
     {
+      "title": "智能厢房",
+      "id": "ai-station",
+      "path": "/aiop/underwater/system-setting/ai-station",
+      "children": [
+        {
+          "title": "设备管理",
+          "id": "manager",
+          "path": "/aiop/underwater/system-setting/ai-station/manager"
+        },
+        {
+          "title": "RFID管理",
+          "id": "rfid",
+          "path": "/aiop/underwater/system-setting/ai-station/rfid"
+        },
+        {
+          "title": "区域管理",
+          "id": "region",
+          "path": "/aiop/underwater/system-setting/ai-station/region"
+        },
+        {
+          "title": "设备事件记录",
+          "id": "record-event",
+          "path": "/aiop/underwater/system-setting/ai-station/record-event"
+        },
+        {
+          "title": "命令执行记录",
+          "id": "record-command",
+          "path": "/aiop/underwater/system-setting/ai-station/record-command"
+        }
+      ]
+    },
+    {
       "title": "事件",
       "id": "ai-events",
       "path": "/aiop/underwater/system-setting/ai-events",

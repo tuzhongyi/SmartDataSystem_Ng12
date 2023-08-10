@@ -1,0 +1,14 @@
+<div class="ai-garbage-station-region-station" *ngIf="!!model">
+  <div class="ai-garbage-station-region-station-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model.Name }}</div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-region-station-body">
+    <div class="stations" *ngIf="model.GarbageStations">
+      <div class="station-item" *ngFor="let station of model.GarbageStations">
+        <i class="howell-icon-garbage"></i> {{ station.GarbageStationName }}
+      </div>
+    </div>
+  </div>
+</div>

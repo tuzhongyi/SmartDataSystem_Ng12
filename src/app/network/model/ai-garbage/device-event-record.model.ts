@@ -1,5 +1,6 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import 'reflect-metadata';
+import { IIdModel } from '../model.interface';
 import { PagedList } from '../page_list.model';
 import { transformDateTime } from '../transform.model';
 
@@ -17,7 +18,8 @@ export enum AIGarbageDeviceEventType {
   FanClose = 11,
 }
 
-export class AIGarbageDeviceEventRecord extends IdModel {
+export class AIGarbageDeviceEventRecord implements IIdModel {
+  Id!: string;
   /**	String	设备ID	M	*/
   DeviceId!: string;
   /**	String	设备名称	O	*/

@@ -1,13 +1,15 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 import { transformDateTime } from '../transform.model';
 import { AIGarbageBuilding } from './building.model';
 import { AIGarbageStation } from './garbage-station.model';
 
-export class AIGarbageRegion extends IdModel {
+export class AIGarbageRegion implements IIdModel {
+  Id!: string;
   /**	String	名称	O	*/
-  Name?: string;
+  Name!: string;
   /**	String	区划ID，街道	O	*/
   DivisionId?: string;
   /**	String	区划名称，街道名称	O	*/

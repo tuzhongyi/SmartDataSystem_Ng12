@@ -1,0 +1,84 @@
+<div class="ai-garbage-station-device-record-command-manager">
+  <div class="ai-garbage-station-device-record-command-manager-head">
+    <div class="head-title">
+      <div class="hw-simple-title">设备命令执行记录</div>
+    </div>
+    <div class="head-sub">
+      <div class="head-filter">
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">开始时间</div>
+          <div class="head-filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [(date)]="args.duration.begin"
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              class="custom form-control time"
+              [minView]="DateTimePickerView.day"
+              (dateChange)="onargschange()"
+            />
+          </div>
+        </div>
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">结束时间</div>
+          <div class="head-filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [(date)]="args.duration.end"
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              class="custom form-control time"
+              [minView]="DateTimePickerView.day"
+              (dateChange)="onargschange()"
+            />
+          </div>
+        </div>
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">执行命令</div>
+          <div class="head-filter-item-value">
+            <select [(ngModel)]="args.command" (change)="onargschange()">
+              <option [ngValue]="undefined">全部</option>
+              <option [ngValue]="1">同步RFID卡号</option>
+              <option [ngValue]="2">自动程序升级检测</option>
+              <option [ngValue]="5">系统自检，并上报结果</option>
+              <option [ngValue]="6">重启系统</option>
+              <option [ngValue]="10">手动开关排风扇</option>
+              <option [ngValue]="11">手动开关香氛喷洒</option>
+              <option [ngValue]="14">设备信息同步</option>
+              <option [ngValue]="15">投放窗口上电</option>
+            </select>
+          </div>
+        </div>
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">执行结果</div>
+          <div class="head-filter-item-value">
+            <select [(ngModel)]="args.result" (change)="onargschange()">
+              <option [ngValue]="undefined">全部</option>
+              <option [ngValue]="0">成功</option>
+              <option [ngValue]="1">失败</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="head-search">
+        <div>
+          <select [(ngModel)]="args.searchType">
+            <option [ngValue]="0">厢房</option>
+            <option [ngValue]="1">区域</option>
+          </select>
+        </div>
+        <div>
+          <howell-simple-search
+            (searchEvent)="onsearch($event)"
+          ></howell-simple-search>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-record-command-manager-body">
+    <ai-garbage-station-device-record-command-table
+      [args]="args"
+      [load]="load"
+    ></ai-garbage-station-device-record-command-table>
+  </div>
+</div>

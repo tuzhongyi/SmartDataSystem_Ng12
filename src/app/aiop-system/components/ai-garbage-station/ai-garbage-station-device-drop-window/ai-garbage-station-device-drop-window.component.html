@@ -1,0 +1,128 @@
+<div class="ai-garbage-station-device-drop-window" *ngIf="!!model">
+  <div class="ai-garbage-station-device-drop-window-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model.GarbageStationName }}投放窗口</div>
+    </div>
+    <ul class="hw-ul" *ngIf="model.DropWindows">
+      <li *ngFor="let item of model.DropWindows">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: selected === item
+          }"
+          (click)="selected = item"
+        >
+          窗口 {{ item.No }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ai-garbage-station-device-drop-window-body">
+    <div class="drow-window-info" *ngIf="selected">
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">窗口类型</div>
+        <div
+          class="drow-window-item-value"
+          [ngClass]="{
+            'sky-blue-text2': selected.DropType === 1,
+            'light-purple-text': selected.DropType === 2,
+            'green-text': selected.DropType === 3,
+            'powder-red-text': selected.DropType === 4
+          }"
+        >
+          {{ Language.DropWindowType(selected.DropType) }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">投放窗口名称</div>
+        <div class="drow-window-item-value">
+          {{ selected.Name ? selected.Name : "无" }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">每个桶的重量(单位：KG)</div>
+        <div class="drow-window-item-value">
+          {{ selected.Weight === undefined ? "无" : selected.Weight }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">抓手复位状态</div>
+        <div
+          class="drow-window-item-value"
+          [ngClass]="{
+            'powder-red-text': selected.GripperState !== 0,
+            'green-text': selected.GripperState === 0
+          }"
+        >
+          {{ selected.GripperState === 0 ? "正常" : "异常" }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">分类平台(翻板)翻转状态</div>
+        <div
+          class="drow-window-item-value"
+          [ngClass]="{
+            'powder-red-text': selected.PlateTurningState !== 0,
+            'green-text': selected.PlateTurningState === 0
+          }"
+        >
+          {{ selected.PlateTurningState === 0 ? "正常" : "异常" }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">窗口开关功能状态</div>
+        <div
+          class="drow-window-item-value"
+          [ngClass]="{
+            'powder-red-text': selected.WindowState !== 0,
+            'green-text': selected.WindowState === 0
+          }"
+        >
+          {{ selected.WindowState === 0 ? "正常" : "异常" }}
+        </div>
+      </div>
+      <div class="drow-window-item">
+        <div class="drow-window-item-title">垃圾是否满溢状态</div>
+        <div
+          class="drow-window-item-value"
+          [ngClass]="{
+            'orange-text': selected.GarbageFull === 1,
+            'green-text': selected.GarbageFull !== 1
+          }"
+        >
+          {{ selected.GarbageFull === 1 ? "满溢" : "未满" }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-drop-window-foot">
+    <button class="hw-blue-btn m-r-10" (click)="tocommand()">
+      <i class="mdi mdi-power-plug"></i> 上电
+    </button>
+    <button class="hw-gray-btn" (click)="onclose()">
+      <i class="howell-icon-Close"></i> 关闭
+    </button>
+  </div>
+</div>
+<app-window
+  [Model]="window.confirm"
+  *ngIf="window.confirm.show"
+  [style]="window.confirm.style"
+>
+  <div class="confirm">
+    <div class="confirm-head">
+      <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 提示</div>
+    </div>
+    <div class="confirm-body">
+      <div class="hw-simple-title">是否投放窗口{{ selected?.No }}上电?</div>
+    </div>
+    <div class="confirm-foot">
+      <button class="hw-green-btn m-r-10" (click)="oncommand()">
+        <i class="howell-icon-Check"></i> 确定
+      </button>
+      <button class="hw-blue-btn" (click)="window.close()">
+        <i class="howell-icon-Close"></i> 取消
+      </button>
+    </div>
+  </div>
+</app-window>

@@ -1,0 +1,51 @@
+.ai-garbage-station-region-station {
+  height: 100%;
+  width: 100%;
+  color: #cfd7ff;
+
+  @head-height: calc(32px);
+
+  &-head {
+    height: @head-height;
+
+    .title {
+      display: flex;
+
+      h3 {
+        color: #cfd7ff;
+      }
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .station {
+      &s {
+        height: 100%;
+
+      }
+
+      &-item {
+
+        height: 50px;
+        border: 1px solid #5e6ebf;
+        padding: 22px;
+        margin: 10px 0;
+        font-size: 18px;
+        border-radius: 6px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        &>i {
+          margin-right: 10px;
+        }
+      }
+
+    }
+  }
+
+}

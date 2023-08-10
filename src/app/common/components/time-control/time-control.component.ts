@@ -2,8 +2,10 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { wait } from '../../tools/tool';
@@ -17,14 +19,13 @@ declare let $: any;
   styleUrls: ['./time-control.component.less'],
 })
 export class TimeControlComponent implements OnInit, AfterViewInit {
-  @Input()
-  time: TimeModel = new TimeModel();
+  @Input() time: TimeModel = new TimeModel();
+  @Output() timeChange: EventEmitter<TimeModel> = new EventEmitter();
+  @Input() beginTime?: TimeModel;
 
-  @Input()
-  beginTime?: TimeModel;
+  @Input() endTime?: TimeModel;
 
-  @Input()
-  endTime?: TimeModel;
+  constructor() {}
 
   @ViewChild('hour')
   hour?: ElementRef;
@@ -34,8 +35,6 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
 
   @ViewChild('second')
   second?: ElementRef;
-
-  constructor() {}
   ngAfterViewInit(): void {
     wait(
       () => {
@@ -145,6 +144,7 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
             if (input.classList.contains(array[i])) {
               this.time[array[i]].value = value;
               this.time[array[i]].view = view;
+              this.timeChange.emit(this.time);
               break;
             }
           }

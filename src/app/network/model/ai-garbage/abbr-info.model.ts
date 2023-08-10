@@ -1,9 +1,11 @@
 import { Type } from 'class-transformer';
 import 'reflect-metadata';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 
-export class AIGarbageAbbrInfo extends IdModel {
+export class AIGarbageAbbrInfo implements IIdModel {
+  Id!: string;
   /**	String	名称	O	*/
   Name?: string;
 }

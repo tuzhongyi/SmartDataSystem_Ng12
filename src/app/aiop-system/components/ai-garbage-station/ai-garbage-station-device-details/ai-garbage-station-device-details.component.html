@@ -1,0 +1,169 @@
+<div class="ai-garbage-station-device-details" *ngIf="!!model">
+  <div class="ai-garbage-station-device-details-head">
+    <div class="hw-simple-title">
+      {{ model.GarbageStationName ? model.GarbageStationName : "厢房设备" }}
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-details-body">
+    <div class="form-group">
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">ID</label>
+        </div>
+        <div class="form-item-value">
+          <input
+            [disabled]="true"
+            class="form-control custom"
+            [(ngModel)]="model.Id"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">设备名称</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.Name" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >垃圾厢房名称</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            class="form-control custom"
+            [(ngModel)]="model.GarbageStationName"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">所属区域</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.RegionName" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">设备型号</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.Model" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >软件版本号</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            class="form-control custom"
+            [(ngModel)]="model.SoftwareVersion"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >硬件版本号</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            class="form-control custom"
+            [(ngModel)]="model.HardwareVersion"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >协议版本号</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.ProtoVersion" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >是否需要升级</label
+          >
+        </div>
+        <div class="form-item-value">
+          <select [(ngModel)]="model.NeedUpgrade">
+            <option [ngValue]="true">是</option>
+            <option [ngValue]="false">否</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >FTP服务器地址</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.FTPAddress" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >升级文件地址</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            class="form-control custom"
+            [(ngModel)]="model.UpgradeAddress"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >Rfid上限数量</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            type="text"
+            [(number)]="model.MaxRfidNumber"
+            appTouchSpin
+            class="form-control custom touchspin"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">心跳间隔</label>
+          (单位：秒)
+        </div>
+        <div class="form-item-value">
+          <input
+            type="text"
+            [(number)]="model.HeartbeatInterval"
+            appTouchSpin
+            class="form-control custom touchspin"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-details-foot">
+    <button class="hw-green-m-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i>
+    </button>
+    <button class="hw-gray-m-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>

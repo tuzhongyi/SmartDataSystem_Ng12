@@ -1,0 +1,129 @@
+<div class="ai-garbage-station-device-details" *ngIf="!!model">
+  <div class="ai-garbage-station-device-details-head">
+    <div class="hw-simple-title">{{ model.GarbageStationName }}操作命令</div>
+  </div>
+  <div class="ai-garbage-station-device-details-body">
+    <div class="panel form-group">
+      <div
+        class="form-item"
+        *ngIf="model.Capabilities && model.Capabilities.ExhaustFan"
+      >
+        <div class="form-item-title">排风扇</div>
+        <div class="form-item-value">
+          <button
+            [ngClass]="{
+              'hw-green-btn': model.Status?.ExhaustFan !== 1,
+              'hw-red-btn': model.Status?.ExhaustFan === 1
+            }"
+            (click)="
+              tocommand(
+                AIGarbageDeviceCommand.ExhaustFan,
+                model.Status?.ExhaustFan === 1 ? 0 : 1
+              )
+            "
+          >
+            <i class="mdi mdi-fan"></i>
+            {{ model.Status?.ExhaustFan === 1 ? "关闭" : "打开" }}
+          </button>
+        </div>
+      </div>
+      <div
+        class="form-item"
+        *ngIf="model.Capabilities && model.Capabilities.Spray"
+      >
+        <div class="form-item-title">香氛</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.Spray, 1)"
+          >
+            <i class="mdi mdi-spray"></i> 喷洒
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">自动程序升级检测</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.UpgradeCheck)"
+          >
+            <i class="mdi mdi-upload"></i> 检测
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">系统自检，并上报结果</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.SelfCheck)"
+          >
+            <i class="mdi mdi-replay"></i> 自检
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">重启系统</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.Reboot)"
+          >
+            <i class="mdi mdi-refresh"></i> 重启
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">设备信息同步</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.DeviceInformation)"
+          >
+            <i class="mdi mdi-twitter-retweet"></i> 同步
+          </button>
+        </div>
+      </div>
+      <div class="form-item" *ngFor="let win of model.DropWindows">
+        <div class="form-item-title">
+          窗口{{ win.No }}-{{ Language.DropWindowType(win.DropType) }}
+        </div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.WindowPowerOn, win.No)"
+          >
+            <i class="mdi mdi-power-plug"></i> 上电
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-window
+    [Model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [style]="window.confirm.style"
+  >
+    <div class="confirm">
+      <div class="confirm-head">
+        <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 提示</div>
+      </div>
+      <div class="confirm-body">
+        <div class="hw-simple-title">是否 {{ window.confirm.language }} ?</div>
+      </div>
+      <div class="confirm-foot">
+        <button
+          class="hw-green-btn m-r-10"
+          (click)="oncommand(window.confirm.command)"
+        >
+          <i class="howell-icon-Check"></i> 确定
+        </button>
+        <button class="hw-gray-btn" (click)="window.close()">
+          <i class="howell-icon-Close"></i> 取消
+        </button>
+      </div>
+    </div>
+  </app-window>
+</div>

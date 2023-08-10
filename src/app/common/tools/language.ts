@@ -44,6 +44,8 @@ import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
+import { AIGarbageDeviceEventType } from 'src/app/network/model/ai-garbage/device-event-record.model';
+import { AIGarbageDropWindowType } from 'src/app/network/model/ai-garbage/drop-window.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { DateTimeTool } from './datetime.tool';
 import language from './language.json';
@@ -660,6 +662,51 @@ export class Language {
         return Language.json.SearchConditionKey.CommunityName;
       default:
         return '';
+    }
+  }
+
+  static AIGarbageDeviceEventType(type: AIGarbageDeviceEventType) {
+    switch (type) {
+      case AIGarbageDeviceEventType.PneumaticPumpPowerOff:
+        return '气压泵电源断电';
+      case AIGarbageDeviceEventType.GasConcentrationAlarm:
+        return '排风打开后长时间有害气体浓度异常报警';
+      case AIGarbageDeviceEventType.GarbageFull:
+        return '垃圾满溢';
+      case AIGarbageDeviceEventType.RfidReaderFalut:
+        return '读卡器故障';
+      case AIGarbageDeviceEventType.WindowStateFault:
+        return '窗口状态故障';
+      case AIGarbageDeviceEventType.Offline:
+        return '离线';
+      case AIGarbageDeviceEventType.Online:
+        return '上线';
+      case AIGarbageDeviceEventType.SpacyOpen:
+        return '香氛喷洒';
+      case AIGarbageDeviceEventType.SpacyClose:
+        return '香氛关闭';
+      case AIGarbageDeviceEventType.FanOpen:
+        return '风扇打开';
+      case AIGarbageDeviceEventType.FanClose:
+        return '风扇关闭';
+      default:
+        return '';
+    }
+  }
+
+  static DropWindowType(type: AIGarbageDropWindowType) {
+    switch (type) {
+      case AIGarbageDropWindowType.DryGarbage:
+        return '干垃圾';
+      case AIGarbageDropWindowType.WetGarbage:
+        return '湿垃圾桶';
+      case AIGarbageDropWindowType.RecyclableGarbage:
+        return '可回收垃圾桶';
+      case AIGarbageDropWindowType.HazardousGarbage:
+        return '有害垃圾桶';
+      case AIGarbageDropWindowType.Other:
+      default:
+        return '其他';
     }
   }
 

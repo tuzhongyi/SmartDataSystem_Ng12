@@ -1,8 +1,5 @@
-import { Transform, Type } from "class-transformer";
-
-
-
-
+import { Type } from 'class-transformer';
+import 'reflect-metadata';
 
 /**枚举值 */
 export class EnumValue {
@@ -13,8 +10,6 @@ export class EnumValue {
   /**模型给出的值 */
   ModelValue!: number;
 }
-
-
 
 /**AI摄像机模型DTO标签 */
 export class CameraAIModelDTOLabel {
@@ -56,8 +51,6 @@ export class CameraAIModelDTO {
   @Type(() => CameraAIModelDTOLabel)
   Labels!: CameraAIModelDTOLabel[];
 }
-
-
 
 /**AI模型信息 */
 export class CameraAIModel {

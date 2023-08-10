@@ -1,5 +1,6 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 import { transformDateTime, transformVersion } from '../transform.model';
 import { AIGarbageCamera } from './camera.model';
@@ -8,7 +9,8 @@ import { AIGarbageDeviceCapabilities } from './garbage-device-capabilities.model
 import { AIGarbageDeviceStatus } from './garbage-device-status.model';
 import { AIGarbageSchedule } from './schedule.model';
 
-export class AIGarbageDevice extends IdModel {
+export class AIGarbageDevice implements IIdModel {
+  Id!: string;
   /**	String	设备密钥，服务器端和设备端的密钥必须匹配；默认：Howell1409	M	*/
   Secret!: string;
   /**	String	设备名称	O	*/

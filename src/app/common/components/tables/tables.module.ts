@@ -6,6 +6,7 @@ import { EventRecordCountTableComponent } from './event-record-count-table/event
 import { EventRecordListComponent } from './event-record/event-record-list/event-record-list.component';
 import { EventRecordTableComponent } from './event-record/event-record-table/event-record-table.component';
 
+import { AIGarbageStationTablesComponents } from './ai-garbage-station-tables/ai-garbage-station-tables.module';
 import { AiopGarbageCollectionPointTrashCanTableComponent } from './aiop-garbage-collection-point-trashcan-table/aiop-garbage-collection-point-trashcan-table.component';
 import { AiopGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
@@ -44,4 +45,6 @@ export const Table_COMPONENTS = [
   CardRecordTableComponent,
 
   GarbageStationWeightTableComponent,
+
+  ...AIGarbageStationTablesComponents,
 ];

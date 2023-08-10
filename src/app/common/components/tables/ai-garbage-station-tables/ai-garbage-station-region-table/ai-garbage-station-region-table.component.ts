@@ -1,0 +1,102 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Sort } from '@angular/material/sort';
+import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { PagedTableAbstractComponent } from '../../table-abstract.component';
+import { AIGarbageStationRegionTableBusiness } from './ai-garbage-station-region-table.business';
+import { AIGarbageStationRegionTableArgs } from './ai-garbage-station-region-table.model';
+
+@Component({
+  selector: 'ai-garbage-station-region-table',
+  templateUrl: './ai-garbage-station-region-table.component.html',
+  styleUrls: [
+    '../../table.less',
+    './ai-garbage-station-region-table.component.less',
+  ],
+  providers: [AIGarbageStationRegionTableBusiness],
+})
+export class AIGarbageStationRegionTableComponent
+  extends PagedTableAbstractComponent<AIGarbageRegion>
+  implements OnInit
+{
+  @Input()
+  args: AIGarbageStationRegionTableArgs = new AIGarbageStationRegionTableArgs();
+  @Input()
+  load?: EventEmitter<AIGarbageStationRegionTableArgs>;
+  @Input()
+  selecteds: AIGarbageRegion[] = [];
+  @Output()
+  selectedsChange: EventEmitter<AIGarbageRegion[]> = new EventEmitter();
+  @Output()
+  loaded: EventEmitter<PagedList<AIGarbageRegion>> = new EventEmitter();
+  @Output()
+  details: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output()
+  delete: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output()
+  building: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output()
+  station: EventEmitter<AIGarbageRegion> = new EventEmitter();
+
+  constructor(private business: AIGarbageStationRegionTableBusiness) {
+    super();
+  }
+  widths: string[] = [];
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        if (x) {
+          this.args = x;
+        }
+        this.loadData(1, this.pageSize, this.args);
+      });
+    }
+    this.loadData(1);
+  }
+
+  loadData(index: number, size: number = 10, ...args: any[]): void {
+    this.business.load(index, size, this.args).then((x) => {
+      this.page = x.Page;
+      this.datas = x.Data;
+      this.loaded.emit(x);
+    });
+  }
+  sortData(sort: Sort) {
+    const isAsc = sort.direction === 'asc';
+    this.args.desc = undefined;
+    this.args.asc = undefined;
+    if (isAsc) {
+      this.args.asc = sort.active;
+    } else {
+      this.args.desc = sort.active;
+    }
+    this.loadData(1);
+  }
+
+  ondetails(e: Event, item: AIGarbageRegion) {
+    e.stopImmediatePropagation();
+    this.details.emit(item);
+  }
+  onremove(e: Event, item: AIGarbageRegion) {
+    e.stopImmediatePropagation();
+    this.delete.emit(item);
+  }
+
+  onbuilding(e: Event, item: AIGarbageRegion) {
+    e.stopImmediatePropagation();
+    this.building.emit(item);
+  }
+  onstation(e: Event, item: AIGarbageRegion) {
+    e.stopImmediatePropagation();
+    this.station.emit(item);
+  }
+  onselected(item: AIGarbageRegion) {
+    let index = this.selecteds.indexOf(item);
+    if (index < 0) {
+      this.selecteds.push(item);
+    } else {
+      this.selecteds.splice(index, 1);
+    }
+    this.selectedsChange.emit(this.selecteds);
+  }
+}

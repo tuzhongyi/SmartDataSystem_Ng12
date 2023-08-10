@@ -1,9 +1,11 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 import { transformDateTime } from '../transform.model';
 
-export class AIGarbageRfidCard extends IdModel {
+export class AIGarbageRfidCard implements IIdModel {
+  Id!: string;
   /**	String	所属区域ID	O	*/
   RegionId?: string;
   /**	String	所属区域名称	O	*/

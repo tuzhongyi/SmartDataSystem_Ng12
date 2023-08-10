@@ -1,9 +1,11 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 import { transformDateTime } from '../transform.model';
 
-export class AIGarbageDeviceLogRecord extends IdModel {
+export class AIGarbageDeviceLogRecord implements IIdModel {
+  Id!: string;
   /**	String	对应的命令ID	M	*/
   CommandId!: string;
   /**	DateTime	日志开始时间	M	*/

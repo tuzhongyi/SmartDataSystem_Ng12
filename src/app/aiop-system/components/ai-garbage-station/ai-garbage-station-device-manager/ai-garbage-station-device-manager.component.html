@@ -1,0 +1,142 @@
+<div class="ai-garbage-station-device-manager">
+  <div class="panel ai-garbage-station-device-manager-tree">
+    <div class="ai-garbage-station-device-manager-tree-title m-b-20">
+      <div class="hw-simple-title">区域列表</div>
+    </div>
+    <div class="ai-garbage-station-device-manager-tree-control">
+      <hw-ai-garbage-station-region-tree
+        [onlyDivisionNode]="false"
+        (selectTreeNode)="selectDivisionClick($event)"
+      ></hw-ai-garbage-station-region-tree>
+    </div>
+  </div>
+  <div class="panel ai-garbage-station-device-manager-table">
+    <div class="ai-garbage-station-device-manager-table-title">
+      <div class="hw-simple-title">{{ title }}管理</div>
+    </div>
+
+    <div class="ai-garbage-station-device-manager-table-head">
+      <div class="hw-btn-group">
+        <button class="hw-blue-btn m-r-10" (click)="onexport()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn m-r-10" (click)="onimport()">
+          <i class="howell-icon-upload"></i> 导入
+        </button>
+        <input
+          type="file"
+          (change)="onfile()"
+          [accept]="'.xlsx'"
+          #file
+          style="display: none"
+        />
+        <button
+          class="hw-red-btn m-r-10"
+          (click)="todelete()"
+          [class.gray-text]="!selecteds.length"
+          [class.black]="!selecteds.length"
+        >
+          <i class="howell-icon-delete-bin"></i>
+          删除
+        </button>
+      </div>
+      <div>
+        <howell-simple-search
+          placeHolder="'名称'"
+          (searchEvent)="tosearch($event)"
+        ></howell-simple-search>
+      </div>
+    </div>
+    <div style="height: calc(100% - 68px); overflow: auto">
+      <ai-garbage-station-device-table
+        [args]="args"
+        [load]="load"
+        [(selecteds)]="selecteds"
+        (details)="ondetails($event)"
+        (command)="oncommand($event)"
+        (camera)="oncamera($event)"
+        (dropwindow)="ondropwindow($event)"
+        (delete)="todelete($event)"
+        (schedule)="onschedule($event)"
+      >
+      </ai-garbage-station-device-table>
+    </div>
+  </div>
+
+  <app-window
+    [Model]="window.details"
+    [style]="window.details.style"
+    *ngIf="window.details.show"
+  >
+    <app-ai-garbage-station-device-details
+      [model]="window.details.model"
+      (cancel)="closewindow()"
+      (ok)="onupdate()"
+    ></app-ai-garbage-station-device-details>
+  </app-window>
+  <app-window
+    [Model]="window.command"
+    [style]="window.command.style"
+    *ngIf="window.command.show"
+  >
+    <app-ai-garbage-station-device-command
+      [model]="window.command.model"
+    ></app-ai-garbage-station-device-command>
+  </app-window>
+  <app-window
+    [Model]="window.camera"
+    [style]="window.camera.style"
+    *ngIf="window.camera.show"
+  >
+    <app-ai-garbage-station-device-camera
+      [model]="window.camera.model"
+    ></app-ai-garbage-station-device-camera>
+  </app-window>
+  <app-window
+    [Model]="window.drop"
+    [style]="window.drop.style"
+    *ngIf="window.drop.show"
+  >
+    <app-ai-garbage-station-device-drop-window
+      [model]="window.drop.model"
+      (close)="window.close()"
+    ></app-ai-garbage-station-device-drop-window>
+  </app-window>
+  <app-window
+    [Model]="window.schedule"
+    [style]="window.schedule.style"
+    *ngIf="window.schedule.show"
+  >
+    <app-ai-garbage-station-device-schedule
+      [model]="window.schedule.model"
+      (ok)="onupdate()"
+      (cancel)="window.close()"
+    ></app-ai-garbage-station-device-schedule>
+  </app-window>
+
+  <app-window
+    [Model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [style]="window.confirm.style"
+  >
+    <div class="confirm">
+      <div class="confirm-head">
+        <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 提示</div>
+      </div>
+      <div class="confirm-body">
+        <div class="hw-simple-title">是否{{ window.confirm.language }} ?</div>
+      </div>
+      <div class="confirm-foot">
+        <button
+          class="hw-green-btn m-r-10"
+          (click)="ondelete(window.confirm.models)"
+        >
+          <i class="howell-icon-Check"></i> 确定
+        </button>
+        <button class="hw-gray-btn" (click)="window.close()">
+          <i class="howell-icon-Close"></i> 取消
+        </button>
+      </div>
+    </div>
+  </app-window>
+</div>

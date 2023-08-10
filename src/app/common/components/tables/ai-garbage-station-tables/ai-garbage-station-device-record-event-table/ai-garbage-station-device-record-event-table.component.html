@@ -1,0 +1,88 @@
+<div class="ai-garbage-station-device-record-event-table">
+  <div
+    class="ai-garbage-station-device-record-event-table-main vertical-layout"
+  >
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>发生时间</td>
+          <td>事件类型</td>
+          <td>设备名称</td>
+          <td>垃圾厢房</td>
+          <td>所属区域</td>
+          <td>投放窗口</td>
+          <td>事件描述</td>
+          <!-- <td class="center">图片</td> -->
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>
+              {{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td>
+              {{ Language.AIGarbageDeviceEventType(item.EventType) }}
+            </td>
+            <td>{{ item.DeviceName }}</td>
+            <td>{{ item.GarbageStationName }}</td>
+            <td>
+              {{ item.RegionName }}
+            </td>
+
+            <td>
+              {{ item.DropWindowName ? item.DropWindowName : "无" }}
+            </td>
+            <td>
+              {{ item.Description }}
+            </td>
+            <!-- <td class="center" (click)="onimage($event, item)">
+              <div class="td-icon" (click)="onimage($event, item)">
+                【 {{ item.ImageIds ? item.ImageIds.length : 0 }} 】
+              </div>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div
+      class="ai-garbage-station-device-record-event-table-main-footer footer"
+      *ngIf="page"
+    >
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

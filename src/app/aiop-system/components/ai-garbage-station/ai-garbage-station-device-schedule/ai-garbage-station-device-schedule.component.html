@@ -1,0 +1,90 @@
+<div class="ai-garbage-station-device-schedule" *ngIf="!!schedule">
+  <div class="ai-garbage-station-device-schedule-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model?.GarbageStationName }}工作表</div>
+    </div>
+    <ul class="hw-ul">
+      <li>
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: type === ScheduleType.fan
+          }"
+          (click)="type = ScheduleType.fan"
+        >
+          风扇开关时段
+        </div>
+      </li>
+      <li>
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: type === ScheduleType.spray
+          }"
+          (click)="type = ScheduleType.spray"
+        >
+          香氛喷洒时间点
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="ai-garbage-station-device-schedule-body">
+    <div class="fan" *ngIf="type === ScheduleType.fan">
+      <div
+        class="panel fan-item"
+        *ngFor="let item of schedule.ExhaustFanTimeSegments; let i = index"
+      >
+        <div class="time">
+          <div>{{ i + 1 }}：</div>
+          <app-time-control
+            [(time)]="item.StartTime"
+            [endTime]="item.StopTime"
+          ></app-time-control>
+          -
+          <app-time-control
+            [(time)]="item.StopTime"
+            [beginTime]="item.StartTime"
+          ></app-time-control>
+        </div>
+        <div (click)="onremove(i)">
+          <i class="howell-icon-delete-bin td-icon"></i>
+        </div>
+      </div>
+
+      <div class="panel plus" (click)="oncreate()">
+        <i class="howell-icon-plus"></i> 添加
+      </div>
+    </div>
+    <div
+      class="spray"
+      *ngIf="type === ScheduleType.spray && !!schedule.SprayTimes"
+    >
+      <div
+        class="panel spray-item"
+        *ngFor="let item of schedule.SprayTimes; let i = index"
+      >
+        <div class="time">
+          <div>{{ i + 1 }}：</div>
+          <app-time-control
+            [(time)]="schedule.SprayTimes[i]"
+          ></app-time-control>
+        </div>
+        <div (click)="onremove(i)">
+          <i class="howell-icon-delete-bin td-icon"></i>
+        </div>
+      </div>
+
+      <div class="panel plus" (click)="oncreate()">
+        <i class="howell-icon-plus"></i> 添加
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-schedule-foot">
+    <button class="hw-green-btn m-r-10" (click)="onupdate()">
+      <i class="howell-icon-Check"></i> 确定
+    </button>
+    <button class="hw-gray-btn" (click)="onclose()">
+      <i class="howell-icon-Close"></i> 取消
+    </button>
+  </div>
+</div>

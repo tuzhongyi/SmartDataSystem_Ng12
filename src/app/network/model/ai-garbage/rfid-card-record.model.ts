@@ -1,9 +1,11 @@
 import { Transform, Type } from 'class-transformer';
-import { IdModel } from '../model.model';
+import { IIdModel } from '../model.interface';
+
 import { PagedList } from '../page_list.model';
 import { transformDateTime } from '../transform.model';
 
-export class AIGarbageRfidCardRecord extends IdModel {
+export class AIGarbageRfidCardRecord implements IIdModel {
+  Id!: string;
   /**	Int64	RFID卡唯一ID	M	*/
   CardId!: number;
   /**	DateTime	刷卡时间	M	*/

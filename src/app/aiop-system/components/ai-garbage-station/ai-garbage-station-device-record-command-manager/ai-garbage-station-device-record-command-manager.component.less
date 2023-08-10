@@ -1,0 +1,67 @@
+.ai-garbage-station-device-record-command-manager {
+  height: 100%;
+  @head-height: calc(36px + 10px + 34px + 10px);
+
+  &-head {
+    height: @head-height;
+
+    .head {
+      &-title {
+        margin-bottom: 10px;
+      }
+
+      &-sub {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &-filter {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        color: #cfd7ff;
+        margin-bottom: 10px;
+
+        &-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-right: 10px;
+
+          &:last-child {
+            margin-right: 0;
+          }
+
+          &>* {
+            margin-right: 10px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+
+          &-title {
+            width: 70px;
+          }
+
+          &-value {
+            width: calc(100% - 70px);
+
+            .time {
+              width: 210px;
+            }
+          }
+        }
+      }
+
+      &-search {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+  }
+}

@@ -1,8 +1,10 @@
 import { ClassConstructor } from 'class-transformer';
 
 export interface IModel {}
-export interface IObjectModel {
+export interface IIdModel extends IModel {
   Id: string;
+}
+export interface IObjectModel extends IIdModel {
   Name: string;
 }
 export class IdNameModel implements IObjectModel {

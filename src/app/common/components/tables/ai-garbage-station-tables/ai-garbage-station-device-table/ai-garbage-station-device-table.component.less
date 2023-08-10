@@ -1,0 +1,35 @@
+.ai-garbage-station-device-table {
+  height: 100%;
+
+  @footer-height: 50px;
+
+  &-main {
+    height: calc(100%);
+    min-height: 622px;
+  }
+
+  .body {
+    height: calc(100% - @footer-height);
+
+  }
+
+  .footer {
+    height: @footer-height;
+    position: unset;
+    overflow: hidden;
+
+    .page {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: end;
+      align-items: flex-end;
+
+      ::ng-deep {
+        &>.custom-pagination {
+          position: unset;
+        }
+      }
+    }
+  }
+}

@@ -4,37 +4,38 @@
  * @Last Modified by: pmx
  * @Last Modified time: 2022-07-29 23:26:10
  */
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AiopComponent } from './aiop.component';
-import { UnderwaterComponent } from './components/underwater/underwater.component';
-import { IllegalDropAbout } from './components/illegal-drop-about/illegal-drop-about.component';
-import { DivisionManageComponent } from './components/division-manage/division-manage.component';
-import { StationStatusComponent } from './components/station-status/station-status.component';
-import { AIOPSystemModeComponent as SystemModeComponent } from './components/system-mode/system-mode.component';
-import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
-import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
-import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
-import { PlatformManageComponent } from './components/platform-manage/platform-manage.component';
-import { SystemSettingComponent } from './components/system-setting/system-setting.component';
-import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
-import { RegionManageComponent } from './components/region-manage/region-manage.component';
-import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
-import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
-import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
-import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
 import { AICameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
-import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
-import { MixIntoManageComponent } from './components/mix-into-manage/mix-into-manage.component';
+import { AIGarbageStationDeviceManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-manager/ai-garbage-station-device-manager.component';
+import { AIGarbageStationDeviceRecordCommandManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-record-command-manager/ai-garbage-station-device-record-command-manager.component';
+import { AIGarbageStationDeviceRecordEventManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-record-event-manager/ai-garbage-station-device-record-event-manager.component';
+import { AIGarbageStationRegionManagerComponent } from './components/ai-garbage-station/ai-garbage-station-region-manager/ai-garbage-station-region-manager.component';
+import { AIGarbageStationRfidCardManagerComponent } from './components/ai-garbage-station/ai-garbage-station-rfid-card-manager/ai-garbage-station-rfid-card-manager.component';
+import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
+import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
+import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
+import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
+import { DivisionManageComponent } from './components/division-manage/division-manage.component';
+import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
+import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
+import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
+import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
+import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
+import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
+import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
+import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
 import { GarbageVehicleDivisionManageComponent } from './components/garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
 import { GarbageVehicleManageComponent } from './components/garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
-import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
-import { GarbageVehicleCameraBindingComponent } from './components/garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding.component';
-import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
-import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
-import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
-import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
+import { IllegalDropAbout } from './components/illegal-drop-about/illegal-drop-about.component';
+import { MixIntoManageComponent } from './components/mix-into-manage/mix-into-manage.component';
+import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
+import { PlatformManageComponent } from './components/platform-manage/platform-manage.component';
+import { RegionManageComponent } from './components/region-manage/region-manage.component';
+import { SRServerManageComponent } from './components/sr-server-manage/sr-server-manage.component';
+import { AIOPSystemModeComponent as SystemModeComponent } from './components/system-mode/system-mode.component';
+import { SystemSettingComponent } from './components/system-setting/system-setting.component';
+import { UnderwaterComponent } from './components/underwater/underwater.component';
 
 const routes: Routes = [
   {
@@ -295,6 +296,51 @@ const routes: Routes = [
                 component: AIModelManageComponent,
                 data: {
                   breadcrumb: 'AI模型列表',
+                },
+              },
+            ],
+          },
+          {
+            path: 'ai-station',
+            children: [
+              {
+                path: '',
+                redirectTo: 'manager',
+                pathMatch: 'full',
+              },
+              {
+                path: 'manager',
+                component: AIGarbageStationDeviceManagerComponent,
+                data: {
+                  breadcrumb: '设备管理',
+                },
+              },
+              {
+                path: 'rfid',
+                component: AIGarbageStationRfidCardManagerComponent,
+                data: {
+                  breadcrumb: 'RFID管理',
+                },
+              },
+              {
+                path: 'region',
+                component: AIGarbageStationRegionManagerComponent,
+                data: {
+                  breadcrumb: '区域管理',
+                },
+              },
+              {
+                path: 'record-event',
+                component: AIGarbageStationDeviceRecordEventManagerComponent,
+                data: {
+                  breadcrumb: '设备事件记录',
+                },
+              },
+              {
+                path: 'record-command',
+                component: AIGarbageStationDeviceRecordCommandManagerComponent,
+                data: {
+                  breadcrumb: '命令执行记录',
                 },
               },
             ],

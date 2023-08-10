@@ -8,7 +8,7 @@ import {
 } from '../../interfaces/converter.interface';
 
 export abstract class PagedTableAbstractComponent<T> {
-  abstract widths: Array<string>;
+  abstract widths: Array<string | undefined>;
   abstract load?: EventEmitter<any>;
   Language = Language;
   datas: T[] = [];

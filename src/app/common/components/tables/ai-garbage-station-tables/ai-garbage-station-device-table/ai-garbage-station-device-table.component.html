@@ -1,0 +1,124 @@
+<div class="ai-garbage-station-device-table">
+  <div class="ai-garbage-station-device-table-main vertical-layout">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>名称</td>
+          <td>垃圾厢房</td>
+          <td>所属区域</td>
+          <td class="center">摄像机</td>
+          <td class="center">投放窗口</td>
+          <td class="center">状态</td>
+          <td>最后更新时间</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body vertical-main paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{
+              selected: selecteds.includes(item)
+            }"
+            (click)="onselected(item)"
+          >
+            <td>{{ item.Name }}</td>
+            <td>{{ item.GarbageStationName }}</td>
+            <td>{{ item.RegionName }}</td>
+            <td class="center">
+              <div
+                title="摄像机数量"
+                class="td-icon"
+                (click)="oncamera($event, item)"
+              >
+                【{{ item.CameraNumber ? item.CameraNumber : 0 }}】
+              </div>
+            </td>
+
+            <td class="center">
+              <div
+                title="投放窗口数量"
+                class="td-icon"
+                (click)="ondropwindow($event, item)"
+              >
+                【{{ item.DropWindowNumber ? item.DropWindowNumber : 0 }}】
+              </div>
+            </td>
+            <td class="center">
+              <div
+                [ngClass]="{
+                  'green-text': !!item.Status && item.Status.OnlineState === 0,
+                  'powder-red-text':
+                    !item.Status || item.Status.OnlineState !== 0
+                }"
+              >
+                {{
+                  !!item.Status && item.Status.OnlineState === 0
+                    ? "在线"
+                    : "离线"
+                }}
+              </div>
+            </td>
+            <td>
+              {{
+                !item.Status
+                  ? "-"
+                  : (item.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
+              }}
+            </td>
+            <td class="operation center">
+              <div (click)="oncommand($event, item)" title="命令">
+                <i class="mdi mdi-apple-keyboard-command td-icon"></i>
+              </div>
+              <div (click)="onschedule($event, item)" title="工作表">
+                <i class="mdi mdi-calendar-clock td-icon"></i>
+              </div>
+              <div (click)="ondetails($event, item)" title="编辑">
+                <i class="howell-icon-modification td-icon"></i>
+              </div>
+              <div (click)="onremove($event, item)" title="删除">
+                <i class="howell-icon-delete-bin td-icon"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ai-garbage-station-device-table-footer footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageCount - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+</div>

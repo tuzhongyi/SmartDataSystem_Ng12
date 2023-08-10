@@ -1,0 +1,73 @@
+<div class="ai-garbage-station-rfid-card-details" *ngIf="!!model">
+  <div class="ai-garbage-station-rfid-card-details-head">
+    <div class="hw-simple-title">RFID</div>
+  </div>
+  <div class="ai-garbage-station-rfid-card-details-body">
+    <div class="form-group">
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">卡号</label>
+        </div>
+        <div class="form-item-value">
+          <input
+            class="form-control custom"
+            [(ngModel)]="model.Id"
+            [disabled]="true"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">区域名称</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.RegionName" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">楼栋编号</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.BuildingNo" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">房屋编号</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.RoomNo" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">持卡人</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="model.CardHolder" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">描述内容</label>
+        </div>
+        <div class="form-item-value">
+          <textarea
+            class="form-control custom"
+            [(ngModel)]="model.Description"
+            rows="5"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-rfid-card-details-foot">
+    <button class="hw-green-m-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i>
+    </button>
+    <button class="hw-gray-m-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>
