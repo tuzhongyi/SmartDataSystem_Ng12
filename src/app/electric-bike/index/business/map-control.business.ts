@@ -1,15 +1,14 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { StoreService } from 'src/app/common/service/store.service';
 import { Flags } from 'src/app/common/tools/flags';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { MapControlConfig } from 'src/app/garbage-system/components/map-control/map-control.config';
 import { Camera } from 'src/app/network/model/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { MQTTEventService } from 'src/app/network/request/mqtt-event/mqtt-event.service';
-import { WindowBussiness } from './window/index-window.business';
 import { PatrolControlBusiness } from './patrol-control.business';
 import { VideoControlWindowBusiness } from './video-control-window.business';
+import { WindowBussiness } from './window/index-window.business';
 
 @Injectable()
 export class MapControlBusiness {
@@ -17,7 +16,8 @@ export class MapControlBusiness {
     private patrol: PatrolControlBusiness,
     private video: VideoControlWindowBusiness,
     private window: WindowBussiness,
-    private garbage: GarbageStationRequestService
+    private garbage: GarbageStationRequestService,
+    private store: StoreService
   ) {
     this.config = new MapControlConfig();
     this.config.status = false;

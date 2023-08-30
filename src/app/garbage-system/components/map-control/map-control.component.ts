@@ -11,21 +11,18 @@ import {
   Output,
   SimpleChanges,
   ViewChild,
-  ViewContainerRef,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Camera } from 'src/app/network/model/camera.model';
+import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
+import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { AMapBusiness, GarbageTimeFilter } from './business/amap.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
-import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
-import { Division } from 'src/app/network/model/division.model';
 import { MapControlConfig } from './map-control.config';
-import { StoreService } from 'src/app/common/service/store.service';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
@@ -148,8 +145,7 @@ export class MapControlComponent
     private changeDetectorRef: ChangeDetectorRef,
     public amap: AMapBusiness,
     public panel: ListPanelBusiness,
-    public info: PointInfoPanelBusiness,
-    private store: StoreService
+    public info: PointInfoPanelBusiness
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
@@ -222,9 +218,6 @@ export class MapControlComponent
         this.amap.pointSelect(x.Id);
       } else {
       }
-    });
-    this.store.refresh.subscribe((x) => {
-      this.amap.reload(false);
     });
   }
   ngOnDestroy(): void {

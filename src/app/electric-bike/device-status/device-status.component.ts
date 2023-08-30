@@ -8,15 +8,14 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import * as echarts from 'echarts/core';
 import { GaugeChart, GaugeSeriesOption } from 'echarts/charts';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
-import { DeviceStatusModel } from './device-status.model';
-import { DeviceStatusBusiness } from './device-status.business';
+import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { StoreService } from 'src/app/common/service/store.service';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { IModel } from 'src/app/network/model/model.interface';
+import { DeviceStatusBusiness } from './device-status.business';
+import { DeviceStatusModel } from './device-status.model';
 
 echarts.use([GaugeChart]);
 
@@ -35,8 +34,9 @@ export class DeviceStatusComponent
   business: IBusiness<IModel, DeviceStatusModel>;
   @Output()
   statusClick: EventEmitter<OnlineStatus | undefined> = new EventEmitter();
+  @Input() load?: EventEmitter<void>;
 
-  constructor(business: DeviceStatusBusiness, private store: StoreService) {
+  constructor(business: DeviceStatusBusiness) {
     this.business = business;
   }
   OnlineStatus = OnlineStatus;
@@ -119,9 +119,11 @@ export class DeviceStatusComponent
   };
 
   ngOnInit(): void {
-    this.store.statusChange.subscribe((x) => {
-      this.loadData();
-    });
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.loadData();
+      });
+    }
   }
   ngAfterViewInit(): void {
     if (this.chartContainer) {

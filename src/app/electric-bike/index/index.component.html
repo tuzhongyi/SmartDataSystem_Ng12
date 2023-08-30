@@ -34,6 +34,7 @@
         <howell-index-card>
           <!-- <app-disposal-count></app-disposal-count> -->
           <howell-device-status
+            [load]="load"
             (statusClick)="device.onclick($event)"
           ></howell-device-status>
           <!-- (task)="trigger.risposalCount.ontask()" -->
@@ -42,6 +43,7 @@
       <div class="">
         <howell-index-card>
           <howell-alarm
+            [load]="load"
             (picture)="alarm.onpicture($event)"
             (playback)="alarm.onplayback($event)"
             (itemClick)="alarm.onItemClicked($event)"
@@ -54,14 +56,14 @@
       [ngClass]="{ fullscreen: patrol.fullscreen == true }"
     >
       <howell-device-statistic
-        [load]="map.load"
+        [load]="load"
         (statusClick)="statistic.onstatus($event)"
       >
       </howell-device-statistic>
       <howell-index-card>
         <app-map-control
           [config]="map.config"
-          [load]="map.load"
+          [load]="load"
           [position]="map.position"
           (patrol)="map.onpatrol()"
           (VideoPlay)="map.onvideoplay($event)"

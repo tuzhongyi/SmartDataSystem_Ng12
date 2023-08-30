@@ -12,9 +12,9 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { wait } from '../../tools/tool';
 import { VideoModel } from './video.model';
@@ -84,8 +84,13 @@ export class VideoPlayerComponent
     private userService: UserRequestService
   ) {}
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.model && !changes.model.firstChange) {
-      this.loaded = false;
+    if (changes.model) {
+      if (this.model) {
+        this.url = this.model.toString();
+      }
+      if (!changes.model.firstChange) {
+        this.loaded = false;
+      }
     }
     this.load();
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { StoreService } from 'src/app/common/service/store.service';
@@ -58,6 +58,7 @@ export class ElectricBikeIndexComponent implements OnInit {
   converter = {
     navication: new CommitteesNavicationConverter(),
   };
+  load: EventEmitter<void> = new EventEmitter();
 
   ngOnInit(): void {
     this.initNavication();
@@ -72,6 +73,19 @@ export class ElectricBikeIndexComponent implements OnInit {
     });
     this.mqtt.pushService.pushEvent.subscribe((x) => {
       this.store.refresh.emit();
+    });
+
+    this.map.load.subscribe((x) => {
+      this.load.emit();
+    });
+    this.store.interval.subscribe((x) => {
+      this.load.emit();
+    });
+    this.store.refresh.subscribe((x) => {
+      this.load.emit();
+    });
+    this.store.statusChange.subscribe((x) => {
+      this.load.emit();
     });
   }
 

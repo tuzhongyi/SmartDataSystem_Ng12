@@ -4,10 +4,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StoreService } from 'src/app/common/service/store.service';
 import { SmokeEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { IModel } from 'src/app/network/model/model.interface';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { AlarmBusiness } from './alarm.business';
 import { ElectricBikeAlarmModel } from './alarm.model';
 
@@ -28,6 +25,7 @@ export class AlarmComponent
   playback: EventEmitter<ImageControlModelArray> = new EventEmitter();
   @Output()
   itemClick: EventEmitter<SmokeEventRecord> = new EventEmitter();
+  @Input() load?: EventEmitter<void>;
 
   constructor(business: AlarmBusiness, private store: StoreService) {
     this.business = business;
@@ -36,13 +34,12 @@ export class AlarmComponent
   datas: ElectricBikeAlarmModel[] = [];
 
   ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.loadData();
+      });
+    }
     this.loadData();
-    this.store.interval.subscribe((x) => {
-      this.loadData();
-    });
-    this.store.refresh.subscribe((x) => {
-      this.loadData();
-    });
   }
 
   async loadData() {
