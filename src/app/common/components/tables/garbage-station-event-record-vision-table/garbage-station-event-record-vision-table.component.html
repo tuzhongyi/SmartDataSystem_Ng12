@@ -1,0 +1,70 @@
+<div class="garbage-station-event-record-vision-table">
+  <div class="header">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>投放点</td>
+          <td>发送时间</td>
+          <td>滞留时长</td>
+          <td>处置状态</td>
+          <td>反馈状态</td>
+          <td>状态</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="content">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <tbody class="light-blue-text">
+        <ng-container *ngFor="let item of datas; let i = index">
+          <tr (click)="onselect($event, item)">
+            <td>{{ item.Index }}</td>
+            <td>{{ item.Data.StationName }}</td>
+            <td>{{ item.Data.DropTime | date : "HH:mm:ss" }}</td>
+            <td>{{ item.Minutes | howellTime }}</td>
+            <td>
+              <div [ngClass]="{ 'green-text': item.Data.IsHandle }">
+                {{ item.Data.IsHandle ? "已处置" : "未处置" }}
+              </div>
+            </td>
+            <td>
+              <div [ngClass]="{ 'green-text': item.Data.FeedbackState === 1 }">
+                {{ item.Data.FeedbackState === 1 ? "已反馈" : "未反馈" }}
+              </div>
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'orange-text':
+                    item.Data.SuperVisionData?.SupervisedState === State.no
+                }"
+              >
+                {{
+                  Language.SupervisedState(
+                    item.Data.SuperVisionData?.SupervisedState
+                  )
+                }}
+              </div>
+            </td>
+            <td class="center operation">
+              <div class="howell-icon" (click)="ondetails($event, item)">
+                <i class="howell-icon-Subsystem"></i>
+              </div>
+              <div class="howell-icon" (click)="onimage($event, item)">
+                <i class="howell-icon-picture"></i>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

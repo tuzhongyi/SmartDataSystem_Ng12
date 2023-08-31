@@ -12,18 +12,19 @@ import {
   CanActivate,
   Router,
   RouterStateSnapshot,
-  UrlTree,
 } from '@angular/router';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { plainToInstance } from 'class-transformer';
+import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
-import CryptoJS from 'crypto-js';
 import { Md5 } from 'ts-md5';
 import { User, UserResource } from '../../model/user.model';
 import { DigestResponse } from './digest-response.class';
@@ -68,6 +69,31 @@ export class AuthorizationService implements CanActivate {
     }
   }
 
+  toroute(user: User) {
+    if (user.Username === 'admin') {
+      return this._router.parseUrl(`/${RoutePath.aiop}`);
+    }
+    if (user.UIType === UserUIType.dapuqiao) {
+      return this._router.parseUrl(`/${RoutePath.dapuqiao}`);
+    } else {
+      if (user.UserType === 2) {
+        return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+      } else if (user.UserType === 3) {
+        return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+      } else {
+        if (user.Resources && user.Resources.length > 0) {
+          let resource = user.Resources[0];
+          if (resource.ResourceType === UserResourceType.Committees) {
+            return this._router.parseUrl(
+              `/${RoutePath.garbage_system_committees}`
+            );
+          }
+        }
+        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
+      }
+    }
+  }
+
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
     let challenge = this._sessionStorageService.challenge;
@@ -83,7 +109,7 @@ export class AuthorizationService implements CanActivate {
       try {
         let result = await this.login(url);
         if (result instanceof User) {
-          return this._router.parseUrl(`/${RoutePath.garbage_system}`);
+          return this.toroute(result);
         }
       } catch (error) {
         return this._router.parseUrl('/login');

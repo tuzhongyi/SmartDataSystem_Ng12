@@ -5,10 +5,7 @@ import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model'
 export class GarbageStationWindowGeneralExportConverter
   implements IExportConverter<GarbageStationStatisticModel[]>
 {
-  Convert(
-    source: GarbageStationStatisticModel[],
-    ...res: any[]
-  ): HowellExportModel {
+  async Convert(source: GarbageStationStatisticModel[], ...res: any[]) {
     let model = new HowellExportModel();
 
     for (let i = 0; i < source.length; i++) {

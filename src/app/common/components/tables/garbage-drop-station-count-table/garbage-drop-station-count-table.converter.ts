@@ -1,33 +1,34 @@
+import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-table.model';
+import { GarbageDropStationCountTableService } from './garbage-drop-station-count-table.service';
 
+@Injectable()
 export class GarbageDropStationCountTableConverter
   implements
-  IPromiseConverter<
-  NumberStatisticV2Type[],
-  GarbageDropStationCountTableModel[]
-  >
+    IPromiseConverter<
+      NumberStatisticV2Type[],
+      GarbageDropStationCountTableModel[]
+    >
 {
+  constructor(private service: GarbageDropStationCountTableService) {}
+
   converter = {
-    item: new GarbageDropStationCountTableItemConverter(),
+    item: new GarbageDropStationCountTableItemConverter(this.service),
   };
 
   async Convert(
     source: NumberStatisticV2Type[],
-    getter: ConvertGetter,
     divisionType: DivisionType,
     ...res: any[]
   ): Promise<GarbageDropStationCountTableModel[]> {
     let array: GarbageDropStationCountTableModel[] = [];
     for (let i = 0; i < source.length; i++) {
-      let item = await this.converter.item.Convert(source[i], getter, divisionType);
+      let item = await this.converter.item.Convert(source[i], divisionType);
       array.push(item);
     }
     return array;
@@ -36,11 +37,11 @@ export class GarbageDropStationCountTableConverter
 
 export class GarbageDropStationCountTableItemConverter
   implements
-  IPromiseConverter<NumberStatisticV2Type, GarbageDropStationCountTableModel>
+    IPromiseConverter<NumberStatisticV2Type, GarbageDropStationCountTableModel>
 {
+  constructor(private service: GarbageDropStationCountTableService) {}
   async Convert(
     source: NumberStatisticV2Type,
-    getter: ConvertGetter,
     divisionType: DivisionType
   ): Promise<GarbageDropStationCountTableModel> {
     let model = new GarbageDropStationCountTableModel();
@@ -54,7 +55,6 @@ export class GarbageDropStationCountTableItemConverter
       if (eventNumber) {
         model.EventCount = eventNumber.DayNumber;
       }
-
 
       eventNumber = source.EventNumbers.find(
         (x) =>
@@ -73,31 +73,29 @@ export class GarbageDropStationCountTableItemConverter
     model.TimeinRatio = 100;
 
     if (model.EventCount > 0) {
-      model.TimeinRatio = ((model.EventCount - model.TimeoutCount) / model.EventCount) * 100;
-
+      model.TimeinRatio =
+        ((model.EventCount - model.TimeoutCount) / model.EventCount) * 100;
     }
 
     if (source instanceof GarbageStationNumberStatisticV2) {
-      model.Parent = await this.GetParentByStation(source.Id, getter);
+      model.Parent = this.GetParentByStation(source.Id);
     } else {
-      model.Parent = await this.GetParentByDivision(source.Id, getter);
+      model.Parent = this.GetParentByDivision(source.Id);
     }
     return model;
   }
 
-  async GetParentByStation(stationId: string, getter: ConvertGetter) {
-    if (getter.station) {
-      let station = await getter.station(stationId);
-      if (station.DivisionId && getter.division) {
-        return await getter.division(station.DivisionId);
-      }
+  async GetParentByStation(stationId: string) {
+    let station = await this.service.station.get(stationId);
+    if (station.DivisionId) {
+      return this.service.division.get(station.DivisionId!);
     }
     return undefined;
   }
-  async GetParentByDivision(divisionId: string, getter: ConvertGetter) {
-    if (getter.division) {
-      let current = await getter.division(divisionId);
-      if (current.ParentId) return getter.division(current.ParentId);
+  async GetParentByDivision(divisionId: string) {
+    let current = await this.service.division.get(divisionId);
+    if (current.ParentId) {
+      return this.service.division.get(current.ParentId);
     }
     return undefined;
   }

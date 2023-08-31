@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { RoutePath } from './app-routing.path';
 import { LoginComponent } from './login/login.component';
 import { AuthorizationService } from './network/request/auth/auth-request.service';
-import { RoutePath } from './app-routing.path';
 
 const routes: Routes = [
   {
@@ -34,6 +34,15 @@ const routes: Routes = [
     loadChildren: () =>
       import('./garbage-system/garbage.module').then(
         (mod) => mod.GarbageModule
+      ),
+    canActivate: [AuthorizationService],
+  },
+
+  {
+    path: RoutePath.dapuqiao,
+    loadChildren: () =>
+      import('./garbage-system/dapuqiao/garbage-dapuqiao.module').then(
+        (mod) => mod.GarbageDaPuQiaoModule
       ),
     canActivate: [AuthorizationService],
   },

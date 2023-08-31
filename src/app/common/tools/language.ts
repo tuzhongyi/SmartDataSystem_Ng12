@@ -24,7 +24,10 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { Gender } from 'src/app/enum/gender.enum';
-import { CollectionMemberType } from 'src/app/enum/member-type.enum';
+import {
+  CollectionMemberType,
+  MemberType,
+} from 'src/app/enum/member-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { RelayState } from 'src/app/enum/relay-state.enum';
@@ -40,12 +43,19 @@ import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { UserType } from 'src/app/enum/user-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { AIGarbageDeviceEventType } from 'src/app/network/model/ai-garbage/device-event-record.model';
 import { AIGarbageDropWindowType } from 'src/app/network/model/ai-garbage/drop-window.model';
+import { FeedbackResult } from 'src/app/network/model/garbage-drop-feedback.model';
+import {
+  GarbageDropSuperVisionLevel,
+  SupervisedState,
+  SuperviseResult,
+} from 'src/app/network/model/garbage-drop-super-vision-data.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { DateTimeTool } from './datetime.tool';
 import language from './language.json';
@@ -99,7 +109,7 @@ export class Language {
       case TimeUnit.Hour:
         return Language.json.Date.day + Language.json.report;
       case TimeUnit.Day:
-        return Language.json.Date.month + Language.json.report;
+        return Language.json.Date.day + Language.json.report;
       case TimeUnit.Week:
         return '周报表';
       case TimeUnit.Month:
@@ -707,6 +717,94 @@ export class Language {
       case AIGarbageDropWindowType.Other:
       default:
         return '其他';
+    }
+  }
+
+  static GarbageDropSuperVisionLevel(level?: GarbageDropSuperVisionLevel) {
+    switch (level) {
+      case GarbageDropSuperVisionLevel.one:
+        return '一级事件';
+      case GarbageDropSuperVisionLevel.two:
+        return '二级事件';
+      case GarbageDropSuperVisionLevel.three:
+        return '三级事件';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+
+  static SupervisedState(state?: SupervisedState) {
+    switch (state) {
+      case SupervisedState.no:
+        return '待督办';
+      case SupervisedState.yes:
+        return '已督办';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+  static FeedbackResult(state?: FeedbackResult) {
+    switch (state) {
+      case FeedbackResult.complete:
+        return '完成';
+      case FeedbackResult.falsealarm:
+        return '误报';
+      case FeedbackResult.nostandard:
+        return '管理不规范';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+
+  static MemberType(type?: MemberType) {
+    switch (type) {
+      case MemberType.other:
+        return '其他人员';
+      case MemberType.volunteer:
+        return '志愿者';
+      case MemberType.healthworker:
+        return '卫生干部';
+      case MemberType.property:
+        return '物业';
+      case MemberType.thirdpart:
+        return '第三方';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+  static UserType(type?: UserType) {
+    switch (type) {
+      case UserType.county:
+        return '街道管理人员';
+      case UserType.community:
+        return '居委管理人员';
+      case UserType.volunteer:
+        return '志愿者';
+      case UserType.property:
+        return '物业管理人员';
+      case UserType.other:
+        return '其他';
+      case UserType.thirdparty:
+        return '第三方';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+
+  static SuperviseResult(result?: SuperviseResult) {
+    switch (result) {
+      case SuperviseResult.complete:
+        return '完成';
+      case SuperviseResult.misclassified:
+        return '误报';
+      case SuperviseResult.unorganized:
+        return '管理不规范';
+      case SuperviseResult.noresponse:
+        return '无响应';
+      case SuperviseResult.notcompleted:
+        return '未按时间完成处置';
+      default:
+        return Language.json.Unknow;
     }
   }
 

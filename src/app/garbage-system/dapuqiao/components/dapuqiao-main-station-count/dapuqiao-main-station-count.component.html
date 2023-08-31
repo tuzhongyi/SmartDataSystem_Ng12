@@ -1,0 +1,29 @@
+<div class="index-station-count">
+  <div class="index-station-count-head">
+    <div class="hw-simple-title" *ngIf="index === Index.station_count">
+      投放点数量
+    </div>
+    <div class="hw-simple-title" *ngIf="index === Index.device_state">
+      设备运行状态
+    </div>
+    <div>
+      <select [(ngModel)]="index">
+        <option [ngValue]="Index.station_count">投放点数量</option>
+        <option [ngValue]="Index.device_state">运行状态</option>
+      </select>
+    </div>
+  </div>
+  <div class="index-station-count-body">
+    <div class="station-count" *ngIf="index === Index.station_count">
+      <div class="station-count-content">
+        <garbage-station-count-table></garbage-station-count-table>
+      </div>
+    </div>
+    <app-device-state
+      *ngIf="index === Index.device_state"
+      [inside]="true"
+      [load]="load"
+      (Click)="ondevicestateclick($event)"
+    ></app-device-state>
+  </div>
+</div>

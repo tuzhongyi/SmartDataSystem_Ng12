@@ -1,6 +1,9 @@
+import { Injectable } from '@angular/core';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import {
   DivisionModel,
   GarbageStationModel,
@@ -11,9 +14,11 @@ import {
 } from '../../map-control-list-panel/map-list-item';
 
 export type ListPanelType = DivisionModel | GarbageStationModel;
+@Injectable()
 export class ListPanelConverter
   implements IConverter<ListPanelType[], ListItem<ListPanelType>[]>
 {
+  constructor(private service: GarbageStationRequestService) {}
   Convert(source: ListPanelType[], ...res: any[]): ListItem<ListPanelType>[] {
     let result: ListItem<ListPanelType>[] = [];
     for (let i = 0; i < source.length; i++) {
@@ -39,6 +44,11 @@ export class ListPanelConverter
       ListItemType.Division,
       source
     );
+    let params = new GetGarbageStationsParams();
+    params.DivisionId = source.Id;
+    this.service.cache.list(params).then((x) => {
+      item.hasChild = x.Data.length > 0;
+    });
     return item;
   }
   fromGarbageStation(source: GarbageStationModel) {

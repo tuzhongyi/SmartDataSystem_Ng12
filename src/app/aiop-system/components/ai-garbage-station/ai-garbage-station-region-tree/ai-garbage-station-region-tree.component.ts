@@ -27,7 +27,7 @@ export class AIGarbageRegionTreeComponent extends CommonTree implements OnInit {
   private _condition: string = '';
 
   @Input()
-  selectStrategy = SelectStrategy.Multiple;
+  selectStrategy = SelectStrategy.Single;
 
   // 默认选中列表
   @Input()

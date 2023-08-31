@@ -1,11 +1,11 @@
 import { EventRecordCountTableModel } from 'src/app/common/components/tables/event-record-count-table/event-record-count-table.model';
-import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model';
 
 export class EventRecordCountExportConverter
-  implements IConverter<EventRecordCountTableModel[], HowellExportModel>
+  implements IPromiseConverter<EventRecordCountTableModel[], HowellExportModel>
 {
-  Convert(source: EventRecordCountTableModel[]): HowellExportModel {
+  async Convert(source: EventRecordCountTableModel[]) {
     let model = new HowellExportModel();
     for (let i = 0; i < source.length; i++) {
       const data = source[i];

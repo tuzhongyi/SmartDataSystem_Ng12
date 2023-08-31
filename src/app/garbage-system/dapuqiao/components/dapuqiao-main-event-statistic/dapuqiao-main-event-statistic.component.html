@@ -1,0 +1,34 @@
+<div class="dapuqiao-main-event-statistic">
+  <div class="dapuqiao-main-event-statistic-head">
+    <div class="hw-simple-title">今日三级事件统计</div>
+    <div>
+      <select [(ngModel)]="args.unit" (change)="onchange()">
+        <option [ngValue]="TimeUnit.Day">今日</option>
+        <option [ngValue]="TimeUnit.Week">本周</option>
+        <option [ngValue]="TimeUnit.Month">本月</option>
+      </select>
+    </div>
+  </div>
+  <div class="dapuqiao-main-event-statistic-body">
+    <div class="dapuqiao-main-event-statistic-body-chart">
+      <chart-pie-event-statistic [load]="load" (inited)="oninit($event)">
+      </chart-pie-event-statistic>
+    </div>
+    <div class="dapuqiao-main-event-statistic-body-info">
+      <div class="info">
+        <div class="info-name">全部三级事件数</div>
+        <div class="info-value light-blue-text">{{ data.statistic.all }}</div>
+      </div>
+      <div>
+        <div class="info-name">三级事件反馈数</div>
+        <div class="info-value blue-text">{{ data.statistic.feedback }}</div>
+      </div>
+      <div>
+        <div class="info-name">三级时间督办数</div>
+        <div class="info-value orange-text">
+          {{ data.statistic.supervision }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

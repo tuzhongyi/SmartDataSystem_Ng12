@@ -56,5 +56,6 @@ export class AMapBusiness {
 
   init(iframe: HTMLIFrameElement) {
     this.amap.init(iframe);
+    this.point.init();
   }
 }

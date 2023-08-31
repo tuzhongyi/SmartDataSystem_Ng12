@@ -3,6 +3,20 @@
     <div *ngIf="model.status != OnlineStatus.Online">NO SIGNAL</div>
   </div>
   <!-- <img [src]="model.src" (error)="onError($event)" [title]="model.name" /> -->
-  <div class="img" [title]="model.name" [ngStyle]="image"></div>
-  <canvas class="img" #canvas *ngIf="draw"></canvas>
+  <div
+    class="img"
+    [ngClass]="{
+      contain: contain
+    }"
+    [title]="model.name"
+    [ngStyle]="image"
+  ></div>
+  <canvas
+    class="img"
+    [ngClass]="{
+      contain: contain
+    }"
+    #canvas
+    *ngIf="draw"
+  ></canvas>
 </div>

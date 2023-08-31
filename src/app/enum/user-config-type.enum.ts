@@ -5,5 +5,6 @@ export enum UserConfigType {
   /** 原GisMapVideoLive */
   VideoStream = 4,
   VideoRuleState = 5,
+  SupervisePosition = 6,
   IntervalInspection = 99,
 }

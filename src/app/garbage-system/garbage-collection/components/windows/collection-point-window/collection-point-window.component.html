@@ -20,21 +20,23 @@
         </div>
         <div class="content">
           <select [(ngModel)]="searchInfo.Type">
-            <option value="">全部</option>
-            <option [value]="CollectionPointClassification.PublicPlace">
+            <option [ngValue]="undefined">全部</option>
+            <option [ngValue]="CollectionPointClassification.PublicPlace">
               公共场所
             </option>
-            <option [value]="CollectionPointClassification.Unit">单位</option>
-            <option [value]="CollectionPointClassification.Residence">
+            <option [ngValue]="CollectionPointClassification.Unit">单位</option>
+            <option [ngValue]="CollectionPointClassification.Residence">
               住宅
             </option>
-            <option [value]="CollectionPointClassification.Building">
+            <option [ngValue]="CollectionPointClassification.Building">
               商业广场
             </option>
-            <option [value]="CollectionPointClassification.Shop">
+            <option [ngValue]="CollectionPointClassification.Shop">
               沿街商铺
             </option>
-            <option [value]="CollectionPointClassification.Other">其他</option>
+            <option [ngValue]="CollectionPointClassification.Other">
+              其他
+            </option>
           </select>
         </div>
       </div>

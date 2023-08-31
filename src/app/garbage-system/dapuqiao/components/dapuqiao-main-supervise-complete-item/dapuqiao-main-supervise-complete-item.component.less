@@ -1,0 +1,113 @@
+.div {
+
+  &-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: -2px;
+  }
+}
+
+
+.dapuqiao-main-supervise-complete-item {
+  width: 100%;
+  height: 100%;
+
+
+  &-half {
+    width: 50%;
+    align-items: stretch;
+    height: auto;
+  }
+
+
+
+  .h {
+    display: flex;
+    height: auto;
+    align-items: stretch;
+    flex-direction: column;
+
+    .top {
+      flex-grow: 0;
+    }
+
+    .bottom {
+      flex-grow: 1;
+    }
+
+    .left {
+      border-left: 2px solid #3972cd;
+    }
+
+    .right {
+      border-right: 2px solid #3972cd;
+    }
+  }
+
+  .divider {
+    flex-grow: 1;
+    display: flex;
+    align-items: baseline;
+    position: relative;
+
+    .note {
+      position: absolute;
+      top: -5px;
+
+      &-left {
+        right: 10px;
+      }
+
+      &-right {
+        left: 10px;
+      }
+    }
+
+
+    .line {
+      width: 100%;
+      border-bottom: 2px solid #3972cd;
+    }
+
+
+    .top {
+      flex-grow: 0;
+      padding-top: 20%;
+    }
+
+    .bottom {
+      padding-bottom: 20%;
+      flex-grow: 1;
+    }
+
+    .left {
+      border-left: 2px solid #3972cd;
+    }
+
+    .right {
+      border-right: 2px solid #3972cd;
+    }
+
+  }
+
+  &-divider {
+    width: 150px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: flex-start;
+    align-items: stretch;
+
+
+
+
+  }
+}

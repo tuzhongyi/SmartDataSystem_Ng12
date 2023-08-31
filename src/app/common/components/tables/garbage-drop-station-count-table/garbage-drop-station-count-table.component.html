@@ -17,14 +17,7 @@
           >
             名称
           </td>
-          <td
-            [ngStyle]="{ width: widths[2] }"
-            mat-sort-header="Parent"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
-            行政区
-          </td>
+          <td [ngStyle]="{ width: widths[2] }">行政区</td>
           <td
             [ngStyle]="{ width: widths[3] }"
             mat-sort-header="EventCount"
@@ -63,7 +56,7 @@
               {{ item.Name }}
             </td>
             <td [ngStyle]="{ width: widths[2] }">
-              {{ item.Parent ? item.Parent.Name : "" }}
+              {{ (item.Parent | async) ? (item.Parent | async)?.Name : "" }}
             </td>
             <td [ngStyle]="{ width: widths[3] }">
               {{ item.EventCount }}

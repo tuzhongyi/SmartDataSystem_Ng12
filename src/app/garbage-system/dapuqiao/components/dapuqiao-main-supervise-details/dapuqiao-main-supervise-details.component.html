@@ -1,0 +1,198 @@
+<div class="dapuqiao-main-supervise-details">
+  <div class="dapuqiao-main-supervise-details-head">
+    <div class="hw-simple-title">督办确认</div>
+    <div class="operation">
+      <div (click)="onclick()" class="howell-icon">
+        <i class="howell-icon-Close"></i>
+      </div>
+    </div>
+  </div>
+  <div class="dapuqiao-main-supervise-details-body" *ngIf="!!model">
+    <div class="dapuqiao-main-supervise-details-body-pictures">
+      <app-media-image-control
+        [model]="model.Image.current"
+        [operation]="false"
+        [contain]="false"
+        [first]="model.Image.first"
+        [last]="model.Image.last"
+        (prev)="model.Image.onprev()"
+        (next)="model.Image.onnext()"
+      ></app-media-image-control>
+    </div>
+    <div class="dapuqiao-main-supervise-details-body-information">
+      <div class="hw-form">
+        <div class="hw-form-list">
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">
+              <div>投</div>
+              <div>放</div>
+              <div>点：</div>
+            </div>
+            <div class="hw-form-list-item-value">
+              {{ model.Data.StationName }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">
+              <div>社</div>
+              <div>区：</div>
+            </div>
+            <div class="hw-form-list-item-value">
+              {{ model.Data.CommunityName }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">
+              <div>居</div>
+              <div>委</div>
+              <div>会：</div>
+            </div>
+            <div class="hw-form-list-item-value">
+              {{ model.Data.DivisionName }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">
+              <div>地</div>
+              <div>址：</div>
+            </div>
+            <div class="hw-form-list-item-value">
+              {{ (model.GarbageStation | async)?.Address }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">滞留时长：</div>
+            <div class="hw-form-list-item-value">
+              {{ model.Minutes | howellTime }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">上报时间：</div>
+            <div class="hw-form-list-item-value">
+              {{ model.LevelTime | date : "HH:mm:ss" }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">处置状态：</div>
+            <div
+              class="hw-form-list-item-value"
+              [ngClass]="{ 'green-text': model.Data.IsHandle }"
+            >
+              {{ model.Data.IsHandle ? "已处置" : "未处置" }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">督办状态：</div>
+            <div
+              class="hw-form-list-item-value"
+              [ngClass]="{
+                'green-text': model.Data.SuperVisionData?.SupervisedState === 1
+              }"
+            >
+              {{
+                model.Data.SuperVisionData?.SupervisedState === 1
+                  ? "已督办"
+                  : "未督办"
+              }}
+            </div>
+          </div>
+          <div
+            class="hw-form-list-item"
+            *ngIf="model.Data.SuperVisionData?.SupervisedState === 1"
+          >
+            <div class="hw-form-list-item-title">督办时间：</div>
+            <div class="hw-form-list-item-value">
+              {{
+                model.Data.SuperVisionData?.SupervisedTime | date : "HH:mm:ss"
+              }}
+            </div>
+          </div>
+          <div class="hw-form-list-item">
+            <div class="hw-form-list-item-title">反馈状态：</div>
+            <div
+              class="hw-form-list-item-value"
+              [ngClass]="{ 'green-text': model.Data.FeedbackState === 1 }"
+            >
+              {{ model.Data.FeedbackState === 1 ? "已反馈" : "未反馈" }}
+            </div>
+          </div>
+
+          <ng-container
+            *ngIf="model.Data.FeedbackState === 1 && !!model.Data.Feedbacks"
+          >
+            <ng-container *ngFor="let item of model.Data.Feedbacks">
+              <div class="hw-form-list-item">
+                <div class="hw-form-list-item-title">反馈人员：</div>
+                <div class="hw-form-list-item-value">
+                  {{ item.FeedbackUserName }}
+                </div>
+              </div>
+              <div class="hw-form-list-item">
+                <div class="hw-form-list-item-title">手机号码：</div>
+                <div class="hw-form-list-item-value">
+                  {{ item.FeedbackUserMobileNo }}
+                </div>
+              </div>
+              <div class="hw-form-list-item">
+                <div class="hw-form-list-item-title">反馈时间：</div>
+                <div class="hw-form-list-item-value">
+                  {{ item.FeedbackTime | date : "HH:mm:ss" }}
+                </div>
+              </div>
+              <div class="hw-form-list-item">
+                <div class="hw-form-list-item-title">反馈结果：</div>
+                <div class="hw-form-list-item-value">
+                  {{ Language.FeedbackResult(item.FeedbackResult) }}
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div
+        class="members"
+        *ngIf="
+          !!(model.GarbageStation | async)?.Members &&
+          ((model.GarbageStation | async)?.Members)!.length > 0
+        "
+      >
+        <!-- -->
+        <div class="members-list">
+          <div
+            class="members-list-item"
+            *ngFor="let item of (model.GarbageStation | async)?.Members"
+          >
+            <div class="howell-icon"><i class="howell-icon-account"></i></div>
+            <div>{{ item.Name }}</div>
+            <div>{{ item.MobileNo }}</div>
+            <div>{{ Language.MemberType(item.MemberType) }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="btns">
+        <button class="hw-gray-btn" *ngIf="model.Data.IsHandle">已处置</button>
+        <button
+          class="hw-gray-btn"
+          *ngIf="
+            model.Data.SuperVisionData?.SupervisedState === 1 &&
+            !model.Data.IsHandle
+          "
+        >
+          已督办
+        </button>
+        <button
+          *ngIf="
+            !(
+              model.Data.SuperVisionData?.SupervisedState === 1 ||
+              model.Data.IsHandle
+            )
+          "
+          class="hw-green-btn"
+          (click)="onsupervise()"
+        >
+          确认
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -33,6 +33,7 @@ import { DivisionTreeSyncComponent } from './division-tree-sync/division-tree-sy
 import { DivisionTreeComponent } from './division-tree/division-tree.component';
 import { EventNumberChartComponent } from './event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from './event-number-statistic/event-number-statistic.component';
+import { HowellSelectComponent } from './hw-select/select-control.component';
 import { ImageControlComponent } from './image-control/image-control.component';
 import { ImageVideoControlComponent } from './image-video-control/image-video-control.component';
 import { ImageVideoMultControlComponent } from './image-video-mult-control/image-video-mult-control.component';
@@ -146,4 +147,6 @@ export const CUSTOM_COMPONENTS = [
 
   LevelListPanelComponent,
   LevelDivisionPanelComponent,
+
+  HowellSelectComponent,
 ];

@@ -32,7 +32,7 @@
   </div>
   <div
     title="生活垃圾分类全程监管平台"
-    *ngIf="store.system === SystemType.vehicle && user.UserType === 3"
+    *ngIf="global.system === SystemType.vehicle && user.UserType === 3"
     class="operation-item"
     (click)="toGarbage()"
   >
@@ -40,7 +40,7 @@
   </div>
   <div
     title="生活垃圾清运监管平台"
-    *ngIf="store.system === SystemType.garbage && user.UserType === 3"
+    *ngIf="global.system === SystemType.garbage && user.UserType === 3"
     class="operation-item"
     (click)="toVehicle()"
   >

@@ -52,6 +52,8 @@ export class AIGarbageStationRfidCardTableComponent
   }
 
   loadData(index: number, size: number = 10, ...args: any[]): void {
+    this.selecteds = [];
+    this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;
       this.datas = x.Data;

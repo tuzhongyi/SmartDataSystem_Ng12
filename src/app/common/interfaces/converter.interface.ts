@@ -9,5 +9,5 @@ export interface IPromiseConverter<T, R> {
 }
 
 export interface IExportConverter<T> {
-  Convert(source: T, ...res: any[]): HowellExportModel;
+  Convert(source: T, ...res: any[]): Promise<HowellExportModel>;
 }

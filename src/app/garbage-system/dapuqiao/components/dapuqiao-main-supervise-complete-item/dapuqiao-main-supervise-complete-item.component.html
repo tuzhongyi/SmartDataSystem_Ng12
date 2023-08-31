@@ -1,0 +1,51 @@
+<div
+  class="dapuqiao-main-supervise-complete-item"
+  [ngClass]="{ 'div-left': left, 'div-right': !left }"
+>
+  <div
+    class="dapuqiao-main-supervise-complete-item-half"
+    [ngClass]="{ 'div-left': left, 'div-right': !left }"
+  >
+    <div class="h" *ngIf="!left">
+      <div
+        class="left top"
+        [ngStyle]="{
+          visibility: top ? 'visible' : 'hidden',
+          height: lineOffset
+        }"
+      ></div>
+      <div
+        class="left bottom"
+        [ngStyle]="{
+          visibility: bottom ? 'visible' : 'hidden'
+        }"
+      ></div>
+    </div>
+    <div class="divider" *ngIf="!left">
+      <div class="note note-right" [style.color]="color">{{ note }}</div>
+      <div class="line" [ngStyle]="{ 'margin-top': lineOffset }"></div>
+    </div>
+    <div class="dapuqiao-main-supervise-complete-item-content">
+      <ng-content></ng-content>
+    </div>
+    <div class="divider" *ngIf="left">
+      <div class="note note-left" [style.color]="color">{{ note }}</div>
+      <div class="line" [ngStyle]="{ 'margin-top': lineOffset }"></div>
+    </div>
+    <div class="h" *ngIf="left">
+      <div
+        class="right top"
+        [ngStyle]="{
+          visibility: top ? 'visible' : 'hidden',
+          height: lineOffset
+        }"
+      ></div>
+      <div
+        class="right bottom"
+        [ngStyle]="{
+          visibility: bottom ? 'visible' : 'hidden'
+        }"
+      ></div>
+    </div>
+  </div>
+</div>

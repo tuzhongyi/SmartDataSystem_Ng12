@@ -2,13 +2,13 @@ import { formatDate } from '@angular/common';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IExportConverter } from 'src/app/common/interfaces/converter.interface';
 import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Language } from 'src/app/common/tools/language';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 
 export class TimeDataGroupExportConverter
   implements IExportConverter<ITimeDataGroup<number>[]>
 {
-  Convert(source: ITimeDataGroup<number>[], unit: TimeUnit): HowellExportModel {
+  async Convert(source: ITimeDataGroup<number>[], unit: TimeUnit) {
     let model = new HowellExportModel();
 
     let rowCount = 0;

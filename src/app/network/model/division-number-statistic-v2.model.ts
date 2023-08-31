@@ -2,6 +2,7 @@ import { Type } from 'class-transformer';
 import 'reflect-metadata';
 import { EventNumber } from './event-number.model';
 import { GarbageWeight } from './garbage-weight.model';
+import { Level3Statistic } from './level-3-statistic.model';
 import { IdNameModel } from './model.interface';
 import { StatisticTime } from './statistic-time.model';
 
@@ -37,4 +38,8 @@ export class DivisionNumberStatisticV2 extends IdNameModel {
   /**	GarbageWeight[]	当日垃圾重量	O */
   @Type(() => GarbageWeight)
   GarbageWeights?: GarbageWeight[];
+
+  /**	Level3Statistic	三级事件统计数据	O */
+  @Type(() => Level3Statistic)
+  Level3Statistic?: Level3Statistic;
 }

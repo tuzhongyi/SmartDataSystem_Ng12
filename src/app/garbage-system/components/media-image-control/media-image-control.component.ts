@@ -12,13 +12,15 @@ import { MediaVideoControlBussiness } from './media-image-control.business';
 })
 export class MediaImageControlComponent {
   @Input() model?: ImageControlModel;
-  @Input('first') isfirst = false;
-  @Input('last') islast = false;
+  @Input('first') isfirst = true;
+  @Input('last') islast = true;
   @Input() captureing = false;
   @Output() next: EventEmitter<ImageControlModel> = new EventEmitter();
   @Output() prev: EventEmitter<ImageControlModel> = new EventEmitter();
   @Output() play: EventEmitter<ImageControlModel> = new EventEmitter();
   @Output() videodownload: EventEmitter<ImageControlModel> = new EventEmitter();
+  @Input() operation = true;
+  @Input() contain = false;
 
   constructor(protected download: DownloadBusiness) {}
 

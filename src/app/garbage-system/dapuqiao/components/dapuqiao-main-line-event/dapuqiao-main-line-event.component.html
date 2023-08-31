@@ -1,0 +1,30 @@
+<div class="dapuqiao-main-line-event">
+  <div class="dapuqiao-main-line-event-head">
+    <div class="hw-simple-title">7日三级事件数量</div>
+    <div>
+      <select [(ngModel)]="level" (click)="onchange()">
+        <option [ngValue]="Level.one">
+          <div class="option">
+            {{ Language.GarbageDropSuperVisionLevel(Level.one) }}
+          </div>
+        </option>
+        <option [ngValue]="Level.two">
+          <div class="option">
+            {{ Language.GarbageDropSuperVisionLevel(Level.two) }}
+          </div>
+        </option>
+        <option [ngValue]="Level.three">
+          <div class="option">
+            {{ Language.GarbageDropSuperVisionLevel(Level.three) }}
+          </div>
+        </option>
+      </select>
+    </div>
+  </div>
+  <div class="dapuqiao-main-line-event-body">
+    <chart-line-simple
+      [load]="load"
+      (inited)="oninit($event)"
+    ></chart-line-simple>
+  </div>
+</div>

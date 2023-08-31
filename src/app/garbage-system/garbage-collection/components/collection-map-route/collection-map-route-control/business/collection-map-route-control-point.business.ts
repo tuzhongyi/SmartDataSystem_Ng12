@@ -28,7 +28,6 @@ export class CollectionMapRouteControlPointBusiness
     params.VehicleId = vehicleId;
     params.BeginTime = duration.begin;
     params.EndTime = duration.end;
-    let paged = await this.service.route.list(params);
-    return paged.Data;
+    return this.service.route.all(params);
   }
 }

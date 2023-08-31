@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Language } from 'src/app/common/tools/language';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { WindowViewModel } from './window.model';
 
 @Component({
   selector: 'app-window',
   templateUrl: './window.component.html',
-  styleUrls: ['./window.component.css'],
+  styleUrls: ['./window.component.less'],
 })
 export class WindowComponent implements OnInit {
   Language = Language;
@@ -15,11 +15,10 @@ export class WindowComponent implements OnInit {
     show: false,
   };
 
-  @Input()
-  Background = true;
+  @Input() Background = true;
 
-  @Input()
-  CloseButton = true;
+  @Input() CloseButton = true;
+  @Input() mask = true;
 
   private _style: any = {
     width: '80%',

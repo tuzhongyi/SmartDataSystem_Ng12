@@ -12,10 +12,10 @@ import { GarbageStationWeightChartArgs } from './garbage-station-weight-chart.mo
 export class GarbageStationWeightChartDownloadConverter
   implements IExportConverter<ITimeDataGroup<number>>
 {
-  Convert(
+  async Convert(
     source: ITimeDataGroup<number>,
     args: GarbageStationWeightChartArgs
-  ): HowellExportModel {
+  ) {
     let model = new HowellExportModel();
     model.headIndex = 1;
     model.dataIndex = [2];

@@ -1,0 +1,53 @@
+.index-event-level {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  @head-height: 36px;
+
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    select {
+      border: none;
+      min-width: auto;
+      background-color: #0b093b;
+
+    }
+  }
+
+  &-body {
+    display: flex;
+    justify-content: space-around;
+    height: calc(100% - @head-height - 10px);
+
+    &-chart {
+      width: 60%;
+      height: 100%;
+    }
+
+    &-info {
+      width: 40%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      flex-direction: column;
+
+      .info {
+        &-name {
+          font-size: 16px;
+          color: #99aaff;
+        }
+
+        &-value {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}

@@ -42,9 +42,11 @@ export class AIGarbageStationRegionManagerComponent {
     if (item) {
       this.window.confirm.models = [item];
       this.window.confirm.language = `删除 ${item.Name}`;
-    } else {
+    } else if (this.selecteds.length > 0) {
       this.window.confirm.models = [...this.selecteds];
       this.window.confirm.language = `删除 ${this.window.confirm.models.length} 个区域`;
+    } else {
+      return;
     }
     this.window.confirm.show = true;
   }

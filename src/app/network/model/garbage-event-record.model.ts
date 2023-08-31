@@ -2,11 +2,15 @@ import {
   plainToInstance,
   Transform,
   TransformFnParams,
+  Type,
 } from 'class-transformer';
 import { EventType } from '../../enum/event-type.enum';
 import { ResourceType } from '../../enum/resource-type.enum';
 import { EventDataObject } from './event-data-object.model';
 import { EventRule } from './event-rule';
+import { GarbageDropFeedback } from './garbage-drop-feedback.model';
+import { GarbageDropSuperVisionData } from './garbage-drop-super-vision-data.model';
+import { GisPoint } from './gis-point.model';
 import { IModel } from './model.interface';
 import { transformDateTime } from './transform.model';
 import { CameraImageUrl } from './url.model';
@@ -186,6 +190,28 @@ export class GarbageDropEventData {
 
   /**	String	滞留时间	O */
   TakeMinutes?: number;
+  /**	Boolean	是否超级滞留	O */
+  IsSuperTimeout?: boolean;
+  /**	GisPoint	投放点GIS点位	O	*/
+  GisPoint?: GisPoint;
+  /**	GarbageDropSuperVisionData	督办信息	O	*/
+  @Type(() => GarbageDropSuperVisionData)
+  SuperVisionData?: GarbageDropSuperVisionData;
+  /**	Int32	"反馈状态
+0：表示没有人员反馈。
+1：表示已反馈"	O	*/
+  FeedbackState?: number;
+  /**	DateTime	首次反馈时间	O	*/
+  @Transform(transformDateTime)
+  FirstFeedbackTime?: Date;
+  /**	Int32	"反馈结果：
+1：完成，2：误报，3：管理不规范"	O	*/
+  FirstFeedbackResult?: number;
+  /**	Double	反馈用时单位：秒	O	*/
+  FeedbackSeconds?: number;
+  /**	GarbageDropFeedback[]	督办反馈信息	O	*/
+  @Type(() => GarbageDropFeedback)
+  Feedbacks?: GarbageDropFeedback[];
 }
 
 function EventRecordDataTransformer(params: TransformFnParams) {

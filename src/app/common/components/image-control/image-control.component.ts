@@ -27,6 +27,7 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() nosignal = true;
   @Output() Click: EventEmitter<ImageControlModel> = new EventEmitter();
   @Input('draw') isDraw = false;
+  @Input() contain = false;
 
   constructor() {}
   OnlineStatus = OnlineStatus;

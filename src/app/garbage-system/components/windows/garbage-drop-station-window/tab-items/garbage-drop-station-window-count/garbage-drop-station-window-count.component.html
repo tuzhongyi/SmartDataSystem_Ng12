@@ -1,36 +1,53 @@
 <div class="garbage-drop-station-window-count">
   <div class="filter">
     <div class="filter-items">
-      <div class="filter-item">
-        <span>选择时间</span>
-        <input
-          type="text"
-          DateTimePicker
-          [format]="dateTimePickerConfig.format"
-          [startView]="dateTimePickerConfig.view"
-          [minView]="dateTimePickerConfig.view"
-          [week]="dateTimePickerConfig.week"
-          [(date)]="date"
-          class=""
-        />
+      <div class="filter-item four">
+        <div class="filter-item-title">选择时间</div>
+        <div class="filter-item-value">
+          <input
+            type="text"
+            DateTimePicker
+            [format]="dateTimePickerConfig.format"
+            [startView]="dateTimePickerConfig.view"
+            [minView]="dateTimePickerConfig.view"
+            [week]="dateTimePickerConfig.week"
+            [(date)]="date"
+            class=""
+          />
+        </div>
       </div>
-      <div class="filter-item">
-        <span>行政区</span>
-        <app-select-control
-          class="list-type-select full"
-          [data]="types"
-          [selected]="typeSelected"
-          (selectedChange)="onTypeChange($event)"
-        ></app-select-control>
+      <div class="filter-item three">
+        <div class="filter-item-title">行政区</div>
+        <div class="filter-item-value">
+          <div class="select-control">
+            <select [(ngModel)]="type" (change)="onTypeChange()">
+              <option
+                [ngValue]="UserResourceType.County"
+                *ngIf="defaultType === UserResourceType.City"
+              >
+                {{ Language.UserResourceType(UserResourceType.County) }}
+              </option>
+              <option [ngValue]="UserResourceType.Committees">
+                {{ Language.UserResourceType(UserResourceType.Committees) }}
+              </option>
+              <option [ngValue]="UserResourceType.Station">
+                {{ Language.UserResourceType(UserResourceType.Station) }}
+              </option>
+            </select>
+          </div>
+        </div>
       </div>
-      <div class="filter-item" *ngIf="type != UserResourceType.County">
-        <span>筛选</span>
-        <app-select-control
-          class="list-type-select full"
-          [data]="counties"
-          [(selected)]="parent"
-          (selectedChange)="onCountyChange($event)"
-        ></app-select-control>
+      <div class="filter-item two" *ngIf="type != UserResourceType.County">
+        <div class="filter-item-title">筛选</div>
+        <div class="filter-item-value">
+          <hw-select [(selected)]="parent" [cannull]="true">
+            <select [(ngModel)]="parent">
+              <option [ngValue]="item" *ngFor="let item of counties">
+                {{ item.Name }}
+              </option>
+            </select>
+          </hw-select>
+        </div>
       </div>
       <button class="hw-blue-btn search" (click)="search()">
         <i class="mdi mdi-magnify"></i> 查询
@@ -44,20 +61,28 @@
     </div>
     <div class="filter-items">
       <div class="filter-item select">
-        <app-select-control
+        <!-- <app-select-control
           class="list-type-select"
           [data]="units"
           (selectedChange)="ontimeunit($event)"
-        ></app-select-control>
+        ></app-select-control> -->
+        <select [(ngModel)]="args.unit" (change)="ontimeunit()">
+          <option [ngValue]="TimeUnit.Day">
+            {{ Language.TimeUnit(TimeUnit.Day) }}
+          </option>
+          <option [ngValue]="TimeUnit.Week">
+            {{ Language.TimeUnit(TimeUnit.Week) }}
+          </option>
+          <option [ngValue]="TimeUnit.Month">
+            {{ Language.TimeUnit(TimeUnit.Month) }}
+          </option>
+        </select>
       </div>
     </div>
   </div>
   <div class="garbage-drop-station-window-count-content">
     <howell-garbage-drop-station-count-table
-      [parentId]="parent?.value"
-      [date]="date"
-      [unit]="unit"
-      [type]="type"
+      [args]="args"
       [load]="load"
       (loaded)="loaded($event)"
     >

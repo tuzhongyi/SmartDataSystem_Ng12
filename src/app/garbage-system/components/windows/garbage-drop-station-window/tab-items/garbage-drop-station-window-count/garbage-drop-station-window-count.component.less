@@ -5,7 +5,9 @@
   @filter-margin-bottim: 10px;
 
   .filter {
-    @title-width: 72px;
+    @title-width-three: 56px;
+    @title-width-two: 38px;
+    @title-width-four: 74px;
 
     display: flex;
     justify-content: space-between;
@@ -24,55 +26,86 @@
         width: 335px;
         display: flex;
         align-items: center;
-        // justify-content: space-between;
+        justify-content: space-between;
         margin-right: 10px;
 
-        &>span {
-          max-width: @title-width;
+        &.two {
+          .filter-item {
+            &-title {
+              width: @title-width-two;
+            }
+
+            &-value {
+              width: calc(100% - @title-width-two);
+            }
+          }
+        }
+
+        &.three {
+          .filter-item {
+            &-title {
+              width: @title-width-three;
+            }
+
+            &-value {
+              width: calc(100% - @title-width-three);
+            }
+          }
+        }
+
+        &.four {
+          .filter-item {
+            &-title {
+              width: @title-width-four;
+            }
+
+            &-value {
+              width: calc(100% - @title-width-four);
+            }
+          }
+        }
+
+        &-title {
+          width: @title-width-four;
           text-align: center;
           margin-right: 5px;
           color: #cfd7ff;
           font-size: 18px;
+
+
         }
 
-        &>input,
-        &>.input,
-        &>select,
-        &>button {
-          width: calc(100% - @title-width);
-        }
+        &-value {
+          width: calc(100% - @title-width-four);
 
-        &>input {
-          height: calc(100% - 2px);
-          width: calc(100% - @title-width - 12px - 10px);
-        }
 
-        &>button {
-          text-align: left;
-          color: #cfd7ff;
-          border: 1px solid #5e6ebf;
-          font-size: 18px;
-          border-radius: unset;
-          background-color: #1d233b;
+          &>button {
+            text-align: left;
+            color: #cfd7ff;
+            border: 1px solid #5e6ebf;
+            font-size: 18px;
+            border-radius: unset;
+            background-color: #1d233b;
 
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 5px;
-          height: 100%;
-
-          &:active,
-          &:focus,
-          &:target,
-          &[aria-expanded*="true"] {
-            border-color: #3a93ff;
-          }
-
-          ::ng-deep &>.mat-button-wrapper {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            width: 100%;
+            justify-content: space-between;
+            padding: 0 5px;
+            height: 100%;
+
+            &:active,
+            &:focus,
+            &:target,
+            &[aria-expanded*="true"] {
+              border-color: #3a93ff;
+            }
+
+            ::ng-deep &>.mat-button-wrapper {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              width: 100%;
+            }
           }
         }
 

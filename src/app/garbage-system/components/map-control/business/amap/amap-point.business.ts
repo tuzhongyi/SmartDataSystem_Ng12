@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import { timer } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { wait } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
-import { AMapVisibility, PointCount } from '../amap.model';
+import { AMapVisibility, GarbageTimeFilter, PointCount } from '../amap.model';
 import { AMapPointLabelBusiness } from './amap-point-label.business';
 import { AMapPointContextMenuBusiness } from './amap-point-menu.business';
 import { AMapClient } from './amap.client';
@@ -27,47 +26,55 @@ export class AMapPointBusiness {
       if (this.visibility.label.value) {
         this.visibility.label.change.emit(true);
       }
+      this.visibility.label.station.change.emit(
+        this.visibility.label.station.value
+      );
     });
     this.initVisibility();
     this.menu.init();
   }
   visibility = new AMapVisibility();
   private inited = false;
-
-  init() {
+  private initing = false;
+  async init() {
+    if (this.initing) {
+      return;
+    }
+    this.initing = true;
     return this.load().then((x) => {
-      timer(0.1 * 1000)
-        .toPromise()
-        .then(() => {
-          this.change();
-        });
+      this.change();
 
-      return x;
-    });
-  }
-
-  private async load() {
-    let all = [this.initStations(), this.initPoints()];
-    return Promise.all(all).then((x) => {
-      this.status(this.amap.source.all);
-      let constructions = this.amap.source.all.filter(
-        (x) => x.StationType === StationType.Construction
-      );
-      this.label.setBatteryLabel(constructions);
       this.inited = true;
-      let p = this.count(this.storeService.divisionId);
-      p.then((count) => {
-        this.event.point.count.emit(count);
-      });
-      return p;
+      this.initing = false;
+
+      return this.count(this.storeService.divisionId);
     });
   }
 
-  async initStations() {
+  /** 加载厢房和点位数据 完成后 重置显示状态和统计点位数量 */
+  private async load() {
+    return new Promise<void>((resolve) => {
+      let all = [this.loadStations(), this.loadPoints()];
+      return Promise.all(all).then((x) => {
+        this.status(this.amap.source.all);
+
+        let constructions = this.amap.source.all.filter(
+          (x) => x.StationType === StationType.Construction
+        );
+        if (this.label.display.battery) {
+          this.label.setBatteryLabel(constructions);
+        }
+        resolve();
+      });
+    });
+  }
+  /** 加载所有厢房 */
+  async loadStations() {
     this.amap.source.all = await this.service.all();
     return this.amap.source.all;
   }
-  async initPoints() {
+  /** 加载化所有点位 */
+  async loadPoints() {
     let controller = await this.amap.controller;
     let points = controller.Village.Point.All(
       this.storeService.defaultDivisionId!
@@ -78,12 +85,14 @@ export class AMapPointBusiness {
     }
     return points;
   }
-
+  /** 选中点位并移动到屏幕中心 */
   async select(stationId: string) {
     let client = await this.amap.client;
     let point = this.amap.source.points[stationId];
     client.Viewer.MoveTo(point.position);
+    client.Point.Select(point.id);
   }
+  /** 修改点位类型 */
   async change() {
     let controller = await this.amap.controller;
     for (let i = 0; i < this.amap.source.all.length; i++) {
@@ -209,8 +218,14 @@ export class AMapPointBusiness {
               console.warn('地图上多出点位：', station);
             }
           }
-
-          resolve({ count: count, normal: normal, warm: warm, error: error });
+          let result = {
+            count: count,
+            normal: normal,
+            warm: warm,
+            error: error,
+          };
+          this.event.point.count.emit(result);
+          resolve(result);
         }
       );
     });
@@ -221,8 +236,9 @@ export class AMapPointBusiness {
     this.visibility.construction.change.subscribe((x) => {});
     this.visibility.label.retention.change.subscribe((x) => {
       this.label.set(this.amap.source.all, x).then((x) => {
-        this.visibility.label.station.value =
-          this.visibility.label.station.value;
+        this.visibility.label.station.change.emit(
+          this.visibility.label.station.value
+        );
       });
     });
     // 当显示垃圾落地时长的时候，是否显示其他厢房
@@ -242,20 +258,24 @@ export class AMapPointBusiness {
       });
     });
     this.visibility.label.change.subscribe((x) => {
-      this.amap.client.then((client) => {
-        if (x) {
-          client.Label.Show();
-          this.label.set(
-            this.amap.source.all,
-            this.visibility.label.retention.value
-          );
-        } else {
-          client.Label.Hide(CesiumDataController.ImageResource.arcProgress);
-        }
-      });
+      if (x) {
+        this.label.show(CesiumDataController.ImageResource.arcProgress);
+        this.label.set(
+          this.amap.source.all,
+          this.visibility.label.retention.value
+        );
+      } else {
+        this.label.hide(CesiumDataController.ImageResource.arcProgress);
+      }
     });
   }
 
+  private garbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
+    if (time === undefined || time <= 0) return false;
+    return time >= filter;
+  }
+
+  // 显示普通厢房
   async garbageStationVisibility(value: boolean) {
     let client = await this.amap.client;
     for (const key in this.amap.source.points) {
@@ -267,15 +287,17 @@ export class AMapPointBusiness {
       }
     }
   }
+  // 显示大件垃圾厢房
   async constructionStationVisibility(value: boolean) {
+    this.label.display.battery = value;
     let client = await this.amap.client;
     this.amap.source.all.forEach((x) => {
       if (x.StationType === StationType.Construction) {
         client.Point.SetVisibility(x.Id, value);
         if (value) {
-          client.Label.Show(CesiumDataController.ImageResource.battery);
+          this.label.show(CesiumDataController.ImageResource.battery);
         } else {
-          client.Label.Hide(CesiumDataController.ImageResource.battery);
+          this.label.hide(CesiumDataController.ImageResource.battery);
         }
       }
     });

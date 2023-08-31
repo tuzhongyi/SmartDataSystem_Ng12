@@ -28,6 +28,7 @@ import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
 import { StaticDataRole } from '../enum/role-static-data.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
+import { UserUIType } from '../enum/user-ui-type.enum';
 import { User, UserResource } from '../network/model/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
@@ -195,6 +196,54 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     return response;
   }
 
+  route(user: User) {
+    if (user.UIType === UserUIType.dapuqiao) {
+      this._router.navigateByUrl(RoutePath.dapuqiao);
+    } else {
+      switch (user.UserType) {
+        case 3:
+        case 2:
+          this._router.navigateByUrl(RoutePath.garbage_vehicle);
+          break;
+
+        case 1:
+        default:
+          this._storeUserInfo(user, user.Id, user.Resources ?? []);
+
+          // 区分权限
+          if (!this.systemManage) {
+            if (user.Role && user.Role.length > 0) {
+              if (user.Role[0].StaticData == StaticDataRole.enabled) {
+                this._router.navigateByUrl(RoutePath.aiop);
+              } else if (user.Role[0].StaticData == StaticDataRole.disabled) {
+                if (
+                  user.Resources &&
+                  user.Resources.length > 0 &&
+                  user.Resources[0].ResourceType === UserResourceType.Committees
+                ) {
+                  this._router.navigateByUrl(
+                    RoutePath.garbage_system_committees
+                  );
+                } else {
+                  this._router.navigateByUrl(RoutePath.garbage_system);
+                }
+              }
+            } else if (
+              user.Resources &&
+              user.Resources.length > 0 &&
+              user.Resources[0].ResourceType === UserResourceType.Committees
+            ) {
+              this._router.navigateByUrl(RoutePath.garbage_system_committees);
+            } else {
+            }
+          } else {
+            this._router.navigateByUrl(RoutePath.system_manage);
+          }
+          break;
+      }
+    }
+  }
+
   async login() {
     // let nonce = 'fc5f3c277dba491eaeedd77d25e41dd1'; //'ad2af40c5f244b77afa15b0e62e572c0';
     // let nc = '00000001'; //'00000032';
@@ -213,52 +262,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         );
         if (user instanceof User) {
           // console.log('登录成功', result);
-          switch (user.UserType) {
-            case 3:
-            case 2:
-              this._router.navigateByUrl(RoutePath.garbage_vehicle);
-              break;
-
-            case 1:
-            default:
-              this._storeUserInfo(user, user.Id, user.Resources ?? []);
-
-              // 区分权限
-              if (!this.systemManage) {
-                if (user.Role && user.Role.length > 0) {
-                  if (user.Role[0].StaticData == StaticDataRole.enabled) {
-                    this._router.navigateByUrl(RoutePath.aiop);
-                  } else if (
-                    user.Role[0].StaticData == StaticDataRole.disabled
-                  ) {
-                    if (
-                      user.Resources &&
-                      user.Resources.length > 0 &&
-                      user.Resources[0].ResourceType ===
-                        UserResourceType.Committees
-                    ) {
-                      this._router.navigateByUrl(
-                        RoutePath.garbage_system_committees
-                      );
-                    } else {
-                      this._router.navigateByUrl(RoutePath.garbage_system);
-                    }
-                  }
-                } else if (
-                  user.Resources &&
-                  user.Resources.length > 0 &&
-                  user.Resources[0].ResourceType === UserResourceType.Committees
-                ) {
-                  this._router.navigateByUrl(
-                    RoutePath.garbage_system_committees
-                  );
-                } else {
-                }
-              } else {
-                this._router.navigateByUrl(RoutePath.system_manage);
-              }
-              break;
-          }
+          this.route(user);
         }
       } catch (e: any) {
         if (this._isAxiosError(e)) {

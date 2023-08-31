@@ -9,4 +9,16 @@ export abstract class AbstractUrl {
   list() {
     return `${this.basic()}/List`;
   }
+  feedback(id: string) {
+    return `${this.item(id)}/Feedback`;
+  }
+  supervise(id: string) {
+    return `${this.item(id)}/Supervise`;
+  }
+  superviseresult(id: string) {
+    return `${this.item(id)}/SuperviseResult`;
+  }
+  accept(id: string) {
+    return `${this.item(id)}/Accept`;
+  }
 }

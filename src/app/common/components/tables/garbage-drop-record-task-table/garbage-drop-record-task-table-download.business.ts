@@ -34,10 +34,7 @@ export class GarbageDropRecordTaskTableDownloadBusiness {
 }
 
 class Converter implements IExportConverter<GarbageDropRecordTaskTableModel[]> {
-  Convert(
-    source: GarbageDropRecordTaskTableModel[],
-    ...res: any[]
-  ): HowellExportModel {
+  async Convert(source: GarbageDropRecordTaskTableModel[], ...res: any[]) {
     let model = new HowellExportModel();
     let total = source.pop();
     for (let i = 0; i < source.length; i++) {

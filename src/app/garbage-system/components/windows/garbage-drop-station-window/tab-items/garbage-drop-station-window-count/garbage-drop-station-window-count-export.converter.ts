@@ -5,18 +5,19 @@ import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model'
 export class GarbageDropStationWindowCountExportConverter
   implements IExportConverter<GarbageDropStationCountTableModel[]>
 {
-  Convert(
+  async Convert(
     source: GarbageDropStationCountTableModel[],
     ...res: any[]
-  ): HowellExportModel {
+  ): Promise<HowellExportModel> {
     let model = new HowellExportModel();
     for (let i = 0; i < source.length; i++) {
       let data = source[i];
       let value = new Array();
       value.push(i + 1);
       value.push(data.Name);
-      if (data.Parent) {
-        value.push(data.Parent.Name);
+      let parent = await data.Parent;
+      if (parent) {
+        value.push(parent.Name);
       }
       value.push(data.EventCount);
       value.push(data.TimeoutCount);

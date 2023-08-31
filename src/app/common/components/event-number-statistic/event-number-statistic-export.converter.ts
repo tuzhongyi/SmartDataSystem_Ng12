@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
-  EventNumberStatisticModel,
   EventNumberStatisticCSV,
+  EventNumberStatisticModel,
 } from 'src/app/view-model/event-number-statistic.model';
 import {
   IConverter,
@@ -14,10 +14,7 @@ export class EventNumberStatisticExportConverter
   implements IExportConverter<EventNumberStatisticModel[]>
 {
   item = new EventNumberStatisticItemExportConverter();
-  Convert(
-    source: EventNumberStatisticModel[],
-    ...res: any[]
-  ): HowellExportModel {
+  async Convert(source: EventNumberStatisticModel[], ...res: any[]) {
     let model = new HowellExportModel();
     model.rowValues = source.map((x, index) => {
       let item = this.item.Convert(x, index);

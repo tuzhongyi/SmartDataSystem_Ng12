@@ -11,6 +11,11 @@ export class AMapPointLabelBusiness {
   private labelOptionConverter = new AMapLabelOptionConverter();
   constructor(private service: AMapService, private amap: AMapClient) {}
 
+  display = {
+    timer: false,
+    battery: true,
+  };
+
   async set(stations: GarbageStationModel[], filter: GarbageTimeFilter) {
     let client = await this.amap.client;
     // 获取统计数据
@@ -54,6 +59,7 @@ export class AMapPointLabelBusiness {
         delete this.amap.source.labels[id];
       }
     }
+    return dropIds;
   }
 
   private garbageTimeFiltering(filter: GarbageTimeFilter, time?: number) {
@@ -80,18 +86,32 @@ export class AMapPointLabelBusiness {
       if (!station.ConstructionData) continue;
 
       let point = controller.Village.Point.Get(station.DivisionId!, station.Id);
-
-      const opt = new CesiumDataController.LabelOptions();
-      opt.position = point.position;
-      opt.id = point.id;
-      opt.image = new CesiumDataController.ImageOptions();
-      opt.image.value = this.getBattery(
+      let option = this.getBatteryOption(
+        point,
         station.ConstructionData.PercentageOfCapacity ?? 0
       );
-      opt.image.resource = CesiumDataController.ImageResource.battery;
-      opt.position = point.position;
-      opts.push(opt);
+      opts.push(option);
     }
     client.Label.Set(opts, CesiumDataController.ImageResource.battery);
+  }
+
+  private getBatteryOption(point: CesiumDataController.Point, value: number) {
+    const opt = new CesiumDataController.LabelOptions();
+    opt.position = point.position;
+    opt.id = point.id;
+    opt.image = new CesiumDataController.ImageOptions();
+    opt.image.value = this.getBattery(value);
+    opt.image.resource = CesiumDataController.ImageResource.battery;
+    opt.position = point.position;
+    return opt;
+  }
+
+  async show(type?: CesiumDataController.ImageResource) {
+    let client = await this.amap.client;
+    client.Label.Show(type);
+  }
+  async hide(type?: CesiumDataController.ImageResource) {
+    let client = await this.amap.client;
+    client.Label.Hide(type);
   }
 }

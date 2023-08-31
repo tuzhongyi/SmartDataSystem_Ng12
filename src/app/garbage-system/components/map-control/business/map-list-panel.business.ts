@@ -1,6 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { ViewModelConverter } from 'src/app/converter/view-models/view-model.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -28,17 +27,18 @@ export class ListPanelBusiness
     private storeService: GlobalStorageService,
     private divisionService: DivisionRequestService,
     private stationService: GarbageStationRequestService,
-    private vmConverter: ViewModelConverter
+    private vmConverter: ViewModelConverter,
+    private converter: ListPanelConverter
   ) {}
-  Converter: IConverter<ListPanelType[], ListItem<ListPanelType>[]> =
-    new ListPanelConverter();
 
   async load(
     parentId: string,
     parentType: DivisionType
   ): Promise<ListItem<ListPanelType>[]> {
     let data = await this.getData(parentId, parentType);
-    return this.Converter.Convert(data);
+    let model = this.converter.Convert(data);
+
+    return model;
   }
   async getData(
     parentId: string,
@@ -124,7 +124,7 @@ export class ListPanelBusiness
       let params = new GetGarbageStationsParams();
       params.Name = text;
       let data = await this.stationService.cache.list(params);
-      let items = this.Converter.Convert(data.Data);
+      let items = this.converter.Convert(data.Data);
       this.datasource = items;
     } else {
       this.init();

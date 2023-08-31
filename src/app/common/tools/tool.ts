@@ -51,10 +51,10 @@ export function IntegerDecimalNum(num: string) {
 /**
  *  JS 计算两个时间间隔多久（时分秒）
  */
-export function DateDifference(faultDate: string, completeTime: Date) {
+export function DateDifference(faultDate: Date, completeTime: Date) {
   // let d1 = new Date(faultDate);
   // let d2 = new Date(completeTime);
-  var stime = new Date(faultDate).getTime();
+  var stime = faultDate.getTime();
   var etime = completeTime.getTime();
 
   var usedTime = etime - stime; //两个时间戳相差的毫秒数

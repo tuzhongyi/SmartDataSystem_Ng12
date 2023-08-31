@@ -33,6 +33,7 @@ import { AMapEvent } from './business/amap/amap.event';
 import { AMapService } from './business/amap/amap.service';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
+import { ListPanelConverter } from './converter/map-list-panel.converter';
 import { MapControlSelected, MapControlTools } from './map-control.model';
 declare var $: any;
 @Component({
@@ -48,6 +49,7 @@ declare var $: any;
     AMapPointLabelBusiness,
     AMapPointContextMenuBusiness,
     AMapBusiness,
+    ListPanelConverter,
     ListPanelBusiness,
     PointInfoPanelBusiness,
   ],
@@ -209,6 +211,8 @@ export class MapControlComponent
       ) {
         display.retention.current.click.emit();
       }
+
+      display.retention.current.display = !display.filting.current.selected;
     });
     display.filting.construction.click.subscribe((x) => {
       display.filting.construction.selected =
@@ -230,12 +234,6 @@ export class MapControlComponent
       display.retention.m30.selected = false;
       display.retention.h1.selected = false;
       display.retention.h2.selected = false;
-      if (
-        display.filting.current.selected &&
-        display.retention.current.selected
-      ) {
-        display.filting.current.click.emit();
-      }
     });
     display.retention.station.click.subscribe((x) => {
       display.retention.station.selected = !display.retention.station.selected;

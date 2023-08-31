@@ -39,17 +39,30 @@ export function transformTimespan(params: TransformFnParams) {
 }
 
 export function transformTime(params: TransformFnParams) {
-  if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    return new Time(params.value);
-  } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
-    let value = params.value as Time;
-    let date = new Date(0, 0, 0, value.hour, value.minute, value.second);
-    return formatDate(date, 'HH:mm:ss', 'en');
-  } else if (params.type === TransformationType.CLASS_TO_CLASS) {
-    return new Time(params.value);
+  if (Array.isArray(params.value)) {
+    if (params.type === TransformationType.PLAIN_TO_CLASS) {
+      return params.value.map((x) => new Time(x));
+    } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
+      return params.value.map((x: Time) => {
+        let value = x as Time;
+        let date = new Date(0, 0, 0, value.hour, value.minute, value.second);
+        return formatDate(date, 'HH:mm:ss', 'en');
+      });
+    } else if (params.type === TransformationType.CLASS_TO_CLASS) {
+      return params.value.map((x) => new Time(x));
+    }
   } else {
-    return '';
+    if (params.type === TransformationType.PLAIN_TO_CLASS) {
+      return new Time(params.value);
+    } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
+      let value = params.value as Time;
+      let date = new Date(0, 0, 0, value.hour, value.minute, value.second);
+      return formatDate(date, 'HH:mm:ss', 'en');
+    } else if (params.type === TransformationType.CLASS_TO_CLASS) {
+      return new Time(params.value);
+    }
   }
+  return params.value;
 }
 
 export function transformFlags(params: TransformFnParams) {

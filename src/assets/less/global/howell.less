@@ -361,3 +361,40 @@ ul {
   padding: 0;
   margin: 0;
 }
+
+.select-control {
+  position: relative;
+
+  .please {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    pointer-events: none;
+    padding: 0 10px;
+  }
+
+  .clear {
+    position: absolute;
+    right: 30px;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
+
+.howell-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

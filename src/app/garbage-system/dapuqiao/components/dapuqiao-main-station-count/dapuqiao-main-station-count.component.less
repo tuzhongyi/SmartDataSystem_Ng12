@@ -1,0 +1,32 @@
+.index-station-count {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  @head-height: 36px;
+
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    select {
+      border: none;
+      min-width: auto;
+      background-color: #100c2a;
+    }
+  }
+
+  &-body {
+
+    height: calc(100% - @head-height - 10px);
+
+    .station-count {
+      width: calc(100% + 20px);
+      padding-right: 20px;
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
+}

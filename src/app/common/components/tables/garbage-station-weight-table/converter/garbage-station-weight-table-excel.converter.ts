@@ -5,10 +5,7 @@ import { GarbageStationWeightTableExportModel } from '../garbage-station-weight-
 export class GarbageStationWeightTableExcelConverter
   implements IExportConverter<GarbageStationWeightTableExportModel[]>
 {
-  Convert(
-    source: GarbageStationWeightTableExportModel[],
-    ...res: any[]
-  ): HowellExportModel {
+  async Convert(source: GarbageStationWeightTableExportModel[], ...res: any[]) {
     let model = new HowellExportModel();
     model.rowValues = source.map((x, index) => {
       let row = new Array();

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExportType } from 'src/app/enum/export-type.enum';
-import { IConverter } from '../interfaces/converter.interface';
+import { IPromiseConverter } from '../interfaces/converter.interface';
 import { HowellCSV } from '../tools/exports/hw-export-csv';
 import { HowellExcel } from '../tools/exports/hw-export-excel';
 import { HowellExportModel } from '../tools/exports/hw-export.model';
@@ -9,12 +9,12 @@ import { HowellExportModel } from '../tools/exports/hw-export.model';
   providedIn: 'root',
 })
 export class ExportBusiness {
-  export<T>(
+  async export<T>(
     type: ExportType,
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
     switch (type) {
@@ -29,28 +29,28 @@ export class ExportBusiness {
     }
   }
 
-  excel<T>(
+  async excel<T>(
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
     let excel = new HowellExcel();
-    let model = converter.Convert(datas, ...args);
+    let model = await converter.Convert(datas, ...args);
     model.headers = headers;
     model.title = title;
     excel.setData(model);
     excel.save(title);
   }
-  csv<T>(
+  async csv<T>(
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
-    let model = converter.Convert(datas, ...args);
+    let model = await converter.Convert(datas, ...args);
     model.title = title;
     model.headers = headers;
     HowellCSV.writeFile(title, model);

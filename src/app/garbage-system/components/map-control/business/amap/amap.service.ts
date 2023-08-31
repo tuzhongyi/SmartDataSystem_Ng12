@@ -14,7 +14,7 @@ export class AMapService {
   }
 
   all() {
-    return this.service.cache.all();
+    return this.service.all();
   }
   get(id: string) {
     return this.service.get(id);

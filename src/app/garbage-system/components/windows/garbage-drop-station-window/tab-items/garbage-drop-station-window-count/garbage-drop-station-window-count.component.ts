@@ -6,8 +6,10 @@ import {
   OnInit,
 } from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { GarbageDropStationCountTableModel } from 'src/app/common/components/tables/garbage-drop-station-count-table/garbage-drop-station-count-table.model';
+import {
+  GarbageDropStationCountTableArgs,
+  GarbageDropStationCountTableModel,
+} from 'src/app/common/components/tables/garbage-drop-station-count-table/garbage-drop-station-count-table.model';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
@@ -19,6 +21,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 import { GarbageDropStationWindowCountBusiness } from './garbage-drop-station-window-count.business';
 
@@ -32,93 +35,42 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   constructor(
     private local: LocalStorageService,
     private exports: ExportBusiness,
-    private store: GlobalStorageService,
+    public store: GlobalStorageService,
     private changeDetector: ChangeDetectorRef,
     private business: GarbageDropStationWindowCountBusiness
   ) {
-    this.initUnits();
-    this.dateTimePickerConfig = new DateTimePickerConfig();
-    this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
+    this.defaultType = EnumHelper.ConvertDivisionToUserResource(
+      store.defaultDivisionType
+    );
+    this.type = EnumHelper.GetResourceChildType(this.defaultType);
   }
 
   UserResourceType = UserResourceType;
   DateTimePickerView = DateTimePickerView;
-  dateTimePickerConfig: DateTimePickerConfig;
+  dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
   TimeUnit = TimeUnit;
-  units: SelectItem[] = [];
-  unit: TimeUnit = TimeUnit.Day;
+
   date: Date = new Date();
-  types: SelectItem[] = [];
   type: UserResourceType = UserResourceType.County;
-  load: EventEmitter<void> = new EventEmitter();
+  args = new GarbageDropStationCountTableArgs();
+  load: EventEmitter<GarbageDropStationCountTableArgs> = new EventEmitter();
   datas?: GarbageDropStationCountTableModel[];
-  typeSelected?: SelectItem;
 
-  counties: SelectItem[] = [];
-  parent?: SelectItem;
-
-  initUnits() {
-    this.units.push(
-      new SelectItem(TimeUnit.Hour.toString(), TimeUnit.Hour, '日报表')
-    );
-    this.units.push(
-      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
-    );
-    this.units.push(
-      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
-    );
-  }
-  initUserResourceTypes() {
-    let type = EnumHelper.ConvertDivisionToUserResource(
-      this.store.divisionType
-    );
-    if (type === UserResourceType.City) {
-      this.types.push(
-        new SelectItem(
-          UserResourceType.County.toString(),
-          UserResourceType.County,
-          Language.UserResourceType(UserResourceType.County)
-        )
-      );
-    }
-
-    this.types.push(
-      new SelectItem(
-        UserResourceType.Committees.toString(),
-        UserResourceType.Committees,
-        Language.UserResourceType(UserResourceType.Committees)
-      )
-    );
-
-    this.types.push(
-      new SelectItem(
-        UserResourceType.Station.toString(),
-        UserResourceType.Station,
-        Language.UserResourceType(UserResourceType.Station)
-      )
-    );
-    this.type = this.types[0].value;
-  }
-
+  counties: Division[] = [];
+  parent?: Division;
+  Language = Language;
+  defaultType: UserResourceType;
   async ngOnInit() {
-    let { Data } = await this.business.getCommittees(this.store.divisionId);
-
-    this.counties = Data.map((division) => {
-      return new SelectItem(division.Id, division.Id, division.Name);
-    });
-    this.counties.unshift(new SelectItem('', '', '全部'));
-
-    this.initUserResourceTypes();
-
-    this.typeSelected = this.types[0];
+    this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
+    this.counties = await this.business.getCounties(
+      this.store.defaultDivisionType
+    );
+    if (this.counties && this.counties.length > 0) {
+      this.parent = this.counties[0];
+    }
   }
-  ngAfterViewChecked() {
-    this.changeDetector.detectChanges();
-  }
-
-  ontimeunit(unit: SelectItem) {
-    this.unit = unit.value;
-    switch (this.unit) {
+  ontimeunit() {
+    switch (this.args.unit) {
       case TimeUnit.Week:
         this.dateTimePickerConfig.view = DateTimePickerView.month;
         this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
@@ -140,24 +92,31 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     }
   }
 
-  onTypeChange(item: SelectItem) {
-    this.type = item.value;
-    console.log(item);
+  async onTypeChange() {
+    this.counties = [];
     this.parent = undefined;
+    this.args.type = EnumHelper.ConvertUserResourceToDivision(this.type);
+    if (
+      this.type === UserResourceType.Station &&
+      this.store.defaultDivisionId
+    ) {
+      this.counties = await this.business.getCommittees(
+        this.store.defaultDivisionId
+      );
+    }
   }
 
-  onCountyChange(item: SelectItem) {
-    this.parent = item;
-  }
   search() {
-    this.load.emit();
+    this.args.parentId = undefined;
+    if (this.parent) {
+      this.args.parentId = this.parent.Id;
+    }
+    this.load.emit(this.args);
   }
 
   loaded(datas: GarbageDropStationCountTableModel[]) {
     this.datas = datas;
   }
-
-  converter = new GarbageDropStationWindowCountExportConverter();
 
   getTitle() {
     let title = formatDate(this.date, 'yyyy年MM月dd日', 'en');
@@ -177,7 +136,8 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
       '垃圾滞留超时',
       '达标率',
     ];
-    this.exports.export(type, title, headers, this.datas, this.converter);
+    let converter = new GarbageDropStationWindowCountExportConverter();
+    this.exports.export(type, title, headers, this.datas, converter);
   }
 
   exportExcel() {

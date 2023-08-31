@@ -1,15 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
-import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
 
 @Component({
   selector: 'howell-garbage-drop-station-window',
@@ -30,9 +27,16 @@ export class GarbageDropStationWindowComponent
   @Input()
   divisionId?: string;
 
-  constructor(public details: EventRecordWindowDetailsBusiness) {
+  constructor(
+    public details: EventRecordWindowDetailsBusiness,
+    local: LocalStorageService
+  ) {
     super();
+    this.ui = local.user.UIType;
   }
+
+  ui?: UserUIType;
+  UserUIType = UserUIType;
 
   Index = GarbageDropStationWindowIndex;
   load: EventEmitter<SearchOptions> = new EventEmitter();
@@ -59,5 +63,6 @@ export class GarbageDropStationWindowComponent
 export enum GarbageDropStationWindowIndex {
   list = 0,
   count = 1,
-  details = 2,
+  details = 3,
+  dapuqiao_count = 2,
 }

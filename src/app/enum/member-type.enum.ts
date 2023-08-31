@@ -1,9 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2022-12-16 11:19:57
- * @Last Modified by: pmx
- * @Last Modified time: 2022-12-21 10:20:54
- */
 /**
  * 人员类型
  * 其他人员	0
@@ -17,6 +11,10 @@ export enum MemberType {
   volunteer = 1,
   /**	卫生干部	2 */
   healthworker = 2,
+  /** 物业	3 */
+  property = 3,
+  /**	第三方	4	*/
+  thirdpart = 4,
 }
 
 export enum CollectionMemberType {

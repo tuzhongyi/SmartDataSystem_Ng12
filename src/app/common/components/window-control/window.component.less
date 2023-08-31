@@ -22,6 +22,12 @@
   top: 0;
   left: 0;
   z-index: 9999;
+
+  &.none {
+    background-color: transparent;
+    pointer-events: none;
+    z-index: 9998;
+  }
 }
 
 .window-content {
@@ -30,4 +36,5 @@
   box-shadow: 0 0 10px 0 rgb(105 173 255);
   background: #0c1127;
   height: 100%;
+  pointer-events: all;
 }

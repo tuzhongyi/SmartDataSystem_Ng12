@@ -1,53 +1,78 @@
 <app-window [Model]="Model" [style]="style">
   <ng-container *ngIf="Model.show">
-    <app-tab-title
-      [title]="
-        Language.json.garbage + Language.json.stay + Language.json.station
-      "
-    >
-      <div class="garbage-drop-station-table-window-header">
+    <div class="garbage-drop-station-table-window">
+      <div class="garbage-drop-station-table-window-head">
+        <div class="hw-second-title">
+          {{
+            Language.json.garbage + Language.json.stay + Language.json.station
+          }}
+        </div>
+        <div class="garbage-drop-station-table-window-head-content">
+          <div class="garbage-drop-station-table-window-head-content-list">
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.list"
+              (click)="indexChange(Index.list)"
+            >
+              列表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.count"
+              (click)="indexChange(Index.count)"
+              *ngIf="ui !== UserUIType.dapuqiao"
+            >
+              总图表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.dapuqiao_count"
+              (click)="indexChange(Index.dapuqiao_count)"
+              *ngIf="ui === UserUIType.dapuqiao"
+            >
+              总图表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.details"
+              (click)="indexChange(Index.details)"
+            >
+              细分图表
+            </div>
+          </div>
+          <div class="operation" *ngIf="index == Index.list">
+            <app-input-search-options (search)="onsearch($event)">
+            </app-input-search-options>
+          </div>
+        </div>
+      </div>
+      <div class="garbage-drop-station-table-window-body">
         <ng-container *ngIf="index == Index.list">
-          <app-input-search-options (search)="onsearch($event)">
-          </app-input-search-options>
+          <howell-garbage-drop-station-table
+            [load]="load"
+            [divisionId]="divisionId"
+            (image)="onimage($event)"
+            (position)="onposition($event)"
+          >
+          </howell-garbage-drop-station-table>
+        </ng-container>
+        <ng-container *ngIf="index == Index.count">
+          <howell-garbage-drop-station-window-count>
+          </howell-garbage-drop-station-window-count>
+        </ng-container>
+        <ng-container *ngIf="index == Index.dapuqiao_count">
+          <howell-garbage-drop-station-window-count>
+          </howell-garbage-drop-station-window-count>
+        </ng-container>
+        <ng-container *ngIf="index === Index.details">
+          <howell-details-chart
+            [types]="type"
+            [business]="details"
+            [division]="details.division"
+          >
+          </howell-details-chart>
         </ng-container>
       </div>
-    </app-tab-title>
-    <div class="garbage-drop-station-table-window-content">
-      <mat-tab-group
-        [disableRipple]="true"
-        animationDuration="0ms"
-        [color]="'transparent'"
-        [selectedIndex]="index"
-        (selectedIndexChange)="indexChange($event)"
-      >
-        <mat-tab label="列表">
-          <ng-container *ngIf="index == Index.list">
-            <howell-garbage-drop-station-table
-              [load]="load"
-              [divisionId]="divisionId"
-              (image)="onimage($event)"
-              (position)="onposition($event)"
-            >
-            </howell-garbage-drop-station-table>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="总图表">
-          <ng-container *ngIf="index == Index.count">
-            <howell-garbage-drop-station-window-count>
-            </howell-garbage-drop-station-window-count>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="细分图表">
-          <ng-container *ngIf="index === Index.details">
-            <howell-details-chart
-              [types]="type"
-              [business]="details"
-              [division]="details.division"
-            >
-            </howell-details-chart>
-          </ng-container>
-        </mat-tab>
-      </mat-tab-group>
     </div>
   </ng-container>
 </app-window>

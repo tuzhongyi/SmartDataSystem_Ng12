@@ -1,0 +1,17 @@
+<div class="index-record-level">
+  <div class="index-record-level-head">
+    <div class="title">{{ title }}</div>
+    <div>
+      <select [(ngModel)]="args.type" (change)="onchange()">
+        <option [ngValue]="Type.GarbageDrop">一级事件</option>
+        <option [ngValue]="Type.GarbageDropTimeout">二级事件</option>
+        <option [ngValue]="Type.GarbageDropSuperTimeout">三级事件</option>
+      </select>
+    </div>
+  </div>
+
+  <app-rank
+    [data]="rankData"
+    (itemClickedEvent)="onItemClicked($event)"
+  ></app-rank>
+</div>

@@ -1,0 +1,27 @@
+.dapuqiao-main-line-feedback {
+  width: 100%;
+  height: 100%;
+  padding: 15px 20px;
+  box-sizing: border-box;
+
+  @head-height: 36px;
+
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    select {
+      border: none;
+      min-width: auto;
+      background-color: #0b093b;
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height - 10px);
+    width: 100%;
+
+  }
+}

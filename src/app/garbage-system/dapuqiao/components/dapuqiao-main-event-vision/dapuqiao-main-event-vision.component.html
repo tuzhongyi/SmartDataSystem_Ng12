@@ -1,0 +1,29 @@
+<div class="index-event-vision">
+  <div class="index-event-vision-head">
+    <div class="hw-simple-title">三级事件督办</div>
+    <div class="operation">
+      <select class="mdi" [(ngModel)]="position" (change)="onchange()">
+        <option [ngValue]="Position.main">
+          <div>&#xf08b;&nbsp;</div>
+        </option>
+        <option [ngValue]="Position.center">
+          <div>&#xf08b;&nbsp;</div>
+        </option>
+        <option [ngValue]="Position.bottom">
+          <div>&#xf08b;&nbsp;</div>
+        </option>
+      </select>
+      <div class="howell-icon" (click)="onclose()">
+        <i class="howell-icon-Close"></i>
+      </div>
+    </div>
+  </div>
+  <div class="index-event-vision-body">
+    <garbage-station-event-record-vision-table
+      [load]="load"
+      (image)="onimage($event)"
+      (details)="ondetails($event)"
+      (select)="onselect($event)"
+    ></garbage-station-event-record-vision-table>
+  </div>
+</div>

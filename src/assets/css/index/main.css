@@ -131,9 +131,16 @@ h2 {
 }
 
 .second-menu-btn {
-  width: 130px;
+  min-width: 130px;
   cursor: pointer;
   height: 44px;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 18px;
   background-image: url("/assets/img/second-menu.png");
 }
 
@@ -151,6 +158,9 @@ h2 {
   color: white;
   align-items: center;
   display: flex;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: 0 10px 0 20px;
 }
 
 select.custom.form-control:not([size]):not([multiple]) {
@@ -268,11 +278,9 @@ a.td-icon:hover i {
 }
 
 .table.body.stylish-table tbody tr:hover {
-  background: linear-gradient(
-    to right,
-    rgb(117, 134, 224, 0.5),
-    rgb(50, 134, 229, 0.5)
-  );
+  background: linear-gradient(to right,
+      rgb(117, 134, 224, 0.5),
+      rgb(50, 134, 229, 0.5));
   border-left: unset;
   cursor: pointer;
   border-bottom: 2px solid rgba(0, 0, 0, 0.3);
@@ -318,39 +326,37 @@ a.td-icon:hover i {
   color: #cfd7ff;
 }
 
-.checkbox-wrap
-  > [type="checkbox"].filled-in:checked.chk-col-deep-purple
-  + label:after {
+.checkbox-wrap>[type="checkbox"].filled-in:checked.chk-col-deep-purple+label:after {
   border: 1px solid #7586e0;
   background-color: rgba(0, 0, 0, 0);
 }
 
-[type="checkbox"].filled-in:checked + label:before {
+[type="checkbox"].filled-in:checked+label:before {
   border-right: 2px solid #cfd7ff !important;
   border-bottom: 2px solid #cfd7ff !important;
 }
 
-[type="checkbox"] + label {
+[type="checkbox"]+label {
   height: 18px;
   line-height: 18px;
   margin-bottom: 0;
 }
 
-[type="checkbox"].filled-in:checked + label:before {
+[type="checkbox"].filled-in:checked+label:before {
   top: 0px;
   left: 0px;
   width: 8px;
   height: 12px;
 }
 
-[type="checkbox"].filled-in:not(:checked) + label:after {
+[type="checkbox"].filled-in:not(:checked)+label:after {
   height: 16px;
   width: 16px;
   top: 1px;
   border: 1px solid #7586e0;
 }
 
-[type="checkbox"].filled-in:checked + label:after {
+[type="checkbox"].filled-in:checked+label:after {
   top: 1px;
   width: 16px;
   height: 16px;

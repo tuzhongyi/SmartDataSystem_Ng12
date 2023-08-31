@@ -113,4 +113,16 @@ export class DateTimeTool {
 
     return duration;
   }
+  static beforeDay(date: Date, day: number = 7): Duration {
+    let duration = {
+      begin: new Date(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate() - day
+      ),
+      end: new Date(date.getFullYear(), date.getMonth(), date.getDate()),
+    };
+    duration.end.setMilliseconds(-1);
+    return duration;
+  }
 }

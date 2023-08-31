@@ -20,7 +20,7 @@ export class AIGarbageStationRegionTreeConverter extends CommonTreeConverter {
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = true;
-    node.ParentId = undefined;
+    node.ParentId = item.ParentId;
     node.ChildrenLoaded = true;
     node.ParentNode = undefined;
     node.IconClass = 'howell-icon-earth';

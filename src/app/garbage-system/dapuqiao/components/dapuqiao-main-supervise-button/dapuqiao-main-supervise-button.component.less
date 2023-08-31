@@ -1,0 +1,49 @@
+.dapuqiao-main-supervise-button {
+  display: flex;
+  background-color: #2d3559;
+  border-radius: 100px;
+  padding: 10px 20px;
+  align-items: center;
+  white-space: nowrap;
+  cursor: pointer;
+  color: white;
+
+  &:hover {
+    background-color: #43496a;
+  }
+
+  &.alarm {
+    background-color: #91580a;
+
+    &:hover {
+      background-color: #9c6923;
+    }
+
+    .icon {
+      color: #ff9233;
+    }
+  }
+
+  &>* {
+    margin-right: 10px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+
+  .icon {
+    color: #68adfd;
+    font-size: 18px;
+  }
+
+  .value {
+    font-size: 18px;
+  }
+
+  .text {
+    font-size: 16px;
+    font-weight: normal;
+  }
+}

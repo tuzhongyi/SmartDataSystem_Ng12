@@ -26,6 +26,8 @@ export class AIGarbageRegionTreeBusiness {
     let divisionIds = regions
       .filter((x) => !!x.DivisionId)
       .map((x) => x.DivisionId!);
+    // 去重
+    divisionIds = Array.from(new Set(divisionIds));
     let divisions = await this.service.divisions(divisionIds);
     let data;
     if (onlyDivisionNode) {

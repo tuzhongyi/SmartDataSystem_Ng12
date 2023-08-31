@@ -1,0 +1,49 @@
+.index-event-vision {
+  width: 100%;
+  height: 100%;
+
+  box-sizing: border-box;
+
+  @head-height: 36px;
+
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+
+    .operation {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      margin-top: -15px;
+
+      &>* {
+        margin-left: 10px;
+
+        &:first-child {
+          margin-left: 0;
+        }
+      }
+
+      .howell-icon {
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+          color: red;
+        }
+      }
+
+      select {
+        font-family: 'HowellFont';
+        border: none;
+        min-width: auto;
+        background-color: #100c2a;
+      }
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height - 10px);
+  }
+}

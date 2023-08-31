@@ -39,9 +39,11 @@ export class AIGarbageStationRfidCardManagerComponent {
     if (item) {
       this.window.confirm.models = [item];
       this.window.confirm.language = `删除卡号 ${item.Id}`;
-    } else {
+    } else if (this.selecteds.length > 0) {
       this.window.confirm.models = [...this.selecteds];
       this.window.confirm.language = `删除 ${this.window.confirm.models.length} 个${this.title}`;
+    } else {
+      return;
     }
     this.window.confirm.show = true;
   }

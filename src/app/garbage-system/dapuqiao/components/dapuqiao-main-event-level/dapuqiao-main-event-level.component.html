@@ -1,0 +1,35 @@
+<div class="index-event-level">
+  <div class="index-event-level-head">
+    <div class="hw-simple-title">{{ title }}</div>
+    <div>
+      <select [(ngModel)]="args.unit" (change)="onchange()">
+        <option [ngValue]="TimeUnit.Day">今日</option>
+        <option [ngValue]="TimeUnit.Week">本周</option>
+        <option [ngValue]="TimeUnit.Month">本月</option>
+      </select>
+    </div>
+  </div>
+  <div class="index-event-level-body">
+    <div class="index-event-level-body-chart">
+      <chart-pie-event-level
+        [load]="load"
+        (inited)="oninit($event)"
+      ></chart-pie-event-level>
+    </div>
+    <div class="index-event-level-body-info">
+      <div *ngFor="let item of model.data" class="info">
+        <div class="info-name">{{ item.name }}</div>
+        <div
+          class="info-value"
+          [ngClass]="{
+            'blue-text': item.key === EventType.GarbageDrop,
+            'orange-text': item.key === EventType.GarbageDropTimeout,
+            'powder-red-text': item.key === EventType.GarbageDropSuperTimeout
+          }"
+        >
+          {{ item.value }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

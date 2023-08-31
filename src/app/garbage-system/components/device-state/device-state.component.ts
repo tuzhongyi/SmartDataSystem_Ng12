@@ -37,10 +37,10 @@ type ECOption = echarts.ComposeOption<GaugeSeriesOption>;
 export class DeviceStateComponent
   implements IComponent<IModel, DeviceStateCountModel>, OnInit, AfterViewInit
 {
+  @Input() inside = false;
   @Input() load?: EventEmitter<void>;
   @Output()
   Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
-
   public title: string = '设备运行状态';
   public model: DeviceStateCountModel = new DeviceStateCountModel();
 

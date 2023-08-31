@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ExportType } from 'src/app/enum/export-type.enum';
-import { IConverter } from '../interfaces/converter.interface';
+import { IPromiseConverter } from '../interfaces/converter.interface';
 import { HowellExportChart } from './exports/hw-export-chart';
 import { HowellCSV } from './exports/hw-export-csv';
 import { HowellExcel } from './exports/hw-export-excel';
@@ -18,7 +18,7 @@ export class ExportTool {
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
     switch (type) {
@@ -36,42 +36,42 @@ export class ExportTool {
     }
   }
 
-  excel<T>(
+  async excel<T>(
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
     let excel = new HowellExcel();
-    let model = converter.Convert(datas, ...args);
+    let model = await converter.Convert(datas, ...args);
     model.headers = headers;
     model.title = title;
     excel.setData(model);
     excel.save(title);
   }
-  csv<T>(
+  async csv<T>(
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
-    let model = converter.Convert(datas, ...args);
+    let model = await converter.Convert(datas, ...args);
     model.title = title;
     model.headers = headers;
     HowellCSV.writeFile(title, model);
   }
 
-  chart<T>(
+  async chart<T>(
     title: string,
     headers: string[],
     datas: T,
-    converter: IConverter<T, HowellExportModel>,
+    converter: IPromiseConverter<T, HowellExportModel>,
     ...args: any[]
   ) {
     let excel = new HowellExcel();
-    let model = converter.Convert(datas, ...args);
+    let model = await converter.Convert(datas, ...args);
     model.headers = headers;
     model.title = title;
     excel.setData(model);

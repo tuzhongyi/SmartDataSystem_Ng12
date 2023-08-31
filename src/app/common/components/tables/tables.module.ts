@@ -15,6 +15,8 @@ import { GarbageDropRecordTaskTableComponent } from './garbage-drop-record-task-
 import { GarbageDropStationCountTableComponent } from './garbage-drop-station-count-table/garbage-drop-station-count-table.component';
 import { GarbageDropStationTableComponent } from './garbage-drop-station-table/garbage-drop-station-table.component';
 import { GarbageFullStationTableComponent } from './garbage-full-station-table/garbage-full-station-table.component';
+import { GarbageStationCountTableComponent } from './garbage-station-count-table/garbage-station-count-table.component';
+import { GarbageStationEventRecordVisionTableComponent } from './garbage-station-event-record-vision-table/garbage-station-event-record-vision-table.component';
 import { GarbageStationStatisticTableComponent } from './garbage-station-statistic-table/garbage-station-statistic-table.component';
 import { GarbageStationTableComponent } from './garbage-station-table/garbage-station-table.component';
 import { GarbageStationWeightTableComponent } from './garbage-station-weight-table/garbage-station-weight-table.component';
@@ -47,4 +49,7 @@ export const Table_COMPONENTS = [
   GarbageStationWeightTableComponent,
 
   ...AIGarbageStationTablesComponents,
+
+  GarbageStationCountTableComponent,
+  GarbageStationEventRecordVisionTableComponent,
 ];

@@ -13,6 +13,7 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { RankComponent } from '../../common/components/rank/rank.component';
+import { ChartComponents } from './charts/chart-components';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
@@ -75,6 +76,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     IntervalFilterComponent,
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
+    ...ChartComponents,
   ],
   imports: [
     CommonModule,
@@ -115,6 +117,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     IntervalFilterComponent,
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
+    ...ChartComponents,
   ],
 })
 export class GarbageComponentsModule {}

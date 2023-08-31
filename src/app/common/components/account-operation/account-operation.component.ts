@@ -11,11 +11,13 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { User } from 'src/app/network/model/user.model';
 import { AccountOperationDisplay } from './account-operation.model';
+import { AccountOperationService } from './account-operation.service';
 
 @Component({
   selector: 'app-account-operation',
   templateUrl: './account-operation.component.html',
   styleUrls: ['./account-operation.component.less'],
+  providers: [AccountOperationService],
 })
 export class AccountOperationComponent implements OnInit {
   @Output()
@@ -24,13 +26,14 @@ export class AccountOperationComponent implements OnInit {
   bindMobile: EventEmitter<void> = new EventEmitter();
 
   constructor(
-    private _sessionStorageService: SessionStorageService,
-    private _localStorageService: LocalStorageService,
-    public store: GlobalStorageService,
-    private _cookieService: CookieService,
-    private _router: Router
+    private session: SessionStorageService,
+    private local: LocalStorageService,
+    public global: GlobalStorageService,
+    private cookie: CookieService,
+    private router: Router,
+    private service: AccountOperationService
   ) {
-    this.user = this._localStorageService.user;
+    this.user = this.local.user;
   }
   user: User;
   userName: string = '';
@@ -38,9 +41,9 @@ export class AccountOperationComponent implements OnInit {
   SystemType = SystemType;
 
   ngOnInit(): void {
-    let userName = this._cookieService.get('userName');
+    let userName = this.cookie.get('userName');
     if (!userName) {
-      this._router.navigateByUrl(RoutePath.login);
+      this.router.navigateByUrl(RoutePath.login);
       return;
     }
     userName = atob(userName);
@@ -54,17 +57,16 @@ export class AccountOperationComponent implements OnInit {
     this.userName = userName;
 
     this.display.changePassword =
-      this.store.divisionType === DivisionType.Committees;
+      this.global.divisionType === DivisionType.Committees;
     this.display.bindMobile =
-      this.store.divisionType === DivisionType.Committees;
+      this.global.divisionType === DivisionType.Committees;
   }
   logoutHandler() {
-    this._sessionStorageService.clear();
-    this._localStorageService.clear();
-    this.store.system = undefined;
-
-    this._router.navigateByUrl('/login');
-
+    this.session.clear();
+    this.local.clear();
+    this.global.system = undefined;
+    this.router.navigateByUrl('/login');
+    this.service.clear();
     // if (this._cookieService.check('savePassWord')) {
     //   let savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
     //   if (!savePassWord) {
@@ -82,9 +84,9 @@ export class AccountOperationComponent implements OnInit {
     this.bindMobile.emit();
   }
   toGarbage() {
-    this._router.navigateByUrl(RoutePath.garbage_system);
+    this.router.navigateByUrl(RoutePath.garbage_system);
   }
   toVehicle() {
-    this._router.navigateByUrl(RoutePath.garbage_vehicle);
+    this.router.navigateByUrl(RoutePath.garbage_vehicle);
   }
 }

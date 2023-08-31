@@ -1,4 +1,10 @@
-<div class="fill-height fill-width window-mask" *ngIf="Model.show">
+<div
+  class="fill-height fill-width window-mask"
+  *ngIf="Model.show"
+  [ngClass]="{
+    none: !mask
+  }"
+>
   <div
     class="window-content"
     [ngClass]="{ 'custom-form-wrap': Background }"

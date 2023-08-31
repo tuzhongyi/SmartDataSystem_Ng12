@@ -1,0 +1,80 @@
+.garbage-station-event-record-vision-table {
+  height: 100%;
+  width: 100%;
+
+  table {
+    width: 100%;
+    table-layout: fixed;
+
+    &>thead {
+      background-color: rgba(58, 147, 255, 0.6);
+      color: white
+    }
+
+    &>tbody {
+      tr:hover {
+        cursor: pointer;
+        color: #6997ff;
+
+        text-decoration: underline;
+
+        .green-text,
+        .orange-text {
+          color: #6997ff
+        }
+      }
+
+      td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+
+      }
+    }
+
+    tr {
+      height: 30px;
+
+
+
+      &>td {
+        &.center {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        &.operation {
+          color: #7586e0;
+
+          &>* {
+            margin-right: 5px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+
+            &:hover {
+              color: white;
+            }
+          }
+        }
+
+        &:first-child {
+          padding-left: 20px;
+        }
+      }
+    }
+
+
+  }
+
+  .content {
+    height: calc(100% - 34px);
+    overflow-y: scroll;
+    width: calc(100% + 20px);
+    padding-right: 16px;
+  }
+
+}

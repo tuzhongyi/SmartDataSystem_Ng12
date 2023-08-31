@@ -1,5 +1,5 @@
 <div class="video-control" *ngIf="!!model">
-  <div class="header">
+  <div class="header" *ngIf="operation">
     <div class="title">
       <div>{{ model.name }}</div>
       <div
@@ -36,8 +36,17 @@
       </div>
     </div>
   </div>
-  <div class="content">
-    <app-image-control [model]="model" [draw]="draw"></app-image-control>
+  <div
+    class="content"
+    [ngClass]="{
+      operation: operation
+    }"
+  >
+    <app-image-control
+      [contain]="contain"
+      [model]="model"
+      [draw]="draw"
+    ></app-image-control>
     <div
       class="page"
       [ngStyle]="{ 'justify-content': isfirst ? 'flex-end' : 'space-between' }"

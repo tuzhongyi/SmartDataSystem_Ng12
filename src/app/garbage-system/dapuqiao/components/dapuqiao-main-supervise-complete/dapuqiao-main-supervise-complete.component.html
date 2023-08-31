@@ -1,0 +1,60 @@
+<div class="dapuqiao-main-supervise-complete" *ngIf="!!model">
+  <div class="dapuqiao-main-supervise-complete-head">
+    <div class="hw-simple-title">
+      {{ model.Data.StationName }} -
+      {{ model.EventTime | date : "yyyy年MM月dd日" }}
+    </div>
+    <div class="operation">
+      <div (click)="onclose()" class="howell-icon">
+        <i class="howell-icon-Close"></i>
+      </div>
+    </div>
+  </div>
+  <div class="dapuqiao-main-supervise-complete-body">
+    <div class="hw-simple-title time">
+      {{ model.Duration.begin | date : "HH:mm:ss" }}
+    </div>
+    <mat-accordion>
+      <div class="complete">
+        <div *ngFor="let item of model.Items">
+          <dapuqiao-main-supervise-complete-item
+            class="complete-item"
+            [top]="item.top"
+            [bottom]="item.bottom"
+            [left]="item.left"
+            [note]="item.Minitues | howellTime"
+            [color]="item.TitleColor"
+          >
+            <div class="complete-item-content">
+              <div class="complete-item-content-inner">
+                <mat-expansion-panel>
+                  <mat-expansion-panel-header>
+                    <div
+                      class="complete-item-content-head"
+                      [ngStyle]="{ color: item.TitleColor }"
+                    >
+                      {{ item.Title }}
+                    </div>
+                  </mat-expansion-panel-header>
+                  <div class="complete-item-content-body">
+                    <div *ngFor="let info of item.infos">{{ info }}</div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </div>
+            <div class="complete-item-images">
+              <div
+                *ngFor="let url of item.urls; let i = index"
+                [style.backgroundImage]="'url(' + url.url + ')'"
+                (click)="onimage(item, i)"
+              ></div>
+            </div>
+          </dapuqiao-main-supervise-complete-item>
+        </div>
+      </div>
+    </mat-accordion>
+    <div class="hw-simple-title time">
+      {{ model.Duration.end | date : "HH:mm:ss" }}
+    </div>
+  </div>
+</div>

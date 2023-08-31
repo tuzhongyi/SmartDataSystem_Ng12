@@ -15,6 +15,10 @@ import {
 } from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
+  GarbageDropAcceptParams,
+  GarbageDropSuperviseParams,
+  GarbageDropSuperviseResultParams,
+  GarbageFeedbackParams,
   GetEventInfosParams,
   GetEventRecordsParams,
   GetGarbageDropEventRecordsParams,
@@ -176,5 +180,21 @@ class RecordsGarbageDropService {
   get(id: string): Promise<GarbageDropEventRecord> {
     let url = EventUrl.record.garbagedrop.item(id);
     return this.type.get(url);
+  }
+  feedback(id: string, params: GarbageFeedbackParams) {
+    let url = EventUrl.record.garbagedrop.feedback(id);
+    return this.type.post(url, params);
+  }
+  supervise(id: string, params: GarbageDropSuperviseParams) {
+    let url = EventUrl.record.garbagedrop.supervise(id);
+    return this.type.post(url, params);
+  }
+  superviseResult(id: string, params: GarbageDropSuperviseResultParams) {
+    let url = EventUrl.record.garbagedrop.superviseresult(id);
+    return this.type.post(url, params);
+  }
+  accept(id: string, params: GarbageDropAcceptParams) {
+    let url = EventUrl.record.garbagedrop.accept(id);
+    return this.type.post(url, params);
   }
 }

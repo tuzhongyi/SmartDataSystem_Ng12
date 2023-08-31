@@ -422,7 +422,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
         }
         // this.myChart.setOption(this.option);
       }
-
+      console.log(this.option);
       this.myChart.setOption(this.option);
     }
   }

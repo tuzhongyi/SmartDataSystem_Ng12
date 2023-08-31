@@ -42,6 +42,16 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
       },
       () => {
         this.wheel(this.hour!.nativeElement);
+        (this.hour!.nativeElement as HTMLInputElement).addEventListener(
+          'input',
+          (e: any) => {
+            let value = this.oninput(e);
+            if (value !== undefined) {
+              this.time.hour.value = value;
+              this.time.hour.view = value.toString().padStart(2, '0');
+            }
+          }
+        );
       }
     );
     wait(
@@ -50,6 +60,16 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
       },
       () => {
         this.wheel(this.minute!.nativeElement);
+        (this.minute!.nativeElement as HTMLInputElement).addEventListener(
+          'input',
+          (e: any) => {
+            let value = this.oninput(e);
+            if (value !== undefined) {
+              this.time.minute.value = value;
+              this.time.minute.view = value.toString().padStart(2, '0');
+            }
+          }
+        );
       }
     );
     wait(
@@ -58,6 +78,16 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
       },
       () => {
         this.wheel(this.second!.nativeElement);
+        (this.second!.nativeElement as HTMLInputElement).addEventListener(
+          'input',
+          (e: any) => {
+            let value = this.oninput(e);
+            if (value !== undefined) {
+              this.time.second.value = value;
+              this.time.second.view = value.toString().padStart(2, '0');
+            }
+          }
+        );
       }
     );
   }
@@ -222,7 +252,9 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
       let value = (e.target as HTMLInputElement).value;
       let int = parseInt(value);
       (e.target as HTMLInputElement).value = TimeModel.format(int);
+      return int;
     }
+    return undefined;
   }
 
   private static format(num: number) {

@@ -161,6 +161,21 @@ class VehicleRouteService {
     let data = instanceToPlain(params);
     return this.basicType.paged(url, data);
   }
+
+  async all(
+    params: GetGarbageVehicleRouteParams = new GetGarbageVehicleRouteParams()
+  ) {
+    let data: GisRoutePoint[] = [];
+    let index = 1;
+    let paged: PagedList<GisRoutePoint>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
+  }
 }
 
 class VehicleRelayService {

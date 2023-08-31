@@ -1,5 +1,5 @@
-<div class="device-state">
-  <div class="device-state__head">
+<div class="device-state" [class.inside]="inside">
+  <div class="device-state__head" *ngIf="!inside">
     <div class="title">{{ title }}</div>
   </div>
   <div class="device-state__wrapper">
