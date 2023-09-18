@@ -1,0 +1,38 @@
+.filter {
+  display: flex;
+  justify-content: space-between;
+
+
+
+  &-items {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &>* {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-title {
+      flex-grow: 0;
+      color: #cfd7ff;
+      font-size: 18px;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+
+    &-value {
+      flex-grow: 1;
+    }
+  }
+}

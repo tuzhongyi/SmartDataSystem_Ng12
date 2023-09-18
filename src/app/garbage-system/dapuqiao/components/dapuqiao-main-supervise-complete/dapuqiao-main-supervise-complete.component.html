@@ -14,7 +14,7 @@
     <div class="hw-simple-title time">
       {{ model.Duration.begin | date : "HH:mm:ss" }}
     </div>
-    <mat-accordion>
+    <mat-accordion multi>
       <div class="complete">
         <div *ngFor="let item of model.Items">
           <dapuqiao-main-supervise-complete-item
@@ -27,7 +27,9 @@
           >
             <div class="complete-item-content">
               <div class="complete-item-content-inner">
-                <mat-expansion-panel>
+                <mat-expansion-panel
+                  [expanded]="item.Type === CompleteType.feedback"
+                >
                   <mat-expansion-panel-header>
                     <div
                       class="complete-item-content-head"

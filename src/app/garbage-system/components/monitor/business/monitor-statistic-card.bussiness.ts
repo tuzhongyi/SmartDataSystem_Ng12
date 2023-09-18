@@ -135,7 +135,7 @@ class StatisticCardConverter
     card.title =
       Language.json.garbage + Language.json.stay + Language.json.station;
     card.value = input.GarbageDropStationNumber ?? 0;
-    card.class = 'green-text';
+    card.class = 'orange-red-text';
     return card;
   }
   createFullStation(input: DivisionNumberStatistic) {

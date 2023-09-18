@@ -1,1 +1,98 @@
-<p>dapuqiao-garbage-drop-station-window-count works!</p>
+<div class="dapuqiao-garbage-drop-station-window-count">
+  <div class="dapuqiao-garbage-drop-station-window-count-head">
+    <div class="filter">
+      <div class="filter-items left">
+        <div class="filter-item four">
+          <div class="filter-item-title">选择时间</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [format]="dateTimePickerConfig.format"
+              [startView]="dateTimePickerConfig.view"
+              [minView]="dateTimePickerConfig.view"
+              [week]="dateTimePickerConfig.week"
+              [(date)]="args.date"
+              class=""
+            />
+          </div>
+        </div>
+        <div class="filter-item three">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value">
+            <div class="select-control">
+              <select [(ngModel)]="args.type" (change)="onTypeChange()">
+                <option
+                  [ngValue]="UserResourceType.County"
+                  *ngIf="defaultType === UserResourceType.City"
+                >
+                  {{ Language.UserResourceType(UserResourceType.County) }}
+                </option>
+                <option [ngValue]="UserResourceType.Committees">
+                  {{ Language.UserResourceType(UserResourceType.Committees) }}
+                </option>
+                <option [ngValue]="UserResourceType.Station">
+                  {{ Language.UserResourceType(UserResourceType.Station) }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="filter-item two"
+          *ngIf="args.type != UserResourceType.County"
+        >
+          <div class="filter-item-title">筛选</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="parent" [cannull]="true">
+              <select #element [(ngModel)]="parent">
+                <option [ngValue]="item" *ngFor="let item of datas">
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <button class="hw-blue-btn search" (click)="search()">
+          <i class="mdi mdi-magnify"></i> 查询
+        </button>
+        <button
+          class="hw-blue-btn excel"
+          (click)="ondownload(ExportType.excel)"
+        >
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn csv" (click)="ondownload(ExportType.csv)">
+          <i class="howell-icon-export"></i> CSV
+        </button>
+      </div>
+      <div class="filter-items">
+        <div class="filter-item select">
+          <!-- <app-select-control
+            class="list-type-select"
+            [data]="units"
+            (selectedChange)="ontimeunit($event)"
+          ></app-select-control> -->
+          <select [(ngModel)]="args.unit" (change)="ontimeunit()">
+            <option [ngValue]="TimeUnit.Day">
+              {{ Language.TimeUnit(TimeUnit.Day) }}
+            </option>
+            <option [ngValue]="TimeUnit.Week">
+              {{ Language.TimeUnit(TimeUnit.Week) }}
+            </option>
+            <option [ngValue]="TimeUnit.Month">
+              {{ Language.TimeUnit(TimeUnit.Month) }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dapuqiao-garbage-drop-station-window-count-body">
+    <dapuqiao-garbage-drop-station-count-table
+      [args]="args"
+      [load]="load"
+      [download]="download"
+    ></dapuqiao-garbage-drop-station-count-table>
+  </div>
+</div>

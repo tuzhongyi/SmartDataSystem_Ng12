@@ -10,13 +10,13 @@ import { AIGarbageStationTablesComponents } from './ai-garbage-station-tables/ai
 import { AiopGarbageCollectionPointTrashCanTableComponent } from './aiop-garbage-collection-point-trashcan-table/aiop-garbage-collection-point-trashcan-table.component';
 import { AiopGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
+import { DaPuQiaoTableComponents } from './daqupiao/dapuqiao-tables-components';
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
 import { GarbageDropRecordTaskTableComponent } from './garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageDropStationCountTableComponent } from './garbage-drop-station-count-table/garbage-drop-station-count-table.component';
 import { GarbageDropStationTableComponent } from './garbage-drop-station-table/garbage-drop-station-table.component';
 import { GarbageFullStationTableComponent } from './garbage-full-station-table/garbage-full-station-table.component';
 import { GarbageStationCountTableComponent } from './garbage-station-count-table/garbage-station-count-table.component';
-import { GarbageStationEventRecordVisionTableComponent } from './garbage-station-event-record-vision-table/garbage-station-event-record-vision-table.component';
 import { GarbageStationStatisticTableComponent } from './garbage-station-statistic-table/garbage-station-statistic-table.component';
 import { GarbageStationTableComponent } from './garbage-station-table/garbage-station-table.component';
 import { GarbageStationWeightTableComponent } from './garbage-station-weight-table/garbage-station-weight-table.component';
@@ -51,5 +51,6 @@ export const Table_COMPONENTS = [
   ...AIGarbageStationTablesComponents,
 
   GarbageStationCountTableComponent,
-  GarbageStationEventRecordVisionTableComponent,
+
+  ...DaPuQiaoTableComponents,
 ];

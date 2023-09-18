@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { GarbageStationEventRecordVisionModel } from 'src/app/common/components/tables/garbage-station-event-record-vision-table/garbage-station-event-record-vision-table.model';
+import { DaPuQiaoGarbageStationEventRecordVisionModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-station-event-record-vision-table/dapuqiao-garbage-station-event-record-vision-table.model';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
@@ -23,11 +23,12 @@ export class DaPuQiaoMainEventVisionComponent implements OnInit, OnChanges {
   @Input() position?: SupervisePosition = SupervisePosition.center;
   @Output() positionChange = new EventEmitter<SupervisePosition>();
   @Output() close: EventEmitter<void> = new EventEmitter();
-  @Output() image: EventEmitter<GarbageStationEventRecordVisionModel> =
+  @Output() image: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
-  @Output() details: EventEmitter<GarbageStationEventRecordVisionModel> =
+  @Output()
+  details: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
-  @Output() select: EventEmitter<GarbageStationEventRecordVisionModel> =
+  @Output() select: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
   constructor(
     private service: UserRequestService,
@@ -83,13 +84,13 @@ export class DaPuQiaoMainEventVisionComponent implements OnInit, OnChanges {
   onclose() {
     this.close.emit();
   }
-  onimage(item: GarbageStationEventRecordVisionModel) {
+  onimage(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
     this.image.emit(item);
   }
-  ondetails(item: GarbageStationEventRecordVisionModel) {
+  ondetails(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
     this.details.emit(item);
   }
-  onselect(item: GarbageStationEventRecordVisionModel) {
+  onselect(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
     this.select.emit(item);
   }
 }

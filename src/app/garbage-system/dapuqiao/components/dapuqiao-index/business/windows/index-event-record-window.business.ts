@@ -30,6 +30,10 @@ export class IndexRecordWindowBusiness extends WindowViewModel {
 
   divisionId?: string;
   stationId?: string;
+  clear() {
+    this.stationId = undefined;
+    this.divisionId = undefined;
+  }
 
   async onimage(
     model:
@@ -66,6 +70,7 @@ export class IndexRecordWindowBusiness extends WindowViewModel {
 
   async onvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
+      this.video.title = item.ResourceName ?? '';
       this.video.playback(
         item.ResourceId,
         DateTimeTool.beforeOrAfter(item.EventTime)

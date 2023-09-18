@@ -25,6 +25,8 @@ export class IndexGarbageStationFullWindowBusiness extends WindowViewModel {
 
   eventCount = 0;
 
+  clear() {}
+
   onimage(
     model: ImageControlModelArray<
       GarbageFullStationTableModel | EventRecordViewModel

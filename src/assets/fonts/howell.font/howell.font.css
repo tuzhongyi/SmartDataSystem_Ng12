@@ -2515,3 +2515,43 @@ a .howell-icon-flip-vertical:before {
 .howell-icon-garbage_card:before {
     content: "\f384";
 }
+
+.howell-icon-fan:before {
+    content: "\f385";
+}
+
+.howell-icon-rfid:before {
+    content: "\f386";
+}
+
+.howell-icon-picture2:before {
+    content: "\f387";
+}
+
+.howell-icon-user_add:before {
+    content: "\f388";
+}
+
+.howell-icon-sort:before {
+    content: "\f389";
+}
+
+.howell-icon-task_tree:before {
+    content: "\f390";
+}
+
+.howell-icon-task_details:before {
+    content: "\f391";
+}
+
+.howell-icon-top:before {
+    content: "\f392";
+}
+
+.howell-icon-middle:before {
+    content: "\f393";
+}
+
+.howell-icon-bottom:before {
+    content: "\f394";
+}

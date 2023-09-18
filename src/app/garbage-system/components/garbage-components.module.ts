@@ -13,6 +13,7 @@ import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { RankComponent } from '../../common/components/rank/rank.component';
+import { DaPuQiaoComponents } from '../dapuqiao/components/dapuqiao-components';
 import { ChartComponents } from './charts/chart-components';
 import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
@@ -22,6 +23,8 @@ import { EventRecordDetailsTableComponent } from './event-record-details-table/e
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
+import { MainStationCountComponent } from './main-station-count/main-station-count.component';
+import { MapControlButtonsComponent } from './map-control-buttons/map-control-buttons.component';
 import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.component';
 import { PointInfoPanelComponent } from './map-control-point-info-panel/point-info-panel.component';
 import { MapControlComponent } from './map-control/map-control.component';
@@ -54,7 +57,9 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordDetailsTableComponent,
     EventRecordDetailsComponent,
     StatisticCardComponent,
+    MapControlButtonsComponent,
     MapControlComponent,
+    MainStationCountComponent,
     MapListPanelComponent,
 
     MediaControlComponent,
@@ -77,6 +82,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,
+    ...DaPuQiaoComponents,
   ],
   imports: [
     CommonModule,
@@ -101,6 +107,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordDetailsComponent,
     StatisticCardComponent,
     MapControlComponent,
+    MainStationCountComponent,
     MapListPanelComponent,
     MediaControlComponent,
     MediaImageControlComponent,
@@ -118,6 +125,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,
+    ...DaPuQiaoComponents,
   ],
 })
 export class GarbageComponentsModule {}

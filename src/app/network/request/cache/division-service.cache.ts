@@ -1,8 +1,8 @@
+import { plainToInstance } from 'class-transformer';
 import { IService } from 'src/app/business/Ibusiness';
 import { Division } from '../../model/division.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetDivisionsParams } from '../division/division-request.params';
-import { IParams, PagedParams } from '../IParams.interface';
 import { ServiceCache } from './service.cache';
 
 export class DivisionServiceCache extends ServiceCache<Division> {
@@ -15,7 +15,7 @@ export class DivisionServiceCache extends ServiceCache<Division> {
       this.wait((data) => {
         let result = data.find((x) => x.Id === id);
         if (result) {
-          reject(result);
+          reject(plainToInstance(Division, result));
           return;
         }
         this.service.get(id).then((x) => {
@@ -34,7 +34,8 @@ export class DivisionServiceCache extends ServiceCache<Division> {
 
   async list(args?: GetDivisionsParams): Promise<PagedList<Division>> {
     return new Promise((reject) => {
-      this.wait((datas: Division[]) => {
+      this.wait((x: Division[]) => {
+        let datas = plainToInstance(Division, x);
         let paged: PagedList<Division>;
         if (args) {
           if (args.ParentId) {

@@ -1,0 +1,120 @@
+<div class="dapuqiao-garbage-station-window-record">
+  <div class="dapuqiao-garbage-station-window-record-head" *ngIf="isFilter">
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">开始时间</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [minView]="DateTimePickerView.hour"
+              [(date)]="args.duration.begin"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">结束时间</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [minView]="DateTimePickerView.hour"
+              [(date)]="args.duration.end"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value">
+            <level-division-panel
+              class="list-type-select"
+              (selectedChange)="ondivision($event)"
+            >
+            </level-division-panel>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">投放点</div>
+          <div class="filter-item-value">
+            <hw-select [cannull]="true" [(selected)]="model.station.selected">
+              <select [(ngModel)]="model.station.selected">
+                <option
+                  [ngValue]="item"
+                  *ngFor="let item of model.station.datas"
+                >
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">事件等级</div>
+          <div class="filter-item-value">
+            <hw-select [cannull]="true" [(selected)]="args.level">
+              <select [(ngModel)]="args.level">
+                <option [ngValue]="1">一级</option>
+                <option [ngValue]="2">二级</option>
+                <option [ngValue]="3">三级</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <!-- <div class="filter-item">
+          <div class="filter-item-title">是否反馈</div>
+          <div class="filter-item-value">
+            <hw-select [cannull]="true" [(selected)]="args.feedback">
+              <select [(ngModel)]="args.feedback">
+                <option [ngValue]="true">已反馈</option>
+                <option [ngValue]="false">未反馈</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">是否督办</div>
+          <div class="filter-item-value">
+            <hw-select [cannull]="true" [(selected)]="args.supervised">
+              <select [(ngModel)]="args.supervised">
+                <option [ngValue]="true">已督办</option>
+                <option [ngValue]="false">未督办</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">是否处置</div>
+          <div class="filter-item-value">
+            <hw-select [cannull]="true" [(selected)]="args.handle">
+              <select [(ngModel)]="args.handle">
+                <option [ngValue]="true">已处置</option>
+                <option [ngValue]="false">未处置</option>
+              </select>
+            </hw-select>
+          </div>
+        </div> -->
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="mdi mdi-magnify"></i> 查询
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="dapuqiao-garbage-station-window-record-body"
+    [class.nohead]="!isFilter"
+  >
+    <dapuqiao-garbage-drop-record-table
+      [args]="args"
+      [load]="load"
+      (details)="ondetails($event)"
+      (image)="onimage($event)"
+      (picture)="onpicture($event)"
+      (process)="onprocess($event)"
+    ></dapuqiao-garbage-drop-record-table>
+  </div>
+</div>

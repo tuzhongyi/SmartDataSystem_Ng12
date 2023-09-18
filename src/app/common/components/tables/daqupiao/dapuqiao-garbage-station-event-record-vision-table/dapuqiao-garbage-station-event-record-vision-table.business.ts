@@ -4,16 +4,23 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
-import { GarbageStationEventRecordVisionModel } from './garbage-station-event-record-vision-table.model';
-import { GarbageStationEventRecordVisionTableService } from './garbage-station-event-record-vision-table.service';
+import { DaPuQiaoGarbageStationEventRecordVisionModel } from './dapuqiao-garbage-station-event-record-vision-table.model';
+import { DaPuQiaoGarbageStationEventRecordVisionTableService } from './dapuqiao-garbage-station-event-record-vision-table.service';
 
 @Injectable()
-export class GarbageStationEventRecordVisionTableBusiness
+export class DaPuQiaoGarbageStationEventRecordVisionTableBusiness
   implements
-    IBusiness<GarbageDropEventRecord[], GarbageStationEventRecordVisionModel[]>
+    IBusiness<
+      GarbageDropEventRecord[],
+      DaPuQiaoGarbageStationEventRecordVisionModel[]
+    >
 {
-  constructor(private service: GarbageStationEventRecordVisionTableService) {}
-  async load(...args: any): Promise<GarbageStationEventRecordVisionModel[]> {
+  constructor(
+    private service: DaPuQiaoGarbageStationEventRecordVisionTableService
+  ) {}
+  async load(
+    ...args: any
+  ): Promise<DaPuQiaoGarbageStationEventRecordVisionModel[]> {
     let data = await this.getData();
     let model = data.map((x, i) => this.convert(x, data.length - i));
     return model;
@@ -21,9 +28,8 @@ export class GarbageStationEventRecordVisionTableBusiness
   async getData(...args: any): Promise<GarbageDropEventRecord[]> {
     let params = new GetGarbageDropEventRecordsParams();
     params.IsTimeout = true;
-    // params.IsSuperTimeout = true;
+    params.IsSuperTimeout = true;
     let date = new Date();
-    date.setDate(date.getDate() - 1);
     let duration = DateTimeTool.allDay(date);
     params.BeginTime = duration.begin;
     params.EndTime = duration.end;
@@ -34,7 +40,10 @@ export class GarbageStationEventRecordVisionTableBusiness
   }
   convert(input: GarbageDropEventRecord, index: number) {
     let plain = instanceToPlain(input);
-    let model = plainToInstance(GarbageStationEventRecordVisionModel, plain);
+    let model = plainToInstance(
+      DaPuQiaoGarbageStationEventRecordVisionModel,
+      plain
+    );
     model.Index = index;
     model.GarbageStation = this.service.station.get(input.Data.StationId);
     model.Minutes = input.Data.TakeMinutes;

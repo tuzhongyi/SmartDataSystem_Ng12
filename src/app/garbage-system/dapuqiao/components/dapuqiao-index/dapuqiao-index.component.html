@@ -38,7 +38,6 @@
         </div>
         <div class="map-control">
           <app-map-control
-            *ngIf="false"
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)"
@@ -62,10 +61,10 @@
           [load]="load"
           (Click)="trigger.deviceState.onclick($event)"
         ></app-device-state> -->
-        <dapuqiao-main-station-count
+        <main-station-count
           [load]="load"
           (devicestateclick)="trigger.deviceState.onclick($event)"
-        ></dapuqiao-main-station-count>
+        ></main-station-count>
       </div>
     </div>
     <div class="dapuqiao-index-body__item">
@@ -87,23 +86,31 @@
     </div>
     <div class="dapuqiao-index-body__item">
       <div class="dapuqiao-index-body__wrapper">
-        <dapuqiao-main-event-level></dapuqiao-main-event-level>
+        <dapuqiao-main-event-level
+          [load]="load"
+          (details)="trigger.dapuqiao.level.ondetails($event)"
+        ></dapuqiao-main-event-level>
       </div>
     </div>
     <div class="dapuqiao-index-body__item">
       <div class="dapuqiao-index-body__wrapper">
-        <dapuqiao-main-line-event></dapuqiao-main-line-event>
+        <dapuqiao-main-line-event [load]="load"></dapuqiao-main-line-event>
         <!-- <dapuqiao-main-event-vision></dapuqiao-main-event-vision> -->
       </div>
     </div>
     <div class="dapuqiao-index-body__item">
       <div class="dapuqiao-index-body__wrapper">
-        <dapuqiao-main-line-feedback></dapuqiao-main-line-feedback>
+        <dapuqiao-main-line-feedback
+          [load]="load"
+        ></dapuqiao-main-line-feedback>
       </div>
     </div>
     <div class="dapuqiao-index-body__item">
       <div class="dapuqiao-index-body__wrapper">
-        <dapuqiao-main-event-statistic></dapuqiao-main-event-statistic>
+        <dapuqiao-main-event-statistic
+          [load]="load"
+          (details)="trigger.dapuqiao.statistic.ondetails()"
+        ></dapuqiao-main-event-statistic>
         <!-- <dapuqiao-main-record-level [load]="load"></dapuqiao-main-record-level> -->
       </div>
     </div>
@@ -179,10 +186,15 @@
   [stationId]="window.station.stationId"
   [divisionId]="window.station.divisionId"
   [taskStatus]="window.station.status"
+  [dapuqiao_level]="window.station.dapuqiao.level"
   (image)="window.station.onimage($event)"
   (video)="window.station.onvideo($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
+  (dapuqiao_details)="window.station.dapuqiao.ondetails($event)"
+  (dapuqiao_image)="window.station.dapuqiao.onimage($event)"
+  (dapuqiao_picture)="window.station.dapuqiao.onpicture($event)"
+  (dapuqiao_process)="window.station.dapuqiao.onprocess($event)"
 >
 </howell-garbage-station-window>
 

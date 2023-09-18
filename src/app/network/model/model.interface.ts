@@ -25,3 +25,7 @@ export class IdNameModel implements IObjectModel {
     return this.Id === value.Id;
   }
 }
+export interface IndexArgs<T = any> {
+  index: number;
+  model: T;
+}

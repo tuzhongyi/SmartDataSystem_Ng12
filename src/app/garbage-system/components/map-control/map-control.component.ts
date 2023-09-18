@@ -25,8 +25,10 @@ import { ListItemType } from '../map-control-list-panel/map-list-item';
 import { AMapBusiness } from './business/amap.business';
 import { GarbageTimeFilter, PointCount } from './business/amap.model';
 import { AMapDivisionBusiness } from './business/amap/amap-division.business';
-import { AMapPointLabelBusiness } from './business/amap/amap-point-label.business';
 import { AMapPointContextMenuBusiness } from './business/amap/amap-point-menu.business';
+import { AMapPointPlugAceBusiness } from './business/amap/amap-point-plug-ace.business';
+import { AMapPointPlugBatteryBusiness } from './business/amap/amap-point-plug-battery.business';
+import { AMapPointPlugBusiness } from './business/amap/amap-point-plug.business';
 import { AMapPointBusiness } from './business/amap/amap-point.business';
 import { AMapClient } from './business/amap/amap.client';
 import { AMapEvent } from './business/amap/amap.event';
@@ -46,7 +48,9 @@ declare var $: any;
     AMapService,
     AMapDivisionBusiness,
     AMapPointBusiness,
-    AMapPointLabelBusiness,
+    AMapPointPlugBusiness,
+    AMapPointPlugAceBusiness,
+    AMapPointPlugBatteryBusiness,
     AMapPointContextMenuBusiness,
     AMapBusiness,
     ListPanelConverter,
@@ -189,106 +193,6 @@ export class MapControlComponent
 
   private initDisplay() {
     let display = new MapControlTools();
-    display.filting.construction.display = false;
-    display.filting.station.display = false;
-    display.retention.station.display = false;
-    display.retention.all.display = false;
-    display.retention.m30.display = false;
-    display.retention.h1.display = false;
-    display.retention.h2.display = false;
-
-    display.filting.current.click.subscribe((x) => {
-      display.filting.current.selected = !display.filting.current.selected;
-      display.filting.construction.display = display.filting.current.selected;
-      display.filting.station.display = display.filting.current.selected;
-
-      display.filting.construction.selected = true;
-      display.filting.station.selected = true;
-
-      if (
-        display.filting.current.selected &&
-        display.retention.current.selected
-      ) {
-        display.retention.current.click.emit();
-      }
-
-      display.retention.current.display = !display.filting.current.selected;
-    });
-    display.filting.construction.click.subscribe((x) => {
-      display.filting.construction.selected =
-        !display.filting.construction.selected;
-    });
-    display.filting.station.click.subscribe((x) => {
-      display.filting.station.selected = !display.filting.station.selected;
-    });
-    display.retention.current.click.subscribe((x) => {
-      display.retention.current.selected = !display.retention.current.selected;
-      display.retention.station.display = display.retention.current.selected;
-      display.retention.all.display = display.retention.current.selected;
-      display.retention.m30.display = display.retention.current.selected;
-      display.retention.h1.display = display.retention.current.selected;
-      display.retention.h2.display = display.retention.current.selected;
-
-      display.retention.station.selected = true;
-      display.retention.all.selected = true;
-      display.retention.m30.selected = false;
-      display.retention.h1.selected = false;
-      display.retention.h2.selected = false;
-    });
-    display.retention.station.click.subscribe((x) => {
-      display.retention.station.selected = !display.retention.station.selected;
-    });
-    display.retention.all.click.subscribe((x) => {
-      display.retention.all.selected = true;
-      display.retention.m30.selected = !display.retention.all.selected;
-      display.retention.h1.selected = !display.retention.all.selected;
-      display.retention.h2.selected = !display.retention.all.selected;
-    });
-    display.retention.m30.click.subscribe((x) => {
-      display.retention.m30.selected = true;
-      display.retention.all.selected = !display.retention.m30.selected;
-      display.retention.h1.selected = !display.retention.m30.selected;
-      display.retention.h2.selected = !display.retention.m30.selected;
-    });
-    display.retention.h1.click.subscribe((x) => {
-      display.retention.h1.selected = true;
-      display.retention.all.selected = !display.retention.h1.selected;
-      display.retention.m30.selected = !display.retention.h1.selected;
-      display.retention.h2.selected = !display.retention.h1.selected;
-    });
-    display.retention.h2.click.subscribe((x) => {
-      display.retention.h2.selected = true;
-      display.retention.all.selected = !display.retention.h2.selected;
-      display.retention.m30.selected = !display.retention.h2.selected;
-      display.retention.h1.selected = !display.retention.h2.selected;
-    });
-
-    display.filting.construction.change.subscribe((x) => {
-      this.amap.point.constructionStationVisibility(x);
-    });
-    display.filting.station.change.subscribe((x) => {
-      this.amap.point.garbageStationVisibility(x);
-      // this.amap.point.visibility.label.station.value = x;
-    });
-    display.retention.all.change.subscribe((x) => {
-      if (x) this.GarbageTimeFilting(GarbageTimeFilter.all);
-    });
-    display.retention.m30.change.subscribe((x) => {
-      if (x) this.GarbageTimeFilting(GarbageTimeFilter.m30);
-    });
-    display.retention.h1.change.subscribe((x) => {
-      if (x) this.GarbageTimeFilting(GarbageTimeFilter.h1);
-    });
-    display.retention.h2.change.subscribe((x) => {
-      if (x) this.GarbageTimeFilting(GarbageTimeFilter.h2);
-    });
-    display.retention.station.change.subscribe((x) => {
-      this.amap.point.visibility.label.station.value = x;
-      this.amap.point.constructionStationVisibility(x);
-    });
-    display.retention.current.change.subscribe((x) => {
-      this.amap.point.visibility.label.value = x;
-    });
 
     return display;
   }
@@ -352,17 +256,7 @@ export class MapControlComponent
     }
   }
 
-  onLabelDisplay = (value: boolean) => {
-    if (!value) {
-      this.display.retention.station.display = true;
-    }
-    this.amap.point.visibility.label.value = value;
-  };
-  onLabelStationDisplay = (value: boolean) => {
-    this.amap.point.visibility.label.value = value;
-  };
-
-  pointCount: PointCount = { count: 0, normal: 0, warm: 0, error: 0 };
+  pointCount: PointCount = new PointCount();
 
   images: ImageControlModel[] = [];
 
@@ -417,14 +311,6 @@ export class MapControlComponent
   onPatrolClicked() {
     this.patrol.emit();
   }
-  Button3Clicked() {
-    this.display.retention.current.selected =
-      !this.display.retention.current.selected;
-  }
-  onDurationClicked() {
-    this.display.retention.station.selected =
-      !this.display.retention.station.selected;
-  }
 
   onPointInfoPanelGarbageRetentionClickedEvent(station: IModel) {
     this.garbageRetentionClicked.emit(station as GarbageStation);
@@ -440,30 +326,4 @@ export class MapControlComponent
   }
 
   GarbageTimeFilter = GarbageTimeFilter;
-
-  GarbageTimeFilting(filter: GarbageTimeFilter) {
-    this.amap.point.visibility.label.retention.value = filter;
-    // this.amap.setLabelVisibility(false).then((x) => {
-    //   // this.display.duration.current = this.display.duration.current;
-    //   this.amap.setLabelVisibility(true).then(() => {
-    //     // this.display.duration.station.display =
-    //     //   this.display.duration.station.display;
-    //   });
-    // });
-  }
-
-  ButtonAllClicked() {
-    this.GarbageTimeFilting(GarbageTimeFilter.all);
-  }
-  Button30mClicked() {
-    this.GarbageTimeFilting(GarbageTimeFilter.m30);
-  }
-
-  Button1hClicked() {
-    this.GarbageTimeFilting(GarbageTimeFilter.h1);
-  }
-
-  Button2hClicked() {
-    this.GarbageTimeFilting(GarbageTimeFilter.h2);
-  }
 }

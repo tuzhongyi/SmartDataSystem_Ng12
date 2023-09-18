@@ -1,0 +1,79 @@
+.map-control {
+  &-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+
+  }
+
+  &-button {
+    margin-right: 6px;
+    bottom: 0px;
+    left: 0px;
+    width: 32px;
+    height: 28px;
+    font-size: 18px;
+    background-color: #2d76ce;
+
+    cursor: pointer;
+    clip-path: polygon(25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%);
+    padding: 3px;
+
+    &.h {
+      font-size: 12px;
+    }
+
+
+    &:hover {
+      background-color: #5da1f4;
+    }
+
+    &:hover &-inner {
+      background-color: #2a3c66;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.selected {
+      background-color: #2ac2e1;
+      opacity: 1;
+
+      .map-control-button-inner {
+        background-color: #003b3d;
+      }
+
+      &:hover {
+        background-color: #73d4ff;
+
+        .map-control-button-inner {
+          background-color: #005f62;
+        }
+      }
+    }
+
+    &-inner {
+      height: 100%;
+      width: 100%;
+      background-color: #040b39;
+      clip-path: polygon(25% 0%,
+          75% 0%,
+          100% 50%,
+          75% 100%,
+          25% 100%,
+          0% 50%);
+
+      line-height: 27px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+  }
+}

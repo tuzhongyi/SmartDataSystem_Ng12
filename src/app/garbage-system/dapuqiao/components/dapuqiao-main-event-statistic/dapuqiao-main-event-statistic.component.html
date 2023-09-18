@@ -11,21 +11,25 @@
   </div>
   <div class="dapuqiao-main-event-statistic-body">
     <div class="dapuqiao-main-event-statistic-body-chart">
-      <chart-pie-event-statistic [load]="load" (inited)="oninit($event)">
+      <chart-pie-event-statistic [load]="chartload" (inited)="oninit($event)">
       </chart-pie-event-statistic>
     </div>
     <div class="dapuqiao-main-event-statistic-body-info">
       <div class="info">
         <div class="info-name">全部三级事件数</div>
-        <div class="info-value light-blue-text">{{ data.statistic.all }}</div>
+        <div class="info-value light-blue-text" (click)="onclick()">
+          {{ data.statistic.all }}
+        </div>
       </div>
       <div>
         <div class="info-name">三级事件反馈数</div>
-        <div class="info-value blue-text">{{ data.statistic.feedback }}</div>
+        <div class="info-value blue-text" (click)="onclick()">
+          {{ data.statistic.feedback }}
+        </div>
       </div>
       <div>
         <div class="info-name">三级时间督办数</div>
-        <div class="info-value orange-text">
+        <div class="info-value orange-text" (click)="onclick()">
           {{ data.statistic.supervision }}
         </div>
       </div>

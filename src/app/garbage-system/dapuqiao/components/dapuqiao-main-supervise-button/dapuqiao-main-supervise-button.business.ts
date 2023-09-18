@@ -13,10 +13,10 @@ export class DapuqiaoMainSuperviseButtonBusiness {
     if (this.global.defaultDivisionId) {
       let data = await this.getData(this.global.defaultDivisionId);
       if (data.Level3Statistic) {
-        return (
+        let value =
           (data.Level3Statistic.Level3Number ?? 0) -
-          (data.Level3Statistic.SupervisedNumber ?? 0)
-        );
+          (data.Level3Statistic.SupervisedNumber ?? 0);
+        return value < 0 ? 0 : value;
       }
     }
     return 0;

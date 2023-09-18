@@ -1,0 +1,93 @@
+.dapuqiao-garbage-drop-station-count-table {
+  height: 100%;
+
+
+  &-main {
+
+    &-table {
+      height: 100%;
+      width: 100%;
+      overflow: visible;
+
+
+      &-head {
+        width: 2068px;
+        height: 50px;
+
+        table {
+          thead {
+            font-size: 18px;
+
+            tr {
+              height: 50px;
+
+              td {
+                padding: 5px;
+
+                &:first-child {
+                  padding-left: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &-body {
+        height: calc(100% - 50px);
+        overflow: scroll;
+
+        table {
+          width: calc(100% - 4px);
+
+          tbody {
+            font-size: 16px;
+
+            tr {
+              height: 50px;
+
+              td {
+                padding: 5px;
+
+                &:first-child {
+                  padding-left: 20px;
+                }
+              }
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+
+
+
+  table {
+    td {
+      div {
+        width: min-content;
+
+        b {
+          color: #7586e0;
+        }
+
+      }
+    }
+
+    tr.selected {
+      b {
+
+
+        &:hover {
+          color: white;
+        }
+      }
+    }
+
+    tr.hover {
+      background: rgba(117, 134, 224, 0.5);
+    }
+  }
+}

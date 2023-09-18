@@ -142,6 +142,8 @@ h2 {
   color: white;
   font-size: 18px;
   background-image: url("/assets/img/second-menu.png");
+  padding-left: 20px;
+  padding-right: 10px;
 }
 
 .second-menu-btn:hover {
@@ -553,12 +555,20 @@ a.td-icon:hover i {
   color: #ffba00;
 }
 
+.orange-red-text {
+  color: #f47330;
+}
+
 .light-purple-text {
   color: #ca98f9;
 }
 
 .powder-red-text {
   color: #ef6464;
+}
+
+.gray-2-text {
+  color: #cccccc
 }
 
 /******************* 查志磊 ****************/

@@ -49,10 +49,14 @@
     </div>
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
-        <app-device-state
+        <!-- <app-device-state
           [load]="load"
           (Click)="trigger.deviceState.onclick($event)"
-        ></app-device-state>
+        ></app-device-state> -->
+        <main-station-count
+          [load]="load"
+          (devicestateclick)="trigger.deviceState.onclick($event)"
+        ></main-station-count>
       </div>
     </div>
     <div class="monitor-body__item">

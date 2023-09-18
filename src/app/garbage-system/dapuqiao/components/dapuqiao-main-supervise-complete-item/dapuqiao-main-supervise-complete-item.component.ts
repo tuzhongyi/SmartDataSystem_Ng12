@@ -11,6 +11,7 @@ export class DapuqiaoMainSuperviseCompleteItemComponent implements OnInit {
   @Input() bottom = false;
 
   @Input() lineOffset = '24px';
+  @Input() width = '270px';
   @Input() note?: string;
   @Input() color?: string;
 

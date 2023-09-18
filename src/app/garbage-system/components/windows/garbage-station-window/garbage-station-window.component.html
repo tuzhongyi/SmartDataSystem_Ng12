@@ -1,84 +1,137 @@
 <app-window [Model]="Model" [style]="style">
   <ng-container *ngIf="Model.show">
-    <app-tab-title [title]="Language.json.station">
-      <div class="garbage-station-window-header">
-        <div class="operation" *ngIf="index === Index.station">
-          <app-input-search-options (search)="station.onsearch($event)">
-          </app-input-search-options>
+    <div class="garbage-station-window">
+      <div class="garbage-station-window-head">
+        <div class="hw-second-title">
+          {{ Language.json.station }}
         </div>
-        <div class="operation" *ngIf="index === Index.record">
-          <howell-garbage-station-window-record-operation
-            (search)="record.filter.onsearch($event)"
-            [(table)]="table"
-            [(isfilter)]="record.filter.show"
-          >
-          </howell-garbage-station-window-record-operation>
+        <div class="garbage-station-window-head-content">
+          <div class="garbage-station-window-head-content-list">
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.station"
+              (click)="indexChange(Index.station)"
+            >
+              列表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.stay"
+              (click)="indexChange(Index.stay)"
+            >
+              小包垃圾滞留
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.general"
+              (click)="indexChange(Index.general)"
+            >
+              总图表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.details"
+              (click)="indexChange(Index.details)"
+            >
+              细分图表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.record"
+              (click)="indexChange(Index.record)"
+              *ngIf="ui !== UserUIType.dapuqiao"
+            >
+              报警事件处置
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.dapuqiao_record"
+              (click)="indexChange(Index.dapuqiao_record)"
+              *ngIf="ui === UserUIType.dapuqiao"
+            >
+              三级事件
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.card"
+              (click)="indexChange(Index.card)"
+            >
+              刷卡记录
+            </div>
+          </div>
+          <div class="operation" *ngIf="index === Index.station">
+            <app-input-search-options (search)="station.onsearch($event)">
+            </app-input-search-options>
+          </div>
+          <div class="operation" *ngIf="index === Index.record">
+            <howell-garbage-station-window-record-operation
+              (search)="record.filter.onsearch($event)"
+              [(table)]="table"
+              [(isfilter)]="record.filter.show"
+            >
+            </howell-garbage-station-window-record-operation>
+          </div>
         </div>
       </div>
-    </app-tab-title>
-    <div class="garbage-station-window-content">
-      <mat-tab-group
-        [disableRipple]="true"
-        animationDuration="0ms"
-        [color]="'transparent'"
-        [selectedIndex]="index"
-        (selectedIndexChange)="indexChange($event)"
-      >
-        <mat-tab label="列表">
-          <ng-container *ngIf="index == Index.station">
-            <howell-garbage-station-table
-              [load]="station.load"
-              [stationId]="stationId"
-              [divisionId]="divisionId"
-              (position)="onposition($event)"
-              (image)="onimage($event)"
-            >
-            </howell-garbage-station-table>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="小包垃圾滞留">
-          <ng-container *ngIf="index == Index.stay">
-            <howell-garbage-station-window-stay
-              [stationId]="stationId"
-              (image)="onimage($event)"
-              (ondblclick)="onstaydblclick($event)"
-            >
-            </howell-garbage-station-window-stay>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="总图表">
-          <ng-container *ngIf="index == Index.general">
-            <howell-garbage-station-window-general>
-            </howell-garbage-station-window-general>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="细分图表">
-          <ng-container *ngIf="index == Index.details">
-            <howell-garbage-station-window-details>
-            </howell-garbage-station-window-details>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="报警事件处置">
-          <ng-container *ngIf="index == Index.record">
-            <howell-garbage-station-window-record
-              [isfilter]="record.filter.show"
-              [status]="taskStatus"
-              [(filter)]="record.filter.filter"
-              [table]="table"
-              [search]="record.filter.load"
-              (image)="onimage($event)"
-              (video)="onvideo($event)"
-            ></howell-garbage-station-window-record>
-          </ng-container>
-        </mat-tab>
-        <mat-tab label="刷卡记录">
-          <ng-container *ngIf="index == Index.card">
-            <hw-garbage-station-card-record
-              (video)="onvideo($event)"
-            ></hw-garbage-station-card-record>
-          </ng-container>
-        </mat-tab>
-      </mat-tab-group>
+      <div class="garbage-station-window-body">
+        <ng-container *ngIf="index == Index.station">
+          <howell-garbage-station-table
+            [load]="station.load"
+            [stationId]="stationId"
+            [divisionId]="divisionId"
+            (position)="onposition($event)"
+            (image)="onimage($event)"
+          >
+          </howell-garbage-station-table>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.stay">
+          <howell-garbage-station-window-stay
+            [stationId]="stationId"
+            (image)="onimage($event)"
+            (ondblclick)="onstaydblclick($event)"
+          >
+          </howell-garbage-station-window-stay>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.general">
+          <howell-garbage-station-window-general>
+          </howell-garbage-station-window-general>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.details">
+          <howell-garbage-station-window-details>
+          </howell-garbage-station-window-details>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.record">
+          <howell-garbage-station-window-record
+            [isfilter]="record.filter.show"
+            [status]="taskStatus"
+            [(filter)]="record.filter.filter"
+            [table]="table"
+            [search]="record.filter.load"
+            (image)="onimage($event)"
+            (video)="onvideo($event)"
+          ></howell-garbage-station-window-record>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.card">
+          <hw-garbage-station-card-record
+            (video)="onvideo($event)"
+          ></hw-garbage-station-card-record>
+        </ng-container>
+
+        <ng-container *ngIf="index == Index.dapuqiao_record">
+          <dapuqiao-garbage-station-window-record
+            [level]="dapuqiao_level"
+            (details)="ondapuqiaodetails($event)"
+            (picture)="ondapuqiaopicture($event)"
+            (image)="ondapuqiaoimage($event)"
+            (process)="ondapuqiaoprocess($event)"
+          ></dapuqiao-garbage-station-window-record>
+        </ng-container>
+      </div>
     </div>
   </ng-container>
 </app-window>

@@ -2,12 +2,12 @@ import {
   AfterViewChecked,
   ChangeDetectorRef,
   Component,
+  ContentChild,
   ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 
 @Component({
@@ -18,6 +18,7 @@ import {
 export class HowellSelectComponent implements OnInit, AfterViewChecked {
   @Input()
   cannull: boolean = false;
+  @Input() nulltext = '请选择';
 
   @Input()
   public set style(v: any) {
@@ -47,13 +48,13 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
   ngAfterViewChecked(): void {
     if (this.element && this.cannull) {
       if (this.selected === undefined) {
-        (this.element.nativeElement as HTMLSelectElement).value = '';
+        this.element.nativeElement.value = '';
       }
     }
   }
 
-  @ViewChild('element')
-  element?: ElementRef;
+  @ContentChild('element')
+  element?: ElementRef<HTMLSelectElement>;
 
   ngOnInit(): void {}
 

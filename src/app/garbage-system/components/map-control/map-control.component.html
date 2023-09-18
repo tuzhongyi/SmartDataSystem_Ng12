@@ -20,6 +20,10 @@
     <div></div>
     满溢 {{ pointCount.warm }}
   </li>
+  <li class="drop">
+    <div></div>
+    滞留 {{ pointCount.drop }}
+  </li>
   <li class="error">
     <div></div>
     异常 {{ pointCount.error }}
@@ -60,6 +64,19 @@
 ></app-map-list-panel>
 
 <div class="map-bar btn-list">
+  <map-control-buttons
+    (patrol)="onPatrolClicked()"
+    (construction)="amap.point.constructionview($event)"
+    (stationnormal)="amap.point.stationnormalview($event)"
+    (stationfull)="amap.point.stationfullview($event)"
+    (stationdrop)="amap.point.stationdropview($event)"
+    (stationerror)="amap.point.stationerrorview($event)"
+    (station30in)="amap.point.station30inview($event)"
+    (station30out)="amap.point.station30outview($event)"
+  ></map-control-buttons>
+</div>
+
+<!-- <div class="map-bar btn-list">
   <div
     class="btn hw-link-tooltip"
     (click)="onPatrolClicked()"
@@ -68,10 +85,7 @@
     <div class="inner">
       <i class="howell-icon-refresh"></i>
     </div>
-  </div>
-  <!-- <div class="btn" (click)="ButtonVSClicked()" style="display: none">
-    <div class="inner" style="line-height: 26px">vs</div>
-  </div> -->
+  </div>  
   <div
     class="btn"
     (click)="display.filting.current.click.emit()"
@@ -112,9 +126,7 @@
     title="小包垃圾滞留时长"
   >
     <div class="inner">
-      <i class="howell-icon-garbagebags"></i>
-      <!-- <i [ngClass]="LabelVisibility ? 'howell-icon-residual': 'howell-icon-recyclable'"></i> -->
-      <!-- <i *ngIf="!LabelVisibility" class="howell-icon-zoomout"></i>       -->
+      <i class="howell-icon-garbagebags"></i>      
     </div>
   </div>
   <div
@@ -167,7 +179,7 @@
   >
     <div class="inner h" style="line-height: 28px">2h</div>
   </div>
-</div>
+</div> -->
 
 <!-- 
   [dataSource]="this.childrenOfList"

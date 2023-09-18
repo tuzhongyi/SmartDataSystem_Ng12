@@ -13,7 +13,7 @@ export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageSta
     return this.cache.get(this.key + id) as GarbageStationNumberStatistic;
   }
   saveItem(id: string, data: GarbageStationNumberStatistic) {
-    this.cache.set(this.key + id, data);
+    this.cache.set(this.key + id, data, this.timeout);
   }
 
   async get(id: string): Promise<GarbageStationNumberStatistic> {
@@ -22,7 +22,7 @@ export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageSta
       if (data) {
         return data;
       }
-    } catch (error) { }
+    } catch (error) {}
     return super.get(id);
   }
 
@@ -55,7 +55,7 @@ export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageSta
           return super.getPaged(result, args);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     return this.service.list!(args).then((result) => {
       result.Data.forEach((item) => {

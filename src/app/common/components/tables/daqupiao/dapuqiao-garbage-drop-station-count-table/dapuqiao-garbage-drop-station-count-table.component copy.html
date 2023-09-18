@@ -1,0 +1,70 @@
+<div class="dapuqiao-garbage-drop-station-count-table vertical-layout">
+  <div class="dapuqiao-garbage-drop-station-count-table-main vertical-main">
+    <div
+      class="dapuqiao-garbage-drop-station-count-table-main-table-head"
+      #head
+    >
+      <table border="2" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <thead>
+          <tr>
+            <td>序号</td>
+            <td>名称</td>
+            <td>行政区</td>
+            <td>一级事件</td>
+            <td>二级事件</td>
+            <td>三级事件</td>
+            <td>全部事件</td>
+            <td>一级事件反馈</td>
+            <td>二级事件反馈</td>
+            <td>三级事件反馈</td>
+            <td>物业反馈</td>
+            <td>第三方反馈</td>
+            <td>全部事件反馈</td>
+            <td>平均反馈时长</td>
+            <td>反馈率</td>
+            <td>督办事件</td>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div
+      class="dapuqiao-garbage-drop-station-count-table-main-table-body"
+      #body
+    >
+      <table border="2" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>
+              {{ i + 1 }}
+            </td>
+            <td>{{ item.Name }}</td>
+            <td>{{ (item.Parent | async)?.Name }}</td>
+            <td>{{ item.Level3Statistic?.Level1Number ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.Level2Number ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.Level3Number ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.AllLevelNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.Level1FeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.Level2FeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.Level3FeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.PropertyFeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.ThirdPartFeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.FeedbackNumber ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.AvgFeedbackSeconds ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.FeedbackRatio ?? 0 }}</td>
+            <td>{{ item.Level3Statistic?.SupervisedNumber ?? 0 }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

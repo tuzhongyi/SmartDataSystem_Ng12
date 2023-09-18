@@ -1,0 +1,107 @@
+<div class="map-control-buttons">
+  <div class="map-control-button" (click)="onpatrol()" title="投放点巡检">
+    <div class="map-control-button-inner">
+      <i class="howell-icon-refresh"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.filter.display"
+    [ngClass]="{
+      selected: model.filter.selected
+    }"
+    class="map-control-button"
+    (click)="onfilter()"
+    title="筛选"
+  >
+    <div class="map-control-button-inner">
+      <i class="mdi mdi-filter-outline"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.display"
+    [ngClass]="{
+      selected: model.construction.selected
+    }"
+    class="map-control-button"
+    (click)="onconstruction()"
+    title="建筑垃圾"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.stationnormal.display"
+    [ngClass]="{
+      selected: model.stationnormal.selected
+    }"
+    class="map-control-button green-text"
+    (click)="onstationnormal()"
+    title="投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.stationfull.display"
+    [ngClass]="{
+      selected: model.stationfull.selected
+    }"
+    class="map-control-button orange-text"
+    (click)="onstationfull()"
+    title="垃圾满溢投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.stationdrop.display"
+    [ngClass]="{
+      selected: model.stationdrop.selected
+    }"
+    class="map-control-button orange-red-text"
+    (click)="onstationdrop()"
+    title="垃圾滞留投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.stationerror.display"
+    [ngClass]="{
+      selected: model.stationerror.selected
+    }"
+    class="map-control-button gray-2-text"
+    (click)="onstationerror()"
+    title="异常投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.station30in.display"
+    [ngClass]="{
+      selected: model.station30in.selected
+    }"
+    class="map-control-button h"
+    (click)="onstation30in()"
+    title="投放点垃圾滞留30分钟内"
+  >
+    <div class="map-control-button-inner">30-</div>
+  </div>
+  <div
+    *ngIf="model.station30out.display"
+    [ngClass]="{
+      selected: model.station30out.selected
+    }"
+    class="map-control-button h"
+    (click)="onstation30out()"
+    title="投放点垃圾滞留30分钟以上"
+  >
+    <div class="map-control-button-inner">30+</div>
+  </div>
+</div>

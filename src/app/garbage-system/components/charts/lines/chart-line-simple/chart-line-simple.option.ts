@@ -17,7 +17,7 @@ export let ChartPieOption: echarts.EChartsOption = {
   grid: {
     left: 50,
     right: 15,
-    top: 10,
+    top: 20,
     bottom: 20,
   },
   xAxis: {

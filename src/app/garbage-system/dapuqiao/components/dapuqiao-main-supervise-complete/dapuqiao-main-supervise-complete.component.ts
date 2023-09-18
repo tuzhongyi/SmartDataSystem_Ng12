@@ -3,6 +3,7 @@ import { DapuqiaoMainSuperviseCompleteBusiness } from './dapuqiao-main-supervise
 import {
   DapuqiaoMainSuperviseCompleteImageArgs,
   DapuqiaoMainSuperviseCompleteModel,
+  DapuqiaoMainSuperviseCompleteModelType,
   GarbageDropEventRecordModel,
 } from './dapuqiao-main-supervise-complete.model';
 import { DapuqiaoMainSuperviseCompleteService } from './dapuqiao-main-supervise-complete.service';
@@ -25,6 +26,7 @@ export class DapuqiaoMainSuperviseCompleteComponent implements OnInit {
   constructor(private business: DapuqiaoMainSuperviseCompleteBusiness) {}
 
   model?: GarbageDropEventRecordModel;
+  CompleteType = DapuqiaoMainSuperviseCompleteModelType;
 
   ngOnInit(): void {
     if (this.eventId) {

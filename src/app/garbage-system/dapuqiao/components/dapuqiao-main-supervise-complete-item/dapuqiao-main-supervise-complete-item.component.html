@@ -25,7 +25,10 @@
       <div class="note note-right" [style.color]="color">{{ note }}</div>
       <div class="line" [ngStyle]="{ 'margin-top': lineOffset }"></div>
     </div>
-    <div class="dapuqiao-main-supervise-complete-item-content">
+    <div
+      class="dapuqiao-main-supervise-complete-item-content"
+      [style.width]="width"
+    >
       <ng-content></ng-content>
     </div>
     <div class="divider" *ngIf="left">

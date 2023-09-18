@@ -10,7 +10,6 @@ export class IndexSuperviseWindowBusiness {
     public detail: IndexSuperviseDetailWindowBusiness,
     public complete: IndexSuperviseCompleteWindowBusiness
   ) {
-    table.show = true;
     table.select.subscribe((x) => {
       detail.eventId = x.EventId;
       detail.show = true;

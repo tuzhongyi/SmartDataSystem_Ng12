@@ -1,0 +1,171 @@
+<div class="garbage-station-profile-table vertical-layout">
+  <div class="garbage-station-profile-table-main vertical-main">
+    <div class="garbage-station-profile-table-main-table" WheelHorizontalScroll>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <thead>
+          <tr>
+            <td class="lock left first">图片</td>
+            <td class="lock left second">投放点</td>
+            <td>居委会</td>
+            <td>社区</td>
+            <td>街道</td>
+            <td>上报时间</td>
+            <td>级别</td>
+            <td>滞留时长</td>
+            <td>反馈状态</td>
+            <td>反馈时长</td>
+            <td>反馈人员</td>
+            <td>反馈结果</td>
+            <td>处置状态</td>
+            <td>处置时间</td>
+            <td>督办状态</td>
+            <td>督办时间</td>
+            <td class="lock right">操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of datas">
+            <td class="lock left first">
+              <div class="imgs">
+                <div
+                  class="img"
+                  [style.backgroundImage]="'url(' + img.url + ')'"
+                  *ngFor="let img of item.imgs; let i = index"
+                  (click)="onimage(item, i)"
+                ></div>
+              </div>
+            </td>
+            <td class="lock left second">
+              {{ item.Data.StationName }}
+            </td>
+            <td>
+              {{ item.Data.DivisionName }}
+            </td>
+            <td>
+              {{ item.Data.CommunityName }}
+            </td>
+            <td>{{ (item.County | async)?.Name }}</td>
+            <td>
+              {{ item.LevelTime | date : "HH:mm:ss" }}
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'blue-text': item.Data.SuperVisionData?.Level === 1,
+                  'orange-text': item.Data.SuperVisionData?.Level === 2,
+                  'powder-red-text': item.Data.SuperVisionData?.Level === 3
+                }"
+              >
+                {{ item.Level }}
+              </div>
+            </td>
+            <td>
+              {{ item.Minutes | howellTime }}
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'orange-text': item.Data.FeedbackState === 0,
+                  'green-text': item.Data.FeedbackState === 1
+                }"
+              >
+                {{ item.Data.FeedbackState === 0 ? "未反馈" : "已反馈" }}
+              </div>
+            </td>
+            <td>
+              {{
+                item.Data.FeedbackState === 1
+                  ? ((item.Data.FeedbackSeconds ?? 0) / 60 | howellTime)
+                  : "-"
+              }}
+            </td>
+            <td>
+              {{ item.Data.FeedbackState === 1 ? item.FeedbackUserName : "-" }}
+            </td>
+            <td>
+              {{
+                item.Data.FeedbackState === 1
+                  ? Language.FeedbackResult(item.Data.FirstFeedbackResult)
+                  : "-"
+              }}
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'orange-text': !item.Data.IsHandle,
+                  'green-text': item.Data.IsHandle
+                }"
+              >
+                {{ item.Data.IsHandle ? "已处置" : "未处置" }}
+              </div>
+            </td>
+            <td>
+              {{ item.Data.HandleTime | date : "HH:mm:ss" }}
+            </td>
+            <td>
+              <div
+                [ngClass]="{
+                  'orange-text':
+                    item.Data.SuperVisionData?.SupervisedState === 0,
+                  'green-text': item.Data.SuperVisionData?.SupervisedState === 1
+                }"
+              >
+                {{
+                  item.Data.SuperVisionData?.SupervisedState === 1
+                    ? "已督办"
+                    : "未督办"
+                }}
+              </div>
+            </td>
+            <td>
+              {{
+                item.Data.SuperVisionData
+                  ? item.Data.SuperVisionData.SupervisedTime
+                    ? (item.Data.SuperVisionData.SupervisedTime
+                      | date : "HH:mm:ss")
+                    : "-"
+                  : "-"
+              }}
+            </td>
+            <td class="lock right operation center">
+              <div class="howell-icon" (click)="ondetails(item)">
+                <i class="howell-icon-task_misson"></i>
+              </div>
+              <div class="howell-icon" (click)="onprocess(item)">
+                <i class="howell-icon-Subsystem"></i>
+              </div>
+              <div class="howell-icon" (click)="onpicture(item)">
+                <i class="howell-icon-picture"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="garbage-station-profile-table-main-footer footer" *ngIf="page">
+    <div class="footer-item">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+      </div>
+
+      <app-paginator
+        [length]="page ? page.TotalRecordCount : 0"
+        [pageSize]="page ? page.PageSize : 0"
+        [pagerCount]="5"
+        [pageIndex]="page.PageIndex - 1"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

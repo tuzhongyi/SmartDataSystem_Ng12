@@ -8,9 +8,9 @@ export class DaPuQiaoMainEventLevelArgs {
 
 export class DaPuQiaoMainEventLevelModel {
   items: LevelItem[] = [
-    new LevelItem(EventType.GarbageDrop, '一级事件(0-10分钟)'),
-    new LevelItem(EventType.GarbageDropTimeout, '二级事件(10-15分钟)'),
-    new LevelItem(EventType.GarbageDropSuperTimeout, '三级事件(15分钟以上)'),
+    new LevelItem(EventType.GarbageDrop, '一级事件'),
+    new LevelItem(EventType.GarbageDropTimeout, '二级事件'),
+    new LevelItem(EventType.GarbageDropSuperTimeout, '三级事件'),
   ];
 }
 

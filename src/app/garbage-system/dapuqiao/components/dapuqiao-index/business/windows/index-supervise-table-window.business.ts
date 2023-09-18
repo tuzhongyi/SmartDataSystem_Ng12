@@ -1,8 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { GarbageStationEventRecordVisionModel } from 'src/app/common/components/tables/garbage-station-event-record-vision-table/garbage-station-event-record-vision-table.model';
+import { DaPuQiaoGarbageStationEventRecordVisionModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-station-event-record-vision-table/dapuqiao-garbage-station-event-record-vision-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { Medium } from 'src/app/common/tools/medium';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { EventRecord } from 'src/app/network/model/event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
@@ -80,16 +81,16 @@ export class IndexSuperviseTableWindowBusiness extends WindowViewModel {
     transition: '0.4s',
   };
 
-  ondetails(item: GarbageStationEventRecordVisionModel) {
+  ondetails(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
     this.details.emit(item);
   }
-  onselect(item: GarbageStationEventRecordVisionModel) {
+  onselect(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
     this.select.emit(item);
   }
-  async onimage(item: GarbageStationEventRecordVisionModel) {
+  async onimage(item: DaPuQiaoGarbageStationEventRecordVisionModel) {
+    this.image.array.manualcapture = true;
     this.image.array.index = 0;
     this.image.array.stationId = item.Data.StationId;
-    this.image.array.manualcapture = true;
 
     let models = this.convert(await item.GarbageStation);
     this.image.array.models = models;
@@ -97,17 +98,19 @@ export class IndexSuperviseTableWindowBusiness extends WindowViewModel {
     this.image.array.show = true;
   }
 
-  convert(input: GarbageStation) {
-    if (input.Cameras) {
-      let array = input.Cameras.sort((a, b) => {
+  convert(station: GarbageStation) {
+    if (station.Cameras) {
+      let array = station.Cameras.sort((a, b) => {
         return LocaleCompare.compare(a.Name, b.Name);
-      }).map((x, i) => {
+      }).map((camera, i) => {
         let img = new ImageControlModel();
-        img.src = Medium.img(x.ImageUrl);
-        img.name = x.Name ?? '';
-        img.stationId = input.Id;
+        img.id = camera.Id;
+        img.stationId = station.Id;
+        img.name = camera.Name ?? '';
+        img.src = Medium.img(camera.ImageUrl);
+        img.status = camera.OnlineStatus ?? OnlineStatus.Offline;
         img.index = i;
-        img.camera = x;
+        img.camera = camera;
         return img;
       });
       return array;

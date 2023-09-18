@@ -4,13 +4,13 @@
     <div class="operation">
       <select class="mdi" [(ngModel)]="position" (change)="onchange()">
         <option [ngValue]="Position.main">
-          <div>&#xf08b;&nbsp;</div>
+          <div>&#xf392;&nbsp;</div>
         </option>
         <option [ngValue]="Position.center">
-          <div>&#xf08b;&nbsp;</div>
+          <div>&#xf393;&nbsp;</div>
         </option>
         <option [ngValue]="Position.bottom">
-          <div>&#xf08b;&nbsp;</div>
+          <div>&#xf394;&nbsp;</div>
         </option>
       </select>
       <div class="howell-icon" (click)="onclose()">
@@ -19,11 +19,11 @@
     </div>
   </div>
   <div class="index-event-vision-body">
-    <garbage-station-event-record-vision-table
+    <dapuqiao-garbage-station-event-record-vision-table
       [load]="load"
       (image)="onimage($event)"
       (details)="ondetails($event)"
       (select)="onselect($event)"
-    ></garbage-station-event-record-vision-table>
+    ></dapuqiao-garbage-station-event-record-vision-table>
   </div>
 </div>

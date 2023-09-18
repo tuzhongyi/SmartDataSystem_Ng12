@@ -1,12 +1,7 @@
 import { IService } from 'src/app/business/Ibusiness';
 import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
-import { Division } from '../../model/division.model';
 import { PagedList } from '../../model/page_list.model';
-import {
-  GetDivisionsParams,
-  GetDivisionStatisticNumbersParams,
-} from '../division/division-request.params';
-import { IParams, PagedParams } from '../IParams.interface';
+import { GetDivisionStatisticNumbersParams } from '../division/division-request.params';
 import { ServiceCache } from './service.cache';
 
 export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberStatistic> {
@@ -18,7 +13,7 @@ export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberSt
     return this.cache.get(this.key + id) as DivisionNumberStatistic;
   }
   saveItem(id: string, data: DivisionNumberStatistic) {
-    this.cache.set(this.key + id, data);
+    this.cache.set(this.key + id, data, this.timeout);
   }
 
   async get(id: string): Promise<DivisionNumberStatistic> {
@@ -51,7 +46,7 @@ export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberSt
           return super.getPaged(result, args);
         }
       }
-    } catch (error) { }
+    } catch (error) {}
 
     return this.service.list!(args).then((result) => {
       result.Data.forEach((item) => {

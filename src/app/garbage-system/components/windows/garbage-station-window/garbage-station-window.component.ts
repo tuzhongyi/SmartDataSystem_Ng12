@@ -8,15 +8,19 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
+import { GarbageDropEventRecordModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
 import {
   GarbageDropRecordFilter,
   GarbageDropRecordViewModel,
 } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { IndexArgs } from 'src/app/network/model/model.interface';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
@@ -39,6 +43,8 @@ export class GarbageStationWindowComponent
   extends WindowComponent
   implements OnInit, OnChanges
 {
+  @Input() dapuqiao_level?: number;
+
   @Input()
   index = GarbageStationWindowIndex.station;
   @Input()
@@ -61,14 +67,28 @@ export class GarbageStationWindowComponent
   @Output()
   video: EventEmitter<GarbageDropRecordViewModel | AIGarbageRfidCardRecord> =
     new EventEmitter();
+
+  @Output() dapuqiao_image: EventEmitter<
+    IndexArgs<GarbageDropEventRecordModel>
+  > = new EventEmitter();
+  @Output() dapuqiao_details: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+  @Output() dapuqiao_picture: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+  @Output() dapuqiao_process: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+
   constructor(
     public station: GarbageStationWindowStationBusiness,
     public record: GarbageStationWindowRecordBusiness,
-    public details: GarbageStationWindowDetailsBusiness
+    public details: GarbageStationWindowDetailsBusiness,
+    local: LocalStorageService
   ) {
     super();
+    this.ui = local.user.UIType;
   }
-
+  ui?: UserUIType;
+  UserUIType = UserUIType;
   Index = GarbageStationWindowIndex;
   isfilter = false;
   table: ListType = ListType.table;
@@ -114,7 +134,7 @@ export class GarbageStationWindowComponent
     this.stationId = undefined;
   }
 
-  onimage(item: ImageControlModelArray) {
+  onimage(item: any) {
     this.image.emit(item);
   }
 
@@ -128,6 +148,19 @@ export class GarbageStationWindowComponent
 
   onvideo(args: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
     this.video.emit(args);
+  }
+
+  ondapuqiaodetails(item: GarbageDropEventRecordModel) {
+    this.dapuqiao_details.emit(item);
+  }
+  ondapuqiaopicture(item: GarbageDropEventRecordModel) {
+    this.dapuqiao_picture.emit(item);
+  }
+  ondapuqiaoimage(model: IndexArgs<GarbageDropEventRecordModel>) {
+    this.dapuqiao_image.emit(model);
+  }
+  ondapuqiaoprocess(item: GarbageDropEventRecordModel) {
+    this.dapuqiao_process.emit(item);
   }
 }
 
@@ -143,4 +176,5 @@ export enum GarbageStationWindowIndex {
   /** 报警事件处置 */
   record = 4,
   card = 5,
+  dapuqiao_record = 6,
 }

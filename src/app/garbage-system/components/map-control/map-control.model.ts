@@ -21,10 +21,6 @@ export class MapControlTools {
   status = true;
   videoList = false;
   videoControl = false;
-  patrol = new MapControlToolButton();
-  filting = new MapControlToolFilterButton();
-  // duration: MapControlLabelDisplay = new MapControlLabelDisplay(this.events);
-  retention = new MapControlTooDurationButton();
 }
 
 class MapControlToolFilterButton {

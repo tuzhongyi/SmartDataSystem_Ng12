@@ -42,15 +42,18 @@ export class DapuqiaoMainEventStatisticBusiness
     let model = new DapuqiaoMainEventStatisticModel();
     if (input.Level3Statistic) {
       if (input.Level3Statistic.Level3Number) {
-        model.supervision.value =
-          input.Level3Statistic.SupervisedNumber ??
-          0 / input.Level3Statistic.Level3Number;
+        model.supervision.value = Math.round(
+          ((input.Level3Statistic.SupervisedNumber ?? 0) /
+            input.Level3Statistic.Level3Number) *
+            100
+        );
       }
 
       model.feedback.value = input.Level3Statistic.FeedbackRatio ?? 100;
 
       model.statistic.all = input.Level3Statistic.Level3Number ?? 0;
-      model.statistic.feedback = input.Level3Statistic.FeedbackNumber ?? 0;
+      model.statistic.feedback =
+        input.Level3Statistic.Level3FeedbackNumber ?? 0;
       model.statistic.supervision = input.Level3Statistic.SupervisedNumber ?? 0;
     }
     return model;

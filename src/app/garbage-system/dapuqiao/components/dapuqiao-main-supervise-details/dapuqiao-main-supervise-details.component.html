@@ -61,19 +61,34 @@
             </div>
           </div>
           <div class="hw-form-list-item">
-            <div class="hw-form-list-item-title">滞留时长：</div>
+            <div class="hw-form-list-item-title">
+              <div>滞</div>
+              <div>留</div>
+              <div>时</div>
+              <div>长：</div>
+            </div>
             <div class="hw-form-list-item-value">
               {{ model.Minutes | howellTime }}
             </div>
           </div>
           <div class="hw-form-list-item">
-            <div class="hw-form-list-item-title">上报时间：</div>
+            <div class="hw-form-list-item-title">
+              <div>上</div>
+              <div>报</div>
+              <div>时</div>
+              <div>间：</div>
+            </div>
             <div class="hw-form-list-item-value">
               {{ model.LevelTime | date : "HH:mm:ss" }}
             </div>
           </div>
           <div class="hw-form-list-item">
-            <div class="hw-form-list-item-title">处置状态：</div>
+            <div class="hw-form-list-item-title">
+              <div>处</div>
+              <div>置</div>
+              <div>状</div>
+              <div>态：</div>
+            </div>
             <div
               class="hw-form-list-item-value"
               [ngClass]="{ 'green-text': model.Data.IsHandle }"
@@ -82,7 +97,12 @@
             </div>
           </div>
           <div class="hw-form-list-item">
-            <div class="hw-form-list-item-title">督办状态：</div>
+            <div class="hw-form-list-item-title">
+              <div>督</div>
+              <div>办</div>
+              <div>状</div>
+              <div>态：</div>
+            </div>
             <div
               class="hw-form-list-item-value"
               [ngClass]="{
@@ -100,7 +120,12 @@
             class="hw-form-list-item"
             *ngIf="model.Data.SuperVisionData?.SupervisedState === 1"
           >
-            <div class="hw-form-list-item-title">督办时间：</div>
+            <div class="hw-form-list-item-title">
+              <div>督</div>
+              <div>办</div>
+              <div>时</div>
+              <div>间：</div>
+            </div>
             <div class="hw-form-list-item-value">
               {{
                 model.Data.SuperVisionData?.SupervisedTime | date : "HH:mm:ss"
@@ -108,7 +133,12 @@
             </div>
           </div>
           <div class="hw-form-list-item">
-            <div class="hw-form-list-item-title">反馈状态：</div>
+            <div class="hw-form-list-item-title">
+              <div>反</div>
+              <div>馈</div>
+              <div>状</div>
+              <div>态：</div>
+            </div>
             <div
               class="hw-form-list-item-value"
               [ngClass]="{ 'green-text': model.Data.FeedbackState === 1 }"
@@ -122,25 +152,45 @@
           >
             <ng-container *ngFor="let item of model.Data.Feedbacks">
               <div class="hw-form-list-item">
-                <div class="hw-form-list-item-title">反馈人员：</div>
+                <div class="hw-form-list-item-title">
+                  <div>反</div>
+                  <div>馈</div>
+                  <div>人</div>
+                  <div>员：</div>
+                </div>
                 <div class="hw-form-list-item-value">
                   {{ item.FeedbackUserName }}
                 </div>
               </div>
               <div class="hw-form-list-item">
-                <div class="hw-form-list-item-title">手机号码：</div>
+                <div class="hw-form-list-item-title">
+                  <div>手</div>
+                  <div>机</div>
+                  <div>号</div>
+                  <div>码：</div>
+                </div>
                 <div class="hw-form-list-item-value">
                   {{ item.FeedbackUserMobileNo }}
                 </div>
               </div>
               <div class="hw-form-list-item">
-                <div class="hw-form-list-item-title">反馈时间：</div>
+                <div class="hw-form-list-item-title">
+                  <div>反</div>
+                  <div>馈</div>
+                  <div>时</div>
+                  <div>间：</div>
+                </div>
                 <div class="hw-form-list-item-value">
                   {{ item.FeedbackTime | date : "HH:mm:ss" }}
                 </div>
               </div>
               <div class="hw-form-list-item">
-                <div class="hw-form-list-item-title">反馈结果：</div>
+                <div class="hw-form-list-item-title">
+                  <div>反</div>
+                  <div>馈</div>
+                  <div>结</div>
+                  <div>果：</div>
+                </div>
                 <div class="hw-form-list-item-value">
                   {{ Language.FeedbackResult(item.FeedbackResult) }}
                 </div>
@@ -184,7 +234,9 @@
           *ngIf="
             !(
               model.Data.SuperVisionData?.SupervisedState === 1 ||
-              model.Data.IsHandle
+              model.Data.IsHandle ||
+              (model.Data.SuperVisionData &&
+                model.Data.SuperVisionData.Level > 2)
             )
           "
           class="hw-green-btn"

@@ -9,7 +9,6 @@ import {
   StatisticCardViewModel,
   StatisticType,
 } from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
-import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -71,29 +70,27 @@ export class IndexStatisticCardBussiness
   onclick(model: StatisticCardViewModel) {
     switch (model.type) {
       case StatisticType.stationCount:
-        this.window.station.stationId = undefined;
-        this.window.station.index = GarbageStationWindowIndex.station;
+        this.window.station.clear();
         this.window.station.show = true;
         break;
       case StatisticType.stationDrop:
-        this.window.drop.divisionId = undefined;
+        this.window.drop.clear();
         this.window.drop.show = true;
         break;
       case StatisticType.stationFull:
+        this.window.full.clear();
         this.window.full.show = true;
         break;
       case StatisticType.illegalDropRecord:
+        this.window.record.clear();
         this.window.record.type = EventType.IllegalDrop;
         this.window.record.count = model.value;
-        this.window.record.stationId = undefined;
-        this.window.record.divisionId = undefined;
         this.window.record.show = true;
         break;
       case StatisticType.mixedIntoRecord:
+        this.window.record.clear();
         this.window.record.type = EventType.MixedInto;
         this.window.record.count = model.value;
-        this.window.record.stationId = undefined;
-        this.window.record.divisionId = undefined;
         this.window.record.show = true;
         break;
       default:
@@ -135,7 +132,7 @@ class StatisticCardConverter
     card.title =
       Language.json.garbage + Language.json.stay + Language.json.station;
     card.value = input.GarbageDropStationNumber ?? 0;
-    card.class = 'green-text';
+    card.class = 'orange-red-text';
     return card;
   }
   createFullStation(input: DivisionNumberStatistic) {

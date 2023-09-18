@@ -1,9 +1,7 @@
-import { ClassConstructor } from 'class-transformer';
-import { IService, IData } from 'src/app/business/Ibusiness';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { Page, PagedList } from '../../model/page_list.model';
+import { IData, IService } from 'src/app/business/Ibusiness';
+import { PagedList } from '../../model/page_list.model';
 import { IParams, PagedParams } from '../IParams.interface';
-import { AppCache } from './app-cache';
+import { AppCache } from './cache.interface';
 
 export class ServicePool {
   static [key: string]: AppCache;
@@ -21,7 +19,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   constructor(
     protected key: string,
     protected service: IService<T>,
-    private timeout = 1000 * 60 * 30,
+    protected timeout = 1000 * 60 * 30,
     private init = true
   ) {
     try {
@@ -77,9 +75,11 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     return this.cache.get(this.key) as T[] | undefined;
   }
   save(data: T[]) {
-    this.cache.set(this.key, data);
+    this.cache.set(this.key, data, this.timeout);
   }
   clear() {
+    this.loading = false;
+    this.loaded = false;
     this.cache.del(this.key);
   }
 

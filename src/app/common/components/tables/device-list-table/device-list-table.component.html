@@ -40,7 +40,7 @@
               <span
                 [ngClass]="{
                   'green-text': item.OnlineStatus === OnlineStatus.Online,
-                  'powder-red-text': item.OnlineStatus === OnlineStatus.Offline
+                  'gray-2-text': item.OnlineStatus === OnlineStatus.Offline
                 }"
               >
                 {{ Language.OnlineStatus(item.OnlineStatus) }}</span

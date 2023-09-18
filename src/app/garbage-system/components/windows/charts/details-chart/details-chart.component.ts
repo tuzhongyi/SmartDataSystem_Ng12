@@ -3,9 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
 
 import { CallbackDataParams } from 'echarts/types/dist/shared';
@@ -45,11 +43,7 @@ import { ExportExcelConverter } from './details-chart-export.converter';
   styleUrls: ['./details-chart.component.less'],
 })
 export class DetailsChartComponent
-  implements
-    OnInit,
-    IComponent<IModel, ITimeData<IModel>[][]>,
-    OnChanges,
-    AfterViewInit
+  implements OnInit, IComponent<IModel, ITimeData<IModel>[][]>, AfterViewInit
 {
   @Input()
   business!: IBusiness<IModel, ITimeData<IModel>[][]>;
@@ -130,20 +124,6 @@ export class DetailsChartComponent
   ngAfterViewInit(): void {
     this.loaded = true;
     this.loadData();
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.eventType && !changes.eventType.firstChange) {
-      this.loadData();
-    }
-    if (changes.types && !changes.types.firstChange) {
-      this.loadData();
-    }
-    if (changes.station && !changes.station.firstChange) {
-      this.loadData();
-    }
-    if (changes.division && !changes.division.firstChange) {
-      this.loadData();
-    }
   }
 
   async ngOnInit() {

@@ -3,6 +3,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DisposalCountArgs } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
@@ -16,6 +17,7 @@ export class IndexEventTriggerBusiness {
   retentionRank = new RetentionRankEventTrigger(this.window);
   risposalCount = new RisposalCountEventTrigger(this.window);
   risposalRank = new RisposalRankEventTrigger(this.window);
+  dapuqiao = new DaPuQiaoEventTrigger(this.window);
 }
 
 export class DeviceStateEventTrigger {
@@ -69,5 +71,26 @@ class RisposalRankEventTrigger {
   onItemClicked(item: RankModel) {
     this.window.record.stationId = item.id;
     this.window.record.show = true;
+  }
+}
+class DaPuQiaoEventTrigger {
+  constructor(private window: IndexWindowBussiness) {}
+  level = new DaPuQiaoPieLevelEventTrigger(this.window);
+  statistic = new DaPuQiaoPieStatisticEventTrigger(this.window);
+}
+class DaPuQiaoPieLevelEventTrigger {
+  constructor(private window: IndexWindowBussiness) {}
+
+  ondetails(level?: number) {
+    this.window.station.index = GarbageStationWindowIndex.dapuqiao_record;
+    this.window.station.dapuqiao.level = level;
+    this.window.station.show = true;
+  }
+}
+class DaPuQiaoPieStatisticEventTrigger {
+  constructor(private window: IndexWindowBussiness) {}
+  ondetails() {
+    this.window.drop.index = GarbageDropStationWindowIndex.dapuqiao_count;
+    this.window.drop.show = true;
   }
 }

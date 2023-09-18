@@ -21,6 +21,11 @@ export class IndexGarbageStationDropWindowBusiness extends WindowViewModel {
     transform: 'translate(-50%, -44.5%)',
   };
 
+  clear() {
+    this.index = GarbageDropStationWindowIndex.list;
+    this.divisionId = undefined;
+  }
+
   onimage(
     model: ImageControlModelArray<
       GarbageFullStationTableModel | EventRecordViewModel

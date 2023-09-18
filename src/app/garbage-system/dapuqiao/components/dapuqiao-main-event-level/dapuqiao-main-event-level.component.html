@@ -12,7 +12,7 @@
   <div class="index-event-level-body">
     <div class="index-event-level-body-chart">
       <chart-pie-event-level
-        [load]="load"
+        [load]="chartload"
         (inited)="oninit($event)"
       ></chart-pie-event-level>
     </div>
@@ -26,6 +26,7 @@
             'orange-text': item.key === EventType.GarbageDropTimeout,
             'powder-red-text': item.key === EventType.GarbageDropSuperTimeout
           }"
+          (click)="onclick(item)"
         >
           {{ item.value }}
         </div>

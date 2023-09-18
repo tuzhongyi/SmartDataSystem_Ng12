@@ -1,7 +1,11 @@
 <div class="select-control" [ngStyle]="style">
   <ng-content></ng-content>
-  <div class="clear" *ngIf="cannull && !!selected" (click)="onclear($event)">
+  <div
+    class="clear"
+    *ngIf="cannull && selected !== undefined"
+    (click)="onclear($event)"
+  >
     <i class="howell-icon-Close"></i>
   </div>
-  <div class="default" *ngIf="!selected">请选择</div>
+  <div class="default" *ngIf="selected === undefined">{{ nulltext }}</div>
 </div>

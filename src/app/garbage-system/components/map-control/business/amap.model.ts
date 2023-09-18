@@ -1,4 +1,5 @@
 import { EventEmitter } from '@angular/core';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class AMapVisibilityItem<T> {
@@ -29,8 +30,9 @@ export class AMapLabelVisibility<T> extends AMapVisibilityItem<T> {
 
 export interface AMapDataSource {
   all: GarbageStation[];
-  drop: GarbageStation[];
-  labels: Global.Dictionary<CesiumDataController.LabelOptions>;
+  construction: GarbageStation[];
+  drop: { station: GarbageStation; statistic: GarbageStationNumberStatistic }[];
+  plug: GarbageStationNumberStatistic[];
   points: Global.Dictionary<CesiumDataController.Point>;
 }
 
@@ -44,9 +46,10 @@ export enum GarbageTimeFilter {
   none = -1,
 }
 
-export interface PointCount {
-  count: number;
-  normal: number;
-  warm: number;
-  error: number;
+export class PointCount {
+  count: number = 0;
+  normal: number = 0;
+  warm: number = 0;
+  drop: number = 0;
+  error: number = 0;
 }
