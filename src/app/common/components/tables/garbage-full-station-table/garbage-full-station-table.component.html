@@ -1,25 +1,31 @@
 <div class="garbage-full-station-table">
   <div class="garbage-full-station-table-main">
     <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
       <thead>
         <tr>
-          <td [ngStyle]="{ width: widths[0] }">图片</td>
-          <td [ngStyle]="{ width: widths[1] }">投放点</td>
-          <td [ngStyle]="{ width: widths[2] }">社区</td>
-          <td [ngStyle]="{ width: widths[3] }">街道</td>
-          <td [ngStyle]="{ width: widths[4] }">居委会</td>
-          <td [ngStyle]="{ width: widths[5] }">状态</td>
-          <td [ngStyle]="{ width: widths[6] }">满溢时间</td>
+          <td>图片</td>
+          <td>投放点</td>
+          <td>社区</td>
+          <td>街道</td>
+          <td>居委会</td>
+          <td>状态</td>
+          <td>满溢时间</td>
         </tr>
       </thead>
     </table>
     <div class="body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
         <tbody>
           <tr *ngFor="let item of datas">
-            <td [ngStyle]="{ width: widths[0] }">
+            <td>
               <div class="img-list">
-                <div class="img" *ngFor="let img of item.images">
+                <div class="img" *ngFor="let img of item.images | async">
                   <app-image-control
                     [nosignal]="false"
                     [model]="img"
@@ -28,51 +34,61 @@
                 </div>
               </div>
             </td>
-            <td [ngStyle]="{ width: widths[1] }">
-              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+            <td>
+              {{ (item.GarbageStation | async)?.Name }}
             </td>
-            <td [ngStyle]="{ width: widths[2] }">
-              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
+            <td>
+              {{ (item.GarbageStation | async)?.CommunityName }}
             </td>
-            <td [ngStyle]="{ width: widths[3] }">
+            <td>
               {{
-                item.GarbageStation
-                  ? ((item.GarbageStation.Division | async)?.Parent | async)
-                      ?.Name
+                (item.GarbageStation | async)
+                  ? (
+                      ((item.GarbageStation | async)?.Division | async)?.Parent
+                      | async
+                    )?.Name
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[4] }">
+            <td>
               {{
-                item.GarbageStation
-                  ? (item.GarbageStation.Division | async)?.Name
+                (item.GarbageStation | async)
+                  ? ((item.GarbageStation | async)?.Division | async)?.Name
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[5] }">
+            <td>
               <span
                 [ngClass]="{
-                  'green-text': item.GarbageStation?.StationState?.contains(
-                    StationState.Normal
-                  ),
-                  'orange-text': item.GarbageStation?.StationState?.contains(
-                    StationState.Full
-                  ),
-                  'powder-red-text':
-                    item.GarbageStation?.StationState?.contains(
-                      StationState.Error
-                    )
+                  'green-text':
+                    (item.GarbageStation | async)
+                      ? (
+                          item.GarbageStation | async
+                        )?.StationStateFlags?.contains(StationState.Normal)
+                      : false,
+                  'orange-text':
+                    (item.GarbageStation | async)
+                      ? (
+                          item.GarbageStation | async
+                        )?.StationStateFlags?.contains(StationState.Full)
+                      : false,
+                  'gray-2-text':
+                    (item.GarbageStation | async)
+                      ? (
+                          item.GarbageStation | async
+                        )?.StationStateFlags?.contains(StationState.Error)
+                      : false
                 }"
                 >{{
-                  item.GarbageStation
+                  (item.GarbageStation | async)
                     ? Language.StationStateFlags(
-                        item.GarbageStation.StationState
+                        (item.GarbageStation | async)?.StationStateFlags!
                       )
                     : ""
                 }}</span
               >
             </td>
-            <td [ngStyle]="{ width: widths[6] }">
+            <td>
               {{ item.FullDuration ? Language.Time(item.FullDuration) : "" }}
             </td>
           </tr>

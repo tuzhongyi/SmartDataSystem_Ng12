@@ -6,7 +6,7 @@ import { ServiceCache } from './service.cache';
 
 export class DivisionStatisticServiceCache extends ServiceCache<DivisionNumberStatistic> {
   constructor(key: string, service: IService<DivisionNumberStatistic>) {
-    super(key, service, 1 * 20 * 1000, false);
+    super(key, service, DivisionNumberStatistic, 1 * 20 * 1000, false);
   }
 
   loadItem(id: string) {

@@ -1,31 +1,269 @@
 <div class="dapuqiao-garbage-drop-station-count-table vertical-layout">
   <div class="dapuqiao-garbage-drop-station-count-table-main vertical-main">
-    <table border="0" cellpadding="0" cellspacing="0">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
       <colgroup>
         <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
       </colgroup>
       <thead>
         <tr>
           <td>序号</td>
-          <td>名称</td>
-          <td>行政区</td>
-          <td>一级事件</td>
-          <td>二级事件</td>
-          <td>三级事件</td>
-          <td>全部事件</td>
-          <td>一级事件反馈</td>
-          <td>二级事件反馈</td>
-          <td>三级事件反馈</td>
-          <td>物业反馈</td>
-          <td>第三方反馈</td>
-          <td>全部事件反馈</td>
-          <td>平均反馈时长</td>
-          <td>反馈率</td>
-          <td>督办事件</td>
+          <td
+            [mat-sort-header]="SortKey.Name"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Name &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Name &&
+                sort.direction === 'desc'
+            }"
+          >
+            名称
+          </td>
+          <td [mat-sort-header]="SortKey.DivisionName" [disableClear]="true">
+            行政区
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level1Number"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level1Number &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level1Number &&
+                sort.direction === 'desc'
+            }"
+          >
+            一级事件
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level2Number"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level2Number &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level2Number &&
+                sort.direction === 'desc'
+            }"
+          >
+            二级事件
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level3Number"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level3Number &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level3Number &&
+                sort.direction === 'desc'
+            }"
+          >
+            三级事件
+          </td>
+          <td
+            [mat-sort-header]="SortKey.AllLevelNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.AllLevelNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.AllLevelNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            全部事件
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level1FeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level1FeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level1FeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            一级事件反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level2FeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level2FeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level2FeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            二级事件反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.Level3FeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.Level3FeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.Level3FeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            三级事件反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.PropertyFeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.PropertyFeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.PropertyFeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            物业反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.ThirdPartFeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.ThirdPartFeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.ThirdPartFeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            第三方反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.FeedbackNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.FeedbackNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.FeedbackNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            全部事件反馈
+          </td>
+          <td
+            [mat-sort-header]="SortKey.AvgFeedbackSeconds"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.AvgFeedbackSeconds &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.AvgFeedbackSeconds &&
+                sort.direction === 'desc'
+            }"
+          >
+            平均反馈时长
+          </td>
+          <td
+            [mat-sort-header]="SortKey.FeedbackRatio"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.FeedbackRatio &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.FeedbackRatio &&
+                sort.direction === 'desc'
+            }"
+          >
+            反馈率
+          </td>
+          <td
+            [mat-sort-header]="SortKey.SupervisedNumber"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.SupervisedNumber &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.SupervisedNumber &&
+                sort.direction === 'desc'
+            }"
+          >
+            督办事件
+          </td>
+          <td
+            [mat-sort-header]="SortKey.SupervisedRatio"
+            [disableClear]="true"
+            [ngClass]="{
+              asc:
+                sort &&
+                sort.active === SortKey.SupervisedRatio &&
+                sort.direction === 'asc',
+              desc:
+                sort &&
+                sort.active === SortKey.SupervisedRatio &&
+                sort.direction === 'desc'
+            }"
+          >
+            三级事件督办率
+          </td>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of datas; let i = index">
+        <tr
+          *ngFor="let item of datas; let i = index"
+          [ngClass]="{ selected: selected === item }"
+          (click)="onselect(item)"
+        >
           <td>
             {{ i + 1 }}
           </td>
@@ -46,8 +284,9 @@
               item.Level3Statistic?.AvgFeedbackSeconds ?? 0 / 60 | howellTime
             }}
           </td>
-          <td>{{ item.Level3Statistic?.FeedbackRatio ?? 0 }}</td>
+          <td>{{ item.FeedbackRatio }}%</td>
           <td>{{ item.Level3Statistic?.SupervisedNumber ?? 0 }}</td>
+          <td>{{ item.SupervisedRatio }}%</td>
         </tr>
       </tbody>
     </table>

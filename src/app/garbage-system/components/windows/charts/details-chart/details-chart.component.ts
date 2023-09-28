@@ -151,6 +151,17 @@ export class DetailsChartComponent
       divisionId: this.station ? undefined : this.division?.Id,
       type: types,
     };
+    let titles = types.map((x) => {
+      switch (x) {
+        case EventType.GarbageDrop:
+          return '垃圾滞留';
+        case EventType.GarbageDropTimeout:
+        case EventType.GarbageDropSuperTimeout:
+          return '垃圾滞留超时';
+        default:
+          return Language.EventType(x);
+      }
+    });
     this.data = await this.business.load(this.options);
     // if (this.unit === TimeUnit.Hour) {
     //   let first: TimeData<IModel> = {
@@ -183,7 +194,7 @@ export class DetailsChartComponent
           series: this.data.map((x, i) => {
             let item: any = {
               type: 'line',
-              name: ChartConfig.title[i],
+              name: titles[i],
               data: x.map((y) => y.value),
               color: ChartConfig.color[i],
               areaStyle: {},
@@ -219,7 +230,7 @@ export class DetailsChartComponent
           series: this.data.map((data, i) => {
             let item: any = {
               type: 'bar',
-              name: ChartConfig.title[i],
+              name: titles[i],
               data: data.map((x) => x.value),
               color: ChartConfig.color[i],
               barWidth: `${32 / this.data.length}px`,

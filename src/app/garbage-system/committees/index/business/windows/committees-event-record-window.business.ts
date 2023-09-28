@@ -1,11 +1,19 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { EventType } from 'src/app/enum/event-type.enum';
+import {
+  GarbageFullEventData,
+  GarbageFullEventRecord,
+  IllegalDropEventData,
+  IllegalDropEventRecord,
+  MixedIntoEventData,
+  MixedIntoEventRecord,
+} from 'src/app/network/model/garbage-event-record.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { ImagePaged } from 'src/app/view-model/paged.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
 import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
 import { CommitteesVideoWindowBusiness } from './committees-video-window.business';
@@ -33,23 +41,23 @@ export class CommitteesRecordWindowBusiness extends WindowViewModel {
   divisionId?: string;
   stationId?: string;
 
-  async onimage(
-    model:
-      | ImageControlModelArray<EventRecordViewModel>
-      | ImagePaged<EventRecordViewModel>
-  ) {
-    if (model instanceof ImagePaged) {
-      this.image.page.page = model.Page;
-      this.image.page.model = model.Image;
-      this.image.page.show = true;
-    } else if (model instanceof ImageControlModelArray) {
-      this.image.array.models = model.models;
-      this.image.array.index = model.index;
-      if (model.models.length > 0) {
-        this.image.array.current = model.models[0];
-      }
+  async onimage(args: PagedArgs<EventRecordViewModel>) {
+    if (args.data.Data instanceof GarbageFullEventData) {
+      this.image.array.index = args.page.PageIndex;
+      let data = args.data as GarbageFullEventRecord;
+      this.image.array.models = ImageControlCreater.Create(data);
       this.image.array.show = true;
-    } else {
+    } else if (args.data.Data instanceof IllegalDropEventData) {
+      this.image.page.page = args.page;
+      let data = args.data as IllegalDropEventRecord;
+      this.image.page.model = ImageControlCreater.Create(data);
+
+      this.image.page.show = true;
+    } else if (args.data.Data instanceof MixedIntoEventData) {
+      this.image.page.page = args.page;
+      let data = args.data as MixedIntoEventRecord;
+      this.image.page.model = ImageControlCreater.Create(data);
+      this.image.page.show = true;
     }
   }
   onvideo(item: EventRecordViewModel) {

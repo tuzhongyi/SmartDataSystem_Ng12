@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
 import {
-  AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,
   modelSource,
 } from 'src/app/converter/common-model.converter';
@@ -52,7 +50,7 @@ export class GarbageStationListConverter extends AbstractCommonModelPromiseConve
           await this._getDivision(model.CountyId)
         ).Name
       : '-';
-    let state = item.StationState.value as StationState;
+    let state = item.StationState;
 
     console.log('sdfsd', item.Name, state);
 

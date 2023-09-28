@@ -7,6 +7,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { Medium } from 'src/app/common/tools/medium';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -15,11 +16,8 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
-import { IndexArgs } from 'src/app/network/model/model.interface';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IndexImageWindowBusiness } from './index-image-window.business';
 import { IndexMediaWindowBusiness } from './index-media-window.business';
 import { IndexSuperviseWindowBusiness } from './index-supervise-window.business';
@@ -57,17 +55,28 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
     this.dapuqiao = new DaPuQiaoLevelBusiness(image, supervise);
   }
   onimage(
-    model: ImageControlModelArray<
-      GarbageDropRecordViewModel | GarbageStationTableModel
+    model: PagedArgs<
+      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
     >
   ) {
     this.image.array.manualcapture =
       model.data instanceof GarbageStationTableModel;
-    this.image.array.index = model.index;
-    if (model.models.length > 0) {
-      this.image.array.stationId = model.models[0].stationId;
+    this.image.array.index = model.page.PageIndex;
+
+    if (model.data instanceof GarbageStationTableModel) {
+      this.image.array.stationId = model.data.GarbageStation.Id;
+      if (model.data.GarbageStation.Cameras) {
+        this.image.array.models = model.data.GarbageStation.Cameras.map((x) =>
+          ImageControlCreater.Create(x)
+        );
+      }
+    } else if (model.data instanceof GarbageDropRecordViewModel) {
+      this.image.array.stationId = model.data.Data.StationId;
+      this.image.array.models = ImageControlCreater.Create(model.data);
+    } else {
+      this.image.array.models = [model.data];
     }
-    this.image.array.models = model.models;
+
     this.image.array.show = true;
   }
   async onvideo(item: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
@@ -124,16 +133,16 @@ class DaPuQiaoLevelBusiness {
     this.supervise.detail.eventId = item.EventId;
     this.supervise.detail.show = true;
   }
-  onimage(args: IndexArgs<GarbageDropEventRecordModel>) {
+  onimage(args: PagedArgs<GarbageDropEventRecordModel>) {
     this.image.array.manualcapture = false;
-    this.image.array.index = args.index;
-    this.image.array.models = args.model.imgs.map((x, i) => {
+    this.image.array.index = args.page.PageIndex;
+    this.image.array.models = args.data.imgs.map((x, i) => {
       let img = new ImageControlModel();
       img.id = x.id ?? '';
       img.index = i;
-      img.eventTime = args.model.LevelTime;
+      img.eventTime = args.data.LevelTime;
       img.name = x.name ?? '';
-      img.stationId = args.model.Data.StationId;
+      img.stationId = args.data.Data.StationId;
       img.src = new Promise((resolve) => {
         resolve(x.url);
       });

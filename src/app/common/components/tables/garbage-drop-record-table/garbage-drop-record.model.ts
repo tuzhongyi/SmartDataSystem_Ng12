@@ -1,12 +1,9 @@
 import { CompareRange } from 'src/app/network/model/compare-range.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { EventRecordFilter } from '../event-record/event-record.model';
 
 export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
-  images: ImageControlModel[] = [];
-
   DateFormatter: string = '';
 
   SendTime: string = '';
@@ -17,8 +14,9 @@ export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
   status: string = '';
   statusClass: string = '';
 
-  Committees?: Division;
-  County?: Division;
+  Committees!: Promise<Division>;
+  County!: Promise<Division>;
+  urls!: Promise<string[]>;
 }
 
 export class GarbageDropRecordFilter extends EventRecordFilter {

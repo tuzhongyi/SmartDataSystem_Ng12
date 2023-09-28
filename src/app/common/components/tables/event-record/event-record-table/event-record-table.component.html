@@ -8,41 +8,49 @@
     </div> -->
   <div class="event-record-table-main">
     <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
       <thead>
         <tr>
-          <th [ngStyle]="{ width: widths[0] }">图片</th>
-          <th [ngStyle]="{ width: widths[1] }">资源名称</th>
-          <th [ngStyle]="{ width: widths[2] }">投放点</th>
-          <th [ngStyle]="{ width: widths[3] }">社区</th>
-          <th [ngStyle]="{ width: widths[4] }">街道</th>
-          <th [ngStyle]="{ width: widths[5] }">居委会</th>
-          <th [ngStyle]="{ width: widths[6] }">上报时间</th>
-          <th [ngStyle]="{ width: widths[7] }" class="center">操作</th>
+          <th>图片</th>
+          <th>投放点</th>
+          <th>社区</th>
+          <th>街道</th>
+          <th>居委会</th>
+          <th>上报时间</th>
+          <th class="center">操作</th>
         </tr>
       </thead>
     </table>
     <div class="event-record-table-main-body body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas; let i = index" class="zoom">
-            <td [ngStyle]="{ width: widths[0] }">
+          <tr
+            *ngFor="let item of datas; let i = index"
+            class="zoom"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
+            <td>
               <div class="img-list">
-                <div class="img" *ngFor="let img of item.images">
-                  <app-image-control
-                    [nosignal]="false"
-                    [model]="img"
-                    (Click)="imageClick(item, img, i)"
-                  ></app-image-control>
-
-                  <!-- [src]="item.imageSrc" -->
-                </div>
+                <div
+                  class="img"
+                  *ngFor="let url of item.urls; let imgIndex = index"
+                  [ngStyle]="{
+                    'background-image': 'url(' + (url | async) + ')'
+                  }"
+                  (click)="onimage($event, item, imgIndex)"
+                ></div>
               </div>
             </td>
-            <td [ngStyle]="{ width: widths[1] }">{{ item.ResourceName }}</td>
-            <td [ngStyle]="{ width: widths[2] }">
+            <td>
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: widths[3] }">
+            <td>
               {{
                 item.Data
                   ? item.Data.CommunityName
@@ -51,7 +59,7 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[4] }">
+            <td>
               {{
                 item.GarbageStation
                   ? ((item.GarbageStation.Division | async)?.Parent | async)
@@ -59,20 +67,20 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[5] }">
+            <td>
               {{
                 item.GarbageStation
                   ? (item.GarbageStation.Division | async)?.Name
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[6] }">{{ item.DateFormatter }}</td>
-            <td [ngStyle]="{ width: widths[7] }" class="center">
+            <td>{{ item.DateFormatter }}</td>
+            <td class="center">
               <div>
                 <button
                   class="icon-button"
                   title="播放视频"
-                  (click)="playvideo(item)"
+                  (click)="playvideo($event, item)"
                 >
                   <i class="howell-icon-video"></i></button
                 ><button

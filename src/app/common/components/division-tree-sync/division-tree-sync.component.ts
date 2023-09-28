@@ -37,6 +37,7 @@ export class DivisionTreeSyncComponent
   @Input() holdStatus = false;
   @Input() selectStrategy = SelectStrategy.Single;
   @Input() showStation = false;
+  @Input() onlystation = false;
   @Input() showSearchBar = true;
   @Input() showButtonIcon = false;
   @Input() resourceType: DivisionType = DivisionType.City;
@@ -62,6 +63,9 @@ export class DivisionTreeSyncComponent
     }
     if ('resourceType' in changes) {
       this.args.resourceType = this.resourceType;
+    }
+    if ('onlystation' in changes) {
+      this.args.onlystation = this.onlystation;
     }
   }
   ngOnInit(): void {

@@ -8,10 +8,10 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { TheDayTime } from 'src/app/common/tools/tool';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
@@ -20,7 +20,6 @@ import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { StatisticSummaryExportExcelBusiness } from './business/statistic-summary-export-excel.business';
 import { StatisticSummaryViewModel } from './statistic-summary.model';
 import { StatisticSummaryService } from './statistic-summary.service';
-import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 
 @Component({
   selector: 'app-statistic-summary',

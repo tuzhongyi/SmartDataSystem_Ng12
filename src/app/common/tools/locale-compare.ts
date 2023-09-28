@@ -41,7 +41,7 @@ export class LocaleCompare {
       }
     }
     if (typeof a == 'number' && typeof b == 'number') {
-      return a - b;
+      return isAsc ? a - b : b - a;
     }
     if (typeof a == 'boolean' && typeof b == 'boolean') {
       return a < b ? -1 : 1;

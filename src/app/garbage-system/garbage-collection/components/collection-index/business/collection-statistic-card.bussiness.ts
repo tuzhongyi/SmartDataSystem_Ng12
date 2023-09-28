@@ -5,14 +5,9 @@
  * @Last Modified time: 2022-12-20 17:31:12
  */
 import { Injectable } from '@angular/core';
-import { param } from 'jquery';
-import { Subscription } from 'rxjs';
 import { CommonStatisticCardConverter } from 'src/app/common/components/common-statistic-card/common-statistic-card.converter';
 import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { TimeService } from 'src/app/common/service/time.service';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionMembersParams } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.params';
 import { CollectionMemberRequsetService } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.service';
 import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
@@ -78,10 +73,11 @@ export class CollectionStatisticCardBusiness {
     return this._collectionMemberRequset.list(params);
   }
 
-  private _listGarbagePoints() {
+  private async _listGarbagePoints() {
     let params = new GetCollectionPointsParams();
     if (
-      this._globalStorage.defaultDivisionId !== this._globalStorage.divisionId
+      (await this._globalStorage.defaultDivisionId) !==
+      this._globalStorage.divisionId
     )
       params.DivisionIds = [this._globalStorage.divisionId];
     return this._collectionPointsRequest.list(params);

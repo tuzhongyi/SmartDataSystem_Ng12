@@ -94,14 +94,13 @@ export function TheBeforeDate(date: Date, days = 0, months = 0) {
   };
 }
 
-export function TheDayTime(date: Date) {
-  let y = date.getFullYear(),
-    m = date.getMonth(),
-    d = date.getDate();
-  return {
-    begin: new Date(y, m, d, 0, 0, 0),
-    end: new Date(y, m, d, 23, 59, 59),
-  };
+export function isToday(date: Date) {
+  let today = new Date();
+  return (
+    today.getFullYear() === date.getFullYear() &&
+    today.getMonth() === date.getMonth() &&
+    today.getDate() === date.getDate()
+  );
 }
 
 export function TimeInterval(
@@ -135,17 +134,6 @@ export function DateInterval(
   newDate.setHours(newDate.getHours() + hours);
   newDate.setDate(newDate.getDate() + date);
   return newDate;
-}
-
-export function MonthLastDay(year: number, month: number) {
-  var new_year = year; //取当前的年份
-  var new_month = month++; //取下一个月的第一天，方便计算（最后一天不固定）
-  if (month > 12) {
-    new_month -= 12; //月份减
-    new_year++; //年份增
-  }
-  var new_date = new Date(new_year, new_month, 1); //取当年当月中的第一天
-  return new Date(new_date.getTime() - 1000 * 60 * 60 * 24).getDate(); //获取当月最后一天日期
 }
 
 //获取周1 - 周7
@@ -192,26 +180,8 @@ export function isIPAddressOrLocalhost() {
 export function wait(
   whether: () => boolean,
   reject: () => void,
-  timepoll?: number
-): void;
-export function wait(
-  whether: () => boolean,
-  timepoll?: number,
-  timeout?: number
-): Promise<void>;
-export function wait(
-  whether: () => boolean,
-  args1: (() => void) | number = 100,
-  args2?: number
+  timepoll = 100
 ) {
-  if (typeof args1 === 'number') {
-    return wait2(whether, args1, args2 ?? 0);
-  } else {
-    return wait1(whether, args1, args2 ?? 100);
-  }
-}
-
-function wait1(whether: () => boolean, reject: () => void, timepoll = 100) {
   setTimeout(() => {
     if (whether()) {
       reject();
@@ -220,7 +190,7 @@ function wait1(whether: () => boolean, reject: () => void, timepoll = 100) {
     }
   }, timepoll);
 }
-function wait2(whether: () => boolean, timepoll = 100, timeout = 0) {
+export function wait2(whether: () => boolean, timepoll = 100, timeout = 0) {
   return new Promise<void>((resolve, reject) => {
     let stop = false;
     wait(

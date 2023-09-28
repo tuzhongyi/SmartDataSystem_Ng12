@@ -4,11 +4,13 @@ import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/gar
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
 import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
@@ -36,17 +38,28 @@ export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
     super();
   }
   onimage(
-    model: ImageControlModelArray<
-      GarbageDropRecordViewModel | GarbageStationTableModel
+    model: PagedArgs<
+      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
     >
   ) {
     this.image.array.manualcapture =
       model.data instanceof GarbageStationTableModel;
-    this.image.array.index = model.index;
-    if (model.models.length > 0) {
-      this.image.array.stationId = model.models[0].stationId;
+    this.image.array.index = model.page.PageIndex;
+
+    if (model.data instanceof GarbageStationTableModel) {
+      this.image.array.stationId = model.data.GarbageStation.Id;
+      if (model.data.GarbageStation.Cameras) {
+        this.image.array.models = model.data.GarbageStation.Cameras.map((x) =>
+          ImageControlCreater.Create(x)
+        );
+      }
+    } else if (model.data instanceof GarbageDropRecordViewModel) {
+      this.image.array.stationId = model.data.Data.StationId;
+      this.image.array.models = ImageControlCreater.Create(model.data);
+    } else {
+      this.image.array.models = [model.data];
     }
-    this.image.array.models = model.models;
+
     this.image.array.show = true;
   }
   async onvideo(item: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {

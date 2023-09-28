@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { GarbageStationType } from '../../model/garbage-station.model';
 import { GarbageStationTypesUrls } from '../../url/aiop/garbage-management/garbage-stations/types/garbage-station-types.url';
 import {
@@ -14,8 +15,8 @@ export class GarbageStationTypesService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<GarbageStationType>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(GarbageStationType);
   }
   list(): Promise<GarbageStationType[]> {

@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { AICamera } from 'src/app/network/model/ai-camera.model';
@@ -20,7 +12,7 @@ import { GarbageVehicleCameraBindingAICameraBusiness } from './garbage-vehicle-c
   providers: [GarbageVehicleCameraBindingAICameraBusiness],
 })
 export class GarbageVehicleCameraBindingAICameraComponent
-  implements IComponent<IModel, AICamera[]>, OnInit, OnChanges
+  implements IComponent<IModel, AICamera[]>, OnInit
 {
   @Input()
   business: IBusiness<IModel, AICamera[]>;
@@ -41,28 +33,16 @@ export class GarbageVehicleCameraBindingAICameraComponent
 
   name?: string;
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.name && !changes.name.firstChange) {
-      this.loadData();
-    }
-    if (changes.filter) {
-      if (this.datas) {
-        this.datas.map((x) => {});
-      }
-    }
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((x) => {
-          this.loadData(this.name, x);
-        });
-      }
-    }
-  }
-
   datas: AICamera[] = [];
   loading = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.loadData(this.name, x);
+      });
+    }
+  }
 
   loadData(name?: string, filter?: string[]) {
     this.loading = true;

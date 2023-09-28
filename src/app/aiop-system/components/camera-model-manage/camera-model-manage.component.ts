@@ -1,29 +1,29 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
-import { AICameraModelManageBusiness } from './camera-model-manage.business';
-import Conf from 'src/assets/json/ai-icon.json';
-import { Page } from 'src/app/network/model/page_list.model';
 import { BehaviorSubject } from 'rxjs';
 import {
-  CameraManageModel,
   AICameraModelManageEvent,
   AICameraModelManageSearchInfo,
   AICameraModelOperateType,
   CameraAIModelManageModel,
+  CameraManageModel,
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { PageEvent } from '@angular/material/paginator';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
-import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonTree } from 'src/app/common/components/common-tree/common-tree';
-import { AICameraModelManageConverter } from './camera-model-manage.converter';
-import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.converter';
-import { CameraDeviceType } from 'src/app/enum/device-type.enum';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { AiIconConfig } from 'src/app/common/models/ai-icon.config';
+import { CameraDeviceType } from 'src/app/enum/device-type.enum';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
+import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
+import { Page } from 'src/app/network/model/page_list.model';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import Conf from 'src/assets/json/ai-icon.json';
+import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.converter';
+import { AICameraModelManageBusiness } from './camera-model-manage.business';
+import { AICameraModelManageConverter } from './camera-model-manage.converter';
 
 @Component({
   selector: 'howell-camera-model-manage',
@@ -65,8 +65,19 @@ export class CameraModelManageComponent implements OnInit {
 
   // Table
   dataSubject = new BehaviorSubject<CameraManageModel[]>([]);
+
+  loadtable: EventEmitter<TableSelectType> = new EventEmitter();
+
   selectStrategy = SelectStrategy.Multiple;
-  selectType = TableSelectType.Cancel;
+  private _selectType = TableSelectType.Cancel;
+  public get selectType(): TableSelectType {
+    return this._selectType;
+  }
+  public set selectType(v: TableSelectType) {
+    this._selectType = v;
+    this.loadtable.emit(v);
+  }
+
   selectedRows: CameraManageModel[] = []; //table选中项
   // willBeDeleted: AIModelManageModel[] = [];
 

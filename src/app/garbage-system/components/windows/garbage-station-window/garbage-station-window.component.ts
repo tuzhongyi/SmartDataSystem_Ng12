@@ -20,8 +20,8 @@ import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IndexArgs } from 'src/app/network/model/model.interface';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
 import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
@@ -56,8 +56,8 @@ export class GarbageStationWindowComponent
 
   @Output()
   image: EventEmitter<
-    ImageControlModelArray<
-      GarbageDropRecordViewModel | GarbageStationTableModel
+    PagedArgs<
+      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
     >
   > = new EventEmitter();
   @Output()
@@ -69,7 +69,7 @@ export class GarbageStationWindowComponent
     new EventEmitter();
 
   @Output() dapuqiao_image: EventEmitter<
-    IndexArgs<GarbageDropEventRecordModel>
+    PagedArgs<GarbageDropEventRecordModel>
   > = new EventEmitter();
   @Output() dapuqiao_details: EventEmitter<GarbageDropEventRecordModel> =
     new EventEmitter();
@@ -134,7 +134,11 @@ export class GarbageStationWindowComponent
     this.stationId = undefined;
   }
 
-  onimage(item: any) {
+  onimage(
+    item: PagedArgs<
+      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
+    >
+  ) {
     this.image.emit(item);
   }
 
@@ -156,7 +160,7 @@ export class GarbageStationWindowComponent
   ondapuqiaopicture(item: GarbageDropEventRecordModel) {
     this.dapuqiao_picture.emit(item);
   }
-  ondapuqiaoimage(model: IndexArgs<GarbageDropEventRecordModel>) {
+  ondapuqiaoimage(model: PagedArgs<GarbageDropEventRecordModel>) {
     this.dapuqiao_image.emit(model);
   }
   ondapuqiaoprocess(item: GarbageDropEventRecordModel) {

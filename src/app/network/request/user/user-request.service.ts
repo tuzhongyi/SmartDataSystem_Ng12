@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
@@ -28,8 +29,8 @@ import {
   providedIn: 'root',
 })
 export class UserRequestService {
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(User);
   }
 

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { isToday } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
@@ -36,7 +37,7 @@ export class DaPuQiaoGarbageDropStationCountTableBusiness
   getData(
     args: DaPuQiaoGarbageDropStationCountTableArgs
   ): Promise<NumberStatistic[]> {
-    if (this.istoday(args.date) && args.unit === TimeUnit.Day) {
+    if (isToday(args.date) && args.unit === TimeUnit.Day) {
       return this.service.today(args);
     } else {
       return this.service.history(args);
@@ -61,15 +62,20 @@ export class DaPuQiaoGarbageDropStationCountTableBusiness
     } else {
       throw new Error('Unknown type');
     }
+    if (input.Level3Statistic) {
+      if (input.Level3Statistic.AllLevelNumber) {
+        model.FeedbackRatio =
+          (input.Level3Statistic.FeedbackNumber ?? 0) /
+          input.Level3Statistic.AllLevelNumber;
+      }
+      if (input.Level3Statistic.Level3Number) {
+        model.SupervisedRatio =
+          (input.Level3Statistic.SupervisedNumber ?? 0) /
+          input.Level3Statistic.Level3Number;
+      }
+    }
+    model.FeedbackRatio = Math.round(model.FeedbackRatio * 10000) / 100;
+    model.SupervisedRatio = Math.round(model.SupervisedRatio * 10000) / 100;
     return model;
-  }
-
-  istoday(date: Date) {
-    let today = new Date();
-    return (
-      today.getFullYear() === date.getFullYear() &&
-      today.getMonth() === date.getMonth() &&
-      today.getDate() === date.getDate()
-    );
   }
 }

@@ -1,15 +1,15 @@
 import { formatDate } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
+import { Medium } from 'src/app/common/tools/medium';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { CameraImageUrlModel } from '../event-record/event-record.model';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { GarbageDropRecordViewModel } from './garbage-drop-record.model';
 
+@Injectable()
 export class GarbageDropEventRecordPagedConverter
   implements
     IPromiseConverter<
@@ -17,23 +17,16 @@ export class GarbageDropEventRecordPagedConverter
       PagedList<GarbageDropRecordViewModel>
     >
 {
-  private converter = {
-    item: new GarbageDropEventRecordConverter(),
-  };
+  constructor(private item: GarbageDropEventRecordConverter) {}
 
   async Convert(
-    source: PagedList<GarbageDropEventRecord>,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-      camera: (id: string) => Promise<Camera>;
-    }
+    source: PagedList<GarbageDropEventRecord>
   ): Promise<PagedList<GarbageDropRecordViewModel>> {
     let array: GarbageDropRecordViewModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
       try {
         const data = source.Data[i];
-        let model = await this.converter.item.Convert(data, getter);
+        let model = await this.item.Convert(data);
         array.push(model);
       } catch (error) {
         console.error(error, this, source.Data[i]);
@@ -46,20 +39,17 @@ export class GarbageDropEventRecordPagedConverter
   }
 }
 
+@Injectable()
 export class GarbageDropEventRecordConverter
   implements
     IPromiseConverter<GarbageDropEventRecord, GarbageDropRecordViewModel>
 {
-  converter = {
-    image: new ImageControlConverter(),
-  };
+  constructor(
+    private division: DivisionRequestService,
+    private station: GarbageStationRequestService
+  ) {}
   async Convert(
-    source: GarbageDropEventRecord,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-      camera: (stationId: string, cameraId: string) => Promise<Camera>;
-    }
+    source: GarbageDropEventRecord
   ): Promise<GarbageDropRecordViewModel> {
     let model = new GarbageDropRecordViewModel();
     model = Object.assign(model, source);
@@ -84,66 +74,33 @@ export class GarbageDropEventRecordConverter
       source.EventType,
       source.Data.IsTimeout
     );
-
+    let all: Promise<string>[] = [];
     if (source.Data.DropImageUrls) {
-      for (let i = 0; i < source.Data.DropImageUrls.length; i++) {
-        try {
-          let url = new CameraImageUrlModel(
-            source.Data.DropImageUrls[i],
-            source.Data.StationId
-          );
-          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
-          let image = this.converter.image.Convert(
-            url,
-            true,
-            source.Data.DropTime
-          );
-          model.images.push(image);
-        } catch (error) {
-          console.error(error, this, source.Data.DropImageUrls[i]);
-        }
-      }
+      all.push(
+        ...source.Data.DropImageUrls.map((url) => Medium.img(url.ImageUrl))
+      );
     }
     if (source.Data.TimeoutImageUrls) {
-      for (let i = 0; i < source.Data.TimeoutImageUrls.length; i++) {
-        try {
-          let url = new CameraImageUrlModel(
-            source.Data.TimeoutImageUrls[i],
-            source.Data.StationId
-          );
-          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
-          let image = this.converter.image.Convert(url, true, source.EventTime);
-          model.images.push(image);
-        } catch (error) {
-          console.error(error, this, source.Data.TimeoutImageUrls[i]);
-        }
-      }
+      all.push(
+        ...source.Data.TimeoutImageUrls.map((url) => Medium.img(url.ImageUrl))
+      );
     }
     if (source.Data.HandleImageUrls) {
-      for (let i = 0; i < source.Data.HandleImageUrls.length; i++) {
-        try {
-          let url = new CameraImageUrlModel(
-            source.Data.HandleImageUrls[i],
-            source.Data.StationId
-          );
-          url.Camera = getter.camera(source.Data.StationId, url.CameraId);
-          let image = this.converter.image.Convert(
-            url,
-            true,
-            source.Data.HandleTime
-          );
-          model.images.push(image);
-        } catch (error) {
-          console.error(error, this, source.Data.HandleImageUrls[i]);
-        }
-      }
+      all.push(
+        ...source.Data.HandleImageUrls.map((url) => Medium.img(url.ImageUrl))
+      );
     }
+    model.urls = Promise.all(all);
 
     if (source.Data.DivisionId) {
-      model.Committees = await getter.division(source.Data.DivisionId);
-      if (model.Committees && model.Committees.ParentId) {
-        model.County = await getter.division(model.Committees.ParentId);
-      }
+      model.Committees = this.division.get(source.Data.DivisionId);
+      model.County = model.Committees.then((committees) => {
+        return new Promise((resolve) => {
+          if (committees.ParentId) {
+            resolve(this.division.get(committees.ParentId));
+          }
+        });
+      });
     }
 
     return model;

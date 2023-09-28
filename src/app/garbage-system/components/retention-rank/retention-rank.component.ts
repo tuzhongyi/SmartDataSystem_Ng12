@@ -58,10 +58,10 @@ export class RetentionRankComponent
 
     switch (this.retentionType) {
       case RetentionType.RetentionTime:
-        this.title = '今日垃圾滞留时长排名';
+        this.title = '今日垃圾滞留时长';
         break;
       case RetentionType.RetentionStationNumber:
-        this.title = '今日垃圾滞留投放点数量排名';
+        this.title = '今日垃圾滞留投放点数量';
         break;
       default:
         break;

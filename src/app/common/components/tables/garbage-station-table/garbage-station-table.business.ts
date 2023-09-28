@@ -5,7 +5,6 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -21,7 +20,6 @@ export class GarbageStationTableBusiness
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService,
     public Converter: GarbageStationPagedConverter
   ) {}
 
@@ -37,9 +35,7 @@ export class GarbageStationTableBusiness
       divisionId = this.storeService.divisionId;
     }
     let data = await this.getData(divisionId, page, opts, stationId);
-    let model = await this.Converter.Convert(data, (id: string) => {
-      return this.divisionService.cache.get(id);
-    });
+    let model = await this.Converter.Convert(data);
     return model;
   }
   getData(

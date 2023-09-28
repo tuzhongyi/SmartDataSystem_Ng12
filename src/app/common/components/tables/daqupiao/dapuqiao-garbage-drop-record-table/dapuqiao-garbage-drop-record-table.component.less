@@ -1,4 +1,4 @@
-.garbage-station-profile-table {
+.dapuqiao-garbage-drop-record-table {
   height: 100%;
   overflow-x: auto;
 
@@ -65,6 +65,10 @@
         max-width: 200px;
         left: 200px !important;
       }
+
+      &.last {
+        width: 100px;
+      }
     }
 
     tr.selected {
@@ -79,6 +83,22 @@
 
     tr.hover {
       background: rgba(117, 134, 224, 0.5);
+    }
+  }
+
+  &-main {
+    position: relative;
+    overflow: hidden;
+
+    .lock-border {
+      position: absolute;
+      pointer-events: none;
+      left: 400px;
+      right: 100px;
+      top: 0;
+      bottom: 0;
+      border-right: 1px dashed #4b5899;
+      border-left: 1px dashed #4b5899;
     }
   }
 }

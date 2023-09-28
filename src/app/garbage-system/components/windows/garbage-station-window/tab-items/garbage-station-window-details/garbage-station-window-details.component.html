@@ -25,6 +25,8 @@
         <howell-division-station-tree-mult-filter
           class="tree"
           [divisionType]="DivisionType.None"
+          [maxSelection]="maxItem"
+          [onlystation]="true"
           (onselect)="onTreeSelect($event)"
         >
         </howell-division-station-tree-mult-filter>

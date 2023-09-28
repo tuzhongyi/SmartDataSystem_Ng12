@@ -1,0 +1,128 @@
+<div class="dapuqiao-garbage-drop-station-window-details-chart">
+  <div class="dapuqiao-garbage-drop-station-window-details-chart-head">
+    <div class="filter">
+      <div class="filter-items left">
+        <div class="filter-item">
+          <div class="filter-item-title">选择时间</div>
+          <div class="filter-item-value">
+            <input type="text" DateTimePicker [(date)]="args.date" class="" />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">统计项</div>
+          <div class="filter-item-value">
+            <select [(ngModel)]="key">
+              <option [ngValue]="ItemKey.Level1Number">
+                {{ ItemLanguage[ItemKey.Level1Number] }}
+              </option>
+              <option [ngValue]="ItemKey.Level2Number">
+                {{ ItemLanguage[ItemKey.Level2Number] }}
+              </option>
+              <option [ngValue]="ItemKey.Level3Number">
+                {{ ItemLanguage[ItemKey.Level3Number] }}
+              </option>
+              <option [ngValue]="ItemKey.AllLevelNumber">
+                {{ ItemLanguage[ItemKey.AllLevelNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.Level1FeedbackNumber">
+                {{ ItemLanguage[ItemKey.Level1FeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.Level2FeedbackNumber">
+                {{ ItemLanguage[ItemKey.Level2FeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.Level3FeedbackNumber">
+                {{ ItemLanguage[ItemKey.Level3FeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.PropertyFeedbackNumber">
+                {{ ItemLanguage[ItemKey.PropertyFeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.ThirdPartFeedbackNumber">
+                {{ ItemLanguage[ItemKey.ThirdPartFeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.FeedbackNumber">
+                {{ ItemLanguage[ItemKey.FeedbackNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.AvgFeedbackSeconds">
+                {{ ItemLanguage[ItemKey.AvgFeedbackSeconds] }}
+              </option>
+              <option [ngValue]="ItemKey.FeedbackRatio">
+                {{ ItemLanguage[ItemKey.FeedbackRatio] }}
+              </option>
+              <option [ngValue]="ItemKey.SupervisedNumber">
+                {{ ItemLanguage[ItemKey.SupervisedNumber] }}
+              </option>
+              <option [ngValue]="ItemKey.SupervisedRatio">
+                {{ ItemLanguage[ItemKey.SupervisedRatio] }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value">
+            <level-division-panel
+              class="list-type-select"
+              [nulllanguage]="defaultName"
+              (selectedChange)="ondivision($event)"
+            >
+            </level-division-panel>
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <div class="filter-item-title">投放点</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.stationId" [cannull]="true">
+              <select #element [(ngModel)]="args.stationId">
+                <option [ngValue]="item.Id" *ngFor="let item of stations">
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <button class="hw-blue-btn search" (click)="onsearch()">
+            <i class="mdi mdi-magnify"></i> 查询
+          </button>
+        </div>
+      </div>
+      <div class="filter-items right">
+        <div>
+          <select [(ngModel)]="args.unit">
+            <option [ngValue]="TimeUnit.Week">
+              {{ Language.TimeUnit(TimeUnit.Week) }}
+            </option>
+            <option [ngValue]="TimeUnit.Month">
+              {{ Language.TimeUnit(TimeUnit.Month) }}
+            </option>
+
+            <option [ngValue]="TimeUnit.Year">
+              {{ Language.TimeUnit(TimeUnit.Year) }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <select [(ngModel)]="type.chart">
+            <option [ngValue]="ChartType.bar">柱状图</option>
+            <option [ngValue]="ChartType.line">折线图</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dapuqiao-garbage-drop-station-window-details-chart-body">
+    <chart-line-simple
+      *ngIf="type.chart === ChartType.line"
+      [load]="chartload"
+      (inited)="oninit($event)"
+    ></chart-line-simple>
+    <chart-bar-simple
+      *ngIf="type.chart === ChartType.bar"
+      [load]="chartload"
+      (inited)="oninit($event)"
+    ></chart-bar-simple>
+  </div>
+</div>

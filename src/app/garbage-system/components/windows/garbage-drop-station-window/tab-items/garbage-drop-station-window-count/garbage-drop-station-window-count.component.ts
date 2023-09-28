@@ -96,12 +96,9 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     this.counties = [];
     this.parent = undefined;
     this.args.type = EnumHelper.ConvertUserResourceToDivision(this.type);
-    if (
-      this.type === UserResourceType.Station &&
-      this.store.defaultDivisionId
-    ) {
+    if (this.type === UserResourceType.Station) {
       this.counties = await this.business.getCommittees(
-        this.store.defaultDivisionId
+        await this.store.defaultDivisionId
       );
     }
   }

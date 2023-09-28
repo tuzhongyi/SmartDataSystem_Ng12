@@ -2,25 +2,22 @@ import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { CallbackDataParams } from 'echarts/types/dist/shared';
+import { ToastrService } from 'ngx-toastr';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import {
-  ITimeData,
-  ITimeDataGroup,
-} from 'src/app/common/components/charts/chart.model';
+import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
 import { TimeDataGroupExportConverter } from 'src/app/converter/exports/time-data-group-exports.converter';
 import { ChartType } from 'src/app/enum/chart-type.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { Language } from 'src/app/common/tools/language';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import {
   ChartConfig,
@@ -28,9 +25,6 @@ import {
 } from '../../../charts/details-chart/details-chart.option';
 import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'howell-event-record-comparison',
@@ -243,6 +237,7 @@ export class EventRecordComparisonComponent
 
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
+    this.selectIds.length = 3;
   }
 
   search() {

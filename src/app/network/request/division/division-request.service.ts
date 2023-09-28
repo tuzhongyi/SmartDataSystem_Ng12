@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { Division } from 'src/app/network/model/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -37,9 +38,9 @@ export class DivisionRequestService extends AbstractService<Division> {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Division>;
 
-  constructor(_http: HowellAuthHttpService) {
+  constructor(http: HowellAuthHttpService, router: Router) {
     super();
-    this.basic = new HowellBaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Division);
   }
 

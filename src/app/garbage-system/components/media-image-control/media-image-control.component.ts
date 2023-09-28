@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
@@ -10,7 +10,7 @@ import { MediaVideoControlBussiness } from './media-image-control.business';
   styleUrls: ['./media-image-control.component.less'],
   providers: [MediaVideoControlBussiness, DownloadBusiness],
 })
-export class MediaImageControlComponent {
+export class MediaImageControlComponent implements OnInit {
   @Input() model?: ImageControlModel;
   @Input('first') isfirst = true;
   @Input('last') islast = true;
@@ -29,11 +29,22 @@ export class MediaImageControlComponent {
   draw = true;
   display = {
     object: true,
+    capture: true,
     download: {
       image: true,
       video: true,
     },
   };
+
+  ngOnInit(): void {
+    if (this.model) {
+      this.display.object = !!(this.model.polygon && this.model.rules);
+      this.display.download.video = !!(
+        this.model.stationId && this.model.eventTime
+      );
+      this.display.capture = !(this.model.stationId && this.model.eventTime);
+    }
+  }
 
   displayConfig(model?: ImageControlModel) {
     if (model) {
@@ -64,16 +75,12 @@ export class MediaImageControlComponent {
     }
   }
 
-  onvideodownload() {
+  async onvideodownload() {
     if (this.model) {
       if (this.model && this.model && this.model.eventTime) {
         let interval = DurationParams.beforeAndAfter(this.model.eventTime);
         if (this.model.stationId) {
-          this.download.video(
-            this.model.stationId,
-            this.model.camera,
-            interval
-          );
+          this.download.video(this.model.stationId, this.model.id, interval);
         }
       }
     }

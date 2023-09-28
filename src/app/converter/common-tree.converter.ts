@@ -36,7 +36,7 @@ export abstract class CommonTreeConverter {
   }
 
   // 数组形式,转成递归树
-  buildNestTree<T extends CommonTreeModel>(data: T[]) {
+  buildNestTree<T extends CommonTreeModel>(data: T[], onlystation?: boolean) {
     // 最终根节点树
     let res: CommonNestNode<T>[] = [];
 
@@ -56,7 +56,7 @@ export abstract class CommonTreeConverter {
         if (item instanceof CommonNestNode) {
           node = item;
         } else {
-          node = this.Convert(item);
+          node = this.Convert(item, onlystation);
         }
         m.set(node.Id, node);
       }
@@ -96,6 +96,9 @@ export abstract class CommonTreeConverter {
           res.push(node);
         }
       }
+    }
+    if (res.length === 0 && hanged.size > 0) {
+      res = [...hanged.values()];
     }
     return res;
   }

@@ -15,6 +15,7 @@ import { ILevelListNode } from './level-list-panel.model';
 export class LevelListPanelComponent implements OnInit, OnDestroy {
   @Input()
   cannull: boolean = true;
+  @Input() nulllanguage = '请选择';
 
   @Input()
   nodes: ILevelListNode[] = [];

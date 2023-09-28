@@ -44,6 +44,11 @@ export class DapuqiaoMainSuperviseDetailsBusiness
     let plain = instanceToPlain(input);
     let model = plainToInstance(GarbageDropEventRecordModel, plain);
     model.GarbageStation = this.service.station.cache.get(input.Data.StationId);
+
+    model.GarbageStation.then((station) => {
+      model.Members = station.Members ?? [];
+    });
+
     let urls: CameraImageUrl[] = [];
     if (input.Data.DropImageUrls) {
       urls = [...urls, ...input.Data.DropImageUrls];

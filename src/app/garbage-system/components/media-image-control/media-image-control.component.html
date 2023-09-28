@@ -3,6 +3,7 @@
     <div class="title">
       <div>{{ model.name }}</div>
       <div
+        *ngIf="display.capture"
         class="spinner-border green-text"
         [ngClass]="{
           'spinner-border': captureing,

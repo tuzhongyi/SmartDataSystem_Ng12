@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { wait } from 'src/app/common/tools/tool';
+import { Flags } from 'src/app/common/tools/flags';
+import { wait2 } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
 import { PointCount } from '../amap.model';
 import { AMapPointContextMenuBusiness } from './amap-point-menu.business';
 import { AMapPointPlugBusiness } from './amap-point-plug.business';
@@ -86,7 +86,9 @@ export class AMapPointBusiness {
   /** 加载化所有点位 */
   async loadPoints() {
     let controller = await this.amap.controller;
-    let points = controller.Village.Point.All(this.global.defaultDivisionId!);
+    let points = controller.Village.Point.All(
+      await this.global.defaultDivisionId
+    );
     for (let i = 0; i < points.length; i++) {
       const point = points[i];
       this.amap.source.points[point.id] = point;
@@ -163,7 +165,7 @@ export class AMapPointBusiness {
     }
   }
 
-  async status(stations?: GarbageStationModel[]) {
+  async status(stations?: GarbageStation[]) {
     if (!stations || stations.length === 0) return;
 
     let client = await this.amap.client;
@@ -180,10 +182,10 @@ export class AMapPointBusiness {
         let index = this.amap.source.drop.findIndex(
           (item) => item.station.Id === station.Id
         );
-
-        if (station.StationState.contains(StationState.Error)) {
+        let flags = new Flags(station.StationState);
+        if (flags.contains(StationState.Error)) {
           status.status = 4;
-        } else if (station.StationState.contains(StationState.Full)) {
+        } else if (flags.contains(StationState.Full)) {
           status.status = 1;
         } else if (index >= 0) {
           status.status = 3;
@@ -202,7 +204,7 @@ export class AMapPointBusiness {
 
   async count(villageId: string): Promise<PointCount> {
     return new Promise((resolve) => {
-      wait(
+      wait2(
         () => {
           return this.inited;
         },
@@ -221,11 +223,12 @@ export class AMapPointBusiness {
           let station = this.amap.source.all.find((x) => x.Id === point.id);
           if (station) {
             let contain = false;
-            if (station.StationState.contains(StationState.Error)) {
+            let flags = new Flags(station.StationState);
+            if (flags.contains(StationState.Error)) {
               error++;
               contain = true;
             }
-            if (station.StationState.contains(StationState.Full)) {
+            if (flags.contains(StationState.Full)) {
               warm++;
               contain = true;
             }
@@ -310,7 +313,7 @@ export class AMapPointBusiness {
         (x.StationType === StationType.Garbage ||
           x.StationType === StationType.Smart ||
           x.StationType === StationType.Rfid) &&
-        x.StationState.value === 0 &&
+        x.StationState === 0 &&
         !dropIds.includes(x.Id)
     );
 
@@ -319,14 +322,16 @@ export class AMapPointBusiness {
   stationfullview(show: boolean) {
     this.display.station.full = show;
     let dropIds = this.amap.source.drop.map((x) => x.station.Id);
-    let stations = this.amap.source.all.filter(
-      (x) =>
+    let stations = this.amap.source.all.filter((x) => {
+      let flags = new Flags(x.StationState);
+      return (
         (x.StationType === StationType.Garbage ||
           x.StationType === StationType.Smart ||
           x.StationType === StationType.Rfid) &&
-        x.StationState.contains(StationState.Full) &&
+        flags.contains(StationState.Full) &&
         !(this.display.station.drop && dropIds.includes(x.Id))
-    );
+      );
+    });
     this.visibile(stations, show);
   }
   async stationdropview(show: boolean) {
@@ -334,9 +339,9 @@ export class AMapPointBusiness {
     let stations = this.amap.source.drop
       .map((x) => x.station)
       .filter((x) => {
+        let flags = new Flags(x.StationState);
         return !(
-          this.display.station.full &&
-          x.StationState.contains(StationState.Full)
+          this.display.station.full && flags.contains(StationState.Full)
         );
       });
     this.visibile(stations, show);
@@ -344,9 +349,10 @@ export class AMapPointBusiness {
 
   stationerrorview(show: boolean) {
     this.display.station.error = show;
-    let stations = this.amap.source.all.filter((x) =>
-      x.StationState.contains(StationState.Error)
-    );
+    let stations = this.amap.source.all.filter((x) => {
+      let flags = new Flags(x.StationState);
+      return flags.contains(StationState.Error);
+    });
     this.visibile(stations, show);
   }
   async stationplugarc(show: boolean, query: (time?: number) => boolean) {

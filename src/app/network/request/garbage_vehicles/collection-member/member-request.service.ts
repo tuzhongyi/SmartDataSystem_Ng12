@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CollectionMember } from 'src/app/network/model/member.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleMemberUrl } from 'src/app/network/url/garbage-vehicle/member.url';
@@ -14,8 +15,8 @@ import { GetCollectionMembersParams } from './member-request.params';
 export class CollectionMemberRequsetService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<CollectionMember>;
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(CollectionMember);
   }
 

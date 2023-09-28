@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
+import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
-import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { IndexImageWindowBusiness } from './index-image-window.business';
 
 @Injectable()
@@ -26,24 +26,16 @@ export class IndexGarbageStationDropWindowBusiness extends WindowViewModel {
     this.divisionId = undefined;
   }
 
-  onimage(
-    model: ImageControlModelArray<
-      GarbageFullStationTableModel | EventRecordViewModel
-    >
-  ) {
-    // this.media.single.camera = model.models;
-    // this.media.single.index = model.index;
-    // this.media.single.autoplay = model.autoplay;
-    // this.media.single.operation.fullscreen = false;
-    // this.media.single.show = true;
-
-    this.image.array.index = model.index;
-
-    if (model.models.length > 0) {
-      this.image.array.stationId = model.models[0].stationId;
-    }
+  async onimage(model: PagedArgs<GarbageDropStationTableModel>) {
+    this.image.array.index = model.page.PageIndex;
+    let station = await model.data.GarbageStation;
+    this.image.array.stationId = station.Id;
     this.image.array.manualcapture = true;
-    this.image.array.models = model.models;
+    if (station.Cameras) {
+      this.image.array.models = station.Cameras.map((x) =>
+        ImageControlCreater.Create(x)
+      );
+    }
     this.image.array.show = true;
   }
 }

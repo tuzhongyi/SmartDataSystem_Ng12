@@ -42,7 +42,9 @@ export class ChartLineSimpleComponent
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
-        this.option = x.option;
+        if (x.option) {
+          this.option = x.option;
+        }
         this.data = x.data;
         (this.option.xAxis as any).data = x.x;
         if (this.option.series && Array.isArray(this.option.series)) {

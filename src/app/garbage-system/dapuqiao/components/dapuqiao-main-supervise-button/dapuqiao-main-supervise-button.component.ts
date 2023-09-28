@@ -10,6 +10,7 @@ import { DapuqiaoMainSuperviseButtonBusiness } from './dapuqiao-main-supervise-b
 export class DapuqiaoMainSuperviseButtonComponent implements OnInit {
   @Input() value: number = 0;
   @Input() load?: EventEmitter<void>;
+  @Input() selected = false;
 
   constructor(private business: DapuqiaoMainSuperviseButtonBusiness) {}
 

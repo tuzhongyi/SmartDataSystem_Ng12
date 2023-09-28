@@ -4,7 +4,7 @@ import {
   GarbageDropEventRecordModel,
 } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { IndexArgs, IObjectModel } from 'src/app/network/model/model.interface';
+import { IObjectModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { DapuqiaoGarbageStationWindowRecordBusiness } from './dapuqiao-garbage-station-window-record.business';
 import { DapuqiaoGarbageStationWindowRecordModel } from './dapuqiao-garbage-station-window-record.model';
 
@@ -17,7 +17,7 @@ import { DapuqiaoGarbageStationWindowRecordModel } from './dapuqiao-garbage-stat
 export class DapuqiaoGarbageStationWindowRecordComponent implements OnInit {
   @Input() isFilter = true;
   @Input() level?: number;
-  @Output() image: EventEmitter<IndexArgs<GarbageDropEventRecordModel>> =
+  @Output() image: EventEmitter<PagedArgs<GarbageDropEventRecordModel>> =
     new EventEmitter();
   @Output() details: EventEmitter<GarbageDropEventRecordModel> =
     new EventEmitter();
@@ -61,7 +61,7 @@ export class DapuqiaoGarbageStationWindowRecordComponent implements OnInit {
   ondetails(item: GarbageDropEventRecordModel) {
     this.details.emit(item);
   }
-  onimage(model: IndexArgs<GarbageDropEventRecordModel>) {
+  onimage(model: PagedArgs<GarbageDropEventRecordModel>) {
     this.image.emit(model);
   }
   onpicture(item: GarbageDropEventRecordModel) {

@@ -40,6 +40,7 @@ export class DapuqiaoGarbageDropStationWindowCountComponent implements OnInit {
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
       this.defaultType = this.local.user.Resources[0].ResourceType;
       this.args.type = EnumHelper.GetResourceChildType(this.defaultType);
+      this.loadData(this.args.type);
     }
   }
 

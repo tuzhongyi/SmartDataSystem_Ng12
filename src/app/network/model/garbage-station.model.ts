@@ -1,6 +1,5 @@
 import { Transform, Type } from 'class-transformer';
 import 'reflect-metadata';
-import { Flags } from 'src/app/common/tools/flags';
 import { DumpPointType } from 'src/app/enum/dump-point-type.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
@@ -12,7 +11,7 @@ import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { IdNameModel } from './model.interface';
 import { TimeRange } from './time-range.model';
-import { transformDateTime, transformFlags } from './transform.model';
+import { transformArraySort, transformDateTime } from './transform.model';
 import { TrashCan } from './trash-can.model';
 
 /** 垃圾房、投放点 */
@@ -39,6 +38,7 @@ export class GarbageStation extends IdNameModel {
   TrashCans?: TrashCan[];
   /**	Camera[]	摄像机列表	O */
   @Type(() => Camera)
+  @Transform(transformArraySort)
   Cameras?: Camera[];
   /**	Boolean	干垃圾满溢	O */
   DryFull?: boolean;
@@ -59,8 +59,7 @@ export class GarbageStation extends IdNameModel {
   /**	Double	最大湿垃圾容积，单位：L	M */
   MaxWetVolume!: number;
   /**	Int32	垃圾房状态	M */
-  @Transform(transformFlags)
-  StationState!: Flags<StationState>;
+  StationState!: StationState;
   /**	Int32	评级	O */
   Grade?: number;
   /**	TimeRange[]	计数时间段	O */

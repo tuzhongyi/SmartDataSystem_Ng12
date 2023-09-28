@@ -14,7 +14,7 @@ import {
 } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageDropRecordTaskTableComponent } from 'src/app/common/components/tables/garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { ListType } from '../../garbage-station-window-record-operation/garbage-station-window-record-operation.component';
 
@@ -32,7 +32,8 @@ export class GarbageStationWindowRecordComponent implements OnInit, OnChanges {
   @Output() filterChange: EventEmitter<GarbageDropRecordFilter> =
     new EventEmitter();
 
-  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
+    new EventEmitter();
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
     new EventEmitter();
 
@@ -79,7 +80,7 @@ export class GarbageStationWindowRecordComponent implements OnInit, OnChanges {
   typeChange(type: ListType) {
     this.table = type;
   }
-  onimage(item: ImageControlModelArray) {
+  onimage(item: PagedArgs<GarbageDropRecordViewModel>) {
     this.image.emit(item);
   }
   onvideo(item: GarbageDropRecordViewModel) {

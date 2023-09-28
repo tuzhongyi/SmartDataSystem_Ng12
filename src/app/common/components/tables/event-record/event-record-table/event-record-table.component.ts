@@ -8,19 +8,16 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { IModel } from 'src/app/network/model/model.interface';
+import { GarbageFullEventData } from 'src/app/network/model/garbage-event-record.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImagePaged } from 'src/app/view-model/paged.model';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
 import {
@@ -49,7 +46,8 @@ export class EventRecordTableComponent
     OnInit,
     OnChanges
 {
-  @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
+  @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>> &
+    IGet<PagedList<EventRecordViewModel>>;
   @Input() type: EventType = EventType.IllegalDrop;
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter;
@@ -57,11 +55,15 @@ export class EventRecordTableComponent
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() image: EventEmitter<
-    | ImagePaged<EventRecordViewModel>
-    | ImageControlModelArray<EventRecordViewModel>
-  > = new EventEmitter();
+  // @Output() image: EventEmitter<
+  //   | ImagePaged<EventRecordViewModel>
+  //   | ImageControlModelArray<EventRecordViewModel>
+  // > = new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+
+  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
+
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -71,8 +73,9 @@ export class EventRecordTableComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-  widths = ['10%', '15%', '15%', '13%', '10%', '15%', '12%', '10%'];
+  widths = ['20%'];
   EventType = EventType;
+  selected?: EventRecordViewModel;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((x) => {
@@ -132,43 +135,40 @@ export class EventRecordTableComponent
       this.download.image(src, model.ResourceName ?? '', model.EventTime);
     }
   }
+  onselect(item: EventRecordViewModel) {
+    if (item === this.selected) {
+      this.selected = undefined;
+    } else {
+      this.selected = item;
+    }
+  }
   oncardrecord(model: EventRecordViewModel) {
     this.card.emit(model);
   }
 
-  playvideo(model: EventRecordViewModel) {
+  playvideo(e: Event, model: EventRecordViewModel) {
     this.video.emit(model);
+    if (model === this.selected) {
+      e.stopPropagation();
+    }
   }
-  imageClick(
-    item: EventRecordViewModel,
-    img: ImageControlModel,
-    index: number
-  ) {
-    switch (this.type) {
-      case EventType.GarbageFull:
-        let array = new ImageControlModelArray<EventRecordViewModel>(
-          item.images,
-          img.index,
-          item
-        );
-        array.data = item;
-        this.image.emit(array);
-        break;
 
-      default:
-        let paged = new ImagePaged<EventRecordViewModel>();
-        let number = this.page.PageSize * (this.page.PageIndex - 1) + index + 1;
-        paged.Data = item;
-        paged.Page = new Page();
-        paged.Page.PageCount = this.page.TotalRecordCount;
-        paged.Page.PageIndex = number;
-        paged.Page.PageSize = 1;
-        paged.Page.RecordCount = 1;
-        paged.Page.TotalRecordCount = this.page.TotalRecordCount;
-        paged.Image = img;
-
-        this.image.emit(paged);
-        break;
+  onimage(e: Event, item: EventRecordViewModel, index: number) {
+    let plain = instanceToPlain(this.page);
+    let page = plainToInstance(Page, plain);
+    if (item.Data instanceof GarbageFullEventData) {
+      page = Page.create(index, item.urls.length);
+    } else {
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
+    }
+    this.image.emit({ page: page, data: item });
+    if (this.selected === item) {
+      e.stopPropagation();
     }
   }
 }

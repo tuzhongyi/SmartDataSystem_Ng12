@@ -6,7 +6,7 @@ import { ServiceCache } from './service.cache';
 
 export class GarbageStationStatisticServiceCache extends ServiceCache<GarbageStationNumberStatistic> {
   constructor(key: string, service: IService<GarbageStationNumberStatistic>) {
-    super(key, service, 1 * 20 * 1000, false);
+    super(key, service, GarbageStationNumberStatistic, 1 * 20 * 1000, false);
   }
 
   loadItem(id: string) {

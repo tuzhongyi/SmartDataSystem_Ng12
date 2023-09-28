@@ -1,9 +1,14 @@
+import { plainToInstance } from 'class-transformer';
+import { IService } from 'src/app/business/Ibusiness';
 import { GarbageStation } from '../../model/garbage-station.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetGarbageStationsParams } from '../garbage-station/garbage-station-request.params';
 import { ServiceCache } from './service.cache';
 
 export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
+  constructor(key: string, service: IService<GarbageStation>) {
+    super(key, service, GarbageStation);
+  }
   async get(id: string): Promise<GarbageStation> {
     return new Promise((reject) => {
       this.wait((data) => {
@@ -38,6 +43,7 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
       this.wait(() => {
         let paged: PagedList<GarbageStation>;
         let datas = this.load() as GarbageStation[];
+        datas = plainToInstance(GarbageStation, datas);
         if (args) {
           if (args.Ids) {
             datas = datas.filter((x) => args.Ids?.includes(x.Id));

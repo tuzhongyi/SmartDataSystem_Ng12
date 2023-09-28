@@ -1,14 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Enum } from 'src/app/enum/enum-helper';
 import { CollectionPoint } from 'src/app/network/model/collection-point.model';
@@ -20,7 +11,7 @@ import { CollectionPoint } from 'src/app/network/model/collection-point.model';
 })
 export class GarbageCollectionPointDetailsWindowComponent
   extends WindowComponent
-  implements OnInit, OnChanges
+  implements OnInit
 {
   @Input()
   open?: EventEmitter<CollectionPoint>;
@@ -39,17 +30,13 @@ export class GarbageCollectionPointDetailsWindowComponent
   classifications: CollectionPointClassification[] = [];
 
   ngOnInit(): void {
-    this.initClassifications();
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.open) {
-      if (this.open) {
-        this.open.subscribe((x) => {
-          this.model = x;
-          this.Model.show = true;
-        });
-      }
+    if (this.open) {
+      this.open.subscribe((x) => {
+        this.model = x;
+        this.Model.show = true;
+      });
     }
+    this.initClassifications();
   }
 
   initClassifications() {

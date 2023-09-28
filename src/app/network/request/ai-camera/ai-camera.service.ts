@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AICamera } from '../../model/ai-camera.model';
 import { CameraAIModel } from '../../model/camera-ai.model';
 import { ResourceAICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
@@ -16,8 +17,8 @@ export class AICameraRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<AICamera>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(AICamera);
   }
 

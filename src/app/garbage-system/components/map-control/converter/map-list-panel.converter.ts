@@ -4,16 +4,13 @@ import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import {
-  DivisionModel,
-  GarbageStationModel,
-} from 'src/app/view-model/garbage-station.model';
+import { DivisionModel } from 'src/app/view-model/garbage-station.model';
 import {
   ListItem,
   ListItemType,
 } from '../../map-control-list-panel/map-list-item';
 
-export type ListPanelType = DivisionModel | GarbageStationModel;
+export type ListPanelType = Division | GarbageStation;
 @Injectable()
 export class ListPanelConverter
   implements IConverter<ListPanelType[], ListItem<ListPanelType>[]>
@@ -51,7 +48,7 @@ export class ListPanelConverter
     });
     return item;
   }
-  fromGarbageStation(source: GarbageStationModel) {
+  fromGarbageStation(source: GarbageStation) {
     let item = new ListItem(
       source.Id,
       source.Name,

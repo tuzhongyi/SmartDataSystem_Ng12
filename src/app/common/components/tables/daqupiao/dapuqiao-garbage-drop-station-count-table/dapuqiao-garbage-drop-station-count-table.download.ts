@@ -39,6 +39,7 @@ export class DaPuQiaoGarbageDropStationCountTableDownload {
       '平均反馈时长',
       '反馈率',
       '督办事件',
+      '督办率',
     ];
     this.tool.export(type, title, handers, datas, converter);
   }
@@ -74,8 +75,9 @@ class Converter implements IExportConverter<NumberStatisticModel[]> {
       );
       row.push(avg);
 
-      row.push(item.Level3Statistic?.FeedbackRatio ?? 0);
+      row.push(`${item.FeedbackRatio}%`);
       row.push(item.Level3Statistic?.SupervisedNumber ?? 0);
+      row.push(`${item.SupervisedRatio}%`);
       model.rowValues.push(row);
     }
     return model;

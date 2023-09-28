@@ -27,6 +27,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
   @Input()
   playback?: EventEmitter<PlaybackInterval>;
+  @Input() is_playback_use_config = true;
   @Input()
   fullplay = false;
 

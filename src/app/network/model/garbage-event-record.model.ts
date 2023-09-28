@@ -59,7 +59,7 @@ class EventRecordData<T> extends BaseEventRecord implements IEventRecord<T> {
 /** 乱丢垃圾事件 */
 export class IllegalDropEventRecord extends EventRecordData<IllegalDropEventData> {}
 /** */
-class IllegalDropEventData {
+export class IllegalDropEventData {
   CommunityName?: string;
   CommunityId?: string;
   /**	String	垃圾房ID	M */
@@ -83,7 +83,7 @@ class IllegalDropEventData {
 /** 混合投放事件 */
 export class MixedIntoEventRecord extends EventRecordData<MixedIntoEventData> {}
 
-class MixedIntoEventData {
+export class MixedIntoEventData {
   /**	String	垃圾房ID	M */
   StationId!: string;
   /**	String	垃圾房名称	M */
@@ -109,7 +109,7 @@ class MixedIntoEventData {
  * */
 export class GarbageFullEventRecord extends EventRecordData<GarbageFullEventData> {}
 
-class GarbageFullEventData {
+export class GarbageFullEventData {
   /**	String	垃圾房ID	M */
   StationId!: string;
   /**	String	垃圾房名称	M */

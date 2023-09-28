@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Platform } from 'src/app/network/model/platform.model';
 import { Protocol } from '../../model/protocol.model';
 import { PlatformsURL } from '../../url/aiop/platforms/platforms.url';
@@ -15,8 +16,8 @@ export class PlatformRequestSerivce {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Platform>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Platform);
   }
 

@@ -14,7 +14,7 @@ export class WindowComponent implements OnInit {
   Model: WindowViewModel = {
     show: false,
   };
-
+  @Input() title?: string;
   @Input() Background = true;
 
   @Input() CloseButton = true;

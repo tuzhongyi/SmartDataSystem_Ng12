@@ -12,14 +12,10 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IModel } from 'src/app/network/model/model.interface';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import {
@@ -49,7 +45,8 @@ export class GarbageDropStationTableComponent
   @Input() divisionId?: string;
   @Input() count: number = 0;
   @Input() load?: EventEmitter<SearchOptions>;
-  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
+    new EventEmitter();
   @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
 
   sort?: Sort;
@@ -61,6 +58,7 @@ export class GarbageDropStationTableComponent
 
   widths = ['10%', '14%', '12%', '7%', '9%', '9%', '9%', '8%', '6%', '6%'];
   searchOptions?: SearchOptions;
+  selected?: GarbageDropStationTableModel;
 
   ngOnDestroy(): void {
     this.searchOptions = undefined;
@@ -107,13 +105,25 @@ export class GarbageDropStationTableComponent
     }
   }
 
-  imageClick(item: GarbageDropStationTableModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index, item);
-    this.image.emit(array);
+  onimage(e: Event, item: GarbageDropStationTableModel, index: number) {
+    this.image.emit({
+      page: Page.create(index),
+      data: item,
+    });
+    if (this.selected === item) {
+      e.stopPropagation();
+    }
   }
 
-  onPositionClicked(item: GarbageDropStationTableModel) {
-    this.position.emit(item.GarbageStation);
+  async onPositionClicked(item: GarbageDropStationTableModel) {
+    this.position.emit(await item.GarbageStation);
+  }
+  onselect(item: GarbageDropStationTableModel) {
+    if (this.selected === item) {
+      this.selected = undefined;
+    } else {
+      this.selected = item;
+    }
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

@@ -17,11 +17,10 @@ export class AMapClient {
         () => {
           return this.isloaded && !!this._client;
         },
-        100,
-        0
-      ).then((x) => {
-        resolve(this._client!);
-      });
+        () => {
+          resolve(this._client!);
+        }
+      );
     });
   }
   public get controller(): Promise<CesiumDataController.Controller> {

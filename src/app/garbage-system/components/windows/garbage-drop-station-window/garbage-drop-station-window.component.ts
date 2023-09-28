@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
 
@@ -21,7 +22,8 @@ export class GarbageDropStationWindowComponent
   @Input()
   index = GarbageDropStationWindowIndex.list;
   @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
+    new EventEmitter();
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Input()
@@ -48,7 +50,7 @@ export class GarbageDropStationWindowComponent
   onsearch(text: SearchOptions) {
     this.load.emit(text);
   }
-  onimage(item: ImageControlModelArray) {
+  onimage(item: PagedArgs<GarbageDropStationTableModel>) {
     this.image.emit(item);
   }
 
@@ -65,4 +67,5 @@ export enum GarbageDropStationWindowIndex {
   count = 1,
   details = 3,
   dapuqiao_count = 2,
+  dapuqiao_details = 4,
 }

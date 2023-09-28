@@ -1,4 +1,5 @@
 import { ClassConstructor } from 'class-transformer';
+import { Page } from './page_list.model';
 
 export interface IModel {}
 export interface IIdModel extends IModel {
@@ -25,7 +26,7 @@ export class IdNameModel implements IObjectModel {
     return this.Id === value.Id;
   }
 }
-export interface IndexArgs<T = any> {
-  index: number;
-  model: T;
+export interface PagedArgs<T = any> {
+  data: T;
+  page: Page;
 }

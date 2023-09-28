@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { GetCollectionPointNumberParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
-import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
 import { CollectionPointPieConverter } from './collection-point-pie.converte';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { ICollectionPointPieSearchInfo } from './collection-point-pie.model';
 
 @Injectable()
 export class CollectionPointPieBusiness {
@@ -19,11 +19,13 @@ export class CollectionPointPieBusiness {
     return res;
   }
 
-  private _listClassificationNumber(searchInfo: ICollectionPointPieSearchInfo) {
+  private async _listClassificationNumber(
+    searchInfo: ICollectionPointPieSearchInfo
+  ) {
     let params = new GetCollectionPointNumberParams();
     if (searchInfo.DivisionIds) {
       if (
-        this._globalStorageService.defaultDivisionId !==
+        (await this._globalStorageService.defaultDivisionId) !==
         this._globalStorageService.divisionId
       ) {
         params.DivisionIds = searchInfo.DivisionIds;

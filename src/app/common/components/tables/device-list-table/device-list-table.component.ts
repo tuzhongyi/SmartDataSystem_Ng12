@@ -16,7 +16,6 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import { ImageControlModelArray } from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import {
@@ -35,22 +34,19 @@ export class DeviceListTableComponent
   extends PagedTableAbstractComponent<DeviceViewModel>
   implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
 {
-  OnlineStatus = OnlineStatus;
-  widths = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
+  @Input() filter: DeviceListTableFilter = {};
+  @Input() business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
-  @Input()
-  filter: DeviceListTableFilter = {};
-
-  @Input()
-  business: IBusiness<IModel, PagedList<DeviceViewModel>>;
-
-  @Input()
-  load?: EventEmitter<SearchOptions>;
+  @Input() load?: EventEmitter<SearchOptions>;
+  @Output() image: EventEmitter<DeviceViewModel> = new EventEmitter();
 
   constructor(business: DeviceListTableBusiness) {
     super();
     this.business = business;
   }
+  selected?: DeviceViewModel;
+  OnlineStatus = OnlineStatus;
+  widths = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
   ngOnDestroy(): void {
     this.filter = {};
   }
@@ -107,11 +103,19 @@ export class DeviceListTableComponent
     this.loadData(1, this.pageSize, this.filter.status, opts);
   }
 
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  imageClick(item: DeviceViewModel) {
-    let img = new ImageControlModelArray([item.image], 0, item);
-    this.image.emit(img);
+  imageClick(e: Event, item: DeviceViewModel) {
+    this.image.emit(item);
+    if (this.selected === item) {
+      e.stopPropagation();
+    }
+  }
+
+  onselect(item: DeviceViewModel) {
+    if (this.selected === item) {
+      this.selected = undefined;
+    } else {
+      this.selected = item;
+    }
   }
 }
 

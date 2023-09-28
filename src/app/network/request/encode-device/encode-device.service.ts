@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { EncodeDevice } from '../../model/encode-device';
 import { Protocol } from '../../model/protocol.model';
 import { ResourceEncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
@@ -16,8 +17,8 @@ export class EncodeDeviceRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<EncodeDevice>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(EncodeDevice);
   }
   create(item: EncodeDevice) {

@@ -42,6 +42,17 @@
         </div>
       </div>
       <div class="form-item">
+        <div class="form-item-title">同步RFID卡号</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.SyncRfidCard)"
+          >
+            <i class="mdi mdi-twitter-retweet"></i> 同步
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
         <div class="form-item-title">自动程序升级检测</div>
         <div class="form-item-value">
           <button
@@ -85,14 +96,12 @@
           </button>
         </div>
       </div>
-      <div class="form-item" *ngFor="let win of model.DropWindows">
-        <div class="form-item-title">
-          窗口{{ win.No }}-{{ Language.DropWindowType(win.DropType) }}
-        </div>
+      <div class="form-item">
+        <div class="form-item-title">窗口上电</div>
         <div class="form-item-value">
           <button
             class="hw-blue-btn"
-            (click)="tocommand(AIGarbageDeviceCommand.WindowPowerOn, win.No)"
+            (click)="tocommand(AIGarbageDeviceCommand.WindowPowerOn, 1)"
           >
             <i class="mdi mdi-power-plug"></i> 上电
           </button>

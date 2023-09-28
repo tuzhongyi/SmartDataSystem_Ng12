@@ -4,6 +4,7 @@
     aria-label="Fruit selection"
     [aria-orientation]="'horizontal'"
     (click)="onchiplistclicked($event)"
+    WheelHorizontalScroll
   >
     <span *ngIf="!selected || selected.length == 0">请选择</span>
     <mat-chip *ngFor="let item of selected" (removed)="remove(item)">
@@ -30,6 +31,7 @@
       (selectTreeNode)="selectTree($event)"
       [defaultIds]="selectedIds"
       [showStation]="config.tree.showStation"
+      [onlystation]="onlystation"
     >
     </howell-division-tree-sync>
     <!-- <howell-tree

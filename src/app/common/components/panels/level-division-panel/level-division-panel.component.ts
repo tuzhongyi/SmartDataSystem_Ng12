@@ -20,6 +20,8 @@ export class LevelDivisionPanelComponent
   business: IBusiness<IModel, ILevelListNode[]>;
   @Input()
   selected?: ILevelListNode;
+  @Input()
+  nulllanguage = '请选择';
   @Output()
   selectedChange: EventEmitter<ILevelListNode> = new EventEmitter();
 

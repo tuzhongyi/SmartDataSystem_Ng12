@@ -18,6 +18,8 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { OrderModel } from 'src/app/view-model/order.model';
 import { SelectItem } from '../../select-control/select-control.model';
 import { GarbageStationStatisticTableBusiness } from './garbage-station-statistic-table.business';
+import { GarbageStationStatisticTableService } from './garbage-station-statistic-table.service';
+import { GarbageStationStatisticArrayConverter } from './garbage-station-statistic.converter';
 import { GarbageStationStatisticModel } from './garbage-station-statistic.model';
 
 interface TableWidth {
@@ -33,7 +35,11 @@ interface TableWidth {
     '../table.less',
     './garbage-station-statistic-table.component.less',
   ],
-  providers: [GarbageStationStatisticTableBusiness],
+  providers: [
+    GarbageStationStatisticTableService,
+    GarbageStationStatisticArrayConverter,
+    GarbageStationStatisticTableBusiness,
+  ],
 })
 export class GarbageStationStatisticTableComponent
   implements

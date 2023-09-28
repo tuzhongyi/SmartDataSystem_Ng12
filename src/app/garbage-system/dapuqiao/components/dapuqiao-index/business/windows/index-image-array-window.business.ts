@@ -4,6 +4,7 @@ import { timer } from 'rxjs';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { Medium } from 'src/app/common/tools/medium';
+import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IndexVideoWindowBusiness } from './index-video-window.business';
@@ -44,6 +45,21 @@ export class IndexImageArrayWindowBusiness extends WindowViewModel {
     if (this._models && this.models.length > 0) {
       this.current = this._models[this.index];
     }
+  }
+
+  create(urls: CameraImageUrl[], eventTime?: Date) {
+    let models: ImageControlModel[] = [];
+    for (let i = 0; i < urls.length; i++) {
+      const url = urls[i];
+      let model = new ImageControlModel();
+      model.id = url.CameraId;
+      model.eventTime = eventTime;
+      model.index = i;
+      model.name = url.CameraName ?? '';
+      model.src = Medium.img(url.ImageUrl);
+      models.push(model);
+    }
+    return models;
   }
 
   current?: ImageControlModel;

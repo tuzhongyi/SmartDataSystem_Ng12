@@ -23,14 +23,14 @@ const DivisionNodeIconType = new Map([
   providedIn: 'root',
 })
 export class DivisionTreeConverter extends CommonTreeConverter {
-  Convert(source: DivisionTreeSource, ...res: any[]): CommonNestNode {
+  Convert(source: DivisionTreeSource, onlystation?: boolean): CommonNestNode {
     // DivisionNode 继承自 Division,要先判断掉
     if (source instanceof DivisionNode) {
       return this._fromDivisionNode(source);
     } else if (source instanceof Division) {
       return this._fromDivision(source);
     } else if (source instanceof GarbageStation) {
-      return this._fromGarbageStation(source);
+      return this._fromGarbageStation(source, onlystation);
     } else if (source instanceof GarbageVehicle) {
       return this._fromGarbageVehicle(source);
     } else if (source instanceof VehicleCamera) {
@@ -73,12 +73,12 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.RawData = item;
     return node;
   }
-  private _fromGarbageStation(item: GarbageStation) {
+  private _fromGarbageStation(item: GarbageStation, only: boolean = false) {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
     node.HasChildren = false;
-    node.ParentId = item.DivisionId;
+    node.ParentId = only ? undefined : item.DivisionId;
     node.ChildrenLoaded = false;
     node.ParentNode = undefined;
     node.IconClass = DivisionNodeIconType.get(UserResourceType.Station) ?? '';

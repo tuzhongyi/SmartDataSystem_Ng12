@@ -50,6 +50,6 @@ export class TouchSpinDirective implements AfterViewInit, OnChanges {
         this.numberChange.emit(parseInt(this.ele.nativeElement.value));
       });
 
-    $(this.ele).val(this.number ?? 1);
+    $(this.ele.nativeElement).val(this.number ?? 1);
   }
 }

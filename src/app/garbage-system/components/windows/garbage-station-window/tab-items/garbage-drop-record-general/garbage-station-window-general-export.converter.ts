@@ -13,15 +13,13 @@ export class GarbageStationWindowGeneralExportConverter
       let row = new Array();
       row.push(i + 1);
       row.push(data.Name);
-      if (data.Committees) {
-        row.push(data.Committees.Name);
-      }
-      if (data.GarbageStation) {
-        row.push(data.GarbageStation.CommunityName);
-      }
-      if (data.County) {
-        row.push(data.County.Name);
-      }
+
+      row.push((await data.Committees).Name);
+
+      row.push((await data.GarbageStation).CommunityName);
+
+      row.push((await data.County).Name);
+
       row.push(
         this.GetValue(
           data.GarbageRatioTd.format + '%',

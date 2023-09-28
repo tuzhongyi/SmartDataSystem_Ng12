@@ -10,6 +10,9 @@
     [ngClass]="{ 'custom-form-wrap': Background }"
     [ngStyle]="style"
   >
+    <div class="window-title" *ngIf="title">
+      <div class="hw-simple-title">{{ title }}</div>
+    </div>
     <a class="close-winow" (click)="closeButtonClick()" *ngIf="CloseButton">
       <i class="howell-icon-Close alert-window-close-btn"></i>
     </a>

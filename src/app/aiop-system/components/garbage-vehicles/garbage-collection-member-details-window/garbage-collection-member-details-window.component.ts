@@ -1,17 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { Enum } from 'src/app/enum/enum-helper';
-import { Gender } from 'src/app/enum/gender.enum';
-import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { CollectionMember } from 'src/app/network/model/member.model';
 
 @Component({
@@ -21,7 +10,7 @@ import { CollectionMember } from 'src/app/network/model/member.model';
 })
 export class GarbageCollectionMemberDetailsWindowComponent
   extends WindowComponent
-  implements OnInit, OnChanges
+  implements OnInit
 {
   @Input()
   open?: EventEmitter<CollectionMember>;
@@ -38,15 +27,12 @@ export class GarbageCollectionMemberDetailsWindowComponent
 
   model?: CollectionMember;
 
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.open) {
-      if (this.open) {
-        this.open.subscribe((x) => {
-          this.model = x;
-          this.Model.show = true;
-        });
-      }
+  ngOnInit(): void {
+    if (this.open) {
+      this.open.subscribe((x) => {
+        this.model = x;
+        this.Model.show = true;
+      });
     }
   }
 

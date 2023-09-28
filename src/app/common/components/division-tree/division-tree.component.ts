@@ -3,16 +3,13 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ClassConstructor } from 'class-transformer';
 import { ToastrService } from 'ngx-toastr';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 
 import { Division } from 'src/app/network/model/division.model';
@@ -25,9 +22,9 @@ import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
 import { DivisionTreeBusiness } from './division-tree.business';
 import {
+  DivisionTreeSource,
   IDivisionTreeBusiness,
   IDivisionTreeComponent,
-  DivisionTreeSource,
 } from './division-tree.model';
 
 @Component({
@@ -38,7 +35,7 @@ import {
 })
 export class DivisionTreeComponent
   extends CommonTree
-  implements IDivisionTreeComponent, OnInit, OnChanges
+  implements IDivisionTreeComponent, OnInit
 {
   private _business?: IDivisionTreeBusiness;
   public get business(): IDivisionTreeBusiness {
@@ -159,6 +156,11 @@ export class DivisionTreeComponent
   private _excludeGuards: string[] = [];
 
   ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this._init();
+      });
+    }
     // 如果showDepth没有设置或者比depth大，则用depth的值
     if (this.showDepth == -1 || this.showDepth > this.depth)
       this.showDepth = this.depth;
@@ -168,15 +170,6 @@ export class DivisionTreeComponent
     this._init();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((x) => {
-          this._init();
-        });
-      }
-    }
-  }
   private async _init() {
     this._nestedNodeMap = this.business.nestedNodeMap;
 

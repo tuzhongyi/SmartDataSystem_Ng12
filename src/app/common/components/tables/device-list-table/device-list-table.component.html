@@ -8,24 +8,37 @@
     </div> -->
   <div class="device-list-table-main">
     <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
       <thead>
         <tr>
-          <td [ngStyle]="{ width: widths[0] }">图片</td>
-          <td [ngStyle]="{ width: widths[1] }">名称</td>
-          <td [ngStyle]="{ width: widths[2] }">状态</td>
-          <td [ngStyle]="{ width: widths[3] }">投放点</td>
-          <td [ngStyle]="{ width: widths[4] }">社区</td>
-          <td [ngStyle]="{ width: widths[5] }">街道</td>
-          <td [ngStyle]="{ width: widths[6] }">居委会</td>
+          <td>图片</td>
+          <td>名称</td>
+          <td>状态</td>
+          <td>投放点</td>
+          <td>社区</td>
+          <td>街道</td>
+          <td>居委会</td>
         </tr>
       </thead>
     </table>
     <div class="body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas" class="zoom">
-            <td [ngStyle]="{ width: widths[0] }">
-              <div class="img" (click)="imageClick(item)">
+          <tr
+            *ngFor="let item of datas"
+            class="zoom"
+            [ngClass]="{
+              selected: selected === item
+            }"
+            (click)="onselect(item)"
+          >
+            <td>
+              <div class="img" (click)="imageClick($event, item)">
                 <img
                   loading="lazy"
                   width="100%"
@@ -35,8 +48,8 @@
                 />
               </div>
             </td>
-            <td [ngStyle]="{ width: widths[1] }">{{ item.Name }}</td>
-            <td [ngStyle]="{ width: widths[2] }">
+            <td>{{ item.Name }}</td>
+            <td>
               <span
                 [ngClass]="{
                   'green-text': item.OnlineStatus === OnlineStatus.Online,
@@ -46,13 +59,13 @@
                 {{ Language.OnlineStatus(item.OnlineStatus) }}</span
               >
             </td>
-            <td [ngStyle]="{ width: widths[3] }">
+            <td>
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
             </td>
-            <td [ngStyle]="{ width: widths[4] }">
+            <td>
               {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
             </td>
-            <td [ngStyle]="{ width: widths[5] }">
+            <td>
               {{
                 item.GarbageStation
                   ? ((item.GarbageStation.Division | async)?.Parent | async)
@@ -60,7 +73,7 @@
                   : ""
               }}
             </td>
-            <td [ngStyle]="{ width: widths[6] }">
+            <td>
               {{
                 item.GarbageStation
                   ? (item.GarbageStation.Division | async)?.Name

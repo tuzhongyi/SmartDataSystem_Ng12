@@ -1,27 +1,40 @@
 import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
+import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 
 @Injectable()
 export class DapuqiaoMainSuperviseButtonBusiness {
   constructor(
-    private service: DivisionRequestService,
+    private service: EventRequestService,
     private global: GlobalStorageService
   ) {}
 
   async load() {
-    if (this.global.defaultDivisionId) {
-      let data = await this.getData(this.global.defaultDivisionId);
-      if (data.Level3Statistic) {
-        let value =
-          (data.Level3Statistic.Level3Number ?? 0) -
-          (data.Level3Statistic.SupervisedNumber ?? 0);
-        return value < 0 ? 0 : value;
+    let datas = await this.getData(await this.global.defaultDivisionId);
+    let value = 0;
+    for (let i = 0; i < datas.length; i++) {
+      const data = datas[i];
+      if (data.Data.IsHandle) {
+        continue;
       }
+      if (data.Data.SuperVisionData) {
+        if (data.Data.SuperVisionData.SupervisedState === 1) {
+          continue;
+        }
+      }
+      value++;
     }
-    return 0;
+    return value;
   }
-  getData(divisionId: string) {
-    return this.service.statistic.number.cache.get(divisionId);
+  async getData(divisionId: string) {
+    let duration = DateTimeTool.allDay(new Date());
+    let params = new GetGarbageDropEventRecordsParams();
+    params.BeginTime = duration.begin;
+    params.EndTime = duration.end;
+    params.DivisionId = divisionId;
+    params.Level = 3;
+    return this.service.record.GarbageDrop.all(params);
   }
 }

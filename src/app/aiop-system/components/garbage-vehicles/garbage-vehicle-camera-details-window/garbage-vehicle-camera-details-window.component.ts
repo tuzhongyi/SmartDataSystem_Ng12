@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { VehicleCameraModelConverter } from 'src/app/converter/view-models/vehicle-camera.model.converter';
@@ -24,7 +16,7 @@ import { GarbageVehicleCameraDetailsWindowBusiness } from './garbage-vehicle-cam
 })
 export class GarbageVehicleCameraDetailsWindowComponent
   extends WindowComponent
-  implements OnInit, OnChanges
+  implements OnInit
 {
   @Input()
   open?: EventEmitter<VehicleCamera>;
@@ -49,17 +41,13 @@ export class GarbageVehicleCameraDetailsWindowComponent
   vehicles: GarbageVehicle[] = [];
 
   ngOnInit(): void {
-    this.initVehicles();
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.open) {
-      if (this.open) {
-        this.open.subscribe((x) => {
-          this.model = this.converter.Convert(x);
-          this.Model.show = true;
-        });
-      }
+    if (this.open) {
+      this.open.subscribe((x) => {
+        this.model = this.converter.Convert(x);
+        this.Model.show = true;
+      });
     }
+    this.initVehicles();
   }
 
   async initVehicles() {

@@ -1,9 +1,14 @@
 <div class="search-wrap">
-  <app-select-control
-    class="list-type-select"
-    [data]="keys"
-    (selectedChange)="onselect($event)"
-  ></app-select-control>
+  <hw-select [(selected)]="key">
+    <select [(ngModel)]="key">
+      <option [ngValue]="Key.name">
+        {{ Language.SearchOption(Key.name) }}
+      </option>
+      <option [ngValue]="Key.community">
+        {{ Language.SearchOption(Key.community) }}
+      </option>
+    </select>
+  </hw-select>
   <input
     type="text"
     #input

@@ -1,3 +1,4 @@
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { IData, IService } from 'src/app/business/Ibusiness';
 import { PagedList } from '../../model/page_list.model';
 import { IParams, PagedParams } from '../IParams.interface';
@@ -19,6 +20,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   constructor(
     protected key: string,
     protected service: IService<T>,
+    protected type?: ClassConstructor<T>,
     protected timeout = 1000 * 60 * 30,
     private init = true
   ) {
@@ -37,6 +39,7 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   }
 
   private doTimeout(time: number) {
+    if (time < 0) time = 0;
     setTimeout(() => {
       this.loaded = false;
     }, time);
@@ -119,6 +122,9 @@ export class ServiceCache<T extends IData> implements IServiceCache {
   list(args?: IParams): Promise<PagedList<T>> {
     return this.service.list!(args).then((result) => {
       let datas = this.load();
+      if (this.type) {
+        result.Data = plainToInstance(this.type, result.Data);
+      }
       result.Data.forEach((item) => {
         if (!datas) datas = [];
         let index = datas.findIndex((x) => x.Id === item.Id);

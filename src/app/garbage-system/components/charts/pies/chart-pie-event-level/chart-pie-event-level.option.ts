@@ -1,4 +1,6 @@
-export interface IChartPieData {
+import { IChartData } from '../../chart.model';
+
+export interface IChartPieData extends IChartData<number> {
   name: string;
   value: number;
 }

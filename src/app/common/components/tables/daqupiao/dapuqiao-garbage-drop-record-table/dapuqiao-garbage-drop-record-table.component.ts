@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { IModel, IndexArgs } from 'src/app/network/model/model.interface';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { DaPuQiaoGarbageDropRecordTableBusiness } from './dapuqiao-garbage-drop-record-table.business';
 import {
@@ -31,11 +31,29 @@ export class DapuqiaoGarbageDropRecordTableComponent
   @Input() business: IBusiness<IModel, PagedList<GarbageDropEventRecordModel>>;
   @Input() args = new DapuqiaoGarbageDropRecordTableArgs();
   @Input() load?: EventEmitter<DapuqiaoGarbageDropRecordTableArgs>;
-  widths = [];
+  widths = [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    '100px',
+  ];
 
   @Output() process: EventEmitter<GarbageDropEventRecordModel> =
     new EventEmitter();
-  @Output() image: EventEmitter<IndexArgs> = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs> = new EventEmitter();
   @Output() details: EventEmitter<GarbageDropEventRecordModel> =
     new EventEmitter();
   @Output() picture: EventEmitter<GarbageDropEventRecordModel> =
@@ -68,7 +86,7 @@ export class DapuqiaoGarbageDropRecordTableComponent
   }
 
   onimage(item: GarbageDropEventRecordModel, index: number) {
-    this.image.emit({ model: item, index: index });
+    this.image.emit({ data: item, page: Page.create(index) });
   }
   ondetails(item: GarbageDropEventRecordModel) {
     this.details.emit(item);

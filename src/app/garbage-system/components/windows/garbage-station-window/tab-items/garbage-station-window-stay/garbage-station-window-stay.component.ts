@@ -4,11 +4,9 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { IModel } from 'src/app/network/model/model.interface';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from 'src/app/view-model/image-control.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { Page } from 'src/app/network/model/page_list.model';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { GarbageStationWindowStayBusiness } from './garbage-station-window-stay.business';
 import { GarbageStationWindowStayModel } from './garbage-station-window-stay.model';
 
@@ -28,7 +26,7 @@ export class GarbageStationWindowStayComponent
   stationId?: string;
 
   @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  image: EventEmitter<PagedArgs<ImageControlModel>> = new EventEmitter();
   @Output()
   ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
 
@@ -66,8 +64,10 @@ export class GarbageStationWindowStayComponent
     if (this.stationId) this.loadData(this.stationId, this.date);
   }
   onimage(model: ImageControlModel) {
-    let array = new ImageControlModelArray([model], 0, true);
-    this.image.emit(array);
+    this.image.emit({
+      page: Page.create(0),
+      data: model,
+    });
   }
   onchartdblclick(args: LineZoomChartArgs) {
     this.ondblclick.emit(args);

@@ -5,6 +5,7 @@
  * @Last Modified time: 2022-11-04 15:39:45
  */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import { HowellResponse } from 'src/app/network/model/howell-response.model';
@@ -35,9 +36,9 @@ import {
 export class GarbageVehicleRequestService extends AbstractService<GarbageVehicle> {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<GarbageVehicle>;
-  constructor(_http: HowellAuthHttpService) {
+  constructor(http: HowellAuthHttpService, router: Router) {
     super();
-    this.basic = new HowellBaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(GarbageVehicle);
   }
   create(data: GarbageVehicle): Promise<GarbageVehicle> {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { CameraAIEventRecord } from '../../model/camera-ai-event-record.model';
 import { CameraAIUrl } from '../../url/aiop/events/records/camera-ai/camera-ai.url';
 import {
@@ -15,8 +16,8 @@ export class CameraAIEventRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<CameraAIEventRecord>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(CameraAIEventRecord);
   }
 

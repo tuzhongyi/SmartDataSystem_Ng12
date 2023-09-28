@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import {
   ICreate,
@@ -26,8 +27,8 @@ export class ResourceRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Resource>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Resource);
   }
   create(item: Resource) {

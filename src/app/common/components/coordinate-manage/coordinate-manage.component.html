@@ -1,43 +1,35 @@
-<div class="coordinate-manage">
-  <div class="hw-simple-title" style="margin-bottom: 20px; text-align: center">
-    {{ title }}
+<div class="coordinate-manage" *ngIf="!!station">
+  <div class="form-group" *ngIf="!!station.GisPoint">
+    <div class="form-item">
+      <div class="form-item-title">坐标系：</div>
+      <div class="form-item-value">
+        <select [(ngModel)]="station.GisPoint.GisType">
+          <option [ngValue]="GisType.GCJ02">GCJ02</option>
+          <option [ngValue]="GisType.BD09">BD09</option>
+          <option [ngValue]="GisType.WGS84">WGS84</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">经度：</div>
+      <div class="form-item-value">
+        <input type="text" [(ngModel)]="station.GisPoint.Longitude" />
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-item-title">纬度：</div>
+      <div class="form-item-value">
+        <input type="text" [(ngModel)]="station.GisPoint.Latitude" />
+      </div>
+    </div>
   </div>
-  <form class="hw-form">
-    <div class="hw-form-group">
-      <div class="title">
-        <span class="hw-form-label"> 经度 </span>
-      </div>
-      <div class="content">
-        <input
-          type="number"
-          class="form-control"
-          name="lon"
-          [(ngModel)]="lon"
-          (keydown)="down($event)"
-        />
-      </div>
-    </div>
-    <div class="hw-form-group">
-      <div class="title">
-        <span class="hw-form-label"> 纬度 </span>
-      </div>
-      <div class="content">
-        <input
-          type="number"
-          class="form-control"
-          name="lat"
-          [(ngModel)]="lat"
-          (keydown)="down($event)"
-        />
-      </div>
-    </div>
-  </form>
   <div class="hw-middle-btn-group">
-    <button class="hw-green-m-btn" type="button" (click)="onSubmit()">
+    <button class="hw-green-m-btn" type="button" (click)="onok()">
       <i class="howell-icon-Check"></i>
     </button>
 
-    <button class="hw-gray-m-btn" type="button" (click)="onReset()">
+    <button class="hw-gray-m-btn" type="button" (click)="oncancel()">
       <i class="howell-icon-Close"></i>
     </button>
   </div>

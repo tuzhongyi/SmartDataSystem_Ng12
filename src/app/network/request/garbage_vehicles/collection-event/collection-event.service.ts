@@ -5,6 +5,7 @@
  * @Last Modified time: 2022-11-22 15:13:02
  */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { VehicleEventInfo } from '../../../model/event-info.model';
 import { PagedList } from '../../../model/page_list.model';
@@ -33,8 +34,8 @@ import {
 export class CollectionEventRequestService {
   private basic: HowellBaseRequestService;
 
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
   }
 
   private _info?: InfosService;

@@ -7,7 +7,7 @@ import { ServiceCache } from './service.cache';
 
 export class DivisionServiceCache extends ServiceCache<Division> {
   constructor(key: string, service: IService<Division>) {
-    super(key, service);
+    super(key, service, Division);
   }
 
   async get(id: string): Promise<Division> {

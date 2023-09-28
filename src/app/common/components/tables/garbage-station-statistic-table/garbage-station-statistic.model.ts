@@ -20,9 +20,9 @@ export class GarbageStationStatisticModel extends GarbageStationNumberStatisticV
 
   MixedIntoTd = new GarbageStationStatisticTd();
 
-  GarbageStation?: GarbageStation;
-  Committees?: Division;
-  County?: Division;
+  GarbageStation!: Promise<GarbageStation>;
+  Committees!: Promise<Division>;
+  County!: Promise<Division>;
 }
 
 export class GarbageStationStatisticTd {

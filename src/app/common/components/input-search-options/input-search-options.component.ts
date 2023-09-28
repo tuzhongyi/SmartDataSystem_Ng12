@@ -1,21 +1,20 @@
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import {
   SearchOptionKey,
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
-import { SelectItem } from '../select-control/select-control.model';
 import { Language } from '../../tools/language';
 @Component({
   selector: 'app-input-search-options',
@@ -46,18 +45,10 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
 
   key = SearchOptionKey.name;
 
-  keys: SelectItem[] = [];
+  Key = SearchOptionKey;
+  Language = Language;
 
   constructor() {}
-
-  initKeys() {
-    this.keys.push(
-      SelectItem.create(SearchOptionKey.name, Language.SearchOption)
-    );
-    this.keys.push(
-      SelectItem.create(SearchOptionKey.community, Language.SearchOption)
-    );
-  }
 
   focus(event: Event) {
     if (this.focusToSelectContent) {
@@ -95,11 +86,5 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit() {
-    this.initKeys();
-  }
-
-  onselect(item: SelectItem) {
-    this.key = item.value;
-  }
+  ngOnInit() {}
 }

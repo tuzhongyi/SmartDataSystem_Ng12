@@ -5,6 +5,7 @@
  * @Last Modified time: 2022-11-06 15:35:53
  */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { VideoUrl } from 'src/app/network/model/url.model';
@@ -21,8 +22,8 @@ import {
   providedIn: 'root',
 })
 export class VehicleSRServerRequestService {
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
   }
   private basic: HowellBaseRequestService;
 

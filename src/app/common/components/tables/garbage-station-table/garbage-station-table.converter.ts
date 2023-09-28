@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
+import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageStationTableModel } from './garbage-station-table.model';
@@ -18,13 +17,12 @@ export class GarbageStationPagedConverter
   constructor(private item: GarbageStationTableConverter) {}
 
   async Convert(
-    source: PagedList<GarbageStation>,
-    getter: (id: string) => Promise<Division>
+    source: PagedList<GarbageStation>
   ): Promise<PagedList<GarbageStationTableModel>> {
     let array: GarbageStationTableModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
       const item = source.Data[i];
-      let model = await this.item.Convert(item, getter);
+      let model = await this.item.Convert(item);
       array.push(model);
     }
     return {
@@ -40,22 +38,20 @@ export class GarbageStationTableConverter
 {
   constructor(private stationConverter: GarbageStationModelConverter) {}
 
-  async Convert(
-    source: GarbageStation,
-    getter: (id: string) => Promise<Division>
-  ): Promise<GarbageStationTableModel> {
+  async Convert(source: GarbageStation): Promise<GarbageStationTableModel> {
     let model = new GarbageStationTableModel();
-    model.GarbageStation = this.stationConverter.Convert(source, getter);
+    model.GarbageStation = this.stationConverter.Convert(source);
     if (model.GarbageStation) {
-      if (model.GarbageStation.Cameras) {
-        model.images = this.converter.image.Convert(
-          model.GarbageStation.Cameras
-        );
-      }
+      model.urls = new Promise((resolve) => {
+        if (model.GarbageStation.Cameras) {
+          let all = model.GarbageStation.Cameras.map((x) =>
+            Medium.img(x.ImageUrl)
+          );
+          resolve(Promise.all(all));
+        }
+      });
     }
+
     return model;
   }
-  converter = {
-    image: new ImageControlArrayConverter(),
-  };
 }

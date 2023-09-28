@@ -12,7 +12,16 @@ export class Page {
   RecordCount!: number;
   /**	Int32	总记录数目	M */
   TotalRecordCount!: number;
-  /** */
+
+  static create(index: number, count: number = 0) {
+    let page = new Page();
+    page.PageIndex = index;
+    page.PageSize = 1;
+    page.PageCount = count;
+    page.RecordCount = count;
+    page.TotalRecordCount = count;
+    return page;
+  }
 }
 /** 分页数据 */
 export class PagedList<T> implements IModel {

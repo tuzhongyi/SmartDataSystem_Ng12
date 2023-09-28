@@ -12,8 +12,8 @@ import { PagedParams } from '../IParams.interface';
   providedIn: 'root',
 })
 export class RoleRequestService {
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
   }
 
   private basic: HowellBaseRequestService;

@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { wait } from '../tools/tool';
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
@@ -49,14 +50,28 @@ export class GlobalStorageService {
   }
   private _defaultDivisionId?: string;
   public get defaultDivisionId() {
-    if (!this._defaultDivisionId) {
-      let user = this.localStorage.user;
-      this._defaultDivisionId =
-        user.Resources && user.Resources.length > 0
-          ? user.Resources[0].Id
-          : undefined;
-    }
-    return this._defaultDivisionId;
+    return new Promise<string>((resolve) => {
+      if (this._defaultDivisionId) {
+        resolve(this._defaultDivisionId);
+        return;
+      }
+      wait(
+        () => {
+          return !!this.localStorage.user;
+        },
+        () => {
+          let user = this.localStorage.user;
+          let divisionId =
+            user.Resources && user.Resources.length > 0
+              ? user.Resources[0].Id
+              : undefined;
+          this._defaultDivisionId = divisionId;
+          if (divisionId) {
+            resolve(divisionId);
+          }
+        }
+      );
+    });
   }
 
   statistic = {

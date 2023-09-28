@@ -1,7 +1,20 @@
 .mat-sort-header-arrow {
   color: white;
+  transform: translateY(3px) !important
 }
 
 .mat-sort-header-stem {
   display: none;
+}
+
+.asc {
+  .mat-sort-header-indicator {
+    transform: translateY(0px) !important;
+  }
+}
+
+.desc {
+  .mat-sort-header-indicator {
+    transform: translateY(4px) !important;
+  }
 }

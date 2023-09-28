@@ -7,14 +7,14 @@ import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Language } from 'src/app/common/tools/language';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { Language } from 'src/app/common/tools/language';
 import { EventRecordCountExportConverter } from './event-record-count-export.converter';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'howell-event-record-count',
@@ -44,7 +44,7 @@ export class EventRecordCountComponent implements OnInit {
     dateTimePicker: new DateTimePickerConfig(),
   };
   DateTimePickerView = DateTimePickerView;
-  dateFormat = 'yyyy年MM月dd日';
+
   units: SelectItem[] = [];
   userTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
@@ -124,7 +124,7 @@ export class EventRecordCountComponent implements OnInit {
   }
   private getTitle() {
     let eventType = Language.EventType(this.eventType);
-    let date = formatDate(this.date, this.dateFormat, 'en');
+    let date = formatDate(this.date, this.config.dateTimePicker.format, 'en');
     let userType = Language.UserResourceType(this.userType);
     return `${date}${userType}${eventType}总数据`;
   }

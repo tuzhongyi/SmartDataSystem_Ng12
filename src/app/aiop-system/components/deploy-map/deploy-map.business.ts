@@ -1,13 +1,11 @@
-import { Injectable } from "@angular/core";
-import { GarbageStation } from "src/app/network/model/garbage-station.model";
-import { GarbageStationRequestService } from "src/app/network/request/garbage-station/garbage-station-request.service";
+import { Injectable } from '@angular/core';
+import { DeployAMapBusiness } from './amap/deploy-amap.business';
+import { DeployMapStationBusiness } from './deploy-map-station.business';
 
 @Injectable()
 export class DeployMapBusiness {
-  constructor(private _garbageStationRequest: GarbageStationRequestService) {
-
-  }
-  updateGarbageStation(station: GarbageStation) {
-    return this._garbageStationRequest.update(station)
-  }
+  constructor(
+    public station: DeployMapStationBusiness,
+    public amap: DeployAMapBusiness
+  ) {}
 }

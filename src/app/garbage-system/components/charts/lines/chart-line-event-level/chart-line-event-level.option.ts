@@ -1,4 +1,6 @@
-export interface IChartLineEventLevelData {
+import { IChartData } from '../../chart.model';
+
+export interface IChartLineEventLevelData extends IChartData<number[]> {
   index: number;
   name: string;
   value: number[];

@@ -44,7 +44,7 @@ export class CollectionScoreRankBusiness {
     return res;
   }
 
-  private _listScores(searchInfo: ICollectionScoreRankSearchInfo) {
+  private async _listScores(searchInfo: ICollectionScoreRankSearchInfo) {
     let params = new GetCollectionPointScoreTopListParams();
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
@@ -53,7 +53,7 @@ export class CollectionScoreRankBusiness {
     if (searchInfo.DivisionIds.length == 1) {
       if (
         searchInfo.DivisionIds[0] ==
-        this._globalStorageService.defaultDivisionId
+        (await this._globalStorageService.defaultDivisionId)
       ) {
         params.DivisionIds = [];
       }

@@ -8,92 +8,87 @@
     </div> -->
   <div class="garbage-drop-record-table-main">
     <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
       <thead>
         <tr>
-          <th [ngStyle]="{ width: widths[0] }">图片</th>
-          <th [ngStyle]="{ width: widths[1] }">投放点</th>
-          <th [ngStyle]="{ width: widths[2] }">居委会</th>
-          <th [ngStyle]="{ width: widths[3] }">社区名称</th>
-          <th [ngStyle]="{ width: widths[4] }">街道</th>
-          <th [ngStyle]="{ width: widths[5] }">工单号</th>
-          <th [ngStyle]="{ width: widths[6] }">发送时间</th>
-          <th [ngStyle]="{ width: widths[7] }">处置时间</th>
-          <th [ngStyle]="{ width: widths[8] }">滞留时长</th>
-          <th [ngStyle]="{ width: widths[9] }">状态</th>
-          <th [ngStyle]="{ width: widths[10] }">处置员</th>
-          <th [ngStyle]="{ width: widths[11] }">操作</th>
+          <th>图片</th>
+          <th>投放点</th>
+          <th>居委会</th>
+          <th>社区名称</th>
+          <th>街道</th>
+          <th>工单号</th>
+          <th>发送时间</th>
+          <th>处置时间</th>
+          <th>滞留时长</th>
+          <th>状态</th>
+          <th>处置员</th>
+          <th>操作</th>
         </tr>
       </thead>
     </table>
     <div class="garbage-drop-record-table-main-body body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas">
-            <td [ngStyle]="{ width: widths[0] }" [width]="widths[0]">
+          <tr
+            *ngFor="let item of datas"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
+            <td [width]="widths[0]">
               <div class="img-list">
                 <div class="img-list-content">
-                  <div class="img" *ngFor="let img of item.images">
-                    <app-image-control
-                      [nosignal]="false"
-                      [model]="img"
-                      (Click)="imageClick(item, img)"
-                    ></app-image-control>
+                  <div
+                    class="img"
+                    *ngFor="let url of item.urls | async; let index = index"
+                    (click)="onimage($event, item, index)"
+                  >
+                    <img [src]="url" alt="" />
                   </div>
                 </div>
               </div>
             </td>
-            <td
-              [ngStyle]="{ width: widths[1] }"
-              [title]="item.Data.StationName"
-            >
+            <td [title]="item.Data.StationName">
               {{ item.Data.StationName }}
             </td>
-            <td
-              [ngStyle]="{ width: widths[2] }"
-              [title]="item.Data.DivisionName ?? '-'"
-            >
+            <td [title]="item.Data.DivisionName ?? '-'">
               {{ item.Data.DivisionName ?? "-" }}
             </td>
-            <td
-              [ngStyle]="{ width: widths[3] }"
-              [title]="item.Data.CommunityName ?? '-'"
-            >
+            <td [title]="item.Data.CommunityName ?? '-'">
               {{ item.Data.CommunityName ?? "-" }}
             </td>
-            <td
-              [ngStyle]="{ width: widths[4] }"
-              [title]="item.County ? item.County.Name : ''"
-            >
-              {{ item.County ? item.County.Name : "" }}
+            <td [title]="(item.County | async)?.Name">
+              {{ (item.County | async)?.Name }}
             </td>
             <td [ngStyle]="{ width: widths[5], fontSize: '16px' }">
               {{ item.Data.RecordNo ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: widths[6] }">
+            <td>
               {{ item.SendTime }}
             </td>
-            <td [ngStyle]="{ width: widths[7] }">
+            <td>
               {{ item.HandleTime }}
             </td>
-            <td [ngStyle]="{ width: widths[8] }">
+            <td>
               {{ item.DropDuration ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: widths[9] }">
+            <td>
               <div [class]="item.statusClass">
                 {{ item.status }}
               </div>
             </td>
-            <td
-              [ngStyle]="{ width: widths[10] }"
-              [title]="item.Data.ProcessorName ?? '-'"
-            >
+            <td [title]="item.Data.ProcessorName ?? '-'">
               {{ item.Data.ProcessorName ?? "-" }}
             </td>
-            <td [ngStyle]="{ width: widths[11] }">
+            <td>
               <button
                 class="icon-button"
                 title="播放视频"
-                (click)="videoClick(item)"
+                (click)="onvideo(item)"
               >
                 <i class="howell-icon-video"></i>
               </button>

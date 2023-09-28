@@ -1,6 +1,6 @@
-import { ImageControlModel } from './image-control.model';
-import { GarbageStationModel } from './garbage-station.model';
 import { BaseEventRecord } from '../network/model/garbage-event-record.model';
+import { GarbageStationModel } from './garbage-station.model';
+import { ImageControlModel } from './image-control.model';
 
 export class EventRecordViewModel<T = any> extends BaseEventRecord {
   Data!: T;
@@ -11,4 +11,5 @@ export class EventRecordViewModel<T = any> extends BaseEventRecord {
   DateFormatter: string = '';
 
   images: ImageControlModel[] = [];
+  urls: Promise<string>[] = [];
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Member } from '../../model/member.model';
 import { PagedList } from '../../model/page_list.model';
 import { MemberUrl } from '../../url/garbage/member.url';
@@ -14,8 +15,8 @@ import { GetMembersParams } from './member-request.params';
 export class MemberRequsetService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Member>;
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Member);
   }
 

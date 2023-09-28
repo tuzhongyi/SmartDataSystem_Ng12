@@ -1,34 +1,40 @@
 <div class="deploy-map horizontal-layout">
-  <ng-container *ngIf="locationDialog">
+  <ng-container *ngIf="window.location.show">
     <howell-confirm-dialog
-      (dialogMsgEvent)="locationDialogMsg($event)"
-      [dialogModel]="locationModel"
+      (dialogMsgEvent)="onlocation($event)"
+      [dialogModel]="window.location"
     >
     </howell-confirm-dialog>
   </ng-container>
-  <ng-container *ngIf="unbindDialog">
+  <ng-container *ngIf="window.unbind.show">
     <howell-confirm-dialog
-      (dialogMsgEvent)="unbindDialogMsg($event)"
-      [dialogModel]="unbindModel"
-    >
-    </howell-confirm-dialog>
-  </ng-container>
-
-  <ng-container *ngIf="bindDialog">
-    <howell-confirm-dialog
-      (dialogMsgEvent)="bindDialogMsg($event)"
-      [dialogModel]="bindModel"
+      (dialogMsgEvent)="onunbind($event)"
+      [dialogModel]="window.unbind"
     >
     </howell-confirm-dialog>
   </ng-container>
 
-  <ng-container *ngIf="showOperate">
-    <toast-window>
+  <!-- <ng-container *ngIf="window.bind.show">
+    <howell-confirm-dialog
+      (dialogMsgEvent)="onbind($event)"
+      [dialogModel]="window.bind"
+    >
+    </howell-confirm-dialog>
+  </ng-container> -->
+
+  <ng-container *ngIf="window.coordinate.show">
+    <app-window
+      [Model]="window.coordinate"
+      *ngIf="window.coordinate.show"
+      [style]="window.coordinate.style"
+      [title]="window.coordinate.station?.Name"
+    >
       <coordinate-manage
-        (closeEvent)="coordinateDialogMsg($event)"
-        [title]="operateTitle"
+        [model]="window.coordinate.station"
+        (ok)="onCoordinateDialogOk($event)"
+        (cancel)="window.coordinate.show = false"
       ></coordinate-manage>
-    </toast-window>
+    </app-window>
   </ng-container>
 
   <div class="horizontal-left">
@@ -38,8 +44,8 @@
         [showStation]="true"
         [holdStatus]="true"
         [showButtonIcon]="true"
-        (selectTreeNode)="selectTreeNode($event)"
-        (buttonIconClickEvent)="buttonIconClick($event)"
+        (selectTreeNode)="ontreeselected($event)"
+        (buttonIconClickEvent)="ontreebutton($event)"
       >
       </howell-division-tree>
     </div>
@@ -54,11 +60,15 @@
                 'hw-blue-btn': !isDragging,
                 'hw-green-btn': isDragging
               }"
-              (click)="dragPoint()"
+              (click)="ondrag()"
             >
               拖拽
             </button>
-            <button class="hw-red-btn" *ngIf="point" (click)="unlinkClicked()">
+            <button
+              class="hw-red-btn"
+              *ngIf="selected.point"
+              (click)="window.unbind.show = true"
+            >
               删除
             </button>
 
@@ -66,13 +76,8 @@
           </div>
         </div>
         <div class="right-wrapper">
-          <input type="text" [value]="mouseLon" />
-          <input type="text" [value]="mouseLat" />
-          <select [(ngModel)]="gisType">
-            <option [ngValue]="GisType.GCJ02">火星坐标系</option>
-            <option [ngValue]="GisType.BD09">百度坐标系</option>
-            <option [ngValue]="GisType.WGS84">地心坐标系</option>
-          </select>
+          {{ business.amap.mouse.lon }},
+          {{ business.amap.mouse.lat }}
         </div>
       </div>
     </div>

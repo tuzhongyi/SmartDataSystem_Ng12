@@ -28,10 +28,9 @@ export class DivisionStationTreeMultFilterComponent
 {
   @Input()
   divisionType = DivisionType.County;
-  @Output()
-  onselect: EventEmitter<string[]> = new EventEmitter();
-  @Output()
-  maxSelection: number = Number.MAX_VALUE;
+  @Output() onselect: EventEmitter<string[]> = new EventEmitter();
+  @Input() maxSelection: number = Number.MAX_VALUE;
+  @Input() onlystation = false;
 
   constructor(private local: LocalStorageService) {}
 
@@ -47,42 +46,6 @@ export class DivisionStationTreeMultFilterComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionType) {
-      this.config.tree.showStation = this.divisionType === DivisionType.None;
-
-      switch (this.divisionType) {
-        case DivisionType.Committees:
-          this.config.tree.depth = 1;
-          this.config.tree.showDepth = 0;
-          this.config.tree.depthIsEnd = true;
-          break;
-        case DivisionType.County:
-        case DivisionType.City:
-          this.config.tree.depth = 0;
-          this.config.tree.showDepth = 0;
-          this.config.tree.depthIsEnd = true;
-          break;
-        case DivisionType.None:
-          let depth = 0;
-          let showDepth = 0;
-          if (
-            this.local.user.Resources &&
-            this.local.user.Resources.length > 0
-          ) {
-            if (
-              this.local.user.Resources[0].ResourceType ==
-              UserResourceType.County
-            ) {
-              depth = 1;
-              showDepth = 1;
-            }
-          }
-          this.config.tree.depth = depth;
-          this.config.tree.showDepth = showDepth;
-          this.config.tree.depthIsEnd = false;
-          break;
-        default:
-          break;
-      }
     }
   }
 
@@ -90,6 +53,42 @@ export class DivisionStationTreeMultFilterComponent
     window.addEventListener('click', () => {
       this.expand = false;
     });
+    this.init();
+  }
+
+  init() {
+    this.config.tree.showStation = this.divisionType === DivisionType.None;
+
+    switch (this.divisionType) {
+      case DivisionType.Committees:
+        this.config.tree.depth = 1;
+        this.config.tree.showDepth = 0;
+        this.config.tree.depthIsEnd = true;
+        break;
+      case DivisionType.County:
+      case DivisionType.City:
+        this.config.tree.depth = 0;
+        this.config.tree.showDepth = 0;
+        this.config.tree.depthIsEnd = true;
+        break;
+      case DivisionType.None:
+        let depth = 0;
+        let showDepth = 0;
+        if (this.local.user.Resources && this.local.user.Resources.length > 0) {
+          if (
+            this.local.user.Resources[0].ResourceType == UserResourceType.County
+          ) {
+            depth = 1;
+            showDepth = 1;
+          }
+        }
+        this.config.tree.depth = depth;
+        this.config.tree.showDepth = showDepth;
+        this.config.tree.depthIsEnd = false;
+        break;
+      default:
+        break;
+    }
   }
 
   remove(item: Division | GarbageStation): void {
@@ -126,6 +125,9 @@ export class DivisionStationTreeMultFilterComponent
 
       this.selected.push(node.RawData);
       this.selectedIds.push(node.Id);
+      if (this.selected.length >= this.maxSelection) {
+        break;
+      }
     }
 
     this.onselect.emit(this.selectedIds);

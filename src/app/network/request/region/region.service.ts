@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Region, RegionTree } from '../../model/region';
 import { RegionsURL } from '../../url/aiop/regions/regions.url';
 import {
@@ -15,8 +16,8 @@ export class RegionRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Region>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Region);
   }
 

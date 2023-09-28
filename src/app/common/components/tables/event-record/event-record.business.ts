@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
@@ -18,12 +17,12 @@ import { EventRecordFilter } from './event-record.model';
 @Injectable()
 export class EventRecordBusiness
   implements
-    IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>
+    IBusiness<PagedList<EventRecordType>, PagedList<EventRecordViewModel>>,
+    IGet<PagedList<EventRecordViewModel>>
 {
   constructor(
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
-    private stationService: GarbageStationRequestService,
     public Converter: EventRecordPagedConverter
   ) {}
 
@@ -33,17 +32,7 @@ export class EventRecordBusiness
     opts: EventRecordFilter
   ): Promise<PagedList<EventRecordViewModel>> {
     let data = await this.getData(type, page, opts);
-    let models = await this.Converter.Convert(data, {
-      station: (id: string) => {
-        return this.stationService.cache.get(id);
-      },
-      division: (id: string) => {
-        return this.divisionService.cache.get(id);
-      },
-      camera: (stationId: string, cameraId: string) => {
-        return this.stationService.camera.get(stationId, cameraId);
-      },
-    });
+    let models = await this.Converter.Convert(data);
 
     return models;
   }
@@ -65,6 +54,33 @@ export class EventRecordBusiness
       default:
         throw new Event('error event type');
     }
+  }
+
+  async get(
+    time: Date,
+    type: EventType
+  ): Promise<PagedList<EventRecordViewModel<any>>> {
+    let params = new GetEventRecordsParams();
+    params.BeginTime = time;
+    params.EndTime = time;
+    params.PageIndex = 1;
+    params.PageSize = 1;
+    let paged: Promise<PagedList<EventRecordType>>;
+    switch (type) {
+      case EventType.IllegalDrop:
+        paged = this.eventService.record.IllegalDrop.list(params);
+        break;
+      case EventType.MixedInto:
+        paged = this.eventService.record.MixedInto.list(params);
+        break;
+      case EventType.GarbageFull:
+        paged = this.eventService.record.GarbageFull.list(params);
+        break;
+      default:
+        throw new Event('error event type');
+    }
+    let model = this.Converter.Convert(await paged);
+    return model;
   }
 
   getParams(page: PagedParams, opts: EventRecordFilter) {

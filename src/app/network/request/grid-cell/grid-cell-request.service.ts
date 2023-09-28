@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { BatchRequest } from '../../model/batch-request.model';
 import { BatchResult } from '../../model/batch-result.model';
@@ -28,8 +29,8 @@ import {
 export class GridCellRequestService {
   basic: HowellBaseRequestService;
   type: HowellBaseTypeRequestService<GridCell>;
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(GridCell);
   }
   delete(id: string): Promise<GridCell> {

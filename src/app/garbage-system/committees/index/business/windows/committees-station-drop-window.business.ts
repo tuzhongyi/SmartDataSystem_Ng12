@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
+import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import {
-  ImageControlModelArray,
-  ImageControlModelPage,
-} from 'src/app/view-model/image-control.model';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
 
 @Injectable()
@@ -19,19 +18,15 @@ export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel 
     transform: 'translate(-50%, -44.5%)',
   };
 
-  onimage(model: ImageControlModelArray | ImageControlModelPage) {
-    if (model instanceof ImageControlModelPage) {
-      this.image.page.model = model;
-      this.image.page.page = model.page;
-      this.image.page.show = true;
-    } else if (model instanceof ImageControlModelArray) {
-      this.image.array.models = model.models;
-      this.image.array.index = model.index;
-      if (model.models && model.models.length > 0) {
-        this.image.array.current = model.models[0];
-      }
-      this.image.array.show = true;
-    } else {
+  async onimage(model: PagedArgs<GarbageDropStationTableModel>) {
+    this.image.array.index = model.page.PageIndex;
+    let station = await model.data.GarbageStation;
+    if (station.Cameras) {
+      this.image.array.models = station.Cameras.map((x) => {
+        let img = ImageControlCreater.Create(x);
+        return img;
+      });
     }
+    this.image.array.show = true;
   }
 }

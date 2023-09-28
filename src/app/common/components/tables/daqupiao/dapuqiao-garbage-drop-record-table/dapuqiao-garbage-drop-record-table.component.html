@@ -1,6 +1,9 @@
-<div class="garbage-station-profile-table vertical-layout">
-  <div class="garbage-station-profile-table-main vertical-main">
-    <div class="garbage-station-profile-table-main-table" WheelHorizontalScroll>
+<div class="dapuqiao-garbage-drop-record-table vertical-layout">
+  <div class="dapuqiao-garbage-drop-record-table-main vertical-main">
+    <div
+      class="dapuqiao-garbage-drop-record-table-main-table"
+      WheelHorizontalScroll
+    >
       <table border="0" cellpadding="0" cellspacing="0">
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
@@ -8,7 +11,7 @@
         <thead>
           <tr>
             <td class="lock left first">图片</td>
-            <td class="lock left second">投放点</td>
+            <td class="lock left second"><div>投放点</div></td>
             <td>居委会</td>
             <td>社区</td>
             <td>街道</td>
@@ -23,7 +26,7 @@
             <td>处置时间</td>
             <td>督办状态</td>
             <td>督办时间</td>
-            <td class="lock right">操作</td>
+            <td class="lock right last operation center">操作</td>
           </tr>
         </thead>
         <tbody>
@@ -130,7 +133,7 @@
                   : "-"
               }}
             </td>
-            <td class="lock right operation center">
+            <td class="lock right last operation center">
               <div class="howell-icon" (click)="ondetails(item)">
                 <i class="howell-icon-task_misson"></i>
               </div>
@@ -145,8 +148,12 @@
         </tbody>
       </table>
     </div>
+    <div class="lock-border"></div>
   </div>
-  <div class="garbage-station-profile-table-main-footer footer" *ngIf="page">
+  <div
+    class="dapuqiao-garbage-drop-record-table-main-footer footer"
+    *ngIf="page"
+  >
     <div class="footer-item">
       <div class="footer-info">
         <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>

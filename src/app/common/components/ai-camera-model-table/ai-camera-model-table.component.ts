@@ -1,36 +1,22 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import {
-  AfterViewInit,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 import {
   AICameraModelManageEvent,
-  CameraManageModel,
   AICameraModelOperateData,
   AICameraModelOperateType,
+  CameraManageModel,
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
-import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
+import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
 
 @Component({
   selector: 'howell-ai-camera-model-table',
   templateUrl: './ai-camera-model-table.component.html',
   styleUrls: ['./ai-camera-model-table.component.less'],
 })
-export class AICameraModelTableComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+export class AICameraModelTableComponent implements OnInit {
   private selection!: SelectionModel<CameraManageModel>;
 
   dataSource: CameraManageModel[] = [];
@@ -41,14 +27,14 @@ export class AICameraModelTableComponent
   };
 
   // 组件更新数据时，自动更新 table 数据
-  @Input()
-  dataSubject = new BehaviorSubject<CameraManageModel[]>([]);
+  @Input() dataSubject = new BehaviorSubject<CameraManageModel[]>([]);
 
   @Input() selectType: TableSelectType = TableSelectType.Cancel;
 
   @Input() selectStrategy = SelectStrategy.Multiple;
 
   @Input() disablehover = false;
+  @Input() load?: EventEmitter<TableSelectType>;
 
   @Output() selectTableRow: EventEmitter<CameraManageModel[]> =
     new EventEmitter<CameraManageModel[]>();
@@ -59,6 +45,13 @@ export class AICameraModelTableComponent
   constructor() {}
 
   ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((event) => {
+        this.selectType = event;
+        this.changeSelectType(this.selectType);
+      });
+    }
+
     if (this.selectStrategy == SelectStrategy.Single) {
       this.selection = new SelectionModel<CameraManageModel>();
     } else {
@@ -89,14 +82,6 @@ export class AICameraModelTableComponent
       this.changeSelectType(this.selectType);
     });
   }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    // 第一次交由 OnInit 初始化全选、单选，剩余每切换一次状态，调用一次 changeSelectType()
-    if (changes.selectType && !changes.selectType.firstChange) {
-      this.changeSelectType(this.selectType);
-    }
-  }
-  ngAfterViewInit(): void {}
 
   changeSelectType(type: TableSelectType) {
     switch (type) {

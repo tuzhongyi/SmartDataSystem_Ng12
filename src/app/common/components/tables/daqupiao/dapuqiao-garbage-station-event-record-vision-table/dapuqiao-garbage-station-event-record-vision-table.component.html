@@ -43,13 +43,17 @@
             <td>
               <div
                 [ngClass]="{
+                  'green-text':
+                    item.Data.SuperVisionData?.SupervisedState === State.yes,
                   'orange-text':
+                    !item.Data.IsHandle &&
                     item.Data.SuperVisionData?.SupervisedState === State.no
                 }"
               >
                 {{
                   Language.SupervisedState(
-                    item.Data.SuperVisionData?.SupervisedState
+                    item.Data.SuperVisionData?.SupervisedState,
+                    item.Data.IsHandle
                   )
                 }}
               </div>

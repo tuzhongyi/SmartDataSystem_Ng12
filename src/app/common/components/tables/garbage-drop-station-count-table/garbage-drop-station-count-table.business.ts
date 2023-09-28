@@ -43,7 +43,7 @@ export class GarbageDropStationCountTableBusiness
     let duration = DurationParams.TimeUnit(args.unit, args.date);
     let divisionId = args.parentId;
     if (!divisionId) {
-      divisionId = this.store.defaultDivisionId!;
+      divisionId = await this.store.defaultDivisionId;
     }
 
     if (args.type === DivisionType.None) {

@@ -5,6 +5,7 @@
  * @Last Modified time: 2022-11-06 16:13:36
  */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { ClassificationNumber } from '../../../model/classification-number.mode';
 import { CollectionPoint } from '../../../model/collection-point.model';
@@ -33,8 +34,8 @@ export class CollectionPointsRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<CollectionPoint>;
 
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(CollectionPoint);
   }
 

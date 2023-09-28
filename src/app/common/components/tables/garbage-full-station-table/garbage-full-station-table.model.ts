@@ -2,7 +2,7 @@ import { GarbageStationModel } from '../../../../view-model/garbage-station.mode
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 
 export class GarbageFullStationTableModel {
-  GarbageStation?: GarbageStationModel;
+  GarbageStation!: Promise<GarbageStationModel>;
   FullDuration?: Date;
-  images: ImageControlModel[] = [];
+  images!: Promise<ImageControlModel[]>;
 }

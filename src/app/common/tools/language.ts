@@ -174,7 +174,8 @@ export class Language {
     return `${Language.Date(begin)} 至 ${Language.Date(end)}`;
   }
 
-  static StationStateFlags(flags: Flags<StationState>) {
+  static StationStateFlags(flags?: Flags<StationState>) {
+    if (!flags) return '';
     if (flags.contains(StationState.Error)) {
       return Language.StationState(StationState.Error);
     } else if (flags.contains(StationState.Full)) {
@@ -733,9 +734,12 @@ export class Language {
     }
   }
 
-  static SupervisedState(state?: SupervisedState) {
+  static SupervisedState(state?: SupervisedState, handle?: boolean) {
     switch (state) {
       case SupervisedState.no:
+        if (handle) {
+          return '未督办';
+        }
         return '待督办';
       case SupervisedState.yes:
         return '已督办';

@@ -199,19 +199,10 @@
           </ng-container>
         </div>
       </div>
-      <div
-        class="members"
-        *ngIf="
-          !!(model.GarbageStation | async)?.Members &&
-          ((model.GarbageStation | async)?.Members)!.length > 0
-        "
-      >
+      <div class="members" *ngIf="model.Members.length > 0">
         <!-- -->
         <div class="members-list">
-          <div
-            class="members-list-item"
-            *ngFor="let item of (model.GarbageStation | async)?.Members"
-          >
+          <div class="members-list-item" *ngFor="let item of model.Members">
             <div class="howell-icon"><i class="howell-icon-account"></i></div>
             <div>{{ item.Name }}</div>
             <div>{{ item.MobileNo }}</div>
@@ -232,12 +223,10 @@
         </button>
         <button
           *ngIf="
-            !(
-              model.Data.SuperVisionData?.SupervisedState === 1 ||
-              model.Data.IsHandle ||
-              (model.Data.SuperVisionData &&
-                model.Data.SuperVisionData.Level > 2)
-            )
+            !model.Data.IsHandle &&
+            !(model.Data.SuperVisionData?.SupervisedState === 1) &&
+            model.Data.SuperVisionData &&
+            model.Data.SuperVisionData.Level > 2
           "
           class="hw-green-btn"
           (click)="onsupervise()"

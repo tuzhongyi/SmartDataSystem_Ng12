@@ -5,6 +5,7 @@
  * @Last Modified time: 2021-12-14 14:36:27
  */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
 import {
@@ -36,6 +37,7 @@ import {
   CameraUploadFileParams,
   FinishTaskParams,
   GetGarbageStationCamerasParams,
+  GetGarbageStationEventNumbersParams,
   GetGarbageStationsParams,
   GetGarbageStationStatisticComparisonParams,
   GetGarbageStationStatisticGarbageCountsParams,
@@ -51,9 +53,9 @@ import {
 })
 @Cache(GarbageStationUrl.basic(), GarbageStation)
 export class GarbageStationRequestService extends AbstractService<GarbageStation> {
-  constructor(_http: HowellAuthHttpService) {
+  constructor(http: HowellAuthHttpService, router: Router) {
     super();
-    this.basic = new HowellBaseRequestService(_http);
+    this.basic = new HowellBaseRequestService(http, router);
     this.typeBasic = this.basic.type(GarbageStation);
   }
 
@@ -355,7 +357,7 @@ class EventNumbersHistoryService {
   private basicType: HowellBaseTypeRequestService<EventNumberStatistic>;
   list(
     stationId: string,
-    params: GetGarbageStationVolumesParams
+    params: GetGarbageStationEventNumbersParams
   ): Promise<PagedList<EventNumberStatistic>> {
     let url = GarbageStationUrl.eventnumber(stationId).history.list();
     return this.basicType.paged(url, params);

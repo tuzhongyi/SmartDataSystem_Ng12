@@ -36,8 +36,10 @@
             }"
             (click)="onselected(item)"
           >
-            <td>{{ item.Name }}</td>
-            <td>{{ item.GarbageStationName }}</td>
+            <td [title]="item.Name">{{ item.Name }}</td>
+            <td [title]="item.GarbageStationName">
+              {{ item.GarbageStationName }}
+            </td>
             <td>{{ item.RegionName }}</td>
             <td class="center">
               <div

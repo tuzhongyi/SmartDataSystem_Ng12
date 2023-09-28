@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { AIGarbageStationDeviceDetailsBusiness } from './ai-garbage-station-device-details.business';
 
@@ -8,7 +8,7 @@ import { AIGarbageStationDeviceDetailsBusiness } from './ai-garbage-station-devi
   styleUrls: ['./ai-garbage-station-device-details.component.less'],
   providers: [AIGarbageStationDeviceDetailsBusiness],
 })
-export class AIGarbageStationDeviceDetailsComponent {
+export class AIGarbageStationDeviceDetailsComponent implements OnInit {
   @Input()
   model?: AIGarbageDevice;
   @Output()
@@ -17,6 +17,9 @@ export class AIGarbageStationDeviceDetailsComponent {
   cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceDetailsBusiness) {}
+  ngOnInit(): void {
+    console.log(this.model);
+  }
 
   oncancel() {
     this.cancel.emit();

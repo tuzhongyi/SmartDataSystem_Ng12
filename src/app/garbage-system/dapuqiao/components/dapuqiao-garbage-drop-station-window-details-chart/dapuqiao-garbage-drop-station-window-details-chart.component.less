@@ -1,0 +1,49 @@
+.dapuqiao-garbage-drop-station-window-details-chart {
+  width: 100%;
+  height: 100%;
+
+  @head-height: 35px;
+
+  &-head {
+    margin-bottom: 10px;
+    height: @head-height;
+
+    .left {
+      .filter-item {
+
+        &-value {
+          width: 200px;
+          display: flex;
+          flex-direction: column;
+
+          .list-type-select {
+            border: 1px solid #5e6ebf;
+            font-size: 18px;
+            height: 32px;
+            width: 100%;
+
+            ::ng-deep .select-item {
+              .select-head {
+                justify-content: space-between;
+              }
+
+              .select-body {
+                left: -1px;
+
+                .select-option {
+                  max-width: 100%;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+  }
+}

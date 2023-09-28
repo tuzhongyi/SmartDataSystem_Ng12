@@ -1,13 +1,16 @@
+import { Injectable } from '@angular/core';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { ConvertGetter } from 'src/app/view-model/converter-getter.model';
+import { GarbageStationStatisticTableService } from './garbage-station-statistic-table.service';
 import {
   GarbageStationStatisticModel,
   GarbageStationStatisticTableSource,
 } from './garbage-station-statistic.model';
 
+@Injectable()
 export class GarbageStationStatisticArrayConverter
   implements
     IPromiseConverter<
@@ -15,12 +18,12 @@ export class GarbageStationStatisticArrayConverter
       GarbageStationStatisticModel[]
     >
 {
+  constructor(private service: GarbageStationStatisticTableService) {}
   converter = {
-    item: new GarbageStationStatisticConverter(),
+    item: new GarbageStationStatisticConverter(this.service),
   };
   async Convert(
-    source: GarbageStationStatisticTableSource,
-    getter?: ConvertGetter
+    source: GarbageStationStatisticTableSource
   ): Promise<GarbageStationStatisticModel[]> {
     let array: GarbageStationStatisticModel[] = [];
 
@@ -29,8 +32,7 @@ export class GarbageStationStatisticArrayConverter
         let current = source.current[i];
         let item = await this.converter.item.Convert(
           current,
-          source.before!.find((x) => x.Id === current.Id),
-          getter
+          source.before!.find((x) => x.Id === current.Id)
         );
         array.push(item);
       }
@@ -46,13 +48,14 @@ export class GarbageStationStatisticConverter
       GarbageStationStatisticModel
     >
 {
+  constructor(private service: GarbageStationStatisticTableService) {}
+
   async Convert(
     today: GarbageStationNumberStatisticV2,
-    before?: GarbageStationNumberStatisticV2,
-    getter?: ConvertGetter
+    before?: GarbageStationNumberStatisticV2
   ): Promise<GarbageStationStatisticModel> {
-    let model = new GarbageStationStatisticModel();
-    model = Object.assign(model, today);
+    let plain = instanceToPlain(today);
+    let model = plainToInstance(GarbageStationStatisticModel, plain);
 
     if (model.GarbageRatio) {
       model.GarbageRatioTd.value = model.GarbageRatio;
@@ -142,25 +145,18 @@ export class GarbageStationStatisticConverter
       }
     }
 
-    if (getter) {
-      if (getter.station) {
-        model.GarbageStation = await getter.station(model.Id);
+    model.GarbageStation = this.service.getStation(model.Id);
 
-        if (
-          getter.division &&
-          model.GarbageStation &&
-          model.GarbageStation.DivisionId
-        ) {
-          model.Committees = await getter.division(
-            model.GarbageStation.DivisionId
-          );
-
-          if (model.Committees && model.Committees.ParentId) {
-            model.County = await getter.division(model.Committees.ParentId);
+    model.GarbageStation.then((station) => {
+      if (station.DivisionId) {
+        model.Committees = this.service.division.cache.get(station.DivisionId);
+        model.Committees.then((committees) => {
+          if (committees.ParentId) {
+            model.County = this.service.division.cache.get(committees.ParentId);
           }
-        }
+        });
       }
-    }
+    });
 
     return model;
   }

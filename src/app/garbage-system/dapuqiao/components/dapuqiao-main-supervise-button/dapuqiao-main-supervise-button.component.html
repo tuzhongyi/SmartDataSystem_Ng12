@@ -1,4 +1,10 @@
-<div class="dapuqiao-main-supervise-button" [ngClass]="{ alarm: value > 0 }">
+<div
+  class="dapuqiao-main-supervise-button"
+  [ngClass]="{
+    selected: selected,
+    alarm: value > 0
+  }"
+>
   <div class="icon">
     <i class="howell-icon-alarm2"></i>
   </div>

@@ -46,40 +46,39 @@
           <col style="width: 10%" />
         </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas">
+          <tr
+            *ngFor="let item of datas"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
             <td>
               <div class="img-list">
-                <div class="img" *ngFor="let img of item.images">
-                  <app-image-control
-                    [nosignal]="false"
-                    [model]="img"
-                    (Click)="imageClick(item, img)"
-                  >
-                  </app-image-control>
+                <div
+                  class="img"
+                  *ngFor="let img of item.urls | async; let index = index"
+                  (click)="onimage($event, item, index)"
+                >
+                  <img [src]="img" />
                 </div>
               </div>
             </td>
             <td>
-              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+              {{ (item.GarbageStation | async)?.Name }}
             </td>
 
             <td>
               {{
-                item.GarbageStation
-                  ? ((item.GarbageStation.Division | async)?.Parent | async)
-                      ?.Name
-                  : ""
+                (
+                  ((item.GarbageStation | async)?.Division | async)?.Parent
+                  | async
+                )?.Name
               }}
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? (item.GarbageStation.Division | async)?.Name
-                  : ""
-              }}
+              {{ ((item.GarbageStation | async)?.Division | async)?.Name }}
             </td>
             <td>
-              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
+              {{ (item.GarbageStation | async)?.CommunityName }}
             </td>
             <td>
               {{ item.GarbageCount }}
@@ -99,7 +98,7 @@
             <td>
               <div
                 style="width: 16px"
-                *ngFor="let member of item.members"
+                *ngFor="let member of item.members | async"
                 [matTooltip]="member.view"
                 [matTooltipPosition]="'above'"
               >

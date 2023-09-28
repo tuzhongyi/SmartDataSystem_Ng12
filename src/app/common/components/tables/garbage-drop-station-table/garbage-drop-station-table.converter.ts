@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import {
   GarbageDropStationTableModel,
   MemberViewModel,
@@ -22,15 +22,11 @@ export class GarbageDropStationPagedTableConverter
   constructor(private item: GarbageDropStationTableConverter) {}
 
   async Convert(
-    source: PagedList<GarbageStationNumberStatistic>,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-    }
+    source: PagedList<GarbageStationNumberStatistic>
   ): Promise<PagedList<GarbageDropStationTableModel>> {
     let array: GarbageDropStationTableModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
-      let item = await this.item.Convert(source.Data[i], getter);
+      let item = await this.item.Convert(source.Data[i]);
 
       array.push(item);
     }
@@ -48,17 +44,16 @@ export class GarbageDropStationTableConverter
       GarbageDropStationTableModel
     >
 {
-  constructor(private stationConverter: GarbageStationModelConverter) {}
+  constructor(
+    private stationConverter: GarbageStationModelConverter,
+    private service: GarbageStationRequestService
+  ) {}
   converter = {
     image: new ImageControlArrayConverter(),
   };
 
   async Convert(
-    source: GarbageStationNumberStatistic,
-    getter: {
-      station: (id: string) => Promise<GarbageStation>;
-      division: (id: string) => Promise<Division>;
-    }
+    source: GarbageStationNumberStatistic
   ): Promise<GarbageDropStationTableModel> {
     let model = new GarbageDropStationTableModel();
     model.GarbageCount = source.GarbageCount ?? 0;
@@ -69,10 +64,12 @@ export class GarbageDropStationTableConverter
     if (source.MaxGarbageTime) {
       model.MaxGarbageDuration = new Date(source.MaxGarbageTime * 60 * 1000);
     }
-    let station = await getter.station(source.Id);
-    model.GarbageStation = await this.stationConverter.Convert(station);
-    if (model.GarbageStation) {
-      model.members = (model.GarbageStation.Members ?? []).map((x) => {
+    model.GarbageStation = this.service.get(source.Id).then((station) => {
+      return this.stationConverter.Convert(station);
+    });
+
+    model.members = model.GarbageStation.then((station) => {
+      return (station.Members ?? []).map((x) => {
         let model = new MemberViewModel();
         model = Object.assign(model, x);
         model.view = x.Name;
@@ -81,12 +78,17 @@ export class GarbageDropStationTableConverter
         }
         return model;
       });
-      if (model.GarbageStation.Cameras) {
-        model.images = this.converter.image.Convert(
-          model.GarbageStation.Cameras
+    });
+
+    model.urls = model.GarbageStation.then((station) => {
+      if (station.Cameras) {
+        return station.Cameras.filter((x) => !!x.ImageUrl).map((x) =>
+          Medium.jpg(x.ImageUrl!)
         );
       }
-    }
+      return [];
+    });
+
     return model;
   }
 }

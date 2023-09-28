@@ -7,31 +7,19 @@
       matSort
       (matSortChange)="sortData($event)"
     >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
       <thead>
         <tr>
-          <th [ngStyle]="{ width: widths[0] }">序号</th>
-          <th
-            [ngStyle]="{ width: widths[1] }"
-            mat-sort-header="name"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
+          <th>序号</th>
+          <th mat-sort-header="name" [disableClear]="true" [start]="'desc'">
             名称
           </th>
-          <th
-            [ngStyle]="{ width: widths[2] }"
-            mat-sort-header="parent"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
+          <th mat-sort-header="parent" [disableClear]="true" [start]="'desc'">
             行政区
           </th>
-          <th
-            [ngStyle]="{ width: widths[3] }"
-            mat-sort-header="value"
-            [disableClear]="true"
-            [start]="'desc'"
-          >
+          <th mat-sort-header="value" [disableClear]="true" [start]="'desc'">
             {{ Language.EventType(eventType) }}
           </th>
         </tr>
@@ -39,14 +27,17 @@
     </table>
     <div class="event-record-count-table-main-body body">
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
         <tbody>
           <tr *ngFor="let item of datas; let i = index">
-            <td [ngStyle]="{ width: widths[0] }">{{ i + 1 }}</td>
-            <td [ngStyle]="{ width: widths[1] }">{{ item.name }}</td>
-            <td [ngStyle]="{ width: widths[2] }">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>
               {{ item.parent ? item.parent.Name : "-" }}
             </td>
-            <td [ngStyle]="{ width: widths[3] }">{{ item.value }}</td>
+            <td>{{ item.value }}</td>
           </tr>
         </tbody>
       </table>

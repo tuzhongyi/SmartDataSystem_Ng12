@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 
 @Injectable()
@@ -15,13 +16,13 @@ export class MonitorDeviceWindowBusiness extends WindowViewModel {
     transform: 'translate(-50%, -45%)',
   };
   status?: OnlineStatus;
-  onimage(model: ImageControlModelArray) {
-    this.image.array.index = model.index;
-    if (model.models.length > 0) {
-      this.image.array.stationId = model.models[0].stationId;
-    }
+  onimage(model: DeviceViewModel) {
+    this.image.array.index = 0;
+
+    this.image.array.stationId = model.GarbageStationId;
+
     this.image.array.manualcapture = true;
-    this.image.array.models = model.models;
+    this.image.array.models = [ImageControlCreater.Create(model)];
     this.image.array.show = true;
   }
 }

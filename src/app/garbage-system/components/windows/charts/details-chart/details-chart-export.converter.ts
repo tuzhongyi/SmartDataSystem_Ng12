@@ -19,12 +19,17 @@ export class ExportExcelConverter
     for (let i = 0; i < rowCount; i++) {
       let value = new Array();
       value.push(i + 1);
-      value.push(formatDate(source[0][i].time, 'yyyy年MM月dd日', 'en'));
+      let format = 'yyyy年MM月dd日';
+      if (unit === TimeUnit.Month) {
+        format = 'yyyy年MM月';
+      }
+      value.push(formatDate(source[0][i].time, format, 'en'));
       if (unit === TimeUnit.Week) {
         value.push(Language.Week(source[0][i].time.getDay()));
       } else if (unit === TimeUnit.Hour) {
         value.push(formatDate(source[0][i].time, 'HH:mm', 'en'));
-      } else {
+      } else if (unit === TimeUnit.Month) {
+        value.push(formatDate(source[0][i].time, 'dd日', 'en'));
       }
       for (let j = 0; j < source.length; j++) {
         const data = source[j][i];

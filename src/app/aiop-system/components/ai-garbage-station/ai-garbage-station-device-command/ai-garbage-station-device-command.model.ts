@@ -35,7 +35,7 @@ export class AIGarbageStationDeviceCommandConfirmWindow extends WindowViewModel 
         case AIGarbageDeviceCommandNo.DeviceInformation:
           return '设备信息同步';
         case AIGarbageDeviceCommandNo.WindowPowerOn:
-          return `窗口${this.command.Parameter} 上电`;
+          return `窗口上电`;
         default:
           return '';
       }

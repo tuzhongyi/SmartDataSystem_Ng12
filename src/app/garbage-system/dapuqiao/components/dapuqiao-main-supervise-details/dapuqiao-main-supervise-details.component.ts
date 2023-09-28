@@ -17,6 +17,7 @@ import { DapuqiaoMainSuperviseDetailsService } from './dapuqiao-main-supervise-d
 export class DapuqiaoMainSuperviseDetailsComponent implements OnInit {
   @Input() eventId?: string;
   @Output() close: EventEmitter<void> = new EventEmitter();
+  @Output() supervise: EventEmitter<string> = new EventEmitter();
   constructor(
     private business: DapuqiaoMainSuperviseDetailsBusiness,
     private toastr: ToastrService
@@ -51,7 +52,7 @@ export class DapuqiaoMainSuperviseDetailsComponent implements OnInit {
         .supervise(this.eventId)
         .then((x) => {
           this.toastr.success('操作成功');
-          this.close.emit();
+          this.supervise.emit(this.eventId);
         })
         .catch((e) => {
           console.error(e);

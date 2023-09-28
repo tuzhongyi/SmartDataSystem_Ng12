@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { plainToInstance } from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 
 import { Division } from 'src/app/network/model/division.model';
@@ -31,7 +32,7 @@ export class DivisionTreeSyncBusiness {
 
     data = this.filtResourceType(data, args.resourceType);
 
-    let res = this._converter.buildNestTree(data);
+    let res = this._converter.buildNestTree(data, args.onlystation);
 
     return res;
   }
@@ -63,6 +64,9 @@ export class DivisionTreeSyncBusiness {
   }
 
   async getData(args: DivisionTreeSyncArgs) {
+    if (args.onlystation) {
+      return this._loadStation();
+    }
     let divisions = await this._loadDivision(args.resourceType);
     if (args.showStation) {
       let stations = await this._loadStation();
@@ -72,10 +76,12 @@ export class DivisionTreeSyncBusiness {
   }
 
   private async _loadDivision(type: DivisionType) {
-    return this._divisionRequest.cache.all();
+    let array = await this._divisionRequest.cache.all();
+    return plainToInstance(Division, array);
   }
 
   private async _loadStation() {
-    return this._stationRequest.cache.all();
+    let array = await this._stationRequest.cache.all();
+    return plainToInstance(GarbageStation, array);
   }
 }

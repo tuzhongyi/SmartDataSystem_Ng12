@@ -26,10 +26,12 @@ import {
 })
 export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Input() model?: ImageVideoControlModel;
+
   @Input() operation: ImageVideoControlOperation =
     new ImageVideoControlOperation();
   @Input() draw: boolean = false;
   @Input() playback?: EventEmitter<PlaybackInterval>;
+  @Input() is_playback_use_config = true;
   @Input() preview?: EventEmitter<string>;
   @Input() stop: EventEmitter<void> = new EventEmitter();
   @Input() fulled = false;
@@ -90,9 +92,13 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     let config = await this.config.getConfig();
 
     let begin = new Date(date.getTime());
-    begin.setSeconds(begin.getSeconds() + config.playback.begin);
     let end = new Date(date.getTime());
-    end.setSeconds(end.getSeconds() + config.playback.end);
+    if (this.is_playback_use_config) {
+      begin.setSeconds(begin.getSeconds() + config.playback.begin);
+      end.setSeconds(end.getSeconds() + config.playback.end);
+    } else {
+      end.setSeconds(end.getSeconds() + 60);
+    }
     return {
       BeginTime: begin,
       EndTime: end,

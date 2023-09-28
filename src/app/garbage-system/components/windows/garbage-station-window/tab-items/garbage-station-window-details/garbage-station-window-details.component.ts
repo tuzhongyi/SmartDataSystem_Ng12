@@ -1,29 +1,28 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
+import { ToastrService } from 'ngx-toastr';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { MessageBar } from 'src/app/common/tools/message-bar';
+import { ExportTool } from 'src/app/common/tools/export.tool';
+import { Language } from 'src/app/common/tools/language';
 import { ChartType } from 'src/app/enum/chart-type.enum';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Enum } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { TimeDataGroupExportConverter } from '../../../../../../converter/exports/time-data-group-exports.converter';
 import {
   ChartConfig,
   EChartOptions,
 } from '../../../charts/details-chart/details-chart.option';
-import { TimeDataGroupExportConverter } from '../../../../../../converter/exports/time-data-group-exports.converter';
 import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-details.business';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { ExportTool } from 'src/app/common/tools/export.tool';
-import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'howell-garbage-station-window-details',
@@ -245,6 +244,7 @@ export class GarbageStationWindowDetailsComponent
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
     if (this.selectIds.length > this.maxItem) {
+      this.selectIds.length = this.maxItem;
       this.toastrService.warning(`最多查看个${this.maxItem}对象`);
     }
   }

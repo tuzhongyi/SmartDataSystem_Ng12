@@ -1,5 +1,4 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -9,34 +8,31 @@ import {
 } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject } from 'rxjs';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { StationType } from 'src/app/enum/station-type.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
+import { Camera } from 'src/app/network/model/camera.model';
 import {
   GarbageStation,
   GarbageStationType,
 } from 'src/app/network/model/garbage-station.model';
-import { GarbageStationOperateBusiness } from './business/garbage-station-operate.business';
-import { AiopCameraConf, StationCameraConf } from './garbage-station.config';
 import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
-import { BehaviorSubject } from 'rxjs';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableColumnModel } from 'src/app/view-model/table.model';
-import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { Camera } from 'src/app/network/model/camera.model';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { StationType } from 'src/app/enum/station-type.enum';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { Language } from 'src/app/common/tools/language';
 import { GarbageStationOperateAICameraBusiness } from './business/garbage-station-operate-ai-camera.business';
-import { GarbageStationOperateStationCameraBusiness } from './business/garbage-station-operate-station-camera.business';
 import { GarbageStationOperateCameraBusiness } from './business/garbage-station-operate-camera.business';
+import { GarbageStationOperateStationCameraBusiness } from './business/garbage-station-operate-station-camera.business';
 import { GarbageStationOperateStationTypeBusiness } from './business/garbage-station-operate-station-type.business';
+import { GarbageStationOperateBusiness } from './business/garbage-station-operate.business';
 import {
   IGarbageStationOperateBusiness,
   IGarbageStationOperateComponent,
 } from './garbage-station-operate.model';
-import { Flags } from 'src/app/common/tools/flags';
+import { AiopCameraConf, StationCameraConf } from './garbage-station.config';
 
 @Component({
   selector: 'howell-garbage-station-operate',
@@ -233,7 +229,7 @@ export class GarbageStationOperateComponent
         station.StationType = this.stationType;
         station.MaxDryVolume = 0;
         station.MaxWetVolume = 0;
-        station.StationState = new Flags(0);
+        station.StationState = 0;
         station.UpdateTime = new Date();
         station.CreateTime = new Date();
         let res = await this.business.create(station);

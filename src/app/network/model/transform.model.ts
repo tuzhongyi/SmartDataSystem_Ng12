@@ -1,7 +1,19 @@
 import { formatDate } from '@angular/common';
 import { TransformationType, TransformFnParams } from 'class-transformer';
 import { Flags } from 'src/app/common/tools/flags';
+import { IdNameModel } from './model.interface';
 import { Time } from './time.model';
+
+export function transformArraySort(params: TransformFnParams) {
+  if (params.value === undefined || params.value === null) return undefined;
+  if (params.type === TransformationType.PLAIN_TO_CLASS) {
+    return params.value.sort((a: IdNameModel, b: IdNameModel) => {
+      return a.Name.length - b.Name.length || a.Name.localeCompare(b.Name);
+    });
+  } else {
+    return params.value;
+  }
+}
 
 export function transformDateTime(params: TransformFnParams) {
   if (params.value === undefined || params.value === null) return undefined;

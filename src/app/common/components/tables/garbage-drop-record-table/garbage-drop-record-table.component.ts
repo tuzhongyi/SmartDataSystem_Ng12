@@ -10,15 +10,15 @@ import {
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../view-model/image-control.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
+import {
+  GarbageDropEventRecordConverter,
+  GarbageDropEventRecordPagedConverter,
+} from './garbage-drop-record-table.converter';
 import {
   GarbageDropRecordFilter,
   GarbageDropRecordViewModel,
@@ -28,7 +28,11 @@ import {
   selector: 'howell-garbage-drop-record-table',
   templateUrl: './garbage-drop-record-table.component.html',
   styleUrls: ['../table.less', './garbage-drop-record-table.component.less'],
-  providers: [GarbageDropRecordTableBusiness],
+  providers: [
+    GarbageDropEventRecordConverter,
+    GarbageDropEventRecordPagedConverter,
+    GarbageDropRecordTableBusiness,
+  ],
 })
 export class GarbageDropRecordTableComponent
   extends PagedTableAbstractComponent<GarbageDropRecordViewModel>
@@ -42,9 +46,8 @@ export class GarbageDropRecordTableComponent
   @Input() filter: GarbageDropRecordFilter;
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
     new EventEmitter();
-  @Output() image: EventEmitter<
-    ImageControlModelArray<GarbageDropRecordViewModel>
-  > = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
+    new EventEmitter();
   widths = [
     '12%',
     '10%',
@@ -61,6 +64,7 @@ export class GarbageDropRecordTableComponent
   ];
 
   loading = false;
+  selected?: GarbageDropRecordViewModel;
 
   constructor(record: GarbageDropRecordTableBusiness) {
     super();
@@ -101,12 +105,25 @@ export class GarbageDropRecordTableComponent
     return promise;
   }
 
-  imageClick(item: GarbageDropRecordViewModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index, item);
-    this.image.emit(array);
+  onvideo(item: GarbageDropRecordViewModel) {
+    this.video.emit(item);
   }
 
-  videoClick(item: GarbageDropRecordViewModel) {
-    this.video.emit(item);
+  onimage(e: Event, item: GarbageDropRecordViewModel, index: number) {
+    this.image.emit({
+      page: Page.create(index),
+      data: item,
+    });
+    if (this.selected === item) {
+      e.stopPropagation();
+    }
+  }
+
+  onselect(item: GarbageDropRecordViewModel) {
+    if (this.selected === item) {
+      this.selected = undefined;
+    } else {
+      this.selected = item;
+    }
   }
 }

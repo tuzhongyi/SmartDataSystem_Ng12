@@ -4,7 +4,7 @@ export class TimeModel {
   constructor(time?: Date);
   constructor(hour: number, minute: number, second: number);
   constructor(time?: Date | number, minute?: number, second?: number) {
-    if (!time) {
+    if (time === undefined) {
       time = new Date();
     }
     if (time instanceof Date) {

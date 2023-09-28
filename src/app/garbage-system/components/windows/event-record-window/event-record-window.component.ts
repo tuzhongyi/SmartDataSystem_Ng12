@@ -11,10 +11,9 @@ import {
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { ImagePaged } from 'src/app/view-model/paged.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
 import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
@@ -47,10 +46,8 @@ export class EventRecordWindowComponent
     new EventEmitter();
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() image: EventEmitter<
-    | ImageControlModelArray<EventRecordViewModel>
-    | ImagePaged<EventRecordViewModel>
-  > = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
   constructor(
     public record: EventRecordWindowRecordBusiness,
     public details: EventRecordWindowDetailsBusiness,
@@ -85,11 +82,7 @@ export class EventRecordWindowComponent
     this.stationId = undefined;
   }
 
-  onimage(
-    model:
-      | ImageControlModelArray<EventRecordViewModel>
-      | ImagePaged<EventRecordViewModel>
-  ) {
+  onimage(model: PagedArgs<EventRecordViewModel>) {
     this.image.emit(model);
   }
   onvideo(model: EventRecordViewModel) {

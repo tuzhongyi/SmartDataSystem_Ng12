@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
@@ -117,9 +118,10 @@ export class PointInfoPanelComponent
   onStateClicked(item: PointInfoPanelModelState) {
     if (!this.Source) return;
     if (this.Source instanceof GarbageStation) {
+      let flags = new Flags(this.Source.StationState);
       if (
-        this.Source.StationState.contains(StationState.Error) ||
-        this.Source.StationState.contains(StationState.Full)
+        flags.contains(StationState.Error) ||
+        flags.contains(StationState.Full)
       )
         if (this.StateClickedEvent) {
           this.StateClickedEvent.emit(this.Source);

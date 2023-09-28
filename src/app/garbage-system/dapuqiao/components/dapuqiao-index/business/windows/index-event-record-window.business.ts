@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { EventType } from 'src/app/enum/event-type.enum';
+import {
+  GarbageFullEventData,
+  GarbageFullEventRecord,
+  IllegalDropEventData,
+  IllegalDropEventRecord,
+  MixedIntoEventData,
+  MixedIntoEventRecord,
+} from 'src/app/network/model/garbage-event-record.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
-import { ImagePaged } from 'src/app/view-model/paged.model';
 import { IndexCardRecordEpisodeWindow } from './index-card-record-episode-window.business';
 import { IndexImageWindowBusiness } from './index-image-window.business';
 import { IndexVideoWindowBusiness } from './index-video-window.business';
@@ -35,31 +43,25 @@ export class IndexRecordWindowBusiness extends WindowViewModel {
     this.divisionId = undefined;
   }
 
-  async onimage(
-    model:
-      | ImageControlModelArray<EventRecordViewModel>
-      | ImagePaged<EventRecordViewModel>
-  ) {
-    // this.media.single.camera = model.models;
-    // this.media.single.index = model.index;
-    // this.media.single.autoplay = model.autoplay;
-    // this.media.single.eventType = this.type;
-    // this.media.single.paged = model.page;
-    // this.media.single.operation.fullscreen = false;
-    // this.media.single.show = true;
-    if (model instanceof ImagePaged) {
-      this.image.page.page = model.Page;
-      this.image.page.model = model.Image;
-      this.image.page.show = true;
-    } else if (model instanceof ImageControlModelArray) {
-      this.image.array.index = model.index;
+  async onimage(args: PagedArgs<EventRecordViewModel>) {
+    if (args.data.Data instanceof GarbageFullEventData) {
+      this.image.array.index = args.page.PageIndex;
       this.image.array.manualcapture = false;
-      if (model.models.length > 0) {
-        this.image.array.stationId = model.models[0].stationId;
-      }
-      this.image.array.models = model.models;
+      this.image.array.stationId = args.data.Data.StationId;
+      let data = args.data as GarbageFullEventRecord;
+      this.image.array.models = ImageControlCreater.Create(data);
       this.image.array.show = true;
-    } else {
+    } else if (args.data.Data instanceof IllegalDropEventData) {
+      this.image.page.page = args.page;
+      let data = args.data as IllegalDropEventRecord;
+      this.image.page.model = ImageControlCreater.Create(data);
+
+      this.image.page.show = true;
+    } else if (args.data.Data instanceof MixedIntoEventData) {
+      this.image.page.page = args.page;
+      let data = args.data as MixedIntoEventRecord;
+      this.image.page.model = ImageControlCreater.Create(data);
+      this.image.page.show = true;
     }
   }
 

@@ -1,7 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { Medium } from 'src/app/common/tools/medium';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IndexVideoWindowBusiness } from './index-video-window.business';
@@ -28,6 +30,16 @@ export class IndexImagePageWindowBusiness extends WindowViewModel {
       if (paged.Data[0].images && paged.Data[0].images.length > 0)
         this.model = paged.Data[0].images[0];
     }
+  }
+
+  create(url: CameraImageUrl, eventTime?: Date) {
+    let model = new ImageControlModel();
+    model.id = url.CameraId;
+    model.eventTime = eventTime;
+    model.index = 0;
+    model.name = url.CameraName ?? '';
+    model.src = Medium.img(url.ImageUrl);
+    return model;
   }
 
   get first() {

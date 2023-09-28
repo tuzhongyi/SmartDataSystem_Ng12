@@ -24,7 +24,7 @@ import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
 export class IllegalMixintoRankComponent implements OnInit {
   @Input() load?: EventEmitter<void>;
 
-  public title: string = '乱扔垃圾排名';
+  public title: string = '今日乱扔垃圾排名';
 
   resourceTypes: SelectItem[] = [];
   eventTypes: SelectItem[] = [];
@@ -78,7 +78,7 @@ export class IllegalMixintoRankComponent implements OnInit {
   async loadData() {
     this.resourceTypeDisplay =
       this.storeService.divisionType !== DivisionType.Committees;
-    this.title = Language.EventType(this.eventType) + '排名';
+    this.title = '今日' + Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
       this.storeService.divisionId,
       this.resourceType,

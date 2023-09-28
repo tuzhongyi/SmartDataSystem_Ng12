@@ -6,6 +6,6 @@ export class IndexSuperviseButton {
   constructor(private window: IndexWindowBussiness) {}
 
   onclick() {
-    this.window.supervise.table.show = true;
+    this.window.supervise.table.show = !this.window.supervise.table.show;
   }
 }

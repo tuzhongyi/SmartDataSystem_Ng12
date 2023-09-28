@@ -1,14 +1,3 @@
-.close-winow {
-  position: absolute;
-  right: 20px;
-  top: 10px;
-  cursor: pointer;
-  z-index: 9;
-  height: 30px;
-  display: flex;
-  align-items: center;
-}
-
 .custom-form-wrap {
   background-image: url("/assets/img/window-background.png");
 }
@@ -37,4 +26,27 @@
   background: #0c1127;
   height: 100%;
   pointer-events: all;
+
+  &>.close-winow {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    z-index: 9;
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+
+  &>.window-title {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    z-index: 9;
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+
+
 }

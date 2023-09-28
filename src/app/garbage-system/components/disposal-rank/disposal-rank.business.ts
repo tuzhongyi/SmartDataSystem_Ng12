@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import {
   GetGarbageStationsParams,
@@ -10,6 +11,7 @@ import {
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { DisposalRankConverter } from './disposal-rank.converter';
+import { DisposalRankType } from './disposal-rank.model';
 
 @Injectable()
 export class DisposalRankBusiness
@@ -29,11 +31,11 @@ export class DisposalRankBusiness
     return response.Data;
   }
 
-  async load(): Promise<RankModel[]> {
+  async load(type: DisposalRankType): Promise<RankModel[]> {
     let data = await this.getData(this.storeService.divisionId);
-    let result = this.Converter.Convert(data);
+    let result = this.Converter.Convert(data, type);
     result = result.sort((a, b) => {
-      return a.value - b.value;
+      return a.value - b.value || LocaleCompare.compare(a.name, b.name);
     });
     while (result.length < 6) {
       let item = new RankModel(undefined);

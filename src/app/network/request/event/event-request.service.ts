@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { EventInfo } from '../../model/event-info.model';
 import {
@@ -28,8 +29,8 @@ import {
   providedIn: 'root',
 })
 export class EventRequestService {
-  constructor(private _http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
   }
 
   private basic: HowellBaseRequestService;
@@ -170,6 +171,21 @@ class RecordsGarbageDropService {
   }
 
   type: HowellBaseTypeRequestService<GarbageDropEventRecord>;
+
+  async all(
+    params: GetGarbageDropEventRecordsParams = new GetGarbageDropEventRecordsParams()
+  ) {
+    let data: GarbageDropEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<GarbageDropEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
+  }
 
   list(
     params: GetGarbageDropEventRecordsParams

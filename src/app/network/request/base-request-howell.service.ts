@@ -1,4 +1,6 @@
+import { Router } from '@angular/router';
 import { ClassConstructor, instanceToPlain } from 'class-transformer';
+import { RoutePath } from 'src/app/app-routing.path';
 import { HowellResponse } from '../model/howell-response.model';
 import { PagedList } from '../model/page_list.model';
 import { HowellAuthHttpService } from './howell-auth-http.service';
@@ -6,14 +8,32 @@ import { IParams } from './IParams.interface';
 import { ServiceHelper } from './service-helper';
 
 export class HowellBaseRequestService {
-  constructor(public http: HowellAuthHttpService) {}
+  constructor(public http: HowellAuthHttpService, private router: Router) {}
   async get<T>(url: string, type: ClassConstructor<T>): Promise<T> {
     let response = await this.http.getHowellResponse(url).toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
   async put<T>(url: string, type: ClassConstructor<T>, model: T | IParams) {
     let data = instanceToPlain(model) as T;
     let response = await this.http.howellPut(url, data).toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
   async post<T>(
@@ -26,16 +46,43 @@ export class HowellBaseRequestService {
   async post<T>(url: string, type: ClassConstructor<T>, args?: T | IParams) {
     let data = instanceToPlain(args) as T | IParams;
     let response = await this.http.howellPost(url, data).toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
 
   async poststring<T>(url: string, type: ClassConstructor<T>, args: string) {
     let response = await this.http.postString(url, args).toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
 
   async delete<T>(url: string, type: ClassConstructor<T>) {
     let response = await this.http.howellDelete(url).toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
   async postArray<T>(url: string, type: ClassConstructor<T>, params?: IParams) {
@@ -46,6 +93,15 @@ export class HowellBaseRequestService {
     let response = await this.http
       .howellPost<IParams, HowellResponse<Array<T>>>(url, data)
       .toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
   async postReturnString(url: string, params?: IParams) {
@@ -56,6 +112,15 @@ export class HowellBaseRequestService {
     let response = await this.http
       .howellPost<IParams, HowellResponse<string>>(url, data)
       .toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, true);
   }
 
@@ -67,6 +132,15 @@ export class HowellBaseRequestService {
     let response = await this.http
       .getHowellResponse<IParams, HowellResponse<Array<T>>>(url)
       .toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
   async paged<T>(url: string, type: ClassConstructor<T>, params: IParams) {
@@ -74,6 +148,15 @@ export class HowellBaseRequestService {
     let response = await this.http
       .howellPost<IParams, HowellResponse<PagedList<T>>>(url, data)
       .toPromise();
+    switch (response.FaultCode) {
+      case 403:
+      case 405:
+        this.router.navigateByUrl(RoutePath.login);
+        break;
+
+      default:
+        break;
+    }
     return ServiceHelper.HowellResponseProcess(response, type);
   }
 

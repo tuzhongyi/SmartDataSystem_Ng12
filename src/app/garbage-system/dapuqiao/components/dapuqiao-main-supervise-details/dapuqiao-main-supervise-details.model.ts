@@ -1,5 +1,6 @@
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Member } from 'src/app/network/model/member.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 export class GarbageDropEventRecordModel extends GarbageDropEventRecord {
@@ -7,6 +8,8 @@ export class GarbageDropEventRecordModel extends GarbageDropEventRecord {
   Image!: GarbageDropEventRecordImage;
   LevelTime!: Date;
   Minutes?: number;
+
+  Members: Member[] = [];
 }
 
 export class GarbageDropEventRecordImage {

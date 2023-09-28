@@ -8,6 +8,7 @@
       <dapuqiao-main-supervise-button
         style="margin-right: 10px"
         [load]="load"
+        [selected]="window.supervise.table.show"
         (click)="supervise.onclick()"
       ></dapuqiao-main-supervise-button>
       <common-time></common-time>
@@ -239,6 +240,7 @@
 >
   <dapuqiao-main-supervise-details
     [eventId]="window.supervise.detail.eventId"
+    (supervise)="window.supervise.detail.onclose(); load.emit()"
     (close)="window.supervise.detail.onclose()"
   ></dapuqiao-main-supervise-details>
 </app-window>

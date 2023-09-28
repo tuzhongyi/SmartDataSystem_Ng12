@@ -26,7 +26,7 @@ export class GarbageFullStationTableBusiness
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
     private divisionService: DivisionRequestService,
-    public Converter: GarbageFullStationPagedTableConverter
+    public converter: GarbageFullStationPagedTableConverter
   ) {}
   loading?: EventEmitter<void> | undefined;
   async load(
@@ -34,14 +34,7 @@ export class GarbageFullStationTableBusiness
     opts?: SearchOptions
   ): Promise<PagedList<GarbageFullStationTableModel>> {
     let data = await this.getData(this.storeService.divisionId, page, opts);
-    let model = await this.Converter.Convert(data, {
-      station: (id: string) => {
-        return this.stationService.cache.get(id);
-      },
-      division: (id: string) => {
-        return this.divisionService.cache.get(id);
-      },
-    });
+    let model = await this.converter.Convert(data);
     return model;
   }
   async getData(

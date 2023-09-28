@@ -8,17 +8,16 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { IModel } from 'src/app/network/model/model.interface';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { GarbageFullEventData } from 'src/app/network/model/garbage-event-record.model';
+import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import {
-  ImageControlModel,
-  ImageControlModelArray,
-} from '../../../../../view-model/image-control.model';
+import { ImageControlModel } from '../../../../../view-model/image-control.model';
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
 import { ListAbstractComponent } from '../../table-abstract.component';
 import { EventRecordBusiness } from '../event-record.business';
@@ -54,7 +53,8 @@ export class EventRecordListComponent
   @Input() type: EventType = EventType.IllegalDrop;
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter;
-  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   constructor(
@@ -130,8 +130,20 @@ export class EventRecordListComponent
   }
 
   imageClick(item: EventRecordViewModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index, item);
-    this.image.emit(array);
+    let plain = instanceToPlain(this.page);
+    let page = plainToInstance(Page, plain);
+    let index = img.index;
+    if (item.Data instanceof GarbageFullEventData) {
+      page = Page.create(index, item.urls.length);
+    } else {
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
+    }
+    this.image.emit({ page: page, data: item });
   }
 
   onCardPlayVideo(model: EventRecordCardModel) {

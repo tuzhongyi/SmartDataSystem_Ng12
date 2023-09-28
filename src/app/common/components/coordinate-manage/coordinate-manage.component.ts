@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { ICoordinate } from '../../interfaces/coordinate.interface';
-import { IDialogMessage } from '../../interfaces/dialog-message.interface';
-import { ValidLatitudeExp, ValidLogitudeExp } from '../../tools/tool';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { GisType } from 'src/app/enum/gis-type.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GisPoint } from 'src/app/network/model/gis-point.model';
 
 @Component({
   selector: 'coordinate-manage',
@@ -12,61 +10,31 @@ import { ValidLatitudeExp, ValidLogitudeExp } from '../../tools/tool';
   styleUrls: ['./coordinate-manage.component.less'],
 })
 export class CoordinateManageComponent implements OnInit {
-  lon = '';
-  lat = '';
+  @Input() model?: GarbageStation;
 
-  @Input() title = '';
+  @Output() ok: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
-  @Output() closeEvent = new EventEmitter<IDialogMessage<ICoordinate | null>>();
+  constructor() {}
 
-  constructor(private _toastrService: ToastrService) {}
+  GisType = GisType;
+  station?: GarbageStation;
 
-  ngOnInit(): void {}
-
-  onSubmit() {
-    // this.closeEvent.emit(
-    //   {
-    //     type: DialogEnum.confirm,
-    //     data: {
-    //       lon: 121.482972,
-    //       lat: 31.278655
-    //     }
-    //   }
-    // );
-    if (this._checkForm()) {
-      console.log('输入正确');
-
-      this.closeEvent.emit({
-        type: DialogEnum.confirm,
-        data: {
-          lon: +this.lon,
-          lat: +this.lat,
-        },
-      });
+  ngOnInit(): void {
+    if (this.model) {
+      let plain = instanceToPlain(this.model);
+      this.station = plainToInstance(GarbageStation, plain);
+      if (!this.station.GisPoint) {
+        this.station.GisPoint = new GisPoint();
+        this.station.GisPoint.GisType = GisType.BD09;
+      }
     }
   }
-  onReset() {
-    this.closeEvent.emit({
-      type: DialogEnum.cancel,
-      data: null,
-    });
+
+  onok() {
+    this.ok.emit(this.station);
   }
-  down(e: KeyboardEvent) {
-    let key = e.key.toLocaleLowerCase();
-    console.log(key);
-    if (key === 'e') {
-      e.preventDefault();
-    }
-  }
-  private _checkForm() {
-    if (!ValidLogitudeExp.test(this.lon)) {
-      this._toastrService.error('请输入正确的经度');
-      return false;
-    }
-    if (!ValidLatitudeExp.test(this.lat)) {
-      this._toastrService.error('请输入正确的纬度');
-      return false;
-    }
-    return true;
+  oncancel() {
+    this.cancel.emit();
   }
 }

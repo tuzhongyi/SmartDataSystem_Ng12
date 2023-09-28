@@ -273,13 +273,13 @@
               {{ item.Name }}
             </td>
             <td>
-              {{ item.Committees ? item.Committees.Name : "" }}
+              {{ (item.Committees | async)?.Name }}
             </td>
             <td>
-              {{ item.GarbageStation ? item.GarbageStation.CommunityName : "" }}
+              {{ (item.GarbageStation | async)?.CommunityName }}
             </td>
             <td>
-              {{ item.County ? item.County.Name : "" }}
+              {{ (item.County | async)?.Name }}
             </td>
             <td class="current">
               {{ item.GarbageRatioTd.format }}

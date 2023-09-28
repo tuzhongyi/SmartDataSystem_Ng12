@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { ResourceLabel } from '../../model/resource-label.model';
 import { ResourceLabelsUrl } from '../../url/aiop/resources/labels/labels.url';
 import {
@@ -16,8 +17,8 @@ export class LabelRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<ResourceLabel>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(ResourceLabel);
   }
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { SRServer } from '../../model/sr-server';
@@ -19,8 +20,8 @@ import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
 export class SRServerRequestService {
   private type: HowellBaseTypeRequestService<SRServer>;
 
-  constructor(_http: HowellAuthHttpService) {
-    this.basic = new HowellBaseRequestService(_http);
+  constructor(http: HowellAuthHttpService, router: Router) {
+    this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(SRServer);
   }
   private basic: HowellBaseRequestService;

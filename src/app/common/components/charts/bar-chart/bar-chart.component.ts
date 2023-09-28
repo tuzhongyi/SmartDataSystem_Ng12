@@ -1,10 +1,4 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { EChartsOption } from 'echarts';
 
@@ -13,7 +7,7 @@ import { EChartsOption } from 'echarts';
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.less'],
 })
-export class BarChartComponent implements OnInit, OnChanges {
+export class BarChartComponent implements OnInit {
   @Input() theme: string = '';
   @Input() options: EChartsOption = {};
   @Input() merge: EChartsOption = {};
@@ -25,7 +19,6 @@ export class BarChartComponent implements OnInit, OnChanges {
     console.log('options', this.options);
     console.log('merge', this.merge);
   }
-  ngOnChanges(changes: SimpleChanges): void {}
   onResized(e: ResizedEvent) {
     let w = e.newRect.width;
     if (this.merge) {

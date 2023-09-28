@@ -1,3 +1,4 @@
+import { formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -34,6 +35,7 @@ export class EventRecordFilterComponent
     OnChanges,
     OnDestroy
 {
+  @Input() date_sync = false;
   @Input()
   filter: EventRecordFilter;
   @Output()
@@ -80,11 +82,33 @@ export class EventRecordFilterComponent
   model: DivisionStationFilteModel = new DivisionStationFilteModel();
 
   changeBegin(date: Date) {
+    if (
+      this.date_sync &&
+      formatDate(this.filter.duration.begin, 'yyyy-MM-dd', 'en') !=
+        formatDate(this.filter.duration.end, 'yyyy-MM-dd', 'en')
+    ) {
+      let end = new Date(this.filter.duration.end.getTime());
+      end.setFullYear(date.getFullYear());
+      end.setMonth(date.getMonth());
+      end.setDate(date.getDate());
+      this.filter.duration.end = end;
+    }
     if (this.filter) {
       this.filterChange.emit(this.filter);
     }
   }
   changeEnd(date: Date) {
+    if (
+      this.date_sync &&
+      formatDate(this.filter.duration.begin, 'yyyy-MM-dd', 'en') !=
+        formatDate(this.filter.duration.end, 'yyyy-MM-dd', 'en')
+    ) {
+      let begin = new Date(this.filter.duration.begin.getTime());
+      begin.setFullYear(date.getFullYear());
+      begin.setMonth(date.getMonth());
+      begin.setDate(date.getDate());
+      this.filter.duration.begin = begin;
+    }
     if (this.filter) {
       this.filterChange.emit(this.filter);
     }

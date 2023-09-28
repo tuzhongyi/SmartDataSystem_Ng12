@@ -1,4 +1,5 @@
 import { DapuqiaoGarbageDropStationWindowCountComponent } from './dapuqiao-garbage-drop-station-window-count/dapuqiao-garbage-drop-station-window-count.component';
+import { DapuqiaoGarbageDropStationWindowDetailsChartComponent } from './dapuqiao-garbage-drop-station-window-details-chart/dapuqiao-garbage-drop-station-window-details-chart.component';
 import { DapuqiaoGarbageStationWindowRecordComponent } from './dapuqiao-garbage-station-window-record/dapuqiao-garbage-station-window-record.component';
 import { DaPuQiaoIndexComponent } from './dapuqiao-index/dapuqiao-index.component';
 import { DaPuQiaoMainEventLevelComponent } from './dapuqiao-main-event-level/dapuqiao-main-event-level.component';
@@ -25,5 +26,6 @@ export const DaPuQiaoComponents = [
   DapuqiaoMainSuperviseCompleteItemComponent,
   DapuqiaoMainSuperviseCompleteComponent,
   DapuqiaoGarbageDropStationWindowCountComponent,
+  DapuqiaoGarbageDropStationWindowDetailsChartComponent,
   DapuqiaoGarbageStationWindowRecordComponent,
 ];

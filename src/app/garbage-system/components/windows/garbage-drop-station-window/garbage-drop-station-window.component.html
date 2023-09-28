@@ -36,6 +36,15 @@
               class="second-menu-btn"
               [class.selected]="index === Index.details"
               (click)="indexChange(Index.details)"
+              *ngIf="ui !== UserUIType.dapuqiao"
+            >
+              细分图表
+            </div>
+            <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.dapuqiao_details"
+              (click)="indexChange(Index.dapuqiao_details)"
+              *ngIf="ui === UserUIType.dapuqiao"
             >
               细分图表
             </div>
@@ -71,6 +80,10 @@
             [division]="details.division"
           >
           </howell-details-chart>
+        </ng-container>
+        <ng-container *ngIf="index === Index.dapuqiao_details">
+          <dapuqiao-garbage-drop-station-window-details-chart>
+          </dapuqiao-garbage-drop-station-window-details-chart>
         </ng-container>
       </div>
     </div>

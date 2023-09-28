@@ -5,9 +5,8 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
+  OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import * as echarts from 'echarts/core';
@@ -36,7 +35,7 @@ import { option } from './line-zoom-chart.option';
   providers: [LineZoomChartBusiness],
 })
 export class LineZoomChartComponent
-  implements OnChanges, AfterViewInit, IComponent<IModel, LineZoomChartModel>
+  implements OnInit, AfterViewInit, IComponent<IModel, LineZoomChartModel>
 {
   @Input()
   stationId?: string;
@@ -69,25 +68,22 @@ export class LineZoomChartComponent
   constructor(business: LineZoomChartBusiness) {
     this.business = business;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((stationId: string) => {
-          this.panel.line.display = false;
-          this.panel.scatter.display = false;
-          this.business.load(stationId, this.date, this.unit).then((data) => {
-            this.data = data;
-            this.setOption(this.data, option);
-          });
-        });
-      }
-    }
-  }
 
   data?: LineZoomChartModel;
   xAxisData: Array<TimeString> = [];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((stationId: string) => {
+        this.panel.line.display = false;
+        this.panel.scatter.display = false;
+        this.business.load(stationId, this.date, this.unit).then((data) => {
+          this.data = data;
+          this.setOption(this.data, option);
+        });
+      });
+    }
+  }
   loaded = false;
   inited = false;
   ngAfterViewInit(): void {

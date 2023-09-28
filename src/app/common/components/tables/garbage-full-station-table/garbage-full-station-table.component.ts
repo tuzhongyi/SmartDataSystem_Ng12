@@ -108,8 +108,8 @@ export class GarbageFullStationTableComponent
     }
   }
 
-  imageClick(item: GarbageFullStationTableModel, img: ImageControlModel) {
-    let array = new ImageControlModelArray(item.images, img.index, item);
+  async imageClick(item: GarbageFullStationTableModel, img: ImageControlModel) {
+    let array = new ImageControlModelArray(await item.images, img.index, item);
     this.image.emit(array);
   }
 }
