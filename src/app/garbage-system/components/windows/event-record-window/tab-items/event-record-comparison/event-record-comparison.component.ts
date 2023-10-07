@@ -63,12 +63,14 @@ export class EventRecordComparisonComponent
   dateFormat = 'yyyy年MM月dd日';
   units: SelectItem[] = [];
   ChartType = ChartType;
+  DivisionType = DivisionType;
   chartType: ChartType = ChartType.bar;
   chartTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
   config: EventRecordComparisonComponentConfig = {};
   datas?: ITimeDataGroup<number>[];
   selectIds?: string[];
+  treeclear: EventEmitter<void> = new EventEmitter();
   echartsLegend: LegendComponentOption = {
     show: true,
     right: '50px',
@@ -233,11 +235,14 @@ export class EventRecordComparisonComponent
   }
   onusertype(item: SelectItem) {
     this.divisionType = item.value;
+    this.treeclear.emit();
   }
 
   onTreeSelect(ids: string[]) {
     this.selectIds = ids;
-    this.selectIds.length = 3;
+    if (this.selectIds.length > 3) {
+      this.selectIds.length = 3;
+    }
   }
 
   search() {

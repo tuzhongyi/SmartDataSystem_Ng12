@@ -7,6 +7,8 @@ import { CameraUsage } from '../../enum/camera-usage.enum';
 import { TrashCanType } from '../../enum/trashcan-type.enum';
 import { Camera } from './camera.model';
 import { ConstructionData } from './construction-data';
+import { DropWindow } from './drop-window.model';
+import { GarbageDeviceData } from './garbage-device-data.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { IdNameModel } from './model.interface';
@@ -86,6 +88,11 @@ export class GarbageStation extends IdNameModel {
   CommunityId?: string;
   /**	ConstructionData	建筑垃圾箱体数据	O */
   ConstructionData?: ConstructionData;
+  /**	DropWindow[]	投放窗口列表， 只有StationType=2|3, 智能垃圾厢房才有该信息	O */
+  @Type(() => DropWindow)
+  DropWindows?: DropWindow[];
+  /**	GarbageDeviceData	设备数据信息	O */
+  GarbageDeviceData?: GarbageDeviceData;
 }
 
 /** 垃圾相关参数 */

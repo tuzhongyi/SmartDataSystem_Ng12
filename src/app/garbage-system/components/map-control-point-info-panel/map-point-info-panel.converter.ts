@@ -1,28 +1,28 @@
+import { Injectable } from '@angular/core';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { Division } from 'src/app/network/model/division.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import {
-  PointInfoPanelModel,
+  MapPointInfoPanelModel,
+  PointInfoPanelModelOptionCommand,
   PointInfoPanelModelState,
   PointInfoPanelModelStatistic,
-} from './point-info-panel.model';
+} from './map-point-info-panel.model';
+import { MapPointInfoPanelService } from './map-point-info-panel.service';
 
-export class PointInfoPanelConverter
-  implements IConverter<GarbageStation, PointInfoPanelModel>
+@Injectable()
+export class MapPointInfoPanelConverter
+  implements IConverter<GarbageStation, MapPointInfoPanelModel>
 {
-  Convert(
-    source: GarbageStation,
-    getter: {
-      division: (id: string) => Promise<Division>;
-      statistic: (id: string) => Promise<GarbageStationNumberStatistic>;
-    }
-  ): PointInfoPanelModel {
-    let model = new PointInfoPanelModel();
+  constructor(private service: MapPointInfoPanelService) {}
+
+  Convert(source: GarbageStation): MapPointInfoPanelModel {
+    let model = new MapPointInfoPanelModel();
     model.id = source.Id;
     model.name = source.Name;
     model.address = source.Address ?? '';
@@ -38,12 +38,12 @@ export class PointInfoPanelConverter
 
     if (source.DivisionId) {
       model.committeeName = new Promise((got) => {
-        getter.division(source.DivisionId!).then((division) => {
+        this.service.division.get(source.DivisionId!).then((division) => {
           got(division.Name);
 
           model.roadName = new Promise((gotRoadName) => {
             if (division.ParentId) {
-              getter.division(division.ParentId).then((parent) => {
+              this.service.division.get(division.ParentId).then((parent) => {
                 gotRoadName(parent.Name);
               });
             }
@@ -52,10 +52,27 @@ export class PointInfoPanelConverter
       });
     }
 
-    model.statistic = getter.statistic(source.Id).then((statistic) => {
-      return this.getStatistic(statistic);
-    });
+    model.statistic = this.service.station.statistic.number
+      .get(source.Id)
+      .then((statistic) => {
+        return this.getStatistic(statistic);
+      });
     model.state = [this.getState(source)];
+
+    if (source.GarbageDeviceData) {
+      model.device = this.service.device.get(source.GarbageDeviceData.DeviceId);
+      model.device.then((x) => {
+        model.options = [
+          {
+            className: 'mdi mdi-power-plug',
+            command: PointInfoPanelModelOptionCommand.device_window_power_on,
+            data: x,
+            title: '窗口上电',
+            language: '窗口上电',
+          },
+        ];
+      });
+    }
     return model;
   }
 
@@ -70,6 +87,12 @@ export class PointInfoPanelConverter
       state.className = 'error';
     } else if (flags.contains(StationState.Full)) {
       state.className = 'warm';
+    } else if (
+      station.GarbageDeviceData &&
+      station.GarbageDeviceData.OnlineState !== OnlineStatus.Online
+    ) {
+      state.language = '故障';
+      state.className = 'fault';
     } else {
       state.language = '';
       state.className = 'normal';

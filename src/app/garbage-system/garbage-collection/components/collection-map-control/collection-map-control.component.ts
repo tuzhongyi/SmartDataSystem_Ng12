@@ -15,7 +15,10 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
-import { PointInfoPanelModelOption } from 'src/app/garbage-system/components/map-control-point-info-panel/point-info-panel.model';
+import {
+  PointInfoPanelModelOption,
+  PointInfoPanelModelOptionCommand,
+} from 'src/app/garbage-system/components/map-control-point-info-panel/map-point-info-panel.model';
 import { ICamera } from 'src/app/network/model/camera.interface';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -23,7 +26,7 @@ import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { CollectionMapControlBusiness } from './business/collection-map-control.business';
 import { GarbageVehiclePointInfoPanelBusiness } from './business/point-info-panel.business';
-import { MapControlWindow } from './collection-map-control.model';
+import { CollectionMapControlWindow } from './collection-map-control.model';
 declare var $: any;
 @Component({
   selector: 'collection-map-control',
@@ -241,7 +244,7 @@ export class CollectionMapControlComponent
   imageConverter = new ImageControlArrayConverter();
 
   selected: Selected = {};
-  window = new MapControlWindow();
+  window = new CollectionMapControlWindow();
   //#region template event
   onLoad(event: Event) {
     this.wait(() => {
@@ -303,10 +306,10 @@ export class CollectionMapControlComponent
   }
   onpaneloption(item: PointInfoPanelModelOption) {
     switch (item.command) {
-      case 'powerOn':
+      case PointInfoPanelModelOptionCommand.collection_power_on:
         this.topower(item.data, true);
         break;
-      case 'powerOff':
+      case PointInfoPanelModelOptionCommand.collection_power_off:
         this.topower(item.data, false);
         break;
 

@@ -26,7 +26,7 @@ import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixi
 import { MainStationCountComponent } from './main-station-count/main-station-count.component';
 import { MapControlButtonsComponent } from './map-control-buttons/map-control-buttons.component';
 import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.component';
-import { PointInfoPanelComponent } from './map-control-point-info-panel/point-info-panel.component';
+import { MapPointInfoPanelComponent } from './map-control-point-info-panel/map-point-info-panel.component';
 import { MapControlComponent } from './map-control/map-control.component';
 import { MediaControlComponent } from './media-control/media-control.component';
 import { MediaImageControlComponent } from './media-image-control/media-image-control.component';
@@ -64,7 +64,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
 
     MediaControlComponent,
     MediaImageControlComponent,
-    PointInfoPanelComponent,
+    MapPointInfoPanelComponent,
 
     PatrolControlComponent,
     PlaybackConfigComponent,
@@ -111,7 +111,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapListPanelComponent,
     MediaControlComponent,
     MediaImageControlComponent,
-    PointInfoPanelComponent,
+    MapPointInfoPanelComponent,
 
     PatrolControlComponent,
     PlaybackConfigComponent,

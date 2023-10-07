@@ -127,6 +127,15 @@
         }
       }
 
+      &.fault {
+        color: #f47330;
+        cursor: pointer;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
       &.normal {
         color: #2bcf38;
       }
@@ -173,6 +182,23 @@
     }
   }
 
+  .device {
+
+
+    &-capabilities {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      flex-wrap: wrap;
+
+      &-item {
+        width: 33%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
+    }
+  }
 }
 
 

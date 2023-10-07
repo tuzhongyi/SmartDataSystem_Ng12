@@ -48,9 +48,9 @@ export class AIGarbageStationDeviceTableComponent
   }
   Command = AIGarbageDeviceCommandNo;
   widths = [
-    undefined,
+    '20%',
     '16%',
-    undefined,
+    '16%',
     undefined,
     undefined,
     undefined,

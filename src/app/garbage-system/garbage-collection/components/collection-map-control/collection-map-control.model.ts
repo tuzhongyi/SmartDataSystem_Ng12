@@ -1,8 +1,8 @@
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 
-export class MapControlWindow {
-  confirm = new MapcontrolConfirmWindow();
+export class CollectionMapControlWindow {
+  confirm = new CollectionMapControlConfirmWindow();
   clear() {
     this.confirm.clear();
   }
@@ -10,7 +10,7 @@ export class MapControlWindow {
     this.confirm.show = false;
   }
 }
-class MapcontrolConfirmWindow extends WindowViewModel {
+class CollectionMapControlConfirmWindow extends WindowViewModel {
   clear() {
     this.model = undefined;
   }

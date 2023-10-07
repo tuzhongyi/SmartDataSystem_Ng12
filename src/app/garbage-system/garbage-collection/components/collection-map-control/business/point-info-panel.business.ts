@@ -4,9 +4,10 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import {
-  PointInfoPanelModel,
+  MapPointInfoPanelModel,
+  PointInfoPanelModelOptionCommand,
   PointInfoPanelModelState,
-} from 'src/app/garbage-system/components/map-control-point-info-panel/point-info-panel.model';
+} from 'src/app/garbage-system/components/map-control-point-info-panel/map-point-info-panel.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { NBStatus } from 'src/app/network/model/nb-status.model';
@@ -15,7 +16,7 @@ import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_ve
 
 @Injectable()
 export class GarbageVehiclePointInfoPanelBusiness
-  implements IBusiness<GarbageVehicle, PointInfoPanelModel>
+  implements IBusiness<GarbageVehicle, MapPointInfoPanelModel>
 {
   vehicle?: GarbageVehicle;
 
@@ -25,7 +26,7 @@ export class GarbageVehiclePointInfoPanelBusiness
   ) {}
 
   Converter = new PointInfoPanelConverter();
-  async load(source: GarbageVehicle): Promise<PointInfoPanelModel> {
+  async load(source: GarbageVehicle): Promise<MapPointInfoPanelModel> {
     let data = await this.getData(source.Id);
     let model = this.Converter.Convert(data, {
       division: (id: string) => {
@@ -43,7 +44,7 @@ export class GarbageVehiclePointInfoPanelBusiness
 }
 
 export class PointInfoPanelConverter
-  implements IConverter<GarbageVehicle, PointInfoPanelModel>
+  implements IConverter<GarbageVehicle, MapPointInfoPanelModel>
 {
   Convert(
     source: GarbageVehicle,
@@ -51,8 +52,8 @@ export class PointInfoPanelConverter
       division: (id: string) => Promise<Division>;
       nbstatus: (id: string) => Promise<NBStatus>;
     }
-  ): PointInfoPanelModel {
-    let model = new PointInfoPanelModel();
+  ): MapPointInfoPanelModel {
+    let model = new MapPointInfoPanelModel();
     model.id = source.Id;
     model.name = source.Name;
     if (source.DivisionId) {
@@ -76,14 +77,14 @@ export class PointInfoPanelConverter
     model.options = [
       {
         className: 'mdi mdi-power-plug',
-        command: 'powerOn',
+        command: PointInfoPanelModelOptionCommand.collection_power_on,
         data: source,
         title: '远程唤醒',
         language: '远程唤醒',
       },
       {
         className: 'mdi mdi-power-plug-off',
-        command: 'powerOff',
+        command: PointInfoPanelModelOptionCommand.collection_power_off,
         data: source,
         title: '远程关闭',
         language: '远程关闭',

@@ -3,6 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
+import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -10,24 +11,30 @@ import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { PointInfoPanelBusiness } from './point-info-panel.business';
+import { MapPointInfoPanelBusiness } from './map-point-info-panel.business';
+import { MapPointInfoPanelConverter } from './map-point-info-panel.converter';
 import {
-  PointInfoPanelModel,
+  MapPointInfoPanelModel,
   PointInfoPanelModelOption,
   PointInfoPanelModelState,
-} from './point-info-panel.model';
+} from './map-point-info-panel.model';
+import { MapPointInfoPanelService } from './map-point-info-panel.service';
 
 @Component({
   selector: 'app-point-info-panel',
-  templateUrl: './point-info-panel.component.html',
-  styleUrls: ['./point-info-panel.component.less'],
-  providers: [PointInfoPanelBusiness],
+  templateUrl: './map-point-info-panel.component.html',
+  styleUrls: ['./map-point-info-panel.component.less'],
+  providers: [
+    MapPointInfoPanelService,
+    MapPointInfoPanelConverter,
+    MapPointInfoPanelBusiness,
+  ],
 })
-export class PointInfoPanelComponent
-  implements IComponent<IModel, PointInfoPanelModel>, OnInit
+export class MapPointInfoPanelComponent
+  implements IComponent<IModel, MapPointInfoPanelModel>, OnInit
 {
   @Input()
-  business: IBusiness<IModel, PointInfoPanelModel>;
+  business: IBusiness<IModel, MapPointInfoPanelModel>;
 
   @Input()
   set Source(val) {
@@ -70,7 +77,7 @@ export class PointInfoPanelComponent
   constructor(
     private divisionService: DivisionRequestService,
     private garbageStationService: GarbageStationRequestService,
-    business: PointInfoPanelBusiness
+    business: MapPointInfoPanelBusiness
   ) {
     this.business = business;
     // this.GarbageStation.Members
@@ -81,8 +88,9 @@ export class PointInfoPanelComponent
   visibility: boolean = false;
 
   source?: IModel;
-  model: PointInfoPanelModel = new PointInfoPanelModel();
+  model: MapPointInfoPanelModel = new MapPointInfoPanelModel();
   StationType = StationType;
+  OnlineStatus = OnlineStatus;
   ngOnInit() {}
 
   onGarbageRetentionClicked() {

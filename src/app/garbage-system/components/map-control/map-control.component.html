@@ -199,9 +199,36 @@
   (IllegalDropClickedEvent)="onPointInfoPanelIllegalDropClickedEvent($event)"
   (MixedIntoClickedEvent)="onPointInfoPanelMixedIntoClickedEvent($event)"
   (StateClickedEvent)="onPointInfoPanelStateClickedEvent($event)"
+  (option)="onpaneloption($event)"
 ></app-point-info-panel>
 
 <!-- (StateClickedEvent)="onPanelStateClicked($event)"
 (GarbageCountClickedEvent)="onPanelGarbageCountClicked($event)"
 (IllegalDropClickedEvent)="onPanelIllegalDropClicked($event)"
 (MixedIntoClickedEvent)="onPanelMixedIntoClicked($event)" -->
+<app-window
+  [Model]="window.confirm"
+  [style]="window.confirm.style"
+  *ngIf="window.confirm.show"
+>
+  <div class="confirm">
+    <div class="confirm-head">
+      <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 请确认</div>
+    </div>
+    <div class="confirm-body">
+      <div class="hw-simple-title">是否确定 窗口上电？</div>
+    </div>
+
+    <div class="confirm-foot">
+      <button
+        class="hw-green-btn"
+        (click)="ondevicewindowpoweron(window.confirm.model)"
+      >
+        <i class="howell-icon-Check"></i> 确定
+      </button>
+      <button class="hw-blue-btn" (click)="onwindowclose()">
+        <i class="howell-icon-Close"></i> 取消
+      </button>
+    </div>
+  </div>
+</app-window>

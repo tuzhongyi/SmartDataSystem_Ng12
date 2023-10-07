@@ -31,6 +31,7 @@ export class DivisionStationTreeMultFilterComponent
   @Output() onselect: EventEmitter<string[]> = new EventEmitter();
   @Input() maxSelection: number = Number.MAX_VALUE;
   @Input() onlystation = false;
+  @Input() clear?: EventEmitter<void>;
 
   constructor(private local: LocalStorageService) {}
 
@@ -50,6 +51,12 @@ export class DivisionStationTreeMultFilterComponent
   }
 
   ngOnInit(): void {
+    if (this.clear) {
+      this.clear.subscribe((x) => {
+        this.selectedIds = [];
+        this.selected = [];
+      });
+    }
     window.addEventListener('click', () => {
       this.expand = false;
     });

@@ -41,7 +41,7 @@ export class AIGarbageStationRegionTableComponent
   constructor(private business: AIGarbageStationRegionTableBusiness) {
     super();
   }
-  widths: string[] = [];
+  widths: string[] = ['20%', '20%'];
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {

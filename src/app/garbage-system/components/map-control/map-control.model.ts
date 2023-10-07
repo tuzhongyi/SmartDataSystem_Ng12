@@ -1,4 +1,6 @@
 import { EventEmitter } from '@angular/core';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class MapControlToolButton {
@@ -63,4 +65,24 @@ class MapControlTooDurationButton {
 
 export interface MapControlSelected {
   station?: GarbageStation;
+}
+
+export class MapControlWindow {
+  confirm = new MapControlConfirmWindow();
+  clear() {
+    this.confirm.clear();
+  }
+  close() {
+    this.confirm.show = false;
+  }
+}
+class MapControlConfirmWindow extends WindowViewModel {
+  clear() {
+    this.model = undefined;
+  }
+  style = {
+    width: '400px',
+    height: 'auto',
+  };
+  model?: AIGarbageDevice;
 }

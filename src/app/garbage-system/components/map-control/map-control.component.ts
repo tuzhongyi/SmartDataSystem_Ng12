@@ -13,8 +13,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToastrService } from 'ngx-toastr';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
+import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -22,6 +24,10 @@ import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
 import { ListItemType } from '../map-control-list-panel/map-list-item';
+import {
+  PointInfoPanelModelOption,
+  PointInfoPanelModelOptionCommand,
+} from '../map-control-point-info-panel/map-point-info-panel.model';
 import { AMapBusiness } from './business/amap.business';
 import { GarbageTimeFilter, PointCount } from './business/amap.model';
 import { AMapDivisionBusiness } from './business/amap/amap-division.business';
@@ -33,15 +39,23 @@ import { AMapPointBusiness } from './business/amap/amap-point.business';
 import { AMapClient } from './business/amap/amap.client';
 import { AMapEvent } from './business/amap/amap.event';
 import { AMapService } from './business/amap/amap.service';
+import { MapControlAIDeviceBusiness } from './business/map-ai-device.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ListPanelConverter } from './converter/map-list-panel.converter';
-import { MapControlSelected, MapControlTools } from './map-control.model';
+import {
+  MapControlSelected,
+  MapControlTools,
+  MapControlWindow,
+} from './map-control.model';
 declare var $: any;
 @Component({
   selector: 'app-map-control',
   templateUrl: './map-control.component.html',
-  styleUrls: ['./map-control.component.less'],
+  styleUrls: [
+    '../../../../assets/less/confirm.less',
+    './map-control.component.less',
+  ],
   providers: [
     AMapEvent,
     AMapClient,
@@ -53,6 +67,7 @@ declare var $: any;
     AMapPointPlugBatteryBusiness,
     AMapPointContextMenuBusiness,
     AMapBusiness,
+    MapControlAIDeviceBusiness,
     ListPanelConverter,
     ListPanelBusiness,
     PointInfoPanelBusiness,
@@ -167,7 +182,9 @@ export class MapControlComponent
     private changeDetectorRef: ChangeDetectorRef,
     public amap: AMapBusiness,
     public panel: ListPanelBusiness,
-    public info: PointInfoPanelBusiness
+    public info: PointInfoPanelBusiness,
+    private device: MapControlAIDeviceBusiness,
+    private toastr: ToastrService
   ) {
     this.display = this.initDisplay();
     // {
@@ -177,8 +194,8 @@ export class MapControlComponent
   }
 
   display: MapControlTools;
-
   loadHandle?: NodeJS.Timer;
+  window = new MapControlWindow();
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
@@ -326,4 +343,41 @@ export class MapControlComponent
   }
 
   GarbageTimeFilter = GarbageTimeFilter;
+
+  onwindowclose() {
+    this.window.clear();
+    this.window.close();
+  }
+
+  onpaneloption(item: PointInfoPanelModelOption) {
+    switch (item.command) {
+      case PointInfoPanelModelOptionCommand.device_window_power_on:
+        this.toconfirm(item.data);
+        break;
+      default:
+        break;
+    }
+  }
+
+  toconfirm(device: AIGarbageDevice) {
+    this.window.confirm.model = device;
+    this.window.confirm.show = true;
+  }
+
+  ondevicewindowpoweron(device?: AIGarbageDevice) {
+    if (device) {
+      this.device
+        .command(device.Id)
+        .then((x) => {
+          this.toastr.success('操作成功');
+        })
+        .catch((x) => {
+          console.log(device, x);
+          this.toastr.error('操作失败');
+        })
+        .finally(() => {
+          this.onwindowclose();
+        });
+    }
+  }
 }

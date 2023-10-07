@@ -92,6 +92,56 @@
       <i class="howell-icon-phone icon"></i><span>{{ member.MobileNo }}</span>
     </div>
   </div>
+  <ng-container *ngIf="!!model.device">
+    <div
+      class="item"
+      *ngIf="
+        model.type === StationType.Rfid &&
+        model.device &&
+        (model.device | async)?.Status &&
+        (model.device | async)?.Status?.OnlineState === 0
+      "
+    >
+      <div class="item-name">
+        <i class="howell-icon-fanfailure icon" style="height: 100%"></i>
+        <div class="item-name__info">
+          <div class="info-name">排风扇</div>
+          <div class="info-dash"></div>
+          <div
+            class="info-note"
+            [ngClass]="{
+              'powder-red-text':
+                (model.device | async)?.Status?.ExhaustFan === 0,
+              'green-text': (model.device | async)?.Status?.ExhaustFan === 1
+            }"
+          >
+            {{
+              (model.device | async)?.Status?.ExhaustFan === 0 ? "关闭" : "打开"
+            }}
+          </div>
+        </div>
+      </div>
+      <div class="item-name" style="width: 42%">
+        <i class="howell-icon-garbage_card icon" style="height: 100%"></i>
+        <div class="item-name__info">
+          <div class="info-name">读卡器</div>
+          <div class="info-dash"></div>
+          <div
+            class="info-note"
+            [ngClass]="{
+              'powder-red-text':
+                (model.device | async)?.Status?.RfidReader === 1,
+              'green-text': (model.device | async)?.Status?.RfidReader === 0
+            }"
+          >
+            {{
+              (model.device | async)?.Status?.RfidReader === 0 ? "正常" : "异常"
+            }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
   <div
     class="statistic"
