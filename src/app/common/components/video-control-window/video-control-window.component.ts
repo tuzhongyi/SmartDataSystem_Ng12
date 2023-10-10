@@ -23,12 +23,18 @@ declare var $: any;
 export class VideoControlWindowComponent
   implements OnInit, OnDestroy, OnChanges
 {
-  PlayMode = PlayMode;
+  @Input() set mode(v: PlayMode | undefined) {
+    if (v === undefined) {
+      return;
+    }
+    this._mode = v;
+    this.modechange(v);
+  }
 
   @Input()
   title: string = '';
   @Input()
-  mode: PlayMode = PlayMode.live;
+  _mode: PlayMode = PlayMode.live;
 
   @Input()
   model?: VideoModel;
@@ -41,16 +47,12 @@ export class VideoControlWindowComponent
 
   @Output()
   download: EventEmitter<DurationParams> = new EventEmitter();
-
-  ngOnDestroy(): void {
-    this.playback = undefined;
-    this.preview = undefined;
-  }
-  ngOnInit(): void {}
+  constructor() {}
+  PlayMode = PlayMode;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && this.model) {
-      this.model.mode = this.mode;
-      switch (this.mode) {
+      this.model.mode = this._mode;
+      switch (this._mode) {
         case PlayMode.live:
           this.preview = this.model;
 
@@ -65,18 +67,24 @@ export class VideoControlWindowComponent
       }
     }
   }
+  ngOnInit(): void {}
+  ngOnDestroy(): void {
+    this.playback = undefined;
+    this.preview = undefined;
+  }
+
   onclose() {
     this.window.show = false;
   }
 
-  modechange() {
-    this.mode = this.mode == PlayMode.live ? PlayMode.vod : PlayMode.live;
+  modechange(m: PlayMode) {
+    this._mode = m;
     if (this.model) {
-      this.model.mode = this.mode;
+      this.model.mode = this._mode;
     }
     this.preview = undefined;
     this.playback = undefined;
-    if (this.mode === PlayMode.live) {
+    if (this._mode === PlayMode.live) {
       this.preview = this.model;
     }
   }

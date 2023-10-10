@@ -55,38 +55,44 @@ export class MapPointInfoPanelConverter
     model.statistic = this.service.station.statistic.number
       .get(source.Id)
       .then((statistic) => {
+        if ((statistic.GarbageDuration ?? 0) > 0) {
+          model.state = [this.getState(source, true)];
+        }
+
         return this.getStatistic(statistic);
       });
-    model.state = [this.getState(source)];
 
+    model.state = [this.getState(source, false)];
+    model.device = source.GarbageDeviceData;
     if (source.GarbageDeviceData) {
-      model.device = this.service.device.get(source.GarbageDeviceData.DeviceId);
-      model.device.then((x) => {
-        model.options = [
-          {
-            className: 'mdi mdi-power-plug',
-            command: PointInfoPanelModelOptionCommand.device_window_power_on,
-            data: x,
-            title: '窗口上电',
-            language: '窗口上电',
-          },
-        ];
-      });
+      model.options = [
+        {
+          className: 'mdi mdi-power-plug',
+          command: PointInfoPanelModelOptionCommand.device_window_power_on,
+          data: source,
+          title: '窗口上电',
+          language: '窗口上电',
+        },
+      ];
     }
     return model;
   }
 
-  private getState(station: GarbageStation) {
+  private getState(station: GarbageStation, drop: boolean) {
     let state: PointInfoPanelModelState = {
       language: '',
       className: 'normal',
     };
     let flags = new Flags(station.StationState);
     state.language = Language.StationStateFlags(flags);
+
     if (flags.contains(StationState.Error)) {
       state.className = 'error';
     } else if (flags.contains(StationState.Full)) {
       state.className = 'warm';
+    } else if (drop) {
+      state.language = '滞留';
+      state.className = 'drop';
     } else if (
       station.GarbageDeviceData &&
       station.GarbageDeviceData.OnlineState !== OnlineStatus.Online
@@ -94,7 +100,7 @@ export class MapPointInfoPanelConverter
       state.language = '故障';
       state.className = 'fault';
     } else {
-      state.language = '';
+      state.language = '正常';
       state.className = 'normal';
     }
     return state;

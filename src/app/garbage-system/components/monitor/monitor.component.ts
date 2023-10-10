@@ -7,6 +7,7 @@
 import { Component, EventEmitter, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import {
   GlobalStorageService,
   SystemType,
@@ -16,6 +17,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { MonitorEventTriggerBusiness } from './business/monitor-event-trigger.business';
+import { MonitorGuideBusiness } from './business/monitor-guide.business';
 import { MonitorMapControlBusiness } from './business/monitor-map-control.business';
 import { MonitorPatrolControlBusiness } from './business/monitor-patrol-control.business';
 import { MonitorStatisticCardBussiness } from './business/monitor-statistic-card.bussiness';
@@ -37,11 +39,12 @@ import { MonitorVideoControlWindowBusiness } from './business/windows/monitor-vi
     MonitorVideoControlWindowBusiness,
     ...WindowBusinesses,
     MonitorWindowBussiness,
+    MonitorGuideBusiness,
   ],
 })
 export class MonitorComponent implements OnInit {
-  public illegalDropType: EventType = EventType.IllegalDrop;
-  public mixIntoType: EventType = EventType.MixedInto;
+  EventType = EventType;
+  PlayMode = PlayMode;
   get HideButton(): boolean {
     return this.global.HideButton;
   }
@@ -61,7 +64,8 @@ export class MonitorComponent implements OnInit {
     public patrol: MonitorPatrolControlBusiness,
     public video: MonitorVideoControlWindowBusiness,
     public statistic: MonitorStatisticCardBussiness,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    public guide: MonitorGuideBusiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
     this.global.system = SystemType.garbage;

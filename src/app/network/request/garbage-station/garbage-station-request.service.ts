@@ -14,6 +14,7 @@ import {
 } from 'src/app/network/model/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { Camera } from '../../model/camera.model';
+import { DeviceCommand } from '../../model/device-command.model';
 import { EventNumberStatistic } from '../../model/event-number-statistic.model';
 import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
 import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
@@ -162,6 +163,14 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
       this._statistic = new StatisticService(this.basic);
     }
     return this._statistic;
+  }
+
+  private _device?: DeviceService;
+  public get device(): DeviceService {
+    if (!this._device) {
+      this._device = new DeviceService(this.basic);
+    }
+    return this._device;
   }
 }
 
@@ -522,5 +531,17 @@ class TaskService {
   ): Promise<GarbageTask> {
     let url = GarbageStationUrl.task(stationId).finish(taskId);
     return this.basicType.post(url, params);
+  }
+}
+
+class DeviceService {
+  constructor(private basic: HowellBaseRequestService) {
+    this.basicType = basic.type(DeviceCommand);
+  }
+  private basicType: HowellBaseTypeRequestService<DeviceCommand>;
+  command(stationId: string, command: DeviceCommand): Promise<DeviceCommand> {
+    let url = GarbageStationUrl.device(stationId).command();
+    let plain = instanceToPlain(command);
+    return this.basicType.post(url, plain);
   }
 }

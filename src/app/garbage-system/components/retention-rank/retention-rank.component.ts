@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { Enum } from 'src/app/enum/enum-helper';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 
@@ -22,16 +20,27 @@ export class RetentionRankComponent
   @Input() load?: EventEmitter<void>;
   @Input() typeEnabled = true;
   @Output() Click: EventEmitter<RetentionRankArgs> = new EventEmitter();
+  @Input() set type(v: RetentionType | undefined) {
+    if (v === undefined) {
+      if (this.retentionType !== RetentionType.RetentionTime) {
+        this.retentionType = RetentionType.RetentionTime;
+        this.loadData();
+      }
+    } else {
+      this.retentionType = v;
+      this.loadData();
+    }
+  }
 
   public title: string = '垃圾滞留时长排名';
 
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
 
-  retentionTypes: SelectItem[] = [];
   //当前事件类型
-  private retentionType = RetentionType.RetentionTime;
-
+  retentionType = RetentionType.RetentionTime;
+  RetentionType = RetentionType;
+  Language = Language;
   constructor(business: RetentionRankBusiness) {
     this.business = business;
   }
@@ -39,11 +48,6 @@ export class RetentionRankComponent
   business: IBusiness<IModel, RankModel[]>;
 
   ngOnInit(): void {
-    let _enum = new Enum(RetentionType);
-    this.retentionTypes = _enum.toArray((x) => {
-      return new SelectItem(x, x, Language.RetentionType(x));
-    });
-
     // 区划改变时触发
     if (this.load) {
       this.load.subscribe((x) => {
@@ -68,8 +72,7 @@ export class RetentionRankComponent
     }
   }
 
-  onRetentionTypeSelected(item: SelectItem) {
-    this.retentionType = item.value;
+  onchange() {
     this.loadData();
   }
 

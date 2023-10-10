@@ -9,11 +9,26 @@ import { DaPuQiaoMainStationCountIndex as MainStationCountIndex } from './main-s
 })
 export class MainStationCountComponent implements OnInit {
   @Input() load?: EventEmitter<void>;
+
+  @Input()
+  public set index(v: MainStationCountIndex | undefined) {
+    if (v === undefined) {
+      if (this._index === MainStationCountIndex.station_count) {
+        this._index = MainStationCountIndex.device_state;
+      }
+      return;
+    }
+    this._index = v;
+  }
+  private _index = MainStationCountIndex.device_state;
+  public get index(): MainStationCountIndex {
+    return this._index;
+  }
+
   @Output() devicestateclick: EventEmitter<IDeviceStateDes> =
     new EventEmitter();
   constructor() {}
 
-  index = MainStationCountIndex.device_state;
   Index = MainStationCountIndex;
 
   ngOnInit(): void {}

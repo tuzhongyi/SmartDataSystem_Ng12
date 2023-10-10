@@ -165,6 +165,11 @@ export class AMapPointBusiness {
     }
   }
 
+  async right(pointId: string) {
+    let client = await this.amap.client;
+    client.Point.RightClick(pointId);
+  }
+
   async status(stations?: GarbageStation[]) {
     if (!stations || stations.length === 0) return;
 

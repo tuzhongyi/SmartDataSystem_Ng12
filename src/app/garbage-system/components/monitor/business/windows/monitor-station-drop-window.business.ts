@@ -33,8 +33,8 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
     this.image.array.stationId = station.Id;
     this.image.array.manualcapture = true;
     if (station.Cameras) {
-      this.image.array.models = station.Cameras.map(
-        (x) => ImageControlCreater.Create(x)!
+      this.image.array.models = station.Cameras.map((x) =>
+        ImageControlCreater.Create(x)
       );
     }
     this.image.array.show = true;

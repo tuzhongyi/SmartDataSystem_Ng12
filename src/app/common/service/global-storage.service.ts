@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { wait } from '../tools/tool';
 import { LocalStorageService } from './local-storage.service';
 
@@ -33,7 +34,17 @@ export class GlobalStorageService {
   get divisionType() {
     return this._divisionType;
   }
-
+  private _defaultResourceType: UserResourceType = UserResourceType.None;
+  public get defaultResourceType() {
+    if (this._defaultResourceType == UserResourceType.None) {
+      let user = this.localStorage.user;
+      this._defaultResourceType =
+        user.Resources && user.Resources.length > 0
+          ? user.Resources[0].ResourceType
+          : UserResourceType.None;
+    }
+    return this._defaultResourceType;
+  }
   private _defaultDivisionType: DivisionType = DivisionType.None;
   public get defaultDivisionType() {
     if (this._defaultDivisionType == DivisionType.None) {

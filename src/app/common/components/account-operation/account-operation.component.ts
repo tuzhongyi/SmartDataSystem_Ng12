@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
@@ -9,6 +9,7 @@ import {
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/user.model';
 import { AccountOperationDisplay } from './account-operation.model';
 import { AccountOperationService } from './account-operation.service';
@@ -20,10 +21,10 @@ import { AccountOperationService } from './account-operation.service';
   providers: [AccountOperationService],
 })
 export class AccountOperationComponent implements OnInit {
-  @Output()
-  changePassword: EventEmitter<void> = new EventEmitter();
-  @Output()
-  bindMobile: EventEmitter<void> = new EventEmitter();
+  @Input() hasGuide: boolean = false;
+  @Output() changePassword: EventEmitter<void> = new EventEmitter();
+  @Output() bindMobile: EventEmitter<void> = new EventEmitter();
+  @Output() guide: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private session: SessionStorageService,
@@ -57,9 +58,9 @@ export class AccountOperationComponent implements OnInit {
     this.userName = userName;
 
     this.display.changePassword =
-      this.global.divisionType === DivisionType.Committees;
+      this.global.defaultDivisionType === DivisionType.Committees;
     this.display.bindMobile =
-      this.global.divisionType === DivisionType.Committees;
+      this.global.defaultDivisionType === DivisionType.Committees;
   }
   logoutHandler() {
     this.session.clear();
@@ -75,7 +76,11 @@ export class AccountOperationComponent implements OnInit {
     // }
   }
   navigateToHelp() {
-    window.open('http://garbage01.51hws.com/help/help.html');
+    let index = 1;
+    if (this.global.defaultResourceType === UserResourceType.Committees) {
+      index = 2;
+    }
+    window.open(`/help/${index}/help.html`);
   }
   onpasswordchang(event: Event) {
     this.changePassword.emit();
@@ -88,5 +93,8 @@ export class AccountOperationComponent implements OnInit {
   }
   toVehicle() {
     this.router.navigateByUrl(RoutePath.garbage_vehicle);
+  }
+  toguide() {
+    this.guide.emit();
   }
 }

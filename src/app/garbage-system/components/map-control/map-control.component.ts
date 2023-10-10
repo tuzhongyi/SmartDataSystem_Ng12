@@ -16,7 +16,6 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
-import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -40,6 +39,7 @@ import { AMapClient } from './business/amap/amap.client';
 import { AMapEvent } from './business/amap/amap.event';
 import { AMapService } from './business/amap/amap.service';
 import { MapControlAIDeviceBusiness } from './business/map-ai-device.business';
+import { MapControlGuideBusiness } from './business/map-control-guide.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
 import { ListPanelConverter } from './converter/map-list-panel.converter';
@@ -71,33 +71,67 @@ declare var $: any;
     ListPanelConverter,
     ListPanelBusiness,
     PointInfoPanelBusiness,
+    MapControlGuideBusiness,
   ],
 })
 export class MapControlComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
-  //#region Output
-  @Output()
-  VideoPlay: EventEmitter<Camera> = new EventEmitter();
-  @Output()
-  patrol: EventEmitter<void> = new EventEmitter();
-  // 垃圾落地记录
-  @Output()
-  illegalDropClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  // 混合投放记录
-  @Output()
-  mixedIntoClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  // 小包垃圾滞留
-  @Output()
-  garbageCountClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  // 垃圾滞留投放点
-  @Output()
-  garbageRetentionClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  @Output()
-  garbageFullClicked: EventEmitter<GarbageStation> = new EventEmitter();
-  @Input()
-  position?: EventEmitter<GarbageStation>;
+  @Input() position?: EventEmitter<GarbageStation>;
+  @Input() filting?: boolean;
 
+  @Input()
+  public set showmenu(v: boolean) {
+    if (v) {
+      this.guide.showmenu();
+    } else {
+      this.guide.closemenu();
+    }
+  }
+  @Input()
+  public set showinfo(v: boolean) {
+    if (v) {
+      this.guide.showpointinfo();
+    } else {
+      this.guide.closepointinfo();
+    }
+  }
+  @Input()
+  public set showcameras(v: boolean) {
+    if (v) {
+      this.guide.station.then((station) => {
+        this.onPointDoubleClicked(station);
+      });
+    } else {
+      this.onMapClicked();
+    }
+  }
+  @Input()
+  public set showvideo(v: boolean) {
+    if (v) {
+      this.guide.station.then((station) => {
+        let camera = station.Cameras![0];
+        this.VideoPlay.emit(camera);
+      });
+    }
+  }
+
+  //#region Output
+  @Output() VideoPlay: EventEmitter<Camera> = new EventEmitter();
+  @Output() patrol: EventEmitter<void> = new EventEmitter();
+  // 垃圾落地记录
+  @Output() illegalDropClicked: EventEmitter<GarbageStation> =
+    new EventEmitter();
+  // 混合投放记录
+  @Output() mixedIntoClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  // 小包垃圾滞留
+  @Output() garbageCountClicked: EventEmitter<GarbageStation> =
+    new EventEmitter();
+  // 垃圾滞留投放点
+  @Output() garbageRetentionClicked: EventEmitter<GarbageStation> =
+    new EventEmitter();
+  @Output() garbageFullClicked: EventEmitter<GarbageStation> =
+    new EventEmitter();
   //#endregion
   //#region ViewChild
   @ViewChild('iframe')
@@ -184,7 +218,8 @@ export class MapControlComponent
     public panel: ListPanelBusiness,
     public info: PointInfoPanelBusiness,
     private device: MapControlAIDeviceBusiness,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private guide: MapControlGuideBusiness
   ) {
     this.display = this.initDisplay();
     // {
@@ -359,20 +394,20 @@ export class MapControlComponent
     }
   }
 
-  toconfirm(device: AIGarbageDevice) {
-    this.window.confirm.model = device;
+  toconfirm(model: GarbageStation) {
+    this.window.confirm.model = model;
     this.window.confirm.show = true;
   }
 
-  ondevicewindowpoweron(device?: AIGarbageDevice) {
-    if (device) {
+  ondevicewindowpoweron(model?: GarbageStation) {
+    if (model) {
       this.device
-        .command(device.Id)
+        .command(model.Id)
         .then((x) => {
           this.toastr.success('操作成功');
         })
         .catch((x) => {
-          console.log(device, x);
+          console.log(model, x);
           this.toastr.error('操作失败');
         })
         .finally(() => {

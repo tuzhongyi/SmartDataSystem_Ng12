@@ -17,13 +17,24 @@ export class DisposalRankComponent
 {
   @Input() load?: EventEmitter<void>;
   @Output() itemClickedEvent: EventEmitter<RankModel> = new EventEmitter();
+  @Input() set type(v: DisposalRankType | undefined) {
+    if (v === undefined) {
+      if (this.ranktype !== DisposalRankType.score) {
+        this.ranktype = DisposalRankType.score;
+        this.loadData();
+      }
+    } else {
+      this.ranktype = v;
+      this.loadData();
+    }
+  }
 
-  public title: string = '小包垃圾处置达标率排名';
+  public title: string = '今日小包垃圾处置评分排名';
 
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
 
-  type: DisposalRankType = DisposalRankType.score;
+  ranktype: DisposalRankType = DisposalRankType.score;
   Type = DisposalRankType;
 
   constructor(business: DisposalRankBusiness) {
@@ -40,15 +51,15 @@ export class DisposalRankComponent
     this.loadData();
   }
   async loadData() {
-    this.rankData = await this.business.load(this.type);
+    this.rankData = await this.business.load(this.ranktype);
   }
 
   onItemClicked(model: RankModel) {
     this.itemClickedEvent.emit(model);
   }
   onchange() {
-    if (this.type === DisposalRankType.score) {
-      this.title = '小包垃圾处置达标率排名';
+    if (this.ranktype === DisposalRankType.score) {
+      this.title = '今日小包垃圾处置评分排名';
     } else {
       this.title = '今日小包垃圾处置达标率排名';
     }

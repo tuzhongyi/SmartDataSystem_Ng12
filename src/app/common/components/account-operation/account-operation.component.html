@@ -46,7 +46,20 @@
   >
     <i class="howell-icon-dustcart"></i>
   </div>
-  <div class="operation-item" (click)="navigateToHelp()">
+  <div class="operation-item" (click)="navigateToHelp()" *ngIf="!hasGuide">
     <mat-icon> help </mat-icon>
+  </div>
+  <div class="operation-item" [matMenuTriggerFor]="menuHelp" *ngIf="hasGuide">
+    <mat-icon> help </mat-icon>
+    <mat-menu #menuHelp="matMenu">
+      <button mat-menu-item (click)="navigateToHelp()">
+        <i class="mdi mdi-help-circle-outline" style="margin-right: 5px"></i>
+        帮助
+      </button>
+      <button mat-menu-item (click)="toguide()">
+        <i class="mdi mdi-lightbulb-on-outline" style="margin-right: 5px"> </i>
+        引导
+      </button>
+    </mat-menu>
   </div>
 </div>

@@ -100,7 +100,14 @@ class ConfigService {
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
-    return this.basic.http.getString(url).toPromise();
+    return this.basic.http
+      .getString(url)
+      .toPromise()
+      .catch((x) => {
+        if (x.status === 200) {
+          return x.error.text;
+        }
+      });
   }
 
   update(userId: string, type: UserConfigType, base64: string): Promise<Fault> {

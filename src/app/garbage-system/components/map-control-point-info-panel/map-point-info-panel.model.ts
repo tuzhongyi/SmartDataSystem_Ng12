@@ -1,6 +1,6 @@
 import { StationType } from 'src/app/enum/station-type.enum';
-import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { ConstructionData } from 'src/app/network/model/construction-data';
+import { GarbageDeviceData } from 'src/app/network/model/garbage-device-data.model';
 import { Member } from 'src/app/network/model/member.model';
 import { IModel } from 'src/app/network/model/model.interface';
 
@@ -23,7 +23,7 @@ export class MapPointInfoPanelModel<T = IModel> {
   largeWaste?: LargeWastePointInfoPanelModel;
   type: StationType = StationType.Garbage;
   location: string = '';
-  device?: Promise<AIGarbageDevice>;
+  device?: GarbageDeviceData;
 }
 
 export class LargeWastePointInfoPanelModel extends ConstructionData {}

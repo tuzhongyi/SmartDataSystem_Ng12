@@ -4,7 +4,12 @@
       <div class="video-control-window-header">
         <div class="title">{{ title }}</div>
         <div class="operation">
-          <div class="mode" (click)="modechange()">
+          <div
+            class="mode"
+            (click)="
+              modechange(_mode === PlayMode.vod ? PlayMode.live : PlayMode.vod)
+            "
+          >
             <i class="howell-icon-replay"></i>
           </div>
           <div class="close-winow" (click)="onclose()">
@@ -14,7 +19,7 @@
       </div>
       <div
         class="video-control-window-content preview"
-        *ngIf="mode === PlayMode.live"
+        *ngIf="_mode === PlayMode.live"
       >
         <div class="video">
           <app-video-player [model]="preview"></app-video-player>
@@ -26,7 +31,7 @@
       </div>
       <div
         class="video-control-window-content playback"
-        *ngIf="mode === PlayMode.vod"
+        *ngIf="_mode === PlayMode.vod"
       >
         <div class="video">
           <app-video-player [model]="playback"></app-video-player>

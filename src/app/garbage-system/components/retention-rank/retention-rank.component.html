@@ -2,11 +2,18 @@
   <div class="retention__head">
     <div class="title">{{ title }}</div>
     <div class="select-group" *ngIf="typeEnabled">
-      <app-select-control
+      <select
         class="retention-type"
-        [data]="retentionTypes"
-        (selectedChange)="onRetentionTypeSelected($event)"
-      ></app-select-control>
+        [(ngModel)]="retentionType"
+        (change)="onchange()"
+      >
+        <option [ngValue]="RetentionType.RetentionTime">
+          {{ Language.RetentionType(RetentionType.RetentionTime) }}
+        </option>
+        <option [ngValue]="RetentionType.RetentionStationNumber">
+          {{ Language.RetentionType(RetentionType.RetentionStationNumber) }}
+        </option>
+      </select>
     </div>
   </div>
   <app-rank

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MapControlButtonList } from './map-control-buttons.model';
 
 @Component({
@@ -16,6 +16,15 @@ export class MapControlButtonsComponent implements OnInit {
   @Output() station30in: EventEmitter<boolean> = new EventEmitter();
   @Output() station30out: EventEmitter<boolean> = new EventEmitter();
 
+  public get filting(): boolean {
+    return this.model.filter.selected;
+  }
+  @Input()
+  public set filting(v: boolean | undefined) {
+    if (v === undefined) return;
+    this.model.filter.selected = v;
+  }
+
   constructor() {}
 
   model = new MapControlButtonList();
@@ -32,6 +41,23 @@ export class MapControlButtonsComponent implements OnInit {
     this.model.stationerror.select.subscribe(this.stationerror);
     this.model.station30in.select.subscribe(this.station30in);
     this.model.station30out.select.subscribe(this.station30out);
+    this.model.filter.select.subscribe((x) => {
+      this.model.construction.display = x;
+      this.model.stationnormal.display = x;
+      this.model.stationfull.display = x;
+      this.model.stationdrop.display = x;
+      this.model.stationerror.display = x;
+      this.model.station30in.display = x;
+      this.model.station30out.display = x;
+      if (x === false) {
+        this.model.stationnormal.selected = true;
+        this.model.stationfull.selected = true;
+        this.model.stationdrop.selected = true;
+        this.model.stationerror.selected = true;
+        this.model.station30in.selected = false;
+        this.model.station30out.selected = false;
+      }
+    });
   }
 
   onpatrol() {
@@ -39,21 +65,6 @@ export class MapControlButtonsComponent implements OnInit {
   }
   onfilter() {
     this.model.filter.selected = !this.model.filter.selected;
-    this.model.construction.display = this.model.filter.selected;
-    this.model.stationnormal.display = this.model.filter.selected;
-    this.model.stationfull.display = this.model.filter.selected;
-    this.model.stationdrop.display = this.model.filter.selected;
-    this.model.stationerror.display = this.model.filter.selected;
-    this.model.station30in.display = this.model.filter.selected;
-    this.model.station30out.display = this.model.filter.selected;
-    if (this.model.filter.selected === false) {
-      this.model.stationnormal.selected = true;
-      this.model.stationfull.selected = true;
-      this.model.stationdrop.selected = true;
-      this.model.stationerror.selected = true;
-      this.model.station30in.selected = false;
-      this.model.station30out.selected = false;
-    }
   }
   onconstruction() {
     this.model.construction.selected = !this.model.construction.selected;

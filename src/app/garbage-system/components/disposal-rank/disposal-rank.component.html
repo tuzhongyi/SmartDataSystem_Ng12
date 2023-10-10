@@ -2,7 +2,7 @@
   <div class="disposal__head">
     <div class="title">{{ title }}</div>
     <div>
-      <select [(ngModel)]="type" (change)="onchange()">
+      <select [(ngModel)]="ranktype" (change)="onchange()">
         <option [ngValue]="Type.score">评分</option>
         <option [ngValue]="Type.ratio">达标率</option>
       </select>

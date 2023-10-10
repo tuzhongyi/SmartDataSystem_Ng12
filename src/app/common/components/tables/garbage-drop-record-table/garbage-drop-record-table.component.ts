@@ -48,6 +48,13 @@ export class GarbageDropRecordTableComponent
     new EventEmitter();
   @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
     new EventEmitter();
+
+  constructor(record: GarbageDropRecordTableBusiness) {
+    super();
+    this.business = record;
+    this.filter = new GarbageDropRecordFilter();
+  }
+
   widths = [
     '12%',
     '10%',
@@ -65,13 +72,6 @@ export class GarbageDropRecordTableComponent
 
   loading = false;
   selected?: GarbageDropRecordViewModel;
-
-  constructor(record: GarbageDropRecordTableBusiness) {
-    super();
-    this.business = record;
-    this.filter = new GarbageDropRecordFilter();
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load && changes.load.firstChange && this.load) {
       this.load.subscribe((x) => {

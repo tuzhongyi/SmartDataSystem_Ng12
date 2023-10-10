@@ -22,15 +22,19 @@
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
         </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas">
+          <tr
+            *ngFor="let item of datas"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
             <td>
               <div class="img-list">
-                <div class="img" *ngFor="let img of item.images | async">
-                  <app-image-control
-                    [nosignal]="false"
-                    [model]="img"
-                    (Click)="imageClick(item, img)"
-                  ></app-image-control>
+                <div
+                  class="img"
+                  *ngFor="let url of item.urls | async; let index = index"
+                  (click)="onimage($event, item, index)"
+                >
+                  <img [src]="url" alt="" />
                 </div>
               </div>
             </td>

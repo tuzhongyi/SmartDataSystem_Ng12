@@ -161,6 +161,7 @@ declare namespace CesiumMap {
     /// <summary>创建点位信息</summary>
     /// <param name="point" type="CesiumMapClient.Point">点位信息</param>
     Create(point: CesiumDataController.Point): CesiumDataController.Point;
+    RightClick(pointId: string): void;
 
     Set(opts: CesiumDataController.PointOptions[]): CesiumDataController.Point;
     Select(pointId: string): CesiumDataController.Point;
@@ -197,6 +198,8 @@ declare namespace CesiumMap {
     Disable(): void;
     AddItem(text: string, fn: Function, num: number): void;
     RemoveItem(text: string, fn: Function): void;
+    Open(point: CesiumDataController.Point): void;
+    Close(): void;
   }
 
   interface EventTriggers {

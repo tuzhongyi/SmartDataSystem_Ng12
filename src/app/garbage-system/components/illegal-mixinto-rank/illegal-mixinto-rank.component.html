@@ -3,17 +3,37 @@
     <div class="title">{{ title }}</div>
 
     <div class="select-group">
-      <app-select-control
+      <select
         class="resource-type"
+        [(ngModel)]="resourceType"
+        (change)="onchange()"
         *ngIf="resourceTypeDisplay"
-        [data]="resourceTypes"
-        (selectedChange)="onResourceTypeSelected($event)"
-      ></app-select-control>
-      <app-select-control
-        class="event-type"
-        [data]="eventTypes"
-        (selectedChange)="onEventTypeSelected($event)"
-      ></app-select-control>
+      >
+        <option
+          [ngValue]="UserResourceType.County"
+          *ngIf="global.divisionType === DivisionType.City"
+        >
+          {{ Language.UserResourceType(UserResourceType.County) }}
+        </option>
+        <option [ngValue]="UserResourceType.Committees">
+          {{ Language.UserResourceType(UserResourceType.Committees) }}
+        </option>
+        <option
+          [ngValue]="UserResourceType.Station"
+          *ngIf="global.divisionType !== DivisionType.City"
+        >
+          {{ Language.UserResourceType(UserResourceType.Station) }}
+        </option>
+      </select>
+
+      <select class="event-type" [(ngModel)]="eventType" (change)="onchange()">
+        <option [ngValue]="EventType.IllegalDrop">
+          {{ Language.EventType(EventType.IllegalDrop) }}
+        </option>
+        <option [ngValue]="EventType.MixedInto">
+          {{ Language.EventType(EventType.MixedInto) }}
+        </option>
+      </select>
     </div>
   </div>
   <app-rank [data]="rankData" (itemClickedEvent)="onItemClicked($event)">

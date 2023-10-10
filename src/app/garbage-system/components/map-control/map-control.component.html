@@ -65,6 +65,7 @@
 
 <div class="map-bar btn-list">
   <map-control-buttons
+    [filting]="filting"
     (patrol)="onPatrolClicked()"
     (construction)="amap.point.constructionview($event)"
     (stationnormal)="amap.point.stationnormalview($event)"

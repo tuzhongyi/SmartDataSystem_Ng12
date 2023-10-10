@@ -13,6 +13,7 @@ const PROXY_CONFIG = [
       '/video/',
       'ng-cli-ws',
       '/amap/',
+      '/help/',
     ],
     // target: 'http://iebs.51hws.cn',
     // target: 'http://192.168.21.241:9000',

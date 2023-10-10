@@ -1,3 +1,5 @@
+import { DeviceCommand } from '../device-command.model';
+
 export enum AIGarbageDeviceCommandNo {
   /** 	同步RFID卡号	1	*/
   SyncRfidCard = 1,
@@ -16,9 +18,7 @@ export enum AIGarbageDeviceCommandNo {
   /** 投放窗口上电	参数1：投放窗口编号[1-16] 15 */
   WindowPowerOn = 15,
 }
-export class AIGarbageDeviceCommand {
+export class AIGarbageDeviceCommand extends DeviceCommand {
   /**	Int32	命令编号	M */
   CommandNo!: AIGarbageDeviceCommandNo;
-  /**	Int32	参数1	O */
-  Parameter?: number;
 }

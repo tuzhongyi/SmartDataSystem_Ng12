@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
+import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
@@ -64,15 +65,14 @@ export class GarbageFullStationTableConverter
       return this.stationConverter.Convert(station);
     });
 
-    model.images = new Promise((resolve) => {
+    model.urls = new Promise((resolve) => {
       model.GarbageStation.then((station) => {
         if (station.Cameras) {
-          let cameras = station.Cameras.filter((x) => {
+          let all = station.Cameras.filter((x) => {
             let flags = new Flags(x.CameraUsage);
             return flags.contains(CameraUsage.GarbageFull);
-          });
-
-          resolve(this.converter.image.Convert(cameras));
+          }).map((x) => Medium.img(x.ImageUrl));
+          resolve(Promise.all(all));
         }
       });
     });

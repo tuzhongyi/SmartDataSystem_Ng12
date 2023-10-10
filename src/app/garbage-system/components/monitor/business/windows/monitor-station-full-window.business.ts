@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 
 import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { Flags } from 'src/app/common/tools/flags';
+import { ImageControlCreater } from 'src/app/converter/image-control.creater';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageFullEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -25,18 +28,29 @@ export class MonitorGarbageStationFullWindowBusiness extends WindowViewModel {
 
   eventCount = 0;
 
-  onimage(
-    model: ImageControlModelArray<
-      GarbageFullStationTableModel | EventRecordViewModel
-    >
+  async onimage(
+    args: PagedArgs<GarbageFullStationTableModel | EventRecordViewModel>
   ) {
     this.image.array.manualcapture =
-      model.data instanceof GarbageFullStationTableModel;
-    this.image.array.index = model.index;
-    if (model.models.length > 0) {
-      this.image.array.stationId = model.models[0].stationId;
+      args.data instanceof GarbageFullStationTableModel;
+    this.image.array.index = args.page.PageIndex;
+
+    if (args.data instanceof GarbageFullStationTableModel) {
+      let station = await args.data.GarbageStation;
+      this.image.array.stationId = station.Id;
+      if (station.Cameras) {
+        this.image.array.models = station.Cameras.filter((x) => {
+          let flags = new Flags(x.CameraUsage);
+          return flags.contains(CameraUsage.GarbageFull);
+        }).map((x) => ImageControlCreater.Create(x));
+      }
+    } else if (args.data instanceof EventRecordViewModel) {
+      let data = args.data as GarbageFullEventRecord;
+      this.image.array.stationId = data.Data.StationId;
+      this.image.array.models = ImageControlCreater.Create(data);
+      this.image.array.show = true;
+    } else {
     }
-    this.image.array.models = model.models;
     this.image.array.show = true;
   }
   onvideo(item: EventRecordViewModel) {

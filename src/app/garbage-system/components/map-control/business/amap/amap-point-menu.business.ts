@@ -90,4 +90,13 @@ export class AMapPointContextMenuBusiness {
 
     client.ContextMenu.Enable();
   }
+
+  async open(point: CesiumDataController.Point) {
+    let client = await this.amap.client;
+    client.ContextMenu.Open(point);
+  }
+  async close() {
+    let client = await this.amap.client;
+    client.ContextMenu.Close();
+  }
 }

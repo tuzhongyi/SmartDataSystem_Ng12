@@ -6,7 +6,11 @@
         <app-total-waste (details)="onweight($event)"></app-total-waste>
       </div>
       <common-time></common-time>
-      <app-account-operation *ngIf="!HideButton"></app-account-operation>
+      <app-account-operation
+        *ngIf="!HideButton"
+        [hasGuide]="true"
+        (guide)="guide.open()"
+      ></app-account-operation>
     </mat-toolbar>
   </div>
   <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
@@ -30,6 +34,21 @@
         </div>
         <div class="map-control">
           <app-map-control
+            [filting]="
+              guide.show && guide.index === guide.Index.map_point_filter
+            "
+            [showmenu]="
+              guide.show && guide.index === guide.Index.map_point_mune
+            "
+            [showinfo]="
+              guide.show && guide.index === guide.Index.map_point_info
+            "
+            [showcameras]="
+              guide.show && guide.index >= guide.Index.map_point_cameras
+            "
+            [showvideo]="
+              guide.show && guide.index >= guide.Index.map_video_preview
+            "
             (patrol)="map.onpatrol()"
             (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)"
@@ -55,6 +74,13 @@
         ></app-device-state> -->
         <main-station-count
           [load]="load"
+          [index]="
+            guide.index === guide.Index.station_count
+              ? 1
+              : guide.index === guide.Index.device_status
+              ? 0
+              : undefined
+          "
           (devicestateclick)="trigger.deviceState.onclick($event)"
         ></main-station-count>
       </div>
@@ -63,6 +89,13 @@
       <div class="monitor-body__wrapper">
         <app-illegal-mixinto-rank
           [load]="load"
+          [type]="
+            guide.index === guide.Index.mixed_into_rank
+              ? EventType.MixedInto
+              : guide.index === guide.Index.illegal_drop_rank
+              ? EventType.IllegalDrop
+              : undefined
+          "
           (itemClickedEvent)="trigger.illegalMixintoRank.onItemClicked($event)"
         >
         </app-illegal-mixinto-rank>
@@ -72,6 +105,13 @@
       <div class="monitor-body__wrapper">
         <app-retention-rank
           [load]="load"
+          [type]="
+            guide.index === guide.Index.today_retention_time
+              ? 0
+              : guide.index === guide.Index.today_retention_number
+              ? 1
+              : undefined
+          "
           (Click)="trigger.retentionRank.onclick($event)"
         ></app-retention-rank>
       </div>
@@ -80,6 +120,13 @@
       <div class="monitor-body__wrapper">
         <app-disposal-rank
           [load]="load"
+          [type]="
+            guide.index === guide.Index.score_rank
+              ? 0
+              : guide.index === guide.Index.ratio_rank
+              ? 1
+              : undefined
+          "
           (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
         ></app-disposal-rank>
       </div>
@@ -102,7 +149,7 @@
         <howell-event-statistic
           [load]="load"
           [title]="'今日混合投放'"
-          [type]="mixIntoType"
+          [type]="EventType.MixedInto"
         ></howell-event-statistic>
       </div>
     </div>
@@ -118,9 +165,17 @@
 </div>
 
 <app-video-control-window
+  *ngIf="video.show"
   [model]="video.model"
   [window]="video"
   [title]="video.title"
+  [mode]="
+    guide.index === guide.Index.map_video_preview
+      ? PlayMode.live
+      : guide.index === guide.Index.map_video_playback
+      ? PlayMode.vod
+      : undefined
+  "
   (download)="video.ondownload($event)"
 >
 </app-video-control-window>
@@ -275,3 +330,38 @@
   <garbage-station-weight-index [type]="window.weight.type">
   </garbage-station-weight-index>
 </app-window>
+
+<div class="guide" *ngIf="guide.show">
+  <div class="top"></div>
+  <img [src]="guide.src" alt="" />
+  <div class="buttons" [style.left]="guide.x" [style.top]="guide.y">
+    <button
+      class="hw-blue-btn"
+      *ngIf="guide.index < guide.last"
+      (click)="guide.finish()"
+    >
+      跳过
+    </button>
+    <button
+      class="hw-green-btn"
+      *ngIf="guide.index > guide.first"
+      (click)="guide.prev()"
+    >
+      上一步
+    </button>
+    <button
+      class="hw-green-btn"
+      *ngIf="guide.index < guide.last"
+      (click)="guide.next()"
+    >
+      下一步
+    </button>
+    <button
+      class="hw-blue-btn"
+      *ngIf="guide.index === guide.last"
+      (click)="guide.finish()"
+    >
+      完成
+    </button>
+  </div>
+</div>

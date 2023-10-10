@@ -98,8 +98,7 @@
       *ngIf="
         model.type === StationType.Rfid &&
         model.device &&
-        (model.device | async)?.Status &&
-        (model.device | async)?.Status?.OnlineState === 0
+        model.device.OnlineState === 0
       "
     >
       <div class="item-name">
@@ -110,14 +109,11 @@
           <div
             class="info-note"
             [ngClass]="{
-              'powder-red-text':
-                (model.device | async)?.Status?.ExhaustFan === 0,
-              'green-text': (model.device | async)?.Status?.ExhaustFan === 1
+              'powder-red-text': model.device.ExhaustFan === 0,
+              'green-text': model.device.ExhaustFan === 1
             }"
           >
-            {{
-              (model.device | async)?.Status?.ExhaustFan === 0 ? "关闭" : "打开"
-            }}
+            {{ model.device.ExhaustFan === 0 ? "关闭" : "打开" }}
           </div>
         </div>
       </div>
@@ -129,14 +125,11 @@
           <div
             class="info-note"
             [ngClass]="{
-              'powder-red-text':
-                (model.device | async)?.Status?.RfidReader === 1,
-              'green-text': (model.device | async)?.Status?.RfidReader === 0
+              'powder-red-text': model.device.RfidReader === 1,
+              'green-text': model.device.RfidReader === 0
             }"
           >
-            {{
-              (model.device | async)?.Status?.RfidReader === 0 ? "正常" : "异常"
-            }}
+            {{ model.device.RfidReader === 0 ? "正常" : "异常" }}
           </div>
         </div>
       </div>
@@ -150,7 +143,9 @@
     <div class="left">
       <div class="number">
         {{
-          model.GarbageStationGrade ? (model.GarbageStationGrade | async) : "0"
+          model.statistic === undefined
+            ? 0
+            : (model.statistic | async)?.GarbageStationGrade
         }}
       </div>
       <div class="suffix">分</div>
@@ -173,7 +168,7 @@
         <a class="hw-link-underline value green-text a-text">{{
           model.statistic === undefined
             ? 0
-            : (model.statistic | async)!.GarbageInterval
+            : (model.statistic | async)?.GarbageInterval
         }}</a>
       </div>
       <div
@@ -208,7 +203,7 @@
         <a class="hw-link-underline value light-purple-text a-text">{{
           model.statistic === undefined
             ? 0
-            : (model.statistic | async)!.MixedIntoCount
+            : (model.statistic | async)?.MixedIntoCount
         }}</a>
       </div>
     </div>
@@ -235,7 +230,7 @@
           <a class="hw-link-underline value green-text a-text">{{
             model.statistic === undefined
               ? 0
-              : (model.statistic | async)!.GarbageInterval
+              : (model.statistic | async)?.GarbageInterval
           }}</a>
         </div>
       </div>
@@ -250,7 +245,7 @@
           <a class="hw-link-underline value powder-red-text a-text">{{
             model.statistic === undefined
               ? 0
-              : (model.statistic | async)!.IllegalDropCount
+              : (model.statistic | async)?.IllegalDropCount
           }}</a>
         </div>
         <div
@@ -263,7 +258,7 @@
           <a class="hw-link-underline value light-purple-text a-text">{{
             model.statistic === undefined
               ? 0
-              : (model.statistic | async)!.MixedIntoCount
+              : (model.statistic | async)?.MixedIntoCount
           }}</a>
         </div>
       </div>

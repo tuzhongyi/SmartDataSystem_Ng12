@@ -1,6 +1,5 @@
 import { EventEmitter } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
 export class MapControlToolButton {
@@ -84,5 +83,5 @@ class MapControlConfirmWindow extends WindowViewModel {
     width: '400px',
     height: 'auto',
   };
-  model?: AIGarbageDevice;
+  model?: GarbageStation;
 }

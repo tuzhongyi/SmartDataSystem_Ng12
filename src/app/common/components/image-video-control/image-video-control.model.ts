@@ -1,3 +1,4 @@
+import { StreamType } from 'src/app/enum/stream-type.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from '../../../view-model/image-control.model';
 
@@ -27,4 +28,8 @@ export class ImageVideoControlOperation {
 
 export class PlaybackInterval extends DurationParams {
   CameraId!: string;
+}
+
+export class UserVideoConfig {
+  stream: StreamType = StreamType.main;
 }

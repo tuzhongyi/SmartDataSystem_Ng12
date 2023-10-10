@@ -1,5 +1,6 @@
 import { BaseUrl } from '../base.url';
 import { CameraInnerUrl } from './inner/camera.url';
+import { DeviceInnerUrl } from './inner/device.url';
 import { EventNumberInnerUrl } from './inner/event_number.url';
 import { MemberInnerUrl } from './inner/member.url';
 import { StatisticInnerUrl } from './inner/statistic.url';
@@ -52,5 +53,9 @@ export class GarbageStationUrl {
   }
   static volume(id: string) {
     return new VolumeInnerUrl(GarbageStationUrl.item(id));
+  }
+
+  static device(id: string) {
+    return new DeviceInnerUrl(GarbageStationUrl.item(id));
   }
 }

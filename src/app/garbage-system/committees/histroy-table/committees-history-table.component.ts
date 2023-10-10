@@ -7,6 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { EventRecordConverter } from 'src/app/common/components/tables/event-record/event-record.converter';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
@@ -26,7 +27,11 @@ import { CommitteesHistroyTableService } from './committees-history-table.servic
   selector: 'app-histroy-table',
   templateUrl: './committees-history-table.component.html',
   styleUrls: ['./committees-history-table.component.css'],
-  providers: [CommitteesHistroyTableService, CommitteesHistoryTableConverter],
+  providers: [
+    CommitteesHistroyTableService,
+    EventRecordConverter,
+    CommitteesHistoryTableConverter,
+  ],
 })
 export class CommitteesHistroyTableComponent
   implements
