@@ -73,6 +73,7 @@ export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
         }
       }
       this.video.title = name ?? '';
+      this.video.mask = true;
       this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
     } else if (item instanceof AIGarbageRfidCardRecord) {
       this.media.multiple.args = new MediaMultipleWindowArgs();

@@ -17,6 +17,14 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
   };
 
   model?: VideoModel;
+  mask: boolean = true;
+  get zindex() {
+    if (this.mask) {
+      return undefined;
+    } else {
+      return 10000;
+    }
+  }
 
   async playback(id: string, duration: Duration) {
     let url = await this.sr.playback(id, {

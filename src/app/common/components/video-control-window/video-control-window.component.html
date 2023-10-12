@@ -1,4 +1,9 @@
-<app-window [Model]="window" [style]="window.style" [CloseButton]="false">
+<app-window
+  [Model]="window"
+  [mask]="mask"
+  [style]="window.style"
+  [CloseButton]="false"
+>
   <ng-container *ngIf="window.show">
     <div class="video-control-window">
       <div class="video-control-window-header">

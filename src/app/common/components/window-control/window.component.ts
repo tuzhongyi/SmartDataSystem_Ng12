@@ -19,6 +19,7 @@ export class WindowComponent implements OnInit {
 
   @Input() CloseButton = true;
   @Input() mask = true;
+  @Input() zindex?: number;
 
   private _style: any = {
     width: '80%',

@@ -53,19 +53,19 @@
 
 
 
-.history-table .filter {
+.history-table .buttons {
   width: 33px;
   margin-right: -10px;
 }
 
-.history-table .filter .button {
+.history-table .buttons .button {
   height: 90px;
   line-height: 18px;
   margin-bottom: 10px;
   cursor: pointer;
 }
 
-.history-table .filter .button>.background {
+.history-table .buttons .button>.background {
   clip-path: polygon(5px 1px,
       calc(100% - 1px) 1px,
       calc(100% - 1px) calc(100% - 5px),
@@ -78,25 +78,25 @@
   background-color: rgba(58, 147, 255, 0.1);
 }
 
-.history-table .filter .button>.background._1 {}
+.history-table .buttons .button>.background._1 {}
 
-.history-table .filter .button>.background._2 {
+.history-table .buttons .button>.background._2 {
   transform: translate(-3px, -3px);
 }
 
-.history-table .filter .button:hover>.background {
+.history-table .buttons .button:hover>.background {
   background-color: rgba(58, 147, 255, 0.2);
 }
 
-.history-table .filter .button.selected>.background {
+.history-table .buttons .button.selected>.background {
   background-color: rgba(58, 147, 255, 0.4);
 }
 
-.history-table .filter .button.selected>.text {
+.history-table .buttons .button.selected>.text {
   color: white;
 }
 
-.history-table .filter .button>.text {
+.history-table .buttons .button>.text {
   padding: 6px;
   width: 30px;
   writing-mode: horizontal-tb;

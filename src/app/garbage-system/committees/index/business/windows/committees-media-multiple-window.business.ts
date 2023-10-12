@@ -10,7 +10,7 @@ export class CommitteesMediaMultipleWindowBusiness extends WindowViewModel {
     top: '56%',
     padding: '10px 20px',
   };
-
+  fullplay = true;
   args?: MediaMultipleWindowArgs;
   date?: Date;
 }

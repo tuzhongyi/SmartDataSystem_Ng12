@@ -16,12 +16,25 @@
       </div>
       <div class="filter-item">
         <span>行政区</span>
-        <app-select-control
-          class="list-type-select"
-          [data]="userTypes"
-          (selectedChange)="onresourcetype($event)"
-        >
-        </app-select-control>
+        <select class="list-type-select" [(ngModel)]="userType">
+          <option
+            [ngValue]="UserResourceType.County"
+            *ngIf="global.defaultResourceType === UserResourceType.City"
+          >
+            {{ Language.UserResourceType(UserResourceType.County) }}
+          </option>
+          <option
+            [ngValue]="UserResourceType.Committees"
+            *ngIf="
+              !(global.defaultResourceType === UserResourceType.Committees)
+            "
+          >
+            {{ Language.UserResourceType(UserResourceType.Committees) }}
+          </option>
+          <option [ngValue]="UserResourceType.Station">
+            {{ Language.UserResourceType(UserResourceType.Station) }}
+          </option>
+        </select>
       </div>
       <button class="hw-blue-btn search" (click)="search()">
         <i class="mdi mdi-magnify"></i> 查询
@@ -34,12 +47,17 @@
       </button>
     </div>
     <div class="selection">
-      <app-select-control
-        class="list-type-select"
-        [data]="units"
-        (selectedChange)="ontimeunit($event)"
-      >
-      </app-select-control>
+      <select class="list-type-select" [(ngModel)]="unit">
+        <option [ngValue]="TimeUnit.Day">
+          {{ Language.TimeUnit(TimeUnit.Day) }}
+        </option>
+        <option [ngValue]="TimeUnit.Week">
+          {{ Language.TimeUnit(TimeUnit.Week) }}
+        </option>
+        <option [ngValue]="TimeUnit.Month">
+          {{ Language.TimeUnit(TimeUnit.Month) }}
+        </option>
+      </select>
     </div>
   </div>
   <div class="event-record-count-content">

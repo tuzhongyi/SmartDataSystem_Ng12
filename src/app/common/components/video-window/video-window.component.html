@@ -1,4 +1,10 @@
-<app-window [Model]="window" [style]="window.style" [CloseButton]="false">
+<app-window
+  [Model]="window"
+  [mask]="mask"
+  [zindex]="zindex"
+  [style]="window.style"
+  [CloseButton]="false"
+>
   <div class="video-window">
     <div class="video-window-header">
       <div class="title">{{ title }}</div>

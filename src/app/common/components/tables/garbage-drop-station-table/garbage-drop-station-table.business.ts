@@ -1,6 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -9,7 +10,10 @@ import { GarbageStationRequestService } from 'src/app/network/request/garbage-st
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageDropStationPagedTableConverter } from './garbage-drop-station-table.converter';
-import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
+import {
+  GarbageDropStationTableModel,
+  GarbageDropStationTableSourceModel,
+} from './garbage-drop-station-table.model';
 
 @Injectable()
 export class GarbageDropStationTableBusiness
@@ -30,22 +34,26 @@ export class GarbageDropStationTableBusiness
   async load(
     page: PagedParams,
     opts?: SearchOptions,
-    divisionId?: string
+    source?: GarbageDropStationTableSourceModel
   ): Promise<PagedList<GarbageDropStationTableModel>> {
-    if (!divisionId) {
-      divisionId = this.storeService.divisionId;
+    let id = this.storeService.divisionId;
+    let type = DivisionType.None;
+    if (source && source.type !== DivisionType.None) {
+      if (source.id) {
+        id = source.id;
+      }
     }
-    let data = await this.getData(divisionId, page, opts);
+    let data = await this.getData(id, page, opts);
     let model = await this.Converter.Convert(data);
     return model;
   }
   getData(
-    divisionId: string,
+    id: string,
     page: PagedParams,
     opts?: SearchOptions
   ): Promise<PagedList<GarbageStationNumberStatistic>> {
     let params = new GetGarbageStationStatisticNumbersParams();
-    params.DivisionId = divisionId;
+    params.DivisionId = id;
     params = Object.assign(params, page);
     params.GarbageDrop = true;
     if (opts) {

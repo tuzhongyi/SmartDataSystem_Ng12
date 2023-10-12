@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DisposalCountArgs } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
 import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
+import { Division } from 'src/app/network/model/division.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { IndexWindowBussiness } from './index-window.business';
@@ -31,7 +33,14 @@ export class DeviceStateEventTrigger {
 export class RetentionRankEventTrigger {
   constructor(private window: IndexWindowBussiness) {}
   onclick(args: RetentionRankArgs) {
-    this.window.drop.divisionId = args.model.id;
+    let type = DivisionType.None;
+    if (args.model.data instanceof Division) {
+      type = args.model.data.DivisionType;
+    }
+    this.window.drop.source = {
+      id: args.model.id,
+      type: type,
+    };
     this.window.drop.show = true;
   }
 }

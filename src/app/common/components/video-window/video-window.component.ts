@@ -14,6 +14,8 @@ export class VideoWindowComponent implements OnInit {
 
   @Input()
   title: string = '';
+  @Input() mask = true;
+  @Input() zindex?: number;
   @Input()
   model?: VideoModel;
 

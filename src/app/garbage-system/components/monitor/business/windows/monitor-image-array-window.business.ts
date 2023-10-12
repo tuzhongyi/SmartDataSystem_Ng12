@@ -73,6 +73,7 @@ export class MonitorImageArrayWindowBusiness extends WindowViewModel {
   onvideo() {
     if (this.current) {
       this.video.title = this.current.name;
+      this.video.mask = false;
       if (this.current.eventTime) {
         this.video.playback(
           this.current.id,

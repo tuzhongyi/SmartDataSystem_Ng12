@@ -17,9 +17,9 @@ export class CommitteesIndexHistroyTableBussiness {
   Type = this.Types.IllegalDrop;
 
   OnPictureClicked(model: ImageControlModelArray) {
-    this.window.media.single.camera = model.models;
-    this.window.media.single.index = model.index;
-    this.window.media.single.show = true;
+    this.window.image.array.index = model.index;
+    this.window.image.array.models = model.models;
+    this.window.image.array.show = true;
   }
   OnVideoClicked(
     model: CommitteesHistoryTableViewModel<
@@ -28,6 +28,7 @@ export class CommitteesIndexHistroyTableBussiness {
   ) {
     if (model.ResourceId) {
       this.window.video.title = model.ResourceName ?? '';
+      this.window.video.mask = true;
       this.window.video.playback(
         model.ResourceId,
         DateTimeTool.beforeOrAfter(model.EventTime)

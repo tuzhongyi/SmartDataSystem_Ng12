@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 
@@ -15,7 +7,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station.model';
   templateUrl: './committees-navication.component.html',
   styleUrls: ['./committees-navication.component.css'],
 })
-export class CommitteesNavicationComponent implements OnInit, OnChanges {
+export class CommitteesNavicationComponent implements OnInit {
   @Input()
   Committees?: Division;
   @Input()
@@ -32,17 +24,14 @@ export class CommitteesNavicationComponent implements OnInit, OnChanges {
   OnCommitteesInfoClicked: EventEmitter<Division> = new EventEmitter();
 
   constructor() {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.Stations) {
-      if (this.Stations && this.Stations.length > 0) {
-        if (!this.StationSelected) {
-          this.StationClicked(this.Stations[0]);
-        }
+
+  ngOnInit() {
+    if (this.Stations && this.Stations.length > 0) {
+      if (!this.StationSelected) {
+        this.StationClicked(this.Stations[0]);
       }
     }
   }
-
-  ngOnInit() {}
 
   CommitteesClicked() {
     this.StationSelected = undefined;

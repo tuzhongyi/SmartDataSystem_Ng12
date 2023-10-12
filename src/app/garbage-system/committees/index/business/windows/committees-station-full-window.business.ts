@@ -31,35 +31,38 @@ export class CommitteesGarbageStationFullWindowBusiness extends WindowViewModel 
   async onimage(
     args: PagedArgs<GarbageFullStationTableModel | EventRecordViewModel>
   ) {
+    this.image.array.manualcapture =
+      args.data instanceof GarbageFullStationTableModel;
     this.image.array.index = args.page.PageIndex;
-    if (args.data instanceof GarbageFullEventRecord) {
-      let data = args.data as GarbageFullEventRecord;
-      this.image.array.models = ImageControlCreater.Create(data);
 
-      this.image.array.show = true;
-    } else if (args.data instanceof GarbageFullStationTableModel) {
+    if (args.data instanceof GarbageFullStationTableModel) {
       let station = await args.data.GarbageStation;
-
+      this.image.array.stationId = station.Id;
       if (station.Cameras) {
         this.image.array.models = station.Cameras.filter((x) => {
           let flags = new Flags(x.CameraUsage);
           return flags.contains(CameraUsage.GarbageFull);
         }).map((x) => ImageControlCreater.Create(x));
       }
-    }
-
-    if (this.image.array.models.length > 0) {
-      this.image.array.current = this.image.array.models[0];
+    } else if (args.data instanceof EventRecordViewModel) {
+      let data = args.data as GarbageFullEventRecord;
+      this.image.array.stationId = data.Data.StationId;
+      this.image.array.models = ImageControlCreater.Create(data);
+      this.image.array.show = true;
+    } else {
     }
     this.image.array.show = true;
   }
   onvideo(item: EventRecordViewModel) {
-    if (item.ResourceId) {
-      this.video.title = item.ResourceName ?? '';
-      this.video.playback(
-        item.ResourceId,
-        DateTimeTool.beforeOrAfter(item.EventTime)
-      );
+    let record = item as GarbageFullEventRecord;
+    let id = item.ResourceId ?? '';
+    let name = item.ResourceName;
+    if (record.Data.CameraImageUrls && record.Data.CameraImageUrls.length > 0) {
+      id = record.Data.CameraImageUrls[0].CameraId;
+      name = record.Data.CameraImageUrls[0].CameraName;
     }
+    this.video.title = name ?? '';
+    this.video.mask = true;
+    this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
   }
 }

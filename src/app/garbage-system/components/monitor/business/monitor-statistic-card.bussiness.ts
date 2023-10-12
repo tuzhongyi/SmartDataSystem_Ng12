@@ -76,7 +76,7 @@ export class MonitorStatisticCardBussiness
         this.window.station.show = true;
         break;
       case StatisticType.stationDrop:
-        this.window.drop.divisionId = undefined;
+        this.window.drop.source = undefined;
         this.window.drop.show = true;
         break;
       case StatisticType.stationFull:

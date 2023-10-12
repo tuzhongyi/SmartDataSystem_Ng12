@@ -115,6 +115,13 @@
     </div>
   </div>
 </div>
+<app-video-control-window
+  *ngIf="window.video.show"
+  [window]="window.video"
+  [style]="window.video.style"
+  [title]="window.video.title"
+  [mask]="window.video.mask"
+></app-video-control-window>
 <!-- 
 <app-video-window
   [model]="video.model"
@@ -124,20 +131,14 @@
 >
 </app-video-window>
 
-
-
-
-
-
-
-
-
-
-
  -->
 
-<app-window [Model]="window.mobile" [style]="window.mobile.styles">
-  <ng-container *ngIf="window.mobile.show">
+<app-window
+  *ngIf="window.mobile.show"
+  [Model]="window.mobile"
+  [style]="window.mobile.styles"
+>
+  <ng-container>
     <app-mobile-change
       (OnBinded)="window.mobile.onBinded()"
       (OnCancel)="window.mobile.onCancel()"
@@ -147,11 +148,12 @@
   </ng-container>
 </app-window>
 <app-window
+  *ngIf="window.password.show"
   [Model]="window.password"
   [style]="window.password.styles"
   [CloseButton]="window.password.closeable"
 >
-  <ng-container *ngIf="window.password.show">
+  <ng-container>
     <app-password-change
       (OnChanged)="window.password.onChanged()"
       (OnCancel)="window.password.onCancel()"
@@ -159,14 +161,32 @@
     </app-password-change>
   </ng-container>
 </app-window>
-<app-window [Model]="window.summary" [style]="window.summary.style">
-  <ng-container *ngIf="window.summary.show">
+<app-window
+  *ngIf="window.summary.show"
+  [Model]="window.summary"
+  [style]="window.summary.style"
+>
+  <ng-container>
     <app-statistic-summary
       [Committees]="navication.committees"
       [Stations]="navication.stations"
     ></app-statistic-summary>
   </ng-container>
 </app-window>
+
+<howell-event-record-window
+  *ngIf="window.record.show"
+  [Model]="window.record"
+  [style]="window.record.style"
+  [type]="window.record.type"
+  [stationId]="window.record.stationId"
+  [divisionId]="window.record.divisionId"
+  (image)="window.record.onimage($event)"
+  (video)="window.record.onvideo($event)"
+  [get]="window.image.page.getData"
+  (got)="window.image.page.gotData($event)"
+>
+</howell-event-record-window>
 
 <howell-device-list-window
   *ngIf="window.device.show"
@@ -176,6 +196,25 @@
   (image)="window.device.onimage($event)"
 >
 </howell-device-list-window>
+
+<howell-garbage-drop-station-window
+  *ngIf="window.drop.show"
+  [Model]="window.drop"
+  [style]="window.drop.style"
+  [source]="window.drop.source"
+  (image)="window.drop.onimage($event)"
+>
+</howell-garbage-drop-station-window>
+
+<howell-garbage-full-station-window
+  *ngIf="window.full.show"
+  [Model]="window.full"
+  [style]="window.full.style"
+  (image)="window.full.onimage($event)"
+  (video)="window.full.onvideo($event)"
+>
+</howell-garbage-full-station-window>
+
 <howell-garbage-station-window
   *ngIf="window.stationInfo.show"
   [Model]="window.stationInfo"
@@ -183,49 +222,29 @@
   [index]="window.stationInfo.index"
   [stationId]="window.stationInfo.stationId"
   (image)="window.stationInfo.onimage($event)"
+  (video)="window.stationInfo.onvideo($event)"
   (chartdblclick)="window.stationInfo.onchartdblclick($event)"
 >
 </howell-garbage-station-window>
-<howell-event-record-window
-  *ngIf="window.record.show"
-  [Model]="window.record"
-  [style]="window.record.style"
-  [type]="window.record.type"
-  [stationId]="window.record.stationId"
-  (image)="window.record.onimage($event)"
-  (video)="window.record.onvideo($event)"
->
-</howell-event-record-window>
-
-<howell-garbage-full-station-window
-  *ngIf="window.full.show"
-  [Model]="window.full"
-  [style]="window.full.style"
-  (image)="window.full.onimage($event)"
->
-</howell-garbage-full-station-window>
-<howell-garbage-drop-station-window
-  *ngIf="window.drop.show"
-  [Model]="window.drop"
-  [style]="window.drop.style"
-  (image)="window.drop.onimage($event)"
->
-</howell-garbage-drop-station-window>
-
 <app-window
+  *ngIf="window.media.single.show"
   [Model]="window.media.single"
   [style]="window.media.single.style"
   [manualClose]="true"
   (OnClosing)="window.media.single.onclosing()"
 >
-  <ng-container *ngIf="window.media.single.show">
+  <ng-container>
     <app-media-control
+      [operation]="window.media.single.operation"
       [autoplay]="window.media.single.autoplay"
       [model]="window.media.single.camera"
       [index]="window.media.single.index"
       [stop]="window.media.single.closing"
+      [page]="window.media.single.showPage"
       (played)="window.media.single.onplay()"
       (stoped)="window.media.single.onstop()"
+      (prev)="window.media.single.onprev()"
+      (next)="window.media.single.onnext()"
     ></app-media-control>
   </ng-container>
 </app-window>
@@ -236,13 +255,8 @@
   [style]="window.media.multiple.style"
   [args]="window.media.multiple.args"
   [date]="window.media.multiple.date"
+  [fullplay]="window.media.multiple.fullplay"
 ></howell-media-multiple-window>
-<app-video-control-window
-  *ngIf="window.video"
-  [window]="window.video"
-  [style]="window.video.style"
-  [title]="window.video.title"
-></app-video-control-window>
 
 <app-window
   [Model]="window.image.page"
@@ -255,6 +269,7 @@
     [last]="window.image.page.last"
     (prev)="window.image.page.onprev()"
     (next)="window.image.page.onnext()"
+    (play)="window.image.page.onvideo()"
   ></app-media-image-control>
 </app-window>
 <app-window
@@ -266,8 +281,10 @@
     [model]="window.image.array.current"
     [first]="window.image.array.first"
     [last]="window.image.array.last"
+    [captureing]="window.image.array.captureing"
     (prev)="window.image.array.onprev()"
     (next)="window.image.array.onnext()"
+    (play)="window.image.array.onvideo()"
   ></app-media-image-control>
 </app-window>
 <app-video-window
@@ -275,5 +292,8 @@
   *ngIf="window.video.show"
   [style]="window.video.style"
   [title]="window.video.title"
+  [model]="window.video.model"
+  [mask]="window.video.mask"
+  [zindex]="window.video.zindex"
 >
 </app-video-window>

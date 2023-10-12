@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { CommitteesIndexPatrolControlBusiness } from './committees-index-patrol-control.business';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()

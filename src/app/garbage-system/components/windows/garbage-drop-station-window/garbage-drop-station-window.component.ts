@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
+import {
+  GarbageDropStationTableModel,
+  GarbageDropStationTableSourceModel,
+} from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -27,7 +30,7 @@ export class GarbageDropStationWindowComponent
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Input()
-  divisionId?: string;
+  source?: GarbageDropStationTableSourceModel;
 
   constructor(
     public details: EventRecordWindowDetailsBusiness,

@@ -69,6 +69,8 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
 
   async onvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
+      this.video.title = item.ResourceName ?? '';
+      this.video.mask = true;
       this.video.playback(
         item.ResourceId,
         DateTimeTool.beforeOrAfter(item.EventTime)

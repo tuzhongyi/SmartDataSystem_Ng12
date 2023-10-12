@@ -30,7 +30,7 @@ export class VideoControlWindowComponent
     this._mode = v;
     this.modechange(v);
   }
-
+  @Input() mask = true;
   @Input()
   title: string = '';
   @Input()

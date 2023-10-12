@@ -12,19 +12,15 @@ import {
   MixedIntoEventRecord,
 } from 'src/app/network/model/garbage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
-import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
 import { CommitteesVideoWindowBusiness } from './committees-video-window.business';
 
 @Injectable()
 export class CommitteesRecordWindowBusiness extends WindowViewModel {
   constructor(
-    private media: CommitteesMediaWindowBusiness,
-    private video: CommitteesVideoWindowBusiness,
     private image: CommitteesIndexImageWindowBusiness,
-    private stationService: GarbageStationRequestService
+    private video: CommitteesVideoWindowBusiness
   ) {
     super();
   }
@@ -44,6 +40,8 @@ export class CommitteesRecordWindowBusiness extends WindowViewModel {
   async onimage(args: PagedArgs<EventRecordViewModel>) {
     if (args.data.Data instanceof GarbageFullEventData) {
       this.image.array.index = args.page.PageIndex;
+      this.image.array.manualcapture = false;
+      this.image.array.stationId = args.data.Data.StationId;
       let data = args.data as GarbageFullEventRecord;
       this.image.array.models = ImageControlCreater.Create(data);
       this.image.array.show = true;
@@ -58,11 +56,13 @@ export class CommitteesRecordWindowBusiness extends WindowViewModel {
       let data = args.data as MixedIntoEventRecord;
       this.image.page.model = ImageControlCreater.Create(data);
       this.image.page.show = true;
+    } else {
     }
   }
-  onvideo(item: EventRecordViewModel) {
+  async onvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
       this.video.title = item.ResourceName ?? '';
+      this.video.mask = true;
       this.video.playback(
         item.ResourceId,
         DateTimeTool.beforeOrAfter(item.EventTime)

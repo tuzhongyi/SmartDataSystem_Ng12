@@ -33,63 +33,23 @@ export class EventRecordCountComponent implements OnInit {
 
   constructor(
     private local: LocalStorageService,
-    private global: GlobalStorageService,
+    public global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    if (local.user.Resources && local.user.Resources.length > 0) {
-      this.userType = local.user.Resources[0].ResourceType;
-    }
+    this.userType = EnumHelper.GetResourceChildType(global.defaultResourceType);
   }
   config = {
     dateTimePicker: new DateTimePickerConfig(),
   };
   DateTimePickerView = DateTimePickerView;
 
-  units: SelectItem[] = [];
-  userTypes: SelectItem[] = [];
   load: EventEmitter<void> = new EventEmitter();
   datas: EventRecordCountTableModel[] = [];
   converter = new EventRecordCountExportConverter();
-  ngOnInit(): void {
-    this.initUnits();
-    this.initUserResourceType();
-  }
-
-  initUnits() {
-    this.units.push(
-      new SelectItem(TimeUnit.Day.toString(), TimeUnit.Day, '日报表')
-    );
-    this.units.push(
-      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
-    );
-    this.units.push(
-      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
-    );
-  }
-  initUserResourceType() {
-    let type = EnumHelper.ConvertDivisionToUserResource(
-      this.global.divisionType
-    );
-    if (type == UserResourceType.City) {
-      this.userTypes.push(
-        new SelectItem(
-          UserResourceType.County.toString(),
-          UserResourceType.County,
-          Language.UserResourceType(UserResourceType.County)
-        )
-      );
-    }
-
-    for (
-      let i = UserResourceType.Committees;
-      i <= UserResourceType.Station;
-      i++
-    ) {
-      this.userTypes.push(
-        new SelectItem(i.toString(), i, Language.UserResourceType(i))
-      );
-    }
-  }
+  UserResourceType = UserResourceType;
+  TimeUnit = TimeUnit;
+  Language = Language;
+  ngOnInit(): void {}
 
   ontimeunit(unit: SelectItem) {
     this.unit = unit.value;

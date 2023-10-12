@@ -64,12 +64,18 @@ export class IllegalMixintoRankComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
-    this.resourceTypeDisplay =
-      this.global.divisionType !== DivisionType.Committees;
+    let resourceType = this.resourceType;
+    if (this.global.divisionType === DivisionType.Committees) {
+      this.resourceTypeDisplay = false;
+      resourceType = UserResourceType.Station;
+    } else {
+      this.resourceTypeDisplay = true;
+    }
+
     this.title = '今日' + Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
       this.global.divisionId,
-      this.resourceType,
+      resourceType,
       this.eventType
     );
   }

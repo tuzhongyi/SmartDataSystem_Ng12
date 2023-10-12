@@ -6,8 +6,10 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
+import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
+import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
@@ -37,30 +39,65 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
       GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
     >
   ) {
+    this.image.array.manualcapture =
+      model.data instanceof GarbageStationTableModel;
     this.image.array.index = model.page.PageIndex;
+
     if (model.data instanceof GarbageStationTableModel) {
+      this.image.array.stationId = model.data.GarbageStation.Id;
       if (model.data.GarbageStation.Cameras) {
         this.image.array.models = model.data.GarbageStation.Cameras.map((x) =>
           ImageControlCreater.Create(x)
         );
       }
     } else if (model.data instanceof GarbageDropRecordViewModel) {
+      this.image.array.stationId = model.data.Data.StationId;
       this.image.array.models = ImageControlCreater.Create(model.data);
     } else {
       this.image.array.models = [model.data];
     }
 
-    if (this.image.array.models.length > 0) {
-      this.image.array.current = this.image.array.models[0];
-    }
     this.image.array.show = true;
   }
-  async onvideo(item: GarbageDropRecordViewModel) {
-    if (item.ResourceId) {
-      this.video.playback(
-        item.ResourceId,
-        DateTimeTool.beforeOrAfter(item.EventTime)
-      );
+  async onvideo(item: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
+    if (item instanceof GarbageDropRecordViewModel) {
+      let id = item.ResourceId ?? '';
+      let name = item.ResourceName;
+      let time = item.EventTime;
+      if (item.ResourceType === ResourceType.GarbageStation) {
+        if (
+          item.Data.HandleImageUrls &&
+          item.Data.HandleImageUrls.length > 0 &&
+          item.Data.HandleTime
+        ) {
+          id = item.Data.HandleImageUrls[0].CameraId;
+          name = item.Data.HandleImageUrls[0].CameraName;
+          time = item.Data.HandleTime;
+        } else if (
+          item.Data.TimeoutImageUrls &&
+          item.Data.TimeoutImageUrls.length > 0
+        ) {
+          id = item.Data.TimeoutImageUrls[0].CameraId;
+          name = item.Data.TimeoutImageUrls[0].CameraName;
+        } else if (
+          item.Data.DropImageUrls &&
+          item.Data.DropImageUrls.length > 0
+        ) {
+          id = item.Data.DropImageUrls[0].CameraId;
+          name = item.Data.DropImageUrls[0].CameraName;
+          time = item.Data.DropTime;
+        }
+      }
+      this.video.title = name ?? '';
+      this.video.mask = true;
+      this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
+    } else if (item instanceof AIGarbageRfidCardRecord) {
+      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args.stationId = item.GarbageStationId;
+      this.media.multiple.args.time = item.Time;
+      this.media.multiple.date = item.Time;
+      this.media.multiple.fullplay = true;
+      this.media.multiple.show = true;
     }
   }
   onchartdblclick(args: LineZoomChartArgs) {
@@ -74,6 +111,7 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
       };
     }
     this.media.multiple.date = args.date;
+    this.media.multiple.fullplay = true;
     this.media.multiple.show = true;
   }
 }

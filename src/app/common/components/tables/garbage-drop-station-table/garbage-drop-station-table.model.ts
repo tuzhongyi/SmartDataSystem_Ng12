@@ -1,3 +1,4 @@
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Member } from 'src/app/network/model/member.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 
@@ -12,4 +13,9 @@ export class GarbageDropStationTableModel {
 
 export class MemberViewModel extends Member {
   view: string = '';
+}
+
+export class GarbageDropStationTableSourceModel {
+  id!: string;
+  type!: DivisionType;
 }

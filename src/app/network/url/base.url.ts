@@ -42,20 +42,20 @@ export class HowellUrlNode {
 export class BaseUrl {
   /** /api/howell/ver10/aiop_service/ */
   static get aiop_service() {
-    return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.aiop_service}/`;
+    return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.aiop_service}`;
   }
   /** /howell/ver10/data_service/ */
   static get data_service() {
-    return `/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.data_service}/`;
+    return `/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.data_service}`;
   }
 
   /** /howell/ver10/data_service/user_system/ */
   static get user_system() {
-    return `${BaseUrl.data_service}${HowellUrlNode.user_system}/`;
+    return `${BaseUrl.data_service}/${HowellUrlNode.user_system}`;
   }
   /** /api/howell/ver10/device_service/ai_garbage/ */
   static get ai_garbage() {
-    return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.device_service}/${HowellUrlNode.ai_garbage}/`;
+    return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.device_service}/${HowellUrlNode.ai_garbage}`;
   }
   static get garbage() {
     return GarbageBaseUrl;
@@ -64,10 +64,10 @@ export class BaseUrl {
 class GarbageBaseUrl {
   /** /api/howell/ver10/aiop_service/garbage_management/ */
   static get garbage_management() {
-    return `${BaseUrl.aiop_service}${HowellUrlNode.garbage_management}/`;
+    return `${BaseUrl.aiop_service}/${HowellUrlNode.garbage_management}`;
   }
   static get garbage_vehicles() {
-    return `${BaseUrl.aiop_service}${HowellUrlNode.garbage_vehicles}/`;
+    return `${BaseUrl.aiop_service}/${HowellUrlNode.garbage_vehicles}`;
   }
   /** /howell/ver10/data_service/user_system/ */
   static get user_system() {
@@ -75,7 +75,7 @@ class GarbageBaseUrl {
   }
   /** /howell/ver10/data_service/short_message/sms/ */
   static get sms() {
-    return `${BaseUrl.data_service}${HowellUrlNode.short_message}/${HowellUrlNode.sms}/`;
+    return `${BaseUrl.data_service}/${HowellUrlNode.short_message}/${HowellUrlNode.sms}`;
   }
 }
 

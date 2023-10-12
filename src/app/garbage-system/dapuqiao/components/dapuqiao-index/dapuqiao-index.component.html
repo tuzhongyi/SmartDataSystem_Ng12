@@ -164,7 +164,7 @@
   [Model]="window.drop"
   [style]="window.drop.style"
   [index]="window.drop.index"
-  [divisionId]="window.drop.divisionId"
+  [source]="window.drop.source"
   (image)="window.drop.onimage($event)"
   (position)="map.onposition($event)"
 >
@@ -322,5 +322,7 @@
   [style]="window.video.style"
   [title]="window.video.title"
   [model]="window.video.model"
+  [mask]="window.video.mask"
+  [zindex]="window.video.zindex"
 >
 </app-video-window>

@@ -64,6 +64,7 @@ export class IndexGarbageStationFullWindowBusiness extends WindowViewModel {
       name = record.Data.CameraImageUrls[0].CameraName;
     }
     this.video.title = name ?? '';
+    this.video.mask = true;
     this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
   }
 }

@@ -46,6 +46,7 @@ export class MonitorImagePageWindowBusiness extends WindowViewModel {
   onvideo() {
     if (this.model) {
       this.video.title = this.model.name;
+      this.video.mask = false;
       if (this.model.eventTime) {
         this.video.playback(
           this.model.id,

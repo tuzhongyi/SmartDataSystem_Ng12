@@ -22,7 +22,10 @@ import {
   GarbageDropStationPagedTableConverter,
   GarbageDropStationTableConverter,
 } from './garbage-drop-station-table.converter';
-import { GarbageDropStationTableModel } from './garbage-drop-station-table.model';
+import {
+  GarbageDropStationTableModel,
+  GarbageDropStationTableSourceModel,
+} from './garbage-drop-station-table.model';
 
 @Component({
   selector: 'howell-garbage-drop-station-table',
@@ -42,7 +45,7 @@ export class GarbageDropStationTableComponent
     OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
-  @Input() divisionId?: string;
+  @Input() source?: GarbageDropStationTableSourceModel;
   @Input() count: number = 0;
   @Input() load?: EventEmitter<SearchOptions>;
   @Output() image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
@@ -83,7 +86,7 @@ export class GarbageDropStationTableComponent
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, opts, this.divisionId);
+    let promise = this.business.load(params, opts, this.source);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;

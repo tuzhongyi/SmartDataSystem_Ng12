@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
+import {
+  GarbageDropStationTableModel,
+  GarbageDropStationTableSourceModel,
+} from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
@@ -11,7 +14,7 @@ export class IndexGarbageStationDropWindowBusiness extends WindowViewModel {
   constructor(private image: IndexImageWindowBusiness) {
     super();
   }
-  divisionId?: string;
+  source?: GarbageDropStationTableSourceModel;
 
   index = GarbageDropStationWindowIndex.list;
 
@@ -23,7 +26,7 @@ export class IndexGarbageStationDropWindowBusiness extends WindowViewModel {
 
   clear() {
     this.index = GarbageDropStationWindowIndex.list;
-    this.divisionId = undefined;
+    this.source = undefined;
   }
 
   async onimage(model: PagedArgs<GarbageDropStationTableModel>) {
