@@ -3,7 +3,7 @@ import { BaseUrl } from '../base.url';
 
 class AIGarbageDevicesUrl extends AbstractUrl {
   constructor(base: string) {
-    super(`${base}GarbageDevices`);
+    super(`${base}/GarbageDevices`);
   }
   excel() {
     return `${this.basic()}/Excels`;
@@ -62,7 +62,7 @@ class AIGarbageRfidCardsRecordsUrl extends AbstractUrl {
 }
 class AIGarbageRegionsUrl extends AbstractUrl {
   constructor(base: string) {
-    super(`${base}Regions`);
+    super(`${base}/Regions`);
   }
   abbr() {
     return `${this.basic()}/AbbrList`;

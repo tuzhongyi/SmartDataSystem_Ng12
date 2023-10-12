@@ -1,8 +1,8 @@
-import { BasicUrl } from '../../../base.url';
+import { BaseUrl } from '../../../base.url';
 
 export abstract class DivisionsUrl {
   static get basic(): string {
-    return `${BasicUrl.garbage.management}/Divisions`;
+    return `${BaseUrl.garbage.garbage_management}/Divisions`;
   }
   static item(id: string) {
     return `${this.basic}/${id}`;
