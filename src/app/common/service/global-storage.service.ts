@@ -19,14 +19,14 @@ export class GlobalStorageService {
   HideButton: boolean = false;
   HideTitlebar: boolean = false;
 
-  private _divisionId: string = '';
+  private _divisionId?: string;
   private _divisionType: DivisionType = DivisionType.None;
 
   set divisionId(id: string) {
     this._divisionId = id;
   }
   get divisionId(): string {
-    return this._divisionId;
+    return this._divisionId ?? '';
   }
   set divisionType(type: DivisionType) {
     this._divisionType = type;
@@ -115,6 +115,17 @@ export class GlobalStorageService {
 
   constructor(private localStorage: LocalStorageService) {
     this.runInterval();
+  }
+
+  destroy() {
+    this.system = undefined;
+    this.password = undefined;
+    this._divisionId = undefined;
+    this._divisionType = DivisionType.None;
+    this._defaultDivisionId = undefined;
+    this._defaultDivisionType = DivisionType.None;
+    this._defaultResourceType = UserResourceType.None;
+    this.stopInterval();
   }
 }
 

@@ -1,4 +1,6 @@
 import { Transform } from 'class-transformer';
+import { CameraClassification } from 'src/app/enum/camera-classification.enum';
+import { CameraEncodeType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from '../../enum/camera-usage.enum';
 import { OnlineStatus } from '../../enum/online-status.enum';
 import { ICamera } from './camera.interface';
@@ -56,4 +58,16 @@ export class Camera implements ICamera, IModel {
   Aberration?: number;
   /**	Int32	视频干扰，0-正常，1-条纹干扰	O */
   Disturbance?: number;
+
+  /**	String	摄像机类型，G3、G5、TD	O */
+  CameraType?: CameraEncodeType;
+  /**
+   * 	Int32	摄像机分类
+   *  0：普通摄像机
+   *  1：热成像摄像机	O
+   */
+  Classification?: CameraClassification;
+
+  /**	String	编码设备ID	O */
+  EncodeDeviceId?: string;
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -17,9 +18,10 @@ export class GarbageDropStationCountTableService {
     let paged = await this.station.cache.list(params);
     return paged.Data;
   }
-  async divisions(parentId: string) {
+  async divisions(parentId: string, type: DivisionType) {
     let params = new GetDivisionsParams();
-    params.ParentId = parentId;
+    params.AncestorId = parentId;
+    params.DivisionType = type;
     let paged = await this.division.cache.list(params);
     return paged.Data;
   }

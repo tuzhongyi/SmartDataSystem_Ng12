@@ -6,16 +6,16 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 @Injectable()
 export class GarbageDropStationWindowCountBusiness {
   constructor(private _divisionRequest: DivisionRequestService) {}
-  async getCounties(type: DivisionType) {
+  async getDivisionsByType(type: DivisionType) {
     let params = new GetDivisionsParams();
     params.DivisionType = type;
     let paged = await this._divisionRequest.cache.list(params);
     return paged.Data;
   }
 
-  async getCommittees(divisionId: string) {
+  async getDivisionsByParentId(parentId: string) {
     let params = new GetDivisionsParams();
-    params.ParentId = divisionId;
+    params.ParentId = parentId;
     let paged = await this._divisionRequest.cache.list(params);
     return paged.Data;
   }

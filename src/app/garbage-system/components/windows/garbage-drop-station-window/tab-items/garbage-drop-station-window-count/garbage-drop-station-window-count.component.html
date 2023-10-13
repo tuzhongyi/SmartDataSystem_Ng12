@@ -20,29 +20,43 @@
         <div class="filter-item-title">行政区</div>
         <div class="filter-item-value">
           <div class="select-control">
-            <select [(ngModel)]="type" (change)="onTypeChange()">
-              <option
-                [ngValue]="UserResourceType.County"
-                *ngIf="defaultType === UserResourceType.City"
-              >
-                {{ Language.UserResourceType(UserResourceType.County) }}
-              </option>
-              <option [ngValue]="UserResourceType.Committees">
-                {{ Language.UserResourceType(UserResourceType.Committees) }}
-              </option>
-              <option [ngValue]="UserResourceType.Station">
-                {{ Language.UserResourceType(UserResourceType.Station) }}
-              </option>
+            <select [(ngModel)]="args.type" (change)="onTypeChange()">
+              <ng-container [ngSwitch]="store.defaultDivisionType">
+                <ng-container *ngSwitchCase="DivisionType.City">
+                  <option [ngValue]="DivisionType.County">
+                    {{ Language.UserResourceType(UserResourceType.County) }}
+                  </option>
+                  <option [ngValue]="DivisionType.Committees">
+                    {{ Language.UserResourceType(UserResourceType.Committees) }}
+                  </option>
+                  <option [ngValue]="DivisionType.None">
+                    {{ Language.UserResourceType(UserResourceType.Station) }}
+                  </option>
+                </ng-container>
+                <ng-container *ngSwitchCase="DivisionType.County">
+                  <option [ngValue]="DivisionType.Committees">
+                    {{ Language.UserResourceType(UserResourceType.Committees) }}
+                  </option>
+                  <option [ngValue]="DivisionType.None">
+                    {{ Language.UserResourceType(UserResourceType.Station) }}
+                  </option>
+                </ng-container>
+                <ng-container *ngSwitchCase="DivisionType.Committees">
+                  <option [ngValue]="DivisionType.None">
+                    {{ Language.UserResourceType(UserResourceType.Station) }}
+                  </option>
+                </ng-container>
+              </ng-container>
             </select>
           </div>
         </div>
       </div>
-      <div class="filter-item two" *ngIf="type != UserResourceType.County">
+      <div class="filter-item two" *ngIf="args.type !== type.default">
         <div class="filter-item-title">筛选</div>
         <div class="filter-item-value">
           <hw-select [(selected)]="parent" [cannull]="true">
             <select [(ngModel)]="parent">
-              <option [ngValue]="item" *ngFor="let item of counties">
+              <option [ngValue]="item" *ngFor="let item of divisions">
                 {{ item.Name }}
               </option>
             </select>

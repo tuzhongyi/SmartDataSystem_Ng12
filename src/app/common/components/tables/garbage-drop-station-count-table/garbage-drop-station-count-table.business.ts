@@ -49,7 +49,7 @@ export class GarbageDropStationCountTableBusiness
     if (args.type === DivisionType.None) {
       return this.getGarbageStationData(divisionId, duration, args.unit);
     } else {
-      return this.getDivisionData(divisionId, duration, args.unit);
+      return this.getDivisionData(divisionId, args.type, duration, args.unit);
     }
   }
 
@@ -76,10 +76,11 @@ export class GarbageDropStationCountTableBusiness
   }
   async getDivisionData(
     parentId: string,
+    type: DivisionType,
     interval: DurationParams,
     unit: TimeUnit
   ) {
-    let divisions = await this.service.divisions(parentId);
+    let divisions = await this.service.divisions(parentId, type);
     let divisionIds = divisions.map((x) => x.Id);
     let params = new GetDivisionStatisticNumbersParamsV2();
     params = Object.assign(params, interval);

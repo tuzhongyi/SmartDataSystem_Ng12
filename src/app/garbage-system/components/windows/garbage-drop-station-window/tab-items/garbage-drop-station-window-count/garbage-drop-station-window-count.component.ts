@@ -17,6 +17,7 @@ import {
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
@@ -38,36 +39,35 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     public store: GlobalStorageService,
     private changeDetector: ChangeDetectorRef,
     private business: GarbageDropStationWindowCountBusiness
-  ) {
-    this.defaultType = EnumHelper.ConvertDivisionToUserResource(
-      store.defaultDivisionType
-    );
-    this.type = EnumHelper.GetResourceChildType(this.defaultType);
-  }
+  ) {}
 
-  UserResourceType = UserResourceType;
-  DateTimePickerView = DateTimePickerView;
   dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
-  TimeUnit = TimeUnit;
 
   date: Date = new Date();
-  type: UserResourceType = UserResourceType.County;
+
   args = new GarbageDropStationCountTableArgs();
   load: EventEmitter<GarbageDropStationCountTableArgs> = new EventEmitter();
   datas?: GarbageDropStationCountTableModel[];
-
-  counties: Division[] = [];
+  divisions: Division[] = [];
   parent?: Division;
+  DateTimePickerView = DateTimePickerView;
+  DivisionType = DivisionType;
+  UserResourceType = UserResourceType;
+  TimeUnit = TimeUnit;
   Language = Language;
-  defaultType: UserResourceType;
+
+  type = {
+    default: DivisionType.None,
+    parent: DivisionType.None,
+  };
+
   async ngOnInit() {
-    this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
-    this.counties = await this.business.getCounties(
+    this.args.type = EnumHelper.GetDivisionChildType(
       this.store.defaultDivisionType
     );
-    if (this.counties && this.counties.length > 0) {
-      this.parent = this.counties[0];
-    }
+    this.type.default = this.args.type;
+    this.divisions = await this.business.getDivisionsByType(this.args.type);
+    this.dateTimePickerConfig.format = 'yyyy年MM月dd日';
   }
   ontimeunit() {
     switch (this.args.unit) {
@@ -93,14 +93,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   }
 
   async onTypeChange() {
-    this.counties = [];
     this.parent = undefined;
-    this.args.type = EnumHelper.ConvertUserResourceToDivision(this.type);
-    if (this.type === UserResourceType.Station) {
-      this.counties = await this.business.getCommittees(
-        await this.store.defaultDivisionId
-      );
-    }
   }
 
   search() {
@@ -117,7 +110,8 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
 
   getTitle() {
     let title = formatDate(this.date, 'yyyy年MM月dd日', 'en');
-    title += ' ' + Language.UserResourceType(this.type);
+    let type = EnumHelper.ConvertDivisionToUserResource(this.args.type);
+    title += ' ' + Language.UserResourceType(type);
     title += ' 垃圾滞留总数据';
     return title;
   }

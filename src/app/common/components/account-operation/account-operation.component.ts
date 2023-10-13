@@ -65,7 +65,7 @@ export class AccountOperationComponent implements OnInit {
   logoutHandler() {
     this.session.clear();
     this.local.clear();
-    this.global.system = undefined;
+    this.global.destroy();
     this.router.navigateByUrl('/login');
     this.service.clear();
     // if (this._cookieService.check('savePassWord')) {

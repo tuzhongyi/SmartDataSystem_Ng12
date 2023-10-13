@@ -16,6 +16,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
+import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Camera } from 'src/app/network/model/camera.model';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -335,7 +336,11 @@ export class MapControlComponent
     this.display.status = false;
     this.display.videoList = true;
     this.images = station.Cameras
-      ? this.imageConverter.Convert(station.Cameras)
+      ? this.imageConverter.Convert(
+          station.Cameras.filter(
+            (x) => !EnumHelper.CameraIgnore(x.Classification)
+          )
+        )
       : [];
     if (this.images.length > 1) {
       this.images = this.images.sort((a, b) => {

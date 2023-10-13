@@ -30,6 +30,9 @@ export class PatrolControlConverter
       let online: OnlineStatus = OnlineStatus.Offline;
       for (let i = 0; i < source.Cameras.length; i++) {
         const camera = source.Cameras[i];
+        if (EnumHelper.CameraIgnore(camera.Classification)) {
+          continue;
+        }
         if (online === OnlineStatus.Offline) {
           online = camera.OnlineStatus ?? OnlineStatus.Offline;
         }

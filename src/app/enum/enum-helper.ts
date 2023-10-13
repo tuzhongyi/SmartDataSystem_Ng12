@@ -1,4 +1,5 @@
 import { Flags } from '../common/tools/flags';
+import { CameraClassification } from './camera-classification.enum';
 import { DivisionType } from './division-type.enum';
 import { StationState } from './station-state.enum';
 import { UserResourceType } from './user-resource-type.enum';
@@ -72,6 +73,21 @@ export class EnumHelper {
         return DivisionType.None;
     }
   }
+  static GetDivisionPrentType(type: DivisionType) {
+    switch (type) {
+      case DivisionType.None:
+      case DivisionType.Community:
+        return DivisionType.Committees;
+      case DivisionType.Committees:
+        return DivisionType.County;
+      case DivisionType.County:
+        return DivisionType.City;
+      case DivisionType.County:
+        return DivisionType.Province;
+      default:
+        throw new Error('There Is No Parent DivisionType');
+    }
+  }
   static GetClass(flags: Flags<StationState>) {
     if (flags.contains(StationState.Error)) {
       return 'powder-red-text';
@@ -80,6 +96,10 @@ export class EnumHelper {
     } else {
       return 'green-text';
     }
+  }
+  static CameraIgnore(c?: CameraClassification) {
+    let ignores = [CameraClassification.thermal];
+    return !!c && ignores.includes(c);
   }
 }
 

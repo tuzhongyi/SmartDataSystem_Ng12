@@ -9,3 +9,8 @@ export enum CameraType {
   // 一体机
   AIO = 4,
 }
+export enum CameraEncodeType {
+  G3 = 'G3',
+  G5 = 'G5',
+  TD = 'TD',
+}
