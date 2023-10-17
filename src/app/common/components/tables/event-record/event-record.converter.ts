@@ -1,5 +1,6 @@
 import { formatDate } from '@angular/common';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageStationConverter } from 'src/app/converter/garbage-station.converter';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { Camera } from 'src/app/network/model/camera.model';
@@ -147,21 +148,22 @@ export class EventRecordConverter
     let model = await this.fromEventRecord(source, getter);
     model.images = [];
     if (source.Data.CameraImageUrls && model.GarbageStation) {
-      for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
+      let urls = source.Data.CameraImageUrls.sort((a, b) => {
+        return LocaleCompare.compare(a.CameraName ?? '', b.CameraName ?? '');
+      });
+      for (let i = 0; i < urls.length; i++) {
         try {
-          const url = new CameraImageUrlModel(
-            source.Data.CameraImageUrls[i],
-            source.Data.StationId
-          );
+          const url = new CameraImageUrlModel(urls[i], source.Data.StationId);
           url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(url, true, source.EventTime);
           image.index = i;
           model.images.push(image);
         } catch (error) {
-          console.error(error, this, source.Data.CameraImageUrls[i]);
+          console.error(error, this, urls[i]);
         }
       }
     }
+
     return model;
   }
   async fromSmoke(
@@ -189,18 +191,18 @@ export class EventRecordConverter
       );
     }
     if (source.Data.CameraImageUrls && model.GarbageStation) {
-      for (let i = 0; i < source.Data.CameraImageUrls.length; i++) {
+      let urls = source.Data.CameraImageUrls.sort((a, b) => {
+        return LocaleCompare.compare(b.CameraName ?? '', a.CameraName ?? '');
+      });
+      for (let i = 0; i < urls.length; i++) {
         try {
-          const url = new CameraImageUrlModel(
-            source.Data.CameraImageUrls[i],
-            source.Data.StationId
-          );
+          const url = new CameraImageUrlModel(urls[i], source.Data.StationId);
           url.Camera = await getter.camera(source.Data.StationId, url.CameraId);
           let image = this.converter.image.Convert(url, true, source.EventTime);
           image.index = i;
           model.images.push(image);
         } catch (error) {
-          console.error(error, this, source.Data.CameraImageUrls[i]);
+          console.error(error, this, urls[i]);
         }
       }
     }

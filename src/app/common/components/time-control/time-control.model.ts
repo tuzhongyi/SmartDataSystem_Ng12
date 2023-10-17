@@ -39,10 +39,7 @@ export class TimeModel {
   }
 
   static format(num: number) {
-    if (num < 10) {
-      return `0${num}`;
-    }
-    return num.toString();
+    return num.toString().padStart(2, '0');
   }
 }
 
