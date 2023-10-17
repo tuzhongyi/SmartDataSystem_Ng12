@@ -1,0 +1,296 @@
+<div class="map-control-buttons-2">
+  <div class="map-control-button" (click)="onpatrol()" title="投放点巡检">
+    <div class="map-control-button-inner">
+      <i class="howell-icon-refresh"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.filter.display"
+    [ngClass]="{
+      selected: model.filter.selected
+    }"
+    class="map-control-button"
+    (click)="onfilter()"
+    title="筛选"
+  >
+    <div class="map-control-button-inner">
+      <i class="mdi mdi-filter-outline"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.station.display"
+    [ngClass]="{
+      selected: model.station.selected
+    }"
+    class="map-control-button"
+    (click)="onstation()"
+    title="垃圾投放点筛选"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.station.all.display"
+    [ngClass]="{
+      selected: model.station.all.selected
+    }"
+    class="map-control-button h"
+    (click)="onstationall()"
+    title="所有垃圾投放点"
+  >
+    <div class="map-control-button-inner">all</div>
+  </div>
+  <div
+    *ngIf="model.station.normal.display"
+    [ngClass]="{
+      selected: model.station.normal.selected
+    }"
+    class="map-control-button green-text"
+    (click)="onstationnormal()"
+    title="正常垃圾投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.station.full.display"
+    [ngClass]="{
+      selected: model.station.full.selected
+    }"
+    class="map-control-button yellow-text"
+    (click)="onstationfull()"
+    title="垃圾满溢投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div class="station-drop" *ngIf="model.station.drop.display">
+    <div class="station-drop-time">
+      <div
+        [ngClass]="{
+          selected: model.station.drop30in.selected
+        }"
+        class="map-control-button h"
+        (click)="onstationdrop30in()"
+        title="异常投放点"
+      >
+        <div class="map-control-button-inner">30-</div>
+      </div>
+      <div
+        [ngClass]="{
+          selected: model.station.drop30out.selected
+        }"
+        class="map-control-button h"
+        (click)="onstationdrop30out()"
+        title="异常投放点"
+      >
+        <div class="map-control-button-inner">30+</div>
+      </div>
+    </div>
+    <div
+      *ngIf="model.station.drop.display"
+      [ngClass]="{
+        selected: model.station.drop.selected
+      }"
+      class="map-control-button orange-red-text"
+      (click)="onstationdrop()"
+      title="垃圾滞留投放点"
+    >
+      <div class="map-control-button-inner">
+        <i class="howell-icon-garbage"></i>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="model.station.error.display"
+    [ngClass]="{
+      selected: model.station.error.selected
+    }"
+    class="map-control-button gray-2-text"
+    (click)="onstationerror()"
+    title="异常投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.rfid.display"
+    [ngClass]="{
+      selected: model.rfid.selected
+    }"
+    class="map-control-button"
+    (click)="onrfid()"
+    title="智慧垃圾厢房"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-smart_garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.rfid.all.display"
+    [ngClass]="{
+      selected: model.rfid.all.selected
+    }"
+    class="map-control-button h"
+    (click)="onrfidall()"
+    title="所有垃圾投放点"
+  >
+    <div class="map-control-button-inner">all</div>
+  </div>
+  <div
+    *ngIf="model.rfid.normal.display"
+    [ngClass]="{
+      selected: model.rfid.normal.selected
+    }"
+    class="map-control-button green-text"
+    (click)="onrfidnormal()"
+    title="正常垃圾投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-smart_garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.rfid.full.display"
+    [ngClass]="{
+      selected: model.rfid.full.selected
+    }"
+    class="map-control-button yellow-text"
+    (click)="onrfidfull()"
+    title="垃圾满溢投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-smart_garbage"></i>
+    </div>
+  </div>
+  <div class="station-drop" *ngIf="model.rfid.drop.display">
+    <div class="station-drop-time">
+      <div
+        [ngClass]="{
+          selected: model.rfid.drop30in.selected
+        }"
+        class="map-control-button h"
+        (click)="onrfiddrop30in()"
+        title="异常投放点"
+      >
+        <div class="map-control-button-inner">30-</div>
+      </div>
+      <div
+        [ngClass]="{
+          selected: model.rfid.drop30out.selected
+        }"
+        class="map-control-button h"
+        (click)="onrfiddrop30out()"
+        title="异常投放点"
+      >
+        <div class="map-control-button-inner">30+</div>
+      </div>
+    </div>
+    <div
+      *ngIf="model.rfid.drop.display"
+      [ngClass]="{
+        selected: model.rfid.drop.selected
+      }"
+      class="map-control-button orange-red-text"
+      (click)="onrfiddrop()"
+      title="垃圾滞留投放点"
+    >
+      <div class="map-control-button-inner">
+        <i class="howell-icon-smart_garbage"></i>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="model.rfid.error.display"
+    [ngClass]="{
+      selected: model.rfid.error.selected
+    }"
+    class="map-control-button gray-2-text"
+    (click)="onrfiderror()"
+    title="异常投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-smart_garbage"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.display"
+    [ngClass]="{
+      selected: model.construction.selected
+    }"
+    class="map-control-button"
+    (click)="onconstruction()"
+    title="建筑垃圾"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.all.display"
+    [ngClass]="{
+      selected: model.construction.all.selected
+    }"
+    class="map-control-button h"
+    (click)="onconstructionall()"
+    title="所有垃圾投放点"
+  >
+    <div class="map-control-button-inner">all</div>
+  </div>
+  <div
+    *ngIf="model.construction.normal.display"
+    [ngClass]="{
+      selected: model.construction.normal.selected
+    }"
+    class="map-control-button green-text"
+    (click)="onconstructionnormal()"
+    title="正常垃圾投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.full.display"
+    [ngClass]="{
+      selected: model.construction.full.selected
+    }"
+    class="map-control-button yellow-text"
+    (click)="onconstructionfull()"
+    title="垃圾满溢投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.drop.display"
+    [ngClass]="{
+      selected: model.construction.drop.selected
+    }"
+    class="map-control-button orange-red-text"
+    (click)="onconstructiondrop()"
+    title="垃圾滞留投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+  <div
+    *ngIf="model.construction.error.display"
+    [ngClass]="{
+      selected: model.construction.error.selected
+    }"
+    class="map-control-button gray-2-text"
+    (click)="onconstructionerror()"
+    title="异常投放点"
+  >
+    <div class="map-control-button-inner">
+      <i class="howell-icon-construction_waste"></i>
+    </div>
+  </div>
+</div>

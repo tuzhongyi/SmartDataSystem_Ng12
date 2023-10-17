@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
-import { AMapDataSource } from '../amap.model';
+import { AMapDataSource } from './amap-data-source';
 
 @Injectable()
 export class AMapClient {
@@ -36,13 +36,7 @@ export class AMapClient {
     });
   }
   loaded: EventEmitter<void> = new EventEmitter();
-  source: AMapDataSource = {
-    all: [],
-    construction: [],
-    drop: [],
-    plug: [],
-    points: {},
-  };
+  source: AMapDataSource = new AMapDataSource();
 
   init(iframe: HTMLIFrameElement) {
     this._client = new CesiumMapClient(iframe);

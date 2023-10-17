@@ -33,6 +33,25 @@ export class AMapPointPlugBatteryBusiness {
     client.Label.Hide(CesiumDataController.ImageResource.battery);
   }
 
+  async remove(id: string | string[]) {
+    let client = await this.amap.client;
+    if (typeof id === 'string') {
+      client.Label.Remove(id);
+    } else {
+      for (let i = 0; i < id.length; i++) {
+        client.Label.Remove(id[i]);
+      }
+    }
+  }
+
+  visibile(stations: GarbageStation[], show: boolean) {
+    if (show) {
+      this.set(stations);
+    } else {
+      this.remove(stations.map((station) => station.Id));
+    }
+  }
+
   getBattery(value: number) {
     if (value < 70) {
       return CesiumDataController.BatteryLevel.empty;

@@ -28,14 +28,6 @@ export class AMapLabelVisibility<T> extends AMapVisibilityItem<T> {
   station = new AMapVisibilityItem(true);
 }
 
-export interface AMapDataSource {
-  all: GarbageStation[];
-  construction: GarbageStation[];
-  drop: { station: GarbageStation; statistic: GarbageStationNumberStatistic }[];
-  plug: GarbageStationNumberStatistic[];
-  points: Global.Dictionary<CesiumDataController.Point>;
-}
-
 export enum GarbageTimeFilter {
   all = 0,
   m30 = 30 - 1,
@@ -49,7 +41,18 @@ export enum GarbageTimeFilter {
 export class PointCount {
   count: number = 0;
   normal: number = 0;
-  warm: number = 0;
+  full: number = 0;
   drop: number = 0;
   error: number = 0;
+}
+export interface IAMapPointViewBusiness {
+  visibile: EventEmitter<AMapPointVisibleArgs>;
+}
+export interface AMapPointVisibleArgs {
+  datas: GarbageStation[];
+  show: boolean;
+}
+
+export class GarbageStationNumberStatisticModel extends GarbageStationNumberStatistic {
+  GarbageStation!: GarbageStation;
 }

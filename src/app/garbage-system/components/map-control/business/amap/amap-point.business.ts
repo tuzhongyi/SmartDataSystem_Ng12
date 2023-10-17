@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Flags } from 'src/app/common/tools/flags';
 import { wait2 } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { PointCount } from '../amap.model';
+import { GarbageStationNumberStatisticModel, PointCount } from '../amap.model';
 import { AMapPointContextMenuBusiness } from './amap-point-menu.business';
 import { AMapPointPlugBusiness } from './amap-point-plug.business';
+import { AMapPointViewBusiness } from './amap-point-view.business';
 import { AMapClient } from './amap.client';
 import { AMapEvent } from './amap.event';
 import { AMapService } from './amap.service';
@@ -20,12 +22,17 @@ export class AMapPointBusiness {
     private global: GlobalStorageService,
     public plug: AMapPointPlugBusiness,
     public menu: AMapPointContextMenuBusiness,
-    public event: AMapEvent
+    public event: AMapEvent,
+    public view: AMapPointViewBusiness
   ) {
     this.global.interval.subscribe((x) => {
       this.keep();
     });
     this.menu.init();
+    this.view.visibile.subscribe((x) => {
+      this.visibile(x.datas, x.show);
+      this.plug.battery.visibile(x.datas, x.show);
+    });
   }
 
   private inited = false;
@@ -60,22 +67,24 @@ export class AMapPointBusiness {
   /** 加载厢房和点位数据 完成后 重置显示状态和统计点位数量 */
   private async load() {
     return new Promise<void>((resolve) => {
-      let all = [this.loadStations(), this.loadPoints()];
+      let all = [this.loadStations(), this.loadStatistic(), this.loadPoints()];
       return Promise.all(all).then((source) => {
-        this.amap.source.construction = this.amap.source.all.filter(
-          (x) => x.StationType === StationType.Construction
-        );
-        this.service.drop().then((drop) => {
-          this.amap.source.drop = drop.map((x) => {
-            return {
-              station: this.amap.source.all.find((y) => y.Id === x.Id)!,
-              statistic: x,
-            };
-          });
-        });
-
+        for (let i = 0; i < this.amap.source.drop.all.length; i++) {
+          let item = this.amap.source.drop.all[i];
+          item.GarbageStation = this.amap.source.all.find(
+            (x) => item.Id === x.Id
+          )!;
+        }
         resolve();
       });
+    });
+  }
+  loadStatistic() {
+    return this.service.drop().then((drop) => {
+      return (this.amap.source.drop.all = drop.map((x) => {
+        let plain = instanceToPlain(x);
+        return plainToInstance(GarbageStationNumberStatisticModel, plain);
+      }));
     });
   }
   /** 加载所有厢房 */
@@ -184,8 +193,8 @@ export class AMapPointBusiness {
           id: station.Id,
           status: 0,
         };
-        let index = this.amap.source.drop.findIndex(
-          (item) => item.station.Id === station.Id
+        let index = this.amap.source.drop.all.findIndex(
+          (item) => item.Id === station.Id
         );
         let flags = new Flags(station.StationState);
         if (flags.contains(StationState.Error)) {
@@ -218,7 +227,7 @@ export class AMapPointBusiness {
       ).then(async (x) => {
         let count = 0;
         let normal = 0;
-        let warm = 0;
+        let full = 0;
         let error = 0;
         let controller = await this.amap.controller;
         let points = controller.Village.Point.All(villageId);
@@ -234,7 +243,7 @@ export class AMapPointBusiness {
               contain = true;
             }
             if (flags.contains(StationState.Full)) {
-              warm++;
+              full++;
               contain = true;
             }
             if (contain == false) {
@@ -248,9 +257,9 @@ export class AMapPointBusiness {
         let result = {
           count: count,
           normal: normal,
-          warm: warm,
+          full: full,
           error: error,
-          drop: this.amap.source.drop.length,
+          drop: this.amap.source.drop.all.length,
         };
         this.event.point.count.emit(result);
         resolve(result);
@@ -260,43 +269,15 @@ export class AMapPointBusiness {
 
   display = {
     construction: true,
-    station: {
-      normal: true,
-      full: true,
-      drop: true,
-      error: true,
-      in30: false,
-      out30: false,
-    },
   };
 
   keep() {
     this.load().then((x) => {
       this.visibile(this.amap.source.all, false);
-      if (this.display.construction) {
-        this.initConstruction();
-        this.plug.battery.show();
-      } else {
-        this.plug.battery.hide();
-      }
-      if (this.display.station.normal) {
-        this.stationnormalview(true);
-      }
-      if (this.display.station.full) {
-        this.stationfullview(true);
-      }
-      if (this.display.station.drop) {
-        this.stationdropview(true);
-      }
-      if (this.display.station.error) {
-        this.stationerrorview(true);
-      }
-      if (this.display.station.in30) {
-        this.station30inview(true);
-      }
-      if (this.display.station.out30) {
-        this.station30outview(true);
-      }
+
+      this.view.station.keep();
+      this.view.rfid.keep();
+      this.view.construction.keep();
       this.count(this.global.divisionId);
     });
   }
@@ -308,105 +289,6 @@ export class AMapPointBusiness {
       this.plug.battery.show();
     } else {
       this.plug.battery.hide();
-    }
-  }
-  async stationnormalview(show: boolean) {
-    this.display.station.normal = show;
-    let dropIds = this.amap.source.drop.map((x) => x.station.Id);
-    let stations = this.amap.source.all.filter(
-      (x) =>
-        (x.StationType === StationType.Garbage ||
-          x.StationType === StationType.Smart ||
-          x.StationType === StationType.Rfid) &&
-        x.StationState === 0 &&
-        !dropIds.includes(x.Id)
-    );
-
-    this.visibile(stations, show);
-  }
-  stationfullview(show: boolean) {
-    this.display.station.full = show;
-    let dropIds = this.amap.source.drop.map((x) => x.station.Id);
-    let stations = this.amap.source.all.filter((x) => {
-      let flags = new Flags(x.StationState);
-      return (
-        (x.StationType === StationType.Garbage ||
-          x.StationType === StationType.Smart ||
-          x.StationType === StationType.Rfid) &&
-        flags.contains(StationState.Full) &&
-        !(this.display.station.drop && dropIds.includes(x.Id))
-      );
-    });
-    this.visibile(stations, show);
-  }
-  async stationdropview(show: boolean) {
-    this.display.station.drop = show;
-    let stations = this.amap.source.drop
-      .map((x) => x.station)
-      .filter((x) => {
-        let flags = new Flags(x.StationState);
-        return !(
-          this.display.station.full && flags.contains(StationState.Full)
-        );
-      });
-    this.visibile(stations, show);
-  }
-
-  stationerrorview(show: boolean) {
-    this.display.station.error = show;
-    let stations = this.amap.source.all.filter((x) => {
-      let flags = new Flags(x.StationState);
-      return flags.contains(StationState.Error);
-    });
-    this.visibile(stations, show);
-  }
-  async stationplugarc(show: boolean, query: (time?: number) => boolean) {
-    let models = this.amap.source.drop.map((x) => x.statistic);
-
-    if (show) {
-      this.stationdropview(show);
-      let drops = models.filter((x) => query(x.CurrentGarbageTime));
-      let surplus = this.amap.source.plug.filter((x) => {
-        return (
-          query(x.CurrentGarbageTime) &&
-          drops.findIndex((drop) => drop.Id === x.Id) < 0
-        );
-      });
-      await this.plug.ace.clear(surplus);
-      await this.plug.ace.set(drops);
-      this.plug.ace.show();
-    } else {
-      let drops = this.amap.source.plug.filter((x) =>
-        query(x.CurrentGarbageTime)
-      );
-      await this.plug.ace.clear(drops);
-    }
-  }
-  async station30inview(show: boolean) {
-    this.display.station.in30 = show;
-    let query = (time?: number) => {
-      return time ? time < 30 : true;
-    };
-    this.stationplugarc(show, query);
-  }
-  async station30outview(show: boolean) {
-    this.display.station.out30 = show;
-    let query = (time?: number) => {
-      return time ? time >= 30 : false;
-    };
-    this.stationplugarc(show, query);
-  }
-
-  // 显示普通厢房
-  async garbageStationVisibility(value: boolean) {
-    let client = await this.amap.client;
-    for (const key in this.amap.source.points) {
-      if (
-        this.amap.source.points[key].type !==
-        CesiumDataController.ElementType.LargeWaste
-      ) {
-        client.Point.SetVisibility(key, value);
-      }
     }
   }
 

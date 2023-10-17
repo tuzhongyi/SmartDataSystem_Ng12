@@ -35,6 +35,10 @@ import { AMapPointContextMenuBusiness } from './business/amap/amap-point-menu.bu
 import { AMapPointPlugAceBusiness } from './business/amap/amap-point-plug-ace.business';
 import { AMapPointPlugBatteryBusiness } from './business/amap/amap-point-plug-battery.business';
 import { AMapPointPlugBusiness } from './business/amap/amap-point-plug.business';
+import { AMapPointConstructionViewBusiness } from './business/amap/amap-point-view-construction.business';
+import { AMapPointRfidViewBusiness } from './business/amap/amap-point-view-rfid.business';
+import { AMapPointStationViewBusiness } from './business/amap/amap-point-view-station.business';
+import { AMapPointViewBusiness } from './business/amap/amap-point-view.business';
 import { AMapPointBusiness } from './business/amap/amap-point.business';
 import { AMapClient } from './business/amap/amap.client';
 import { AMapEvent } from './business/amap/amap.event';
@@ -62,6 +66,10 @@ declare var $: any;
     AMapClient,
     AMapService,
     AMapDivisionBusiness,
+    AMapPointStationViewBusiness,
+    AMapPointRfidViewBusiness,
+    AMapPointConstructionViewBusiness,
+    AMapPointViewBusiness,
     AMapPointBusiness,
     AMapPointPlugBusiness,
     AMapPointPlugAceBusiness,

@@ -24,6 +24,7 @@ import { EventRecordDetailsComponent } from './event-record-details/event-record
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { MainStationCountComponent } from './main-station-count/main-station-count.component';
+import { MapControlButtons2Component } from './map-control-buttons-2/map-control-buttons-2.component';
 import { MapControlButtonsComponent } from './map-control-buttons/map-control-buttons.component';
 import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.component';
 import { MapPointInfoPanelComponent } from './map-control-point-info-panel/map-point-info-panel.component';
@@ -58,6 +59,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordDetailsComponent,
     StatisticCardComponent,
     MapControlButtonsComponent,
+    MapControlButtons2Component,
     MapControlComponent,
     MainStationCountComponent,
     MapListPanelComponent,

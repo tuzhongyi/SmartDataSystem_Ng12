@@ -1,4 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -100,22 +101,9 @@ export class GlobalStorageService {
     },
   };
 
-  interval = new EventEmitter();
-  private intervalHandle?: NodeJS.Timer;
-  runInterval(interval: number = 1000 * 60 * 1) {
-    this.intervalHandle = setInterval(() => {
-      this.interval.emit();
-    }, interval);
-  }
-  stopInterval() {
-    if (this.intervalHandle) {
-      clearInterval(this.intervalHandle);
-    }
-  }
+  interval = new IntervalController();
 
-  constructor(private localStorage: LocalStorageService) {
-    this.runInterval();
-  }
+  constructor(private localStorage: LocalStorageService) {}
 
   destroy() {
     this.system = undefined;
@@ -125,7 +113,43 @@ export class GlobalStorageService {
     this._defaultDivisionId = undefined;
     this._defaultDivisionType = DivisionType.None;
     this._defaultResourceType = UserResourceType.None;
-    this.stopInterval();
+    this.interval.stop();
+  }
+}
+
+class IntervalController {
+  interval = new EventEmitter();
+  private intervalHandle?: NodeJS.Timer;
+  run(interval: number = 1000 * 60 * 1) {
+    if (!this.intervalHandle) {
+      this.intervalHandle = setInterval(() => {
+        this.interval.emit();
+      }, interval);
+    }
+  }
+  stop() {
+    this.interval.emit;
+    if (this.intervalHandle) {
+      clearInterval(this.intervalHandle);
+      this.intervalHandle = undefined;
+    }
+  }
+
+  subscribe<T = any>(
+    next?: (value: T) => void,
+    error?: (error: any) => void,
+    complete?: () => void
+  ): Subscription;
+  subscribe<T = any>(
+    observerOrNext?: any,
+    error?: any,
+    complete?: any
+  ): Subscription;
+  subscribe(observerOrNext?: any, error?: any, complete?: any) {
+    return this.interval.subscribe(observerOrNext, error, complete);
+  }
+  emit<T = any>(value?: T): void {
+    this.interval.emit(value);
   }
 }
 

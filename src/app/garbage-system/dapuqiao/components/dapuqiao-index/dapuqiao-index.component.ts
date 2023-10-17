@@ -64,6 +64,7 @@ export class DaPuQiaoIndexComponent implements OnInit {
     this.global.system = SystemType.garbage;
     this.global.interval.subscribe(this.load);
     this.global.statusChange.subscribe(this.load);
+    this.global.interval.run();
   }
 
   config(route: ActivatedRoute) {

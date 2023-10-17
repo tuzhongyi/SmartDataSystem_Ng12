@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
 import { IIdModel } from 'src/app/network/model/model.interface';
 import { AMapLabelOptionConverter } from '../amap-label-option.converter';
+import { GarbageStationNumberStatisticModel } from '../amap.model';
 import { AMapClient } from './amap.client';
 import { AMapService } from './amap.service';
 
@@ -11,29 +11,24 @@ export class AMapPointPlugAceBusiness {
 
   private labelOptionConverter = new AMapLabelOptionConverter();
 
-  async set(drops: GarbageStationNumberStatistic[]) {
+  async set(drops: GarbageStationNumberStatisticModel[]) {
     let client = await this.amap.client;
     // 记录被统计的厢房
     const opts = new Array<CesiumDataController.LabelOptions>();
     for (let i = 0; i < drops.length; i++) {
-      const data = drops[i];
-      const station = this.amap.source.all.find((x) => x.Id == data.Id);
+      let data = drops[i];
 
-      if (
-        station &&
-        data.CurrentGarbageTime != undefined &&
-        data.CurrentGarbageTime > 0
-      ) {
-        let point = this.amap.source.points[station.Id];
+      if (data.CurrentGarbageTime != undefined && data.CurrentGarbageTime > 0) {
+        let point = this.amap.source.points[data.Id];
         if (!point) continue;
         const opt = this.labelOptionConverter.Convert(data, point.position);
         opts.push(opt);
-        this.amap.source.plug.unshift(data);
+        this.amap.source.plug.all.unshift(data);
       }
     }
 
     client.Label.Set(opts, CesiumDataController.ImageResource.arcProgress);
-    this.amap.source.plug = this.unique(this.amap.source.plug);
+    this.amap.source.plug.all = this.unique(this.amap.source.plug.all);
   }
 
   unique<T extends IIdModel>(arr: T[]) {
@@ -54,9 +49,9 @@ export class AMapPointPlugAceBusiness {
     for (let i = 0; i < models.length; i++) {
       const model = models[i];
       client.Label.Remove(model.Id);
-      let index = this.amap.source.plug.findIndex((x) => x.Id === model.Id);
+      let index = this.amap.source.plug.all.findIndex((x) => x.Id === model.Id);
       if (index >= 0) {
-        this.amap.source.plug.splice(index, 1);
+        this.amap.source.plug.all.splice(index, 1);
       }
     }
   }

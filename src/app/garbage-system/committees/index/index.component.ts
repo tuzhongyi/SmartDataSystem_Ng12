@@ -64,10 +64,10 @@ export class CommitteesIndexComponent implements OnInit {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
-    return this._storeService.HideButton;
+    return this.global.HideButton;
   }
   get HideTitlebar(): boolean {
-    return this._storeService.HideTitlebar;
+    return this.global.HideTitlebar;
   }
 
   constructor(
@@ -75,7 +75,7 @@ export class CommitteesIndexComponent implements OnInit {
     public business: CommitteesIndexBusiness,
     private _titleService: Title,
     private _localStorageService: LocalStorageService,
-    private _storeService: GlobalStorageService,
+    private global: GlobalStorageService,
     public window: CommitteesWindowBussiness,
     public trigger: CommitteesIndexEventTriggerBusiness,
     public patrol: CommitteesIndexPatrolControlBusiness,
@@ -84,6 +84,7 @@ export class CommitteesIndexComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
+    this.global.interval.run();
   }
 
   config(route: ActivatedRoute) {
@@ -96,10 +97,10 @@ export class CommitteesIndexComponent implements OnInit {
           value = JSON.parse(param[key]);
           switch (lower) {
             case 'hidebutton':
-              this._storeService.HideButton = value;
+              this.global.HideButton = value;
               break;
             case 'hidetitlebar':
-              this._storeService.HideTitlebar = value;
+              this.global.HideTitlebar = value;
               break;
             default:
               break;
@@ -118,17 +119,15 @@ export class CommitteesIndexComponent implements OnInit {
       let userDivisionType =
         EnumHelper.ConvertUserResourceToDivision(resourceType);
 
-      this._storeService.divisionId = userDivisionId;
-      this._storeService.divisionType = userDivisionType;
+      this.global.divisionId = userDivisionId;
+      this.global.divisionType = userDivisionType;
     }
 
+    this.service.getCommittees(this.global.divisionId).then((x: Division) => {
+      this.navication.committees = x;
+    });
     this.service
-      .getCommittees(this._storeService.divisionId)
-      .then((x: Division) => {
-        this.navication.committees = x;
-      });
-    this.service
-      .getStationList(this._storeService.divisionId)
+      .getStationList(this.global.divisionId)
       .then((x: GarbageStation[]) => {
         this.navication.stations = x;
       });

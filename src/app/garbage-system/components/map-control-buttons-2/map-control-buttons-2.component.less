@@ -1,0 +1,106 @@
+.map-control {
+  &-buttons-2 {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    color: white;
+
+    &>* {
+      margin-right: 6px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    .station-drop {
+
+      &-time {
+        display: none;
+        bottom: 28px;
+        left: 0;
+
+        &>* {
+          margin-bottom: 3px;
+        }
+      }
+
+      &:hover {
+        .station-drop-time {
+          display: block;
+        }
+      }
+    }
+  }
+
+  &-button {
+
+    bottom: 0px;
+    left: 0px;
+    width: 32px;
+    height: 28px;
+    font-size: 18px;
+    background-color: #2d76ce;
+
+    cursor: pointer;
+    clip-path: polygon(25% 0%,
+        75% 0%,
+        100% 50%,
+        75% 100%,
+        25% 100%,
+        0% 50%);
+    padding: 3px;
+
+    &.h {
+      font-size: 12px;
+    }
+
+
+    &:hover {
+      background-color: #5da1f4;
+    }
+
+    &:hover &-inner {
+      background-color: #2a3c66;
+    }
+
+
+
+    &.selected {
+      background-color: #2ac2e1;
+      opacity: 1;
+
+      .map-control-button-inner {
+        background-color: #003b3d;
+      }
+
+      &:hover {
+        background-color: #73d4ff;
+
+        .map-control-button-inner {
+          background-color: #005f62;
+        }
+      }
+    }
+
+    &-inner {
+      height: 100%;
+      width: 100%;
+      background-color: #040b39;
+      clip-path: polygon(25% 0%,
+          75% 0%,
+          100% 50%,
+          75% 100%,
+          25% 100%,
+          0% 50%);
+
+      line-height: 27px;
+      justify-content: center;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+
+
+}
