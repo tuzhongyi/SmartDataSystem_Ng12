@@ -35,6 +35,10 @@ export class AccountOperationComponent implements OnInit {
     private service: AccountOperationService
   ) {
     this.user = this.local.user;
+    this.global.interval.subscribe((x) => {
+      this.service.heart(this.user.Id);
+    });
+    this.global.interval.run();
   }
   user: User;
   userName: string = '';
