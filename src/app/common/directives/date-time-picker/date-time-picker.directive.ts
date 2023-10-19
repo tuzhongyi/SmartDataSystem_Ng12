@@ -1,15 +1,15 @@
+import { formatDate } from '@angular/common';
 import {
+  AfterContentInit,
   Directive,
   ElementRef,
-  AfterContentInit,
+  EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   Output,
-  EventEmitter,
-  OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { formatDate } from '@angular/common';
 import { OneWeekDate } from '../../tools/tool';
 
 declare let $: any;
@@ -185,6 +185,23 @@ export enum DateTimePickerView {
 }
 
 export class DateTimePickerConfig {
+  constructor(
+    opts: {
+      view?: DateTimePickerView;
+      week?: boolean;
+      format?: string;
+    } = {}
+  ) {
+    if (opts.format) {
+      this.format = opts.format;
+    }
+    if (opts.view !== undefined) {
+      this.view = opts.view;
+    }
+    if (opts.week !== undefined) {
+      this.week = opts.week;
+    }
+  }
   view: DateTimePickerView = DateTimePickerView.month;
   week = false;
   format = 'yyyy-MM-dd';

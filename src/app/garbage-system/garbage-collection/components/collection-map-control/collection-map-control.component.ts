@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import {
   PointInfoPanelModelOption,
@@ -153,8 +154,12 @@ export class CollectionMapControlComponent
     private changeDetectorRef: ChangeDetectorRef,
     public amap: CollectionMapControlBusiness,
     public info: GarbageVehiclePointInfoPanelBusiness,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private global: GlobalStorageService
   ) {}
+
+  key = 'collection-map-control';
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
       if (this.position) {
@@ -180,6 +185,12 @@ export class CollectionMapControlComponent
   //#endregion
 
   ngOnInit(): void {
+    this.global.interval.subscribe(this.key, (x) => {
+      this.amap.init();
+    });
+    this.global.statusChange.subscribe((x) => {
+      this.amap.divisionSelect(this.global.divisionId);
+    });
     let src = this.amap.getSrc();
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);
     this.amap.pointDoubleClicked.subscribe((x) => {
@@ -221,6 +232,7 @@ export class CollectionMapControlComponent
     if (this.loadHandle) {
       clearTimeout(this.loadHandle);
     }
+    this.global.interval.unsubscribe(this.key);
   }
 
   onLabelDisplay = (value: boolean) => {

@@ -87,7 +87,6 @@ export class DetailsChartComponent
       this.userResourceType = local.user.Resources[0].ResourceType;
     }
     this.type = global.defaultDivisionType;
-    this.config.dateTimePicker.format = 'yyyy年MM月dd日';
   }
   treeClose: EventEmitter<void> = new EventEmitter();
   selectedNodes: CommonFlatNode[] = [];
@@ -108,7 +107,7 @@ export class DetailsChartComponent
   config = {
     line: new ChartConfig(this.unit, this.date),
     bar: new ChartConfig(this.unit, this.date),
-    dateTimePicker: new DateTimePickerConfig(),
+    dateTimePicker: new DateTimePickerConfig({ format: 'yyyy年MM月dd日' }),
   };
 
   data: ITimeData<IModel>[][] = [];
@@ -275,17 +274,17 @@ export class DetailsChartComponent
     switch (this.unit) {
       case TimeUnit.Week:
         this.config.dateTimePicker.view = DateTimePickerView.month;
-        this.config.dateTimePicker.format = 'yyyy-MM-dd';
+        this.config.dateTimePicker.format = 'yyyy年MM月dd日';
         this.config.dateTimePicker.week = true;
         break;
       case TimeUnit.Hour:
         this.config.dateTimePicker.view = DateTimePickerView.month;
-        this.config.dateTimePicker.format = 'yyyy-MM-dd';
+        this.config.dateTimePicker.format = 'yyyy年MM月dd日';
         this.config.dateTimePicker.week = false;
         break;
       case TimeUnit.Month:
         this.config.dateTimePicker.view = DateTimePickerView.year;
-        this.config.dateTimePicker.format = 'yyyy-MM';
+        this.config.dateTimePicker.format = 'yyyy年MM月';
         this.config.dateTimePicker.week = false;
         break;
       default:

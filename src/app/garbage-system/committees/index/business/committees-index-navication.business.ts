@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Division } from 'src/app/network/model/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
 import { CommitteesWindowBussiness } from './committees-window.business';
@@ -10,8 +10,12 @@ export class CommitteesIndexNavicationBusiness {
   stations: GarbageStation[] = [];
   selected?: GarbageStation;
 
+  select: EventEmitter<number> = new EventEmitter();
+
   onStationClicked(station: GarbageStation) {
     this.selected = station;
+    let index = this.stations.findIndex((x) => x.Id === this.selected?.Id);
+    this.select.emit(index);
   }
   onCommitteesInfoClicked(division: Division) {
     this.committees = division;

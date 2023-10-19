@@ -142,7 +142,11 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     this.loading = true;
     let datas = this.load();
     if (datas && datas.length > 0) {
-      return datas;
+      try {
+        return datas;
+      } finally {
+        this.loading = false;
+      }
     }
     return this.service.list!().then((x) => {
       try {

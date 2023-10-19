@@ -3,20 +3,19 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { TaskTableBusiness } from './task-table.business';
-import { TaskTableViewModel } from './task-table.model';
-import { TaskTableConverter } from './task-table.converter';
-import { DatePipe } from '@angular/common';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/division.model';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { TaskTableBusiness } from './task-table.business';
+import { TaskTableViewModel } from './task-table.model';
 
 @Component({
   selector: 'app-task-table',
@@ -28,6 +27,7 @@ export class TaskTableComponent
   implements
     OnInit,
     OnChanges,
+    OnDestroy,
     IComponent<GarbageDropEventRecord[], TaskTableViewModel[]>
 {
   @Input()
@@ -47,7 +47,7 @@ export class TaskTableComponent
   views?: TaskTableViewModel[];
   headWidths = ['10%', '25%', '15%', '20%', '15%', 'calc(15% - 8px)', '8px'];
   bodyWidths = ['10%', '25%', '15%', '20%', '15%', '15%'];
-
+  key = 'task-table';
   EventType = EventType;
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -59,9 +59,12 @@ export class TaskTableComponent
   }
 
   ngOnInit() {
-    this.store.interval.subscribe(() => {
+    this.store.interval.subscribe(this.key, () => {
       this.show();
     });
+  }
+  ngOnDestroy(): void {
+    this.store.interval.unsubscribe(this.key);
   }
 
   itemClick(item: TaskTableViewModel) {

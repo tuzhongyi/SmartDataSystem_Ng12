@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { instanceToPlain } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 import { Fault } from '../../model/howell-response.model';
@@ -37,9 +37,10 @@ export class UserRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<User>;
 
-  get(id: string): Promise<User> {
+  async get(id: string): Promise<User> {
     let url = UserUrl.item(id);
-    return this.type.get(url);
+    let response = await this.basic.http.get(url).toPromise();
+    return plainToInstance(User, response);
   }
   update(data: User): Promise<Fault> {
     let url = UserUrl.basic();

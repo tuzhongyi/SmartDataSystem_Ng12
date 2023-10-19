@@ -42,7 +42,7 @@ class AIGarbageDevicesRecordsEventsUrl extends AbstractUrl {
 class AIGarbageRfidUrl {
   constructor(private basic: string) {}
   private get base() {
-    return `${this.basic}Rfid`;
+    return `${this.basic}/Rfid`;
   }
   cards = new AIGarbageRfidCardsUrl(this.base);
 }

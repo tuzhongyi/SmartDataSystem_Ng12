@@ -11,17 +11,11 @@ import { CollectionMapControlConverter } from '../collection-map-control.convert
 @Injectable()
 export class CollectionMapControlBusiness {
   constructor(
-    private storeService: GlobalStorageService,
+    private global: GlobalStorageService,
     private vehicleService: GarbageVehicleRequestService,
     private divisionService: DivisionRequestService
-  ) {
-    this.storeService.interval.subscribe((x) => {
-      this.init();
-    });
-    this.storeService.statusChange.subscribe((x) => {
-      this.divisionSelect(this.storeService.divisionId);
-    });
-  }
+  ) {}
+
   private converter = new CollectionMapControlConverter();
   private iframe?: HTMLIFrameElement;
 
@@ -84,7 +78,7 @@ export class CollectionMapControlBusiness {
         this.onMapClicked();
       };
 
-      this.loadDivision(this.storeService.divisionId);
+      this.loadDivision(this.global.divisionId);
 
       this.setContentMenu();
     };

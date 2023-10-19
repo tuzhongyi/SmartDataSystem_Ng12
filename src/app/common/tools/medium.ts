@@ -21,7 +21,11 @@ export class Medium {
 
   static img(url?: string): Promise<string> {
     return new Promise((resolve) => {
-      let img = url ? Medium.jpg(url) : '';
+      if (!url) {
+        resolve('/assets/img/timg-pic.jpg');
+        return;
+      }
+      let img = Medium.jpg(url);
       var image = new Image();
       image.src = img;
       image.onerror = () => {
@@ -41,6 +45,12 @@ export class Medium {
         } else {
           img = Medium.jpg(url);
         }
+      } else {
+        resolve({
+          url: '/assets/img/timg-pic.png',
+          error: true,
+        });
+        return;
       }
 
       var image = new Image();

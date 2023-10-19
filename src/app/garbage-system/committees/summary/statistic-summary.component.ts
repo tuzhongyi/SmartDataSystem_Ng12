@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
@@ -28,11 +29,12 @@ import { StatisticSummaryService } from './statistic-summary.service';
   providers: [StatisticSummaryService],
 })
 export class StatisticSummaryComponent
-  implements OnInit, OnChanges, AfterViewInit
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
   private _unit: TimeUnit = TimeUnit.Hour;
 
   title = '汇总信息';
+  key = 'statistic-summary';
 
   TimeUnits: {
     value: TimeUnit;
@@ -100,6 +102,7 @@ export class StatisticSummaryComponent
     private service: StatisticSummaryService,
     private store: GlobalStorageService
   ) {}
+
   ngAfterViewInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.Committees && this.Stations && this.Date) {
@@ -117,13 +120,15 @@ export class StatisticSummaryComponent
       language: Language.TimeUnit(TimeUnit.Day),
     });
 
-    this.store.interval.subscribe((x) => {
+    this.store.interval.subscribe(this.key, (x) => {
       this.onLoaded();
     });
 
     this.exportBusiness = new StatisticSummaryExportExcelBusiness(this.title);
   }
-
+  ngOnDestroy(): void {
+    this.store.interval.unsubscribe(this.key);
+  }
   onLoaded() {
     if (this.Committees && this.Stations) {
       let stationIds = this.Stations.map((x) => x.Id);

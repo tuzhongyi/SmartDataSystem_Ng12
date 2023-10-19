@@ -3,18 +3,19 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { CommitteesStatisticBusiness } from './committees-statistic.business';
-import { CommitteesStatisticViewModel } from './committees-statistic.model';
+import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Language } from 'src/app/common/tools/language';
 import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { Division } from 'src/app/network/model/division.model';
-import { Language } from 'src/app/common/tools/language';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { CommitteesStatisticBusiness } from './committees-statistic.business';
+import { CommitteesStatisticViewModel } from './committees-statistic.model';
 
 @Component({
   selector: 'app-committees-statistic',
@@ -26,6 +27,7 @@ export class CommitteesStatisticComponent
   implements
     OnInit,
     OnChanges,
+    OnDestroy,
     IComponent<DivisionNumberStatistic, CommitteesStatisticViewModel>
 {
   Language = Language;
@@ -60,6 +62,7 @@ export class CommitteesStatisticComponent
   }
 
   view = new CommitteesStatisticViewModel();
+  key = 'committees-statistic';
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.Committees) {
@@ -73,11 +76,14 @@ export class CommitteesStatisticComponent
   }
 
   ngOnInit() {
-    this.store.interval.subscribe(() => {
+    this.store.interval.subscribe(this.key, () => {
       this.show();
     });
   }
 
+  ngOnDestroy(): void {
+    this.store.interval.unsubscribe(this.key);
+  }
   show() {
     if (this.Committees) {
       this.business

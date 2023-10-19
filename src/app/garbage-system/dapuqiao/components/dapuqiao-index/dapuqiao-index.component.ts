@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import {
@@ -35,7 +35,7 @@ import { IndexVideoControlWindowBusiness } from './business/windows/index-video-
     IndexSuperviseButton,
   ],
 })
-export class DaPuQiaoIndexComponent implements OnInit {
+export class DaPuQiaoIndexComponent implements OnInit, OnDestroy {
   public illegalDropType: EventType = EventType.IllegalDrop;
   public mixIntoType: EventType = EventType.MixedInto;
   get HideButton(): boolean {
@@ -62,10 +62,17 @@ export class DaPuQiaoIndexComponent implements OnInit {
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
     this.global.system = SystemType.garbage;
-    this.global.interval.subscribe(this.load);
-    this.global.statusChange.subscribe(this.load);
+    this.global.interval.subscribe(this.key, () => {
+      this.load.emit();
+      this.statistic.loading.emit();
+    });
+    this.global.statusChange.subscribe(() => {
+      this.load.emit();
+      this.statistic.loading.emit();
+    });
     this.global.interval.run();
   }
+  key = 'dapuqiao-index';
 
   config(route: ActivatedRoute) {
     route.queryParams.subscribe((param) => {
@@ -104,6 +111,9 @@ export class DaPuQiaoIndexComponent implements OnInit {
     }
 
     this.statistic.loading.emit();
+  }
+  ngOnDestroy(): void {
+    this.global.interval.unsubscribe(this.key);
   }
 
   onweight(type: GarbageType) {

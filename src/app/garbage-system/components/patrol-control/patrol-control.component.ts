@@ -34,7 +34,7 @@ import { PlaybackConfigWindowViewModel } from './playback-config-window.model';
 })
 export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   @Input() load?: EventEmitter<void>;
-  // @Input() id?: string;
+  @Input() toselect?: EventEmitter<number>;
   @Input() config: PatrolControlConfig = new PatrolControlConfig();
   @Output() close: EventEmitter<void> = new EventEmitter();
 
@@ -44,15 +44,6 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private business: PatrolControlBusiness) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    // if (changes.id && this.id) {
-    //   if (this.models && this.models.length > 0) {
-    //     let index = this.models.findIndex((x) => x.id == this.id);
-    //     if (index >= 0) {
-    //       this.selected = this.models[index];
-    //       this.onselected.emit(this.selected);
-    //     }
-    //   }
-    // }
     if (changes.config) {
       if (this.config.autoplay) {
         this.run();
@@ -87,6 +78,11 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
       this.load.subscribe((x) => {
         let index = this.page ? this.page.PageIndex : 1;
         this.loadData(index);
+      });
+    }
+    if (this.toselect) {
+      this.toselect.subscribe((x) => {
+        this.loadData(x + 1);
       });
     }
     this.loadData(1);

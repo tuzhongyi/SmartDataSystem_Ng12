@@ -29,14 +29,6 @@ export class MonitorStatisticCardBussiness
     this.loading.subscribe(async (x) => {
       this.cards = await this.load();
     });
-    this.storeService.statusChange.subscribe(async (x) => {
-      this.cards = await this.load();
-    });
-    this.storeService.interval.subscribe((x) => {
-      this.load().then((cards) => {
-        this.cards = cards;
-      });
-    });
   }
 
   cards: StatisticCardViewModel[] = [];

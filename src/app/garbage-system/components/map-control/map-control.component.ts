@@ -14,6 +14,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -228,7 +229,8 @@ export class MapControlComponent
     public info: PointInfoPanelBusiness,
     private device: MapControlAIDeviceBusiness,
     private toastr: ToastrService,
-    private guide: MapControlGuideBusiness
+    private guide: MapControlGuideBusiness,
+    private global: GlobalStorageService
   ) {
     this.display = this.initDisplay();
     // {
@@ -240,6 +242,7 @@ export class MapControlComponent
   display: MapControlTools;
   loadHandle?: NodeJS.Timer;
   window = new MapControlWindow();
+  key = 'app-map-control';
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
@@ -258,6 +261,9 @@ export class MapControlComponent
     return display;
   }
   ngOnInit(): void {
+    this.global.interval.subscribe(this.key, (x) => {
+      this.amap.point.keep();
+    });
     this.panel.init();
 
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.amap.src);
@@ -315,6 +321,7 @@ export class MapControlComponent
     if (this.loadHandle) {
       clearTimeout(this.loadHandle);
     }
+    this.global.interval.unsubscribe(this.key);
   }
 
   pointCount: PointCount = new PointCount();

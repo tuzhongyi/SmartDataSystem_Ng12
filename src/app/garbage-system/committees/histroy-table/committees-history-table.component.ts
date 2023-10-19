@@ -3,6 +3,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
@@ -37,6 +38,7 @@ export class CommitteesHistroyTableComponent
   implements
     OnInit,
     OnChanges,
+    OnDestroy,
     IComponent<
       Array<IllegalDropEventRecord | MixedIntoEventRecord>,
       CommitteesHistoryTableViewModel<
@@ -70,31 +72,35 @@ export class CommitteesHistroyTableComponent
   ) {
     this.business = business;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.Committees && this.Committees) {
-      this.onLoaded();
-    }
-  }
+  key = 'committees-history-table';
   business: IBusiness<
     (IllegalDropEventRecord | MixedIntoEventRecord)[],
     CommitteesHistoryTableViewModel<
       IllegalDropEventRecord | MixedIntoEventRecord
     >[]
   >;
-  onLoaded(): void {
-    this.show();
+  views: CommitteesHistoryTableViewModel<
+    IllegalDropEventRecord | MixedIntoEventRecord
+  >[] = [];
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.Committees && this.Committees) {
+      this.onLoaded();
+    }
   }
 
   ngOnInit() {
-    this.store.interval.subscribe(() => {
+    this.store.interval.subscribe(this.key, () => {
       this.show();
     });
   }
 
-  views: CommitteesHistoryTableViewModel<
-    IllegalDropEventRecord | MixedIntoEventRecord
-  >[] = [];
+  ngOnDestroy(): void {
+    this.store.interval.unsubscribe(this.key);
+  }
 
+  onLoaded(): void {
+    this.show();
+  }
   show() {
     if (this.Committees) {
       this.business.load(this.Committees.Id, this.Type).then((datas) => {

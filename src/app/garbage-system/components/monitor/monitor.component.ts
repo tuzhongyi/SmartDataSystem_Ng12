@@ -4,7 +4,7 @@
  * @Last Modified by: zzl
  * @Last Modified time: 2022-01-10 16:08:27
  */
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
@@ -42,7 +42,7 @@ import { MonitorVideoControlWindowBusiness } from './business/windows/monitor-vi
     MonitorGuideBusiness,
   ],
 })
-export class MonitorComponent implements OnInit {
+export class MonitorComponent implements OnInit, OnDestroy {
   EventType = EventType;
   PlayMode = PlayMode;
   get HideButton(): boolean {
@@ -69,10 +69,17 @@ export class MonitorComponent implements OnInit {
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
     this.global.system = SystemType.garbage;
-    this.global.interval.subscribe(this.load);
-    this.global.statusChange.subscribe(this.load);
+    this.global.interval.subscribe(this.key, () => {
+      this.load.emit();
+      this.statistic.loading.emit();
+    });
+    this.global.statusChange.subscribe(() => {
+      this.load.emit();
+      this.statistic.loading.emit();
+    });
     this.global.interval.run();
   }
+  key = 'monitor';
 
   config(route: ActivatedRoute) {
     route.queryParams.subscribe((param) => {
@@ -111,6 +118,9 @@ export class MonitorComponent implements OnInit {
     }
 
     this.statistic.loading.emit();
+  }
+  ngOnDestroy(): void {
+    this.global.interval.unsubscribe(this.key);
   }
 
   onweight(type: GarbageType) {

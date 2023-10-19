@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { RoutePath } from 'src/app/app-routing.path';
@@ -20,8 +27,9 @@ import { AccountOperationService } from './account-operation.service';
   styleUrls: ['./account-operation.component.less'],
   providers: [AccountOperationService],
 })
-export class AccountOperationComponent implements OnInit {
+export class AccountOperationComponent implements OnInit, OnDestroy {
   @Input() hasGuide: boolean = false;
+  @Input() heart: boolean = false;
   @Output() changePassword: EventEmitter<void> = new EventEmitter();
   @Output() bindMobile: EventEmitter<void> = new EventEmitter();
   @Output() guide: EventEmitter<void> = new EventEmitter();
@@ -35,17 +43,20 @@ export class AccountOperationComponent implements OnInit {
     private service: AccountOperationService
   ) {
     this.user = this.local.user;
-    this.global.interval.subscribe((x) => {
-      this.service.heart(this.user.Id);
-    });
-    this.global.interval.run();
   }
   user: User;
   userName: string = '';
   display = new AccountOperationDisplay();
   SystemType = SystemType;
+  key = 'app-account-operation';
 
   ngOnInit(): void {
+    if (this.heart) {
+      this.global.interval.subscribe(this.key, () => {
+        this.service.heart(this.user.Id);
+      });
+      this.global.interval.run();
+    }
     let userName = this.cookie.get('userName');
     if (!userName) {
       this.router.navigateByUrl(RoutePath.login);
@@ -65,6 +76,10 @@ export class AccountOperationComponent implements OnInit {
       this.global.defaultDivisionType === DivisionType.Committees;
     this.display.bindMobile =
       this.global.defaultDivisionType === DivisionType.Committees;
+  }
+
+  ngOnDestroy(): void {
+    this.global.interval.unsubscribe(this.key);
   }
   logoutHandler() {
     this.session.clear();

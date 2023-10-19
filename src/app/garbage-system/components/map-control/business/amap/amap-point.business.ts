@@ -25,9 +25,6 @@ export class AMapPointBusiness {
     public event: AMapEvent,
     public view: AMapPointViewBusiness
   ) {
-    this.global.interval.subscribe((x) => {
-      this.keep();
-    });
     this.menu.init();
     this.view.visibile.subscribe((x) => {
       this.visibile(x.datas, x.show);

@@ -33,7 +33,7 @@
     >
       <div class="monitor-body__wrapper patrol">
         <app-patrol-control
-          [id]="navication.selected ? navication.selected.Id : ''"
+          [toselect]="navication.select"
           [config]="patrol.config"
           (close)="patrol.onclose()"
           (fullscreen)="patrol.onfullscreen()"

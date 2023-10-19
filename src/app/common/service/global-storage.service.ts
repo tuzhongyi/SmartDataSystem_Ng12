@@ -113,43 +113,57 @@ export class GlobalStorageService {
     this._defaultDivisionId = undefined;
     this._defaultDivisionType = DivisionType.None;
     this._defaultResourceType = UserResourceType.None;
-    this.interval.stop();
+    this.interval.clear();
   }
 }
 
 class IntervalController {
-  interval = new EventEmitter();
+  interval: { [key: string]: EventEmitter<void> } = {};
   private intervalHandle?: NodeJS.Timer;
   run(interval: number = 1000 * 60 * 1) {
     if (!this.intervalHandle) {
       this.intervalHandle = setInterval(() => {
-        this.interval.emit();
+        for (const key in this.interval) {
+          this.interval[key].emit();
+        }
       }, interval);
     }
   }
   stop() {
-    this.interval.emit;
     if (this.intervalHandle) {
       clearInterval(this.intervalHandle);
       this.intervalHandle = undefined;
     }
   }
+  clear() {
+    this.stop();
+    for (const key in this.interval) {
+      this.unsubscribe(key);
+    }
+  }
 
   subscribe<T = any>(
+    key: string,
     next?: (value: T) => void,
     error?: (error: any) => void,
     complete?: () => void
   ): Subscription;
   subscribe<T = any>(
-    observerOrNext?: any,
-    error?: any,
-    complete?: any
+    key: string,
+    observerOrNext?: T,
+    error?: T,
+    complete?: T
   ): Subscription;
-  subscribe(observerOrNext?: any, error?: any, complete?: any) {
-    return this.interval.subscribe(observerOrNext, error, complete);
+  subscribe<T = any>(key: string, observerOrNext?: T, error?: T, complete?: T) {
+    let emitter = new EventEmitter();
+    this.interval[key] = emitter;
+    return this.interval[key].subscribe(observerOrNext, error, complete);
   }
-  emit<T = any>(value?: T): void {
-    this.interval.emit(value);
+  unsubscribe(key: string) {
+    if (key in this.interval) {
+      this.interval[key].unsubscribe();
+      delete this.interval[key];
+    }
   }
 }
 
