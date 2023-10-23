@@ -35,7 +35,8 @@
               <div class="imgs">
                 <div
                   class="img"
-                  [style.backgroundImage]="'url(' + img.url + ')'"
+                  image
+                  [url]="img.url"
                   *ngFor="let img of item.imgs; let i = index"
                   (click)="onimage(item, i)"
                 ></div>

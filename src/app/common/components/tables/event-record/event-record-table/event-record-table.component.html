@@ -39,10 +39,9 @@
               <div class="img-list">
                 <div
                   class="img"
+                  image
                   *ngFor="let url of item.urls; let imgIndex = index"
-                  [ngStyle]="{
-                    'background-image': 'url(' + (url | async) + ')'
-                  }"
+                  [url]="url | async"
                   (click)="onimage($event, item, imgIndex)"
                 ></div>
               </div>

@@ -46,8 +46,9 @@
             </div>
             <div class="complete-item-images">
               <div
+                image
                 *ngFor="let url of item.urls; let i = index"
-                [style.backgroundImage]="'url(' + url.url + ')'"
+                [url]="url.url"
                 (click)="onimage(item, i)"
               ></div>
             </div>

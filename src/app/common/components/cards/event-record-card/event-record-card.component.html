@@ -31,11 +31,7 @@
     </div>
   </div>
   <div class="event-record-card-body">
-    <div
-      [ngStyle]="{
-        backgroundImage: 'url(' + (model.img | async) + ')'
-      }"
-    ></div>
+    <div image [url]="model.img | async"></div>
     <!-- <img
       [src]="model.img | async"
       onerror="this.src='/assets/img/black-bg.png'"
