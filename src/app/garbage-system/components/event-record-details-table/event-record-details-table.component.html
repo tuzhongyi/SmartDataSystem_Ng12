@@ -5,7 +5,6 @@
         <input
           type="text"
           placeholder="输入关键字"
-          class=""
           [(ngModel)]="this.filter.opts.text"
         />
         <button type="button" class="hw-blue-btn search" (click)="search()">
@@ -34,7 +33,6 @@
           [minView]="DateTimePickerView.hour"
           [(date)]="filter.duration.begin"
           [style]="{ fontFamily: 'HowellFont' }"
-          class=""
         />
       </div>
       <div class="filter-item">
@@ -46,7 +44,6 @@
           [startView]="DateTimePickerView.day"
           [minView]="DateTimePickerView.hour"
           [(date)]="filter.duration.end"
-          class=""
         />
       </div>
       <div class="filter-item select">

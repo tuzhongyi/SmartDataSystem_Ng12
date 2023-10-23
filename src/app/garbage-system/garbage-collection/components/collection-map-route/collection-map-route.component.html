@@ -10,7 +10,7 @@
     class="collection-map-route-content"
     [ngClass]="{ splitview: splitview }"
   >
-    <iframe #iframe [src]="src" (load)="onIframeLoad($event)" class=""></iframe>
+    <iframe #iframe [src]="src" (load)="onIframeLoad($event)"></iframe>
   </div>
   <div
     *ngIf="!display.query && !splitview"

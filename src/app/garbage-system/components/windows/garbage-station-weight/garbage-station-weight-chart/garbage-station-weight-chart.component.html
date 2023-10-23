@@ -30,7 +30,7 @@
       <div class="head-filter-item" style="width: 300px">
         <div class="head-filter-item-title three">投放点</div>
         <div class="head-filter-item-value three">
-          <select class="" [(ngModel)]="selected.station">
+          <select [(ngModel)]="selected.station">
             <option [ngValue]="undefined">请选择</option>
             <option [ngValue]="item" *ngFor="let item of stations">
               {{ item.Name }}
@@ -54,7 +54,7 @@
       </div>
     </div>
     <div class="head-search">
-      <select class="" [(ngModel)]="args.type.garbage" (change)="onchange()">
+      <select [(ngModel)]="args.type.garbage" (change)="onchange()">
         <option [ngValue]="GarbageType.Dry">
           {{ Language.GarbageType(GarbageType.Dry) }}
         </option>
@@ -62,7 +62,7 @@
           {{ Language.GarbageType(GarbageType.Wet) }}
         </option>
       </select>
-      <select class="" [(ngModel)]="args.unit" (change)="onchange()">
+      <select [(ngModel)]="args.unit" (change)="onchange()">
         <option [ngValue]="TimeUnit.Week">
           {{ Language.TimeUnit(TimeUnit.Week) }}
         </option>
@@ -73,7 +73,7 @@
           {{ Language.TimeUnit(TimeUnit.Year) }}
         </option>
       </select>
-      <select class="" [(ngModel)]="args.type.chart" (change)="onchange()">
+      <select [(ngModel)]="args.type.chart" (change)="onchange()">
         <option [ngValue]="ChartType.line">
           {{ Language.ChartType(ChartType.line) }}
         </option>

@@ -60,15 +60,15 @@
   </div>
   <div class="patrol-control-footer">
     <div class="status light-blue-text" [class.hide]="!config.status">
-      <div class="">
+      <div>
         <i class="howell-icon-nolittering sky-blue-text2"></i
-        ><label class="">{{ selected.status.illegalDrop }}</label>
+        ><label>{{ selected.status.illegalDrop }}</label>
       </div>
-      <div class="">
+      <div>
         <i class="howell-icon-mixlittering sky-blue-text2"></i
-        ><label class="">{{ selected.status.mixedInto }}</label>
+        ><label>{{ selected.status.mixedInto }}</label>
       </div>
-      <div class="" *ngIf="selected.status.stationState">
+      <div *ngIf="selected.status.stationState">
         <i class="howell-icon-fullgarbage sky-blue-text2"></i
         ><label [class]="selected.status.stationState.class">{{
           selected.status.stationState.language
