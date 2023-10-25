@@ -11,5 +11,4 @@ export class MonitorWeightWindowBusiness extends WindowViewModel {
     height: '89%',
   };
   type?: GarbageType;
-  show = false;
 }

@@ -31,8 +31,12 @@
         <tbody>
           <tr
             *ngFor="let item of datas; let i = index"
-            class="zoom"
-            [ngClass]="{ selected: selected === item }"
+            class=""
+            [ngClass]="{
+              zoom:
+                type === EventType.IllegalDrop || type === EventType.MixedInto,
+              selected: selected === item
+            }"
             (click)="onselect(item)"
           >
             <td>

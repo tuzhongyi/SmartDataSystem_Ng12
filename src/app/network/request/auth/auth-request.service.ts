@@ -77,9 +77,11 @@ export class AuthorizationService implements CanActivate {
       return this._router.parseUrl(`/${RoutePath.dapuqiao}`);
     } else {
       if (user.UserType === 2) {
-        return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+        // return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
       } else if (user.UserType === 3) {
-        return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+        // return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
+        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
       } else {
         if (user.Resources && user.Resources.length > 0) {
           let resource = user.Resources[0];

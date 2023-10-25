@@ -13,7 +13,6 @@ export class HowellBaseRequestService {
     let response = await this.http.getHowellResponse(url).toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -27,7 +26,6 @@ export class HowellBaseRequestService {
     let response = await this.http.howellPut(url, data).toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -45,24 +43,37 @@ export class HowellBaseRequestService {
 
   async post<T>(url: string, type: ClassConstructor<T>, args?: T | IParams) {
     let data = instanceToPlain(args) as T | IParams;
-    let response = await this.http.howellPost(url, data).toPromise();
-    switch (response.FaultCode) {
-      case 403:
-      case 405:
-        this.router.navigateByUrl(RoutePath.login);
-        break;
+    return this.http
+      .howellPost(url, data)
+      .toPromise()
+      .then((response) => {
+        switch (response.FaultCode) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
 
-      default:
-        break;
-    }
-    return ServiceHelper.HowellResponseProcess(response, type);
+          default:
+            break;
+        }
+        return ServiceHelper.HowellResponseProcess(response, type);
+      })
+      .catch((x) => {
+        switch (x.status) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
+
+          default:
+            break;
+        }
+        throw new Error(x.message);
+      });
   }
 
   async poststring<T>(url: string, type: ClassConstructor<T>, args: string) {
     let response = await this.http.postString(url, args).toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -76,7 +87,6 @@ export class HowellBaseRequestService {
     let response = await this.http.howellDelete(url).toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -95,7 +105,6 @@ export class HowellBaseRequestService {
       .toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -114,7 +123,6 @@ export class HowellBaseRequestService {
       .toPromise();
     switch (response.FaultCode) {
       case 403:
-      case 405:
         this.router.navigateByUrl(RoutePath.login);
         break;
 
@@ -129,35 +137,59 @@ export class HowellBaseRequestService {
   }
 
   async getArray<T>(url: string, type: ClassConstructor<T>) {
-    let response = await this.http
+    return this.http
       .getHowellResponse<IParams, HowellResponse<Array<T>>>(url)
-      .toPromise();
-    switch (response.FaultCode) {
-      case 403:
-      case 405:
-        this.router.navigateByUrl(RoutePath.login);
-        break;
+      .toPromise()
+      .then((response) => {
+        switch (response.FaultCode) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
 
-      default:
-        break;
-    }
-    return ServiceHelper.HowellResponseProcess(response, type);
+          default:
+            break;
+        }
+        return ServiceHelper.HowellResponseProcess(response, type);
+      })
+      .catch((x) => {
+        switch (x.status) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
+
+          default:
+            break;
+        }
+        throw new Error(x.message);
+      });
   }
   async paged<T>(url: string, type: ClassConstructor<T>, params: IParams) {
     let data = instanceToPlain(params) as IParams;
-    let response = await this.http
+    return this.http
       .howellPost<IParams, HowellResponse<PagedList<T>>>(url, data)
-      .toPromise();
-    switch (response.FaultCode) {
-      case 403:
-      case 405:
-        this.router.navigateByUrl(RoutePath.login);
-        break;
+      .toPromise()
+      .then((response) => {
+        switch (response.FaultCode) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
 
-      default:
-        break;
-    }
-    return ServiceHelper.HowellResponseProcess(response, type);
+          default:
+            break;
+        }
+        return ServiceHelper.HowellResponseProcess(response, type);
+      })
+      .catch((x) => {
+        switch (x.status) {
+          case 403:
+            this.router.navigateByUrl(RoutePath.login);
+            break;
+
+          default:
+            break;
+        }
+        throw new Error(x.message);
+      });
   }
 
   async getExcel(url: string) {

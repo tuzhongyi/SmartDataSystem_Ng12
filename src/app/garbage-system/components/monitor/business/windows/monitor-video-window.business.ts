@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
 import { Duration } from 'src/app/network/model/duration.model';
@@ -16,8 +16,26 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
     top: '56%',
   };
 
+  override set show(v: boolean) {
+    this._show = v;
+    if (!this.show) {
+      this.isplayback = undefined;
+      this.first = true;
+      this.duration = undefined;
+    }
+  }
+  override get show() {
+    return this._show;
+  }
+
   model?: VideoModel;
+  seek: EventEmitter<number> = new EventEmitter();
   mask: boolean = true;
+  first: boolean = true;
+  duration?: Duration;
+  reserve = 10;
+
+  private isplayback?: boolean;
   get zindex() {
     if (this.mask) {
       return undefined;
@@ -27,6 +45,11 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
   }
 
   async playback(id: string, duration: Duration) {
+    this.isplayback = true;
+    this.first = true;
+    duration.begin.setSeconds(duration.begin.getSeconds() - this.reserve);
+    this.duration = duration;
+
     let url = await this.sr.playback(id, {
       BeginTime: duration.begin,
       EndTime: duration.end,
@@ -35,6 +58,7 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
   }
 
   async preview(id: string) {
+    this.isplayback = false;
     let url = await this.sr.preview(id);
     this.play(url);
   }
@@ -53,5 +77,15 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
 
     this.model = model;
     this.show = true;
+  }
+
+  onposition(value: number) {
+    if (this.isplayback && value === 0 && this.first && this.duration) {
+      this.first = false;
+      this.seek.emit(10 * 1000);
+    }
+  }
+  onstoping() {
+    this.show = false;
   }
 }

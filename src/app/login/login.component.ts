@@ -203,7 +203,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       switch (user.UserType) {
         case 3:
         case 2:
-          this._router.navigateByUrl(RoutePath.garbage_vehicle);
+          // this._router.navigateByUrl(RoutePath.garbage_vehicle);
+          this._router.navigateByUrl(RoutePath.garbage_system);
           break;
 
         case 1:

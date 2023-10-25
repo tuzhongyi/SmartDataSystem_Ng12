@@ -39,7 +39,7 @@ export class EventRecordCountComponent implements OnInit {
     this.userType = EnumHelper.GetResourceChildType(global.defaultResourceType);
   }
   config = {
-    dateTimePicker: new DateTimePickerConfig(),
+    dateTimePicker: new DateTimePickerConfig({ format: 'yyyy年MM月dd日' }),
   };
   DateTimePickerView = DateTimePickerView;
 

@@ -269,13 +269,13 @@
         </colgroup>
         <tbody>
           <tr *ngFor="let item of datas">
-            <td>
+            <td [title]="item.Name">
               {{ item.Name }}
             </td>
-            <td>
+            <td [title]="(item.Committees | async)?.Name">
               {{ (item.Committees | async)?.Name }}
             </td>
-            <td>
+            <td [title]="(item.GarbageStation | async)?.CommunityName">
               {{ (item.GarbageStation | async)?.CommunityName }}
             </td>
             <td>

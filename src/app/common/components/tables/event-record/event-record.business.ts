@@ -88,12 +88,12 @@ export class EventRecordBusiness
     params = Object.assign(params, page);
     params.BeginTime = opts.duration.begin;
     params.EndTime = opts.duration.end;
-    if (opts.divisionId) {
-      params.DivisionIds = [opts.divisionId];
-    }
     if (opts.stationId) {
       params.StationIds = [opts.stationId];
+    } else if (opts.divisionId) {
+      params.DivisionIds = [opts.divisionId];
     }
+
     if (opts.cameraId) {
       params.ResourceIds = [opts.cameraId];
     }

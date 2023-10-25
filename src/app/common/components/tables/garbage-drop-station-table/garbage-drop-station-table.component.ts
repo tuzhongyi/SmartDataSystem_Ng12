@@ -23,8 +23,8 @@ import {
   GarbageDropStationTableConverter,
 } from './garbage-drop-station-table.converter';
 import {
+  GarbageDropStationTableArgs,
   GarbageDropStationTableModel,
-  GarbageDropStationTableSourceModel,
 } from './garbage-drop-station-table.model';
 
 @Component({
@@ -45,9 +45,9 @@ export class GarbageDropStationTableComponent
     OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<GarbageDropStationTableModel>>;
-  @Input() source?: GarbageDropStationTableSourceModel;
+  @Input() args?: GarbageDropStationTableArgs;
   @Input() count: number = 0;
-  @Input() load?: EventEmitter<SearchOptions>;
+  @Input() load?: EventEmitter<GarbageDropStationTableArgs>;
   @Output() image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
     new EventEmitter();
   @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
@@ -70,23 +70,19 @@ export class GarbageDropStationTableComponent
   ngOnInit(): void {
     this.loadData(1, this.pageSize);
     if (this.load) {
-      this.load.subscribe((opts) => {
-        this.loadData(1, this.pageSize, opts);
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(1, this.pageSize);
       });
     }
   }
 
-  async loadData(
-    index: number,
-    size: number,
-    opts?: SearchOptions,
-    show = true
-  ) {
+  async loadData(index: number, size: number, show = true) {
     let params = new PagedParams();
     params.PageSize = size;
     params.PageIndex = index;
 
-    let promise = this.business.load(params, opts, this.source);
+    let promise = this.business.load(params, this.args);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -99,7 +95,7 @@ export class GarbageDropStationTableComponent
   }
 
   override pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOptions);
+    this.loadData(page.pageIndex + 1, this.pageSize);
   }
 
   onerror(e: Event) {

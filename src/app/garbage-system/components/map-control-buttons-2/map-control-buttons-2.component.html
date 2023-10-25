@@ -24,7 +24,7 @@
     }"
     class="map-control-button"
     (click)="onstation()"
-    title="垃圾投放点筛选"
+    [title]="Language.StationType(StationType.Garbage)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-garbage"></i>
@@ -37,7 +37,7 @@
     }"
     class="map-control-button h"
     (click)="onstationall()"
-    title="所有垃圾投放点"
+    [title]="'所有' + Language.StationType(StationType.Garbage)"
   >
     <div class="map-control-button-inner">all</div>
   </div>
@@ -48,7 +48,7 @@
     }"
     class="map-control-button green-text"
     (click)="onstationnormal()"
-    title="正常垃圾投放点"
+    [title]="'正常' + Language.StationType(StationType.Garbage)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-garbage"></i>
@@ -61,7 +61,7 @@
     }"
     class="map-control-button yellow-text"
     (click)="onstationfull()"
-    title="垃圾满溢投放点"
+    [title]="'垃圾满溢' + Language.StationType(StationType.Garbage)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-garbage"></i>
@@ -75,7 +75,9 @@
         }"
         class="map-control-button h"
         (click)="onstationdrop30in()"
-        title="异常投放点"
+        [title]="
+          '垃圾滞留30分钟以内' + Language.StationType(StationType.Garbage)
+        "
       >
         <div class="map-control-button-inner">30-</div>
       </div>
@@ -85,7 +87,9 @@
         }"
         class="map-control-button h"
         (click)="onstationdrop30out()"
-        title="异常投放点"
+        [title]="
+          '垃圾滞留30分钟以上' + Language.StationType(StationType.Garbage)
+        "
       >
         <div class="map-control-button-inner">30+</div>
       </div>
@@ -97,7 +101,7 @@
       }"
       class="map-control-button orange-red-text"
       (click)="onstationdrop()"
-      title="垃圾滞留投放点"
+      [title]="'垃圾滞留' + Language.StationType(StationType.Garbage)"
     >
       <div class="map-control-button-inner">
         <i class="howell-icon-garbage"></i>
@@ -111,7 +115,7 @@
     }"
     class="map-control-button gray-2-text"
     (click)="onstationerror()"
-    title="异常投放点"
+    [title]="'异常' + Language.StationType(StationType.Garbage)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-garbage"></i>
@@ -124,7 +128,7 @@
     }"
     class="map-control-button"
     (click)="onrfid()"
-    title="智慧垃圾厢房"
+    [title]="Language.StationType(StationType.Rfid)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-smart_garbage"></i>
@@ -137,7 +141,7 @@
     }"
     class="map-control-button h"
     (click)="onrfidall()"
-    title="所有垃圾投放点"
+    [title]="'所有' + Language.StationType(StationType.Rfid)"
   >
     <div class="map-control-button-inner">all</div>
   </div>
@@ -148,7 +152,7 @@
     }"
     class="map-control-button green-text"
     (click)="onrfidnormal()"
-    title="正常垃圾投放点"
+    [title]="'正常' + Language.StationType(StationType.Rfid)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-smart_garbage"></i>
@@ -161,7 +165,7 @@
     }"
     class="map-control-button yellow-text"
     (click)="onrfidfull()"
-    title="垃圾满溢投放点"
+    [title]="'垃圾满溢' + Language.StationType(StationType.Rfid)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-smart_garbage"></i>
@@ -175,7 +179,7 @@
         }"
         class="map-control-button h"
         (click)="onrfiddrop30in()"
-        title="异常投放点"
+        [title]="'垃圾滞留30分钟以内' + Language.StationType(StationType.Rfid)"
       >
         <div class="map-control-button-inner">30-</div>
       </div>
@@ -185,7 +189,7 @@
         }"
         class="map-control-button h"
         (click)="onrfiddrop30out()"
-        title="异常投放点"
+        [title]="'垃圾滞留30分钟以上' + Language.StationType(StationType.Rfid)"
       >
         <div class="map-control-button-inner">30+</div>
       </div>
@@ -197,7 +201,7 @@
       }"
       class="map-control-button orange-red-text"
       (click)="onrfiddrop()"
-      title="垃圾滞留投放点"
+      [title]="'垃圾滞留' + Language.StationType(StationType.Rfid)"
     >
       <div class="map-control-button-inner">
         <i class="howell-icon-smart_garbage"></i>
@@ -211,7 +215,7 @@
     }"
     class="map-control-button gray-2-text"
     (click)="onrfiderror()"
-    title="异常投放点"
+    [title]="'异常' + Language.StationType(StationType.Rfid)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-smart_garbage"></i>
@@ -224,7 +228,7 @@
     }"
     class="map-control-button"
     (click)="onconstruction()"
-    title="建筑垃圾"
+    [title]="Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-construction_waste"></i>
@@ -237,7 +241,7 @@
     }"
     class="map-control-button h"
     (click)="onconstructionall()"
-    title="所有垃圾投放点"
+    [title]="'所有' + Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">all</div>
   </div>
@@ -248,7 +252,7 @@
     }"
     class="map-control-button green-text"
     (click)="onconstructionnormal()"
-    title="正常垃圾投放点"
+    [title]="'正常' + Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-construction_waste"></i>
@@ -261,7 +265,7 @@
     }"
     class="map-control-button yellow-text"
     (click)="onconstructionfull()"
-    title="垃圾满溢投放点"
+    [title]="'垃圾满溢' + Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-construction_waste"></i>
@@ -274,7 +278,7 @@
     }"
     class="map-control-button orange-red-text"
     (click)="onconstructiondrop()"
-    title="垃圾滞留投放点"
+    [title]="'垃圾滞留' + Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-construction_waste"></i>
@@ -287,7 +291,7 @@
     }"
     class="map-control-button gray-2-text"
     (click)="onconstructionerror()"
-    title="异常投放点"
+    [title]="'异常' + Language.StationType(StationType.Construction)"
   >
     <div class="map-control-button-inner">
       <i class="howell-icon-construction_waste"></i>

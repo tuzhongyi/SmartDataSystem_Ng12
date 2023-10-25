@@ -11,5 +11,4 @@ export class IndexWeightWindowBusiness extends WindowViewModel {
     height: '89%',
   };
   type?: GarbageType;
-  show = false;
 }

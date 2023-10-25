@@ -11,9 +11,7 @@ import { WindowViewModel } from './window.model';
 export class WindowComponent implements OnInit {
   Language = Language;
   @Input()
-  Model: WindowViewModel = {
-    show: false,
-  };
+  Model: WindowViewModel = new WindowViewModel();
   @Input() title?: string;
   @Input() Background = true;
 

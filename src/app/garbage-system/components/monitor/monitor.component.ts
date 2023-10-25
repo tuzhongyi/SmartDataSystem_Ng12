@@ -96,6 +96,8 @@ export class MonitorComponent implements OnInit, OnDestroy {
             case 'hidetitlebar':
               this.global.HideTitlebar = value;
               break;
+            case 'auth':
+              break;
             default:
               break;
           }

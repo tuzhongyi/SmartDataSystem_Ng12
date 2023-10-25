@@ -18,7 +18,7 @@ import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { HowellUrl } from 'src/app/view-model/howell-url.model';
 import { wait } from '../../tools/tool';
-import { VideoModel } from './video.model';
+import { VideoModel, VideoPlayerState } from './video.model';
 import { ButtonName } from './WSPlayerProxyButtonName';
 
 @Component({
@@ -74,7 +74,6 @@ export class VideoPlayerComponent
     }
     this.webUrl = `${protocol}//${location.hostname}${port}/video/wsplayer/wsplayer.html`;
   }
-  reserve: number = 15 * 1000;
   src?: SafeResourceUrl;
   isloaded = false;
   playing = false;
@@ -336,11 +335,11 @@ export class VideoPlayerComponent
           }
         });
       };
-      this.player.onStatusChanged = (index: number = 0, state: PlayerState) => {
+      this.player.onStatusChanged = (index: number = 0, state: number) => {
         if (this.index != index) return;
         switch (state) {
-          case PlayerState.playing:
-            this.onseek(this.reserve);
+          case VideoPlayerState.playing:
+            // this.onseek(this.reserve);
             break;
 
           default:

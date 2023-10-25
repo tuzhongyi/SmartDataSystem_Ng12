@@ -81,9 +81,13 @@ export class IllegalMixintoRankComponent implements OnInit {
   }
 
   onItemClicked(model: RankModel) {
+    let resourceType = this.resourceType;
+    if (this.global.divisionType === DivisionType.Committees) {
+      resourceType = UserResourceType.Station;
+    }
     this.itemClickedEvent.emit({
       model: model,
-      resourceType: this.resourceType,
+      resourceType: resourceType,
       eventType: this.eventType,
     });
   }

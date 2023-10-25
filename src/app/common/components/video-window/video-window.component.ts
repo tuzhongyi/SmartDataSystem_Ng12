@@ -16,14 +16,15 @@ export class VideoWindowComponent implements OnInit {
   title: string = '';
   @Input() mask = true;
   @Input() zindex?: number;
-  @Input()
-  model?: VideoModel;
+  @Input() model?: VideoModel;
+  @Input() seek?: EventEmitter<number>;
 
-  @Input()
-  window: VideoWindowViewModel = new VideoWindowViewModel();
+  @Input() window: VideoWindowViewModel = new VideoWindowViewModel();
 
-  @Output()
-  download: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() download: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() position: EventEmitter<number> = new EventEmitter();
+  @Output() playing: EventEmitter<number> = new EventEmitter();
+  @Output() stoping: EventEmitter<number> = new EventEmitter();
 
   constructor() {}
 
@@ -64,5 +65,14 @@ export class VideoWindowComponent implements OnInit {
   }
   onloaded() {
     this.loaded = true;
+  }
+  getposition(value: number) {
+    this.position.emit(value);
+  }
+  onplaying(index: number) {
+    this.playing.emit(index);
+  }
+  onstoping(index: number) {
+    this.stoping.emit(index);
   }
 }

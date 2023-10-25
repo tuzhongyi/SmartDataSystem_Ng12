@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  GarbageDropStationTableArgs,
   GarbageDropStationTableModel,
-  GarbageDropStationTableSourceModel,
 } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -30,7 +30,7 @@ export class GarbageDropStationWindowComponent
   @Output()
   position: EventEmitter<GarbageStation> = new EventEmitter();
   @Input()
-  source?: GarbageDropStationTableSourceModel;
+  args: GarbageDropStationTableArgs = {};
 
   constructor(
     public details: EventRecordWindowDetailsBusiness,
@@ -44,14 +44,15 @@ export class GarbageDropStationWindowComponent
   UserUIType = UserUIType;
 
   Index = GarbageDropStationWindowIndex;
-  load: EventEmitter<SearchOptions> = new EventEmitter();
+  load: EventEmitter<GarbageDropStationTableArgs> = new EventEmitter();
 
   type: EventType[] = [EventType.GarbageDrop, EventType.GarbageDropTimeout];
 
   ngOnInit(): void {}
 
   onsearch(text: SearchOptions) {
-    this.load.emit(text);
+    this.args.opts = text;
+    this.load.emit(this.args);
   }
   onimage(item: PagedArgs<GarbageDropStationTableModel>) {
     this.image.emit(item);

@@ -22,7 +22,14 @@
       </div>
     </div>
     <div class="video-window-content">
-      <app-video-player [play]="play" (loaded)="onloaded()"></app-video-player>
+      <app-video-player
+        [play]="play"
+        [seek]="seek"
+        (loaded)="onloaded()"
+        (getPosition)="getposition($event)"
+        (onPlaying)="onplaying($event)"
+        (onStoping)="onstoping($event)"
+      ></app-video-player>
     </div>
   </div>
 </app-window>

@@ -59,7 +59,7 @@
         <ng-container *ngIf="index == Index.list">
           <howell-garbage-drop-station-table
             [load]="load"
-            [source]="source"
+            [args]="args"
             (image)="onimage($event)"
             (position)="onposition($event)"
           >

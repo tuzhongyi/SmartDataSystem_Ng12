@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { Division } from 'src/app/network/model/division.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 
@@ -11,10 +11,13 @@ import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()
 export class CommitteesIndexEventTriggerBusiness {
-  constructor(private window: CommitteesWindowBussiness) {}
+  constructor(
+    private window: CommitteesWindowBussiness,
+    private global: GlobalStorageService
+  ) {}
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
-  retentionRank = new RetentionRankEventTrigger(this.window);
+  retentionRank = new RetentionRankEventTrigger(this.window, this.global);
   risposalCount = new RisposalCountEventTrigger(this.window);
   risposalRank = new RisposalRankEventTrigger(this.window);
 }
@@ -28,15 +31,17 @@ export class DeviceStateEventTrigger {
 }
 
 export class RetentionRankEventTrigger {
-  constructor(private window: CommitteesWindowBussiness) {}
+  constructor(
+    private window: CommitteesWindowBussiness,
+    private global: GlobalStorageService
+  ) {}
   onclick(args: RetentionRankArgs) {
-    let type = DivisionType.None;
-    if (args.model.data instanceof Division) {
-      type = args.model.data.DivisionType;
+    let divisionId = this.global.divisionId;
+    if (args.model.data instanceof DivisionNumberStatistic) {
+      divisionId = args.model.id;
     }
-    this.window.drop.source = {
-      id: args.model.id,
-      type: type,
+    this.window.drop.args = {
+      divisionId: divisionId,
     };
     this.window.drop.show = true;
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
+  GarbageDropStationTableArgs,
   GarbageDropStationTableModel,
-  GarbageDropStationTableSourceModel,
 } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
@@ -13,7 +13,7 @@ export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel 
   constructor(private image: CommitteesIndexImageWindowBusiness) {
     super();
   }
-  source?: GarbageDropStationTableSourceModel;
+  args: GarbageDropStationTableArgs = {};
 
   style = {
     height: '83.5%',

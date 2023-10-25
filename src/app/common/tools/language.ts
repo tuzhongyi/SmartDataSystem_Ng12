@@ -319,9 +319,13 @@ export class Language {
   static StationType(type: StationType) {
     switch (type) {
       case StationType.Garbage:
-        return Language.json.StationType.Garbage;
+        return '垃圾投放点';
       case StationType.Construction:
-        return '建筑垃圾';
+        return '建筑垃圾投放点';
+      case StationType.Smart:
+        return '智能垃圾厢房';
+      case StationType.Rfid:
+        return '精品厢房';
       default:
         return Language.json.Unknow;
     }

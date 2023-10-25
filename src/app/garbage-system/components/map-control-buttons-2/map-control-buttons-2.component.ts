@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Language } from 'src/app/common/tools/language';
+import { StationType } from 'src/app/enum/station-type.enum';
 import { MapControlButton2List } from './map-control-buttons-2.model';
 
 @Component({
@@ -40,6 +42,8 @@ export class MapControlButtons2Component implements OnInit {
   constructor() {}
 
   model = new MapControlButton2List();
+  Language = Language;
+  StationType = StationType;
 
   ngOnInit(): void {
     this.regist();

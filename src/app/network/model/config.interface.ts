@@ -1,5 +1,5 @@
 export interface Config {
-  playback: { begin: number; end: number };
+  playback: { begin: number; end: number; seek: number };
   videoUrl: string;
   regionId: string;
   help: string;

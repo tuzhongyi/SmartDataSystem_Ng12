@@ -218,7 +218,7 @@
   [Model]="window.drop"
   [style]="window.drop.style"
   [index]="window.drop.index"
-  [source]="window.drop.source"
+  [args]="window.drop.args"
   (image)="window.drop.onimage($event)"
   (position)="map.onposition($event)"
 >
@@ -323,6 +323,9 @@
   [model]="window.video.model"
   [mask]="window.video.mask"
   [zindex]="window.video.zindex"
+  [seek]="window.video.seek"
+  (position)="window.video.onposition($event)"
+  (stoping)="window.video.onstoping()"
 >
 </app-video-window>
 <app-window
