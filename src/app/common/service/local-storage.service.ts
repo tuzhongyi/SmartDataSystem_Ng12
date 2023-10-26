@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  ClassConstructor,
-  instanceToPlain,
-  ClassTransformer,
-  plainToInstance,
-} from 'class-transformer';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { User, UserResource } from 'src/app/network/model/user.model';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 
 /*
  * @Author: pmx

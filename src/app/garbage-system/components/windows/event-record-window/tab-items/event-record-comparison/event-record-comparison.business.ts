@@ -1,20 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import {
-  ITimeData,
-  ITimeDataGroup,
-} from 'src/app/common/components/charts/chart.model';
+import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { StatisticToTimeDataConverter } from 'src/app/converter/statistic-to-timedata.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationEventNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';

@@ -18,9 +18,9 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';

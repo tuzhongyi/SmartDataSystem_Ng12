@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RegionType } from '../enum/region-type.enum';
-import { Region, RegionNode } from '../network/model/region';
+import { Region, RegionNode } from '../network/model/garbage-station/region';
 import { CommonNestNode } from '../view-model/common-nest-node.model';
 import { CommonTreeConverter } from './common-tree.converter';
 

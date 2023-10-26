@@ -1,3 +1,4 @@
+import { KeyValue } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -8,26 +9,24 @@ import {
   ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { Language } from 'src/app/common/tools/language';
-import { TimeService } from 'src/app/common/service/time.service';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
-import { Page } from 'src/app/network/model/page_list.model';
 import {
   AICameraEventsModel,
   AICameraEventsSearchInfo,
 } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.model';
-import { AICameraEventsBusiness } from './ai-camera-events.business';
-import { ViewMode } from 'src/app/enum/view-mode.enum';
-import { AICameraEventsConverter } from './ai-camera-events.converter';
-import { KeyValue } from '@angular/common';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { VideoControlConverter } from 'src/app/converter/video-control.converter';
-import { VideoArgs } from 'src/app/network/model/args/video.args';
+import { TimeService } from 'src/app/common/service/time.service';
+import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { ViewMode } from 'src/app/enum/view-mode.enum';
+import { VideoArgs } from 'src/app/network/model/args/video.args';
+import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
+import { Page } from 'src/app/network/model/page_list.model';
+import { AICameraEventsBusiness } from './ai-camera-events.business';
+import { AICameraEventsConverter } from './ai-camera-events.converter';
 @Component({
   selector: 'howell-ai-camera-events',
   templateUrl: './ai-camera-events.component.html',

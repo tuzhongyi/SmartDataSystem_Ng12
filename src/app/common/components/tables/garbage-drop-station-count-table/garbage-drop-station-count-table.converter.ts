@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-table.model';
 import { GarbageDropStationCountTableService } from './garbage-drop-station-count-table.service';

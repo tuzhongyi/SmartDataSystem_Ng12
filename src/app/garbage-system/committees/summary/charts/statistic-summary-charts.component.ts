@@ -8,9 +8,8 @@ import {
 } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { StatisticSummaryViewModel } from '../statistic-summary.model';
 import { StatisticSummaryEventRatioChartViewModel } from './event-ratio/statistic-summary-event-ratio-chart.model';
 import { StatisticSummaryLineChartViewModel } from './line-chart/statistic-summary-line-chart.model';

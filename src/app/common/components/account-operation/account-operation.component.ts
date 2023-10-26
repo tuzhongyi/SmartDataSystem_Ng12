@@ -17,7 +17,7 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { User } from 'src/app/network/model/user.model';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 import { AccountOperationDisplay } from './account-operation.model';
 import { AccountOperationService } from './account-operation.service';
 

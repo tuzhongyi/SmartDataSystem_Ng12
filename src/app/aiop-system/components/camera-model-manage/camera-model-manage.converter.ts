@@ -1,17 +1,15 @@
 import { Injectable } from '@angular/core';
-import { IConverter } from '../../../common/interfaces/converter.interface';
+import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
+import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
 import { OnlineStatus } from '../../../enum/online-status.enum';
-import { AICamera } from '../../../network/model/ai-camera.model';
-import { AICameraRequestService } from '../../../network/request/ai-camera/ai-camera.service';
+import { AICamera } from '../../../network/model/garbage-station/ai-camera.model';
 import {
   CameraAIModelManageModel,
-  CameraManageModel as CameraManageModel,
+  CameraManageModel,
 } from './camera-model-manage.model';
-import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
 
-import Conf from 'src/assets/json/ai-icon.json';
 import { AiIconConfig } from 'src/app/common/models/ai-icon.config';
+import Conf from 'src/assets/json/ai-icon.json';
 
 type AICameraModelManageSource = AICamera | CameraAIModel;
 

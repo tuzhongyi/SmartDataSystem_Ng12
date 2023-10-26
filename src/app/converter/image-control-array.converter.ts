@@ -1,7 +1,7 @@
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { ICamera } from '../network/model/camera.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
+import { ICamera } from '../network/model/garbage-station/camera.interface';
 
 export class ImageControlArrayConverter
   implements IConverter<ICamera[], ImageControlModel[]>

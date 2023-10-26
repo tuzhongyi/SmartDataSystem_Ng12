@@ -22,7 +22,7 @@ import { EnumHelper } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageDropStationWindowCountExportConverter } from './garbage-drop-station-window-count-export.converter';
 import { GarbageDropStationWindowCountBusiness } from './garbage-drop-station-window-count.business';
 

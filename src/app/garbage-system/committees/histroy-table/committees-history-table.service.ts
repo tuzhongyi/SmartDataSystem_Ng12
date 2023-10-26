@@ -5,7 +5,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';

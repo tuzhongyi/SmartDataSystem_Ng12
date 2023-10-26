@@ -1,8 +1,8 @@
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { EventRule } from 'src/app/network/model/event-rule';
+import { EventRule } from 'src/app/network/model/garbage-station/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { ICamera } from '../network/model/camera.interface';
-import { EventDataObject } from '../network/model/event-data-object.model';
+import { ICamera } from '../network/model/garbage-station/camera.interface';
+import { EventDataObject } from '../network/model/garbage-station/event-data-object.model';
 import { Page } from '../network/model/page_list.model';
 
 export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {

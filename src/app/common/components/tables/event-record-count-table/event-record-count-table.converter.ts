@@ -1,9 +1,9 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { EventRecordCountTableModel } from './event-record-count-table.model';
 

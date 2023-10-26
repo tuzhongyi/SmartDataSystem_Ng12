@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AIGarbageCamera } from 'src/app/network/model/ai-garbage/camera.model';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-table.service';
 
 @Injectable()

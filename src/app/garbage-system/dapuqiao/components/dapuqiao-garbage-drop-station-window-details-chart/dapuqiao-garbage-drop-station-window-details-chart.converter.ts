@@ -4,7 +4,7 @@ import { Language } from 'src/app/common/tools/language';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IChartBarData } from 'src/app/garbage-system/components/charts/bars/chart-bar-simple/chart-bar-simple.option';
 import { IChartData } from 'src/app/garbage-system/components/charts/chart.model';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import {
   DapuqiaoGarbageDropStationWindowDetailsChartItemKey,
   DapuqiaoGarbageDropStationWindowDetailsChartItemLanguage,

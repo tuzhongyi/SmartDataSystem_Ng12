@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DefaultLabelFormatterCallbackParams } from 'echarts';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
@@ -7,10 +6,9 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
-import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
-import { TimeService } from '../../service/time.service';
+import { DivisionGarbageWeight } from 'src/app/network/model/garbage-station/division-garbage-weight.model';
+import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
+import { GarbageCollectionEventRecord } from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { CommonLineChartModel } from './common-line-chart.model';
 
 @Injectable({

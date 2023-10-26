@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionModel } from 'src/app/view-model/garbage-station.model';
 

@@ -1,12 +1,12 @@
 import {
   ICreate,
-  IUpdate,
   IDelete,
-  IGet,
-  IUpload,
   IDownload,
+  IGet,
+  IUpdate,
+  IUpload,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 
 export interface IGarbageCollectionPointBusiness
   extends IGet<CollectionPoint>,

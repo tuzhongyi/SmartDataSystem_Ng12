@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { AIGarbageRegionsRequestService } from 'src/app/network/request/ai-garbage/region.service';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';

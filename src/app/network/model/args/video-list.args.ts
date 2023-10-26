@@ -1,5 +1,5 @@
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
-import { ICamera } from '../camera.interface';
+import { ICamera } from '../garbage-station/camera.interface';
 
 export class VideoListArgs<T extends ICamera = any> {
   cameras: T[] = [];

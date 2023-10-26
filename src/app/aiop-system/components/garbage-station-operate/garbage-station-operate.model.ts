@@ -4,13 +4,12 @@ import {
   IDelete,
   IUpdate,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
-import { Camera } from 'src/app/network/model/camera.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import {
   GarbageStation,
   GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
-import { PagedList } from 'src/app/network/model/page_list.model';
+} from 'src/app/network/model/garbage-station/garbage-station.model';
 import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
 
 export type TGarbageStationOperateBusiness = IBusiness<GarbageStation> &

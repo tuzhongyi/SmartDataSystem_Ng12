@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IConverter } from '../common/interfaces/converter.interface';
-import { AICamera } from '../network/model/ai-camera.model';
+import { AICamera } from '../network/model/garbage-station/ai-camera.model';
 import { EncodeDeviceRequestService } from '../network/request/encode-device/encode-device.service';
 import { AICameraModel } from '../view-model/ai-camera.model';
 

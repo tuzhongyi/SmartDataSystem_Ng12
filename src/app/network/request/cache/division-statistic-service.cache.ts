@@ -1,5 +1,5 @@
 import { IService } from 'src/app/business/Ibusiness';
-import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
+import { DivisionNumberStatistic } from '../../model/garbage-station/division-number-statistic.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetDivisionStatisticNumbersParams } from '../division/division-request.params';
 import { ServiceCache } from './service.cache';

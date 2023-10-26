@@ -1,22 +1,21 @@
-import { Data } from '@angular/router';
 import { Transform } from 'class-transformer';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { ComparisonType } from 'src/app/enum/comparison-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { LidState } from 'src/app/enum/lid-state.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
-import { transformDate, transformDateTime } from '../../model/transform.model';
+import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStation } from '../../model/garbage-station/garbage-station.model';
+import { transformDate } from '../../model/transform.model';
 import {
   DurationParams,
   IParams,
   PagedDurationParams,
   PagedParams,
 } from '../IParams.interface';
-import { GarbageStation } from '../../model/garbage-station.model';
 
 /**获取垃圾房列表参数 */
 export class GetGarbageStationsParams extends PagedParams implements IParams {

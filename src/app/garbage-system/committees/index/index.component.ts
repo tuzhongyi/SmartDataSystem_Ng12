@@ -11,8 +11,8 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommitteesIndexEventTriggerBusiness } from './business/committees-index-event-trigger.business';
 import { CommitteesIndexNavicationBusiness } from './business/committees-index-navication.business';
 import { CommitteesIndexPatrolControlBusiness } from './business/committees-index-patrol-control.business';

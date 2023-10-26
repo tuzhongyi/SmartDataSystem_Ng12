@@ -1,12 +1,12 @@
 import { EventEmitter } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
-import { IModel } from 'src/app/network/model/model.interface';
+import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import {
   GarbageCollectionEventRecord,
   VehicleOnlineEventRecord,
-} from 'src/app/network/model/vehicle-event-record.model';
+} from 'src/app/network/model/garbage-station/vehicle-event-record.model';
+import { IModel } from 'src/app/network/model/model.interface';
 
 export class CollectionMapRouteControlSource {
   points: GisRoutePoint[] = [];

@@ -3,7 +3,7 @@ import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-ch
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page } from 'src/app/network/model/page_list.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';

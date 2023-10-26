@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationCamerasParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';

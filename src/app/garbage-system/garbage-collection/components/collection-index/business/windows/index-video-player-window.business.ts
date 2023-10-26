@@ -7,7 +7,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { IdNameModel } from 'src/app/network/model/model.interface';
 import { VideoUrl } from 'src/app/network/model/url.model';
 

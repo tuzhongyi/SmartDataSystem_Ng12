@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import {
   GetDivisionsParams,
   GetDivisionTreeParams,

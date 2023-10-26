@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Member } from '../../model/member.model';
+import { Member } from '../../model/garbage-station/member.model';
 import { PagedList } from '../../model/page_list.model';
 import { MemberUrl } from '../../url/garbage/member.url';
 import {

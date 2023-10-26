@@ -8,7 +8,7 @@ import {
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DeviceStateCountModel } from 'src/app/view-model/device-state-count.model';
 

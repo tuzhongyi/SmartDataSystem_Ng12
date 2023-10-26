@@ -5,12 +5,12 @@ import * as echarts from 'echarts/core';
 import { TimeString } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Duration } from 'src/app/network/model/duration.model';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import {
   GarbageCollectionEventRecord,
   VehicleOnlineEventRecord,
-} from 'src/app/network/model/vehicle-event-record.model';
+} from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { CollectionMapRouteQuery } from '../../collection-map-route-query/collection-map-route-query.model';
 import {
   ArrayItem,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { CommitteesStatisticConverter } from './committees-statistic.converter';
 import { CommitteesStatisticViewModel } from './committees-statistic.model';

@@ -1,5 +1,4 @@
 import { EventType } from 'src/app/enum/event-type.enum';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
 
 export class AICameraEventsModel<T = any> {
   Id!: string;

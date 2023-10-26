@@ -1,5 +1,5 @@
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export class DateTimeTool {
   static TimeUnit(unit: TimeUnit, date: Date, firstDay = 1): Duration {

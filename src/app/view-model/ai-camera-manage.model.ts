@@ -1,4 +1,4 @@
-import { ResourceLabel } from '../network/model/resource-label.model';
+import { ResourceLabel } from '../network/model/garbage-station/resource-label.model';
 import { CommonModel } from './common-model';
 
 export class AICameraManageModel implements CommonModel {

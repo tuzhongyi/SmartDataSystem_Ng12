@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 
 export class GarbageStationWeightListDateArgs {
   format = 'yyyy年MM月dd日';

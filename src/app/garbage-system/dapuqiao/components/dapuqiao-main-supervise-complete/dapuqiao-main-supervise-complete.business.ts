@@ -4,12 +4,12 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
-import { GarbageDropFeedback } from 'src/app/network/model/garbage-drop-feedback.model';
-import { GarbageDropSuperVisionData } from 'src/app/network/model/garbage-drop-super-vision-data.model';
+import { GarbageDropFeedback } from 'src/app/network/model/garbage-station/garbage-drop-feedback.model';
+import { GarbageDropSuperVisionData } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import {
   GarbageDropEventData,
   GarbageDropEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import {
   DapuqiaoMainSuperviseCompleteModel,

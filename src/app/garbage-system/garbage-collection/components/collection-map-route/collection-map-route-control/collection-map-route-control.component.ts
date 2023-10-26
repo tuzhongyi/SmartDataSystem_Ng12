@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
+import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { CollectionMapRouteQuery } from '../collection-map-route-query/collection-map-route-query.model';
 import { CollectionMapRouteControlChartsBusiness } from './business/collection-map-route-control-charts.business';
 import { CollectionMapRouteControlOnlineBusiness } from './business/collection-map-route-control-online.business';

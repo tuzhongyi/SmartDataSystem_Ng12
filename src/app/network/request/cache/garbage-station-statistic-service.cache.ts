@@ -1,5 +1,5 @@
 import { IService } from 'src/app/business/Ibusiness';
-import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
+import { GarbageStationNumberStatistic } from '../../model/garbage-station/garbage-station-number-statistic.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetGarbageStationStatisticNumbersParams } from '../garbage-station/garbage-station-request.params';
 import { ServiceCache } from './service.cache';

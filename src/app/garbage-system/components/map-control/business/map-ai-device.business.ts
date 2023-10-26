@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
-import { DeviceCommand } from 'src/app/network/model/device-command.model';
+import { DeviceCommand } from 'src/app/network/model/garbage-station/device-command.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 
 @Injectable()

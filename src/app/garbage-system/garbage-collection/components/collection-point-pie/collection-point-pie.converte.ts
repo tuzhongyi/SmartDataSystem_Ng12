@@ -7,9 +7,7 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
-import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { ClassificationNumber } from 'src/app/network/model/classification-number.mode';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
+import { ClassificationNumber } from 'src/app/network/model/garbage-station/classification-number.mode';
 import { CollectionPointPieModel } from './collection-point-pie.model';
 
 @Injectable()

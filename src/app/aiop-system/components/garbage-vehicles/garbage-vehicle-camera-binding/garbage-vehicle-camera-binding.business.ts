@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GarbageVehicleCameraConverter } from 'src/app/converter/garbage-vehicle-camera.converter';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { IGarbageVehicleCameraBindingBusiness } from './garbage-vehicle-camera-binding.model';
 

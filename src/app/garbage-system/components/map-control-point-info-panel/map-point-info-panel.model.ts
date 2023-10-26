@@ -1,7 +1,7 @@
 import { StationType } from 'src/app/enum/station-type.enum';
-import { ConstructionData } from 'src/app/network/model/construction-data';
-import { GarbageDeviceData } from 'src/app/network/model/garbage-device-data.model';
-import { Member } from 'src/app/network/model/member.model';
+import { ConstructionData } from 'src/app/network/model/garbage-station/construction-data';
+import { GarbageDeviceData } from 'src/app/network/model/garbage-station/garbage-device-data.model';
+import { Member } from 'src/app/network/model/garbage-station/member.model';
 import { IModel } from 'src/app/network/model/model.interface';
 
 export class MapPointInfoPanelModel<T = IModel> {

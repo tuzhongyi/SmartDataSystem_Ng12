@@ -1,11 +1,11 @@
 import { IConverter } from '../../../common/interfaces/converter.interface';
-import { DisposalCountType } from './disposal-count.enum';
-import { EventType } from '../../../enum/event-type.enum';
 import { Language } from '../../../common/tools/language';
-import { DivisionNumberStatistic } from '../../../network/model/division-number-statistic.model';
-import { GarbageStationNumberStatistic } from '../../../network/model/garbage-station-number-statistic.model';
-import { DisposalCountModel } from './disposal-count.model';
 import { DivisionType } from '../../../enum/division-type.enum';
+import { EventType } from '../../../enum/event-type.enum';
+import { DivisionNumberStatistic } from '../../../network/model/garbage-station/division-number-statistic.model';
+import { GarbageStationNumberStatistic } from '../../../network/model/garbage-station/garbage-station-number-statistic.model';
+import { DisposalCountType } from './disposal-count.enum';
+import { DisposalCountModel } from './disposal-count.model';
 
 export type NumberStatistic =
   | DivisionNumberStatistic

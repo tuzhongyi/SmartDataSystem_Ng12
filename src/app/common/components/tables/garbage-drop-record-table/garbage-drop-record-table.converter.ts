@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

@@ -1,4 +1,4 @@
-import { GarbageVehicle } from '../model/garbage-vehicle.model';
+import { GarbageVehicle } from '../model/garbage-station/garbage-vehicle.model';
 import { DivisionModel } from './division.view-model';
 
 /**	清运车辆	*/

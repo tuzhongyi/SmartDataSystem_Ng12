@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionMapRouteDeviceListConverter } from './collection-map-route-query.converter';

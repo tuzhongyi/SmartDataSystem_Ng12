@@ -9,7 +9,7 @@ import {
   StatisticCardViewModel,
   StatisticType,
 } from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

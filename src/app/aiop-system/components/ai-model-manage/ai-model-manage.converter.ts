@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { CameraAIModel } from '../../../network/model/camera-ai.model';
-import { AIModelManageModel } from '../../../view-model/ai-model-manage.model';
 import Conf from 'src/assets/json/ai-icon.json';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
 } from '../../../converter/common-model.converter';
+import { CameraAIModel } from '../../../network/model/garbage-station/camera-ai.model';
+import { AIModelManageModel } from '../../../view-model/ai-model-manage.model';
 
 const imgBase = 'assets/img/ai-model';
 const icons: any = Conf;

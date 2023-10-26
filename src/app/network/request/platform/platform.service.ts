@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Platform } from 'src/app/network/model/platform.model';
-import { Protocol } from '../../model/protocol.model';
+import { Platform } from 'src/app/network/model/garbage-station/platform.model';
+import { Protocol } from '../../model/garbage-station/protocol.model';
 import { PlatformsURL } from '../../url/aiop/platforms/platforms.url';
 import {
   HowellBaseRequestService,

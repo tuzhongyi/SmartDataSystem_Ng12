@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { plainToInstance } from 'class-transformer';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';

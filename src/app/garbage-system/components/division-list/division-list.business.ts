@@ -1,9 +1,9 @@
 import { IService } from 'src/app/business/Ibusiness';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 
 export class DivisionListBusiness {
-  constructor(private _business: IService<Division>) { }
+  constructor(private _business: IService<Division>) {}
 
   async get(id: string) {
     let data = await this._business.get(id);

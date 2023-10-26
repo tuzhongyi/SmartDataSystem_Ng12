@@ -1,6 +1,6 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { DisposalRankType } from './disposal-rank.model';
 

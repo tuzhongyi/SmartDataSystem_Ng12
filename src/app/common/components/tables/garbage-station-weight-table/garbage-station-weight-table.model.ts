@@ -1,6 +1,6 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 
 export class GarbageStationWeightTableArgs {
   date: Date = new Date();

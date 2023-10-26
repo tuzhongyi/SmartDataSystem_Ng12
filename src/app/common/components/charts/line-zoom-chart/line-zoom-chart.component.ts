@@ -15,7 +15,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
 import { wait } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station/garbage-station-sarbage-count-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';

@@ -2,8 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 import { Medium } from 'src/app/common/tools/medium';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';

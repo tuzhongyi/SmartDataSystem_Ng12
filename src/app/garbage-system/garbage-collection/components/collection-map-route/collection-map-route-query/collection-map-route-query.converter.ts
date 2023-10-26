@@ -1,5 +1,5 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { CollectionMapRouteDevice } from './collection-map-route-query.model';
 
 export class CollectionMapRouteDeviceListConverter

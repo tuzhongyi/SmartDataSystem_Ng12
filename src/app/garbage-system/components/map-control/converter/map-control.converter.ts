@@ -1,5 +1,5 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 type Local = Array<GarbageStation | CesiumDataController.Point>;
 export class MapControlConverter implements IConverter<string[], Local> {

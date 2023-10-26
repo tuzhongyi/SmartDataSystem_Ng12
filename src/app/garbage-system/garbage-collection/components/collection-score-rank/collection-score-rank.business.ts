@@ -6,7 +6,7 @@
  */
 import { Injectable } from '@angular/core';
 import { Guid } from 'src/app/common/tools/guid';
-import { ScoreTop } from 'src/app/network/model/score-top.model';
+import { ScoreTop } from 'src/app/network/model/garbage-station/score-top.model';
 import { GetCollectionPointScoreTopListParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';

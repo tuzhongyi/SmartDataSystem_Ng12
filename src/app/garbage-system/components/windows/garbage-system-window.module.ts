@@ -12,6 +12,7 @@ import { GarbageStationWindowComponent } from './garbage-station-window/garbage-
 import { GarbageStationCardRecordComponent } from './garbage-station-window/tab-items/garbage-station-card-record/garbage-station-card-record.component';
 import { GarbageStationWindowDetailsComponent } from './garbage-station-window/tab-items/garbage-station-window-details/garbage-station-window-details.component';
 import { GarbageStationWindowRecordComponent } from './garbage-station-window/tab-items/garbage-station-window-record/garbage-station-window-record.component';
+import { GarbageStationWindowSewageComponent } from './garbage-station-window/tab-items/garbage-station-window-sewage/garbage-station-window-sewage.component';
 import { MediaMultipleWindowComponent } from './media-multiple-window/media-multiple-window.component';
 
 export const GARBAGE_SYSTEM_WINDOW_COMPONENTS = [
@@ -24,6 +25,7 @@ export const GARBAGE_SYSTEM_WINDOW_COMPONENTS = [
   GarbageFullStationWindowComponent,
   GarbageStationWindowDetailsComponent,
   GarbageStationWindowRecordComponent,
+  GarbageStationWindowSewageComponent,
   GarbageStationCardRecordComponent,
   GarbageStationWindowComponent,
 

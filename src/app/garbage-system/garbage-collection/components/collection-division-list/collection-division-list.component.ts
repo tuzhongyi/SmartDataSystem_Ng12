@@ -6,7 +6,7 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { CommonElementListModel } from 'src/app/common/components/common-element-list/common-element-list.model';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CollectionDivisionListBusiness } from './collection-division-list.business';
 
 @Component({

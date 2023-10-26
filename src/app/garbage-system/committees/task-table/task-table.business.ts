@@ -2,7 +2,7 @@ import {} from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleMemberUrl } from 'src/app/network/url/garbage-vehicle/member.url';
 import {

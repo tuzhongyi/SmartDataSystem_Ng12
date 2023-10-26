@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CommonTreeConverter } from 'src/app/converter/common-tree.converter';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
 @Injectable()

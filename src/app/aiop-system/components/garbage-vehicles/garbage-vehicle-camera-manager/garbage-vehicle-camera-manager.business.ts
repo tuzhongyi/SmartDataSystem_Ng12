@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { IGarbageVehicleCameraManagerBusiness } from './garbage-vehicle-camera-manager.model';
 

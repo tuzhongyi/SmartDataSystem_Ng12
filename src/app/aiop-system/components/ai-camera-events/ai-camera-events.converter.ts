@@ -1,19 +1,10 @@
-import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
-import {
-  IConverter,
-  IPromiseConverter,
-} from '../../../common/interfaces/converter.interface';
-import { Language } from '../../../common/tools/language';
-import { CameraAIEventRecord } from '../../../network/model/camera-ai-event-record.model';
-import { Medium } from '../../../common/tools/medium';
-import { AICameraEventsModel } from './ai-camera-events.model';
-import {
-  AbstractCommonModelConverter,
-  AbstractCommonModelPromiseConverter,
-} from '../../../converter/common-model.converter';
-import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
+import { Language } from '../../../common/tools/language';
+import { Medium } from '../../../common/tools/medium';
+import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
+import { CameraAIEventRecord } from '../../../network/model/garbage-station/camera-ai-event-record.model';
+import { AICameraEventsModel } from './ai-camera-events.model';
 
 type AICameraEventsSource = CameraAIEventRecord;
 

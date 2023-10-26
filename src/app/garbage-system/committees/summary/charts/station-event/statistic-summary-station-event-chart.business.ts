@@ -1,11 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { StatisticSummaryStationEventChartConverter } from './statistic-summary-station-event-chart.converter';
 import { StatisticSummaryStationEventChartViewModel } from './statistic-summary-station-event-chart.model';
 

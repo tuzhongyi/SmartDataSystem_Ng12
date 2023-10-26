@@ -3,7 +3,7 @@ import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { GarbageFullEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { MediaWindowBusiness } from './media-window.business';
 

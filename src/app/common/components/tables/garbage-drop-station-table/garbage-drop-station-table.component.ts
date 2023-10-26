@@ -11,7 +11,7 @@ import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Medium } from 'src/app/common/tools/medium';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';

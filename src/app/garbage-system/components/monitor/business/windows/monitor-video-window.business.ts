@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 

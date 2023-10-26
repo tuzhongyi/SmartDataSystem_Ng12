@@ -15,7 +15,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EChartLineOption } from 'src/app/common/interfaces/echarts/echart-line.option';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
+import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
 import { StatisticSummaryIllegalDropChartBusiness } from './statistic-summary-line-chart.business';
 import { StatisticSummaryLineChartViewModel } from './statistic-summary-line-chart.model';
 

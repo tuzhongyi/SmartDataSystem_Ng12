@@ -26,7 +26,7 @@ import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
 import { Md5 } from 'ts-md5';
-import { User, UserResource } from '../../model/user.model';
+import { User, UserResource } from '../../model/garbage-station/user.model';
 import { DigestResponse } from './digest-response.class';
 
 @Injectable({

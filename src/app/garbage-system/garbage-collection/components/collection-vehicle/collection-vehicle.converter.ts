@@ -2,8 +2,7 @@ import {
   AbstractCommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { CollectionVehicleModel } from './collection-vehicle.model';
 
 export class CollectionVehicleConverter extends AbstractCommonModelConverter<CollectionVehicleModel> {

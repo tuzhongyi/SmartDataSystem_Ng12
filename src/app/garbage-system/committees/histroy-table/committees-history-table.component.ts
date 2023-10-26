@@ -14,11 +14,11 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';

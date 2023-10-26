@@ -6,8 +6,8 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageStationListModel } from './garbage-station-list.model';
 

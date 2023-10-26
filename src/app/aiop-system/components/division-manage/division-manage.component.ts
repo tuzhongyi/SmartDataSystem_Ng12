@@ -5,30 +5,30 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { DivisionManageBusiness } from './division-manage.business';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormState } from 'src/app/enum/form-state.enum';
-import { Language } from 'src/app/common/tools/language';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { ToastrService } from 'ngx-toastr';
 import {
   DivisionManageModel,
   IDivisionManageComponent,
   TDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
+import { Language } from 'src/app/common/tools/language';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { FormState } from 'src/app/enum/form-state.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { Division } from 'src/app/network/model/division.model';
+import { DivisionManageBusiness } from './division-manage.business';
 
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { DivisionNode } from 'src/app/network/model/division-tree.model';
+import { DivisionTreeConverter } from 'src/app/common/components/division-tree/division-tree.converter';
 import {
   DivisionTreeSource,
   IDivisionTreeBusiness,
 } from 'src/app/common/components/division-tree/division-tree.model';
-import { DivisionTreeConverter } from 'src/app/common/components/division-tree/division-tree.converter';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { DivisionNode } from 'src/app/network/model/garbage-station/division-tree.model';
 
 @Component({
   selector: 'howell-division-manage',

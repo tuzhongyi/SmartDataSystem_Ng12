@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { EventNumber } from 'src/app/network/model/event-number.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { EventNumber } from 'src/app/network/model/garbage-station/event-number.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { GarbageDropRecordTaskTableModel } from './garbage-drop-record-task-table.model';
 
 @Injectable()

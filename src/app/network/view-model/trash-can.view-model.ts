@@ -1,5 +1,4 @@
-import { CollectionPoint } from '../model/collection-point.model';
-import { CollectionTrashCan } from '../model/trash-can.model';
+import { CollectionTrashCan } from '../model/garbage-station/trash-can.model';
 import { CollectionPointModel } from './collection-point.view-model';
 import { DivisionModel } from './division.view-model';
 

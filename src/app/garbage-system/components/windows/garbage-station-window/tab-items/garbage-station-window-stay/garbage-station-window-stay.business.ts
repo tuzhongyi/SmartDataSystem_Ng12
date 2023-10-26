@@ -1,19 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import {
-  GetGarbageStationStatisticGarbageCountsParams,
-  GetGarbageStationStatisticNumbersParamsV2,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowStayConverter } from './garbage-station-window-stay.converter';

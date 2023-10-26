@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
-import { Division } from 'src/app/network/model/division.model';
 import {
   DivisionManageModel,
   IDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 
 @Injectable()

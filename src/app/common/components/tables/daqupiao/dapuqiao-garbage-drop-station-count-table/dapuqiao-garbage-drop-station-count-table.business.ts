@@ -3,10 +3,10 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { isToday } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { DaPuQiaoGarbageDropStationCountTableDownload } from './dapuqiao-garbage-drop-station-count-table.download';
 import {
   DaPuQiaoGarbageDropStationCountTableArgs,

@@ -6,7 +6,7 @@ import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IChartLineModel } from 'src/app/garbage-system/components/charts/lines/chart-line-simple/chart-line-simple.option';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, IObjectModel } from 'src/app/network/model/model.interface';
 import { DapuqiaoGarbageDropStationWindowDetailsChartBusiness } from './dapuqiao-garbage-drop-station-window-details-chart.business';
 import { DapuqiaoGarbageDropStationWindowDetailsChartConverter } from './dapuqiao-garbage-drop-station-window-details-chart.converter';

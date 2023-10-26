@@ -9,6 +9,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
 import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
@@ -16,7 +17,7 @@ import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { EncodeDevice } from 'src/app/network/model/encode-device';
+import { EncodeDevice } from 'src/app/network/model/garbage-station/encode-device';
 import { Page } from 'src/app/network/model/page_list.model';
 import {
   AICameraManageModel,
@@ -24,7 +25,6 @@ import {
 } from 'src/app/view-model/ai-camera-manage.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import {
   TableCellEvent,
   TableColumnModel,

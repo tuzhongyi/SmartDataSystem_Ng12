@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { GarbageStationType } from 'src/app/network/model/garbage-station.model';
+import { GarbageStationType } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 

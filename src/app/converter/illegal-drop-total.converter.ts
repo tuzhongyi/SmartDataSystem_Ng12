@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { EnumHelper } from '../enum/enum-helper';
 import { UserResourceType } from '../enum/user-resource-type.enum';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
-import { DivisionRequestService } from '../network/request/division/division-request.service';
+import { Division } from '../network/model/garbage-station/division.model';
+import { GarbageStation } from '../network/model/garbage-station/garbage-station.model';
 import { EventNumberStatisticModel } from '../view-model/event-number-statistic.model';
-import {
-  AbstractCommonModelConverter,
-  AbstractCommonModelPromiseConverter,
-} from './common-model.converter';
+import { AbstractCommonModelConverter } from './common-model.converter';
 
 type IllegalDropTotalSource = Division | GarbageStation;
 

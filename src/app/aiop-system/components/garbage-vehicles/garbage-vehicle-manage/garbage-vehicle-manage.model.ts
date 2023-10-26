@@ -6,10 +6,7 @@ import {
   IUpdate,
   IUpload,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { IModel } from 'src/app/network/model/model.interface';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CommonModel } from 'src/app/view-model/common-model';
 

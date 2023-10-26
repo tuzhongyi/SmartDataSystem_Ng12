@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PointCount } from '../amap.model';
 @Injectable()
 export class AMapEvent {

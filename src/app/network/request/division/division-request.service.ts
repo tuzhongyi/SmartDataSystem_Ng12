@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AbstractService } from 'src/app/business/Ibusiness';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { BatchRequest } from '../../model/batch-request.model';
-import { BatchResult } from '../../model/batch-result.model';
-import { DivisionNumberStatisticComparison } from '../../model/division-number-statistic-comparison.model';
-import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
-import { DivisionNumberStatistic } from '../../model/division-number-statistic.model';
-import { DivisionTree } from '../../model/division-tree.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { GarbageVolume } from '../../model/garbage-volume.model';
-import { SumEventNumber } from '../../model/sum-event-number.model';
+import { BatchRequest } from '../../model/garbage-station/batch-request.model';
+import { BatchResult } from '../../model/garbage-station/batch-result.model';
+import { DivisionNumberStatisticComparison } from '../../model/garbage-station/division-number-statistic-comparison.model';
+import { DivisionNumberStatisticV2 } from '../../model/garbage-station/division-number-statistic-v2.model';
+import { DivisionNumberStatistic } from '../../model/garbage-station/division-number-statistic.model';
+import { DivisionTree } from '../../model/garbage-station/division-tree.model';
+import { EventNumberStatistic } from '../../model/garbage-station/event-number-statistic.model';
+import { GarbageVolume } from '../../model/garbage-station/garbage-volume.model';
+import { SumEventNumber } from '../../model/garbage-station/sum-event-number.model';
 import { DivisionUrl } from '../../url/garbage/division.url';
 import {
   HowellBaseRequestService,

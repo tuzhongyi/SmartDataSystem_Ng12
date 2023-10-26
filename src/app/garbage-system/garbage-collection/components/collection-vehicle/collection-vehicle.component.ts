@@ -5,11 +5,9 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { interval, Subscription, timer } from 'rxjs';
-import { IToastWindowEmitModel } from 'src/app/common/components/toast-window/toast-window.model';
+import { Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { IModel } from 'src/app/network/model/model.interface';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {

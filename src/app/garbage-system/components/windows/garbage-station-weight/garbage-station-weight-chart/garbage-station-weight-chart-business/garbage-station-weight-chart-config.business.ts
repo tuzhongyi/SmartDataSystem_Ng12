@@ -5,8 +5,8 @@ import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import {
   ChartConfig,
   EChartOptions,

@@ -7,7 +7,7 @@ import { WindowComponent } from 'src/app/common/components/window-control/window
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';

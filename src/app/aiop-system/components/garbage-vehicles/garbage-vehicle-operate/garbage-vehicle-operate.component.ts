@@ -7,19 +7,18 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { Creater } from 'src/app/common/tools/creater';
+import { Language } from 'src/app/common/tools/language';
+import { VehicleType } from 'src/app/enum/vehicle-type.enum';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicleOperateCameraBusiness } from './business/garbage-vehicle-operate-camera.business';
+import { GarbageVehicleOperateBusiness } from './business/garbage-vehicle-operate.business';
 import {
   IGarbageVehicleOperateBusiness,
   IGarbageVehicleOperateComponent,
 } from './garbage-vehicle-operate.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { GarbageVehicleOperateCameraBusiness } from './business/garbage-vehicle-operate-camera.business';
-import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { Language } from 'src/app/common/tools/language';
-import { GarbageVehicleOperateBusiness } from './business/garbage-vehicle-operate.business';
-import { AICameraModel } from 'src/app/view-model/ai-camera.model';
-import { Creater } from 'src/app/common/tools/creater';
 
 @Component({
   selector: 'howell-garbage-vehicle-operate',

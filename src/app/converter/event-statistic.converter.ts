@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { EventType } from '../enum/event-type.enum';
-import { EventNumberStatistic } from '../network/model/event-number-statistic.model';
-import { EChartsLineModelV2 } from '../view-model/echarts-line.model';
+import { EventNumberStatistic } from '../network/model/garbage-station/event-number-statistic.model';
 @Injectable({
   providedIn: 'root',
 })

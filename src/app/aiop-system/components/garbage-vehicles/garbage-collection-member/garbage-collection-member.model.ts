@@ -1,13 +1,12 @@
 import {
-  IBusiness,
   ICreate,
-  IUpdate,
   IDelete,
-  IUpload,
-  IGet,
   IDownload,
+  IGet,
+  IUpdate,
+  IUpload,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 
 export interface IGarbageCollectionMemberBusiness
   extends IGet<CollectionMember>,

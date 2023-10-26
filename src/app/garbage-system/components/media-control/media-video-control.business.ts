@@ -1,30 +1,24 @@
 import { EventEmitter, Injectable } from '@angular/core';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { timer } from 'rxjs';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
-import {
-  PlayMode,
-  VideoModel,
-} from 'src/app/common/components/video-player/video.model';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { StreamType } from 'src/app/enum/stream-type.enum';
-import { CameraImageUrl, VideoUrl } from 'src/app/network/model/url.model';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { Medium } from 'src/app/common/tools/medium';
+import { StreamType } from 'src/app/enum/stream-type.enum';
+import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
+import { VideoUrl } from 'src/app/network/model/url.model';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
 } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
-import { ICamera } from 'src/app/network/model/camera.interface';
-import { Camera } from 'src/app/network/model/camera.model';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { MediaVideoControlArrayConverter } from './media-control.converter';
 import { IMediaControlBusiness } from './media-control.model';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class MediaVideoControlBussiness implements IMediaControlBusiness {

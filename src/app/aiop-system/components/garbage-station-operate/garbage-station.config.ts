@@ -1,5 +1,5 @@
 import { Language } from 'src/app/common/tools/language';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 

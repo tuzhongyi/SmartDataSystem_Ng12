@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 
 @Component({
   selector: 'garbage-collection-member-details-window',

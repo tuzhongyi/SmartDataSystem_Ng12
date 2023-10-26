@@ -7,14 +7,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
-import { VehicleEventInfo } from '../../../model/event-info.model';
-import { PagedList } from '../../../model/page_list.model';
+import { VehicleEventInfo } from '../../../model/garbage-station/event-info.model';
 import {
   CameraOnlineEventRecord,
   GarbageCollectionEventRecord,
   RelayStateChangeEventRecord,
   VehicleOnlineEventRecord,
-} from '../../../model/vehicle-event-record.model';
+} from '../../../model/garbage-station/vehicle-event-record.model';
+import { PagedList } from '../../../model/page_list.model';
 import { GarbageVehicleEventUrl } from '../../../url/garbage-vehicle/events.url';
 import {
   HowellBaseRequestService,

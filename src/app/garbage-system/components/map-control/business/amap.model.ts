@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class AMapVisibilityItem<T> {
   constructor(t: T) {

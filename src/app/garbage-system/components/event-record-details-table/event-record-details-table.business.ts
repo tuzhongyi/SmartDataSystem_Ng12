@@ -4,9 +4,9 @@ import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { SelectItemConverter } from 'src/app/converter/select-item.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';

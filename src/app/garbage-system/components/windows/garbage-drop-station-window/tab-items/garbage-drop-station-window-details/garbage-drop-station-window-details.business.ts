@@ -2,18 +2,15 @@ import { Injectable } from '@angular/core';
 import { ITimeData } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
-import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import {
-  GetDivisionEventNumbersParams,
-  GetDivisionVolumesParams,
-} from 'src/app/network/request/division/division-request.params';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
 import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';

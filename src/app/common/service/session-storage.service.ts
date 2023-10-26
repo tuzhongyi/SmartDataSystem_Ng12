@@ -5,8 +5,6 @@
  * @Last Modified time: 2022-06-22 14:23:36
  */
 import { Injectable } from '@angular/core';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { UserResource } from 'src/app/network/model/user.model';
 import { DigestResponse } from 'src/app/network/request/auth/digest-response.class';
 
 @Injectable({

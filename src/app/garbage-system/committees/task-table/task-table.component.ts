@@ -12,8 +12,8 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { TaskTableBusiness } from './task-table.business';
 import { TaskTableViewModel } from './task-table.model';
 

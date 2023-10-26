@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ResourceLabel } from '../../model/resource-label.model';
+import { ResourceLabel } from '../../model/garbage-station/resource-label.model';
 import { ResourceLabelsUrl } from '../../url/aiop/resources/labels/labels.url';
 import {
   HowellBaseRequestService,

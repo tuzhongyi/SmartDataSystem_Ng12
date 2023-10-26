@@ -2,8 +2,8 @@ import { EChartsOption } from 'echarts';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IChartData } from 'src/app/garbage-system/components/charts/chart.model';
 import { IChartLineModel } from 'src/app/garbage-system/components/charts/lines/chart-line-simple/chart-line-simple.option';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 
 export class DapuqiaoGarbageDropStationWindowDetailsChartArgs {
   date: Date = new Date();

@@ -1,13 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Language } from '../common/tools/language';
-import { AICamera } from '../network/model/ai-camera.model';
-import { EncodeDevice } from '../network/model/encode-device';
+import { AICamera } from '../network/model/garbage-station/ai-camera.model';
+import { EncodeDevice } from '../network/model/garbage-station/encode-device';
 import { EncodeDeviceRequestService } from '../network/request/encode-device/encode-device.service';
 import { AICameraManageModel } from '../view-model/ai-camera-manage.model';
-import {
-  AbstractCommonModelConverter,
-  AbstractCommonModelPromiseConverter,
-} from './common-model.converter';
+import { AbstractCommonModelPromiseConverter } from './common-model.converter';
 
 type AICameraManageSource = AICamera;
 

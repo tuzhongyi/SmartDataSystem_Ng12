@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { CommonRankConverter } from 'src/app/common/components/common-rank/common-rank.converter';
-import { CommonRankData } from 'src/app/common/components/common-rank/common-rank.model';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { ScoreTop } from 'src/app/network/model/score-top.model';
+import { ScoreTop } from 'src/app/network/model/garbage-station/score-top.model';
 import { CollectionScoreRankModel } from './collection-score-rank.model';
 
 @Injectable()

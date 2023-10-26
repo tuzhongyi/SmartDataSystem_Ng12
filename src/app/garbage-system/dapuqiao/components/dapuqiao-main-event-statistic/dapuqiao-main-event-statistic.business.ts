@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import {
   DapuqiaoMainEventStatisticArgs,
   DapuqiaoMainEventStatisticModel,

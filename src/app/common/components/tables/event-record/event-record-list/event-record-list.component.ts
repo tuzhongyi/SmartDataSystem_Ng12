@@ -12,7 +12,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageFullEventData } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageFullEventData } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';

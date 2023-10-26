@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { Duration } from 'src/app/network/model/duration.model';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { GetGarbageVehicleRouteParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 

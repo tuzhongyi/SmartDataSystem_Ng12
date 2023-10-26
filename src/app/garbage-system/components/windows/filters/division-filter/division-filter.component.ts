@@ -2,10 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DivisionType } from 'src/app/enum/division-type.enum';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { Division } from 'src/app/network/model/division.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DivisionFilterBusiness } from './division-filter.business';
 

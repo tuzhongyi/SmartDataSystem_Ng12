@@ -58,6 +58,13 @@
             >
               刷卡记录
             </div>
+            <!-- <div
+              class="second-menu-btn"
+              [class.selected]="index === Index.card"
+              (click)="indexChange(Index.sewage)"
+            >
+              水渍检测记录
+            </div> -->
           </div>
           <div class="operation" *ngIf="index === Index.station">
             <app-input-search-options (search)="station.onsearch($event)">
@@ -130,6 +137,9 @@
             (image)="ondapuqiaoimage($event)"
             (process)="ondapuqiaoprocess($event)"
           ></dapuqiao-garbage-station-window-record>
+        </ng-container>
+        <ng-container *ngIf="index == Index.sewage">
+          <garbage-station-window-sewage></garbage-station-window-sewage>
         </ng-container>
       </div>
     </div>

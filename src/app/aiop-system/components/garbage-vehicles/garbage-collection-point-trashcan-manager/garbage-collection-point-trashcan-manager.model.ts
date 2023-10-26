@@ -1,13 +1,12 @@
 import {
-  IBusiness,
   ICreate,
-  IUpdate,
   IDelete,
-  IUpload,
-  IGet,
   IDownload,
+  IGet,
+  IUpdate,
+  IUpload,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { CollectionTrashCan } from 'src/app/network/model/trash-can.model';
+import { CollectionTrashCan } from 'src/app/network/model/garbage-station/trash-can.model';
 
 export interface IGarbageCollectionPointTrashCanManagerBusiness
   extends IGet<CollectionTrashCan>,

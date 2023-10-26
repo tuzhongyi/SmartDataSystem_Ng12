@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
-import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station/garbage-station-sarbage-count-statistic.model';
 import { TimeRange } from 'src/app/network/model/time-range.model';
 import { ImageControlModel } from '../../../../view-model/image-control.model';
 import { GarbageDropDurationPanelModel } from '../../panels/garbage-drop-duration-panel/garbage-drop-duration-panel.model';

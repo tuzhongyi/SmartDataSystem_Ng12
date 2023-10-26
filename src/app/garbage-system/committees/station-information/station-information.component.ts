@@ -5,10 +5,9 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { Member } from 'src/app/network/model/member.model';
-import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { Member } from 'src/app/network/model/garbage-station/member.model';
 
 @Component({
   selector: 'app-station-information',

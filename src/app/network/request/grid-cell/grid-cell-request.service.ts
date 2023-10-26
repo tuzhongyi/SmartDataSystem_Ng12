@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
-import { BatchRequest } from '../../model/batch-request.model';
-import { BatchResult } from '../../model/batch-result.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { GridCellNumberStatisticComparison } from '../../model/grid-cell-number-statistic-comparison.model';
-import { GridCellNumberStatisticV2 } from '../../model/grid-cell-number-statistic-v2.model';
-import { GridCellNumberStatistic } from '../../model/grid-cell-number-statistic.model';
-import { GridCell } from '../../model/grid-cell.model';
+import { BatchRequest } from '../../model/garbage-station/batch-request.model';
+import { BatchResult } from '../../model/garbage-station/batch-result.model';
+import { EventNumberStatistic } from '../../model/garbage-station/event-number-statistic.model';
+import { GridCellNumberStatisticComparison } from '../../model/garbage-station/grid-cell-number-statistic-comparison.model';
+import { GridCellNumberStatisticV2 } from '../../model/garbage-station/grid-cell-number-statistic-v2.model';
+import { GridCellNumberStatistic } from '../../model/garbage-station/grid-cell-number-statistic.model';
+import { GridCell } from '../../model/garbage-station/grid-cell.model';
 import { PagedList } from '../../model/page_list.model';
 import { GridCellUrl } from '../../url/garbage/grid-cells.url';
 import {

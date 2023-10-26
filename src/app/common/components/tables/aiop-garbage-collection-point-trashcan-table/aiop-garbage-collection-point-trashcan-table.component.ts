@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { CollectionTrashCan } from 'src/app/network/model/garbage-station/trash-can.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { CollectionTrashCan } from 'src/app/network/model/trash-can.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AiopGarbageCollectionPointTrashCanTableBusiness } from './aiop-garbage-collection-point-trashcan-table.business';

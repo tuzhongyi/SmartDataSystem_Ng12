@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,

@@ -1,7 +1,6 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { Injectable } from '@angular/core';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';

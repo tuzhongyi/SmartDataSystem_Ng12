@@ -14,11 +14,13 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { FormState } from 'src/app/enum/form-state.enum';
-import { Protocol } from 'src/app/network/model/protocol.model';
-import { SRServer, SRServerAddress } from 'src/app/network/model/sr-server';
-import { SRServerOperateBusiness } from './sr-server-operate.business';
 import { ValidIPExp } from 'src/app/common/tools/tool';
+import { FormState } from 'src/app/enum/form-state.enum';
+import {
+  SRServer,
+  SRServerAddress,
+} from 'src/app/network/model/garbage-station/sr-server';
+import { SRServerOperateBusiness } from './sr-server-operate.business';
 
 @Component({
   selector: 'howell-sr-server-operate',

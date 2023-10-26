@@ -26,13 +26,12 @@
  *　　　 ┃┫┫　┃┫┫
  *　　　 ┗┻┛　┗┻┛+ + + +
  */
+import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
-import { IllegalDropEventRecord } from '../network/model/garbage-event-record.model';
-import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
-import { mode } from 'crypto-js';
-import { DatePipe } from '@angular/common';
 import { Medium } from '../common/tools/medium';
+import { IllegalDropEventRecord } from '../network/model/garbage-station/garbage-event-record.model';
+import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
 
 type IllegalDropEventRecordSourceModel = IllegalDropEventRecord;
 
@@ -40,9 +39,10 @@ type IllegalDropEventRecordSourceModel = IllegalDropEventRecord;
   providedIn: 'root',
 })
 export class IllegalDropEventRecordConverter
-  implements IConverter<IllegalDropEventRecordSourceModel, IllegalDropRecordModel>
+  implements
+    IConverter<IllegalDropEventRecordSourceModel, IllegalDropRecordModel>
 {
-  constructor(private _datePipe: DatePipe) { }
+  constructor(private _datePipe: DatePipe) {}
   Convert(source: IllegalDropEventRecordSourceModel) {
     if (source instanceof IllegalDropEventRecord) {
       return this._fromIllegalDropEventRecord(source);
@@ -55,7 +55,7 @@ export class IllegalDropEventRecordConverter
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
       const model = this.Convert(item);
-      res.push(model)
+      res.push(model);
     }
 
     return res;
@@ -66,9 +66,7 @@ export class IllegalDropEventRecordConverter
     let model = new IllegalDropRecordModel();
 
     model.EventId = item.EventId;
-    model.ImageUrl = item.ImageUrl
-      ? Medium.jpg(item.ImageUrl)
-      : '';
+    model.ImageUrl = item.ImageUrl ? Medium.jpg(item.ImageUrl) : '';
     var image = new Image();
     try {
       image.src = model.ImageUrl;
@@ -85,10 +83,9 @@ export class IllegalDropEventRecordConverter
     model.CommitteeName = item.Data.DivisionName ?? '';
     model.CommitteeId = item.Data.DivisionId ?? '';
     model.CommunityName = item.Data.CommunityName ?? '';
-    model.CommunityId = item.Data.CommunityId ?? "";
+    model.CommunityId = item.Data.CommunityId ?? '';
     model.EventTime =
       this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
-
 
     return model;
   }

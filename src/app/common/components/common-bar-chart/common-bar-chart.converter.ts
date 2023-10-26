@@ -5,10 +5,10 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { CommonBarChartModel } from './common-bar-chart.model';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
 import ColorPalette from 'src/assets/json/color-palette.json';
 import { Language } from '../../tools/language';
+import { CommonBarChartModel } from './common-bar-chart.model';
 
 import Color from 'color';
 

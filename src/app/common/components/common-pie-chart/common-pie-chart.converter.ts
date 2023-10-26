@@ -10,11 +10,11 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { CommonPieChartModel } from './common-pie-chart.model';
-import { Language } from '../../tools/language';
-import { ClassificationNumber } from '../../../network/model/classification-number.mode';
-import { DivisionGarbageScore } from '../../../network/model/division-garbage-score.model';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
+import { ClassificationNumber } from '../../../network/model/garbage-station/classification-number.mode';
+import { DivisionGarbageScore } from '../../../network/model/garbage-station/division-garbage-score.model';
+import { Language } from '../../tools/language';
+import { CommonPieChartModel } from './common-pie-chart.model';
 
 import ColorPalette from 'src/assets/json/color-palette.json';
 

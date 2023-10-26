@@ -3,7 +3,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { DivisionModel } from './garbage-station-count-table.model';
 import { GarbageStationCountTableService } from './garbage-station-count-table.service';
 

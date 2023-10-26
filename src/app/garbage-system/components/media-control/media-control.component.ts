@@ -16,7 +16,7 @@ import {
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { wait } from 'src/app/common/tools/tool';
-import { ICamera } from 'src/app/network/model/camera.interface';
+import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IMediaControlBusiness } from './media-control.model';

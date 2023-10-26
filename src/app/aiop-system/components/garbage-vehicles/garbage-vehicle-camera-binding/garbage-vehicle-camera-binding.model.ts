@@ -1,11 +1,8 @@
 import {
-  IBusiness,
   ICreate,
   IDelete,
-  IUpdate,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 
 export interface IGarbageVehicleCameraBindingBusiness
   extends ICreate<VehicleCamera[]>,

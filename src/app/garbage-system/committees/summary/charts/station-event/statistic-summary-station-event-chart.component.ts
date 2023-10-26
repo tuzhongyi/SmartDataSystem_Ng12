@@ -14,7 +14,7 @@ import { instanceToPlain } from 'class-transformer';
 import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { EchartBarOption } from '../../../../../common/interfaces/echarts/echart-bar.option';
 import { StatisticSummaryStationEventChartBusiness } from './statistic-summary-station-event-chart.business';
 import { StatisticSummaryStationEventChartViewModel } from './statistic-summary-station-event-chart.model';

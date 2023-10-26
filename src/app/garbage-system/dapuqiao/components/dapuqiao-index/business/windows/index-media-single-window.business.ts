@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { ImageVideoControlOperation } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {

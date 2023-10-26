@@ -12,8 +12,8 @@ import { ToastrService } from 'ngx-toastr';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 

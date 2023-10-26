@@ -20,7 +20,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { EventStatisticBusiness } from './event-statistic.business';
 
 type EChartOptions = echarts.ComposeOption<

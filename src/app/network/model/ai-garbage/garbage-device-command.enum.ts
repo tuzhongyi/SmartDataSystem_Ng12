@@ -1,4 +1,4 @@
-import { DeviceCommand } from '../device-command.model';
+import { DeviceCommand } from '../garbage-station/device-command.model';
 
 export enum AIGarbageDeviceCommandNo {
   /** 	同步RFID卡号	1	*/

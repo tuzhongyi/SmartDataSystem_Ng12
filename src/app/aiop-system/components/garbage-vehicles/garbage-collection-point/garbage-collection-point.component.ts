@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import {
   FileReadType,
@@ -8,10 +9,9 @@ import {
 import { Creater } from 'src/app/common/tools/creater';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { Division } from 'src/app/network/model/division.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { GarbageCollectionPointBusiness } from './garbage-collection-point.business';
 import {
   IGarbageCollectionPointBusiness,

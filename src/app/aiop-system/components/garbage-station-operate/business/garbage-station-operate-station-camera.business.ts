@@ -4,8 +4,7 @@ import {
   ICreate,
   IDelete,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { Camera } from 'src/app/network/model/camera.model';
-import { PagedList } from 'src/app/network/model/page_list.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 
 @Injectable()

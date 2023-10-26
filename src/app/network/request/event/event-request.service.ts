@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
-import { EventInfo } from '../../model/event-info.model';
+import { EventInfo } from '../../model/garbage-station/event-info.model';
 import {
   GarbageDropEventRecord,
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from '../../model/garbage-event-record.model';
+} from '../../model/garbage-station/garbage-event-record.model';
 import { PagedList } from '../../model/page_list.model';
 import { EventUrl } from '../../url/garbage/event.url';
 import {

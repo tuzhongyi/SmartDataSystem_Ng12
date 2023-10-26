@@ -1,6 +1,6 @@
-import { Duration } from 'src/app/network/model/duration.model';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class GarbageDropEventRecordModel extends GarbageDropEventRecord {
   GarbageStation!: Promise<GarbageStation>;

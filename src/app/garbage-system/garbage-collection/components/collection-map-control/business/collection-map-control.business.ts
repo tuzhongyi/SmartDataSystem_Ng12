@@ -3,7 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionMapControlConverter } from '../collection-map-control.converter';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { EncodeDevice } from '../../model/encode-device';
-import { Protocol } from '../../model/protocol.model';
+import { EncodeDevice } from '../../model/garbage-station/encode-device';
+import { Protocol } from '../../model/garbage-station/protocol.model';
 import { ResourceEncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
 import {
   HowellBaseRequestService,

@@ -1,4 +1,4 @@
-import { Division } from '../model/division.model';
+import { Division } from '../model/garbage-station/division.model';
 
 /** 区划 */
 export class DivisionModel extends Division {

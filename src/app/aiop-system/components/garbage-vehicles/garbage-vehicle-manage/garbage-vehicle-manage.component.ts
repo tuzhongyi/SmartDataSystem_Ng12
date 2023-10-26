@@ -2,39 +2,35 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
-import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
-import { Page } from 'src/app/network/model/page_list.model';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { BehaviorSubject } from 'rxjs';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
+import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { Page } from 'src/app/network/model/page_list.model';
 
+import { PageEvent } from '@angular/material/paginator';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import {
   TableColumnModel,
   TableOperateModel,
 } from 'src/app/view-model/table.model';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { PageEvent } from '@angular/material/paginator';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { GarbageVehicleManageBusiness } from './garbage-vehicle-manage.business';
 import { GarbageVehicleManageConf } from './garbage-vehicle-manage.config';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import {
   GarbageVehicleModel,
   IGarbageVehicleManageBusiness,
   IGarbageVehicleManageComponent,
 } from './garbage-vehicle-manage.model';
 
-import {
-  IBusiness,
-  IDelete,
-} from 'src/app/common/interfaces/bussiness.interface';
+import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import {
   FileReadType,
   FileResult,
 } from 'src/app/common/components/upload-control/upload-control.model';
-import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 
 @Component({
   selector: 'howell-garbage-vehicle-manage',

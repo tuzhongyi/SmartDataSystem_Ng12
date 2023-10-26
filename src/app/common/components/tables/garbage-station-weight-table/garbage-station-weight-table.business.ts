@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStationWeightTableExcelConverter } from './converter/garbage-station-weight-table-excel.converter';
 import { GarbageStationWeightTableConverter } from './garbage-station-weight-table.converter';
 import {

@@ -1,10 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
+import { Injectable } from '@angular/core';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { IGarbageCollectionPointBusiness } from './garbage-collection-point.model';
 

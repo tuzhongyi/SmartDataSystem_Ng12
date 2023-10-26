@@ -1,20 +1,19 @@
 import { Injectable } from '@angular/core';
 import { AICameraModelManageConverter } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.converter';
-import { AIModelManageConverter } from 'src/app/aiop-system/components/ai-model-manage/ai-model-manage.converter';
+import {
+  AICameraModelManageSearchInfo,
+  CameraAIModelManageModel,
+  CameraManageModel,
+} from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
+import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
 import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 import { GetAIModelsParams } from 'src/app/network/request/ai-model/ai-model.params';
 import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model.service';
 import { LabelRequestService } from 'src/app/network/request/label/label.service';
-import {
-  CameraManageModel,
-  AICameraModelManageSearchInfo,
-  CameraAIModelManageModel,
-} from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
-import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
 
 @Injectable()
 export class AICameraModelManageBusiness {

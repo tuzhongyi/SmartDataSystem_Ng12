@@ -2,7 +2,7 @@ import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import {
   CommitteesHistoryTableTypes,

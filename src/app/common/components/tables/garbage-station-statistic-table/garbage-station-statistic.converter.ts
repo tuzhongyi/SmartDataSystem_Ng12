@@ -3,7 +3,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStationStatisticTableService } from './garbage-station-statistic-table.service';
 import {
   GarbageStationStatisticModel,

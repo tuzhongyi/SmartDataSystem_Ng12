@@ -10,9 +10,9 @@ import {
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AiopGarbageVehicleCameraTableTableBusiness as AiopGarbageVehicleCameraTableBusiness } from './aiop-garbage-vehicle-camera-table.business';

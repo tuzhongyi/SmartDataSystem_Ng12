@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParams,

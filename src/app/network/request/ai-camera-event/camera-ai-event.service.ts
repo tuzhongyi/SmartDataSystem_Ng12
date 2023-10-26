@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { CameraAIEventRecord } from '../../model/camera-ai-event-record.model';
+import { CameraAIEventRecord } from '../../model/garbage-station/camera-ai-event-record.model';
 import { CameraAIUrl } from '../../url/aiop/events/records/camera-ai/camera-ai.url';
 import {
   HowellBaseRequestService,

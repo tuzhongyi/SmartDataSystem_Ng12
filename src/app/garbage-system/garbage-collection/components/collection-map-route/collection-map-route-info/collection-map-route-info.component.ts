@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GarbageVehicleModelConverter } from 'src/app/converter/view-models/garbage-vehicle.model.converter';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { GarbageVehicleModel } from 'src/app/network/view-model/garbage-vehicle.view-model';
 
 @Component({

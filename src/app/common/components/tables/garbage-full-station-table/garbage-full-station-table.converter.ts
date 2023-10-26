@@ -5,7 +5,7 @@ import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';

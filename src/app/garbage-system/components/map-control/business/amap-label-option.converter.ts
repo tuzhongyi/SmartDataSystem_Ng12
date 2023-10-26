@@ -1,6 +1,6 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 
 export class AMapLabelOptionConverter
   implements

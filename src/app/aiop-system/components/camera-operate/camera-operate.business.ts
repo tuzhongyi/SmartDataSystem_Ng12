@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';

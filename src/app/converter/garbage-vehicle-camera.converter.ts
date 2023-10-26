@@ -1,7 +1,6 @@
 import { IConverter } from '../common/interfaces/converter.interface';
-import { VehiclePositionNo } from '../enum/position-no.enum';
-import { AICamera } from '../network/model/ai-camera.model';
-import { VehicleCamera } from '../network/model/vehicle-camera.model';
+import { AICamera } from '../network/model/garbage-station/ai-camera.model';
+import { VehicleCamera } from '../network/model/garbage-station/vehicle-camera.model';
 
 export class GarbageVehicleCameraConverter
   implements IConverter<AICamera, VehicleCamera>

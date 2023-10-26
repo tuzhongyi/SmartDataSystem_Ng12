@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import {
-  AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { Division } from 'src/app/network/model/division.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { CollectionPointWindowModel } from './collection-point-window.model';
 

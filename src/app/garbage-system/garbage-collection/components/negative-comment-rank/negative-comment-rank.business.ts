@@ -10,7 +10,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,

@@ -8,12 +8,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
+import { NBStatus } from 'src/app/network/model/garbage-station/nb-status.model';
 import { HowellResponse } from 'src/app/network/model/howell-response.model';
-import { NBStatus } from 'src/app/network/model/nb-status.model';
-import { GarbageVehicle } from '../../../model/garbage-vehicle.model';
-import { GisRoutePoint } from '../../../model/gis-point.model';
+import { GarbageVehicle } from '../../../model/garbage-station/garbage-vehicle.model';
+import { GisRoutePoint } from '../../../model/garbage-station/gis-point.model';
+import { VehicleCamera } from '../../../model/garbage-station/vehicle-camera.model';
 import { PagedList } from '../../../model/page_list.model';
-import { VehicleCamera } from '../../../model/vehicle-camera.model';
 import { GarbageVehicleUrl } from '../../../url/garbage-vehicle/garbage-vehicle.url';
 import {
   HowellBaseRequestService,

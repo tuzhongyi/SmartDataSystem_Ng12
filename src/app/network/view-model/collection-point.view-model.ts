@@ -1,4 +1,4 @@
-import { CollectionPoint } from '../model/collection-point.model';
+import { CollectionPoint } from '../model/garbage-station/collection-point.model';
 import { DivisionModel } from './division.view-model';
 
 /**	收运点	*/

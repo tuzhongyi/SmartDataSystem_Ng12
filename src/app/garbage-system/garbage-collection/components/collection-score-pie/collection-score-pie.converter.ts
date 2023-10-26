@@ -12,8 +12,8 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { GarbageScoreNumber } from 'src/app/network/model/garbage-score-num.model';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
+import { GarbageScoreNumber } from 'src/app/network/model/garbage-station/garbage-score-num.model';
 import { CollectionScorePieModel } from './collection-score-pie.model';
 
 @Injectable()

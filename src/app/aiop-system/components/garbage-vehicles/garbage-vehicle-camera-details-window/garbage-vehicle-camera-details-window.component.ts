@@ -3,8 +3,8 @@ import { ToastrService } from 'ngx-toastr';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { VehicleCameraModelConverter } from 'src/app/converter/view-models/vehicle-camera.model.converter';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
 import { GarbageVehicleCameraDetailsWindowBusiness } from './garbage-vehicle-camera-details-window.business';
 

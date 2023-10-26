@@ -1,8 +1,8 @@
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { ICamera } from 'src/app/network/model/camera.interface';
-import { Camera } from 'src/app/network/model/camera.model';
+import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 export class MediaVideoControlArrayConverter

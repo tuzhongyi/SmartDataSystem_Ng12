@@ -7,8 +7,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { ListItem } from './map-list-item';
 
 @Component({

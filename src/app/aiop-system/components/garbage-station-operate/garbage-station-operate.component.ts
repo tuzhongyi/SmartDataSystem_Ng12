@@ -16,11 +16,11 @@ import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import {
   GarbageStation,
   GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
+} from 'src/app/network/model/garbage-station/garbage-station.model';
 import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 import { GarbageStationOperateAICameraBusiness } from './business/garbage-station-operate-ai-camera.business';

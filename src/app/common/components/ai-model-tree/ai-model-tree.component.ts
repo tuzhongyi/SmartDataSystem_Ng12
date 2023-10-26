@@ -1,23 +1,19 @@
+import { SelectionModel } from '@angular/cdk/collections';
+import { FlatTreeControl } from '@angular/cdk/tree';
 import { Component, Input, OnInit } from '@angular/core';
-import { time } from 'console';
-import { TreeConverter } from 'src/app/converter/tree.converter';
-import {
-  CameraAIModel,
-  CameraAIModelDTOLabel,
-  EnumValue,
-} from 'src/app/network/model/camera-ai.model';
-import { AIModelTreeBusiness } from './ai-model-tree.business';
-import { AIModelTreeConverter } from '../../../converter/ai-model-tree.converter';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
-  MatTreeNestedDataSource,
 } from '@angular/material/tree';
-import { AIModelNestNode } from 'src/app/view-model/ai-model-nest-node.model';
-import { FlatTreeControl, NestedTreeControl } from '@angular/cdk/tree';
+import { BehaviorSubject } from 'rxjs';
+import {
+  CameraAIModelDTOLabel,
+  EnumValue,
+} from 'src/app/network/model/garbage-station/camera-ai.model';
 import { AIModelFlatNode } from 'src/app/view-model/ai-model-flat-node.model';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { SelectionModel } from '@angular/cdk/collections';
+import { AIModelNestNode } from 'src/app/view-model/ai-model-nest-node.model';
+import { AIModelTreeConverter } from '../../../converter/ai-model-tree.converter';
+import { AIModelTreeBusiness } from './ai-model-tree.business';
 
 type rawDataType = CameraAIModelDTOLabel | EnumValue;
 

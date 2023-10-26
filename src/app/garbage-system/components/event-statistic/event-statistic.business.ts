@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CallbackDataParams } from 'echarts/types/dist/shared';
-import { EventStatisticConverter } from 'src/app/converter/event-statistic.converter';
-import { StatisticLineEChartsConverter } from 'src/app/converter/statistic-line-eCharts.converter';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TimeService } from 'src/app/common/service/time.service';
-import { EventNumberStatistic } from 'src/app/network/model/event-number-statistic.model';
-import { EventNumber } from 'src/app/network/model/event-number.model';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { EChartsLineModel } from 'src/app/view-model/echarts-line.model';
 
 @Injectable()
 export class EventStatisticBusiness {

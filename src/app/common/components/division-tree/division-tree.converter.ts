@@ -3,12 +3,12 @@ import { CommonTreeConverter } from 'src/app/converter/common-tree.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { DivisionNode } from 'src/app/network/model/division-tree.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
+import { DivisionNode } from 'src/app/network/model/garbage-station/division-tree.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { DivisionTreeSource } from './division-tree.model';
 

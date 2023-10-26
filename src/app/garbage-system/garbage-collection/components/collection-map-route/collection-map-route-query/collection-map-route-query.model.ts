@@ -1,4 +1,4 @@
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { IdNameModel } from 'src/app/network/model/model.interface';
 
 export class CollectionMapRouteDevice<T extends IdNameModel = any> {

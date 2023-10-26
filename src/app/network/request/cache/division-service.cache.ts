@@ -1,6 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { IService } from 'src/app/business/Ibusiness';
-import { Division } from '../../model/division.model';
+import { Division } from '../../model/garbage-station/division.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetDivisionsParams } from '../division/division-request.params';
 import { ServiceCache } from './service.cache';

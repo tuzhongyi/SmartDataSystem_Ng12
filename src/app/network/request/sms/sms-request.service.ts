@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SmsProtocolType } from 'src/app/enum/sms-protocol-type.enum';
-import { AuthCode } from '../../model/auth-code.model';
+import { AuthCode } from '../../model/garbage-station/auth-code.model';
 import { HowellResponse } from '../../model/howell-response.model';
 import { SmsUrl } from '../../url/sms/sms.url';
 import { HowellAuthHttpService } from '../howell-auth-http.service';

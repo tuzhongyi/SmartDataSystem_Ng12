@@ -7,12 +7,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
-import { ClassificationNumber } from '../../../model/classification-number.mode';
-import { CollectionPoint } from '../../../model/collection-point.model';
+import { ClassificationNumber } from '../../../model/garbage-station/classification-number.mode';
+import { CollectionPoint } from '../../../model/garbage-station/collection-point.model';
+import { ScoreTop } from '../../../model/garbage-station/score-top.model';
+import { CollectionTrashCan } from '../../../model/garbage-station/trash-can.model';
+import { WeightTop } from '../../../model/garbage-station/weight-top.model';
 import { PagedList } from '../../../model/page_list.model';
-import { ScoreTop } from '../../../model/score-top.model';
-import { CollectionTrashCan } from '../../../model/trash-can.model';
-import { WeightTop } from '../../../model/weight-top.model';
 import { GarbageVehicleCollectionPointUrl } from '../../../url/garbage-vehicle/collection-point.url';
 import {
   HowellBaseRequestService,

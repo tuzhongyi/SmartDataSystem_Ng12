@@ -50,12 +50,12 @@ import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { AIGarbageDeviceEventType } from 'src/app/network/model/ai-garbage/device-event-record.model';
 import { AIGarbageDropWindowType } from 'src/app/network/model/ai-garbage/drop-window.model';
-import { FeedbackResult } from 'src/app/network/model/garbage-drop-feedback.model';
+import { FeedbackResult } from 'src/app/network/model/garbage-station/garbage-drop-feedback.model';
 import {
   GarbageDropSuperVisionLevel,
   SupervisedState,
   SuperviseResult,
-} from 'src/app/network/model/garbage-drop-super-vision-data.model';
+} from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { DateTimeTool } from './datetime.tool';
 import language from './language.json';

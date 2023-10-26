@@ -7,7 +7,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IService } from 'src/app/business/Ibusiness';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { DivisionListBusiness } from './division-list.business';
 

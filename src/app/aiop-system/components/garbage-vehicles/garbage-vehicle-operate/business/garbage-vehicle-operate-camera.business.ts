@@ -1,14 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { AICameraManageConverter } from 'src/app/converter/ai-camera-manage.converter';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
-import { AICameraManageModel } from 'src/app/view-model/ai-camera-manage.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { GarbageVehicleOperateCameraConverter } from '../converter/garbage-vehicle-operate-camera.converter';
 
 @Injectable()

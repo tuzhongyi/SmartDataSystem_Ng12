@@ -1,6 +1,6 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleModel } from './garbage-vehicle-manage.model';
 

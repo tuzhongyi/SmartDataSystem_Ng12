@@ -3,7 +3,7 @@ import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface
 import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 

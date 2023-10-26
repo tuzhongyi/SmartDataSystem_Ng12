@@ -3,7 +3,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 

@@ -5,12 +5,12 @@ import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

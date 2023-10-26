@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import { IChartLineModel } from 'src/app/garbage-system/components/charts/lines/chart-line-simple/chart-line-simple.option';
-import { GarbageDropSuperVisionLevel } from 'src/app/network/model/garbage-drop-super-vision-data.model';
+import { GarbageDropSuperVisionLevel } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import { DaPuQiaoMainLineFeedbackBusiness } from './dapuqiao-main-line-feedback.business';
 
 @Component({

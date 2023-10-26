@@ -5,7 +5,7 @@ import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface
 import {
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 
 @Injectable()

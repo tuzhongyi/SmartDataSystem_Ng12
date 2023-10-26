@@ -10,7 +10,7 @@ import { Language } from 'src/app/common/tools/language';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowGeneralExportConverter } from './garbage-station-window-general-export.converter';
 

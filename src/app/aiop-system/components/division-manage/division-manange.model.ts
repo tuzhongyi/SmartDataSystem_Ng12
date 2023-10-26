@@ -1,10 +1,9 @@
 import {
-  IBusiness,
   ICreate,
   IDelete,
   IUpdate,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonModel } from '../../../view-model/common-model';
 
 export class DivisionManageModel<T = any> implements CommonModel {

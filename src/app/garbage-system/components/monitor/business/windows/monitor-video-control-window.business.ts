@@ -8,8 +8,8 @@ import { VideoWindowViewModel } from 'src/app/common/components/video-window/vid
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

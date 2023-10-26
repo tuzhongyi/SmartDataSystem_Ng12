@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { DaPuQiaoGarbageStationEventRecordVisionModel } from './dapuqiao-garbage-station-event-record-vision-table.model';
 import { DaPuQiaoGarbageStationEventRecordVisionTableService } from './dapuqiao-garbage-station-event-record-vision-table.service';

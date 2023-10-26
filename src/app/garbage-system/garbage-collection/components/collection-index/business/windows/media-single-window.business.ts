@@ -1,23 +1,22 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { Camera } from 'src/app/network/model/camera.model';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { ICamera } from 'src/app/network/model/camera.interface';
+import { PlayMode } from 'src/app/common/components/video-player/video.model';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
-import { PlayMode } from 'src/app/common/components/video-player/video.model';
-import { VideoUrl } from 'src/app/network/model/url.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { MediaVideoControlArrayConverter } from 'src/app/garbage-system/components/media-control/media-control.converter';
+import { IMediaControlBusiness } from 'src/app/garbage-system/components/media-control/media-control.model';
+import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { VideoUrl } from 'src/app/network/model/url.model';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
 } from 'src/app/network/request/ai-sr-server/sr-server.params';
-import { MediaVideoControlArrayConverter } from 'src/app/garbage-system/components/media-control/media-control.converter';
-import { IMediaControlBusiness } from 'src/app/garbage-system/components/media-control/media-control.model';
+import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 @Injectable()
 export class MediaSingleWindowBusiness

@@ -3,8 +3,8 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from '../../model/division-number-statistic-v2.model';
-import { Division } from '../../model/division.model';
+import { DivisionNumberStatisticV2 } from '../../model/garbage-station/division-number-statistic-v2.model';
+import { Division } from '../../model/garbage-station/division.model';
 import {
   DurationParams,
   IParams,

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { AbstractService } from 'src/app/business/Ibusiness';
-import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
-import { DivisionTree } from 'src/app/network/model/division-tree.model';
-import { Division } from 'src/app/network/model/division.model';
+import { CollectionDivisionStatisticNumber } from 'src/app/network/model/garbage-station/collection-division-statistic-number.model';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
+import { DivisionGarbageWeight } from 'src/app/network/model/garbage-station/division-garbage-weight.model';
+import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageVehicleDivisionUrl } from 'src/app/network/url/garbage-vehicle/division.url';
 import {

@@ -1,8 +1,8 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
-import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
-import { PagedParams, IParams, DurationParams } from '../../IParams.interface';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
+import { DivisionGarbageWeight } from 'src/app/network/model/garbage-station/division-garbage-weight.model';
+import { DurationParams, IParams, PagedParams } from '../../IParams.interface';
 
 /**获取区划列表参数 */
 export class GetDivisionsParams extends PagedParams implements IParams {

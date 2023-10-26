@@ -1,4 +1,4 @@
-import { Point } from 'src/app/network/model/point.model';
+import { Point } from 'src/app/network/model/garbage-station/point.model';
 
 export class MathTool {
   /** 两点之间距离 */

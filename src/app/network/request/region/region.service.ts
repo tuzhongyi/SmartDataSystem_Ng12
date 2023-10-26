@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Region, RegionTree } from '../../model/region';
+import { Region, RegionTree } from '../../model/garbage-station/region';
 import { RegionsURL } from '../../url/aiop/regions/regions.url';
 import {
   HowellBaseRequestService,

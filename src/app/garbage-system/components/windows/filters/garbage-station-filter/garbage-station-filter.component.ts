@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { GarbageStationFilterBusiness } from './garbage-station-filter.business';
 

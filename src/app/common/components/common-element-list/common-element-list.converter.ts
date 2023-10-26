@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonElementListModel } from './common-element-list.model';
 
 @Injectable({

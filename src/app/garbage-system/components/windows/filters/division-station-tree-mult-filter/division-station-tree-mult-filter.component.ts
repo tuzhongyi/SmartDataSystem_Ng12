@@ -13,8 +13,8 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-filter.model';
 

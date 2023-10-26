@@ -1,7 +1,6 @@
 import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 import { OnlineStatus } from '../../../enum/online-status.enum';
-import { ResourceLabel } from '../../../network/model/resource-label.model';
-import { CommonModel } from '../../../view-model/common-model';
+import { ResourceLabel } from '../../../network/model/garbage-station/resource-label.model';
 
 // 摄像机列表
 export class CameraManageModel<T = any> {

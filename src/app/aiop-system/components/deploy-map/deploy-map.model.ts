@@ -1,6 +1,6 @@
 import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class DeployMapWindow {
   coordinate = new DeployMapCoordinateWindow();

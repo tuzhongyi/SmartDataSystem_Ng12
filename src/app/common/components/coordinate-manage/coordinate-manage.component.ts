@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { GisType } from 'src/app/enum/gis-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GisPoint } from 'src/app/network/model/gis-point.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { GisPoint } from 'src/app/network/model/garbage-station/gis-point.model';
 
 @Component({
   selector: 'coordinate-manage',

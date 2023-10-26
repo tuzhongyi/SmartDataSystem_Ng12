@@ -7,9 +7,9 @@ import {
   IUpdate,
 } from 'src/app/common/interfaces/bussiness.interface';
 import { CameraDeviceType } from 'src/app/enum/camera-device-type.enum';
+import { ResourceLabel } from '../../model/garbage-station/resource-label.model';
+import { Resource } from '../../model/garbage-station/resource.model';
 import { PagedList } from '../../model/page_list.model';
-import { ResourceLabel } from '../../model/resource-label.model';
-import { Resource } from '../../model/resource.model';
 import { ResourceLabelsUrl } from '../../url/aiop/resources/labels/labels.url';
 import { ResourcesURL } from '../../url/aiop/resources/resources.url';
 import {

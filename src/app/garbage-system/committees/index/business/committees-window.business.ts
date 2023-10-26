@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommitteesDeviceWindowBusiness } from './windows/committees-device-window.business';
 import { CommitteesRecordWindowBusiness } from './windows/committees-event-record-window.business';
 import { CommitteesIndexImageWindowBusiness } from './windows/committees-image-window.business';

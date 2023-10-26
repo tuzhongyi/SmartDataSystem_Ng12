@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
 
-import { VideoModel, PlayMode } from '../video-player/video.model';
+import { PlayMode, VideoModel } from '../video-player/video.model';
 
 @Injectable()
 export class VideoPlayerWindowBusiness

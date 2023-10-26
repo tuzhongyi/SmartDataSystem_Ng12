@@ -1,4 +1,4 @@
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export class CardRecordTableArgs {
   stationId?: string;

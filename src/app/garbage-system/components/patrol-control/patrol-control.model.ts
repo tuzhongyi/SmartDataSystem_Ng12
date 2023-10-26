@@ -4,8 +4,8 @@ import {
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class PatrolControlModel {
   constructor(id: string) {

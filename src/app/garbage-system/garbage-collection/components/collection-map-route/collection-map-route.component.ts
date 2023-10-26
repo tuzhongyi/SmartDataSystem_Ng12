@@ -9,9 +9,9 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { wait } from 'src/app/common/tools/tool';
-import { Duration } from 'src/app/network/model/duration.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { GisRoutePoint } from 'src/app/network/model/gis-point.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
 import { CollectionMapRouteControlSource } from './collection-map-route-control/collection-map-route-control.model';
 import {

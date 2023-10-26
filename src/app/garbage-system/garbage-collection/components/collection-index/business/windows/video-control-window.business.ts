@@ -7,10 +7,10 @@ import { VideoWindowViewModel } from 'src/app/common/components/video-window/vid
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
+import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { ICamera } from 'src/app/network/model/camera.interface';
 import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class VideoControlWindowBusiness

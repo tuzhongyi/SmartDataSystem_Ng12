@@ -1,16 +1,15 @@
+import { Injectable } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import {
-  AbstractCommonModelConverter,
   AbstractCommonModelPromiseConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { CollectionVehicleWindowModel } from './collection-vehicle-window.model';
-import ColorPalette from 'src/assets/json/color-palette.json';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
-import { Division } from 'src/app/network/model/division.model';
-import { Injectable } from '@angular/core';
+import ColorPalette from 'src/assets/json/color-palette.json';
+import { CollectionVehicleWindowModel } from './collection-vehicle-window.model';
 
 @Injectable()
 export class CollectionVehicleWindowConverter extends AbstractCommonModelPromiseConverter<CollectionVehicleWindowModel> {

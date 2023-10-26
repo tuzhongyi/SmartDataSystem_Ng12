@@ -11,20 +11,20 @@ import { AbstractService } from 'src/app/business/Ibusiness';
 import {
   GarbageStation,
   GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
+} from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { Camera } from '../../model/camera.model';
-import { DeviceCommand } from '../../model/device-command.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
-import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
-import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
-import { GarbageTask } from '../../model/garbage-task.model';
-import { GarbageVolume } from '../../model/garbage-volume.model';
-import { Member } from '../../model/member.model';
-import { SumEventNumber } from '../../model/sum-event-number.model';
-import { TrashCan } from '../../model/trash-can.model';
+import { Camera } from '../../model/garbage-station/camera.model';
+import { DeviceCommand } from '../../model/garbage-station/device-command.model';
+import { EventNumberStatistic } from '../../model/garbage-station/event-number-statistic.model';
+import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station/garbage-station-number-statistic-comparison.model';
+import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatistic } from '../../model/garbage-station/garbage-station-number-statistic.model';
+import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station/garbage-station-sarbage-count-statistic.model';
+import { GarbageTask } from '../../model/garbage-station/garbage-task.model';
+import { GarbageVolume } from '../../model/garbage-station/garbage-volume.model';
+import { Member } from '../../model/garbage-station/member.model';
+import { SumEventNumber } from '../../model/garbage-station/sum-event-number.model';
+import { TrashCan } from '../../model/garbage-station/trash-can.model';
 import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
 import { GarbageStationUrl } from '../../url/garbage/garbage-station.url';
 import {

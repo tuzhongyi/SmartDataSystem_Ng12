@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
+import { Role } from '../../model/garbage-station/role.model';
+import { UserLabel } from '../../model/garbage-station/user-label.model';
+import { User } from '../../model/garbage-station/user.model';
 import { Fault } from '../../model/howell-response.model';
 import { PagedList } from '../../model/page_list.model';
-import { Role } from '../../model/role.model';
-import { UserLabel } from '../../model/user-label.model';
-import { User } from '../../model/user.model';
 import { PasswordUrl } from '../../url/garbage/password.url';
 import { UserUrl } from '../../url/garbage/user.url';
 import {

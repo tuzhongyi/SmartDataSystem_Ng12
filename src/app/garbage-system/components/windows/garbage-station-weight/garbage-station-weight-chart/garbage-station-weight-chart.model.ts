@@ -15,11 +15,11 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { Division } from 'src/app/network/model/division.model';
-import { Duration } from 'src/app/network/model/duration.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export type NumberStatisticV2 =
   | GarbageStationNumberStatisticV2

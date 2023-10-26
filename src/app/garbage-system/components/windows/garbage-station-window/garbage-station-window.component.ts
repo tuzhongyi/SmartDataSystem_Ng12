@@ -19,7 +19,7 @@ import { LocalStorageService } from 'src/app/common/service/local-storage.servic
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
@@ -181,4 +181,5 @@ export enum GarbageStationWindowIndex {
   record = 4,
   card = 5,
   dapuqiao_record = 6,
+  sewage = 7,
 }

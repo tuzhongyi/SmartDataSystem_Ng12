@@ -1,6 +1,6 @@
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import { Division } from 'src/app/network/model/division.model';
 import { Medium } from 'src/app/common/tools/medium';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
 

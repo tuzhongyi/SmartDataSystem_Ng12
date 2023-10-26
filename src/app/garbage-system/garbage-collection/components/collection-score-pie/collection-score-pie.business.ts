@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
-import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 import { CollectionScorePieConverter } from './collection-score-pie.converter';
+import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 
 @Injectable()
 export class CollectionScorePieBusiness {

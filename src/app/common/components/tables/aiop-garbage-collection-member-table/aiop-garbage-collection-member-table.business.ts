@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionMembersParams } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.params';
 import { CollectionMemberRequsetService } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.service';

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { SupervisedState } from 'src/app/network/model/garbage-drop-super-vision-data.model';
+import { SupervisedState } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { DaPuQiaoGarbageStationEventRecordVisionTableBusiness } from './dapuqiao-garbage-station-event-record-vision-table.business';
 import {

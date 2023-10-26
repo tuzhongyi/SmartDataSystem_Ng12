@@ -8,8 +8,7 @@ import {
 } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
-import { Resource } from 'src/app/network/model/resource.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { RegionTreeComponent } from '../../../common/components/region-tree/region-tree.component';

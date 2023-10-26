@@ -4,8 +4,8 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,

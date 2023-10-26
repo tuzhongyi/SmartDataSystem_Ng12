@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoutePath } from '../app-routing.path';
-import { User } from '../network/model/user.model';
+import { User } from '../network/model/garbage-station/user.model';
 import { CheckCodeParams } from '../network/request/user/user-request.params';
 import { UserRequestService } from '../network/request/user/user-request.service';
 @Injectable()

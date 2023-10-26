@@ -2,7 +2,7 @@ import {
   AbstractCommonModelConverter,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { GarbageCollectionEventRecord } from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { CollectionListWindowModel } from './collection-list-window.model';
 
 export class CollectionListWindowConverter extends AbstractCommonModelConverter<CollectionListWindowModel> {

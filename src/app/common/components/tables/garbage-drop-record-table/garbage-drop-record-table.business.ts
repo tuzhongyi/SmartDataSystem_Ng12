@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { OrderType } from 'src/app/enum/order-type.enum';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';

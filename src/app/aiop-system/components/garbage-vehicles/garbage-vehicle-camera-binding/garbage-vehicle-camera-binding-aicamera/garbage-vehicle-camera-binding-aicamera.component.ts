@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { GarbageVehicleCameraBindingAICameraBusiness } from './garbage-vehicle-camera-binding-aicamera.business';
 

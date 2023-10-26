@@ -6,7 +6,7 @@ import {
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { GarbageCollectionEventRecord } from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { CollectionRecordWindowModel } from './collection-record-window.model';
 

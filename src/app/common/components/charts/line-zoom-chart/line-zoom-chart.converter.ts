@@ -1,7 +1,7 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station/garbage-station-sarbage-count-statistic.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { CameraImageUrlModel } from '../../tables/event-record/event-record.model';
 import { ImageTimeData, ITimeData } from '../chart.model';

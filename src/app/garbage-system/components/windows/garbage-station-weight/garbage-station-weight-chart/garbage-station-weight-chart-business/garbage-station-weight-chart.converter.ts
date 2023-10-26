@@ -5,11 +5,11 @@ import {
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { IdNameModel } from 'src/app/network/model/model.interface';
 
-import { StatisticTime } from 'src/app/network/model/statistic-time.model';
+import { StatisticTime } from 'src/app/network/model/garbage-station/statistic-time.model';
 import { GarbageStationWeightChartArgs } from '../garbage-station-weight-chart.model';
 
 export class GarbageStationWeightChartConverter

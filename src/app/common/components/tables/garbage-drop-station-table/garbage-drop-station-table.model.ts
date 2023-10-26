@@ -1,5 +1,5 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Member } from 'src/app/network/model/member.model';
+import { Member } from 'src/app/network/model/garbage-station/member.model';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 

@@ -11,11 +11,11 @@ import {
   CollectionRecordWindowComponent,
   CollectionVehicleWindowComponent,
 } from 'src/app/garbage-system/garbage-collection/components/windows';
-import { CollectionDivisionStatisticNumber } from 'src/app/network/model/collection-division-statistic-number.model';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionDivisionStatisticNumber } from 'src/app/network/model/garbage-station/collection-division-statistic-number.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
+import { DivisionGarbageWeight } from 'src/app/network/model/garbage-station/division-garbage-weight.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { Language } from '../../tools/language';
 import { CommonStatisticCardModel } from './common-statistic-card.model';

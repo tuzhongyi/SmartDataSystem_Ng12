@@ -1,13 +1,8 @@
 import { Injectable } from '@angular/core';
-import { param } from 'jquery';
-import { filter } from 'jszip';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { Flags } from 'src/app/common/tools/flags';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
 

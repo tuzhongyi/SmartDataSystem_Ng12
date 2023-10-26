@@ -1,7 +1,7 @@
 import { formatDate, PlatformLocation } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 @Injectable()
 export class DeployAMapClient {

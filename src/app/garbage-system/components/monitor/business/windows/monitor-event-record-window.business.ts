@@ -10,7 +10,7 @@ import {
   IllegalDropEventRecord,
   MixedIntoEventData,
   MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-event-record.model';
+} from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { MonitorCardRecordEpisodeWindow } from './monitor-card-record-episode-window.business';

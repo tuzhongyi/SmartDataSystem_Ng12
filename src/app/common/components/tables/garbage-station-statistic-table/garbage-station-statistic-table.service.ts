@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import {
   GetGarbageStationsParams,

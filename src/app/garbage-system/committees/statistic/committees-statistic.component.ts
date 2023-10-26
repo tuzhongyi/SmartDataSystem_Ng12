@@ -12,8 +12,8 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
-import { Division } from 'src/app/network/model/division.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommitteesStatisticBusiness } from './committees-statistic.business';
 import { CommitteesStatisticViewModel } from './committees-statistic.model';
 

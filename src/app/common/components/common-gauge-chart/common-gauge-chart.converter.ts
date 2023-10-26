@@ -6,10 +6,10 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { CollectionDeviceStateRatioType } from 'src/app/enum/collection-device-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import ColorPalette from 'src/assets/json/color-palette.json';
 import { Language } from '../../tools/language';
 import { CommonGaugeChartModel } from './common-gauge-chart.model';
-import ColorPalette from 'src/assets/json/color-palette.json';
 
 @Injectable({
   providedIn: 'root',

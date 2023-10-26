@@ -29,7 +29,10 @@ import { SessionStorageService } from '../common/service/session-storage.service
 import { StaticDataRole } from '../enum/role-static-data.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { UserUIType } from '../enum/user-ui-type.enum';
-import { User, UserResource } from '../network/model/user.model';
+import {
+  User,
+  UserResource,
+} from '../network/model/garbage-station/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 
 /**

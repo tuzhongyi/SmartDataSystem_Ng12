@@ -1,21 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { FormState } from 'src/app/enum/form-state.enum';
-import { EncodeDeviceOperateBusiness } from './encode-device-operate.business';
-import { EncodeDevice } from 'src/app/network/model/encode-device';
-import { Protocol } from 'src/app/network/model/protocol.model';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ValidIPExp } from 'src/app/common/tools/tool';
-import { ProtocolType } from 'src/app/enum/protocol-type.enum';
 import { EncodedDeviceType } from 'src/app/enum/device-type.enum';
-import { TransType } from 'src/app/enum/trans-type.enum';
+import { FormState } from 'src/app/enum/form-state.enum';
+import { ProtocolType } from 'src/app/enum/protocol-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
-import { ResourceLabel } from 'src/app/network/model/resource-label.model';
+import { TransType } from 'src/app/enum/trans-type.enum';
+import { EncodeDevice } from 'src/app/network/model/garbage-station/encode-device';
+import { Protocol } from 'src/app/network/model/garbage-station/protocol.model';
+import { ResourceLabel } from 'src/app/network/model/garbage-station/resource-label.model';
+import { EncodeDeviceOperateBusiness } from './encode-device-operate.business';
 
 @Component({
   selector: 'howell-encode-device-operate',

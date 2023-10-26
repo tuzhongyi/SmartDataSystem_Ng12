@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { GarbageVehicleCameraTreeCameraBusiness } from './business/garbage-vehicle-camera-tree-camera.business';
 import { GarbageVehicleCameraTreeDivisionBusiness } from './business/garbage-vehicle-camera-tree-division.business';

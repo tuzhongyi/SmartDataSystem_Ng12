@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { EventNumber } from 'src/app/network/model/event-number.model';
+import { EventNumber } from 'src/app/network/model/garbage-station/event-number.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParams,

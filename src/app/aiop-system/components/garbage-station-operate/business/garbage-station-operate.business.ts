@@ -4,7 +4,7 @@ import {
   IPromiseConverter,
 } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { IGarbageStationOperateBusiness } from '../garbage-station-operate.model';
 import { GarbageStationOperateCameraBusiness } from './garbage-station-operate-camera.business';

@@ -17,7 +17,7 @@ import { CameraDeviceType } from 'src/app/enum/device-type.enum';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { CameraAIModel } from 'src/app/network/model/camera-ai.model';
+import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import Conf from 'src/assets/json/ai-icon.json';

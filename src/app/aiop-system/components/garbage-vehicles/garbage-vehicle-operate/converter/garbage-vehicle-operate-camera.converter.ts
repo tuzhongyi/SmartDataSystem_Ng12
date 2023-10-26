@@ -1,5 +1,5 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { AICameraModel } from 'src/app/view-model/ai-camera.model';
 
 export class GarbageVehicleOperateCameraConverter

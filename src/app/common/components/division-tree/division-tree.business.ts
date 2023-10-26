@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { DivisionTree } from 'src/app/network/model/division-tree.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import {
   GetDivisionsParams,
   GetDivisionTreeParams,

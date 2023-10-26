@@ -4,8 +4,7 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { ScoreTop } from 'src/app/network/model/score-top.model';
-import { Guid } from '../../tools/guid';
+import { ScoreTop } from 'src/app/network/model/garbage-station/score-top.model';
 import { CommonRankData, CommonRankModel } from './common-rank.model';
 
 @Injectable({

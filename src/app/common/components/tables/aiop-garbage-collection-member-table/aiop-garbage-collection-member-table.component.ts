@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';

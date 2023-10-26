@@ -1,13 +1,12 @@
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
-import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { CollectionMember } from 'src/app/network/model/member.model';
-import { CollectionTrashCan } from 'src/app/network/model/trash-can.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
+import { CollectionTrashCan } from 'src/app/network/model/garbage-station/trash-can.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { Guid } from './guid';
 
 export class Creater {

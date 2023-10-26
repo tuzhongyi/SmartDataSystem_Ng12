@@ -8,9 +8,9 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { GarbageVehicleCameraTreeCameraBusiness } from './garbage-vehicle-camera-tree-camera.business';

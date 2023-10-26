@@ -1,8 +1,8 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { SelectItemConverter } from 'src/app/converter/select-item.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { DivisionStationFilteModel } from './interval-division-station-filter.model';
 
 export class EventRecordFilterConverter

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
 import { Enum } from 'src/app/enum/enum-helper';
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 
 @Component({
   selector: 'garbage-collection-point-details-window',

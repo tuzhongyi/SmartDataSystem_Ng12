@@ -2,8 +2,8 @@ import { ImageVideoControlModel } from 'src/app/common/components/image-video-co
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import {
   MediaMultipleWindowArgs,
   MediaMultipleWindowModel,

@@ -1,9 +1,8 @@
-import { formatDate } from '@angular/common';
 import {
   AbstractCommonModelConverter,
   CommonModelSource,
 } from 'src/app/converter/common-model.converter';
-import { GarbageCollectionEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { GarbageCollectionEventRecord } from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { CollectionPointWeightModel } from './collection-point-weight.model';
 
 export class CollectionPointWeightConverter extends AbstractCommonModelConverter<CollectionPointWeightModel> {

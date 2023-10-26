@@ -2,9 +2,9 @@ import { CameraImageUrlModel } from '../common/components/tables/event-record/ev
 import { IConverter } from '../common/interfaces/converter.interface';
 import { Medium } from '../common/tools/medium';
 import { OnlineStatus } from '../enum/online-status.enum';
-import { ICamera } from '../network/model/camera.interface';
-import { Camera } from '../network/model/camera.model';
-import { VehicleCamera } from '../network/model/vehicle-camera.model';
+import { ICamera } from '../network/model/garbage-station/camera.interface';
+import { Camera } from '../network/model/garbage-station/camera.model';
+import { VehicleCamera } from '../network/model/garbage-station/vehicle-camera.model';
 import { ImageControlModel } from '../view-model/image-control.model';
 
 export class ImageControlConverter

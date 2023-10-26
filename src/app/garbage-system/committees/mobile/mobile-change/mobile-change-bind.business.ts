@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { MessageBar } from 'src/app/common/tools/message-bar';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { User } from 'src/app/network/model/user.model';
+import { MessageBar } from 'src/app/common/tools/message-bar';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 import { MobileBindingService } from '../mobile-binding.service';
 import { MobileViewModel } from '../mobile.model';
 

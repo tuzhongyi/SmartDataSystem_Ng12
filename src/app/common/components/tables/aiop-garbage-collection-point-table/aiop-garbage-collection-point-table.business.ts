@@ -4,7 +4,7 @@ import { GetCollectionPointsParams } from 'src/app/network/request/garbage_vehic
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 
-import { CollectionPoint } from 'src/app/network/model/collection-point.model';
+import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 
 @Injectable()

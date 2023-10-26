@@ -6,7 +6,7 @@ import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illega
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
 import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { IndexWindowBussiness } from './index-window.business';

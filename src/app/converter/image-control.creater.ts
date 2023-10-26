@@ -3,15 +3,15 @@ import { GarbageDropRecordViewModel } from '../common/components/tables/garbage-
 import { Medium } from '../common/tools/medium';
 import { EventType } from '../enum/event-type.enum';
 import { OnlineStatus } from '../enum/online-status.enum';
-import { ICamera } from '../network/model/camera.interface';
-import { Camera } from '../network/model/camera.model';
-import { EventDataObject } from '../network/model/event-data-object.model';
-import { EventRule } from '../network/model/event-rule';
+import { ICamera } from '../network/model/garbage-station/camera.interface';
+import { Camera } from '../network/model/garbage-station/camera.model';
+import { EventDataObject } from '../network/model/garbage-station/event-data-object.model';
+import { EventRule } from '../network/model/garbage-station/event-rule';
 import {
   GarbageFullEventRecord,
   IllegalDropEventRecord,
   MixedIntoEventRecord,
-} from '../network/model/garbage-event-record.model';
+} from '../network/model/garbage-station/garbage-event-record.model';
 import { EventRecordViewModel } from '../view-model/event-record.model';
 import { ImageControlModel } from '../view-model/image-control.model';
 

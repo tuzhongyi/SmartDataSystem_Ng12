@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CollectionMember } from 'src/app/network/model/member.model';
+import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { CollectionMemberRequsetService } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.service';
 import { IGarbageCollectionMemberBusiness } from './garbage-collection-member.model';
 

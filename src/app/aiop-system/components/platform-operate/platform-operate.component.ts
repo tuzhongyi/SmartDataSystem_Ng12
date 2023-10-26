@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { ValidIPExp } from 'src/app/common/tools/tool';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { Platform } from 'src/app/network/model/platform.model';
-import { Protocol } from 'src/app/network/model/protocol.model';
+import { Platform } from 'src/app/network/model/garbage-station/platform.model';
+import { Protocol } from 'src/app/network/model/garbage-station/protocol.model';
 import { PlatformOperateBusiness } from './platform-operate.business';
 
 @Component({

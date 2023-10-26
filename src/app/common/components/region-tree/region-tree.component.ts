@@ -1,12 +1,13 @@
-import { SelectionChange } from '@angular/cdk/collections';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { BehaviorSubject } from 'rxjs';
-import { RegionTreeSource } from 'src/app/converter/region-tree.converter';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { Region } from 'src/app/network/model/region';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { Deduplication } from '../../tools/deduplication';
 import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
@@ -16,13 +17,10 @@ import { RegionTreeBusiness } from './region-tree.business';
   selector: 'howell-region-tree',
   templateUrl: './region-tree.component.html',
   styleUrls: ['./region-tree.component.less'],
-  providers: [
-    RegionTreeBusiness
-  ]
+  providers: [RegionTreeBusiness],
 })
 export class RegionTreeComponent extends CommonTree implements OnInit {
-
-  private _condition: string = ''
+  private _condition: string = '';
   private _searchGuards: string[] = ['区域'];
   private _excludeGuards: string[] = [];
 
@@ -34,25 +32,30 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
   @Input() selectOnFirst = true;
 
   // 默认选中列表
-  private _defaultIds: string[] = []
+  private _defaultIds: string[] = [];
   @Input()
   set defaultIds(ids: string[]) {
     // 排除空字符串
-    this._defaultIds = ids.filter(id => id);
+    this._defaultIds = ids.filter((id) => id);
   }
   get defaultIds() {
     return this._defaultIds;
   }
 
-  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<CommonFlatNode[]>();
-
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<
+    CommonFlatNode[]
+  >();
 
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
-
-  constructor(private _business: RegionTreeBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private _business: RegionTreeBusiness,
+    private _toastrService: ToastrService
+  ) {
     super();
-    this._excludeGuards = Deduplication.generateExcludeArray(this._searchGuards)
+    this._excludeGuards = Deduplication.generateExcludeArray(
+      this._searchGuards
+    );
   }
 
   ngOnInit(): void {
@@ -63,9 +66,8 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
     this._nestedNodeMap = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
-    if (res.length > 0 && this.selectOnFirst)
-      this.defaultIds = [res[0].Id]
-    this.dataSubject.next(res)
+    if (res.length > 0 && this.selectOnFirst) this.defaultIds = [res[0].Id];
+    this.dataSubject.next(res);
   }
 
   async searchEventHandler(condition: string) {
@@ -85,14 +87,13 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
     // console.log(res)
     if (res && res.length) {
       this._toastrService.success('操作成功');
-      if (res.length && this.selectOnFirst)
-        this.defaultIds = [res[0].Id]
+      if (res.length && this.selectOnFirst) this.defaultIds = [res[0].Id];
       this.dataSubject.next(res);
       if (condition != '') {
-        this.tree?.expandAll()
+        this.tree?.expandAll();
       } else {
         this.tree?.reset();
-        this.tree?.collapseAll()
+        this.tree?.collapseAll();
       }
     } else {
       this._toastrService.warning('无匹配结果');
@@ -100,7 +101,6 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
   }
   setDefault() {
     if (this.dataSubject.value.length)
-      this.defaultIds = [this.dataSubject.value[0].Id]
+      this.defaultIds = [this.dataSubject.value[0].Id];
   }
-
 }

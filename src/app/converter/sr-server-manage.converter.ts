@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { SRServer } from '../network/model/sr-server';
+import { SRServer } from '../network/model/garbage-station/sr-server';
 import { SRServerManageModel } from '../view-model/sr-server-manage.model';
 import {
   AbstractCommonModelConverter,

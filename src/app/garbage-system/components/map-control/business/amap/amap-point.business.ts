@@ -5,7 +5,7 @@ import { Flags } from 'src/app/common/tools/flags';
 import { wait2 } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { StationType } from 'src/app/enum/station-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationNumberStatisticModel, PointCount } from '../amap.model';
 import { AMapPointContextMenuBusiness } from './amap-point-menu.business';
 import { AMapPointPlugBusiness } from './amap-point-plug.business';

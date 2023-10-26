@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { init } from 'echarts';
 import {
   GarbageStation,
   GarbageStationType,
-} from '../network/model/garbage-station.model';
+} from '../network/model/garbage-station/garbage-station.model';
 import { GarbageStationRequestService } from '../network/request/garbage-station/garbage-station-request.service';
-import { CommonModel } from '../view-model/common-model';
 import { GarbageStationManageModel } from '../view-model/garbage-station-manage.model';
 import {
   AbstractCommonModelConverter,

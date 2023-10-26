@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AICamera } from '../../model/ai-camera.model';
-import { CameraAIModel } from '../../model/camera-ai.model';
+import { AICamera } from '../../model/garbage-station/ai-camera.model';
+import { CameraAIModel } from '../../model/garbage-station/camera-ai.model';
 import { ResourceAICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
 import {
   HowellBaseRequestService,

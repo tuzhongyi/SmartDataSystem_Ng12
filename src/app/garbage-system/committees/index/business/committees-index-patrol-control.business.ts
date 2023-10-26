@@ -4,7 +4,7 @@ import {
   PatrolControlConfig,
   PatrolControlModel,
 } from 'src/app/garbage-system/components/patrol-control/patrol-control.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { CommitteesIndexNavicationBusiness } from './committees-index-navication.business';
 

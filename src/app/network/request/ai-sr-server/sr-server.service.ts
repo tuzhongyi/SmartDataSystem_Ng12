@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { SRServer } from '../../model/sr-server';
+import { SRServer } from '../../model/garbage-station/sr-server';
 import { VideoUrl } from '../../model/url.model';
 import { SRServersURL } from '../../url/aiop/sr-servers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';

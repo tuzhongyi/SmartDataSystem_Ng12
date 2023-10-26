@@ -1,3 +1,4 @@
+import { DOCUMENT, KeyValue } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -11,18 +12,16 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { decode } from 'js-base64';
+import { ToastrService } from 'ngx-toastr';
+import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { FormState } from 'src/app/enum/form-state.enum';
 import {
   CameraAIModel,
-  CameraAIModelDTO,
   CameraAIModelDTOLabel,
-} from 'src/app/network/model/camera-ai.model';
-import { AIModelOperateBusiness } from './ai-model-operate.business';
+} from 'src/app/network/model/garbage-station/camera-ai.model';
 import Icons from 'src/assets/json/ai-icon.json';
-import { BehaviorSubject, fromEvent, Subject, Subscription } from 'rxjs';
-import { DOCUMENT, KeyValue } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
-import { encode, decode, Base64 } from 'js-base64';
+import { AIModelOperateBusiness } from './ai-model-operate.business';
 
 @Component({
   selector: 'howell-ai-model-operate',

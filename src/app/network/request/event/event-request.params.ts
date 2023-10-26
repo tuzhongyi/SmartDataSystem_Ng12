@@ -1,11 +1,11 @@
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
-import { CompareRange } from '../../model/compare-range.model';
-import { FeedbackResult } from '../../model/garbage-drop-feedback.model';
+import { CompareRange } from '../../model/garbage-station/compare-range.model';
+import { FeedbackResult } from '../../model/garbage-station/garbage-drop-feedback.model';
 import {
   GarbageDropSuperVisionLevel,
   SupervisedState,
-} from '../../model/garbage-drop-super-vision-data.model';
+} from '../../model/garbage-station/garbage-drop-super-vision-data.model';
 import {
   IParams,
   PagedDurationParams,

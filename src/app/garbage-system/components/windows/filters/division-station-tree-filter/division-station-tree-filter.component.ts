@@ -19,7 +19,7 @@ import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DivisionStationTreeFilterBusiness } from './division-station-tree-filter.business';

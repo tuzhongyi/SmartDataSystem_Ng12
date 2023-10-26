@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { GarbageStationType } from '../../model/garbage-station.model';
+import { GarbageStationType } from '../../model/garbage-station/garbage-station.model';
 import { GarbageStationTypesUrls } from '../../url/aiop/garbage-management/garbage-stations/types/garbage-station-types.url';
 import {
   HowellBaseRequestService,

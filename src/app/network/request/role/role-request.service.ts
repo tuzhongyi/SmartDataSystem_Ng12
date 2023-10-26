@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Role } from '../../model/garbage-station/role.model';
+import { User } from '../../model/garbage-station/user.model';
 import { Fault } from '../../model/howell-response.model';
 import { PagedList } from '../../model/page_list.model';
-import { Role } from '../../model/role.model';
-import { User } from '../../model/user.model';
 import { RoleUrl } from '../../url/garbage/role.url';
 import { HowellBaseRequestService } from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';

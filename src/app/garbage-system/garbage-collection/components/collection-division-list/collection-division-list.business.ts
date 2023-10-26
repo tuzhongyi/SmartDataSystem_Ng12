@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { IService } from 'src/app/business/Ibusiness';
+import { CommonElementListConverter } from 'src/app/common/components/common-element-list/common-element-list.converter';
 import {
   CommonElementListModel,
   ICommonElementListBusiness,
 } from 'src/app/common/components/common-element-list/common-element-list.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { CommonElementListConverter } from 'src/app/common/components/common-element-list/common-element-list.converter';
-import { Division } from 'src/app/network/model/division.model';
-import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GetDivisionsParams } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.params';
+import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 
 @Injectable()
 export class CollectionDivisionListBusiness

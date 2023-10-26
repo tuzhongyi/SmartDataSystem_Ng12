@@ -1,6 +1,6 @@
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { ResultState } from 'src/app/enum/ai-garbage/result-state.enum';
-import { Duration } from 'src/app/network/model/duration.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export class AIGarbageStationDeviceRecordCommandTableArgs {
   asc?: string;

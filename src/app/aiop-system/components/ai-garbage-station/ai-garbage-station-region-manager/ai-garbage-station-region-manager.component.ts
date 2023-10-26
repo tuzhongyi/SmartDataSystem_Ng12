@@ -3,7 +3,7 @@ import { AIGarbageStationRegionTableArgs } from 'src/app/common/components/table
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { AIGarbageStationRegionManagerBusiness } from './ai-garbage-station-region-manager.business';
 import { AIGarbageStationRegionWindow } from './ai-garbage-station-region-manager.model';

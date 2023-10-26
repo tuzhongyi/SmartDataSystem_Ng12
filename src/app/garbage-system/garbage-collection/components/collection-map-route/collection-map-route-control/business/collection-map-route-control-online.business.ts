@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { Duration } from 'src/app/network/model/duration.model';
-import { VehicleOnlineEventRecord } from 'src/app/network/model/vehicle-event-record.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { VehicleOnlineEventRecord } from 'src/app/network/model/garbage-station/vehicle-event-record.model';
 import { GetVehicleOnlineEventRecordsParams } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.params';
 import { CollectionEventRequestService } from 'src/app/network/request/garbage_vehicles/collection-event/collection-event.service';
 

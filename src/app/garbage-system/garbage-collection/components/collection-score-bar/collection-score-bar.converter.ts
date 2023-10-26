@@ -5,7 +5,7 @@ import {
   CommonModelSource,
   modelSource,
 } from 'src/app/converter/common-model.converter';
-import { DivisionGarbageScore } from 'src/app/network/model/division-garbage-score.model';
+import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
 import { CollectionScoreBarModel } from './collection-score-bar.model';
 @Injectable()
 export class CollectionScoreBarConverter extends AbstractCommonModelConverter<CollectionScoreBarModel> {

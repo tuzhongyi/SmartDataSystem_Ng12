@@ -1,6 +1,6 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { CommitteesStatisticViewModel } from './committees-statistic.model';
 
 export class CommitteesStatisticConverter

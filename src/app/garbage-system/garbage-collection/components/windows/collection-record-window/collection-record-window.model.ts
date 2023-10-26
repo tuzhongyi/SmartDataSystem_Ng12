@@ -1,6 +1,6 @@
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { VehicleCamera } from 'src/app/network/model/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 
 export class CollectionRecordWindowModel<T = any> {
   Id!: string;

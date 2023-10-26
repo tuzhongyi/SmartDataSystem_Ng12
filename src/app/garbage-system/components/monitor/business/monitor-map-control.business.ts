@@ -1,7 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 import { MonitorPatrolControlBusiness } from './monitor-patrol-control.business';
 import { MonitorWindowBussiness } from './window.business';

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ResourceLabel } from 'src/app/network/model/resource-label.model';
+import { ResourceLabel } from 'src/app/network/model/garbage-station/resource-label.model';
 import { GetResourceLabelsParams } from 'src/app/network/request/label/label.params';
 import { LabelRequestService } from 'src/app/network/request/label/label.service';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';

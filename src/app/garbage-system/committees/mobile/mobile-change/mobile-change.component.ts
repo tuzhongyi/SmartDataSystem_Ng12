@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { User } from 'src/app/network/model/user.model';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 import { MobileBindingService } from '../mobile-binding.service';
 import { MobileChangeStep, MobileViewModel } from '../mobile.model';
 import { MobileChangeBindBusiness } from './mobile-change-bind.business';

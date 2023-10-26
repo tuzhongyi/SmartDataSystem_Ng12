@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';

@@ -30,18 +30,17 @@
  *
  */
 import { Injectable } from '@angular/core';
+import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
 import { IConverter } from '../common/interfaces/converter.interface';
+import { DivisionType } from '../enum/division-type.enum';
 import { EnumHelper } from '../enum/enum-helper';
 import { RegionType } from '../enum/region-type.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
-import { CameraAIModelDTOLabel } from '../network/model/camera-ai.model';
-import { DivisionNode } from '../network/model/division-tree.model';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
-import { Region, RegionNode } from '../network/model/region';
-import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
+import { DivisionNode } from '../network/model/garbage-station/division-tree.model';
+import { Division } from '../network/model/garbage-station/division.model';
+import { GarbageStation } from '../network/model/garbage-station/garbage-station.model';
+import { Region, RegionNode } from '../network/model/garbage-station/region';
 import { NestTreeNode } from '../view-model/nest-tree-node.model';
-import { DivisionType } from '../enum/division-type.enum';
 
 type TreeSourceModel =
   | DivisionNode

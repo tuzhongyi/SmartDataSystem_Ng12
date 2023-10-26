@@ -1,6 +1,6 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { RetentionType } from 'src/app/enum/retention-type.enum';
-import { DivisionNumberStatistic } from 'src/app/network/model/division-number-statistic.model';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 
 export class RetentionRankConverter

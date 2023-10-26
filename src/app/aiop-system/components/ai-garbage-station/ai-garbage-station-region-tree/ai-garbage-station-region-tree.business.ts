@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { AIGarbageStationRegionTreeConverter } from './ai-garbage-station-region-tree.converter';
 import { AIGarbageRegionTreeService } from './ai-garbage-station-region-tree.service';

@@ -5,9 +5,9 @@ import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
-import { AICamera } from 'src/app/network/model/ai-camera.model';
-import { EncodeDevice } from 'src/app/network/model/encode-device';
-import { ResourceLabel } from 'src/app/network/model/resource-label.model';
+import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
+import { EncodeDevice } from 'src/app/network/model/garbage-station/encode-device';
+import { ResourceLabel } from 'src/app/network/model/garbage-station/resource-label.model';
 import { CameraOperateBusiness } from './camera-operate.business';
 
 @Component({

@@ -6,7 +6,7 @@ import {
   modelSource,
 } from 'src/app/converter/common-model.converter';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
-import { DivisionGarbageWeight } from 'src/app/network/model/division-garbage-weight.model';
+import { DivisionGarbageWeight } from 'src/app/network/model/garbage-station/division-garbage-weight.model';
 import { CollectionWeightLineModel } from './collection-weight-line.model';
 
 @Injectable()

@@ -4,9 +4,9 @@ import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/d
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 
-import { DivisionTree } from 'src/app/network/model/division-tree.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-vehicle.model';
+import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import {
   GetDivisionsParams,
   GetDivisionTreeParams,

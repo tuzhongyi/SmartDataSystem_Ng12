@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DivisionNumberStatisticV2 } from 'src/app/network/model/division-number-statistic-v2.model';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
 import { GetDivisionStatisticNumbersParamsV2 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 

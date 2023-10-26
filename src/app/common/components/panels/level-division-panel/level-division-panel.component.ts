@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ILevelListNode } from '../level-list-panel/level-list-panel.model';
 import { LevelDivisionPanelBusiness } from './level-division-panel.business';

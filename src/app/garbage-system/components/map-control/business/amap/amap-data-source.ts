@@ -1,5 +1,5 @@
 import { StationType } from 'src/app/enum/station-type.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationNumberStatisticModel } from '../amap.model';
 
 export class AMapDataSource {

@@ -1,5 +1,5 @@
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { Flags } from '../common/tools/flags';
 import { StationState } from '../enum/station-state.enum';
 

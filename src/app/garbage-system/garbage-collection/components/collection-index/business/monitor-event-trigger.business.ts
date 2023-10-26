@@ -3,7 +3,6 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { WindowBussiness } from './window.business';

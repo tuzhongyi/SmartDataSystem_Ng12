@@ -1,15 +1,12 @@
 import { formatDate } from '@angular/common';
-import { Injectable } from '@angular/core';
-import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { IllegalDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { User } from 'src/app/network/model/user.model';
+import { MessageBar } from 'src/app/common/tools/message-bar';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 import {
   CommitteesMessageBarNotifyViewModel,
   NotifyStatus,
 } from '../../message-bar/message-bar.model';
-import { CommitteesIndexService } from '../index.component.service';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
 export class CommitteesMessageBarBussiness {

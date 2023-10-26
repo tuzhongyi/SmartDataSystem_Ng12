@@ -1,14 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { SelectItemConverter } from 'src/app/converter/select-item.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Division } from 'src/app/network/model/division.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
@@ -16,7 +13,7 @@ import { DivisionRequestService } from 'src/app/network/request/division/divisio
 export class DivisionFilterBusiness
   implements IBusiness<Division[], SelectItem[]>
 {
-  constructor(private divisionService: DivisionRequestService) { }
+  constructor(private divisionService: DivisionRequestService) {}
   Converter: IConverter<Division[], SelectItem[]> =
     new DivisionFilterConverter();
   subscription?: ISubscription | undefined;
@@ -26,7 +23,6 @@ export class DivisionFilterBusiness
     parentId?: string
   ): Promise<SelectItem[]> {
     let data = await this.getData(divisionType, parentId);
-    ;
     let model = this.Converter.Convert(data);
     return model;
   }

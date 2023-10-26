@@ -1,6 +1,6 @@
-import { Camera } from '../network/model/camera.model';
-import { Division } from '../network/model/division.model';
-import { GarbageStation } from '../network/model/garbage-station.model';
+import { Camera } from '../network/model/garbage-station/camera.model';
+import { Division } from '../network/model/garbage-station/division.model';
+import { GarbageStation } from '../network/model/garbage-station/garbage-station.model';
 
 export interface ConvertGetter {
   station?: (id: string) => Promise<GarbageStation>;

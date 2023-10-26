@@ -1,6 +1,6 @@
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { Member } from 'src/app/network/model/member.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { Member } from 'src/app/network/model/garbage-station/member.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 export class GarbageDropEventRecordModel extends GarbageDropEventRecord {

@@ -11,10 +11,10 @@ import {
   ViewChild,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { EventDataObject } from 'src/app/network/model/event-data-object.model';
-import { EventRule } from 'src/app/network/model/event-rule';
-import { Point } from 'src/app/network/model/point.model';
-import { Size } from 'src/app/network/model/size.model';
+import { EventDataObject } from 'src/app/network/model/garbage-station/event-data-object.model';
+import { EventRule } from 'src/app/network/model/garbage-station/event-rule';
+import { Point } from 'src/app/network/model/garbage-station/point.model';
+import { Size } from 'src/app/network/model/garbage-station/size.model';
 import { ImageControlModel } from '../../../view-model/image-control.model';
 
 @Component({

@@ -11,8 +11,8 @@ import { DivisionTreeSource } from 'src/app/common/components/division-tree/divi
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { DeployAMapBusiness } from './amap/deploy-amap.business';
 import { DeployAMapClient } from './amap/deploy-amap.client';

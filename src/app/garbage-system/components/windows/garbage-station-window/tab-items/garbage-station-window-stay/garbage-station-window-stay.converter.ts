@@ -1,22 +1,15 @@
-import {
-  IConverter,
-  IPromiseConverter,
-} from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Language } from 'src/app/common/tools/language';
-import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station-number-statistic-v2.model';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station-number-statistic.model';
-import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station-sarbage-count-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
-import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GarbageStationWindowStayModel } from './garbage-station-window-stay.model';
 
 export class GarbageStationWindowStayConverter
   implements
-  IPromiseConverter<
-  GarbageStationNumberStatisticV2,
-  GarbageStationWindowStayModel
-  >
+    IPromiseConverter<
+      GarbageStationNumberStatisticV2,
+      GarbageStationWindowStayModel
+    >
 {
   async Convert(
     source: GarbageStationNumberStatisticV2,
@@ -46,7 +39,7 @@ export class GarbageStationWindowStayConverter
             model.eventCount = number.DayNumber;
             break;
           case EventType.GarbageDrop:
-            model.taskCount = number.DayNumber
+            model.taskCount = number.DayNumber;
             break;
           default:
             break;

@@ -1,6 +1,6 @@
-import { CompareRange } from 'src/app/network/model/compare-range.model';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-event-record.model';
+import { CompareRange } from 'src/app/network/model/garbage-station/compare-range.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
 import { EventRecordFilter } from '../event-record/event-record.model';
 
 export class GarbageDropRecordViewModel extends GarbageDropEventRecord {

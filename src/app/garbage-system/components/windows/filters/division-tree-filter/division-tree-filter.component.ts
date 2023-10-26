@@ -18,8 +18,8 @@ import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/division.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 @Component({

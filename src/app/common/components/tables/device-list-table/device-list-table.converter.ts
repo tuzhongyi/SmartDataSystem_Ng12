@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
-import { Camera } from 'src/app/network/model/camera.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DeviceViewModel } from './device.model';
 

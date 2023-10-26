@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { User } from 'src/app/network/model/user.model';
+import { User } from 'src/app/network/model/garbage-station/user.model';
 import { SmsRequestService } from 'src/app/network/request/sms/sms-request.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Flags } from 'src/app/common/tools/flags';
 import { wait } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { AMapBusiness } from './amap.business';
 import { PointInfoPanelBusiness } from './point-info-panel.business';
 

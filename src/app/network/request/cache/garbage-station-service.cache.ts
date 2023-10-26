@@ -1,6 +1,6 @@
 import { plainToInstance } from 'class-transformer';
 import { IService } from 'src/app/business/Ibusiness';
-import { GarbageStation } from '../../model/garbage-station.model';
+import { GarbageStation } from '../../model/garbage-station/garbage-station.model';
 import { PagedList } from '../../model/page_list.model';
 import { GetGarbageStationsParams } from '../garbage-station/garbage-station-request.params';
 import { ServiceCache } from './service.cache';

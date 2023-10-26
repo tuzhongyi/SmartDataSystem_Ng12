@@ -4,8 +4,8 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { Medium } from 'src/app/common/tools/medium';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { EventRecord } from 'src/app/network/model/event-record.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station.model';
+import { EventRecord } from 'src/app/network/model/garbage-station/event-record.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { SupervisePosition } from '../../../dapuqiao-main-event-vision/dapuqiao-main-event-vision.model';
 import { IndexImageWindowBusiness } from './index-image-window.business';

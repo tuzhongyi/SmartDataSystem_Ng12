@@ -1,7 +1,15 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { ResourceLabel } from 'src/app/network/model/resource-label.model';
+import { ResourceLabel } from 'src/app/network/model/garbage-station/resource-label.model';
 import { SimpleSearchComponent } from '../simple-search/simple-search.component';
 import { LabelOperateBusiness } from './label-operate.business';
 
@@ -9,9 +17,7 @@ import { LabelOperateBusiness } from './label-operate.business';
   selector: 'howell-label-operate',
   templateUrl: './label-operate.component.html',
   styleUrls: ['./label-operate.component.less'],
-  providers: [
-    LabelOperateBusiness
-  ]
+  providers: [LabelOperateBusiness],
 })
 export class LabelOperateComponent implements OnInit, AfterViewInit {
   private _condition_pool: string = '';
@@ -21,11 +27,9 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
   resourceLabels: ResourceLabel[] = [];
   selection = new SelectionModel<ResourceLabel>(true);
 
-
   highLight = (model: ResourceLabel) => {
     return this.selection.isSelected(model);
   };
-
 
   @Input()
   resourceId: string = '';
@@ -34,8 +38,10 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
     ResourceLabel[]
   >();
 
-
-  constructor(private _business: LabelOperateBusiness, private _toastrService: ToastrService) { }
+  constructor(
+    private _business: LabelOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
 
   @ViewChild('searchPool') searchPool?: SimpleSearchComponent;
 
@@ -59,12 +65,15 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
 
   private async _listAllLbales() {
     let res = await this._business.listAllLabels(this._condition_pool);
-    console.log('所有标签', res)
+    console.log('所有标签', res);
     this.allLables = res.Data;
   }
   private async _listResourceLabels() {
-    this.resourceLabels = await this._business.getResourceLabels(this.resourceId, this._condition_native)
-    console.log('资源标签', this.resourceLabels)
+    this.resourceLabels = await this._business.getResourceLabels(
+      this.resourceId,
+      this._condition_native
+    );
+    console.log('资源标签', this.resourceLabels);
   }
   searchPoolEvent(condition: string) {
     this._condition_pool = condition;
@@ -80,38 +89,36 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
     if (this.searchPool) {
       this._condition_pool = this.searchPool.getValue();
       if (this._condition_pool) {
-        let res = await this._business.createLabel(this._condition_pool)
+        let res = await this._business.createLabel(this._condition_pool);
         if (res) {
-          this._toastrService.success('添加成功')
+          this._toastrService.success('添加成功');
           this._condition_pool = '';
           this._listAllLbales();
         }
       }
-
     }
   }
   selectLabel(label: ResourceLabel) {
-    this.selection.toggle(label)
+    this.selection.toggle(label);
   }
   async deleteLabel(e: Event, label: ResourceLabel) {
     e.stopPropagation();
-    let res = await this._business.deleteLabel(label.Id)
+    let res = await this._business.deleteLabel(label.Id);
     if (res) {
       this._toastrService.success('删除成功');
       this._listAllLbales();
     }
   }
   async deleteResourceLabel(label: ResourceLabel) {
-    let res = await this._business.deleteResourceLabel(this.resourceId, label.Id);
+    let res = await this._business.deleteResourceLabel(
+      this.resourceId,
+      label.Id
+    );
     if (res) {
       this._toastrService.success('删除成功');
       this._listResourceLabels();
     }
   }
-  onSubmit() {
-
-  }
-  onReset() {
-
-  }
+  onSubmit() {}
+  onReset() {}
 }
