@@ -2,10 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
+
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { AIGarbageStationDeviceTableBusiness } from './ai-garbage-station-device-table.business';
+import { AIGarbageStationDeviceTableConverter } from './ai-garbage-station-device-table.converter';
 import { AIGarbageStationDeviceTableArgs } from './ai-garbage-station-device-table.model';
+import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-table.service';
 
 @Component({
   selector: 'ai-garbage-station-device-table',
@@ -14,7 +17,11 @@ import { AIGarbageStationDeviceTableArgs } from './ai-garbage-station-device-tab
     '../../table.less',
     './ai-garbage-station-device-table.component.less',
   ],
-  providers: [AIGarbageStationDeviceTableBusiness],
+  providers: [
+    AIGarbageStationDeviceTableService,
+    AIGarbageStationDeviceTableConverter,
+    AIGarbageStationDeviceTableBusiness,
+  ],
 })
 export class AIGarbageStationDeviceTableComponent
   extends PagedTableAbstractComponent<AIGarbageDevice>
@@ -29,7 +36,8 @@ export class AIGarbageStationDeviceTableComponent
   @Output()
   selectedsChange: EventEmitter<AIGarbageDevice[]> = new EventEmitter();
   @Output()
-  loaded: EventEmitter<PagedList<AIGarbageDevice>> = new EventEmitter();
+  loaded: EventEmitter<PagedList<Promise<AIGarbageDevice>>> =
+    new EventEmitter();
   @Output()
   details: EventEmitter<AIGarbageDevice> = new EventEmitter();
   @Output()
@@ -47,16 +55,7 @@ export class AIGarbageStationDeviceTableComponent
     super();
   }
   Command = AIGarbageDeviceCommandNo;
-  widths = [
-    '20%',
-    '16%',
-    '16%',
-    undefined,
-    undefined,
-    undefined,
-    '16%',
-    undefined,
-  ];
+  widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -74,8 +73,10 @@ export class AIGarbageStationDeviceTableComponent
     this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;
-      this.datas = x.Data;
-      this.loaded.emit(x);
+      Promise.all(x.Data).then((datas) => {
+        this.datas = datas;
+        this.loaded.emit(x);
+      });
     });
   }
   sortData(sort: Sort) {

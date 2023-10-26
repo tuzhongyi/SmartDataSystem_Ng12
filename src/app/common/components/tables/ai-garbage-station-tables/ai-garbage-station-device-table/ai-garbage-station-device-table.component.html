@@ -16,7 +16,7 @@
           <td>垃圾厢房</td>
           <td>所属区域</td>
           <td class="center">摄像机</td>
-          <td class="center">投放窗口</td>
+          <td class="center">窗口</td>
           <td class="center">状态</td>
           <td>最后更新时间</td>
           <td class="center">操作</td>
@@ -47,7 +47,7 @@
                 class="td-icon"
                 (click)="oncamera($event, item)"
               >
-                【{{ item.CameraNumber ? item.CameraNumber : 0 }}】
+                【{{ item.Cameras ? item.Cameras.length : 0 }}】
               </div>
             </td>
 
@@ -82,18 +82,20 @@
                   : (item.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
               }}
             </td>
-            <td class="operation center">
-              <div (click)="oncommand($event, item)" title="命令">
-                <i class="mdi mdi-apple-keyboard-command td-icon"></i>
-              </div>
-              <div (click)="onschedule($event, item)" title="工作表">
-                <i class="mdi mdi-calendar-clock td-icon"></i>
-              </div>
-              <div (click)="ondetails($event, item)" title="编辑">
-                <i class="howell-icon-modification td-icon"></i>
-              </div>
-              <div (click)="onremove($event, item)" title="删除">
-                <i class="howell-icon-delete-bin td-icon"></i>
+            <td>
+              <div class="operation">
+                <div (click)="oncommand($event, item)" title="命令">
+                  <i class="mdi mdi-apple-keyboard-command td-icon"></i>
+                </div>
+                <div (click)="onschedule($event, item)" title="工作表">
+                  <i class="mdi mdi-calendar-clock td-icon"></i>
+                </div>
+                <div (click)="ondetails($event, item)" title="编辑">
+                  <i class="howell-icon-modification td-icon"></i>
+                </div>
+                <div (click)="onremove($event, item)" title="删除">
+                  <i class="howell-icon-delete-bin td-icon"></i>
+                </div>
               </div>
             </td>
           </tr>

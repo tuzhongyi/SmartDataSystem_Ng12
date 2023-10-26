@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
 import { AIGarbageStationDeviceTableArgs } from 'src/app/common/components/tables/ai-garbage-station-tables/ai-garbage-station-device-table/ai-garbage-station-device-table.model';
 import { MessageBar } from 'src/app/common/tools/message-bar';
+import { AIGarbageCamera } from 'src/app/network/model/ai-garbage/camera.model';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -52,7 +53,10 @@ export class AIGarbageStationDeviceManagerComponent {
     this.window.command.show = true;
   }
   oncamera(item: AIGarbageDevice) {
-    if (item && item.Cameras && item.Cameras.length > 0) {
+    if (item.GarbageStationId) {
+      this.window.camera.model = item;
+      this.window.camera.show = true;
+    } else if (item && item.Cameras && item.Cameras.length > 0) {
       this.window.camera.model = item;
       this.window.camera.show = true;
     }
@@ -133,5 +137,12 @@ export class AIGarbageStationDeviceManagerComponent {
   onupdate() {
     this.load.emit(this.args);
     this.closewindow();
+  }
+  async onvideo(model: AIGarbageCamera) {
+    if (model.CameraId) {
+      this.window.video.title = model.Name;
+      this.window.video.model = await this.business.preview(model.CameraId);
+      this.window.video.show = true;
+    }
   }
 }

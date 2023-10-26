@@ -90,6 +90,7 @@
   >
     <app-ai-garbage-station-device-camera
       [model]="window.camera.model"
+      (video)="onvideo($event)"
     ></app-ai-garbage-station-device-camera>
   </app-window>
   <app-window
@@ -139,4 +140,12 @@
       </div>
     </div>
   </app-window>
+  <app-video-window
+    [window]="window.video"
+    *ngIf="window.video.show"
+    [style]="window.video.style"
+    [title]="window.video.title"
+    [model]="window.video.model"
+  >
+  </app-video-window>
 </div>

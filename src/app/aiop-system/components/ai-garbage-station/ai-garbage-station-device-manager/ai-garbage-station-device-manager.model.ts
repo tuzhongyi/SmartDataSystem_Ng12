@@ -1,3 +1,5 @@
+import { VideoWindowViewModel } from 'src/app/common/components/video-control-window/video-control-window.model';
+import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 
@@ -8,6 +10,7 @@ export class AIGarbageStationDeviceWindow {
   drop = new AIGarbageStationDeviceDropWindow();
   schedule = new AIGarbageStationDeviceScheduleWindow();
   confirm = new AIGarbageStationDeviceConfirmWindow();
+  video = new AIGarbageStationDeviceVideoWindow();
   clear() {
     this.details.clear();
     this.command.clear();
@@ -15,6 +18,7 @@ export class AIGarbageStationDeviceWindow {
     this.drop.clear();
     this.schedule.clear();
     this.confirm.clear();
+    this.video.clear();
   }
   close() {
     this.details.show = false;
@@ -23,6 +27,7 @@ export class AIGarbageStationDeviceWindow {
     this.drop.show = false;
     this.schedule.show = false;
     this.confirm.show = false;
+    this.video.show = false;
   }
 }
 
@@ -71,7 +76,7 @@ class AIGarbageStationDeviceCameraWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '400px',
+    width: '500px',
     height: 'auto',
   };
   language: string = '';
@@ -80,6 +85,7 @@ class AIGarbageStationDeviceCameraWindow extends WindowViewModel {
 class AIGarbageStationDeviceConfirmWindow extends WindowViewModel {
   clear(): void {
     this.models = [];
+    this.language = '';
   }
   style = {
     width: '400px',
@@ -87,4 +93,14 @@ class AIGarbageStationDeviceConfirmWindow extends WindowViewModel {
   };
   language: string = '';
   models?: AIGarbageDevice[];
+}
+class AIGarbageStationDeviceVideoWindow extends VideoWindowViewModel {
+  clear(): void {
+    this.model = undefined;
+  }
+  style = {
+    width: '64%',
+    height: '64%',
+  };
+  model?: VideoModel;
 }

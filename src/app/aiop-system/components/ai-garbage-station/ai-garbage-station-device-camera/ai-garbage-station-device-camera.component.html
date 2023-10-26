@@ -3,7 +3,7 @@
     <div class="title">
       <div class="hw-simple-title">{{ model.GarbageStationName }}摄像机</div>
     </div>
-    <ul class="hw-ul" *ngIf="model.Cameras">
+    <ul class="hw-ul" *ngIf="model.Cameras" WheelHorizontalScroll>
       <li *ngFor="let item of model.Cameras">
         <div
           class="second-menu-btn text"
@@ -19,39 +19,52 @@
   </div>
   <div class="ai-garbage-station-device-camera-body">
     <div class="info" *ngIf="selected">
-      <div class="info-item">
-        <div class="info-item-title">摄像机名称</div>
-        <div class="info-item-value">
-          {{ selected.Name ? selected.Name : "无" }}
-        </div>
-      </div>
-      <div class="info-item">
-        <div class="info-item-title">摄像机对应的窗口</div>
-        <div class="info-item-value">
-          <span *ngIf="selected.DropWindowNo"
-            >窗口 {{ selected.DropWindowNo }}</span
-          >
-          <span *ngIf="!selected.DropWindowNo">无</span>
-        </div>
-      </div>
-      <div class="info-item">
-        <div class="info-item-title">摄像机机位</div>
-        <div class="info-item-value">
-          {{ selected.Position ? selected.Position : "无" }}
-        </div>
-      </div>
-      <div class="info-item">
-        <div class="info-item-title">状态</div>
-        <div
-          class="info-item-value"
-          [ngClass]="{
-            'powder-red-text': selected.OnlineState !== 0,
-            'green-text': selected.OnlineState === 0
-          }"
-        >
-          {{ selected.OnlineState === 0 ? "在线" : "异常" }}
-        </div>
-      </div>
+      <table border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td class="info-title">摄像机名称</td>
+          <td class="info-value">
+            {{ selected.Name ? selected.Name : "无" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="info-title">摄像机对应的窗口</td>
+          <td class="info-value">
+            <span *ngIf="selected.DropWindowNo"
+              >窗口 {{ selected.DropWindowNo }}</span
+            >
+            <span *ngIf="!selected.DropWindowNo">无</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="info-title">摄像机机位</td>
+          <td class="info-value">
+            {{ selected.Position ? selected.Position : "无" }}
+          </td>
+        </tr>
+        <tr>
+          <td class="info-title">状态</td>
+          <td class="info-value">
+            <div
+              class="info-item-value"
+              [ngClass]="{
+                'powder-red-text': selected.OnlineState !== 0,
+                'green-text': selected.OnlineState === 0
+              }"
+            >
+              {{ selected.OnlineState === 0 ? "在线" : "异常" }}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="center">
+              <button class="hw-green-btn" (click)="onvideo()">
+                <i class="howell-icon-video"></i> 预览
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
     </div>
   </div>
 </div>
