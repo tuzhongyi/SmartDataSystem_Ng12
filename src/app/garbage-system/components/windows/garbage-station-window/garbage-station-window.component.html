@@ -1,95 +1,16 @@
 <app-window [Model]="Model" [style]="style">
   <ng-container *ngIf="Model.show">
     <div class="garbage-station-window">
-      <div class="garbage-station-window-head">
-        <div class="hw-second-title">
-          {{ Language.json.station }}
-        </div>
-        <div class="garbage-station-window-head-content">
-          <div class="garbage-station-window-head-content-list">
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.station"
-              (click)="indexChange(Index.station)"
-            >
-              列表
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.stay"
-              (click)="indexChange(Index.stay)"
-            >
-              小包垃圾滞留
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.general"
-              (click)="indexChange(Index.general)"
-            >
-              总图表
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.details"
-              (click)="indexChange(Index.details)"
-            >
-              细分图表
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.record"
-              (click)="indexChange(Index.record)"
-              *ngIf="ui !== UserUIType.dapuqiao"
-            >
-              报警事件处置
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.dapuqiao_record"
-              (click)="indexChange(Index.dapuqiao_record)"
-              *ngIf="ui === UserUIType.dapuqiao"
-            >
-              三级事件
-            </div>
-            <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.card"
-              (click)="indexChange(Index.card)"
-            >
-              刷卡记录
-            </div>
-            <!-- <div
-              class="second-menu-btn"
-              [class.selected]="index === Index.card"
-              (click)="indexChange(Index.sewage)"
-            >
-              水渍检测记录
-            </div> -->
-          </div>
-          <div class="operation" *ngIf="index === Index.station">
-            <app-input-search-options (search)="station.onsearch($event)">
-            </app-input-search-options>
-          </div>
-          <div class="operation" *ngIf="index === Index.record">
-            <howell-garbage-station-window-record-operation
-              (search)="record.filter.onsearch($event)"
-              [(table)]="table"
-              [(isfilter)]="record.filter.show"
-            >
-            </howell-garbage-station-window-record-operation>
-          </div>
-        </div>
-      </div>
       <div class="garbage-station-window-body">
         <ng-container *ngIf="index == Index.station">
-          <howell-garbage-station-table
-            [load]="station.load"
+          <garbage-station-window-list
             [stationId]="stationId"
             [divisionId]="divisionId"
             (position)="onposition($event)"
             (image)="onimage($event)"
           >
-          </howell-garbage-station-table>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-station-window-list>
         </ng-container>
 
         <ng-container *ngIf="index == Index.stay">
@@ -98,35 +19,37 @@
             (image)="onimage($event)"
             (ondblclick)="onstaydblclick($event)"
           >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
           </howell-garbage-station-window-stay>
         </ng-container>
 
         <ng-container *ngIf="index == Index.general">
           <howell-garbage-station-window-general>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
           </howell-garbage-station-window-general>
         </ng-container>
 
         <ng-container *ngIf="index == Index.details">
           <howell-garbage-station-window-details>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
           </howell-garbage-station-window-details>
         </ng-container>
 
         <ng-container *ngIf="index == Index.record">
           <howell-garbage-station-window-record
-            [isfilter]="record.filter.show"
             [status]="taskStatus"
-            [(filter)]="record.filter.filter"
-            [table]="table"
-            [search]="record.filter.load"
+            [divisionId]="divisionId"
             (image)="onimage($event)"
             (video)="onvideo($event)"
-          ></howell-garbage-station-window-record>
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </howell-garbage-station-window-record>
         </ng-container>
 
         <ng-container *ngIf="index == Index.card">
-          <hw-garbage-station-card-record
-            (video)="onvideo($event)"
-          ></hw-garbage-station-card-record>
+          <hw-garbage-station-card-record (video)="onvideo($event)">
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </hw-garbage-station-card-record>
         </ng-container>
 
         <ng-container *ngIf="index == Index.dapuqiao_record">
@@ -136,12 +59,91 @@
             (picture)="ondapuqiaopicture($event)"
             (image)="ondapuqiaoimage($event)"
             (process)="ondapuqiaoprocess($event)"
-          ></dapuqiao-garbage-station-window-record>
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </dapuqiao-garbage-station-window-record>
         </ng-container>
         <ng-container *ngIf="index == Index.sewage">
-          <garbage-station-window-sewage></garbage-station-window-sewage>
+          <garbage-station-window-sewage
+            [get]="get"
+            (got)="ongot($event)"
+            (image)="onimage($event)"
+            (video)="onvideo($event)"
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-station-window-sewage>
         </ng-container>
       </div>
     </div>
   </ng-container>
 </app-window>
+
+<ng-template #header>
+  <div class="garbage-station-window-head">
+    <div class="hw-second-title">
+      {{ Language.json.station }}
+    </div>
+    <div class="garbage-station-window-head-content">
+      <div class="garbage-station-window-head-content-list">
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.station"
+          (click)="indexChange(Index.station)"
+        >
+          列表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.stay"
+          (click)="indexChange(Index.stay)"
+        >
+          小包垃圾滞留
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.general"
+          (click)="indexChange(Index.general)"
+        >
+          总图表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.details"
+          (click)="indexChange(Index.details)"
+        >
+          细分图表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.record"
+          (click)="indexChange(Index.record)"
+          *ngIf="ui !== UserUIType.dapuqiao"
+        >
+          报警事件处置
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.dapuqiao_record"
+          (click)="indexChange(Index.dapuqiao_record)"
+          *ngIf="ui === UserUIType.dapuqiao"
+        >
+          三级事件
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.card"
+          (click)="indexChange(Index.card)"
+        >
+          刷卡记录
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.sewage"
+          (click)="indexChange(Index.sewage)"
+        >
+          水渍检测记录
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

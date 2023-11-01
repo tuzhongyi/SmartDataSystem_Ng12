@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { IllegalDropEventRecord } from '../../model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from '../../model/garbage-station/event-record/illegal-drop-event-record.model';
 
 @Injectable({
   providedIn: 'root',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()

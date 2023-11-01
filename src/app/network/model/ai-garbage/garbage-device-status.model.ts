@@ -1,6 +1,7 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
+import { SwitchState } from './switch-state.model';
 
 export class AIGarbageDeviceStatus implements IModel {
   /**	Int32	在线状态 0:正常、1:异常	O	*/
@@ -19,6 +20,9 @@ export class AIGarbageDeviceStatus implements IModel {
   Spray?: number;
   /**	Double	气体检测传感器数值	O	*/
   GasSensor?: number;
+  /**	SwitchState[]	开关状态	O */
+  @Type(() => SwitchState)
+  SwitchStates?: SwitchState[];
   /**	DateTime	最后更新时间	O	*/
   @Transform(transformDateTime)
   LastUpdateTime?: Date;

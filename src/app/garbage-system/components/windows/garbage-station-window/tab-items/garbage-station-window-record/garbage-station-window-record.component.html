@@ -1,4 +1,13 @@
 <div class="garbage-station-window-record">
+  <div class="garbage-station-window-record-head">
+    <ng-content></ng-content>
+    <howell-garbage-station-window-record-operation
+      (search)="onsearch($event)"
+      [(table)]="table"
+      [(isfilter)]="isfilter"
+    >
+    </howell-garbage-station-window-record-operation>
+  </div>
   <div class="garbage-station-window-record-filter" *ngIf="isfilter">
     <howell-garbage-station-window-record-filter
       [(filter)]="filter"
@@ -8,7 +17,7 @@
     <howell-garbage-drop-record-table
       *ngIf="table === TableType.table"
       [filter]="filter"
-      [load]="filterChange"
+      [load]="load"
       (image)="onimage($event)"
       (video)="onvideo($event)"
     >

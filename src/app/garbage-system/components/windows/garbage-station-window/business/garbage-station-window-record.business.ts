@@ -4,7 +4,7 @@ import { EventRecordOperationFilterBusiness } from '../../event-record-operation
 
 @Injectable()
 export class GarbageStationWindowRecordBusiness {
-  constructor(public filter: EventRecordOperationFilterBusiness) {
-    filter.filter = new GarbageDropRecordFilter();
+  constructor(public drop: EventRecordOperationFilterBusiness) {
+    drop.filter = new GarbageDropRecordFilter();
   }
 }

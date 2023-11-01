@@ -51,6 +51,8 @@ export class EventRecordBusiness
         return this.eventService.record.MixedInto.list(params);
       case EventType.GarbageFull:
         return this.eventService.record.GarbageFull.list(params);
+      case EventType.Sewage:
+        return this.eventService.record.sewage.list(params);
       default:
         throw new Event('error event type');
     }
@@ -75,6 +77,9 @@ export class EventRecordBusiness
         break;
       case EventType.GarbageFull:
         paged = this.eventService.record.GarbageFull.list(params);
+        break;
+      case EventType.Sewage:
+        paged = this.eventService.record.sewage.list(params);
         break;
       default:
         throw new Event('error event type');

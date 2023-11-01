@@ -6,7 +6,7 @@ import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';

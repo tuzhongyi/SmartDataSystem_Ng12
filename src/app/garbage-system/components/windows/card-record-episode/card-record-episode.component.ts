@@ -10,7 +10,7 @@ import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { wait } from 'src/app/common/tools/tool';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
-import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CardRecordEpisodeBusiness } from './card-record-episode.business';
 import {

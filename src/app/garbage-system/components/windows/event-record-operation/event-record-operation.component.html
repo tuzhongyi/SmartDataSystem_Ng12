@@ -15,12 +15,12 @@
     <i class="mdi mdi-magnify"></i>
     查询
   </button>
-  <app-select-control
-    class="list-type-select"
-    [data]="listTypes"
-    [style]="{ fontFamily: 'HowellFont' }"
-    (selectedChange)="onListTypeSelect($event)"
-  ></app-select-control>
+  <div class="list-type-select" (change)="onListTypeSelect()">
+    <select [(ngModel)]="type" style="font-family: 'HowellFont'">
+      <option [ngValue]="ListType.table">&#xf08b;&nbsp;</option>
+      <option [ngValue]="ListType.card">&#xf225;&nbsp;</option>
+    </select>
+  </div>
   <button class="hw-cyan-m-btn" (click)="onfilter()">
     <i class="mdi mdi-filter-outline"></i>
   </button>

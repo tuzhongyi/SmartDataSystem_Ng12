@@ -269,9 +269,15 @@ select.custom.form-control:not([size]):not([multiple]) {
   color: #7586e0;
 }
 
-a.td-icon:hover i {
+.selected .td-icon:hover,
+.td-icon:hover {
+  color: white;
+}
+
+.selected .td-icon {
   color: #cfd7ff;
 }
+
 
 .table.body.stylish-table tbody tr {
   height: 58px;

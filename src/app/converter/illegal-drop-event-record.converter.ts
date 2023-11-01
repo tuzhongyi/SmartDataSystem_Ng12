@@ -30,7 +30,7 @@ import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
 import { Medium } from '../common/tools/medium';
-import { IllegalDropEventRecord } from '../network/model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from '../network/model/garbage-station/event-record/illegal-drop-event-record.model';
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
 
 type IllegalDropEventRecordSourceModel = IllegalDropEventRecord;

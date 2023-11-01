@@ -2,10 +2,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { EventType } from 'src/app/enum/event-type.enum';
-import {
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';

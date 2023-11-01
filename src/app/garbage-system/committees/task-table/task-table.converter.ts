@@ -3,7 +3,7 @@ import { TaskTableViewModel } from './task-table.model';
 import { formatDate } from '@angular/common';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 
 export class TaskTableConverter
   implements

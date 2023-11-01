@@ -11,9 +11,35 @@
   .body {
     height: calc(100% - @footer-height);
 
+    table {
+      tbody {
+        tr {
+          height: 56px;
+        }
+      }
+    }
+
     .operation {
       width: 100%;
       justify-content: center;
+    }
+
+    .states {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      &>div {
+        margin-right: 5px;
+
+        &:last-child {
+          margin-right: 0;
+        }
+
+        &>i {
+          color: inherit;
+        }
+      }
     }
   }
 

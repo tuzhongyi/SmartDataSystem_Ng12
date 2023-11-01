@@ -1,19 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageFullEventData } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageFullEventData } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -41,10 +33,7 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
 })
 export class EventRecordTableComponent
   extends PagedTableAbstractComponent<EventRecordViewModel>
-  implements
-    IComponent<IModel, PagedList<EventRecordViewModel>>,
-    OnInit,
-    OnChanges
+  implements IComponent<IModel, PagedList<EventRecordViewModel>>, OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>> &
     IGet<PagedList<EventRecordViewModel>>;
@@ -76,8 +65,9 @@ export class EventRecordTableComponent
   widths = ['20%'];
   EventType = EventType;
   selected?: EventRecordViewModel;
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange && this.load) {
+
+  async ngOnInit() {
+    if (this.load) {
       this.load.subscribe((x) => {
         if (x) {
           this.filter = x;
@@ -85,7 +75,7 @@ export class EventRecordTableComponent
         this.loadData(-1, this.pageSize, this.filter);
       });
     }
-    if (changes.get && this.get) {
+    if (this.get) {
       this.get.subscribe((page) => {
         let params = new PagedParams();
         params.PageSize = page.PageSize;
@@ -96,9 +86,6 @@ export class EventRecordTableComponent
         });
       });
     }
-  }
-
-  async ngOnInit() {
     this.loadData(-1, this.pageSize, this.filter);
   }
 

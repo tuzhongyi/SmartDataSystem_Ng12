@@ -43,6 +43,7 @@ import { IntervalFilterComponent } from './windows/filters/interval-filter/inter
 import { GarbageStationWindowRecordFilterComponent } from './windows/garbage-station-window/garbage-station-window-record-filter/garbage-station-window-record-filter.component';
 import { GarbageStationWindowRecordOperationComponent } from './windows/garbage-station-window/garbage-station-window-record-operation/garbage-station-window-record-operation.component';
 import { GarbageStationWindowGeneralComponent } from './windows/garbage-station-window/tab-items/garbage-drop-record-general/garbage-station-window-general.component';
+import { GarbageStationWindowListComponent } from './windows/garbage-station-window/tab-items/garbage-station-window-list/garbage-station-window-list.component';
 import { GarbageStationWindowStayComponent } from './windows/garbage-station-window/tab-items/garbage-station-window-stay/garbage-station-window-stay.component';
 import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-window.module';
 
@@ -75,6 +76,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordFilterComponent,
     EventStatisticComponent,
 
+    GarbageStationWindowListComponent,
     GarbageStationWindowRecordOperationComponent,
     GarbageStationWindowRecordFilterComponent,
     GarbageStationWindowGeneralComponent,
@@ -121,6 +123,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordOperationComponent,
     EventRecordFilterComponent,
     EventStatisticComponent,
+    GarbageStationWindowListComponent,
     GarbageStationWindowGeneralComponent,
     GarbageStationWindowStayComponent,
     IntervalFilterComponent,

@@ -1,18 +1,11 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
+import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageFullEventData } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageFullEventData } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -34,6 +27,7 @@ import { EventRecordListConverter } from './event-record-list.converter';
   templateUrl: './event-record-list.component.html',
   styleUrls: ['../../table.less', './event-record-list.component.less'],
   providers: [
+    EventRecordListConverter,
     EventRecordBusiness,
     DownloadBusiness,
     VideoDownloadPanelBusiness,
@@ -43,24 +37,25 @@ import { EventRecordListConverter } from './event-record-list.converter';
 })
 export class EventRecordListComponent
   extends ListAbstractComponent<EventRecordViewModel, EventRecordCardModel>
-  implements
-    IComponent<IModel, PagedList<EventRecordViewModel>>,
-    OnInit,
-    OnChanges
+  implements IComponent<IModel, PagedList<EventRecordViewModel>>, OnInit
 {
-  converter = new EventRecordListConverter();
-
+  @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>> &
+    IGet<PagedList<EventRecordViewModel>>;
   @Input() type: EventType = EventType.IllegalDrop;
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter;
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
+    new EventEmitter();
   @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
     new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   constructor(
-    public business: EventRecordBusiness,
+    business: EventRecordBusiness,
     private download: DownloadBusiness,
-    public panel: VideoDownloadPanelBusiness
+    public panel: VideoDownloadPanelBusiness,
+    public converter: EventRecordListConverter
   ) {
     super();
     this.business = business;
@@ -69,8 +64,8 @@ export class EventRecordListComponent
 
   widths: string[] = [];
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange && this.load) {
+  async ngOnInit() {
+    if (this.load) {
       this.load.subscribe((x) => {
         if (x) {
           this.filter = x;
@@ -78,9 +73,17 @@ export class EventRecordListComponent
         this.loadData(-1, this.pageSize, this.filter);
       });
     }
-  }
-
-  async ngOnInit() {
+    if (this.get) {
+      this.get.subscribe((page) => {
+        let params = new PagedParams();
+        params.PageSize = page.PageSize;
+        params.PageIndex = page.PageIndex;
+        let promise = this.business.load(this.type, params, this.filter);
+        promise.then((data) => {
+          this.got.emit(data);
+        });
+      });
+    }
     this.loadData(-1, this.pageSize, this.filter);
   }
 
@@ -100,14 +103,7 @@ export class EventRecordListComponent
       this.page = paged.Page;
 
       this.datas = paged.Data;
-      this.list = await this.converter.Convert(this.datas, {
-        division: (id: string) => {
-          return this.business.getDivision(id);
-        },
-        img: (id: string) => {
-          return this.business.getImage(id);
-        },
-      });
+      this.list = await this.converter.Convert(this.datas);
     });
     return promise;
   }

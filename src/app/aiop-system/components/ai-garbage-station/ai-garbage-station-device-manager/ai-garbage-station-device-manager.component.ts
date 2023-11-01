@@ -145,4 +145,8 @@ export class AIGarbageStationDeviceManagerComponent {
       this.window.video.show = true;
     }
   }
+  onstatus(model: AIGarbageDevice) {
+    this.window.status.model = model;
+    this.window.status.show = true;
+  }
 }

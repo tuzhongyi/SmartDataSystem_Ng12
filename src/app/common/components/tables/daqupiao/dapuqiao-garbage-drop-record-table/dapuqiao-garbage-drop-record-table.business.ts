@@ -3,7 +3,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { OrderType } from 'src/app/enum/order-type.enum';
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';

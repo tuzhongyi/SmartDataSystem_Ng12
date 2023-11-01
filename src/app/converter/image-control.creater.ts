@@ -6,12 +6,11 @@ import { OnlineStatus } from '../enum/online-status.enum';
 import { ICamera } from '../network/model/garbage-station/camera.interface';
 import { Camera } from '../network/model/garbage-station/camera.model';
 import { EventDataObject } from '../network/model/garbage-station/event-data-object.model';
+import { GarbageFullEventRecord } from '../network/model/garbage-station/event-record/garbage-full-event-record.model';
+import { IllegalDropEventRecord } from '../network/model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from '../network/model/garbage-station/event-record/mixed-into-event-record.model';
+import { SewageEventRecord } from '../network/model/garbage-station/event-record/sewage-event-record.model';
 import { EventRule } from '../network/model/garbage-station/event-rule';
-import {
-  GarbageFullEventRecord,
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from '../network/model/garbage-station/garbage-event-record.model';
 import { EventRecordViewModel } from '../view-model/event-record.model';
 import { ImageControlModel } from '../view-model/image-control.model';
 
@@ -21,6 +20,7 @@ type InputType =
   | IllegalDropEventRecord
   | GarbageFullEventRecord
   | MixedIntoEventRecord
+  | SewageEventRecord
   | EventRecordViewModel
   | GarbageDropRecordViewModel;
 
@@ -30,6 +30,7 @@ export class ImageControlCreater {
   static Create(model: IllegalDropEventRecord): ImageControlModel;
   static Create(model: GarbageFullEventRecord): ImageControlModel[];
   static Create(model: MixedIntoEventRecord): ImageControlModel;
+  static Create(model: SewageEventRecord): ImageControlModel;
   static Create(model: EventRecordViewModel): ImageControlModel;
   static Create(model: GarbageDropRecordViewModel): ImageControlModel[];
   static Create(model: InputType) {
@@ -43,6 +44,8 @@ export class ImageControlCreater {
       return this.fromGarbageFullEventRecord(model);
     } else if (model instanceof MixedIntoEventRecord) {
       return this.fromMixedIntoEventRecord(model);
+    } else if (model instanceof SewageEventRecord) {
+      return this.fromSewageEventRecord(model);
     } else if (model instanceof EventRecordViewModel) {
       switch (model.EventType) {
         case EventType.IllegalDrop:
@@ -57,6 +60,8 @@ export class ImageControlCreater {
         case EventType.GarbageDropTimeout:
         case EventType.GarbageDropTimeoutHandle:
           return this.fromEventRecordViewModel(model);
+        case EventType.Sewage:
+          return this.fromSewageEventRecord(model);
         default:
           return this.fromEventRecordViewModel(model);
       }
@@ -124,6 +129,20 @@ export class ImageControlCreater {
       {
         eventTime: data.EventTime,
         stationId: data.Data.StationId,
+      }
+    );
+  }
+  private static fromSewageEventRecord(data: SewageEventRecord) {
+    return this.create(
+      data.ResourceId ?? data.EventId,
+      Medium.img(data.ImageUrl ?? Medium.default),
+      data.ResourceName ?? data.Data.StationName,
+
+      {
+        eventTime: data.EventTime,
+        stationId: data.Data.StationId,
+        rules: data.Data.Rules,
+        polygon: data.Data.Objects,
       }
     );
   }

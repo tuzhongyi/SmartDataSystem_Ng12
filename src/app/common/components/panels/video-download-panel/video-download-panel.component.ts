@@ -4,7 +4,6 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { WindowViewModel } from '../../window-control/window.model';
 import { VideoDownloader } from './video-downloader.model';
 
 @Component({
@@ -42,6 +41,9 @@ export class VideoDownloadPanelComponent
         break;
       case EventType.IllegalDrop:
         usage = CameraUsage.IllegalDrop;
+        break;
+      case EventType.Sewage:
+        usage = CameraUsage.Sewage;
         break;
       case EventType.MixedInto:
       default:

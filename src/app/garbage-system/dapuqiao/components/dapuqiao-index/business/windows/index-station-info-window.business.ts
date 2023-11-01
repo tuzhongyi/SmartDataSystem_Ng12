@@ -16,7 +16,9 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
+import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IndexImageWindowBusiness } from './index-image-window.business';
 import { IndexMediaWindowBusiness } from './index-media-window.business';
@@ -56,7 +58,10 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
   }
   onimage(
     model: PagedArgs<
-      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
+      | GarbageDropRecordViewModel
+      | GarbageStationTableModel
+      | EventRecordViewModel
+      | ImageControlModel
     >
   ) {
     this.image.array.manualcapture =
@@ -73,13 +78,24 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
     } else if (model.data instanceof GarbageDropRecordViewModel) {
       this.image.array.stationId = model.data.Data.StationId;
       this.image.array.models = ImageControlCreater.Create(model.data);
+    } else if (model.data instanceof EventRecordViewModel) {
+      this.image.page.page = model.page;
+      let data = model.data as SewageEventRecord;
+      this.image.page.model = ImageControlCreater.Create(data);
+      this.image.page.show = true;
+      return;
     } else {
       this.image.array.models = [model.data];
     }
 
     this.image.array.show = true;
   }
-  async onvideo(item: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
+  async onvideo(
+    item:
+      | GarbageDropRecordViewModel
+      | AIGarbageRfidCardRecord
+      | EventRecordViewModel
+  ) {
     if (item instanceof GarbageDropRecordViewModel) {
       let id = item.ResourceId ?? '';
       let name = item.ResourceName;
@@ -99,6 +115,15 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
       this.media.multiple.date = item.Time;
       this.media.multiple.fullplay = true;
       this.media.multiple.show = true;
+    } else if (item instanceof EventRecordViewModel) {
+      if (item.ResourceId) {
+        this.video.title = item.ResourceName ?? '';
+        this.video.mask = true;
+        this.video.playback(
+          item.ResourceId,
+          DateTimeTool.beforeOrAfter(item.EventTime)
+        );
+      }
     }
   }
   onchartdblclick(args: LineZoomChartArgs) {

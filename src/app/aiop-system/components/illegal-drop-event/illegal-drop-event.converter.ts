@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
 import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
 import { Medium } from '../../../common/tools/medium';
 import { AbstractCommonModelPromiseConverter } from '../../../converter/common-model.converter';
 import { DivisionType } from '../../../enum/division-type.enum';
 import { Division } from '../../../network/model/garbage-station/division.model';
-import { IllegalDropEventRecord } from '../../../network/model/garbage-station/garbage-event-record.model';
+
 import { DivisionRequestService } from '../../../network/request/division/division-request.service';
 import { IllegalDropEventModel } from './illegal-drop-event.model';
 

@@ -2,10 +2,8 @@ import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { EventRecordConverter } from 'src/app/common/components/tables/event-record/event-record.converter';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
-import {
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 
 @Injectable()

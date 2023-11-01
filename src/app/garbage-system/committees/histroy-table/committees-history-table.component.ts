@@ -15,10 +15,8 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
-import {
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';

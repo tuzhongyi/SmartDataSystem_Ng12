@@ -1,0 +1,128 @@
+.ai-garbage-station-device-status {
+  color: #cfd7ff;
+
+  &-head {}
+
+  &-body {
+    .form {
+      &-group {
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        margin: 0 -5px;
+      }
+
+      &-item {
+        width: 100%;
+        padding: 0 5px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+
+        .btn {
+          font-size: 16px;
+        }
+
+        &-title {
+          color: white;
+          display: flex;
+          align-items: center;
+          flex-grow: 0;
+        }
+
+        &-value {
+          display: flex;
+          align-items: center;
+          height: 34px;
+          justify-content: flex-end;
+
+          flex-grow: 1;
+
+
+          hw-switch {
+            transform: scale(1.5);
+            transform-origin: center center;
+          }
+
+
+          // button {
+          //   color: #7586e0;
+          //   border-color: #7586e0;
+          //   font-weight: bold;
+
+          //   &:hover {
+          //     color: white;
+          //     background-color: #7586e0;
+          //   }
+          // }
+
+          ::ng-deep {
+            .mat-slide-toggle.mat-primary.mat-checked .mat-slide-toggle-bar {
+              background-color: #7586e0;
+            }
+
+            .mat-slide-toggle.mat-primary.mat-checked .mat-ripple-element {
+              background-color: #7586e0;
+            }
+
+            .mat-slide-toggle-bar {
+              background-color: #e0e0e0;
+            }
+          }
+
+        }
+      }
+    }
+  }
+
+  &-windows {
+    margin: 0 -5px;
+
+    &-tab {
+
+      display: flex;
+      justify-content: flex-start;
+
+
+      .second-menu-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+
+    &-content {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+
+      &-item {
+        width: 50%;
+
+        &-title {}
+
+        &-value {
+          color: white;
+        }
+      }
+
+      &-foot {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+
+  &-foot {}
+
+  .panel {
+    background: rgba(36, 72, 165, 0.05);
+    border: 2px rgba(117, 134, 224, 0.15) solid;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+}

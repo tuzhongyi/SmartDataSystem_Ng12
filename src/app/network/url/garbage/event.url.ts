@@ -6,14 +6,14 @@ export class EventUrl {
     return `${BaseUrl.garbage.garbage_management}/Events`;
   }
   static get info() {
-    return new InfoUrl(this.basic());
+    return new EventInfoUrl(this.basic());
   }
   static get record() {
-    return new RecordUrl(this.basic());
+    return new EventRecordUrl(this.basic());
   }
 }
 
-class InfoUrl extends AbstractUrl {
+class EventInfoUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/Infos`);
   }
@@ -22,34 +22,40 @@ class InfoUrl extends AbstractUrl {
   }
 }
 
-class IllegalDropUrl extends AbstractUrl {
+class EventRecordIllegalDropUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/IllegalDrop`);
   }
 }
-class MixedIntoUrl extends AbstractUrl {
+class EventRecordMixedIntoUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/MixedInto`);
   }
 }
 
-class GarbageFullUrl extends AbstractUrl {
+class EventRecordGarbageFullUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/GarbageFull`);
   }
 }
 
-class GarbageDropUrl extends AbstractUrl {
+class EventRecordGarbageDropUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/GarbageDrop`);
   }
 }
-class RecordUrl extends AbstractUrl {
+class EventRecordSewageUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Sewage`);
+  }
+}
+class EventRecordUrl extends AbstractUrl {
   constructor(base: string) {
     super(`${base}/Records`);
   }
-  illegaldrop = new IllegalDropUrl(this.basic());
-  mixedinto = new MixedIntoUrl(this.basic());
-  garbagefull = new GarbageFullUrl(this.basic());
-  garbagedrop = new GarbageDropUrl(this.basic());
+  illegaldrop = new EventRecordIllegalDropUrl(this.basic());
+  mixedinto = new EventRecordMixedIntoUrl(this.basic());
+  garbagefull = new EventRecordGarbageFullUrl(this.basic());
+  garbagedrop = new EventRecordGarbageDropUrl(this.basic());
+  sewage = new EventRecordSewageUrl(this.basic());
 }

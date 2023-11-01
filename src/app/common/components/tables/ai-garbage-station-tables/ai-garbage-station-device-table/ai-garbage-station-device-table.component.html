@@ -61,18 +61,51 @@
               </div>
             </td>
             <td class="center">
-              <div
-                [ngClass]="{
-                  'green-text': !!item.Status && item.Status.OnlineState === 0,
-                  'powder-red-text':
-                    !item.Status || item.Status.OnlineState !== 0
-                }"
-              >
-                {{
-                  !!item.Status && item.Status.OnlineState === 0
-                    ? "在线"
-                    : "离线"
-                }}
+              <div class="states" (click)="onstatus($event, item)">
+                <div
+                  [title]="
+                    !!item.Status && item.Status.OnlineState === 0
+                      ? '在线'
+                      : '离线'
+                  "
+                  [ngClass]="{
+                    'green-text':
+                      !!item.Status && item.Status.OnlineState === 0,
+                    'powder-red-text':
+                      !item.Status || item.Status.OnlineState !== 0
+                  }"
+                >
+                  <i
+                    [ngClass]="{
+                      'howell-icon-signal2':
+                        !!item.Status && item.Status.OnlineState === 0,
+                      'howell-icon-no_signal':
+                        !item.Status || item.Status.OnlineState === 1
+                    }"
+                  ></i>
+                </div>
+                <ng-container *ngIf="!!item.Status">
+                  <div
+                    *ngFor="let state of item.Status.SwitchStates"
+                    [title]="state.Name"
+                    [ngClass]="{
+                      'green-text': state.State,
+                      'powder-red-text': !state.State
+                    }"
+                  >
+                    <ng-container [ngSwitch]="state.No">
+                      <i
+                        *ngSwitchCase="DeviceState.door"
+                        class="howell-icon-door-state"
+                      ></i>
+                      <i
+                        *ngSwitchCase="DeviceState.rfid"
+                        class="howell-icon-rfid"
+                      ></i>
+                      <i *ngSwitchDefault class="howell-icon-alertcircle"></i>
+                    </ng-container>
+                  </div>
+                </ng-container>
               </div>
             </td>
             <td>
@@ -117,7 +150,7 @@
           [length]="page.TotalRecordCount"
           [pageSize]="page.PageSize"
           [pagerCount]="5"
-          [pageIndex]="page.PageCount - 1"
+          [pageIndex]="page.PageIndex - 1"
           [showFirstLastButtons]="true"
           (page)="pageEvent($event)"
         >

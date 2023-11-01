@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IllegalDropEventRecord } from '../../model/garbage-station/garbage-event-record.model';
+import { IllegalDropEventRecord } from '../../model/garbage-station/event-record/illegal-drop-event-record.model';
 import { ConfigRequestService } from '../config/config-request.service';
 import { EventPushService } from './event-push.service';
 import { MqttComponent } from './mqtt';

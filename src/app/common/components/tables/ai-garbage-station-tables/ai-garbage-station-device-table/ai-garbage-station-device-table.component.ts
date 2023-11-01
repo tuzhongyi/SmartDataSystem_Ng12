@@ -7,7 +7,10 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { AIGarbageStationDeviceTableBusiness } from './ai-garbage-station-device-table.business';
 import { AIGarbageStationDeviceTableConverter } from './ai-garbage-station-device-table.converter';
-import { AIGarbageStationDeviceTableArgs } from './ai-garbage-station-device-table.model';
+import {
+  AIGarbageDeviceState,
+  AIGarbageStationDeviceTableArgs,
+} from './ai-garbage-station-device-table.model';
 import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-table.service';
 
 @Component({
@@ -50,12 +53,16 @@ export class AIGarbageStationDeviceTableComponent
   camera: EventEmitter<AIGarbageDevice> = new EventEmitter();
   @Output()
   schedule: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output()
+  status: EventEmitter<AIGarbageDevice> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceTableBusiness) {
     super();
+    this.pageSize = 10;
   }
   Command = AIGarbageDeviceCommandNo;
   widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
+  DeviceState = AIGarbageDeviceState;
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -123,5 +130,9 @@ export class AIGarbageStationDeviceTableComponent
       this.selecteds.splice(index, 1);
     }
     this.selectedsChange.emit(this.selecteds);
+  }
+  onstatus(e: Event, item: AIGarbageDevice) {
+    e.stopImmediatePropagation();
+    this.status.emit(item);
   }
 }

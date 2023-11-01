@@ -3,7 +3,7 @@
     <div class="title">
       <div class="hw-simple-title">{{ model.GarbageStationName }}投放窗口</div>
     </div>
-    <ul class="hw-ul" *ngIf="model.DropWindows">
+    <ul class="hw-ul" *ngIf="model.DropWindows" WheelHorizontalScroll>
       <li *ngFor="let item of model.DropWindows">
         <div
           class="second-menu-btn text"

@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { EventInfo } from '../../model/garbage-station/event-info.model';
-import {
-  GarbageDropEventRecord,
-  GarbageFullEventRecord,
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from '../../model/garbage-station/garbage-event-record.model';
+import { GarbageDropEventRecord } from '../../model/garbage-station/event-record/garbage-drop-event-record.model';
+import { GarbageFullEventRecord } from '../../model/garbage-station/event-record/garbage-full-event-record.model';
+import { IllegalDropEventRecord } from '../../model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from '../../model/garbage-station/event-record/mixed-into-event-record.model';
+import { SewageEventRecord } from '../../model/garbage-station/event-record/sewage-event-record.model';
 import { PagedList } from '../../model/page_list.model';
 import { EventUrl } from '../../url/garbage/event.url';
 import {
@@ -107,6 +106,14 @@ class RecordsService {
       this._GarbageDrop = new RecordsGarbageDropService(this.basic);
     }
     return this._GarbageDrop;
+  }
+
+  private _sewage?: RecordsSewageService;
+  public get sewage(): RecordsSewageService {
+    if (!this._sewage) {
+      this._sewage = new RecordsSewageService(this.basic);
+    }
+    return this._sewage;
   }
 }
 
@@ -212,5 +219,21 @@ class RecordsGarbageDropService {
   accept(id: string, params: GarbageDropAcceptParams) {
     let url = EventUrl.record.garbagedrop.accept(id);
     return this.type.post(url, params);
+  }
+}
+class RecordsSewageService {
+  constructor(private basic: HowellBaseRequestService) {
+    this.type = basic.type(SewageEventRecord);
+  }
+
+  type: HowellBaseTypeRequestService<SewageEventRecord>;
+
+  list(params: GetEventRecordsParams): Promise<PagedList<SewageEventRecord>> {
+    let url = EventUrl.record.sewage.list();
+    return this.type.paged(url, params);
+  }
+  get(id: string): Promise<SewageEventRecord> {
+    let url = EventUrl.record.sewage.item(id);
+    return this.type.get(url);
   }
 }

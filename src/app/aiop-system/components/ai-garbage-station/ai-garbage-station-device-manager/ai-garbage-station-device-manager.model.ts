@@ -11,6 +11,7 @@ export class AIGarbageStationDeviceWindow {
   schedule = new AIGarbageStationDeviceScheduleWindow();
   confirm = new AIGarbageStationDeviceConfirmWindow();
   video = new AIGarbageStationDeviceVideoWindow();
+  status = new AIGarbageStationDeviceStatusWindow();
   clear() {
     this.details.clear();
     this.command.clear();
@@ -19,6 +20,7 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.clear();
     this.confirm.clear();
     this.video.clear();
+    this.status.clear();
   }
   close() {
     this.details.show = false;
@@ -28,6 +30,7 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.show = false;
     this.confirm.show = false;
     this.video.show = false;
+    this.status.show = false;
   }
 }
 
@@ -103,4 +106,14 @@ class AIGarbageStationDeviceVideoWindow extends VideoWindowViewModel {
     height: '64%',
   };
   model?: VideoModel;
+}
+class AIGarbageStationDeviceStatusWindow extends WindowViewModel {
+  clear(): void {
+    this.model = undefined;
+  }
+  style = {
+    width: '400px',
+    height: 'auto',
+  };
+  model?: AIGarbageDevice;
 }

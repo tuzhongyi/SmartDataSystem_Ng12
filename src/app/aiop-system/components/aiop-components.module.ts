@@ -20,6 +20,7 @@ import { AIGarbageStationDeviceManagerComponent } from './ai-garbage-station/ai-
 import { AIGarbageStationDeviceRecordCommandManagerComponent } from './ai-garbage-station/ai-garbage-station-device-record-command-manager/ai-garbage-station-device-record-command-manager.component';
 import { AIGarbageStationDeviceRecordEventManagerComponent } from './ai-garbage-station/ai-garbage-station-device-record-event-manager/ai-garbage-station-device-record-event-manager.component';
 import { AIGarbageStationDeviceScheduleComponent } from './ai-garbage-station/ai-garbage-station-device-schedule/ai-garbage-station-device-schedule.component';
+import { AiGarbageStationDeviceStatusComponent } from './ai-garbage-station/ai-garbage-station-device-status/ai-garbage-station-device-status.component';
 import { AIGarbageStationRegionBuildingComponent } from './ai-garbage-station/ai-garbage-station-region-building/ai-garbage-station-region-building.component';
 import { AIGarbageStationRegionManagerComponent } from './ai-garbage-station/ai-garbage-station-region-manager/ai-garbage-station-region-manager.component';
 import { AIGarbageStationRegionStationComponent } from './ai-garbage-station/ai-garbage-station-region-station/ai-garbage-station-region-station.component';
@@ -136,6 +137,7 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     AIGarbageStationDeviceDropWindowComponent,
     AIGarbageStationDeviceCameraComponent,
     AIGarbageStationDeviceScheduleComponent,
+    AiGarbageStationDeviceStatusComponent,
     AIGarbageStationDeviceManagerComponent,
 
     AIGarbageStationDeviceRecordEventManagerComponent,

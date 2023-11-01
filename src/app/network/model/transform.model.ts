@@ -1,6 +1,17 @@
 import { formatDate } from '@angular/common';
-import { TransformationType, TransformFnParams } from 'class-transformer';
+import {
+  plainToInstance,
+  TransformationType,
+  TransformFnParams,
+} from 'class-transformer';
 import { Flags } from 'src/app/common/tools/flags';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageDropEventData } from './garbage-station/event-record/garbage-drop-event-record.model';
+import { EventRecordData } from './garbage-station/event-record/garbage-event-record.model';
+import { GarbageFullEventData } from './garbage-station/event-record/garbage-full-event-record.model';
+import { IllegalDropEventData } from './garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventData } from './garbage-station/event-record/mixed-into-event-record.model';
+import { SewageEventData } from './garbage-station/event-record/sewage-event-record.model';
 import { IdNameModel } from './model.interface';
 import { Time } from './time.model';
 
@@ -120,5 +131,25 @@ export function transformBinary(params: TransformFnParams) {
     return parseInt(str, 2);
   } else if (params.type === TransformationType.CLASS_TO_CLASS) {
     return params.value;
+  }
+}
+export function transformEventRecordData(params: TransformFnParams) {
+  let record = params.obj as EventRecordData<any>;
+  switch (record.EventType) {
+    case EventType.GarbageDrop:
+    case EventType.GarbageDropHandle:
+    case EventType.GarbageDropTimeout:
+    case EventType.GarbageDropSuperTimeout:
+      return plainToInstance(GarbageDropEventData, params.value);
+    case EventType.GarbageFull:
+      return plainToInstance(GarbageFullEventData, params.value);
+    case EventType.IllegalDrop:
+      return plainToInstance(IllegalDropEventData, params.value);
+    case EventType.MixedInto:
+      return plainToInstance(MixedIntoEventData, params.value);
+    case EventType.Sewage:
+      return plainToInstance(SewageEventData, params.value);
+    default:
+      throw new Error('EventRecordDataTransformer unknow eventtype');
   }
 }

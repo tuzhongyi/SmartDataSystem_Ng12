@@ -245,6 +245,8 @@
   (video)="window.station.onvideo($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
+  [get]="window.image.page.getData"
+  (got)="window.image.page.gotData($event)"
 >
 </howell-garbage-station-window>
 

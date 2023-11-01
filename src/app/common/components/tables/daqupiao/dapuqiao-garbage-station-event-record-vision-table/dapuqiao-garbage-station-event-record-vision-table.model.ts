@@ -1,4 +1,4 @@
-import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class DaPuQiaoGarbageStationEventRecordVisionTableArgs {}

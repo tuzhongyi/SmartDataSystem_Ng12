@@ -1,1 +1,43 @@
-<p>garbage-station-window-sewage works!</p>
+<div class="garbage-station-window-sewage">
+  <div class="garbage-station-window-sewage-head">
+    <ng-content></ng-content>
+    <howell-event-record-operation
+      (filter)="onfilter()"
+      (search)="onsearch($event)"
+      [(type)]="type"
+    >
+    </howell-event-record-operation>
+  </div>
+  <div class="garbage-station-window-sewage-filter" *ngIf="isfilter">
+    <interval-division-station-filter
+      [date_sync]="true"
+      [(filter)]="filter"
+    ></interval-division-station-filter>
+  </div>
+  <div class="garbage-station-window-sewage-table" [class.filter]="isfilter">
+    <ng-container *ngIf="type === ListType.table">
+      <howell-event-record-table
+        [type]="EventType.Sewage"
+        [filter]="filter"
+        [load]="load"
+        [get]="get"
+        (image)="onimage($event)"
+        (video)="onvideo($event)"
+        (got)="ongot($event)"
+      >
+      </howell-event-record-table>
+    </ng-container>
+    <ng-container *ngIf="type === ListType.card">
+      <howell-event-record-list
+        [type]="EventType.Sewage"
+        [load]="load"
+        [get]="get"
+        (got)="ongot($event)"
+        (image)="onimage($event)"
+        (video)="onvideo($event)"
+        [filter]="filter"
+      >
+      </howell-event-record-list>
+    </ng-container>
+  </div>
+</div>

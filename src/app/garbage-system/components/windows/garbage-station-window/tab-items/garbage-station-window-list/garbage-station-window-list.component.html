@@ -1,0 +1,17 @@
+<div class="garbage-station-window-list">
+  <div class="garbage-station-window-list-head">
+    <ng-content></ng-content>
+    <app-input-search-options (search)="onsearch($event)">
+    </app-input-search-options>
+  </div>
+  <div class="garbage-station-window-list-body">
+    <howell-garbage-station-table
+      [load]="load"
+      [stationId]="stationId"
+      [divisionId]="divisionId"
+      (position)="onposition($event)"
+      (image)="onimage($event)"
+    >
+    </howell-garbage-station-table>
+  </div>
+</div>

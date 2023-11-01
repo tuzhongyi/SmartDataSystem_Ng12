@@ -39,12 +39,11 @@ export class AuthorizationService implements CanActivate {
   private _config: AxiosRequestConfig = {};
 
   constructor(
-    private _localStorageService: LocalStorageService,
-    private _sessionStorageService: SessionStorageService,
-
+    private local: LocalStorageService,
+    private session: SessionStorageService,
     private _cookieService: CookieService,
     private _router: Router,
-    private _store: GlobalStorageService
+    private global: GlobalStorageService
   ) {
     if (this._cookieService.check('userName')) {
       let userName = this._cookieService.get('userName');
@@ -98,8 +97,8 @@ export class AuthorizationService implements CanActivate {
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     // console.log(route, state);
-    let challenge = this._sessionStorageService.challenge;
-    let user = this._localStorageService.user;
+    let challenge = this.session.challenge;
+    let user = this.local.user;
     let holdCookie = this._cookieService.check('userName');
     // console.log(userResource);
     if (challenge && user && user.Id && holdCookie) {
@@ -128,6 +127,10 @@ export class AuthorizationService implements CanActivate {
     username: string,
     password?: string
   ): Promise<User | AxiosResponse<any> | null> {
+    // this.session.clear();
+    // this.local.clear();
+    // this.global.destroy();
+    // this.service.clear();
     if (password) {
       return this.loginByUsername(username, password);
     } else {
@@ -158,7 +161,7 @@ export class AuthorizationService implements CanActivate {
           'GET',
           UserUrl.login(username)
         );
-        this._sessionStorageService.challenge = challenge;
+        this.session.challenge = challenge;
         return axios(this._config).then((res: AxiosResponse<User>) => {
           let result = plainToInstance(User, res.data);
           this._storeUserInfo(
@@ -206,8 +209,14 @@ export class AuthorizationService implements CanActivate {
     let passWord = btoa(prefix + password + suffix);
     this._cookieService.set('passWord', passWord, options);
 
-    this._localStorageService.user = user;
-    this._store.password = passWord;
+    this.local.user = user;
+    this.global.password = passWord;
+  }
+
+  clear() {
+    this.session.clear();
+    this.local.clear();
+    this.global.destroy();
   }
 
   loginByUrl(url: string): Promise<AxiosResponse<any> | User | null> {
@@ -220,6 +229,7 @@ export class AuthorizationService implements CanActivate {
           let value = uri.Querys[key];
           switch (lower) {
             case 'auth':
+              this.clear();
               let encode = decodeURIComponent(value);
               let urlParam = base64decode(encode);
               let paramSplit = urlParam.split('&');
@@ -228,10 +238,10 @@ export class AuthorizationService implements CanActivate {
               auto = true;
               break;
             case 'hidetitlebar':
-              this._store.HideTitlebar = JSON.parse(value);
+              this.global.HideTitlebar = JSON.parse(value);
               break;
             case 'hidebutton':
-              this._store.HideButton = JSON.parse(value);
+              this.global.HideButton = JSON.parse(value);
               break;
             default:
               break;
@@ -300,7 +310,7 @@ export class AuthorizationService implements CanActivate {
     return authHeaders;
   }
   public generateHttpHeader(method: string, uri: string) {
-    let chanllenge = this._sessionStorageService.challenge;
+    let chanllenge = this.session.challenge;
     // console.log(chanllenge);
     const authHeader = this._generateChallengeHeader(chanllenge, method, uri);
     return new HttpHeaders({

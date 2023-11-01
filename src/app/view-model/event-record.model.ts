@@ -1,4 +1,4 @@
-import { BaseEventRecord } from '../network/model/garbage-station/garbage-event-record.model';
+import { BaseEventRecord } from '../network/model/garbage-station/event-record/garbage-event-record.model';
 import { GarbageStationModel } from './garbage-station.model';
 import { ImageControlModel } from './image-control.model';
 

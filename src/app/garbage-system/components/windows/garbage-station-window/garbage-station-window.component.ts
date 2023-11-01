@@ -1,18 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { GarbageDropEventRecordModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
-import {
-  GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
-} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
+import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -21,27 +10,18 @@ import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
-import { ListType } from '../event-record-operation/event-record-operation.component';
-import { GarbageStationWindowRecordBusiness } from './business/garbage-station-window-record.business';
-import { GarbageStationWindowStationBusiness } from './business/garbage-station-window-station.business';
-import { GarbageStationWindowDetailsBusiness } from './tab-items/garbage-station-window-details/garbage-station-window-details.business';
 
 @Component({
   selector: 'howell-garbage-station-window',
   templateUrl: './garbage-station-window.component.html',
   styleUrls: ['./garbage-station-window.component.less'],
-  providers: [
-    GarbageStationWindowStationBusiness,
-    EventRecordOperationFilterBusiness,
-    GarbageStationWindowRecordBusiness,
-    GarbageStationWindowDetailsBusiness,
-  ],
 })
 export class GarbageStationWindowComponent
   extends WindowComponent
-  implements OnInit, OnChanges
+  implements OnInit
 {
   @Input() dapuqiao_level?: number;
 
@@ -54,19 +34,22 @@ export class GarbageStationWindowComponent
   @Input()
   taskStatus?: GarbageTaskStatus;
 
-  @Output()
-  image: EventEmitter<
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
+    new EventEmitter();
+  @Output() image: EventEmitter<
     PagedArgs<
-      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
+      | GarbageDropRecordViewModel
+      | GarbageStationTableModel
+      | EventRecordViewModel
+      | ImageControlModel
     >
   > = new EventEmitter();
-  @Output()
-  chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
-  @Output()
-  position: EventEmitter<GarbageStation> = new EventEmitter();
-  @Output()
-  video: EventEmitter<GarbageDropRecordViewModel | AIGarbageRfidCardRecord> =
-    new EventEmitter();
+  @Output() chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() video: EventEmitter<
+    GarbageDropRecordViewModel | AIGarbageRfidCardRecord | EventRecordViewModel
+  > = new EventEmitter();
 
   @Output() dapuqiao_image: EventEmitter<
     PagedArgs<GarbageDropEventRecordModel>
@@ -78,12 +61,7 @@ export class GarbageStationWindowComponent
   @Output() dapuqiao_process: EventEmitter<GarbageDropEventRecordModel> =
     new EventEmitter();
 
-  constructor(
-    public station: GarbageStationWindowStationBusiness,
-    public record: GarbageStationWindowRecordBusiness,
-    public details: GarbageStationWindowDetailsBusiness,
-    local: LocalStorageService
-  ) {
+  constructor(local: LocalStorageService) {
     super();
     this.ui = local.user.UIType;
   }
@@ -91,42 +69,8 @@ export class GarbageStationWindowComponent
   UserUIType = UserUIType;
   Index = GarbageStationWindowIndex;
   isfilter = false;
-  table: ListType = ListType.table;
 
-  ngOnInit(): void {
-    // console.log('ppp', this.eventType);
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.eventType) {
-      let filter = this.record.filter.filter as GarbageDropRecordFilter;
-      // switch (this.eventType) {
-      //   case EventType.GarbageDrop:
-      //     filter.IsHandle = false;
-      //     filter.IsTimeout = false;
-      //     break;
-      //   case EventType.GarbageDropHandle:
-      //     filter.IsHandle = true;
-      //     filter.IsTimeout = false;
-      //     break;
-      //   case EventType.GarbageDropTimeout:
-      //   case EventType.GarbageDropSuperTimeout:
-      //     filter.IsTimeout = true;
-      //     break;
-      //   case EventType.GarbageDropTimeoutHandle:
-      //     filter.IsTimeout = true;
-      //     filter.IsHandle = true;
-      //     break;
-
-      //   default:
-      //     break;
-      // }
-    }
-    if (changes.divisionId) {
-      (this.record.filter.filter as GarbageDropRecordFilter).divisionId =
-        this.divisionId;
-    }
-  }
+  ngOnInit(): void {}
 
   indexChange(index: number) {
     this.index = index;
@@ -136,7 +80,10 @@ export class GarbageStationWindowComponent
 
   onimage(
     item: PagedArgs<
-      GarbageDropRecordViewModel | GarbageStationTableModel | ImageControlModel
+      | GarbageDropRecordViewModel
+      | GarbageStationTableModel
+      | EventRecordViewModel
+      | ImageControlModel
     >
   ) {
     this.image.emit(item);
@@ -150,8 +97,16 @@ export class GarbageStationWindowComponent
     this.position.emit(item);
   }
 
-  onvideo(args: GarbageDropRecordViewModel | AIGarbageRfidCardRecord) {
+  onvideo(
+    args:
+      | GarbageDropRecordViewModel
+      | AIGarbageRfidCardRecord
+      | EventRecordViewModel
+  ) {
     this.video.emit(args);
+  }
+  ongot(data: any) {
+    this.got.emit(data);
   }
 
   ondapuqiaodetails(item: GarbageDropEventRecordModel) {

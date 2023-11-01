@@ -6,11 +6,10 @@ import { ImageControlConverter } from 'src/app/converter/image-control.converter
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
-import {
-  GarbageFullEventRecord,
-  IllegalDropEventRecord,
-  MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-station/garbage-event-record.model';
+import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
+import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
+import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
+import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
@@ -20,7 +19,8 @@ import { CameraImageUrlModel } from './event-record.model';
 export type EventRecordType =
   | MixedIntoEventRecord
   | IllegalDropEventRecord
-  | GarbageFullEventRecord;
+  | GarbageFullEventRecord
+  | SewageEventRecord;
 
 @Injectable()
 export class EventRecordPagedConverter
@@ -68,6 +68,8 @@ export class EventRecordConverter
       return this.fromGarbageFull(source);
     } else if (source instanceof IllegalDropEventRecord) {
       return this.fromIllegalDrop(source);
+    } else if (source instanceof SewageEventRecord) {
+      return this.fromSewage(source);
     } else {
       return this.fromEventRecord(source);
     }
@@ -157,6 +159,16 @@ export class EventRecordConverter
         }
       }
     }
+    return model;
+  }
+
+  async fromSewage(source: SewageEventRecord) {
+    let model = await this.fromEventRecord(source);
+    // if (source.Data.CameraImageUrls) {
+    //   model.urls = source.Data.CameraImageUrls.map((x) => {
+    //     return Medium.img(x.ImageUrl);
+    //   });
+    // }
     return model;
   }
 }

@@ -1,7 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { Language } from 'src/app/common/tools/language';
-import { Enum } from 'src/app/enum/enum-helper';
 import {
   SearchOptionKey,
   SearchOptions,
@@ -15,6 +14,7 @@ import {
 export class EventRecordOperationComponent implements OnInit {
   @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
   @Output() filter: EventEmitter<void> = new EventEmitter();
+  @Input() type: ListType = ListType.table;
   @Output() typeChange: EventEmitter<ListType> = new EventEmitter();
 
   constructor() {}
@@ -25,32 +25,9 @@ export class EventRecordOperationComponent implements OnInit {
     text: '',
     propertyName: SearchOptionKey.name,
   };
-
+  ListType = ListType;
   ngOnInit(): void {
-    this.initListType();
     this.initSearchOpts();
-  }
-
-  initListType() {
-    let typeEnum = new Enum(ListType);
-    this.listTypes = typeEnum.toArray().map((x) => {
-      let item = new SelectItem();
-      item.Id = x;
-
-      switch (x) {
-        case ListType.table:
-          item.Name = '&#xf08b;&nbsp;'; //'<i class="howell-icon-ul"></i>';
-          break;
-        case ListType.card:
-          item.Name = '&#xf225;&nbsp;'; //'<i class="howell-icon-cam-all1"></i>';
-          break;
-
-        default:
-          break;
-      }
-      item.value = x;
-      return item;
-    });
   }
 
   initSearchOpts() {
@@ -69,8 +46,8 @@ export class EventRecordOperationComponent implements OnInit {
     this.filter.emit();
   }
 
-  onListTypeSelect(item: SelectItem) {
-    this.typeChange.emit(item.value);
+  onListTypeSelect() {
+    this.typeChange.emit(this.type);
   }
   onSearchOptionSelect(item: SelectItem) {
     this.searchOption.propertyName = item.value;
