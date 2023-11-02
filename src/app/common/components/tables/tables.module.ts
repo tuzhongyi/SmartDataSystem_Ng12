@@ -8,6 +8,7 @@ import { EventRecordTableComponent } from './event-record/event-record-table/eve
 
 import { AIGarbageStationTablesComponents } from './ai-garbage-station-tables/ai-garbage-station-tables.module';
 import { AiopGarbageCollectionPointTrashCanTableComponent } from './aiop-garbage-collection-point-trashcan-table/aiop-garbage-collection-point-trashcan-table.component';
+import { AIOPGarbageStationTableComponent } from './aiop-garbage-station-table/aiop-garbage-station-table.component';
 import { AiopGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
 import { DaPuQiaoTableComponents } from './daqupiao/dapuqiao-tables-components';
@@ -43,6 +44,8 @@ export const Table_COMPONENTS = [
   AiopGarbageCollectionMemberTableComponent,
   AiopGarbageCollectionPointTrashCanTableComponent,
   AiopGarbageVehicleCameraTableComponent,
+
+  AIOPGarbageStationTableComponent,
 
   CardRecordTableComponent,
 
