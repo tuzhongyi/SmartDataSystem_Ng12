@@ -29,6 +29,9 @@ import { AIGarbageStationRfidCardDetailsComponent } from './ai-garbage-station/a
 import { AIGarbageStationRfidCardManagerComponent } from './ai-garbage-station/ai-garbage-station-rfid-card-manager/ai-garbage-station-rfid-card-manager.component';
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
 import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.component';
+import { AIOPGarbageStationDetailsCamerasComponent } from './aiop-garbage-station-details-cameras/aiop-garbage-station-details-cameras.component';
+import { AIOPGarbageStationDetailsComponent } from './aiop-garbage-station-details/aiop-garbage-station-details.component';
+import { AIOPGarbageStationManagerComponent } from './aiop-garbage-station-manager/aiop-garbage-station-manager.component';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
 import { CameraMoveComponent } from './camera-move/camera-move.component';
@@ -40,7 +43,6 @@ import { EncodeDeviceOperateComponent } from './encode-device-operate/encode-dev
 import { GarbageEventsComponent } from './garbage-events/garbage-events.component';
 import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
 import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
-import { GarbageStationManageComponent } from './garbage-station-manage/garbage-station-manage.component';
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
 import { GarbageCollectionMemberDetailsWindowComponent } from './garbage-vehicles/garbage-collection-member-details-window/garbage-collection-member-details-window.component';
 import { GarbageCollectionMemberComponent } from './garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
@@ -79,7 +81,9 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     DivisionManageComponent,
     GarbageEventsComponent,
     DeployMapComponent,
-    GarbageStationManageComponent,
+    AIOPGarbageStationDetailsCamerasComponent,
+    AIOPGarbageStationDetailsComponent,
+    AIOPGarbageStationManagerComponent,
     SystemSettingComponent,
     PlatformManageComponent,
     MonitorPlatformComponent,

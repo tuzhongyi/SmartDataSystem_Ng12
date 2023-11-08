@@ -1,0 +1,53 @@
+<div class="aiop-garbage-station-details-cameras">
+  <div class="aiop-garbage-station-details-cameras-head">
+    <div class="hw-simple-title">选择摄像机</div>
+  </div>
+  <div class="aiop-garbage-station-details-cameras-selected">
+    <div class="aiop-garbage-station-details-cameras-head">
+      <div class="hw-simple-title-1">已选择摄像机</div>
+    </div>
+    <div class="aiop-garbage-station-details-cameras-selected">
+      <mat-chip-list class="material-chip-list wrap" #chipList>
+        <mat-chip
+          *ngFor="let item of selected | keyvalue"
+          [title]="item.value.Name"
+        >
+          <div class="mat-chip-item">
+            <div class="mat-chip-item-title">{{ item.value.Name }}</div>
+            <div class="mat-chip-item-value" (click)="onremove(item.value)">
+              <i class="howell-icon-Close"></i>
+            </div>
+          </div>
+        </mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+  <div class="aiop-garbage-station-details-cameras-selectable">
+    <div class="aiop-garbage-station-details-cameras-head">
+      <div class="hw-simple-title-1">可选择摄像机</div>
+      <div>
+        <howell-simple-search
+          placeHolder="厢房名称"
+          (searchEvent)="onsearch($event)"
+        ></howell-simple-search>
+      </div>
+    </div>
+    <div class="aiop-garbage-station-details-cameras-body">
+      <aiop-camera-table
+        [init]="false"
+        [args]="args"
+        [load]="load"
+        (loaded)="onloaded($event)"
+        [(selected)]="selected"
+      ></aiop-camera-table>
+    </div>
+  </div>
+  <div class="aiop-garbage-station-details-cameras-foot">
+    <button class="hw-green-btn m-r-10" (click)="onok()">
+      <i class="howell-icon-Check"></i> 确定
+    </button>
+    <button class="hw-gray-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i> 取消
+    </button>
+  </div>
+</div>

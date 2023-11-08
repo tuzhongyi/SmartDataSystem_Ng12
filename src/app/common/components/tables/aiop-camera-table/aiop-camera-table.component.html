@@ -1,40 +1,38 @@
 <div class="aiop-camera-table">
-  <div class="aiop-camera-table-main">
-    <table border="0" cellpadding="0" cellspacing="0">
+  <div class="header">
+    <table>
       <colgroup>
         <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
       </colgroup>
       <thead>
         <tr>
-          <!-- [(ngModel)]="checked" -->
           <td>名称</td>
           <td>类型</td>
           <td>编码设备</td>
         </tr>
       </thead>
     </table>
-    <div class="body">
-      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
-        <colgroup>
-          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
-        </colgroup>
-        <tbody>
-          <tr
-            [ngClass]="{
-              selected: selected.includes(item)
-            }"
-            *ngFor="let item of datas; let i = index"
-            (click)="onselect(item)"
-          >
-            <td>{{ item.Name }}</td>
-            <td>{{ item.CameraType | language_camera_type_pipe }}</td>
-            <td>{{ (item.EncodeDevice | async)?.Name }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
   </div>
-
+  <div class="content">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <tbody class="light-blue-text">
+        <tr
+          [ngClass]="{
+            selected: selected.has(item.Id)
+          }"
+          *ngFor="let item of datas; let i = index"
+          (click)="onselect(item)"
+        >
+          <td>{{ item.Name }}</td>
+          <td>{{ item.CameraType | language_camera_type_pipe }}</td>
+          <td>{{ (item.EncodeDevice | async)?.Name }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
   <div class="loading" *ngIf="loading">
     <mat-spinner></mat-spinner>
   </div>

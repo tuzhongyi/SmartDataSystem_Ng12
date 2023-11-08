@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { EncodeDevice } from '../../model/garbage-station/encode-device';
 import { Protocol } from '../../model/garbage-station/protocol.model';
+import { PagedList } from '../../model/page_list.model';
 import { ResourceEncodeDevicesUrl } from '../../url/aiop/resources/encode-devices/encode-devices.url';
 import {
   HowellBaseRequestService,
@@ -39,6 +40,19 @@ export class EncodeDeviceRequestService {
 
   list(params: GetEncodeDevicesParams = new GetEncodeDevicesParams()) {
     return this.type.paged(ResourceEncodeDevicesUrl.list(), params);
+  }
+
+  async all(params: GetEncodeDevicesParams = new GetEncodeDevicesParams()) {
+    let data: EncodeDevice[] = [];
+    let index = 1;
+    let paged: PagedList<EncodeDevice>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
 
   protocol() {

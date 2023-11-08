@@ -1,0 +1,75 @@
+.aiop-garbage-station-details {
+  &-body {
+    .station-info {
+      padding: 0;
+
+      &-item {
+        margin-bottom: 10px;
+
+        &-title {
+          width: auto;
+          flex-grow: 0;
+          display: flex;
+          color: #cfd7ff;
+
+          .must {
+            color: red;
+          }
+        }
+
+        &-value {
+          flex-grow: 1;
+        }
+      }
+
+
+    }
+
+    &-cameras {
+      &-head {
+        display: flex;
+        align-items: center;
+        color: #cfd7ff;
+
+        .button {
+          margin-left: 5px;
+          color: #7586e0;
+          cursor: pointer;
+
+          &:hover {
+            color: white;
+          }
+        }
+
+      }
+
+      &-body {
+        border: 1px solid #5e6ebf;
+        height: 212px;
+      }
+    }
+  }
+
+  &-foot {
+    height: 50px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+  }
+}
+
+.confirm {
+  &-body {
+    .hw-simple-title {
+      display: flex;
+      flex-wrap: wrap;
+
+
+      .important {
+        color: #7586e0;
+      }
+    }
+  }
+
+}

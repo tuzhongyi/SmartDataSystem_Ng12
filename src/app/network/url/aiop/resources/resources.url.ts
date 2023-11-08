@@ -1,7 +1,7 @@
 import { BaseUrl } from '../../base.url';
 
 export abstract class ResourcesURL {
-  protected static get basic(): string {
+  static get basic(): string {
     return `${BaseUrl.aiop_service}/Resources`;
   }
 

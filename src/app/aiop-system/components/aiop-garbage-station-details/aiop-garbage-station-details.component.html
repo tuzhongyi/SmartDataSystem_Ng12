@@ -1,0 +1,78 @@
+<div class="aiop-garbage-station-details">
+  <div class="aiop-garbage-station-details-head">
+    <div class="hw-simple-title">编辑垃圾厢房</div>
+  </div>
+  <div class="aiop-garbage-station-details-body" *ngIf="!!station">
+    <div class="aiop-garbage-station-details-body-info">
+      <div class="station-info">
+        <div class="station-info-item">
+          <div class="station-info-item-title">
+            名称
+            <div class="must">*</div>
+          </div>
+          <div class="station-info-item-value">
+            <input type="text" [(ngModel)]="station.Name" />
+          </div>
+        </div>
+        <div class="station-info-item">
+          <div class="station-info-item-title">
+            类型
+            <div class="must">*</div>
+          </div>
+          <div class="station-info-item-value">
+            <hw-select [(selected)]="station.StationType">
+              <select [(ngModel)]="station.StationType">
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Garbage) }}
+                </option>
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Construction) }}
+                </option>
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Smart) }}
+                </option>
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Rfid) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="aiop-garbage-station-details-body-cameras">
+      <div class="aiop-garbage-station-details-body-cameras-head">
+        摄像机
+        <div class="button" title="设置" (click)="oncamerasetting()">
+          <i class="howell-icon-modification"></i>
+        </div>
+      </div>
+      <div class="aiop-garbage-station-details-body-cameras-body">
+        <aiop-garbage-station-cameras-table
+          [cameras]="station.Cameras"
+          (delete)="oncameradelete($event)"
+        ></aiop-garbage-station-cameras-table>
+      </div>
+    </div>
+  </div>
+  <div class="aiop-garbage-station-details-foot">
+    <button class="hw-green-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i> 确定
+    </button>
+    <button class="hw-gray-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i> 取消
+    </button>
+  </div>
+</div>
+
+<app-window
+  [Model]="window.setting"
+  *ngIf="window.setting.show && window.setting.model"
+  [style]="window.setting.style"
+  [mask]="false"
+>
+  <aiop-garbage-station-details-cameras
+    [(model)]="window.setting.model"
+    (close)="window.setting.show = false"
+  ></aiop-garbage-station-details-cameras>
+</app-window>

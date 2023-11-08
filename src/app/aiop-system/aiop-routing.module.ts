@@ -13,6 +13,7 @@ import { AIGarbageStationDeviceRecordEventManagerComponent } from './components/
 import { AIGarbageStationRegionManagerComponent } from './components/ai-garbage-station/ai-garbage-station-region-manager/ai-garbage-station-region-manager.component';
 import { AIGarbageStationRfidCardManagerComponent } from './components/ai-garbage-station/ai-garbage-station-rfid-card-manager/ai-garbage-station-rfid-card-manager.component';
 import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
+import { AIOPGarbageStationManagerComponent } from './components/aiop-garbage-station-manager/aiop-garbage-station-manager.component';
 import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
@@ -20,7 +21,6 @@ import { DivisionManageComponent } from './components/division-manage/division-m
 import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
 import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
 import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
-import { GarbageStationManageComponent } from './components/garbage-station-manage/garbage-station-manage.component';
 import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
@@ -92,7 +92,7 @@ const routes: Routes = [
               },
               {
                 path: 'garbage-station-manage',
-                component: GarbageStationManageComponent,
+                component: AIOPGarbageStationManagerComponent,
                 data: {
                   breadcrumb: '垃圾厢房管理',
                 },

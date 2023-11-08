@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AIOPGarbageStationTableBusiness } from './aiop-garbage-station-table.business';
 import { AIOPGarbageStationTableArgs } from './aiop-garbage-station-table.model';
@@ -16,24 +16,33 @@ import { AIOPGarbageStationTableService } from './aiop-garbage-station-table.ser
   providers: [AIOPGarbageStationTableService, AIOPGarbageStationTableBusiness],
 })
 export class AIOPGarbageStationTableComponent
-  extends PagedTableAbstractComponent<GarbageStation>
-  implements IComponent<IModel, PagedList<GarbageStation>>, OnInit
+  extends PagedTableAbstractComponent<GarbageStationModel>
+  implements IComponent<IModel, PagedList<GarbageStationModel>>, OnInit
 {
   @Input() load?: EventEmitter<AIOPGarbageStationTableArgs>;
   @Input() args: AIOPGarbageStationTableArgs =
     new AIOPGarbageStationTableArgs();
-  @Input() business: IBusiness<IModel, PagedList<GarbageStation>>;
-  @Output() details: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input() business: IBusiness<IModel, PagedList<GarbageStationModel>>;
+  @Input() selected: GarbageStationModel[] = [];
+  @Output() selectedChange: EventEmitter<GarbageStationModel[]> =
+    new EventEmitter();
+  @Output() details: EventEmitter<GarbageStationModel> = new EventEmitter();
+
   constructor(business: AIOPGarbageStationTableBusiness) {
     super();
     this.business = business;
   }
   ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.args = x;
+        this.loadData(1);
+      });
+    }
     this.loadData(1);
   }
 
-  widths = [];
-  selected?: GarbageStation;
+  widths = ['250px', undefined, undefined, undefined, undefined, '10%'];
 
   loadData(index: number, size: number = 10): void {
     this.loading = true;
@@ -43,14 +52,15 @@ export class AIOPGarbageStationTableComponent
       this.loading = false;
     });
   }
-  onselect(item: GarbageStation) {
-    if (this.selected === item) {
-      this.selected = undefined;
+  onselect(item: GarbageStationModel) {
+    let index = this.selected.indexOf(item);
+    if (index < 0) {
+      this.selected.push(item);
     } else {
-      this.selected = item;
+      this.selected.splice(index, 1);
     }
   }
-  ondetails(item: GarbageStation) {
+  ondetails(item: GarbageStationModel) {
     this.details.emit(item);
   }
 }

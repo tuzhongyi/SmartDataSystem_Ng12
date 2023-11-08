@@ -1,0 +1,51 @@
+<div class="aiop-garbage-station-cameras-table">
+  <div class="header">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>#</td>
+          <td>名称</td>
+          <td>状态</td>
+          <td>用途</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+  <div class="content">
+    <table>
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <tbody class="light-blue-text">
+        <ng-container *ngFor="let item of cameras; let i = index">
+          <tr (click)="onselect($event, item)">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item.Name }}</td>
+            <td>
+              <div
+                [ngClass]="{
+                  'green-text': item.OnlineStatus === 0,
+                  'powder-red-text': item.OnlineStatus !== 0
+                }"
+              >
+                {{ item.OnlineStatus === 0 ? "在线" : "离线" }}
+              </div>
+            </td>
+            <td [title]="Language.CameraUsageList(item.CameraUsage)">
+              {{ Language.CameraUsageList(item.CameraUsage) }}
+            </td>
+            <td class="center operation">
+              <div class="howell-icon" (click)="ondelete(item)">
+                <i class="howell-icon-delete-bin"></i>
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+</div>

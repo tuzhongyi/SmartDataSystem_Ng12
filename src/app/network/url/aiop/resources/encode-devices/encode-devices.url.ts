@@ -1,7 +1,7 @@
 import { ResourcesURL } from '../resources.url';
 
 export abstract class ResourceEncodeDevicesUrl extends ResourcesURL {
-  protected static get basic() {
+  static get basic() {
     return `${super.basic}/EncodeDevices`;
   }
   static create() {

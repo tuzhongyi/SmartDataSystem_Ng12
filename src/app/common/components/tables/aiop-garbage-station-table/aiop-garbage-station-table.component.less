@@ -1,8 +1,28 @@
 .garbage-station-table {
   height: 100%;
 
+
   &-main {
     height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &>* {
+      flex-grow: 0;
+    }
+
+    .body {
+      flex-grow: 1;
+    }
+
+    table {
+      tr {
+        height: 54px;
+      }
+    }
+
+
+
 
     .img-list {
       display: flex;
@@ -26,10 +46,6 @@
       justify-content: center;
     }
 
-    ::ng-deep {
-      .body {
-        height: calc(100% - 70px - 50px);
-      }
-    }
+
   }
 }

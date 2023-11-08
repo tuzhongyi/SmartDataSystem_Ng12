@@ -3,30 +3,31 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { AICameraConverter } from 'src/app/converter/ai-camera.converter';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 import { AICameraModel } from 'src/app/view-model/ai-camera.model';
+import { AiopCameraTableArgs } from './aiop-camera-table.model';
+import { AiopCameraTableService } from './aiop-camera-table.service';
 
 @Injectable()
 export class AiopCameraTableBusiness
   implements IBusiness<AICamera[], AICameraModel[]>
 {
   constructor(
-    private service: AICameraRequestService,
+    private service: AiopCameraTableService,
     private converter: AICameraConverter
   ) {}
 
-  async load(condition?: string) {
-    let data = await this.getData(condition);
+  async load(args: AiopCameraTableArgs) {
+    let data = await this.getData(args);
+    let devices = await this.service.device.all();
     let model = data.map((x) => {
-      return this.converter.Convert(x);
+      return this.converter.Convert(x, devices);
     });
     return model;
   }
 
-  async getData(condition?: string): Promise<AICamera[]> {
+  async getData(args: AiopCameraTableArgs): Promise<AICamera[]> {
     let params = new GetCamerasParams();
-    params.Name = condition;
-    let paged = await this.service.list(params);
-    return paged.Data;
+    params.Name = args.name;
+    return this.service.camera.all(params);
   }
 }

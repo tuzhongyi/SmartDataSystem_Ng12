@@ -18,6 +18,17 @@
   .mat-chip-list-wrapper {
     flex-wrap: nowrap;
   }
+
+  &.wrap {
+    .mat-chip-list-wrapper {
+      flex-wrap: wrap;
+    }
+  }
+
+  .mat-chip-item {
+    display: flex;
+    align-items: center;
+  }
 }
 
 app-root .mat-standard-chip {
@@ -33,6 +44,7 @@ app-root .mat-standard-chip {
 .mat-chip.mat-standard-chip {
   background-color: rgb(69, 75, 112);
   color: #eaedff;
+  border-radius: 3px;
 }
 
 .mat-standard-chip.mat-chip-with-trailing-icon {

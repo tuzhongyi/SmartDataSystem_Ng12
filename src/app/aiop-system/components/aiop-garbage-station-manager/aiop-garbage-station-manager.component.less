@@ -1,0 +1,57 @@
+.aiop-garbage-station-manager {
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  &-tree {
+    height: 100%;
+    flex-grow: 0;
+    width: 27%;
+    max-width: 320px;
+    min-width: 275px;
+  }
+
+  &-content {
+    height: 100%;
+    flex-grow: 1;
+  }
+
+  &-head {
+    height: 36px;
+    margin-bottom: 10px;
+  }
+
+  &-body {
+    height: calc(100% - 46px);
+    display: flex;
+    flex-direction: column;
+
+    &-scroll {
+      height: 100%;
+    }
+
+    &-filter {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      flex-grow: 0;
+    }
+
+    &-table {
+      height: calc(100% - 24px);
+    }
+  }
+
+
+  .aiop-card {
+    background: rgba(36, 72, 165, 0.05);
+    border: 2px rgba(117, 134, 224, 0.15) solid;
+    padding: 20px;
+    margin-right: 20px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

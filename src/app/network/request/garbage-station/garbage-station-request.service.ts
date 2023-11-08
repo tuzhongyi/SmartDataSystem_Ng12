@@ -32,6 +32,7 @@ import {
   HowellBaseTypeRequestService,
 } from '../base-request-howell.service';
 import { Cache } from '../cache/cache';
+import { ExcelService } from '../excel.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   CameraDownloadFileParams,
@@ -54,7 +55,7 @@ import {
 })
 @Cache(GarbageStationUrl.basic(), GarbageStation)
 export class GarbageStationRequestService extends AbstractService<GarbageStation> {
-  constructor(http: HowellAuthHttpService, router: Router) {
+  constructor(private http: HowellAuthHttpService, router: Router) {
     super();
     this.basic = new HowellBaseRequestService(http, router);
     this.typeBasic = this.basic.type(GarbageStation);
@@ -172,6 +173,8 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
     }
     return this._device;
   }
+
+  excel = new ExcelService(this.http, GarbageStationUrl.excels());
 }
 
 class CamerasService {

@@ -213,6 +213,24 @@ export class Language {
         return Language.json.Unknow;
     }
   }
+  static CameraUsageList(value?: number) {
+    if (value === undefined) {
+      return '-';
+    }
+    let flags = new Flags(value);
+    let result = [];
+    let values = flags.getValues();
+    for (let i = 0; i < values.length; i++) {
+      if (flags.contains(values[i])) {
+        result.push(values[i]);
+      }
+    }
+    if (result.length === 0) {
+      return '-';
+    }
+
+    return result.map((x) => Language.CameraUsage(x)).join(',');
+  }
 
   static EventType(type: EventType) {
     switch (type) {

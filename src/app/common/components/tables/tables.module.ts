@@ -1,4 +1,4 @@
-import { AiopCameraTableComponent } from './aiop-camera-table/aiop-camera-table.component';
+import { AIOPCameraTableComponent } from './aiop-camera-table/aiop-camera-table.component';
 import { AiopGarbageCollectionMemberTableComponent } from './aiop-garbage-collection-member-table/aiop-garbage-collection-member-table.component';
 import { AiopGarbageCollectionPointTableComponent } from './aiop-garbage-collection-point-table/aiop-garbage-collection-point-table.component';
 import { DeviceListTableComponent } from './device-list-table/device-list-table.component';
@@ -8,6 +8,7 @@ import { EventRecordTableComponent } from './event-record/event-record-table/eve
 
 import { AIGarbageStationTablesComponents } from './ai-garbage-station-tables/ai-garbage-station-tables.module';
 import { AiopGarbageCollectionPointTrashCanTableComponent } from './aiop-garbage-collection-point-trashcan-table/aiop-garbage-collection-point-trashcan-table.component';
+import { AIOPGarbageStationCamerasTableComponent } from './aiop-garbage-station-cameras-table/aiop-garbage-station-cameras-table.component';
 import { AIOPGarbageStationTableComponent } from './aiop-garbage-station-table/aiop-garbage-station-table.component';
 import { AiopGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
@@ -38,12 +39,14 @@ export const Table_COMPONENTS = [
   EventRecordCountTableComponent,
   GarbageDropStationCountTableComponent,
   GarbageVehicleCameraTableComponent,
-  AiopCameraTableComponent,
+  AIOPCameraTableComponent,
 
   AiopGarbageCollectionPointTableComponent,
   AiopGarbageCollectionMemberTableComponent,
   AiopGarbageCollectionPointTrashCanTableComponent,
   AiopGarbageVehicleCameraTableComponent,
+
+  AIOPGarbageStationCamerasTableComponent,
 
   AIOPGarbageStationTableComponent,
 

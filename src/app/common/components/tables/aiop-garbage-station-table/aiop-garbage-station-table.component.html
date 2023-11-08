@@ -6,13 +6,11 @@
       </colgroup>
       <thead>
         <tr>
-          <!-- <td >序号</td> -->
-          <td>图片</td>
+          <td>ID</td>
           <td>投放点</td>
-          <td>社区</td>
           <td>街道</td>
           <td>居委会</td>
-          <td>状态</td>
+          <td>类型</td>
           <td class="operation"><div>操作</div></td>
         </tr>
       </thead>
@@ -25,72 +23,28 @@
         <tbody>
           <tr
             *ngFor="let item of datas; let i = index"
-            [ngClass]="{ selected: selected === item }"
+            [ngClass]="{ selected: selected.includes(item) }"
             (click)="onselect(item)"
           >
             <!-- <td >{{ i + 1 }}</td> -->
             <td>
-              <div class="img-list">
-                <div
-                  class="img"
-                  *ngFor="let url of item.urls | async; let index = index"
-                  (click)="onimage($event, item, index)"
-                >
-                  <img [src]="url" alt="" />
-                </div>
-              </div>
+              {{ item.Id }}
             </td>
             <td>
-              {{ item.GarbageStation ? item.GarbageStation.Name : "-" }}
+              {{ item.Name }}
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? item.GarbageStation.CommunityName ?? "-"
-                  : "-"
-              }}
+              {{ ((item.Division | async)?.Parent | async)?.Name }}
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? ((item.GarbageStation.Division | async)?.Parent | async)
-                      ?.Name
-                  : "-"
-              }}
+              {{ (item.Division | async)?.Name }}
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? (item.GarbageStation.Division | async)?.Name
-                  : "-"
-              }}
-            </td>
-            <td>
-              <span
-                [ngClass]="{
-                  'green-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Normal
-                  ),
-                  'orange-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Full
-                  ),
-                  'gray-2-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Error
-                  )
-                }"
-              >
-                {{
-                  item.GarbageStation
-                    ? Language.StationStateFlags(
-                        item.GarbageStation.StationStateFlags
-                      )
-                    : "-"
-                }}
-              </span>
+              {{ Language.StationType(item.StationType) }}
             </td>
             <td class="operation">
-              <div (click)="onPositionClicked(item)">
-                <i class="glyphicon glyphicon-map-marker"></i>
+              <div (click)="ondetails(item)">
+                <i class="howell-icon-modification"></i>
               </div>
             </td>
           </tr>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AICamera } from '../../model/garbage-station/ai-camera.model';
 import { CameraAIModel } from '../../model/garbage-station/camera-ai.model';
+import { PagedList } from '../../model/page_list.model';
 import { ResourceAICamerasUrl } from '../../url/aiop/resources/cameras/cameras.url';
 import {
   HowellBaseRequestService,
@@ -20,6 +21,19 @@ export class AICameraRequestService {
   constructor(http: HowellAuthHttpService, router: Router) {
     this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(AICamera);
+  }
+
+  async all(params: GetCamerasParams = new GetCamerasParams()) {
+    let data: AICamera[] = [];
+    let index = 1;
+    let paged: PagedList<AICamera>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
 
   list(params: GetCamerasParams = new GetCamerasParams()) {
