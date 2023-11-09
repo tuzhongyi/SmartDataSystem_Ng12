@@ -39,7 +39,7 @@ export class AICameraModelManageBusiness {
 
     for (let i = 0; i < models.length; i++) {
       let model = models[i];
-      let aiModels = await this._cameraRequest.listAIModels(model.Id);
+      let aiModels = await this._cameraRequest.model.list(model.Id);
       model.AIModels =
         this._converter.iterateToModel<CameraAIModelManageModel<CameraAIModel>>(
           aiModels
@@ -81,13 +81,13 @@ export class AICameraModelManageBusiness {
   }
 
   addAIModelToCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.addAIModel(cameraId, modelId);
+    return this._cameraRequest.model.add(cameraId, modelId);
   }
   getAIModelFromCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.getAIModel(cameraId, modelId);
+    return this._cameraRequest.model.get(cameraId, modelId);
   }
   deleteAIModelFromCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.deleteAIModel(cameraId, modelId);
+    return this._cameraRequest.model.delete(cameraId, modelId);
   }
   private _listCameras(params: GetCamerasParams = new GetCamerasParams()) {
     return this._cameraRequest.list(params);

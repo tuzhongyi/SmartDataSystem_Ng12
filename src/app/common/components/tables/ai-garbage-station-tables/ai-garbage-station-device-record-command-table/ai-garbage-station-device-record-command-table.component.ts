@@ -55,7 +55,11 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
         if (x) {
           this.args = x;
         }
-        this.loadData(1, this.pageSize, this.args);
+        this.loadData(
+          this.args.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize,
+          this.args
+        );
       });
     }
     this.loadData(1);
@@ -77,7 +81,7 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
     } else {
       this.args.desc = sort.active;
     }
-    this.loadData(1);
+    this.loadData(this.page.PageIndex);
   }
 
   onimage(e: Event, item: AIGarbageDeviceCommandRecord) {

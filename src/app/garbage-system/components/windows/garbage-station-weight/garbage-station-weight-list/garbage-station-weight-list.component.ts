@@ -77,6 +77,7 @@ export class GarbageStationWeightListComponent
 
   loadData(divisionId?: string) {
     this.args.divisionId = divisionId;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 
@@ -105,10 +106,12 @@ export class GarbageStationWeightListComponent
       default:
         break;
     }
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 
   onsearch() {
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 

@@ -6,23 +6,22 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetCollectionMembersParams } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.params';
 import { CollectionMemberRequsetService } from 'src/app/network/request/garbage_vehicles/collection-member/member-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { AiopGarbageCollectionMemberTableArgs as AIOPGarbageCollectionMemberTableArgs } from './aiop-garbage-collection-member-table.model';
 
 @Injectable()
-export class AiopGarbageCollectionMemberTableBusiness
+export class AIOPGarbageCollectionMemberTableBusiness
   implements IBusiness<PagedList<CollectionMember>>
 {
   constructor(private service: CollectionMemberRequsetService) {}
   load(
     index: number,
     size: number,
-    divisionId?: string,
-    name?: string
+    args: AIOPGarbageCollectionMemberTableArgs
   ): Promise<PagedList<CollectionMember>> {
     let page = new PagedParams();
     page.PageIndex = index;
     page.PageSize = size;
-
-    return this.getData(page, divisionId, name);
+    return this.getData(page, args.divisionId, args.name);
   }
   getData(
     paged: PagedParams,

@@ -47,6 +47,7 @@ export class AIOPGarbageStationDetailsCamerasComponent implements OnInit {
 
   onsearch(name: string) {
     this.args.name = name;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 

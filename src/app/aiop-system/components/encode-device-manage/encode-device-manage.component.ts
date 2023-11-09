@@ -3,8 +3,11 @@ import { FormBuilder } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import {
+  EncodeDeviceManageModel,
+  EncodeDeviceManageSearchInfo,
+} from 'src/app/aiop-system/components/encode-device-manage/encode-device-manage.model';
 import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
@@ -13,16 +16,13 @@ import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import {
-  EncodeDeviceManageModel,
-  EncodeDeviceManageSearchInfo,
-} from 'src/app/view-model/encode-device-manage.model';
-import {
   TableCellEvent,
   TableColumnModel,
   TableOperateModel,
 } from 'src/app/view-model/table.model';
 import { EncodeDeviceManageBusiness } from './encode-device-manage.business';
 import { EncodeDeviceManageConf } from './encode-device-manage.config';
+import { EncodeDeviceManageWindow } from './encode-device-manage.window';
 
 @Component({
   selector: 'howell-encode-device-manage',
@@ -47,11 +47,6 @@ export class EncodeDeviceManageComponent implements OnInit {
   pagerCount: number = 4;
   pageIndex = 1;
 
-  // 对话框
-  showOperate = false;
-  showConfirm = false;
-  dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
-
   //搜索
   condition = '';
   showFilter = false;
@@ -73,14 +68,6 @@ export class EncodeDeviceManageComponent implements OnInit {
   treeSelectStrategy = SelectStrategy.Multiple;
   defaultIds: string[] = [];
   labelIds: string[] = [];
-
-  // 表单
-  state = FormState.none;
-  resourceId = '';
-  resourceName = '';
-
-  // 绑定标签
-  showBind = false;
 
   get enableDelBtn() {
     return !!this.selectedRows.length;
@@ -108,6 +95,8 @@ export class EncodeDeviceManageComponent implements OnInit {
     );
   }
 
+  window = new EncodeDeviceManageWindow();
+
   ngOnInit(): void {
     this._init();
   }
@@ -134,9 +123,11 @@ export class EncodeDeviceManageComponent implements OnInit {
   selectTableCell(e: TableCellEvent<EncodeDeviceManageModel>) {
     console.log(e);
     if (e.column.columnDef == 'Labels') {
-      this.resourceId = e.row.Id;
-      this.showBind = true;
-      this.resourceName = e.row.Name;
+      this.window.label.show = true;
+      this.window.label.resource = {
+        Id: e.row.Id,
+        Name: e.row.Name,
+      };
     }
   }
   tableSelect(type: TableSelectType) {
@@ -170,24 +161,23 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
 
   async dialogMsgEvent(status: DialogEnum) {
-    this.showConfirm = false;
+    this.window.confirm.show = false;
     if (status == DialogEnum.confirm) {
       this._deleteRows(this.willBeDeleted);
     } else if (status == DialogEnum.cancel) {
     }
   }
   closeForm(update: boolean) {
-    this.showOperate = false;
-    this.state = FormState.none;
-    this.resourceId = '';
+    this.window.operate.show = false;
+    this.window.operate.clear();
     if (update) {
       this.pageIndex = 1;
       this._init();
     }
   }
   closeBind(update: boolean) {
-    this.showBind = false;
-    this.resourceId = '';
+    this.window.label.show = false;
+    this.window.label.clear();
     if (update) {
       this.pageIndex = 1;
       this._init();
@@ -198,19 +188,21 @@ export class EncodeDeviceManageComponent implements OnInit {
     this.searchInfo.filter = this.showFilter;
   }
   addBtnClick() {
-    this.state = FormState.add;
-    this.showOperate = true;
+    this.window.operate.state = FormState.add;
+    this.window.operate.show = true;
   }
   deleteBtnClick() {
     this.willBeDeleted = [...this.selectedRows];
-    this.showConfirm = true;
-    this.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
+    this.window.confirm.show = true;
+    this.window.confirm.dialogModel.content = `删除${this.willBeDeleted.length}个选项?`;
   }
 
   bindBtnClick() {
-    this.showBind = true;
-    this.resourceId = this.selectedRows[0]?.Id || '';
-    this.resourceName = this.selectedRows[0]?.Name || '';
+    this.window.label.show = true;
+    this.window.label.resource = {
+      Id: this.selectedRows[0]?.Id || '',
+      Name: this.selectedRows[0]?.Name || '',
+    };
   }
 
   private async _deleteRows(rows: EncodeDeviceManageModel[]) {
@@ -225,8 +217,11 @@ export class EncodeDeviceManageComponent implements OnInit {
   }
 
   private _clickEditBtn(row: EncodeDeviceManageModel) {
-    this.showOperate = true;
-    this.state = FormState.edit;
-    this.resourceId = row.Id;
+    this.window.operate.state = FormState.edit;
+    this.window.operate.resource = {
+      Id: row.Id,
+      Name: row.Name,
+    };
+    this.window.operate.show = true;
   }
 }

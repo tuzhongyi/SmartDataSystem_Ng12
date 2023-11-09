@@ -34,7 +34,7 @@ export class AIGarbageStationDeviceManagerComponent {
         this.args.regionId = node.RawData.Id;
       }
     }
-
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   tocreate() {
@@ -42,6 +42,7 @@ export class AIGarbageStationDeviceManagerComponent {
   }
   tosearch(value: string) {
     this.args.name = value;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   ondetails(item: AIGarbageDevice) {
@@ -91,6 +92,7 @@ export class AIGarbageStationDeviceManagerComponent {
           .upload(t_files[0])
           .then((x) => {
             MessageBar.response_success('操作成功');
+            this.args.tofirst = false;
             this.load.emit(this.args);
           })
           .catch((x) => {
@@ -119,6 +121,7 @@ export class AIGarbageStationDeviceManagerComponent {
         .delete(models.map((x) => x.Id))
         .then((x) => {
           MessageBar.response_success('操作成功');
+          this.args.tofirst = false;
           this.load.emit(this.args);
         })
         .catch((x) => {
@@ -135,6 +138,7 @@ export class AIGarbageStationDeviceManagerComponent {
     this.window.close();
   }
   onupdate() {
+    this.args.tofirst = false;
     this.load.emit(this.args);
     this.closewindow();
   }

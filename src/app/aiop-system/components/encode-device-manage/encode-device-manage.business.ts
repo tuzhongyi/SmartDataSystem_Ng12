@@ -1,15 +1,25 @@
-import { Injectable } from "@angular/core";
-import { EncodeDeviceManageConverter } from "src/app/converter/encode-device-manage.converter";
-import { PagedList } from "src/app/network/model/page_list.model";
-import { EncodeDeviceRequestService } from "src/app/network/request/encode-device/encode-device.service";
-import { GetEncodeDevicesParams } from "src/app/network/request/encode-device/encode-devices-params";
-import { EncodeDeviceManageModel, EncodeDeviceManageSearchInfo } from "src/app/view-model/encode-device-manage.model";
+import { Injectable } from '@angular/core';
+import { EncodeDeviceManageConverter } from 'src/app/aiop-system/components/encode-device-manage/encode-device-manage.converter';
+import {
+  EncodeDeviceManageModel,
+  EncodeDeviceManageSearchInfo,
+} from 'src/app/aiop-system/components/encode-device-manage/encode-device-manage.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
+import { GetEncodeDevicesParams } from 'src/app/network/request/encode-device/encode-devices-params';
 
 @Injectable()
 export class EncodeDeviceManageBusiness {
-  constructor(private _encodeDeviceRequest: EncodeDeviceRequestService, private _converter: EncodeDeviceManageConverter) { }
+  constructor(
+    private _encodeDeviceRequest: EncodeDeviceRequestService,
+    private _converter: EncodeDeviceManageConverter
+  ) {}
 
-  async init(searchInfo: EncodeDeviceManageSearchInfo, pageIndex: number = 1, pageSize: number = 9) {
+  async init(
+    searchInfo: EncodeDeviceManageSearchInfo,
+    pageIndex: number = 1,
+    pageSize: number = 9
+  ) {
     let params = new GetEncodeDevicesParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
@@ -23,21 +33,19 @@ export class EncodeDeviceManageBusiness {
     }
 
     let { Data, Page } = await this.listEncodeDevice(params);
-    let data = this._converter.iterateToModel(Data)
-
+    let data = this._converter.iterateToModel(Data);
 
     let res: PagedList<EncodeDeviceManageModel> = {
       Page,
       Data: data,
     };
     return res;
-
   }
 
   listEncodeDevice(params: GetEncodeDevicesParams) {
-    return this._encodeDeviceRequest.list(params)
+    return this._encodeDeviceRequest.list(params);
   }
   deleteEncodeDevice(id: string) {
-    return this._encodeDeviceRequest.delete(id)
+    return this._encodeDeviceRequest.delete(id);
   }
 }

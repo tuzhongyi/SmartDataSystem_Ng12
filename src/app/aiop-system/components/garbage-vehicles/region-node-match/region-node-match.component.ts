@@ -1,22 +1,15 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { CommonFlatNode } from 'src/app/components/common-tree/common-flat-node.model';
-import { CommonNestNode } from 'src/app/components/common-tree/common-nest-node.model';
-import { RegionTreeComponent } from 'src/app/components/region-tree/region-tree.component';
-import { RegionTreeSource } from 'src/app/components/region-tree/region-tree.converter';
-import { EnumHelper } from 'src/app/enums/enum-helper';
-import { RegionTreeItemType } from 'src/app/enums/region-tree.enum';
-import { ResourceType } from 'src/app/enums/resource-type.enum';
-import { SelectStrategy } from 'src/app/enums/select-strategy.enum';
-import { TableSelectStateEnum } from 'src/app/enums/table-select-state.enum';
-import { CameraRegionNode, RegionNode } from 'src/app/models/region-node.model';
-import { RegionTree } from 'src/app/models/region-tree.model';
-import { Region } from 'src/app/models/region.model';
-import { Camera } from 'src/app/models/resource/camera.resource';
-import { Resource } from 'src/app/models/resource/resource.model';
-import { SelectItem } from 'src/app/models/select-control.model';
-import { Language } from 'src/app/tools/language';
+import { RegionTreeComponent } from 'src/app/common/components/region-tree/region-tree.component';
+import { RegionTreeSource } from 'src/app/converter/label-tree.converter';
+import { EnumHelper } from 'src/app/enum/enum-helper';
+import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { RegionNode } from 'src/app/network/model/garbage-station/region';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
+
 import { RegionNodeMatchBusiness } from './region-node-match.business';
 import {
   RegionNodeMatchSearch,

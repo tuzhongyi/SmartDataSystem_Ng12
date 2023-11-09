@@ -1,6 +1,6 @@
-import { IObjectModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
 
-export interface ILevelListNode extends IObjectModel {
+export interface ILevelListNode extends IIdNameModel {
   Language?: string;
   ParentId?: string;
 }

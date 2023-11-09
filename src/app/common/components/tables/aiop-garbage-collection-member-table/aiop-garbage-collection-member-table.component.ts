@@ -1,19 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
-import { AiopGarbageCollectionMemberTableBusiness } from './aiop-garbage-collection-member-table.business';
+import { AIOPGarbageCollectionMemberTableBusiness } from './aiop-garbage-collection-member-table.business';
+import { AiopGarbageCollectionMemberTableArgs } from './aiop-garbage-collection-member-table.model';
 
 @Component({
   selector: 'aiop-garbage-collection-member-table',
@@ -22,18 +15,17 @@ import { AiopGarbageCollectionMemberTableBusiness } from './aiop-garbage-collect
     '../table.less',
     './aiop-garbage-collection-member-table.component.less',
   ],
-  providers: [AiopGarbageCollectionMemberTableBusiness],
+  providers: [AIOPGarbageCollectionMemberTableBusiness],
 })
-export class AiopGarbageCollectionMemberTableComponent
+export class AIOPGarbageCollectionMemberTableComponent
   extends PagedTableAbstractComponent<CollectionMember>
-  implements IComponent<IModel, PagedList<CollectionMember>>, OnInit, OnChanges
+  implements IComponent<IModel, PagedList<CollectionMember>>, OnInit
 {
   @Input()
   business: IBusiness<IModel, PagedList<CollectionMember>>;
-  @Input()
-  divisionId?: string;
-  @Input()
-  load?: EventEmitter<string>;
+  @Input() init = false;
+  @Input() args = new AiopGarbageCollectionMemberTableArgs();
+  @Input() load?: EventEmitter<AiopGarbageCollectionMemberTableArgs>;
 
   @Output()
   update: EventEmitter<CollectionMember> = new EventEmitter();
@@ -43,32 +35,31 @@ export class AiopGarbageCollectionMemberTableComponent
   @Output()
   selectedChange: EventEmitter<CollectionMember[]> = new EventEmitter();
 
-  constructor(business: AiopGarbageCollectionMemberTableBusiness) {
+  constructor(business: AIOPGarbageCollectionMemberTableBusiness) {
     super();
     this.business = business;
   }
 
   widths = ['20%', '20%', '20%', '20%', '20%'];
 
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.divisionId) {
-      if (this.divisionId) {
-        this.loadData(1, this.pageSize);
-      }
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(
+          this.args.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize
+        );
+      });
     }
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((name) => {
-          this.loadData(1, this.pageSize, name);
-        });
-      }
+    if (this.init) {
+      this.loadData(1, this.pageSize);
     }
   }
-  async loadData(index: number, size: number, name?: string) {
+  async loadData(index: number, size: number) {
     this.selected = undefined;
 
-    let paged = await this.business.load(index, size, this.divisionId, name);
+    let paged = await this.business.load(index, size, this.args);
     this.page = paged.Page;
     this.datas = paged.Data;
   }

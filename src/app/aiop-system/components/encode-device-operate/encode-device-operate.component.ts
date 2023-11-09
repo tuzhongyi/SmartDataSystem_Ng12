@@ -19,6 +19,20 @@ import { EncodeDeviceOperateBusiness } from './encode-device-operate.business';
   providers: [EncodeDeviceOperateBusiness],
 })
 export class EncodeDeviceOperateComponent implements OnInit {
+  @Input()
+  state: FormState = FormState.none;
+
+  @Input()
+  encodeDeviceId: string = '';
+
+  @Output()
+  closeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private fb: FormBuilder,
+    private _business: EncodeDeviceOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
   private _encodeDevice?: EncodeDevice;
 
   selectedLabels: ResourceLabel[] = [];
@@ -68,22 +82,6 @@ export class EncodeDeviceOperateComponent implements OnInit {
   get Port() {
     return this.myForm.get('Port') as FormControl;
   }
-
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  encodeDeviceId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  constructor(
-    private fb: FormBuilder,
-    private _business: EncodeDeviceOperateBusiness,
-    private _toastrService: ToastrService
-  ) {}
-
   async ngOnInit() {
     this.protocols = await this._business.getProtocols();
     // console.log("协议", this.protocols);
@@ -241,29 +239,29 @@ export class EncodeDeviceOperateComponent implements OnInit {
         this._toastrService.error('请输入IP地址');
         return;
       }
-      if (this.Hostname.errors && 'pattern' in this.Hostname.errors) {
-        this._toastrService.error('IP地址无效');
-        return;
-      }
+      // if (this.Hostname.errors && 'pattern' in this.Hostname.errors) {
+      //   this._toastrService.error('IP地址无效');
+      //   return;
+      // }
     }
-    if (this.Port.invalid) {
-      if (this.Port.errors && 'required' in this.Port.errors) {
-        this._toastrService.error('请输入端口号');
-        return;
-      }
-      if (this.Port.errors && 'pattern' in this.Port.errors) {
-        this._toastrService.error('端口号无效');
-        return;
-      }
-      if (this.Port.errors && 'min' in this.Port.errors) {
-        this._toastrService.error('端口号不能小于0');
-        return;
-      }
-      if (this.Port.errors && 'max' in this.Port.errors) {
-        this._toastrService.error('端口号最大为65535');
-        return;
-      }
-    }
+    // if (this.Port.invalid) {
+    //   if (this.Port.errors && 'required' in this.Port.errors) {
+    //     this._toastrService.error('请输入端口号');
+    //     return;
+    //   }
+    //   if (this.Port.errors && 'pattern' in this.Port.errors) {
+    //     this._toastrService.error('端口号无效');
+    //     return;
+    //   }
+    //   if (this.Port.errors && 'min' in this.Port.errors) {
+    //     this._toastrService.error('端口号不能小于0');
+    //     return;
+    //   }
+    //   if (this.Port.errors && 'max' in this.Port.errors) {
+    //     this._toastrService.error('端口号最大为65535');
+    //     return;
+    //   }
+    // }
     return true;
   }
 }

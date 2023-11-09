@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -38,7 +30,6 @@ export class GarbageFullStationTableComponent
   extends PagedTableAbstractComponent<GarbageFullStationTableModel>
   implements
     IComponent<IModel, PagedList<GarbageFullStationTableModel>>,
-    OnChanges,
     OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
@@ -61,15 +52,13 @@ export class GarbageFullStationTableComponent
   selected?: GarbageFullStationTableModel;
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize);
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange && this.load) {
+    if (this.load) {
       this.load.subscribe((opts) => {
         this.searchOptions = opts;
         this.loadData(1, this.pageSize, opts);
       });
     }
+    this.loadData(1, this.pageSize);
   }
 
   async loadData(

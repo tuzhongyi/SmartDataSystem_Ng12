@@ -59,9 +59,9 @@
 
       <div class="vertical-main">
         <aiop-garbage-collection-point-trashcan-table
-          [divisionId]="divisionId"
-          [(selected)]="selected"
+          [args]="args"
           [load]="load"
+          [(selected)]="selected"
           (update)="toupdate($event)"
         >
         </aiop-garbage-collection-point-trashcan-table>

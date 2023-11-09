@@ -42,12 +42,15 @@ export class AIGarbageStationDeviceRecordEventManagerComponent
 
   onsearch(value: string) {
     this.args.name = value;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   oneventtype() {
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   ondate() {
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 }

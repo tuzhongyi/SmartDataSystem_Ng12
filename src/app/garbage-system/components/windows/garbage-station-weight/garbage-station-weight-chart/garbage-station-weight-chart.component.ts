@@ -10,7 +10,7 @@ import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { IObjectModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
 import { GarbageStationWeightChartConfigBusiness } from './garbage-station-weight-chart-business/garbage-station-weight-chart-config.business';
 import { GarbageStationWeightChartDivisionService } from './garbage-station-weight-chart-service/garbage-station-weight-chart-division.service';
 import { GarbageStationWeightChartStationService } from './garbage-station-weight-chart-service/garbage-station-weight-chart-station.service';
@@ -72,7 +72,7 @@ export class GarbageStationWeightChartComponent implements OnInit {
     });
   }
 
-  async ondivision(item?: IObjectModel) {
+  async ondivision(item?: IIdNameModel) {
     this.selected.station = undefined;
     this.selected.division = undefined;
     if (item) {

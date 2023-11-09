@@ -3,7 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import {
-  AICameraModelManageEvent,
+  AICameraModelManageEventArgs,
   AICameraModelManageSearchInfo,
   AICameraModelOperateType,
   CameraAIModelManageModel,
@@ -11,10 +11,8 @@ import {
 } from 'src/app/aiop-system/components/camera-model-manage/camera-model-manage.model';
 import { AICameraModelTableComponent } from 'src/app/common/components/ai-camera-model-table/ai-camera-model-table.component';
 import { CommonTree } from 'src/app/common/components/common-tree/common-tree';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { AiIconConfig } from 'src/app/common/models/ai-icon.config';
 import { CameraDeviceType } from 'src/app/enum/device-type.enum';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
@@ -24,11 +22,15 @@ import Conf from 'src/assets/json/ai-icon.json';
 import { AIModelManageConverter } from '../ai-model-manage/ai-model-manage.converter';
 import { AICameraModelManageBusiness } from './camera-model-manage.business';
 import { AICameraModelManageConverter } from './camera-model-manage.converter';
+import { CameraModelManageWindow } from './camera-model-manage.window';
 
 @Component({
   selector: 'howell-camera-model-manage',
   templateUrl: './camera-model-manage.component.html',
-  styleUrls: ['./camera-model-manage.component.less'],
+  styleUrls: [
+    '../../../../assets/less/confirm.less',
+    './camera-model-manage.component.less',
+  ],
   providers: [
     AICameraModelManageBusiness,
     AICameraModelManageConverter,
@@ -36,6 +38,10 @@ import { AICameraModelManageConverter } from './camera-model-manage.converter';
   ],
 })
 export class CameraModelManageComponent implements OnInit {
+  constructor(
+    private _business: AICameraModelManageBusiness,
+    private _toastrService: ToastrService
+  ) {}
   selectDataSource = new Map<CameraDeviceType, string>([
     [CameraDeviceType.G3, CameraDeviceType.G3],
     [CameraDeviceType.G5, CameraDeviceType.G5],
@@ -45,7 +51,7 @@ export class CameraModelManageComponent implements OnInit {
     ModelName: '',
     CameraDeviceType: '',
     PageIndex: 1,
-    PageSize: 9,
+    PageSize: 4,
     CameraName: '',
     LabelIds: [],
   };
@@ -82,9 +88,6 @@ export class CameraModelManageComponent implements OnInit {
   // willBeDeleted: AIModelManageModel[] = [];
 
   disablehover = false;
-  showConfirm = false;
-  dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
-  aiCameraManageEvent?: AICameraModelManageEvent;
 
   // 标签筛选器
   selectedNodes: CommonFlatNode[] = [];
@@ -95,25 +98,22 @@ export class CameraModelManageComponent implements OnInit {
   @ViewChild(AICameraModelTableComponent) table?: AICameraModelTableComponent;
   @ViewChild('tree') tree?: CommonTree;
 
-  constructor(
-    private _business: AICameraModelManageBusiness,
-    private _toastrService: ToastrService
-  ) {}
+  window = new CameraModelManageWindow();
 
   ngOnInit(): void {
-    this._init();
+    this.init();
   }
 
-  private _init() {
-    this._listAIModels();
-    this._listCameraAIModels();
+  private init() {
+    this.loadAIModels();
+    this.loadCameraAIModels();
   }
   // 拉取模型列表
-  private async _listAIModels() {
+  private async loadAIModels() {
     this.AIModels = await this._business.listAIModels(this.searchInfo);
     // console.log('模型列表', this.AIModels);
   }
-  private async _listCameraAIModels() {
+  private async loadCameraAIModels() {
     let { Data, Page } = await this._business.listCameraAIModels(
       this.searchInfo
     );
@@ -125,12 +125,12 @@ export class CameraModelManageComponent implements OnInit {
   // 模型列表搜索
   searchAIModels(condition: string) {
     this.searchInfo.ModelName = condition;
-    this._listAIModels();
+    this.loadAIModels();
   }
   // AI设备列表搜索
   searchCameraAIModels() {
     this.searchInfo.PageIndex = 1;
-    this._listCameraAIModels();
+    this.loadCameraAIModels();
   }
 
   dragstart(e: DragEvent, model: CameraAIModelManageModel<CameraAIModel>) {
@@ -146,20 +146,17 @@ export class CameraModelManageComponent implements OnInit {
     this.disablehover = false;
   }
 
-  async operateTableRow(e: AICameraModelManageEvent) {
-    this.aiCameraManageEvent = e;
+  async onoperate(e: AICameraModelManageEventArgs) {
+    this.window.confirm.args = e;
     if (e.type == AICameraModelOperateType.delete) {
-      this.showConfirm = true;
+      this.window.confirm.show = true;
     } else if ((e.type = AICameraModelOperateType.add)) {
       this._addAIModelToCamera();
     }
   }
-  async dialogMsgEvent(status: DialogEnum) {
-    this.showConfirm = false;
-    if (status == DialogEnum.confirm) {
-      this._deleteAIModelFromCamera();
-    } else if (status == DialogEnum.cancel) {
-    }
+  async dialogMsgEvent() {
+    this.window.confirm.show = false;
+    this._deleteAIModelFromCamera();
   }
 
   /***************************组件通用代码**********************************/
@@ -172,7 +169,7 @@ export class CameraModelManageComponent implements OnInit {
     if (this.searchInfo.PageIndex == pageInfo.pageIndex + 1) return;
     this.searchInfo.PageIndex = pageInfo.pageIndex + 1;
     this.selectType = TableSelectType.Cancel;
-    this._listCameraAIModels();
+    this.loadCameraAIModels();
   }
 
   /**
@@ -184,7 +181,7 @@ export class CameraModelManageComponent implements OnInit {
     // this.selectType = type;
   }
   changeCameraDeviceType() {
-    this._init();
+    this.init();
   }
 
   // 点击树节点
@@ -195,11 +192,11 @@ export class CameraModelManageComponent implements OnInit {
   }
 
   private async _deleteAIModelFromCamera() {
-    if (this.aiCameraManageEvent) {
-      let data = this.aiCameraManageEvent.data;
+    if (this.window.confirm.args) {
+      let data = this.window.confirm.args.data;
       for (let i = 0; i < data.length; i++) {
-        let cameraId = data[i].CameraId;
-        let modelId = data[i].ModelId;
+        let cameraId = data[i].camera.Id;
+        let modelId = data[i].model.Id;
         let res = await this._business.deleteAIModelFromCamera(
           cameraId,
           modelId
@@ -208,24 +205,22 @@ export class CameraModelManageComponent implements OnInit {
           this._toastrService.success('删除成功');
         }
       }
-      this.searchInfo.PageIndex = 1;
-      this._listCameraAIModels();
+      this.loadCameraAIModels();
     }
   }
 
   private async _addAIModelToCamera() {
-    if (this.aiCameraManageEvent) {
-      let data = this.aiCameraManageEvent.data;
+    if (this.window.confirm.args) {
+      let data = this.window.confirm.args.data;
       for (let i = 0; i < data.length; i++) {
-        let cameraId = data[i].CameraId;
-        let modelId = data[i].ModelId;
+        let cameraId = data[i].camera.Id;
+        let modelId = data[i].model.Id;
         let res = await this._business.addAIModelToCamera(cameraId, modelId);
         if (res) {
           this._toastrService.success('添加成功');
         }
       }
-      this.searchInfo.PageIndex = 1;
-      this._listCameraAIModels();
+      this.loadCameraAIModels();
     }
   }
 }

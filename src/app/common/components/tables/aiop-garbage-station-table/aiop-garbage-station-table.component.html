@@ -23,7 +23,7 @@
         <tbody>
           <tr
             *ngFor="let item of datas; let i = index"
-            [ngClass]="{ selected: selected.includes(item) }"
+            [ngClass]="{ selected: selected === item }"
             (click)="onselect(item)"
           >
             <!-- <td >{{ i + 1 }}</td> -->

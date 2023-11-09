@@ -5,6 +5,7 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetTrashCansParams } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.params';
 import { CollectionPointsRequestService } from 'src/app/network/request/garbage_vehicles/collection-points/collection-points.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
+import { AiopGarbageCollectionPointTrashCanTableArgs } from './aiop-garbage-collection-point-trashcan-table.model';
 
 @Injectable()
 export class AiopGarbageCollectionPointTrashCanTableBusiness
@@ -14,24 +15,22 @@ export class AiopGarbageCollectionPointTrashCanTableBusiness
 
   async load(
     paged: PagedParams,
-    divisionId?: string,
-    name?: string
+    args: AiopGarbageCollectionPointTrashCanTableArgs
   ): Promise<PagedList<CollectionTrashCan>> {
-    return this.getData(paged, divisionId);
+    return this.getData(paged, args);
   }
   getData(
     paged: PagedParams,
-    divisionId?: string,
-    name?: string
+    args: AiopGarbageCollectionPointTrashCanTableArgs
   ): Promise<PagedList<CollectionTrashCan>> {
     let params = new GetTrashCansParams();
     params.PageIndex = paged.PageIndex;
     params.PageSize = paged.PageSize;
-    if (divisionId) {
-      params.DivisionIds = [divisionId];
+    if (args.divisionId) {
+      params.DivisionIds = [args.divisionId];
     }
-    if (name) {
-      params.Name = name;
+    if (args.name) {
+      params.Name = args.name;
     }
     return this.service.trashCan.list(params);
   }

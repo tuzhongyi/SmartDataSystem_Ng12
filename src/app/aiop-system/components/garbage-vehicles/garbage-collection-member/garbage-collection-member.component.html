@@ -58,9 +58,9 @@
 
       <div class="vertical-main">
         <aiop-garbage-collection-member-table
-          [divisionId]="divisionId"
           [(selected)]="selected"
           [load]="load"
+          [args]="args"
           (update)="toupdate($event)"
         >
         </aiop-garbage-collection-member-table>

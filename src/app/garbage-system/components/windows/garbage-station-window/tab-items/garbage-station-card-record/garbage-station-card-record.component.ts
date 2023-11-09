@@ -35,6 +35,7 @@ export class GarbageStationCardRecordComponent implements OnInit {
     this.business.first().then((x) => {
       this.divisiontree.ids = [x.Id];
       this.args.stationId = x.Id;
+      this.args.tofirst = true;
       this.load.emit(this.args);
     });
     this.divisiontree.select.subscribe((x) => {
@@ -43,6 +44,7 @@ export class GarbageStationCardRecordComponent implements OnInit {
   }
 
   search() {
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 

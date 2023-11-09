@@ -29,9 +29,11 @@ export class AIGarbageStationDeviceRecordCommandManagerComponent
 
   onsearch(value: string) {
     this.args.name = value;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   onargschange() {
+    this.args.tofirst = false;
     this.load.emit(this.args);
   }
 }

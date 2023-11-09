@@ -31,6 +31,7 @@ export class AIGarbageStationRfidCardManagerComponent {
       const node = nodes[i];
       if (node.RawData instanceof AIGarbageRegion) {
         this.args.regionId = node.RawData.Id;
+        this.args.tofirst = true;
         this.load.emit(this.args);
       }
     }
@@ -52,6 +53,7 @@ export class AIGarbageStationRfidCardManagerComponent {
       .delete(models.map((x) => x.Id))
       .then((x) => {
         MessageBar.response_success('操作成功');
+        this.args.tofirst = false;
         this.load.emit(this.args);
       })
       .catch((x) => {
@@ -64,6 +66,7 @@ export class AIGarbageStationRfidCardManagerComponent {
   }
   tosearch(value: string) {
     this.args.name = value;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   ondetails(item: AIGarbageRfidCard) {
@@ -93,6 +96,7 @@ export class AIGarbageStationRfidCardManagerComponent {
         if (t_files.length > 0) {
           this.business.upload(t_files[0], this.args.regionId).then((x) => {
             MessageBar.response_success('操作成功');
+            this.args.tofirst = false;
             this.load.emit(this.args);
           });
           this.file.nativeElement.value = null;
@@ -107,6 +111,7 @@ export class AIGarbageStationRfidCardManagerComponent {
     this.window.close();
   }
   onupdate() {
+    this.args.tofirst = false;
     this.load.emit(this.args);
     this.closewindow();
   }

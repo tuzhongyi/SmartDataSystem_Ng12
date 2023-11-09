@@ -1,4 +1,4 @@
-import { EncodeDeviceManageModel } from 'src/app/view-model/encode-device-manage.model';
+import { EncodeDeviceManageModel } from 'src/app/aiop-system/components/encode-device-manage/encode-device-manage.model';
 import { TableColumnModel } from 'src/app/view-model/table.model';
 
 export const EncodeDeviceManageConf: TableColumnModel[] = [

@@ -5,10 +5,10 @@ export interface IModel {}
 export interface IIdModel extends IModel {
   Id: string;
 }
-export interface IObjectModel extends IIdModel {
+export interface IIdNameModel extends IIdModel {
   Name: string;
 }
-export class IdNameModel implements IObjectModel {
+export class IdNameModel implements IIdNameModel {
   Id!: string;
   Name!: string;
 

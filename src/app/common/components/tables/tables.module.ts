@@ -1,5 +1,5 @@
 import { AIOPCameraTableComponent } from './aiop-camera-table/aiop-camera-table.component';
-import { AiopGarbageCollectionMemberTableComponent } from './aiop-garbage-collection-member-table/aiop-garbage-collection-member-table.component';
+import { AIOPGarbageCollectionMemberTableComponent } from './aiop-garbage-collection-member-table/aiop-garbage-collection-member-table.component';
 import { AiopGarbageCollectionPointTableComponent } from './aiop-garbage-collection-point-table/aiop-garbage-collection-point-table.component';
 import { DeviceListTableComponent } from './device-list-table/device-list-table.component';
 import { EventRecordCountTableComponent } from './event-record-count-table/event-record-count-table.component';
@@ -42,7 +42,7 @@ export const Table_COMPONENTS = [
   AIOPCameraTableComponent,
 
   AiopGarbageCollectionPointTableComponent,
-  AiopGarbageCollectionMemberTableComponent,
+  AIOPGarbageCollectionMemberTableComponent,
   AiopGarbageCollectionPointTrashCanTableComponent,
   AiopGarbageVehicleCameraTableComponent,
 

@@ -23,8 +23,8 @@ export class AIOPGarbageStationTableComponent
   @Input() args: AIOPGarbageStationTableArgs =
     new AIOPGarbageStationTableArgs();
   @Input() business: IBusiness<IModel, PagedList<GarbageStationModel>>;
-  @Input() selected: GarbageStationModel[] = [];
-  @Output() selectedChange: EventEmitter<GarbageStationModel[]> =
+  @Input() selected?: GarbageStationModel;
+  @Output() selectedChange: EventEmitter<GarbageStationModel> =
     new EventEmitter();
   @Output() details: EventEmitter<GarbageStationModel> = new EventEmitter();
 
@@ -36,7 +36,7 @@ export class AIOPGarbageStationTableComponent
     if (this.load) {
       this.load.subscribe((x) => {
         this.args = x;
-        this.loadData(1);
+        this.loadData(this.args.tofirst ? 1 : this.page.PageIndex);
       });
     }
     this.loadData(1);
@@ -53,12 +53,19 @@ export class AIOPGarbageStationTableComponent
     });
   }
   onselect(item: GarbageStationModel) {
-    let index = this.selected.indexOf(item);
-    if (index < 0) {
-      this.selected.push(item);
+    // let index = this.selected.indexOf(item);
+    // if (index < 0) {
+    //   this.selected.push(item);
+    // } else {
+    //   this.selected.splice(index, 1);
+    // }
+
+    if (this.selected === item) {
+      this.selected = undefined;
     } else {
-      this.selected.splice(index, 1);
+      this.selected = item;
     }
+    this.selectedChange.emit(this.selected);
   }
   ondetails(item: GarbageStationModel) {
     this.details.emit(item);

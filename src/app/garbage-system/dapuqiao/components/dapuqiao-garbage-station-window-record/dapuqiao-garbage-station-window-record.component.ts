@@ -4,7 +4,7 @@ import {
   GarbageDropEventRecordModel,
 } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { IObjectModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { IIdNameModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { DapuqiaoGarbageStationWindowRecordBusiness } from './dapuqiao-garbage-station-window-record.business';
 import { DapuqiaoGarbageStationWindowRecordModel } from './dapuqiao-garbage-station-window-record.model';
 
@@ -46,7 +46,7 @@ export class DapuqiaoGarbageStationWindowRecordComponent implements OnInit {
     this.load.emit(this.args);
   }
 
-  ondivision(item?: IObjectModel) {
+  ondivision(item?: IIdNameModel) {
     this.args.divisionId = undefined;
     this.model.station.selected = undefined;
     this.model.station.datas = [];

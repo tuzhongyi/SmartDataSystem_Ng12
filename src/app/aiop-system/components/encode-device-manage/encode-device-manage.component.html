@@ -1,32 +1,4 @@
 <div class="encode-device-manage">
-  <ng-container *ngIf="showOperate">
-    <toast-window>
-      <howell-encode-device-operate
-        [state]="state"
-        [encodeDeviceId]="resourceId"
-        (closeEvent)="closeForm($event)"
-      ></howell-encode-device-operate>
-    </toast-window>
-  </ng-container>
-
-  <ng-container *ngIf="showConfirm">
-    <howell-confirm-dialog
-      (dialogMsgEvent)="dialogMsgEvent($event)"
-      [dialogModel]="dialogModel"
-    >
-    </howell-confirm-dialog>
-  </ng-container>
-  <ng-container *ngIf="showBind">
-    <toast-window>
-      <howell-label-manage-form
-        [resourceName]="resourceName"
-        [resourceId]="resourceId"
-        (closeEvent)="closeBind($event)"
-      >
-      </howell-label-manage-form>
-    </toast-window>
-  </ng-container>
-
   <div class="vertical-layout">
     <div class="vertical-header">
       <div class="hw-second-title">编码器</div>
@@ -169,4 +141,38 @@
       </div>
     </div>
   </div>
+  <app-window
+    [Model]="window.operate"
+    *ngIf="window.operate.show && window.operate.resource"
+    [style]="window.operate.style"
+  >
+    <howell-encode-device-operate
+      [state]="window.operate.state"
+      [encodeDeviceId]="window.operate.resource.Id"
+      (closeEvent)="closeForm($event)"
+    ></howell-encode-device-operate>
+  </app-window>
+  <app-window
+    [Model]="window.label"
+    *ngIf="window.label.show && window.label.resource"
+    [style]="window.label.style"
+  >
+    <howell-label-manage-form
+      [resourceName]="window.label.resource.Name"
+      [resourceId]="window.label.resource.Id"
+      (closeEvent)="closeBind($event)"
+    >
+    </howell-label-manage-form>
+  </app-window>
+  <app-window
+    [Model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [style]="window.confirm.style"
+  >
+    <howell-confirm-dialog
+      (dialogMsgEvent)="dialogMsgEvent($event)"
+      [dialogModel]="window.confirm.dialogModel"
+    >
+    </howell-confirm-dialog>
+  </app-window>
 </div>

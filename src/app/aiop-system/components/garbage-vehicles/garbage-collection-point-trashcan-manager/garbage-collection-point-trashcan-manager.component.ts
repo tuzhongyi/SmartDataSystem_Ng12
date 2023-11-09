@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { AiopGarbageCollectionPointTrashCanTableArgs } from 'src/app/common/components/tables/aiop-garbage-collection-point-trashcan-table/aiop-garbage-collection-point-trashcan-table.model';
 import { FileReadType } from 'src/app/common/components/upload-control/upload-control.model';
 import { Creater } from 'src/app/common/tools/creater';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
@@ -35,14 +36,15 @@ export class GarbageCollectionPointTrashCanManagerComponent
 
   ngOnInit(): void {}
   state: FormState = FormState.none;
-  load: EventEmitter<string> = new EventEmitter();
+  load: EventEmitter<AiopGarbageCollectionPointTrashCanTableArgs> =
+    new EventEmitter();
   open: EventEmitter<CollectionTrashCan> = new EventEmitter();
   enabled = {
     add: false,
     delete: false,
   };
 
-  divisionId?: string;
+  args = new AiopGarbageCollectionPointTrashCanTableArgs();
 
   dialog = new ConfirmDialogModel('确认删除', '删除该项');
 
@@ -58,8 +60,10 @@ export class GarbageCollectionPointTrashCanManagerComponent
   // 点击树节点
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
     let division = nodes[0].RawData as Division;
-    this.divisionId = division.Id;
-    this.enabled.add = !!this.divisionId;
+    this.args.divisionId = division.Id;
+    this.enabled.add = !!this.args.divisionId;
+    this.args.tofirst = true;
+    this.load.emit(this.args);
   }
 
   tocreate() {
@@ -77,7 +81,9 @@ export class GarbageCollectionPointTrashCanManagerComponent
     this.dialog.show = true;
   }
   onsearch(name: string) {
-    this.load.emit(name);
+    this.args.name = name;
+    this.args.tofirst = true;
+    this.load.emit(this.args);
   }
 
   onyes(model: CollectionTrashCan) {
@@ -99,7 +105,8 @@ export class GarbageCollectionPointTrashCanManagerComponent
         .delete(this.selected.map((x) => x.Id))
         .then((x) => {
           this.toastr.success('删除成功');
-          this.load.emit();
+          this.args.tofirst = false;
+          this.load.emit(this.args);
         })
         .catch((x) => {
           this.toastr.warning('删除失败');
@@ -109,12 +116,13 @@ export class GarbageCollectionPointTrashCanManagerComponent
   }
 
   oncreate(model: CollectionTrashCan) {
-    model.DivisionId = this.divisionId;
+    model.DivisionId = this.args.divisionId;
     this.business
       .create(model)
       .then((x) => {
         this.toastr.success('创建成功');
-        this.load.emit();
+        this.args.tofirst = false;
+        this.load.emit(this.args);
       })
       .catch((x) => {
         this.toastr.warning('创建失败');
@@ -125,7 +133,8 @@ export class GarbageCollectionPointTrashCanManagerComponent
       .update(model)
       .then((x) => {
         this.toastr.success('修改成功');
-        this.load.emit();
+        this.args.tofirst = false;
+        this.load.emit(this.args);
       })
       .catch((x) => {
         this.toastr.warning('修改失败');
@@ -134,7 +143,8 @@ export class GarbageCollectionPointTrashCanManagerComponent
   FileReadType = FileReadType;
   onupload(data: any) {
     this.business.upload(data).then((x) => {
-      this.load.emit();
+      this.args.tofirst = false;
+      this.load.emit(this.args);
     });
   }
   ondownload() {

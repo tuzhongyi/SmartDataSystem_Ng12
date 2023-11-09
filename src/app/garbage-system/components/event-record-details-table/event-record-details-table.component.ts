@@ -14,7 +14,7 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
 import { Enum } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { IModel, IObjectModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordDetailsTableBusiness } from './event-record-details-table.business';
 import { EventRecordDetailsTableModel } from './event-record-details-table.model';
 
@@ -96,7 +96,7 @@ export class EventRecordDetailsTableComponent
     this.searchEvent.emit(this.filter);
   }
 
-  async ondivisionselect(item: IObjectModel) {
+  async ondivisionselect(item: IIdNameModel) {
     this.filter.division = item;
     this.filter.camera = undefined;
     this.filter.station = undefined;

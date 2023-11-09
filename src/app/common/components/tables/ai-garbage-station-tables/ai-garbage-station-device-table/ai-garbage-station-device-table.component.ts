@@ -69,7 +69,11 @@ export class AIGarbageStationDeviceTableComponent
         if (x) {
           this.args = x;
         }
-        this.loadData(1, this.pageSize, this.args);
+        this.loadData(
+          x.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize,
+          this.args
+        );
       });
     }
     this.loadData(1);
@@ -95,7 +99,7 @@ export class AIGarbageStationDeviceTableComponent
     } else {
       this.args.desc = sort.active;
     }
-    this.loadData(1);
+    this.loadData(this.page.PageIndex);
   }
 
   ondetails(e: Event, item: AIGarbageDevice) {

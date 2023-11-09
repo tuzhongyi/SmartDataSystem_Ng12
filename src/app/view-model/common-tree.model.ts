@@ -1,5 +1,5 @@
-import { IObjectModel } from '../network/model/model.interface';
+import { IIdNameModel } from '../network/model/model.interface';
 
-export interface CommonTreeModel extends IObjectModel {
+export interface CommonTreeModel extends IIdNameModel {
   [key: string]: any;
 }

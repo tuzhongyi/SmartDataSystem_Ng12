@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Language } from '../common/tools/language';
-import { EncodedDeviceType } from '../enum/device-type.enum';
-import { ProtocolType } from '../enum/protocol-type.enum';
-import { EncodeDevice } from '../network/model/garbage-station/encode-device';
-import { EncodeDeviceManageModel } from '../view-model/encode-device-manage.model';
-import { AbstractCommonModelConverter } from './common-model.converter';
+import { Language } from '../../../common/tools/language';
+import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
+import { EncodedDeviceType } from '../../../enum/device-type.enum';
+import { ProtocolType } from '../../../enum/protocol-type.enum';
+import { EncodeDevice } from '../../../network/model/garbage-station/encode-device';
+import { EncodeDeviceManageModel } from './encode-device-manage.model';
 
 type EncodeDeviceManageSource = EncodeDevice;
 

@@ -7,7 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DeviceListTableFilter } from 'src/app/common/components/tables/device-list-table/device-list-table.component';
+import { DeviceListTableArgs } from 'src/app/common/components/tables/device-list-table/device-list-table.model';
+
 import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -40,7 +41,7 @@ export class DeviceListWindowComponent
 
   load: EventEmitter<SearchOptions> = new EventEmitter();
 
-  filter: DeviceListTableFilter = {};
+  filter = new DeviceListTableArgs();
 
   onsearch(text: string) {
     let opts: SearchOptions = {

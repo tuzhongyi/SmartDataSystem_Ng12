@@ -34,6 +34,7 @@ export class AIGarbageStationRegionManagerComponent {
         node.RawData.DivisionType === DivisionType.County
       ) {
         this.args.divisionId = node.RawData.Id;
+        this.args.tofirst = true;
         this.load.emit(this.args);
       }
     }
@@ -55,6 +56,7 @@ export class AIGarbageStationRegionManagerComponent {
       .delete(models.map((x) => x.Id))
       .then((x) => {
         MessageBar.response_success('操作成功');
+        this.args.tofirst = false;
         this.load.emit(this.args);
       })
       .catch((x) => {
@@ -67,6 +69,7 @@ export class AIGarbageStationRegionManagerComponent {
   }
   tosearch(value: string) {
     this.args.name = value;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
   ondetails(item: AIGarbageRegion) {
@@ -91,6 +94,7 @@ export class AIGarbageStationRegionManagerComponent {
       if (t_files.length > 0) {
         this.business.upload(t_files[0]).then((x) => {
           MessageBar.response_success('操作成功');
+          this.args.tofirst = false;
           this.load.emit(this.args);
         });
         this.file.nativeElement.value = null;

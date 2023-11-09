@@ -22,6 +22,7 @@ import {
   DeviceConverter,
   DevicePagedConverter,
 } from './device-list-table.converter';
+import { DeviceListTableArgs } from './device-list-table.model';
 import { DeviceViewModel } from './device.model';
 
 @Component({
@@ -34,7 +35,7 @@ export class DeviceListTableComponent
   extends PagedTableAbstractComponent<DeviceViewModel>
   implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
 {
-  @Input() filter: DeviceListTableFilter = {};
+  @Input() filter: DeviceListTableArgs = new DeviceListTableArgs();
   @Input() business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
   @Input() load?: EventEmitter<SearchOptions>;
@@ -47,18 +48,16 @@ export class DeviceListTableComponent
   selected?: DeviceViewModel;
   OnlineStatus = OnlineStatus;
   widths = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
-  ngOnDestroy(): void {
-    this.filter = {};
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
-    this.loadData(1, this.pageSize, this.filter.status);
     if (this.load) {
       this.load.subscribe((opts) => {
         this.filter.opts = opts;
         this.loadData(1, this.pageSize, this.filter.status, this.filter.opts);
       });
     }
+    this.loadData(1, this.pageSize, this.filter.status);
   }
 
   loadData(
@@ -117,9 +116,4 @@ export class DeviceListTableComponent
       this.selected = item;
     }
   }
-}
-
-export interface DeviceListTableFilter {
-  status?: OnlineStatus;
-  opts?: SearchOptions;
 }

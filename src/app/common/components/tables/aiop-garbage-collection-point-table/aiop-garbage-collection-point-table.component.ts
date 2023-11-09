@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
@@ -16,6 +8,7 @@ import { PagedParams } from 'src/app/network/request/IParams.interface';
 
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AIOPGarbageCollectionPointTableBusiness } from './aiop-garbage-collection-point-table.business';
+import { AIOPGarbageCollectionPointTableArgs } from './aiop-garbage-collection-point-table.model';
 
 @Component({
   selector: 'aiop-garbage-collection-point-table',
@@ -28,14 +21,15 @@ import { AIOPGarbageCollectionPointTableBusiness } from './aiop-garbage-collecti
 })
 export class AiopGarbageCollectionPointTableComponent
   extends PagedTableAbstractComponent<CollectionPoint>
-  implements IComponent<IModel, PagedList<CollectionPoint>>, OnInit, OnChanges
+  implements IComponent<IModel, PagedList<CollectionPoint>>, OnInit
 {
   @Input()
   business: IBusiness<IModel, PagedList<CollectionPoint>>;
+  @Input() init = false;
   @Input()
-  divisionId?: string;
+  args = new AIOPGarbageCollectionPointTableArgs();
   @Input()
-  load?: EventEmitter<string>;
+  load?: EventEmitter<AIOPGarbageCollectionPointTableArgs>;
 
   @Output()
   update: EventEmitter<CollectionPoint> = new EventEmitter();
@@ -49,31 +43,30 @@ export class AiopGarbageCollectionPointTableComponent
     super();
     this.business = business;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.divisionId) {
-      if (this.divisionId) {
-        this.loadData(1, this.pageSize);
-      }
-    }
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((name) => {
-          this.loadData(1, this.pageSize, name);
-        });
-      }
-    }
-  }
 
   widths = ['30%', '25%', '30%', '15%'];
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(
+          this.args.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize
+        );
+      });
+    }
+    if (this.init) {
+      this.loadData(1, this.pageSize);
+    }
+  }
 
   async loadData(index: number, size: number, name?: string) {
     this.selected = undefined;
     let params = new PagedParams();
     params.PageIndex = index;
     params.PageSize = size;
-    let paged = await this.business.load(params, this.divisionId, name);
+    let paged = await this.business.load(params, this.args);
     this.page = paged.Page;
     this.datas = paged.Data;
   }

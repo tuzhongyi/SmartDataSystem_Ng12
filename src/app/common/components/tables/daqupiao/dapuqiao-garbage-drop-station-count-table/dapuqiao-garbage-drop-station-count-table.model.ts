@@ -5,8 +5,9 @@ import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/d
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
+import { PageArgs } from '../../table.interface';
 
-export class DaPuQiaoGarbageDropStationCountTableArgs {
+export class DaPuQiaoGarbageDropStationCountTableArgs extends PageArgs {
   date: Date = new Date();
   type: UserResourceType = UserResourceType.County;
   parentId?: string;

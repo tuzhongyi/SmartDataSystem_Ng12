@@ -1,8 +1,9 @@
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { PageArgs } from '../table.interface';
 
-export class GarbageStationWeightTableArgs {
+export class GarbageStationWeightTableArgs extends PageArgs {
   date: Date = new Date();
   unit: TimeUnit = TimeUnit.Day;
   type: DivisionType = DivisionType.County;

@@ -32,19 +32,21 @@ export class AIOPGarbageStationManagerComponent implements OnInit {
   load = new EventEmitter<AIOPGarbageStationTableArgs>();
   window = new AIOPGarbageStationManagerWindow();
 
-  selected: GarbageStationModel[] = [];
+  selected?: GarbageStationModel;
 
   ngOnInit(): void {}
   ondivision(nodes: CommonFlatNode<DivisionTreeSource>[]) {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       this.args.divisionId = node.Id;
+      this.args.tofirst = true;
       this.load.emit(this.args);
       return;
     }
   }
   onsearch(name: string) {
     this.args.name = name;
+    this.args.tofirst = true;
     this.load.emit(this.args);
   }
 
@@ -55,6 +57,7 @@ export class AIOPGarbageStationManagerComponent implements OnInit {
   ondetailsok() {
     this.window.details.clear();
     this.window.details.show = false;
+    this.args.tofirst = false;
     this.load.emit(this.args);
   }
 
@@ -90,6 +93,7 @@ export class AIOPGarbageStationManagerComponent implements OnInit {
           .upload(t_files[0])
           .then((x) => {
             this.toastr.success('操作成功');
+            this.args.tofirst = false;
             this.load.emit(this.args);
           })
           .catch((x) => {

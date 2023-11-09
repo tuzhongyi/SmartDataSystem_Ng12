@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -16,6 +8,7 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AiopGarbageVehicleCameraTableTableBusiness as AiopGarbageVehicleCameraTableBusiness } from './aiop-garbage-vehicle-camera-table.business';
+import { AiopGarbageVehicleCameraTableArgs } from './aiop-garbage-vehicle-camera-table.model';
 
 @Component({
   selector: 'aiop-garbage-vehicle-camera-table',
@@ -28,25 +21,15 @@ import { AiopGarbageVehicleCameraTableTableBusiness as AiopGarbageVehicleCameraT
 })
 export class AiopGarbageVehicleCameraTableComponent
   extends PagedTableAbstractComponent<VehicleCameraModel>
-  implements
-    IComponent<IModel, PagedList<VehicleCameraModel>>,
-    OnInit,
-    OnChanges
+  implements IComponent<IModel, PagedList<VehicleCameraModel>>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<VehicleCameraModel>>;
-  @Input()
-  divisionId?: string;
-  @Input()
-  load?: EventEmitter<string>;
-
-  @Output()
-  update: EventEmitter<VehicleCameraModel> = new EventEmitter();
-
-  @Input()
-  selected?: VehicleCamera[];
-  @Output()
-  selectedChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
+  @Input() business: IBusiness<IModel, PagedList<VehicleCameraModel>>;
+  @Input() init = false;
+  @Input() args = new AiopGarbageVehicleCameraTableArgs();
+  @Input() load?: EventEmitter<AiopGarbageVehicleCameraTableArgs>;
+  @Output() update: EventEmitter<VehicleCameraModel> = new EventEmitter();
+  @Input() selected?: VehicleCamera[];
+  @Output() selectedChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
 
   constructor(business: AiopGarbageVehicleCameraTableBusiness) {
     super();
@@ -55,25 +38,25 @@ export class AiopGarbageVehicleCameraTableComponent
   OnlineStatus = OnlineStatus;
   widths = ['45%', '15%', '20%', '10%', '10%'];
 
-  ngOnInit(): void {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.divisionId) {
-      if (this.divisionId) {
-        this.loadData(1, this.pageSize);
-      }
+  ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(
+          this.args.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize
+        );
+      });
     }
-    if (changes.load) {
-      if (this.load) {
-        this.load.subscribe((name) => {
-          this.loadData(1, this.pageSize, name);
-        });
-      }
+    if (this.init) {
+      this.loadData(1, this.pageSize);
     }
   }
-  async loadData(index: number, size: number, name?: string) {
+
+  async loadData(index: number, size: number) {
     this.selected = undefined;
 
-    let paged = await this.business.load(index, size, this.divisionId, name);
+    let paged = await this.business.load(index, size, this.args);
     this.page = paged.Page;
     this.datas = paged.Data;
   }

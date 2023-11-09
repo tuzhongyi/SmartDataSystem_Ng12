@@ -2,7 +2,7 @@ import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
-import { IObjectModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import {
   SearchOptionKey,
@@ -22,11 +22,11 @@ export class EventRecordFilter {
   stationId?: string;
   cameraId?: string;
 
-  private _division?: IObjectModel;
-  public get division(): IObjectModel | undefined {
+  private _division?: IIdNameModel;
+  public get division(): IIdNameModel | undefined {
     return this._division;
   }
-  public set division(v: IObjectModel | undefined) {
+  public set division(v: IIdNameModel | undefined) {
     this._division = v;
     if (v) {
       this.divisionId = v.Id;

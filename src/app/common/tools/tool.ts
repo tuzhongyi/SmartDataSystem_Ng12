@@ -10,6 +10,28 @@ export class ToolService {
   }
 }
 
+export class Tool {
+  static equals<T1, T2>(a: T1, b: T2) {
+    if (a === undefined && b === undefined) {
+      return true;
+    } else if (a === undefined) {
+      return false;
+    } else if (b === undefined) {
+      return false;
+    }
+
+    if (a === null && b === null) {
+      return true;
+    } else if (a === null) {
+      return false;
+    } else if (b === null) {
+      return false;
+    }
+
+    return JSON.stringify(a) === JSON.stringify(b);
+  }
+}
+
 export function ToHoursMinutes(val: number) {
   const hours = parseInt((val / 60).toString());
   const minutes = parseInt((Math.ceil(val) % 60).toString());

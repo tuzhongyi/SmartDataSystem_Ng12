@@ -6,6 +6,7 @@ import { PagedParams } from 'src/app/network/request/IParams.interface';
 
 import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { AIOPGarbageCollectionPointTableArgs } from './aiop-garbage-collection-point-table.model';
 
 @Injectable()
 export class AIOPGarbageCollectionPointTableBusiness
@@ -15,24 +16,22 @@ export class AIOPGarbageCollectionPointTableBusiness
 
   async load(
     paged: PagedParams,
-    divisionId?: string,
-    name?: string
+    args: AIOPGarbageCollectionPointTableArgs
   ): Promise<PagedList<CollectionPoint>> {
-    return this.getData(paged, divisionId);
+    return this.getData(paged, args);
   }
   getData(
     paged: PagedParams,
-    divisionId?: string,
-    name?: string
+    args: AIOPGarbageCollectionPointTableArgs
   ): Promise<PagedList<CollectionPoint>> {
     let params = new GetCollectionPointsParams();
     params.PageIndex = paged.PageIndex;
     params.PageSize = paged.PageSize;
-    if (divisionId) {
-      params.DivisionIds = [divisionId];
+    if (args.divisionId) {
+      params.DivisionIds = [args.divisionId];
     }
-    if (name) {
-      params.Name = name;
+    if (args.name) {
+      params.Name = args.name;
     }
     return this.service.list(params);
   }

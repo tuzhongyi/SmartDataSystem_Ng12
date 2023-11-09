@@ -15,7 +15,7 @@ import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/d
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { IModel, IObjectModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
   DivisionStationFilteModel,
@@ -114,7 +114,7 @@ export class EventRecordFilterComponent
     }
   }
 
-  async ondivision(item?: IObjectModel) {
+  async ondivision(item?: IIdNameModel) {
     let opts: DivisionStationFilterOpts | undefined = undefined;
     if (item) {
       opts = {

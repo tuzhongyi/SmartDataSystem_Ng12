@@ -1,4 +1,5 @@
 import { CameraDeviceType } from 'src/app/enum/device-type.enum';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
 import { OnlineStatus } from '../../../enum/online-status.enum';
 import { ResourceLabel } from '../../../network/model/garbage-station/resource-label.model';
 
@@ -25,11 +26,10 @@ export enum AICameraModelOperateType {
   add = 'add',
 }
 export interface AICameraModelOperateData {
-  CameraId: string;
-  ModelId: string;
-  CameraName: string; // 辅助调试
+  camera: IIdNameModel;
+  model: IIdNameModel;
 }
-export interface AICameraModelManageEvent {
+export interface AICameraModelManageEventArgs {
   type: AICameraModelOperateType;
   data: Array<AICameraModelOperateData>;
 }

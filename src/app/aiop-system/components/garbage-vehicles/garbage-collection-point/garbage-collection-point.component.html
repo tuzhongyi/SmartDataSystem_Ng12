@@ -74,8 +74,8 @@
 
       <div class="vertical-main">
         <aiop-garbage-collection-point-table
-          [divisionId]="divisionId"
           [(selected)]="selected"
+          [args]="args"
           [load]="load"
           (update)="toupdate($event)"
         >

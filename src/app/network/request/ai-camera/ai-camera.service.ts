@@ -54,25 +54,37 @@ export class AICameraRequestService {
   delete(id: string) {
     return this.type.delete(ResourceAICamerasUrl.item(id));
   }
-  listAIModels(id: string) {
+
+  private _model?: AICameraAIModelRequestService;
+  public get model(): AICameraAIModelRequestService {
+    if (!this._model) {
+      this._model = new AICameraAIModelRequestService(this.basic);
+    }
+    return this._model;
+  }
+}
+
+class AICameraAIModelRequestService {
+  constructor(private basic: HowellBaseRequestService) {}
+  list(id: string) {
     return this.basic.getArray(
       ResourceAICamerasUrl.AIModels(id),
       CameraAIModel
     );
   }
-  addAIModel(cameraId: string, modelId: string) {
+  add(cameraId: string, modelId: string) {
     return this.basic.post(
       ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel
     );
   }
-  getAIModel(cameraId: string, modelId: string) {
+  get(cameraId: string, modelId: string) {
     return this.basic.get(
       ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel
     );
   }
-  deleteAIModel(cameraId: string, modelId: string) {
+  delete(cameraId: string, modelId: string) {
     return this.basic.delete(
       ResourceAICamerasUrl.singleAIModel(cameraId, modelId),
       CameraAIModel

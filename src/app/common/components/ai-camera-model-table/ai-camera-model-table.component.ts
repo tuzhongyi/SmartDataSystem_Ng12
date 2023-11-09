@@ -2,7 +2,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {
-  AICameraModelManageEvent,
+  AICameraModelManageEventArgs,
   AICameraModelOperateData,
   AICameraModelOperateType,
   CameraManageModel,
@@ -39,7 +39,7 @@ export class AICameraModelTableComponent implements OnInit {
   @Output() selectTableRow: EventEmitter<CameraManageModel[]> =
     new EventEmitter<CameraManageModel[]>();
 
-  @Output() operateTableRow: EventEmitter<AICameraModelManageEvent> =
+  @Output() operate: EventEmitter<AICameraModelManageEventArgs> =
     new EventEmitter();
 
   constructor() {}
@@ -164,7 +164,7 @@ export class AICameraModelTableComponent implements OnInit {
         }
 
         if (data.length != 0) {
-          this.operateTableRow.emit({
+          this.operate.emit({
             type: AICameraModelOperateType.add,
             data,
           });
@@ -179,13 +179,18 @@ export class AICameraModelTableComponent implements OnInit {
 
   delete(e: Event, row: CameraManageModel, model: any) {
     e.stopPropagation();
-    this.operateTableRow.emit({
+    this.operate.emit({
       type: AICameraModelOperateType.delete,
       data: [
         {
-          CameraId: row.Id,
-          CameraName: row.Name,
-          ModelId: model.Id,
+          camera: {
+            Id: row.Id,
+            Name: row.Name,
+          },
+          model: {
+            Id: model.Id,
+            Name: model.Name,
+          },
         },
       ],
     });
@@ -197,9 +202,14 @@ export class AICameraModelTableComponent implements OnInit {
       row.AIModels.every((m) => m.Id != model.Id)
     ) {
       return {
-        CameraId: row.Id,
-        CameraName: row.Name,
-        ModelId: model.Id,
+        camera: {
+          Id: row.Id,
+          Name: row.Name,
+        },
+        model: {
+          Id: model.Id,
+          Name: model.Name,
+        },
       };
     }
     return false;

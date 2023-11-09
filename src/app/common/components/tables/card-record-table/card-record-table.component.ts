@@ -48,7 +48,10 @@ export class CardRecordTableComponent
     if (this.load) {
       this.load.subscribe((args) => {
         this.args = args;
-        this.loadData(1, this.pageSize);
+        this.loadData(
+          this.args.tofirst ? 1 : this.page.PageIndex,
+          this.pageSize
+        );
       });
     }
     if (this.isinit) {

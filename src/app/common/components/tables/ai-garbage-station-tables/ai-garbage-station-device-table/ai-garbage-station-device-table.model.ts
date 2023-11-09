@@ -1,4 +1,6 @@
-export class AIGarbageStationDeviceTableArgs {
+import { PageArgs } from '../../table.interface';
+
+export class AIGarbageStationDeviceTableArgs extends PageArgs {
   asc?: string;
   desc?: string;
   name?: string;
