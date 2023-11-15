@@ -4,7 +4,7 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common-table.component';
 import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { DivisionTreeComponent } from 'src/app/common/components/division-tree/division-tree.component';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';

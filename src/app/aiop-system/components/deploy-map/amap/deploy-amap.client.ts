@@ -10,7 +10,11 @@ export class DeployAMapClient {
     const host = this.location.hostname;
     const port = this.location.port;
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+    let protocol = document.location.protocol;
+    if (protocol.indexOf(':') < 0) {
+      protocol += ':';
+    }
+    return `${protocol}//${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   public get client(): Promise<CesiumMapClient> {
     return new Promise((resolve) => {

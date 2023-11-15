@@ -5,10 +5,12 @@ import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 import { Role } from '../../model/garbage-station/role.model';
 import { UserLabel } from '../../model/garbage-station/user-label.model';
+import { UserRecord } from '../../model/garbage-station/user-record.model';
 import { User } from '../../model/garbage-station/user.model';
 import { Fault } from '../../model/howell-response.model';
 import { PagedList } from '../../model/page_list.model';
 import { PasswordUrl } from '../../url/garbage/password.url';
+import { UserLogUrl } from '../../url/garbage/user-log.url';
 import { UserUrl } from '../../url/garbage/user.url';
 import {
   HowellBaseRequestService,
@@ -20,6 +22,7 @@ import {
   ChangeUserPasswordParams,
   CheckCodeParams,
   GetUserLabelsParams,
+  GetUserRecordListParams,
   GetUsersParams,
   PasswordCheckCodeResult,
   RandomUserPaswordParams,
@@ -93,6 +96,14 @@ export class UserRequestService {
       this._password = new PasswordsService(this.basic);
     }
     return this._password;
+  }
+
+  private _log?: LogService;
+  public get log(): LogService {
+    if (!this._log) {
+      this._log = new LogService(this.basic);
+    }
+    return this._log;
   }
 }
 
@@ -202,5 +213,25 @@ class PasswordCheckService {
     let data = instanceToPlain(params);
     let url = PasswordUrl.checkCode();
     return this.basic.post(url, PasswordCheckCodeResult, data);
+  }
+}
+
+class LogService {
+  constructor(private basic: HowellBaseRequestService) {}
+  private _record?: LogUserRecordService;
+  public get record(): LogUserRecordService {
+    if (!this._record) {
+      this._record = new LogUserRecordService(this.basic);
+    }
+    return this._record;
+  }
+}
+class LogUserRecordService {
+  constructor(private basic: HowellBaseRequestService) {}
+
+  list(params: GetUserRecordListParams): Promise<PagedList<UserRecord>> {
+    let plain = instanceToPlain(params);
+    let url = UserLogUrl.record.list();
+    return this.basic.paged(url, UserRecord, plain);
   }
 }

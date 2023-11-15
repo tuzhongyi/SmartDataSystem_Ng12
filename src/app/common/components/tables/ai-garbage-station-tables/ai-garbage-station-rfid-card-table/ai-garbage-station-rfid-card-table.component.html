@@ -54,11 +54,9 @@
       </table>
     </div>
 
-    <div
-      class="ai-garbage-station-rfid-card-table-main-footer footer"
-      *ngIf="page"
-    >
-      <div class="footer-item">
+    <div class="ai-garbage-station-rfid-card-table-main-footer footer">
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
+      <div class="footer-item" *ngIf="page">
         <div class="footer-info">
           <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
           <div class="info-item">

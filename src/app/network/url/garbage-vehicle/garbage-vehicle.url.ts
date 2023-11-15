@@ -17,7 +17,7 @@ export abstract class GarbageVehicleUrl {
   static list() {
     return `${this.basic()}/List`;
   }
-  static excles() {
+  static excels() {
     return `${this.basic()}/Excels`;
   }
   static camera(id?: string) {

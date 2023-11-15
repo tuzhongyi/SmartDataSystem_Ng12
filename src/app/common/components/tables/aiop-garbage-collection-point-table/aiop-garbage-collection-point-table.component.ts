@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -35,9 +36,9 @@ export class AiopGarbageCollectionPointTableComponent
   update: EventEmitter<CollectionPoint> = new EventEmitter();
 
   @Input()
-  selected?: CollectionPoint[];
+  selecteds: CollectionPoint[] = [];
   @Output()
-  selectedChange: EventEmitter<CollectionPoint[]> = new EventEmitter();
+  selectedsChange: EventEmitter<CollectionPoint[]> = new EventEmitter();
 
   constructor(business: AIOPGarbageCollectionPointTableBusiness) {
     super();
@@ -62,7 +63,7 @@ export class AiopGarbageCollectionPointTableComponent
   }
 
   async loadData(index: number, size: number, name?: string) {
-    this.selected = undefined;
+    this.selecteds = [];
     let params = new PagedParams();
     params.PageIndex = index;
     params.PageSize = size;
@@ -77,15 +78,32 @@ export class AiopGarbageCollectionPointTableComponent
   }
 
   onselected(item: CollectionPoint) {
-    if (!this.selected) {
-      this.selected = [];
+    if (!this.selecteds) {
+      this.selecteds = [];
     }
-    let index = this.selected.indexOf(item);
+    let index = this.selecteds.indexOf(item);
     if (index < 0) {
-      this.selected.push(item);
+      this.selecteds.push(item);
     } else {
-      this.selected.splice(index, 1);
+      this.selecteds.splice(index, 1);
     }
-    this.selectedChange.emit(this.selected);
+    this.selectedsChange.emit(this.selecteds);
+  }
+  toselect(type: TableSelectType) {
+    switch (type) {
+      case TableSelectType.All:
+        this.selecteds = [...this.datas];
+        break;
+      case TableSelectType.Cancel:
+        this.selecteds = [];
+        break;
+      case TableSelectType.Reverse:
+        this.selecteds = this.datas.filter((x) => !this.selecteds.includes(x));
+        break;
+
+      default:
+        break;
+    }
+    this.selectedsChange.emit(this.selecteds);
   }
 }

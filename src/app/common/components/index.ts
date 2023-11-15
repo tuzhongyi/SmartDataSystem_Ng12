@@ -1,6 +1,6 @@
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { AccountOperationComponent } from './account-operation/account-operation.component';
-import { CommonTableComponent } from './common-table/common.component';
+import { CommonTableComponent } from './common-table/common-table.component';
 import { CommonTimeComponent } from './common-time/common-time.component';
 import { HeaderNavComponent } from './header-nav/header-nav.component';
 import { SelectControlComponent } from './select-control/select-control.component';
@@ -69,6 +69,7 @@ import { VideoSettingControlComponent } from './video-control-window/video-setti
 import { VideoPlayerListComponent } from './video-player-list/video-player-list.component';
 import { VideoPlayerWindowComponent } from './video-player-window/video-player-window.component';
 import { VideoWindowComponent } from './video-window/video-window.component';
+import { WindowConfirmComponent } from './window-confirm/window-confirm.component';
 import { WindowComponent } from './window-control/window.component';
 import { VideoMultiplePlayerWindowComponent } from './windows/video-multiple-player-window/video-multiple-player-window.component';
 
@@ -81,6 +82,7 @@ export const CUSTOM_COMPONENTS = [
   AccountOperationComponent,
   TotalWasteComponent,
   WindowComponent,
+  WindowConfirmComponent,
   SelectControlComponent,
   TabTitleComponent,
   HeaderNavComponent,

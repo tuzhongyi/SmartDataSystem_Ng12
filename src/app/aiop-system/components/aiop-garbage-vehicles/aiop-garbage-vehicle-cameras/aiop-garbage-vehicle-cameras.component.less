@@ -1,0 +1,73 @@
+.garbage-vehicle-cameras {
+  height: 100%;
+  width: 100%;
+  color: #cfd7ff;
+
+  @head-height: calc(32px + 44px);
+  @foot-height: 0;
+
+  &-head {
+    height: @head-height;
+
+    .title {
+      display: flex;
+
+      h3 {
+        color: #cfd7ff;
+      }
+    }
+
+    .hw-ul {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      overflow-x: auto;
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height - @foot-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .info {
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      padding: 20px 10px;
+
+
+      &-item {
+        width: 100%;
+        padding: 0 5px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+
+        &-title {
+          color: white;
+          display: flex;
+          align-items: center;
+        }
+
+        &-value {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  &-foot {
+    height: @foot-height;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

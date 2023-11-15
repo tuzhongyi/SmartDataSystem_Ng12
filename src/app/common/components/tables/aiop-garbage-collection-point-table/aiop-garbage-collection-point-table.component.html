@@ -22,7 +22,7 @@
           <tr
             *ngFor="let item of datas; let i = index"
             [ngClass]="{
-              selected: this.selected && this.selected.includes(item)
+              selected: this.selecteds.includes(item)
             }"
             (click)="onselected(item)"
           >
@@ -48,6 +48,7 @@
       class="vertical-footer aiop-garbage-collection-point-table-main-footer footer"
       *ngIf="page"
     >
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
       <div class="footer-item">
         <div class="footer-info">
           <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>

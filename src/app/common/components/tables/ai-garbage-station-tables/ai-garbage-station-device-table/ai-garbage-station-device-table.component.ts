@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 
@@ -138,5 +139,23 @@ export class AIGarbageStationDeviceTableComponent
   onstatus(e: Event, item: AIGarbageDevice) {
     e.stopImmediatePropagation();
     this.status.emit(item);
+  }
+
+  toselect(type: TableSelectType) {
+    switch (type) {
+      case TableSelectType.All:
+        this.selecteds = [...this.datas];
+        break;
+      case TableSelectType.Cancel:
+        this.selecteds = [];
+        break;
+      case TableSelectType.Reverse:
+        this.selecteds = this.datas.filter((x) => !this.selecteds.includes(x));
+        break;
+
+      default:
+        break;
+    }
+    this.selectedsChange.emit(this.selecteds);
   }
 }

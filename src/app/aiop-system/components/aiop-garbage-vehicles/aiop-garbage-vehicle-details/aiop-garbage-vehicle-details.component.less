@@ -1,0 +1,54 @@
+.garbage-vehicle-details {
+  height: 100%;
+  width: 100%;
+  color: #cfd7ff;
+
+  @head-height: 32px;
+  @foot-height: 34px;
+
+  &-head {
+    height: @head-height;
+  }
+
+  &-body {
+    height: calc(100% - @head-height - @foot-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    .form {
+      &-group {
+        display: flex;
+        justify-content: start;
+        flex-wrap: wrap;
+        margin: 0 -5px;
+      }
+
+      &-item {
+        width: 50%;
+        padding: 0 5px;
+        box-sizing: border-box;
+        margin-bottom: 25px;
+
+        &-title {}
+
+        &-value {
+          display: flex;
+          align-items: center;
+          height: 34px;
+
+          &>* {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &-foot {
+    height: @foot-height;
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

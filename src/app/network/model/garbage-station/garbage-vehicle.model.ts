@@ -1,4 +1,9 @@
-import { Transform, Type } from 'class-transformer';
+import {
+  Transform,
+  TransformationType,
+  TransformFnParams,
+  Type,
+} from 'class-transformer';
 import { Flags } from 'src/app/common/tools/flags';
 import { RelayState } from 'src/app/enum/relay-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
@@ -51,17 +56,40 @@ export class GarbageVehicle extends IdNameModel {
   /**	Int32	继电器数量	O	*/
   RelayCount?: number;
   /**	Int32	"继电器状态，0-关闭，1-打开，最低位，表示1号继电器"	O	*/
-  RelayState?: RelayState;
+  @Transform(transformRelayState)
+  RelayState: RelayState[] = new Array(this.RelayCount);
   /**	String	车牌号码	O	*/
   PlateNo?: string;
   /**	DateTime	最后一次NB上电请求时间	O */
   @Transform(transformDateTime)
   NBPowerOnTime?: Date;
-
+  /**	Boolean	最后一次NB请求命令，True：远程唤醒，False：电源关闭	O */
+  PowerOn?: boolean;
   /**	GarbageVehicleParameters	清运车参数	O */
   @Type(() => GarbageVehicleParameter)
   GarbageVehicleParameters?: GarbageVehicleParameter;
-
-  /**	Boolean	最后一次NB请求命令，True：远程唤醒，False：电源关闭	O */
-  PowerOn?: boolean;
+}
+function transformRelayState(params: TransformFnParams) {
+  if (params.type === TransformationType.PLAIN_TO_CLASS) {
+    if (Array.isArray(params.value)) {
+      return params.value;
+    }
+    let value: RelayState[] = [];
+    for (let i = 0; i < params.obj.RelayCount; i++) {
+      value.push(RelayState.Closed);
+    }
+    let str = params.value.toString(2);
+    for (let i = 0; i < str.length; i++) {
+      value[i] = parseInt(str[i]);
+    }
+    return value;
+  } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
+    let str = '';
+    for (let i = 0; i < params.value.length; i++) {
+      str += params.value[i];
+    }
+    return parseInt(str, 2);
+  } else if (params.type === TransformationType.CLASS_TO_CLASS) {
+    return params.value;
+  }
 }

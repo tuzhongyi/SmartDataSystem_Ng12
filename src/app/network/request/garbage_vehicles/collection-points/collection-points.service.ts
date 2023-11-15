@@ -18,6 +18,7 @@ import {
   HowellBaseRequestService,
   HowellBaseTypeRequestService,
 } from '../../base-request-howell.service';
+import { ExcelService } from '../../excel.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetCollectionPointNumberParams,
@@ -34,7 +35,7 @@ export class CollectionPointsRequestService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<CollectionPoint>;
 
-  constructor(http: HowellAuthHttpService, router: Router) {
+  constructor(private http: HowellAuthHttpService, router: Router) {
     this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(CollectionPoint);
   }
@@ -62,14 +63,10 @@ export class CollectionPointsRequestService {
     return this.type.paged(url, params);
   }
 
-  async excel(data?: BinaryData) {
-    let url = GarbageVehicleCollectionPointUrl.excels();
-    if (data) {
-      return this.basic.postBinaryData<string>(url, data);
-    } else {
-      return this.basic.getExcel(url);
-    }
-  }
+  excel = new ExcelService(
+    this.http,
+    GarbageVehicleCollectionPointUrl.excels()
+  );
 
   private _trashCan?: TrashCanService;
   public get trashCan(): TrashCanService {
@@ -118,14 +115,11 @@ class TrashCanService {
     let url = GarbageVehicleCollectionPointUrl.trashcan().item(id);
     return this.type.delete(url);
   }
-  excel(data?: BinaryData) {
-    let url = GarbageVehicleCollectionPointUrl.trashcan().excels();
-    if (data) {
-      return this.basic.postReturnString(url, data);
-    } else {
-      return this.basic.getExcel(url);
-    }
-  }
+
+  excel = new ExcelService(
+    this.basic.http,
+    GarbageVehicleCollectionPointUrl.excels()
+  );
 }
 
 class StatisticsService {

@@ -1,0 +1,40 @@
+<div class="garbage-vehicle-command" *ngIf="!!model">
+  <div class="garbage-vehicle-command-head">
+    <h2>{{ model.Name }}命令</h2>
+  </div>
+  <div class="garbage-vehicle-command-body">
+    <div class="params-item">
+      <div>NB传感器远程上电</div>
+      <div>
+        <button class="hw-blue-btn" (click)="onnb()">
+          <i class="mdi mdi-power-plug"></i> 上电
+        </button>
+      </div>
+    </div>
+    <div
+      class="params-item"
+      *ngFor="let state of model.RelayState; let i = index"
+    >
+      <div>继电器{{ i + 1 }}</div>
+      <div>
+        <button
+          [ngClass]="{
+            'hw-green-btn': state === RelayState.Closed,
+            'hw-red-btn': state === RelayState.Opened
+          }"
+          (click)="onrelay(i + 1, state)"
+        >
+          <i class="mdi mdi-power-plug"></i>
+          {{ state === RelayState.Closed ? "打开" : "关闭" }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <confirm-window
+    [model]="confirm"
+    *ngIf="confirm.show"
+    [content]="confirm.language"
+    (ok)="onok()"
+    (cancel)="close()"
+  ></confirm-window>
+</div>

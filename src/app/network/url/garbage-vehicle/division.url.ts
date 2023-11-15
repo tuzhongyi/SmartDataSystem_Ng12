@@ -15,7 +15,7 @@ export class GarbageVehicleDivisionUrl extends AbstractUrl {
   static list() {
     return this.url.list();
   }
-  static excles() {
+  static excels() {
     return `${this.basic()}/Excels`;
   }
   static tree() {

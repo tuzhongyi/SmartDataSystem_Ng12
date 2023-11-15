@@ -12,11 +12,11 @@ export class EncodeDeviceManageModel {
   Labels!: ResourceLabel[];
 }
 
-export interface EncodeDeviceManageSearchInfo {
-  condition: string;
-  deviceName: string;
-  ip: string;
-  online: string;
-  labelIds: Array<string>;
-  filter: boolean;
+export class EncodeDeviceManageSearchInfo {
+  condition?: string;
+  deviceName?: string;
+  ip?: string;
+  online?: string;
+  labelIds: Array<string> = [];
+  filter: boolean = false;
 }

@@ -7,6 +7,7 @@ import {
   HowellBaseRequestService,
   HowellBaseTypeRequestService,
 } from '../../base-request-howell.service';
+import { ExcelService } from '../../excel.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import { GetCollectionMembersParams } from './member-request.params';
 @Injectable({
@@ -15,7 +16,7 @@ import { GetCollectionMembersParams } from './member-request.params';
 export class CollectionMemberRequsetService {
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<CollectionMember>;
-  constructor(http: HowellAuthHttpService, router: Router) {
+  constructor(private http: HowellAuthHttpService, router: Router) {
     this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(CollectionMember);
   }
@@ -43,12 +44,5 @@ export class CollectionMemberRequsetService {
     return this.type.paged(url, params);
   }
 
-  excel(data?: BinaryData) {
-    let url = GarbageVehicleMemberUrl.excels();
-    if (data) {
-      return this.basic.postBinaryData(url, data);
-    } else {
-      return this.basic.getExcel(url);
-    }
-  }
+  excel = new ExcelService(this.http, GarbageVehicleMemberUrl.excels());
 }

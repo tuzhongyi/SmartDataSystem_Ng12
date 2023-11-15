@@ -13,7 +13,7 @@ import {
   AICameraEventsModel,
   AICameraEventsSearchInfo,
 } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.model';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common-table.component';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
 import { PlayMode } from 'src/app/common/components/video-player/video.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';

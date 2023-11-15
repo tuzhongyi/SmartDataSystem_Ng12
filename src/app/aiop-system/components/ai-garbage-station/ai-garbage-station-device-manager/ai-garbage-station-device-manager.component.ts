@@ -122,6 +122,7 @@ export class AIGarbageStationDeviceManagerComponent {
         .then((x) => {
           MessageBar.response_success('操作成功');
           this.args.tofirst = false;
+          this.selecteds = [];
           this.load.emit(this.args);
         })
         .catch((x) => {

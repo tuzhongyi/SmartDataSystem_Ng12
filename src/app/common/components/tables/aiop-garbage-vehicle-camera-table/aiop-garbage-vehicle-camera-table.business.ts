@@ -7,6 +7,7 @@ import { GetGarbageVehicleCamerasParams } from 'src/app/network/request/garbage_
 import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
+import { AiopGarbageVehicleCameraTableArgs } from './aiop-garbage-vehicle-camera-table.model';
 
 @Injectable()
 export class AiopGarbageVehicleCameraTableTableBusiness
@@ -19,14 +20,13 @@ export class AiopGarbageVehicleCameraTableTableBusiness
   async load(
     index: number,
     size: number,
-    divisionId?: string,
-    name?: string
+    args: AiopGarbageVehicleCameraTableArgs
   ): Promise<PagedList<VehicleCameraModel>> {
     let page = new PagedParams();
     page.PageIndex = index;
     page.PageSize = size;
 
-    let data = await this.getData(page, divisionId, name);
+    let data = await this.getData(page, args);
 
     let paged = new PagedList<VehicleCameraModel>();
 
@@ -39,16 +39,15 @@ export class AiopGarbageVehicleCameraTableTableBusiness
   }
   getData(
     paged: PagedParams,
-    divisionId?: string,
-    name?: string
+    args: AiopGarbageVehicleCameraTableArgs
   ): Promise<PagedList<VehicleCamera>> {
     let params = new GetGarbageVehicleCamerasParams();
     params.PageIndex = paged.PageIndex;
     params.PageSize = paged.PageSize;
-    if (divisionId) {
-      params.DivisionIds = [divisionId];
+    if (args.divisionId) {
+      params.DivisionIds = [args.divisionId];
     }
-    params.Name = name;
+    params.Name = args.name;
     return this.service.camera.list(params);
   }
 }

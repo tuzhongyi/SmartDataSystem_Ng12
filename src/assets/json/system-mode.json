@@ -15,6 +15,11 @@
       "title": "系统设置",
       "icon": "howell-icon-setting",
       "path": "/aiop/underwater/system-setting"
+    },
+    {
+      "title": "用户管理",
+      "icon": "howell-icon-department-admin",
+      "path": "/aiop/underwater/user-setting"
     }
   ]
 }

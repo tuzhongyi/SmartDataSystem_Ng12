@@ -7,9 +7,10 @@
       <thead>
         <tr>
           <td>名称</td>
-          <td>状态</td>
+          <td>用途</td>
           <td>清运车</td>
           <td>位置</td>
+          <td class="center">状态</td>
           <td class="operation center"><div>操作</div></td>
         </tr>
       </thead>
@@ -23,26 +24,29 @@
           <tr
             *ngFor="let item of datas; let i = index"
             [ngClass]="{
-              selected: this.selected && this.selected.includes(item)
+              selected: this.selecteds.includes(item)
             }"
             (click)="onselected(item)"
           >
             <td>{{ item.Name }}</td>
-            <td>
-              <span
-                [ngClass]="{
-                  'green-text': item.OnlineStatus === OnlineStatus.Online,
-                  'powder-red-text': item.OnlineStatus === OnlineStatus.Offline
-                }"
-                >{{ item.OnlineStatus | language_online_status_pipe }}</span
-              >
-            </td>
+            <td>{{ Language.CameraUsage(item.CameraUsage) }}</td>
+
             <td>
               {{ (item.GarbageVehicle | async)?.Name }}
             </td>
-            <td>{{ item.PositionNo | language_position_no_pipe }}</td>
+            <td>{{ Language.VehiclePositionNo(item.PositionNo) }}</td>
+            <td class="center">
+              <div
+                [ngClass]="{
+                  'green-text': item.OnlineStatus !== 1,
+                  'powder-red-text': item.OnlineStatus === 1
+                }"
+              >
+                {{ item.OnlineStatus === 1 ? "离线" : "正常" }}
+              </div>
+            </td>
             <td class="operation center">
-              <div (click)="onupdate($event, item)" class="center">
+              <div (click)="ondetails($event, item)" title="编辑">
                 <i class="howell-icon-modification"></i>
               </div>
             </td>
@@ -55,6 +59,7 @@
       class="vertical-footer aiop-garbage-vehicle-camera-table-main-footer footer"
       *ngIf="page"
     >
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
       <div class="footer-item">
         <div class="footer-info">
           <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>

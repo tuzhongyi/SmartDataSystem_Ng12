@@ -1,28 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { PageEvent } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
 import {
   PlatformManageModel,
   PlatformManageSearch,
 } from 'src/app/aiop-system/components/platform-manage/platform-manage.model';
-import {
-  TableCellEvent,
-  TableColumnModel,
-  TableOperateModel,
-  TableRowModel,
-} from 'src/app/view-model/table.model';
-import { PlatformManageConf } from './platform-manage.config';
-import { PlatformManageBusiness } from './platform-manage.business';
-import { Page } from 'src/app/network/model/page_list.model';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common-table.component';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { PageEvent } from '@angular/material/paginator';
+import { DialogEnum } from 'src/app/enum/dialog.enum';
+import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { FormState } from 'src/app/enum/form-state.enum';
-import { ToastrService } from 'ngx-toastr';
-import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
-import { ThisReceiver } from '@angular/compiler';
+import { Page } from 'src/app/network/model/page_list.model';
+import {
+  TableColumnModel,
+  TableOperateModel,
+} from 'src/app/view-model/table.model';
+import { PlatformManageBusiness } from './platform-manage.business';
+import { PlatformManageConf } from './platform-manage.config';
 
 @Component({
   selector: 'howell-platform-manage',

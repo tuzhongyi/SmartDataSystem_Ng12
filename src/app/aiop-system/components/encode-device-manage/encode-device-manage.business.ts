@@ -31,7 +31,6 @@ export class EncodeDeviceManageBusiness {
       params.OnlineStatus = searchInfo.online ? +searchInfo.online : void 0;
       params.AndLabelIds = searchInfo.labelIds;
     }
-
     let { Data, Page } = await this.listEncodeDevice(params);
     let data = this._converter.iterateToModel(Data);
 

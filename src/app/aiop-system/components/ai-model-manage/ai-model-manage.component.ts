@@ -2,17 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { CommonTableComponent } from 'src/app/common/components/common-table/common-table.component';
+import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { PaginatorComponent } from 'src/app/common/components/paginator/paginator.component';
-import { CommonTableComponent } from 'src/app/common/components/common-table/common.component';
-import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { CameraAIUrl } from 'src/app/network/url/aiop/events/records/camera-ai/camera-ai.url';
 import { AIModelManageModel } from 'src/app/view-model/ai-model-manage.model';
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import {
   TableColumnModel,
   TableOperateModel,

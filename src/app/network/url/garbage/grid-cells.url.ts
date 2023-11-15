@@ -1,10 +1,10 @@
-import { BasicUrl } from '../base.url';
+import { BaseUrl } from '../base.url';
 import { EventNumberInnerUrl } from './inner/event_number.url';
 import { StatisticInnerUrl } from './inner/statistic.url';
 
 export class GridCellUrl {
   static basic() {
-    return `${BasicUrl.garbage.management}/GridCell`;
+    return `${BaseUrl.garbage.garbage_management}/GridCell`;
   }
   static item(id: string) {
     return `${this.basic()}/${id}`;

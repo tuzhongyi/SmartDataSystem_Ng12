@@ -45,8 +45,11 @@ export class CollectionMapControlBusiness {
     const port = document.location.port;
     //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-
-    return `http://${host}:${port}/amap/map_ts.html?v=${date}`;
+    let protocol = document.location.protocol;
+    if (protocol.indexOf(':') < 0) {
+      protocol += ':';
+    }
+    return `${protocol}//${host}:${port}/amap/map_ts.html?v=${date}`;
   }
   loaded = false;
 

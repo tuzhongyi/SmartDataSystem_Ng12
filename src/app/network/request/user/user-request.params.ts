@@ -1,7 +1,11 @@
 import { Gender } from 'src/app/enum/gender.enum';
 import { UserLabelType } from 'src/app/enum/user-label-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
-import { IParams, PagedParams } from '../IParams.interface';
+import {
+  IParams,
+  PagedDurationParams,
+  PagedParams,
+} from '../IParams.interface';
 
 export class GetUsersParams extends PagedParams implements IParams {
   /**	String[]	用户ID	O */
@@ -54,4 +58,15 @@ export class PasswordCheckCodeResult {
   Result!: boolean;
   /**	String	跳转地址	O	R */
   RedirectUrl?: string;
+}
+
+export class GetUserRecordListParams extends PagedDurationParams {
+  /**	String	用户名	O	*/
+  UserName?: string;
+  /**	Int32[]	消息类型	O	*/
+  MessageTypes?: number[];
+  /**	String	被操纵的用户名	O	*/
+  OperatedUserName?: string;
+  /**	Boolean	True：成功，False：失败	O	*/
+  Result?: boolean;
 }

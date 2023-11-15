@@ -1,0 +1,110 @@
+<div class="garbage-station-manage horizontal-layout">
+  <div class="horizontal-left">
+    <div class="hw-simple-title" style="margin-bottom: 10px">区划列表</div>
+    <div class="tree-container">
+      <garbage-vehicle-division-tree
+        [holdStatus]="true"
+        (selectTreeNode)="ondivision($event)"
+      ></garbage-vehicle-division-tree>
+    </div>
+  </div>
+  <div class="horizontal-right">
+    <div class="vertical-layout">
+      <div>
+        <div class="hw-simple-title">清运车</div>
+        <div class="operate-bar wrap">
+          <div class="hw-normal-btn-group">
+            <upload-control
+              (upload)="onupload($event)"
+              [type]="FileReadType.ArrayBuffer"
+              [accept]="'.xlsx'"
+            >
+              <button class="hw-btn hw-blue-btn">
+                <i class="howell-icon-upload"></i>
+                导入
+              </button>
+            </upload-control>
+            <button class="hw-btn hw-cyan-btn" (click)="ondownload()">
+              <i class="howell-icon-upload"></i>
+              导出
+            </button>
+            <button
+              class="hw-btn hw-red-btn"
+              [disabled]="selecteds.length == 0"
+              (click)="todelete()"
+            >
+              <i class="howell-icon-delete-bin"></i>
+              删除
+            </button>
+          </div>
+
+          <div class="search-wrapper">
+            <howell-simple-search
+              placeHolder="厢房名称"
+              (searchEvent)="onsearch($event)"
+            ></howell-simple-search>
+          </div>
+        </div>
+      </div>
+
+      <div class="vertical-main">
+        <aiop-garbage-vehicle-table
+          [args]="args"
+          [load]="load"
+          [(selecteds)]="selecteds"
+          (details)="ondetails($event)"
+          (params)="onparams($event)"
+          (cameras)="oncameras($event)"
+          (command)="oncommand($event)"
+        ></aiop-garbage-vehicle-table>
+      </div>
+    </div>
+  </div>
+
+  <app-window
+    [Model]="window.params"
+    *ngIf="window.params.show"
+    [style]="window.params.style"
+  >
+    <aiop-garbage-vehicle-params
+      [model]="window.params.model"
+    ></aiop-garbage-vehicle-params>
+  </app-window>
+  <app-window
+    [Model]="window.cameras"
+    *ngIf="window.cameras.show"
+    [style]="window.cameras.style"
+  >
+    <aiop-garbage-vehicle-cameras
+      [model]="window.cameras.model"
+    ></aiop-garbage-vehicle-cameras>
+  </app-window>
+  <app-window
+    [Model]="window.command"
+    *ngIf="window.command.show"
+    [style]="window.command.style"
+  >
+    <aiop-garbage-vehicle-command
+      [model]="window.command.model"
+    ></aiop-garbage-vehicle-command>
+  </app-window>
+  <app-window
+    [Model]="window.details"
+    *ngIf="window.details.show"
+    [style]="window.details.style"
+  >
+    <aiop-garbage-vehicle-details
+      [model]="window.details.model"
+      (ok)="onupdate()"
+      (cancel)="window.close()"
+    ></aiop-garbage-vehicle-details>
+  </app-window>
+
+  <confirm-window
+    [model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [content]="window.confirm.language"
+    (ok)="ondelete()"
+    (cancel)="window.close()"
+  ></confirm-window>
+</div>

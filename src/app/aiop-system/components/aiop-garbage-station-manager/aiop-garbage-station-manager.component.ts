@@ -32,7 +32,7 @@ export class AIOPGarbageStationManagerComponent implements OnInit {
   load = new EventEmitter<AIOPGarbageStationTableArgs>();
   window = new AIOPGarbageStationManagerWindow();
 
-  selected?: GarbageStationModel;
+  selecteds: GarbageStationModel[] = [];
 
   ngOnInit(): void {}
   ondivision(nodes: CommonFlatNode<DivisionTreeSource>[]) {
@@ -101,6 +101,29 @@ export class AIOPGarbageStationManagerComponent implements OnInit {
           });
         this.file.nativeElement.value = null;
       }
+    }
+  }
+
+  todelete() {
+    this.window.confirm.models = this.selecteds;
+    this.window.confirm.show = true;
+  }
+  ondelete() {
+    if (this.selecteds.length > 0) {
+      this.business
+        .delete(this.selecteds.map((x) => x.Id))
+        .then((x) => {
+          this.toastr.success('操作成功');
+          this.args.tofirst = false;
+          this.selecteds = [];
+          this.load.emit(this.args);
+        })
+        .catch((x) => {
+          this.toastr.error('操作失败');
+        })
+        .finally(() => {
+          this.window.confirm.show = false;
+        });
     }
   }
 }

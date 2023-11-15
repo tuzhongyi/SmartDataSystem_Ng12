@@ -11,7 +11,7 @@
             </button>
             <button
               class="hw-red-btn"
-              [disabled]="!enableDelBtn"
+              [disabled]="this.table.selected.length == 0"
               (click)="deleteBtnClick()"
             >
               <i class="howell-icon-delete-bin"></i>
@@ -19,7 +19,7 @@
             </button>
             <button
               class="hw-cyan-btn"
-              [disabled]="!enableBindBtn"
+              [disabled]="this.table.selected.length == 0"
               (click)="bindBtnClick()"
             >
               <i class="mdi mdi-tag"></i>
@@ -30,15 +30,15 @@
         <div class="right-wrapper">
           <div class="search-wrapper">
             <input
-              [disabled]="disableSearch"
+              [disabled]="searchInfo.filter"
               type="text"
               [(ngModel)]="searchInfo.condition"
-              [placeholder]="placeHolder"
-              (keyup.enter)="search()"
+              [placeholder]="'搜索编码器名称'"
+              (keyup.enter)="onsearch()"
             />
           </div>
           <div class="hw-normal-btn-group">
-            <button class="hw-blue-btn" (click)="search()">
+            <button class="hw-blue-btn" (click)="onsearch()">
               <i class="mdi mdi-magnify"></i>
               查询
             </button>
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div class="filter-wrapper" *ngIf="showFilter">
+      <div class="filter-wrapper" *ngIf="searchInfo.filter">
         <div class="filter-group">
           <div class="title">
             <span class="hw-form-label">名称:</span>
@@ -79,8 +79,8 @@
               class="hw-form-control hw-form-select"
               [(ngModel)]="searchInfo.online"
             >
-              <option value="">全部</option>
-              <option value="0">正常</option>
+              <option [ngValue]="undefined">全部</option>
+              <option [ngValue]="0">正常</option>
               <option value="1">离线</option>
             </select>
           </div>
@@ -94,8 +94,7 @@
             >
               <howell-label-tree
                 #tree
-                [defaultIds]="defaultIds"
-                [selectStrategy]="selectStrategy"
+                [selectStrategy]="SelectStrategy.Multiple"
                 (selectTreeNode)="selectTreeNode($event)"
               ></howell-label-tree>
             </common-label-select>
@@ -106,13 +105,15 @@
 
     <div class="vertical-main">
       <common-table
-        [dataSubject]="dataSubject"
-        [columnModel]="columnModel"
-        [displayedColumns]="displayedColumns"
-        [selectStrategy]="selectStrategy"
-        [tableOperates]="tableOperates"
-        (selectTableRow)="selectTableRow($event)"
-        (selectTableCell)="selectTableCell($event)"
+        [dataSubject]="table.dataSubject"
+        [columnModel]="table.columns"
+        [displayedColumns]="table.ids"
+        [tableOperates]="table.operates"
+        [selectStrategy]="SelectStrategy.Multiple"
+        (selectTableRow)="table.onselect($event)"
+        (selectTableCell)="table.onclick($event)"
+        [select]="table.select"
+        [delete]="table.delete"
       ></common-table>
     </div>
     <div class="vertical-footer">
@@ -123,18 +124,16 @@
 
       <div class="footer-item">
         <div class="footer-info">
-          <div class="info-item">已选择: {{ selectedRows.length }}</div>
-          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-          <div class="info-item">
-            总数量: {{ page && page.TotalRecordCount }}
-          </div>
+          <div class="info-item">已选择: {{ table.selected.length }}</div>
+          <div class="info-item">当前数量: {{ table.page.RecordCount }}</div>
+          <div class="info-item">总数量: {{ table.page.TotalRecordCount }}</div>
         </div>
         <app-paginator
-          *ngIf="page"
-          [length]="page.TotalRecordCount"
-          [pageSize]="page.PageSize"
-          [pagerCount]="pagerCount"
-          [pageIndex]="pageIndex - 1"
+          *ngIf="table.page"
+          [length]="table.page.TotalRecordCount"
+          [pageSize]="table.page.PageSize"
+          [pagerCount]="table.pagerCount"
+          [pageIndex]="table.page.PageIndex - 1"
           (page)="pageEvent($event)"
         >
         </app-paginator>
@@ -143,12 +142,12 @@
   </div>
   <app-window
     [Model]="window.operate"
-    *ngIf="window.operate.show && window.operate.resource"
+    *ngIf="window.operate.show"
     [style]="window.operate.style"
   >
     <howell-encode-device-operate
       [state]="window.operate.state"
-      [encodeDeviceId]="window.operate.resource.Id"
+      [encodeDeviceId]="window.operate.resource?.Id"
       (closeEvent)="closeForm($event)"
     ></howell-encode-device-operate>
   </app-window>
@@ -169,10 +168,26 @@
     *ngIf="window.confirm.show"
     [style]="window.confirm.style"
   >
-    <howell-confirm-dialog
-      (dialogMsgEvent)="dialogMsgEvent($event)"
-      [dialogModel]="window.confirm.dialogModel"
-    >
-    </howell-confirm-dialog>
+    <div class="confirm">
+      <div class="confirm-head">
+        <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 提示</div>
+      </div>
+      <div class="confirm-body">
+        <div class="hw-simple-title">
+          是否删除 <span>{{ window.confirm.language }}</span> ?
+        </div>
+      </div>
+      <div class="confirm-foot">
+        <button
+          class="hw-green-btn m-r-10"
+          (click)="ondelete(window.confirm.models)"
+        >
+          <i class="howell-icon-Check"></i> 确定
+        </button>
+        <button class="hw-gray-btn" (click)="window.confirm.show = false">
+          <i class="howell-icon-Close"></i> 取消
+        </button>
+      </div>
+    </div>
   </app-window>
 </div>

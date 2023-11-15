@@ -1,7 +1,7 @@
-import { ConfirmDialogModel } from 'src/app/common/components/confirm-dialog/confirm-dialog.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { IIdNameModel } from 'src/app/network/model/model.interface';
+import { EncodeDeviceManageModel } from './encode-device-manage.model';
 
 export class EncodeDeviceManageWindow {
   operate = new EncodeDeviceManageOperateWindow();
@@ -34,7 +34,11 @@ class EncodeDeviceManageLabelWindow extends WindowViewModel {
 }
 class EncodeDeviceManageComfirmWindow extends WindowViewModel {
   style = {
+    width: '500px',
     height: 'auto',
   };
-  dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
+  get language() {
+    return this.models.map((x) => x.Name).join(',');
+  }
+  models: EncodeDeviceManageModel[] = [];
 }

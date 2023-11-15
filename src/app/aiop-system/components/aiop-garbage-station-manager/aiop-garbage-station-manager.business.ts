@@ -13,4 +13,10 @@ export class AIOPGarbageStationManagerBusiness {
   upload(file: any) {
     return this.service.excel.post(file);
   }
+  delete(ids: string[]) {
+    let all = ids.map((x) => {
+      return this.service.delete(x);
+    });
+    return Promise.all(all);
+  }
 }

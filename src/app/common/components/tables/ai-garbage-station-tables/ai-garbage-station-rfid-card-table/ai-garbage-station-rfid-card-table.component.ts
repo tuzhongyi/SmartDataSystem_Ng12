@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageRfidCard } from 'src/app/network/model/ai-garbage/rfid-card.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
@@ -37,6 +38,7 @@ export class AIGarbageStationRfidCardTableComponent
 
   constructor(private business: AIGarbageStationRfidCardTableBusiness) {
     super();
+    this.pageSize = 10;
   }
   widths: string[] = [];
   ngOnInit(): void {
@@ -90,6 +92,36 @@ export class AIGarbageStationRfidCardTableComponent
       this.selecteds.push(item);
     } else {
       this.selecteds.splice(index, 1);
+    }
+    this.selectedsChange.emit(this.selecteds);
+  }
+
+  onselectall() {
+    this.selectedsChange.emit(this.selecteds);
+  }
+  onselectclear() {
+    this.selecteds = [];
+    this.selectedsChange.emit(this.selecteds);
+  }
+  onselectreverse() {
+    this.selecteds = this.datas.filter((x) => !this.selecteds.includes(x));
+    this.selectedsChange.emit(this.selecteds);
+  }
+
+  toselect(type: TableSelectType) {
+    switch (type) {
+      case TableSelectType.All:
+        this.selecteds = [...this.datas];
+        break;
+      case TableSelectType.Cancel:
+        this.selecteds = [];
+        break;
+      case TableSelectType.Reverse:
+        this.selecteds = this.datas.filter((x) => !this.selecteds.includes(x));
+        break;
+
+      default:
+        break;
     }
     this.selectedsChange.emit(this.selecteds);
   }

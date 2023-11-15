@@ -1,0 +1,34 @@
+.garbage-vehicle-command {
+  width: 100%;
+  height: 100%;
+  color: #cfd7ff;
+
+  @head-height: 50px;
+
+  &-head {
+    height: @head-height;
+  }
+
+  &-body {
+    height: calc(100% - @head-height);
+
+    &.nodata {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+
+    .params-item {
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 10px 0;
+
+      &-value {
+        color: white;
+      }
+    }
+  }
+}

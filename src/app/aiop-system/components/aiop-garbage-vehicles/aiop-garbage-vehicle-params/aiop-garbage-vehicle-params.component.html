@@ -1,0 +1,22 @@
+<div class="garbage-vehicle-params" *ngIf="!!model">
+  <div class="garbage-vehicle-params-head">
+    <h2>{{ model.Name }}参数</h2>
+  </div>
+  <div
+    class="garbage-vehicle-params-body"
+    *ngIf="!!model.GarbageVehicleParameters"
+  >
+    <div class="params-item">
+      <div>皮重(KG)</div>
+      <div class="params-item-value">
+        {{ model.GarbageVehicleParameters.Tare }}
+      </div>
+    </div>
+  </div>
+  <div
+    class="garbage-vehicle-params-body nodata"
+    *ngIf="!model.GarbageVehicleParameters"
+  >
+    无数据
+  </div>
+</div>

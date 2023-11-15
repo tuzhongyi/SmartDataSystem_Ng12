@@ -1,0 +1,31 @@
+{
+  "$schema": "./sidenav.schema.json",
+  "data": [
+    {
+      "title": "用户",
+      "id": "user",
+      "path": "/aiop/underwater/user-setting/user",
+      "icon": "howell-icon-department-admin",
+      "children": [
+        {
+          "title": "用户管理",
+          "id": "user-manager",
+          "path": "/aiop/underwater/user-setting/user/user-manager"
+        }
+      ]
+    },
+    {
+      "title": "加密",
+      "id": "cryption",
+      "path": "/aiop/underwater/user-setting/cryption",
+      "icon": "howell-icon-key",
+      "children": [
+        {
+          "title": "加密测试",
+          "id": "test",
+          "path": "/aiop/underwater/user-setting/cryption/test"
+        }
+      ]
+    }
+  ]
+}

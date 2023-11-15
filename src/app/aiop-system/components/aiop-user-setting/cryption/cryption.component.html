@@ -1,0 +1,32 @@
+<div class="cryption">
+  <div class="cryption-head">
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">key:</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="key" />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">iv:</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="iv" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cryption-body">
+    <div>
+      <textarea [ngModel]="text"></textarea>
+    </div>
+    <div>
+      <button class="hw-green-btn" (click)="encode()">></button>
+    </div>
+    <div>
+      <div>result1: {{ result1 }}</div>
+      <div>result2: {{ result2 }}</div>
+    </div>
+  </div>
+</div>

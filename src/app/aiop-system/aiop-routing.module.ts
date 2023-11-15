@@ -1,9 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2021-09-15 16:02:26
- * @Last Modified by: pmx
- * @Last Modified time: 2022-07-29 23:26:10
- */
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AICameraEventsComponent } from './components/ai-camera-events/ai-camera-events.component';
@@ -14,6 +8,15 @@ import { AIGarbageStationRegionManagerComponent } from './components/ai-garbage-
 import { AIGarbageStationRfidCardManagerComponent } from './components/ai-garbage-station/ai-garbage-station-rfid-card-manager/ai-garbage-station-rfid-card-manager.component';
 import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
 import { AIOPGarbageStationManagerComponent } from './components/aiop-garbage-station-manager/aiop-garbage-station-manager.component';
+import { AIOPGarbageCollectionPointManagerComponent } from './components/aiop-garbage-vehicles/aiop-garbage-collection-point-manager/aiop-garbage-collection-point-manager.component';
+import { GarbageVehicleCameraManagerComponent } from './components/aiop-garbage-vehicles/aiop-garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
+import { AIOPGarbageVehicleManageComponent } from './components/aiop-garbage-vehicles/aiop-garbage-vehicle-manager/aiop-garbage-vehicle-manager.component';
+import { GarbageCollectionMemberComponent } from './components/aiop-garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
+import { GarbageCollectionPointTrashCanManagerComponent } from './components/aiop-garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
+import { GarbageVehicleDivisionManageComponent } from './components/aiop-garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
+import { AIOPUserManagerComponent } from './components/aiop-user-setting/aiop-user-manager/aiop-user-manager.component';
+import { AIOPUserSettingComponent } from './components/aiop-user-setting/aiop-user-setting.component';
+import { TestCryptionComponent } from './components/aiop-user-setting/cryption/cryption.component';
 import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
@@ -21,12 +24,6 @@ import { DivisionManageComponent } from './components/division-manage/division-m
 import { EncodeDeviceManageComponent } from './components/encode-device-manage/encode-device-manage.component';
 import { GarbageEventsComponent } from './components/garbage-events/garbage-events.component';
 import { GarbageStationAboutComponent } from './components/garbage-station-about/garbage-station-about.component';
-import { GarbageCollectionMemberComponent } from './components/garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
-import { GarbageCollectionPointTrashCanManagerComponent } from './components/garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
-import { GarbageCollectionPointComponent } from './components/garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
-import { GarbageVehicleCameraManagerComponent } from './components/garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
-import { GarbageVehicleDivisionManageComponent } from './components/garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
-import { GarbageVehicleManageComponent } from './components/garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
 import { IllegalDropAbout } from './components/illegal-drop-about/illegal-drop-about.component';
 import { MixIntoManageComponent } from './components/mix-into-manage/mix-into-manage.component';
 import { MonitorPlatformComponent } from './components/monitor-platform/monitor-platform.component';
@@ -117,7 +114,7 @@ const routes: Routes = [
               },
               {
                 path: 'garbage-vehicle-manage',
-                component: GarbageVehicleManageComponent,
+                component: AIOPGarbageVehicleManageComponent,
                 data: {
                   breadcrumb: '清运车管理',
                 },
@@ -131,7 +128,7 @@ const routes: Routes = [
               },
               {
                 path: 'garbage-collection-point',
-                component: GarbageCollectionPointComponent,
+                component: AIOPGarbageCollectionPointManagerComponent,
                 data: {
                   breadcrumb: '收运点管理',
                 },
@@ -358,6 +355,51 @@ const routes: Routes = [
                 component: AICameraEventsComponent,
                 data: {
                   breadcrumb: 'AI摄像机事件',
+                },
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: 'user-setting',
+        component: AIOPUserSettingComponent,
+        children: [
+          {
+            path: '',
+            redirectTo: 'user',
+            pathMatch: 'full',
+          },
+          {
+            path: 'user',
+            children: [
+              {
+                path: '',
+                redirectTo: 'user-manager',
+                pathMatch: 'full',
+              },
+              {
+                path: 'user-manager',
+                component: AIOPUserManagerComponent,
+                data: {
+                  breadcrumb: '用户管理',
+                },
+              },
+            ],
+          },
+          {
+            path: 'cryption',
+            children: [
+              {
+                path: '',
+                redirectTo: 'test',
+                pathMatch: 'full',
+              },
+              {
+                path: 'test',
+                component: TestCryptionComponent,
+                data: {
+                  breadcrumb: '加密测试',
                 },
               },
             ],

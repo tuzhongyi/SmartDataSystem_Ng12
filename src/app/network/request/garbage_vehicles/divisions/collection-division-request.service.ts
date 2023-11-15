@@ -15,6 +15,7 @@ import {
 } from '../../base-request-howell.service';
 import { Cache } from '../../cache/cache';
 import { GetDivisionTreeParams } from '../../division/division-request.params';
+import { ExcelService } from '../../excel.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
 import {
   GetDivisionGarbageScoresParams,
@@ -30,7 +31,7 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
   private basic: HowellBaseRequestService;
   private type: HowellBaseTypeRequestService<Division>;
 
-  constructor(http: HowellAuthHttpService, router: Router) {
+  constructor(private http: HowellAuthHttpService, router: Router) {
     super();
     this.basic = new HowellBaseRequestService(http, router);
     this.type = this.basic.type(Division);
@@ -60,14 +61,7 @@ export class CollectionDivisionRequestService extends AbstractService<Division> 
     return this.type.paged(url, data);
   }
 
-  excels(data?: BinaryData) {
-    let url = GarbageVehicleDivisionUrl.excles();
-    if (data) {
-      return this.basic.postReturnString(url, data);
-    } else {
-      return this.basic.getExcel(url);
-    }
-  }
+  excel = new ExcelService(this.http, GarbageVehicleDivisionUrl.excels());
 
   private _garbage?: DivisionGarbage;
   get garbage() {

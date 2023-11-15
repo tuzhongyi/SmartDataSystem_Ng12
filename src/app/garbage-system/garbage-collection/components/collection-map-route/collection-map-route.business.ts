@@ -15,8 +15,11 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     const port = document.location.port;
     //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
     const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-
-    return `http://${host}:${port}/amap/map_ts.html?maptype=2D&v=${date}`;
+    let protocol = document.location.protocol;
+    if (protocol.indexOf(':') < 0) {
+      protocol += ':';
+    }
+    return `${protocol}//${host}:${port}/amap/map_ts.html?maptype=2D&v=${date}`;
   }
   seek: EventEmitter<GisRoutePoint> = new EventEmitter();
   private loaded = false;

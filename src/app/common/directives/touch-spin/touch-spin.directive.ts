@@ -14,7 +14,14 @@ import { HowellTouchSpinOptions } from './touch-spin.class';
   selector: '[appTouchSpin]',
 })
 export class TouchSpinDirective implements AfterViewInit, OnChanges {
-  @Input() options: TouchSpinOptions = new HowellTouchSpinOptions();
+  private _options: TouchSpinOptions = new HowellTouchSpinOptions();
+  public get options(): TouchSpinOptions {
+    return this._options;
+  }
+  @Input()
+  public set options(v: TouchSpinOptions) {
+    this._options = Object.assign(this._options, v);
+  }
 
   @Input()
   min: number = 1;

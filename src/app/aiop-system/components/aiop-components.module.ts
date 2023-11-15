@@ -32,6 +32,8 @@ import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.com
 import { AIOPGarbageStationDetailsCamerasComponent } from './aiop-garbage-station-details-cameras/aiop-garbage-station-details-cameras.component';
 import { AIOPGarbageStationDetailsComponent } from './aiop-garbage-station-details/aiop-garbage-station-details.component';
 import { AIOPGarbageStationManagerComponent } from './aiop-garbage-station-manager/aiop-garbage-station-manager.component';
+import { AIOPGarbageVehicleComponents } from './aiop-garbage-vehicles/aiop-garbage-vehicle-components';
+import { AIOPUserSettingComponents } from './aiop-user-setting/aiop-user-setting-components';
 import { CameraManageComponent } from './camera-manage/camera-manage.component';
 import { CameraModelManageComponent } from './camera-model-manage/camera-model-manage.component';
 import { CameraMoveComponent } from './camera-move/camera-move.component';
@@ -44,23 +46,7 @@ import { GarbageEventsComponent } from './garbage-events/garbage-events.componen
 import { GarbageStationAboutComponent } from './garbage-station-about/garbage-station-about.component';
 import { GarbageStationListComponent } from './garbage-station-list/garbage-station-list.component';
 import { GarbageStationOperateComponent } from './garbage-station-operate/garbage-station-operate.component';
-import { GarbageCollectionMemberDetailsWindowComponent } from './garbage-vehicles/garbage-collection-member-details-window/garbage-collection-member-details-window.component';
-import { GarbageCollectionMemberComponent } from './garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
-import { GarbageCollectionPointDetailsWindowComponent } from './garbage-vehicles/garbage-collection-point-details-window/garbage-collection-point-details-window.component';
-import { GarbageCollectionPointTrashcanDetailsWindowComponent } from './garbage-vehicles/garbage-collection-point-trashcan-details-window/garbage-collection-point-trashcan-details-window.component';
-import { GarbageCollectionPointTrashCanManagerComponent } from './garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
-import { GarbageCollectionPointComponent } from './garbage-vehicles/garbage-collection-point/garbage-collection-point.component';
-import { GarbageVehicleCameraBindingAICameraComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding-aicamera/garbage-vehicle-camera-binding-aicamera.component';
-import { GarbageVehicleCameraBindingComponent } from './garbage-vehicles/garbage-vehicle-camera-binding/garbage-vehicle-camera-binding.component';
-import { GarbageVehicleCameraDetailsWindowComponent } from './garbage-vehicles/garbage-vehicle-camera-details-window/garbage-vehicle-camera-details-window.component';
-import { GarbageVehicleCameraManagerComponent } from './garbage-vehicles/garbage-vehicle-camera-manager/garbage-vehicle-camera-manager.component';
-import { GarbageVehicleDivisionManageComponent } from './garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
-import { GarbageVehicleManageComponent } from './garbage-vehicles/garbage-vehicle-manage/garbage-vehicle-manage.component';
-import { GarbageVehicleOperateComponent } from './garbage-vehicles/garbage-vehicle-operate/garbage-vehicle-operate.component';
-import { GarbageCollectionPointTreeComponent } from './garbage-vehicles/trees/garbage-collection-point-tree/garbage-collection-point-tree.component';
-import { GarbageVehicleCameraTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-camera-tree/garbage-vehicle-camera-tree.component';
-import { GarbageVehicleDivisionTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-division-tree/garbage-vehicle-division-tree.component';
-import { GarbageVehicleTreeComponent } from './garbage-vehicles/trees/garbage-vehicle-tree/garbage-vehicle-tree.component';
+
 import { IllegalDropAbout } from './illegal-drop-about/illegal-drop-about.component';
 import { MixIntoManageComponent } from './mix-into-manage/mix-into-manage.component';
 import { MonitorPlatformComponent } from './monitor-platform/monitor-platform.component';
@@ -108,30 +94,6 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     GarbageStationListComponent,
     PictureUploadComponent,
 
-    GarbageVehicleManageComponent,
-    GarbageVehicleOperateComponent,
-    GarbageVehicleDivisionManageComponent,
-    GarbageVehicleDivisionTreeComponent,
-
-    GarbageCollectionPointComponent,
-    GarbageCollectionPointDetailsWindowComponent,
-
-    GarbageVehicleCameraTreeComponent,
-    GarbageVehicleCameraBindingComponent,
-    GarbageVehicleCameraBindingAICameraComponent,
-
-    GarbageCollectionMemberComponent,
-    GarbageCollectionMemberDetailsWindowComponent,
-    GarbageCollectionPointTrashCanManagerComponent,
-    GarbageCollectionPointTrashcanDetailsWindowComponent,
-
-    GarbageCollectionPointTreeComponent,
-
-    GarbageVehicleCameraManagerComponent,
-    GarbageVehicleCameraDetailsWindowComponent,
-
-    GarbageVehicleTreeComponent,
-
     AIGarbageStationRegionBuildingComponent,
     AIGarbageStationRegionStationComponent,
     AIGarbageStationRegionManagerComponent,
@@ -151,6 +113,8 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     AIGarbageStationRfidCardManagerComponent,
 
     AIGarbageRegionTreeComponent,
+    ...AIOPGarbageVehicleComponents,
+    ...AIOPUserSettingComponents,
   ],
   imports: [
     CommonModule,

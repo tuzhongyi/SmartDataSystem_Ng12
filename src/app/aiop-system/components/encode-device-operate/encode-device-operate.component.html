@@ -48,29 +48,16 @@
         </select>
       </div>
     </div>
-    <div class="hw-form-group">
+    <div class="hw-form-group" style="flex-basis: 100%">
       <div class="title">
-        <span class="hw-form-label"> IP地址 </span>
+        <span class="hw-form-label"> URL </span>
         <span class="hw-form-icon">*</span>
       </div>
       <div class="content">
         <input
           type="text"
           class="hw-form-control hw-form-input"
-          formControlName="Hostname"
-        />
-      </div>
-    </div>
-    <div class="hw-form-group">
-      <div class="title">
-        <span class="hw-form-label"> 端口号 </span>
-        <span class="hw-form-icon">*</span>
-      </div>
-      <div class="content">
-        <input
-          type="text"
-          class="hw-form-control hw-form-input"
-          formControlName="Port"
+          formControlName="Url"
         />
       </div>
     </div>
@@ -202,7 +189,7 @@
       </div>
       <div class="content">
         <howell-label-operate
-          [resourceId]="encodeDeviceId"
+          [resourceId]="encodeDeviceId!"
           (selectLabelEvent)="selectLabelEvent($event)"
         ></howell-label-operate>
       </div>

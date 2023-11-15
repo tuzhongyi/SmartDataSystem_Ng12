@@ -36,7 +36,11 @@
           <button class="hw-green-btn" (click)="oncreate()" *If="false">
             <i class="howell-icon-plus"></i> 添加
           </button>
-          <button class="hw-red-btn" *ngIf="false">
+          <button
+            class="hw-red-btn"
+            [disabled]="selecteds.length === 0"
+            (click)="todelete()"
+          >
             <i class="howell-icon-delete-bin"></i> 删除
           </button>
         </div>
@@ -51,7 +55,7 @@
         <aiop-garbage-station-table
           [args]="args"
           [load]="load"
-          [(selected)]="selected"
+          [(selecteds)]="selecteds"
           (details)="ondetails($event)"
         ></aiop-garbage-station-table>
       </div>
@@ -69,3 +73,11 @@
     (cancel)="window.details.show = false"
   ></aiop-garbage-station-details>
 </app-window>
+<confirm-window
+  [model]="window.confirm"
+  *ngIf="window.confirm.show"
+  [content]="window.confirm.content"
+  (ok)="ondelete()"
+  (cancel)="window.confirm.show = false"
+>
+</confirm-window>

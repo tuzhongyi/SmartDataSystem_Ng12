@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -24,19 +25,19 @@ export class AiopGarbageVehicleCameraTableComponent
   implements IComponent<IModel, PagedList<VehicleCameraModel>>, OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<VehicleCameraModel>>;
-  @Input() init = false;
+  @Input() init = true;
   @Input() args = new AiopGarbageVehicleCameraTableArgs();
   @Input() load?: EventEmitter<AiopGarbageVehicleCameraTableArgs>;
-  @Output() update: EventEmitter<VehicleCameraModel> = new EventEmitter();
-  @Input() selected?: VehicleCamera[];
-  @Output() selectedChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
+  @Output() details: EventEmitter<VehicleCameraModel> = new EventEmitter();
+  @Input() selecteds: VehicleCamera[] = [];
+  @Output() selectedsChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
 
   constructor(business: AiopGarbageVehicleCameraTableBusiness) {
     super();
     this.business = business;
   }
   OnlineStatus = OnlineStatus;
-  widths = ['45%', '15%', '20%', '10%', '10%'];
+  widths = [];
 
   ngOnInit(): void {
     if (this.load) {
@@ -54,28 +55,44 @@ export class AiopGarbageVehicleCameraTableComponent
   }
 
   async loadData(index: number, size: number) {
-    this.selected = undefined;
-
+    this.selecteds = [];
     let paged = await this.business.load(index, size, this.args);
     this.page = paged.Page;
     this.datas = paged.Data;
   }
 
-  onupdate(e: Event, item: VehicleCameraModel) {
-    this.update.emit(item);
+  ondetails(e: Event, item: VehicleCameraModel) {
+    this.details.emit(item);
     e.stopPropagation();
   }
 
   onselected(item: VehicleCameraModel) {
-    if (!this.selected) {
-      this.selected = [];
+    if (!this.selecteds) {
+      this.selecteds = [];
     }
-    let index = this.selected.indexOf(item);
+    let index = this.selecteds.indexOf(item);
     if (index < 0) {
-      this.selected.push(item);
+      this.selecteds.push(item);
     } else {
-      this.selected.splice(index, 1);
+      this.selecteds.splice(index, 1);
     }
-    this.selectedChange.emit(this.selected);
+    this.selectedsChange.emit(this.selecteds);
+  }
+  toselect(type: TableSelectType) {
+    switch (type) {
+      case TableSelectType.All:
+        this.selecteds = [...this.datas];
+        break;
+      case TableSelectType.Cancel:
+        this.selecteds = [];
+        break;
+      case TableSelectType.Reverse:
+        this.selecteds = this.datas.filter((x) => !this.selecteds.includes(x));
+        break;
+
+      default:
+        break;
+    }
+    this.selectedsChange.emit(this.selecteds);
   }
 }

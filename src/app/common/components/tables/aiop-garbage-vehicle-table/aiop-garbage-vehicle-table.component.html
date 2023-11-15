@@ -1,0 +1,107 @@
+<div class="garbage-station-table">
+  <div class="garbage-station-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>编号</td>
+          <td>名称</td>
+          <td>类型</td>
+          <td>车牌号码</td>
+          <td>IMEI</td>
+          <td class="center">摄像机</td>
+          <td class="center">状态</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{ selected: selecteds.includes(item) }"
+            (click)="onselect(item)"
+          >
+            <td>
+              {{ item.No }}
+            </td>
+            <td>
+              {{ item.Name }}
+            </td>
+            <td>
+              {{ Language.VehicleType(item.VehicleType) }}
+            </td>
+            <td>
+              {{ item.PlateNo }}
+            </td>
+            <td [title]="item.IMEI">
+              {{ item.IMEI }}
+            </td>
+            <td class="center">
+              <div
+                title="摄像机数量"
+                class="td-icon"
+                (click)="oncamera($event, item)"
+              >
+                【 {{ item.Cameras ? item.Cameras.length : 0 }} 】
+              </div>
+            </td>
+            <td class="center">
+              <div
+                class="green-text"
+                [ngClass]="{
+                  'powder-red-text': item.State && item.State.contains(1)
+                }"
+              >
+                {{ item.State && item.State.contains(1) ? "离线" : "正常" }}
+              </div>
+            </td>
+            <td class="operation center">
+              <div (click)="onparams($event, item)" title="参数">
+                <i class="mdi mdi-cube-outline"></i>
+              </div>
+              <div (click)="oncommand($event, item)" title="命令">
+                <i class="mdi mdi-apple-keyboard-command"></i>
+              </div>
+              <div (click)="ondetails($event, item)" title="编辑">
+                <i class="howell-icon-modification"></i>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="garbage-station-table-main-footer footer">
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

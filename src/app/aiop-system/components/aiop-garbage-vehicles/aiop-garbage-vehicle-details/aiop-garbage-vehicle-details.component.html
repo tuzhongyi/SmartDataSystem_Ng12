@@ -1,0 +1,117 @@
+<div class="garbage-vehicle-details" *ngIf="!!instance">
+  <div class="garbage-vehicle-details-head">
+    <h2>清运车信息</h2>
+  </div>
+  <div class="garbage-vehicle-details-body">
+    <div class="form-group">
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">ID</label>
+        </div>
+        <div class="form-item-value">
+          <input
+            [disabled]="true"
+            class="form-control custom"
+            [(ngModel)]="instance.Id"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">No</label>
+        </div>
+        <div class="form-item-value">
+          <input
+            [disabled]="true"
+            class="form-control custom"
+            [(ngModel)]="instance.No"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">车辆名称</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="instance.Name" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">车辆类型</label>
+        </div>
+        <div class="form-item-value">
+          <hw-select [selected]="instance.VehicleType">
+            <select [(ngModel)]="instance.VehicleType">
+              <option [value]="VehicleType.Tricycle">
+                {{ Language.VehicleType(VehicleType.Tricycle) }}
+              </option>
+              <option [value]="VehicleType.Car">
+                {{ Language.VehicleType(VehicleType.Car) }}
+              </option>
+            </select>
+          </hw-select>
+        </div>
+      </div>
+
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">车牌号码</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="instance.PlateNo" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">IMEI</label>
+        </div>
+        <div class="form-item-value">
+          <input class="form-control custom" [(ngModel)]="instance.IMEI" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >心跳间隔(秒)</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            type="text"
+            [(number)]="instance.HeartbeatInterval"
+            appTouchSpin
+            class="form-control custom touchspin"
+          />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label"
+            >自动关闭时间(秒)</label
+          >
+        </div>
+        <div class="form-item-value">
+          <input
+            type="text"
+            [(number)]="instance.ShutdownSeconds"
+            [options]="{
+              min: 600,
+              max: 14400
+            }"
+            appTouchSpin
+            class="form-control custom touchspin"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="garbage-vehicle-details-foot">
+    <button class="hw-green-m-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i>
+    </button>
+    <button class="hw-gray-m-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>

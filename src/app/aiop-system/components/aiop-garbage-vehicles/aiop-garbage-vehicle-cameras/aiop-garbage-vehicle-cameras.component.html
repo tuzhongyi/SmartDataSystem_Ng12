@@ -1,0 +1,60 @@
+<div class="garbage-vehicle-cameras" *ngIf="!!model">
+  <div class="garbage-vehicle-cameras-head">
+    <div class="title">
+      <h2>{{ model.Name }}摄像机</h2>
+    </div>
+    <ul class="hw-ul" *ngIf="model.Cameras">
+      <li *ngFor="let item of model.Cameras">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: selected === item
+          }"
+          (click)="selected = item"
+        >
+          {{ item.Name }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class="garbage-vehicle-cameras-body">
+    <div class="info" *ngIf="selected">
+      <div class="info-item">
+        <div class="info-item-title">编号</div>
+        <div class="info-item-value">
+          {{ selected.Id }}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">名称</div>
+        <div class="info-item-value">
+          {{ selected.Name }}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">位置</div>
+        <div class="info-item-value">
+          {{ Language.VehiclePositionNo(selected.PositionNo) }}
+        </div>
+      </div>
+      <div class="info-item" *ngIf="!!selected">
+        <div class="info-item-title">状态</div>
+        <div
+          class="info-item-value"
+          [ngClass]="{
+            'powder-red-text': selected.OnlineStatus !== 0,
+            'green-text': selected.OnlineStatus === 0
+          }"
+        >
+          {{ selected.OnlineStatus === 0 ? "在线" : "离线" }}
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-title">最后更新时间</div>
+        <div class="info-item-value">
+          {{ selected.UpdateTime | date : "yyyy-MM-dd HH:mm:ss" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

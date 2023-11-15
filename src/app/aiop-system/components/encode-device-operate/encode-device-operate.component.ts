@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ValidIPExp } from 'src/app/common/tools/tool';
 import { EncodedDeviceType } from 'src/app/enum/device-type.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { ProtocolType } from 'src/app/enum/protocol-type.enum';
@@ -23,7 +22,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
   state: FormState = FormState.none;
 
   @Input()
-  encodeDeviceId: string = '';
+  encodeDeviceId?: string;
 
   @Output()
   closeEvent = new EventEmitter<boolean>();
@@ -44,16 +43,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
     Name: ['', Validators.required],
     TransType: [TransType.TCP],
     ProtocolType: [ProtocolType.NVR],
-    Hostname: ['', [Validators.required, Validators.pattern(ValidIPExp)]],
-    Port: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^\d*$/),
-        Validators.max(65535),
-        Validators.min(0),
-      ],
-    ],
+    Url: ['', Validators.required],
     Username: [''],
     Password: [''],
     DeviceType: [EncodedDeviceType.None],
@@ -76,11 +66,8 @@ export class EncodeDeviceOperateComponent implements OnInit {
   get Name() {
     return this.myForm.get('Name') as FormControl;
   }
-  get Hostname() {
-    return this.myForm.get('Hostname') as FormControl;
-  }
-  get Port() {
-    return this.myForm.get('Port') as FormControl;
+  get Url() {
+    return this.myForm.get('Url') as FormControl;
   }
   async ngOnInit() {
     this.protocols = await this._business.getProtocols();
@@ -88,11 +75,11 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
     if (this.state == FormState.edit) {
       this._encodeDevice = await this._business.getEncodeDevice(
-        this.encodeDeviceId
+        this.encodeDeviceId!
       );
       // console.log('编码器', this._encodeDevice)
       this.resourceLabels = await this._business.getResourceLabels(
-        this.encodeDeviceId
+        this.encodeDeviceId!
       );
     }
     this._updateForm();
@@ -109,8 +96,8 @@ export class EncodeDeviceOperateComponent implements OnInit {
         encodeDevice.Name = this.myForm.value.Name!;
         encodeDevice.TransType = +this.myForm.value.TransType!;
         encodeDevice.ProtocolType = this.myForm.value.ProtocolType!;
-        encodeDevice.Url =
-          'http://' + this.myForm.value.Hostname + ':' + this.myForm.value.Port;
+        encodeDevice.Url = this.myForm.value.Url!;
+
         encodeDevice.Username = this.myForm.value.Username!;
         encodeDevice.Password = this.myForm.value.Password!;
         encodeDevice.DeviceType = this.myForm.value.DeviceType!;
@@ -137,11 +124,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
           this._encodeDevice.Name = this.myForm.value.Name!;
           this._encodeDevice.TransType = +this.myForm.value.TransType!;
           this._encodeDevice.ProtocolType = this.myForm.value.ProtocolType!;
-          this._encodeDevice.Url =
-            'http://' +
-            this.myForm.value.Hostname +
-            ':' +
-            this.myForm.value.Port;
+          this._encodeDevice.Url = this.myForm.value.Url ?? '';
           this._encodeDevice.Username = this.myForm.value.Username!;
           this._encodeDevice.Password = this.myForm.value.Password!;
           this._encodeDevice.DeviceType = this.myForm.value.DeviceType!;
@@ -191,10 +174,8 @@ export class EncodeDeviceOperateComponent implements OnInit {
           Password: protocol.Password,
         });
         try {
-          let url = new URL(protocol.Url);
           this.myForm.patchValue({
-            Hostname: url.hostname,
-            Port: url.port,
+            Url: protocol.Url,
           });
         } catch (e) {}
       }
@@ -217,10 +198,7 @@ export class EncodeDeviceOperateComponent implements OnInit {
 
         try {
           let url = new URL(this._encodeDevice.Url);
-          this.myForm.patchValue({
-            Hostname: url.hostname,
-            Port: url.port,
-          });
+          this.myForm.patchValue({ Url: this._encodeDevice.Url });
         } catch (e) {
           console.log('无效的url');
         } finally {
@@ -232,13 +210,11 @@ export class EncodeDeviceOperateComponent implements OnInit {
   private _checkForm() {
     if (this.Name.invalid) {
       this._toastrService.error('请输入名称');
-      return;
+      return false;
     }
-    if (this.Hostname.invalid) {
-      if (this.Hostname.errors && 'required' in this.Hostname.errors) {
-        this._toastrService.error('请输入IP地址');
-        return;
-      }
+    if (this.Url.invalid) {
+      this._toastrService.error('请输入IP地址');
+      return false;
       // if (this.Hostname.errors && 'pattern' in this.Hostname.errors) {
       //   this._toastrService.error('IP地址无效');
       //   return;
