@@ -23,7 +23,7 @@ class AIOPUserManagerDetailsWindow extends WindowViewModel {
   }
   style = {
     width: '800px',
-    height: '80%',
+    height: 'auto',
   };
   user?: User;
 }

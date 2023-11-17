@@ -59,12 +59,13 @@
             用户角色 <span class="must">*</span>
           </div>
           <div class="hw-form-list-item-value">
-            <common-label-select
-              [autoclose]="true"
-              [selectedNodes]="model.Role"
-            >
-              <aiop-role-list #tree [(selecteds)]="model.Role"></aiop-role-list>
-            </common-label-select>
+            <hw-select [(selected)]="role.selected">
+              <select [(ngModel)]="role.selected" [disabled]="!!user">
+                <option [ngValue]="item" *ngFor="let item of role.datas">
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
           </div>
         </div>
         <div class="hw-form-list-item">
@@ -124,14 +125,23 @@
         </div>
 
         <div class="hw-form-list-item">
-          <div class="hw-form-list-item-title">
-            服务器 <span class="must">*</span>
+          <div class="hw-form-list-item-title">UI类型</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.UIType">
+              <select #element [(ngModel)]="model.UIType">
+                <option [ngValue]="UserUIType.garbage">美丽城市助手</option>
+                <option [ngValue]="UserUIType.dapuqiao">打浦桥订制</option>
+              </select>
+            </hw-select>
           </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">服务器</div>
           <div class="hw-form-list-item-value">
             <input type="text" [(ngModel)]="model.ServerId" />
           </div>
         </div>
-        <!-- <div class="hw-form-list-item">
+        <div class="hw-form-list-item">
           <div class="hw-form-list-item-title">状态</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.State">
@@ -140,7 +150,7 @@
               </select>
             </hw-select>
           </div>
-        </div> -->
+        </div>
         <div class="hw-form-list-item" style="width: 100%; padding: 0">
           <div class="hw-form-list-item-title">描述信息</div>
           <div class="hw-form-list-item-value">

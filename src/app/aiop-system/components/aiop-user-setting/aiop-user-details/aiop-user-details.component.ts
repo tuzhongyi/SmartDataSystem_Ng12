@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { ToastrService } from 'ngx-toastr';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { Guid } from 'src/app/common/tools/guid';
 import { Language } from 'src/app/common/tools/language';
 import { RegExpTool } from 'src/app/common/tools/reg-exp/reg-exp.tool';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -9,14 +10,17 @@ import { Gender } from 'src/app/enum/gender.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
+import { UserType } from 'src/app/enum/user-type.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
+import { Role } from 'src/app/network/model/garbage-station/role.model';
 import {
   User,
   UserResource,
 } from 'src/app/network/model/garbage-station/user.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { AIOPUserDetailsRoleBusiness } from './aiop-user-details-role.business';
 import { AIOPUserDetailsBusiness } from './aiop-user-details.business';
 import { AIOPUserDetailsService } from './aiop-user-details.service';
 
@@ -24,7 +28,11 @@ import { AIOPUserDetailsService } from './aiop-user-details.service';
   selector: 'aiop-user-details',
   templateUrl: './aiop-user-details.component.html',
   styleUrls: ['./aiop-user-details.component.less'],
-  providers: [AIOPUserDetailsService, AIOPUserDetailsBusiness],
+  providers: [
+    AIOPUserDetailsRoleBusiness,
+    AIOPUserDetailsService,
+    AIOPUserDetailsBusiness,
+  ],
 })
 export class AIOPUserDetailsComponent implements OnInit {
   @Input() user?: User;
@@ -33,6 +41,7 @@ export class AIOPUserDetailsComponent implements OnInit {
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(
+    public role: AIOPUserDetailsRoleBusiness,
     private business: AIOPUserDetailsBusiness,
     private toastr: ToastrService
   ) {}
@@ -44,13 +53,15 @@ export class AIOPUserDetailsComponent implements OnInit {
   SelectStrategy = SelectStrategy;
   model = this.createUser();
   password: string = '';
+  roles: Role[] = [];
 
   createUser() {
     let user = new User();
+    user.Id = Guid.NewGuid().ToString('N');
     user.Role = [];
     user.ServerId = '1';
     user.State = UserState.normal;
-    user.UserType = UserUIType.garbage;
+    user.UserType = UserType.garbage_system;
     return user;
   }
 
@@ -67,6 +78,11 @@ export class AIOPUserDetailsComponent implements OnInit {
       let plain = instanceToPlain(this.user);
       this.model = plainToInstance(User, plain);
     }
+    this.role.load().then((x) => {
+      if (this.model.Role.length > 0) {
+        this.role.select(this.model.Role[0].Id);
+      }
+    });
   }
 
   select_resources(nodes: CommonFlatNode<DivisionTreeSource>[]) {
@@ -113,7 +129,7 @@ export class AIOPUserDetailsComponent implements OnInit {
       this.toastr.warning('请填写姓名');
       return false;
     }
-    if (!this.model.Role || this.model.Role.length === 0) {
+    if (!this.role.selected) {
       this.toastr.warning('请选择用户角色');
       return false;
     }
@@ -131,7 +147,11 @@ export class AIOPUserDetailsComponent implements OnInit {
       if (this.model.CreateTime) {
         promise = this.business.update(this.model);
       } else {
-        promise = this.business.create(this.model, this.password);
+        promise = this.business.create(
+          this.model,
+          this.password,
+          this.role.selected!
+        );
       }
       promise
         .then((x) => {

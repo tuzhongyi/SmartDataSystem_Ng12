@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { CryptionTool } from 'src/app/common/tools/cryptions/cryption.tool';
+import { Role } from 'src/app/network/model/garbage-station/role.model';
 import { User } from 'src/app/network/model/garbage-station/user.model';
 import { AIOPUserDetailsService } from './aiop-user-details.service';
 
@@ -17,7 +18,7 @@ export class AIOPUserDetailsBusiness {
     user.Password = undefined;
     return this.service.user.update(user);
   }
-  create(user: User, password: string) {
+  create(user: User, password: string, role: Role) {
     let plain = instanceToPlain(user);
     let model = plainToInstance(User, plain);
     model.CreateTime = new Date();
@@ -29,6 +30,7 @@ export class AIOPUserDetailsBusiness {
     expired.setFullYear(expired.getFullYear() + 3);
     model.ExpiredTime = expired;
     model.CreatorId = this.local.user.Id;
+    model.Role = [role];
 
     return this.service.user.create(model);
   }
