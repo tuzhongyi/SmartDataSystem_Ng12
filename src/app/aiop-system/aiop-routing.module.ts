@@ -14,9 +14,10 @@ import { AIOPGarbageVehicleManageComponent } from './components/aiop-garbage-veh
 import { GarbageCollectionMemberComponent } from './components/aiop-garbage-vehicles/garbage-collection-member/garbage-collection-member.component';
 import { GarbageCollectionPointTrashCanManagerComponent } from './components/aiop-garbage-vehicles/garbage-collection-point-trashcan-manager/garbage-collection-point-trashcan-manager.component';
 import { GarbageVehicleDivisionManageComponent } from './components/aiop-garbage-vehicles/garbage-vehicle-division-manage/garbage-vehicle-division-manage.component';
+import { AIOPRoleManagerComponent } from './components/aiop-user-setting/aiop-role-manager/aiop-role-manager.component';
+import { AIOPUserLogRecordManagerComponent } from './components/aiop-user-setting/aiop-user-log-record-manager/aiop-user-log-record-manager.component';
 import { AIOPUserManagerComponent } from './components/aiop-user-setting/aiop-user-manager/aiop-user-manager.component';
 import { AIOPUserSettingComponent } from './components/aiop-user-setting/aiop-user-setting.component';
-import { TestCryptionComponent } from './components/aiop-user-setting/cryption/cryption.component';
 import { CameraManageComponent } from './components/camera-manage/camera-manage.component';
 import { CameraModelManageComponent } from './components/camera-model-manage/camera-model-manage.component';
 import { DeployMapComponent } from './components/deploy-map/deploy-map.component';
@@ -385,21 +386,18 @@ const routes: Routes = [
                   breadcrumb: '用户管理',
                 },
               },
-            ],
-          },
-          {
-            path: 'cryption',
-            children: [
               {
-                path: '',
-                redirectTo: 'test',
-                pathMatch: 'full',
+                path: 'role-manager',
+                component: AIOPRoleManagerComponent,
+                data: {
+                  breadcrumb: '角色管理',
+                },
               },
               {
-                path: 'test',
-                component: TestCryptionComponent,
+                path: 'log-record',
+                component: AIOPUserLogRecordManagerComponent,
                 data: {
-                  breadcrumb: '加密测试',
+                  breadcrumb: '操作日志',
                 },
               },
             ],

@@ -1,0 +1,88 @@
+<div class="aiop-role-table">
+  <div class="aiop-role-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>名称</td>
+          <td>隐私数据</td>
+          <td>用户数据</td>
+          <td>静态数据</td>
+          <td>照片</td>
+          <td>服务器ID</td>
+          <td class="center"><div class="operation">操作</div></td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{ selected: selecteds.includes(item) }"
+            (click)="onselect(item)"
+          >
+            <td>
+              {{ item.Id }}
+            </td>
+            <td>
+              {{ item.Name }}
+            </td>
+            <td>{{ item.PrivacyData == 1 ? "显示" : "不显示" }}</td>
+            <td>
+              {{ item.UserData == 1 ? "显示" : "不显示" }}
+            </td>
+            <td>
+              {{ item.StaticData == 1 ? "显示" : "不显示" }}
+            </td>
+            <td>
+              {{ item.PictureData == 1 ? "显示" : "不显示" }}
+            </td>
+            <td>
+              {{ item.ServerId }}
+            </td>
+            <td>
+              <div class="operation center">
+                <div (click)="ondetails($event, item)" title="编辑">
+                  <i class="howell-icon-modification"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aiop-role-table-main-footer footer">
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

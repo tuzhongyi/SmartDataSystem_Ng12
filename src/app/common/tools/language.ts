@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2022-11-03 15:03:31
- * @Last Modified by: pmx
- * @Last Modified time: 2023-01-13 21:03:25
+ * @Last Modified by: zzl
+ * @Last Modified time: 2023-11-16 11:39:02
  */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
@@ -42,6 +42,7 @@ import { StationType } from 'src/app/enum/station-type.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
+import { UserLogRecordMessageType } from 'src/app/enum/user-log-record-message-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserType } from 'src/app/enum/user-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
@@ -831,6 +832,33 @@ export class Language {
         return '未按时间完成处置';
       default:
         return Language.json.Unknow;
+    }
+  }
+
+  static MessageType(type?: UserLogRecordMessageType) {
+    switch (type) {
+      case UserLogRecordMessageType.Login:
+        return '登录成功';
+      case UserLogRecordMessageType.Logout:
+        return '注销';
+      case UserLogRecordMessageType.LoginFailed:
+        return '登录失败';
+      case UserLogRecordMessageType.CreateUser:
+        return '创建用户';
+      case UserLogRecordMessageType.DeleteUser:
+        return '删除用户';
+      case UserLogRecordMessageType.SetUser:
+        return '修改用户';
+      case UserLogRecordMessageType.CreateRole:
+        return '创建角色';
+      case UserLogRecordMessageType.DeleteRole:
+        return '删除角色';
+      case UserLogRecordMessageType.SetRole:
+        return '修改角色';
+      case UserLogRecordMessageType.ChangePassword:
+        return '修改用户密码';
+      default:
+        return '未知';
     }
   }
 

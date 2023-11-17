@@ -41,6 +41,7 @@ export class AIGarbageStationRegionTableComponent
 
   constructor(private business: AIGarbageStationRegionTableBusiness) {
     super();
+    this.pageSize = 10;
   }
   widths: string[] = ['20%', '20%'];
   ngOnInit(): void {
@@ -59,7 +60,7 @@ export class AIGarbageStationRegionTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10, ...args: any[]): void {
+  loadData(index: number, size: number = this.pageSize, ...args: any[]): void {
     this.selecteds = [];
     this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {

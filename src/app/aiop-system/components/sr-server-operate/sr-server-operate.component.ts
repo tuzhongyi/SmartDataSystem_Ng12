@@ -14,7 +14,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ValidIPExp } from 'src/app/common/tools/tool';
+import { RegExpTool } from 'src/app/common/tools/reg-exp/reg-exp.tool';
 import { FormState } from 'src/app/enum/form-state.enum';
 import {
   SRServer,
@@ -93,7 +93,10 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
   }
   newAddress() {
     return this._fb.group({
-      IPAddress: ['', [Validators.required, Validators.pattern(ValidIPExp)]],
+      IPAddress: [
+        '',
+        [Validators.required, Validators.pattern(RegExpTool.ValidIPExp)],
+      ],
       Port: ['', Validators.required],
       IsInternet: '1',
       IsDefault: '1',

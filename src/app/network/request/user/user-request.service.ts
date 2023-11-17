@@ -12,10 +12,8 @@ import { PagedList } from '../../model/page_list.model';
 import { PasswordUrl } from '../../url/garbage/password.url';
 import { UserLogUrl } from '../../url/garbage/user-log.url';
 import { UserUrl } from '../../url/garbage/user.url';
-import {
-  HowellBaseRequestService,
-  HowellBaseTypeRequestService,
-} from '../base-request-howell.service';
+import { BaseRequestService } from '../base-request.service';
+
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { PagedParams } from '../IParams.interface';
 import {
@@ -33,25 +31,25 @@ import {
 })
 export class UserRequestService {
   constructor(http: HowellAuthHttpService, router: Router) {
-    this.basic = new HowellBaseRequestService(http, router);
-    this.type = this.basic.type(User);
+    this.basic = new BaseRequestService(http);
   }
 
-  private basic: HowellBaseRequestService;
-  private type: HowellBaseTypeRequestService<User>;
+  private basic: BaseRequestService;
 
   async get(id: string): Promise<User> {
     let url = UserUrl.item(id);
     let response = await this.basic.http.get(url).toPromise();
     return plainToInstance(User, response);
   }
-  update(data: User): Promise<Fault> {
-    let url = UserUrl.basic();
-    return this.basic.put(url, Fault, data);
+  async update(data: User): Promise<boolean> {
+    let url = UserUrl.item(data.Id);
+    let fault = await this.basic.put(url, Fault, data);
+    return fault.FaultCode === 0;
   }
-  create(data: User): Promise<Fault> {
+  async create(data: User): Promise<boolean> {
     let url = UserUrl.basic();
-    return this.basic.post(url, Fault, data);
+    let fault = await this.basic.post(url, Fault, data);
+    return fault.FaultCode === 0;
   }
   delete(id: string): Promise<Fault> {
     let url = UserUrl.item(id);
@@ -63,7 +61,7 @@ export class UserRequestService {
   ): Promise<PagedList<User>> {
     let url = UserUrl.list();
     let data = instanceToPlain(params);
-    return this.type.paged(url, data);
+    return this.basic.paged(url, User, data);
   }
 
   private _config?: ConfigService;
@@ -108,7 +106,7 @@ export class UserRequestService {
 }
 
 class ConfigService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
 
   get(userId: string, type: UserConfigType): Promise<string> {
     let url = UserUrl.config(userId).item(type);
@@ -129,10 +127,7 @@ class ConfigService {
 }
 
 class RolesService {
-  constructor(private basic: HowellBaseRequestService) {
-    this.basicType = basic.type(Role);
-  }
-  private basicType: HowellBaseTypeRequestService<Role>;
+  constructor(private basic: BaseRequestService) {}
 
   list(userId: string, params?: PagedParams): Promise<PagedList<Role>> {
     let url = UserUrl.role(userId).basic(params);
@@ -141,12 +136,12 @@ class RolesService {
 
   get(userId: string, id: string): Promise<Role> {
     let url = UserUrl.role(userId).item(id);
-    return this.basicType.get(url);
+    return this.basic.get(url, Role);
   }
 }
 
 class LabelsService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
 
   list(params: GetUserLabelsParams): Promise<PagedList<UserLabel>> {
     let url = UserUrl.label().list();
@@ -173,7 +168,7 @@ class LabelsService {
 }
 
 class PasswordsService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
 
   random(userId: string, params: RandomUserPaswordParams): Promise<string> {
     let url = UserUrl.password(userId).random();
@@ -197,7 +192,7 @@ class PasswordsService {
 }
 
 class PasswordCheckService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
 
   mobileNo(mobileNo: string): Promise<Fault> {
     let url = PasswordUrl.checkMobileNo(mobileNo);
@@ -217,7 +212,7 @@ class PasswordCheckService {
 }
 
 class LogService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
   private _record?: LogUserRecordService;
   public get record(): LogUserRecordService {
     if (!this._record) {
@@ -227,7 +222,7 @@ class LogService {
   }
 }
 class LogUserRecordService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
 
   list(params: GetUserRecordListParams): Promise<PagedList<UserRecord>> {
     let plain = instanceToPlain(params);

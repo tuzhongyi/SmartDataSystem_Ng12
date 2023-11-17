@@ -3,7 +3,7 @@ import { Gender } from 'src/app/enum/gender.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { UserState } from 'src/app/enum/user-state.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
-import { IModel } from '../model.interface';
+import { IIdNameModel, IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
 import { Role } from './role.model';
 export class User implements IModel {
@@ -60,11 +60,11 @@ export class User implements IModel {
   UIType?: UserUIType;
 }
 
-export class UserResource implements IModel {
+export class UserResource implements IIdNameModel {
   /**	String	资源ID	M	R */
   Id!: string;
   /**	String	资源名称	O	R */
-  Name?: string;
+  Name!: string;
   /**	Int32	资源类型，1-街道，2-居委，3-厢房，4-行政区	M	R */
   ResourceType!: UserResourceType;
 

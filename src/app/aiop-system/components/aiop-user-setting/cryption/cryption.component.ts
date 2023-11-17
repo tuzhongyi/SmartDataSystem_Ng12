@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import CryptoJS from 'crypto-js';
-import { sm4encrypt } from './sm4';
+import { CryptionTool } from 'src/app/common/tools/cryptions/cryption.tool';
 
 @Component({
   selector: 'test-cryption',
@@ -23,27 +23,15 @@ export class TestCryptionComponent implements OnInit {
     this.encode2();
   }
 
-  tohex(str: string) {
-    let val = [];
-    for (let i = 0; i < str.length; i++) {
-      val.push(parseInt(str.charCodeAt(i).toString(16)));
-    }
-    return val;
-  }
-
   encode1() {
-    let key = CryptoJS.enc.Utf8.parse(this.key);
-    let hex = this.tohex(this.iv);
-
-    let result = sm4encrypt(key.toString(), hex, this.text);
-    this.result1 = result;
+    this.result1 = CryptionTool.sm4.encrypt(this.key, this.iv, this.text);
   }
 
   encode2() {
     let key = CryptoJS.enc.Utf8.parse(this.key);
     let iv = CryptoJS.enc.Hex.parse(this.iv);
     let text = CryptoJS.enc.Utf8.parse(this.text);
-    let encrypted = CryptoJS.AES.encrypt(text, key, {
+    let encrypted = CryptoJS.DES.encrypt(text, key, {
       iv: iv,
       mode: CryptoJS.mode.CBC,
       padding: CryptoJS.pad.Pkcs7,

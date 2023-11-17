@@ -1,0 +1,161 @@
+<div class="aiop-user-details">
+  <div class="aiop-user-details-head">
+    <div class="hw-simple-title">
+      {{ user ? user.LastName ?? user.FirstName ?? user.Username : "用户信息" }}
+    </div>
+  </div>
+  <div class="aiop-user-details-body">
+    <div class="hw-form">
+      <div class="hw-form-list">
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            用户名 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <input
+              [disabled]="!!user"
+              type="text"
+              [(ngModel)]="model.Username"
+            />
+          </div>
+        </div>
+
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            密码 <span class="must">*</span>
+            <div class="describe">
+              8-30个字符，需包含大、小写字母、数字和特殊字符
+            </div>
+          </div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [disabled]="!!user" [(ngModel)]="password" />
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            姓名 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.LastName" />
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">性别</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.Gender">
+              <select #element [(ngModel)]="model.Gender">
+                <option [ngValue]="Gender.Male">
+                  {{ Language.Gender(Gender.Male) }}
+                </option>
+                <option [ngValue]="Gender.Female">
+                  {{ Language.Gender(Gender.Female) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            用户角色 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <common-label-select
+              [autoclose]="true"
+              [selectedNodes]="model.Role"
+            >
+              <aiop-role-list #tree [(selecteds)]="model.Role"></aiop-role-list>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            资源权限 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <common-label-select
+              [height]="'325px'"
+              [showCloseIcon]="false"
+              [autoclose]="true"
+              [selectedNodes]="model.Resources ?? []"
+            >
+              <howell-division-tree
+                #tree
+                [defaultIds]="resourceIds"
+                [selectStrategy]="SelectStrategy.Single"
+                (selectTreeNode)="select_resources($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">手机号码</div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.MobileNo" />
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">邮箱</div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.Email" />
+          </div>
+        </div>
+        <!-- <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">过期时间</div>
+          <div class="hw-form-list-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [(date)]="model.ExpiredTime"
+              [format]="'yyyy年MM月dd日 HH:mm'"
+            />
+          </div>
+        </div> -->
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">用户类型</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.UserType">
+              <select #element [(ngModel)]="model.UserType">
+                <option [ngValue]="1">生活垃圾</option>
+                <option [ngValue]="2">垃圾清运</option>
+                <option [ngValue]="3">生活垃圾&垃圾清运</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            服务器 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.ServerId" />
+          </div>
+        </div>
+        <!-- <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">状态</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.State">
+              <select #element [(ngModel)]="model.State">
+                <option [ngValue]="UserState.normal">正常</option>
+              </select>
+            </hw-select>
+          </div>
+        </div> -->
+        <div class="hw-form-list-item" style="width: 100%; padding: 0">
+          <div class="hw-form-list-item-title">描述信息</div>
+          <div class="hw-form-list-item-value">
+            <textarea [(ngModel)]="model.Note"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aiop-user-details-foot">
+    <button class="hw-green-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i> 确定
+    </button>
+    <button class="hw-gray-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i> 取消
+    </button>
+  </div>
+</div>

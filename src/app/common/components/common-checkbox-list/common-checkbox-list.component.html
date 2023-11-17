@@ -1,0 +1,9 @@
+<div class="common-checkbox-list">
+  <div *ngFor="let item of datas">
+    <mat-checkbox
+      [checked]="selectedIds.includes(item.Id)"
+      (change)="onchange(item)"
+      >{{ item.Name }}</mat-checkbox
+    >
+  </div>
+</div>

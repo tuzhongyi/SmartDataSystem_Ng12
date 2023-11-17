@@ -11,19 +11,16 @@
           "title": "用户管理",
           "id": "user-manager",
           "path": "/aiop/underwater/user-setting/user/user-manager"
-        }
-      ]
-    },
-    {
-      "title": "加密",
-      "id": "cryption",
-      "path": "/aiop/underwater/user-setting/cryption",
-      "icon": "howell-icon-key",
-      "children": [
+        },
         {
-          "title": "加密测试",
-          "id": "test",
-          "path": "/aiop/underwater/user-setting/cryption/test"
+          "title": "角色管理",
+          "id": "role-manager",
+          "path": "/aiop/underwater/user-setting/user/role-manager"
+        },
+        {
+          "title": "操作日志",
+          "id": "log-record",
+          "path": "/aiop/underwater/user-setting/user/log-record"
         }
       ]
     }

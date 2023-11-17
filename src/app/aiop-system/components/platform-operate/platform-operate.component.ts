@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ValidIPExp } from 'src/app/common/tools/tool';
+import { RegExpTool } from 'src/app/common/tools/reg-exp/reg-exp.tool';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Platform } from 'src/app/network/model/garbage-station/platform.model';
 import { Protocol } from 'src/app/network/model/garbage-station/protocol.model';
@@ -25,7 +25,7 @@ export class PlatformOperateComponent implements OnInit {
     Password: new FormControl(''),
     Hostname: new FormControl('', [
       Validators.required,
-      Validators.pattern(ValidIPExp),
+      Validators.pattern(RegExpTool.ValidIPExp),
     ]),
     Port: new FormControl('', [
       Validators.required,
@@ -38,7 +38,10 @@ export class PlatformOperateComponent implements OnInit {
       Validators.max(65535),
       Validators.min(0),
     ]),
-    EventRecvIPAddress: new FormControl('', Validators.pattern(ValidIPExp)),
+    EventRecvIPAddress: new FormControl(
+      '',
+      Validators.pattern(RegExpTool.ValidIPExp)
+    ),
     EventCodes: new FormControl([]),
   });
   protocols: Array<Protocol> = [];

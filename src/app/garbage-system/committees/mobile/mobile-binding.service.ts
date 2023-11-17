@@ -20,7 +20,6 @@ export class MobileBindingService {
   }
 
   async setUser(user: User) {
-    let response = await this.userService.update(user);
-    return response.FaultCode == 0;
+    return this.userService.update(user);
   }
 }

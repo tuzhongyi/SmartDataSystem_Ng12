@@ -4,7 +4,8 @@ import { User } from '../../model/garbage-station/user.model';
 import { Fault } from '../../model/howell-response.model';
 import { PagedList } from '../../model/page_list.model';
 import { RoleUrl } from '../../url/garbage/role.url';
-import { HowellBaseRequestService } from '../base-request-howell.service';
+import { BaseRequestService } from '../base-request.service';
+
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import { PagedParams } from '../IParams.interface';
 
@@ -12,23 +13,25 @@ import { PagedParams } from '../IParams.interface';
   providedIn: 'root',
 })
 export class RoleRequestService {
-  constructor(http: HowellAuthHttpService, router: Router) {
-    this.basic = new HowellBaseRequestService(http, router);
+  constructor(http: HowellAuthHttpService) {
+    this.basic = new BaseRequestService(http);
   }
 
-  private basic: HowellBaseRequestService;
+  private basic: BaseRequestService;
 
   get(id: string): Promise<Role> {
     let url = RoleUrl.item(id);
     return this.basic.get(url, Role);
   }
-  update(data: Role): Promise<Fault> {
-    let url = RoleUrl.basic();
-    return this.basic.put(url, Fault, data);
+  async update(data: Role): Promise<boolean> {
+    let url = RoleUrl.item(data.Id);
+    let fault = await this.basic.put(url, Fault, data);
+    return fault.FaultCode === 0;
   }
-  create(data: Role): Promise<Fault> {
+  async create(data: Role): Promise<boolean> {
     let url = RoleUrl.basic();
-    return this.basic.post(url, Fault, data);
+    let fault = await this.basic.post(url, Fault, data);
+    return fault.FaultCode === 0;
   }
   delete(id: string): Promise<Fault> {
     let url = RoleUrl.item(id);
@@ -36,7 +39,7 @@ export class RoleRequestService {
   }
   list(params?: PagedParams): Promise<PagedList<Role>> {
     let url = RoleUrl.basic(params);
-    return this.basic.get(url, PagedList);
+    return this.basic.get(url, PagedList<Role>);
   }
 
   private _user?: UsersService;
@@ -48,10 +51,10 @@ export class RoleRequestService {
   }
 }
 class UsersService {
-  constructor(private basic: HowellBaseRequestService) {}
+  constructor(private basic: BaseRequestService) {}
   list(roleId: string, params: PagedParams): Promise<PagedList<User>> {
     let url = RoleUrl.user(roleId).basic(params);
-    return this.basic.get(url, PagedList);
+    return this.basic.get(url, PagedList<User>);
   }
 
   get(roleId: string, userId: string) {

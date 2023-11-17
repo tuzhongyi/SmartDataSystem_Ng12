@@ -1,0 +1,80 @@
+<div class="aiop-role-details">
+  <div class="aiop-role-details-head">
+    <div class="hw-simple-title">
+      {{ role ? role.Name : "角色信息" }}
+    </div>
+  </div>
+  <div class="aiop-role-details-body">
+    <div class="hw-form">
+      <div class="hw-form-list">
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">
+            名称 <span class="must">*</span>
+          </div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.Name" />
+          </div>
+        </div>
+
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">服务器</div>
+          <div class="hw-form-list-item-value">
+            <input type="text" [(ngModel)]="model.ServerId" />
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">隐私数据</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.PrivacyData">
+              <select #element [(ngModel)]="model.PrivacyData">
+                <option [ngValue]="0">不显示</option>
+                <option [ngValue]="1">显示</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">用户数据</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.UserData">
+              <select #element [(ngModel)]="model.UserData">
+                <option [ngValue]="0">不显示</option>
+                <option [ngValue]="1">显示</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">静态数据</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.StaticData">
+              <select #element [(ngModel)]="model.StaticData">
+                <option [ngValue]="0">不显示</option>
+                <option [ngValue]="1">显示</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="hw-form-list-item">
+          <div class="hw-form-list-item-title">照片</div>
+          <div class="hw-form-list-item-value">
+            <hw-select [(selected)]="model.PictureData">
+              <select #element [(ngModel)]="model.PictureData">
+                <option [ngValue]="0">不显示</option>
+                <option [ngValue]="1">显示</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="aiop-role-details-foot">
+    <button class="hw-green-btn" (click)="onok()">
+      <i class="howell-icon-Check"></i> 确定
+    </button>
+    <button class="hw-gray-btn" (click)="oncancel()">
+      <i class="howell-icon-Close"></i> 取消
+    </button>
+  </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="aiop-user-log-record-table">
+  <div class="aiop-user-log-record-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>时间</td>
+          <td>消息类型</td>
+          <td>用户名</td>
+          <td>操作内容</td>
+          <td>操作次数</td>
+          <td>被操作用户</td>
+          <td>操作结果</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>{{ item.Time | date : "yyyy-MM-dd HH:mm:ss" }}</td>
+            <td>
+              {{ Language.MessageType(item.MessageType) }}
+            </td>
+            <td>
+              {{ item.UserName }}
+            </td>
+            <td>{{ item.Content }}</td>
+            <td>
+              {{ item.Times }}
+            </td>
+            <td>
+              {{ item.OperatedUserName }}
+            </td>
+            <td>
+              {{ item.Result ? "成功" : "失败:" + item.Reason }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aiop-user-log-record-table-main-footer footer">
+      <div></div>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

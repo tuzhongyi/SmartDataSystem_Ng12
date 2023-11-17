@@ -1,0 +1,64 @@
+.aiop-role-details {
+  height: 100%;
+  width: 100%;
+
+  &-head {
+    height: 36px;
+  }
+
+  &-body {
+    height: calc(100% - 36px - 50px);
+    overflow-y: auto;
+
+    .describe {
+      opacity: 0.8;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+
+    .hw-form {
+      height: 100%;
+
+      &-list {
+        padding: 0;
+
+        &-item {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+
+          &:nth-child(odd) {
+            padding-right: 10px;
+          }
+
+          &:nth-child(even) {
+            padding-left: 10px;
+          }
+
+          &-title {
+            width: 100%;
+            margin: 0;
+            margin-bottom: 5px;
+          }
+
+          &-value {
+            width: 100%;
+
+            textarea {
+              height: 100px;
+              min-height: 100px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-foot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50px;
+  }
+}

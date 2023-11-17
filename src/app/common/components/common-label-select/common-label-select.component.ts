@@ -12,8 +12,8 @@ import {
   Output,
 } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
-import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
-import { CommonTree } from '../common-tree/common-tree';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
+import { ICommonTree } from '../common-tree/common-tree.model';
 
 /**
  *  显示树的选中节点信息
@@ -32,7 +32,7 @@ export class CommonLabelSelecComponent
   showDropDownChange: EventEmitter<boolean> = new EventEmitter();
 
   @Input()
-  selectedNodes: CommonFlatNode[] = [];
+  selectedNodes: IIdNameModel[] = [];
 
   @Input()
   autoclose = false;
@@ -48,7 +48,7 @@ export class CommonLabelSelecComponent
   @Output() toggleDropDown = new EventEmitter<boolean>();
   @Output() removeDropItem = new EventEmitter();
 
-  @ContentChild('tree') tree?: CommonTree;
+  @ContentChild('tree') tree?: ICommonTree;
 
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
@@ -76,7 +76,7 @@ export class CommonLabelSelecComponent
     this.showDropDownChange.emit(this.showDropDown);
     this.toggleDropDown.emit(this.showDropDown);
   }
-  removeNode(e: Event, node: CommonFlatNode) {
+  removeNode(e: Event, node: IIdNameModel) {
     e.stopPropagation();
 
     this.tree?.toggleNodes([node.Id]);

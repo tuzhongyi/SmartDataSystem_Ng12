@@ -1,26 +1,66 @@
 <div class="aiop-user-manager">
-  <div class="vertical-layout">
-    <div class="vertical-header">
-      <div class="hw-second-title">用户管理</div>
-      <div class="operate-bar">
-        <div class="hw-normal-btn-group">
-          <button class="hw-green-btn">
-            <i class="howell-icon-plus"></i>
-            添加
-          </button>
-          <button class="hw-red-btn">
-            <i class="howell-icon-delete-bin"></i>
-            删除
-          </button>
-        </div>
+  <div class="aiop-user-manager-head">
+    <div class="hw-second-title">用户管理</div>
+    <div class="operate-bar">
+      <div class="hw-normal-btn-group">
+        <button class="hw-green-btn" (click)="tocreate()">
+          <i class="howell-icon-plus"></i>
+          添加
+        </button>
+        <button
+          class="hw-red-btn"
+          [disabled]="selecteds.length == 0"
+          (click)="todelete()"
+        >
+          <i class="howell-icon-delete-bin"></i>
+          删除
+        </button>
+      </div>
 
-        <div class="search-wrapper">
-          <howell-simple-search
-            placeHolder="名称"
-            (searchEvent)="onsearch($event)"
-          ></howell-simple-search>
-        </div>
+      <div class="search-wrapper">
+        <howell-simple-search
+          placeHolder="姓名或手机号码"
+          (searchEvent)="onsearch($event)"
+        ></howell-simple-search>
       </div>
     </div>
   </div>
+  <div class="aiop-user-manager-body">
+    <aiop-user-table
+      [args]="args"
+      [load]="load"
+      [(selecteds)]="selecteds"
+      (details)="ondetails($event)"
+      (key)="onkey($event)"
+    ></aiop-user-table>
+  </div>
+  <app-window
+    [Model]="window.details"
+    *ngIf="window.details.show"
+    [style]="window.details.style"
+  >
+    <aiop-user-details
+      [user]="window.details.user"
+      (ok)="ondetailsok()"
+      (cancel)="window.details.show = false"
+    ></aiop-user-details>
+  </app-window>
+  <app-window
+    [Model]="window.password"
+    *ngIf="window.password.show"
+    [style]="window.password.style"
+  >
+    <aiop-user-password-change
+      [user]="window.password.user"
+      (close)="window.password.show = false"
+    ></aiop-user-password-change>
+  </app-window>
+  <confirm-window
+    [model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [content]="window.confirm.content"
+    (ok)="ondelete()"
+    (cancel)="window.confirm.show = false"
+  >
+  </confirm-window>
 </div>

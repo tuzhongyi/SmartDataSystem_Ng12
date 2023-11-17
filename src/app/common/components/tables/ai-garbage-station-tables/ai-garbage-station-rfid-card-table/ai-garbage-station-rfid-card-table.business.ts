@@ -23,6 +23,7 @@ export class AIGarbageStationRfidCardTableBusiness {
     if (args.regionId) {
       params.RegionIds = [args.regionId];
     }
+    params.RegionName = args.name;
     return this.service.rfid.cards.list(params);
   }
 }

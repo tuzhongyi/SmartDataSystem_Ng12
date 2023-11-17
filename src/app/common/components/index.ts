@@ -17,6 +17,7 @@ import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { CARD_COMPONENTS } from './cards/cards.module';
 import { CHART_COMPONENTS } from './charts/chart-component';
 import { CommonBarChartComponent } from './common-bar-chart/common-bar-chart.component';
+import { CommonCheckboxListComponent } from './common-checkbox-list/common-checkbox-list.component';
 import { CommonElementListComponent } from './common-element-list/common-element-list.component';
 import { CommonGaugeChartComponent } from './common-gauge-chart/common-gauge-chart.component';
 import { CommonLabelSelecComponent } from './common-label-select/common-label-select.component';
@@ -122,6 +123,7 @@ export const CUSTOM_COMPONENTS = [
   CommonTreeComponent,
   RegionTreeComponent,
   CommonLabelSelecComponent,
+  CommonCheckboxListComponent,
   LabelOperateComponent,
   LabelManageFormComponent,
   ToastWindowComponent,

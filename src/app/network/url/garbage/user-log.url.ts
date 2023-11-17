@@ -3,7 +3,7 @@ import { UserRecordInnerUrl } from './inner/user_record.url';
 
 export class UserLogUrl {
   static basic() {
-    return `${BaseUrl.user_system}/Logs`;
+    return `${BaseUrl.user_logs}/Logs`;
   }
 
   private static _record?: UserRecordInnerUrl;

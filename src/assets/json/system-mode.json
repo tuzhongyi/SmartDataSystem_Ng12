@@ -7,11 +7,6 @@
       "path": "/aiop/underwater/monitor-platform"
     },
     {
-      "title": "垃圾事件",
-      "icon": "howell-icon-system",
-      "path": "/aiop/underwater/garbage-events"
-    },
-    {
       "title": "系统设置",
       "icon": "howell-icon-setting",
       "path": "/aiop/underwater/system-setting"

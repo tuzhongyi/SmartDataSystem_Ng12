@@ -1,4 +1,4 @@
-const sm4 = require('sm-crypto').sm4
+const { sm4 } = require('sm-crypto');
 
 export function sm4encrypt (key, iv, text) {
 

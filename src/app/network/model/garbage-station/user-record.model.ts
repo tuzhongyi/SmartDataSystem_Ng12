@@ -1,4 +1,5 @@
 import { Transform } from 'class-transformer';
+import { UserLogRecordMessageType } from 'src/app/enum/user-log-record-message-type.enum';
 import { IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
 
@@ -6,7 +7,7 @@ export class UserRecord implements IModel {
   /**	String	用户名	M	*/
   UserName!: string;
   /**	Int32	消息类型	M	*/
-  MessageType!: number;
+  MessageType!: UserLogRecordMessageType;
   /**	DateTime	时间	M	*/
   @Transform(transformDateTime) Time!: Date;
   /**	String	操作内容	O	*/

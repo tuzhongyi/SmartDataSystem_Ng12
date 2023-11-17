@@ -1,18 +1,17 @@
-import { SelectionChange } from "@angular/cdk/collections";
-import { Component, EventEmitter, Output } from "@angular/core";
-import { BehaviorSubject } from "rxjs";
-import { CommonFlatNode } from "src/app/view-model/common-flat-node.model";
-import { CommonNestNode } from "src/app/view-model/common-nest-node.model";
-import { CommonTreeComponent } from "./common-tree.component";
+import { SelectionChange } from '@angular/cdk/collections';
+import { EventEmitter } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
+import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
+import { CommonTreeComponent } from './common-tree.component';
+import { ICommonTree } from './common-tree.model';
 
-export abstract class CommonTree {
+export abstract class CommonTree implements ICommonTree {
   protected _nestedNodeMap = new Map<string, CommonNestNode>();
   public dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
   public tree?: CommonTreeComponent;
 
   abstract selectTreeNode: EventEmitter<CommonFlatNode[]>;
-
-
 
   selectTreeNodeHandler(change: SelectionChange<CommonFlatNode>) {
     let nodes = change.source.selected;
@@ -23,18 +22,15 @@ export abstract class CommonTree {
     if (node.ParentId) {
       let parentNode = this._nestedNodeMap.get(node.ParentId);
       if (parentNode) {
-
         parentNode.HasChildren = true;
         parentNode.childrenChange.value.push(node);
-
       }
     } else {
       this.dataSubject.value.push(node);
     }
     this._nestedNodeMap.set(node.Id, node);
-    this.dataSubject.next(this.dataSubject.value)
+    this.dataSubject.next(this.dataSubject.value);
   }
-
 
   /**原节点有各种状态,使用原节点 */
   editNode(node: CommonNestNode) {
@@ -68,12 +64,10 @@ export abstract class CommonTree {
       this._nestedNodeMap.delete(currentNode.Id);
     }
     this.dataSubject.next(this.dataSubject.value);
-    this.tree?.deleteNode(flat)
+    this.tree?.deleteNode(flat);
   }
-
 
   toggleNodes(ids: string[], clear?: boolean) {
-    this.tree?.toggleSelect(ids, clear)
+    this.tree?.toggleSelect(ids, clear);
   }
-
 }

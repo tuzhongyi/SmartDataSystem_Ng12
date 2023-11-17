@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-13 15:05:38
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 14:46:28
+ * @Last Modified by: zzl
+ * @Last Modified time: 2023-11-16 11:22:24
  */
 // const BaseAiopUrl = '/api/howell/ver10/aiop_service';
 // const BaseGarbageUrl = '/api/howell/ver10/aiop_service/garbage_management';
@@ -31,6 +31,7 @@ export class HowellUrlNode {
   static aiop_service = 'aiop_service';
   static data_service = 'data_service';
   static user_system = 'user_system';
+  static user_logs = 'user_logs';
   static garbage_management = 'garbage_management';
   static garbage_vehicles = 'garbage_vehicles';
   static short_message = 'short_message';
@@ -52,6 +53,10 @@ export class BaseUrl {
   /** /howell/ver10/data_service/user_system/ */
   static get user_system() {
     return `${BaseUrl.data_service}/${HowellUrlNode.user_system}`;
+  }
+  /** /howell/ver10/data_service/user_system/ */
+  static get user_logs() {
+    return `${BaseUrl.data_service}/${HowellUrlNode.user_logs}`;
   }
   /** /api/howell/ver10/device_service/ai_garbage/ */
   static get ai_garbage() {

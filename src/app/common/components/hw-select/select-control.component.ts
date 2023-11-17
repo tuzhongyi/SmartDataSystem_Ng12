@@ -37,8 +37,12 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
     return this._selected;
   }
   @Input()
-  public set selected(v: any | undefined) {
-    this._selected = v;
+  public set selected(v: any | undefined | null) {
+    if (v === null) {
+      this._selected = undefined;
+    } else {
+      this._selected = v;
+    }
     this.selectedChange.emit(v);
   }
   @Output()

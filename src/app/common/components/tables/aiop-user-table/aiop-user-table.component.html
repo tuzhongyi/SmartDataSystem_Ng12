@@ -1,1 +1,99 @@
-<p>aiop-user-table works!</p>
+<div class="aiop-user-table">
+  <div class="aiop-user-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>ID</td>
+          <td>用户名</td>
+          <td>姓名</td>
+          <td>手机号码</td>
+          <td>用户类型</td>
+          <td>角色信息</td>
+          <td>资源权限</td>
+          <td class="center"><div class="operation">操作</div></td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{ selected: selecteds.includes(item) }"
+            (click)="onselect(item)"
+          >
+            <td>
+              {{ item.Id }}
+            </td>
+            <td>
+              {{ item.Username }}
+            </td>
+            <td>{{ item.FirstName }}{{ item.LastName }}</td>
+            <td>
+              {{ item.MobileNo }}
+            </td>
+            <td>
+              {{ Language.UserType(item.UserType) }}
+            </td>
+            <td>
+              <div class="roles">
+                <div *ngFor="let role of item.Role">
+                  {{ role.Name }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="roles">
+                <div *ngFor="let resource of item.Resources">
+                  {{ resource.Name }}
+                </div>
+              </div>
+            </td>
+            <td>
+              <div class="operation center">
+                <div (click)="ondetails($event, item)" title="编辑">
+                  <i class="howell-icon-modification"></i>
+                </div>
+                <div (click)="onkey($event, item)" title="修改密码">
+                  <i class="howell-icon-key"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aiop-user-table-main-footer footer">
+      <app-table-select (tableSelect)="toselect($event)"></app-table-select>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
