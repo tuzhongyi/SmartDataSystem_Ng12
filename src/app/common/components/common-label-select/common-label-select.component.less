@@ -3,12 +3,35 @@
   height: 100%;
 }
 
-.label-select-item {
-  &.single {
+
+.single {
+  overflow: hidden !important;
+
+  &>.label-select-item {
+    width: 100%;
     background-color: transparent;
     color: #cfd7ff;
     font-size: 16px;
     overflow: hidden;
     padding: 0 5px;
+    justify-content: space-between;
+
+  }
+}
+
+.clear {
+  display: flex;
+  align-items: center;
+  color: #cfd7ff;
+  position: absolute;
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  &:hover {
+    color: white
   }
 }

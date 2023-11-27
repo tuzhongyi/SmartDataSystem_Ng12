@@ -1,18 +1,19 @@
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { StatisticSummaryStationEventChartViewModel } from './statistic-summary-station-event-chart.model';
 
 export class StatisticSummaryStationEventChartConverter
   implements
     IConverter<
-      GarbageStationNumberStatisticV2[],
+      (GarbageStationNumberStatisticV2 | DivisionNumberStatisticV2)[],
       StatisticSummaryStationEventChartViewModel[]
     >
 {
   Convert(
-    input: GarbageStationNumberStatisticV2[]
+    input: (GarbageStationNumberStatisticV2 | DivisionNumberStatisticV2)[]
   ): StatisticSummaryStationEventChartViewModel[] {
     let array = new Array<StatisticSummaryStationEventChartViewModel>();
     let ids = new Array<string>();
@@ -36,7 +37,7 @@ export class StatisticSummaryStationEventChartConverter
   }
 
   add(
-    statistic: GarbageStationNumberStatisticV2,
+    statistic: GarbageStationNumberStatisticV2 | DivisionNumberStatisticV2,
     item: StatisticSummaryStationEventChartViewModel
   ) {
     if (statistic.EventNumbers) {
@@ -61,7 +62,9 @@ export class StatisticSummaryStationEventChartConverter
     return item;
   }
 
-  create(statistic: GarbageStationNumberStatisticV2) {
+  create(
+    statistic: GarbageStationNumberStatisticV2 | DivisionNumberStatisticV2
+  ) {
     let item = new StatisticSummaryStationEventChartViewModel();
     item.id = statistic.Id;
     item.product = statistic.Name;

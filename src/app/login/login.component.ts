@@ -26,9 +26,6 @@ import { RoutePath } from '../app-routing.path';
 import { GlobalStorageService } from '../common/service/global-storage.service';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
-import { StaticDataRole } from '../enum/role-static-data.enum';
-import { UserResourceType } from '../enum/user-resource-type.enum';
-import { UserUIType } from '../enum/user-ui-type.enum';
 import {
   User,
   UserResource,
@@ -198,55 +195,68 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     const response = Md5.hashStr(a);
     return response;
   }
-
   route(user: User) {
-    if (user.UIType === UserUIType.dapuqiao) {
-      this._router.navigateByUrl(RoutePath.dapuqiao);
-    } else {
-      switch (user.UserType) {
-        case 3:
-        case 2:
-          // this._router.navigateByUrl(RoutePath.garbage_vehicle);
-          this._router.navigateByUrl(RoutePath.garbage_system);
-          break;
+    let path = this._authorizationService.getPath(user);
+    switch (path) {
+      case RoutePath.garbage_system:
+      case RoutePath.garbage_system_committees:
+      case RoutePath.garbage_vehicle:
+        this._storeUserInfo(user, user.Id, user.Resources ?? []);
+        break;
 
-        case 1:
-        default:
-          this._storeUserInfo(user, user.Id, user.Resources ?? []);
-
-          // 区分权限
-          if (!this.systemManage) {
-            if (user.Role && user.Role.length > 0) {
-              if (user.Role[0].StaticData == StaticDataRole.enabled) {
-                this._router.navigateByUrl(RoutePath.aiop);
-              } else if (user.Role[0].StaticData == StaticDataRole.disabled) {
-                if (
-                  user.Resources &&
-                  user.Resources.length > 0 &&
-                  user.Resources[0].ResourceType === UserResourceType.Committees
-                ) {
-                  this._router.navigateByUrl(
-                    RoutePath.garbage_system_committees
-                  );
-                } else {
-                  this._router.navigateByUrl(RoutePath.garbage_system);
-                }
-              }
-            } else if (
-              user.Resources &&
-              user.Resources.length > 0 &&
-              user.Resources[0].ResourceType === UserResourceType.Committees
-            ) {
-              this._router.navigateByUrl(RoutePath.garbage_system_committees);
-            } else {
-            }
-          } else {
-            this._router.navigateByUrl(RoutePath.system_manage);
-          }
-          break;
-      }
+      default:
+        break;
     }
+    this._router.navigateByUrl(path);
   }
+  // route(user: User) {
+  //   if (user.UIType === UserUIType.dapuqiao) {
+  //     this._router.navigateByUrl(RoutePath.dapuqiao);
+  //   } else {
+  //     switch (user.UserType) {
+  //       case UserType.station_vehicle:
+  //       case UserType.garbage_vehicle_system:
+  //         // this._router.navigateByUrl(RoutePath.garbage_vehicle);
+  //         this._router.navigateByUrl(RoutePath.garbage_system);
+  //         break;
+
+  //       case UserType.garbage_station_system:
+  //       default:
+  //         this._storeUserInfo(user, user.Id, user.Resources ?? []);
+
+  //         // 区分权限
+  //         if (!this.systemManage) {
+  //           if (user.Role && user.Role.length > 0) {
+  //             if (user.Role[0].StaticData == StaticDataRole.enabled) {
+  //               this._router.navigateByUrl(RoutePath.aiop);
+  //             } else if (user.Role[0].StaticData == StaticDataRole.disabled) {
+  //               if (
+  //                 user.Resources &&
+  //                 user.Resources.length > 0 &&
+  //                 user.Resources[0].ResourceType === UserResourceType.Committees
+  //               ) {
+  //                 this._router.navigateByUrl(
+  //                   RoutePath.garbage_system_committees
+  //                 );
+  //               } else {
+  //                 this._router.navigateByUrl(RoutePath.garbage_system);
+  //               }
+  //             }
+  //           } else if (
+  //             user.Resources &&
+  //             user.Resources.length > 0 &&
+  //             user.Resources[0].ResourceType === UserResourceType.Committees
+  //           ) {
+  //             this._router.navigateByUrl(RoutePath.garbage_system_committees);
+  //           } else {
+  //           }
+  //         } else {
+  //           this._router.navigateByUrl(RoutePath.system_manage);
+  //         }
+  //         break;
+  //     }
+  //   }
+  // }
 
   async login() {
     // let nonce = 'fc5f3c277dba491eaeedd77d25e41dd1'; //'ad2af40c5f244b77afa15b0e62e572c0';

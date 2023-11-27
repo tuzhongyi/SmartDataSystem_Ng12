@@ -1,0 +1,49 @@
+.task-chart {
+  height: 100%;
+
+  &-header {
+    font-size: 24px;
+    color: white;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-content {
+    display: flex;
+    height: calc(100% - 56px);
+
+    &-chart {
+
+      width: 40%;
+      height: 100%;
+
+      .task.echarts {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .number-list {
+
+      display: flex;
+      justify-content: space-around;
+      width: 60%;
+      align-items: center;
+
+      .value {
+
+        font-size: 30px;
+      }
+    }
+  }
+
+  .operational {
+    cursor: pointer;
+
+    &:hover {
+      color: #6997ff;
+    }
+  }
+}

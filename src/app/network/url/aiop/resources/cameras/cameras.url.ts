@@ -1,25 +1,16 @@
-import { ResourcesURL } from '../resources.url';
+import { AbstractUrl } from '../../../abstract.url';
+import { ResourceCamerasAICountUrl } from './aicount/resource-camera-aicount.url';
+import { ResourceCamerasAIModelsUrl } from './aimodel/resource-camera-aimodel.url';
 
-export abstract class ResourceAICamerasUrl extends ResourcesURL {
-  static get basic() {
-    return `${super.basic}/Cameras`;
+export class ResourceAICamerasUrl extends AbstractUrl {
+  constructor(base: string) {
+    super(`${base}/Cameras`);
   }
-  static create() {
-    return this.basic;
+
+  aiModel(id: string) {
+    return new ResourceCamerasAIModelsUrl(this.item(id));
   }
-  static item(id: string) {
-    return `${this.basic}/${id}`;
-  }
-  static list() {
-    return `${this.basic}/List`;
-  }
-  static AIModels(id: string) {
-    return `${this.basic}/${id}/AIModels`;
-  }
-  static singleAIModel(cameraId: string, modelId: string) {
-    return `${this.basic}/${cameraId}/AIModels/${modelId}`;
-  }
-  static copyTo(id: string) {
-    return `${this.basic}/${id}/AIModels/CopyTo`;
+  aiCount() {
+    return new ResourceCamerasAICountUrl(this.basic());
   }
 }

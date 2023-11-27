@@ -38,10 +38,14 @@
 
           <app-time-control
             [time]="(duration | async)!.begin"
+            [endTime]="(duration | async)!.end"
           ></app-time-control>
 
           <div class="_">-</div>
-          <app-time-control [time]="(duration | async)!.end"></app-time-control>
+          <app-time-control
+            [beginTime]="(duration | async)!.begin"
+            [time]="(duration | async)!.end"
+          ></app-time-control>
         </div>
         <div class="video-player-window-head-item">
           <button class="full hw-blue-btn" (click)="playback()">

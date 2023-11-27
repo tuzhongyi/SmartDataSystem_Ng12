@@ -1,33 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
-import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class CameraOperateBusiness {
-  constructor(
-    private _AICameraRequest: AICameraRequestService,
-    private _encodeDeviceRequest: EncodeDeviceRequestService,
-    private _resourceRequest: ResourceRequestService
-  ) {}
+  constructor(private service: ResourceRequestService) {}
 
   listEncodeDevice() {
-    return this._encodeDeviceRequest.list();
+    return this.service.encodeDevice.list();
   }
   getAICamera(id: string) {
-    return this._AICameraRequest.get(id);
+    return this.service.camera.get(id);
   }
   createAICamera(camera: AICamera) {
-    return this._AICameraRequest.create(camera);
+    return this.service.camera.create(camera);
   }
   updateAICamera(camera: AICamera) {
-    return this._AICameraRequest.update(camera);
+    return this.service.camera.update(camera);
   }
   addResourceLabel(resourceId: string, labelId: string) {
-    return this._resourceRequest.label.create(labelId, resourceId);
+    return this.service.label.binding(resourceId, labelId);
   }
   getResourceLabels(id: string) {
-    return this._resourceRequest.label.array(id);
+    return this.service.label.array(id);
   }
 }

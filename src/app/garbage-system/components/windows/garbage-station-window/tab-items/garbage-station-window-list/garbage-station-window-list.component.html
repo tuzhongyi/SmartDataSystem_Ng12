@@ -6,9 +6,8 @@
   </div>
   <div class="garbage-station-window-list-body">
     <howell-garbage-station-table
-      [load]="load"
-      [stationId]="stationId"
-      [divisionId]="divisionId"
+      [load]="tableLoad"
+      [args]="args"
       (position)="onposition($event)"
       (image)="onimage($event)"
     >

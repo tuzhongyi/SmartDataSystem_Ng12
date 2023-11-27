@@ -1,0 +1,80 @@
+<div class="audit-log-video-table">
+  <div class="audit-log-video-table-main">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td [mat-sort-header]="'CameraName'" [disableClear]="true">摄像机</td>
+          <td [mat-sort-header]="'GarbageStationName'" [disableClear]="true">
+            投放点
+          </td>
+          <td [mat-sort-header]="'DivisionName'" [disableClear]="true">区划</td>
+          <td [mat-sort-header]="'Username'" [disableClear]="true">用户名</td>
+          <td [mat-sort-header]="'OperationType'" [disableClear]="true">
+            类型
+          </td>
+          <td [mat-sort-header]="'Time'" [disableClear]="true">时间</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td [title]="item.CameraName">
+              {{ item.CameraName }}
+            </td>
+            <td [title]="item.GarbageStationName">
+              {{ item.GarbageStationName }}
+            </td>
+            <td [title]="item.DivisionName">{{ item.DivisionName }}</td>
+            <td [title]="item.Username">
+              {{ item.Username }}
+            </td>
+            <td>
+              {{ Language.VideoOperationType(item.OperationType) }}
+            </td>
+            <td>{{ item.Time | date : "yyyy-MM-dd HH:mm:ss" }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="audit-log-video-table-main-footer footer">
+      <div></div>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

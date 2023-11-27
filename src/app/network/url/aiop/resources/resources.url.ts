@@ -1,6 +1,11 @@
 import { BaseUrl } from '../../base.url';
+import { ResourceAICamerasUrl } from './cameras/cameras.url';
+import { ResourceCrossingUrl } from './crossing/resource-crossiong.url';
+import { ResourceEncodeDevicesUrl } from './encode-devices/resource-encode-devices.url';
+import { ResourceLabelsUrl } from './labels/resource-labels.url';
+import { ResourceOnlineStatusUrl } from './online-status/resource-online-status.url';
 
-export abstract class ResourcesURL {
+export abstract class ResourcesUrl {
   static get basic(): string {
     return `${BaseUrl.aiop_service}/Resources`;
   }
@@ -14,14 +19,26 @@ export abstract class ResourcesURL {
   static list() {
     return `${this.basic}/List`;
   }
-  static labels(id: string) {
-    return `${this.basic}/${id}/Labels`;
-  }
-  static singleLabel(resourceId: string, labelId: string) {
-    return `${this.basic}/${resourceId}/Labels/${labelId}`;
-  }
 
   static deviceTypes() {
     return `${this.basic}/DeviceTypes`;
+  }
+
+  static camera() {
+    return new ResourceAICamerasUrl(this.basic);
+  }
+
+  static label(id?: string) {
+    let url = id ? this.item(id) : this.base();
+    return new ResourceLabelsUrl(url);
+  }
+  static encodeDevice() {
+    return new ResourceEncodeDevicesUrl(this.base());
+  }
+  static onlineStatus() {
+    return new ResourceOnlineStatusUrl(this.base());
+  }
+  static crossing() {
+    return new ResourceCrossingUrl(this.base());
   }
 }

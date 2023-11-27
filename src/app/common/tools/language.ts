@@ -1,9 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 15:03:31
- * @Last Modified by: zzl
- * @Last Modified time: 2023-11-16 11:39:02
- */
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { CameraState } from 'src/app/enum/camera-state.enum';
@@ -44,10 +38,12 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { UserLogRecordMessageType } from 'src/app/enum/user-log-record-message-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { FeedbackUserType } from 'src/app/enum/user-type-feedback.enum';
 import { UserType } from 'src/app/enum/user-type.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
+import { VideoOperationType } from 'src/app/enum/video-operation-type.enum';
 import { DisposalCountType } from 'src/app/garbage-system/components/disposal-count/disposal-count.enum';
 import { AIGarbageDeviceEventType } from 'src/app/network/model/ai-garbage/device-event-record.model';
 import { AIGarbageDropWindowType } from 'src/app/network/model/ai-garbage/drop-window.model';
@@ -310,7 +306,7 @@ export class Language {
     }
   }
 
-  static ResourceType(type: ResourceType) {
+  static ResourceType(type?: ResourceType) {
     switch (type) {
       case ResourceType.Camera:
         return Language.json.monitor + Language.json.point;
@@ -799,20 +795,32 @@ export class Language {
         return Language.json.Unknow;
     }
   }
+  static FeedbackUserType(type?: FeedbackUserType) {
+    switch (type) {
+      case FeedbackUserType.county:
+        return '街道管理人员';
+      case FeedbackUserType.community:
+        return '居委管理人员';
+      case FeedbackUserType.volunteer:
+        return '志愿者';
+      case FeedbackUserType.property:
+        return '物业管理人员';
+      case FeedbackUserType.other:
+        return '其他';
+      case FeedbackUserType.thirdparty:
+        return '第三方';
+      default:
+        return Language.json.Unknow;
+    }
+  }
   static UserType(type?: UserType) {
     switch (type) {
-      case UserType.county:
-        return '街道管理人员';
-      case UserType.community:
-        return '居委管理人员';
-      case UserType.volunteer:
-        return '志愿者';
-      case UserType.property:
-        return '物业管理人员';
-      case UserType.other:
-        return '其他';
-      case UserType.thirdparty:
-        return '第三方';
+      case UserType.garbage_station_system:
+        return '生活垃圾';
+      case UserType.garbage_station_system:
+        return '垃圾清运';
+      case UserType.garbage_station_system:
+        return '生活垃圾&垃圾清运';
       default:
         return Language.json.Unknow;
     }
@@ -859,6 +867,16 @@ export class Language {
         return '修改用户密码';
       default:
         return '未知';
+    }
+  }
+  static VideoOperationType(type?: VideoOperationType) {
+    switch (type) {
+      case VideoOperationType.preview:
+        return '视频预览';
+      case VideoOperationType.playback:
+        return '视频回放';
+      default:
+        return Language.json.Unknow;
     }
   }
 

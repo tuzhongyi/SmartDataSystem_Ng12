@@ -1,0 +1,79 @@
+<div class="audit-record-resource-status-online-manager">
+  <div class="audit-record-resource-status-online-manager-head">
+    <div class="hw-second-title">设备上下线记录</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.begin"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.end"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">资源类型：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.type" [cannull]="true">
+              <select #element [(ngModel)]="args.type">
+                <option [ngValue]="ResourceType.Camera">
+                  {{ Language.ResourceType(ResourceType.Camera) }}
+                </option>
+                <option [ngValue]="ResourceType.EncodeDevice">
+                  {{ Language.ResourceType(ResourceType.EncodeDevice) }}
+                </option>
+                <option [ngValue]="ResourceType.IoTSensor">
+                  {{ Language.ResourceType(ResourceType.IoTSensor) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">设备状态：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.status" [cannull]="true">
+              <select #element [(ngModel)]="args.status">
+                <option [ngValue]="OnlineStatus.Online">上线</option>
+                <option [ngValue]="OnlineStatus.Offline">下线</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">资源名称：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.name" />
+          </div>
+        </div>
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-record-resource-status-online-manager-body">
+    <aiop-record-resource-status-online-table
+      [args]="args"
+      [load]="load"
+    ></aiop-record-resource-status-online-table>
+  </div>
+</div>

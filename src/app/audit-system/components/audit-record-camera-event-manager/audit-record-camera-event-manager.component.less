@@ -1,0 +1,55 @@
+.audit-record-resource-status-online-manager {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &-head {
+    flex-grow: 0;
+
+    &>* {
+      margin-bottom: 10px;
+    }
+
+    .operate-bar {
+      width: 100%;
+    }
+
+    .filter {
+      flex-direction: column;
+
+      &>* {
+        margin-bottom: 10px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .filter-item {
+        width: 300px;
+
+        &.message-type {
+          width: 350px;
+          flex-grow: 1;
+        }
+
+        &.search {
+          flex-grow: 0;
+          display: flex;
+          justify-content: flex-end;
+          width: auto;
+        }
+      }
+    }
+  }
+
+  &-body {
+    flex-grow: 1;
+  }
+
+}
+
+.hw-second-title {
+  margin-right: 10px;
+}

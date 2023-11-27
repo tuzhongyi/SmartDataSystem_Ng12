@@ -77,23 +77,6 @@
             />
           </div>
         </div>
-
-        <div class="filter-group">
-          <div class="title">
-            <span class="hw-form-label">事件类型</span>
-          </div>
-          <div class="content">
-            <select [(ngModel)]="searchInfo.EventType">
-              <option [ngValue]="EventType.None">全部</option>
-              <option
-                [ngValue]="item.key"
-                *ngFor="let item of selectDataSource | keyvalue"
-              >
-                {{ item.value }}
-              </option>
-            </select>
-          </div>
-        </div>
         <div class="filter-group">
           <div class="title"><span class="hw-form-label">AI模型</span></div>
           <div class="content">
@@ -142,7 +125,6 @@
           <tr>
             <th>图片</th>
             <th>设备名称</th>
-            <th>事件类型</th>
             <th>模型名称</th>
             <th>设备类型</th>
             <th>上报时间</th>
@@ -169,7 +151,6 @@
                 />
               </td>
               <td>{{ item.ResourceName }}</td>
-              <td>{{ item.EventType }}</td>
               <td>{{ item.ModelName }}</td>
               <td>{{ item.ResourceType }}</td>
 

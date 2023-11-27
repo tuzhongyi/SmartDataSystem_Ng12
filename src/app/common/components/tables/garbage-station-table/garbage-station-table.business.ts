@@ -7,10 +7,11 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationPagedConverter } from './garbage-station-table.converter';
-import { GarbageStationTableModel } from './garbage-station-table.model';
+import {
+  GarbageStationTableArgs,
+  GarbageStationTableModel,
+} from './garbage-station-table.model';
 
 @Injectable()
 export class GarbageStationTableBusiness
@@ -26,32 +27,43 @@ export class GarbageStationTableBusiness
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async load(
-    page: PagedParams,
-    opts?: SearchOptions,
-    stationId?: string,
-    divisionId?: string
+    index: number,
+    size: number,
+    args: GarbageStationTableArgs
   ): Promise<PagedList<GarbageStationTableModel>> {
+    let divisionId = args.divisionId;
     if (!divisionId) {
       divisionId = this.storeService.divisionId;
     }
-    let data = await this.getData(divisionId, page, opts, stationId);
+    let data = await this.getData(index, size, divisionId, args);
     let model = await this.Converter.Convert(data);
     return model;
   }
   getData(
+    index: number,
+    size: number,
     divisionId: string,
-    page: PagedParams,
-    opts?: SearchOptions,
-    stationId?: string
+    args: GarbageStationTableArgs
   ): Promise<PagedList<GarbageStation>> {
     let params = new GetGarbageStationsParams();
-    params = Object.assign(params, page);
-    if (opts) {
-      (params as any)[opts.propertyName] = opts.text;
+    params.PageIndex = index;
+    params.PageSize = size;
+    if (args.opts) {
+      (params as any)[args.opts.propertyName] = args.opts.text;
     }
     params.DivisionId = divisionId;
-    if (stationId) {
-      params.Ids = [stationId];
+    if (args.stationId) {
+      params.Ids = [args.stationId];
+    }
+
+    if (args.state != undefined) {
+      if (args.state === 0) {
+        params.StationState = args.state;
+      } else {
+        let state = '1';
+        state = state.padEnd(args.state, '0');
+        params.StationState = parseInt(state, 2);
+      }
     }
     return this.stationService.list(params);
   }

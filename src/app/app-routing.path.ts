@@ -8,4 +8,5 @@ export enum RoutePath {
   garbage_vehicle = 'garbage_vehicle',
   system_manage = 'system_manage',
   dapuqiao = 'waste-regulation-1',
+  audit = 'audit',
 }

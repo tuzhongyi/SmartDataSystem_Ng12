@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HowellModule } from 'src/app/common/howell.module';
+import { MaterialModule } from 'src/app/material.module';
 import { GarbageComponentsModule } from '../components/garbage-components.module';
 import { GarbageCommitteesRoutingModule } from './garbage-committees-routing.module';
 import { CommitteesHistroyTableComponent } from './histroy-table/committees-history-table.component';
@@ -47,11 +49,22 @@ import { TaskTableComponent } from './task-table/task-table.component';
     StatisticSummaryEventRatioChartComponent,
   ],
   imports: [
+    MaterialModule,
+    HowellModule,
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     GarbageCommitteesRoutingModule,
     GarbageComponentsModule,
+  ],
+  exports: [
+    StatisticSummaryComponent,
+    StatisticSummaryHeaderComponent,
+    StatisticSummaryChartsComponent,
+    StatisticSummaryTaskChartComponent,
+    StatisticSummaryStationEventChartComponent,
+    StatisticSummaryIllegalDropChartComponent,
+    StatisticSummaryEventRatioChartComponent,
   ],
 })
 export class GarbageCommitteesModule {}

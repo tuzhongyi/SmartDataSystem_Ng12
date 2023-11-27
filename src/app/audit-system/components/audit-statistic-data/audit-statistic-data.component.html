@@ -1,0 +1,93 @@
+<div class="audit-statistic">
+  <div class="audit-statistic-head">
+    <div class="hw-second-title">数据统计</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="selection.show"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                (selectTreeNode)="selection.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-statistic-body">
+    <div class="audit-statistic-body-scroll">
+      <div class="audit-statistic-body-scroll-wrap">
+        <audit-statistic-card style="width: calc(50% - 10px)">
+          <audit-statistic-data-count-station
+            [data]="data"
+            [load]="load"
+            (details)="onstation($event)"
+          ></audit-statistic-data-count-station>
+        </audit-statistic-card>
+        <audit-statistic-card style="width: calc(50% - 10px)">
+          <audit-statistic-data-count-device
+            [data]="data"
+            [load]="load"
+            (details)="ondevice($event)"
+          ></audit-statistic-data-count-device>
+        </audit-statistic-card>
+      </div>
+    </div>
+  </div>
+  <app-window
+    [Model]="window.station"
+    [style]="window.station.style"
+    *ngIf="window.station.show"
+  >
+    <audit-statistic-data-station-manager
+      [state]="window.station.state"
+      [drop]="window.station.drop"
+      (image)="window.station.onimage($event)"
+    ></audit-statistic-data-station-manager>
+  </app-window>
+  <app-window
+    [Model]="window.device"
+    [style]="window.device.style"
+    *ngIf="window.device.show"
+  >
+    <audit-statistic-data-device-manager
+      [status]="window.device.status"
+      (image)="window.device.onimage($event)"
+    ></audit-statistic-data-device-manager>
+  </app-window>
+  <app-window
+    [Model]="window.image"
+    *ngIf="window.image.show"
+    [style]="window.image.style"
+  >
+    <app-media-image-control
+      [model]="window.image.current"
+      [first]="window.image.first"
+      [last]="window.image.last"
+      [captureing]="window.image.captureing"
+      (prev)="window.image.onprev()"
+      (next)="window.image.onnext()"
+      (play)="window.image.onvideo()"
+    ></app-media-image-control>
+  </app-window>
+  <app-video-window
+    [window]="window.video"
+    *ngIf="window.video.show"
+    [style]="window.video.style"
+    [title]="window.video.title"
+    [model]="window.video.model"
+    [mask]="window.video.mask"
+    [zindex]="window.video.zindex"
+    (stoping)="window.video.onstoping()"
+  >
+  </app-video-window>
+</div>

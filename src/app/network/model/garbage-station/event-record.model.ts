@@ -1,10 +1,11 @@
 import { Transform } from 'class-transformer';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
 
 /** 事件基础类型 */
-export class EventRecord {
+export class EventRecord implements IModel {
   /**事件ID */
   EventId!: string;
   /**事件时间 */

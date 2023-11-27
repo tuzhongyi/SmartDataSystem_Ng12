@@ -1,0 +1,75 @@
+<div class="audit-log-video-manager">
+  <div class="audit-log-video-manager-head">
+    <div class="hw-second-title">视频播放记录</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item datetime">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.begin"
+            />
+          </div>
+        </div>
+        <div class="filter-item datetime">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.end"
+            />
+          </div>
+        </div>
+        <div class="filter-item name">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="showDivision"
+              [selectedNodes]="nodes"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                (selectTreeNode)="ondivision($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="filter-item type">
+          <div class="filter-item-title">类型：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.type" [cannull]="true">
+              <select [(ngModel)]="args.type">
+                <option [ngValue]="Operation.preview">视频预览</option>
+                <option [ngValue]="Operation.playback">视频回放</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item search">
+          <select [(ngModel)]="args.searchType">
+            <option [ngValue]="NameType.station">投放点</option>
+            <option [ngValue]="NameType.camera">摄像机</option>
+            <option [ngValue]="NameType.user">用户名</option>
+          </select>
+          <input type="text" [(ngModel)]="args.name" />
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-log-video-manager-body">
+    <audit-log-video-table [args]="args" [load]="load"></audit-log-video-table>
+  </div>
+</div>

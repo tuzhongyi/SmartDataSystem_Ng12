@@ -15,8 +15,8 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SidenavModel } from 'src/app/common/components/sidenav/sidenav.model';
 import { ISideNavConfig } from '../../models/sidenav-config';
+import { wait } from '../../tools/tool';
 
 @Component({
   selector: 'howell-sidenav',
@@ -51,33 +51,44 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
   private _subscription!: Subscription;
 
   // 后行断言+捕获+量词+非捕获
-  private regExp =
+  @Input() regExp =
     /(?<=\/[\w-]+\/[\w-]+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
 
   models: Array<ISideNavConfig> = [];
+
+  inited = false;
 
   constructor(private _router: Router, private _activeRoute: ActivatedRoute) {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         // console.log('router', e);
+        wait(
+          () => {
+            return this.inited;
+          },
+          () => {
+            let mode = e.urlAfterRedirects.match(this.regExp);
+            // console.log('mode: ', mode);
+            if (mode && mode.groups && mode.groups.first) {
+              Object.assign(this.groups, mode.groups);
+              console.log(mode.groups['first']);
+              import(`src/assets/json/${mode.groups['first']}.json`).then(
+                (config) => {
+                  // console.log('config', config.data);
 
-        let mode = e.urlAfterRedirects.match(this.regExp);
-        // console.log('mode: ', mode);
-        if (mode && mode.groups && mode.groups.first) {
-          Object.assign(this.groups, mode.groups);
-          import(`src/assets/json/${mode.groups['first']}.json`).then(
-            (config) => {
-              // console.log('config', config.data);
-
-              this.models = config.data;
+                  this.models = config.data;
+                }
+              );
             }
-          );
-        }
+          }
+        );
       }
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.inited = true;
+  }
   ngOnChanges(changes: SimpleChanges): void {}
   ngOnDestroy(): void {
     this._subscription.unsubscribe();

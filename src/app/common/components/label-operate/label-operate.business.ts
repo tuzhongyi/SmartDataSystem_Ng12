@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ResourceLabel } from 'src/app/network/model/garbage-station/resource-label.model';
-import { GetResourceLabelsParams } from 'src/app/network/request/label/label.params';
-import { LabelRequestService } from 'src/app/network/request/label/label.service';
+import { GetResourceLabelsParams } from 'src/app/network/request/resources/label/resource-label.params';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class LabelOperateBusiness {
   constructor(
-    private _labelRequest: LabelRequestService,
+    private service: ResourceRequestService,
     private _resourceRequest: ResourceRequestService
   ) {}
 
@@ -15,16 +14,16 @@ export class LabelOperateBusiness {
     let params = new GetResourceLabelsParams();
     params.LabelName = condition;
 
-    return this._labelRequest.list(params);
+    return this.service.label.list(params);
   }
   createLabel(name: string) {
     let label = new ResourceLabel();
     label.Name = name;
     label.Id = '';
-    return this._labelRequest.create(label);
+    return this.service.label.create(label);
   }
   deleteLabel(id: string) {
-    return this._labelRequest.delete(id);
+    return this.service.delete(id);
   }
   async getResourceLabels(id: string, condition: string) {
     let labels = await this._resourceRequest.label.array(id);

@@ -1,0 +1,51 @@
+{
+  "$schema": "./sidenav.schema.json",
+  "data": [
+    {
+      "title": "统计审计",
+      "id": "auditor",
+      "path": "/audit/auditor",
+      "icon": "howell-icon-Status",
+      "children": [
+        {
+          "title": "数据统计",
+          "id": "statistic-data",
+          "path": "/audit/auditor/statistic-data"
+        },
+        {
+          "title": "事件统计",
+          "id": "statistic-event",
+          "path": "/audit/auditor/statistic-event"
+        }
+      ]
+    },
+    {
+      "title": "记录审计",
+      "id": "auditor",
+      "path": "/audit/auditor",
+      "icon": "howell-icon-Record",
+      "children": [
+        {
+          "title": "用户操作记录",
+          "id": "log-user",
+          "path": "/audit/auditor/log-user"
+        },
+        {
+          "title": "视频播放记录",
+          "id": "log-video",
+          "path": "/audit/auditor/log-video"
+        },
+        {
+          "title": "设备上下线记录",
+          "id": "record-online",
+          "path": "/audit/auditor/record-online"
+        },
+        {
+          "title": "摄像机报警记录",
+          "id": "record-camera",
+          "path": "/audit/auditor/record-camera"
+        }
+      ]
+    }
+  ]
+}

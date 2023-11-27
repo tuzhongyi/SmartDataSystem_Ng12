@@ -5,14 +5,20 @@
       <div #echarts class="echarts"></div>
     </div>
     <div class="number-list">
-      <div>
+      <div
+        [class.operational]="operational"
+        (click)="onrecord(EventType.MixedInto)"
+      >
         <div>混合投放</div>
         <div>
           <span class="blue-text value">{{ data ? data.MixedInto : 0 }}</span
           ><span class="blue-text">起</span>
         </div>
       </div>
-      <div>
+      <div
+        [class.operational]="operational"
+        (click)="onrecord(EventType.GarbageFull)"
+      >
         <div>垃圾满溢</div>
         <div>
           <span class="orange-text value">{{
@@ -21,7 +27,10 @@
           ><span class="blue-text">起</span>
         </div>
       </div>
-      <div>
+      <div
+        [class.operational]="operational"
+        (click)="onrecord(EventType.IllegalDrop)"
+      >
         <div>{{ Language.json.EventType.IllegalDrop }}</div>
         <div>
           <span class="powder-red-text value">{{

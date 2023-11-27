@@ -1,0 +1,87 @@
+<div class="aiop-user-log-record-table">
+  <div class="aiop-user-log-record-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>图片</td>
+          <td>设备名称</td>
+          <td>模型名称</td>
+          <td>设备类型</td>
+          <td>时间</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0" #table>
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
+            <td>
+              <div class="image">
+                <div
+                  (click)="onimage($event, item)"
+                  image
+                  [url]="item.url | async"
+                ></div>
+              </div>
+            </td>
+            <td>
+              {{ item.ResourceName }}
+            </td>
+            <td>
+              {{ item.Data.ModelName }}
+            </td>
+            <td>
+              {{ Language.ResourceType(item.ResourceType) }}
+            </td>
+
+            <td>{{ item.EventTime | date : "yyyy-MM-dd HH:mm:ss" }}</td>
+            <td>
+              <div class="operation center">
+                <div (click)="onvideo($event, item)" title="回放">
+                  <i class="howell-icon-video"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="aiop-user-log-record-table-main-footer footer">
+      <div></div>
+      <div class="footer-item" *ngIf="page">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

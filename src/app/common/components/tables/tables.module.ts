@@ -12,9 +12,13 @@ import { AIOPGarbageStationCamerasTableComponent } from './aiop-garbage-station-
 import { AIOPGarbageStationTableComponent } from './aiop-garbage-station-table/aiop-garbage-station-table.component';
 import { AiopGarbageVehicleCameraTableComponent as AIOPGarbageVehicleCameraTableComponent } from './aiop-garbage-vehicle-camera-table/aiop-garbage-vehicle-camera-table.component';
 import { AIOPGarbageVehicleTableComponent } from './aiop-garbage-vehicle-table/aiop-garbage-vehicle-table.component';
+import { AIOPRecordCameraEventTableComponent } from './aiop-record-camera-event-table/aiop-record-camera-event-table.component';
+import { AIOPRecordResourceStatusOnlineTableComponent } from './aiop-record-resource-status-online-table/aiop-record-resource-status-online-table.component';
 import { AIOPRoleTableComponent } from './aiop-role-table/aiop-role-table.component';
 import { AIOPUserLogRecordTableComponent } from './aiop-user-log-record-table/aiop-user-log-record-table.component';
 import { AIOPUserTableComponent } from './aiop-user-table/aiop-user-table.component';
+import { AuditGarbageStationTableComponent } from './audit-garbage-station-table/audit-garbage-station-table.component';
+import { AuditLogVideoTableComponent } from './audit-log-video-table/audit-log-video-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
 import { DaPuQiaoTableComponents } from './daqupiao/dapuqiao-tables-components';
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
@@ -68,4 +72,8 @@ export const Table_COMPONENTS = [
   AIOPRoleTableComponent,
   AIOPUserTableComponent,
   AIOPUserLogRecordTableComponent,
+  AIOPRecordResourceStatusOnlineTableComponent,
+  AIOPRecordCameraEventTableComponent,
+  AuditLogVideoTableComponent,
+  AuditGarbageStationTableComponent,
 ];

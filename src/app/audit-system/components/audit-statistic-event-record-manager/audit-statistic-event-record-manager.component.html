@@ -1,0 +1,79 @@
+<div class="audit-statistic-data-station-manager">
+  <div class="audit-statistic-data-station-manager-head">
+    <div class="hw-second-title">{{ Language.EventType(type) }}</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item datetime">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [minView]="DateView.hour"
+              [(date)]="args.duration.begin"
+              (dateChange)="ondate($event)"
+            />
+          </div>
+        </div>
+        <div class="filter-item datetime">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [minView]="DateView.hour"
+              [(date)]="args.duration.end"
+              (dateChange)="ondate($event)"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [showCloseIcon]="false"
+              [(showDropDown)]="selection.show"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                [defaultIds]="selection.default"
+                (selectTreeNode)="selection.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">投放点名称：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.opts.text" />
+          </div>
+        </div>
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-statistic-data-station-manager-body">
+    <howell-event-record-table
+      [type]="type"
+      [filter]="args"
+      [load]="load"
+      [get]="get"
+      (image)="onimage($event)"
+      (video)="onvideo($event)"
+      (got)="ongot($event)"
+    >
+    </howell-event-record-table>
+  </div>
+</div>

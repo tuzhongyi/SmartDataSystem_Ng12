@@ -11,6 +11,55 @@ export class ToolService {
 }
 
 export class Tool {
+  static plus(a: number, b: number): number;
+  static plus(a?: number, b?: number): number | undefined;
+  static plus<T>(a?: T, b?: T, plus?: (a: T, b: T) => T): T;
+  static plus<T>(a?: T, b?: T, plus?: (a: T, b: T) => T) {
+    if (a === undefined && b === undefined) {
+      return undefined;
+    }
+    if (a === null && b === null) {
+      return undefined;
+    }
+    if (a === undefined || a === null) {
+      return b;
+    }
+    if (b === undefined || b === null) {
+      return a;
+    }
+
+    if (plus) {
+      return plus(a, b);
+    }
+
+    return (a as unknown as number) + (b as unknown as number);
+  }
+
+  static sum<T>(arr: Array<T>, plus?: (a: T, b: T) => T) {
+    return arr.reduce((prev, curr, idx, arr) => {
+      return this.plus(prev, curr, plus);
+    });
+  }
+
+  static groupBy<T = any>(array: T[], key: string): T[][] {
+    const group: { [key: string]: any } = {};
+
+    array.forEach((item: any) => {
+      const _key = item[key];
+
+      if (!group[_key]) {
+        group[_key] = [];
+      }
+
+      group[_key].push(item);
+    });
+
+    let result = [];
+    for (const key in group) {
+      result.push(group[key]);
+    }
+    return result;
+  }
   static equals<T1, T2>(a: T1, b: T2) {
     if (a === undefined && b === undefined) {
       return true;

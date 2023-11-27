@@ -14,8 +14,6 @@ import { Medium } from 'src/app/common/tools/medium';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { DeviceListTableBusiness } from './device-list-table.business';
 import {
@@ -35,10 +33,10 @@ export class DeviceListTableComponent
   extends PagedTableAbstractComponent<DeviceViewModel>
   implements IComponent<IModel, PagedList<DeviceViewModel>>, OnInit, OnDestroy
 {
-  @Input() filter: DeviceListTableArgs = new DeviceListTableArgs();
+  @Input() args: DeviceListTableArgs = new DeviceListTableArgs();
   @Input() business: IBusiness<IModel, PagedList<DeviceViewModel>>;
 
-  @Input() load?: EventEmitter<SearchOptions>;
+  @Input() load?: EventEmitter<DeviceListTableArgs>;
   @Output() image: EventEmitter<DeviceViewModel> = new EventEmitter();
 
   constructor(business: DeviceListTableBusiness) {
@@ -52,54 +50,33 @@ export class DeviceListTableComponent
 
   ngOnInit(): void {
     if (this.load) {
-      this.load.subscribe((opts) => {
-        this.filter.opts = opts;
-        this.loadData(1, this.pageSize, this.filter.status, this.filter.opts);
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(1, this.pageSize);
       });
     }
-    this.loadData(1, this.pageSize, this.filter.status);
+    this.loadData(1, this.pageSize);
   }
 
-  loadData(
-    index: number,
-    size: number,
-    status?: OnlineStatus,
-    opts?: SearchOptions,
-    show = true
-  ) {
-    let params = new PagedParams();
-    params.PageSize = size;
-    params.PageIndex = index;
-
-    let promise = this.business.load(params, status, opts);
+  loadData(index: number, size: number) {
+    let promise = this.business.load(index, size, this.args);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
       this.page = paged.Page;
-      if (show) {
-        this.datas = paged.Data;
-      }
+
+      this.datas = paged.Data;
     });
     return promise;
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(
-      page.pageIndex + 1,
-      this.pageSize,
-      this.filter.status,
-      this.filter.opts
-    );
+    this.loadData(page.pageIndex + 1, this.pageSize);
   }
   onerror(e: Event) {
     if (e.target) {
       (e.target as HTMLImageElement).src = Medium.default;
     }
-  }
-
-  search(opts: SearchOptions) {
-    this.filter.opts = opts;
-    this.loadData(1, this.pageSize, this.filter.status, opts);
   }
 
   imageClick(e: Event, item: DeviceViewModel) {

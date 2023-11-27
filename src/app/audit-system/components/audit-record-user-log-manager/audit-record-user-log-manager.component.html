@@ -1,0 +1,80 @@
+<div class="audit-record-user-log-manager">
+  <div class="audit-record-user-log-manager-head">
+    <div class="hw-second-title">用户操作记录</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.begin"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.end"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">操作结果：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.result" [cannull]="true">
+              <select #element [(ngModel)]="args.result">
+                <option [ngValue]="true">成功</option>
+                <option [ngValue]="false">失败</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">用户名：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.username" />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">被操纵用户名：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.operated" />
+          </div>
+        </div>
+      </div>
+      <div class="filter-items">
+        <div class="filter-item message-type">
+          <div class="filter-item-title">消息类型：</div>
+          <div class="filter-item-value">
+            <common-label-select [autoclose]="true" [selectedNodes]="types">
+              <message-type-list
+                #tree
+                [(selecteds)]="types"
+              ></message-type-list>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-record-user-log-manager-body">
+    <aiop-user-log-record-table
+      [args]="args"
+      [load]="load"
+    ></aiop-user-log-record-table>
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="audit-record-resource-status-online-manager">
+  <div class="audit-record-resource-status-online-manager-head">
+    <div class="hw-second-title">摄像机报警记录</div>
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">开始时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.begin"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">结束时间：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              readonly
+              DateTimePicker
+              [format]="'yyyy年MM月dd日 HH:mm'"
+              [(date)]="args.duration.end"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">AI模型：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.modelId" [cannull]="true">
+              <select #element [(ngModel)]="args.modelId">
+                <option *ngFor="let item of ai_models" [ngValue]="item.ModelId">
+                  {{ item.ModelName }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">设备名称：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.name" />
+          </div>
+        </div>
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-record-resource-status-online-manager-body">
+    <aiop-record-camera-event-table
+      [args]="args"
+      [load]="load"
+      (video)="onvideo($event)"
+      (image)="onimage($event)"
+    ></aiop-record-camera-event-table>
+  </div>
+
+  <howell-video-player-window
+    *ngIf="window.video.show"
+    [Model]="window.video"
+    [style]="{ width: '60%', height: '60%' }"
+    [cameraId]="window.video.cameraId"
+    [mode]="PlayMode.vod"
+    [time]="window.video.time"
+    [title]="window.video.title ?? ''"
+    [autoplay]="true"
+  ></howell-video-player-window>
+  <app-window
+    *ngIf="window.image.show"
+    [Model]="window.image"
+    [style]="{ width: '60%', height: '60%', paddingTop: '50px' }"
+    [title]="window.image.title"
+  >
+    <div image [url]="window.image.url | async"></div>
+  </app-window>
+</div>

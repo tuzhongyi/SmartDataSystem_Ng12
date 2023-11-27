@@ -5,21 +5,21 @@
       <div #echarts class="task echarts"></div>
     </div>
     <div class="number-list">
-      <div>
+      <div [class.operational]="operational" (click)="ontask()">
         <div>发布任务数</div>
         <div>
           <span class="text-white value">{{ data.TotalCount }}</span
           ><span class="blue-text">起</span>
         </div>
       </div>
-      <div>
+      <div [class.operational]="operational" (click)="ontask(undefined, true)">
         <div>超时任务数</div>
         <div>
           <span class="text-white value">{{ data.GarbageTimeoutCount }}</span
           ><span class="blue-text">起</span>
         </div>
       </div>
-      <div>
+      <div [class.operational]="operational" (click)="ontask(false)">
         <div>未完成任务数</div>
         <div>
           <span class="text-white value">{{ data.UncompletedCount }}</span

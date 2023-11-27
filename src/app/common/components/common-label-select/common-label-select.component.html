@@ -1,17 +1,16 @@
 <div class="label-select" tabindex="-1">
   <div class="label-select-header" (click)="toggleHandler($event)">
     <div class="placeholder" *ngIf="!selectedNodes.length">请选择</div>
-    <div class="wrapper">
-      <div
-        class="label-select-item"
-        [ngClass]="{
-          single: single
-        }"
-        *ngFor="let node of selectedNodes"
-      >
+    <div
+      class="wrapper"
+      [ngClass]="{
+        single: single
+      }"
+    >
+      <div class="label-select-item" *ngFor="let node of selectedNodes">
         <div class="title">{{ node.Name }}</div>
         <div
-          class="close-btn"
+          class="clear"
           *ngIf="showCloseIcon"
           (click)="removeNode($event, node)"
         >

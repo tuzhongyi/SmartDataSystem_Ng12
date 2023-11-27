@@ -1,6 +1,6 @@
 import { ElementRef, EventEmitter } from '@angular/core';
 import * as echarts from 'echarts';
-export abstract class AEChartComponent<T> {
+export abstract class AEChartComponent<T = any> {
   abstract element?: ElementRef;
   abstract option: echarts.EChartsOption;
 

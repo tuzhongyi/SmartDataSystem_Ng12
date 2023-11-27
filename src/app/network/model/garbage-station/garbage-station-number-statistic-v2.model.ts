@@ -23,7 +23,7 @@ export class GarbageStationNumberStatisticV2 extends IdNameModel {
   /**	Double	湿垃圾容量，单位：L	O */
   WetVolume?: number;
   /**	Int32	评级	O */
-  Garde?: number;
+  Grade?: number;
   /**	Int32	满溢时间，单位：分钟	O */
   FullDuration?: number;
   /**	Double	垃圾滞留比值 有垃圾时长/没有垃圾的时长	O */

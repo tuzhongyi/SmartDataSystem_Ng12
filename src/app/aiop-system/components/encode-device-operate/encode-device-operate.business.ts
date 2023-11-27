@@ -1,30 +1,26 @@
 import { Injectable } from '@angular/core';
 import { EncodeDevice } from 'src/app/network/model/garbage-station/encode-device';
-import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class EncodeDeviceOperateBusiness {
-  constructor(
-    private _encodeDeviceRequest: EncodeDeviceRequestService,
-    private _resourceRequest: ResourceRequestService
-  ) {}
+  constructor(private service: ResourceRequestService) {}
   getProtocols() {
-    return this._encodeDeviceRequest.protocol();
+    return this.service.encodeDevice.protocols();
   }
   getEncodeDevice(id: string) {
-    return this._encodeDeviceRequest.get(id);
+    return this.service.encodeDevice.get(id);
   }
   createEncodeDevice(item: EncodeDevice) {
-    return this._encodeDeviceRequest.create(item);
+    return this.service.encodeDevice.create(item);
   }
   updateEncodeDevice(item: EncodeDevice) {
-    return this._encodeDeviceRequest.update(item);
+    return this.service.encodeDevice.update(item);
   }
   addResourceLabel(resourceId: string, labelId: string) {
-    return this._resourceRequest.label.create(labelId, resourceId);
+    return this.service.label.binding(resourceId, labelId);
   }
   getResourceLabels(id: string) {
-    return this._resourceRequest.label.array(id);
+    return this.service.label.array(id);
   }
 }

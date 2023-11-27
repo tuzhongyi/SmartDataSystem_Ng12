@@ -9,23 +9,21 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { CameraAIModel } from 'src/app/network/model/garbage-station/camera-ai.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 import { GetAIModelsParams } from 'src/app/network/request/ai-model/ai-model.params';
 import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model.service';
-import { LabelRequestService } from 'src/app/network/request/label/label.service';
+import { GetResourceCamerasParams } from 'src/app/network/request/resources/camera/resource-camera.params';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class AICameraModelManageBusiness {
   private _aiModelMap = new Map<string, CameraAIModel>();
   constructor(
-    private _cameraRequest: AICameraRequestService,
     private _AIModelRequest: AIModelRequestService,
-    private _labelRequest: LabelRequestService,
+    private service: ResourceRequestService,
     private _converter: AICameraModelManageConverter
   ) {}
   async listCameraAIModels(searchInfo: AICameraModelManageSearchInfo) {
-    let params = new GetCamerasParams();
+    let params = new GetResourceCamerasParams();
     if (searchInfo.PageIndex) params.PageIndex = searchInfo.PageIndex;
     if (searchInfo.PageSize) params.PageSize = searchInfo.PageSize;
     if (searchInfo.CameraName) params.Name = searchInfo.CameraName;
@@ -39,7 +37,7 @@ export class AICameraModelManageBusiness {
 
     for (let i = 0; i < models.length; i++) {
       let model = models[i];
-      let aiModels = await this._cameraRequest.model.list(model.Id);
+      let aiModels = await this.service.camera.ai.model.array(model.Id);
       model.AIModels =
         this._converter.iterateToModel<CameraAIModelManageModel<CameraAIModel>>(
           aiModels
@@ -77,20 +75,22 @@ export class AICameraModelManageBusiness {
     return models;
   }
   listLabels() {
-    return this._labelRequest.list();
+    return this.service.label.list();
   }
 
   addAIModelToCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.model.add(cameraId, modelId);
+    return this.service.camera.ai.model.binding(cameraId, modelId);
   }
   getAIModelFromCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.model.get(cameraId, modelId);
+    return this.service.camera.ai.model.get(cameraId, modelId);
   }
   deleteAIModelFromCamera(cameraId: string, modelId: string) {
-    return this._cameraRequest.model.delete(cameraId, modelId);
+    return this.service.camera.ai.model.delete(cameraId, modelId);
   }
-  private _listCameras(params: GetCamerasParams = new GetCamerasParams()) {
-    return this._cameraRequest.list(params);
+  private _listCameras(
+    params: GetResourceCamerasParams = new GetResourceCamerasParams()
+  ) {
+    return this.service.camera.list(params);
   }
   private _register(model: CameraAIModel) {
     if (!this._aiModelMap.has(model.Id)) {

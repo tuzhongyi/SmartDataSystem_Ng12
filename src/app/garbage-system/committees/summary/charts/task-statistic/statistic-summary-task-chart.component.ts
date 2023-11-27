@@ -1,5 +1,4 @@
 import {
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -11,20 +10,21 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { instanceToPlain } from 'class-transformer';
+import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StatisticSummaryViewModel } from '../../statistic-summary.model';
 import { StatisticSummaryTaskChartBusiness } from './statistic-summary-task-chart.business';
-import { StatisticSummaryTaskChartConverter } from './statistic-summary-task-chart.converter';
-import { StatisticSummaryTaskChartViewModel } from './statistic-summary-task-chart.model';
+import {
+  StatisticSummaryTaskChartEventArgs,
+  StatisticSummaryTaskChartViewModel,
+} from './statistic-summary-task-chart.model';
 import { StatisticSummaryTaskChartOption } from './statistic-summary-task-chart.option';
-import * as echarts from 'echarts/core';
 
 @Component({
   selector: 'app-statistic-summary-task-chart',
   templateUrl: './statistic-summary-task-chart.component.html',
-  styleUrls: ['./statistic-summary-task-chart.component.css'],
+  styleUrls: ['./statistic-summary-task-chart.component.less'],
   providers: [StatisticSummaryTaskChartBusiness],
 })
 export class StatisticSummaryTaskChartComponent
@@ -34,24 +34,13 @@ export class StatisticSummaryTaskChartComponent
     AfterViewInit,
     IComponent<StatisticSummaryViewModel[], StatisticSummaryTaskChartViewModel>
 {
-  myChart: any;
-
-  @Input()
-  EventTrigger?: EventEmitter<void>;
-  @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryTaskChartViewModel> =
+  @Input() Data?: StatisticSummaryViewModel[];
+  @Input() operational = false;
+  @Input() EventTrigger?: EventEmitter<void>;
+  @Output() OnTriggerEvent: EventEmitter<StatisticSummaryTaskChartViewModel> =
     new EventEmitter();
-
-  @Input()
-  Data?: StatisticSummaryViewModel[];
-
-  data: StatisticSummaryTaskChartViewModel =
-    new StatisticSummaryTaskChartViewModel();
-
-  @ViewChild('echarts')
-  private echarts?: ElementRef<HTMLDivElement>;
-
-  option = StatisticSummaryTaskChartOption;
+  @Output() task: EventEmitter<StatisticSummaryTaskChartEventArgs> =
+    new EventEmitter();
 
   constructor(business: StatisticSummaryTaskChartBusiness) {
     this.business = business;
@@ -60,6 +49,15 @@ export class StatisticSummaryTaskChartComponent
     StatisticSummaryViewModel[],
     StatisticSummaryTaskChartViewModel
   >;
+  myChart: any;
+
+  data: StatisticSummaryTaskChartViewModel =
+    new StatisticSummaryTaskChartViewModel();
+
+  @ViewChild('echarts')
+  private echarts?: ElementRef<HTMLDivElement>;
+
+  option = StatisticSummaryTaskChartOption;
 
   ngOnChanges(changes: SimpleChanges): void {
     this.onLoaded();
@@ -112,5 +110,11 @@ export class StatisticSummaryTaskChartComponent
       this.myChart.resize();
       this.myChart.setOption(this.option, true);
     }
+  }
+  ontask(handle?: boolean, timeout?: boolean) {
+    this.task.emit({
+      handle: handle,
+      timeout: timeout,
+    });
   }
 }

@@ -6,13 +6,13 @@ import { ServiceCache } from './service.cache';
 export interface IService<T extends IIdModel> {
   cache: ServiceCache<T>;
   list: (params?: IParams, ...args: any[]) => Promise<PagedList<T>>;
-  all: (params?: IParams, ...args: any[]) => Promise<PagedList<T>>;
+  all: (params?: IParams, ...args: any[]) => Promise<T[]>;
 }
 export abstract class AbstractService<T extends IIdModel>
   implements IService<T>
 {
   abstract list(params?: IParams, ...args: any[]): Promise<PagedList<T>>;
-  abstract all(params?: IParams, ...args: any[]): Promise<PagedList<T>>;
+  abstract all(params?: IParams, ...args: any[]): Promise<T[]>;
 }
 export interface AbstractService<T extends IIdModel> {
   cache: ServiceCache<T>;

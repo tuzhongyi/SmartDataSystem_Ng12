@@ -4,7 +4,7 @@ import { AICameraConverter } from 'src/app/converter/ai-camera.converter';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
+import { GetResourceCamerasParams } from 'src/app/network/request/resources/camera/resource-camera.params';
 import { AICameraModel } from 'src/app/view-model/ai-camera.model';
 import { AIOPGarbageStationDetailsCamerasService } from './aiop-garbage-station-details-cameras.service';
 
@@ -22,9 +22,9 @@ export class AIOPGarbageStationDetailsCamerasBusiness
     return model;
   }
   async getData(ids?: string[]): Promise<AICamera[]> {
-    let params = new GetCamerasParams();
+    let params = new GetResourceCamerasParams();
     params.ResourceIds = ids;
-    let paged = await this.service.aicamera.list(params);
+    let paged = await this.service.resource.camera.list(params);
     return paged.Data;
   }
 

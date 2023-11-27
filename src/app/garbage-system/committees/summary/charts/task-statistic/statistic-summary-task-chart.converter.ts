@@ -45,7 +45,7 @@ export class StatisticSummaryTaskChartConverter
       vm.timeoutRatio =
         vm.TotalCount == 0
           ? 0
-          : Math.ceil((vm.GarbageTimeoutCount / vm.TotalCount) * 100);
+          : Math.ceil((1 - vm.GarbageTimeoutCount / vm.TotalCount) * 100);
     }
 
     return vm;

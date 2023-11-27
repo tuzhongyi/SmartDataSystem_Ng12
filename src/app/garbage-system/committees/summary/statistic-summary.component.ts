@@ -113,11 +113,11 @@ export class StatisticSummaryComponent
   ngOnInit() {
     this.TimeUnits.push({
       value: TimeUnit.Hour,
-      language: Language.TimeUnit(TimeUnit.Hour),
+      language: Language.TimeUnit(TimeUnit.Day),
     });
     this.TimeUnits.push({
       value: TimeUnit.Day,
-      language: Language.TimeUnit(TimeUnit.Day),
+      language: Language.TimeUnit(TimeUnit.Month),
     });
 
     this.store.interval.subscribe(this.key, (x) => {
@@ -163,9 +163,9 @@ export class StatisticSummaryComponent
             let gardeLength = 0;
             this.stationStatistic.forEach((x) => {
               maxGarbageTime = Math.max(maxGarbageTime, x.MaxGarbageTime ?? 0);
-              if (x.Garde) {
+              if (x.Grade) {
                 gardeLength++;
-                gardeCount += x.Garde;
+                gardeCount += x.Grade;
               }
             });
             if (gardeLength > 0) {

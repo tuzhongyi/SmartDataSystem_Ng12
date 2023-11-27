@@ -12,10 +12,6 @@ import { DeviceListTableArgs } from 'src/app/common/components/tables/device-lis
 import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import {
-  SearchOptionKey,
-  SearchOptions,
-} from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-device-list-window',
@@ -33,22 +29,19 @@ export class DeviceListWindowComponent
     super();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    this.filter.status = this.status;
+    this.args.status = this.status;
     this.load.emit();
   }
 
   ngOnInit(): void {}
 
-  load: EventEmitter<SearchOptions> = new EventEmitter();
+  load: EventEmitter<DeviceListTableArgs> = new EventEmitter();
 
-  filter = new DeviceListTableArgs();
+  args = new DeviceListTableArgs();
 
   onsearch(text: string) {
-    let opts: SearchOptions = {
-      text: text,
-      propertyName: SearchOptionKey.name,
-    };
-    this.load.emit(opts);
+    this.args.name = text;
+    this.load.emit(this.args);
   }
   onimage(model: DeviceViewModel) {
     this.image.emit(model);

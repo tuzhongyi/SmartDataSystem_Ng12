@@ -191,7 +191,7 @@ export class DapuqiaoMainSuperviseCompleteBusiness
         item.infos.push(data.FeedbackUserName);
       }
       if (data.FeedbackUserType) {
-        item.infos.push(Language.UserType(data.FeedbackUserType));
+        item.infos.push(Language.FeedbackUserType(data.FeedbackUserType));
       }
       if (data.FeedbackUserMobileNo) {
         item.infos.push(data.FeedbackUserMobileNo);

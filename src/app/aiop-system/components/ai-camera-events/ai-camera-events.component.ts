@@ -41,7 +41,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
 
   windowModel = new WindowViewModel();
 
-  widths = ['10%', '15%', '10%', '10%', '10%', '10%', '5%'];
+  widths = ['10%', '20%', '15%', '10%', '15%', '5%'];
 
   video = new VideoArgs();
 

@@ -23,7 +23,7 @@ import { StatisticSummaryEventRatioChartViewModel } from './statistic-summary-ev
 @Component({
   selector: 'app-statistic-summary-event-ratio-chart',
   templateUrl: './statistic-summary-event-ratio-chart.component.html',
-  styleUrls: ['./statistic-summary-event-ratio-chart.component.css'],
+  styleUrls: ['./statistic-summary-event-ratio-chart.component.less'],
   providers: [StatisticSummaryEventRatioChartBusiness],
 })
 export class StatisticSummaryEventRatioChartComponent
@@ -36,23 +36,22 @@ export class StatisticSummaryEventRatioChartComponent
       StatisticSummaryEventRatioChartViewModel
     >
 {
-  Language = Language;
+  @Input() operational = false;
 
-  @ViewChild('echarts')
-  private echarts?: ElementRef<HTMLDivElement>;
+  @Input() Data?: StatisticSummaryViewModel[];
 
-  myChart: any;
-
-  @Input()
-  Data?: StatisticSummaryViewModel[];
-
-  @Input()
-  EventTrigger?: EventEmitter<void>;
+  @Input() EventTrigger?: EventEmitter<void>;
   @Output()
   OnTriggerEvent: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
     new EventEmitter();
-
-  data?: StatisticSummaryEventRatioChartViewModel;
+  @Output()
+  illegalDrop: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
+    new EventEmitter();
+  @Output() mixedInto: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
+    new EventEmitter();
+  @Output()
+  garbageFull: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
+    new EventEmitter();
 
   constructor(business: StatisticSummaryEventRatioChartBusiness) {
     this.business = business;
@@ -61,6 +60,31 @@ export class StatisticSummaryEventRatioChartComponent
     StatisticSummaryViewModel[],
     StatisticSummaryEventRatioChartViewModel
   >;
+  Language = Language;
+
+  @ViewChild('echarts')
+  private echarts?: ElementRef<HTMLDivElement>;
+
+  myChart: any;
+  data?: StatisticSummaryEventRatioChartViewModel;
+  option = EChartPieOption;
+  EventType = EventType;
+  get EChartOptionData() {
+    return [
+      {
+        value: this.data ? this.data.MixedInto : 0,
+        name: Language.EventType(EventType.MixedInto),
+      },
+      {
+        value: this.data ? this.data.GarbageFull : 0,
+        name: Language.EventType(EventType.GarbageFull),
+      },
+      {
+        value: this.data ? this.data.IllegalDrop : 0,
+        name: Language.EventType(EventType.IllegalDrop),
+      },
+    ];
+  }
   ngOnInit(): void {
     if (this.EventTrigger) {
       this.EventTrigger.subscribe((x) => {
@@ -93,23 +117,6 @@ export class StatisticSummaryEventRatioChartComponent
     }
   }
 
-  get EChartOptionData() {
-    return [
-      {
-        value: this.data ? this.data.MixedInto : 0,
-        name: Language.EventType(EventType.MixedInto),
-      },
-      {
-        value: this.data ? this.data.GarbageFull : 0,
-        name: Language.EventType(EventType.GarbageFull),
-      },
-      {
-        value: this.data ? this.data.IllegalDrop : 0,
-        name: Language.EventType(EventType.IllegalDrop),
-      },
-    ];
-  }
-
   getOption(data: { value: number; name: string }[]) {
     for (let i = 0; i < this.option.series.length; i++) {
       const serie = this.option.series[i];
@@ -118,5 +125,20 @@ export class StatisticSummaryEventRatioChartComponent
     return this.option;
   }
 
-  option = EChartPieOption;
+  onrecord(type: EventType) {
+    switch (type) {
+      case EventType.IllegalDrop:
+        this.illegalDrop.emit(this.data);
+        break;
+      case EventType.MixedInto:
+        this.mixedInto.emit(this.data);
+        break;
+      case EventType.GarbageFull:
+        this.garbageFull.emit(this.data);
+        break;
+
+      default:
+        break;
+    }
+  }
 }

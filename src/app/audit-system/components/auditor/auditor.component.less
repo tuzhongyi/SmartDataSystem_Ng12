@@ -1,0 +1,49 @@
+.auditor {
+  width: 100%;
+  height: 100%;
+  background-color: #0c1127;
+
+  &-header {
+    width: 100%;
+    height: 90px;
+
+    .logo {
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      background-image: -webkit-linear-gradient(top, white, #6997ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &-body {
+    width: 100%;
+    height: calc(100% - 90px);
+    display: flex;
+
+    .sidenav {
+      background-image: linear-gradient(to right,
+          rgba(216, 244, 255, 0) 97%,
+          rgba(216, 244, 255, 0.1) 100%);
+    }
+
+    .sidenav-main {
+      height: 100%;
+      flex-grow: 1;
+      padding: 20px;
+      position: relative; // 重要，给弹窗定位用
+      width: 0;
+
+      .sidenav-nav {
+        margin-bottom: 15px;
+      }
+
+      .sidenav-content {
+        flex-grow: 1;
+        overflow: hidden;
+        // border: 1px solid red;
+      }
+    }
+  }
+}

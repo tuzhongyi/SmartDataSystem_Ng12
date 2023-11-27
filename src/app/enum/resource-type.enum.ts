@@ -1,9 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2022-11-03 16:15:32
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-03 16:17:13
- */
 export enum ResourceType {
   /**监控点 */
   Camera = 'Camera',

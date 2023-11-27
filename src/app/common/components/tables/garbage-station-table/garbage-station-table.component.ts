@@ -6,7 +6,6 @@ import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationTableBusiness } from './garbage-station-table.business';
@@ -14,7 +13,10 @@ import {
   GarbageStationPagedConverter,
   GarbageStationTableConverter,
 } from './garbage-station-table.converter';
-import { GarbageStationTableModel } from './garbage-station-table.model';
+import {
+  GarbageStationTableArgs,
+  GarbageStationTableModel,
+} from './garbage-station-table.model';
 
 @Component({
   selector: 'howell-garbage-station-table',
@@ -30,11 +32,10 @@ export class GarbageStationTableComponent
   extends PagedTableAbstractComponent<GarbageStationTableModel>
   implements IComponent<IModel, PagedList<GarbageStationTableModel>>, OnInit
 {
-  @Input() load?: EventEmitter<SearchOptions>;
-
+  @Input() load?: EventEmitter<GarbageStationTableArgs>;
+  @Input() isoperation = true;
   @Input() business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
-  @Input() stationId?: string;
-  @Input() divisionId?: string;
+  @Input() args = new GarbageStationTableArgs();
   @Output() image: EventEmitter<PagedArgs<GarbageStationTableModel>> =
     new EventEmitter();
   @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
@@ -51,43 +52,28 @@ export class GarbageStationTableComponent
 
   ngOnInit(): void {
     if (this.load) {
-      this.load.subscribe((opts) => {
-        this.searchOpts = opts;
-        this.loadData(1, this.pageSize, opts);
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(1, this.pageSize);
       });
     }
     this.loadData(1, this.pageSize);
   }
 
-  async loadData(
-    index: number,
-    size: number,
-    opts?: SearchOptions,
-    show = true
-  ) {
-    let params = new PagedParams();
-    params.PageSize = size;
-    params.PageIndex = index;
-
-    let promise = this.business.load(
-      params,
-      opts,
-      this.stationId,
-      this.divisionId
-    );
+  async loadData(index: number, size: number) {
+    let promise = this.business.load(index, size, this.args);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
       this.page = paged.Page;
-      if (show) {
-        this.datas = paged.Data;
-      }
+
+      this.datas = paged.Data;
     });
     return promise;
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOpts);
+    this.loadData(page.pageIndex + 1, this.pageSize);
   }
 
   onimage(e: Event, item: GarbageStationTableModel, index: number) {

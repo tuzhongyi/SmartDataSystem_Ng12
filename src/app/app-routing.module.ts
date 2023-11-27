@@ -30,6 +30,12 @@ const routes: Routes = [
     canActivate: [AuthorizationService],
   },
   {
+    path: RoutePath.audit,
+    loadChildren: () =>
+      import('./audit-system/audit.module').then((mod) => mod.AuditModule),
+    canActivate: [AuthorizationService],
+  },
+  {
     path: RoutePath.garbage_system,
     loadChildren: () =>
       import('./garbage-system/garbage.module').then(

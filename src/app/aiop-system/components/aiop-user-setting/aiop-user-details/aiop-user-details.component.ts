@@ -61,7 +61,7 @@ export class AIOPUserDetailsComponent implements OnInit {
     user.Role = [];
     user.ServerId = '1';
     user.State = UserState.normal;
-    user.UserType = UserType.garbage_system;
+    user.UserType = UserType.garbage_station_system;
     return user;
   }
 

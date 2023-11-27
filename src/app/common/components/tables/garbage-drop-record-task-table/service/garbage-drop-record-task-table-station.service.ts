@@ -22,6 +22,9 @@ export class GarbageDropRecordTaskTableStationService {
     }
     params.TimeUnit = TimeUnit.Day;
     let stations = await this.list(args.opts, division.Id);
+    if (stations.length === 0) {
+      return [];
+    }
     params.GarbageStationIds = stations.map((x) => x.Id);
     return this.service.statistic.number.history.list(params);
   }
@@ -29,6 +32,9 @@ export class GarbageDropRecordTaskTableStationService {
     let params = new GetGarbageStationStatisticNumbersParams();
 
     let stations = await this.list(args.opts, division.Id);
+    if (stations.length === 0) {
+      return [];
+    }
     params.Ids = stations.map((x) => x.Id);
 
     let paged = await this.service.statistic.number.list(params);

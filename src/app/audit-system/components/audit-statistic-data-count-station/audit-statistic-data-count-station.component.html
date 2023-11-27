@@ -1,0 +1,36 @@
+<div class="audit-statistic-data-count-station">
+  <div class="audit-statistic-data-count-station-head">
+    <div class="hw-simple-title">投放点统计</div>
+  </div>
+  <div class="audit-statistic-data-count-station-body">
+    <div class="audit-statistic-data-count-station-body-chart">
+      <div #echart class="echart"></div>
+    </div>
+    <div class="audit-statistic-data-count-station-body-number">
+      <div class="number-item" (click)="onclick(StationState.Normal)">
+        <div>正常投放点</div>
+        <div class="number-item-text blue-text">
+          {{ model ? model.normal : 0 }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick(StationState.Full)">
+        <div>垃圾满溢投放点</div>
+        <div class="number-item-text yellow-text">
+          {{ model ? model.dryFull : 0 }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick(undefined, true)">
+        <div>垃圾滞留投放点</div>
+        <div class="number-item-text orange-red-text">
+          {{ model ? model.drop : 0 }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick()">
+        <div>投放点总数</div>
+        <div class="number-item-text sky-blue-text2">
+          {{ model ? model.all : 0 }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,6 +35,8 @@ export class GetGarbageStationsParams extends PagedParams implements IParams {
   AncestorId?: string;
   /**小区名称，支持LIKE */
   CommunityName?: string;
+  /**	Int32	垃圾房状态,FLAGS	O */
+  StationState?: number;
 }
 
 export class GetGarbageStationCamerasParams

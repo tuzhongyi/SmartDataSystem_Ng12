@@ -14,6 +14,7 @@ import { instanceToPlain } from 'class-transformer';
 import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { EchartBarOption } from '../../../../../common/interfaces/echarts/echart-bar.option';
 import { StatisticSummaryStationEventChartBusiness } from './statistic-summary-station-event-chart.business';
@@ -35,6 +36,11 @@ export class StatisticSummaryStationEventChartComponent
       StatisticSummaryStationEventChartViewModel[]
     >
 {
+  @Input() title = '投放点事件';
+  @Input() Data?: (
+    | GarbageStationNumberStatisticV2
+    | DivisionNumberStatisticV2
+  )[];
   @Input()
   EventTrigger?: EventEmitter<void>;
   @Output()
@@ -44,9 +50,6 @@ export class StatisticSummaryStationEventChartComponent
   echart: any;
   @ViewChild('echarts')
   private echartElement?: ElementRef<HTMLDivElement>;
-
-  @Input()
-  Data?: GarbageStationNumberStatisticV2[];
 
   data?: StatisticSummaryStationEventChartViewModel[];
 
@@ -58,6 +61,7 @@ export class StatisticSummaryStationEventChartComponent
     StatisticSummaryStationEventChartViewModel[]
   >;
   ngOnInit(): void {
+    this.option.title.text = this.title;
     if (this.EventTrigger) {
       this.EventTrigger.subscribe((x) => {
         console.log(this.data);

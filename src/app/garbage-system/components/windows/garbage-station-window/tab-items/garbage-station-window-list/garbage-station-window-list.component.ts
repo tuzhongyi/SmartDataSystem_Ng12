@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
+import {
+  GarbageStationTableArgs,
+  GarbageStationTableModel,
+} from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
@@ -17,8 +20,16 @@ export class GarbageStationWindowListComponent implements OnInit {
     new EventEmitter();
   @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
   constructor() {}
-
-  ngOnInit(): void {}
+  args: GarbageStationTableArgs = new GarbageStationTableArgs();
+  tableLoad = new EventEmitter<GarbageStationTableArgs>();
+  ngOnInit(): void {
+    this.args.stationId = this.stationId;
+    this.args.divisionId = this.divisionId;
+    this.load.subscribe((x) => {
+      this.args.opts = x;
+      this.tableLoad.emit(this.args);
+    });
+  }
 
   onimage(item: PagedArgs<GarbageStationTableModel>) {
     this.image.emit(item);
@@ -27,6 +38,7 @@ export class GarbageStationWindowListComponent implements OnInit {
     this.position.emit(item);
   }
   onsearch(opts: SearchOptions) {
-    this.load.emit(opts);
+    this.args.opts = opts;
+    this.tableLoad.emit(this.args);
   }
 }

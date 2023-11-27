@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { param } from 'jquery';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { AICameraManageConverter } from 'src/app/converter/ai-camera-manage.converter';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
-import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
+import { GetResourceCamerasParams } from 'src/app/network/request/resources/camera/resource-camera.params';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 import {
   AICameraManageModel,
   AICameraManageSearchInfo,
@@ -14,8 +12,7 @@ import {
 @Injectable()
 export class CameraManageBusiness {
   constructor(
-    private _AICameraRequest: AICameraRequestService,
-    private _encodeDeviceRequest: EncodeDeviceRequestService,
+    private service: ResourceRequestService,
     private _converter: AICameraManageConverter
   ) {}
 
@@ -25,7 +22,7 @@ export class CameraManageBusiness {
     pageIndex: number = 1,
     pageSize: number = 9
   ) {
-    let params = new GetCamerasParams();
+    let params = new GetResourceCamerasParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
 
@@ -59,12 +56,12 @@ export class CameraManageBusiness {
     return res;
   }
   listEncodeDevice() {
-    return this._encodeDeviceRequest.list();
+    return this.service.encodeDevice.list();
   }
   deleteAICamera(id: string) {
-    return this._AICameraRequest.delete(id);
+    return this.service.camera.delete(id);
   }
-  private _listAiopCameras(params: GetCamerasParams) {
-    return this._AICameraRequest.list(params);
+  private _listAiopCameras(params: GetResourceCamerasParams) {
+    return this.service.camera.list(params);
   }
 }

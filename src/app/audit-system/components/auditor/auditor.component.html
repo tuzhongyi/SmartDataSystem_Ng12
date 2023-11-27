@@ -1,0 +1,18 @@
+<div class="auditor">
+  <div class="auditor-header">
+    <mat-toolbar>
+      <div class="logo">系统运行与维护</div>
+      <div class="spacer"></div>
+      <common-time></common-time>
+      <app-account-operation [heart]="true"></app-account-operation>
+    </mat-toolbar>
+  </div>
+  <div class="auditor-body">
+    <div class="sidenav">
+      <howell-sidenav [regExp]="regExp"></howell-sidenav>
+    </div>
+    <main class="sidenav-main">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

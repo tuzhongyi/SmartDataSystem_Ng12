@@ -1,4 +1,5 @@
 import { Transform } from 'class-transformer';
+import { FeedbackUserType } from 'src/app/enum/user-type-feedback.enum';
 import { IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
 
@@ -28,7 +29,7 @@ export class GarbageDropFeedback implements IModel {
       1-街道管理人员，2-居委管理人员，3-志愿者，4-物业管理人员，5-其他，6-第三方。"
 	    M
 	*/
-  FeedbackUserType!: number;
+  FeedbackUserType!: FeedbackUserType;
 }
 export enum FeedbackResult {
   /** 1：完成 */

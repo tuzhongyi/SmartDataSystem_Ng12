@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
 import { Language } from '../../../common/tools/language';
 import { Medium } from '../../../common/tools/medium';
 import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
@@ -10,7 +9,7 @@ type AICameraEventsSource = CameraAIEventRecord;
 
 @Injectable()
 export class AICameraEventsConverter extends AbstractCommonModelConverter<AICameraEventsModel> {
-  constructor(private _resourceRequest: AICameraRequestService) {
+  constructor() {
     super();
   }
 

@@ -4,15 +4,15 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageVehicleCameraConverter } from 'src/app/converter/garbage-vehicle-camera.converter';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
 import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
-import { GetCamerasParams } from 'src/app/network/request/ai-camera/ai-camera.params';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
+import { GetResourceCamerasParams } from 'src/app/network/request/resources/camera/resource-camera.params';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class GarbageVehicleCameraTableBusiness
   implements IBusiness<AICamera[], VehicleCamera[]>
 {
   constructor(
-    private service: AICameraRequestService,
+    private service: ResourceRequestService,
     private converter: GarbageVehicleCameraConverter
   ) {}
 
@@ -31,9 +31,9 @@ export class GarbageVehicleCameraTableBusiness
   }
 
   async getData(condition?: string): Promise<AICamera[]> {
-    let params = new GetCamerasParams();
+    let params = new GetResourceCamerasParams();
     params.Name = condition;
-    let paged = await this.service.list(params);
+    let paged = await this.service.camera.list(params);
     return paged.Data;
   }
 }

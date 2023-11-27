@@ -1,0 +1,107 @@
+<div class="garbage-station-table">
+  <div class="garbage-station-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <!-- <td >序号</td> -->
+          <td>图片</td>
+          <td>投放点</td>
+          <td>社区</td>
+          <td>街道</td>
+          <td>居委会</td>
+          <td>状态</td>
+          <td>滞留时间</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngClass]="{ selected: selected === item }"
+            (click)="onselect(item)"
+          >
+            <!-- <td >{{ i + 1 }}</td> -->
+            <td>
+              <div class="img-list">
+                <div
+                  class="img"
+                  *ngFor="let url of item.urls | async; let index = index"
+                  (click)="onimage($event, item, index)"
+                >
+                  <img [src]="url" alt="" />
+                </div>
+              </div>
+            </td>
+            <td>
+              {{ item ? item.Name : "-" }}
+            </td>
+            <td>
+              {{ item ? item.CommunityName ?? "-" : "-" }}
+            </td>
+            <td>
+              {{ item ? ((item.Division | async)?.Parent | async)?.Name : "-" }}
+            </td>
+            <td>
+              {{ item ? (item.Division | async)?.Name : "-" }}
+            </td>
+            <td>
+              <span
+                [ngClass]="{
+                  'green-text': item.StationStateFlags.contains(
+                    StationState.Normal
+                  ),
+                  'orange-text': item.StationStateFlags.contains(
+                    StationState.Full
+                  ),
+                  'gray-2-text': item.StationStateFlags.contains(
+                    StationState.Error
+                  )
+                }"
+              >
+                {{ Language.StationStateFlags(item.StationStateFlags) }}
+              </span>
+            </td>
+            <td>
+              <div *ngIf="!!item.drop">
+                {{ item.drop.CurrentGarbageTime | howellTime }}
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="garbage-station-table-main-footer footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <app-paginator
+          [length]="page ? page.TotalRecordCount : 0"
+          [pageSize]="page ? page.PageSize : 0"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

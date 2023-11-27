@@ -2,6 +2,11 @@
   "$schema": "./system-mode.schema.json",
   "data": [
     {
+      "title": "用户管理",
+      "icon": "howell-icon-department-admin",
+      "path": "/aiop/underwater/user-setting"
+    },
+    {
       "title": "监督平台",
       "icon": "howell-icon-cam-all1",
       "path": "/aiop/underwater/monitor-platform"
@@ -10,11 +15,6 @@
       "title": "系统设置",
       "icon": "howell-icon-setting",
       "path": "/aiop/underwater/system-setting"
-    },
-    {
-      "title": "用户管理",
-      "icon": "howell-icon-department-admin",
-      "path": "/aiop/underwater/user-setting"
     }
   ]
 }

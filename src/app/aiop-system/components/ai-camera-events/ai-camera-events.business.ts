@@ -1,22 +1,21 @@
 import { Injectable } from '@angular/core';
-import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { AICameraEventsConverter } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.converter';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetCameraAIEventRecordsParams } from 'src/app/network/request/ai-camera-event/camera-ai-event.params';
-import { CameraAIEventRequestService } from 'src/app/network/request/ai-camera-event/camera-ai-event.service';
-import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model.service';
 import {
   AICameraEventsModel,
   AICameraEventsSearchInfo,
 } from 'src/app/aiop-system/components/ai-camera-events/ai-camera-events.model';
-import { AICameraRequestService } from 'src/app/network/request/ai-camera/ai-camera.service';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { GetCameraAIEventRecordsParams } from 'src/app/network/request/ai-camera-event/camera-ai-event.params';
+import { CameraAIEventRequestService } from 'src/app/network/request/ai-camera-event/camera-ai-event.service';
+import { AIModelRequestService } from 'src/app/network/request/ai-model/ai-model.service';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class AICameraEventsBusiness {
   constructor(
     private _cameraAIEventRequest: CameraAIEventRequestService,
-    private _aiCameraRequest: AICameraRequestService,
+    private resource: ResourceRequestService,
     private _cameraAIModelRequest: AIModelRequestService,
     private _converter: AICameraEventsConverter
   ) {}
@@ -43,7 +42,7 @@ export class AICameraEventsBusiness {
     return this._cameraAIModelRequest.list();
   }
   getAICamera(id: string) {
-    return this._aiCameraRequest.get(id);
+    return this.resource.camera.get(id);
   }
 
   private async _listCameraAIEvents(searchInfo: AICameraEventsSearchInfo) {

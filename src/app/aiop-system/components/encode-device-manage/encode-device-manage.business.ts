@@ -5,13 +5,13 @@ import {
   EncodeDeviceManageSearchInfo,
 } from 'src/app/aiop-system/components/encode-device-manage/encode-device-manage.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { EncodeDeviceRequestService } from 'src/app/network/request/encode-device/encode-device.service';
-import { GetEncodeDevicesParams } from 'src/app/network/request/encode-device/encode-devices-params';
+import { GetResourceEncodeDevicesParams } from 'src/app/network/request/resources/encode-device/resource-encode-device.params';
+import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 
 @Injectable()
 export class EncodeDeviceManageBusiness {
   constructor(
-    private _encodeDeviceRequest: EncodeDeviceRequestService,
+    private service: ResourceRequestService,
     private _converter: EncodeDeviceManageConverter
   ) {}
 
@@ -20,7 +20,7 @@ export class EncodeDeviceManageBusiness {
     pageIndex: number = 1,
     pageSize: number = 9
   ) {
-    let params = new GetEncodeDevicesParams();
+    let params = new GetResourceEncodeDevicesParams();
     params.PageIndex = pageIndex;
     params.PageSize = pageSize;
     if (!searchInfo.filter) {
@@ -41,10 +41,10 @@ export class EncodeDeviceManageBusiness {
     return res;
   }
 
-  listEncodeDevice(params: GetEncodeDevicesParams) {
-    return this._encodeDeviceRequest.list(params);
+  listEncodeDevice(params: GetResourceEncodeDevicesParams) {
+    return this.service.encodeDevice.list(params);
   }
   deleteEncodeDevice(id: string) {
-    return this._encodeDeviceRequest.delete(id);
+    return this.service.encodeDevice.delete(id);
   }
 }

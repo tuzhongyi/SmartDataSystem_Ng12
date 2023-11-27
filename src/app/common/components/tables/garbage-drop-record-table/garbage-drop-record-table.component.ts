@@ -105,8 +105,11 @@ export class GarbageDropRecordTableComponent
     return promise;
   }
 
-  onvideo(item: GarbageDropRecordViewModel) {
+  onvideo(e: Event, item: GarbageDropRecordViewModel) {
     this.video.emit(item);
+    if (this.selected === item) {
+      e.stopPropagation();
+    }
   }
 
   onimage(e: Event, item: GarbageDropRecordViewModel, index: number) {

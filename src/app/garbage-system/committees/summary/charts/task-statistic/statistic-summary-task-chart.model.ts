@@ -11,3 +11,8 @@ export class StatisticSummaryTaskChartViewModel {
   taskRatio = 0;
   timeoutRatio = 0;
 }
+
+export class StatisticSummaryTaskChartEventArgs {
+  handle?: boolean;
+  timeout?: boolean;
+}

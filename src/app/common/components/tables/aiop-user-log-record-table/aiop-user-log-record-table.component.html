@@ -6,13 +6,13 @@
       </colgroup>
       <thead>
         <tr>
-          <td>时间</td>
-          <td>消息类型</td>
           <td>用户名</td>
+          <td>消息类型</td>
           <td>操作内容</td>
           <td>操作次数</td>
           <td>被操作用户</td>
           <td>操作结果</td>
+          <td>时间</td>
         </tr>
       </thead>
     </table>
@@ -23,23 +23,33 @@
         </colgroup>
         <tbody>
           <tr *ngFor="let item of datas; let i = index">
-            <td>{{ item.Time | date : "yyyy-MM-dd HH:mm:ss" }}</td>
-            <td>
-              {{ Language.MessageType(item.MessageType) }}
-            </td>
             <td>
               {{ item.UserName }}
             </td>
-            <td>{{ item.Content }}</td>
+            <td>
+              {{ Language.MessageType(item.MessageType) }}
+            </td>
+            <td [title]="item.Content">{{ item.Content }}</td>
             <td>
               {{ item.Times }}
             </td>
             <td>
               {{ item.OperatedUserName }}
             </td>
-            <td>
-              {{ item.Result ? "成功" : "失败:" + item.Reason }}
+            <td [title]="item.Reason">
+              <div class="result">
+                <div
+                  [ngClass]="{
+                    'green-text': item.Result,
+                    'powder-red-text': !item.Result
+                  }"
+                >
+                  {{ item.Result ? "成功" : "失败" }}
+                </div>
+                <div *ngIf="!item.Result">：{{ item.Reason }}</div>
+              </div>
             </td>
+            <td>{{ item.Time | date : "yyyy-MM-dd HH:mm:ss" }}</td>
           </tr>
         </tbody>
       </table>

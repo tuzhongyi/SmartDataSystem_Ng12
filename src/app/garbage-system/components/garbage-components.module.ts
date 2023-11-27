@@ -97,8 +97,6 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
   ],
   providers: [DownloadBusiness],
   exports: [
-    MaterialModule,
-    HowellModule,
     RankComponent,
     MonitorComponent,
     DivisionListComponent,

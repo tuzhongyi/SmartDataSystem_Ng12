@@ -22,6 +22,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { UserType } from 'src/app/enum/user-type.enum';
 import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { HowellUrl } from 'src/app/view-model/howell-url';
@@ -57,42 +58,62 @@ export class AuthorizationService implements CanActivate {
     }
 
     if (this._cookieService.check('passWord')) {
-      let passWord = this._cookieService.get('passWord');
-      passWord = atob(passWord);
-      let res2 = passWord.match(
-        /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
-      )!;
-      passWord = res2.groups!['passWord'];
+      let password = this._cookieService.get('passWord');
+      password = atob(password);
 
-      this._password = passWord;
+      if (password && password.length > 64) {
+        password = password.substring(32, password.length);
+        password = password.substring(0, password.length - 32);
+      }
+
+      // let res2 = password.match(
+      //   /[a-zA-Z0-9+/=]{32}(?<passWord>(?=.*\d)(?=.*[a-zA-Z])(?=.*[^\da-zA-Z\s]).{8,30})[a-zA-Z0-9+/=]{32}/
+      // )!;
+      // password = res2.groups!['passWord'];
+
+      this._password = password;
     }
   }
 
   toroute(user: User) {
-    if (user.Username === 'admin') {
-      return this._router.parseUrl(`/${RoutePath.aiop}`);
-    }
+    let path = this.getPath(user);
+    return this._router.parseUrl(`/${path}`);
+  }
+
+  getPath(user: User): RoutePath {
+    let role = user.Role[0];
     if (user.UIType === UserUIType.dapuqiao) {
-      return this._router.parseUrl(`/${RoutePath.dapuqiao}`);
-    } else {
-      if (user.UserType === 2) {
-        // return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
-        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
-      } else if (user.UserType === 3) {
-        // return this._router.parseUrl(`/${RoutePath.garbage_vehicle}`);
-        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
-      } else {
-        if (user.Resources && user.Resources.length > 0) {
-          let resource = user.Resources[0];
-          if (resource.ResourceType === UserResourceType.Committees) {
-            return this._router.parseUrl(
-              `/${RoutePath.garbage_system_committees}`
-            );
-          }
-        }
-        return this._router.parseUrl(`/${RoutePath.garbage_system}`);
+      return RoutePath.dapuqiao;
+    } else if (
+      user.UserType === UserType.station_vehicle ||
+      user.UserType === UserType.garbage_vehicle_system
+    ) {
+      return RoutePath.garbage_system;
+    } else if (
+      role.PrivacyData === 1 &&
+      role.UserData === 1 &&
+      role.StaticData === 1 &&
+      role.PictureData === 1
+    ) {
+      return RoutePath.aiop;
+    } else if (
+      role.UserData === 1 &&
+      role.StaticData === 1 &&
+      role.PictureData === 1
+    ) {
+      return RoutePath.audit;
+    } else if (user.Resources && user.Resources.length > 0) {
+      let resource = user.Resources[0];
+      switch (resource.ResourceType) {
+        case UserResourceType.Committees:
+          return RoutePath.garbage_system_committees;
+        case UserResourceType.City:
+        case UserResourceType.County:
+        default:
+          return RoutePath.garbage_system;
       }
     }
+    return RoutePath.login;
   }
 
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
