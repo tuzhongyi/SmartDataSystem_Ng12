@@ -64,6 +64,7 @@ export class AIGarbageStationDeviceScheduleComponent implements OnInit {
         case AIGarbageStationDeviceScheduleType.spray:
           this.schedule.SprayTimes?.splice(index, 1);
           break;
+
         default:
           break;
       }

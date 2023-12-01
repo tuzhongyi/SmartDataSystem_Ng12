@@ -43,7 +43,6 @@ import { InputSearchComponent } from './input-search/input-search.component';
 import { LabelManageFormComponent } from './label-manage-form/label-manage-form.component';
 import { LabelOperateComponent } from './label-operate/label-operate.component';
 import { LabelTreeComponent } from './label-tree/label-tree.component';
-import { MixIntoComponent } from './mix-into/mix-into.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { GarbageDropDurationPanelComponent } from './panels/garbage-drop-duration-panel/garbage-drop-duration-panel.component';
 import { GarbageDropEventPanelComponent } from './panels/garbage-drop-event-panel/garbage-drop-event-panel.component';
@@ -127,7 +126,6 @@ export const CUSTOM_COMPONENTS = [
   LabelOperateComponent,
   LabelManageFormComponent,
   ToastWindowComponent,
-  MixIntoComponent,
   CommonTabComponent,
   IllegalDropEventComponent,
   EventNumberStatisticComponent,

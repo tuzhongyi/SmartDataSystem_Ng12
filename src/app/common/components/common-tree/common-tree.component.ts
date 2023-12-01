@@ -293,6 +293,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
           // 最顶层节点，则直接选中状态
           if (!node.ParentId) {
             this.selection.select(node);
+          } else if (!this._flatNodeMap.get(node.ParentId)) {
+            this.selection.select(node);
           } else {
             // 上层节点为打开状态,否则没有打开树，就抛选中事件不合逻辑
             let parentNode = this._flatNodeMap.get(node.ParentId);

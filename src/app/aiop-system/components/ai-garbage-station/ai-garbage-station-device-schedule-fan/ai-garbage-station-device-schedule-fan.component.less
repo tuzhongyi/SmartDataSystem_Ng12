@@ -1,0 +1,62 @@
+app-time-control {
+  width: 130px;
+}
+
+
+.time {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  app-time-control {
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.fan {
+  height: 100%;
+  overflow-y: scroll;
+
+  &-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+  }
+}
+
+.panel {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  border: 1px solid #5e6ebf;
+  border-radius: 6px;
+
+  &.plus {
+    border: 1px solid #4a8eff;
+
+    width: calc(100% - 10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #4a8eff;
+
+      color: white;
+    }
+  }
+}

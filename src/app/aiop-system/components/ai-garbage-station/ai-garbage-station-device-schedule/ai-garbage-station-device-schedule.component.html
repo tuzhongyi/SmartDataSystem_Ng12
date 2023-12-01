@@ -26,10 +26,36 @@
           香氛喷洒时间点
         </div>
       </li>
+      <li>
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: type === ScheduleType.door
+          }"
+          (click)="type = ScheduleType.door"
+        >
+          感应门开门时间点
+        </div>
+      </li>
     </ul>
   </div>
   <div class="ai-garbage-station-device-schedule-body">
-    <div class="fan" *ngIf="type === ScheduleType.fan">
+    <ai-garbage-station-device-schedule-fan
+      *ngIf="type === ScheduleType.fan"
+      [(models)]="schedule.ExhaustFanTimeSegments"
+    >
+    </ai-garbage-station-device-schedule-fan>
+    <ai-garbage-station-device-schedule-spray
+      *ngIf="type === ScheduleType.spray"
+      [(models)]="schedule.SprayTimes"
+    >
+    </ai-garbage-station-device-schedule-spray>
+    <ai-garbage-station-device-schedule-door
+      *ngIf="type === ScheduleType.door"
+      [(models)]="schedule.DoorOpenTimes"
+    >
+    </ai-garbage-station-device-schedule-door>
+    <!-- <div class="fan" *ngIf="type === ScheduleType.fan">
       <div
         class="panel fan-item"
         *ngFor="let item of schedule.ExhaustFanTimeSegments; let i = index"
@@ -54,8 +80,8 @@
       <div class="panel plus" (click)="oncreate()">
         <i class="howell-icon-plus"></i> 添加
       </div>
-    </div>
-    <div
+    </div> -->
+    <!-- <div
       class="spray"
       *ngIf="type === ScheduleType.spray && !!schedule.SprayTimes"
     >
@@ -77,7 +103,7 @@
       <div class="panel plus" (click)="oncreate()">
         <i class="howell-icon-plus"></i> 添加
       </div>
-    </div>
+    </div> -->
   </div>
   <div class="ai-garbage-station-device-schedule-foot">
     <button class="hw-green-btn m-r-10" (click)="onupdate()">

@@ -1,16 +1,100 @@
 <div class="garbage-station-window-list">
   <div class="garbage-station-window-list-head">
     <ng-content></ng-content>
-    <app-input-search-options (search)="onsearch($event)">
-    </app-input-search-options>
   </div>
   <div class="garbage-station-window-list-body">
-    <howell-garbage-station-table
-      [load]="tableLoad"
-      [args]="args"
-      (position)="onposition($event)"
-      (image)="onimage($event)"
-    >
-    </howell-garbage-station-table>
+    <div class="garbage-station-window-list-body-filter filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="selection.show"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                [resourceType]="selection.type"
+                [defaultIds]="selection.default"
+                (selectTreeNode)="selection.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">类型：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.type" [cannull]="true">
+              <select [(ngModel)]="args.type">
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Garbage) }}
+                </option>
+                <option [ngValue]="StationType.Construction">
+                  {{ Language.StationType(StationType.Construction) }}
+                </option>
+                <option [ngValue]="StationType.Rfid">
+                  {{ Language.StationType(StationType.Rfid) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">状态</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.state" [cannull]="true">
+              <select [(ngModel)]="args.state">
+                <option [ngValue]="StationState.Normal">
+                  {{ Language.StationState(StationState.Normal) }}
+                </option>
+                <option [ngValue]="StationState.Full">
+                  {{ Language.StationState(StationState.Full) }}
+                </option>
+                <option [ngValue]="StationState.Error">
+                  {{ Language.StationState(StationState.Error) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">社区：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              placeholder="社区名称"
+              [(ngModel)]="args.communityName"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">投放点：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              placeholder="投放点名称"
+              [(ngModel)]="args.stationName"
+            />
+          </div>
+        </div>
+        <div class="filter-item">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="mdi mdi-magnify"></i> 查找
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="garbage-station-window-list-body-table">
+      <howell-garbage-station-table
+        [load]="tableLoad"
+        [args]="args"
+        (position)="onposition($event)"
+        (image)="onimage($event)"
+      >
+      </howell-garbage-station-table>
+    </div>
   </div>
 </div>

@@ -9,7 +9,8 @@ export class EventRecordViewModel<T = any> extends BaseEventRecord {
   GarbageStation?: GarbageStationModel;
 
   DateFormatter: string = '';
-
+  ProcessorName?: string;
+  ProcessTime?: Date;
   images: ImageControlModel[] = [];
   urls: Promise<string>[] = [];
 }

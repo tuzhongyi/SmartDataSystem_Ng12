@@ -155,6 +155,8 @@ export class DivisionTreeComponent
    */
   private _excludeGuards: string[] = [];
 
+  treeLoad = new EventEmitter<void>();
+
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -176,6 +178,7 @@ export class DivisionTreeComponent
     let res = await this.business.load(this.resourceType, this.depth);
     this.loaded.emit(res);
     this.dataSubject.next(res);
+    this.treeLoad.emit();
     if (this.tree) {
       this.tree.expandNodeRecursively(res, this.showDepth);
       this.tree.setDefaultNodes();

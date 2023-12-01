@@ -1,8 +1,9 @@
-import { TimeModel } from "src/app/common/components/time-control/time-control.model";
+import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
 
 export enum AIGarbageStationDeviceScheduleType {
   fan,
   spray,
+  door,
 }
 
 export class AIGarbageTimeSegmentModel {
@@ -12,7 +13,13 @@ export class AIGarbageTimeSegmentModel {
   StopTime!: TimeModel;
 }
 
+export class AIGarbageDayTimeSegmentModel {
+  Day: number = 0;
+  Segments?: AIGarbageTimeSegmentModel[];
+}
+
 export class AIGarbageScheduleModel {
   ExhaustFanTimeSegments?: AIGarbageTimeSegmentModel[];
   SprayTimes?: TimeModel[];
+  DoorOpenTimes?: AIGarbageDayTimeSegmentModel[];
 }

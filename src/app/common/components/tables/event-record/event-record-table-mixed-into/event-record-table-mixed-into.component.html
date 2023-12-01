@@ -1,0 +1,142 @@
+<div class="event-record-table">
+  <!-- <div class="event-record-table-header">
+        <div>
+            <div>导航</div>
+            <button (click)="show=!show">显示 </button>
+        </div>
+        <div *ngIf="show">hshdfh</div>
+    </div> -->
+  <div class="event-record-table-main">
+    <table border="0" cellpadding="0" cellspacing="0">
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>图片</th>
+          <th>投放点</th>
+          <th>社区</th>
+          <th>街道</th>
+          <th>居委会</th>
+          <th>上报时间</th>
+          <th>处置人员</th>
+          <th>处置时间</th>
+          <th class="center">操作</th>
+        </tr>
+      </thead>
+    </table>
+    <div class="event-record-table-main-body body">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            class="zoom"
+            [ngClass]="{
+              selected: selected === item
+            }"
+            (click)="onselect(item)"
+          >
+            <td>
+              <div class="img-list">
+                <div
+                  class="img"
+                  image
+                  *ngFor="let url of item.urls; let imgIndex = index"
+                  [url]="url | async"
+                  (click)="onimage($event, item, imgIndex)"
+                ></div>
+              </div>
+            </td>
+            <td>
+              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+            </td>
+            <td>
+              {{
+                item.Data
+                  ? item.Data.CommunityName
+                  : item.GarbageStation
+                  ? item.GarbageStation.CommunityName
+                  : ""
+              }}
+            </td>
+            <td>
+              {{
+                item.GarbageStation
+                  ? ((item.GarbageStation.Division | async)?.Parent | async)
+                      ?.Name
+                  : ""
+              }}
+            </td>
+            <td>
+              {{
+                item.GarbageStation
+                  ? (item.GarbageStation.Division | async)?.Name
+                  : ""
+              }}
+            </td>
+            <td>{{ item.DateFormatter }}</td>
+            <td>{{ item.ProcessorName }}</td>
+            <td>{{ item.ProcessTime | date : "HH:mm:ss" }}</td>
+            <td class="center">
+              <div>
+                <button
+                  class="icon-button"
+                  title="播放视频"
+                  (click)="playvideo($event, item)"
+                >
+                  <i class="howell-icon-video"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载图片"
+                  (click)="onDownloadImage(item)"
+                >
+                  <i class="howell-icon-picturedownload"></i></button
+                ><button
+                  class="icon-button"
+                  title="下载视频"
+                  (click)="onDownloadVideo(item)"
+                >
+                  <i class="howell-icon-videodownload"></i></button
+                ><button
+                  class="icon-button"
+                  title="刷卡记录"
+                  (click)="oncardrecord(item)"
+                >
+                  <i class="howell-icon-garbage_card"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="event-record-table-main-footer" *ngIf="page">
+      <div class="footer-item">
+        <div class="footer-info">
+          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+          <div class="info-item">
+            总数量: {{ page && page.TotalRecordCount }}
+          </div>
+        </div>
+
+        <!-- MatPaginator 的pageIndex是从0开始-->
+        <app-paginator
+          [length]="page.TotalRecordCount"
+          [pageSize]="page.PageSize"
+          [pagerCount]="5"
+          [pageIndex]="page.PageIndex - 1"
+          [showFirstLastButtons]="true"
+          (page)="pageEvent($event)"
+        >
+        </app-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

@@ -21,6 +21,10 @@ import { AuditGarbageStationTableComponent } from './audit-garbage-station-table
 import { AuditLogVideoTableComponent } from './audit-log-video-table/audit-log-video-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
 import { DaPuQiaoTableComponents } from './daqupiao/dapuqiao-tables-components';
+import { EventRecordTableGarbageFullComponent } from './event-record/event-record-table-garbage-full/event-record-table-garbage-full.component';
+import { EventRecordTableIllegalDropComponent } from './event-record/event-record-table-illegal-drop/event-record-table-illegal-drop.component';
+import { EventRecordTableMixedIntoComponent } from './event-record/event-record-table-mixed-into/event-record-table-mixed-into.component';
+import { EventRecordTableSewageComponent } from './event-record/event-record-table-sewage/event-record-table-sewage.component';
 import { GarbageDropRecordTableComponent } from './garbage-drop-record-table/garbage-drop-record-table.component';
 import { GarbageDropRecordTaskTableComponent } from './garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageDropStationCountTableComponent } from './garbage-drop-station-count-table/garbage-drop-station-count-table.component';
@@ -35,6 +39,11 @@ import { GarbageVehicleCameraTableComponent } from './garbage-vehicle-camera-tab
 export const Table_COMPONENTS = [
   EventRecordTableComponent,
   EventRecordListComponent,
+  EventRecordTableIllegalDropComponent,
+  EventRecordTableMixedIntoComponent,
+  EventRecordTableGarbageFullComponent,
+  EventRecordTableSewageComponent,
+
   DeviceListTableComponent,
   GarbageDropStationTableComponent,
   GarbageFullStationTableComponent,

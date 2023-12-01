@@ -48,9 +48,7 @@ export class GarbageStationTableBusiness
     let params = new GetGarbageStationsParams();
     params.PageIndex = index;
     params.PageSize = size;
-    if (args.opts) {
-      (params as any)[args.opts.propertyName] = args.opts.text;
-    }
+
     params.DivisionId = divisionId;
     if (args.stationId) {
       params.Ids = [args.stationId];
@@ -64,6 +62,12 @@ export class GarbageStationTableBusiness
         state = state.padEnd(args.state, '0');
         params.StationState = parseInt(state, 2);
       }
+    }
+    params.StationType = args.type;
+    params.CommunityName = args.communityName;
+    params.Name = args.stationName;
+    if (args.opts) {
+      (params as any)[args.opts.propertyName] = args.opts.text;
     }
     return this.stationService.list(params);
   }

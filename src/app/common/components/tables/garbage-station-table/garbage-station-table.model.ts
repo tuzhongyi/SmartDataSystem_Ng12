@@ -1,3 +1,4 @@
+import { StationType } from 'src/app/enum/station-type.enum';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageStationModel } from '../../../../view-model/garbage-station.model';
 
@@ -10,4 +11,7 @@ export class GarbageStationTableArgs {
   stationId?: string;
   divisionId?: string;
   state?: number;
+  type?: StationType;
+  stationName?: string;
+  communityName?: string;
 }

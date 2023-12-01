@@ -45,7 +45,7 @@ export class GarbageStationTableComponent
     this.business = business;
   }
   StationState = StationState;
-  widths = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
+  widths = ['20%', '15%'];
 
   searchOpts?: SearchOptions;
   selected?: GarbageStationTableModel;

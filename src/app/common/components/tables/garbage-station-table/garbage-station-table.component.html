@@ -12,6 +12,7 @@
           <td>社区</td>
           <td>街道</td>
           <td>居委会</td>
+          <td>类型</td>
           <td>状态</td>
           <td class="operation"><div>操作</div></td>
         </tr>
@@ -65,6 +66,7 @@
                   : "-"
               }}
             </td>
+            <td>{{ Language.StationType(item.GarbageStation.StationType) }}</td>
             <td>
               <span
                 [ngClass]="{

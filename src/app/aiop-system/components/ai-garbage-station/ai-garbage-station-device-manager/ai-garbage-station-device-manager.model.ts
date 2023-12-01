@@ -69,7 +69,7 @@ class AIGarbageStationDeviceScheduleWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '500px',
+    width: '520px',
     height: '500px',
   };
   model?: AIGarbageDevice;

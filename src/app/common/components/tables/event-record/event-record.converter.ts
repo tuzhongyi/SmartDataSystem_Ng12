@@ -70,6 +70,8 @@ export class EventRecordConverter
       return this.fromIllegalDrop(source);
     } else if (source instanceof SewageEventRecord) {
       return this.fromSewage(source);
+    } else if (source instanceof MixedIntoEventRecord) {
+      return this.fromMixedInto(source);
     } else {
       return this.fromEventRecord(source);
     }
@@ -159,6 +161,10 @@ export class EventRecordConverter
         }
       }
     }
+
+    model.ProcessorName = source.Data.ProcessorName;
+    model.ProcessTime = source.Data.ProcessTime;
+
     return model;
   }
 
@@ -169,6 +175,15 @@ export class EventRecordConverter
     //     return Medium.img(x.ImageUrl);
     //   });
     // }
+    model.ProcessorName = source.Data.ProcessorName;
+    model.ProcessTime = source.Data.ProcessTime;
+    return model;
+  }
+
+  async fromMixedInto(source: MixedIntoEventRecord) {
+    let model = await this.fromEventRecord(source);
+    model.ProcessorName = source.Data.ProcessorName;
+    model.ProcessTime = source.Data.ProcessTime;
     return model;
   }
 }
