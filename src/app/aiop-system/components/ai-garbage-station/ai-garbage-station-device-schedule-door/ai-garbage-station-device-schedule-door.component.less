@@ -87,3 +87,39 @@ app-time-control {
     }
   }
 }
+
+.week-window {
+
+  &-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+
+    .all {
+      cursor: pointer;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+
+  &-body {
+    padding: 20px 0;
+    height: 70px;
+    box-sizing: content-box;
+
+    &-checkboxs {
+      &>* {
+        margin-right: 10px;
+      }
+    }
+
+  }
+
+  &-foot {
+    display: flex;
+    justify-content: center;
+  }
+}

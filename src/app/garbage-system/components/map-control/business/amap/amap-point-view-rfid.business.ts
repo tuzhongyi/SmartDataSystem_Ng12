@@ -97,6 +97,38 @@ export class AMapPointRfidViewBusiness implements IAMapPointViewBusiness {
       return time ? time < 30 : true;
     };
     this.plugarc(show, query);
+    let in30 = this.amap.source.drop.rfid.filter((x) =>
+      query(x.CurrentGarbageTime)
+    );
+    let stations = this.amap.source.all.filter(
+      (x) => in30.findIndex((y) => y.Id == x.Id) >= 0
+    );
+    this.visibile.emit({
+      datas: stations,
+      show: show,
+    });
+    if (this.display.out30 === false) {
+      if (show) {
+        let out30 = this.amap.source.drop.rfid.filter(
+          (x) => !query(x.CurrentGarbageTime)
+        );
+        stations = this.amap.source.all.filter(
+          (x) => out30.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: false,
+        });
+      } else {
+        stations = this.amap.source.all.filter(
+          (x) => this.amap.source.drop.rfid.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: true,
+        });
+      }
+    }
   }
   async drop30out(show: boolean) {
     this.display.out30 = show;
@@ -104,6 +136,38 @@ export class AMapPointRfidViewBusiness implements IAMapPointViewBusiness {
       return time ? time >= 30 : false;
     };
     this.plugarc(show, query);
+    let out30 = this.amap.source.drop.rfid.filter((x) =>
+      query(x.CurrentGarbageTime)
+    );
+    let stations = this.amap.source.all.filter(
+      (x) => out30.findIndex((y) => y.Id == x.Id) >= 0
+    );
+    this.visibile.emit({
+      datas: stations,
+      show: show,
+    });
+    if (this.display.in30 === false) {
+      if (show) {
+        let in30 = this.amap.source.drop.rfid.filter(
+          (x) => !query(x.CurrentGarbageTime)
+        );
+        stations = this.amap.source.all.filter(
+          (x) => in30.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: false,
+        });
+      } else {
+        stations = this.amap.source.all.filter(
+          (x) => this.amap.source.drop.rfid.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: true,
+        });
+      }
+    }
   }
 
   private async plugarc(show: boolean, query: (time?: number) => boolean) {

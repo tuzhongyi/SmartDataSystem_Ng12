@@ -1,17 +1,12 @@
 <div class="door" *ngIf="!!models">
   <div class="door-week">
-    <common-label-select
-      [autoclose]="true"
-      [selectedNodes]="selection.selecteds"
-    >
-      <ai-garbage-station-week-list
-        #tree
-        [selecteds]="selection.selecteds"
-        (selectedsChange)="selection.onselect($event)"
-      ></ai-garbage-station-week-list>
-    </common-label-select>
-    <div class="panel" (click)="onsync()">
-      <i class="howell-icon-refresh"></i> 同步
+    <select [(ngModel)]="week">
+      <option [ngValue]="item" *ngFor="let item of weeks">
+        {{ Language.Week(item) }}
+      </option>
+    </select>
+    <div class="panel" (click)="tocopy()">
+      <i class="mdi mdi-content-copy"></i> 复制
     </div>
   </div>
   <div
@@ -39,3 +34,38 @@
     <i class="howell-icon-plus"></i> 添加
   </div>
 </div>
+
+<app-window
+  *ngIf="window.show"
+  [style]="window.style"
+  [Model]="window"
+  [CloseButton]="false"
+>
+  <div class="week-window">
+    <div class="week-window-head">
+      <div class="hw-simple-title">复制到……</div>
+      <div class="all" (click)="onall()">全选</div>
+    </div>
+    <div class="week-window-body">
+      <div class="week-window-body-checkboxs">
+        <mat-checkbox
+          [checked]="window.weeks.includes(item)"
+          [indeterminate]="window.current === item"
+          [disabled]="window.current === item"
+          *ngFor="let item of weeks"
+          (change)="onweek(item)"
+          >{{ Language.Week(item) }}</mat-checkbox
+        >
+      </div>
+      <div class="week-window-body-controls"></div>
+    </div>
+    <div class="week-window-foot">
+      <button class="hw-green-btn" (click)="oncopy()">
+        <i class="mdi mdi-content-copy"></i> 复制
+      </button>
+      <button class="hw-gray-btn" (click)="window.show = false">
+        <i class="howell-icon-Close"></i> 取消
+      </button>
+    </div>
+  </div>
+</app-window>

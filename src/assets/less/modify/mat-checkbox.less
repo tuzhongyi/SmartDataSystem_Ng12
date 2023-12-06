@@ -11,6 +11,14 @@
       color: #cfd7ff;
     }
   }
+
+  &.mat-checkbox-disabled {
+    .mat-checkbox-layout {
+      .mat-checkbox-label {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+  }
 }
 
 .mat-checkbox {
@@ -18,6 +26,7 @@
 
   label.mat-checkbox-layout {
     width: 100%;
+    align-items: center;
 
     .mat-checkbox-inner-container {
       margin: 0;

@@ -72,6 +72,12 @@ export class MapControlButtons2Component implements OnInit {
         this.model.construction.selected = !x;
       }
     });
+    this.model.station.all.select.subscribe((x) => {
+      if (x) {
+        this.model.station.drop30in.selected = false;
+        this.model.station.drop30out.selected = false;
+      }
+    });
     this.model.station.normal.select.subscribe(this.stationnormal);
     this.model.station.full.select.subscribe(this.stationfull);
     this.model.station.drop.select.subscribe(this.stationdrop);
@@ -84,6 +90,12 @@ export class MapControlButtons2Component implements OnInit {
       if (x) {
         this.model.station.selected = !x;
         this.model.construction.selected = !x;
+      }
+    });
+    this.model.rfid.all.select.subscribe((x) => {
+      if (x) {
+        this.model.station.drop30in.selected = false;
+        this.model.station.drop30out.selected = false;
       }
     });
     this.model.rfid.normal.select.subscribe(this.rfidnormal);

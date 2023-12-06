@@ -1,4 +1,5 @@
 import { EventEmitter } from '@angular/core';
+import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { IIdNameModel } from 'src/app/network/model/model.interface';
 
 export class WeekSelection {
@@ -12,4 +13,12 @@ export class WeekSelection {
     this.selecteds = nodes;
     this.select.emit(this.selecteds);
   }
+}
+export class WeekSelectionWindow extends WindowViewModel {
+  style = {
+    width: '300px',
+    height: 'auto',
+  };
+  current: number = 0;
+  weeks: number[] = [];
 }

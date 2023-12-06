@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
-import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
+import { Language } from 'src/app/common/tools/language';
 import { DropWindow } from 'src/app/network/model/garbage-station/drop-window.model';
 import {
   AIGarbageDayTimeSegmentModel,
   AIGarbageTimeSegmentModel,
 } from '../ai-garbage-station-device-schedule/ai-garbage-station-device-schedule.model';
-import { WeekSelection } from './ai-garbage-station-device-schedule-door.model';
+import { WeekSelectionWindow } from './ai-garbage-station-device-schedule-door.model';
 
 @Component({
   selector: 'ai-garbage-station-device-schedule-door',
@@ -19,25 +19,22 @@ export class AiGarbageStationDeviceScheduleDoorComponent implements OnInit {
   @Input() models?: AIGarbageDayTimeSegmentModel[];
   @Output() modelsChange: EventEmitter<AIGarbageDayTimeSegmentModel[]> =
     new EventEmitter();
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService) {
+    this.weeks = [0, 1, 2, 3, 4, 5, 6];
+  }
   week: number = 0;
-
-  SelectStrategy = SelectStrategy;
-  selection = new WeekSelection();
+  weeks: number[] = [];
+  Language = Language;
+  window = new WeekSelectionWindow();
   ngOnInit(): void {
     if (!this.models || this.models.length === 0) {
       this.models = [];
-      for (let i = 0; i < 7; i++) {
+      for (let i = 0; i < this.weeks.length; i++) {
         let week = new AIGarbageDayTimeSegmentModel();
-        week.Day = i;
+        week.Day = this.weeks[i];
         this.models.push(week);
       }
     }
-    this.selection.select.subscribe((x) => {
-      if (x && x.length > 0) {
-        this.week = parseInt(x[0].Id);
-      }
-    });
   }
   onremove(index: number) {
     if (this.models) {
@@ -57,18 +54,39 @@ export class AiGarbageStationDeviceScheduleDoorComponent implements OnInit {
       this.modelsChange.emit(this.models);
     }
   }
-  onsync() {
+  tocopy() {
+    this.window.current = this.week;
+    this.window.show = true;
+  }
+  onall() {
+    this.window.weeks = [];
+    for (let i = 0; i < this.weeks.length; i++) {
+      const week = this.weeks[i];
+      if (week === this.week) continue;
+      this.window.weeks.push(week);
+    }
+  }
+  onweek(week: number) {
+    let index = this.window.weeks.indexOf(week);
+    if (index < 0) {
+      this.window.weeks.push(week);
+    } else {
+      this.window.weeks.splice(index, 1);
+    }
+  }
+  oncopy() {
     if (this.models) {
       let current = this.models[this.week].Segments;
       let success = false;
-      for (let i = 0; i < this.selection.selecteds.length; i++) {
-        let week = parseInt(this.selection.selecteds[i].Id);
+      for (let i = 0; i < this.window.weeks.length; i++) {
+        let week = this.window.weeks[i];
         if (week === this.week) continue;
         this.models[week].Segments = current;
         success = true;
       }
       if (success) {
-        this.toastr.success('同步成功');
+        this.toastr.success('复制成功');
+        this.window.show = false;
       }
     }
   }

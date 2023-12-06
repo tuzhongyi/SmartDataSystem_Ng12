@@ -49,7 +49,7 @@ class AIGarbageStationDeviceCommandWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '400px',
+    width: '600px',
     height: 'auto',
   };
   model?: AIGarbageDevice;
@@ -69,7 +69,7 @@ class AIGarbageStationDeviceScheduleWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '520px',
+    width: '600px',
     height: '500px',
   };
   model?: AIGarbageDevice;
@@ -79,7 +79,7 @@ class AIGarbageStationDeviceCameraWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '500px',
+    width: '600px',
     height: 'auto',
   };
   language: string = '';
@@ -112,7 +112,7 @@ class AIGarbageStationDeviceStatusWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '400px',
+    width: '600px',
     height: 'auto',
   };
   model?: AIGarbageDevice;

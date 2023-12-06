@@ -85,11 +85,6 @@ export class AMapPointStationViewBusiness implements IAMapPointViewBusiness {
       let flags = new Flags(x.StationState);
       return flags.contains(StationState.Error);
     });
-
-    this.visibile.emit({
-      datas: stations,
-      show: show,
-    });
     this.visibile.emit({
       datas: stations,
       show: show,
@@ -102,6 +97,39 @@ export class AMapPointStationViewBusiness implements IAMapPointViewBusiness {
       return time ? time < 30 : true;
     };
     this.plugarc(show, query);
+    let in30 = this.amap.source.drop.garbage.filter((x) =>
+      query(x.CurrentGarbageTime)
+    );
+    let stations = this.amap.source.all.filter(
+      (x) => in30.findIndex((y) => y.Id == x.Id) >= 0
+    );
+    this.visibile.emit({
+      datas: stations,
+      show: show,
+    });
+    if (this.display.out30 === false) {
+      if (show) {
+        let out30 = this.amap.source.drop.garbage.filter(
+          (x) => !query(x.CurrentGarbageTime)
+        );
+        stations = this.amap.source.all.filter(
+          (x) => out30.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: false,
+        });
+      } else {
+        stations = this.amap.source.all.filter(
+          (x) =>
+            this.amap.source.drop.garbage.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: true,
+        });
+      }
+    }
   }
   async drop30out(show: boolean) {
     this.display.out30 = show;
@@ -109,6 +137,39 @@ export class AMapPointStationViewBusiness implements IAMapPointViewBusiness {
       return time ? time >= 30 : false;
     };
     this.plugarc(show, query);
+    let out30 = this.amap.source.drop.garbage.filter((x) =>
+      query(x.CurrentGarbageTime)
+    );
+    let stations = this.amap.source.all.filter(
+      (x) => out30.findIndex((y) => y.Id == x.Id) >= 0
+    );
+    this.visibile.emit({
+      datas: stations,
+      show: show,
+    });
+    if (this.display.in30 === false) {
+      if (show) {
+        let in30 = this.amap.source.drop.garbage.filter(
+          (x) => !query(x.CurrentGarbageTime)
+        );
+        stations = this.amap.source.all.filter(
+          (x) => in30.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: false,
+        });
+      } else {
+        stations = this.amap.source.all.filter(
+          (x) =>
+            this.amap.source.drop.garbage.findIndex((y) => y.Id == x.Id) >= 0
+        );
+        this.visibile.emit({
+          datas: stations,
+          show: true,
+        });
+      }
+    }
   }
 
   private async plugarc(show: boolean, query: (time?: number) => boolean) {
@@ -126,11 +187,13 @@ export class AMapPointStationViewBusiness implements IAMapPointViewBusiness {
       await this.plug.ace.clear(surplus);
       await this.plug.ace.set(drops);
       this.plug.ace.show();
+      return drops;
     } else {
       let drops = this.amap.source.plug.garbage.filter((x) =>
         query(x.CurrentGarbageTime)
       );
       await this.plug.ace.clear(drops);
+      return drops;
     }
   }
 }
