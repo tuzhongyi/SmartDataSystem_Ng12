@@ -13,5 +13,6 @@ export class AIGarbageSchedule implements IModel {
   @Transform(transformTime)
   SprayTimes?: Time[];
   /**	DayTimeSegment[]	感应开门周工作表	O */
+  @Type(() => AIGarbageDayTimeSegment)
   DoorOpenTimes?: AIGarbageDayTimeSegment[];
 }

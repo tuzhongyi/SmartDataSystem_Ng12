@@ -27,7 +27,28 @@ app-time-control {
 
   &-week {
     padding: 5px;
-    margin: 5px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .panel {
+      width: 85px;
+      height: 34px;
+      margin-left: 5px;
+
+      &:hover {
+        background-color: #4a8eff;
+
+        color: white;
+      }
+    }
+
+    ::ng-deep {
+      .label-select .label-select-header .placeholder {
+        left: 5px;
+      }
+    }
   }
 
 

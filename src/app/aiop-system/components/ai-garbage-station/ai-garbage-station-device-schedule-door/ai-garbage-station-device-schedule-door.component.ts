@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { DropWindow } from 'src/app/network/model/garbage-station/drop-window.model';
@@ -6,7 +7,7 @@ import {
   AIGarbageDayTimeSegmentModel,
   AIGarbageTimeSegmentModel,
 } from '../ai-garbage-station-device-schedule/ai-garbage-station-device-schedule.model';
-import { DropWindowSelection } from './ai-garbage-station-device-schedule-door.model';
+import { WeekSelection } from './ai-garbage-station-device-schedule-door.model';
 
 @Component({
   selector: 'ai-garbage-station-device-schedule-door',
@@ -18,11 +19,11 @@ export class AiGarbageStationDeviceScheduleDoorComponent implements OnInit {
   @Input() models?: AIGarbageDayTimeSegmentModel[];
   @Output() modelsChange: EventEmitter<AIGarbageDayTimeSegmentModel[]> =
     new EventEmitter();
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
   week: number = 0;
 
   SelectStrategy = SelectStrategy;
-  selection = new DropWindowSelection();
+  selection = new WeekSelection();
   ngOnInit(): void {
     if (!this.models || this.models.length === 0) {
       this.models = [];
@@ -32,6 +33,11 @@ export class AiGarbageStationDeviceScheduleDoorComponent implements OnInit {
         this.models.push(week);
       }
     }
+    this.selection.select.subscribe((x) => {
+      if (x && x.length > 0) {
+        this.week = parseInt(x[0].Id);
+      }
+    });
   }
   onremove(index: number) {
     if (this.models) {
@@ -49,6 +55,21 @@ export class AiGarbageStationDeviceScheduleDoorComponent implements OnInit {
       _new.StopTime = new TimeModel(16, 0, 0);
       this.models[this.week].Segments?.push(_new);
       this.modelsChange.emit(this.models);
+    }
+  }
+  onsync() {
+    if (this.models) {
+      let current = this.models[this.week].Segments;
+      let success = false;
+      for (let i = 0; i < this.selection.selecteds.length; i++) {
+        let week = parseInt(this.selection.selecteds[i].Id);
+        if (week === this.week) continue;
+        this.models[week].Segments = current;
+        success = true;
+      }
+      if (success) {
+        this.toastr.success('同步成功');
+      }
     }
   }
 }

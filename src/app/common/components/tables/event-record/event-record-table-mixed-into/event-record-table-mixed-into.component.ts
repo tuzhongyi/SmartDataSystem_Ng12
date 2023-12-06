@@ -44,12 +44,12 @@ export class EventRecordTableMixedIntoComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
-  widths = new Array(9);
+  widths = new Array(10);
 
   selected?: EventRecordViewModel;
 
   async ngOnInit() {
-    this.widths[5] = '210px';
+    this.widths[6] = '210px';
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {

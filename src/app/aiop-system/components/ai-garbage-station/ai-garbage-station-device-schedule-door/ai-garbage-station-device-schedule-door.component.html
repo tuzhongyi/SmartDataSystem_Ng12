@@ -1,14 +1,18 @@
 <div class="door" *ngIf="!!models">
   <div class="door-week">
-    <select [(ngModel)]="week">
-      <option [ngValue]="0">周日</option>
-      <option [ngValue]="1">周一</option>
-      <option [ngValue]="2">周二</option>
-      <option [ngValue]="3">周三</option>
-      <option [ngValue]="4">周四</option>
-      <option [ngValue]="5">周五</option>
-      <option [ngValue]="6">周六</option>
-    </select>
+    <common-label-select
+      [autoclose]="true"
+      [selectedNodes]="selection.selecteds"
+    >
+      <ai-garbage-station-week-list
+        #tree
+        [selecteds]="selection.selecteds"
+        (selectedsChange)="selection.onselect($event)"
+      ></ai-garbage-station-week-list>
+    </common-label-select>
+    <div class="panel" (click)="onsync()">
+      <i class="howell-icon-refresh"></i> 同步
+    </div>
   </div>
   <div
     class="panel door-item"

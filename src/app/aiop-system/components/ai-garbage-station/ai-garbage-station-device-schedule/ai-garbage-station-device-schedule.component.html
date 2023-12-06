@@ -55,55 +55,6 @@
       [(models)]="schedule.DoorOpenTimes"
     >
     </ai-garbage-station-device-schedule-door>
-    <!-- <div class="fan" *ngIf="type === ScheduleType.fan">
-      <div
-        class="panel fan-item"
-        *ngFor="let item of schedule.ExhaustFanTimeSegments; let i = index"
-      >
-        <div class="time">
-          <div>{{ i + 1 }}：</div>
-          <app-time-control
-            [(time)]="item.StartTime"
-            [endTime]="item.StopTime"
-          ></app-time-control>
-          -
-          <app-time-control
-            [(time)]="item.StopTime"
-            [beginTime]="item.StartTime"
-          ></app-time-control>
-        </div>
-        <div (click)="onremove(i)">
-          <i class="howell-icon-delete-bin td-icon"></i>
-        </div>
-      </div>
-
-      <div class="panel plus" (click)="oncreate()">
-        <i class="howell-icon-plus"></i> 添加
-      </div>
-    </div> -->
-    <!-- <div
-      class="spray"
-      *ngIf="type === ScheduleType.spray && !!schedule.SprayTimes"
-    >
-      <div
-        class="panel spray-item"
-        *ngFor="let item of schedule.SprayTimes; let i = index"
-      >
-        <div class="time">
-          <div>{{ i + 1 }}：</div>
-          <app-time-control
-            [(time)]="schedule.SprayTimes[i]"
-          ></app-time-control>
-        </div>
-        <div (click)="onremove(i)">
-          <i class="howell-icon-delete-bin td-icon"></i>
-        </div>
-      </div>
-
-      <div class="panel plus" (click)="oncreate()">
-        <i class="howell-icon-plus"></i> 添加
-      </div>
-    </div> -->
   </div>
   <div class="ai-garbage-station-device-schedule-foot">
     <button class="hw-green-btn m-r-10" (click)="onupdate()">

@@ -14,6 +14,7 @@
       <thead>
         <tr>
           <th>图片</th>
+          <th>资源名称</th>
           <th>投放点</th>
           <th>社区</th>
           <th>街道</th>
@@ -52,6 +53,9 @@
             </td>
             <td>
               {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+            </td>
+            <td>
+              {{ item.ResourceName }}
             </td>
             <td>
               {{
