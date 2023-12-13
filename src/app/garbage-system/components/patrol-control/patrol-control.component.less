@@ -1,5 +1,5 @@
 .patrol-control {
-  width: calc(100% - 20px);
+  width: calc(100%);
   height: calc(100%);
   padding: 0 10px;
   color: white;
@@ -41,6 +41,18 @@
       justify-content: end;
       font-size: 18px;
 
+      select {
+        border: none;
+        background-color: transparent;
+        width: auto;
+        min-width: auto;
+
+        option {
+          background-color: #0e0737;
+          height: 50px;
+        }
+      }
+
       &>div {
         margin-left: 10px;
         cursor: pointer;
@@ -57,8 +69,6 @@
           width: 74px;
         }
       }
-
-
     }
   }
 
@@ -100,6 +110,7 @@
         &.center {
           width: 50px;
           height: 50px;
+          font-size: 32px;
         }
 
         &:hover {

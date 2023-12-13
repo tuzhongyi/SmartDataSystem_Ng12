@@ -12,18 +12,15 @@
     align-items: center;
     justify-content: space-between;
 
-    &>span {
-      width: 72px;
+    &-title {
       margin-right: 5px;
       color: #cfd7ff;
       font-size: 18px;
+      flex-grow: 0;
     }
 
-    &>input,
-    &>.input,
-    &>select,
-    &>button {
-      width: calc(100% - 72px);
+    &-value {
+      flex-grow: 1;
     }
 
     &>input {
@@ -66,26 +63,7 @@
       align-items: center;
     }
 
-    .list-type-select {
-      border: 1px solid #5e6ebf;
-      font-size: 18px;
-      height: 32px;
-      width: 250px;
 
-      ::ng-deep .select-item {
-        .select-head {
-          justify-content: space-between;
-        }
-
-        .select-body {
-          left: -1px;
-
-          .select-option {
-            max-width: 100%;
-          }
-        }
-      }
-    }
   }
 
 

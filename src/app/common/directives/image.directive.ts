@@ -15,6 +15,7 @@ export class ImageDirective implements OnInit, OnChanges {
   url?: string | null;
   @Input()
   directiveClass = 'directive-image';
+  @Input() default = '/assets/img/timg-pic.jpg';
 
   constructor(e: ElementRef) {
     this.ele = e.nativeElement;
@@ -28,6 +29,9 @@ export class ImageDirective implements OnInit, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
       this.ele.style.backgroundImage = `url(${this.url})`;
+      setTimeout(() => {
+        this.ele.style.backgroundImage = `url(${this.url}), url(${this.default})`;
+      }, 1000);
     }
   }
   private ele: HTMLElement;

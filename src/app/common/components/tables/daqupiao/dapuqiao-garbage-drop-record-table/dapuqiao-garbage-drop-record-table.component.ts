@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
@@ -31,6 +39,23 @@ export class DapuqiaoGarbageDropRecordTableComponent
   @Input() business: IBusiness<IModel, PagedList<GarbageDropEventRecordModel>>;
   @Input() args = new DapuqiaoGarbageDropRecordTableArgs();
   @Input() load?: EventEmitter<DapuqiaoGarbageDropRecordTableArgs>;
+
+  @Output() process: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs> = new EventEmitter();
+  @Output() details: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+  @Output() picture: EventEmitter<GarbageDropEventRecordModel> =
+    new EventEmitter();
+
+  constructor(business: DaPuQiaoGarbageDropRecordTableBusiness) {
+    super();
+    this.business = business;
+    this.pageSize = 9;
+  }
+
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+  Language = Language;
   widths = [
     undefined,
     undefined,
@@ -50,22 +75,6 @@ export class DapuqiaoGarbageDropRecordTableComponent
     undefined,
     '100px',
   ];
-
-  @Output() process: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-  @Output() image: EventEmitter<PagedArgs> = new EventEmitter();
-  @Output() details: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-  @Output() picture: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-
-  constructor(business: DaPuQiaoGarbageDropRecordTableBusiness) {
-    super();
-    this.business = business;
-    this.pageSize = 9;
-  }
-
-  Language = Language;
 
   ngOnInit(): void {
     if (this.load) {

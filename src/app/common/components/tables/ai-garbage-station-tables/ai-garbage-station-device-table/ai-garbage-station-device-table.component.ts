@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
@@ -61,6 +69,7 @@ export class AIGarbageStationDeviceTableComponent
     super();
     this.pageSize = 10;
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   Command = AIGarbageDeviceCommandNo;
   widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
   DeviceState = AIGarbageDeviceState;

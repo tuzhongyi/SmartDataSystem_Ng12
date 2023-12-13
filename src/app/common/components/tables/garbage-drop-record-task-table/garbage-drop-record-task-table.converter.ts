@@ -66,7 +66,9 @@ export class GarbageDropRecordTaskTableConverter {
       model.unhandle = model.count - GarbageDropHandleCount;
       model.ratio = '100%';
       let ratio = (GarbageDropHandleCount / model.count) * 100;
-      if (!Number.isNaN(ratio)) model.ratio = ratio.toFixed(2) + '%';
+      if (!Number.isNaN(ratio)) {
+        model.ratio = ratio.toFixed(ratio === 100 ? 0 : 2) + '%';
+      }
     }
     return model;
   }

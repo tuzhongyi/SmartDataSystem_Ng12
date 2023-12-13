@@ -2,18 +2,15 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
-import { timer } from 'rxjs';
 import {
   ImageVideoControlModel,
   PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
+import { Enum } from 'src/app/enum/enum-helper';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
@@ -21,6 +18,7 @@ import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { PatrolControlBusiness } from './patrol-control.business';
 import {
   PatrolControlConfig,
+  PatrolControlInterval,
   PatrolControlModel,
   PatrolIntervalControl,
 } from './patrol-control.model';
@@ -32,7 +30,7 @@ import { PlaybackConfigWindowViewModel } from './playback-config-window.model';
   styleUrls: ['./patrol-control.component.less'],
   providers: [PatrolControlBusiness],
 })
-export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
+export class PatrolControlComponent implements OnInit, OnDestroy {
   @Input() load?: EventEmitter<void>;
   @Input() toselect?: EventEmitter<number>;
   @Input() config: PatrolControlConfig = new PatrolControlConfig();
@@ -42,16 +40,6 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   @Output() onselected: EventEmitter<PatrolControlModel> = new EventEmitter();
 
   constructor(private business: PatrolControlBusiness) {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.config) {
-      if (this.config.autoplay) {
-        this.run();
-      } else {
-        this.stop();
-      }
-    }
-  }
 
   OnlineStatus = OnlineStatus;
   selected?: PatrolControlModel;
@@ -64,11 +52,7 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   change: EventEmitter<ImageVideoControlModel[]> = new EventEmitter();
 
   async ngOnInit() {
-    for (let i = 1; i <= 4; i++) {
-      let time = 30 * i;
-      let item = new SelectItem(time.toString(), time, time + 's');
-      this.interval.times.push(item);
-    }
+    this.init();
 
     this.business.manualCaptureEvent.subscribe((x) => {
       this.captureing = x;
@@ -102,14 +86,35 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
     this.interval.runing = false;
   }
 
+  init() {
+    this.initInterval();
+    this.initConfig();
+    this.subscribe();
+  }
+  initInterval() {
+    let _enum = new Enum(PatrolControlInterval);
+    console.log(_enum.getValues());
+    this.interval.times = _enum.getValues().map((x) => parseInt(x));
+    this.interval.time = PatrolControlInterval.s30;
+  }
+  initConfig() {
+    if (this.config.autoplay) {
+      this.run();
+    } else {
+      this.stop();
+    }
+  }
+  subscribe() {
+    this.interval.trigger.subscribe((x) => {
+      this.next(true);
+    });
+  }
   async loadData(index: number) {
     let paged = await this.business.load(index);
     this.selected = paged.Data;
     this.page = paged.Page;
     this.onselected.emit(this.selected);
-    timer(0).subscribe((x) => {
-      this.onreflush();
-    });
+    this.onreflush();
   }
 
   async prev(event?: Event) {
@@ -154,21 +159,14 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   run() {
-    this.interval.runing = true;
-    this.interval.handle = setInterval(() => {
-      this.next(true);
-    }, this.interval.time * 1000);
+    this.interval.run();
   }
   stop() {
-    this.interval.runing = false;
-    if (this.interval.handle) {
-      clearInterval(this.interval.handle);
-    }
+    this.interval.stop();
   }
 
-  timeSelect(item: SelectItem) {
+  timeSelect() {
     if (this.config.autoplay) {
-      this.interval.time = item.value;
       this.stop();
       this.run();
     }
@@ -180,10 +178,14 @@ export class PatrolControlComponent implements OnInit, OnChanges, OnDestroy {
 
   onvideoplayed(video: ImageVideoControlModel) {
     this.playing = video;
+    this.stop();
   }
   onvideostoped(video: ImageVideoControlModel) {
     if (this.playing) {
       this.playing = undefined;
+      if (this.config.autoplay) {
+        this.interval.run();
+      }
     }
   }
 

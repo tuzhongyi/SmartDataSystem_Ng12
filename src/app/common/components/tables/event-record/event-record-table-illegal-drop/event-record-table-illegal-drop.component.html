@@ -2,7 +2,7 @@
   <!-- <div class="event-record-table-header">
         <div>
             <div>导航</div>
-            <button (click)="show=!show">显示 </button>
+            <div (click)="show=!show">显示 </div>
         </div>
         <div *ngIf="show">hshdfh</div>
     </div> -->
@@ -24,7 +24,11 @@
         </tr>
       </thead>
     </table>
-    <div class="event-record-table-main-body body">
+    <div
+      class="event-record-table-main-body body"
+      #body
+      [ngClass]="{ full: page && page.RecordCount === pageSize }"
+    >
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
@@ -37,6 +41,9 @@
               selected: selected === item
             }"
             (click)="onselect(item)"
+            [ngStyle]="{
+              height: tr_height
+            }"
           >
             <td>
               <div class="img-list">
@@ -81,26 +88,28 @@
             </td>
             <td>{{ item.DateFormatter }}</td>
             <td class="center">
-              <div>
-                <button
+              <div class="operation center">
+                <div
                   class="icon-button"
                   title="播放视频"
                   (click)="playvideo($event, item)"
                 >
-                  <i class="howell-icon-video"></i></button
-                ><button
+                  <i class="howell-icon-video"></i>
+                </div>
+                <div
                   class="icon-button"
                   title="下载图片"
                   (click)="onDownloadImage(item)"
                 >
-                  <i class="howell-icon-picturedownload"></i></button
-                ><button
+                  <i class="howell-icon-picturedownload"></i>
+                </div>
+                <div
                   class="icon-button"
                   title="下载视频"
                   (click)="onDownloadVideo(item)"
                 >
                   <i class="howell-icon-videodownload"></i>
-                </button>
+                </div>
               </div>
             </td>
           </tr>

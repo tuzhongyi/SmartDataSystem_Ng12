@@ -40,7 +40,7 @@ export class EventRecordListItemConverter
     model.time = source.EventTime;
     model.station = source.GarbageStation;
     if (model.station && model.station.DivisionId) {
-      model.parent = await this.service.get(model.station.DivisionId);
+      model.parent = await this.service.cache.get(model.station.DivisionId);
     }
     model.img = Medium.img(source.ImageUrl);
 

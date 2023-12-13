@@ -109,9 +109,7 @@ export class DivisionTreeComponent
   private _resourceType: DivisionType = DivisionType.City;
   @Input()
   set resourceType(type: DivisionType) {
-    if (type !== DivisionType.None) {
-      this._resourceType = type;
-    }
+    this._resourceType = type;
   }
   get resourceType() {
     return this._resourceType;

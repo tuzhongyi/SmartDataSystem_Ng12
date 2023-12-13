@@ -1,13 +1,17 @@
 <div class="image-video-mult-control" #element>
-  <ng-container *ngFor="let item of models">
+  <ng-container *ngFor="let item of models; let i = index">
     <div
       class="item"
+      [ngClass]="{
+        selected: playing.indexOf(item) >= 0
+      }"
       [ngStyle]="{ width: 100 / sqrt + '%', height: 100 / sqrt + '%' }"
     >
       <app-image-video-control
         [ngClass]="{
           fulled: item.fulled
         }"
+        [index]="i"
         [model]="item"
         [(fulled)]="item.fulled"
         [is_playback_use_config]="is_playback_use_config"

@@ -49,9 +49,9 @@ export class DaPuQiaoGarbageDropRecordTableBusiness
     if (args.stationId) {
       params.StationIds = [args.stationId];
     }
-    if (args.level !== undefined) {
-      params.Level = args.level;
-    }
+    // if (args.level !== undefined) {
+    //   params.Level = args.level;
+    // }
     if (args.supervised !== undefined) {
       params.SupervisedState = args.supervised ? 1 : 0;
     }

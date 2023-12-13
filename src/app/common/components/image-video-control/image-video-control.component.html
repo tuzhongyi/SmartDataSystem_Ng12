@@ -12,8 +12,9 @@
     <app-video-player
       [stop]="stop"
       [play]="videoPlay"
+      [index]="index"
       (destroy)="onVideoDestroy($event)"
-      (onStoping)="tostop()"
+      (onStoping)="tostop($event)"
     >
     </app-video-player>
   </div>

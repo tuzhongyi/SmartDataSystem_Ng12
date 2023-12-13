@@ -1,11 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -54,6 +56,7 @@ export class GarbageDropRecordTableComponent
     this.business = record;
     this.filter = new GarbageDropRecordFilter();
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
 
   widths = [
     '12%',

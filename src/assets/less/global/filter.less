@@ -27,12 +27,24 @@
       flex-grow: 0;
       color: #cfd7ff;
       font-size: 18px;
-      margin-right: 10px;
+      margin-right: 5px;
       white-space: nowrap;
     }
 
     &-value {
       flex-grow: 1;
+
+      &.tree {
+        width: 300px;
+
+        ::ng-deep {
+
+          .mat-tree .mat-tree-node>div,
+          .mat-tree .mat-nested-tree-node>div {
+            font-style: 16px;
+          }
+        }
+      }
     }
   }
 }

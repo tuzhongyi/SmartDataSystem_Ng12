@@ -1,7 +1,8 @@
 <div class="event-record-filter">
   <div class="filter-item">
-    <span>开始时间</span>
+    <div class="filter-item-title">开始时间</div>
     <input
+      class="filter-item-value"
       type="text"
       DateTimePicker
       [format]="'yyyy年MM月dd日 HH:mm'"
@@ -12,8 +13,9 @@
     />
   </div>
   <div class="filter-item">
-    <span>结束时间</span>
+    <div class="filter-item-title">结束时间</div>
     <input
+      class="filter-item-value"
       type="text"
       DateTimePicker
       [format]="'yyyy年MM月dd日 HH:mm'"
@@ -24,7 +26,7 @@
     />
   </div>
   <div class="filter-item select">
-    <span>行政区</span>
+    <div class="filter-item-title">行政区</div>
     <!-- <app-select-control
       class="division-select input"
       [data]="model.divisions"
@@ -41,25 +43,53 @@
     ></app-select-control> -->
 
     <level-division-panel
-      class="list-type-select"
+      class="filter-item-value list-type-select"
       (selectedChange)="ondivision($event)"
     >
     </level-division-panel>
   </div>
   <div class="filter-item">
-    <span>投放点</span>
-    <app-select-control
+    <div class="filter-item-title">投放点</div>
+
+    <hw-select
+      class="filter-item-value"
+      [(selected)]="filter.station"
+      [cannull]="true"
+    >
+      <select
+        #element
+        class="list-type-select"
+        [(ngModel)]="filter.station"
+        (change)="onstation()"
+      >
+        <option [ngValue]="item" *ngFor="let item of model.stations">
+          {{ item.Name }}
+        </option>
+      </select>
+    </hw-select>
+    <!-- <app-select-control
       class="list-type-select"
       [data]="model.stations"
       (selectedChange)="onstation($event)"
-    ></app-select-control>
+    ></app-select-control> -->
   </div>
   <div class="filter-item">
-    <span>摄像机</span>
-    <app-select-control
-      class="list-type-select"
-      [data]="model.cameras"
-      (selectedChange)="oncamera($event)"
-    ></app-select-control>
+    <div class="filter-item-title">摄像机</div>
+    <hw-select
+      class="filter-item-value"
+      [(selected)]="filter.camera"
+      [cannull]="true"
+    >
+      <select
+        #element
+        class="list-type-select"
+        [(ngModel)]="filter.camera"
+        (change)="oncamera()"
+      >
+        <option [ngValue]="item" *ngFor="let item of model.cameras">
+          {{ item.Name }}
+        </option>
+      </select>
+    </hw-select>
   </div>
 </div>

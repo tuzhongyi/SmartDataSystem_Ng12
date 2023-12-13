@@ -234,6 +234,26 @@ table {
 
 .body {
   overflow-y: auto;
+
+  &.full {
+    table {
+      height: 100%;
+
+      tr {
+        height: unset;
+
+        td {
+          .img-list {
+            .img {
+              img {
+                height: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .loading {

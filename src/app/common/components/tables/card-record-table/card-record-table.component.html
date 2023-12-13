@@ -19,13 +19,22 @@
         </tr>
       </thead>
     </table>
-    <div class="body">
+    <div
+      class="body"
+      #body
+      [ngClass]="{ full: page && page.RecordCount === pageSize }"
+    >
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <colgroup>
           <col *ngFor="let width of widths" [style.width]="width" />
         </colgroup>
         <tbody>
-          <tr *ngFor="let item of datas; let i = index">
+          <tr
+            *ngFor="let item of datas; let i = index"
+            [ngStyle]="{
+              height: tr_height
+            }"
+          >
             <td>{{ item.GarbageStationName }}</td>
             <td>{{ item.RegionName }}</td>
             <td>{{ item.BuildingNo }}</td>

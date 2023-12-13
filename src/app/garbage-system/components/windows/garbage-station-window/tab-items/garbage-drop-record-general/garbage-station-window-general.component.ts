@@ -31,7 +31,6 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
 
   units: SelectItem[] = [];
   unit: TimeUnit = TimeUnit.Day;
-  unitSelected?: SelectItem;
   date: Date = new Date();
   treeAlign = HorizontalAlign.left;
   division?: Division;
@@ -49,16 +48,14 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     this.units.push(
       new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
-    this.unitSelected = this.units[0];
+    this.unit = TimeUnit.Hour;
   }
 
   ngOnInit(): void {
     this.initUnits();
   }
 
-  ontimeunit(unit: SelectItem) {
-    this.unit = unit.value;
-    this.unitSelected = unit;
+  ontimeunit() {
     switch (this.unit) {
       case TimeUnit.Week:
         this.dateTimePickerConfig.view = DateTimePickerView.month;
@@ -111,8 +108,8 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
 
     title += ' 投放点';
 
-    if (this.unitSelected) {
-      title += ' ' + this.unitSelected.Name;
+    if (this.unit) {
+      title += ' ' + Language.TimeUnit(this.unit);
     }
     return title;
   }

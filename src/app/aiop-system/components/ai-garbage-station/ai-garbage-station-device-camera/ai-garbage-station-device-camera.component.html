@@ -1,7 +1,7 @@
 <div class="ai-garbage-station-device-camera" *ngIf="!!model">
   <div class="ai-garbage-station-device-camera-head">
     <div class="title">
-      <div class="hw-simple-title">{{ model.GarbageStationName }}摄像机</div>
+      <div class="hw-simple-title">{{ model.Name }}摄像机</div>
     </div>
     <ul class="hw-ul" *ngIf="model.Cameras" WheelHorizontalScroll>
       <li *ngFor="let item of model.Cameras">

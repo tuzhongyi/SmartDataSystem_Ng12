@@ -1,11 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnChanges,
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -56,6 +58,9 @@ export class GarbageDropStationCountTableComponent
     super();
     this.business = business;
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+  widths: string[] = ['10%', '25%', '15%', '15%', '15%'];
+  sort?: Sort;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load) {
       if (this.load) {
@@ -65,8 +70,6 @@ export class GarbageDropStationCountTableComponent
       }
     }
   }
-  widths: string[] = ['10%', '25%', '15%', '15%', '15%'];
-  sort?: Sort;
 
   ngOnInit(): void {
     this.loadData();

@@ -3,7 +3,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { LegendComponentOption } from 'echarts';
 import { ToastrService } from 'ngx-toastr';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { ExportTool } from 'src/app/common/tools/export.tool';
@@ -12,6 +11,7 @@ import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { Enum } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -22,7 +22,10 @@ import {
   EChartOptions,
 } from '../../../charts/details-chart/details-chart.option';
 import { GarbageStationWindowDetailsBusiness } from './garbage-station-window-details.business';
-import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
+import {
+  GarbageStationDetailsChartOptions,
+  StationSelection,
+} from './garbage-station-window-details.model';
 
 @Component({
   selector: 'howell-garbage-station-window-details',
@@ -42,19 +45,18 @@ export class GarbageStationWindowDetailsComponent
   ) {
     this.business = business;
   }
+  readonly maxItem = 5;
+  opts = new GarbageStationDetailsChartOptions();
 
-  date: Date = new Date();
-  type: StatisticType = StatisticType.garde;
-  types: SelectItem[] = [];
-  unit: TimeUnit = TimeUnit.Week;
-  units: SelectItem[] = [];
+  types: StatisticType[] = [];
+  units: TimeUnit[] = [];
   chartType: ChartType = ChartType.bar;
-  chartTypes: SelectItem[] = [];
-
-  selectIds: string[] = [];
+  chartTypes: ChartType[] = [];
   config: GarbageStationWindowDetailsComponentConfig = {};
-
+  selection = new StationSelection();
   DivisionType = DivisionType;
+  SelectStrategy = SelectStrategy;
+  Language = Language;
   ChartType = ChartType;
   dateFormat: string = 'yyyy年MM月dd日';
   datas: ITimeDataGroup<number>[] = [];
@@ -73,18 +75,16 @@ export class GarbageStationWindowDetailsComponent
     this.initType();
     this.initUnits();
     this.initChartTypes();
+    this.selection.select.subscribe((x) => {
+      this.opts.stationIds = x.map((station) => station.Id);
+      if (this.opts.stationIds.length > this.maxItem) {
+        this.toastrService.warning(`最多查看个${this.maxItem}对象`);
+      }
+    });
   }
   async loadData() {
-    if (this.selectIds.length <= 0) return;
-    let interval = DurationParams.TimeUnit(this.unit, this.date, 1);
-    let opts: GarbageStationDetailsChartOptions = {
-      stationIds: this.selectIds,
-      unit: TimeUnit.Day,
-      type: this.type,
-      begin: interval.BeginTime,
-      end: interval.EndTime,
-    };
-    this.datas = await this.business.load(opts);
+    if (this.opts.stationIds.length <= 0) return;
+    this.datas = await this.business.load(this.opts);
     this.loadChart();
   }
 
@@ -95,16 +95,16 @@ export class GarbageStationWindowDetailsComponent
     switch (this.chartType) {
       case ChartType.line:
         this.config.line = new ChartConfig(
-          this.unit,
-          this.date,
+          this.opts.unit,
+          this.opts.date,
           this.echartsLegend,
           merge
         );
         break;
       case ChartType.bar:
         this.config.bar = new ChartConfig(
-          this.unit,
-          this.date,
+          this.opts.unit,
+          this.opts.date,
           this.echartsLegend,
           merge
         );
@@ -116,7 +116,7 @@ export class GarbageStationWindowDetailsComponent
 
   getEChartsFormatter(value = 'value') {
     let formatter = `{${value}} `;
-    switch (this.type) {
+    switch (this.opts.type) {
       case StatisticType.garde:
         formatter += '分';
         break;
@@ -195,66 +195,22 @@ export class GarbageStationWindowDetailsComponent
 
   initType() {
     let _enum = new Enum(StatisticType);
-    let array = _enum.toArray();
-    for (let i = 0; i < array.length; i++) {
-      let language = Language.StatisticType(array[i]);
-      let type = new SelectItem(array[i], array[i], language);
-      this.types.push(type);
-    }
+    this.types = _enum.getValues().map((x) => parseInt(x));
   }
   initUnits() {
-    this.units.push(
-      new SelectItem(TimeUnit.Week.toString(), TimeUnit.Week, '周报表')
-    );
-    this.units.push(
-      new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
-    );
+    this.units = [TimeUnit.Week, TimeUnit.Month];
   }
   initChartTypes() {
-    this.chartTypes.push(
-      new SelectItem(
-        ChartType.bar.toString(),
-        ChartType.bar,
-        Language.ChartType(ChartType.bar)
-      )
-    );
-    this.chartTypes.push(
-      new SelectItem(
-        ChartType.line.toString(),
-        ChartType.line,
-        Language.ChartType(ChartType.line)
-      )
-    );
+    this.chartTypes = [ChartType.bar, ChartType.line];
   }
 
-  ontype(item: SelectItem) {
-    this.type = item.value;
-  }
-  ontimeunit(item: SelectItem) {
-    this.unit = item.value;
-    this.loadData();
-  }
-  oncharttype(item: SelectItem) {
-    this.chartType = item.value;
-    this.loadChart();
-  }
-
-  readonly maxItem = 5;
-
-  onTreeSelect(ids: string[]) {
-    this.selectIds = ids;
-    if (this.selectIds.length > this.maxItem) {
-      this.selectIds.length = this.maxItem;
-      this.toastrService.warning(`最多查看个${this.maxItem}对象`);
-    }
-  }
   search() {
-    if (this.selectIds.length <= 0) {
+    if (this.opts.stationIds.length <= 0) {
       // MessageBar.response_warning(`请选择要查看的对象`);
       this.toastrService.warning('请选择要查看的对象');
       return;
     }
-    if (this.selectIds.length > this.maxItem) {
+    if (this.opts.stationIds.length > this.maxItem) {
       this.toastrService.warning(`最多查看个${this.maxItem}对象`);
 
       return;
@@ -265,7 +221,7 @@ export class GarbageStationWindowDetailsComponent
   converter = new TimeDataGroupExportConverter();
 
   getTitle() {
-    let duration = DurationParams.TimeUnit(this.unit, this.date);
+    let duration = DurationParams.TimeUnit(this.opts.unit, this.opts.date);
     let begin = formatDate(duration.BeginTime, 'yyyy年MM月dd日', 'en');
     let end = formatDate(duration.EndTime, 'yyyy年MM月dd日', 'en');
     let title = `${begin} 至 ${end}`;
@@ -273,14 +229,14 @@ export class GarbageStationWindowDetailsComponent
       const data = this.datas[i];
       title += ' ' + data.Name;
     }
-    title += ' ' + Language.StatisticType(this.type);
+    title += ' ' + Language.StatisticType(this.opts.type);
     return title;
   }
 
   toExport(type: ExportType) {
     let title = this.getTitle();
     let headers = ['序号', '日期']; //, '时间', this.getName()
-    if (this.unit === TimeUnit.Week) {
+    if (this.opts.unit === TimeUnit.Week) {
       headers.push('时间');
     }
     for (let i = 0; i < this.datas.length; i++) {
@@ -293,7 +249,7 @@ export class GarbageStationWindowDetailsComponent
       headers,
       this.datas,
       this.converter,
-      this.unit
+      this.opts.unit
     );
   }
 

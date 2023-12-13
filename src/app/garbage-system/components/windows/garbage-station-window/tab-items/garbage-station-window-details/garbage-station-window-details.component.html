@@ -2,58 +2,83 @@
   <ng-content></ng-content>
   <div class="garbage-station-window-details-header">
     <div class="filter">
-      <div class="filter-item">
-        <span>选择时间</span>
-        <input
-          type="text"
-          DateTimePicker
-          [format]="dateFormat"
-          [(date)]="date"
-        />
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">选择时间</div>
+          <input
+            class="filter-item-value"
+            type="text"
+            DateTimePicker
+            [format]="dateFormat"
+            [(date)]="opts.date"
+          />
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">类型</div>
+          <select
+            class="filter-item-value list-type-select"
+            [(ngModel)]="opts.type"
+          >
+            <option [ngValue]="item" *ngFor="let item of types">
+              {{ Language.StatisticType(item) }}
+            </option>
+          </select>
+        </div>
+        <div class="filter-item tree">
+          <div class="filter-item-title">投放点</div>
+          <div class="filter-item-value hw-form-list-item-value tree">
+            <common-label-select
+              [autoclose]="true"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                [selectStrategy]="SelectStrategy.Multiple"
+                [resourceType]="DivisionType.None"
+                (selectTreeNode)="selection.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+          <!-- <howell-division-station-tree-mult-filter
+            class="filter-item-value tree"
+            [divisionType]="DivisionType.None"
+            [maxSelection]="maxItem"
+            [onlystation]="true"
+            (onselect)="onTreeSelect($event)"
+          >
+          </howell-division-station-tree-mult-filter> -->
+        </div>
+        <button class="hw-blue-btn search" (click)="search()">
+          <i class="mdi mdi-magnify"></i> 查询
+        </button>
+        <button class="hw-blue-btn excel" (click)="exportExcel()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn csv" (click)="exportCSV()">
+          <i class="howell-icon-export"></i> CSV
+        </button>
       </div>
-      <div class="filter-item">
-        <span>类型</span>
-        <app-select-control
-          class="list-type-select"
-          [data]="types"
-          (selectedChange)="ontype($event)"
-        >
-        </app-select-control>
-      </div>
-      <div class="filter-item tree">
-        <span>投放点</span>
-        <howell-division-station-tree-mult-filter
-          class="tree"
-          [divisionType]="DivisionType.None"
-          [maxSelection]="maxItem"
-          [onlystation]="true"
-          (onselect)="onTreeSelect($event)"
-        >
-        </howell-division-station-tree-mult-filter>
-      </div>
-      <button class="hw-blue-btn search" (click)="search()">
-        <i class="mdi mdi-magnify"></i> 查询
-      </button>
-      <button class="hw-blue-btn excel" (click)="exportExcel()">
-        <i class="howell-icon-export"></i> 导出
-      </button>
-      <button class="hw-blue-btn csv" (click)="exportCSV()">
-        <i class="howell-icon-export"></i> CSV
-      </button>
     </div>
     <div class="selection">
-      <app-select-control
-        class="list-type-select"
-        [data]="units"
-        (selectedChange)="ontimeunit($event)"
-      >
-      </app-select-control>
-      <app-select-control
-        class="list-type-select"
-        [data]="chartTypes"
-        (selectedChange)="oncharttype($event)"
-      >
-      </app-select-control>
+      <select class="list-type-select" [(ngModel)]="opts.unit">
+        <option
+          [ngValue]="item"
+          *ngFor="let item of units"
+          (change)="loadData()"
+        >
+          {{ Language.TimeUnit(item) }}
+        </option>
+      </select>
+      <select class="list-type-select" [(ngModel)]="chartType">
+        <option
+          [ngValue]="item"
+          *ngFor="let item of chartTypes"
+          (change)="loadData()"
+        >
+          {{ Language.ChartType(item) }}
+        </option>
+      </select>
     </div>
   </div>
   <div class="garbage-station-window-details-content">

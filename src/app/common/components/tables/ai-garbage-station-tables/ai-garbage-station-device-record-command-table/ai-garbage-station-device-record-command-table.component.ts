@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Language } from 'src/app/common/tools/language';
 import { AIGarbageDeviceCommandRecord } from 'src/app/network/model/ai-garbage/device-command-record.model';
@@ -38,6 +46,7 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
   ) {
     super();
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   Language = Language;
   override widths = [
     '15%',

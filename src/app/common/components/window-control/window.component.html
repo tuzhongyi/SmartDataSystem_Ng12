@@ -16,9 +16,9 @@
     <div class="window-title" *ngIf="title">
       <div class="hw-simple-title">{{ title }}</div>
     </div>
-    <a class="close-winow" (click)="closeButtonClick()" *ngIf="CloseButton">
+    <div class="close-winow" (click)="closeButtonClick()" *ngIf="CloseButton">
       <i class="howell-icon-Close alert-window-close-btn"></i>
-    </a>
+    </div>
     <ng-content></ng-content>
   </div>
 </div>

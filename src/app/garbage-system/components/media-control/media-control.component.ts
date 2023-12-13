@@ -283,8 +283,8 @@ export class MediaControlComponent
     this.playing = true;
     this.played.emit();
   }
-  onstoped(playing: boolean) {
-    this.playing = playing;
+  onstoped(index: number) {
+    this.playing = false;
     this.stoped.emit();
   }
 

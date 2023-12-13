@@ -3,12 +3,11 @@ import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowDetailsConverter } from './garbage-station-window-details.converter';
 import { GarbageStationDetailsChartOptions } from './garbage-station-window-details.model';
 
@@ -31,22 +30,19 @@ export class GarbageStationWindowDetailsBusiness
   async load(
     opts: GarbageStationDetailsChartOptions
   ): Promise<ITimeDataGroup<number>[]> {
-    let interval: DurationParams = new DurationParams();
-    interval.BeginTime = opts.begin;
-    interval.EndTime = opts.end;
-    let data = await this.getData(opts.stationIds, interval, opts.unit);
+    let data = await this.getData(opts);
     let model = this.Converter.Convert(data, opts.type);
     return model;
   }
   async getData(
-    stationIds: string[],
-    interval: DurationParams,
-    unit: TimeUnit
+    opts: GarbageStationDetailsChartOptions
   ): Promise<GarbageStationNumberStatisticV2[]> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
-    params = Object.assign(params, interval);
-    params.GarbageStationIds = stationIds;
-    params.TimeUnit = unit;
+    let duration = DateTimeTool.TimeUnit(opts.unit, opts.date);
+    params.BeginTime = duration.begin;
+    params.EndTime = duration.end;
+    params.GarbageStationIds = opts.stationIds;
+    params.TimeUnit = opts.unit;
     return this.stationService.statistic.number.history.list(params);
   }
 

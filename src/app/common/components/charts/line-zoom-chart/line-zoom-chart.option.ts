@@ -1,4 +1,5 @@
 export let option = {
+  backgroundColor: 'transparent',
   animation: false,
   tooltip: {
     trigger: 'axis',
@@ -79,7 +80,7 @@ export let option = {
       show: true,
       xAxisIndex: [0, 1],
       type: 'slider',
-      top: '84%',
+      top: '78%',
       start: 0,
       end: 100,
       fillerColor: 'rgb(117,134,224,0.5)',

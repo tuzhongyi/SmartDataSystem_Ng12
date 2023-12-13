@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -32,7 +38,7 @@ export class GarbageStationCountTableComponent
     super();
     this.business = business;
   }
-
+  bodyElement?: ElementRef<HTMLDivElement>;
   widths = [undefined, '15%'];
 
   ngOnInit(): void {

@@ -5,113 +5,16 @@
   height: 34px;
   margin-bottom: 10px;
 
-  .filter-item {
-    height: 100%;
-    width: calc(15%);
-    display: flex;
-    align-items: center;
+  .filter-items {
+    width: 100%;
     justify-content: space-between;
-    padding: 0 5px;
 
-
-
-
-    &:first-child {
-      padding-left: 0;
-    }
-
-    &:last-child {
-      padding-right: 0;
-    }
-
-    &.datetime {
-      width: 20%;
-    }
-
-    &.duration {
-      &>span {
-        width: 108px;
-      }
-
-      &>input {
-        width: calc(100% - 108px);
-      }
-    }
-
-    &>span {
-      width: 72px;
-      margin-right: 5px;
-      color: #cfd7ff;
-      font-size: 18px;
-    }
-
-    &>input,
-    &>.input,
-    &>select,
-    &>button,
-    &>howell-division-tree-filter {
-      width: calc(100% - 72px);
-    }
-
-    &>input {
-      height: calc(100% - 2px);
-      width: calc(100% - 72px - 12px - 10px);
-    }
-
-    &>button {
-      text-align: left;
-      color: #cfd7ff;
-      border: 1px solid #5e6ebf;
-      font-size: 18px;
-      border-radius: unset;
-      background-color: #1d233b;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 5px;
-      height: 100%;
-
-      &:active,
-      &:focus,
-      &:target,
-      &[aria-expanded*="true"] {
-        border-color: #3a93ff;
-      }
-
-      ::ng-deep &>.mat-button-wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-      }
-    }
-
-    &.select {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .list-type-select {
-      border: 1px solid #5e6ebf;
-      font-size: 18px;
-      height: 32px;
+    .division {
       width: 250px;
+    }
 
-      ::ng-deep .select-item {
-        .select-head {
-          justify-content: space-between;
-        }
-
-        .select-body {
-          left: -1px;
-
-          .select-option {
-            max-width: 100%;
-          }
-        }
-      }
+    .station {
+      width: 250px;
     }
   }
 

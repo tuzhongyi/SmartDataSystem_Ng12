@@ -1,63 +1,83 @@
-<div class="garbage-station-window-record-filter">
-  <div class="filter-item datetime">
-    <span>开始时间</span>
-    <input
-      type="text"
-      DateTimePicker
-      [format]="'yyyy年MM月dd日 HH:mm'"
-      [startView]="DateTimePickerView.day"
-      [minView]="DateTimePickerView.hour"
-      [(date)]="filter.duration.begin"
-      (dateChange)="changeBegin($event)"
-    />
-  </div>
-  <div class="filter-item datetime">
-    <span>结束时间</span>
-    <input
-      type="text"
-      DateTimePicker
-      [format]="'yyyy年MM月dd日 HH:mm'"
-      [startView]="DateTimePickerView.day"
-      [minView]="DateTimePickerView.hour"
-      [(date)]="filter.duration.end"
-      (dateChange)="changeEnd($event)"
-    />
-  </div>
-  <div class="filter-item select">
-    <span>行政区</span>
-    <!-- <app-select-control
+<div class="garbage-station-window-record-filter filter">
+  <div class="filter-items">
+    <div class="filter-item datetime">
+      <div class="filter-item-title">开始时间</div>
+      <input
+        type="text"
+        class="filter-item-value"
+        DateTimePicker
+        [format]="'yyyy年MM月dd日 HH:mm'"
+        [startView]="DateTimePickerView.day"
+        [minView]="DateTimePickerView.hour"
+        [(date)]="filter.duration.begin"
+        (dateChange)="changeBegin($event)"
+      />
+    </div>
+    <div class="filter-item datetime">
+      <div class="filter-item-title">结束时间</div>
+      <input
+        type="text"
+        class="filter-item-value"
+        DateTimePicker
+        [format]="'yyyy年MM月dd日 HH:mm'"
+        [startView]="DateTimePickerView.day"
+        [minView]="DateTimePickerView.hour"
+        [(date)]="filter.duration.end"
+        (dateChange)="changeEnd($event)"
+      />
+    </div>
+    <div class="filter-item select">
+      <div class="filter-item-title">行政区</div>
+      <!-- <app-select-control
       class="list-type-select"
       [data]="model.divisions"
       [load]="loadDivision"
       (selectedChange)="ondivision($event)"
     ></app-select-control> -->
-    <howell-division-tree-filter
-      (select)="ondivision($event)"
-      [align]="HorizontalAlign.left"
-    ></howell-division-tree-filter>
-  </div>
-  <div class="filter-item">
-    <span>投放点</span>
-    <app-select-control
-      class="list-type-select"
-      [data]="model.stations"
-      (selectedChange)="onstation($event)"
-    ></app-select-control>
-  </div>
-  <div class="filter-item duration">
-    <span>滞留时长</span>
-    <app-select-control
-      class="list-type-select"
-      [data]="durations"
-      (selectedChange)="onrange($event)"
-    ></app-select-control>
-  </div>
-  <div class="filter-item">
-    <span>状态</span>
-    <app-select-control
-      class="list-type-select"
-      [data]="statuses"
-      (selectedChange)="onstatus($event)"
-    ></app-select-control>
+      <howell-division-tree-filter
+        class="filter-item-value division"
+        (select)="ondivision($event)"
+        [align]="HorizontalAlign.left"
+      ></howell-division-tree-filter>
+    </div>
+    <div class="filter-item">
+      <div class="filter-item-title">投放点</div>
+      <hw-select [(selected)]="filter.stationId" [cannull]="true">
+        <select
+          class="filter-item-value station"
+          #element
+          [(ngModel)]="filter.stationId"
+          (change)="onchange()"
+        >
+          <option [ngValue]="item.Id" *ngFor="let item of model.stations">
+            {{ item.Name }}
+          </option>
+        </select>
+      </hw-select>
+    </div>
+    <div class="filter-item duration">
+      <div class="filter-item-title">滞留时长</div>
+      <select
+        class="filter-item-value"
+        [(ngModel)]="filter.range"
+        (change)="onchange()"
+      >
+        <option [ngValue]="item.value" *ngFor="let item of durations">
+          {{ item.Name }}
+        </option>
+      </select>
+    </div>
+    <div class="filter-item">
+      <div class="filter-item-title">状态</div>
+      <select
+        class="filter-item-value"
+        [(ngModel)]="status"
+        (change)="onstatus()"
+      >
+        <option [ngValue]="item.value" *ngFor="let item of statuses">
+          {{ item.Name }}
+        </option>
+      </select>
+    </div>
   </div>
 </div>

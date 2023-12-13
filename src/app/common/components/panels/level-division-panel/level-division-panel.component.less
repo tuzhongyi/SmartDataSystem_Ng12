@@ -1,3 +1,25 @@
-level-list-panel {
+.level-division-panel {
+  border: 1px solid #5e6ebf;
+  font-size: 16px;
+  height: 32px;
   width: 100%;
+
+  level-list-panel {
+    width: 100%;
+
+    ::ng-deep .select-item {
+      .select-head {
+        justify-content: space-between;
+      }
+
+      .select-body {
+        left: -1px;
+
+        .select-option {
+          max-width: 100%;
+        }
+      }
+    }
+  }
+
 }

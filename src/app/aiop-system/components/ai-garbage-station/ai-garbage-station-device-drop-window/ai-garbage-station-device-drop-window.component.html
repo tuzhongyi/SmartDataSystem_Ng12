@@ -1,7 +1,7 @@
 <div class="ai-garbage-station-device-drop-window" *ngIf="!!model">
   <div class="ai-garbage-station-device-drop-window-head">
     <div class="title">
-      <div class="hw-simple-title">{{ model.GarbageStationName }}投放窗口</div>
+      <div class="hw-simple-title">{{ model.Name }}投放窗口</div>
     </div>
     <ul class="hw-ul" *ngIf="model.DropWindows" WheelHorizontalScroll>
       <li *ngFor="let item of model.DropWindows">

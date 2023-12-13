@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { VideoOperationLog } from 'src/app/network/model/garbage-station/log-operation-video.model';
@@ -28,6 +35,9 @@ export class AuditLogVideoTableComponent
     this.business = business;
     this.pageSize = 10;
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+  widths = ['230px'];
+
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -37,8 +47,6 @@ export class AuditLogVideoTableComponent
     }
     this.loadData(1);
   }
-
-  widths = ['230px'];
 
   loadData(index: number, size: number = this.pageSize): void {
     this.loading = true;

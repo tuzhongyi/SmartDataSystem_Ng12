@@ -1,10 +1,12 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
+  ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -58,8 +60,8 @@ export class GarbageDropStationTableComponent
     super();
     this.business = business;
   }
-
-  widths = ['10%', '14%', '12%', '7%', '9%', '9%', '9%', '8%', '6%', '6%'];
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+  widths = ['12%', '12%', '10%', '10%', '10%', '8%', '10%', '10%', '5%', '10%'];
   searchOptions?: SearchOptions;
   selected?: GarbageDropStationTableModel;
 

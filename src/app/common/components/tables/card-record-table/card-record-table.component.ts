@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
@@ -32,6 +40,7 @@ export class CardRecordTableComponent
     this.business = business;
   }
 
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   widths: string[] = [
     '12%',
     '12%',

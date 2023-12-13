@@ -42,6 +42,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
 
   sqrt = 1;
   played?: ImageVideoControlModel;
+  playing: (ImageVideoControlModel | undefined)[] = [];
 
   @ViewChild('element')
   element?: ElementRef;
@@ -52,6 +53,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
         this.models.push(new ImageVideoControlModel(''));
+        this.playing = this.models.map((x) => undefined);
       }
     }
   }
@@ -63,6 +65,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       for (let i = this.models.length; i < pow; i++) {
         this.models.push(new ImageVideoControlModel(''));
       }
+      this.playing = this.models.map((x) => undefined);
     }
     if (this.change) {
       this.change.subscribe((x) => {
@@ -95,10 +98,22 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
     if (this.fullplay) {
       item.fulled = true;
     }
+
     this.onplayed.emit(this.played);
+    if (this.models) {
+      let index = this.models.indexOf(item);
+      if (index >= 0) {
+        this.playing[index] = item;
+      }
+    }
   }
-  onstop(playing: boolean) {
-    this.onstoped.emit(this.played);
-    this.played = undefined;
+  onstop(index: number) {
+    if (index >= 0) {
+      let item = this.playing[index];
+
+      this.playing[index] = undefined;
+      this.onstoped.emit(item);
+      this.played = undefined;
+    }
   }
 }

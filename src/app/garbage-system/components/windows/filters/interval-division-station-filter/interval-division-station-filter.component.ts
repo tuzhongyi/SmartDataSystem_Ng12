@@ -9,7 +9,6 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
@@ -130,21 +129,19 @@ export class EventRecordFilterComponent
     this.filter.station = undefined;
     this.filterChange.emit(this.filter);
   }
-  async onstation(item?: SelectItem) {
-    if (item) {
+  async onstation() {
+    if (this.filter.station) {
       let opts: DivisionStationFilterOpts = {
         divisionId: this.filter.divisionId,
-        stationId: item.Id,
+        stationId: this.filter.station.Id,
       };
       let model = await this.business.load(opts);
       this.model.cameras = model.cameras;
-      this.filter.station = item;
       this.filter.camera = undefined;
       this.filterChange.emit(this.filter);
     }
   }
-  oncamera(item?: SelectItem) {
-    this.filter.camera = item;
+  oncamera() {
     this.filterChange.emit(this.filter);
   }
 }

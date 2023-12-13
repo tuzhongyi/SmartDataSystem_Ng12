@@ -1,11 +1,12 @@
 <div class="garbage-station-window-general">
   <ng-content></ng-content>
-  <div class="filter">
+  <div class="garbage-station-window-general-filter filter">
     <div class="filter-items">
       <div class="filter-item">
-        <span>选择时间</span>
+        <div class="filter-item-title">选择时间</div>
         <input
           type="text"
+          class="filter-item-value"
           DateTimePicker
           [format]="dateTimePickerConfig.format"
           [startView]="dateTimePickerConfig.view"
@@ -15,8 +16,9 @@
         />
       </div>
       <div class="filter-item">
-        <span>行政区</span>
+        <div class="filter-item-title">行政区</div>
         <howell-division-tree-filter
+          class="filter-item-value tree"
           (select)="ondivisionselect($event)"
           [align]="treeAlign"
           [division]="division"
@@ -34,11 +36,16 @@
     </div>
     <div class="filter-items">
       <div class="filter-item select">
-        <app-select-control
+        <!-- <app-select-control
           class="list-type-select"
           [data]="units"
           (selectedChange)="ontimeunit($event)"
-        ></app-select-control>
+        ></app-select-control> -->
+        <select [(ngModel)]="unit" (change)="ontimeunit()">
+          <option [ngValue]="item.value" *ngFor="let item of units">
+            {{ item.Name }}
+          </option>
+        </select>
       </div>
     </div>
   </div>

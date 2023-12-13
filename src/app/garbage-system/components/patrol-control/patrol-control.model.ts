@@ -1,8 +1,8 @@
+import { EventEmitter } from '@angular/core';
 import {
   ImageVideoControlModel,
   ImageVideoControlOperation,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
@@ -38,10 +38,23 @@ export class ControlClass<T> {
 }
 
 export class PatrolIntervalControl {
-  times: SelectItem[] = [];
-  time: number = 30;
+  times: number[] = [];
+  time!: number;
   runing = false;
   handle?: NodeJS.Timer;
+  trigger: EventEmitter<void> = new EventEmitter();
+  run() {
+    this.runing = true;
+    this.handle = setInterval(() => {
+      this.trigger.emit();
+    }, this.time * 1000);
+  }
+  stop() {
+    this.runing = false;
+    if (this.handle) {
+      clearInterval(this.handle);
+    }
+  }
 }
 
 export class PatrolControlConfig {
@@ -53,4 +66,11 @@ export class PatrolControlConfig {
   autoplay: boolean = true;
   playback: boolean = false;
   operation: ImageVideoControlOperation = new ImageVideoControlOperation();
+}
+
+export enum PatrolControlInterval {
+  s30 = 30,
+  s60 = 60,
+  s90 = 90,
+  s120 = 120,
 }

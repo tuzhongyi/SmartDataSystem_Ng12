@@ -2,7 +2,7 @@
   <!-- <div class="device-list-table-header">
         <div>
             <div>导航</div>
-            <button (click)="show=!show">显示 </button>
+            <div (click)="show=!show">显示 </div>
         </div>
         <div *ngIf="show">hshdfh</div>
     </div> -->
@@ -23,7 +23,11 @@
         </tr>
       </thead>
     </table>
-    <div class="body">
+    <div
+      class="body"
+      #body
+      [ngClass]="{ full: page && page.RecordCount === pageSize }"
+    >
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
@@ -36,6 +40,9 @@
               selected: selected === item
             }"
             (click)="onselect(item)"
+            [ngStyle]="{
+              height: tr_height
+            }"
           >
             <td>
               <div class="img" (click)="imageClick($event, item)">

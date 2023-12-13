@@ -5,7 +5,7 @@ export const AIModelManageConf: TableColumnModel[] = [
   {
     columnDef: 'ImageUrl',
     header: '图片',
-    cell: (element: AIModelManageModel) => `<img src=${element.LabelIcon}/>`,
+    cell: (element: AIModelManageModel) => `<img src="${element.LabelIcon}"/>`,
   },
   {
     columnDef: 'Name',

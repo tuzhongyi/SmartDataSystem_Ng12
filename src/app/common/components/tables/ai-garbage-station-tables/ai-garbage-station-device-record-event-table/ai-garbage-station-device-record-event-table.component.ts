@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Language } from 'src/app/common/tools/language';
 import { AIGarbageDeviceEventRecord } from 'src/app/network/model/ai-garbage/device-event-record.model';
@@ -37,6 +45,7 @@ export class AIGarbageStationDeviceRecordEventTableComponent
   ) {
     super();
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   Language = Language;
   override widths = [
     '15%',

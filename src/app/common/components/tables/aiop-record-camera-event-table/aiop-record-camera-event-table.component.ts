@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { CameraAIEventRecord } from 'src/app/network/model/garbage-station/camera-ai-event-record.model';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -39,6 +47,7 @@ export class AIOPRecordCameraEventTableComponent
     this.pageSize = 10;
   }
 
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   widths = [];
   selected?: CameraAIEventRecord;
   ngOnInit(): void {

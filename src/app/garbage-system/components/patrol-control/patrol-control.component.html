@@ -21,11 +21,15 @@
     </div>
     <div class="operation">
       <div class="interval" [class.hide]="!config.interval">
-        <app-select-control
-          [data]="interval.times"
-          (selectedChange)="timeSelect($event)"
+        <select
+          *ngIf="interval.time"
+          [(ngModel)]="interval.time"
+          (change)="timeSelect()"
         >
-        </app-select-control>
+          <option [ngValue]="item" *ngFor="let item of interval.times">
+            {{ item }}s
+          </option>
+        </select>
       </div>
       <div
         class="playback"
@@ -36,12 +40,12 @@
         <i class="howell-icon-film text-white"></i>
       </div>
       <div class="reflush" (click)="onreflush()" title="刷新图片">
-        <i class="howell-icon-restore text-white"></i>
+        <i class="mdi mdi-refresh text-white"></i>
       </div>
       <div class="fullscreen" (click)="onfullscreen()">
         <i class="mdi mdi-fullscreen text-white"></i>
       </div>
-      <div class="close" (click)="onclose()" [class.none]="!config.close">
+      <div class="" (click)="onclose()" [class.none]="!config.close">
         <i class="howell-icon-Close"></i>
       </div>
     </div>
@@ -79,7 +83,7 @@
       <div class="howell-icon-arrowleftbold arrow-wrap" (click)="prev()"></div>
 
       <div
-        class="arrow-wrap howell-icon-play center"
+        class="arrow-wrap mdi mdi-play center"
         title="播放"
         *ngIf="!interval.runing"
         [class.hide]="!config.stop"

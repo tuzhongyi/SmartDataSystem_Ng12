@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { Role } from 'src/app/network/model/garbage-station/role.model';
@@ -31,6 +39,8 @@ export class AIOPRoleTableComponent
     this.business = business;
     this.pageSize = 10;
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+  widths = [];
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -40,8 +50,6 @@ export class AIOPRoleTableComponent
     }
     this.loadData(1);
   }
-
-  widths = [];
 
   loadData(index: number, size: number = 10): void {
     this.loading = true;

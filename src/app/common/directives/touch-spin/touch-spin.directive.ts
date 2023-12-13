@@ -4,16 +4,14 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { HowellTouchSpinOptions } from './touch-spin.class';
 
 @Directive({
   selector: '[appTouchSpin]',
 })
-export class TouchSpinDirective implements AfterViewInit, OnChanges {
+export class TouchSpinDirective implements AfterViewInit {
   private _options: TouchSpinOptions = new HowellTouchSpinOptions();
   public get options(): TouchSpinOptions {
     return this._options;
@@ -23,12 +21,28 @@ export class TouchSpinDirective implements AfterViewInit, OnChanges {
     this._options = Object.assign(this._options, v);
   }
 
+  public get min(): number | undefined {
+    return this.options.min;
+  }
   @Input()
-  min: number = 1;
+  public set min(v: number | undefined) {
+    this.options.min = v;
+  }
+
+  public get max(): number | undefined {
+    return this.options.max;
+  }
   @Input()
-  max: number = 65535;
+  public set max(v: number | undefined) {
+    this.options.max = v;
+  }
+  public get verticalbuttons(): boolean | undefined {
+    return this.options.verticalbuttons;
+  }
   @Input()
-  verticalbuttons: boolean = true;
+  public set verticalbuttons(v: boolean | undefined) {
+    this.options.verticalbuttons = v;
+  }
 
   @Output() touchSpinChange = new EventEmitter();
 
@@ -38,17 +52,6 @@ export class TouchSpinDirective implements AfterViewInit, OnChanges {
   numberChange: EventEmitter<number> = new EventEmitter();
 
   constructor(private ele: ElementRef<HTMLInputElement>) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.min) {
-      this.options.min = this.min;
-    }
-    if (changes.max) {
-      this.options.max = this.max;
-    }
-    if (changes.verticalbuttons) {
-      this.options.verticalbuttons = this.verticalbuttons;
-    }
-  }
   ngAfterViewInit(): void {
     $(this.ele.nativeElement)
       .TouchSpin(this.options)

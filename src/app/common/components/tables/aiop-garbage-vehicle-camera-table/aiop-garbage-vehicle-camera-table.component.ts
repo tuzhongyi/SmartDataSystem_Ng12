@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -36,6 +44,7 @@ export class AiopGarbageVehicleCameraTableComponent
     super();
     this.business = business;
   }
+  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   OnlineStatus = OnlineStatus;
   widths = [];
 

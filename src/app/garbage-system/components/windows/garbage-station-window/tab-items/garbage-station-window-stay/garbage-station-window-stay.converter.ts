@@ -23,7 +23,7 @@ export class GarbageStationWindowStayConverter
       model.maxDropDuration = this.htmlFormat(source.MaxGarbageTime);
     }
     if (source.GarbageRatio) {
-      model.garde = source.GarbageRatio.toFixed(2);
+      model.garde = source.GarbageRatio.toFixed(0);
     }
     if (source.GarbageDuration) {
       model.countDropDuration = this.htmlFormat(source.GarbageDuration);

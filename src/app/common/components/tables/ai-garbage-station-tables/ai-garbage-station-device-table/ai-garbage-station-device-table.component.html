@@ -23,7 +23,11 @@
         </tr>
       </thead>
     </table>
-    <div class="body vertical-main paged">
+    <div
+      class="body vertical-main paged"
+      #body
+      [ngClass]="{ full: page && page.RecordCount === pageSize }"
+    >
       <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
@@ -35,6 +39,9 @@
               selected: selecteds.includes(item)
             }"
             (click)="onselected(item)"
+            [ngStyle]="{
+              height: tr_height
+            }"
           >
             <td [title]="item.Name">{{ item.Name }}</td>
             <td [title]="item.GarbageStationName">

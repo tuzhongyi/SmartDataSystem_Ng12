@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import { ElementRef, EventEmitter } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Language } from 'src/app/common/tools/language';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -10,6 +10,26 @@ import {
 export abstract class PagedTableAbstractComponent<T> {
   abstract widths: Array<string | undefined>;
   abstract load?: EventEmitter<any>;
+  abstract bodyElement?: ElementRef<HTMLDivElement>;
+  get body_height() {
+    if (this.bodyElement) {
+      let div = this.bodyElement.nativeElement as HTMLDivElement;
+      return div.clientHeight;
+    }
+    return undefined;
+  }
+
+  get tr_height() {
+    if (this.page) {
+      if (this.page.RecordCount === this.pageSize) {
+        return undefined;
+      }
+    }
+    if (this.body_height) {
+      return this.body_height / this.pageSize + 'px';
+    }
+    return '58px';
+  }
   Language = Language;
   datas: T[] = [];
   page: Page = new Page();

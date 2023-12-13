@@ -1,5 +1,4 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
@@ -79,10 +78,6 @@ export class EventRecordFilterBusiness
     });
 
     let model = this.Converter.Convert('', divisions, stations, cameras);
-
-    model.divisions.unshift(new SelectItem('', undefined, '请选择'));
-    model.stations.unshift(new SelectItem('', undefined, '请选择'));
-    model.cameras.unshift(new SelectItem('', undefined, '请选择'));
 
     return model;
   }

@@ -29,6 +29,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
 
   @Input() operation: ImageVideoControlOperation =
     new ImageVideoControlOperation();
+  @Input() index = 0;
   @Input() draw: boolean = false;
   @Input() playback?: EventEmitter<PlaybackInterval>;
   @Input() is_playback_use_config = true;
@@ -37,7 +38,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Input() fulled = false;
   @Output() fulledChange: EventEmitter<boolean> = new EventEmitter();
   @Output() onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-  @Output() onstop: EventEmitter<boolean> = new EventEmitter();
+  @Output() onstop: EventEmitter<number> = new EventEmitter();
 
   constructor(
     private business: ImageVideoControlBusiness,
@@ -140,13 +141,15 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     this.onplay.emit(this.model);
   }
 
-  tostop() {
-    this.stop.emit();
-    this.playing = false;
-    this.display.image = true;
-    this.display.video = false;
-    this.display.operation.play = true;
-    this.onstop.emit(this.playing);
+  tostop(index: number) {
+    if (index === this.index) {
+      this.stop.emit();
+      this.playing = false;
+      this.display.image = true;
+      this.display.video = false;
+      this.display.operation.play = true;
+      this.onstop.emit(index);
+    }
   }
 
   onVideoDestroy(model: VideoModel) {

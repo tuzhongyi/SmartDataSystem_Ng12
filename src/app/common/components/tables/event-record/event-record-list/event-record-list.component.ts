@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
@@ -61,7 +68,7 @@ export class EventRecordListComponent
     this.business = business;
     this.filter = new EventRecordFilter();
   }
-
+  bodyElement?: ElementRef<HTMLDivElement>;
   widths: string[] = [];
 
   async ngOnInit() {
