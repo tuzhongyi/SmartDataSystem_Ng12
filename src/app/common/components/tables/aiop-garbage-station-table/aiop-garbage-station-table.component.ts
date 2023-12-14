@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
@@ -41,9 +33,10 @@ export class AIOPGarbageStationTableComponent
     super();
     this.business = business;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   widths = ['250px', undefined, undefined, undefined, undefined, '10%'];
   ngOnInit(): void {
+    this.pageSize = 10;
     if (this.load) {
       this.load.subscribe((x) => {
         this.args = x;
@@ -53,7 +46,7 @@ export class AIOPGarbageStationTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10): void {
+  loadData(index: number, size: number = this.pageSize): void {
     this.loading = true;
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;

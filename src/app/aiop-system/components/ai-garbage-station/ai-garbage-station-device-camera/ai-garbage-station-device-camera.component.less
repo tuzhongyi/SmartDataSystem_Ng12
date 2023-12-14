@@ -2,15 +2,12 @@
   height: 100%;
   width: 100%;
   color: #cfd7ff;
-  display: flex;
-  flex-direction: column;
-
-  @head-height: calc(32px + 44px);
+  @head-height: calc(32px + 48px);
   @foot-height: 0;
 
   &-head {
     height: @head-height;
-    flex-grow: 0;
+
 
     .title {
       display: flex;
@@ -24,7 +21,7 @@
       display: flex;
       justify-content: flex-start;
       align-items: center;
-      overflow-x: auto;
+      overflow-x: scroll;
     }
   }
 
@@ -32,7 +29,7 @@
     height: calc(100% - @head-height - @foot-height);
     overflow-y: auto;
     overflow-x: hidden;
-    flex-grow: 1;
+
 
     .info {
       display: flex;

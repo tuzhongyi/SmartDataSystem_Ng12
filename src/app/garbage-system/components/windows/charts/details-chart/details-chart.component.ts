@@ -24,12 +24,11 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { IModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartLoadOptions } from './details-chart.model';
 import { ChartConfig } from './details-chart.option';
 
-import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
@@ -55,7 +54,7 @@ export class DetailsChartComponent
   station?: GarbageStation;
 
   @Input()
-  division?: Division;
+  division?: IIdNameModel;
 
   // private _division?: Division;
   // public get division(): Division | undefined {
@@ -259,14 +258,8 @@ export class DetailsChartComponent
     this.loadData();
   }
 
-  onDivisionSelected(nodes: CommonFlatNode<DivisionTreeSource>[]) {
-    this.selectedNodes = nodes;
-    for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      this.division = node.RawData as Division;
-      this.showDropDown = false;
-      return;
-    }
+  ondivision(item?: IIdNameModel) {
+    this.division = item;
   }
 
   ontimeunit(unit: SelectItem) {

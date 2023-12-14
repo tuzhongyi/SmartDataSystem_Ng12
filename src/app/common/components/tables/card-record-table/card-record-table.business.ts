@@ -14,7 +14,7 @@ export class CardRecordTableBusiness
   constructor(private service: AIGarbageRequestService) {}
   async load(
     index: number,
-    size: number = 10,
+    size: number,
     args: CardRecordTableArgs
   ): Promise<PagedList<AIGarbageRfidCardRecord>> {
     let data = await this.getData(index, size, args);
@@ -22,7 +22,7 @@ export class CardRecordTableBusiness
   }
   getData(
     index: number,
-    size: number = 10,
+    size: number,
     args: CardRecordTableArgs
   ): Promise<PagedList<AIGarbageRfidCardRecord>> {
     let params = new GetAIGarbageStationRfidCardRecordsParams();

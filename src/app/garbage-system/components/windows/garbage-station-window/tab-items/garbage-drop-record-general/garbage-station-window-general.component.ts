@@ -11,6 +11,7 @@ import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { IIdNameModel } from 'src/app/network/model/model.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowGeneralExportConverter } from './garbage-station-window-general-export.converter';
 
@@ -78,9 +79,8 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     }
   }
 
-  ondivisionselect(division: Division) {
-    this.division = division;
-    this.filterId = this.division.Id;
+  ondivision(item?: IIdNameModel) {
+    this.filterId = item?.Id;
   }
 
   search() {

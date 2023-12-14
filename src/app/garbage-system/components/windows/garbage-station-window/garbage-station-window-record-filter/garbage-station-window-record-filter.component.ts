@@ -6,8 +6,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
-import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { IModel } from 'src/app/network/model/model.interface';
+import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { GarbageStationWindowRecordFilterBusiness } from './garbage-station-window-record-filter.business';
 import { GarbageStationWindowRecordFilterModel } from './garbage-station-window-record-filter.model';
 
@@ -114,9 +113,9 @@ export class GarbageStationWindowRecordFilterComponent
   changeEnd(date: Date) {
     this.filterChange.emit(this.filter);
   }
-  ondivision(item: Division) {
-    this.filter.divisionId = item.Id;
-    this.loadData(item.Id);
+  ondivision(item?: IIdNameModel) {
+    this.filter.divisionId = item?.Id;
+    this.loadData(this.filter.divisionId);
     this.filterChange.emit(this.filter);
   }
 

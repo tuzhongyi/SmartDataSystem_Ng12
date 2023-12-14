@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -51,7 +43,6 @@ export class EventRecordTableIllegalDropComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   widths = new Array(8);
   selected?: EventRecordViewModel;
 

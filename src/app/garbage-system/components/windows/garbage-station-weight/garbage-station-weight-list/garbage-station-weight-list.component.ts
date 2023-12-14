@@ -121,6 +121,9 @@ export class GarbageStationWeightListComponent
   onroot() {
     this.loadData();
   }
+  ontype() {
+    this.args.divisionId = undefined;
+  }
   onfilter() {
     this.args.divisionId = undefined;
     if (this.selected.division) {

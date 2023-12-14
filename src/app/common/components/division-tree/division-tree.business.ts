@@ -1,21 +1,14 @@
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
-import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import {
-  GetDivisionsParams,
-  GetDivisionTreeParams,
-} from 'src/app/network/request/division/division-request.params';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { DivisionTreeConverter } from './division-tree.converter';
 
 import { IDivisionTreeBusiness } from './division-tree.model';
+import { DivisionTreeService } from './division-tree.service';
 
 @Injectable()
 export class DivisionTreeBusiness implements IDivisionTreeBusiness {
@@ -25,8 +18,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   public nestedNodeMap = new Map<string, CommonNestNode<Division>>();
 
   constructor(
-    private _divisionRequest: DivisionRequestService,
-    private _stationRequest: GarbageStationRequestService,
+    private service: DivisionTreeService,
     private _converter: DivisionTreeConverter
   ) {}
 
@@ -73,11 +65,11 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     if (condition == '') {
       nodes = await this.load(type, depth);
     } else {
-      let data = await this._searchDivisionData(condition);
+      let data = await this.service.division.search(condition);
       let divisionNodes = this._converter.recurseToNestNode(data);
       nodes = divisionNodes;
       if (this.showExtend) {
-        let stations = await this._searchStationData(condition);
+        let stations = await this.service.station.search(condition);
         // 所有祖先区划
         let allDivisions: Division[] = [];
         let allStations: GarbageStation[] = [];
@@ -87,9 +79,9 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
           let station = stations[i];
           if (station.DivisionId) {
             allStations.push(station);
-            let division = await this._getDivision(station.DivisionId);
+            let division = await this.service.division.get(station.DivisionId);
             allDivisions.push(division);
-            let ancestors = await this._getAncestorDivision(division);
+            let ancestors = await this.service.division.ancestor(division);
             allDivisions.push(...ancestors);
           }
         }
@@ -130,7 +122,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     if (depth < 0) return [];
     let data = await this.getData(type);
 
-    let nodes = this._converter.iterateToNestNode(data);
+    let nodes = this._converter.iterateToNestNode(data, depth);
     this._register(nodes);
 
     if (type == DivisionType.Committees && this.showExtend) {
@@ -171,54 +163,10 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       case DivisionType.City:
       case DivisionType.County:
       case DivisionType.Committees:
-        return this._loadDivision(type, divisionId);
+        return this.service.division.list(type, divisionId);
       default:
-        return this._loadStation(divisionId);
+        return this.service.station.list(divisionId);
     }
-  }
-
-  private async _loadDivision(type: DivisionType, parentId?: string) {
-    let params = new GetDivisionsParams();
-    params.DivisionType = type;
-    if (parentId) params.ParentId = parentId;
-    let res = await this._divisionRequest.list(params);
-    return res.Data;
-  }
-
-  private async _loadStation(divisionId?: string) {
-    let params = new GetGarbageStationsParams();
-    if (divisionId) params.DivisionId = divisionId;
-    let res = await this._stationRequest.list(params);
-    return res.Data;
-  }
-
-  private async _getDivision(id: string) {
-    return await this._divisionRequest.get(id);
-  }
-  private async _getAncestorDivision(division: Division) {
-    let res: Division[] = [];
-
-    while (division.ParentId) {
-      let d = await this._getDivision(division.ParentId);
-      res.push(d);
-      division = d;
-    }
-
-    return res;
-  }
-
-  private async _searchDivisionData(condition: string) {
-    let params = new GetDivisionTreeParams();
-    params.Name = condition;
-    let res: DivisionTree = await this._divisionRequest.tree(params);
-    return res.Nodes;
-  }
-  private async _searchStationData(condition: string) {
-    let params = new GetGarbageStationsParams();
-    params.Name = condition;
-    let res = await this._stationRequest.list(params);
-
-    return res.Data;
   }
 
   private _register(nodes: CommonNestNode[]) {

@@ -16,22 +16,21 @@
         </tr>
       </thead>
     </table>
-    <div
-      class="body"
-      #body
-      [ngClass]="{ full: page && page.RecordCount === pageSize }"
-    >
-      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+    <div class="body">
+      <table
+        *ngIf="datas"
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        [ngStyle]="{
+          height: table_height
+        }"
+      >
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
         </colgroup>
         <tbody>
-          <tr
-            *ngFor="let item of datas; let i = index"
-            [ngStyle]="{
-              height: tr_height
-            }"
-          >
+          <tr *ngFor="let item of datas; let i = index">
             <td>
               {{ item.UserName }}
             </td>

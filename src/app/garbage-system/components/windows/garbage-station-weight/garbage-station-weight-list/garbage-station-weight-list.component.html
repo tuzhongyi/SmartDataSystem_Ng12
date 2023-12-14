@@ -1,63 +1,66 @@
 <div class="garbage-station-weight-list">
   <div class="garbage-station-weight-list-head">
-    <div class="head-filter">
-      <div class="head-filter-item">
-        <div class="head-filter-item-title">选择日期</div>
-        <div class="head-filter-item-value">
-          <input
-            type="text"
-            DateTimePicker
-            [(date)]="args.date"
-            [format]="dateArgs.format"
-            class="custom form-control time"
-            [startView]="dateArgs.view"
-            [minView]="dateArgs.view"
-            [week]="dateArgs.isweek"
-            (dateChange)="onchange()"
-          />
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">选择日期</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [(date)]="args.date"
+              [format]="dateArgs.format"
+              class="custom form-control time"
+              [startView]="dateArgs.view"
+              [minView]="dateArgs.view"
+              [week]="dateArgs.isweek"
+              (dateChange)="onchange()"
+            />
+          </div>
         </div>
-      </div>
-      <div class="head-filter-item">
-        <div class="head-filter-item-title three">行政区</div>
-        <div class="head-filter-item-value three">
-          <select [(ngModel)]="selected.type">
-            <option
-              [ngValue]="UserResourceType.County"
-              *ngIf="resourceType === UserResourceType.City"
-            >
-              {{ Language.UserResourceType(UserResourceType.County) }}
-            </option>
-            <option [ngValue]="UserResourceType.Committees">
-              {{ Language.UserResourceType(UserResourceType.Committees) }}
-            </option>
-            <option [ngValue]="UserResourceType.Station">
-              {{ Language.UserResourceType(UserResourceType.Station) }}
-            </option>
-          </select>
+        <div class="filter-item">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value">
+            <select [(ngModel)]="selected.type" (change)="ontype()">
+              <option
+                [ngValue]="UserResourceType.County"
+                *ngIf="resourceType === UserResourceType.City"
+              >
+                {{ Language.UserResourceType(UserResourceType.County) }}
+              </option>
+              <option [ngValue]="UserResourceType.Committees">
+                {{ Language.UserResourceType(UserResourceType.Committees) }}
+              </option>
+              <option [ngValue]="UserResourceType.Station">
+                {{ Language.UserResourceType(UserResourceType.Station) }}
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="head-filter-item" *ngIf="selected.child !== selected.type">
-        <div class="head-filter-item-title two">筛选</div>
-        <div class="head-filter-item-value two">
-          <select [(ngModel)]="selected.division" (change)="onfilter()">
-            <option [ngValue]="undefined">请选择</option>
-            <option [ngValue]="item" *ngFor="let item of source">
-              {{ item.Name }}
-            </option>
-          </select>
+        <div class="filter-item" *ngIf="selected.child !== selected.type">
+          <div class="filter-item-title">筛选</div>
+          <div class="filter-item-value division">
+            <hw-select [(selected)]="selected.division" [cannull]="true">
+              <select [(ngModel)]="selected.division" (change)="onfilter()">
+                <option [ngValue]="item" *ngFor="let item of source">
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
         </div>
-      </div>
 
-      <div>
-        <button class="hw-blue-btn m-r-10" (click)="onsearch()">
-          <i class="mdi mdi-magnify"></i> 查询
-        </button>
-        <button class="hw-blue-btn m-r-10" (click)="onexcel()">
-          <i class="howell-icon-export"></i> 导出
-        </button>
-        <button class="hw-blue-btn" (click)="oncsv()">
-          <i class="howell-icon-export"></i> CSV
-        </button>
+        <div>
+          <button class="hw-blue-btn m-r-10" (click)="onsearch()">
+            <i class="mdi mdi-magnify"></i> 查询
+          </button>
+          <button class="hw-blue-btn m-r-10" (click)="onexcel()">
+            <i class="howell-icon-export"></i> 导出
+          </button>
+          <button class="hw-blue-btn" (click)="oncsv()">
+            <i class="howell-icon-export"></i> CSV
+          </button>
+        </div>
       </div>
     </div>
     <div class="head-search">

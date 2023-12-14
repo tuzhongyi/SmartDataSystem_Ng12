@@ -1,7 +1,9 @@
 <div class="level-division-panel">
   <level-list-panel
+    [(opened)]="opened"
     [nodes]="datas"
     [nulllanguage]="nulllanguage"
+    [cannull]="cannull"
     [selected]="selected"
     (selectedChange)="onchange($event)"
   >

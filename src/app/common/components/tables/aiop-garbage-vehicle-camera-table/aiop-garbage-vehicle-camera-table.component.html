@@ -15,12 +15,16 @@
         </tr>
       </thead>
     </table>
-    <div
-      class="body vertical-main"
-      #body
-      [ngClass]="{ full: page && page.RecordCount === pageSize }"
-    >
-      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+    <div class="body vertical-main">
+      <table
+        *ngIf="datas"
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        [ngStyle]="{
+          height: table_height
+        }"
+      >
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
         </colgroup>
@@ -31,9 +35,6 @@
               selected: this.selecteds.includes(item)
             }"
             (click)="onselected(item)"
-            [ngStyle]="{
-              height: tr_height
-            }"
           >
             <td>{{ item.Name }}</td>
             <td>{{ Language.CameraUsage(item.CameraUsage) }}</td>

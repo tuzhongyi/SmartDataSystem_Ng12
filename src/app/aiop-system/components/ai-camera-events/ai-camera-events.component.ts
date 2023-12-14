@@ -81,7 +81,6 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     BeginTime: TimeService.beginTime(this.today),
     EndTime: TimeService.endTime(this.today),
     EventType: EventType.None,
-    ModelName: '',
     Filter: false,
     PageIndex: 1,
     PageSize: 9,

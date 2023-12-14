@@ -1,44 +1,66 @@
 <div class="event-record-comparison">
   <div class="event-record-comparison-header">
     <div class="filter">
-      <div class="filter-item">
-        <span>选择时间</span>
-        <input
-          type="text"
-          DateTimePicker
-          [format]="dateFormat"
-          [(date)]="date"
-        />
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">选择时间</div>
+          <input
+            type="text"
+            DateTimePicker
+            [format]="dateFormat"
+            [(date)]="date"
+          />
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">类型</div>
+          <app-select-control
+            class="list-type-select"
+            [data]="userTypes"
+            (selectedChange)="onusertype($event)"
+          >
+          </app-select-control>
+        </div>
+        <div class="filter-item tree">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value tree">
+            <common-label-select
+              [autoclose]="true"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+              [(showDropDown)]="selection.show"
+              (removeDropItem)="selection.onremove($event)"
+            >
+              <howell-division-tree
+                *ngIf="selection.show"
+                [trigger]="selection.trigger"
+                [defaultIds]="selection.selectedIds"
+                [depth]="selection.depth"
+                [selectStrategy]="SelectStrategy.Multiple"
+                [resourceType]="divisionType"
+                [showStation]="divisionType === DivisionType.None"
+                (selectTreeNode)="selection.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+          <!-- <howell-division-station-tree-mult-filter
+            class="tree"
+            [divisionType]="divisionType"
+            [onlystation]="divisionType === DivisionType.None"
+            [clear]="treeclear"
+            (onselect)="onTreeSelect($event)"
+          >
+          </howell-division-station-tree-mult-filter> -->
+        </div>
+        <button class="hw-blue-btn search" (click)="search()">
+          <i class="mdi mdi-magnify"></i> 查询
+        </button>
+        <button class="hw-blue-btn excel" (click)="exportExcel()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn csv" (click)="exportCSV()">
+          <i class="howell-icon-export"></i> CSV
+        </button>
       </div>
-      <div class="filter-item">
-        <span>类型</span>
-        <app-select-control
-          class="list-type-select"
-          [data]="userTypes"
-          (selectedChange)="onusertype($event)"
-        >
-        </app-select-control>
-      </div>
-      <div class="filter-item tree">
-        <span>行政区</span>
-        <howell-division-station-tree-mult-filter
-          class="tree"
-          [divisionType]="divisionType"
-          [onlystation]="divisionType === DivisionType.None"
-          [clear]="treeclear"
-          (onselect)="onTreeSelect($event)"
-        >
-        </howell-division-station-tree-mult-filter>
-      </div>
-      <button class="hw-blue-btn search" (click)="search()">
-        <i class="mdi mdi-magnify"></i> 查询
-      </button>
-      <button class="hw-blue-btn excel" (click)="exportExcel()">
-        <i class="howell-icon-export"></i> 导出
-      </button>
-      <button class="hw-blue-btn csv" (click)="exportCSV()">
-        <i class="howell-icon-export"></i> CSV
-      </button>
     </div>
     <div class="selection">
       <app-select-control

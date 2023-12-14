@@ -8,94 +8,9 @@
     display: flex;
     justify-content: space-between;
 
-    .head {
-      &-sub {
-        display: flex;
-        justify-content: space-between;
-      }
-
-      &-filter {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        color: #cfd7ff;
-        margin-bottom: 10px;
-
-        &-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-right: 10px;
-
-          .time {
-            width: 210px;
-          }
-
-          &:last-child {
-            margin-right: 0;
-          }
-
-          &>* {
-            margin-right: 5px;
-
-            &:last-child {
-              margin-right: 0;
-            }
-          }
-
-          &-title {
-            width: 70px;
-
-            &.two {
-              width: 34px;
-            }
-
-            &.three {
-              width: 52px;
-            }
-          }
-
-          &-value {
-            width: calc(100% - 70px);
-
-            &.two {
-              width: calc(100% - 34px);
-            }
-
-            &.three {
-              width: calc(100% - 52px);
-            }
-
-            &.tree {
-              position: relative;
-              width: 320px;
-              color: #cfd7ff;
-              border: 1px solid #5e6ebf;
-
-              ::ng-deep {
-                .division-tree {
-                  .selected {
-                    font-size: 18px;
-                    display: flex;
-                    align-items: center;
-                  }
-                }
-              }
-            }
-
-          }
-        }
-      }
-
-      &-search {
-        display: flex;
-        justify-content: flex-end;
-
-        &>* {
-          height: 34px;
-          width: auto;
-        }
-
+    .filter-item-value.division {
+      &.division {
+        width: 250px;
       }
     }
   }

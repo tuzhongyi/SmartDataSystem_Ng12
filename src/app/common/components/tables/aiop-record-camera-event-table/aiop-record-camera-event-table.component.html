@@ -15,12 +15,17 @@
         </tr>
       </thead>
     </table>
-    <div
-      class="body"
-      #body
-      [ngClass]="{ full: page && page.RecordCount === pageSize }"
-    >
-      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0" #table>
+    <div class="body">
+      <table
+        *ngIf="datas"
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        #table
+        [ngStyle]="{
+          height: table_height
+        }"
+      >
         <colgroup>
           <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
         </colgroup>
@@ -29,9 +34,6 @@
             *ngFor="let item of datas; let i = index"
             [ngClass]="{ selected: selected === item }"
             (click)="onselect(item)"
-            [ngStyle]="{
-              height: tr_height
-            }"
           >
             <td>
               <div class="image">

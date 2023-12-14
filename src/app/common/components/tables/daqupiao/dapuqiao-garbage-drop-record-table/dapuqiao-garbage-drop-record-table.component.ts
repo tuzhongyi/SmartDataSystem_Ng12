@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
@@ -54,7 +46,6 @@ export class DapuqiaoGarbageDropRecordTableComponent
     this.pageSize = 9;
   }
 
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   Language = Language;
   widths = [
     undefined,

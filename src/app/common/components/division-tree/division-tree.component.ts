@@ -26,12 +26,13 @@ import {
   IDivisionTreeBusiness,
   IDivisionTreeComponent,
 } from './division-tree.model';
+import { DivisionTreeService } from './division-tree.service';
 
 @Component({
   selector: 'howell-division-tree',
   templateUrl: './division-tree.component.html',
   styleUrls: ['./division-tree.component.less'],
-  providers: [DivisionTreeBusiness],
+  providers: [DivisionTreeService, DivisionTreeBusiness],
 })
 export class DivisionTreeComponent
   extends CommonTree
@@ -132,6 +133,7 @@ export class DivisionTreeComponent
   load?: EventEmitter<void>;
   @Output()
   loaded: EventEmitter<CommonNestNode[]> = new EventEmitter();
+  @Input() trigger?: EventEmitter<string[]> = new EventEmitter();
 
   constructor(
     private defaultBusiness: DivisionTreeBusiness,
@@ -156,11 +158,7 @@ export class DivisionTreeComponent
   treeLoad = new EventEmitter<void>();
 
   ngOnInit(): void {
-    if (this.load) {
-      this.load.subscribe((x) => {
-        this._init();
-      });
-    }
+    this.regist();
     // 如果showDepth没有设置或者比depth大，则用depth的值
     if (this.showDepth == -1 || this.showDepth > this.depth)
       this.showDepth = this.depth;
@@ -168,6 +166,19 @@ export class DivisionTreeComponent
     this.business.showExtend = this.showStation;
     this.business.depthIsEnd = this.depthIsEnd;
     this._init();
+  }
+
+  regist() {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this._init();
+      });
+    }
+    if (this.trigger) {
+      this.trigger.subscribe((x) => {
+        this.toggleNodes(x);
+      });
+    }
   }
 
   private async _init() {

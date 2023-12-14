@@ -9,6 +9,7 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { TimeDataGroupExportConverter } from 'src/app/converter/exports/time-data-group-exports.converter';
@@ -17,6 +18,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
+import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IModel } from 'src/app/network/model/model.interface';
 import {
@@ -24,7 +26,10 @@ import {
   EChartOptions,
 } from '../../../charts/details-chart/details-chart.option';
 import { EventRecordComparisonBusiness } from './event-record-comparison.business';
-import { EventRecordComparisonOptions } from './EventRecordComparison.model';
+import {
+  DivisionSelection,
+  EventRecordComparisonOptions,
+} from './EventRecordComparison.model';
 
 @Component({
   selector: 'howell-event-record-comparison',
@@ -48,7 +53,8 @@ export class EventRecordComparisonComponent
     private local: LocalStorageService,
     private exports: ExportBusiness,
     business: EventRecordComparisonBusiness,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private global: GlobalStorageService
   ) {
     this.business = business;
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
@@ -70,7 +76,8 @@ export class EventRecordComparisonComponent
   config: EventRecordComparisonComponentConfig = {};
   datas?: ITimeDataGroup<number>[];
   selectIds?: string[];
-  treeclear: EventEmitter<void> = new EventEmitter();
+  selection = new DivisionSelection();
+  SelectStrategy = SelectStrategy;
   echartsLegend: LegendComponentOption = {
     show: true,
     right: '50px',
@@ -82,6 +89,9 @@ export class EventRecordComparisonComponent
   };
 
   ngOnInit(): void {
+    this.selection.select.subscribe((x) => {
+      this.selectIds = x.map((y) => y.Id);
+    });
     this.initUnits();
     this.initChartTypes();
     this.initDivisionTypes();
@@ -235,7 +245,35 @@ export class EventRecordComparisonComponent
   }
   onusertype(item: SelectItem) {
     this.divisionType = item.value;
-    this.treeclear.emit();
+    this.selection.depth = this.getdepth(this.divisionType);
+    this.selection.selecteds = [];
+  }
+
+  getdepth(type: DivisionType) {
+    switch (this.global.defaultDivisionType) {
+      case DivisionType.City:
+        switch (type) {
+          case DivisionType.County:
+            return 0;
+          case DivisionType.Committees:
+            return 1;
+          default:
+            break;
+        }
+        break;
+      case DivisionType.County:
+        switch (type) {
+          case DivisionType.Committees:
+            return 0;
+          default:
+            break;
+        }
+        break;
+
+      default:
+        break;
+    }
+    return 0;
   }
 
   onTreeSelect(ids: string[]) {

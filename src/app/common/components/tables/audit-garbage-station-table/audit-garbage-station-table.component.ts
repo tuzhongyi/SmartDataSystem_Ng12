@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -47,7 +39,7 @@ export class AuditGarbageStationTableComponent
     super();
     this.business = business;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   StationState = StationState;
   widths = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 

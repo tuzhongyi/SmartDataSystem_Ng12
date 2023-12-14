@@ -1,58 +1,48 @@
 <div class="garbage-station-window-details">
   <div class="garbage-station-window-details-header">
     <div class="filter">
-      <div class="filter-item">
-        <span>选择时间</span>
-        <input
-          type="text"
-          DateTimePicker
-          [format]="config.dateTimePicker.format"
-          [startView]="config.dateTimePicker.view"
-          [minView]="config.dateTimePicker.view"
-          [week]="config.dateTimePicker.week"
-          [(date)]="date"
-          (dateChange)="changeDate($event)"
-        />
-      </div>
-      <div class="filter-item">
-        <span>行政区</span>
-
-        <div class="content" style="width: 250px">
-          <common-label-select
-            [selectedNodes]="selectedNodes"
-            [autoclose]="true"
-            [showCloseIcon]="false"
-            [single]="true"
-            [(showDropDown)]="showDropDown"
-            [height]="'325px'"
-          >
-            <howell-division-tree
-              #tree
-              [depth]="1"
-              [resourceType]="type"
-              [defaultIds]="division ? [division.Id] : []"
-              (selectTreeNode)="onDivisionSelected($event)"
-            ></howell-division-tree>
-          </common-label-select>
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">选择时间</div>
+          <input
+            type="text"
+            DateTimePicker
+            [format]="config.dateTimePicker.format"
+            [startView]="config.dateTimePicker.view"
+            [minView]="config.dateTimePicker.view"
+            [week]="config.dateTimePicker.week"
+            [(date)]="date"
+            (dateChange)="changeDate($event)"
+          />
         </div>
-      </div>
-      <div class="filter-item">
-        <howell-garbage-station-filter
-          [divisionId]="division ? division.Id : undefined"
-          (select)="onStationSelected($event)"
-        >
-        </howell-garbage-station-filter>
-      </div>
+        <div class="filter-item">
+          <div class="filter-item-title">行政区</div>
 
-      <button class="hw-blue-btn search" (click)="search()">
-        <i class="mdi mdi-magnify"></i>查询
-      </button>
-      <button class="hw-blue-btn excel" (click)="exportExcel()">
-        <i class="howell-icon-export"></i>导出
-      </button>
-      <button class="hw-blue-btn csv" (click)="exportCSV()">
-        <i class="howell-icon-export"></i>CSV
-      </button>
+          <div class="filter-item-value">
+            <level-division-panel
+              [cannull]="true"
+              (selectedChange)="ondivision($event)"
+            ></level-division-panel>
+          </div>
+        </div>
+        <div class="filter-item">
+          <howell-garbage-station-filter
+            [divisionId]="division ? division.Id : undefined"
+            (select)="onStationSelected($event)"
+          >
+          </howell-garbage-station-filter>
+        </div>
+
+        <button class="hw-blue-btn search" (click)="search()">
+          <i class="mdi mdi-magnify"></i>查询
+        </button>
+        <button class="hw-blue-btn excel" (click)="exportExcel()">
+          <i class="howell-icon-export"></i>导出
+        </button>
+        <button class="hw-blue-btn csv" (click)="exportCSV()">
+          <i class="howell-icon-export"></i>CSV
+        </button>
+      </div>
     </div>
     <div class="selection">
       <app-select-control

@@ -16,9 +16,10 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
   @Input()
   cannull: boolean = true;
   @Input() nulllanguage = '请选择';
-
   @Input()
   nodes: ILevelListNode[] = [];
+  @Input() opened = false;
+  @Output() openedChange = new EventEmitter<boolean>();
 
   @Input()
   public set selected(v: ILevelListNode | undefined) {
@@ -36,7 +37,6 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
   constructor() {}
 
   handle: any;
-  opened = false;
 
   ngOnDestroy(): void {
     if (this.handle) {
@@ -50,10 +50,12 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
 
   onclose() {
     this.opened = false;
+    this.openedChange.emit(this.opened);
   }
 
   onclick(e: Event) {
     this.opened = !this.opened;
+    this.openedChange.emit(this.opened);
     e.stopImmediatePropagation();
   }
 

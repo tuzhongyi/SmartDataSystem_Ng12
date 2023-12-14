@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { CollectionTrashCan } from 'src/app/network/model/garbage-station/trash-can.model';
@@ -50,7 +42,6 @@ export class AiopGarbageCollectionPointTrashCanTableComponent
     this.business = business;
   }
 
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
   widths = ['15%', '20%', '15%', '15%', '25%', '10%'];
 
   ngOnInit(): void {

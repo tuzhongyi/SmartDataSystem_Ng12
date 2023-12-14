@@ -9,50 +9,8 @@
     justify-content: space-between;
     align-items: center;
 
-    .filter {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-
-      &>* {
-        margin-right: 10px;
-
-        &:last-child {
-          margin-right: 0px;
-        }
-      }
-
-
-      &-item {
-        white-space: nowrap;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-
-        &>span {
-          color: #cfd7ff;
-          font-size: 18px;
-          margin-right: 10px;
-        }
-
-        &>input {
-          height: 32px;
-        }
-
-        &>howell-division-tree-filter {
-          width: 250px;
-        }
-
-        ::ng-deep {
-          .division-station-tree-filter .selected label {
-            font-size: 18px;
-          }
-
-
-        }
-
-      }
-
+    .filter-item-value {
+      min-width: 250px;
     }
 
     .selection {

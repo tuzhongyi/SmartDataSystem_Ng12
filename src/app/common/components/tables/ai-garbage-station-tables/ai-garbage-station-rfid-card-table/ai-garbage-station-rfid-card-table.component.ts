@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageRfidCard } from 'src/app/network/model/ai-garbage/rfid-card.model';
@@ -46,11 +38,11 @@ export class AIGarbageStationRfidCardTableComponent
 
   constructor(private business: AIGarbageStationRfidCardTableBusiness) {
     super();
-    this.pageSize = 10;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   widths: string[] = [];
   ngOnInit(): void {
+    this.pageSize = 10;
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {
@@ -66,7 +58,7 @@ export class AIGarbageStationRfidCardTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10, ...args: any[]): void {
+  loadData(index: number, size: number = this.pageSize, ...args: any[]): void {
     this.selecteds = [];
     this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {

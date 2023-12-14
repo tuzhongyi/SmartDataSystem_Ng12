@@ -30,3 +30,8 @@ export type DivisionTreeSource =
   | GarbageVehicle
   | VehicleCamera
   | CollectionPoint;
+
+export class DivisionTreeConverterArgs {
+  onlystation = false;
+  depth = -1;
+}

@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
@@ -51,7 +43,7 @@ export class AIGarbageStationRegionTableComponent
     super();
     this.pageSize = 10;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   widths: string[] = ['20%', '20%'];
   ngOnInit(): void {
     if (this.load) {

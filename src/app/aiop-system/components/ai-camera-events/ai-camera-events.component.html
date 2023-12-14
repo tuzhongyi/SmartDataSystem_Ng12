@@ -80,12 +80,16 @@
         <div class="filter-group">
           <div class="title"><span class="hw-form-label">AI模型</span></div>
           <div class="content">
-            <select [(ngModel)]="searchInfo.ModelName">
-              <option value="">全部</option>
-              <option [value]="model.ModelName" *ngFor="let model of aiModels">
-                {{ model.ModelName }}
-              </option>
-            </select>
+            <hw-select [(selected)]="searchInfo.ModelName" [cannull]="true">
+              <select [(ngModel)]="searchInfo.ModelName">
+                <option
+                  [ngValue]="model.ModelName"
+                  *ngFor="let model of aiModels"
+                >
+                  {{ model.ModelName }}
+                </option>
+              </select>
+            </hw-select>
           </div>
         </div>
       </div>

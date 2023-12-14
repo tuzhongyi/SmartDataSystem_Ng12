@@ -28,17 +28,12 @@
     </div>
     <div class="filter-item select">
       <div class="filter-item-title">行政区</div>
-      <!-- <app-select-control
-      class="list-type-select"
-      [data]="model.divisions"
-      [load]="loadDivision"
-      (selectedChange)="ondivision($event)"
-    ></app-select-control> -->
-      <howell-division-tree-filter
-        class="filter-item-value division"
-        (select)="ondivision($event)"
-        [align]="HorizontalAlign.left"
-      ></howell-division-tree-filter>
+      <div class="filter-item-value division">
+        <level-division-panel
+          [cannull]="true"
+          (selectedChange)="ondivision($event)"
+        ></level-division-panel>
+      </div>
     </div>
     <div class="filter-item">
       <div class="filter-item-title">投放点</div>

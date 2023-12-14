@@ -10,7 +10,10 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
-import { DivisionTreeSource } from './division-tree.model';
+import {
+  DivisionTreeConverterArgs,
+  DivisionTreeSource,
+} from './division-tree.model';
 
 const DivisionNodeIconType = new Map([
   [UserResourceType.City, 'howell-icon-earth'],
@@ -23,14 +26,17 @@ const DivisionNodeIconType = new Map([
   providedIn: 'root',
 })
 export class DivisionTreeConverter extends CommonTreeConverter {
-  Convert(source: DivisionTreeSource, onlystation?: boolean): CommonNestNode {
+  Convert(
+    source: DivisionTreeSource,
+    args?: DivisionTreeConverterArgs
+  ): CommonNestNode {
     // DivisionNode 继承自 Division,要先判断掉
     if (source instanceof DivisionNode) {
       return this._fromDivisionNode(source);
     } else if (source instanceof Division) {
-      return this._fromDivision(source);
+      return this._fromDivision(source, args?.depth);
     } else if (source instanceof GarbageStation) {
-      return this._fromGarbageStation(source, onlystation);
+      return this._fromGarbageStation(source, args?.onlystation);
     } else if (source instanceof GarbageVehicle) {
       return this._fromGarbageVehicle(source);
     } else if (source instanceof VehicleCamera) {
@@ -58,11 +64,11 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     return node;
   }
 
-  private _fromDivision(item: Division) {
+  private _fromDivision(item: Division, depth = 0) {
     const node = new CommonNestNode();
     node.Id = item.Id;
     node.Name = item.Name;
-    node.HasChildren = !item.IsLeaf;
+    node.HasChildren = depth === 0 ? false : !item.IsLeaf;
     node.ParentId = item.ParentId;
     node.ChildrenLoaded = false;
     node.ParentNode = undefined;

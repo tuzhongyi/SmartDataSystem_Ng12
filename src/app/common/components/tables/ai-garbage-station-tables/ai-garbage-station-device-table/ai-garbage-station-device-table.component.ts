@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
@@ -67,13 +59,13 @@ export class AIGarbageStationDeviceTableComponent
 
   constructor(private business: AIGarbageStationDeviceTableBusiness) {
     super();
-    this.pageSize = 10;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   Command = AIGarbageDeviceCommandNo;
   widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
   DeviceState = AIGarbageDeviceState;
   ngOnInit(): void {
+    this.pageSize = 10;
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {
@@ -89,7 +81,7 @@ export class AIGarbageStationDeviceTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10, ...args: any[]): void {
+  loadData(index: number, size: number = this.pageSize, ...args: any[]): void {
     this.selecteds = [];
     this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {

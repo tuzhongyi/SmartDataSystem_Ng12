@@ -40,7 +40,7 @@ class AIGarbageStationDeviceDetailsWindow extends WindowViewModel {
   }
   style = {
     width: '800px',
-    height: '600px',
+    height: '740px',
   };
   model?: AIGarbageDevice;
 }

@@ -20,7 +20,7 @@ export interface AICameraEventsSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   EventType: EventType;
-  ModelName: string;
+  ModelName?: string;
   Filter: boolean;
   PageIndex: number;
   PageSize: number;

@@ -17,12 +17,12 @@
       </div>
       <div class="filter-item">
         <div class="filter-item-title">行政区</div>
-        <howell-division-tree-filter
-          class="filter-item-value tree"
-          (select)="ondivisionselect($event)"
-          [align]="treeAlign"
-          [division]="division"
-        ></howell-division-tree-filter>
+        <div class="filter-item-value">
+          <level-division-panel
+            [cannull]="true"
+            (selectedChange)="ondivision($event)"
+          ></level-division-panel>
+        </div>
       </div>
       <button class="hw-blue-btn search" (click)="search()">
         <i class="mdi mdi-magnify"></i> 查询

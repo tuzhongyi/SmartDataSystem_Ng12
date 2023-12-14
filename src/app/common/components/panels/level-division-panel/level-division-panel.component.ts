@@ -16,19 +16,16 @@ import { LevelDivisionPanelBusiness } from './level-division-panel.business';
 export class LevelDivisionPanelComponent
   implements IComponent<IModel, ILevelListNode[]>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, ILevelListNode[]>;
-  @Input()
-  selected?: ILevelListNode;
-  @Input()
-  nulllanguage = '请选择';
-  @Output()
-  selectedChange: EventEmitter<ILevelListNode> = new EventEmitter();
+  @Input() business: IBusiness<IModel, ILevelListNode[]>;
+  @Input() cannull: boolean = true;
+  @Input() nulllanguage = '请选择';
+  @Input() selected?: ILevelListNode;
+  @Output() selectedChange: EventEmitter<ILevelListNode> = new EventEmitter();
 
   constructor(business: LevelDivisionPanelBusiness) {
     this.business = business;
   }
-
+  opened = false;
   datas: ILevelListNode[] = [];
 
   ngOnInit(): void {
@@ -42,6 +39,7 @@ export class LevelDivisionPanelComponent
       if (node) {
         let division = node as Division;
         if (division.DivisionType === DivisionType.Committees) {
+          this.opened = false;
           return;
         }
       }

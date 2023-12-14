@@ -6,12 +6,13 @@ export abstract class CommonTreeConverter {
 
   // 数据以数组形式
   iterateToNestNode<T extends Array<CommonTreeModel>>(
-    data: T
+    data: T,
+    depth: number = -1
   ): CommonNestNode[] {
     let res: CommonNestNode[] = new Array<CommonNestNode>();
     for (let i = 0; i < data.length; i++) {
       let item = data[i];
-      const node = this.Convert(item);
+      const node = this.Convert(item, depth);
       res.push(node);
     }
     return res;

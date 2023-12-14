@@ -1,12 +1,10 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   Input,
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 
@@ -48,7 +46,6 @@ export class DeviceListTableComponent
   selected?: DeviceViewModel;
   OnlineStatus = OnlineStatus;
   widths = ['10%', '15%', '10%', '15%', '15%', '10%', '15%'];
-  @ViewChild('body') bodyElement?: ElementRef;
 
   ngOnDestroy(): void {}
 

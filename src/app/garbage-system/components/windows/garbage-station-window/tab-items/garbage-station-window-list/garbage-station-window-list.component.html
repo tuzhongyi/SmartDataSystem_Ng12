@@ -8,20 +8,10 @@
         <div class="filter-item">
           <div class="filter-item-title">行政区</div>
           <div class="filter-item-value">
-            <common-label-select
-              [single]="true"
-              [autoclose]="true"
-              [(showDropDown)]="selection.show"
-              [selectedNodes]="selection.selecteds"
-              [height]="'325px'"
-            >
-              <howell-division-tree
-                #tree
-                [resourceType]="selection.type"
-                [defaultIds]="selection.default"
-                (selectTreeNode)="selection.onselect($event)"
-              ></howell-division-tree>
-            </common-label-select>
+            <level-division-panel
+              [cannull]="true"
+              (selectedChange)="ondivision($event)"
+            ></level-division-panel>
           </div>
         </div>
         <div class="filter-item">

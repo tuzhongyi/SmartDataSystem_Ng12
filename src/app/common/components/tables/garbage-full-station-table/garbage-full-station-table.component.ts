@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
@@ -53,7 +45,7 @@ export class GarbageFullStationTableComponent
     super();
     this.business = business;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   widths = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
   searchOptions?: SearchOptions;
   StationState = StationState;

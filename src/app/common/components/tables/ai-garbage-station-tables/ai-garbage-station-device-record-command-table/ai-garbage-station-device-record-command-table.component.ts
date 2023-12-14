@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Language } from 'src/app/common/tools/language';
 import { AIGarbageDeviceCommandRecord } from 'src/app/network/model/ai-garbage/device-command-record.model';
@@ -46,7 +38,7 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
   ) {
     super();
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   Language = Language;
   override widths = [
     '15%',
@@ -59,6 +51,7 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
     '20%',
   ];
   ngOnInit(): void {
+    this.pageSize = 10;
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {
@@ -74,7 +67,7 @@ export class AIGarbageStationDeviceRecordCommandTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10, ...args: any[]): void {
+  loadData(index: number, size: number = this.pageSize, ...args: any[]): void {
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;
       this.datas = x.Data;

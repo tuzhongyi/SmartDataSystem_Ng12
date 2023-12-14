@@ -1,12 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { User } from 'src/app/network/model/garbage-station/user.model';
@@ -37,11 +29,11 @@ export class AIOPUserTableComponent
   constructor(business: AIOPUserTableBusiness) {
     super();
     this.business = business;
-    this.pageSize = 10;
   }
-  @ViewChild('body') bodyElement?: ElementRef<HTMLDivElement>;
+
   widths = [];
   ngOnInit(): void {
+    this.pageSize = 10;
     if (this.load) {
       this.load.subscribe((x) => {
         this.args = x;
@@ -51,7 +43,7 @@ export class AIOPUserTableComponent
     this.loadData(1);
   }
 
-  loadData(index: number, size: number = 10): void {
+  loadData(index: number, size: number = this.pageSize): void {
     this.loading = true;
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;
