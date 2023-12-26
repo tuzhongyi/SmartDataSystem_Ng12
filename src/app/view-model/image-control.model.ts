@@ -11,7 +11,7 @@ export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
   name: string;
   src: Promise<string>;
   onerror: string;
-  status: OnlineStatus;
+  status?: OnlineStatus;
   camera: T;
   eventTime?: Date;
   polygon?: EventDataObject[];
@@ -42,7 +42,7 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
   src!: Promise<string>;
   id!: string;
   onerror!: string;
-  status: OnlineStatus = OnlineStatus.Offline;
+  status?: OnlineStatus;
   index = 0;
   polygon?: EventDataObject[];
   rules?: EventRule[];

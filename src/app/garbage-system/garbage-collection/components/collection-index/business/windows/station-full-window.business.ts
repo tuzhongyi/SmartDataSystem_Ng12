@@ -16,7 +16,7 @@ export class GarbageStationFullWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '83.5%',
+    height: '90%',
     width: '90%',
     transform: 'translate(-50%, -44.5%)',
   };

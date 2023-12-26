@@ -15,7 +15,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   public showExtend = false;
   public depthIsEnd = false;
 
-  public nestedNodeMap = new Map<string, CommonNestNode<Division>>();
+  public nestedNodeMap = new Map<string, CommonNestNode<any>>();
 
   constructor(
     private service: DivisionTreeService,
@@ -23,9 +23,11 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   ) {}
 
   // 相当于默认请求 condition==''的区划
-  load(type: DivisionType = DivisionType.City, depth: number = 0) {
+  async load(type: DivisionType = DivisionType.City, depth: number = 0) {
     this.nestedNodeMap.clear();
-    return this._getDataRecursively(type, depth);
+    await this._getDataRecursively(type, depth);
+    let array = Array.from(this.nestedNodeMap.values());
+    return array;
   }
 
   async loadChildren(flat: CommonFlatNode<Division>) {
@@ -121,6 +123,15 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
   ) {
     if (depth < 0) return [];
     let data = await this.getData(type);
+
+    if (depth === 0) {
+      for (let i = 0; i < data.length; i++) {
+        let item = data[i];
+        if (item instanceof Division) {
+          item.IsLeaf = true;
+        }
+      }
+    }
 
     let nodes = this._converter.iterateToNestNode(data, depth);
     this._register(nodes);

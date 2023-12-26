@@ -29,7 +29,7 @@ export class GarbageStationOperateBusiness
     return this.getData(stationId);
   }
   getData(stationId: string): Promise<GarbageStation> {
-    return this.service.get(stationId);
+    return this.service.cache.get(stationId);
   }
 
   create(station: GarbageStation) {

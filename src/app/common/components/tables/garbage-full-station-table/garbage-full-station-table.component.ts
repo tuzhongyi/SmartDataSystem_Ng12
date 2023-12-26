@@ -46,7 +46,7 @@ export class GarbageFullStationTableComponent
     this.business = business;
   }
 
-  widths = ['15%', '15%', '15%', '15%', '15%', '15%', '15%'];
+  widths = ['15%', '15%', '15%', '15%', '10%', '15%', '20%'];
   searchOptions?: SearchOptions;
   StationState = StationState;
   selected?: GarbageFullStationTableModel;

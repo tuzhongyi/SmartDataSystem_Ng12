@@ -87,19 +87,6 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
     return this.typeBasic.paged(url, params);
   }
 
-  async all(params: GetGarbageStationsParams = new GetGarbageStationsParams()) {
-    let data: GarbageStation[] = [];
-    let index = 1;
-    let paged: PagedList<GarbageStation>;
-    do {
-      params.PageIndex = index;
-      paged = await this.list(params);
-      data = data.concat(paged.Data);
-      index++;
-    } while (index <= paged.Page.PageCount);
-    return data;
-  }
-
   manualCapture(stationId: string): Promise<CameraPictureUrl[]> {
     let url = GarbageStationUrl.manualcapture(stationId);
     return this.basic.postArray(url, CameraPictureUrl);

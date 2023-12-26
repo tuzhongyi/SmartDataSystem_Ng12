@@ -16,7 +16,7 @@ export class CollectionPointModelConverter
     let plain = instanceToPlain(source);
     let model = plainToInstance(CollectionPointModel, plain);
     if (source.DivisionId) {
-      model.Division = this.service.get(source.DivisionId);
+      model.Division = this.service.cache.get(source.DivisionId);
     }
     return model;
   }

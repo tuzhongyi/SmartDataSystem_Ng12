@@ -26,7 +26,7 @@ export class DivisionManageBusiness implements IDivisionManageBusiness {
     division.UpdateTime = new Date();
 
     if (parentId) {
-      let parent = await this.service.get(parentId);
+      let parent = await this.service.cache.get(parentId);
       division.DivisionType = EnumHelper.GetDivisionChildType(
         parent.DivisionType
       );
@@ -45,7 +45,7 @@ export class DivisionManageBusiness implements IDivisionManageBusiness {
     return res;
   }
   async update(id: string, model: DivisionManageModel) {
-    let division = await this.service.get(id);
+    let division = await this.service.cache.get(id);
     division.Name = model.Name;
     division.Description = model.Description;
     let res = await this.service.update(division);

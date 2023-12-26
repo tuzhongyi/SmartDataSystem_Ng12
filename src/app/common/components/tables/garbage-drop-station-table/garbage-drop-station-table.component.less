@@ -1,84 +1,91 @@
 .garbage-drop-station-table {
+  width: 100%;
   height: 100%;
-
+  // border: 3px solid violet;
+  overflow: auto;
   display: flex;
   flex-direction: column;
 
+  table {
+    width: 100%;
+
+    th {
+      text-align: left;
+
+      &.center {
+        text-align: center;
+      }
+    }
+  }
+
+
+  &-header {
+    // background-color: rgb(0, 255, 85);
+  }
+
   &-main {
+    // background-color: red;
+    flex-basis: 0;
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
     overflow: auto;
 
-    .table-header {
-      flex-shrink: 0;
+    .img-list {
+      display: flex;
+      align-items: center;
+      height: 36px;
 
-      table {
-        width: calc(100% - 4px);
+      .img {
+        width: 44px;
+        margin-right: 10px;
 
-        thead {
-          //   color: black;
-          //   background-color: white;
+        app-image-control {
+          width: 100%;
+          height: 100%;
         }
       }
     }
 
-    .table-body {
-      flex-grow: 1;
+    .body table tbody tr.zoom:hover .img-list {
+      height: 80px;
+
+      .img {
+        width: 100px
+      }
+    }
+
+    ::ng-deep {
+      .body {
+        height: calc(100% - 60px);
+      }
+    }
+
+
+    &-footer {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+      height: 50px;
+      border-top: 1px solid #7586e0;
+      padding: 0 20px;
+      box-sizing: border-box;
       overflow: auto;
 
-      &.full {
-        table {
-          height: 100%;
+      .footer-item {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
 
-          tr {
-            height: unset;
+        .footer-info {
+          display: flex;
 
-            td {
-              .img-list {
-                .img {
-                  img {
-                    height: 100%;
-                  }
-                }
-              }
-            }
+          .info-item {
+            margin: 10px;
+            font-size: 14px;
+            color: #cfd7ff;
           }
         }
       }
     }
   }
 
-  &-footer {
-    flex-shrink: 0;
-  }
-
-  .img-list {
-    display: flex;
-    align-items: center;
-    height: 36px;
-    width: 0;
-    // overflow: auto;
-
-    .img {
-      width: 44px;
-      flex-shrink: 0;
-      margin-right: 10px;
-
-      app-image-control {
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-
-  // &-main {
-  //   height: 100%;
-
-  //   ::ng-deep {
-  //     .body {
-  //       height: calc(100% - 70px - 50px);
-  //     }
-  //   }
-  // }
 }

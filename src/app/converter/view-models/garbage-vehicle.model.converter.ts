@@ -16,7 +16,7 @@ export class GarbageVehicleModelConverter
     let plain = instanceToPlain(source);
     let model = plainToInstance(GarbageVehicleModel, plain);
     if (source.DivisionId) {
-      model.Division = this.service.get(source.DivisionId);
+      model.Division = this.service.cache.get(source.DivisionId);
     }
     return model;
   }

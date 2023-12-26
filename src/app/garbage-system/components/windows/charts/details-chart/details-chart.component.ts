@@ -195,7 +195,9 @@ export class DetailsChartComponent
               name: titles[i],
               data: x.map((y) => y.value),
               color: ChartConfig.color[i],
-              areaStyle: {},
+              areaStyle: {
+                color: ChartConfig.itemColor[i],
+              },
               label: {
                 formatter: (params: CallbackDataParams) => {
                   return params.value.toString();
@@ -233,6 +235,9 @@ export class DetailsChartComponent
               color: ChartConfig.color[i],
               barWidth: `${32 / this.data.length}px`,
               barMinHeight: 5,
+              itemStyle: {
+                color: ChartConfig.itemColor[i],
+              },
               label: {
                 show: true,
                 position: 'top',

@@ -60,7 +60,10 @@
           </div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="role.selected">
-              <select [(ngModel)]="role.selected" [disabled]="!!user">
+              <select
+                [(ngModel)]="role.selected"
+                [disabled]="!!user && !!(user.Role && user.Role.length > 0)"
+              >
                 <option [ngValue]="item" *ngFor="let item of role.datas">
                   {{ item.Name }}
                 </option>

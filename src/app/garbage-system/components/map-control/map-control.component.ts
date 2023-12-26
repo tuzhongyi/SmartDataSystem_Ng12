@@ -15,9 +15,11 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { Flags } from 'src/app/common/tools/flags';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
 import { EnumHelper } from 'src/app/enum/enum-helper';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
@@ -290,7 +292,7 @@ export class MapControlComponent
       this.mixedIntoClicked.emit(x);
     });
     this.amap.event.menu.garbagedrop.subscribe((x) => {
-      this.garbageCountClicked.emit(x);
+      this.garbageRetentionClicked.emit(x);
     });
     this.amap.event.menu.video.subscribe((x) => {
       this.onPointDoubleClicked(x);
@@ -393,8 +395,18 @@ export class MapControlComponent
   onPointInfoPanelMixedIntoClickedEvent(station: IModel) {
     this.mixedIntoClicked.emit(station as GarbageStation);
   }
-  onPointInfoPanelStateClickedEvent(station: IModel) {
-    this.garbageFullClicked.emit(station as GarbageStation);
+  onPointInfoPanelStateClickedEvent(model: IModel) {
+    let station = model as GarbageStation;
+    let flags = new Flags(station.StationState);
+
+    if (flags.contains(StationState.Full)) {
+      this.garbageFullClicked.emit(station);
+    } else if (flags.contains(StationState.Error)) {
+      this.garbageCountClicked.emit(station);
+    }
+  }
+  onPointInfoPanelDropClickedEvent(model: IModel) {
+    this.garbageRetentionClicked.emit(model as GarbageStation);
   }
 
   GarbageTimeFilter = GarbageTimeFilter;

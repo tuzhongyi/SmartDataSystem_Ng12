@@ -24,6 +24,8 @@ export class MapPointInfoPanelModel<T = IModel> {
   type: StationType = StationType.Garbage;
   location: string = '';
   device?: GarbageDeviceData;
+  dryWeight = 0;
+  wetWeight = 0;
 }
 
 export class LargeWastePointInfoPanelModel extends ConstructionData {}

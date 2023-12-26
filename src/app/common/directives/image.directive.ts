@@ -28,11 +28,24 @@ export class ImageDirective implements OnInit, OnChanges {
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.url && this.url) {
-      this.ele.style.backgroundImage = `url(${this.url})`;
-      setTimeout(() => {
-        this.ele.style.backgroundImage = `url(${this.url}), url(${this.default})`;
-      }, 1000);
+      this.get(this.url).then((x) => {
+        this.ele.style.backgroundImage = `url(${x})`;
+      });
     }
   }
+
+  get(url: string) {
+    return new Promise<string>((resolve) => {
+      let img = new Image();
+      img.src = url;
+      img.onerror = () => {
+        resolve(this.default);
+      };
+      img.onload = () => {
+        resolve(url);
+      };
+    });
+  }
+
   private ele: HTMLElement;
 }

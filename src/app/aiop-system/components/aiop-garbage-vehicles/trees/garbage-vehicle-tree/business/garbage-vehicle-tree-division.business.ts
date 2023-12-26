@@ -11,7 +11,7 @@ export class GarbageVehicleTreeDivisionBusiness {
   constructor(private service: CollectionDivisionRequestService) {}
 
   get(id: string) {
-    return this.service.get(id);
+    return this.service.cache.get(id);
   }
 
   async all() {

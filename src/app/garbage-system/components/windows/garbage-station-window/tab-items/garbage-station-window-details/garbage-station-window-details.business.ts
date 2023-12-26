@@ -4,6 +4,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -42,7 +43,7 @@ export class GarbageStationWindowDetailsBusiness
     params.BeginTime = duration.begin;
     params.EndTime = duration.end;
     params.GarbageStationIds = opts.stationIds;
-    params.TimeUnit = opts.unit;
+    params.TimeUnit = TimeUnit.Day;
     return this.stationService.statistic.number.history.list(params);
   }
 

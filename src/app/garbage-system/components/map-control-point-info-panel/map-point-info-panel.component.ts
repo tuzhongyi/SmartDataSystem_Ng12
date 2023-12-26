@@ -63,6 +63,7 @@ export class MapPointInfoPanelComponent
    */
   @Output()
   StateClickedEvent: EventEmitter<IModel> = new EventEmitter();
+  @Output() drop: EventEmitter<IModel> = new EventEmitter();
 
   @Output()
   GarbageRetentionClickedEvent: EventEmitter<IModel> = new EventEmitter();
@@ -130,10 +131,14 @@ export class MapPointInfoPanelComponent
       if (
         flags.contains(StationState.Error) ||
         flags.contains(StationState.Full)
-      )
+      ) {
         if (this.StateClickedEvent) {
           this.StateClickedEvent.emit(this.Source);
         }
+      }
+      if (item.className === 'drop') {
+        this.drop.emit(this.Source);
+      }
     } else if (this.Source instanceof GarbageVehicle) {
       this.Source.State;
     }

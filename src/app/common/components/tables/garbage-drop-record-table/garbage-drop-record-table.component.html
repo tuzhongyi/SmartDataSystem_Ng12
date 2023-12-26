@@ -51,12 +51,12 @@
               <div class="img-list">
                 <div class="img-list-content">
                   <div
+                    image
+                    [url]="url"
                     class="img"
                     *ngFor="let url of item.urls | async; let index = index"
                     (click)="onimage($event, item, index)"
-                  >
-                    <img [src]="url" alt="" />
-                  </div>
+                  ></div>
                 </div>
               </div>
             </td>

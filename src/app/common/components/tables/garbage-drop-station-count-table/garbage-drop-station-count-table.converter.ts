@@ -88,14 +88,14 @@ export class GarbageDropStationCountTableItemConverter
   async GetParentByStation(stationId: string) {
     let station = await this.service.station.get(stationId);
     if (station.DivisionId) {
-      return this.service.division.get(station.DivisionId!);
+      return this.service.division.cache.get(station.DivisionId!);
     }
     return undefined;
   }
   async GetParentByDivision(divisionId: string) {
-    let current = await this.service.division.get(divisionId);
+    let current = await this.service.division.cache.get(divisionId);
     if (current.ParentId) {
-      return this.service.division.get(current.ParentId);
+      return this.service.division.cache.get(current.ParentId);
     }
     return undefined;
   }

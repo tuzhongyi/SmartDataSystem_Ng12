@@ -35,6 +35,6 @@ export class GarbageStationWeightTableDivisionService {
   }
 
   get(id: string) {
-    return this.service.get(id);
+    return this.service.cache.get(id);
   }
 }

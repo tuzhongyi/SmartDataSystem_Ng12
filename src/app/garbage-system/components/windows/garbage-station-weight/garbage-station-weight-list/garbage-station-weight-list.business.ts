@@ -13,7 +13,7 @@ export class GarbageStationWeightListBusiness {
 
     let params = new GetDivisionsParams();
     params.DivisionType = EnumHelper.ConvertUserResourceToDivision(child);
-    let paged = await this.service.list(params);
+    let paged = await this.service.cache.list(params);
     return paged.Data;
   }
 }

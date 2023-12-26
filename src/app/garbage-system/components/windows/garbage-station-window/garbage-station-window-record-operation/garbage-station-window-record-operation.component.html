@@ -15,12 +15,13 @@
     <i class="mdi mdi-magnify"></i>
     查询
   </button>
-  <app-select-control
-    class="list-type-select"
-    [data]="listTypes"
-    [style]="{ fontFamily: 'HowellFont' }"
-    (selectedChange)="onListTypeSelect($event)"
-  ></app-select-control>
+  <div class="list-type-select">
+    <app-select-control
+      [data]="listTypes"
+      [style]="{ fontFamily: 'HowellFont' }"
+      (selectedChange)="onListTypeSelect($event)"
+    ></app-select-control>
+  </div>
   <button class="hw-cyan-m-btn" (click)="onfilter()">
     <i class="mdi mdi-filter-outline"></i>
   </button>

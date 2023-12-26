@@ -30,12 +30,13 @@
       <div class="head-filter-item" style="width: 300px">
         <div class="head-filter-item-title three">投放点</div>
         <div class="head-filter-item-value three">
-          <select [(ngModel)]="selected.station">
-            <option [ngValue]="undefined">请选择</option>
-            <option [ngValue]="item" *ngFor="let item of stations">
-              {{ item.Name }}
-            </option>
-          </select>
+          <hw-select [(selected)]="selected.station" [cannull]="true">
+            <select [(ngModel)]="selected.station">
+              <option [ngValue]="item" *ngFor="let item of stations">
+                {{ item.Name }}
+              </option>
+            </select>
+          </hw-select>
         </div>
       </div>
       <div>

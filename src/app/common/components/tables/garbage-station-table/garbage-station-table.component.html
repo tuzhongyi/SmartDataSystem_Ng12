@@ -13,7 +13,9 @@
           <td>街道</td>
           <td>居委会</td>
           <td>类型</td>
-          <td>状态</td>
+          <td>干垃圾重量</td>
+          <td>湿垃圾重量</td>
+          <td class="center">状态</td>
           <td class="operation"><div>操作</div></td>
         </tr>
       </thead>
@@ -41,12 +43,12 @@
             <td>
               <div class="img-list">
                 <div
+                  image
                   class="img"
                   *ngFor="let url of item.urls | async; let index = index"
                   (click)="onimage($event, item, index)"
-                >
-                  <img [src]="url" alt="" />
-                </div>
+                  [url]="url"
+                ></div>
               </div>
             </td>
             <td>
@@ -75,28 +77,21 @@
               }}
             </td>
             <td>{{ Language.StationType(item.GarbageStation.StationType) }}</td>
-            <td>
-              <span
-                [ngClass]="{
-                  'green-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Normal
-                  ),
-                  'orange-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Full
-                  ),
-                  'gray-2-text': item.GarbageStation.StationStateFlags.contains(
-                    StationState.Error
-                  )
-                }"
-              >
-                {{
-                  item.GarbageStation
-                    ? Language.StationStateFlags(
-                        item.GarbageStation.StationStateFlags
-                      )
-                    : "-"
-                }}
-              </span>
+            <td>{{ item.GarbageStation.DryVolume ?? 0 }} KG</td>
+            <td>{{ item.GarbageStation.WetVolume ?? 0 }} KG</td>
+            <td class="center">
+              <ng-container *ngFor="let state of item.states; let i = index">
+                {{ i > 0 ? "/" : "" }}
+                <span
+                  [ngClass]="{
+                    'green-text': state === StationState.Normal,
+                    'orange-text': state === StationState.Full,
+                    'gray-2-text': state === StationState.Error
+                  }"
+                >
+                  {{ Language.StationState(state) }}
+                </span>
+              </ng-container>
             </td>
             <td class="operation">
               <div (click)="onPositionClicked(item)">

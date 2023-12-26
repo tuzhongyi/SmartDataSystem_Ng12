@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { Flags } from 'src/app/common/tools/flags';
 import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { EnumHelper } from 'src/app/enum/enum-helper';
@@ -43,6 +44,11 @@ export class GarbageStationTableConverter
     let model = new GarbageStationTableModel();
     model.GarbageStation = this.stationConverter.Convert(source);
     if (model.GarbageStation) {
+      let flags = new Flags(model.GarbageStation.StationState);
+      model.states = flags.getValues();
+      if (!model.states || model.states.length == 0) {
+        model.states = [0];
+      }
       model.urls = new Promise((resolve) => {
         if (model.GarbageStation.Cameras) {
           let all = model.GarbageStation.Cameras.filter(

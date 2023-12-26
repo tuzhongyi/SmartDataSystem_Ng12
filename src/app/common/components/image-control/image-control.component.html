@@ -1,6 +1,10 @@
 <div *ngIf="model" class="image-control" (click)="onClick($event)">
   <div *ngIf="nosignal" class="error">
-    <div *ngIf="model.status != OnlineStatus.Online">NO SIGNAL</div>
+    <div
+      *ngIf="model.status != undefined && model.status != OnlineStatus.Online"
+    >
+      NO SIGNAL
+    </div>
   </div>
   <!-- <img [src]="model.src" (error)="onError($event)" [title]="model.name" /> -->
   <div

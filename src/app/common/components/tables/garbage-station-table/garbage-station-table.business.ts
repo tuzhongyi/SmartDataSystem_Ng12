@@ -63,6 +63,7 @@ export class GarbageStationTableBusiness
         params.StationState = parseInt(state, 2);
       }
     }
+
     params.StationType = args.type;
     params.CommunityName = args.communityName;
     params.Name = args.stationName;

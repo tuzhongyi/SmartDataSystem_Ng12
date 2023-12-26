@@ -17,6 +17,27 @@
     <i class="howell-icon-map5 icon"></i>
     <div class="content">{{ model.address }}</div>
   </div>
+
+  <div class="item">
+    <div
+      class="item"
+      title="干垃圾重量"
+      *ngIf="model.type === StationType.Construction"
+      style="margin-right: 10px"
+    >
+      <i class="howell-icon-residual icon"></i>
+      <div class="content">{{ model.dryWeight }} KG</div>
+    </div>
+    <div
+      class="item"
+      title="湿垃圾重量"
+      *ngIf="model.type !== StationType.Construction"
+    >
+      <i class="howell-icon-kitchen icon"></i>
+      <div class="content">{{ model.wetWeight }} KG</div>
+    </div>
+  </div>
+
   <div class="item" *ngIf="model.powerTime" title="最后一次NB上电请求时间">
     <i class="howell-icon-time icon"></i>
     <div class="content">
@@ -33,6 +54,7 @@
     <i class="mdi mdi-signal icon"></i>
     <div class="content">{{ model.signal ?? 0 }} %</div>
   </div>
+
   <div
     class="item"
     *ngIf="!(model.powerOn === undefined)"

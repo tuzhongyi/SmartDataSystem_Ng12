@@ -153,7 +153,10 @@ export class GarbageStationWindowDetailsComponent
               type: 'line',
               name: data.Name,
               data: data.datas.map((x) => x.value),
-              areaStyle: {},
+
+              areaStyle: {
+                color: ChartConfig.itemColor[i],
+              },
               label: {
                 formatter: '',
               },
@@ -179,6 +182,10 @@ export class GarbageStationWindowDetailsComponent
               data: data.datas.map((x) => x.value),
               barWidth: '15px',
               barMinHeight: 5,
+
+              itemStyle: {
+                color: ChartConfig.itemColor[i],
+              },
               label: {
                 show: true,
                 position: 'top',

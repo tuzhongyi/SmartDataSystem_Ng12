@@ -62,6 +62,8 @@ export class GarbageFullStationTableConverter
     }
 
     model.GarbageStation = this.service.cache.get(source.Id).then((station) => {
+      let flags = new Flags(station.StationState);
+      model.states = flags.getValues();
       return this.stationConverter.Convert(station);
     });
 

@@ -93,11 +93,11 @@ export class GarbageDropEventRecordConverter
     model.urls = Promise.all(all);
 
     if (source.Data.DivisionId) {
-      model.Committees = this.division.get(source.Data.DivisionId);
+      model.Committees = this.division.cache.get(source.Data.DivisionId);
       model.County = model.Committees.then((committees) => {
         return new Promise((resolve) => {
           if (committees.ParentId) {
-            resolve(this.division.get(committees.ParentId));
+            resolve(this.division.cache.get(committees.ParentId));
           }
         });
       });

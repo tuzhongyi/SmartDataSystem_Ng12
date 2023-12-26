@@ -10,14 +10,14 @@ export class GarbageStationWeightListDivisionService {
   async byType(type?: DivisionType) {
     let params = new GetDivisionsParams();
     params.DivisionType = type;
-    let paged = await this.service.list(params);
+    let paged = await this.service.cache.list(params);
     return paged.Data;
   }
 
   async byParentId(parentId?: string) {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
-    let paged = await this.service.list(params);
+    let paged = await this.service.cache.list(params);
     return paged.Data;
   }
 }

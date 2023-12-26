@@ -94,7 +94,7 @@ export class DivisionTreeComponent
   }
 
   // 展示数据的深度，一般等于 depth
-  private _showDepth: number = -1;
+  private _showDepth: number = 2;
   @Input()
   set showDepth(val: number) {
     if (val < 0) {

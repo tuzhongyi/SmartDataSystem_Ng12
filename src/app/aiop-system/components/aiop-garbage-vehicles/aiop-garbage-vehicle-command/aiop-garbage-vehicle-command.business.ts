@@ -19,7 +19,7 @@ export class AIOPGarbageVehicleCommandBusiness {
       throw new Error();
     }
     return promise.then((x) => {
-      return this.service.get(id);
+      return this.service.cache.get(id);
     });
   }
 }

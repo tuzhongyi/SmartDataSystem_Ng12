@@ -82,7 +82,7 @@ export class EventRecordConverter
   ): Promise<EventRecordViewModel> {
     let model = new EventRecordViewModel();
     model = Object.assign(model, source);
-    let station = await this.service.get(source.Data.StationId);
+    let station = await this.service.cache.get(source.Data.StationId);
     model.GarbageStation = await this.stationConverter.Convert(station);
 
     let img: CameraImageUrl = {

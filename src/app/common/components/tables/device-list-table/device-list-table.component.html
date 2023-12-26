@@ -46,15 +46,12 @@
             (click)="onselect(item)"
           >
             <td>
-              <div class="img" (click)="imageClick($event, item)">
-                <img
-                  loading="lazy"
-                  width="100%"
-                  height="100%"
-                  (error)="onerror($event)"
-                  [src]="item.image.src | async"
-                />
-              </div>
+              <div
+                image
+                [url]="item.image.src | async"
+                class="img"
+                (click)="imageClick($event, item)"
+              ></div>
             </td>
             <td>{{ item.Name }}</td>
             <td>

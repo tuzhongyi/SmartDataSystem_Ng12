@@ -36,6 +36,32 @@ export class ChartConfig {
 
   theme: EChartsTheme = EChartsTheme.adsame;
   static color = ['#7586e0', '#ffba00', '#21E452'];
+  static itemColor = [
+    new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#7586e0' },
+      { offset: 1, color: 'rgb(117,134,224,0.5)' },
+    ]),
+
+    new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#ffba00' },
+      { offset: 1, color: 'rgb(255,186,0,0.5)' },
+    ]),
+
+    new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#32b43e' },
+      { offset: 1, color: 'rgb(50,180,62,0.5)' },
+    ]),
+
+    new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#2ac3e2' },
+      { offset: 1, color: 'rgb(42,195,226,0.5)' },
+    ]),
+
+    new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+      { offset: 0, color: '#ef6464' },
+      { offset: 1, color: 'rgb(239,100,100,0.5)' },
+    ]),
+  ];
   static title = ['垃圾滞留', '垃圾滞留超时'];
   getOption(
     unit: TimeUnit,

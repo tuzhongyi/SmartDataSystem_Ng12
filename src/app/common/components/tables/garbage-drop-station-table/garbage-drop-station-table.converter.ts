@@ -64,7 +64,7 @@ export class GarbageDropStationTableConverter
     if (source.MaxGarbageTime) {
       model.MaxGarbageDuration = new Date(source.MaxGarbageTime * 60 * 1000);
     }
-    model.GarbageStation = this.service.get(source.Id).then((station) => {
+    model.GarbageStation = this.service.cache.get(source.Id).then((station) => {
       return this.stationConverter.Convert(station);
     });
 

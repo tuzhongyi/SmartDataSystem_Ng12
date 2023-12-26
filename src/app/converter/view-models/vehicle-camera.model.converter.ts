@@ -15,7 +15,7 @@ export class VehicleCameraModelConverter
   Convert(source: VehicleCamera, ...res: any[]): VehicleCameraModel {
     let plain = instanceToPlain(source);
     let model = plainToInstance(VehicleCameraModel, plain);
-    model.GarbageVehicle = this.service.get(source.GarbageVehicleId);
+    model.GarbageVehicle = this.service.cache.get(source.GarbageVehicleId);
     return model;
   }
 }

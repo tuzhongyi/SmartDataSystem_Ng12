@@ -43,7 +43,15 @@ export class EventRecordTableSewageComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
-  widths = ['20%', undefined, undefined, undefined, undefined, '210px'];
+  widths = [
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    undefined,
+    '210px',
+  ];
   selected?: EventRecordViewModel;
 
   async ngOnInit() {

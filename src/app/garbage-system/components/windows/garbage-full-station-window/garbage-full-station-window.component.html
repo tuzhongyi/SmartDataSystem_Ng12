@@ -10,6 +10,7 @@
           <howell-event-record-operation
             (filter)="record.filter.display()"
             (search)="record.filter.onsearch($event)"
+            (typeChange)="onTypeChange($event)"
           >
           </howell-event-record-operation>
         </div>
@@ -37,13 +38,26 @@
           >
           </interval-division-station-filter>
           <div class="event-record-table" [class.filter]="record.filter.show">
-            <howell-event-record-table
-              [type]="type"
-              [load]="record.filter.load"
-              (image)="onimage($event)"
-              (video)="onvideo($event)"
-            >
-            </howell-event-record-table>
+            <ng-container *ngIf="listType === ListType.table">
+              <howell-event-record-table
+                [load]="record.filter.load"
+                [type]="type"
+                [filter]="record.filter.filter"
+                (image)="onimage($event)"
+                (video)="onvideo($event)"
+              >
+              </howell-event-record-table>
+            </ng-container>
+            <ng-container *ngIf="listType === ListType.card">
+              <howell-event-record-list
+                [type]="type"
+                [load]="record.filter.load"
+                (image)="onimage($event)"
+                (video)="onvideo($event)"
+                [filter]="record.filter.filter"
+              >
+              </howell-event-record-list>
+            </ng-container>
           </div>
         </mat-tab>
       </mat-tab-group>

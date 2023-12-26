@@ -66,6 +66,7 @@ export class AIOPGarbageStationTableComponent
   }
   ondetails(e: Event, item: GarbageStationModel) {
     this.details.emit(item);
+    e.stopPropagation();
   }
   toselect(type: TableSelectType) {
     switch (type) {

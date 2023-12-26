@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { Medium } from 'src/app/common/tools/medium';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { EventRecordCardModel } from '../../../cards/event-record-card/event-record-card.model';
@@ -43,6 +44,12 @@ export class EventRecordListItemConverter
       model.parent = await this.service.cache.get(model.station.DivisionId);
     }
     model.img = Medium.img(source.ImageUrl);
+
+    if (source.EventType === EventType.GarbageFull) {
+      if (source.urls && source.urls.length > 0) {
+        model.img = source.urls[0];
+      }
+    }
 
     return model;
   }

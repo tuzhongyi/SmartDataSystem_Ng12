@@ -28,6 +28,8 @@ export class MapPointInfoPanelConverter
     model.address = source.Address ?? '';
     model.members = source.Members;
     model.type = source.StationType;
+    model.dryWeight = source.DryVolume ?? 0;
+    model.wetWeight = source.WetVolume ?? 0;
     if (source.GisPoint) {
       model.location = `${source.GisPoint.Longitude.toFixed(
         6
@@ -38,14 +40,16 @@ export class MapPointInfoPanelConverter
 
     if (source.DivisionId) {
       model.committeeName = new Promise((got) => {
-        this.service.division.get(source.DivisionId!).then((division) => {
+        this.service.division.cache.get(source.DivisionId!).then((division) => {
           got(division.Name);
 
           model.roadName = new Promise((gotRoadName) => {
             if (division.ParentId) {
-              this.service.division.get(division.ParentId).then((parent) => {
-                gotRoadName(parent.Name);
-              });
+              this.service.division.cache
+                .get(division.ParentId)
+                .then((parent) => {
+                  gotRoadName(parent.Name);
+                });
             }
           });
         });
