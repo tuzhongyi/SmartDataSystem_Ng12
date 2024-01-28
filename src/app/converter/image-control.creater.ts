@@ -129,6 +129,8 @@ export class ImageControlCreater {
       {
         eventTime: data.EventTime,
         stationId: data.Data.StationId,
+        rules: data.Data.Rules,
+        polygon: data.Data.Objects,
       }
     );
   }

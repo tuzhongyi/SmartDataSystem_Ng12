@@ -184,6 +184,11 @@ export class EventRecordConverter
     let model = await this.fromEventRecord(source);
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
+
+    if (model.images && model.images.length > 0) {
+      model.images[0].polygon = source.Data.Objects;
+      model.images[0].rules = source.Data.Rules;
+    }
     return model;
   }
 }

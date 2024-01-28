@@ -65,6 +65,10 @@ export class DateTimeTool {
     let day = date.getDate();
     let weekDay = date.getDay() - firstDay;
 
+    if (weekDay < 0) {
+      weekDay = weekDay + 7;
+    }
+
     let begin = new Date(year, month, day);
     begin.setDate(begin.getDate() - weekDay);
     begin.toISOString;

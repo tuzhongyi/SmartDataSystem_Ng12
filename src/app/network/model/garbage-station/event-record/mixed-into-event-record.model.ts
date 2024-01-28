@@ -1,6 +1,7 @@
 import { Transform } from 'class-transformer';
 import { transformDateTime } from '../../transform.model';
 import { EventDataObject } from '../event-data-object.model';
+import { EventRule } from '../event-rule';
 import { EventRecordData } from './garbage-event-record.model';
 
 /** 混合投放事件 */
@@ -23,6 +24,8 @@ export class MixedIntoEventData {
   GridCellId?: string;
   /**	String	网格单元名称	O */
   GridCellName?: string;
+  /**	EventRule[]	事件规则	O */
+  Rules?: EventRule[];
   /**	DateTime	处置时间	O	*/
   @Transform(transformDateTime)
   HandleTime?: Date;
