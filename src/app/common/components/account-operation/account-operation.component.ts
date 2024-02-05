@@ -85,8 +85,26 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     this.session.clear();
     this.local.clear();
     this.global.destroy();
-    this.router.navigateByUrl('/login');
     this.service.clear();
+    // if (this.cookie.check('savePassWord')) {
+    //   this.cookie.delete('savePassWord');
+    // }
+    // if (this.cookie.check('userName')) {
+    //   this.cookie.delete('userName');
+    // }
+    // if (this.cookie.check('passWord')) {
+    //   this.cookie.delete('passWord');
+    // }
+    // if (this.cookie.check('autoLogin')) {
+    //   this.cookie.delete('autoLogin');
+    // }
+    // if (this.cookie.check('savePassWord')) {
+    //   let item = this.cookie.get('savePassWrod');
+    //   console.log(item);
+    // }
+    this.cookie.deleteAll('/');
+
+    this.router.navigateByUrl('/login');
     // if (this._cookieService.check('savePassWord')) {
     //   let savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
     //   if (!savePassWord) {

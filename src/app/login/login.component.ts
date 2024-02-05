@@ -139,19 +139,15 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       // console.log(res);
       userName = res.groups!['userName'];
 
-      console.log(userName);
-
       let passWord = this._cookieService.get('passWord');
-      // console.log(passWord);
+
       passWord = atob(passWord);
-      // console.log(passWord);
+
       let res2 = passWord.match(
         /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
       )!;
-      // console.log(res2);
-      passWord = res2.groups!['passWord'];
 
-      console.log(passWord);
+      passWord = res2.groups!['passWord'];
 
       this.formGroup.patchValue({
         userName: userName,
