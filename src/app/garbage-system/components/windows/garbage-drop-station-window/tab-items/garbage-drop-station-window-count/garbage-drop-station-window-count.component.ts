@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import {
   ChangeDetectorRef,
   Component,
@@ -106,7 +105,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   }
 
   getTitle() {
-    let title = formatDate(this.args.date, 'yyyy年MM月dd日', 'en');
+    let title = Language.Date(this.args.date, this.args.unit);
     let type = EnumHelper.ConvertDivisionToUserResource(this.args.type);
     title += ' ' + Language.UserResourceType(type);
     title += ' 垃圾滞留总数据';

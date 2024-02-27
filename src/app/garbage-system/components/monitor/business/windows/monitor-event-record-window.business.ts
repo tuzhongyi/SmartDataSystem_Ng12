@@ -17,8 +17,10 @@ import {
 } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
 import { MonitorCardRecordEpisodeWindow } from './monitor-card-record-episode-window.business';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
 
 @Injectable()
@@ -26,7 +28,8 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
   constructor(
     private image: MonitorImageWindowBusiness,
     private card: MonitorCardRecordEpisodeWindow,
-    private video: MonitorVideoWindowBusiness
+    private video: MonitorVideoWindowBusiness,
+    private media: MonitorMediaWindowBusiness
   ) {
     super();
   }
@@ -73,12 +76,33 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
 
   async onvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
-      this.video.title = item.ResourceName ?? '';
-      this.video.mask = true;
-      this.video.playback(
-        item.ResourceId,
-        DateTimeTool.beforeOrAfter(item.EventTime)
-      );
+      // if (item.EventType === EventType.MixedInto) {
+      //   this.media.multiple.args = new MediaMultipleWindowArgs();
+      //   this.media.multiple.args.stationId = item.Data.StationId;
+      //   this.media.multiple.args.time = item.EventTime;
+      //   this.media.multiple.date = item.EventTime;
+      //   this.media.multiple.show = true;
+      // } else
+      {
+        this.video.title = item.ResourceName ?? '';
+        this.video.mask = true;
+        this.video.playback(
+          item.ResourceId,
+          DateTimeTool.beforeOrAfter(item.EventTime)
+        );
+      }
+    }
+  }
+
+  async onallvideo(item: EventRecordViewModel) {
+    if (item.ResourceId) {
+      if (item.EventType === EventType.MixedInto) {
+        this.media.multiple.args = new MediaMultipleWindowArgs();
+        this.media.multiple.args.stationId = item.Data.StationId;
+        this.media.multiple.args.time = item.EventTime;
+        this.media.multiple.date = item.EventTime;
+        this.media.multiple.show = true;
+      }
     }
   }
 }

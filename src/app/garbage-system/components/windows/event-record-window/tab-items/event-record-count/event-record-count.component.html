@@ -46,7 +46,11 @@
       </button>
     </div>
     <div class="selection">
-      <select class="list-type-select" [(ngModel)]="unit">
+      <select
+        class="list-type-select"
+        [(ngModel)]="unit"
+        (change)="ontimeunit()"
+      >
         <option [ngValue]="TimeUnit.Day">
           {{ Language.TimeUnit(TimeUnit.Day) }}
         </option>

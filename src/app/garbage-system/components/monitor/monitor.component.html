@@ -202,6 +202,7 @@
   [get]="window.image.page.getData"
   (got)="window.image.page.gotData($event)"
   (card)="window.record.oncard($event)"
+  (allvideo)="window.record.onallvideo($event)"
 >
 </howell-event-record-window>
 
@@ -231,6 +232,7 @@
   [style]="window.full.style"
   (image)="window.full.onimage($event)"
   (video)="window.full.onvideo($event)"
+  (allvideo)="window.full.onallvideo($event)"
 >
 </howell-garbage-full-station-window>
 

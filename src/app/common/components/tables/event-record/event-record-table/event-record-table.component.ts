@@ -34,6 +34,8 @@ export class EventRecordTableComponent {
   @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
     new EventEmitter();
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
+
   EventType = EventType;
 
   constructor(
@@ -64,5 +66,8 @@ export class EventRecordTableComponent {
       let src = await model.images[0].src;
       this.download.image(src, model.ResourceName ?? '', model.EventTime);
     }
+  }
+  onallvideo(model: EventRecordViewModel) {
+    this.allvideo.emit(model);
   }
 }

@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
@@ -51,8 +50,7 @@ export class EventRecordCountComponent implements OnInit {
   Language = Language;
   ngOnInit(): void {}
 
-  ontimeunit(unit: SelectItem) {
-    this.unit = unit.value;
+  ontimeunit() {
     switch (this.unit) {
       case TimeUnit.Week:
         this.config.dateTimePicker.view = DateTimePickerView.month;
@@ -84,7 +82,7 @@ export class EventRecordCountComponent implements OnInit {
   }
   private getTitle() {
     let eventType = Language.EventType(this.eventType);
-    let date = formatDate(this.date, this.config.dateTimePicker.format, 'en');
+    let date = Language.Date(this.date, this.unit);
     let userType = Language.UserResourceType(this.userType);
     return `${date}${userType}${eventType}总数据`;
   }

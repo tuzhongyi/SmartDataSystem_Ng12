@@ -272,14 +272,12 @@ export class MapControlComponent
 
     this.amap.event.mapclick.subscribe(() => {
       this.onMapClicked();
-      this.info.station = undefined;
     });
     this.amap.event.point.count.subscribe((count) => {
       this.pointCount = count;
     });
     this.amap.event.menu.click.subscribe((x) => {
       this.onMapClicked();
-      this.info.station = undefined;
     });
     this.amap.event.menu.information.subscribe((x) => {
       this.info.station = x;
@@ -370,6 +368,7 @@ export class MapControlComponent
   onMapClicked() {
     this.display.status = true;
     this.display.videoList = false;
+    this.info.station = undefined;
   }
   //#endregion
 
@@ -383,6 +382,7 @@ export class MapControlComponent
   }
 
   onPatrolClicked() {
+    this.onMapClicked();
     this.patrol.emit();
   }
 

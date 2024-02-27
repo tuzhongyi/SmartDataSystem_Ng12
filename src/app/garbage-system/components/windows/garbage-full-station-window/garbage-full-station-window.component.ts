@@ -27,6 +27,7 @@ export class GarbageFullStationWindowComponent
     PagedArgs<GarbageFullStationTableModel | EventRecordViewModel>
   > = new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   Index = GarbageFullStationWindowIndex;
 
@@ -60,6 +61,9 @@ export class GarbageFullStationWindowComponent
   }
   onTypeChange(type: ListType) {
     this.listType = type;
+  }
+  onallvideo(model: EventRecordViewModel) {
+    this.allvideo.emit(model);
   }
 }
 export enum GarbageFullStationWindowIndex {

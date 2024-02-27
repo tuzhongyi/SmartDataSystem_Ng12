@@ -38,6 +38,7 @@ export class EventRecordTableGarbageFullComponent
     new EventEmitter();
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
+  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   widths = ['20%', undefined, undefined, undefined, undefined, '210px'];
   selected?: EventRecordViewModel;
@@ -125,6 +126,12 @@ export class EventRecordTableGarbageFullComponent
     }
     this.image.emit({ page: page, data: item });
     if (this.selected === item) {
+      e.stopPropagation();
+    }
+  }
+  onallvideo(e: Event, model: EventRecordViewModel) {
+    this.allvideo.emit(model);
+    if (model === this.selected) {
       e.stopPropagation();
     }
   }

@@ -20,7 +20,7 @@
         [operation]="
           item.cameraId ? operation : { play: false, fullscreen: false }
         "
-        [playback]="playback"
+        [playback]="_playback[i]"
       ></app-image-video-control>
     </div>
   </ng-container>

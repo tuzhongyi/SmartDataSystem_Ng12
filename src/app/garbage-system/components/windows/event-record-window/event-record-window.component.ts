@@ -48,6 +48,7 @@ export class EventRecordWindowComponent
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
   @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
     new EventEmitter();
+  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
   constructor(
     public record: EventRecordWindowRecordBusiness,
     public details: EventRecordWindowDetailsBusiness,
@@ -87,6 +88,9 @@ export class EventRecordWindowComponent
   }
   onvideo(model: EventRecordViewModel) {
     this.video.emit(model);
+  }
+  onallvideo(model: EventRecordViewModel) {
+    this.allvideo.emit(model);
   }
 
   onTypeChange(type: ListType) {

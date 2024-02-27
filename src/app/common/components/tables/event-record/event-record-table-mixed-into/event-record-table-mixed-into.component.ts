@@ -43,6 +43,7 @@ export class EventRecordTableMixedIntoComponent
     new EventEmitter();
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
+  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
   widths = new Array(10);
 
@@ -131,6 +132,12 @@ export class EventRecordTableMixedIntoComponent
     }
     this.image.emit({ page: page, data: item });
     if (this.selected === item) {
+      e.stopPropagation();
+    }
+  }
+  onallvideo(e: Event, model: EventRecordViewModel) {
+    this.allvideo.emit(model);
+    if (model === this.selected) {
       e.stopPropagation();
     }
   }

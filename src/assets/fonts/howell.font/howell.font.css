@@ -2559,3 +2559,19 @@ a .howell-icon-flip-vertical:before {
 .howell-icon-smart_garbage:before {
     content: "\f395";
 }
+
+.howell-icon-garbage_1:before {
+    content: "\f396";
+}
+
+.howell-icon-garbage_2:before {
+    content: "\f397";
+}
+
+.howell-icon-garbage_ground:before {
+    content: "\f398";
+}
+
+.howell-icon-robot:before {
+    content: "\f399";
+}

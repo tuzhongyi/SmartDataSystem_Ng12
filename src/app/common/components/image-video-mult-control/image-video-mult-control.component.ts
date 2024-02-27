@@ -40,6 +40,8 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
 
   constructor() {}
 
+  _playback: EventEmitter<PlaybackInterval>[] = [];
+
   sqrt = 1;
   played?: ImageVideoControlModel;
   playing: (ImageVideoControlModel | undefined)[] = [];
@@ -53,8 +55,9 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       let pow = Math.pow(this.sqrt, 2);
       for (let i = this.models.length; i < pow; i++) {
         this.models.push(new ImageVideoControlModel(''));
-        this.playing = this.models.map((x) => undefined);
       }
+      this.playing = this.models.map((x) => undefined);
+      this._playback = this.models.map((x) => new EventEmitter());
     }
   }
 
@@ -70,6 +73,16 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
     if (this.change) {
       this.change.subscribe((x) => {
         this.onchange(x);
+      });
+    }
+    if (this.playback) {
+      this.playback.subscribe((x) => {
+        let index = this.playing.findIndex(
+          (y) => y && y.cameraId === x.CameraId
+        );
+        if (index >= 0) {
+          this._playback[index].emit(x);
+        }
       });
     }
   }

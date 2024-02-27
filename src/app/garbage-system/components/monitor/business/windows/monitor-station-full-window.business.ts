@@ -9,14 +9,17 @@ import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
+import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
 
 @Injectable()
 export class MonitorGarbageStationFullWindowBusiness extends WindowViewModel {
   constructor(
     private image: MonitorImageWindowBusiness,
-    private video: MonitorVideoWindowBusiness
+    private video: MonitorVideoWindowBusiness,
+    private media: MonitorMediaWindowBusiness
   ) {
     super();
   }
@@ -64,5 +67,15 @@ export class MonitorGarbageStationFullWindowBusiness extends WindowViewModel {
     this.video.title = name ?? '';
     this.video.mask = true;
     this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
+  }
+
+  async onallvideo(item: EventRecordViewModel) {
+    if (item.ResourceId) {
+      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args.stationId = item.Data.StationId;
+      this.media.multiple.args.time = item.EventTime;
+      this.media.multiple.date = item.EventTime;
+      this.media.multiple.show = true;
+    }
   }
 }

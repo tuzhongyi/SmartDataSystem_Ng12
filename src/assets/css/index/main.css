@@ -142,8 +142,8 @@ h2 {
   color: white;
   font-size: 18px;
   background-image: url("/assets/img/second-menu.png");
-  padding-left: 20px;
-  padding-right: 10px;
+  white-space: nowrap;
+  padding-left: 12px;
 }
 
 .second-menu-btn:hover {
