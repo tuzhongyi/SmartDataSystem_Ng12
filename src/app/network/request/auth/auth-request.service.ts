@@ -131,7 +131,8 @@ export class AuthorizationService implements CanActivate {
       try {
         let result = await this.login(url);
         if (result instanceof User) {
-          return this.toroute(result);
+          this.toroute(result);
+          return true;
         }
       } catch (error) {
         return this._router.parseUrl('/login');
