@@ -26,7 +26,7 @@ export class Time {
             break;
         }
       }
-    } else if (time instanceof Time) {
+    } else if (time instanceof Time || typeof time === 'object') {
       this.hour = time.hour;
       this.minute = time.minute;
       this.second = time.second;
