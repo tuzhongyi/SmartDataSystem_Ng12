@@ -107,9 +107,30 @@ export function transformFlags(params: TransformFnParams) {
 
 export function transformVersion(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    return params.value.toString(16);
+    if (typeof params.value === 'number') {
+      let values = [];
+      while (params.value > 0) {
+        let item = params.value & 255;
+        params.value >>= 8;
+        values.push(item);
+      }
+      while (values.length < 4) {
+        values.push(0);
+      }
+      return values.join('.');
+    } else {
+      return params.value;
+    }
   } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
-    return parseInt(`0x${params.value}`, 16);
+    if (params.value) {
+      let result = 0;
+      let values = params.value.split('.');
+      for (let i = 0; i < values.length; i++) {
+        result += parseInt(values[i]) << (8 * i);
+      }
+      return result;
+    }
+    return 0;
   } else if (params.type === TransformationType.CLASS_TO_CLASS) {
     return params.value;
   }
@@ -117,12 +138,21 @@ export function transformVersion(params: TransformFnParams) {
 
 export function transformBinary(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    let str = params.value.toString(2);
-    let value = [];
-    for (let i = 0; i < str.length.length; i++) {
-      value.push(parseInt(str.length[i]));
+    if (typeof params.value === 'number') {
+      if (params.value === 0) {
+        return [0];
+      }
+      let str = params.value.toString(2).split('').reverse().join('');
+      let value = [];
+      for (let i = 0; i < str.length; i++) {
+        let item = parseInt(str[i]);
+        if (item) {
+          value.push(i + 1);
+        }
+      }
+      return value;
     }
-    return value;
+    return params.value;
   } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
     let str = '';
     for (let i = 0; i < params.value.length; i++) {

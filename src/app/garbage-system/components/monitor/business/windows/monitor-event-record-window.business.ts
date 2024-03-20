@@ -99,8 +99,13 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
       if (item.EventType === EventType.MixedInto) {
         this.media.multiple.args = new MediaMultipleWindowArgs();
         this.media.multiple.args.stationId = item.Data.StationId;
-        this.media.multiple.args.time = item.EventTime;
-        this.media.multiple.date = item.EventTime;
+
+        let second = item.EventTime.getSeconds() - 30;
+
+        this.media.multiple.args.time = new Date(item.EventTime.getTime());
+        this.media.multiple.args.time.setSeconds(second);
+        this.media.multiple.date = new Date(item.EventTime.getTime());
+        this.media.multiple.date.setSeconds(second);
         this.media.multiple.show = true;
       }
     }

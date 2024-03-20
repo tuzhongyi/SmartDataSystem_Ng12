@@ -17,9 +17,7 @@ export class AIGarbageStationDeviceDetailsComponent implements OnInit {
   cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceDetailsBusiness) {}
-  ngOnInit(): void {
-    console.log(this.model);
-  }
+  ngOnInit(): void {}
 
   oncancel() {
     this.cancel.emit();

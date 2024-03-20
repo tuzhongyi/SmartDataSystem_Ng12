@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  EventEmitter,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -55,6 +56,7 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     point?: CesiumDataController.Point;
     node?: CommonFlatNode;
   } = {};
+  treetrigger = new EventEmitter<string[]>();
 
   @ViewChild('iframe') iframe!: ElementRef<HTMLIFrameElement>;
   ngOnInit(): void {
@@ -77,6 +79,7 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
       this.selected.point = point;
       this.business.station.get(point.id).then((x) => {
         this.selected.station = x;
+        this.treetrigger.emit([x.Id]);
       });
     });
   }

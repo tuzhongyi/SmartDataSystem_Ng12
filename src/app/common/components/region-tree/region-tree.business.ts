@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RegionTreeConverter } from 'src/app/converter/region-tree.converter';
 import { Region } from 'src/app/network/model/garbage-station/region';
-import { GetRegionsParams } from 'src/app/network/request/region/region.params';
 import { RegionRequestService } from 'src/app/network/request/region/region.service';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 
@@ -23,18 +22,20 @@ export class RegionTreeBusiness {
   async init(condition: string = '') {
     this.nestedNodeMap.clear();
 
-    let params = new GetRegionsParams();
-    params.Name = condition;
-
     // 结果是满足condition的数组,但是可能缺少父节点
-    let tmp = await this._listRegion(params);
+    let data = await this._listRegion();
+    if (condition) {
+      data = data.filter((x) =>
+        x.Name.toLocaleLowerCase().includes(condition.toLocaleLowerCase())
+      );
+    }
 
     // console.log('符合的区域', tmp.Data);
 
     // 要求condition必须为 "",才可使用该字段
-    this._regions = tmp.Data;
+    this._regions = data;
 
-    let nodes = this._converter.iterateToNestNode(tmp.Data);
+    let nodes = this._converter.iterateToNestNode(data);
 
     // nodes.unshift(extra)
     // 注册请求到的节点
@@ -111,8 +112,8 @@ export class RegionTreeBusiness {
     return this.init2(condition);
   }
 
-  private _listRegion(params: GetRegionsParams) {
-    return this._regionRequest.list(params);
+  private _listRegion() {
+    return this._regionRequest.all();
   }
 
   private _loadTree() {

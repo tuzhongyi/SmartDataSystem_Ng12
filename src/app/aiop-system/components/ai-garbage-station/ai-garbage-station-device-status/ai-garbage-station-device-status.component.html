@@ -4,106 +4,292 @@
   </div>
   <div class="ai-garbage-station-device-status-body">
     <div class="panel form-group" *ngIf="!!model.Status">
+      <div class="panel-head">
+        <div class="hw-simple-title">厢房状态</div>
+      </div>
       <div class="form-item">
         <div class="form-item-title">在线状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.OnlineState === 0,
-            'powder-red-text': model.Status.OnlineState !== 0
-          }"
+          [class]="Color.OnlineState(model.Status.OnlineState)"
         >
-          {{ model.Status.OnlineState === 0 ? "在线" : "离线" }}
+          {{
+            model.Status.OnlineState === undefined
+              ? "-"
+              : Language.OnlineState(model.Status.OnlineState)
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.ExhaustFan !== undefined">
+      <div class="form-item">
         <div class="form-item-title">排风扇开关状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.ExhaustFan !== 1,
-            'powder-red-text': model.Status.ExhaustFan === 1
-          }"
+          [class]="Color.OpenState(model.Status.ExhaustFan)"
         >
-          {{ model.Status.ExhaustFan === 1 ? "关闭" : "打开" }}
+          {{
+            model.Status.ExhaustFan === undefined
+              ? "-"
+              : Language.OpenState(model.Status.ExhaustFan)
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.Spray !== undefined">
+      <div class="form-item">
         <div class="form-item-title">香氛喷洒开关状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.Spray !== 1,
-            'powder-red-text': model.Status.Spray === 1
-          }"
+          [class]="Color.OpenState(model.Status.Spray)"
         >
-          {{ model.Status.Spray === 1 ? "打开" : "关闭" }}
+          {{
+            model.Status.Spray === undefined
+              ? "-"
+              : Language.OpenState(model.Status.Spray, true)
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.RfidReader !== undefined">
+      <div class="form-item">
         <div class="form-item-title">RFID读卡器状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.RfidReader === 0,
-            'powder-red-text': model.Status.RfidReader === 1
-          }"
+          [class]="Color.SwitchState(model.Status.RfidReader)"
         >
-          {{ model.Status.RfidReader === 1 ? "异常" : "正常" }}
+          {{
+            model.Status.RfidReader === undefined
+              ? "-"
+              : Language.SwitchState(model.Status.RfidReader)
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.GateState !== undefined">
+      <div class="form-item">
         <div class="form-item-title">大门开关状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.GateState === 0,
-            'powder-red-text': model.Status.GateState !== 0
-          }"
+          [class]="Color.OpenState(model.Status.GateState)"
         >
-          {{ model.Status.GateState === 0 ? "关闭" : "打开" }}
+          {{
+            model.Status.GateState === undefined
+              ? "-"
+              : Language.OpenState(model.Status.GateState, true)
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.AirPumpPower !== undefined">
+      <div class="form-item">
         <div class="form-item-title">气泵电源状态</div>
         <div
           class="form-item-value"
-          [ngClass]="{
-            'green-text': model.Status.AirPumpPower === 0,
-            'powder-red-text': model.Status.AirPumpPower === 1
-          }"
+          [class]="Color.SwitchState(model.Status.AirPumpPower)"
         >
-          {{ model.Status.AirPumpPower === 1 ? "上电" : "断电" }}
+          <ng-container [ngSwitch]="model.Status.AirPumpPower">
+            <span *ngSwitchCase="0">断电</span>
+            <span *ngSwitchCase="1">上电</span>
+            <span *ngSwitchDefault>-</span>
+          </ng-container>
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.AirPumpPressure !== undefined">
+      <div class="form-item">
         <div class="form-item-title">气泵压强数值，单位：pa</div>
         <div class="form-item-value">
-          {{ model.Status.AirPumpPressure }}
+          {{
+            model.Status.AirPumpPressure === undefined
+              ? "-"
+              : model.Status.AirPumpPressure
+          }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.GasSensor !== undefined">
+      <div class="form-item">
         <div class="form-item-title">气体检测传感器数值</div>
         <div class="form-item-value">
-          {{ model.Status.GasSensor }}
+          {{
+            model.Status.GasSensor === undefined ? "-" : model.Status.GasSensor
+          }}
         </div>
       </div>
       <div class="form-item" *ngFor="let state of model.Status.SwitchStates">
         <div class="form-item-title">{{ state.Name }}</div>
-        <div
-          class="form-item-value"
-          [ngClass]="{
-            'green-text': state.State,
-            'powder-red-text': !state.State
-          }"
-        >
-          {{ state.State ? "是" : "否" }}
+        <div class="form-item-value" [class]="Color.YesOrNo(state.State)">
+          {{ Language.YesOrNo(state.State) }}
         </div>
       </div>
-      <div class="form-item" *ngIf="model.Status.LastUpdateTime">
+      <div class="form-item end" *ngIf="model.Status.LastUpdateTime">
         <div class="form-item-title">最后更新时间</div>
         <div class="form-item-value" style="width: 150px">
-          {{ model.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss" }}
+          {{
+            model.Status.LastUpdateTime === undefined
+              ? "-"
+              : (model.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
+          }}
+        </div>
+      </div>
+    </div>
+    <div class="form-groups">
+      <div class="panel form-group" *ngIf="!!robot">
+        <div class="panel-head">
+          <div class="hw-simple-title">机器人状态</div>
+          <div
+            class="panel-head-opts"
+            *ngIf="!!robots && robots.items.length > 1"
+          >
+            <div
+              *ngFor="let item of robots.items; let index = index"
+              (click)="robots.onclick(index)"
+              [class.selected]="index === robots.index"
+            >
+              {{ index + 1 }}
+            </div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">机器人序列号</div>
+          <div class="form-item-value">
+            {{ robot.SerialNumber === undefined ? "-" : robot.SerialNumber }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">机器人型号</div>
+          <div class="form-item-value">
+            {{ robot.Model === undefined ? "-" : robot.Model }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">机器人状态</div>
+          <div class="form-item-value">
+            <ng-container *ngFor="let state of robot.State">
+              <span [class]="Color.RobotState(state)">
+                {{ Language.RobotState(state) }}
+              </span>
+            </ng-container>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">电池电量</div>
+          <div
+            class="form-item-value"
+            [class]="Color.BatteryLevel(robot.BatteryLevel)"
+          >
+            {{ robot.BatteryLevel === undefined ? "-" : robot.BatteryLevel }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">电池状态</div>
+          <div
+            class="form-item-value"
+            [class]="Color.BatteryState(robot.BatteryState)"
+          >
+            {{
+              robot.BatteryState === undefined
+                ? "-"
+                : Language.BatteryState(robot.BatteryState)
+            }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">错误码</div>
+          <div class="form-item-value code">
+            <ng-container *ngIf="!!errors">
+              <div
+                *ngFor="let error of errors.items; let index = index"
+                (click)="errors.onclick(index)"
+              >
+                <span *ngIf="index > 0">, </span
+                ><span
+                  class="powder-red-text _code"
+                  [class._code]="errors.items.length > 1"
+                  [class.selected]="
+                    index === errors.index && errors.items.length > 1
+                  "
+                  >{{ error.Code }}</span
+                >
+              </div>
+            </ng-container>
+            <div *ngIf="!errors || errors.items.length == 0">-</div>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">错误信息</div>
+          <div class="form-item-value message" [title]="error?.Desc">
+            {{ !error ? "-" : error.Desc }}
+          </div>
+        </div>
+        <!-- <div
+          class="form-items"
+          *ngIf="!!robot.Errors && robot.Errors.length > 0"
+        >
+          <div
+            class="form-item"
+            *ngFor="let error of robot.Errors; let index = index"
+          >
+            <div class="form-item-title">
+              <span>错误码({{ index + 1 }}/{{ robot.Errors.length }})：</span>
+              <span class="powder-red-text">
+                {{ error.Code }}
+              </span>
+            </div>
+            <div class="form-item-value" [title]="error.Desc">
+              {{ error.Desc }}
+            </div>
+          </div>
+        </div>
+        <div
+          class="form-items"
+          *ngIf="!robot.Errors || robot.Errors.length == 0"
+        >
+          <div class="form-item">
+            <div class="form-item-title">错误码</div>
+            <div class="form-item-value">-</div>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="panel form-group" *ngIf="!!gcha && !isEmpty(gcha)">
+        <div class="hw-simple-title">GCHA状态</div>
+        <div class="form-item">
+          <div class="form-item-title">在线状态</div>
+          <div
+            class="form-item-value"
+            [class]="Color.OnlineState(gcha.OnlineState)"
+          >
+            {{
+              gcha.OnlineState === undefined
+                ? "-"
+                : Language.OnlineState(gcha.OnlineState)
+            }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">分析服务状态</div>
+          <div
+            class="form-item-value"
+            [class]="Color.SwitchState(gcha.AnalysisServerState)"
+          >
+            {{
+              gcha.AnalysisServerState === undefined
+                ? "-"
+                : Language.SwitchState(gcha.AnalysisServerState)
+            }}
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">升级服务状态</div>
+          <div
+            class="form-item-value"
+            [class]="Color.SwitchState(gcha.UpgradeServerState)"
+          >
+            {{
+              gcha.UpgradeServerState === undefined
+                ? "-"
+                : Language.SwitchState(gcha.UpgradeServerState)
+            }}
+          </div>
+        </div>
+
+        <div class="form-item">
+          <div class="form-item-title">最后更新时间</div>
+          <div class="form-item-value" style="width: 150px">
+            {{
+              gcha.LastUpdateTime === undefined
+                ? "-"
+                : (gcha.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
+            }}
+          </div>
         </div>
       </div>
     </div>

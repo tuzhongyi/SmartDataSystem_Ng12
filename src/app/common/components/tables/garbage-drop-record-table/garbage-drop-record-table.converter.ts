@@ -1,8 +1,10 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -46,7 +48,8 @@ export class GarbageDropEventRecordConverter
 {
   constructor(
     private division: DivisionRequestService,
-    private station: GarbageStationRequestService
+    private station: GarbageStationRequestService,
+    private global: GlobalStorageService
   ) {}
   async Convert(
     source: GarbageDropEventRecord
@@ -68,11 +71,15 @@ export class GarbageDropEventRecordConverter
 
     model.status = Language.GarbageDropEventType(
       source.EventType,
-      source.Data.IsTimeout
+      this.global.defaultDivisionType === DivisionType.City
+        ? source.Data.IsSuperTimeout
+        : source.Data.IsTimeout
     );
     model.statusClass = Language.GarbageDropEventTypeClassName(
       source.EventType,
-      source.Data.IsTimeout
+      this.global.defaultDivisionType === DivisionType.City
+        ? source.Data.IsSuperTimeout
+        : source.Data.IsTimeout
     );
     let all: Promise<string>[] = [];
     if (source.Data.DropImageUrls) {

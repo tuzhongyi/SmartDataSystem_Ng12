@@ -15,13 +15,14 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { TaskTableBusiness } from './task-table.business';
+import { TaskTableConverter } from './task-table.converter';
 import { TaskTableViewModel } from './task-table.model';
 
 @Component({
   selector: 'app-task-table',
   templateUrl: './task-table.component.html',
   styleUrls: ['./task-table.component.css'],
-  providers: [TaskTableBusiness],
+  providers: [TaskTableConverter, TaskTableBusiness],
 })
 export class TaskTableComponent
   implements

@@ -1,6 +1,8 @@
 import { Transform, Type } from 'class-transformer';
 import { IModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
+import { GCHAStatus } from './gcha-status.model';
+import { RobotStatus } from './robot-status.model';
 import { SwitchState } from './switch-state.model';
 
 export class AIGarbageDeviceStatus implements IModel {
@@ -26,4 +28,10 @@ export class AIGarbageDeviceStatus implements IModel {
   /**	DateTime	最后更新时间	O	*/
   @Transform(transformDateTime)
   LastUpdateTime?: Date;
+  /**	RobotStatus[]	机器人状态	O */
+  @Type(() => RobotStatus)
+  Robots?: RobotStatus[];
+  /**	GCHAStatus	GCHA状态	O */
+  @Type(() => GCHAStatus)
+  GCHAStatus?: GCHAStatus;
 }

@@ -17,7 +17,7 @@ const PROXY_CONFIG = [
     ],
     // target: 'http://iebs.51hws.cn',
     // target: 'http://192.168.21.241:9000',
-    target: 'http://garbage01.51hws.cn',
+    target: 'http://garbage01.51hws.com',
     // target: 'http://192.168.21.122:8080',
     changeOrigin: true,
     secure: false,

@@ -2,7 +2,11 @@ import { Transform, Type } from 'class-transformer';
 import { IIdModel } from '../model.interface';
 
 import { PagedList } from '../page_list.model';
-import { transformDateTime, transformVersion } from '../transform.model';
+import {
+  transformArraySort,
+  transformDateTime,
+  transformVersion,
+} from '../transform.model';
 import { AIGarbageCamera } from './camera.model';
 import { AIGarbageDropWindow } from './drop-window.model';
 import { AIGarbageDeviceCapabilities } from './garbage-device-capabilities.model';
@@ -51,6 +55,7 @@ export class AIGarbageDevice implements IIdModel {
   CameraNumber?: number;
   /**	Camera[]	摄像机信息	O	*/
   @Type(() => AIGarbageCamera)
+  @Transform(transformArraySort)
   Cameras?: AIGarbageCamera[];
   /**	DeviceCapabilities	设备能力	O	*/
   @Type(() => AIGarbageDeviceCapabilities)

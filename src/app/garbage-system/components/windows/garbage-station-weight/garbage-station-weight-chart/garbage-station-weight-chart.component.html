@@ -1,57 +1,59 @@
 <div class="garbage-station-weight-chart">
   <div class="garbage-station-weight-chart-head">
-    <div class="head-filter">
-      <div class="head-filter-item">
-        <div class="head-filter-item-title">选择日期</div>
-        <div class="head-filter-item-value">
-          <input
-            type="text"
-            DateTimePicker
-            [(date)]="args.date"
-            [format]="dateArgs.format"
-            class="custom form-control time"
-            [startView]="dateArgs.view"
-            [minView]="dateArgs.view"
-            [week]="dateArgs.isweek"
-            (dateChange)="onchange()"
-          />
+    <div class="filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">选择日期</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              DateTimePicker
+              [(date)]="args.date"
+              [format]="dateArgs.format"
+              class="custom form-control time"
+              [startView]="dateArgs.view"
+              [minView]="dateArgs.view"
+              [week]="dateArgs.isweek"
+              (dateChange)="onchange()"
+            />
+          </div>
         </div>
-      </div>
-      <div class="head-filter-item" style="width: 300px">
-        <div class="head-filter-item-title">行政区</div>
-        <div class="head-filter-item-value">
-          <level-division-panel
-            class="list-type-select"
-            (selectedChange)="ondivision($event)"
+        <div class="filter-item" style="width: 300px">
+          <div class="filter-item-title">行政区</div>
+          <div class="filter-item-value">
+            <level-division-panel
+              class="list-type-select"
+              (selectedChange)="ondivision($event)"
+            >
+            </level-division-panel>
+          </div>
+        </div>
+        <div class="filter-item" style="width: 300px">
+          <div class="filter-item-title three">投放点</div>
+          <div class="filter-item-value three">
+            <hw-select [(selected)]="selected.station" [cannull]="true">
+              <select [(ngModel)]="selected.station">
+                <option [ngValue]="item" *ngFor="let item of stations">
+                  {{ item.Name }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div>
+          <button class="hw-blue-btn m-r-10" (click)="onsearch()">
+            <i class="mdi mdi-magnify"></i> 查询
+          </button>
+          <button
+            class="hw-blue-btn m-r-10"
+            (click)="ondownload(ExportType.chart)"
           >
-          </level-division-panel>
+            <i class="howell-icon-export"></i> 导出
+          </button>
+          <button class="hw-blue-btn" (click)="ondownload(ExportType.csv)">
+            <i class="howell-icon-export"></i> CSV
+          </button>
         </div>
-      </div>
-      <div class="head-filter-item" style="width: 300px">
-        <div class="head-filter-item-title three">投放点</div>
-        <div class="head-filter-item-value three">
-          <hw-select [(selected)]="selected.station" [cannull]="true">
-            <select [(ngModel)]="selected.station">
-              <option [ngValue]="item" *ngFor="let item of stations">
-                {{ item.Name }}
-              </option>
-            </select>
-          </hw-select>
-        </div>
-      </div>
-      <div>
-        <button class="hw-blue-btn m-r-10" (click)="onsearch()">
-          <i class="mdi mdi-magnify"></i> 查询
-        </button>
-        <button
-          class="hw-blue-btn m-r-10"
-          (click)="ondownload(ExportType.chart)"
-        >
-          <i class="howell-icon-export"></i> 导出
-        </button>
-        <button class="hw-blue-btn" (click)="ondownload(ExportType.csv)">
-          <i class="howell-icon-export"></i> CSV
-        </button>
       </div>
     </div>
     <div class="head-search">

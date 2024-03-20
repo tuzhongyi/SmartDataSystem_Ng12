@@ -9,7 +9,9 @@ export enum AIGarbageDeviceCommandNo {
   SelfCheck = 5,
   /** 	重启系统	6	*/
   Reboot = 6,
-  /** 	手动开关排风扇	10	*/
+  /** 	手动开关排风扇	9	*/
+  TCPConnection = 9,
+  /** 	开启TCP连接	10	*/
   ExhaustFan = 10,
   /** 	手动开关香氛喷洒	11	*/
   Spray = 11,
@@ -17,6 +19,12 @@ export enum AIGarbageDeviceCommandNo {
   DeviceInformation = 14,
   /** 投放窗口上电	参数1：投放窗口编号[1-16] 15 */
   WindowPowerOn = 15,
+  /**	22	GCHA自动程序升级检测 */
+  GCHAUpgradeCheck = 22,
+  /**	26	重启系统	 */
+  GCHAReboot = 26,
+  /**	29	开启TCP连接	参数1时长，单位：分钟 */
+  GCHATCP = 29,
 }
 export class AIGarbageDeviceCommand extends DeviceCommand {
   /**	Int32	命令编号	M */

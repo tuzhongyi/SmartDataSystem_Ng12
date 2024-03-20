@@ -38,7 +38,10 @@
         <tr>
           <td class="info-title">摄像机机位</td>
           <td class="info-value">
-            {{ selected.Position ? selected.Position : "无" }}
+            <span>{{ selected.Position ? selected.Position : "无" }}</span
+            ><span *ngIf="selected.Position"
+              >({{ Language.CameraPosition(selected.Position) }})</span
+            >
           </td>
         </tr>
         <tr>

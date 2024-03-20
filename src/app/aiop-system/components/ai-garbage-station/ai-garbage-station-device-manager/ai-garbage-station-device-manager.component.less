@@ -4,7 +4,7 @@
   display: flex;
   justify-content: space-between;
 
-  @tree-width: 320px;
+  @tree-width: 0px;
 
   .panel {
     background: rgba(36, 72, 165, 0.05);
@@ -15,19 +15,6 @@
 
   }
 
-  &-tree {
-    width: @tree-width;
-    height: 100%;
-    margin-right: 20px;
-
-    &-title {
-      margin-bottom: 10px;
-    }
-
-    &-control {
-      height: calc(100% - 44px);
-    }
-  }
 
   &-table {
     &.panel {
@@ -44,6 +31,40 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
+
+
+      .head-filter {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        width: calc(100% - 250px);
+        gap: 10px;
+
+        &-item {
+          width: 300px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 5px;
+
+          &.search {
+            width: auto;
+          }
+
+          &-title {
+            flex-grow: 0;
+            white-space: nowrap;
+            color: #cfd7ff;
+            font-size: 18px;
+          }
+
+          &-value {
+            flex-grow: 1;
+          }
+        }
+
+
+      }
     }
 
   }

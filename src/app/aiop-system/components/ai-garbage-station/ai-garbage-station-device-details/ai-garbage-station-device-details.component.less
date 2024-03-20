@@ -1,6 +1,6 @@
 .ai-garbage-station-device-details {
   height: 100%;
-  width: 100%;
+  width: calc(100% + 20px);
   color: #cfd7ff;
 
   @head-height: 32px;
@@ -12,6 +12,7 @@
 
   &-body {
     height: calc(100% - @head-height - @foot-height);
+    padding-right: 20px;
     overflow-y: auto;
     overflow-x: hidden;
 

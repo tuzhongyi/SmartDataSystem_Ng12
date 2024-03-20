@@ -21,6 +21,9 @@ export class RegionRequestService {
     this.type = this.basic.type(Region);
   }
 
+  private data: Region[] = [];
+  loaded = false;
+
   create(item: Region) {
     return this.type.post(RegionsURL.create(), item);
   }
@@ -42,5 +45,15 @@ export class RegionRequestService {
   }
   trees(): Promise<RegionTree> {
     return this.basic.get(RegionsURL.trees(), RegionTree);
+  }
+  async all() {
+    if (this.loaded && this.data && this.data.length > 0) {
+      return this.data;
+    }
+    let params = new GetRegionsParams();
+    let paged = await this.list(params);
+    this.data = paged.Data;
+    this.loaded = true;
+    return this.data;
   }
 }

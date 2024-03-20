@@ -69,56 +69,59 @@
               </div>
             </td>
             <td class="center">
-              <div class="states" (click)="onstatus($event, item)">
+              <div
+                class="states"
+                (click)="onstatus($event, item)"
+                *ngIf="!!item.Status"
+              >
                 <div
                   [title]="
-                    !!item.Status && item.Status.OnlineState === 0
-                      ? '在线'
-                      : '离线'
+                    '厢房' + Language.OnlineState(item.Status.OnlineState)
                   "
-                  [ngClass]="{
-                    'green-text':
-                      !!item.Status && item.Status.OnlineState === 0,
-                    'powder-red-text':
-                      !item.Status || item.Status.OnlineState !== 0
-                  }"
+                  [class]="Color.OnlineState(item.Status.OnlineState)"
                 >
-                  <i
-                    [ngClass]="{
-                      'howell-icon-signal2':
-                        !!item.Status && item.Status.OnlineState === 0,
-                      'howell-icon-no_signal':
-                        !item.Status || item.Status.OnlineState === 1
-                    }"
-                  ></i>
+                  <ng-container [ngSwitch]="item.Status.OnlineState">
+                    <i class="howell-icon-signal2" *ngSwitchCase="0"></i>
+                    <i class="howell-icon-no_signal" *ngSwitchCase="1"></i>
+                  </ng-container>
                 </div>
-                <ng-container *ngIf="!!item.Status">
-                  <div
-                    *ngFor="let state of item.Status.SwitchStates"
-                    [title]="state.Name"
-                    [ngClass]="{
-                      'green-text': state.State,
-                      'powder-red-text': !state.State
-                    }"
+                <ng-container
+                  *ngIf="!!item.Status.Robots && item.Status.Robots.length > 0"
+                >
+                  <ng-container
+                    *ngFor="let robot of item.Status.Robots; let index = index"
                   >
-                    <ng-container [ngSwitch]="state.No">
-                      <i
-                        *ngSwitchCase="DeviceState.door"
-                        class="howell-icon-door-state"
-                      ></i>
-                      <i
-                        *ngSwitchCase="DeviceState.rfid"
-                        class="howell-icon-rfid"
-                      ></i>
-                      <i *ngSwitchDefault class="howell-icon-alertcircle"></i>
-                    </ng-container>
-                  </div>
+                    <div
+                      *ngIf="index == 0"
+                      [title]="
+                        '机器人状态：' + Language.RobotStates(robot.State)
+                      "
+                      [class]="Color.RobotStateDefault(robot.State)"
+                    >
+                      <i class="howell-icon-robot"></i>
+                    </div>
+                  </ng-container>
                 </ng-container>
+                <div
+                  *ngIf="
+                    !!item.Status.GCHAStatus &&
+                    item.Status.GCHAStatus.OnlineState != undefined
+                  "
+                  [title]="
+                    'GCHA' +
+                    Language.OnlineState(item.Status.GCHAStatus.OnlineState)
+                  "
+                  [class]="
+                    Color.OnlineState(item.Status.GCHAStatus.OnlineState)
+                  "
+                >
+                  <i class="mdi mdi-server-network"></i>
+                </div>
               </div>
             </td>
             <td>
               {{
-                !item.Status
+                !item.Status || !item.Status.LastUpdateTime
                   ? "-"
                   : (item.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
               }}

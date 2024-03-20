@@ -4,43 +4,8 @@
   </div>
   <div class="ai-garbage-station-device-command-body">
     <div class="panel form-group">
-      <div
-        class="form-item"
-        *ngIf="model.Capabilities && model.Capabilities.ExhaustFan"
-      >
-        <div class="form-item-title">排风扇</div>
-        <div class="form-item-value">
-          <button
-            [ngClass]="{
-              'hw-green-btn': model.Status?.ExhaustFan !== 1,
-              'hw-red-btn': model.Status?.ExhaustFan === 1
-            }"
-            (click)="
-              tocommand(
-                AIGarbageDeviceCommand.ExhaustFan,
-                model.Status?.ExhaustFan === 1 ? 0 : 1
-              )
-            "
-          >
-            <i class="mdi mdi-fan"></i>
-            {{ model.Status?.ExhaustFan === 1 ? "关闭" : "打开" }}
-          </button>
-        </div>
-      </div>
-      <div
-        class="form-item"
-        *ngIf="model.Capabilities && model.Capabilities.Spray"
-      >
-        <div class="form-item-title">香氛</div>
-        <div class="form-item-value">
-          <button
-            class="hw-blue-btn"
-            (click)="tocommand(AIGarbageDeviceCommand.Spray, 1)"
-          >
-            <i class="mdi mdi-spray"></i> 喷洒
-          </button>
-        </div>
-      </div>
+      <div class="hw-simple-title">系统命令</div>
+
       <div class="form-item">
         <div class="form-item-title">同步RFID卡号</div>
         <div class="form-item-value">
@@ -75,6 +40,17 @@
         </div>
       </div>
       <div class="form-item">
+        <div class="form-item-title">开启TCP连接</div>
+        <div class="form-item-value">
+          <button
+            class="hw-blue-btn"
+            (click)="tocommand(AIGarbageDeviceCommand.TCPConnection)"
+          >
+            <i class="mdi mdi-lan"></i> 连接
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
         <div class="form-item-title">重启系统</div>
         <div class="form-item-value">
           <button
@@ -96,15 +72,98 @@
           </button>
         </div>
       </div>
-      <div class="form-item">
-        <div class="form-item-title">窗口上电</div>
-        <div class="form-item-value">
-          <button
-            class="hw-blue-btn"
-            (click)="tocommand(AIGarbageDeviceCommand.WindowPowerOn, 1)"
-          >
-            <i class="mdi mdi-power-plug"></i> 上电
-          </button>
+    </div>
+    <div class="form-groups">
+      <div class="panel form-group">
+        <div class="hw-simple-title">厢房命令</div>
+        <div
+          class="form-item"
+          *ngIf="model.Capabilities && model.Capabilities.ExhaustFan"
+        >
+          <div class="form-item-title">
+            排风扇
+            <span class="fun" [class.run]="model.Status?.ExhaustFan">
+              <i class="mdi mdi-fan"></i
+            ></span>
+          </div>
+          <div class="form-item-value">
+            <button
+              [ngClass]="{
+                'hw-green-btn': model.Status?.ExhaustFan !== 1,
+                'hw-red-btn': model.Status?.ExhaustFan === 1
+              }"
+              (click)="
+                tocommand(
+                  AIGarbageDeviceCommand.ExhaustFan,
+                  model.Status?.ExhaustFan === 1 ? 0 : 1
+                )
+              "
+            >
+              <i class="mdi mdi-fan"></i>
+              {{ model.Status?.ExhaustFan === 1 ? "关闭" : "打开" }}
+            </button>
+          </div>
+        </div>
+        <div
+          class="form-item"
+          *ngIf="model.Capabilities && model.Capabilities.Spray"
+        >
+          <div class="form-item-title">香氛</div>
+          <div class="form-item-value">
+            <button
+              class="hw-blue-btn"
+              (click)="tocommand(AIGarbageDeviceCommand.Spray, 1)"
+            >
+              <i class="mdi mdi-spray"></i> 喷洒
+            </button>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">窗口上电</div>
+          <div class="form-item-value">
+            <button
+              class="hw-blue-btn"
+              (click)="tocommand(AIGarbageDeviceCommand.WindowPowerOn, 1)"
+            >
+              <i class="mdi mdi-power-plug"></i> 上电
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="panel form-group">
+        <div class="hw-simple-title">GCHA命令</div>
+        <div class="form-item">
+          <div class="form-item-title">自动程序升级检测</div>
+          <div class="form-item-value">
+            <button
+              class="hw-blue-btn"
+              (click)="tocommand(AIGarbageDeviceCommand.GCHAUpgradeCheck)"
+            >
+              <i class="mdi mdi-upload"></i> 检测
+            </button>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">开启TCP连接</div>
+          <div class="form-item-value">
+            <button
+              class="hw-blue-btn"
+              (click)="tocommand(AIGarbageDeviceCommand.GCHATCP)"
+            >
+              <i class="mdi mdi-lan"></i> 连接
+            </button>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item-title">重启系统</div>
+          <div class="form-item-value">
+            <button
+              class="hw-blue-btn"
+              (click)="tocommand(AIGarbageDeviceCommand.GCHAReboot)"
+            >
+              <i class="mdi mdi-refresh"></i> 重启
+            </button>
+          </div>
         </div>
       </div>
     </div>

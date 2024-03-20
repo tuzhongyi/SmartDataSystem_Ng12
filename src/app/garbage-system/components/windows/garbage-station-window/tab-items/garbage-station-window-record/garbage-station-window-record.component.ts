@@ -54,6 +54,7 @@ export class GarbageStationWindowRecordComponent implements OnInit {
         break;
       case GarbageTaskStatus.timeout:
         this.filter.IsTimeout = true;
+        this.filter.IsHandle = false;
         break;
       case GarbageTaskStatus.timeout_handled:
         this.filter.IsTimeout = true;

@@ -298,3 +298,19 @@ export function distinctArray(array: Array<any>) {
     return self.indexOf(value) === index;
   });
 }
+
+export function isEmpty(obj: any) {
+  if (Number.isFinite(obj)) {
+    return false;
+  }
+  if (Array.isArray(obj)) {
+    return obj.length === 0;
+  }
+  if (!obj) {
+    return true;
+  }
+  if (Object.keys(obj).length > 0) {
+    return false;
+  }
+  return true;
+}

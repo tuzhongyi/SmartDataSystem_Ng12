@@ -1,5 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
+import { BatteryState } from 'src/app/enum/ai-garbage/battery-state.enum';
+import { RobotState } from 'src/app/enum/ai-garbage/robot-state.enum';
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
@@ -877,6 +879,98 @@ export class Language {
         return '视频回放';
       default:
         return Language.json.Unknow;
+    }
+  }
+
+  static RobotState(value?: RobotState) {
+    switch (value) {
+      case RobotState.None:
+        return '正常';
+      case RobotState.Busy:
+        return '繁忙状态';
+      case RobotState.Charging:
+        return '充电状态';
+      case RobotState.LoBAT:
+        return '低电量';
+      case RobotState.Error:
+        return '故障';
+      case RobotState.Upgrading:
+        return '升级中';
+      case RobotState.Offline:
+        return '信号丢失';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+  static RobotStates(values: RobotState[]) {
+    return values.map((x) => this.RobotState(x)).join(',');
+  }
+
+  static BatteryState(value?: BatteryState) {
+    switch (value) {
+      case BatteryState.Normal:
+        return '正常';
+      case BatteryState.Charging:
+        return '充电中';
+      case BatteryState.Unable:
+        return '无法充电';
+      case BatteryState.UnderVoltage:
+        return '欠压、亏电';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+
+  static SwitchState(value?: number) {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '异常';
+      default:
+        return Language.json.Unknow;
+    }
+  }
+
+  static CameraPosition(value?: number) {
+    if (value === undefined) return '未知';
+    if (1 <= value && value <= 10) {
+      return '舱外';
+    } else if (11 <= value && value <= 20) {
+      return '舱内';
+    } else if (21 <= value && value <= 30) {
+      return '红外';
+    } else {
+      return '未知';
+    }
+  }
+
+  static OnlineState(value?: number) {
+    switch (value) {
+      case 0:
+        return '在线';
+      case 1:
+      default:
+        return '离线';
+    }
+  }
+
+  static YesOrNo(yes: boolean) {
+    if (yes) {
+      return '是';
+    } else {
+      return '否';
+    }
+  }
+
+  static OpenState(value?: number, contrary: boolean = false) {
+    if (value === undefined || value === null) return Language.json.Unknow;
+    switch (value) {
+      case 0:
+        return contrary ? '关闭' : '打开';
+      case 1:
+      default:
+        return contrary ? '打开' : '关闭';
     }
   }
 

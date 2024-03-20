@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
+import { Language } from 'src/app/common/tools/language';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
 import { AIGarbageDeviceCommandNo } from 'src/app/network/model/ai-garbage/garbage-device-command.enum';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
@@ -62,6 +64,8 @@ export class AIGarbageStationDeviceTableComponent
   }
 
   Command = AIGarbageDeviceCommandNo;
+  Color = ColorTool;
+  Language = Language;
   widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
   DeviceState = AIGarbageDeviceState;
   ngOnInit(): void {

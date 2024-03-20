@@ -1,5 +1,7 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -22,7 +24,8 @@ export class GarbageDropRecordTableBusiness
 {
   constructor(
     private service: EventRequestService,
-    private converter: GarbageDropEventRecordPagedConverter
+    private converter: GarbageDropEventRecordPagedConverter,
+    private global: GlobalStorageService
   ) {}
   loading?: EventEmitter<void> | undefined;
   async load(
@@ -42,7 +45,13 @@ export class GarbageDropRecordTableBusiness
     params.BeginTime = opts.duration.begin;
     params.EndTime = opts.duration.end;
     params.IsHandle = opts.IsHandle;
-    params.IsTimeout = opts.IsTimeout;
+
+    if (this.global.defaultDivisionType === DivisionType.City) {
+      params.IsSuperTimeout = opts.IsTimeout;
+    } else {
+      params.IsTimeout = opts.IsTimeout;
+    }
+
     if (opts.divisionId) {
       params.DivisionIds = [opts.divisionId];
     }

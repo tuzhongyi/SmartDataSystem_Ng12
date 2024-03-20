@@ -11,7 +11,11 @@ export class AIGarbageStationDeviceWindow {
   schedule = new AIGarbageStationDeviceScheduleWindow();
   confirm = new AIGarbageStationDeviceConfirmWindow();
   video = new AIGarbageStationDeviceVideoWindow();
-  status = new AIGarbageStationDeviceStatusWindow();
+  status = {
+    device: new AIGarbageStationDeviceStatusWindow(),
+    robot: new AIGarbageStationDeviceRobotStatusWindow(),
+    gcha: new AIGarbageStationDeviceGCHAStatusWindow(),
+  };
   clear() {
     this.details.clear();
     this.command.clear();
@@ -20,7 +24,9 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.clear();
     this.confirm.clear();
     this.video.clear();
-    this.status.clear();
+    this.status.device.clear();
+    this.status.robot.clear();
+    this.status.gcha.clear();
   }
   close() {
     this.details.show = false;
@@ -30,7 +36,9 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.show = false;
     this.confirm.show = false;
     this.video.show = false;
-    this.status.show = false;
+    this.status.device.show = false;
+    this.status.robot.show = false;
+    this.status.gcha.show = false;
   }
 }
 
@@ -49,7 +57,7 @@ class AIGarbageStationDeviceCommandWindow extends WindowViewModel {
     this.model = undefined;
   }
   style = {
-    width: '600px',
+    width: 'auto',
     height: 'auto',
   };
   model?: AIGarbageDevice;
@@ -108,6 +116,26 @@ class AIGarbageStationDeviceVideoWindow extends VideoWindowViewModel {
   model?: VideoModel;
 }
 class AIGarbageStationDeviceStatusWindow extends WindowViewModel {
+  clear(): void {
+    this.model = undefined;
+  }
+  style = {
+    width: 'auto',
+    height: 'auto',
+  };
+  model?: AIGarbageDevice;
+}
+class AIGarbageStationDeviceRobotStatusWindow extends WindowViewModel {
+  clear(): void {
+    this.model = undefined;
+  }
+  style = {
+    width: '600px',
+    height: 'auto',
+  };
+  model?: AIGarbageDevice;
+}
+class AIGarbageStationDeviceGCHAStatusWindow extends WindowViewModel {
   clear(): void {
     this.model = undefined;
   }

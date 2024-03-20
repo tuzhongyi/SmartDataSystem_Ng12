@@ -14,6 +14,7 @@ export class AIGarbageStationDeviceCommandWindow {
 export class AIGarbageStationDeviceCommandConfirmWindow extends WindowViewModel {
   command?: AIGarbageDeviceCommand;
   style = {
+    width: '500px',
     height: 'auto',
   };
 
@@ -28,6 +29,8 @@ export class AIGarbageStationDeviceCommandConfirmWindow extends WindowViewModel 
           return '系统自检，并上报结果';
         case AIGarbageDeviceCommandNo.Reboot:
           return '重启系统';
+        case AIGarbageDeviceCommandNo.TCPConnection:
+          return '开启TCP连接';
         case AIGarbageDeviceCommandNo.ExhaustFan:
           return `${this.command.Parameter === 1 ? '打开' : '关闭'}排风扇`;
         case AIGarbageDeviceCommandNo.Spray:
@@ -36,6 +39,12 @@ export class AIGarbageStationDeviceCommandConfirmWindow extends WindowViewModel 
           return '设备信息同步';
         case AIGarbageDeviceCommandNo.WindowPowerOn:
           return `窗口上电`;
+        case AIGarbageDeviceCommandNo.GCHAUpgradeCheck:
+          return 'GCHA自动程序升级检测';
+        case AIGarbageDeviceCommandNo.GCHAReboot:
+          return 'GCHA重启系统';
+        case AIGarbageDeviceCommandNo.GCHATCP:
+          return 'GCHA开启TCP连接';
         default:
           return '';
       }

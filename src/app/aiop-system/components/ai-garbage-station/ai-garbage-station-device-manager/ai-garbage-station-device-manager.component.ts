@@ -1,4 +1,10 @@
-import { Component, ElementRef, EventEmitter, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { AIGarbageStationDeviceTableArgs } from 'src/app/common/components/tables/ai-garbage-station-tables/ai-garbage-station-device-table/ai-garbage-station-device-table.model';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { AIGarbageCamera } from 'src/app/network/model/ai-garbage/camera.model';
@@ -7,6 +13,7 @@ import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { AIGarbageStationDeviceManagerBusiness } from './ai-garbage-station-device-manager.business';
 import { AIGarbageStationDeviceWindow } from './ai-garbage-station-device-manager.model';
+import { AIGarbageStationDeviceSelection } from './ai-garbage-station-device-manager.selection';
 
 @Component({
   selector: 'app-ai-garbage-station-device-manager',
@@ -17,14 +24,25 @@ import { AIGarbageStationDeviceWindow } from './ai-garbage-station-device-manage
   ],
   providers: [AIGarbageStationDeviceManagerBusiness],
 })
-export class AIGarbageStationDeviceManagerComponent {
+export class AIGarbageStationDeviceManagerComponent implements OnInit {
   constructor(private business: AIGarbageStationDeviceManagerBusiness) {}
 
   title: string = '厢房设备';
   args: AIGarbageStationDeviceTableArgs = new AIGarbageStationDeviceTableArgs();
   load: EventEmitter<AIGarbageStationDeviceTableArgs> = new EventEmitter();
   selecteds: AIGarbageDevice[] = [];
+  selection = new AIGarbageStationDeviceSelection();
   window = new AIGarbageStationDeviceWindow();
+
+  ngOnInit(): void {
+    this.selection.select.subscribe((x) => {
+      if (x) {
+        this.args.regionId = x.Id;
+      } else {
+        this.args.regionId = undefined;
+      }
+    });
+  }
 
   selectDivisionClick(nodes: CommonFlatNode[]) {
     this.args.regionId = undefined;
@@ -40,8 +58,7 @@ export class AIGarbageStationDeviceManagerComponent {
   tocreate() {
     this.window.details.show = true;
   }
-  tosearch(value: string) {
-    this.args.name = value;
+  tosearch() {
     this.args.tofirst = true;
     this.load.emit(this.args);
   }
@@ -151,7 +168,15 @@ export class AIGarbageStationDeviceManagerComponent {
     }
   }
   onstatus(model: AIGarbageDevice) {
-    this.window.status.model = model;
-    this.window.status.show = true;
+    this.window.status.device.model = model;
+    this.window.status.device.show = true;
+  }
+  onrobot(model: AIGarbageDevice) {
+    this.window.status.robot.model = model;
+    this.window.status.robot.show = true;
+  }
+  ongcha(model: AIGarbageDevice) {
+    this.window.status.gcha.model = model;
+    this.window.status.gcha.show = true;
   }
 }

@@ -1,15 +1,29 @@
 .ai-garbage-station-device-status {
   color: #cfd7ff;
 
-  &-head {}
+  &-head {
+    margin-bottom: 10px;
+  }
 
   &-body {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+
     .form {
       &-group {
         display: flex;
         justify-content: start;
         flex-wrap: wrap;
-        margin: 0 -5px;
+        gap: 10px;
+        margin-bottom: 0;
+
+        &s {
+          display: flex;
+          justify-content: flex-start;
+          gap: 10px;
+          flex-direction: column;
+        }
       }
 
       &-item {
@@ -18,17 +32,32 @@
         box-sizing: border-box;
         display: flex;
         justify-content: space-between;
-        margin: 10px 0;
+        align-items: center;
+        height: 34px;
+
+        &.end {
+          align-self: flex-end;
+        }
+
+        &s {
+          height: calc(34px * 2);
+          overflow-y: auto;
+          overflow-x: hidden;
+          margin-right: -4px;
+          display: flex;
+          flex-direction: column;
+        }
 
         .btn {
           font-size: 16px;
         }
 
         &-title {
-          color: white;
+          color: #cfd7ff;
           display: flex;
           align-items: center;
           flex-grow: 0;
+          white-space: nowrap;
         }
 
         &-value {
@@ -38,6 +67,31 @@
           justify-content: flex-end;
 
           flex-grow: 1;
+          white-space: nowrap;
+
+          &.code {
+            ._code {
+              cursor: pointer;
+
+              &:hover {
+                opacity: 0.8;
+              }
+            }
+
+            .selected {
+              text-decoration: underline;
+            }
+          }
+
+          &.message {
+            display: block;
+            width: 300px;
+            text-overflow: ellipsis;
+            line-height: 34px;
+            overflow-x: hidden;
+            text-align: right;
+            flex-grow: unset;
+          }
 
 
           hw-switch {
@@ -116,13 +170,46 @@
     }
   }
 
-  &-foot {}
 
   .panel {
     background: rgba(36, 72, 165, 0.05);
     border: 2px rgba(117, 134, 224, 0.15) solid;
     padding: 20px;
     box-sizing: border-box;
-    margin-bottom: 10px;
+    width: 500px;
+
+    &-head {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5px;
+
+      &-opts {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        gap: 10px;
+
+        &>* {
+          border: 1px solid #7586e0;
+          cursor: pointer;
+          text-align: center;
+          width: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 14px;
+
+          &.selected {
+            background-color: #7586e0;
+          }
+
+          &:hover {
+            background-color: rgba(117, 134, 224, 0.5);
+          }
+        }
+      }
+    }
   }
 }

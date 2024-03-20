@@ -1,15 +1,4 @@
 <div class="ai-garbage-station-device-manager">
-  <div class="panel ai-garbage-station-device-manager-tree">
-    <div class="ai-garbage-station-device-manager-tree-title m-b-20">
-      <div class="hw-simple-title">区域列表</div>
-    </div>
-    <div class="ai-garbage-station-device-manager-tree-control">
-      <hw-ai-garbage-station-region-tree
-        [onlyDivisionNode]="false"
-        (selectTreeNode)="selectDivisionClick($event)"
-      ></hw-ai-garbage-station-region-tree>
-    </div>
-  </div>
   <div class="panel ai-garbage-station-device-manager-table">
     <div class="ai-garbage-station-device-manager-table-title">
       <div class="hw-simple-title">{{ title }}管理</div>
@@ -40,11 +29,37 @@
           删除
         </button>
       </div>
-      <div>
-        <howell-simple-search
-          placeHolder="厢房名称"
-          (searchEvent)="tosearch($event)"
-        ></howell-simple-search>
+      <div class="head-filter">
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">行政区</div>
+          <div class="head-filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="selection.show"
+              [selectedNodes]="selection.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                (selectTreeNode)="selection.onselect($event)"
+                [depth]="2"
+                [showDepth]="0"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">厢房名称</div>
+          <div class="head-filter-item-value">
+            <input type="text" [(ngModel)]="args.name" />
+          </div>
+        </div>
+        <div class="head-filter-item search">
+          <button class="hw-blue-btn" (click)="tosearch()">
+            <i class="howell-icon-search2"></i> 查找
+          </button>
+        </div>
       </div>
     </div>
     <div style="height: calc(100% - 68px); overflow: auto">
@@ -85,14 +100,33 @@
     ></app-ai-garbage-station-device-command>
   </app-window>
   <app-window
-    [Model]="window.status"
-    [style]="window.status.style"
-    *ngIf="window.status.show"
+    [Model]="window.status.device"
+    [style]="window.status.device.style"
+    *ngIf="window.status.device.show"
   >
     <ai-garbage-station-device-status
-      [model]="window.status.model"
+      [model]="window.status.device.model"
     ></ai-garbage-station-device-status>
   </app-window>
+  <app-window
+    [Model]="window.status.robot"
+    [style]="window.status.robot.style"
+    *ngIf="window.status.robot.show"
+  >
+    <ai-garbage-station-device-status-robot
+      [model]="window.status.robot.model"
+    ></ai-garbage-station-device-status-robot>
+  </app-window>
+  <app-window
+    [Model]="window.status.gcha"
+    [style]="window.status.gcha.style"
+    *ngIf="window.status.gcha.show"
+  >
+    <ai-garbage-station-device-status-gcha
+      [model]="window.status.gcha.model"
+    ></ai-garbage-station-device-status-gcha>
+  </app-window>
+
   <app-window
     [Model]="window.camera"
     [style]="window.camera.style"
