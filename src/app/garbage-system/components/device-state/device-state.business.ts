@@ -54,10 +54,10 @@ export class DeviceStateConverter
     } else {
       percent = (onLineCameraNum / totalCameraNum) * 100;
     }
-    model.onLineRatio = percent >> 0;
-    if (model.onLineRatio < 80) {
+    model.onlineRatio = percent >> 0;
+    if (model.onlineRatio < 80) {
       model.state = DeviceStateRatioType.bad;
-    } else if (model.onLineRatio >= 80 && model.onLineRatio < 90) {
+    } else if (model.onlineRatio >= 80 && model.onlineRatio < 90) {
       model.state = DeviceStateRatioType.mild;
     } else {
       model.state = DeviceStateRatioType.good;

@@ -435,7 +435,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
         args.status = GarbageTaskStatus.unhandled;
         break;
       case DisposalCountType.timeout:
-        args.status = GarbageTaskStatus.timeout;
+        args.status = GarbageTaskStatus.timeout_handled;
         break;
       case DisposalCountType.total:
       default:

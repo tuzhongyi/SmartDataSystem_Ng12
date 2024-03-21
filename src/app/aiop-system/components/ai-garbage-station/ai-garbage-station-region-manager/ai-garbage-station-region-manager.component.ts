@@ -103,10 +103,10 @@ export class AIGarbageStationRegionManagerComponent {
     }
   }
   onbuilding(item: AIGarbageRegion) {
-    // if (item && item.Buildings && item.Buildings.length > 0) {
-    this.window.building.model = item;
-    this.window.building.show = true;
-    // }
+    if (item && item.Buildings && item.Buildings.length > 0) {
+      this.window.building.model = item;
+      this.window.building.show = true;
+    }
   }
   onstation(item: AIGarbageRegion) {
     if (item && item.GarbageStations && item.GarbageStations.length > 0) {

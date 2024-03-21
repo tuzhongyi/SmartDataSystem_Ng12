@@ -168,15 +168,7 @@ export class AIGarbageStationDeviceManagerComponent implements OnInit {
     }
   }
   onstatus(model: AIGarbageDevice) {
-    this.window.status.device.model = model;
-    this.window.status.device.show = true;
-  }
-  onrobot(model: AIGarbageDevice) {
-    this.window.status.robot.model = model;
-    this.window.status.robot.show = true;
-  }
-  ongcha(model: AIGarbageDevice) {
-    this.window.status.gcha.model = model;
-    this.window.status.gcha.show = true;
+    this.window.status.model = model;
+    this.window.status.show = true;
   }
 }

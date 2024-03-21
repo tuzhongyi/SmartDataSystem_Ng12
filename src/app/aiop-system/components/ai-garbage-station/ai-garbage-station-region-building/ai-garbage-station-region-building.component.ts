@@ -25,7 +25,7 @@ export class AIGarbageStationRegionBuildingComponent implements OnInit {
   }
   selected?: AIGarbageBuilding;
   Language = Language;
-  debug = true;
+  debug = false;
 
   test(model: AIGarbageRegion) {
     model.Buildings = [];

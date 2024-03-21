@@ -1,7 +1,4 @@
-import {
-  DeviceStateCountType,
-  DeviceStateRatioType,
-} from '../enum/device-state-count.enum';
+import { DeviceStateRatioType } from '../enum/device-state-count.enum';
 import { OnlineStatus } from '../enum/online-status.enum';
 
 // 设备数量接口
@@ -14,7 +11,7 @@ export interface IDeviceStateDes {
   tagCls: string;
 }
 export class DeviceStateCountModel {
-  onLineRatio: number = 0;
+  onlineRatio: number = 0;
   state: DeviceStateRatioType = DeviceStateRatioType.good;
   stateCls: string = '';
   stateDes: string = '';

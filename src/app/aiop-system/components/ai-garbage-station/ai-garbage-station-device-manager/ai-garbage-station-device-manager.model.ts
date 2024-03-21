@@ -11,11 +11,7 @@ export class AIGarbageStationDeviceWindow {
   schedule = new AIGarbageStationDeviceScheduleWindow();
   confirm = new AIGarbageStationDeviceConfirmWindow();
   video = new AIGarbageStationDeviceVideoWindow();
-  status = {
-    device: new AIGarbageStationDeviceStatusWindow(),
-    robot: new AIGarbageStationDeviceRobotStatusWindow(),
-    gcha: new AIGarbageStationDeviceGCHAStatusWindow(),
-  };
+  status = new AIGarbageStationStatusWindow();
   clear() {
     this.details.clear();
     this.command.clear();
@@ -24,9 +20,7 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.clear();
     this.confirm.clear();
     this.video.clear();
-    this.status.device.clear();
-    this.status.robot.clear();
-    this.status.gcha.clear();
+    this.status.clear();
   }
   close() {
     this.details.show = false;
@@ -36,9 +30,7 @@ export class AIGarbageStationDeviceWindow {
     this.schedule.show = false;
     this.confirm.show = false;
     this.video.show = false;
-    this.status.device.show = false;
-    this.status.robot.show = false;
-    this.status.gcha.show = false;
+    this.status.show = false;
   }
 }
 
@@ -48,7 +40,7 @@ class AIGarbageStationDeviceDetailsWindow extends WindowViewModel {
   }
   style = {
     width: '800px',
-    height: '740px',
+    height: 'auto',
   };
   model?: AIGarbageDevice;
 }
@@ -115,32 +107,12 @@ class AIGarbageStationDeviceVideoWindow extends VideoWindowViewModel {
   };
   model?: VideoModel;
 }
-class AIGarbageStationDeviceStatusWindow extends WindowViewModel {
+class AIGarbageStationStatusWindow extends WindowViewModel {
   clear(): void {
     this.model = undefined;
   }
   style = {
     width: 'auto',
-    height: 'auto',
-  };
-  model?: AIGarbageDevice;
-}
-class AIGarbageStationDeviceRobotStatusWindow extends WindowViewModel {
-  clear(): void {
-    this.model = undefined;
-  }
-  style = {
-    width: '600px',
-    height: 'auto',
-  };
-  model?: AIGarbageDevice;
-}
-class AIGarbageStationDeviceGCHAStatusWindow extends WindowViewModel {
-  clear(): void {
-    this.model = undefined;
-  }
-  style = {
-    width: '600px',
     height: 'auto',
   };
   model?: AIGarbageDevice;

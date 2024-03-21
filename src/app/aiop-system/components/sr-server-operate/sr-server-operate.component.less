@@ -4,14 +4,13 @@
 }
 
 .sr-server-operate {
-  width: 800px;
-  height: 600px;
   display: flex;
   flex-direction: column;
 
   .addr-btns {
     display: flex;
     border-bottom: 1px solid rgba(120, 130, 140, 0.13);
+
     .addr-item {
       width: 92px;
       height: 34px;
@@ -39,19 +38,23 @@
         background-position: center center;
         background-color: #009efb;
         color: #fff;
+
         &:hover {
           .close-btn {
             display: block;
+
             :hover {
               color: #f60431;
             }
           }
         }
       }
+
       &:not(.active) {
         &:hover {
           background-color: rgba(50, 131, 229, 0.4);
           color: #fff;
+
           .close-btn {
             display: block;
           }
@@ -59,6 +62,7 @@
       }
     }
   }
+
   .plus-btn {
     margin-left: 15px;
     color: #7586e0;
@@ -70,23 +74,27 @@
       color: #fff;
     }
   }
+
   .address-wrapper {
-    height: 230px;
     // overflow: auto;
     margin-top: 5px;
   }
 }
 
 .hw-form {
+  gap: 10px;
+  padding: 0;
+
   .hw-form-group {
-    flex-basis: 50%;
+    flex-basis: calc((100% - 10px) / 2);
 
     .title {
       // flex-basis: 100%;
       text-align: left;
     }
-    .content {
-      flex-basis: 95%;
-    }
+  }
+
+  .hw-middle-btn-group {
+    margin-top: 0;
   }
 }

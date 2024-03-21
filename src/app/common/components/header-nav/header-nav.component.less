@@ -2,19 +2,24 @@
   margin-right: 20px;
   margin-left: 20px;
 }
+
 .app-header-nav {
   font-size: 14px;
   color: #cfd7ff;
   display: flex;
+
   .item {
     cursor: pointer;
     display: flex;
-    align-items: flex-end;
-    padding: 7px 13px 3px;
+    align-items: center;
+    width: 100px;
+    height: 30px;
+    justify-content: center;
     border: 2px #5e6ebe solid;
     background-color: #232b52;
     transform: skewX(-20deg);
     margin-right: -2px;
+
     &:hover {
       color: #fff;
     }
@@ -22,6 +27,7 @@
     & * {
       transform: skewX(20deg);
     }
+
     &-icon {
       margin-right: 4px;
     }

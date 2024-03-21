@@ -100,33 +100,14 @@
     ></app-ai-garbage-station-device-command>
   </app-window>
   <app-window
-    [Model]="window.status.device"
-    [style]="window.status.device.style"
-    *ngIf="window.status.device.show"
+    [Model]="window.status"
+    [style]="window.status.style"
+    *ngIf="window.status.show"
   >
     <ai-garbage-station-device-status
-      [model]="window.status.device.model"
+      [model]="window.status.model"
     ></ai-garbage-station-device-status>
   </app-window>
-  <app-window
-    [Model]="window.status.robot"
-    [style]="window.status.robot.style"
-    *ngIf="window.status.robot.show"
-  >
-    <ai-garbage-station-device-status-robot
-      [model]="window.status.robot.model"
-    ></ai-garbage-station-device-status-robot>
-  </app-window>
-  <app-window
-    [Model]="window.status.gcha"
-    [style]="window.status.gcha.style"
-    *ngIf="window.status.gcha.show"
-  >
-    <ai-garbage-station-device-status-gcha
-      [model]="window.status.gcha.model"
-    ></ai-garbage-station-device-status-gcha>
-  </app-window>
-
   <app-window
     [Model]="window.camera"
     [style]="window.camera.style"

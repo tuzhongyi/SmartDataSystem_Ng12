@@ -3,9 +3,10 @@
   height: 100%;
   overflow: auto;
   font-size: 18px;
+
   .camera-row {
     cursor: pointer;
-    height: 154px;
+    height: calc(100% / 4 - 8px);
     margin: 10px 0;
     border: 1px solid #35324b;
     box-shadow: 0 0 5px 0px rgba(127, 148, 255, 0.15),
@@ -23,6 +24,7 @@
     &:first-child {
       margin-top: 0;
     }
+
     &:last-child {
       margin-bottom: 0;
     }
@@ -32,38 +34,42 @@
 
     .title {
       height: 36px;
-      background: linear-gradient(
-        to bottom,
-        rgba(105, 173, 255, 0) 0%,
-        rgba(105, 173, 255, 0.1) 100%
-      );
+      background: linear-gradient(to bottom,
+          rgba(105, 173, 255, 0) 0%,
+          rgba(105, 173, 255, 0.1) 100%);
       padding: 0 10px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .left-side {
         display: flex;
         background-image: url(/assets/img/blue-light-spot.png);
         background-repeat: no-repeat;
         background-size: 100% 100%;
       }
+
       .right-side {
         display: flex;
+
         .icon {
           margin: 0 5px;
         }
+
         .tag {
           font-size: 16px;
           margin: 0 5px;
         }
       }
     }
+
     &.high-light {
       border: 1px #6d86c4 solid;
       background-color: rgba(36, 72, 165, 0.4);
       box-shadow: 0 0 5px 0px rgba(127, 148, 255, 0.5),
         inset 0 0 10px 0 rgba(127, 148, 255, 0.5);
     }
+
     &:hover:not(.high-light) {
       border: 1px solid #495d92;
       background-color: rgba(36, 72, 165, 0.2);

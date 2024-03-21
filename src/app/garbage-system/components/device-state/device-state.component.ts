@@ -45,17 +45,79 @@ export class DeviceStateComponent
   public model: DeviceStateCountModel = new DeviceStateCountModel();
 
   public get stateRatioColor() {
-    return this.stateColor.get(this.model.state);
+    return this.color.state.get(this.model.state);
   }
 
-  private myChart?: echarts.ECharts;
-  private option: ECOption = {};
+  color = {
+    background: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+      {
+        offset: 0,
+        color: '#ef6464', // 0% 处的颜色
+      },
+      {
+        offset: 0.5,
+        color: '#ffba00', // 100% 处的颜色
+      },
+      {
+        offset: 1,
+        color: '#21e452', // 100% 处的颜色
+      },
+    ]),
+    state: new Map([
+      [DeviceStateRatioType.bad, '#ef6464'],
+      [DeviceStateRatioType.mild, '#ffba00'],
+      [DeviceStateRatioType.good, '#21e452'],
+    ]),
+  };
 
-  private stateColor = new Map([
-    [DeviceStateRatioType.bad, '#ef6464'],
-    [DeviceStateRatioType.mild, '#ffba00'],
-    [DeviceStateRatioType.good, '#21e452'],
-  ]);
+  private myChart?: echarts.ECharts;
+  private option: ECOption = {
+    series: [
+      {
+        type: 'gauge',
+        radius: '70%',
+        center: ['50%', '50%'],
+        startAngle: -45,
+        endAngle: -135,
+        clockwise: false,
+        progress: {
+          show: true,
+          overlap: false,
+          roundCap: false,
+          clip: false,
+        },
+        axisLine: {
+          show: true,
+          lineStyle: {
+            width: 10,
+            color: [[1, this.color.background as any]],
+          },
+        },
+        axisLabel: {
+          show: false,
+        },
+        splitLine: {
+          show: false,
+        },
+        axisTick: {
+          show: false,
+        },
+        title: {
+          offsetCenter: ['0%', '0%'],
+          color: 'auto',
+          fontSize: 18,
+          fontWeight: 400,
+        },
+        detail: {
+          show: false,
+        },
+        pointer: {
+          show: false,
+        },
+        data: [],
+      },
+    ],
+  };
 
   @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
 
@@ -73,54 +135,8 @@ export class DeviceStateComponent
       }
       this.loadData();
     }
-
-    this.option = {
-      series: [
-        {
-          type: 'gauge',
-          radius: '70%',
-          center: ['50%', '50%'],
-          progress: {
-            show: true,
-            width: 10,
-            itemStyle: {},
-          },
-          axisLine: {
-            show: true,
-            lineStyle: {
-              width: 10,
-              color: [[1, '#6b7199']],
-            },
-          },
-          axisLabel: {
-            show: false,
-            distance: 5,
-          },
-          splitLine: {
-            show: false,
-          },
-          axisTick: {
-            show: false,
-          },
-          title: {
-            offsetCenter: ['0%', '0%'],
-            color: 'auto',
-            fontSize: 18,
-            fontWeight: 400,
-          },
-          detail: {
-            show: false,
-          },
-          pointer: {
-            show: false,
-          },
-          data: [],
-        },
-      ],
-    };
   }
   ngAfterViewInit() {
-    // console.log('chartContainers', this.chartContainer);
     if (this.chartContainer) {
       this.myChart = echarts.init(this.chartContainer.nativeElement);
       this.myChart.setOption(this.option);
@@ -128,54 +144,31 @@ export class DeviceStateComponent
   }
   async loadData() {
     this.model = await this.business.load();
-    // this.model.onLineRatio = 30;
-    this.myChart?.setOption({
+    let option = {
       series: [
         {
           type: 'gauge',
           axisLabel: {
             color: this.stateRatioColor,
           },
-          data: [
-            {
-              name: this.model.stateDes,
-              value: this.model.onLineRatio,
-              // itemStyle: {
-              //   color: this.stateRatioColor,
-              // },
-              itemStyle: {
-                color: {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: this.model.onLineRatio
-                    ? 100 / this.model.onLineRatio
-                    : 100,
-                  y2: 0,
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: '#ef6464', // 0% 处的颜色
-                    },
-                    {
-                      offset: 0.5,
-                      color: '#ffba00', // 100% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: '#21e452', // 100% 处的颜色
-                    },
-                  ],
-                },
-              },
-              title: {
-                color: this.stateRatioColor,
-              },
-            },
-          ],
+          data: [this.getData(this.model, this.stateRatioColor ?? '')],
         },
       ],
-    });
+    };
+    this.myChart?.setOption(option);
+  }
+
+  getData(model: DeviceStateCountModel, color: string) {
+    return {
+      value: 100 - model.onlineRatio,
+      name: model.stateDes,
+      title: {
+        color: color,
+      },
+      itemStyle: {
+        color: '#6d7099',
+      },
+    };
   }
 
   onResized(e: ResizedEvent) {
