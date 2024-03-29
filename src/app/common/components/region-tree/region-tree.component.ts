@@ -63,7 +63,7 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
   }
 
   private async _init() {
-    this._nestedNodeMap = this._business.nestedNodeMap;
+    this.nodes = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
     if (res.length > 0 && this.selectOnFirst) this.defaultIds = [res[0].Id];

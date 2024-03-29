@@ -20,6 +20,8 @@ const PROXY_CONFIG = [
     // target: 'http://192.168.21.122:8080',
     changeOrigin: true,
     secure: false,
+    proxyTimeout: 10 * 60 * 1000,
+    timeout: 10 * 60 * 1000,
   },
   // {
   //   context: ['/amap/'],

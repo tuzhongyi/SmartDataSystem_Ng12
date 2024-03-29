@@ -5,6 +5,7 @@ import { AIGarbageDeviceEventRecord } from '../../model/ai-garbage/device-event-
 import { AIGarbageDeviceLogRecord } from '../../model/ai-garbage/device-log-recprd.model';
 import { AIGarbageDeviceCommand } from '../../model/ai-garbage/garbage-device-command.enum';
 import { AIGarbageDevice } from '../../model/ai-garbage/garbage-device.model';
+import { PagedList } from '../../model/page_list.model';
 import { AIGarbageUrl } from '../../url/ai-garbage/ai-garbage.url';
 import {
   BaseRequestService,
@@ -69,6 +70,20 @@ export class AIGarbageDevicesRequestService {
     return this.http
       .howellPost<AIGarbageDeviceCommand>(url, plain as AIGarbageDeviceCommand)
       .toPromise();
+  }
+  async all(
+    params: GetAIGarbageStationDevicesParams = new GetAIGarbageStationDevicesParams()
+  ) {
+    let data: AIGarbageDevice[] = [];
+    let index = 1;
+    let paged: PagedList<AIGarbageDevice>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
 }
 class AIGarbageDevicesRecordsRequestService {

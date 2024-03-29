@@ -1,0 +1,53 @@
+<div class="ai-garbage-station-device-session-table">
+  <div class="ai-garbage-station-device-session-table-main">
+    <table
+      border="0"
+      cellpadding="0"
+      cellspacing="0"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <colgroup>
+        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+      </colgroup>
+      <thead>
+        <tr>
+          <td>序号</td>
+          <td>设备名称</td>
+          <td>设备类型</td>
+          <td>代理地址</td>
+          <td>代理端口号</td>
+          <td class="center">操作</td>
+        </tr>
+      </thead>
+    </table>
+    <div class="body paged">
+      <table *ngIf="datas" border="0" cellpadding="0" cellspacing="0">
+        <colgroup>
+          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+        </colgroup>
+        <tbody>
+          <tr *ngFor="let item of datas; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td [title]="item.DeviceName">
+              {{ item.DeviceName }}
+            </td>
+            <td [title]="item.DeviceType">{{ item.DeviceType }}</td>
+            <td [title]="item.Forwarding.Address">
+              {{ item.Forwarding.Address }}
+            </td>
+            <td [title]="item.Forwarding.Port">{{ item.Forwarding.Port }}</td>
+
+            <td>
+              <div class="operation">
+                <div (click)="onopen(item)" title="打开">
+                  <i class="mdi mdi-newspaper td-icon"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

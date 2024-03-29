@@ -8,21 +8,21 @@ import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-
 export class AIGarbageStationDeviceTableConverter {
   constructor(private service: AIGarbageStationDeviceTableService) {}
 
-  async device(source: AIGarbageDevice) {
-    if (source.Cameras && source.Cameras.length > 0) {
-      return source;
-    } else if (source.GarbageStationId) {
-      let station = await this.service.station.get(source.GarbageStationId);
+  async device(model: AIGarbageDevice) {
+    if (model.Cameras && model.Cameras.length > 0) {
+      return model;
+    } else if (model.GarbageStationId) {
+      let station = await this.service.station.get(model.GarbageStationId);
       if (station.Cameras) {
-        source.Cameras = station.Cameras.map((x, index) =>
+        model.Cameras = station.Cameras.map((x, index) =>
           this.camera(x, index + 1)
         );
-        return source;
+        return model;
       } else {
-        return source;
+        return model;
       }
     } else {
-      return source;
+      return model;
     }
   }
   camera(source: Camera, index: number) {

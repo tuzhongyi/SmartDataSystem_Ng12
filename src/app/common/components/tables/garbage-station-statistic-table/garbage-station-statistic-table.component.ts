@@ -94,7 +94,9 @@ export class GarbageStationStatisticTableComponent
 
   loading = false;
   ngOnInit() {
-    this.loadData();
+    if (this.load) {
+      this.load.subscribe(() => this.loadData());
+    }
   }
 
   /** 居委会 */

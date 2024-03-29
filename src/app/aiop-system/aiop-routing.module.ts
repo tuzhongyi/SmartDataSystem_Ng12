@@ -4,6 +4,7 @@ import { AICameraEventsComponent } from './components/ai-camera-events/ai-camera
 import { AIGarbageStationDeviceManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-manager/ai-garbage-station-device-manager.component';
 import { AIGarbageStationDeviceRecordCommandManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-record-command-manager/ai-garbage-station-device-record-command-manager.component';
 import { AIGarbageStationDeviceRecordEventManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-record-event-manager/ai-garbage-station-device-record-event-manager.component';
+import { AIGarbageStationDeviceSessionManagerComponent } from './components/ai-garbage-station/ai-garbage-station-device-session-manager/ai-garbage-station-device-session-manager.component';
 import { AIGarbageStationRegionManagerComponent } from './components/ai-garbage-station/ai-garbage-station-region-manager/ai-garbage-station-region-manager.component';
 import { AIGarbageStationRfidCardManagerComponent } from './components/ai-garbage-station/ai-garbage-station-rfid-card-manager/ai-garbage-station-rfid-card-manager.component';
 import { AIModelManageComponent } from './components/ai-model-manage/ai-model-manage.component';
@@ -311,6 +312,13 @@ const routes: Routes = [
                 component: AIGarbageStationDeviceManagerComponent,
                 data: {
                   breadcrumb: '设备管理',
+                },
+              },
+              {
+                path: 'gcha',
+                component: AIGarbageStationDeviceSessionManagerComponent,
+                data: {
+                  breadcrumb: 'GCHA管理',
                 },
               },
               {

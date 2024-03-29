@@ -36,6 +36,7 @@ export class GarbageStationWindowListComponent implements OnInit {
       this.args.opts = x;
       this.tableLoad.emit(this.args);
     });
+    this.tableLoad.emit(this.args);
   }
 
   onimage(item: PagedArgs<GarbageStationTableModel>) {

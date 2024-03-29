@@ -75,7 +75,7 @@ export class DivisionTreeSyncComponent
   @ViewChild(DivisionTreeComponent) tree?: CommonTreeComponent;
 
   async init() {
-    this._nestedNodeMap = this.business.nestedNodeMap;
+    this.nodes = this.business.nestedNodeMap;
 
     let res = await this.business.load(this.args);
     this.dataSubject.next(res);

@@ -43,7 +43,7 @@
           <div class="hw-form-list-item-title">性别</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.Gender">
-              <select #element [(ngModel)]="model.Gender">
+              <select hw-select-content [(ngModel)]="model.Gender">
                 <option [ngValue]="Gender.Male">
                   {{ Language.Gender(Gender.Male) }}
                 </option>
@@ -118,7 +118,7 @@
           <div class="hw-form-list-item-title">用户类型</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.UserType">
-              <select #element [(ngModel)]="model.UserType">
+              <select hw-select-content [(ngModel)]="model.UserType">
                 <option [ngValue]="1">生活垃圾</option>
                 <option [ngValue]="2">垃圾清运</option>
                 <option [ngValue]="3">生活垃圾&垃圾清运</option>
@@ -131,7 +131,7 @@
           <div class="hw-form-list-item-title">UI类型</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.UIType">
-              <select #element [(ngModel)]="model.UIType">
+              <select hw-select-content [(ngModel)]="model.UIType">
                 <option [ngValue]="UserUIType.garbage">美丽城市助手</option>
                 <option [ngValue]="UserUIType.dapuqiao">打浦桥订制</option>
               </select>
@@ -148,7 +148,7 @@
           <div class="hw-form-list-item-title">状态</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.State">
-              <select #element [(ngModel)]="model.State">
+              <select hw-select-content [(ngModel)]="model.State">
                 <option [ngValue]="UserState.normal">正常</option>
               </select>
             </hw-select>

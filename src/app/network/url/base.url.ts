@@ -38,6 +38,7 @@ export class HowellUrlNode {
   static sms = 'sms';
   static device_service = 'device_service';
   static ai_garbage = 'ai_garbage';
+  static http2tcp = 'http2tcp';
 }
 
 export class BaseUrl {
@@ -64,6 +65,10 @@ export class BaseUrl {
   }
   static get garbage() {
     return GarbageBaseUrl;
+  }
+  /** /api/howell/ver10/device_service/http2tcp/  */
+  static get http2tcp() {
+    return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.device_service}/${HowellUrlNode.http2tcp}`;
   }
 }
 class GarbageBaseUrl {

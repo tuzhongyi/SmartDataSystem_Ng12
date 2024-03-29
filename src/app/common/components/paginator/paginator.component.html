@@ -1,5 +1,5 @@
 <div class="paginator-outer-container">
-  <div class="paginator-container">
+  <div class="paginator-container" [class]="align">
     <div class="paginator-range-actions">
       <button
         mat-button
@@ -114,7 +114,7 @@
           />
         </svg>
       </button>
-      <div class="jump-to">
+      <div class="jump-to" *ngIf="showJumpTo">
         <span class="jump-to-label"> 跳至</span>
 
         <input

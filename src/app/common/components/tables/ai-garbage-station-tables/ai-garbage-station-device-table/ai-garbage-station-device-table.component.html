@@ -104,6 +104,7 @@
                 </ng-container>
                 <div
                   *ngIf="
+                    !!item.Status &&
                     !!item.Status.GCHAStatus &&
                     item.Status.GCHAStatus.OnlineState != undefined
                   "
@@ -119,6 +120,7 @@
                 </div>
               </div>
             </td>
+
             <td>
               {{
                 !item.Status || !item.Status.LastUpdateTime
@@ -134,6 +136,16 @@
                 <div (click)="onschedule($event, item)" title="工作表">
                   <i class="mdi mdi-calendar-clock td-icon"></i>
                 </div>
+                <!-- <div (click)="onsession($event, item)" title="HTTP透传">
+                  <i
+                    class="mdi mdi-monitor td-icon"
+                    [class.disabled]="
+                      !item.Status ||
+                      !item.Status.GCHAStatus ||
+                      item.Status.GCHAStatus.OnlineState != 0
+                    "
+                  ></i>
+                </div> -->
                 <div (click)="ondetails($event, item)" title="编辑">
                   <i class="howell-icon-modification td-icon"></i>
                 </div>

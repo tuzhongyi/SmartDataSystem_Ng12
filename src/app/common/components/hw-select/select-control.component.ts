@@ -3,12 +3,12 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
-  ElementRef,
   EventEmitter,
   Input,
   OnInit,
   Output,
 } from '@angular/core';
+import { SelectDirective } from '../../directives/select.directive';
 
 @Component({
   selector: 'hw-select',
@@ -57,8 +57,15 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
     }
   }
 
-  @ContentChild('element')
-  element?: ElementRef<HTMLSelectElement>;
+  @ContentChild(SelectDirective)
+  element?: SelectDirective;
+
+  get disabled() {
+    if (this.element) {
+      return this.element.nativeElement.disabled;
+    }
+    return false;
+  }
 
   ngOnInit(): void {}
 

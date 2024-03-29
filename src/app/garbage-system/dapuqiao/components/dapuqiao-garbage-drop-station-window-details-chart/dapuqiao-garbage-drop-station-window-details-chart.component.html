@@ -74,7 +74,7 @@
           <div class="filter-item-title">投放点</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.stationId" [cannull]="true">
-              <select #element [(ngModel)]="args.stationId">
+              <select hw-select-content [(ngModel)]="args.stationId">
                 <option [ngValue]="item.Id" *ngFor="let item of stations">
                   {{ item.Name }}
                 </option>

@@ -10,6 +10,7 @@ import { MessageBar } from 'src/app/common/tools/message-bar';
 import { AIGarbageCamera } from 'src/app/network/model/ai-garbage/camera.model';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { AIGarbageStationDeviceManagerBusiness } from './ai-garbage-station-device-manager.business';
 import { AIGarbageStationDeviceWindow } from './ai-garbage-station-device-manager.model';
@@ -36,20 +37,23 @@ export class AIGarbageStationDeviceManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.selection.select.subscribe((x) => {
-      if (x) {
+      this.args.divisionId = undefined;
+      this.args.regionId = undefined;
+      if (x instanceof Division) {
+        this.args.divisionId = x.Id;
+      } else if (x instanceof AIGarbageRegion) {
         this.args.regionId = x.Id;
       } else {
-        this.args.regionId = undefined;
       }
     });
   }
 
   selectDivisionClick(nodes: CommonFlatNode[]) {
-    this.args.regionId = undefined;
+    this.args.divisionId = undefined;
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       if (node.RawData instanceof AIGarbageRegion) {
-        this.args.regionId = node.RawData.Id;
+        this.args.divisionId = node.RawData.Id;
       }
     }
     this.args.tofirst = true;
@@ -170,5 +174,9 @@ export class AIGarbageStationDeviceManagerComponent implements OnInit {
   onstatus(model: AIGarbageDevice) {
     this.window.status.model = model;
     this.window.status.show = true;
+  }
+  onsession(model: AIGarbageDevice) {
+    this.window.session.model = model;
+    this.window.session.show = true;
   }
 }

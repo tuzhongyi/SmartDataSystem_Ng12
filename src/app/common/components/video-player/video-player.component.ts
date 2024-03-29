@@ -18,6 +18,7 @@ import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { HowellUrl } from 'src/app/view-model/howell-url.model';
 import { wait } from '../../tools/tool';
+import { UrlTool } from '../../tools/url-tool/url.tool';
 import { VideoModel, VideoPlayerState } from './video.model';
 import { ButtonName } from './WSPlayerProxyButtonName';
 
@@ -64,15 +65,7 @@ export class VideoPlayerComponent
     private local: LocalStorageService,
     private userService: UserRequestService
   ) {
-    let protocol = location.protocol;
-    if (!protocol.includes(':')) {
-      protocol += ':';
-    }
-    let port = '';
-    if (location.port) {
-      port = ':' + location.port;
-    }
-    this.webUrl = `${protocol}//${location.hostname}${port}/video/wsplayer/wsplayer.html`;
+    this.webUrl = UrlTool.fromLocation('/video/wsplayer/wsplayer.html');
   }
   src?: SafeResourceUrl;
   isloaded = false;

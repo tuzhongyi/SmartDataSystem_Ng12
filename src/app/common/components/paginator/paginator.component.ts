@@ -59,6 +59,11 @@ export class PaginatorComponent
       value <= 0 ? this.getNumberOfPages() : value < 3 ? 3 : value;
   }
 
+  @Input()
+  public showJumpTo: boolean = true;
+  @Input()
+  align: 'right' | 'center' | 'left' = 'left';
+
   /***************** private ************************/
   // 显示几个分页按钮
   private _pagerCount = 4; // 不能小于等于0，但可以超出 max pager count

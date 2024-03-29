@@ -31,7 +31,7 @@
           <div class="filter-item-title">资源类型：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.type" [cannull]="true">
-              <select #element [(ngModel)]="args.type">
+              <select hw-select-content [(ngModel)]="args.type">
                 <option [ngValue]="ResourceType.Camera">
                   {{ Language.ResourceType(ResourceType.Camera) }}
                 </option>
@@ -49,7 +49,7 @@
           <div class="filter-item-title">设备状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.status" [cannull]="true">
-              <select #element [(ngModel)]="args.status">
+              <select hw-select-content [(ngModel)]="args.status">
                 <option [ngValue]="OnlineStatus.Online">上线</option>
                 <option [ngValue]="OnlineStatus.Offline">下线</option>
               </select>

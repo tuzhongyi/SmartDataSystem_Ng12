@@ -1,7 +1,7 @@
-import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { MathTool } from 'src/app/common/tools/math.tool';
 import { wait } from 'src/app/common/tools/tool';
+import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
@@ -11,15 +11,7 @@ import { ICollectionMapRouteBusiness } from './collection-map-route.model';
 export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
   constructor(private converter: CollectionMapControlConverter) {}
   get src(): string {
-    const host = document.location.hostname;
-    const port = document.location.port;
-    //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
-    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    let protocol = document.location.protocol;
-    if (protocol.indexOf(':') < 0) {
-      protocol += ':';
-    }
-    return `${protocol}//${host}:${port}/amap/map_ts.html?maptype=2D&v=${date}`;
+    return UrlTool.amap2d;
   }
   seek: EventEmitter<GisRoutePoint> = new EventEmitter();
   private loaded = false;

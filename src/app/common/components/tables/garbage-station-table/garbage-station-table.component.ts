@@ -58,7 +58,6 @@ export class GarbageStationTableComponent
         this.loadData(1, this.pageSize);
       });
     }
-    this.loadData(1, this.pageSize);
   }
 
   async loadData(index: number, size: number) {

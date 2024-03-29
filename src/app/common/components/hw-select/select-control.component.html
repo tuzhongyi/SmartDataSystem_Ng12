@@ -7,7 +7,11 @@
   >
     <i class="howell-icon-Close"></i>
   </div>
-  <div class="default" *ngIf="selected === undefined">
+  <div
+    class="default"
+    [class.disabled]="disabled"
+    *ngIf="selected === undefined"
+  >
     {{ nulltext }}
   </div>
 </div>

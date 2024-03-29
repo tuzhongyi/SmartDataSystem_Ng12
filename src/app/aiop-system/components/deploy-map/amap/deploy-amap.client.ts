@@ -1,20 +1,13 @@
-import { formatDate, PlatformLocation } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
+import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 @Injectable()
 export class DeployAMapClient {
-  constructor(private location: PlatformLocation) {}
+  constructor() {}
   get src() {
-    const host = this.location.hostname;
-    const port = this.location.port;
-    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    let protocol = document.location.protocol;
-    if (protocol.indexOf(':') < 0) {
-      protocol += ':';
-    }
-    return `${protocol}//${host}:${port}/amap/map_ts.html?v=${date}`;
+    return UrlTool.amap;
   }
   public get client(): Promise<CesiumMapClient> {
     return new Promise((resolve) => {

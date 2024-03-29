@@ -1,19 +1,12 @@
-import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { wait } from 'src/app/common/tools/tool';
+import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { AMapDataSource } from './amap-data-source';
 
 @Injectable()
 export class AMapClient {
   get src() {
-    const host = document.location.hostname;
-    const port = document.location.port;
-    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    let protocol = document.location.protocol;
-    if (protocol.indexOf(':') < 0) {
-      protocol += ':';
-    }
-    return `${protocol}//${host}:${port}/amap/map_ts.html?v=${date}`;
+    return UrlTool.amap;
   }
   public get client(): Promise<CesiumMapClient> {
     return new Promise((resolve) => {

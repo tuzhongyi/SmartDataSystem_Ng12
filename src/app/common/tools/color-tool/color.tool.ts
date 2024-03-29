@@ -2,14 +2,15 @@ import { BatteryState } from 'src/app/enum/ai-garbage/battery-state.enum';
 import { RobotState } from 'src/app/enum/ai-garbage/robot-state.enum';
 
 export class ColorTool {
-  static OnlineState(value?: number) {
+  static OnlineState(value?: number, cannull = true) {
     switch (value) {
       case 0:
         return 'green-text';
       case 1:
         return 'powder-red-text';
       default:
-        return '';
+        if (cannull) return '';
+        else return 'powder-red-text';
     }
   }
   static SwitchState(value?: number) {

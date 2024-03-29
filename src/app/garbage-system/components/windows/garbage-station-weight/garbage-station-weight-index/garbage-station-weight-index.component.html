@@ -1,33 +1,29 @@
 <div class="garbage-station-weight-index">
   <div class="garbage-station-weight-index-head">
-    <div><div class="second-title-bg pull-left text">垃圾称重</div></div>
-    <div>
-      <ul class="hw-ul pull-left m-t-10">
-        <li class="pull-left">
-          <a (click)="page = Page.list">
-            <div
-              class="second-menu-btn text"
-              [ngClass]="{
-                selected: page === Page.list
-              }"
-            >
-              &nbsp;&nbsp;总图表
-            </div>
-          </a>
-        </li>
-        <li class="pull-left">
-          <a (click)="page = Page.chart">
-            <div
-              class="second-menu-btn text"
-              [ngClass]="{
-                selected: page === Page.chart
-              }"
-            >
-              &nbsp;细分图表
-            </div>
-          </a>
-        </li>
-      </ul>
+    <div class="garbage-station-weight-index-head-title">
+      <div class="second-title-bg text">垃圾称重</div>
+    </div>
+    <div class="garbage-station-weight-index-head-menu">
+      <div (click)="page = Page.list">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: page === Page.list
+          }"
+        >
+          总图表
+        </div>
+      </div>
+      <div (click)="page = Page.chart">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: page === Page.chart
+          }"
+        >
+          细分图表
+        </div>
+      </div>
     </div>
   </div>
   <div class="garbage-station-weight-index-body">

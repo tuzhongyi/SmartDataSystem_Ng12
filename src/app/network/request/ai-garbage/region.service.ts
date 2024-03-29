@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AIGarbageAbbrInfo } from '../../model/ai-garbage/abbr-info.model';
 import { AIGarbageRegion } from '../../model/ai-garbage/region.model';
+import { PagedList } from '../../model/page_list.model';
 import { AIGarbageUrl } from '../../url/ai-garbage/ai-garbage.url';
 import {
   BaseRequestService,
@@ -23,6 +24,21 @@ export class AIGarbageRegionsRequestService {
   constructor(private http: HowellAuthHttpService) {
     this.basic = new BaseRequestService(http);
     this.type = this.basic.type(AIGarbageRegion);
+  }
+
+  async all(
+    params: GetAIGarbageStationRegionsParams = new GetAIGarbageStationRegionsParams()
+  ) {
+    let data: AIGarbageRegion[] = [];
+    let index = 1;
+    let paged: PagedList<AIGarbageRegion>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
   create(item: AIGarbageRegion) {
     let url = AIGarbageUrl.regions.basic();

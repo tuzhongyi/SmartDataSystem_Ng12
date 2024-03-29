@@ -54,6 +54,7 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
 
   ngOnInit(): void {
     this.initUnits();
+    this.load.emit();
   }
 
   ontimeunit() {

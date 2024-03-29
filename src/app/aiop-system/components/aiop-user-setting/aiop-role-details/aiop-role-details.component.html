@@ -26,7 +26,7 @@
           <div class="hw-form-list-item-title">隐私数据</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.PrivacyData">
-              <select #element [(ngModel)]="model.PrivacyData">
+              <select hw-select-content [(ngModel)]="model.PrivacyData">
                 <option [ngValue]="0">不显示</option>
                 <option [ngValue]="1">显示</option>
               </select>
@@ -37,7 +37,7 @@
           <div class="hw-form-list-item-title">用户数据</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.UserData">
-              <select #element [(ngModel)]="model.UserData">
+              <select hw-select-content [(ngModel)]="model.UserData">
                 <option [ngValue]="0">不显示</option>
                 <option [ngValue]="1">显示</option>
               </select>
@@ -48,7 +48,7 @@
           <div class="hw-form-list-item-title">静态数据</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.StaticData">
-              <select #element [(ngModel)]="model.StaticData">
+              <select hw-select-content [(ngModel)]="model.StaticData">
                 <option [ngValue]="0">不显示</option>
                 <option [ngValue]="1">显示</option>
               </select>
@@ -59,7 +59,7 @@
           <div class="hw-form-list-item-title">照片</div>
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="model.PictureData">
-              <select #element [(ngModel)]="model.PictureData">
+              <select hw-select-content [(ngModel)]="model.PictureData">
                 <option [ngValue]="0">不显示</option>
                 <option [ngValue]="1">显示</option>
               </select>

@@ -4,6 +4,7 @@ export class AIGarbageStationDeviceTableArgs extends PageArgs {
   asc?: string;
   desc?: string;
   name?: string;
+  divisionId?: string;
   regionId?: string;
 }
 

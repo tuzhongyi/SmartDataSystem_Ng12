@@ -1,12 +1,28 @@
 .garbage-station-weight-index {
   height: 100%;
-  @head-height: calc(58px + 14px);
+  @head-height: calc(58px);
+  @head-margin: 14px;
 
   &-head {
-    height: @head-height
+    height: @head-height;
+    margin-bottom: @head-margin;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    &-menu {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .second-title-bg.text {
+      margin-bottom: 0;
+    }
   }
 
   &-body {
-    height: calc(100% - @head-height);
+    height: calc(100% - @head-height - @head-margin);
   }
 }

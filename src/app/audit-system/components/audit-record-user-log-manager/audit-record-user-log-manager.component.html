@@ -31,7 +31,7 @@
           <div class="filter-item-title">操作结果：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.result" [cannull]="true">
-              <select #element [(ngModel)]="args.result">
+              <select hw-select-content [(ngModel)]="args.result">
                 <option [ngValue]="true">成功</option>
                 <option [ngValue]="false">失败</option>
               </select>

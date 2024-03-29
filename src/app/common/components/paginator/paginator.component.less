@@ -2,6 +2,7 @@
   display: flex;
   color: #cfd7ff;
   font-size: 14px;
+
   .paginator-container {
     display: flex;
     align-items: center;
@@ -10,16 +11,29 @@
     width: 100%;
     min-width: 56px;
 
+    &.left {
+      justify-content: flex-end;
+    }
+
+    &.center {
+      justify-content: center;
+    }
+
+    &.left {
+      justify-content: flex-start;
+    }
+
     .paginator-range-actions {
       display: flex;
       align-items: center;
-      > .mat-button {
+      gap: 5px;
+
+      >.mat-button {
         background: #1f2e57;
         padding: 0;
         min-width: 30px;
         height: 30px;
 
-        margin: 0 5px;
 
         display: flex;
         align-items: center;
@@ -28,6 +42,7 @@
         svg {
           fill: #cfd7ff;
         }
+
         &.paginator-navigation-last,
         &.paginator-navigation-first {
           span {
@@ -35,12 +50,14 @@
             width: 100%;
           }
         }
+
         &.mat-button-disabled {
           cursor: not-allowed;
 
           span {
             color: gray;
           }
+
           svg {
             fill: gray;
           }
@@ -48,6 +65,7 @@
 
         &.pager {
           padding: 0 5px;
+
           &.active,
           &:hover {
             background-color: #2d76ce;
@@ -55,10 +73,12 @@
           }
         }
       }
+
       .jump-to {
         display: flex;
         align-items: center;
-        margin: 0 10px;
+        margin-left: 5px;
+        gap: 5px;
 
         .jump-to-label {
           display: flex;
@@ -85,10 +105,12 @@
           line-height: 24px;
           text-align: center;
           overflow: hidden;
+
           &:focus-visible {
             border-color: #3a93ff;
           }
         }
+
         .jump-to-input {
           width: 40px;
           height: 24px;
@@ -96,23 +118,23 @@
           text-align: center;
           padding: 0;
           box-sizing: border-box;
-          margin: 0 5px;
           background-color: #1d233b;
           color: #cfd7ff;
           border: 1px solid #5e6ebf;
           outline: none;
         }
+
         .jump-to-button {
           background: #1f2e57;
           cursor: pointer;
           min-width: 30px;
           height: 24px;
-          margin: 0 5px;
           padding: 0 10px;
           padding-top: 2px;
 
           display: flex;
           align-items: center;
+
           &:hover {
             background-color: #2d76ce;
             color: #fff;

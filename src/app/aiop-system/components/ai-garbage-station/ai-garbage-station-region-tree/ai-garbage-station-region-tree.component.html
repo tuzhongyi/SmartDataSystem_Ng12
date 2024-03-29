@@ -2,7 +2,7 @@
   <div class="search-wrapper" *ngIf="showSearchBar">
     <howell-simple-search
       placeHolder="名称"
-      (searchEvent)="searchEventHandler($event)"
+      (searchEvent)="onsearch($event)"
     ></howell-simple-search>
   </div>
   <div class="tree-container">
@@ -12,7 +12,7 @@
       [defaultIds]="defaultIds"
       [selectStrategy]="selectStrategy"
       (selectTreeNode)="selectTreeNodeHandler($event)"
-      [loaded]="loaded"
+      [inited]="inited"
     ></howell-common-tree>
   </div>
 </div>

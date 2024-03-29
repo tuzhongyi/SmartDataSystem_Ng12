@@ -58,7 +58,8 @@ export class AIGarbageStationDeviceTableComponent
   schedule: EventEmitter<AIGarbageDevice> = new EventEmitter();
   @Output()
   status: EventEmitter<AIGarbageDevice> = new EventEmitter();
-
+  @Output()
+  session: EventEmitter<AIGarbageDevice> = new EventEmitter();
   constructor(private business: AIGarbageStationDeviceTableBusiness) {
     super();
   }
@@ -131,6 +132,17 @@ export class AIGarbageStationDeviceTableComponent
   onschedule(e: Event, item: AIGarbageDevice) {
     e.stopImmediatePropagation();
     this.schedule.emit(item);
+  }
+  onsession(e: Event, item: AIGarbageDevice) {
+    e.stopImmediatePropagation();
+    if (
+      !item.Status ||
+      !item.Status.GCHAStatus ||
+      item.Status.GCHAStatus.OnlineState != 0
+    ) {
+      return;
+    }
+    this.session.emit(item);
   }
   onselected(item: AIGarbageDevice) {
     let index = this.selecteds.indexOf(item);

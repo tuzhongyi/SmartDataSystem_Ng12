@@ -182,7 +182,7 @@ export class DivisionTreeComponent
   }
 
   private async _init() {
-    this._nestedNodeMap = this.business.nestedNodeMap;
+    this.nodes = this.business.nestedNodeMap;
 
     let res = await this.business.load(this.resourceType, this.depth);
     this.loaded.emit(res);

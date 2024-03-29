@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
@@ -10,38 +17,37 @@ import { LabelListBusiness as LabelTreeBusiness } from './label-tree.business';
   selector: 'howell-label-tree',
   templateUrl: './label-tree.component.html',
   styleUrls: ['./label-tree.component.less'],
-  providers: [
-    LabelTreeBusiness
-  ]
+  providers: [LabelTreeBusiness],
 })
 export class LabelTreeComponent extends CommonTree implements OnInit {
-
-
   private _condition: string = '';
-
 
   @Input()
   selectStrategy = SelectStrategy.Multiple;
 
   // 默认选中列表
-  private _defaultIds: string[] = []
+  private _defaultIds: string[] = [];
   @Input()
   set defaultIds(ids: string[]) {
     // 排除空字符串
-    this._defaultIds = ids.filter(id => id);
+    this._defaultIds = ids.filter((id) => id);
   }
   get defaultIds() {
     return this._defaultIds;
   }
 
-
   @Input() showSearchBar = true;
 
-  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<CommonFlatNode[]>();
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode[]> = new EventEmitter<
+    CommonFlatNode[]
+  >();
 
   @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
-  constructor(private _business: LabelTreeBusiness, private _toastrService: ToastrService) {
+  constructor(
+    private _business: LabelTreeBusiness,
+    private _toastrService: ToastrService
+  ) {
     super();
   }
 
@@ -49,11 +55,11 @@ export class LabelTreeComponent extends CommonTree implements OnInit {
     this._init();
   }
   private async _init() {
-    this._nestedNodeMap = this._business.nestedNodeMap;
+    this.nodes = this._business.nestedNodeMap;
 
     let res = await this._business.init(this._condition);
     // console.log(res);
-    this.dataSubject.next(res)
+    this.dataSubject.next(res);
   }
   async searchEventHandler(condition: string) {
     console.log('搜索字段', condition);
@@ -71,14 +77,13 @@ export class LabelTreeComponent extends CommonTree implements OnInit {
 
       this.dataSubject.next(res);
       if (condition != '') {
-        this.tree?.expandAll()
+        this.tree?.expandAll();
       } else {
         this.tree?.reset();
-        this.tree?.collapseAll()
+        this.tree?.collapseAll();
       }
     } else {
       this._toastrService.warning('无匹配结果');
     }
   }
-
 }

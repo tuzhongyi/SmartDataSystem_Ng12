@@ -1,0 +1,89 @@
+<div class="ai-garbage-station-device-session-manager">
+  <div class="panel ai-garbage-station-device-session-manager-region">
+    <div class="ai-garbage-station-device-session-manager-head">
+      <div class="hw-simple-title">设备列表</div>
+    </div>
+    <div class="ai-garbage-station-device-session-manager-body">
+      <ai-garbage-station-device-session-list
+        (session)="ondevice($event)"
+      ></ai-garbage-station-device-session-list>
+    </div>
+  </div>
+  <!-- <div class="panel ai-garbage-station-device-session-manager-device">
+    <div class="ai-garbage-station-device-session-manager-head">
+      <div class="hw-simple-title">设备列表</div>
+    </div>
+    <div class="ai-garbage-station-device-session-manager-body">
+
+    </div>
+  </div> -->
+
+  <div class="panel ai-garbage-station-device-session-manager-session">
+    <div class="ai-garbage-station-device-session-manager-head">
+      <div class="hw-simple-title">GCHA</div>
+    </div>
+    <div class="ai-garbage-station-device-session-manager-body">
+      <div class="hw-form">
+        <div class="hw-form-group">
+          <div class="hw-form-label">地址</div>
+          <div class="content">
+            <input type="text" [disabled]="true" [(ngModel)]="ele.url" />
+          </div>
+        </div>
+        <div class="hw-form-group">
+          <div class="hw-form-label">本地设备</div>
+          <div class="content">
+            <hw-select [(selected)]="selection.selected">
+              <select
+                hw-select-content
+                [(ngModel)]="selection.selected"
+                [disabled]="!session"
+                (change)="onselect()"
+              >
+                <option [ngValue]="item" *ngFor="let item of selection.datas">
+                  {{ item.DeviceName }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="hw-form-group">
+          <div class="hw-form-label">本地地址</div>
+          <div class="content ipaddress">
+            <input
+              class="ip"
+              type="text"
+              [disabled]="!session"
+              [(ngModel)]="ele.host"
+            />
+            <input
+              class="port"
+              type="text"
+              [disabled]="!session"
+              [(ngModel)]="ele.port"
+            />
+            <button
+              class="hw-green-btn"
+              [disabled]="!session"
+              (click)="onforwarding()"
+            >
+              <i class="mdi mdi-lan-connect"></i> 应用
+            </button>
+          </div>
+        </div>
+
+        <div class="hw-form-group">
+          <div>
+            <button
+              class="hw-blue-btn"
+              [disabled]="!ele.url"
+              (click)="onopen()"
+            >
+              <i class="mdi mdi-newspaper"></i> 打开
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

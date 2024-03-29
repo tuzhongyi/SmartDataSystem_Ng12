@@ -40,12 +40,18 @@
               [selectedNodes]="selection.selecteds"
               [height]="'325px'"
             >
-              <howell-division-tree
+              <hw-ai-garbage-station-region-tree
+                #tree
+                [regionNode]="true"
+                (selectTreeNode)="selection.onselect($event)"
+              >
+              </hw-ai-garbage-station-region-tree>
+              <!-- <howell-division-tree
                 #tree
                 (selectTreeNode)="selection.onselect($event)"
                 [depth]="2"
                 [showDepth]="0"
-              ></howell-division-tree>
+              ></howell-division-tree> -->
             </common-label-select>
           </div>
         </div>

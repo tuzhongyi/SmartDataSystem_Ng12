@@ -31,7 +31,7 @@
           <div class="filter-item-title">AI模型：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.modelId" [cannull]="true">
-              <select #element [(ngModel)]="args.modelId">
+              <select hw-select-content [(ngModel)]="args.modelId">
                 <option *ngFor="let item of ai_models" [ngValue]="item.ModelId">
                   {{ item.ModelName }}
                 </option>

@@ -40,7 +40,7 @@
       <hw-select [(selected)]="filter.stationId" [cannull]="true">
         <select
           class="filter-item-value station"
-          #element
+          hw-select-content
           [(ngModel)]="filter.stationId"
           (change)="onchange()"
         >

@@ -75,6 +75,11 @@
           "path": "/aiop/underwater/system-setting/ai-station/manager"
         },
         {
+          "title": "GCHA管理",
+          "id": "gcha",
+          "path": "/aiop/underwater/system-setting/ai-station/gcha"
+        },
+        {
           "title": "RFID管理",
           "id": "rfid",
           "path": "/aiop/underwater/system-setting/ai-station/rfid"

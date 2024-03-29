@@ -2,13 +2,31 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
   i {
     margin-right: 3px;
+
     &:first-child {
       margin-left: 3px;
     }
-    &:last-child{
-      margin-right: 0;;
+
+    &:last-child {
+      margin-right: 0;
+      ;
+    }
+  }
+}
+
+::ng-deep {
+  app-root {
+    .mat-tree {
+
+      .mat-tree-node,
+      .mat-nested-tree-node {
+        &>div {
+          gap: 2px;
+        }
+      }
     }
   }
 }

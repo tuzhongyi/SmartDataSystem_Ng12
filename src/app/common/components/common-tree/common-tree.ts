@@ -7,7 +7,7 @@ import { CommonTreeComponent } from './common-tree.component';
 import { ICommonTree } from './common-tree.model';
 
 export abstract class CommonTree implements ICommonTree {
-  protected _nestedNodeMap = new Map<string, CommonNestNode>();
+  protected nodes = new Map<string, CommonNestNode>();
   public dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
   public tree?: CommonTreeComponent;
 
@@ -20,7 +20,7 @@ export abstract class CommonTree implements ICommonTree {
 
   addNode(node: CommonNestNode) {
     if (node.ParentId) {
-      let parentNode = this._nestedNodeMap.get(node.ParentId);
+      let parentNode = this.nodes.get(node.ParentId);
       if (parentNode) {
         parentNode.HasChildren = true;
         parentNode.childrenChange.value.push(node);
@@ -28,13 +28,13 @@ export abstract class CommonTree implements ICommonTree {
     } else {
       this.dataSubject.value.push(node);
     }
-    this._nestedNodeMap.set(node.Id, node);
+    this.nodes.set(node.Id, node);
     this.dataSubject.next(this.dataSubject.value);
   }
 
   /**原节点有各种状态,使用原节点 */
   editNode(node: CommonNestNode) {
-    let currentNode = this._nestedNodeMap.get(node.Id);
+    let currentNode = this.nodes.get(node.Id);
     if (currentNode) {
       currentNode.Name = node.Name;
       currentNode.RawData = node.RawData;
@@ -45,11 +45,11 @@ export abstract class CommonTree implements ICommonTree {
   deleteNode(flat: CommonFlatNode) {
     const node = flat;
     // 当前要删除的节点
-    let currentNode = this._nestedNodeMap.get(node.Id);
+    let currentNode = this.nodes.get(node.Id);
     if (currentNode) {
       // 该节点有没有父节点
       if (currentNode.ParentId) {
-        let parentNode = this._nestedNodeMap.get(currentNode.ParentId)!;
+        let parentNode = this.nodes.get(currentNode.ParentId)!;
         let index = parentNode.childrenChange.value.indexOf(currentNode);
         if (index != -1) {
           parentNode.childrenChange.value.splice(index, 1);
@@ -61,7 +61,7 @@ export abstract class CommonTree implements ICommonTree {
           this.dataSubject.value.splice(index, 1);
         }
       }
-      this._nestedNodeMap.delete(currentNode.Id);
+      this.nodes.delete(currentNode.Id);
     }
     this.dataSubject.next(this.dataSubject.value);
     this.tree?.deleteNode(flat);

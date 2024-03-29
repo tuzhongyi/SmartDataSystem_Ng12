@@ -1,7 +1,7 @@
-import { formatDate } from '@angular/common';
 import { EventEmitter, Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
@@ -41,15 +41,7 @@ export class CollectionMapControlBusiness {
   };
 
   getSrc() {
-    const host = document.location.hostname;
-    const port = document.location.port;
-    //let date = this.datePipe.transform(new Date(), 'yyyyMMddHHmmss');
-    const date = formatDate(new Date(), 'yyyyMMddHHmmss', 'en');
-    let protocol = document.location.protocol;
-    if (protocol.indexOf(':') < 0) {
-      protocol += ':';
-    }
-    return `${protocol}//${host}:${port}/amap/map_ts.html?v=${date}`;
+    return UrlTool.amap;
   }
   loaded = false;
 

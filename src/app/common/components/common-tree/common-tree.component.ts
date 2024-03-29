@@ -52,7 +52,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Output()
   buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
   @Input()
-  loaded: EventEmitter<void> = new EventEmitter();
+  inited: EventEmitter<void> = new EventEmitter();
 
   constructor() {
     this._treeFlattener = new MatTreeFlattener(
@@ -149,8 +149,8 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     if (this.defaultIds && this.defaultIds.length > 0) {
       this.setDefaultNodes();
     }
-    if (this.loaded) {
-      this.loaded.subscribe((x) => {
+    if (this.inited) {
+      this.inited.subscribe((x) => {
         if (!this.defaultIdLoaded) {
           this.setDefaultNodes();
         }
