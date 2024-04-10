@@ -54,6 +54,7 @@ export class LineZoomChartBusiness
     // console.log('count', count);
 
     // console.log('statistic', statistic);
+
     return {
       count: count,
       record: statistic,

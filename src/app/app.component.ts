@@ -6,7 +6,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'waste';
-  constructor() {
-    console.log();
-  }
+  constructor() {}
 }

@@ -61,11 +61,11 @@ export class CameraAIModel {
   /**模型标签图标0-n */
   Label!: number;
   /**数据集ID(可选) */
-  readonly DataSetId?: string;
+  DataSetId?: string;
   /**版本(可选) */
-  readonly Version?: string;
+  Version?: string;
   /**应用类型，一般是设备型号(可选) */
-  readonly TransformType?: string;
+  TransformType?: string;
   /**模型类型(可选)：AIOP */
   ModelType?: string;
   /**模型名称(可选) */

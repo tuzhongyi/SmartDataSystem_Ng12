@@ -74,7 +74,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   DateTimePickerView = DateTimePickerView;
   TrashCanType = TrashCanType;
 
-  dateFormat: string = 'yyyy-MM-dd HH:mm';
+  dateFormat: string = Language.yyyyMMddHHmm;
   selectedNodes: CommonFlatNode[] = [];
 
   constructor(

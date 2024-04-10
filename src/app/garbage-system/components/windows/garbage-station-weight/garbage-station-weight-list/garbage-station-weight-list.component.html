@@ -41,7 +41,11 @@
           <div class="filter-item-title">筛选</div>
           <div class="filter-item-value division">
             <hw-select [(selected)]="selected.division" [cannull]="true">
-              <select [(ngModel)]="selected.division" (change)="onfilter()">
+              <select
+                hw-select-content
+                [(ngModel)]="selected.division"
+                (change)="onfilter()"
+              >
                 <option [ngValue]="item" *ngFor="let item of source">
                   {{ item.Name }}
                 </option>

@@ -14,6 +14,7 @@ import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/d
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { Language } from 'src/app/common/tools/language';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
@@ -83,8 +84,8 @@ export class EventRecordFilterComponent
   changeBegin(date: Date) {
     if (
       this.date_sync &&
-      formatDate(this.filter.duration.begin, 'yyyy-MM-dd', 'en') !=
-        formatDate(this.filter.duration.end, 'yyyy-MM-dd', 'en')
+      formatDate(this.filter.duration.begin, Language.yyyyMMdd, 'en') !=
+        formatDate(this.filter.duration.end, Language.yyyyMMdd, 'en')
     ) {
       let end = new Date(this.filter.duration.end.getTime());
       end.setFullYear(date.getFullYear());
@@ -99,8 +100,8 @@ export class EventRecordFilterComponent
   changeEnd(date: Date) {
     if (
       this.date_sync &&
-      formatDate(this.filter.duration.begin, 'yyyy-MM-dd', 'en') !=
-        formatDate(this.filter.duration.end, 'yyyy-MM-dd', 'en')
+      formatDate(this.filter.duration.begin, Language.yyyyMMdd, 'en') !=
+        formatDate(this.filter.duration.end, Language.yyyyMMdd, 'en')
     ) {
       let begin = new Date(this.filter.duration.begin.getTime());
       begin.setFullYear(date.getFullYear());

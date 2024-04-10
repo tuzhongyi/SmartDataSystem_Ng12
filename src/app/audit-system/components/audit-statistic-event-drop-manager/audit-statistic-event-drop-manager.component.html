@@ -54,7 +54,7 @@
           <div class="filter-item-title">滞留时长：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.range" [cannull]="true">
-              <select [(ngModel)]="args.range">
+              <select hw-select-content [(ngModel)]="args.range">
                 <option [ngValue]="item.value" *ngFor="let item of ranges">
                   {{ item.key }}
                 </option>
@@ -66,7 +66,11 @@
           <div class="filter-item-title">状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="status" [cannull]="true">
-              <select [(ngModel)]="status" (change)="onstatus(status)">
+              <select
+                hw-select-content
+                [(ngModel)]="status"
+                (change)="onstatus(status)"
+              >
                 <option [ngValue]="GarbageTaskStatus.unhandled">待处置</option>
                 <option [ngValue]="GarbageTaskStatus.handled">已处置</option>
                 <option [ngValue]="GarbageTaskStatus.timeout">

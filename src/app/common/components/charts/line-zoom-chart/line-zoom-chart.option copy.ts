@@ -11,6 +11,28 @@ export let option = {
       },
     },
   },
+  visualMap: {
+    show: false,
+    type: 'piecewise',
+    pieces: [
+      {
+        gt: 0.01,
+        lte: 1,
+        color: '#CD661D',
+      },
+      {
+        gte: 0.0000000000000000000000001,
+        lte: 0.01,
+        color: '#28ce38',
+      },
+      {
+        gte: -1,
+        lte: 0,
+        color: '#cccccc',
+      },
+    ],
+    seriesIndex: 0,
+  },
   grid: [
     {
       top: 20,
@@ -72,37 +94,10 @@ export let option = {
   series: [
     {
       type: 'line',
-      connectNulls: false,
       smooth: false,
       step: 'end',
       symbol: 'emptyCircle',
       symbolSize: 8,
-      color: '#28ce38',
-      zlevel: 3,
-      data: [],
-    },
-
-    {
-      type: 'line',
-      connectNulls: false,
-      smooth: false,
-      step: 'end',
-      symbol: 'emptyCircle',
-      symbolSize: 8,
-      color: '#cccccc',
-      data: [],
-      zlevel: 2,
-    },
-
-    {
-      type: 'line',
-      connectNulls: false,
-      smooth: false,
-      step: 'end',
-      symbol: 'emptyCircle',
-      symbolSize: 8,
-      color: '#CD661D',
-      zlevel: 0,
       data: [],
     },
     {

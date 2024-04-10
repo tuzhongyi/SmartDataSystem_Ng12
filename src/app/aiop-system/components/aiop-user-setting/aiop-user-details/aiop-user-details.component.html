@@ -61,6 +61,7 @@
           <div class="hw-form-list-item-value">
             <hw-select [(selected)]="role.selected">
               <select
+                hw-select-content
                 [(ngModel)]="role.selected"
                 [disabled]="!!user && !!(user.Role && user.Role.length > 0)"
               >

@@ -48,7 +48,7 @@
           <div class="filter-item-title">类型：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.type" [cannull]="true">
-              <select [(ngModel)]="args.type">
+              <select hw-select-content [(ngModel)]="args.type">
                 <option [ngValue]="Operation.preview">视频预览</option>
                 <option [ngValue]="Operation.playback">视频回放</option>
               </select>

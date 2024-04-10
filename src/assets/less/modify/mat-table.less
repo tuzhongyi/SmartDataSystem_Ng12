@@ -1,13 +1,16 @@
 .mat-table {
   background-color: #1b2242;
+
   .mat-header-row {
     background-color: #414b83;
     height: 70px;
     border-bottom-color: rgba(0, 0, 0, 0.3);
+
     .mat-header-cell {
       color: white;
       font-size: 24px;
-      > div {
+
+      >div {
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
@@ -16,21 +19,21 @@
       }
     }
   }
+
   .mat-row {
     height: 60px;
 
     cursor: pointer;
+
     &:hover {
       background-color: #3d5492;
       border-bottom-color: rgba(0, 0, 0, 0.3);
     }
 
     &.high-light {
-      background: linear-gradient(
-        to right,
-        rgb(117, 134, 224),
-        rgb(50, 134, 229)
-      );
+      background: linear-gradient(to right,
+          rgb(117, 134, 224),
+          rgb(50, 134, 229));
       border-bottom-color: rgba(0, 0, 0, 0.3);
     }
 
@@ -38,7 +41,8 @@
       color: #cfd7ff;
       font-size: 18px;
       overflow: auto;
-      > div {
+
+      >div {
         width: 100%;
         white-space: nowrap;
         overflow: hidden;
@@ -47,13 +51,24 @@
         flex-shrink: 0;
       }
     }
+
     img {
       width: 69px;
       height: 40px;
+
+      &.contain {
+        object-fit: contain;
+      }
+
+      &.cover {
+        object-fit: cover;
+      }
     }
+
     i {
       margin-right: 5px;
       color: #7586e0;
+
       &:hover {
         color: #fff;
       }
@@ -75,6 +90,7 @@ mat-table.zoomIn .mat-row:hover {
 mat-table .mat-row.high-light {
   i {
     color: #cfd7ff;
+
     &:hover {
       color: #fff;
     }
@@ -90,6 +106,7 @@ mat-footer-cell:last-of-type {
     text-align: center;
   }
 }
+
 mat-header-cell:last-of-type {
   padding-right: 10px;
 }
@@ -99,6 +116,7 @@ mat-header-cell:first-of-type,
 mat-footer-cell:first-of-type {
   padding-left: 24px;
 }
+
 /*保留*/
 mat-cell,
 mat-header-cell,

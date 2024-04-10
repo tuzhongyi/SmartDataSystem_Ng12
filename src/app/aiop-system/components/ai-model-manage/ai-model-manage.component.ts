@@ -17,6 +17,7 @@ import {
 import { AIModelManageBusiness } from './ai-model-manage.business';
 import { AIModelManageConf } from './ai-model-manage.config';
 import { AIModelManageConverter } from './ai-model-manage.converter';
+import { AIModelManagerWindow } from './ai-model-manage.model';
 
 @Component({
   selector: 'howell-ai-model-manage',
@@ -42,13 +43,13 @@ export class AIModelManageComponent implements OnInit {
   pageIndex = 1;
 
   // 对话框
-  showOperate = false;
   showConfirm = false;
   dialogModel = new ConfirmDialogModel('确认删除', '删除该项');
 
   // 表单
   state = FormState.none;
-  operateId = '';
+
+  window = new AIModelManagerWindow();
 
   get enableDelBtn() {
     return !!this.selectedRows.length;
@@ -123,18 +124,17 @@ export class AIModelManageComponent implements OnInit {
     this._init();
   }
 
-  closeForm(update: boolean) {
-    this.showOperate = false;
-    this.state = FormState.none;
-    this.operateId = '';
-    if (update) {
-      this.pageIndex = 1;
-      this._init();
-    }
+  ondetails() {
+    this.window.details.clear();
+    this.window.details.show = false;
+
+    this.pageIndex = 1;
+    this._init();
   }
   addBtnClick() {
     this.state = FormState.add;
-    this.showOperate = true;
+    this.window.details.clear();
+    this.window.details.show = true;
   }
   deleteBtnClick() {
     this.willBeDeleted = [...this.selectedRows];
@@ -162,9 +162,10 @@ export class AIModelManageComponent implements OnInit {
     this._init();
   }
   private _clickEditBtn(row: AIModelManageModel) {
-    this.showOperate = true;
     this.state = FormState.edit;
-    this.operateId = row.Id;
+
+    this.window.details.id = row.Id;
+    this.window.details.show = true;
   }
   private _clickDelBtn(row: AIModelManageModel) {
     this.willBeDeleted = [row];

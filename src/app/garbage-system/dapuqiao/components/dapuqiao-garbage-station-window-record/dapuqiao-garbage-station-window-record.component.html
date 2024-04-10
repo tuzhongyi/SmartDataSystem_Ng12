@@ -46,7 +46,7 @@
           <div class="filter-item-title">投放点</div>
           <div class="filter-item-value">
             <hw-select [cannull]="true" [(selected)]="model.station.selected">
-              <select [(ngModel)]="model.station.selected">
+              <select hw-select-content [(ngModel)]="model.station.selected">
                 <option
                   [ngValue]="item"
                   *ngFor="let item of model.station.datas"
@@ -61,7 +61,7 @@
           <div class="filter-item-title">事件等级</div>
           <div class="filter-item-value">
             <hw-select [cannull]="true" [(selected)]="args.level">
-              <select [(ngModel)]="args.level">
+              <select hw-select-content [(ngModel)]="args.level">
                 <option [ngValue]="1">一级</option>
                 <option [ngValue]="2">二级</option>
                 <option [ngValue]="3">三级</option>

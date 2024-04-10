@@ -13,6 +13,7 @@ import { HowellModule } from 'src/app/common/howell.module';
 import { MaterialModule } from 'src/app/material.module';
 import { AICameraEventsComponent } from './ai-camera-events/ai-camera-events.component';
 import { AIGarbageStationComponents } from './ai-garbage-station/ai-garbage-station.module';
+import { AIModelDetailsComponent } from './ai-model-details/ai-model-details.component';
 import { AIModelManageComponent } from './ai-model-manage/ai-model-manage.component';
 import { AIModelOperateComponent } from './ai-model-operate/ai-model-operate.component';
 import { AIOPGarbageStationDetailsCamerasComponent } from './aiop-garbage-station-details-cameras/aiop-garbage-station-details-cameras.component';
@@ -69,6 +70,7 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     SRServerManageComponent,
     SRServerOperateComponent,
     AIModelOperateComponent,
+    AIModelDetailsComponent,
     EncodeDeviceOperateComponent,
     GarbageStationOperateComponent,
     CameraOperateComponent,

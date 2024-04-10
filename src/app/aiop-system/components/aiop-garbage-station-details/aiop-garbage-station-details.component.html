@@ -21,7 +21,7 @@
           </div>
           <div class="station-info-item-value">
             <hw-select [(selected)]="station.StationType">
-              <select [(ngModel)]="station.StationType">
+              <select hw-select-content [(ngModel)]="station.StationType">
                 <option [ngValue]="StationType.Garbage">
                   {{ Language.StationType(StationType.Garbage) }}
                 </option>

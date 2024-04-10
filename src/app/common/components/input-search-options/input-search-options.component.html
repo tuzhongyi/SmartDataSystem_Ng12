@@ -1,6 +1,6 @@
 <div class="search-wrap">
   <hw-select [(selected)]="key">
-    <select [(ngModel)]="key">
+    <select hw-select-content [(ngModel)]="key">
       <option [ngValue]="Key.name">
         {{ Language.SearchOption(Key.name) }}
       </option>

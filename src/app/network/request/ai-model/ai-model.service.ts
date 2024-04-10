@@ -40,7 +40,7 @@ export class AIModelRequestService {
     return this.type.delete(AIModelsUrl.item(id));
   }
 
-  parse(base64JSONData: string) {
+  parse(base64JSONData: string): Promise<CameraAIModel> {
     return this.basic.poststring(
       AIModelsUrl.parse(),
       CameraAIModel,

@@ -16,12 +16,16 @@ const PROXY_CONFIG = [
     ],
     // target: 'http://iebs.51hws.cn',
     // target: 'http://192.168.21.241:9000',
-    target: 'http://garbage01.51hws.com',
+
+    // target: 'http://101.91.121.126',
     // target: 'http://192.168.21.122:8080',
+    target: 'http://garbage01.51hws.com',
     changeOrigin: true,
+
     secure: false,
-    proxyTimeout: 10 * 60 * 1000,
-    timeout: 10 * 60 * 1000,
+    headers: {
+      Connection: 'keep-alive',
+    },
   },
   // {
   //   context: ['/amap/'],

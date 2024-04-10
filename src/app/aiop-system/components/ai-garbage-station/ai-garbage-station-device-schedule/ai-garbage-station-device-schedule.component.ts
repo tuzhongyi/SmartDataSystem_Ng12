@@ -34,7 +34,6 @@ export class AIGarbageStationDeviceScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.model && this.model.Schedule) {
-      console.log(this.model.Schedule);
       this.schedule = this.business.tomodel(this.model.Schedule);
     }
   }

@@ -5,6 +5,7 @@ import {
   TransformFnParams,
 } from 'class-transformer';
 import { Flags } from 'src/app/common/tools/flags';
+import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageDropEventData } from './garbage-station/event-record/garbage-drop-event-record.model';
 import { EventRecordData } from './garbage-station/event-record/garbage-event-record.model';
@@ -29,7 +30,13 @@ export function transformArraySort(params: TransformFnParams) {
 export function transformDateTime(params: TransformFnParams) {
   if (params.value === undefined || params.value === null) return undefined;
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
-    return new Date(params.value);
+    if (typeof params.value === 'string') {
+      return new Date(params.value);
+    } else if (typeof params.value === 'number') {
+      return new Date(params.value);
+    } else {
+      return params.value;
+    }
   } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
     return formatDate(params.value as Date, 'yyyy-MM-ddTHH:mm:ssZZZZZ', 'en');
   } else if (params.type === TransformationType.CLASS_TO_CLASS) {
@@ -42,7 +49,7 @@ export function transformDate(params: TransformFnParams) {
   if (params.type === TransformationType.PLAIN_TO_CLASS) {
     return new Date(params.value);
   } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
-    return formatDate(params.value as Date, 'yyyy-MM-dd', 'en');
+    return formatDate(params.value as Date, Language.yyyyMMdd, 'en');
   } else if (params.type === TransformationType.CLASS_TO_CLASS) {
     return new Date(params.value);
   } else {

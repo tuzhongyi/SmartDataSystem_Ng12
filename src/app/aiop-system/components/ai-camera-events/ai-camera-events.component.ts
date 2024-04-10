@@ -61,7 +61,7 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   };
 
   // 搜索
-  dateFormat: string = 'yyyy年MM月dd日';
+  dateFormat: string = Language.YearMonthDay;
 
   selectDataSource = new Map<EventType, string>([
     [EventType.IllegalDrop, Language.EventType(EventType.IllegalDrop)],
@@ -155,7 +155,6 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
     }
   }
   changeViewMode(viewMode: ViewMode) {
-    console.log(viewMode);
     this.viewMode = viewMode;
     this.showMode = false;
     if (viewMode == ViewMode.table) {
@@ -174,8 +173,6 @@ export class AICameraEventsComponent implements OnInit, AfterViewInit {
   async clickVideoIcon(item: AICameraEventsModel) {
     if (item.RawData && item.AICameraId) {
       let camera = await this._business.getAICamera(item.AICameraId);
-      console.log(camera);
-      console.log(item.RawData);
 
       this.video.autoplay = true;
       this.video.cameraId = item.AICameraId;

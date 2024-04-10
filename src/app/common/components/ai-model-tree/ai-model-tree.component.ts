@@ -1,19 +1,23 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   MatTreeFlatDataSource,
   MatTreeFlattener,
 } from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import {
+  AIModelFlatNode,
+  AIModelNestNode,
+  NodeChangeArgs,
+} from 'src/app/common/components/ai-model-tree/ai-model-tree.model';
+import {
   CameraAIModelDTOLabel,
   EnumValue,
 } from 'src/app/network/model/garbage-station/camera-ai.model';
-import { AIModelFlatNode } from 'src/app/view-model/ai-model-flat-node.model';
-import { AIModelNestNode } from 'src/app/view-model/ai-model-nest-node.model';
-import { AIModelTreeConverter } from '../../../converter/ai-model-tree.converter';
+
 import { AIModelTreeBusiness } from './ai-model-tree.business';
+import { AIModelTreeConverter } from './ai-model-tree.converter';
 
 type rawDataType = CameraAIModelDTOLabel | EnumValue;
 
@@ -24,6 +28,38 @@ type rawDataType = CameraAIModelDTOLabel | EnumValue;
   providers: [AIModelTreeBusiness, AIModelTreeConverter],
 })
 export class AIModelTreeComponent implements OnInit {
+  @Input()
+  modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>([]);
+  @Output()
+  nodeChange: EventEmitter<NodeChangeArgs> = new EventEmitter();
+
+  constructor(
+    private _business: AIModelTreeBusiness,
+    private _converter: AIModelTreeConverter
+  ) {
+    this._treeFlattener = new MatTreeFlattener(
+      this._transformer,
+      this._getLevel,
+      this._isExpandable,
+      this._getChildren
+    );
+
+    this.treeControl = new FlatTreeControl<AIModelFlatNode<rawDataType>>(
+      this._getLevel,
+      this._isExpandable
+    );
+
+    this.dataSource = new MatTreeFlatDataSource<
+      AIModelNestNode<rawDataType>,
+      AIModelFlatNode<rawDataType>
+    >(this.treeControl, this._treeFlattener);
+
+    this.dataChange.subscribe((data) => {
+      this.dataSource.data = data;
+    });
+    this.selection = new SelectionModel<AIModelFlatNode<rawDataType>>();
+  }
+
   private _flatNodeMap = new Map<string, AIModelFlatNode<rawDataType>>();
   private _transformer = (
     nestNode: AIModelNestNode<rawDataType>,
@@ -41,7 +77,7 @@ export class AIModelTreeComponent implements OnInit {
     flatNode.rawData = nestNode.rawData;
 
     if (nestNode.parentId) {
-      let parentFlatNode = this._flatNodeMap.get(nestNode.parentId) ?? null;
+      let parentFlatNode = this._flatNodeMap.get(nestNode.parentId);
       flatNode.parentNode = parentFlatNode;
     }
 
@@ -77,36 +113,6 @@ export class AIModelTreeComponent implements OnInit {
     return this.selection.isSelected(node);
   };
 
-  @Input()
-  modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>([]);
-
-  constructor(
-    private _business: AIModelTreeBusiness,
-    private _converter: AIModelTreeConverter
-  ) {
-    this._treeFlattener = new MatTreeFlattener(
-      this._transformer,
-      this._getLevel,
-      this._isExpandable,
-      this._getChildren
-    );
-
-    this.treeControl = new FlatTreeControl<AIModelFlatNode<rawDataType>>(
-      this._getLevel,
-      this._isExpandable
-    );
-
-    this.dataSource = new MatTreeFlatDataSource<
-      AIModelNestNode<rawDataType>,
-      AIModelFlatNode<rawDataType>
-    >(this.treeControl, this._treeFlattener);
-
-    this.dataChange.subscribe((data) => {
-      this.dataSource.data = data;
-    });
-    this.selection = new SelectionModel<AIModelFlatNode<rawDataType>>();
-  }
-
   async ngOnInit() {
     this.modelLabelsSubject.subscribe((data) => {
       this._AIModelLabels = data;
@@ -122,14 +128,10 @@ export class AIModelTreeComponent implements OnInit {
     console.log(this._flatNodeMap);
   }
   touchSpinChange(data: string, node: AIModelFlatNode<rawDataType>) {
-    // console.log('touchSpinChange', data)
     node.modelValue = data;
-    if (node.rawData instanceof CameraAIModelDTOLabel) {
-      node.rawData.LabelModelValue = data;
-    } else if (node.rawData instanceof EnumValue) {
-      node.rawData.ModelValue = +data;
-    }
-    // 虽然修改的是对象，可以显式提示数据更新
-    this.modelLabelsSubject.next(this._AIModelLabels);
+    this.nodeChange.emit({
+      node: node,
+      value: data,
+    });
   }
 }

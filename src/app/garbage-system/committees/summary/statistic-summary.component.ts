@@ -1,4 +1,4 @@
-import { DatePipe } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import {
   AfterViewInit,
   Component,
@@ -199,7 +199,7 @@ export class StatisticSummaryComponent
 
   // child output
   onExport(data: any) {
-    let date = this.datePipe.transform(this.Date, this.language.format);
+    let date = formatDate(this.Date, this.language.format, 'en');
     this.exportBusiness.export(data, `${date} ${this.title}`);
     if (this.exportBusiness.completed) {
       this.exportBusiness = new StatisticSummaryExportExcelBusiness(this.title);

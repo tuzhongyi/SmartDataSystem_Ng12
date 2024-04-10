@@ -21,7 +21,7 @@
         </div>
       </div>
       <div class="head-item">
-        <div class="head-item-title">设备名称</div>
+        <div class="head-item-title">名称</div>
         <div class="head-item-value">
           <howell-simple-search
             (searchEvent)="onsearch($event)"
@@ -58,7 +58,7 @@
           *ngFor="let item of datas"
         >
           <td>
-            <div>
+            <div class="flex">
               <mat-checkbox
                 [disableRipple]="true"
                 [checked]="selecteds.includes(item)"
@@ -66,7 +66,10 @@
               ></mat-checkbox>
             </div>
           </td>
-          <td (click)="onitemclick($event, item)" [title]="item.Name">
+          <td
+            (click)="onitemclick($event, item)"
+            [title]="item.Name + '(' + item.GarbageStationName + ')'"
+          >
             {{ item.Name }}
           </td>
           <td (click)="onitemclick($event, item)" [title]="item.RegionName">

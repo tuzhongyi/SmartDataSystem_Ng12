@@ -55,3 +55,10 @@ export class TimeString extends Date {
     return formatDate(this.date, this.formater, 'en');
   }
 }
+
+export enum SerieIndex {
+  normal,
+  offline,
+  target,
+  record,
+}

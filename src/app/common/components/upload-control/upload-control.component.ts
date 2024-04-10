@@ -17,6 +17,10 @@ import { FileReadType, FileResult } from './upload-control.model';
 export class UploadControlComponent implements OnInit {
   @Input()
   accept: string = '*.png|*.jpg|*.jpeg|*.bmp';
+  @Input()
+  path: string = '';
+  @Output()
+  pathChange: EventEmitter<string> = new EventEmitter();
 
   @Input()
   type: FileReadType = FileReadType.DataURL;
@@ -45,6 +49,8 @@ export class UploadControlComponent implements OnInit {
     }
   }
   async uploadFile(file: any) {
+    this.path = file.name;
+    this.pathChange.emit(this.path);
     var reader = new FileReader();
     switch (this.type) {
       case FileReadType.ArrayBuffer:

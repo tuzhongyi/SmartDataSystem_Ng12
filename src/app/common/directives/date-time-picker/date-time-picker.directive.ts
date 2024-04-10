@@ -10,6 +10,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Language } from '../../tools/language';
 import { OneWeekDate } from '../../tools/tool';
 
 declare let $: any;
@@ -21,7 +22,7 @@ export class DateTimePickerDirective
   implements AfterContentInit, OnDestroy, OnChanges
 {
   private ele: HTMLInputElement;
-  @Input('format') format = 'yyyy-MM-dd';
+  @Input('format') format = Language.yyyyMMdd;
 
   // @Input('changeDate') changeDate: (val: any) => void;
   @Input('startView') startView: DateTimePickerView = DateTimePickerView.month;
@@ -204,5 +205,5 @@ export class DateTimePickerConfig {
   }
   view: DateTimePickerView = DateTimePickerView.month;
   week = false;
-  format = 'yyyy-MM-dd';
+  format = Language.yyyyMMdd;
 }

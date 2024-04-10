@@ -24,7 +24,7 @@
           <div class="filter-item-title">状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.status" [cannull]="true">
-              <select [(ngModel)]="args.status">
+              <select hw-select-content [(ngModel)]="args.status">
                 <option [ngValue]="OnlineStatus.Online">
                   {{ Language.OnlineStatus(OnlineStatus.Online) }}
                 </option>

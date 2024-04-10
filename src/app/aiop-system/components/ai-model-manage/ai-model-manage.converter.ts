@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Language } from 'src/app/common/tools/language';
 import Conf from 'src/assets/json/ai-icon.json';
 import {
   AbstractCommonModelConverter,
@@ -31,7 +32,7 @@ export class AIModelManageConverter extends AbstractCommonModelConverter<AIModel
     model.Version = item.Version;
     model.LabelIcon = imgBase + '/' + icons[item.Label];
     model.UpdateTime =
-      this._datePipe.transform(item.UpdateTime, 'yyyy-MM-dd hh:mm') ?? '';
+      this._datePipe.transform(item.UpdateTime, Language.yyyyMMddHHmm) ?? '';
     return model;
   }
 }

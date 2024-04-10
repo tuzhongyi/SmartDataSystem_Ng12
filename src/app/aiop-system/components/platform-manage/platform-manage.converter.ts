@@ -1,5 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Language } from 'src/app/common/tools/language';
 import { AbstractCommonModelConverter } from '../../../converter/common-model.converter';
 import { Platform } from '../../../network/model/garbage-station/platform.model';
 import { PlatformManageModel } from './platform-manage.model';
@@ -28,7 +29,7 @@ export class PlatformManageConverter extends AbstractCommonModelConverter<Platfo
     model.ProtocolType = item.ProtocolType;
     model.State = item.State == 0 ? '正常' : '故障';
     model.UpdateTime =
-      this._datePipe.transform(item.UpdateTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
+      this._datePipe.transform(item.UpdateTime, Language.yyyyMMddHHmmss) ?? '';
     return model;
   }
 }

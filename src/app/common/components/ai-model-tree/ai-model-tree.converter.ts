@@ -4,12 +4,13 @@ import {
   CameraAIModelDTOLabel,
   EnumValue,
 } from 'src/app/network/model/garbage-station/camera-ai.model';
-import { AIModelNestNode } from '../view-model/ai-model-nest-node.model';
+import { AIModelNestNode } from './ai-model-tree.model';
 
 type AIModelTreeModel = CameraAIModelDTOLabel | EnumValue;
 @Injectable()
 export class AIModelTreeConverter {
   constructor() {}
+
   Convert(source: AIModelTreeModel, ...res: any[]) {
     if (source instanceof CameraAIModelDTOLabel) {
       return this._fromCameraAIModelDTOLabel(source);
@@ -20,7 +21,7 @@ export class AIModelTreeConverter {
   }
   recurseToNestTreeNode<T extends AIModelTreeModel>(
     data: T[],
-    parentId: string | null = null
+    parentId?: string
   ) {
     let res: AIModelNestNode[] = [];
     for (let i = 0; i < data.length; i++) {

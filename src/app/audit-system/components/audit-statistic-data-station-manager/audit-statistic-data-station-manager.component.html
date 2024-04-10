@@ -24,7 +24,7 @@
           <div class="filter-item-title">状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.state" [cannull]="true">
-              <select [(ngModel)]="args.state">
+              <select hw-select-content [(ngModel)]="args.state">
                 <option [ngValue]="StationState.Normal">
                   {{ Language.StationState(StationState.Normal) }}
                 </option>
@@ -42,7 +42,7 @@
           <div class="filter-item-title">垃圾滞留：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.drop" [cannull]="true">
-              <select [(ngModel)]="args.drop">
+              <select hw-select-content [(ngModel)]="args.drop">
                 <option [ngValue]="true">是</option>
                 <option [ngValue]="false">否</option>
               </select>

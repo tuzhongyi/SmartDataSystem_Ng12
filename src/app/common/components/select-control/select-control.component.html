@@ -59,7 +59,7 @@
   </mat-option>
 </mat-select> -->
 <div class="select-control" [ngStyle]="style">
-  <select hw-select-content [(ngModel)]="selected">
+  <select #element [(ngModel)]="selected">
     <option
       [ngValue]="item"
       *ngFor="let item of data"

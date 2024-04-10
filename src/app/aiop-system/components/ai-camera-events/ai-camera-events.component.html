@@ -81,7 +81,7 @@
           <div class="title"><span class="hw-form-label">AI模型</span></div>
           <div class="content">
             <hw-select [(selected)]="searchInfo.ModelName" [cannull]="true">
-              <select [(ngModel)]="searchInfo.ModelName">
+              <select hw-select-content [(ngModel)]="searchInfo.ModelName">
                 <option
                   [ngValue]="model.ModelName"
                   *ngFor="let model of aiModels"

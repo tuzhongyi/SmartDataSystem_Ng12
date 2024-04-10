@@ -42,7 +42,7 @@
                 (touchSpinChange)="touchSpinChange($event, node)"
                 appTouchSpin
                 type="text"
-                [value]="node.modelValue"
+                [(ngModel)]="node.modelValue"
                 style="height: 22px; min-width: auto; font-size: 14px"
               />
             </div>

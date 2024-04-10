@@ -29,6 +29,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IConverter } from '../common/interfaces/converter.interface';
+import { Language } from '../common/tools/language';
 import { Medium } from '../common/tools/medium';
 import { IllegalDropEventRecord } from '../network/model/garbage-station/event-record/illegal-drop-event-record.model';
 import { IllegalDropRecordModel } from '../view-model/illegal-drop-record.model';
@@ -85,7 +86,7 @@ export class IllegalDropEventRecordConverter
     model.CommunityName = item.Data.CommunityName ?? '';
     model.CommunityId = item.Data.CommunityId ?? '';
     model.EventTime =
-      this._datePipe.transform(item.EventTime, 'yyyy-MM-dd HH:mm:ss') ?? '';
+      this._datePipe.transform(item.EventTime, Language.yyyyMMddHHmmss) ?? '';
 
     return model;
   }

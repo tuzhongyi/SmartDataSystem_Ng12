@@ -25,6 +25,7 @@ import {
   LineZoomChartModel,
   LineZoomLinePanel,
   LineZoomScatterPanel,
+  SerieIndex,
   TimeString,
 } from './line-zoom-chart.model';
 import { option } from './line-zoom-chart.option';
@@ -173,7 +174,7 @@ export class LineZoomChartComponent
         if (data) {
           this.panel.line.model.date = formatDate(
             data.value.BeginTime,
-            'yyyy-MM-dd',
+            Language.yyyyMMdd,
             'en'
           );
           this.panel.line.model.time = trigger.name;
@@ -207,8 +208,7 @@ export class LineZoomChartComponent
       }
     }
   }
-
-  optionProcess(model: LineZoomChartModel, option: any) {
+  optionProcess1(model: LineZoomChartModel, option: any) {
     let begin = new Date(
       this.date.getFullYear(),
       this.date.getMonth(),
@@ -261,6 +261,87 @@ export class LineZoomChartComponent
 
     option.series[1].data = records;
 
+    return option;
+  }
+  optionProcess(model: LineZoomChartModel, option: any) {
+    let begin = new Date(
+      this.date.getFullYear(),
+      this.date.getMonth(),
+      this.date.getDate(),
+      model.timeRange ? model.timeRange.BeginTime.hour : 9,
+      model.timeRange ? model.timeRange.BeginTime.minute : 0
+    );
+    let minutes = model.timeRange
+      ? model.timeRange.EndTime.toMinutes() -
+        model.timeRange.BeginTime.toMinutes()
+      : 12 * 60;
+    this.xAxisData = [];
+    let counts = new Array();
+    let records = new Array();
+    let last: TimeString | undefined;
+    let normal = [];
+    let offline = [];
+    let target = [];
+    for (let i = 0, offset = { count: 0, record: 0 }; i <= minutes; i++) {
+      let now = new Date(begin.getTime());
+      now.setMinutes(i);
+      last = new TimeString(now, 'HH:mm');
+      this.xAxisData.push(last);
+      let time: Date | undefined = undefined;
+      if (
+        model.count &&
+        model.count[offset.count] &&
+        model.count[offset.count].time
+      ) {
+        time = model.count[offset.count].time;
+      }
+      if (time && time.getTime() === now.getTime()) {
+        model.count[offset.count].index = i;
+        offline.push(null);
+        if (model.count[offset.count].value.GarbageCount > 0) {
+          target.push(1);
+          if (target.length > 1 && target[target.length - 2] === null) {
+            target[target.length - 2] = 0;
+          }
+          normal.push(null);
+        } else {
+          normal.push(0);
+          target.push(null);
+          if (target.length > 1 && target[target.length - 2] === 1) {
+            target[target.length - 1] = 0;
+          }
+        }
+
+        offset.count++;
+      } else {
+        normal.push(null);
+        target.push(null);
+        offline.push(0);
+
+        if (target.length > 1 && target[target.length - 2] === 1) {
+          target[target.length - 1] = 0;
+        }
+      }
+    }
+
+    if (model.record) {
+      for (let i = 0; i < model.record.length; i++) {
+        model.record[i].index = i;
+        let formatter = formatDate(model.record[i].time, 'HH:mm', 'en');
+        records.push([formatter, -0.1]);
+      }
+    }
+
+    if (this.xAxisData.length % 2 === 0 && last) {
+      this.xAxisData.push(last);
+    }
+
+    option.xAxis.data = this.xAxisData;
+    option.series[SerieIndex.normal].data = normal;
+    option.series[SerieIndex.offline].data = offline;
+    option.series[SerieIndex.target].data = target;
+    option.series[SerieIndex.record].data = records;
+    console.log(option);
     return option;
   }
 

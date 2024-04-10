@@ -1,0 +1,128 @@
+<div class="ai-model-details" *ngIf="!!data">
+  <div class="ai-model-details-head">
+    <div class="hw-simple-title">AI模型信息</div>
+  </div>
+  <div class="ai-model-details-body">
+    <div class="form-group">
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">模型名称</label>
+          <span class="must">*</span>
+        </div>
+        <div class="form-item-value">
+          <input type="text" [(ngModel)]="data.ModelName" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">模型协议</label>
+          <span class="must">*</span>
+        </div>
+        <div class="form-item-value" style="display: block">
+          <hw-select [(selected)]="data.ModelType">
+            <select hw-select-content [(ngModel)]="data.ModelType">
+              <option value="AIOP">AIOP</option>
+              <option value="AIHW">AIHW</option>
+            </select>
+          </hw-select>
+        </div>
+      </div>
+      <div class="form-item form-item-row">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">上传模型</label>
+        </div>
+        <div class="form-item-value">
+          <div class="input">
+            <input type="text" readonly [(ngModel)]="upload.path" />
+          </div>
+          <upload-control
+            (upload)="upload.onupload($event)"
+            [type]="FileReadType.Text"
+            [accept]="'*.json'"
+            [(path)]="upload.path"
+          >
+            <button class="hw-blue-btn">
+              <i class="howell-icon-repeat"></i>
+              选择模型
+            </button>
+          </upload-control>
+          <button class="hw-cyan-btn" (click)="onparse()">
+            <i class="mdi mdi-tag"></i>
+            应用模型
+          </button>
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">模型版本</label>
+        </div>
+        <div class="form-item-value">
+          <input type="text" disabled [value]="model ? model.Version : ''" />
+        </div>
+      </div>
+      <div class="form-item">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">应用类型</label>
+        </div>
+        <div class="form-item-value">
+          <input
+            type="text"
+            disabled
+            [value]="model ? model.TransformType : ''"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-item form-item-icons">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">模型图标</label>
+          <span class="must">*</span>
+        </div>
+        <div class="form-item-value">
+          <div class="ai-icon-selected" (click)="icon.open($event)">
+            <img [src]="icon.selected.path" *ngIf="icon.selected.path" />
+          </div>
+          <div class="ai-icon-list" *ngIf="icon.show">
+            <div
+              class="ai-icon"
+              *ngFor="let item of icon.datas | keyvalue"
+              (click)="icon.select(item.key)"
+            >
+              <img [src]="imgBase + item.value" alt="" />
+              <i
+                class="howell-icon-Check"
+                *ngIf="item.key == icon.selected.key"
+              ></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-item form-item-labels">
+        <div class="form-item-title">
+          <label class="custom control-label tran-input-label">模型属性</label>
+          <div class="download" title="下载模型" (click)="ondownload()">
+            <i class="howell-icon-download" style=""></i>
+          </div>
+        </div>
+        <div class="form-item-value">
+          <howell-ai-model-tree
+            [modelLabelsSubject]="label.subject"
+            (nodeChange)="label.onchange($event)"
+          ></howell-ai-model-tree>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ai-model-details-foot">
+    <button class="hw-green-m-btn" type="button" (click)="onok()">
+      <i class="howell-icon-Check"></i>
+    </button>
+
+    <button class="hw-gray-m-btn" type="button" (click)="oncancel()">
+      <i class="howell-icon-Close"></i>
+    </button>
+  </div>
+</div>

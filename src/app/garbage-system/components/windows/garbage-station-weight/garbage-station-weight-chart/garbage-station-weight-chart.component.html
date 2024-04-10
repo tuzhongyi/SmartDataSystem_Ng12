@@ -32,7 +32,7 @@
           <div class="filter-item-title three">投放点</div>
           <div class="filter-item-value three">
             <hw-select [(selected)]="selected.station" [cannull]="true">
-              <select [(ngModel)]="selected.station">
+              <select hw-select-content [(ngModel)]="selected.station">
                 <option [ngValue]="item" *ngFor="let item of stations">
                   {{ item.Name }}
                 </option>

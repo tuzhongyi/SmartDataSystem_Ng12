@@ -1,5 +1,5 @@
 <div class="ai-model-manage">
-  <ng-container *ngIf="showOperate">
+  <!-- <ng-container *ngIf="showOperate">
     <toast-window>
       <howell-ai-model-operate
         [state]="state"
@@ -7,7 +7,20 @@
         (closeEvent)="closeForm($event)"
       ></howell-ai-model-operate>
     </toast-window>
-  </ng-container>
+  </ng-container> -->
+
+  <app-window
+    [Model]="window.details"
+    [style]="window.details.style"
+    *ngIf="window.details.show"
+  >
+    <ai-model-details
+      [id]="window.details.id"
+      (ok)="ondetails()"
+      (cancel)="window.details.show = false"
+    >
+    </ai-model-details>
+  </app-window>
 
   <ng-container *ngIf="showConfirm">
     <howell-confirm-dialog

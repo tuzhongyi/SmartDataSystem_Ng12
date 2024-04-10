@@ -97,6 +97,7 @@ export class GarbageStationStatisticTableComponent
     if (this.load) {
       this.load.subscribe(() => this.loadData());
     }
+    this.loadData();
   }
 
   /** 居委会 */

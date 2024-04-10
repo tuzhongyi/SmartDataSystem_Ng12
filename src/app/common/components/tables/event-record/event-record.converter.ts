@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
+import { Language } from 'src/app/common/tools/language';
 import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
@@ -108,7 +109,7 @@ export class EventRecordConverter
 
     model.DateFormatter = formatDate(
       source.EventTime,
-      'yyyy-MM-dd HH:mm:dd',
+      Language.yyyyMMddHHmmss,
       'en'
     );
     EventType.IllegalDrop;

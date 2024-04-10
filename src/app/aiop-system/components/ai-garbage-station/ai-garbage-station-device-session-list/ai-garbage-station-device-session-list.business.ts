@@ -60,6 +60,7 @@ export class AIGarbageStationDeviceSessionListBusiness
     params.PageIndex = index;
     params.PageSize = size;
     params.GarbageStationName = args.name;
+    params.DeviceName = args.name;
     if (args.divisionId) {
       let regions = await this.service.region.array(args.divisionId);
       params.RegionIds = regions.map((x) => x.Id);

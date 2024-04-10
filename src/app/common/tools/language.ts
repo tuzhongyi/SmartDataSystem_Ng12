@@ -60,6 +60,11 @@ import { DateTimeTool } from './datetime.tool';
 import language from './language.json';
 
 export class Language {
+  static yyyyMMdd = 'yyyy-MM-dd';
+  static yyyyMMddHHmmss = 'yyyy-MM-dd HH:mm:ss';
+  static yyyyMMddHHmm = 'yyyy-MM-dd HH:mm';
+  static YearMonthDay = 'yyyy年MM月dd日';
+
   static GarbageType(type: GarbageType): string {
     switch (type) {
       case GarbageType.Dry:
@@ -365,7 +370,7 @@ export class Language {
   static Time(time: Date | number, full = true) {
     let result = '';
     if (typeof time === 'number') {
-      const hours = parseInt((time / 60).toString());
+      const hours = parseInt((Math.ceil(time) / 60).toString());
       const minutes = parseInt((Math.ceil(time) % 60).toString());
 
       result = hours ? hours + Language.json.Time.hour : '';

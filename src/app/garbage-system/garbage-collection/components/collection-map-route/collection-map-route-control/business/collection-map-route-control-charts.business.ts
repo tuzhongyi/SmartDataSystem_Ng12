@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import * as echarts from 'echarts/core';
 import { TimeString } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
+import { Language } from 'src/app/common/tools/language';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
@@ -265,7 +266,7 @@ export class CollectionMapRouteControlChartsBusiness
     let times = datas.map((x) => formatDate(x.Time, this.formater, 'en'));
     let xAxis = (this.xAxis.data as Array<TimeString>).map((x) => x.toString());
 
-    let todayStr = formatDate(date, 'yyyy-MM-dd', 'en');
+    let todayStr = formatDate(date, Language.yyyyMMdd, 'en');
     for (let i = 1; i < times.length; i++) {
       let current = new Date(`${todayStr} ${times[i - 1]}`);
       let next = new Date(`${todayStr} ${times[i]}`);

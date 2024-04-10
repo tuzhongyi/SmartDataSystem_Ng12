@@ -63,7 +63,7 @@ export class IllegalDropEventComponent implements OnInit {
   EventType = EventType;
   DateTimePickerView = DateTimePickerView;
 
-  dateFormat: string = 'yyyy-MM-dd HH:mm';
+  dateFormat: string = Language.yyyyMMddHHmm;
   showMode = false;
 
   widths = ['7%', '13%', '10%', '10%', '10%', '10%', '10%', '5%'];
