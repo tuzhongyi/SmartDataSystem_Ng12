@@ -4,11 +4,9 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ClassConstructor } from 'class-transformer';
@@ -31,7 +29,7 @@ import { DivisionStationTreeFilterBusiness } from './division-station-tree-filte
   providers: [DivisionStationTreeFilterBusiness],
 })
 export class DivisionStationTreeFilterComponent
-  implements OnInit, AfterViewInit, OnDestroy, OnChanges
+  implements OnInit, AfterViewInit, OnDestroy
 {
   @Input()
   type: DivisionType;
@@ -56,11 +54,11 @@ export class DivisionStationTreeFilterComponent
   current?: DivisionTreeSource[];
   currentTitle: string[] = [];
 
-  expand = false;
+  closetreehandle: any;
 
   tree = {
     depth: 2,
-    loaded: false,
+    expand: false,
   };
 
   style = {
@@ -79,18 +77,9 @@ export class DivisionStationTreeFilterComponent
     }
   }
 
-  async ngOnChanges(changes: SimpleChanges) {
-    if (changes.stationId && this.stationId) {
-      // console.log(this.station);
-      // this.current = new FlatTreeNode(this.station.Id, this.station.Name, 3);
-      // this.current.rawData = this.station;
-      // this.current.parentId = this.station.DivisionId;
-      // this.currentTitle = [this.current.name];
-      // await this.getRemoteTitle(this.current.parentId);
-      // console.log(this.currentTitle)
-    }
+  ngOnDestroy(): void {
+    window.removeEventListener('click', this.closetreehandle);
   }
-  ngOnDestroy(): void {}
 
   ngAfterViewInit(): void {
     if (this.input) {
@@ -103,9 +92,9 @@ export class DivisionStationTreeFilterComponent
         }
       );
     }
-    // window.addEventListener('click', () => {
-    //   this.expand = false;
-    // });
+
+    this.closetreehandle = this.ontreeclick.bind(this);
+    window.addEventListener('click', this.closetreehandle);
   }
 
   ngOnInit(): void {
@@ -113,31 +102,33 @@ export class DivisionStationTreeFilterComponent
       this.current = datas;
       this.currentTitle = this.getLocalTitle(this.current);
       let station = datas.find((x) => x instanceof GarbageStation);
-      this.select.emit(station as GarbageStation);
+      if (station) {
+        this.stationId = station.Id;
+        this.select.emit(station as GarbageStation);
+      }
     });
   }
 
   selectTreeNode(nodes: CommonFlatNode<DivisionTreeSource>[]) {
     if (nodes.length > 0) {
-      let station = nodes[0].RawData as GarbageStation;
-      this.select.emit(station);
+      let station = nodes[0].RawData;
+      if (station instanceof GarbageStation) {
+        this.select.emit(station);
 
-      this.business.load(this.type, station.Id).then((datas) => {
-        this.current = datas;
-        this.currentTitle = this.getLocalTitle(this.current);
-      });
-    }
-
-    if (this.tree.loaded) {
-      this.expand = false;
-      this.tree.loaded = false;
-    } else {
-      this.tree.loaded = true;
+        this.business.load(this.type, station.Id).then((datas) => {
+          this.current = datas;
+          this.currentTitle = this.getLocalTitle(this.current);
+        });
+      }
     }
   }
 
+  ontreeclick() {
+    this.tree.expand = false;
+  }
+
   onclick(event: Event) {
-    this.expand = !this.expand;
+    this.tree.expand = !this.tree.expand;
     event.cancelBubble = true;
   }
 

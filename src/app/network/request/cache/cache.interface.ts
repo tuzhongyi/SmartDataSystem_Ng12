@@ -32,15 +32,22 @@ export class AppCache {
     }, timeout);
   }
 
+  // get(key: string) {
+  //   let str = AppCache.data[key];
+  //   if (str) {
+  //     return JSON.parse(str);
+  //   }
+  //   return undefined;
+  // }
+  // set(key: string, value: any, timeout: number) {
+  //   AppCache.data[key] = JSON.stringify(value);
+  //   this.countdown(key, timeout);
+  // }
   get(key: string) {
-    let str = AppCache.data[key];
-    if (str) {
-      return JSON.parse(str);
-    }
-    return undefined;
+    return AppCache.data[key];
   }
   set(key: string, value: any, timeout: number) {
-    AppCache.data[key] = JSON.stringify(value);
+    AppCache.data[key] = value;
     this.countdown(key, timeout);
   }
   del(key: string) {

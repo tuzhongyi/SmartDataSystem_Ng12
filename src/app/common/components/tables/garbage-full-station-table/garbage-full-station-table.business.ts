@@ -9,10 +9,11 @@ import {
   GetGarbageStationStatisticNumbersParams,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageFullStationPagedTableConverter } from './garbage-full-station-table.converter';
-import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
+import {
+  GarbageFullStationTableArgs,
+  GarbageFullStationTableModel,
+} from './garbage-full-station-table.model';
 
 @Injectable()
 export class GarbageFullStationTableBusiness
@@ -30,35 +31,47 @@ export class GarbageFullStationTableBusiness
   ) {}
   loading?: EventEmitter<void> | undefined;
   async load(
-    page: PagedParams,
-    opts?: SearchOptions
+    index: number,
+    size: number,
+    args: GarbageFullStationTableArgs
   ): Promise<PagedList<GarbageFullStationTableModel>> {
-    let data = await this.getData(this.storeService.divisionId, page, opts);
+    let data = await this.getData(
+      index,
+      size,
+      this.storeService.divisionId,
+      args
+    );
     let model = await this.converter.Convert(data);
     return model;
   }
   async getData(
+    index: number,
+    size: number,
     divisionId: string,
-    page: PagedParams,
-    opts?: SearchOptions
+    args: GarbageFullStationTableArgs
   ): Promise<PagedList<GarbageStationNumberStatistic>> {
-    let p = new GetGarbageStationsParams();
-    p.DryFull = true;
-    let stations = await this.stationService.list(p);
+    let params = new GetGarbageStationStatisticNumbersParams();
+    params.DivisionId = divisionId;
+    params.PageIndex = index;
+    params.PageSize = size;
+    let stations = await this.stations();
+    params.Ids = stations.Data.map((x) => x.Id);
+    params.Name = args.station;
+    params.CommunityName = args.community;
+
+    return this.stationService.statistic.number.list(params);
+  }
+
+  private async stations() {
+    let params = new GetGarbageStationsParams();
+    params.DryFull = true;
+    let stations = await this.stationService.list(params);
     if (stations.Data.length == 0) {
       return {
         Page: stations.Page,
         Data: [],
       };
     }
-    let params = new GetGarbageStationStatisticNumbersParams();
-    params.DivisionId = divisionId;
-    params = Object.assign(params, page);
-    params.Ids = stations.Data.map((x) => x.Id);
-    if (opts) {
-      (params as any)[opts.propertyName] = opts.text;
-    }
-
-    return this.stationService.statistic.number.list(params);
+    return stations;
   }
 }

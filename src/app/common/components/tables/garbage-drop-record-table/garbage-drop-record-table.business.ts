@@ -7,7 +7,6 @@ import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/ev
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { GarbageDropEventRecordPagedConverter } from './garbage-drop-record-table.converter';
 import {
   GarbageDropRecordFilter,
@@ -29,19 +28,22 @@ export class GarbageDropRecordTableBusiness
   ) {}
   loading?: EventEmitter<void> | undefined;
   async load(
-    page: PagedParams,
+    index: number,
+    size: number,
     opts: GarbageDropRecordFilter
   ): Promise<PagedList<GarbageDropRecordViewModel>> {
-    let data = await this.getData(page, opts);
+    let data = await this.getData(index, size, opts);
     let model = await this.converter.Convert(data);
     return model;
   }
   async getData(
-    page: PagedParams,
+    index: number,
+    size: number,
     opts: GarbageDropRecordFilter
   ): Promise<PagedList<GarbageDropEventRecord>> {
     let params = new GetGarbageDropEventRecordsParams();
-    params = Object.assign(params, page);
+    params.PageIndex = index;
+    params.PageSize = size;
     params.BeginTime = opts.duration.begin;
     params.EndTime = opts.duration.end;
     params.IsHandle = opts.IsHandle;

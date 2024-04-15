@@ -46,6 +46,8 @@
                 (image)="onimage($event)"
                 (video)="onvideo($event)"
                 (allvideo)="onallvideo($event)"
+                (got)="ongot($event)"
+                [get]="get"
               >
               </howell-event-record-table>
             </ng-container>
@@ -56,6 +58,8 @@
                 (image)="onimage($event)"
                 (video)="onvideo($event)"
                 [filter]="record.filter.filter"
+                [get]="get"
+                (got)="ongot($event)"
               >
               </howell-event-record-list>
             </ng-container>

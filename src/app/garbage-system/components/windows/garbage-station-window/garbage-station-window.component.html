@@ -37,6 +37,8 @@
 
         <ng-container *ngIf="index == Index.record">
           <howell-garbage-station-window-record
+            [get]="get"
+            (got)="ongot($event)"
             [status]="taskStatus"
             [divisionId]="divisionId"
             (image)="onimage($event)"

@@ -16,6 +16,8 @@ export interface ImageControlModelArgs<T extends ICamera | CameraImageUrl> {
   eventTime?: Date;
   polygon?: EventDataObject[];
   rules?: EventRule[];
+  ishandle?: boolean;
+  istimeout?: boolean;
 }
 
 export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
@@ -33,6 +35,8 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
       }
       this.polygon = args.polygon;
       this.rules = args.rules;
+      this.ishandle = args.ishandle;
+      this.istimeout = args.istimeout;
     }
   }
   eventTime?: Date;
@@ -46,6 +50,8 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
   index = 0;
   polygon?: EventDataObject[];
   rules?: EventRule[];
+  ishandle?: boolean;
+  istimeout?: boolean;
 }
 
 export class ImageControlModelArray<T = any> {

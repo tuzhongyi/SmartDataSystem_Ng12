@@ -1,20 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { EventType } from 'src/app/enum/event-type.enum';
-import {
-  GarbageFullEventData,
-  GarbageFullEventRecord,
-} from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
-import {
-  IllegalDropEventData,
-  IllegalDropEventRecord,
-} from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
-import {
-  MixedIntoEventData,
-  MixedIntoEventRecord,
-} from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
@@ -47,26 +34,7 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
   stationId?: string;
 
   async onimage(args: PagedArgs<EventRecordViewModel>) {
-    if (args.data.Data instanceof GarbageFullEventData) {
-      this.image.array.index = args.page.PageIndex;
-      this.image.array.manualcapture = false;
-      this.image.array.stationId = args.data.Data.StationId;
-      let data = args.data as GarbageFullEventRecord;
-      this.image.array.models = ImageControlCreater.Create(data);
-      this.image.array.show = true;
-    } else if (args.data.Data instanceof IllegalDropEventData) {
-      this.image.page.page = args.page;
-      let data = args.data as IllegalDropEventRecord;
-      this.image.page.model = ImageControlCreater.Create(data);
-
-      this.image.page.show = true;
-    } else if (args.data.Data instanceof MixedIntoEventData) {
-      this.image.page.page = args.page;
-      let data = args.data as MixedIntoEventRecord;
-      this.image.page.model = ImageControlCreater.Create(data);
-      this.image.page.show = true;
-    } else {
-    }
+    this.image.open(args);
   }
 
   oncard(model: EventRecordViewModel) {

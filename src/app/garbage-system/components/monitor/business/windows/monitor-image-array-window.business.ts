@@ -26,6 +26,9 @@ export class MonitorImageArrayWindowBusiness extends WindowViewModel {
 
   manualcapture = false;
   stationId?: string;
+  current?: ImageControlModel;
+  index: number = 0;
+  captureing = false;
 
   private _models: ImageControlModel[] = [];
   public get models(): ImageControlModel[] {
@@ -46,15 +49,20 @@ export class MonitorImageArrayWindowBusiness extends WindowViewModel {
     }
   }
 
-  current?: ImageControlModel;
-  index: number = 0;
-  captureing = false;
-
   get first() {
     return this.index === 0;
   }
   get last() {
     return this.index === this.models.length - 1;
+  }
+
+  clear() {
+    this.stationId = undefined;
+    this.manualcapture = false;
+    this.models = [];
+    this.current = undefined;
+    this.index = 0;
+    this.captureing = false;
   }
 
   onnext() {

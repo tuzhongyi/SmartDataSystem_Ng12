@@ -30,3 +30,6 @@ export interface PagedArgs<T = any> {
   data: T;
   page: Page;
 }
+export interface ImagePagedArgs<T = any> extends PagedArgs<T> {
+  index: number;
+}

@@ -34,8 +34,7 @@ export class MonitorWindowBussiness {
     this.media.single.show = false;
     this.media.multiple.show = false;
     this.media.video.show = false;
-    this.image.page.show = false;
-    this.image.array.show = false;
+    this.image.show = false;
     this.video.show = false;
     this.device.show = false;
     this.drop.show = false;

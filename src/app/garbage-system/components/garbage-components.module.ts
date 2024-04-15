@@ -30,6 +30,7 @@ import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.c
 import { MapPointInfoPanelComponent } from './map-control-point-info-panel/map-point-info-panel.component';
 import { MapControlComponent } from './map-control/map-control.component';
 import { MediaControlComponent } from './media-control/media-control.component';
+import { MediaImageControlPageComponent } from './media-image-control-page/media-image-control-page.component';
 import { MediaImageControlComponent } from './media-image-control/media-image-control.component';
 import { MonitorComponent } from './monitor/monitor.component';
 import { PatrolControlComponent } from './patrol-control/patrol-control.component';
@@ -67,6 +68,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
 
     MediaControlComponent,
     MediaImageControlComponent,
+    MediaImageControlPageComponent,
     MapPointInfoPanelComponent,
 
     PatrolControlComponent,
@@ -113,6 +115,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapListPanelComponent,
     MediaControlComponent,
     MediaImageControlComponent,
+    MediaImageControlPageComponent,
     MapPointInfoPanelComponent,
 
     PatrolControlComponent,

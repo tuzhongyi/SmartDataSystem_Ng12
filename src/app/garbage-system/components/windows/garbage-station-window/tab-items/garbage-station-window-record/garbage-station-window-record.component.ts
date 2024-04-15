@@ -13,6 +13,7 @@ import {
 import { GarbageDropRecordTaskTableComponent } from 'src/app/common/components/tables/garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { ListType } from '../../garbage-station-window-record-operation/garbage-station-window-record-operation.component';
 
@@ -29,6 +30,10 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
     new EventEmitter();
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
+
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
     new EventEmitter();
 
   constructor() {}
@@ -77,5 +82,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   onsearch(opts: SearchOptions) {
     this.filter.opts = opts;
     this.load.emit(this.filter);
+  }
+  ongot(args: PagedList<GarbageDropRecordViewModel>) {
+    this.got.emit(args);
   }
 }

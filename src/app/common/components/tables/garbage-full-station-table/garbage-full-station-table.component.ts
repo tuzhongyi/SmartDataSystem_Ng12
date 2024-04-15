@@ -6,15 +6,16 @@ import { Medium } from 'src/app/common/tools/medium';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageFullStationTableBusiness } from './garbage-full-station-table.business';
 import {
   GarbageFullStationPagedTableConverter,
   GarbageFullStationTableConverter,
 } from './garbage-full-station-table.converter';
-import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
+import {
+  GarbageFullStationTableArgs,
+  GarbageFullStationTableModel,
+} from './garbage-full-station-table.model';
 
 @Component({
   selector: 'howell-garbage-full-station-table',
@@ -33,58 +34,52 @@ export class GarbageFullStationTableComponent
     OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<GarbageFullStationTableModel>>;
+  @Input() args: GarbageFullStationTableArgs =
+    new GarbageFullStationTableArgs();
 
-  @Input() count: number = 0;
-
-  @Input() load?: EventEmitter<SearchOptions>;
+  @Input() load?: EventEmitter<GarbageFullStationTableArgs>;
   @Output() image: EventEmitter<PagedArgs<GarbageFullStationTableModel>> =
     new EventEmitter();
   @Output() video: EventEmitter<GarbageFullStationTableModel> =
     new EventEmitter();
+
   constructor(business: GarbageFullStationTableBusiness) {
     super();
     this.business = business;
   }
 
-  widths = ['15%', '15%', '15%', '15%', '10%', '15%', '20%'];
-  searchOptions?: SearchOptions;
+  widths = ['15%', '20%', '15%', '10%', '10%', '15%', '20%'];
+
   StationState = StationState;
   selected?: GarbageFullStationTableModel;
 
   ngOnInit(): void {
     if (this.load) {
-      this.load.subscribe((opts) => {
-        this.searchOptions = opts;
-        this.loadData(1, this.pageSize, opts);
+      this.load.subscribe((args) => {
+        this.args = args;
+        this.loadData(1, this.pageSize, this.args);
       });
     }
-    this.loadData(1, this.pageSize);
+    this.loadData(1, this.pageSize, this.args);
   }
 
   async loadData(
     index: number,
     size: number,
-    opts?: SearchOptions,
-    show = true
+    args: GarbageFullStationTableArgs
   ) {
-    let params = new PagedParams();
-    params.PageSize = size;
-    params.PageIndex = index;
-
-    let promise = this.business.load(params, opts);
+    let promise = this.business.load(index, size, args);
     this.loading = true;
     promise.then((paged) => {
-      this.loading = false;
       this.page = paged.Page;
-      if (show) {
-        this.datas = paged.Data;
-      }
+      this.datas = paged.Data;
+      this.loading = false;
     });
     return promise;
   }
 
   async pageEvent(page: PageEvent) {
-    this.loadData(page.pageIndex + 1, this.pageSize, this.searchOptions);
+    this.loadData(page.pageIndex + 1, this.pageSize, this.args);
   }
 
   onerror(e: Event) {

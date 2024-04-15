@@ -7,3 +7,7 @@ export class GarbageFullStationTableModel {
   urls!: Promise<string[]>;
   states: StationState[] = [];
 }
+export class GarbageFullStationTableArgs {
+  station?: string;
+  community?: string;
+}

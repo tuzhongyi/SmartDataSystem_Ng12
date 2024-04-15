@@ -199,8 +199,8 @@
   [divisionId]="window.record.divisionId"
   (image)="window.record.onimage($event)"
   (video)="window.record.onvideo($event)"
-  [get]="window.image.page.getData"
-  (got)="window.image.page.gotData($event)"
+  [get]="window.image.getData"
+  (got)="window.image.gotData($event)"
   (card)="window.record.oncard($event)"
   (allvideo)="window.record.onallvideo($event)"
 >
@@ -233,6 +233,8 @@
   (image)="window.full.onimage($event)"
   (video)="window.full.onvideo($event)"
   (allvideo)="window.full.onallvideo($event)"
+  [get]="window.image.getData"
+  (got)="window.image.gotData($event)"
 >
 </howell-garbage-full-station-window>
 
@@ -248,8 +250,8 @@
   (video)="window.station.onvideo($event)"
   (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
-  [get]="window.image.page.getData"
-  (got)="window.image.page.gotData($event)"
+  [get]="window.image.getData"
+  (got)="window.image.gotData($event)"
 >
 </howell-garbage-station-window>
 
@@ -291,7 +293,7 @@
 >
   <card-record-episode [record]="window.card.record"></card-record-episode>
 </app-window>
-<app-window
+<!-- <app-window
   [Model]="window.image.page"
   *ngIf="window.image.page.show"
   [style]="window.image.page.style"
@@ -304,21 +306,27 @@
     (next)="window.image.page.onnext()"
     (play)="window.image.page.onvideo()"
   ></app-media-image-control>
-</app-window>
+</app-window> -->
 <app-window
-  [Model]="window.image.array"
-  *ngIf="window.image.array.show"
-  [style]="window.image.array.style"
+  [Model]="window.image"
+  *ngIf="window.image.show"
+  [style]="window.image.style"
 >
-  <app-media-image-control
-    [model]="window.image.array.current"
-    [first]="window.image.array.first"
-    [last]="window.image.array.last"
-    [captureing]="window.image.array.captureing"
-    (prev)="window.image.array.onprev()"
-    (next)="window.image.array.onnext()"
-    (play)="window.image.array.onvideo()"
-  ></app-media-image-control>
+  <media-image-control-page
+    [model]="window.image.current"
+    [imgfirst]="window.image.imgfirst"
+    [imglast]="window.image.imglast"
+    [captureing]="window.image.captureing"
+    (imgprev)="window.image.onimgprev()"
+    (imgnext)="window.image.onimgnext()"
+    (play)="window.image.onvideo()"
+    [pagefirst]="window.image.pagefirst"
+    [pagelast]="window.image.pagelast"
+    [pageindex]="window.image.page?.PageIndex"
+    (pageprev)="window.image.onpageprev()"
+    (pagenext)="window.image.onpagenext()"
+    [state]="window.image.state"
+  ></media-image-control-page>
 </app-window>
 <app-video-window
   [window]="window.video"

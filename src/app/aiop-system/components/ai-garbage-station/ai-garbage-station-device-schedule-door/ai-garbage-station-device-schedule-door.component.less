@@ -111,8 +111,13 @@ app-time-control {
     box-sizing: content-box;
 
     &-checkboxs {
-      &>* {
-        margin-right: 10px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+
+      &>.mat-checkbox {
+        flex-grow: 0;
       }
     }
 

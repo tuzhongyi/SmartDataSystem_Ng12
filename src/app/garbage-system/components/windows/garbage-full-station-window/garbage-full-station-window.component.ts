@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
@@ -29,17 +30,22 @@ export class GarbageFullStationWindowComponent
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
-  Index = GarbageFullStationWindowIndex;
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
+    new EventEmitter();
 
-  type = EventType.GarbageFull;
-  listType = ListType.table;
-  ListType = ListType;
   constructor(
     public station: GarbageFullStationWindowStationBusiness,
     public record: GarbageFullStationWindowRecordBusiness
   ) {
     super();
   }
+
+  Index = GarbageFullStationWindowIndex;
+
+  type = EventType.GarbageFull;
+  listType = ListType.table;
+  ListType = ListType;
 
   index = GarbageFullStationWindowIndex.station;
 
@@ -64,6 +70,9 @@ export class GarbageFullStationWindowComponent
   }
   onallvideo(model: EventRecordViewModel) {
     this.allvideo.emit(model);
+  }
+  ongot(data: any) {
+    this.got.emit(data);
   }
 }
 export enum GarbageFullStationWindowIndex {

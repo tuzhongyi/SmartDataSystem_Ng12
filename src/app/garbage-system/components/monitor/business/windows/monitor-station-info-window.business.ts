@@ -4,12 +4,10 @@ import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/gar
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
-import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
@@ -40,38 +38,14 @@ export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
     super();
   }
   onimage(
-    model: PagedArgs<
+    args: PagedArgs<
       | GarbageDropRecordViewModel
       | GarbageStationTableModel
       | EventRecordViewModel
       | ImageControlModel
     >
   ) {
-    this.image.array.manualcapture =
-      model.data instanceof GarbageStationTableModel;
-    this.image.array.index = model.page.PageIndex;
-
-    if (model.data instanceof GarbageStationTableModel) {
-      this.image.array.stationId = model.data.GarbageStation.Id;
-      if (model.data.GarbageStation.Cameras) {
-        this.image.array.models = model.data.GarbageStation.Cameras.map((x) =>
-          ImageControlCreater.Create(x)
-        );
-      }
-    } else if (model.data instanceof GarbageDropRecordViewModel) {
-      this.image.array.stationId = model.data.Data.StationId;
-      this.image.array.models = ImageControlCreater.Create(model.data);
-    } else if (model.data instanceof EventRecordViewModel) {
-      this.image.page.page = model.page;
-      let data = model.data as SewageEventRecord;
-      this.image.page.model = ImageControlCreater.Create(data);
-      this.image.page.show = true;
-      return;
-    } else {
-      this.image.array.models = [model.data];
-    }
-
-    this.image.array.show = true;
+    this.image.open(args);
   }
   async onvideo(
     item:

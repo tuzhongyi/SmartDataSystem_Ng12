@@ -43,11 +43,19 @@ export class EventRecordTableIllegalDropComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
-  widths = new Array(8);
+  widths = [
+    '150px',
+    undefined,
+    undefined,
+    '13%',
+    '10%',
+    '12%',
+    '210px',
+    '150px',
+  ];
   selected?: EventRecordViewModel;
 
   async ngOnInit() {
-    this.widths[6] = '210px';
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {

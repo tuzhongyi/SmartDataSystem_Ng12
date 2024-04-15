@@ -104,4 +104,20 @@ export class ColorTool {
     }
     return '';
   }
+
+  static GarbageDropState(handle: boolean, timeout: boolean) {
+    if (handle) {
+      if (timeout) {
+        return 'sky-blue-text2';
+      } else {
+        return 'green-text';
+      }
+    } else {
+      if (timeout) {
+        return 'powder-red-text';
+      } else {
+        return 'orange-text';
+      }
+    }
+  }
 }

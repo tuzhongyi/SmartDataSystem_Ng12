@@ -3,8 +3,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { GarbageFullEventData } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
-import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { ImagePagedArgs, IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -37,7 +36,7 @@ export class EventRecordTableMixedIntoComponent
   // > = new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
-  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
+  @Output() image: EventEmitter<ImagePagedArgs<EventRecordViewModel>> =
     new EventEmitter();
   @Output() downloadVideo: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
@@ -120,17 +119,15 @@ export class EventRecordTableMixedIntoComponent
   onimage(e: Event, item: EventRecordViewModel, index: number) {
     let plain = instanceToPlain(this.page);
     let page = plainToInstance(Page, plain);
-    if (item.Data instanceof GarbageFullEventData) {
-      page = Page.create(index, item.urls.length);
-    } else {
-      page.RecordCount = this.page.TotalRecordCount;
-      page.PageCount = this.page.TotalRecordCount;
-      page.PageSize = 1;
-      index = this.datas.indexOf(item);
-      page.PageIndex =
-        (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
-    }
-    this.image.emit({ page: page, data: item });
+
+    page.RecordCount = this.page.TotalRecordCount;
+    page.PageCount = this.page.TotalRecordCount;
+    page.PageSize = 1;
+    let _index = this.datas.indexOf(item);
+    page.PageIndex =
+      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+
+    this.image.emit({ page: page, data: item, index: index });
     if (this.selected === item) {
       e.stopPropagation();
     }

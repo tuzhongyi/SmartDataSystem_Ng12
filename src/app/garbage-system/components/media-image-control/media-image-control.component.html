@@ -1,7 +1,16 @@
 <div class="video-control" *ngIf="!!model">
-  <div class="header" *ngIf="operation">
-    <div class="title">
-      <div>{{ model.name }}</div>
+  <div class="video-control-head" *ngIf="operation">
+    <div class="video-control-head-title">
+      <div>
+        {{ model.name }}
+        <span
+          *ngIf="model.ishandle !== undefined && model.istimeout !== undefined"
+          [class]="Color.GarbageDropState(model.ishandle, model.istimeout)"
+          >{{
+            Language.GarbageDropState(model.ishandle, model.istimeout)
+          }}</span
+        >
+      </div>
       <div
         *ngIf="display.capture"
         class="spinner-border green-text"
@@ -11,7 +20,7 @@
         }"
       ></div>
     </div>
-    <div class="operation">
+    <div class="video-control-head-operation">
       <div class="label" *ngIf="display.object">目标信息</div>
       <hw-switch
         *ngIf="display.object"
@@ -38,7 +47,7 @@
     </div>
   </div>
   <div
-    class="content"
+    class="video-control-body"
     [ngClass]="{
       operation: operation
     }"
@@ -66,5 +75,5 @@
       </div>
     </div>
   </div>
-  <div class="content" *ngIf="img"></div>
+  <div class="video-control-body" *ngIf="img"></div>
 </div>

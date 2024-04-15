@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
+import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
+import { Language } from 'src/app/common/tools/language';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { MediaVideoControlBussiness } from './media-image-control.business';
@@ -24,6 +26,8 @@ export class MediaImageControlComponent implements OnInit {
 
   constructor(protected download: DownloadBusiness) {}
 
+  Language = Language;
+  Color = ColorTool;
   img?: string;
   title?: string;
   draw = true;

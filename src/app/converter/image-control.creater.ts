@@ -25,14 +25,17 @@ type InputType =
   | GarbageDropRecordViewModel;
 
 export class ImageControlCreater {
+  static Create(model: SewageEventRecord): ImageControlModel[];
+  static Create(model: GarbageFullEventRecord): ImageControlModel[];
+  static Create(model: MixedIntoEventRecord): ImageControlModel[];
+  static Create(model: GarbageDropRecordViewModel): ImageControlModel[];
+  static Create(
+    model: EventRecordViewModel
+  ): ImageControlModel | ImageControlModel[];
   static Create(model: Camera): ImageControlModel;
   static Create(model: DeviceViewModel): ImageControlModel;
   static Create(model: IllegalDropEventRecord): ImageControlModel;
-  static Create(model: GarbageFullEventRecord): ImageControlModel[];
-  static Create(model: MixedIntoEventRecord): ImageControlModel;
-  static Create(model: SewageEventRecord): ImageControlModel;
-  static Create(model: EventRecordViewModel): ImageControlModel;
-  static Create(model: GarbageDropRecordViewModel): ImageControlModel[];
+
   static Create(model: InputType) {
     if (model instanceof DeviceViewModel) {
       return this.fromDeviceViewModel(model);
@@ -83,6 +86,8 @@ export class ImageControlCreater {
       camera?: Promise<ICamera>;
       polygon?: EventDataObject[];
       rules?: EventRule[];
+      ishandle?: boolean;
+      istimeout?: boolean;
     }
   ): ImageControlModel {
     let model = new ImageControlModel();
@@ -96,6 +101,8 @@ export class ImageControlCreater {
       model.stationId = args.stationId;
       model.polygon = args.polygon;
       model.rules = args.rules;
+      model.ishandle = args.ishandle;
+      model.istimeout = args.istimeout;
       if (args.camera) {
         args.camera.then((camera) => {
           model.status = camera.OnlineStatus ?? OnlineStatus.Offline;
@@ -121,36 +128,76 @@ export class ImageControlCreater {
     });
   }
   private static fromMixedIntoEventRecord(data: MixedIntoEventRecord) {
-    return this.create(
-      data.ResourceId ?? data.EventId,
-      Medium.img(data.ImageUrl ?? Medium.default),
-      data.ResourceName ?? data.Data.StationName,
+    let result = [
+      this.create(
+        data.ResourceId ?? data.EventId,
+        Medium.img(data.ImageUrl ?? Medium.default),
+        data.ResourceName ?? data.Data.StationName,
 
-      {
-        eventTime: data.EventTime,
-        stationId: data.Data.StationId,
-        rules: data.Data.Rules,
-        polygon: data.Data.Objects,
-      }
-    );
+        {
+          eventTime: data.EventTime,
+          stationId: data.Data.StationId,
+          rules: data.Data.Rules,
+          polygon: data.Data.Objects,
+          ishandle: false,
+          istimeout: false,
+        }
+      ),
+    ];
+    if (data.Data.HandleImageUrl) {
+      result.push(
+        this.create(
+          data.ResourceId ?? data.EventId,
+          Medium.img(data.Data.HandleImageUrl ?? Medium.default),
+          data.ResourceName ?? data.Data.StationName,
+          {
+            eventTime: data.Data.ProcessTime,
+            stationId: data.Data.StationId,
+            ishandle: true,
+            istimeout: false,
+          }
+        )
+      );
+    }
+    return result;
   }
   private static fromSewageEventRecord(data: SewageEventRecord) {
-    return this.create(
-      data.ResourceId ?? data.EventId,
-      Medium.img(data.ImageUrl ?? Medium.default),
-      data.ResourceName ?? data.Data.StationName,
-
-      {
-        eventTime: data.EventTime,
-        stationId: data.Data.StationId,
-        rules: data.Data.Rules,
-        polygon: data.Data.Objects,
-      }
-    );
+    let result = [
+      this.create(
+        data.ResourceId ?? data.EventId,
+        Medium.img(data.ImageUrl ?? Medium.default),
+        data.ResourceName ?? data.Data.StationName,
+        {
+          eventTime: data.EventTime,
+          stationId: data.Data.StationId,
+          rules: data.Data.Rules,
+          polygon: data.Data.Objects,
+          ishandle: false,
+          istimeout: false,
+        }
+      ),
+    ];
+    if (data.Data.HandleImageUrl) {
+      result.push(
+        this.create(
+          data.ResourceId ?? data.EventId,
+          Medium.img(data.Data.HandleImageUrl ?? Medium.default),
+          data.ResourceName ?? data.Data.StationName,
+          {
+            eventTime: data.Data.ProcessTime,
+            stationId: data.Data.StationId,
+            ishandle: true,
+            istimeout: false,
+          }
+        )
+      );
+    }
+    return result;
   }
   private static fromGarbageFullEventRecord(data: GarbageFullEventRecord) {
+    let result: ImageControlModel[] = [];
     if (data.Data.CameraImageUrls) {
-      return data.Data.CameraImageUrls.map((x) => {
+      result = data.Data.CameraImageUrls.map((x) => {
         return ImageControlCreater.create(
           x.CameraId,
           Medium.img(x.ImageUrl),
@@ -158,12 +205,42 @@ export class ImageControlCreater {
           {
             stationId: data.Data.StationId,
             eventTime: data.EventTime,
+            ishandle: false,
+            istimeout: false,
           }
         );
       });
     } else {
-      return [Medium.default];
+      result = [
+        ImageControlCreater.create(
+          data.ResourceId!,
+          new Promise<string>((resolve) => {
+            resolve(Medium.default);
+          }),
+          data.ResourceName ?? data.Data.StationName
+        ),
+      ];
     }
+
+    if (data.Data.HandleImageUrls) {
+      result.push(
+        ...data.Data.HandleImageUrls.map((x) => {
+          return this.create(
+            x.CameraId ?? data.ResourceId ?? data.EventId,
+            Medium.img(x.ImageUrl ?? Medium.default),
+            x.CameraName ?? data.ResourceName ?? data.Data.StationName,
+            {
+              eventTime: data.Data.ProcessTime,
+              stationId: data.Data.StationId,
+              ishandle: true,
+              istimeout: false,
+            }
+          );
+        })
+      );
+    }
+
+    return result;
   }
   private static fromIllegalDropEventRecord(data: IllegalDropEventRecord) {
     return ImageControlCreater.create(
@@ -203,6 +280,8 @@ export class ImageControlCreater {
             {
               stationId: data.Data.StationId,
               eventTime: data.EventTime,
+              ishandle: false,
+              istimeout: false,
             }
           )
         )
@@ -218,6 +297,8 @@ export class ImageControlCreater {
             {
               stationId: data.Data.StationId,
               eventTime: data.EventTime,
+              ishandle: false,
+              istimeout: true,
             }
           )
         )
@@ -233,6 +314,8 @@ export class ImageControlCreater {
             {
               stationId: data.Data.StationId,
               eventTime: data.EventTime,
+              ishandle: true,
+              istimeout: data.Data.IsSuperTimeout || data.Data.IsTimeout,
             }
           )
         )

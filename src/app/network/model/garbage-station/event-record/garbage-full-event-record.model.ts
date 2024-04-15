@@ -36,7 +36,7 @@ export class GarbageFullEventData {
   /**	Boolean	是否已处置	O	*/
   IsHandle?: boolean;
   /**	String	图片ID、图片地址	O	*/
-  HandleImageUrl?: string;
+  HandleImageUrls?: CameraImageUrl[];
   /**	Boolean	处置人员是否已处置	O	*/
   Processed?: boolean;
   /**	String	处置人员名称	O	*/

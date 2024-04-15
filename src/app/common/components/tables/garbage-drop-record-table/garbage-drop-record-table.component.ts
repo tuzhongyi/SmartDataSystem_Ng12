@@ -1,18 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { ImagePagedArgs, IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
 import {
@@ -36,17 +28,18 @@ import {
 })
 export class GarbageDropRecordTableComponent
   extends PagedTableAbstractComponent<GarbageDropRecordViewModel>
-  implements
-    IComponent<IModel, PagedList<GarbageDropRecordViewModel>>,
-    OnInit,
-    OnChanges
+  implements IComponent<IModel, PagedList<GarbageDropRecordViewModel>>, OnInit
 {
   @Input() business: IBusiness<IModel, PagedList<GarbageDropRecordViewModel>>;
   @Input() load?: EventEmitter<GarbageDropRecordFilter>;
   @Input() filter: GarbageDropRecordFilter;
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
     new EventEmitter();
-  @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
+  @Output() image: EventEmitter<ImagePagedArgs<GarbageDropRecordViewModel>> =
+    new EventEmitter();
+
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
     new EventEmitter();
 
   constructor(record: GarbageDropRecordTableBusiness) {
@@ -72,16 +65,26 @@ export class GarbageDropRecordTableComponent
 
   loading = false;
   selected?: GarbageDropRecordViewModel;
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange && this.load) {
+
+  async ngOnInit() {
+    if (this.load) {
       this.load.subscribe((x) => {
         this.filter = x;
         this.loadData(-1, this.pageSize, this.filter);
       });
     }
-  }
-
-  async ngOnInit() {
+    if (this.get) {
+      this.get.subscribe((page) => {
+        let promise = this.business.load(
+          page.PageIndex,
+          page.PageSize,
+          this.filter
+        );
+        promise.then((data) => {
+          this.got.emit(data);
+        });
+      });
+    }
     this.loadData(-1, this.pageSize, this.filter);
   }
 
@@ -90,11 +93,7 @@ export class GarbageDropRecordTableComponent
   }
 
   loadData(index: number, size: number, filter: GarbageDropRecordFilter) {
-    let params = new PagedParams();
-    params.PageSize = size;
-    params.PageIndex = index;
-
-    let promise = this.business.load(params, filter);
+    let promise = this.business.load(index, size, filter);
     this.loading = true;
     promise.then((paged) => {
       this.loading = false;
@@ -113,9 +112,20 @@ export class GarbageDropRecordTableComponent
   }
 
   onimage(e: Event, item: GarbageDropRecordViewModel, index: number) {
+    let plain = instanceToPlain(this.page);
+    let page = plainToInstance(Page, plain);
+
+    page.RecordCount = this.page.TotalRecordCount;
+    page.PageCount = this.page.TotalRecordCount;
+    page.PageSize = 1;
+    let _index = this.datas.indexOf(item);
+    page.PageIndex =
+      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+
     this.image.emit({
-      page: Page.create(index),
+      page: page,
       data: item,
+      index: index,
     });
     if (this.selected === item) {
       e.stopPropagation();

@@ -9,7 +9,7 @@
     [class.right]="align == HorizontalAlign.right"
     [class.left]="align == HorizontalAlign.left"
     [ngStyle]="style"
-    *ngIf="expand"
+    *ngIf="tree.expand"
   >
     <!-- <howell-tree
       [treeServiceModel]="treeServiceModel"
@@ -25,6 +25,7 @@
       [showStation]="true"
       [defaultIds]="stationId ? [stationId] : []"
       (selectTreeNode)="selectTreeNode($event)"
+      (click)="ontreeclick()"
     >
     </howell-division-tree>
   </div>

@@ -61,7 +61,7 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
     } else if (model.data instanceof EventRecordViewModel) {
       this.image.page.page = model.page;
       let data = model.data as SewageEventRecord;
-      this.image.page.model = ImageControlCreater.Create(data);
+      this.image.page.model = ImageControlCreater.Create(data)[0];
       this.image.page.show = true;
       return;
     } else {

@@ -979,5 +979,21 @@ export class Language {
     }
   }
 
+  static GarbageDropState(handle: boolean, timeout: boolean) {
+    if (handle) {
+      if (timeout) {
+        return '超时处置';
+      } else {
+        return '已处置';
+      }
+    } else {
+      if (timeout) {
+        return '超时待处置';
+      } else {
+        return '待处置';
+      }
+    }
+  }
+
   static json = language;
 }

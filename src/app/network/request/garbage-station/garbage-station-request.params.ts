@@ -115,6 +115,10 @@ export class GetGarbageStationStatisticNumbersParams
   GridCellId?: string;
   /**	Boolean	当前有没有垃圾落地	O */
   GarbageDrop?: boolean;
+  /**	String	小区ID	O */
+  CommunityId?: string;
+  /**	String	小区名称，支持LIKE	O */
+  CommunityName?: string;
 }
 export class GetGarbageStationStatisticGarbageCountsParams implements IParams {
   /**	Date	日期	M */

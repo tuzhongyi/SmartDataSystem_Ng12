@@ -35,7 +35,6 @@
         <tbody>
           <tr
             *ngFor="let item of datas; let i = index"
-            class="zoom"
             [ngClass]="{
               selected: selected === item
             }"
@@ -83,8 +82,12 @@
               }}
             </td>
             <td>{{ item.DateFormatter }}</td>
-            <td>{{ item.ProcessorName }}</td>
-            <td>{{ item.ProcessTime | date : "HH:mm:ss" }}</td>
+            <td>{{ item.ProcessorName ?? "-" }}</td>
+            <td>
+              {{
+                item.ProcessTime ? (item.ProcessTime | date : "HH:mm:ss") : "-"
+              }}
+            </td>
             <td class="center">
               <div class="operation center">
                 <div

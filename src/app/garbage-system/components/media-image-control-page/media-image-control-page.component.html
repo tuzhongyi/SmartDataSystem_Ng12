@@ -1,0 +1,42 @@
+<div class="media-image-control-page">
+  <div class="media-image-control-page-body">
+    <app-media-image-control
+      [model]="model"
+      [first]="imgfirst"
+      [last]="imglast"
+      [captureing]="captureing"
+      [operation]="operation"
+      [contain]="contain"
+      (next)="onimgnext($event)"
+      (prev)="onimgprev($event)"
+      (play)="onplay($event)"
+      (videodownload)="ondownload($event)"
+    ></app-media-image-control>
+  </div>
+
+  <div
+    class="media-image-control-page-foot"
+    *ngIf="pagefirst === false || pagelast === false"
+  >
+    <div></div>
+    <div class="buttons">
+      <button (click)="onpageprev()" [disabled]="pagefirst" title="上一条">
+        <i class="howell-icon-arrow2left"></i>
+      </button>
+      <div *ngIf="pageindex">第 {{ pageindex }} 条</div>
+      <button (click)="onpagenext()" [disabled]="pagelast" title="下一条">
+        <i class="howell-icon-arrow2right"></i>
+      </button>
+    </div>
+    <div>
+      <div
+        *ngIf="
+          state && state.ishandle !== undefined && state.istimeout !== undefined
+        "
+        [class]="Color.GarbageDropState(state.ishandle, state.istimeout)"
+      >
+        {{ Language.GarbageDropState(state.ishandle, state.istimeout) }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -20,6 +20,8 @@
       [load]="load"
       (image)="onimage($event)"
       (video)="onvideo($event)"
+      [get]="get"
+      (got)="ongot($event)"
     >
     </howell-garbage-drop-record-table>
     <garbage-drop-record-task-table

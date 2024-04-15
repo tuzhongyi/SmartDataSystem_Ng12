@@ -58,7 +58,7 @@ export class CommitteesRecordWindowBusiness extends WindowViewModel {
     } else if (args.data.Data instanceof MixedIntoEventData) {
       this.image.page.page = args.page;
       let data = args.data as MixedIntoEventRecord;
-      this.image.page.model = ImageControlCreater.Create(data);
+      this.image.page.model = ImageControlCreater.Create(data)[0];
       this.image.page.show = true;
     } else {
     }

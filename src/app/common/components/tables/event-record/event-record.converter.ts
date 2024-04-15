@@ -118,6 +118,7 @@ export class EventRecordConverter
 
   async fromIllegalDrop(source: IllegalDropEventRecord) {
     let model = await this.fromEventRecord(source);
+
     if (model.images && model.images.length > 0) {
       model.images[0].polygon = source.Data.Objects;
       model.images[0].rules = source.Data.Rules;
@@ -131,6 +132,11 @@ export class EventRecordConverter
       model.urls = source.Data.CameraImageUrls.map((x) => {
         return Medium.img(x.ImageUrl);
       });
+    }
+    if (source.Data.HandleImageUrls) {
+      model.urls.push(
+        ...source.Data.HandleImageUrls.map((x) => Medium.img(x.ImageUrl))
+      );
     }
 
     model.images = [];
@@ -176,6 +182,9 @@ export class EventRecordConverter
     //     return Medium.img(x.ImageUrl);
     //   });
     // }
+    if (source.Data.HandleImageUrl) {
+      model.urls.push(Medium.img(source.Data.HandleImageUrl));
+    }
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
     return model;
@@ -185,6 +194,10 @@ export class EventRecordConverter
     let model = await this.fromEventRecord(source);
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
+
+    if (source.Data.HandleImageUrl) {
+      model.urls.push(Medium.img(source.Data.HandleImageUrl));
+    }
 
     if (model.images && model.images.length > 0) {
       model.images[0].polygon = source.Data.Objects;
