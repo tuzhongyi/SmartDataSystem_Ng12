@@ -273,10 +273,12 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
   ) {
     this.page = page;
     this.index = index;
-    this.state = {
-      ishandle: data.Data.Processed,
-      istimeout: false,
-    };
+    if (data.Data.Processed) {
+      this.state = {
+        ishandle: data.Data.Processed,
+        istimeout: false,
+      };
+    }
     this.models = ImageControlCreater.Create(data);
   }
   private setFromGarbageDropStationTableModel(
