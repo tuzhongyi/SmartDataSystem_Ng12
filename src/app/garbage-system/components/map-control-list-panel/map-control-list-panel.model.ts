@@ -25,3 +25,7 @@ export enum ListItemType {
   Division,
   GarbageStation,
 }
+
+export class MapListPanelArgs {
+  divisionId?: string;
+}

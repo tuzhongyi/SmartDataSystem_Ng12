@@ -119,6 +119,25 @@ export class ChartConfig {
             ),
           ],
         };
+      case TimeUnit.Year:
+        interval = DurationParams.allYear(date);
+
+        return {
+          mainType: 'xAxis',
+          type: 'category',
+
+          data: [
+            ...Array.from(
+              {
+                length:
+                  interval.EndTime.getMonth() -
+                  interval.BeginTime.getMonth() +
+                  1,
+              },
+              (v, i) => (i + 1).toString() + '月'
+            ),
+          ],
+        };
       case TimeUnit.Week:
         interval = DurationParams.allWeek(date);
 

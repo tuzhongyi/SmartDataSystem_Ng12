@@ -1,13 +1,9 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import {
-  GetGarbageStationsParams,
-  GetGarbageStationStatisticNumbersParams,
-} from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { GarbageFullStationPagedTableConverter } from './garbage-full-station-table.converter';
 import {
@@ -19,14 +15,13 @@ import {
 export class GarbageFullStationTableBusiness
   implements
     IBusiness<
-      PagedList<GarbageStationNumberStatistic>,
+      PagedList<GarbageStation>,
       PagedList<GarbageFullStationTableModel>
     >
 {
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService,
     public converter: GarbageFullStationPagedTableConverter
   ) {}
   loading?: EventEmitter<void> | undefined;
@@ -49,22 +44,14 @@ export class GarbageFullStationTableBusiness
     size: number,
     divisionId: string,
     args: GarbageFullStationTableArgs
-  ): Promise<PagedList<GarbageStationNumberStatistic>> {
-    let params = new GetGarbageStationStatisticNumbersParams();
+  ): Promise<PagedList<GarbageStation>> {
+    let params = new GetGarbageStationsParams();
+    params.DryFull = true;
     params.DivisionId = divisionId;
     params.PageIndex = index;
     params.PageSize = size;
-    let stations = await this.stations();
-    params.Ids = stations.Data.map((x) => x.Id);
     params.Name = args.station;
     params.CommunityName = args.community;
-
-    return this.stationService.statistic.number.list(params);
-  }
-
-  private async stations() {
-    let params = new GetGarbageStationsParams();
-    params.DryFull = true;
     let stations = await this.stationService.list(params);
     if (stations.Data.length == 0) {
       return {

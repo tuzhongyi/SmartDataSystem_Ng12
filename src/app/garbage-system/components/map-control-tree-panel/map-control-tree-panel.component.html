@@ -1,0 +1,119 @@
+<div class="map-control-tree-panel">
+  <div class="map-control-tree-panel-top"></div>
+  <div class="map-control-tree-panel-middle">
+    <div class="map-control-tree-panel-head">
+      <div class="map-control-tree-panel-head-title">投放点信息</div>
+      <div class="map-control-tree-panel-head-options">
+        <div
+          class="item"
+          [ngClass]="{
+            selected: !tree.args.juststation
+          }"
+          (click)="ontree()"
+        >
+          <i class="howell-icon-tree"></i>
+        </div>
+        <div class="split"></div>
+        <div
+          class="item"
+          [ngClass]="{
+            selected: tree.args.juststation
+          }"
+          (click)="onlist()"
+        >
+          <i class="howell-icon-list3"></i>
+        </div>
+      </div>
+    </div>
+    <div class="map-control-tree-panel-body">
+      <div class="map-control-tree-panel-body-filter">
+        <howell-simple-search
+          (searchEvent)="onsearch($event)"
+        ></howell-simple-search>
+        <div class="map-control-tree-panel-body-filter-item">
+          <div class="filter-item-title">投放点类型：</div>
+          <div class="filter-item-value">
+            <div
+              [ngStyle]="{
+                color: tree.args.isgarbage ? '#fff' : 'inherit'
+              }"
+              (click)="tree.args.isgarbage = !tree.args.isgarbage; onfilter()"
+            >
+              <i class="howell-icon-garbage"></i> 标准
+            </div>
+            <div
+              [ngStyle]="{
+                color: tree.args.isrfid ? '#fff' : 'inherit'
+              }"
+              (click)="tree.args.isrfid = !tree.args.isrfid; onfilter()"
+            >
+              <i class="howell-icon-smart_garbage"></i> 智能
+            </div>
+            <div
+              [ngStyle]="{
+                color: tree.args.isconstruction ? '#fff' : 'inherit'
+              }"
+              (click)="
+                tree.args.isconstruction = !tree.args.isconstruction; onfilter()
+              "
+            >
+              <i class="howell-icon-construction_waste"></i> 大件
+            </div>
+          </div>
+        </div>
+        <div class="map-control-tree-panel-body-filter-item">
+          <div class="filter-item-title">投放点状态：</div>
+          <div class="filter-item-value">
+            <div
+              [ngStyle]="{
+                color:
+                  tree.args.isnormal &&
+                  tree.args.isfull &&
+                  tree.args.isdrop &&
+                  tree.args.iserror
+                    ? '#fff'
+                    : 'inherit'
+              }"
+              (click)="onstateall()"
+            >
+              全部
+            </div>
+            <div
+              [ngClass]="{ 'green-text': tree.args.isnormal }"
+              (click)="tree.args.isnormal = !tree.args.isnormal; onfilter()"
+            >
+              正常
+            </div>
+            <div
+              [ngClass]="{ 'yellow-text': tree.args.isfull }"
+              (click)="tree.args.isfull = !tree.args.isfull; onfilter()"
+            >
+              满溢
+            </div>
+            <div
+              [ngClass]="{ 'orange-red-text': tree.args.isdrop }"
+              (click)="tree.args.isdrop = !tree.args.isdrop; onfilter()"
+            >
+              滞留
+            </div>
+            <div
+              [ngClass]="{ 'gray-2-text': tree.args.iserror }"
+              (click)="tree.args.iserror = !tree.args.iserror; onfilter()"
+            >
+              异常
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="map-control-tree-panel-body-content">
+        <map-control-tree
+          (select)="onselect($event)"
+          (info)="oninfo($event)"
+          [args]="tree.args"
+          [load]="tree.load"
+        ></map-control-tree>
+      </div>
+    </div>
+  </div>
+  <div class="map-control-tree-panel-bottom"></div>
+</div>

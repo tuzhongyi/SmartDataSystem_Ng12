@@ -30,10 +30,10 @@
     >
       <div class="dapuqiao-index-body__wrapper">
         <div *ngIf="statistic.cards" class="statistic-card-group">
-          <ng-container *ngFor="let item of statistic.cards">
+          <ng-container *ngFor="let item of statistic.cards; let index = index">
             <app-statistic-card
               [model]="item"
-              (Click)="statistic.onclick(item)"
+              (click)="statistic.onclick(index)"
             ></app-statistic-card>
           </ng-container>
         </div>

@@ -5,10 +5,7 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
-import {
-  StatisticCardViewModel,
-  StatisticType,
-} from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
+import { StatisticCardViewModel } from 'src/app/garbage-system/components/statistic-card/statistic-card.model';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -47,11 +44,11 @@ export class IndexStatisticCardBussiness
     let count = this.Converter.createGarbageStation(stations.length);
     array.unshift(count);
 
-    this.storeService.statistic.station.count = array[0].value;
-    this.storeService.statistic.station.drop = array[1].value;
-    this.storeService.statistic.full = array[2].value;
-    this.storeService.statistic.illegalDrop = array[3].value;
-    this.storeService.statistic.mixedInto = array[4].value;
+    this.storeService.statistic.station.count = parseInt(array[0].value);
+    this.storeService.statistic.station.drop = parseInt(array[1].value);
+    this.storeService.statistic.full = parseInt(array[2].value);
+    this.storeService.statistic.illegalDrop = parseInt(array[3].value);
+    this.storeService.statistic.mixedInto = parseInt(array[4].value);
 
     return array;
   }
@@ -59,30 +56,31 @@ export class IndexStatisticCardBussiness
     return this.divisionService.statistic.number.cache.get(divisionId);
   }
 
-  onclick(model: StatisticCardViewModel) {
-    switch (model.type) {
-      case StatisticType.stationCount:
+  onclick(index: number) {
+    let model = this.cards[index];
+    switch (index) {
+      case 0:
         this.window.station.clear();
         this.window.station.show = true;
         break;
-      case StatisticType.stationDrop:
+      case 1:
         this.window.drop.clear();
         this.window.drop.show = true;
         break;
-      case StatisticType.stationFull:
+      case 2:
         this.window.full.clear();
         this.window.full.show = true;
         break;
-      case StatisticType.illegalDropRecord:
+      case 3:
         this.window.record.clear();
         this.window.record.type = EventType.IllegalDrop;
-        this.window.record.count = model.value;
+        this.window.record.count = parseInt(model.value);
         this.window.record.show = true;
         break;
-      case StatisticType.mixedIntoRecord:
+      case 4:
         this.window.record.clear();
         this.window.record.type = EventType.MixedInto;
-        this.window.record.count = model.value;
+        this.window.record.count = parseInt(model.value);
         this.window.record.show = true;
         break;
       default:
@@ -111,62 +109,51 @@ class StatisticCardConverter
   }
 
   createGarbageStation(count: number) {
-    let card = new StatisticCardViewModel(StatisticType.stationCount, count);
+    let card = new StatisticCardViewModel(count);
     card.title =
       Language.json.garbage + Language.json.station + Language.json.number;
-    card.value = count;
+    card.value = `${count}`;
     card.class = 'sky-blue-text2';
     return card;
   }
 
   createRetentionStation(input: DivisionNumberStatistic) {
-    let card = new StatisticCardViewModel(StatisticType.stationDrop, input);
+    let card = new StatisticCardViewModel(input);
     card.title =
       Language.json.garbage + Language.json.stay + Language.json.station;
-    card.value = input.GarbageDropStationNumber ?? 0;
+    card.value = `${input.GarbageDropStationNumber ?? 0}`;
     card.class = 'orange-red-text';
     return card;
   }
   createFullStation(input: DivisionNumberStatistic) {
-    let card = new StatisticCardViewModel(StatisticType.stationFull, input);
+    let card = new StatisticCardViewModel(input);
     card.title =
       Language.json.did +
       Language.json.full +
       Language.json.station +
       Language.json.number;
-    card.value = input.DryFullStationNumber + input.WetFullStationNumber;
+    card.value = `${input.DryFullStationNumber + input.WetFullStationNumber}`;
     card.class = 'orange-text';
     return card;
   }
-  createEvent(
-    input: DivisionNumberStatistic,
-    type: { event: EventType; statistic: StatisticType }
-  ) {
-    let card = new StatisticCardViewModel(type.statistic, input);
+  createEvent(input: DivisionNumberStatistic, type: EventType) {
+    let card = new StatisticCardViewModel(input);
     if (input.TodayEventNumbers) {
-      let number = input.TodayEventNumbers.find(
-        (x) => x.EventType === type.event
-      );
+      let number = input.TodayEventNumbers.find((x) => x.EventType === type);
       if (number) {
-        card.value = number.DayNumber;
+        card.value = `${number.DayNumber}`;
       }
     }
     return card;
   }
   createIllegalDrop(input: DivisionNumberStatistic) {
-    let card = this.createEvent(input, {
-      event: EventType.IllegalDrop,
-      statistic: StatisticType.illegalDropRecord,
-    });
+    let card = this.createEvent(input, EventType.IllegalDrop);
     card.title = Language.json.EventType.IllegalDrop + Language.json.event;
     card.class = 'powder-red-text';
     return card;
   }
   createMixedInto(input: DivisionNumberStatistic) {
-    let card = this.createEvent(input, {
-      event: EventType.MixedInto,
-      statistic: StatisticType.mixedIntoRecord,
-    });
+    let card = this.createEvent(input, EventType.MixedInto);
     card.title = Language.json.EventType.MixedInto + Language.json.event;
     card.class = 'light-purple-text';
     return card;

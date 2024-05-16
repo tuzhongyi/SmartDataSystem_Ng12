@@ -1,0 +1,27 @@
+.statistic-card {
+  &-group {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: calc(100%);
+    box-sizing: border-box;
+    gap: 20px;
+  }
+
+  &-item {
+    ::ng-deep {
+      .task {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        .split {
+          font-size: 14px;
+        }
+      }
+
+    }
+  }
+
+
+}

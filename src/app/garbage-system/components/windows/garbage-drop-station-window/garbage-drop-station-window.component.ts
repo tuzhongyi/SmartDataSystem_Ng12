@@ -10,13 +10,16 @@ import { UserUIType } from 'src/app/enum/user-ui-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import { EventRecordWindowDetailsBusiness } from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
+import {
+  EventRecordWindowDetailsBusiness,
+  EventRecordWindowDetailsProviders,
+} from '../event-record-window/business/event-record-window-details/event-record-window-details.business';
 
 @Component({
   selector: 'howell-garbage-drop-station-window',
   templateUrl: './garbage-drop-station-window.component.html',
   styleUrls: ['./garbage-drop-station-window.component.less'],
-  providers: [EventRecordWindowDetailsBusiness],
+  providers: [...EventRecordWindowDetailsProviders],
 })
 export class GarbageDropStationWindowComponent
   extends WindowComponent

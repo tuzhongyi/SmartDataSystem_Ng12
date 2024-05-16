@@ -1,15 +1,9 @@
-<div class="panel" *ngIf="visibility" (click)="onpanelclick($event)">
+<div class="panel">
   <div class="background">
     <div class="inner">
       <div class="data-list">
-        <ng-container *ngFor="let item of dataSource">
-          <div
-            class="item"
-            [title]="item.Name"
-            (mouseover)="itemHover(item)"
-            (click)="itemClick($event, item)"
-            (dblclick)="itemDoubleClick($event, item)"
-          >
+        <ng-container *ngFor="let item of datas">
+          <div class="item" [title]="item.Name" (click)="onclick($event, item)">
             <div class="name">{{ item.Name }}</div>
             <div class="child" *ngIf="item.hasChild">
               <i class="howell-icon-arrow2right"></i>
@@ -24,10 +18,5 @@
         ></app-input-search>
       </div>
     </div>
-  </div>
-</div>
-<div class="btn" (click)="ButtonClick($event)" title="区域菜单栏">
-  <div class="inner">
-    <i class="howell-icon-ul"></i>
   </div>
 </div>

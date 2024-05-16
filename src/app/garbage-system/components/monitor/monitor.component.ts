@@ -71,11 +71,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.global.system = SystemType.garbage;
     this.global.interval.subscribe(this.key, () => {
       this.load.emit();
-      this.statistic.loading.emit();
     });
     this.global.statusChange.subscribe(() => {
       this.load.emit();
-      this.statistic.loading.emit();
     });
     this.global.interval.run();
   }
@@ -118,8 +116,6 @@ export class MonitorComponent implements OnInit, OnDestroy {
       this.global.divisionId = userDivisionId;
       this.global.divisionType = userDivisionType;
     }
-
-    this.statistic.loading.emit();
   }
   ngOnDestroy(): void {
     this.global.interval.unsubscribe(this.key);

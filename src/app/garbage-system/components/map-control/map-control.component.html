@@ -57,55 +57,25 @@
 </div>
 
 <app-map-list-panel
+  *ngIf="panel.show && !fullscreen"
   class="map-bar list-panel"
-  [dataSource]="panel.datasource"
-  (OnItemClicked)="panel.onItemCliced($event)"
-  (OnSearching)="panel.onSearch($event)"
+  (select)="panel.onselected($event)"
 ></app-map-list-panel>
-
-<!-- <div class="map-bar btn-list">
-  <map-control-buttons
-    [filting]="filting"
-    (patrol)="onPatrolClicked()"
-    (construction)="amap.point.constructionview($event)"
-    (stationnormal)="amap.point.stationnormalview($event)"
-    (stationfull)="amap.point.stationfullview($event)"
-    (stationdrop)="amap.point.stationdropview($event)"
-    (stationerror)="amap.point.stationerrorview($event)"
-    (station30in)="amap.point.station30inview($event)"
-    (station30out)="amap.point.station30outview($event)"
-  ></map-control-buttons>
-</div> -->
+<div class="map-bar tree-panel" *ngIf="panel.show && fullscreen">
+  <map-control-tree-panel
+    (select)="panel.onselected($event)"
+    (info)="ontreepanelinfo($event)"
+    [load]="panel.load"
+  ></map-control-tree-panel>
+</div>
 <div class="map-bar btn-list">
-  <map-control-buttons-2
+  <map-control-buttons-3
     [filting]="filting"
     (patrol)="onPatrolClicked()"
-    (stationnormal)="amap.point.view.station.normal($event)"
-    (stationfull)="amap.point.view.station.full($event)"
-    (stationdrop)="amap.point.view.station.drop($event)"
-    (stationerror)="amap.point.view.station.error($event)"
-    (stationdrop30in)="amap.point.view.station.drop30in($event)"
-    (stationdrop30out)="amap.point.view.station.drop30out($event)"
-    (rfidnormal)="amap.point.view.rfid.normal($event)"
-    (rfidfull)="amap.point.view.rfid.full($event)"
-    (rfiddrop)="amap.point.view.rfid.drop($event)"
-    (rfiderror)="amap.point.view.rfid.error($event)"
-    (rfiddrop30in)="amap.point.view.rfid.drop30in($event)"
-    (rfiddrop30out)="amap.point.view.rfid.drop30out($event)"
-    (constructionnormal)="amap.point.view.construction.normal($event)"
-    (constructionfull)="amap.point.view.construction.full($event)"
-    (constructiondrop)="amap.point.view.construction.drop($event)"
-    (constructionerror)="amap.point.view.construction.error($event)"
-    ><!-- (rfidnormal)="amap.point.stationnormalview($event)"
-    (rfidfull)="amap.point.stationfullview($event)"
-    (rfiddrop)="amap.point.stationdropview($event)"
-    (rfiderror)="amap.point.stationerrorview($event)"
-
-    (constructionnormal)="amap.point.stationnormalview($event)"
-    (constructionfull)="amap.point.stationfullview($event)"
-    (constructiondrop)="amap.point.stationdropview($event)"
-    (constructionerror)="amap.point.stationerrorview($event)" --></map-control-buttons-2
-  >
+    (panel)="onpanel()"
+    (fullscreen)="onfullscreen()"
+    (filterChange)="amap.point.view.onfilter($event)"
+  ></map-control-buttons-3>
 </div>
 
 <app-point-info-panel

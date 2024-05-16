@@ -10,8 +10,8 @@ export class HowellTimePipe implements PipeTransform {
     let minute = time - hour * 60;
     let res =
       hour == 0
-        ? Math.ceil(minute) + '分钟'
-        : hour + '小时' + Math.ceil(minute) + '分钟';
+        ? Math.round(minute) + '分钟'
+        : hour + '小时' + Math.round(minute) + '分钟';
     return res;
   }
 }

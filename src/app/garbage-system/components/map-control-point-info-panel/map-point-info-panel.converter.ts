@@ -56,11 +56,14 @@ export class MapPointInfoPanelConverter
       });
     }
 
-    model.statistic = this.service.station.statistic.number
-      .get(source.Id)
-      .then((statistic) => {
+    model.statistic = this.service.station
+      .statistic(source.Id)
+      .then(async (statistic) => {
         if ((statistic.GarbageDuration ?? 0) > 0) {
-          model.state = [this.getState(source, true)];
+          let drop = await this.service.station.drop(source.Id);
+          if (drop) {
+            model.state = [this.getState(source, drop)];
+          }
         }
 
         return this.getStatistic(statistic);

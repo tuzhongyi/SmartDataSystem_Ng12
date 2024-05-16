@@ -1,7 +1,7 @@
 <app-window
   [Model]="window"
   [mask]="mask"
-  [style]="window.style"
+  [style]="windowstyle??window.style"
   [CloseButton]="false"
 >
   <ng-container *ngIf="window.show">

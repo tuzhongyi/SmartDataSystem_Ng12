@@ -2579,3 +2579,27 @@ a .howell-icon-flip-vertical:before {
 .howell-icon-full_screen:before {
     content: "\f400";
 }
+
+.howell-icon-type:before {
+    content: "\f401";
+}
+
+.howell-icon-subtitles:before {
+    content: "\f402";
+}
+
+.howell-icon-subtitles_off:before {
+    content: "\f403";
+}
+
+.howell-icon-tree:before {
+    content: "\f404";
+}
+
+.howell-icon-list3:before {
+    content: "\f405";
+}
+
+.howell-icon-dashboard:before {
+    content: "\f406";
+}

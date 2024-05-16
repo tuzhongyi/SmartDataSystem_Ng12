@@ -24,10 +24,14 @@ import { EventRecordDetailsComponent } from './event-record-details/event-record
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { MainStationCountComponent } from './main-station-count/main-station-count.component';
+import { MapControlButtonComponent } from './map-control-button/map-control-button.component';
 import { MapControlButtons2Component } from './map-control-buttons-2/map-control-buttons-2.component';
+import { MapControlButtons3Component } from './map-control-buttons-3/map-control-buttons-3.component';
 import { MapControlButtonsComponent } from './map-control-buttons/map-control-buttons.component';
 import { MapListPanelComponent } from './map-control-list-panel/map-list-panel.component';
 import { MapPointInfoPanelComponent } from './map-control-point-info-panel/map-point-info-panel.component';
+import { MapControlTreePanelComponent } from './map-control-tree-panel/map-control-tree-panel.component';
+import { MapControlTreeComponent } from './map-control-tree/map-control-tree.component';
 import { MapControlComponent } from './map-control/map-control.component';
 import { MediaControlComponent } from './media-control/media-control.component';
 import { MediaImageControlPageComponent } from './media-image-control-page/media-image-control-page.component';
@@ -36,6 +40,7 @@ import { MonitorComponent } from './monitor/monitor.component';
 import { PatrolControlComponent } from './patrol-control/patrol-control.component';
 import { PlaybackConfigComponent } from './patrol-control/playback-config/playback-config.component';
 import { RetentionRankComponent } from './retention-rank/retention-rank.component';
+import { StatisticCardGroupComponent } from './statistic-card-group/statistic-card-group.component';
 import { StatisticCardComponent } from './statistic-card/statistic-card.component';
 import { EventRecordOperationComponent } from './windows/event-record-operation/event-record-operation.component';
 import { GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS } from './windows/filters/garbage-system-window-filter.module';
@@ -60,11 +65,16 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordDetailsTableComponent,
     EventRecordDetailsComponent,
     StatisticCardComponent,
+    StatisticCardGroupComponent,
+    MapControlButtonComponent,
     MapControlButtonsComponent,
     MapControlButtons2Component,
+    MapControlButtons3Component,
     MapControlComponent,
     MainStationCountComponent,
     MapListPanelComponent,
+    MapControlTreeComponent,
+    MapControlTreePanelComponent,
 
     MediaControlComponent,
     MediaImageControlComponent,
@@ -110,9 +120,12 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     EventRecordDetailsTableComponent,
     EventRecordDetailsComponent,
     StatisticCardComponent,
+    StatisticCardGroupComponent,
     MapControlComponent,
     MainStationCountComponent,
     MapListPanelComponent,
+    MapControlTreeComponent,
+    MapControlTreePanelComponent,
     MediaControlComponent,
     MediaImageControlComponent,
     MediaImageControlPageComponent,

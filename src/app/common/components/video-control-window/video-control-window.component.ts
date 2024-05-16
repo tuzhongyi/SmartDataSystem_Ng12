@@ -44,6 +44,8 @@ export class VideoControlWindowComponent
 
   @Input()
   window: VideoWindowViewModel = new VideoWindowViewModel();
+  @Input()
+  windowstyle?:any
 
   @Output()
   download: EventEmitter<DurationParams> = new EventEmitter();

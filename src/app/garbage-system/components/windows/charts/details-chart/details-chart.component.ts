@@ -53,8 +53,8 @@ export class DetailsChartComponent
   @Input()
   station?: GarbageStation;
 
-  @Input()
-  division?: IIdNameModel;
+  @Input('division')
+  input_division?: IIdNameModel;
 
   // private _division?: Division;
   // public get division(): Division | undefined {
@@ -87,6 +87,7 @@ export class DetailsChartComponent
     }
     this.type = global.defaultDivisionType;
   }
+  division?: IIdNameModel;
   treeClose: EventEmitter<void> = new EventEmitter();
   selectedNodes: CommonFlatNode[] = [];
   showDropDown: boolean = false;
@@ -125,6 +126,9 @@ export class DetailsChartComponent
   }
 
   async ngOnInit() {
+    if (this.input_division) {
+      this.division = this.input_division;
+    }
     this.initUnits();
     this.initCharts();
     // wait(
@@ -285,6 +289,11 @@ export class DetailsChartComponent
         this.config.dateTimePicker.format = 'yyyy年MM月';
         this.config.dateTimePicker.week = false;
         break;
+      case TimeUnit.Year:
+        this.config.dateTimePicker.view = DateTimePickerView.decade;
+        this.config.dateTimePicker.format = 'yyyy年';
+        this.config.dateTimePicker.week = false;
+        break;
       default:
         break;
     }
@@ -300,6 +309,9 @@ export class DetailsChartComponent
     );
     this.units.push(
       new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
+    );
+    this.units.push(
+      new SelectItem(TimeUnit.Year.toString(), TimeUnit.Year, '年报表')
     );
   }
   initCharts() {
@@ -359,6 +371,13 @@ export class DetailsChartComponent
         break;
       case TimeUnit.Month:
         interval.params = DurationParams.allMonth(this.date);
+        interval.language = Language.Duration(
+          interval.params.BeginTime,
+          interval.params.EndTime
+        );
+        break;
+      case TimeUnit.Year:
+        interval.params = DurationParams.allYear(this.date);
         interval.language = Language.Duration(
           interval.params.BeginTime,
           interval.params.EndTime

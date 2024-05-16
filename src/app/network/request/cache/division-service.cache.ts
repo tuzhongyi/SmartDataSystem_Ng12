@@ -63,6 +63,34 @@ export class DivisionServiceCache extends ServiceCache<Division> {
     });
   }
 
+  async array(args?: GetDivisionsParams) {
+    return new Promise<Division[]>((reject) => {
+      this.wait((x: Division[]) => {
+        let datas = plainToInstance(Division, x);
+        if (args) {
+          if (args.ParentId) {
+            datas = datas.filter((x) => x.ParentId === args.ParentId);
+          }
+          if (args.AncestorId) {
+            datas = this.getAllChildren(args.AncestorId, datas);
+          }
+          if (args.DivisionType) {
+            datas = datas.filter((x) => x.DivisionType === args.DivisionType);
+          }
+          if (args.Name) {
+            datas = datas.filter((x) => x.Name.includes(args.Name!));
+          }
+          if (args.Ids) {
+            datas = datas.filter((x) => args.Ids?.includes(x.Id));
+          } else {
+          }
+        } else {
+        }
+        reject(datas);
+      });
+    });
+  }
+
   getAncestor(ancestorId: string, datas: Division[]) {
     return datas.find((x) => x.Id === ancestorId);
   }

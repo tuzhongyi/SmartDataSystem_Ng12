@@ -1,9 +1,9 @@
-<div class="coordinate-manage" *ngIf="!!station">
-  <div class="form-group" *ngIf="!!station.GisPoint">
+<div class="coordinate-manage">
+  <div class="form-group">
     <div class="form-item">
       <div class="form-item-title">坐标系：</div>
       <div class="form-item-value">
-        <select [(ngModel)]="station.GisPoint.GisType">
+        <select [(ngModel)]="gis.GisType">
           <option [ngValue]="GisType.GCJ02">GCJ02</option>
           <option [ngValue]="GisType.BD09">BD09</option>
           <option [ngValue]="GisType.WGS84">WGS84</option>
@@ -13,14 +13,14 @@
     <div class="form-item">
       <div class="form-item-title">经度：</div>
       <div class="form-item-value">
-        <input type="text" [(ngModel)]="station.GisPoint.Longitude" />
+        <input type="text" [(ngModel)]="gis.Longitude" />
       </div>
     </div>
 
     <div class="form-item">
       <div class="form-item-title">纬度：</div>
       <div class="form-item-value">
-        <input type="text" [(ngModel)]="station.GisPoint.Latitude" />
+        <input type="text" [(ngModel)]="gis.Latitude" />
       </div>
     </div>
   </div>

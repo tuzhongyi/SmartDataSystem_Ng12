@@ -1,15 +1,25 @@
 .number-card {
   background-image: url(/assets/img/hint-card.png);
-  width: 168px;
+  min-width: 168px;
   height: 71px;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+
+  .value {
+    border-bottom: 1px solid transparent;
+  }
 
   &:hover {
     background-image: url(/assets/img/hint-card-hover.png);
 
     .value {
-      text-decoration: underline;
-      color: #6997ff;
+      // text-decoration: underline;
+      color: #6997ff !important;
+
+      border-bottom: 1px solid #6997ff;
+
+
     }
   }
 

@@ -36,7 +36,8 @@ export class PatrolControlComponent implements OnInit, OnDestroy {
   @Input() config: PatrolControlConfig = new PatrolControlConfig();
   @Output() close: EventEmitter<void> = new EventEmitter();
 
-  @Output() fullscreen: EventEmitter<void> = new EventEmitter();
+  @Input() fullscreen: boolean = false;
+  @Output() fullscreenChange: EventEmitter<boolean> = new EventEmitter();
   @Output() onselected: EventEmitter<PatrolControlModel> = new EventEmitter();
 
   constructor(private business: PatrolControlBusiness) {}
@@ -152,7 +153,8 @@ export class PatrolControlComponent implements OnInit, OnDestroy {
     }
   }
   onfullscreen() {
-    this.fullscreen.emit();
+    this.fullscreen = !this.fullscreen;
+    this.fullscreenChange.emit(this.fullscreen);
   }
   onclose() {
     this.close.emit();

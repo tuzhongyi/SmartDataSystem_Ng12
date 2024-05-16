@@ -1,0 +1,12 @@
+<div
+  class="map-control-button"
+  [ngClass]="{
+    selected: selected
+  }"
+  [style]="style"
+  (click)="onclick()"
+>
+  <div class="map-control-button-inner">
+    <ng-content></ng-content>
+  </div>
+</div>

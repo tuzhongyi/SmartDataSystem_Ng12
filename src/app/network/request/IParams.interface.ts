@@ -60,6 +60,14 @@ export class DurationParams {
     params.EndTime = duration.end;
     return params;
   }
+
+  static allYear(date: Date) {
+    let duration = DateTimeTool.allYear(date);
+    let params = new DurationParams();
+    params.BeginTime = duration.begin;
+    params.EndTime = duration.end;
+    return params;
+  }
 }
 export class PagedDurationParams extends PagedParams {
   /**	DateTime	开始时间	M */

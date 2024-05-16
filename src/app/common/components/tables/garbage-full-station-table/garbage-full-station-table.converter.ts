@@ -5,7 +5,7 @@ import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlArrayConverter } from 'src/app/converter/image-control-array.converter';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { GarbageFullStationTableModel } from './garbage-full-station-table.model';
@@ -14,14 +14,14 @@ import { GarbageFullStationTableModel } from './garbage-full-station-table.model
 export class GarbageFullStationPagedTableConverter
   implements
     IPromiseConverter<
-      PagedList<GarbageStationNumberStatistic>,
+      PagedList<GarbageStation>,
       PagedList<GarbageFullStationTableModel>
     >
 {
   constructor(private item: GarbageFullStationTableConverter) {}
 
   async Convert(
-    source: PagedList<GarbageStationNumberStatistic>
+    source: PagedList<GarbageStation>
   ): Promise<PagedList<GarbageFullStationTableModel>> {
     let array: GarbageFullStationTableModel[] = [];
     for (let i = 0; i < source.Data.length; i++) {
@@ -38,11 +38,7 @@ export class GarbageFullStationPagedTableConverter
 
 @Injectable()
 export class GarbageFullStationTableConverter
-  implements
-    IPromiseConverter<
-      GarbageStationNumberStatistic,
-      GarbageFullStationTableModel
-    >
+  implements IPromiseConverter<GarbageStation, GarbageFullStationTableModel>
 {
   constructor(
     private service: GarbageStationRequestService,
@@ -52,13 +48,12 @@ export class GarbageFullStationTableConverter
     image: new ImageControlArrayConverter(),
   };
 
-  async Convert(
-    source: GarbageStationNumberStatistic
-  ): Promise<GarbageFullStationTableModel> {
+  async Convert(source: GarbageStation): Promise<GarbageFullStationTableModel> {
     let model = new GarbageFullStationTableModel();
 
-    if (source.FullDuration) {
-      model.FullDuration = new Date(source.FullDuration * 1000 * 60);
+    if (source.DryFullTime) {
+      let duration = new Date().getTime() - source.DryFullTime.getTime();
+      model.FullDuration = new Date(duration);
     }
 
     model.GarbageStation = this.service.cache.get(source.Id).then((station) => {

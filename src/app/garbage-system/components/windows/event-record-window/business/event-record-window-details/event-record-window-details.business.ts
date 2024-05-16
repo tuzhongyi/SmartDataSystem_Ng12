@@ -9,79 +9,44 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
-import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
 import { ExportTool } from 'src/app/common/tools/export.tool';
-import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
+import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartLoadOptions } from '../../../charts/details-chart/details-chart.model';
+import { EventRecordWindowDetailsDivisionBusiness } from './event-record-window-details-division.business';
+import { EventRecordWindowDetailsStationBusiness } from './event-record-window-details-station.business';
 import { EventRecordWindowDetailsConverter } from './event-record-window-details.converter';
 
 @Injectable()
 export class EventRecordWindowDetailsBusiness
-  implements IBusiness<EventNumberStatistic[], ITimeData<number>[][]>
+  implements
+    IBusiness<
+      | EventNumberStatistic[]
+      | DivisionNumberStatisticV2[]
+      | GarbageStationNumberStatisticV2[],
+      ITimeData<number>[][]
+    >
 {
+  division?: Division;
+
   constructor(
     private stationService: GarbageStationRequestService,
-    private divisionService: DivisionRequestService,
+
     private store: GlobalStorageService,
-    private exportTool: ExportTool
+    private exportTool: ExportTool,
+    private _station: EventRecordWindowDetailsStationBusiness,
+    private _division: EventRecordWindowDetailsDivisionBusiness
   ) {}
-  Converter: IConverter<EventNumberStatistic[], ITimeData<number>[][]> =
-    new EventRecordWindowDetailsConverter();
 
-  async getData(
-    id: string,
-    type: UserResourceType,
-    interval: DurationParams,
-    unit: TimeUnit
-  ): Promise<EventNumberStatistic[]> {
-    switch (type) {
-      case UserResourceType.Station:
-        return this.getDataByStation(id, interval, unit);
-      default:
-        return this.getDataByDivision(id, interval, unit);
-    }
-  }
-
-  division?: Division;
-  station?: GarbageStation;
-
-  async getDataByStation(
-    stationId: string,
-    interval: DurationParams,
-    unit: TimeUnit
-  ) {
-    let params = new GetGarbageStationVolumesParams();
-    params = Object.assign(params, interval);
-    params.TimeUnit = unit;
-    let paged = await this.stationService.eventNumber.history.list(
-      stationId,
-      params
-    );
-    return paged.Data;
-  }
-  async getDataByDivision(
-    divisionId: string,
-    interval: DurationParams,
-    unit: TimeUnit
-  ) {
-    let params = new GetDivisionEventNumbersParams();
-    params = Object.assign(params, interval);
-    params.TimeUnit = unit;
-    let paged = await this.divisionService.eventNumber.history.list(
-      divisionId,
-      params
-    );
-    return paged.Data;
-  }
-
-  async loadDefault(divisionId: string) {
-    this.division = await this.divisionService.cache.get(divisionId);
-  }
+  private Converter: IConverter<
+    | EventNumberStatistic[]
+    | DivisionNumberStatisticV2[]
+    | GarbageStationNumberStatisticV2[],
+    ITimeData<number>[][]
+  > = new EventRecordWindowDetailsConverter();
 
   async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
     let divisionId = this.store.divisionId!;
@@ -99,6 +64,36 @@ export class EventRecordWindowDetailsBusiness
     let model = this.Converter.Convert(data, opts.type);
     return model;
   }
+  async getData(
+    id: string,
+    type: UserResourceType,
+    interval: DurationParams,
+    unit: TimeUnit
+  ): Promise<
+    | EventNumberStatistic[]
+    | DivisionNumberStatisticV2[]
+    | GarbageStationNumberStatisticV2[]
+  > {
+    switch (type) {
+      case UserResourceType.Station:
+        if (unit === TimeUnit.Year) {
+          return this._station.history(id, interval);
+        } else {
+          return this._station.history(id, interval, unit);
+        }
+
+      default:
+        if (unit === TimeUnit.Year) {
+          return this._division.history(id, interval);
+        } else {
+          return this._division.history(id, interval, unit);
+        }
+    }
+  }
+
+  async loadDefault(divisionId: string) {
+    this.division = await this._division.get(divisionId);
+  }
 
   getFilter(eventType: EventType) {
     switch (eventType) {
@@ -110,3 +105,9 @@ export class EventRecordWindowDetailsBusiness
     }
   }
 }
+
+export const EventRecordWindowDetailsProviders = [
+  EventRecordWindowDetailsStationBusiness,
+  EventRecordWindowDetailsDivisionBusiness,
+  EventRecordWindowDetailsBusiness,
+];

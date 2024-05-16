@@ -22,6 +22,8 @@ export class ExportExcelConverter
       let format = 'yyyy年MM月dd日';
       if (unit === TimeUnit.Month) {
         format = 'yyyy年MM月';
+      } else if (unit === TimeUnit.Year) {
+        format = 'yyyy年';
       }
       value.push(formatDate(source[0][i].time, format, 'en'));
       if (unit === TimeUnit.Week) {
@@ -30,6 +32,8 @@ export class ExportExcelConverter
         value.push(formatDate(source[0][i].time, 'HH:mm', 'en'));
       } else if (unit === TimeUnit.Month) {
         value.push(formatDate(source[0][i].time, 'dd日', 'en'));
+      } else if (unit === TimeUnit.Year) {
+        value.push(formatDate(source[0][i].time, 'MM月', 'en'));
       }
       for (let j = 0; j < source.length; j++) {
         const data = source[j][i];

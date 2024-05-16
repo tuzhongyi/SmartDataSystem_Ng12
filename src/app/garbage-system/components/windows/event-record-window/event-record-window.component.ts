@@ -16,7 +16,10 @@ import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { EventRecordOperationFilterBusiness } from '../event-record-operation-filter.business';
 import { ListType } from '../event-record-operation/event-record-operation.component';
-import { EventRecordWindowDetailsBusiness } from './business/event-record-window-details/event-record-window-details.business';
+import {
+  EventRecordWindowDetailsBusiness,
+  EventRecordWindowDetailsProviders,
+} from './business/event-record-window-details/event-record-window-details.business';
 import { EventRecordWindowRecordBusiness } from './business/event-record-window-record.business';
 import { EventRecordWindowBusiness } from './event-record-window.business';
 
@@ -28,7 +31,7 @@ import { EventRecordWindowBusiness } from './event-record-window.business';
     EventRecordWindowBusiness,
     EventRecordOperationFilterBusiness,
     EventRecordWindowRecordBusiness,
-    EventRecordWindowDetailsBusiness,
+    ...EventRecordWindowDetailsProviders,
   ],
 })
 export class EventRecordWindowComponent

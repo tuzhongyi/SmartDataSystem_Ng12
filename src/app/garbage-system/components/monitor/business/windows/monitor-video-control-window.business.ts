@@ -26,11 +26,20 @@ export class MonitorVideoControlWindowBusiness
   model?: VideoModel;
   webUrl?: string;
 
-  style: any = {
+  fullscreen = false;
+
+  style = {
     width: '788px',
     height: '376px',
     padding: '0',
     transform: 'translate(-50%, -69%)',
+  };
+
+  fullstyle = {
+    width: '60%',
+    height: '60%',
+    padding: '0',
+    transform: 'translate(-50%, -42%)',
   };
 
   constructor(

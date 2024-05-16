@@ -1,9 +1,8 @@
 <div class="common-tree">
   <mat-tree
-    [dataSource]="dataSource"
-    [treeControl]="treeControl"
-    [trackBy]="trackBy"
-    #tree
+    [dataSource]="tree.dataSource"
+    [treeControl]="tree.control"
+    [trackBy]="tree.trackBy"
   >
     <mat-tree-node
       *matTreeNodeDef="let node"
@@ -21,7 +20,7 @@
         >
           <div
             class="select"
-            [class.expanded]="treeControl.isExpanded(node)"
+            [class.expanded]="tree.control.isExpanded(node)"
           ></div>
         </button>
       </ng-container>

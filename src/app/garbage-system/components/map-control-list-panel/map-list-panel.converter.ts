@@ -5,10 +5,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DivisionModel } from 'src/app/view-model/garbage-station.model';
-import {
-  ListItem,
-  ListItemType,
-} from '../../map-control-list-panel/map-list-item';
+import { ListItem, ListItemType } from './map-control-list-panel.model';
 
 export type ListPanelType = Division | GarbageStation;
 @Injectable()

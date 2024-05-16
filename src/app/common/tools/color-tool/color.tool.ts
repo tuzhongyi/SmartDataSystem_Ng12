@@ -1,5 +1,7 @@
 import { BatteryState } from 'src/app/enum/ai-garbage/battery-state.enum';
 import { RobotState } from 'src/app/enum/ai-garbage/robot-state.enum';
+import { StationState } from 'src/app/enum/station-state.enum';
+import { Flags } from '../flags';
 
 export class ColorTool {
   static OnlineState(value?: number, cannull = true) {
@@ -118,6 +120,17 @@ export class ColorTool {
       } else {
         return 'orange-text';
       }
+    }
+  }
+
+  static StationState(state: StationState) {
+    let flags = new Flags(state);
+    if (flags.contains(StationState.Error)) {
+      return 'gray-2-text';
+    } else if (flags.contains(StationState.Full)) {
+      return 'yellow-text';
+    } else {
+      return 'green-text';
     }
   }
 }

@@ -1,0 +1,123 @@
+<div class="map-control-buttons-3">
+  <map-control-button
+    [selectable]="false"
+    (click)="onpanel()"
+    title="区域菜单栏"
+  >
+    <i class="howell-icon-ul"></i>
+  </map-control-button>
+  <map-control-button
+    [selectable]="false"
+    (click)="onpatrol()"
+    title="投放点巡检"
+  >
+    <i class="howell-icon-refresh"></i>
+  </map-control-button>
+  <map-control-button
+    [selectable]="false"
+    (click)="onfullscreen()"
+    title="满屏"
+  >
+    <i class="mdi mdi-fullscreen"></i>
+  </map-control-button>
+
+  <map-control-button [(selected)]="model.filter.selected" title="筛选">
+    <i class="mdi mdi-filter-outline"></i>
+  </map-control-button>
+
+  <ng-container *ngIf="model.filter.selected">
+    <map-control-button
+      [(selected)]="model.filter.state.selected"
+      title="投放点状态"
+    >
+      <i class="howell-icon-garbage"></i>
+    </map-control-button>
+
+    <ng-container *ngIf="model.filter.state.selected">
+      <map-control-button
+        [(selected)]="model.filter.state.all.selected"
+        (click)="onfilter()"
+      >
+        <span class="font">all</span>
+      </map-control-button>
+      <map-control-button
+        [(selected)]="model.filter.state.normal.selected"
+        title="正常垃圾投放点"
+        (click)="onfilter()"
+      >
+        <span class="green-text"><i class="howell-icon-garbage"></i></span>
+      </map-control-button>
+      <map-control-button
+        [(selected)]="model.filter.state.full.selected"
+        title="垃圾满溢垃圾投放点"
+        (click)="onfilter()"
+      >
+        <span class="yellow-text"><i class="howell-icon-garbage"></i></span>
+      </map-control-button>
+      <div class="station-drop">
+        <map-control-button
+          [(selected)]="model.filter.state.drop.in30.selected"
+          class="station-drop-time"
+          title="垃圾滞留30分钟以内垃圾投放点"
+          (click)="onfilter()"
+        >
+          <span class="font">30-</span>
+        </map-control-button>
+        <map-control-button
+          [(selected)]="model.filter.state.drop.out30.selected"
+          class="station-drop-time"
+          title="垃圾滞留30分钟以上垃圾投放点"
+          (click)="onfilter()"
+        >
+          <span class="font">30+</span>
+        </map-control-button>
+        <map-control-button
+          [(selected)]="model.filter.state.drop.selected"
+          title="垃圾滞留垃圾投放点"
+          (click)="onfilter()"
+        >
+          <span class="orange-red-text"
+            ><i class="howell-icon-garbage"></i
+          ></span>
+        </map-control-button>
+      </div>
+      <map-control-button
+        [(selected)]="model.filter.state.error.selected"
+        title="异常垃圾投放点"
+        (click)="onfilter()"
+      >
+        <span class="gray-2-text"><i class="howell-icon-garbage"></i></span>
+      </map-control-button>
+    </ng-container>
+    <map-control-button
+      [(selected)]="model.filter.type.selected"
+      title="投放点类型"
+    >
+      <i class="howell-icon-type"></i>
+    </map-control-button>
+
+    <ng-container *ngIf="model.filter.type.selected">
+      <map-control-button
+        [(selected)]="model.filter.type.station.selected"
+        title="普通垃圾投放点"
+        (click)="onfilter()"
+      >
+        <i class="howell-icon-garbage"></i>
+      </map-control-button>
+      <map-control-button
+        [(selected)]="model.filter.type.rfid.selected"
+        title="智能垃圾投放点"
+        (click)="onfilter()"
+      >
+        <i class="howell-icon-smart_garbage"></i>
+      </map-control-button>
+      <map-control-button
+        [(selected)]="model.filter.type.construction.selected"
+        title="建筑垃圾投放点"
+        (click)="onfilter()"
+      >
+        <i class="howell-icon-construction_waste"></i>
+      </map-control-button>
+    </ng-container>
+  </ng-container>
+</div>

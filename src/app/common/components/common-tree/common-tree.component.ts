@@ -1,5 +1,5 @@
 import { SelectionChange, SelectionModel } from '@angular/cdk/collections';
-import { FlatTreeControl } from '@angular/cdk/tree';
+
 import {
   Component,
   EventEmitter,
@@ -9,14 +9,11 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-} from '@angular/material/tree';
 import { BehaviorSubject } from 'rxjs';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
+import { CommonTreeController } from './common-tree.controller';
 
 @Component({
   selector: 'howell-common-tree',
@@ -54,72 +51,16 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   @Input()
   inited: EventEmitter<void> = new EventEmitter();
 
-  constructor() {
-    this._treeFlattener = new MatTreeFlattener(
-      this._transformer,
-      this._getLevel,
-      this._isExpandable,
-      this._getChildren
-    );
+  constructor() {}
 
-    this.treeControl = new FlatTreeControl<CommonFlatNode>(
-      this._getLevel,
-      this._isExpandable
-    );
-
-    this.dataSource = new MatTreeFlatDataSource<CommonNestNode, CommonFlatNode>(
-      this.treeControl,
-      this._treeFlattener
-    );
-  }
+  tree = new CommonTreeController();
 
   defaultIdLoaded = false;
 
   SelectStrategy = SelectStrategy;
 
-  _flatNodeMap = new Map<string, CommonFlatNode>();
-  private _currentNode: CommonFlatNode | null = null;
+  private _currentNode?: CommonFlatNode;
 
-  private _transformer = (
-    nestNode: CommonNestNode,
-    level: number
-  ): CommonFlatNode => {
-    const existingNode = this._flatNodeMap.get(nestNode.Id);
-
-    // 为了保证加载子节点时，原节点信息不丢失
-    if (existingNode) {
-      existingNode.Name = nestNode.Name;
-      existingNode.Expandable = nestNode.HasChildren;
-      existingNode.RawData = nestNode.RawData;
-      return existingNode;
-    }
-
-    const flatNode = new CommonFlatNode();
-    flatNode.Id = nestNode.Id;
-    flatNode.Name = nestNode.Name;
-    flatNode.Level = level;
-    flatNode.Expandable = nestNode.HasChildren;
-    flatNode.ParentId = nestNode.ParentId;
-    flatNode.IconClass = nestNode.IconClass;
-    flatNode.RawData = nestNode.RawData;
-    flatNode.hideArrow = nestNode.hideArrow;
-    flatNode.ButtonIconClasses = nestNode.ButtonIconClasses;
-
-    if (nestNode.ParentId) {
-      let ParentNode = this._flatNodeMap.get(nestNode.ParentId);
-      flatNode.ParentNode = ParentNode;
-    }
-    this._flatNodeMap.set(flatNode.Id, flatNode);
-    return flatNode;
-  };
-  private _getLevel = (node: CommonFlatNode) => node.Level;
-  private _isExpandable = (node: CommonFlatNode) => node.Expandable;
-  private _getChildren = (node: CommonNestNode) => node.childrenChange;
-  private _treeFlattener: MatTreeFlattener<CommonNestNode, CommonFlatNode>;
-
-  treeControl: FlatTreeControl<CommonFlatNode>;
-  trackBy = (index: number, node: CommonFlatNode) => node; //必须返回node
-  dataSource: MatTreeFlatDataSource<CommonNestNode, CommonFlatNode>;
   selection!: SelectionModel<CommonFlatNode>; // 保存选中节点
 
   highLight = (node: CommonFlatNode) => {
@@ -143,7 +84,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
 
     this.dataSubject.subscribe((data) => {
       // console.log('树数据', data)
-      this.dataSource.data = data;
+      this.tree.dataSource.data = data;
     });
 
     if (this.defaultIds && this.defaultIds.length > 0) {
@@ -205,7 +146,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     this._checkAllParentsSelection(node);
   }
   loadChildren(node: CommonFlatNode) {
-    if (this.treeControl.isExpanded(node)) {
+    if (this.tree.control.isExpanded(node)) {
       this.loadChildrenEvent.emit(node);
     }
   }
@@ -216,7 +157,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
    * @returns
    */
   descendantsPartiallySelected(node: CommonFlatNode) {
-    const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.tree.control.getDescendants(node);
     const result = descendants.some((child) =>
       this.selection.isSelected(child)
     );
@@ -230,7 +171,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
    * @description 当前节点所有后代节点都被选中
    */
   private _descendantAllSelected(node: CommonFlatNode) {
-    const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.tree.control.getDescendants(node);
     const descAllSelected =
       descendants.length > 0 &&
       descendants.every((child) => this.selection.isSelected(child));
@@ -238,7 +179,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   }
 
   private _checkAllParentsSelection(node: CommonFlatNode) {
-    let parent: CommonFlatNode | null = this._getParentNode(node);
+    let parent = this._getParentNode(node);
     while (parent) {
       this._checkRootNodeSelection(parent);
       parent = this._getParentNode(parent);
@@ -252,7 +193,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
    */
   private _checkRootNodeSelection(node: CommonFlatNode) {
     const nodeSelected = this.selection.isSelected(node);
-    const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.tree.control.getDescendants(node);
     const descAllSelected =
       descendants.length > 0 &&
       descendants.every((child) => this.selection.isSelected(child));
@@ -265,10 +206,10 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   }
   private _getParentNode(node: CommonFlatNode) {
     if (node.ParentId) {
-      return this._flatNodeMap.get(node.ParentId)!;
+      return this.tree.flatNodeMap.get(node.ParentId)!;
     }
 
-    return null;
+    return undefined;
   }
 
   setDefaultNodes() {
@@ -287,21 +228,21 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     for (let i = 0; i < len; i++) {
       let id = this.defaultIds[i]; // 会改变数组长度
       if (id) {
-        let node = this._flatNodeMap.get(id);
+        let node = this.tree.flatNodeMap.get(id);
         if (node) {
           this.defaultIdLoaded = true;
           // 最顶层节点，则直接选中状态
           if (!node.ParentId) {
             this.selection.select(node);
-          } else if (!this._flatNodeMap.get(node.ParentId)) {
+          } else if (!this.tree.flatNodeMap.get(node.ParentId)) {
             this.selection.select(node);
           } else {
             // 上层节点为打开状态,否则没有打开树，就抛选中事件不合逻辑
-            let parentNode = this._flatNodeMap.get(node.ParentId);
+            let parentNode = this.tree.flatNodeMap.get(node.ParentId);
             if (
               parentNode &&
               (this.isAsync === false ||
-                this.treeControl.isExpanded(parentNode))
+                this.tree.control.isExpanded(parentNode))
             ) {
               this.selection.select(node);
               // this._checkAllParentsSelection(node);
@@ -338,9 +279,9 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   expandNodeRecursively(nodes: CommonNestNode[], depth: number) {
     for (let i = 0; i < nodes.length; i++) {
       let node = nodes[i];
-      let flatNode = this._flatNodeMap.get(node.Id);
+      let flatNode = this.tree.flatNodeMap.get(node.Id);
       if (flatNode && flatNode.Level < depth) {
-        this.treeControl.expand(flatNode);
+        this.tree.control.expand(flatNode);
         this.expandNodeRecursively(node.childrenChange.value, depth);
       } else {
         break;
@@ -353,7 +294,7 @@ export class CommonTreeComponent implements OnInit, OnChanges {
    * 如果当前节点取消选中，则所有子节点取消选中
    */
   checkAllDescendants(node: CommonFlatNode) {
-    const descendants = this.treeControl.getDescendants(node);
+    const descendants = this.tree.control.getDescendants(node);
     if (descendants.length > 0 && this.selection.isMultipleSelection()) {
       this.selection.isSelected(node)
         ? this.selection.select(...descendants)
@@ -362,14 +303,14 @@ export class CommonTreeComponent implements OnInit, OnChanges {
   }
   /**搜索成功时,打开/关闭树 */
   expandAll() {
-    this.treeControl.expandAll();
+    this.tree.control.expandAll();
   }
   collapseAll() {
-    this.treeControl.collapseAll();
+    this.tree.control.collapseAll();
   }
   deleteNode(node: CommonFlatNode) {
     this.selection.deselect(node);
-    this._flatNodeMap.delete(node.Id);
+    this.tree.flatNodeMap.delete(node.Id);
   }
 
   toggleSelect(ids: string[], clear?: boolean) {
@@ -377,14 +318,14 @@ export class CommonTreeComponent implements OnInit, OnChanges {
     if (clear) this.selection.clear();
     for (let i = 0; i < ids.length; i++) {
       let id = ids[i];
-      let flatNode = this._flatNodeMap.get(id);
+      let flatNode = this.tree.flatNodeMap.get(id);
       if (flatNode) {
         this.multipleSelectNode(flatNode);
       }
     }
   }
   reset() {
-    this._currentNode = null;
+    this._currentNode = undefined;
     this.selection.clear();
   }
 }

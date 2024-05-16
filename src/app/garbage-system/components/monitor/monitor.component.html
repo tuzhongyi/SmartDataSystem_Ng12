@@ -21,17 +21,30 @@
     </div>
     <div
       class="monitor-body__item monitor-body__item--map"
-      [ngClass]="{ fullscreen: patrol.fullscreen == true }"
+      [ngClass]="{
+        fullscreen: map.fullscreen == true
+      }"
     >
       <div class="monitor-body__wrapper">
-        <div *ngIf="statistic.cards" class="statistic-card-group">
+        <statistic-card-group
+          [load]="load"
+          [types]="statistic.types"
+          (stationcount)="statistic.onstationcount()"
+          (stationdrop)="statistic.onstationdrop()"
+          (stationfull)="statistic.onstationfull()"
+          (recordillegaldrop)="statistic.onrecordillegaldrop()"
+          (recordmixedinto)="statistic.onrecordmixedinto()"
+          (task)="trigger.risposalCount.ontask($event)"
+        >
+        </statistic-card-group>
+        <!-- <div *ngIf="statistic.cards" class="statistic-card-group">
           <ng-container *ngFor="let item of statistic.cards">
             <app-statistic-card
               [model]="item"
               (Click)="statistic.onclick(item)"
             ></app-statistic-card>
           </ng-container>
-        </div>
+        </div> -->
         <div class="map-control">
           <app-map-control
             [filting]="
@@ -50,6 +63,8 @@
               guide.show && guide.index >= guide.Index.map_video_preview
             "
             (patrol)="map.onpatrol()"
+            [fullscreen]="map.fullscreen"
+            (fullscreenChange)="map.onfullscreen($event)"
             (VideoPlay)="map.onvideoplay($event)"
             (illegalDropClicked)="map.onIllegalDropClicked($event)"
             (mixedIntoClicked)="map.onMixedIntoClicked($event)"
@@ -63,7 +78,8 @@
       <div class="monitor-body__wrapper patrol" *ngIf="patrol.show">
         <app-patrol-control
           (close)="patrol.onclose()"
-          (fullscreen)="patrol.onfullscreen()"
+          [fullscreen]="map.fullscreen"
+          (fullscreenChange)="map.onfullscreen($event)"
         ></app-patrol-control>
       </div>
     </div>
@@ -170,6 +186,8 @@
   [model]="video.model"
   [window]="video"
   [title]="video.title"
+  fullstyle="{"
+  [windowstyle]="map.fullscreen ? video.fullstyle : video.style"
   [mode]="
     guide.index === guide.Index.map_video_preview
       ? PlayMode.live

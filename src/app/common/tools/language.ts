@@ -64,6 +64,7 @@ export class Language {
   static yyyyMMddHHmmss = 'yyyy-MM-dd HH:mm:ss';
   static yyyyMMddHHmm = 'yyyy-MM-dd HH:mm';
   static YearMonthDay = 'yyyy年MM月dd日';
+  static HH_mm = "HH:mm'";
 
   static GarbageType(type: GarbageType): string {
     switch (type) {
@@ -370,8 +371,8 @@ export class Language {
   static Time(time: Date | number, full = true) {
     let result = '';
     if (typeof time === 'number') {
-      const hours = parseInt((Math.ceil(time) / 60).toString());
-      const minutes = parseInt((Math.ceil(time) % 60).toString());
+      const hours = parseInt((Math.round(time) / 60).toString());
+      const minutes = parseInt((Math.round(time) % 60).toString());
 
       result = hours ? hours + Language.json.Time.hour : '';
 

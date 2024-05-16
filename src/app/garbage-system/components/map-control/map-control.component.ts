@@ -26,7 +26,6 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { IModel } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { ImageControlArrayConverter } from '../../../converter/image-control-array.converter';
-import { ListItemType } from '../map-control-list-panel/map-list-item';
 import {
   PointInfoPanelModelOption,
   PointInfoPanelModelOptionCommand,
@@ -49,8 +48,9 @@ import { AMapService } from './business/amap/amap.service';
 import { MapControlAIDeviceBusiness } from './business/map-ai-device.business';
 import { MapControlGuideBusiness } from './business/map-control-guide.business';
 import { ListPanelBusiness } from './business/map-list-panel.business';
+
 import { PointInfoPanelBusiness } from './business/point-info-panel.business';
-import { ListPanelConverter } from './converter/map-list-panel.converter';
+
 import {
   MapControlSelected,
   MapControlTools,
@@ -80,10 +80,9 @@ declare var $: any;
     AMapPointContextMenuBusiness,
     AMapBusiness,
     MapControlAIDeviceBusiness,
-    ListPanelConverter,
-    ListPanelBusiness,
     PointInfoPanelBusiness,
     MapControlGuideBusiness,
+    ListPanelBusiness,
   ],
 })
 export class MapControlComponent
@@ -127,6 +126,8 @@ export class MapControlComponent
       });
     }
   }
+  @Input() fullscreen: boolean = false;
+  @Output() fullscreenChange: EventEmitter<boolean> = new EventEmitter();
 
   //#region Output
   @Output() VideoPlay: EventEmitter<Camera> = new EventEmitter();
@@ -144,7 +145,31 @@ export class MapControlComponent
     new EventEmitter();
   @Output() garbageFullClicked: EventEmitter<GarbageStation> =
     new EventEmitter();
+
   //#endregion
+
+  constructor(
+    private sanitizer: DomSanitizer,
+    private changeDetectorRef: ChangeDetectorRef,
+    public amap: AMapBusiness,
+    public info: PointInfoPanelBusiness,
+    private device: MapControlAIDeviceBusiness,
+    private toastr: ToastrService,
+    private guide: MapControlGuideBusiness,
+    private global: GlobalStorageService,
+    public panel: ListPanelBusiness
+  ) {
+    this.display = this.initDisplay();
+    // {
+    //   current: this.onLabelDisplay.bind(this),
+    //   station: this.onLabelStationDisplay.bind(this),
+    // }
+  }
+
+  display: MapControlTools;
+  loadHandle?: NodeJS.Timer;
+  window = new MapControlWindow();
+  key = 'app-map-control';
   //#region ViewChild
   @ViewChild('iframe')
   element?: ElementRef;
@@ -223,29 +248,6 @@ export class MapControlComponent
     return;
   }
 
-  constructor(
-    private sanitizer: DomSanitizer,
-    private changeDetectorRef: ChangeDetectorRef,
-    public amap: AMapBusiness,
-    public panel: ListPanelBusiness,
-    public info: PointInfoPanelBusiness,
-    private device: MapControlAIDeviceBusiness,
-    private toastr: ToastrService,
-    private guide: MapControlGuideBusiness,
-    private global: GlobalStorageService
-  ) {
-    this.display = this.initDisplay();
-    // {
-    //   current: this.onLabelDisplay.bind(this),
-    //   station: this.onLabelStationDisplay.bind(this),
-    // }
-  }
-
-  display: MapControlTools;
-  loadHandle?: NodeJS.Timer;
-  window = new MapControlWindow();
-  key = 'app-map-control';
-
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.position) {
       if (this.position) {
@@ -265,8 +267,8 @@ export class MapControlComponent
   ngOnInit(): void {
     this.global.interval.subscribe(this.key, (x) => {
       this.amap.point.keep();
+      this.panel.load.emit();
     });
-    this.panel.init();
 
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(this.amap.src);
 
@@ -303,13 +305,8 @@ export class MapControlComponent
 
     this.panel.itemSelected.subscribe((x) => {
       if (x instanceof Division) {
-        this.amap.division.select(x.Id);
-        this.panel.datasource.forEach((y) => {
-          if (y.type != ListItemType.Parent) {
-            y.hasChild = !!this.amap.source.all.find(
-              (g) => g.DivisionId! === y.Id
-            );
-          }
+        this.amap.division.select(x.Id).then((x) => {
+          this.amap.point.view.filter();
         });
       } else if (x instanceof GarbageStation) {
         this.amap.point.select(x.Id);
@@ -385,6 +382,14 @@ export class MapControlComponent
     this.onMapClicked();
     this.patrol.emit();
   }
+  onfullscreen() {
+    this.onMapClicked();
+    this.fullscreen = !this.fullscreen;
+    this.fullscreenChange.emit(this.fullscreen);
+  }
+  onpanel() {
+    this.panel.show = !this.panel.show;
+  }
 
   onPointInfoPanelGarbageRetentionClickedEvent(station: IModel) {
     this.garbageRetentionClicked.emit(station as GarbageStation);
@@ -446,5 +451,11 @@ export class MapControlComponent
           this.onwindowclose();
         });
     }
+  }
+
+  ontreepanelinfo(item: GarbageStation) {
+    this.info.station = item;
+    this.display.status = false;
+    this.display.videoList = false;
   }
 }
