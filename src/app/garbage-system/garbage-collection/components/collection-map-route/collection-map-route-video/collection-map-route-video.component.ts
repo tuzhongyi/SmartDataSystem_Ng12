@@ -27,26 +27,16 @@ import { CollectionMapRouteVideoBusiness } from './collection-map-route-video.bu
 export class CollectionMapRouteVideoComponent
   implements IComponent<IModel, VideoModel>, OnInit, OnChanges
 {
-  @Input()
-  business: IBusiness<IModel, VideoModel>;
-  @Input()
-  begin?: Date = new Date();
-  @Input()
-  end?: Date = new Date();
-  @Input()
-  source?: GarbageVehicle;
-  @Input()
-  play?: EventEmitter<Duration>;
-  @Input()
-  pause?: EventEmitter<void>;
-  @Input()
-  stop?: EventEmitter<void>;
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
-  @Output()
-  opened: EventEmitter<void> = new EventEmitter();
-  @Output()
-  splitview: EventEmitter<boolean> = new EventEmitter();
+  @Input() business: IBusiness<IModel, VideoModel>;
+  @Input() begin?: Date = new Date();
+  @Input() end?: Date = new Date();
+  @Input() source?: GarbageVehicle;
+  @Input() play?: EventEmitter<Duration>;
+  @Input() pause?: EventEmitter<void>;
+  @Input() stop?: EventEmitter<void>;
+  @Output() close: EventEmitter<void> = new EventEmitter();
+  @Output() opened: EventEmitter<void> = new EventEmitter();
+  @Output() splitview: EventEmitter<boolean> = new EventEmitter();
 
   constructor(business: CollectionMapRouteVideoBusiness) {
     this.business = business;

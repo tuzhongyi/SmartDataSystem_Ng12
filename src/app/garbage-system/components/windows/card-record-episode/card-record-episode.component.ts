@@ -27,10 +27,8 @@ import { CardRecordEpisodeService } from './card-record-episode.service';
   providers: [CardRecordEpisodeService, CardRecordEpisodeBusiness],
 })
 export class CardRecordEpisodeComponent implements OnInit, OnDestroy {
-  @Input()
-  record?: MixedIntoEventRecord;
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+  @Input() record?: MixedIntoEventRecord;
+  @Output() close: EventEmitter<void> = new EventEmitter();
   constructor(private business: CardRecordEpisodeBusiness) {}
 
   args = {

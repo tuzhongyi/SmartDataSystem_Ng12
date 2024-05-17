@@ -33,6 +33,16 @@ export class IllegalMixintoRankComponent implements OnInit {
     }
   }
 
+  @Output() itemClickedEvent: EventEmitter<IllegalMixintoRankArgs> =
+    new EventEmitter();
+
+  constructor(
+    public business: IllegalMixintoRankBusiness,
+    public global: GlobalStorageService
+  ) {}
+  // 处理后的排行榜数据
+  public rankData: RankModel[] = [];
+
   public title: string = '今日乱扔垃圾排名';
 
   resourceType: UserResourceType = UserResourceType.Committees;
@@ -43,16 +53,6 @@ export class IllegalMixintoRankComponent implements OnInit {
   DivisionType = DivisionType;
   Language = Language;
   eventType: EventType = EventType.IllegalDrop;
-
-  @Output()
-  itemClickedEvent: EventEmitter<IllegalMixintoRankArgs> = new EventEmitter();
-
-  // 处理后的排行榜数据
-  public rankData: RankModel[] = [];
-  constructor(
-    public business: IllegalMixintoRankBusiness,
-    public global: GlobalStorageService
-  ) {}
 
   ngOnInit(): void {
     // 区划改变时触发

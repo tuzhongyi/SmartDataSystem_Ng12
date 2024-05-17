@@ -17,23 +17,16 @@ import { GarbageVehicleTreeBusiness } from './business/garbage-vehicle-tree.busi
   ],
 })
 export class GarbageVehicleTreeComponent implements OnInit {
-  @Input()
-  defaultIds: string[] = [];
-  @Input()
-  holdStatus: boolean = false;
-  @Input()
-  selectStrategy: SelectStrategy = SelectStrategy.Single;
+  @Input() defaultIds: string[] = [];
+  @Input() holdStatus: boolean = false;
+  @Input() selectStrategy: SelectStrategy = SelectStrategy.Single;
 
-  @Input()
-  load?: EventEmitter<void>;
-  @Output()
-  loaded: EventEmitter<DivisionTreeSource[]> = new EventEmitter();
+  @Input() load?: EventEmitter<void>;
+  @Output() loaded: EventEmitter<DivisionTreeSource[]> = new EventEmitter();
 
-  @Output()
-  selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
     new EventEmitter();
-  @Output()
-  holdStatusChange = new EventEmitter();
+  @Output() holdStatusChange = new EventEmitter();
   constructor(public business: GarbageVehicleTreeBusiness) {
     this.business.loaded.subscribe(this.loaded);
   }

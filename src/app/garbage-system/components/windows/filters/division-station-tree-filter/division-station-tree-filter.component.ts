@@ -31,21 +31,28 @@ import { DivisionStationTreeFilterBusiness } from './division-station-tree-filte
 export class DivisionStationTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input()
-  type: DivisionType;
+  @Input() type: DivisionType;
 
-  @Output()
-  select: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() select: EventEmitter<GarbageStation> = new EventEmitter();
 
-  @Input()
-  stationId?: string;
+  @Input() stationId?: string;
+
+  @Input() align: HorizontalAlign = HorizontalAlign.right;
+
+  constructor(
+    private store: GlobalStorageService,
+    private business: DivisionStationTreeFilterBusiness,
+    private _divisionRequest: DivisionRequestService
+  ) {
+    this.type = store.divisionType;
+
+    if (this.type === DivisionType.City) {
+      this.tree.depth = 3;
+    }
+  }
 
   @ViewChild('selected')
   input?: ElementRef<HTMLLabelElement>;
-
-  @Input()
-  align: HorizontalAlign = HorizontalAlign.right;
-
   filterTypes: ClassConstructor<any>[] = [GarbageStation];
 
   treeServiceModel = DistrictTreeEnum.Station;
@@ -65,18 +72,6 @@ export class DivisionStationTreeFilterComponent
     top: '0',
   };
   HorizontalAlign = HorizontalAlign;
-  constructor(
-    private store: GlobalStorageService,
-    private business: DivisionStationTreeFilterBusiness,
-    private _divisionRequest: DivisionRequestService
-  ) {
-    this.type = store.divisionType;
-
-    if (this.type === DivisionType.City) {
-      this.tree.depth = 3;
-    }
-  }
-
   ngOnDestroy(): void {
     window.removeEventListener('click', this.closetreehandle);
   }

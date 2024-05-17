@@ -9,8 +9,7 @@ import { GarbageStationWeightPage as GarbageStationWeightIndexPage } from './gar
   providers: [],
 })
 export class GarbageStationWeightIndexComponent {
-  @Input()
-  type?: GarbageType;
+  @Input() type?: GarbageType;
   page: GarbageStationWeightIndexPage = GarbageStationWeightIndexPage.list;
   Page = GarbageStationWeightIndexPage;
 }

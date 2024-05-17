@@ -19,6 +19,15 @@ import { MobileViewModel } from '../../mobile.model';
   providers: [MobileBindingService],
 })
 export class MobileViewComponent implements OnInit, OnChanges {
+  @Input('Model') model: MobileViewModel = new MobileViewModel();
+
+  @Output() OnGetCheckCodeClick: EventEmitter<string> = new EventEmitter();
+
+  @Output() OnOKClick: EventEmitter<MobileViewModel> = new EventEmitter();
+
+  @Output() OnCancelClick: EventEmitter<void> = new EventEmitter();
+
+  constructor(private service: MobileBindingService) {}
   form: FormGroup = new FormGroup({
     mobileNo: new FormControl(''),
     checkCode: new FormControl(''),
@@ -31,22 +40,8 @@ export class MobileViewComponent implements OnInit, OnChanges {
     return this.form.controls.checkCode.value;
   }
 
-  @Input('Model')
-  model: MobileViewModel = new MobileViewModel();
-
-  @Output()
-  OnGetCheckCodeClick: EventEmitter<string> = new EventEmitter();
-
-  @Output()
-  OnOKClick: EventEmitter<MobileViewModel> = new EventEmitter();
-
-  @Output()
-  OnCancelClick: EventEmitter<void> = new EventEmitter();
-
   seconds = 0;
   getCheckCodeDisabled = '';
-
-  constructor(private service: MobileBindingService) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.model) {
       if (this.model.MobileNo) {

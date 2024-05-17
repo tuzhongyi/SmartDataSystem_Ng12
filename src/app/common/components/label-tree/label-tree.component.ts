@@ -20,15 +20,11 @@ import { LabelListBusiness as LabelTreeBusiness } from './label-tree.business';
   providers: [LabelTreeBusiness],
 })
 export class LabelTreeComponent extends CommonTree implements OnInit {
-  private _condition: string = '';
-
-  @Input()
-  selectStrategy = SelectStrategy.Multiple;
+  @Input() selectStrategy = SelectStrategy.Multiple;
 
   // 默认选中列表
   private _defaultIds: string[] = [];
-  @Input()
-  set defaultIds(ids: string[]) {
+  @Input() set defaultIds(ids: string[]) {
     // 排除空字符串
     this._defaultIds = ids.filter((id) => id);
   }
@@ -42,14 +38,15 @@ export class LabelTreeComponent extends CommonTree implements OnInit {
     CommonFlatNode[]
   >();
 
-  @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
-
   constructor(
     private _business: LabelTreeBusiness,
     private _toastrService: ToastrService
   ) {
     super();
   }
+  private _condition: string = '';
+
+  @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
   ngOnInit(): void {
     this._init();

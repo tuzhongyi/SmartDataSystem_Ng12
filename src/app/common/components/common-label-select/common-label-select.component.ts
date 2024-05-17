@@ -26,32 +26,24 @@ import { ICommonTree } from '../common-tree/common-tree.model';
 export class CommonLabelSelecComponent
   implements OnInit, AfterViewInit, AfterContentInit, OnDestroy
 {
-  @Input()
-  showDropDown = false;
-  @Output()
-  showDropDownChange: EventEmitter<boolean> = new EventEmitter();
+  @Input() showDropDown = false;
+  @Output() showDropDownChange: EventEmitter<boolean> = new EventEmitter();
 
-  @Input()
-  selectedNodes: IIdNameModel[] = [];
+  @Input() selectedNodes: IIdNameModel[] = [];
 
-  @Input()
-  autoclose = false;
+  @Input() autoclose = false;
 
-  @Input()
-  single = false;
+  @Input() single = false;
 
-  @Input()
-  showCloseIcon = true;
-  @Input()
-  height = 'auto';
+  @Input() showCloseIcon = true;
+  @Input() height = 'auto';
 
   @Output() toggleDropDown = new EventEmitter<boolean>();
   @Output() removeDropItem = new EventEmitter();
 
-  @ContentChild('tree') tree?: ICommonTree;
-
   constructor(@Inject(DOCUMENT) private document: Document) {}
 
+  @ContentChild('tree') tree?: ICommonTree;
   handle: any;
 
   subscription!: Subscription;

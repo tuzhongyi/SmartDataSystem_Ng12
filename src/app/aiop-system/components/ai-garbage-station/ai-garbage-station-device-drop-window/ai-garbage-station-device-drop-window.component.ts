@@ -16,10 +16,8 @@ import { AIGarbageStationDeviceDropWindow } from './ai-garbage-station-device-dr
   providers: [AIGarbageStationDeviceDropWindowBusiness],
 })
 export class AIGarbageStationDeviceDropWindowComponent implements OnInit {
-  @Input()
-  model?: AIGarbageDevice;
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+  @Input() model?: AIGarbageDevice;
+  @Output() close: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceDropWindowBusiness) {}
 

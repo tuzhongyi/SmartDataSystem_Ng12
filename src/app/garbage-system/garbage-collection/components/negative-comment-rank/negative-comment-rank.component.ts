@@ -24,6 +24,14 @@ import { NegativeCommentRankBusiness } from './negative-comment-rank.business';
 export class NegativeCommentRankComponent implements OnInit {
   @Input() load?: EventEmitter<void>;
 
+  @Output() itemClickedEvent: EventEmitter<IllegalMixintoRankArgs> =
+    new EventEmitter();
+
+  constructor(
+    public business: NegativeCommentRankBusiness,
+    private storeService: GlobalStorageService
+  ) {}
+
   public title: string = '垃圾清运差评榜';
 
   resourceTypes: SelectItem[] = [];
@@ -34,17 +42,8 @@ export class NegativeCommentRankComponent implements OnInit {
   eventType: EventType = EventType.IllegalDrop;
 
   resourceTypeDisplay: boolean = true;
-
-  @Output()
-  itemClickedEvent: EventEmitter<IllegalMixintoRankArgs> = new EventEmitter();
-
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
-  constructor(
-    public business: NegativeCommentRankBusiness,
-    private storeService: GlobalStorageService
-  ) {}
-
   ngOnInit(): void {
     let child = EnumHelper.GetResourceChildTypeByDivisionType(
       this.storeService.divisionType

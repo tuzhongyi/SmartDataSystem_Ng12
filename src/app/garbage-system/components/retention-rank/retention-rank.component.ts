@@ -31,6 +31,11 @@ export class RetentionRankComponent
       this.loadData();
     }
   }
+  @Input() business: IBusiness<IModel, RankModel[]>;
+
+  constructor(business: RetentionRankBusiness) {
+    this.business = business;
+  }
 
   public title: string = '垃圾滞留时长排名';
 
@@ -41,12 +46,6 @@ export class RetentionRankComponent
   retentionType = RetentionType.RetentionTime;
   RetentionType = RetentionType;
   Language = Language;
-  constructor(business: RetentionRankBusiness) {
-    this.business = business;
-  }
-  @Input()
-  business: IBusiness<IModel, RankModel[]>;
-
   ngOnInit(): void {
     // 区划改变时触发
     if (this.load) {

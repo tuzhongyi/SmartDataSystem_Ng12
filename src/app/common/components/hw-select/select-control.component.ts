@@ -16,12 +16,10 @@ import { SelectDirective } from '../../directives/select.directive';
   styleUrls: ['./select-control.component.less'],
 })
 export class HowellSelectComponent implements OnInit, AfterViewChecked {
-  @Input()
-  cannull: boolean = false;
+  @Input() cannull: boolean = false;
   @Input() nulltext = '请选择';
 
-  @Input()
-  public set style(v: any) {
+  @Input() public set style(v: any) {
     if (this._style === undefined) {
       this._style = {};
     }
@@ -36,8 +34,7 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
   public get selected(): any | undefined {
     return this._selected;
   }
-  @Input()
-  public set selected(v: any | undefined | null) {
+  @Input() public set selected(v: any | undefined | null) {
     if (v === null) {
       this._selected = undefined;
     } else {
@@ -45,8 +42,7 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
     }
     this.selectedChange.emit(v);
   }
-  @Output()
-  selectedChange: EventEmitter<any> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<any> = new EventEmitter();
 
   constructor(public detector: ChangeDetectorRef) {}
   ngAfterViewChecked(): void {

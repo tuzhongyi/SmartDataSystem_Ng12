@@ -21,7 +21,6 @@ declare let $: any;
 export class DateTimePickerDirective
   implements AfterContentInit, OnDestroy, OnChanges
 {
-  private ele: HTMLInputElement;
   @Input('format') format = Language.yyyyMMdd;
 
   // @Input('changeDate') changeDate: (val: any) => void;
@@ -39,14 +38,13 @@ export class DateTimePickerDirective
     this.dateChange.emit(v);
   }
 
-  @Output()
-  dateChange: EventEmitter<Date> = new EventEmitter();
-
-  changing = false;
+  @Output() dateChange: EventEmitter<Date> = new EventEmitter();
 
   constructor(e: ElementRef) {
     this.ele = e.nativeElement;
   }
+  changing = false;
+  private ele: HTMLInputElement;
   ngOnChanges(changes: SimpleChanges): void {
     // console.log(changes);
     // this.reInit(this.startView, this.minView, this.format, this.value);

@@ -9,7 +9,6 @@ import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
   providers: [],
 })
 export class AIGarbageStationRegionStationComponent {
-  @Input()
-  model?: AIGarbageRegion;
+  @Input() model?: AIGarbageRegion;
   Language = Language;
 }

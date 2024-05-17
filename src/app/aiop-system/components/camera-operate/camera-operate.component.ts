@@ -17,6 +17,17 @@ import { CameraOperateBusiness } from './camera-operate.business';
   providers: [CameraOperateBusiness],
 })
 export class CameraOperateComponent implements OnInit {
+  @Input() state: FormState = FormState.none;
+
+  @Input() cameraId: string = '';
+
+  @Output() closeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private fb: FormBuilder,
+    private _business: CameraOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
   private _AICamera?: AICamera;
 
   myForm = this.fb.group({
@@ -53,22 +64,6 @@ export class CameraOperateComponent implements OnInit {
   get ChannelNo() {
     return this.myForm.get('ChannelNo') as FormControl;
   }
-
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  cameraId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  constructor(
-    private fb: FormBuilder,
-    private _business: CameraOperateBusiness,
-    private _toastrService: ToastrService
-  ) {}
-
   async ngOnInit() {
     this.encodeDevices = (await this._business.listEncodeDevice()).Data;
 

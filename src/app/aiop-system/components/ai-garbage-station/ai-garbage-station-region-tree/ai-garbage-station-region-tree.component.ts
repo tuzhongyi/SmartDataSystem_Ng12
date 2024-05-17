@@ -39,16 +39,14 @@ export class AIGarbageRegionTreeComponent extends CommonTree implements OnInit {
   public get regionNode(): boolean {
     return this.args.showRegion;
   }
-  @Input()
-  public set regionNode(v: boolean) {
+  @Input() public set regionNode(v: boolean) {
     this.args.showRegion = v;
   }
 
   public get deviceNode(): boolean {
     return this.args.showDevice;
   }
-  @Input()
-  public set deviceNode(v: boolean) {
+  @Input() public set deviceNode(v: boolean) {
     this.args.showDevice = v;
   }
 
@@ -56,8 +54,8 @@ export class AIGarbageRegionTreeComponent extends CommonTree implements OnInit {
     CommonFlatNode[]
   >();
 
-  @Output()
-  loaded: EventEmitter<CommonNestNode<TreeSourceType>[]> = new EventEmitter();
+  @Output() loaded: EventEmitter<CommonNestNode<TreeSourceType>[]> =
+    new EventEmitter();
 
   constructor(
     private business: AIGarbageRegionTreeBusiness,

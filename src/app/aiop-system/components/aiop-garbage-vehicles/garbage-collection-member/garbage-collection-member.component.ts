@@ -25,8 +25,7 @@ import {
 export class GarbageCollectionMemberComponent
   implements IGarbageCollectionMemberComponent, OnInit
 {
-  @Input()
-  business: IGarbageCollectionMemberBusiness;
+  @Input() business: IGarbageCollectionMemberBusiness;
 
   constructor(
     business: GarbageCollectionMemberBusiness,

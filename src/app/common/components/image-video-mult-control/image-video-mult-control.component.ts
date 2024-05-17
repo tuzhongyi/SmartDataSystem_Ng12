@@ -21,22 +21,16 @@ import {
   styleUrls: ['./image-video-mult-control.component.less'],
 })
 export class ImageVideoMultControlComponent implements OnInit, OnChanges {
-  @Input('models')
-  models?: ImageVideoControlModel[];
-  @Input()
-  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
-  @Input()
-  playback?: EventEmitter<PlaybackInterval>;
+  @Input('models') models?: ImageVideoControlModel[];
+  @Input() operation: ImageVideoControlOperation =
+    new ImageVideoControlOperation();
+  @Input() playback?: EventEmitter<PlaybackInterval>;
   @Input() is_playback_use_config = true;
-  @Input()
-  fullplay = false;
+  @Input() fullplay = false;
 
-  @Output()
-  onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-  @Output()
-  onstoped: EventEmitter<ImageVideoControlModel> = new EventEmitter();
-  @Input()
-  change?: EventEmitter<ImageVideoControlModel[]>;
+  @Output() onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Output() onstoped: EventEmitter<ImageVideoControlModel> = new EventEmitter();
+  @Input() change?: EventEmitter<ImageVideoControlModel[]>;
 
   constructor() {}
 

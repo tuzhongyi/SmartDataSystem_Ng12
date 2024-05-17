@@ -8,15 +8,12 @@ import { StatisticCardViewModel } from './statistic-card.model';
   styleUrls: ['./statistic-card.component.less'],
 })
 export class StatisticCardComponent implements OnInit {
+  @Input() model?: StatisticCardViewModel;
+  @Output() Click: EventEmitter<StatisticCardViewModel> = new EventEmitter();
+
   constructor() {}
 
-  @Output()
-  Click: EventEmitter<StatisticCardViewModel> = new EventEmitter();
-
   ngOnInit(): void {}
-
-  @Input()
-  model?: StatisticCardViewModel;
 
   onclick() {
     this.Click.emit(this.model);

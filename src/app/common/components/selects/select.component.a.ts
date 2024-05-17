@@ -5,10 +5,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./select.component.less'],
 })
 export abstract class AbstractSelectComponent<T> implements OnInit {
-  @Input()
-  selected?: T;
-  @Output()
-  selectedChange: EventEmitter<T> = new EventEmitter();
+  @Input() selected?: T;
+  @Output() selectedChange: EventEmitter<T> = new EventEmitter();
 
   constructor() {}
   ngOnInit(): void {

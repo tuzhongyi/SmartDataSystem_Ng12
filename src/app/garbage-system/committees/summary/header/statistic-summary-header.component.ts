@@ -41,8 +41,7 @@ export class StatisticSummaryHeaderComponent
   @Output() mixedInto: EventEmitter<StatisticSummaryHeaderViewModel> =
     new EventEmitter();
 
-  @Input()
-  business: IBusiness<
+  @Input() business: IBusiness<
     StatisticSummaryViewModel[],
     StatisticSummaryHeaderViewModel
   >;

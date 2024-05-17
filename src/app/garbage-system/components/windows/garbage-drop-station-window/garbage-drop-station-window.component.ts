@@ -25,15 +25,11 @@ export class GarbageDropStationWindowComponent
   extends WindowComponent
   implements OnInit
 {
-  @Input()
-  index = GarbageDropStationWindowIndex.list;
-  @Output()
-  image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
+  @Input() index = GarbageDropStationWindowIndex.list;
+  @Output() image: EventEmitter<PagedArgs<GarbageDropStationTableModel>> =
     new EventEmitter();
-  @Output()
-  position: EventEmitter<GarbageStation> = new EventEmitter();
-  @Input()
-  args: GarbageDropStationTableArgs = {};
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input() args: GarbageDropStationTableArgs = {};
 
   constructor(
     public details: EventRecordWindowDetailsBusiness,

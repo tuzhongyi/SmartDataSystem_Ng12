@@ -20,6 +20,16 @@ import { LabelOperateBusiness } from './label-operate.business';
   providers: [LabelOperateBusiness],
 })
 export class LabelOperateComponent implements OnInit, AfterViewInit {
+  @Input() resourceId: string = '';
+
+  @Output() selectLabelEvent: EventEmitter<ResourceLabel[]> = new EventEmitter<
+    ResourceLabel[]
+  >();
+
+  constructor(
+    private _business: LabelOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
   private _condition_pool: string = '';
   private _condition_native: string = '';
 
@@ -30,19 +40,6 @@ export class LabelOperateComponent implements OnInit, AfterViewInit {
   highLight = (model: ResourceLabel) => {
     return this.selection.isSelected(model);
   };
-
-  @Input()
-  resourceId: string = '';
-
-  @Output() selectLabelEvent: EventEmitter<ResourceLabel[]> = new EventEmitter<
-    ResourceLabel[]
-  >();
-
-  constructor(
-    private _business: LabelOperateBusiness,
-    private _toastrService: ToastrService
-  ) {}
-
   @ViewChild('searchPool') searchPool?: SimpleSearchComponent;
 
   ngOnInit(): void {

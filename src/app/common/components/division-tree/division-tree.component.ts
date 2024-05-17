@@ -38,6 +38,11 @@ export class DivisionTreeComponent
   extends CommonTree
   implements IDivisionTreeComponent, OnInit
 {
+  @Input() holdStatus = false;
+  @Input() selectStrategy = SelectStrategy.Single;
+  @Input('showStation') showStation = false; // 区划树或厢房树
+  @Input() showSearchBar = true;
+  @Input() showButtonIcon = false;
   private _business?: IDivisionTreeBusiness;
   public get business(): IDivisionTreeBusiness {
     if (!this._business) {
@@ -45,30 +50,12 @@ export class DivisionTreeComponent
     }
     return this._business;
   }
-  @Input()
-  public set business(v: IDivisionTreeBusiness | undefined) {
+  @Input() public set business(v: IDivisionTreeBusiness | undefined) {
     this._business = v;
   }
-
-  @Input()
-  holdStatus = false;
-
-  @Input()
-  selectStrategy = SelectStrategy.Single;
-
-  @Input('showStation')
-  showStation = false; // 区划树或厢房树
-
-  @Input()
-  showSearchBar = true;
-
-  @Input()
-  showButtonIcon = false;
-
   // 默认选中列表
   private _defaultIds: string[] = [];
-  @Input()
-  set defaultIds(ids: string[]) {
+  @Input() set defaultIds(ids: string[]) {
     // 排除空字符串
     this._defaultIds = ids.filter((id) => id);
   }
@@ -77,13 +64,11 @@ export class DivisionTreeComponent
   }
 
   // 强制最大深度节点为叶节点，虽然实际有子节点
-  @Input()
-  depthIsEnd = false;
+  @Input() depthIsEnd = false;
 
   // 请求数据的深度
   private _depth: number = 0;
-  @Input()
-  set depth(val: number) {
+  @Input() set depth(val: number) {
     if (val < 0) {
       val = 0;
     }
@@ -95,8 +80,7 @@ export class DivisionTreeComponent
 
   // 展示数据的深度，一般等于 depth
   private _showDepth: number = 2;
-  @Input()
-  set showDepth(val: number) {
+  @Input() set showDepth(val: number) {
     if (val < 0) {
       val = 0;
     }
@@ -108,8 +92,7 @@ export class DivisionTreeComponent
 
   // 最高区划等级
   private _resourceType: DivisionType = DivisionType.City;
-  @Input()
-  set resourceType(type: DivisionType) {
+  @Input() set resourceType(type: DivisionType) {
     this._resourceType = type;
   }
   get resourceType() {
@@ -117,22 +100,16 @@ export class DivisionTreeComponent
   }
 
   // 抛出指定类型的节点
-  @Input()
-  filterTypes: ClassConstructor<any>[] = [];
+  @Input() filterTypes: ClassConstructor<any>[] = [];
 
-  @Output()
-  defaultIdsChange = new EventEmitter<string[]>();
-  @Output()
-  selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
+  @Output() defaultIdsChange = new EventEmitter<string[]>();
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
     new EventEmitter<CommonFlatNode<DivisionTreeSource>[]>();
-  @Output()
-  holdStatusChange = new EventEmitter();
+  @Output() holdStatusChange = new EventEmitter();
   @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
 
-  @Input()
-  load?: EventEmitter<void>;
-  @Output()
-  loaded: EventEmitter<CommonNestNode[]> = new EventEmitter();
+  @Input() load?: EventEmitter<void>;
+  @Output() loaded: EventEmitter<CommonNestNode[]> = new EventEmitter();
   @Input() trigger?: EventEmitter<string[]> = new EventEmitter();
 
   constructor(

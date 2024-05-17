@@ -19,12 +19,11 @@ import { CollectionDivisionTreeBusiness } from '../../../../common/business/coll
 export class CollectionDivisionTreeComponent implements OnInit {
   @Input() depth = 1;
 
-  @Output()
-  selectTreeNode = new EventEmitter();
-
-  @ViewChild(DivisionTreeComponent) tree?: DivisionTreeComponent;
+  @Output() selectTreeNode = new EventEmitter();
 
   constructor(public business: CollectionDivisionTreeBusiness) {}
+
+  @ViewChild(DivisionTreeComponent) tree?: DivisionTreeComponent;
 
   ngOnInit(): void {}
   onSelectTreeNode(nodes: CommonFlatNode<any>[]) {

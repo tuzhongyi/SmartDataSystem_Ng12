@@ -11,18 +11,13 @@ import { GarbageVehicleDivisionTreeBusiness } from './garbage-vehicle-division-t
   providers: [GarbageVehicleDivisionTreeBusiness],
 })
 export class GarbageVehicleDivisionTreeComponent implements OnInit {
-  @Input()
-  defaultIds: string[] = [];
-  @Input()
-  holdStatus: boolean = false;
-  @Input()
-  selectStrategy: SelectStrategy = SelectStrategy.Single;
+  @Input() defaultIds: string[] = [];
+  @Input() holdStatus: boolean = false;
+  @Input() selectStrategy: SelectStrategy = SelectStrategy.Single;
 
-  @Output()
-  selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
     new EventEmitter();
-  @Output()
-  holdStatusChange = new EventEmitter();
+  @Output() holdStatusChange = new EventEmitter();
   constructor(public business: GarbageVehicleDivisionTreeBusiness) {}
 
   ngOnInit(): void {}

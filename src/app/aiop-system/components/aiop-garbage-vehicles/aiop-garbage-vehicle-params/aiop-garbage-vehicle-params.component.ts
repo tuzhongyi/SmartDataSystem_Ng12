@@ -8,6 +8,5 @@ import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-ve
   providers: [],
 })
 export class AIOPGarbageVehicleParamsComponent {
-  @Input()
-  model?: GarbageVehicle;
+  @Input() model?: GarbageVehicle;
 }

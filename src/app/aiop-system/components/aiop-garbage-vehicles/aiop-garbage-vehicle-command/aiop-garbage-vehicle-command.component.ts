@@ -18,8 +18,7 @@ import { GarbageVehicleCommandConfirmWindowModel } from './garbage-vehicle-comma
   providers: [AIOPGarbageVehicleCommandBusiness],
 })
 export class AIOPGarbageVehicleCommandComponent implements OnInit {
-  @Input()
-  model?: GarbageVehicle;
+  @Input() model?: GarbageVehicle;
 
   constructor(private business: AIOPGarbageVehicleCommandBusiness) {}
 

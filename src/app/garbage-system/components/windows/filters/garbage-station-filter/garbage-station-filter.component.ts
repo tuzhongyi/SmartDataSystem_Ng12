@@ -20,19 +20,18 @@ import { GarbageStationFilterBusiness } from './garbage-station-filter.business'
   providers: [GarbageStationFilterBusiness],
 })
 export class GarbageStationFilterComponent implements OnInit, OnChanges {
-  @Input()
-  divisionId?: string;
-  @Output()
-  select: EventEmitter<GarbageStation> = new EventEmitter();
+  @Input() divisionId?: string;
+  @Output() select: EventEmitter<GarbageStation> = new EventEmitter();
+
+  constructor(business: GarbageStationFilterBusiness) {
+    this.business = business;
+  }
 
   loading: EventEmitter<string> = new EventEmitter();
 
   items: SelectItem[] = [];
   business: IBusiness<IModel, SelectItem[]>;
 
-  constructor(business: GarbageStationFilterBusiness) {
-    this.business = business;
-  }
   ngOnChanges(changes: SimpleChanges) {
     if (this.divisionId) {
       this.business

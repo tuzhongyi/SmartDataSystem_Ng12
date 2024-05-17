@@ -25,9 +25,8 @@ export class DaPuQiaoMainEventVisionComponent implements OnInit, OnChanges {
   @Output() close: EventEmitter<void> = new EventEmitter();
   @Output() image: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
-  @Output()
-  details: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
-    new EventEmitter();
+  @Output() details =
+    new EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel>();
   @Output() select: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
   constructor(

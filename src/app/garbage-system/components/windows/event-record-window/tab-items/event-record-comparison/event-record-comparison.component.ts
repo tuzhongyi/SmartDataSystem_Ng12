@@ -40,14 +40,10 @@ import {
 export class EventRecordComparisonComponent
   implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]>
 {
-  @Input()
-  date: Date = new Date();
-  @Input()
-  unit: TimeUnit = TimeUnit.Day;
-  @Input()
-  divisionType: DivisionType = DivisionType.None;
-  @Input()
-  eventType: EventType = EventType.IllegalDrop;
+  @Input() date: Date = new Date();
+  @Input() unit: TimeUnit = TimeUnit.Day;
+  @Input() divisionType: DivisionType = DivisionType.None;
+  @Input() eventType: EventType = EventType.IllegalDrop;
 
   constructor(
     private local: LocalStorageService,

@@ -1,16 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { VideoPresetPointControlModel } from '../video-preset-point-control/video-preset-point-control.model';
 import {
@@ -25,12 +17,16 @@ import {
   styleUrls: ['./video-setting-control.component.less'],
 })
 export class VideoSettingControlComponent implements OnInit {
-  StreamType = StreamType;
+  @Input() model: VideoSettingControlViewModel =
+    new VideoSettingControlViewModel();
+
+  @Output() streamChange: EventEmitter<StreamType> = new EventEmitter();
+
   constructor(
     private local: LocalStorageService,
     private userService: UserRequestService
   ) {}
-
+  StreamType = StreamType;
   stream: StreamType = StreamType.main;
 
   async loadStream() {
@@ -65,12 +61,6 @@ export class VideoSettingControlComponent implements OnInit {
       );
     }
   }
-
-  @Input()
-  model: VideoSettingControlViewModel = new VideoSettingControlViewModel();
-
-  @Output()
-  streamChange: EventEmitter<StreamType> = new EventEmitter();
 
   ngOnInit(): void {
     this.loadStream();

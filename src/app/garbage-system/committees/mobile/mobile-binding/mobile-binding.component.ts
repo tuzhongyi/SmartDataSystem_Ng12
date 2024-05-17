@@ -13,6 +13,8 @@ import { MobileBindingService } from '../mobile-binding.service';
   providers: [MobileBindingService],
 })
 export class MobileBindingComponent implements OnInit {
+  @Output() OnBinded: EventEmitter<void> = new EventEmitter();
+  @Output() OnCancel: EventEmitter<void> = new EventEmitter();
   constructor(
     private service: MobileBindingService,
     private local: LocalStorageService
@@ -36,6 +38,8 @@ export class MobileBindingComponent implements OnInit {
 
   private checkCodeResult?: string;
 
+  seconds = 0;
+  getCheckCodeDisabled = '';
   ngOnInit() {}
 
   async checkMobilNo() {
@@ -68,7 +72,6 @@ export class MobileBindingComponent implements OnInit {
     this.countdown();
   }
 
-  seconds = 0;
   countdown() {
     setTimeout(() => {
       this.seconds--;
@@ -86,13 +89,6 @@ export class MobileBindingComponent implements OnInit {
     }
     return true;
   }
-
-  getCheckCodeDisabled = '';
-
-  @Output()
-  OnBinded: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnCancel: EventEmitter<void> = new EventEmitter();
 
   async binding(event: Event) {
     if (!this.checkCode) {

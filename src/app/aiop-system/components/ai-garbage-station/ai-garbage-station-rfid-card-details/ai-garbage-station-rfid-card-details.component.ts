@@ -10,12 +10,9 @@ import { AIGarbageStationRfidCardDetailsBusiness } from './ai-garbage-station-rf
   providers: [AIGarbageStationRfidCardDetailsBusiness],
 })
 export class AIGarbageStationRfidCardDetailsComponent {
-  @Input()
-  model?: AIGarbageRfidCard;
-  @Output()
-  ok: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
-  @Output()
-  cancel: EventEmitter<void> = new EventEmitter();
+  @Input() model?: AIGarbageRfidCard;
+  @Output() ok: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationRfidCardDetailsBusiness) {}
 

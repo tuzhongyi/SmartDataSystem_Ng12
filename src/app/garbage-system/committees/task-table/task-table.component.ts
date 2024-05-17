@@ -31,11 +31,10 @@ export class TaskTableComponent
     OnDestroy,
     IComponent<GarbageDropEventRecord[], TaskTableViewModel[]>
 {
-  @Input()
-  Committees?: Division;
+  @Input() Committees?: Division;
 
-  @Output()
-  OnItemClicked: EventEmitter<GarbageDropEventRecord> = new EventEmitter();
+  @Output() OnItemClicked: EventEmitter<GarbageDropEventRecord> =
+    new EventEmitter();
 
   constructor(
     business: TaskTableBusiness,

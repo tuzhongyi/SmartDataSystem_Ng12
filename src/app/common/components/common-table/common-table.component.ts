@@ -27,38 +27,25 @@ import { TableDataSource } from './data-source';
   exportAs: 'commonTable',
 })
 export class CommonTableComponent implements OnInit {
-  private selection!: SelectionModel<TableRowModel>;
-
-  dataSource = new TableDataSource([]);
-
-  highLight = (model: TableRowModel) => {
-    return this.selection.isSelected(model);
-  };
-
   // 组件更新数据时，自动更新 table 数据
-  @Input()
-  dataSubject = new BehaviorSubject<TableRowModel>([]);
+  @Input() dataSubject = new BehaviorSubject<TableRowModel>([]);
   @Input() select?: EventEmitter<TableSelectType>;
   @Input() delete?: EventEmitter<TableRowModel[]>;
 
   // 表格的元数据配置
-  @Input()
-  columnModel: TableColumnModel[] = [];
+  @Input() columnModel: TableColumnModel[] = [];
 
   // 要显示的列
-  @Input()
-  displayedColumns: string[] = [];
+  @Input() displayedColumns: string[] = [];
 
   // hover是否放大
   @Input() zoomIn = false;
 
   // 操作列
-  @Input()
-  tableOperates: TableOperateModel[] = [];
+  @Input() tableOperates: TableOperateModel[] = [];
 
   // 单选表 || 多选表
-  @Input('selectStrategy')
-  selectStrategy = SelectStrategy.Multiple;
+  @Input('selectStrategy') selectStrategy = SelectStrategy.Multiple;
 
   @Output() selectTableRow: EventEmitter<TableRowModel[]> = new EventEmitter<
     TableRowModel[]
@@ -69,9 +56,15 @@ export class CommonTableComponent implements OnInit {
   @Output() selectTableCell: EventEmitter<TableCellEvent> =
     new EventEmitter<TableCellEvent>();
 
-  @ViewChild('table') table!: MatTable<any>;
-
   constructor() {}
+  @ViewChild('table') table!: MatTable<any>;
+  private selection!: SelectionModel<TableRowModel>;
+
+  dataSource = new TableDataSource([]);
+
+  highLight = (model: TableRowModel) => {
+    return this.selection.isSelected(model);
+  };
 
   ngOnInit(): void {
     if (this.select) {

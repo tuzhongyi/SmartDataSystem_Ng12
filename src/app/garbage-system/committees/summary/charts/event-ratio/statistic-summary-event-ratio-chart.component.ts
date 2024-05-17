@@ -41,17 +41,14 @@ export class StatisticSummaryEventRatioChartComponent
   @Input() Data?: StatisticSummaryViewModel[];
 
   @Input() EventTrigger?: EventEmitter<void>;
-  @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
-    new EventEmitter();
-  @Output()
-  illegalDrop: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
-    new EventEmitter();
+  @Output() OnTriggerEvent =
+    new EventEmitter<StatisticSummaryEventRatioChartViewModel>();
+  @Output() illegalDrop =
+    new EventEmitter<StatisticSummaryEventRatioChartViewModel>();
   @Output() mixedInto: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
     new EventEmitter();
-  @Output()
-  garbageFull: EventEmitter<StatisticSummaryEventRatioChartViewModel> =
-    new EventEmitter();
+  @Output() garbageFull =
+    new EventEmitter<StatisticSummaryEventRatioChartViewModel>();
 
   constructor(business: StatisticSummaryEventRatioChartBusiness) {
     this.business = business;

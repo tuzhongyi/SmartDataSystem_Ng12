@@ -9,7 +9,8 @@
             class="filter-item-value"
             type="text"
             DateTimePicker
-            [format]="dateFormat"
+            [format]="date.format"
+            [week]="date.week"
             [(date)]="opts.date"
           />
         </div>
@@ -61,12 +62,12 @@
       </div>
     </div>
     <div class="selection">
-      <select class="list-type-select" [(ngModel)]="opts.unit">
-        <option
-          [ngValue]="item"
-          *ngFor="let item of units"
-          (change)="loadData()"
-        >
+      <select
+        class="list-type-select"
+        [(ngModel)]="opts.unit"
+        (change)="onunitchange(opts.unit)"
+      >
+        <option [ngValue]="item" *ngFor="let item of units">
           {{ Language.TimeUnit(item) }}
         </option>
       </select>

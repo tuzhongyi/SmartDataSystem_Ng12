@@ -15,10 +15,8 @@ import { ScreenMode } from './video-player-list.model';
   styleUrls: ['./video-player-list.component.less'],
 })
 export class VideoPlayerListComponent implements OnInit, OnChanges {
-  @Input()
-  screen = ScreenMode.one;
-  @Input()
-  play?: EventEmitter<VideoModel>;
+  @Input() screen = ScreenMode.one;
+  @Input() play?: EventEmitter<VideoModel>;
 
   constructor() {}
   datas: (VideoModel | undefined)[] = [];

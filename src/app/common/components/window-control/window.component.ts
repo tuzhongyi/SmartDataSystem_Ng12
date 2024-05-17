@@ -9,9 +9,7 @@ import { WindowViewModel } from './window.model';
   styleUrls: ['./window.component.less'],
 })
 export class WindowComponent implements OnInit {
-  Language = Language;
-  @Input()
-  Model: WindowViewModel = new WindowViewModel();
+  @Input() Model: WindowViewModel = new WindowViewModel();
   @Input() title?: string;
   @Input() Background = true;
 
@@ -30,22 +28,18 @@ export class WindowComponent implements OnInit {
   public get style(): any {
     return this._style;
   }
-  @Input()
-  public set style(v: any) {
+  @Input() public set style(v: any) {
     this._style = Object.assign(this._style, v);
   }
 
-  @Output()
-  OnClosing: EventEmitter<boolean> = new EventEmitter();
+  @Output() OnClosing: EventEmitter<boolean> = new EventEmitter();
 
-  @Input()
-  status?: OnlineStatus;
+  @Input() status?: OnlineStatus;
 
-  @Input()
-  manualClose = false;
+  @Input() manualClose = false;
 
   constructor() {}
-
+  Language = Language;
   ngOnInit() {}
 
   closeButtonClick() {

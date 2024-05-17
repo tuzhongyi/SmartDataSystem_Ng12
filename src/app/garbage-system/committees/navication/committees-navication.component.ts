@@ -8,20 +8,15 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
   styleUrls: ['./committees-navication.component.css'],
 })
 export class CommitteesNavicationComponent implements OnInit {
-  @Input()
-  Committees?: Division;
-  @Input()
-  Stations?: GarbageStation[];
-  @Input()
-  StationSelected?: GarbageStation;
+  @Input() Committees?: Division;
+  @Input() Stations?: GarbageStation[];
+  @Input() StationSelected?: GarbageStation;
 
-  @Output()
-  OnCommitteesClicked: EventEmitter<Division> = new EventEmitter();
-  @Output()
-  OnStationClicked: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() OnCommitteesClicked: EventEmitter<Division> = new EventEmitter();
+  @Output() OnStationClicked: EventEmitter<GarbageStation> = new EventEmitter();
 
-  @Output()
-  OnCommitteesInfoClicked: EventEmitter<Division> = new EventEmitter();
+  @Output() OnCommitteesInfoClicked: EventEmitter<Division> =
+    new EventEmitter();
 
   constructor() {}
 

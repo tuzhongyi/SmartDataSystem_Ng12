@@ -19,16 +19,17 @@ import { GarbageStationWindowStayModel } from './garbage-station-window-stay.mod
 export class GarbageStationWindowStayComponent
   implements OnInit, IComponent<IModel, GarbageStationWindowStayModel>
 {
-  @Input()
-  business: IBusiness<IModel, GarbageStationWindowStayModel>;
+  @Input() business: IBusiness<IModel, GarbageStationWindowStayModel>;
 
-  @Input()
-  stationId?: string;
+  @Input() stationId?: string;
 
-  @Output()
-  image: EventEmitter<PagedArgs<ImageControlModel>> = new EventEmitter();
-  @Output()
-  ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
+  @Output() image: EventEmitter<PagedArgs<ImageControlModel>> =
+    new EventEmitter();
+  @Output() ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
+
+  constructor(business: GarbageStationWindowStayBusiness) {
+    this.business = business;
+  }
 
   date: Date = new Date();
 
@@ -37,10 +38,6 @@ export class GarbageStationWindowStayComponent
   model: GarbageStationWindowStayModel = new GarbageStationWindowStayModel();
 
   chartLoad: EventEmitter<string> = new EventEmitter();
-
-  constructor(business: GarbageStationWindowStayBusiness) {
-    this.business = business;
-  }
 
   ngOnInit(): void {
     if (this.stationId) {

@@ -44,17 +44,12 @@ import { ExportExcelConverter } from './details-chart-export.converter';
 export class DetailsChartComponent
   implements OnInit, IComponent<IModel, ITimeData<IModel>[][]>, AfterViewInit
 {
-  @Input()
-  business!: IBusiness<IModel, ITimeData<IModel>[][]>;
-  @Input()
-  eventType: EventType = EventType.IllegalDrop;
-  @Input()
-  types?: EventType[];
-  @Input()
-  station?: GarbageStation;
+  @Input() business!: IBusiness<IModel, ITimeData<IModel>[][]>;
+  @Input() eventType: EventType = EventType.IllegalDrop;
+  @Input() types?: EventType[];
+  @Input() station?: GarbageStation;
 
-  @Input('division')
-  input_division?: IIdNameModel;
+  @Input('division') input_division?: IIdNameModel;
 
   // private _division?: Division;
   // public get division(): Division | undefined {

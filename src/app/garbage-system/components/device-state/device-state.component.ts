@@ -39,8 +39,12 @@ export class DeviceStateComponent
 {
   @Input() inside = false;
   @Input() load?: EventEmitter<void>;
-  @Output()
-  Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
+  @Output() Click: EventEmitter<IDeviceStateDes> = new EventEmitter();
+  constructor(business: DeviceStateBusiness) {
+    this.business = business;
+  }
+  business: IBusiness<IModel, DeviceStateCountModel>;
+
   public title: string = '设备运行状态';
   public model: DeviceStateCountModel = new DeviceStateCountModel();
 
@@ -120,11 +124,6 @@ export class DeviceStateComponent
   };
 
   @ViewChild('chartContainer') chartContainer!: ElementRef<HTMLDivElement>;
-
-  constructor(business: DeviceStateBusiness) {
-    this.business = business;
-  }
-  business: IBusiness<IModel, DeviceStateCountModel>;
 
   ngOnInit(): void {
     if (this.load) {

@@ -35,28 +35,20 @@ export class MediaControlComponent
     AfterViewInit,
     IComponent<Array<ICamera | ImageControlModel>, ImageVideoControlModel[]>
 {
-  @Input()
-  business: IMediaControlBusiness;
-  @Input()
-  model?: Array<ICamera | ImageControlModel> = [];
-  @Input()
-  index = 0;
-  @Input()
-  stop: EventEmitter<void> = new EventEmitter();
-  @Input()
-  autoplay: boolean = false;
-  @Input()
-  operation: ImageVideoControlOperation = new ImageVideoControlOperation();
-  @Output()
-  played: EventEmitter<void> = new EventEmitter();
-  @Output()
-  stoped: EventEmitter<void> = new EventEmitter();
-  @Input()
-  page = true;
-  @Output()
-  next: EventEmitter<ICamera | ImageControlModel> = new EventEmitter();
-  @Output()
-  prev: EventEmitter<ICamera | ImageControlModel> = new EventEmitter();
+  @Input() business: IMediaControlBusiness;
+  @Input() model?: Array<ICamera | ImageControlModel> = [];
+  @Input() index = 0;
+  @Input() stop: EventEmitter<void> = new EventEmitter();
+  @Input() autoplay: boolean = false;
+  @Input() operation: ImageVideoControlOperation =
+    new ImageVideoControlOperation();
+  @Output() played: EventEmitter<void> = new EventEmitter();
+  @Output() stoped: EventEmitter<void> = new EventEmitter();
+  @Input() page = true;
+  @Output() next: EventEmitter<ICamera | ImageControlModel> =
+    new EventEmitter();
+  @Output() prev: EventEmitter<ICamera | ImageControlModel> =
+    new EventEmitter();
 
   constructor(
     bussiness: MediaVideoControlBussiness,

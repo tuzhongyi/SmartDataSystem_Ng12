@@ -21,23 +21,18 @@ import { CameraMoveBusiness } from './camera-move.business';
   providers: [CameraMoveBusiness],
 })
 export class CameraMoveComponent implements OnInit {
-  private _currentNode?: CommonFlatNode<RegionTreeSource>;
+  @Input() resourceIds: string[] = [];
 
-  cameras: AICamera[] = [];
-
-  @Input()
-  resourceIds: string[] = [];
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  @ViewChild(RegionTreeComponent) regionTree?: RegionTreeComponent;
+  @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(
     private _business: CameraMoveBusiness,
     private _toastrService: ToastrService
   ) {}
 
+  cameras: AICamera[] = [];
+  private _currentNode?: CommonFlatNode<RegionTreeSource>;
+  @ViewChild(RegionTreeComponent) regionTree?: RegionTreeComponent;
   async ngOnInit() {
     if (this.resourceIds.length) {
       this.cameras = (await this._business.getAICameras(this.resourceIds)).Data;

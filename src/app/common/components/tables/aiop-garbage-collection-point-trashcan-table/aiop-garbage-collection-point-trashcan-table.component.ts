@@ -22,20 +22,16 @@ export class AiopGarbageCollectionPointTrashCanTableComponent
   extends PagedTableAbstractComponent<CollectionTrashCan>
   implements IComponent<IModel, PagedList<CollectionTrashCan>>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<CollectionTrashCan>>;
+  @Input() business: IBusiness<IModel, PagedList<CollectionTrashCan>>;
   @Input() init = false;
   @Input() args = new AiopGarbageCollectionPointTrashCanTableArgs();
-  @Input()
-  load?: EventEmitter<AiopGarbageCollectionPointTrashCanTableArgs>;
+  @Input() load?: EventEmitter<AiopGarbageCollectionPointTrashCanTableArgs>;
 
-  @Output()
-  update: EventEmitter<CollectionTrashCan> = new EventEmitter();
+  @Output() update: EventEmitter<CollectionTrashCan> = new EventEmitter();
 
-  @Input()
-  selected?: CollectionTrashCan[];
-  @Output()
-  selectedChange: EventEmitter<CollectionTrashCan[]> = new EventEmitter();
+  @Input() selected?: CollectionTrashCan[];
+  @Output() selectedChange: EventEmitter<CollectionTrashCan[]> =
+    new EventEmitter();
 
   constructor(business: AiopGarbageCollectionPointTrashCanTableBusiness) {
     super();

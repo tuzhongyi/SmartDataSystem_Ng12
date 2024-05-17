@@ -33,33 +33,22 @@ export class AIGarbageStationDeviceTableComponent
   extends PagedTableAbstractComponent<AIGarbageDevice>
   implements OnInit
 {
-  @Input()
-  args: AIGarbageStationDeviceTableArgs = new AIGarbageStationDeviceTableArgs();
-  @Input()
-  load?: EventEmitter<AIGarbageStationDeviceTableArgs>;
-  @Input()
-  selecteds: AIGarbageDevice[] = [];
-  @Output()
-  selectedsChange: EventEmitter<AIGarbageDevice[]> = new EventEmitter();
-  @Output()
-  loaded: EventEmitter<PagedList<Promise<AIGarbageDevice>>> =
+  @Input() args: AIGarbageStationDeviceTableArgs =
+    new AIGarbageStationDeviceTableArgs();
+  @Input() load?: EventEmitter<AIGarbageStationDeviceTableArgs>;
+  @Input() selecteds: AIGarbageDevice[] = [];
+  @Output() selectedsChange: EventEmitter<AIGarbageDevice[]> =
     new EventEmitter();
-  @Output()
-  details: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  command: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  delete: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  dropwindow: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  camera: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  schedule: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  status: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  session: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() loaded: EventEmitter<PagedList<Promise<AIGarbageDevice>>> =
+    new EventEmitter();
+  @Output() details: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() command: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() delete: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() dropwindow: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() camera: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() schedule: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() status: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() session: EventEmitter<AIGarbageDevice> = new EventEmitter();
   constructor(private business: AIGarbageStationDeviceTableBusiness) {
     super();
   }

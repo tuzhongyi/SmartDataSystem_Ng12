@@ -36,8 +36,7 @@ import {
 export class GarbageStationWindowDetailsComponent
   implements OnInit, IComponent<IModel, ITimeDataGroup<number>[]>
 {
-  @Input()
-  business: IBusiness<IModel, ITimeDataGroup<number>[]>;
+  @Input() business: IBusiness<IModel, ITimeDataGroup<number>[]>;
   constructor(
     business: GarbageStationWindowDetailsBusiness,
     private exports: ExportTool,
@@ -59,6 +58,10 @@ export class GarbageStationWindowDetailsComponent
   Language = Language;
   ChartType = ChartType;
   dateFormat: string = 'yyyy年MM月dd日';
+  date = {
+    format: 'yyyy年MM月dd日',
+    week: true,
+  };
   datas: ITimeDataGroup<number>[] = [];
   echartsLegend: LegendComponentOption = {
     show: true,
@@ -205,7 +208,7 @@ export class GarbageStationWindowDetailsComponent
     this.types = _enum.getValues().map((x) => parseInt(x));
   }
   initUnits() {
-    this.units = [TimeUnit.Week, TimeUnit.Month];
+    this.units = [TimeUnit.Week, TimeUnit.Month, TimeUnit.Year];
   }
   initChartTypes() {
     this.chartTypes = [ChartType.bar, ChartType.line];
@@ -221,6 +224,27 @@ export class GarbageStationWindowDetailsComponent
       this.toastrService.warning(`最多查看个${this.maxItem}对象`);
 
       return;
+    }
+    this.loadData();
+  }
+
+  onunitchange(unit: TimeUnit) {
+    this.date.week = false;
+    switch (unit) {
+      case TimeUnit.Year:
+        this.date.format = 'yyyy年';
+        break;
+      case TimeUnit.Month:
+        this.date.format = 'yyyy年MM月';
+        break;
+      case TimeUnit.Week:
+        this.date.week = true;
+
+        this.date.format = 'yyyy年MM月dd日';
+        break;
+
+      default:
+        break;
     }
     this.loadData();
   }

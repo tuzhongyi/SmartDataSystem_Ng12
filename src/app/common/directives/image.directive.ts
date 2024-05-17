@@ -11,10 +11,8 @@ import {
   selector: '[image]',
 })
 export class ImageDirective implements OnInit, OnChanges {
-  @Input()
-  url?: string | null;
-  @Input()
-  directiveClass = 'directive-image';
+  @Input() url?: string | null;
+  @Input() directiveClass = 'directive-image';
   @Input() default = '/assets/img/timg-pic.jpg';
 
   constructor(e: ElementRef) {

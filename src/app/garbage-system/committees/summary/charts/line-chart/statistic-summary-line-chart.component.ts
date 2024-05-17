@@ -31,31 +31,25 @@ export class StatisticSummaryIllegalDropChartComponent
     OnChanges,
     IComponent<EventNumberStatistic[], StatisticSummaryLineChartViewModel>
 {
-  @ViewChild('echarts')
-  private echartElement?: ElementRef<HTMLDivElement>;
+  @Input() Data?: EventNumberStatistic[];
 
-  echarts: any;
+  @Input() Type?: EventType;
 
-  @Input()
-  Data?: EventNumberStatistic[];
-
-  @Input()
-  Type?: EventType;
-
-  @Input()
-  TimeUnit?: TimeUnit;
-  @Input()
-  EventTrigger?: EventEmitter<void>;
-  @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryLineChartViewModel> =
+  @Input() TimeUnit?: TimeUnit;
+  @Input() EventTrigger?: EventEmitter<void>;
+  @Output() OnTriggerEvent: EventEmitter<StatisticSummaryLineChartViewModel> =
     new EventEmitter();
-
-  private data: StatisticSummaryLineChartViewModel =
-    new StatisticSummaryLineChartViewModel();
 
   constructor(business: StatisticSummaryIllegalDropChartBusiness) {
     this.business = business;
   }
+
+  @ViewChild('echarts')
+  private echartElement?: ElementRef<HTMLDivElement>;
+
+  echarts: any;
+  private data: StatisticSummaryLineChartViewModel =
+    new StatisticSummaryLineChartViewModel();
   business: IBusiness<
     EventNumberStatistic[],
     StatisticSummaryLineChartViewModel

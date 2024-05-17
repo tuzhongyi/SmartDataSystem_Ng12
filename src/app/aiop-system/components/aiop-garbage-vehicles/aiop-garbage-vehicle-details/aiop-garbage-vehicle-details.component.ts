@@ -13,12 +13,9 @@ import { AIOPGarbageVehicleDetailsBusiness } from './aiop-garbage-vehicle-detail
   providers: [AIOPGarbageVehicleDetailsBusiness],
 })
 export class AIOPGarbageVehicleDetailsComponent implements OnInit {
-  @Input()
-  model?: GarbageVehicle;
-  @Output()
-  ok: EventEmitter<GarbageVehicle> = new EventEmitter();
-  @Output()
-  cancel: EventEmitter<void> = new EventEmitter();
+  @Input() model?: GarbageVehicle;
+  @Output() ok: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private business: AIOPGarbageVehicleDetailsBusiness,

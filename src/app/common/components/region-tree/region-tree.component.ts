@@ -20,10 +20,6 @@ import { RegionTreeBusiness } from './region-tree.business';
   providers: [RegionTreeBusiness],
 })
 export class RegionTreeComponent extends CommonTree implements OnInit {
-  private _condition: string = '';
-  private _searchGuards: string[] = ['区域'];
-  private _excludeGuards: string[] = [];
-
   @Input() holdStatus = true;
 
   @Input() showSearchBar = true;
@@ -33,8 +29,7 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
 
   // 默认选中列表
   private _defaultIds: string[] = [];
-  @Input()
-  set defaultIds(ids: string[]) {
+  @Input() set defaultIds(ids: string[]) {
     // 排除空字符串
     this._defaultIds = ids.filter((id) => id);
   }
@@ -46,8 +41,6 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
     CommonFlatNode[]
   >();
 
-  @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
-
   constructor(
     private _business: RegionTreeBusiness,
     private _toastrService: ToastrService
@@ -57,6 +50,11 @@ export class RegionTreeComponent extends CommonTree implements OnInit {
       this._searchGuards
     );
   }
+  private _condition: string = '';
+  private _searchGuards: string[] = ['区域'];
+  private _excludeGuards: string[] = [];
+
+  @ViewChild(CommonTreeComponent) tree?: CommonTreeComponent;
 
   ngOnInit(): void {
     this._init();

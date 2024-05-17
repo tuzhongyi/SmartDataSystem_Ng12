@@ -26,8 +26,7 @@ import { DivisionStationTreeFilterConfig } from './division-station-tree-mult-fi
 export class DivisionStationTreeMultFilterComponent
   implements OnInit, OnChanges
 {
-  @Input()
-  divisionType = DivisionType.County;
+  @Input() divisionType = DivisionType.County;
   @Output() onselect: EventEmitter<string[]> = new EventEmitter();
   @Input() maxSelection: number = Number.MAX_VALUE;
   @Input() onlystation = false;

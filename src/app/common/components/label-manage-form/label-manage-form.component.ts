@@ -10,22 +10,19 @@ import { LabelManageFormBusiness } from './label-manage-form.business';
   providers: [LabelManageFormBusiness],
 })
 export class LabelManageFormComponent implements OnInit {
-  resourceLabels: ResourceLabel[] = [];
-  selectedLabels: ResourceLabel[] = [];
-
   @Input() resourceName = '';
 
-  @Input()
-  resourceId: string = '';
+  @Input() resourceId: string = '';
 
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
+  @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(
     private _business: LabelManageFormBusiness,
     private _toastrService: ToastrService
   ) {}
 
+  resourceLabels: ResourceLabel[] = [];
+  selectedLabels: ResourceLabel[] = [];
   ngOnInit(): void {
     if (this.resourceId) {
       this._listResourceLabels();

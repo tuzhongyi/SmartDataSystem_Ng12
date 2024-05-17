@@ -33,11 +33,9 @@ import { MapPointInfoPanelService } from './map-point-info-panel.service';
 export class MapPointInfoPanelComponent
   implements IComponent<IModel, MapPointInfoPanelModel>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, MapPointInfoPanelModel>;
+  @Input() business: IBusiness<IModel, MapPointInfoPanelModel>;
 
-  @Input()
-  set Source(val) {
+  @Input() set Source(val) {
     this.source = val;
     if (this.source) {
       this.business.load(this.source).then((x) => {
@@ -50,8 +48,7 @@ export class MapPointInfoPanelComponent
     return this.source;
   }
 
-  @Input()
-  VisibilityChange = (val: boolean) => {
+  @Input() VisibilityChange = (val: boolean) => {
     this.visibility = val;
   };
 
@@ -61,20 +58,17 @@ export class MapPointInfoPanelComponent
    * @type {EventEmitter<GarbageStation>}
    * @memberof PointInfoPanelComponent
    */
-  @Output()
-  StateClickedEvent: EventEmitter<IModel> = new EventEmitter();
+  @Output() StateClickedEvent: EventEmitter<IModel> = new EventEmitter();
   @Output() drop: EventEmitter<IModel> = new EventEmitter();
 
-  @Output()
-  GarbageRetentionClickedEvent: EventEmitter<IModel> = new EventEmitter();
+  @Output() GarbageRetentionClickedEvent: EventEmitter<IModel> =
+    new EventEmitter();
 
-  @Output()
-  IllegalDropClickedEvent: EventEmitter<IModel> = new EventEmitter();
+  @Output() IllegalDropClickedEvent: EventEmitter<IModel> = new EventEmitter();
 
-  @Output()
-  MixedIntoClickedEvent: EventEmitter<IModel> = new EventEmitter();
-  @Output()
-  option: EventEmitter<PointInfoPanelModelOption> = new EventEmitter();
+  @Output() MixedIntoClickedEvent: EventEmitter<IModel> = new EventEmitter();
+  @Output() option: EventEmitter<PointInfoPanelModelOption> =
+    new EventEmitter();
   constructor(
     private divisionService: DivisionRequestService,
     private garbageStationService: GarbageStationRequestService,

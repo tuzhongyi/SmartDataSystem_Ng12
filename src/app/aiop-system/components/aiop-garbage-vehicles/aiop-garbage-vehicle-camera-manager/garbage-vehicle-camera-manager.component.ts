@@ -25,8 +25,7 @@ import {
 export class GarbageVehicleCameraManagerComponent
   implements IGarbageVehicleCameraManagerComponent, OnInit
 {
-  @Input()
-  business: IGarbageVehicleCameraManagerBusiness;
+  @Input() business: IGarbageVehicleCameraManagerBusiness;
 
   constructor(
     business: GarbageVehicleCameraManagerBusiness,

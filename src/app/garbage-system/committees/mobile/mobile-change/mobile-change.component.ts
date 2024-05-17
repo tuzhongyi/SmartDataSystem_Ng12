@@ -17,16 +17,11 @@ import { MobileChangeCheckBusiness } from './mobile-change-check.business';
   ],
 })
 export class MobileChangeComponent implements OnInit {
-  user: User;
-  MobileChangeStep = MobileChangeStep;
-
   @Input('Step')
   step = MobileChangeStep.Check;
 
-  @Output()
-  OnBinded: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnCancel: EventEmitter<void> = new EventEmitter();
+  @Output() OnBinded: EventEmitter<void> = new EventEmitter();
+  @Output() OnCancel: EventEmitter<void> = new EventEmitter();
 
   constructor(
     public checkBusiness: MobileChangeCheckBusiness,
@@ -36,6 +31,8 @@ export class MobileChangeComponent implements OnInit {
     this.user = this.local.user;
   }
 
+  user: User;
+  MobileChangeStep = MobileChangeStep;
   ngOnInit() {}
 
   cancel() {

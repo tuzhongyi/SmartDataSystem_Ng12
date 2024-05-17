@@ -9,12 +9,9 @@ import { AIGarbageStationDeviceDetailsBusiness } from './ai-garbage-station-devi
   providers: [AIGarbageStationDeviceDetailsBusiness],
 })
 export class AIGarbageStationDeviceDetailsComponent implements OnInit {
-  @Input()
-  model?: AIGarbageDevice;
-  @Output()
-  ok: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  cancel: EventEmitter<void> = new EventEmitter();
+  @Input() model?: AIGarbageDevice;
+  @Output() ok: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceDetailsBusiness) {}
   ngOnInit(): void {}

@@ -44,17 +44,9 @@ export class CommitteesHistroyTableComponent
       >[]
     >
 {
-  Language = Language;
-  headWidths = ['10%', '60%', '15%', 'calc(15% - 8px)', '8px'];
-  bodyWidths = ['10%', '60%', '15%', '15%'];
+  @Input() Committees?: Division;
 
-  EventType = EventType;
-
-  @Input()
-  Committees?: Division;
-
-  @Input()
-  Type: EventType = EventType.IllegalDrop;
+  @Input() Type: EventType = EventType.IllegalDrop;
 
   @Output() OnPictureClicked: EventEmitter<ImageControlModelArray> =
     new EventEmitter();
@@ -70,6 +62,11 @@ export class CommitteesHistroyTableComponent
   ) {
     this.business = business;
   }
+  Language = Language;
+  headWidths = ['10%', '60%', '15%', 'calc(15% - 8px)', '8px'];
+  bodyWidths = ['10%', '60%', '15%', '15%'];
+
+  EventType = EventType;
   key = 'committees-history-table';
   business: IBusiness<
     (IllegalDropEventRecord | MixedIntoEventRecord)[],

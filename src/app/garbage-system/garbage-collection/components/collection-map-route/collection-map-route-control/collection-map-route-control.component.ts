@@ -34,29 +34,19 @@ import {
 export class CollectionMapRouteControlComponent
   implements ICollectionMapRouteControlComponent, OnInit, AfterViewInit
 {
-  @Input()
-  business: ICollectionMapRouteControlChartsBusiness;
-  @Input()
-  query?: CollectionMapRouteQuery;
-  @Input()
-  load?: EventEmitter<CollectionMapRouteQuery>;
-  @Input()
-  seek?: EventEmitter<GisRoutePoint>;
-  @Input()
-  focus: boolean = false;
-  @Output()
-  focusChange: EventEmitter<boolean> = new EventEmitter();
-  @Output()
-  scoreclick: EventEmitter<Date> = new EventEmitter();
-  @Output()
-  routetrigger: EventEmitter<Date> = new EventEmitter();
-  @Output()
-  routeclick: EventEmitter<Date> = new EventEmitter();
-  @Output()
-  runclick: EventEmitter<boolean> = new EventEmitter();
+  @Input() business: ICollectionMapRouteControlChartsBusiness;
+  @Input() query?: CollectionMapRouteQuery;
+  @Input() load?: EventEmitter<CollectionMapRouteQuery>;
+  @Input() seek?: EventEmitter<GisRoutePoint>;
+  @Input() focus: boolean = false;
+  @Output() focusChange: EventEmitter<boolean> = new EventEmitter();
+  @Output() scoreclick: EventEmitter<Date> = new EventEmitter();
+  @Output() routetrigger: EventEmitter<Date> = new EventEmitter();
+  @Output() routeclick: EventEmitter<Date> = new EventEmitter();
+  @Output() runclick: EventEmitter<boolean> = new EventEmitter();
 
-  @Output()
-  loaded: EventEmitter<CollectionMapRouteControlSource> = new EventEmitter();
+  @Output() loaded: EventEmitter<CollectionMapRouteControlSource> =
+    new EventEmitter();
   constructor(charts: CollectionMapRouteControlChartsBusiness) {
     this.business = charts;
     this.business.scoreclick.subscribe(this.scoreclick);

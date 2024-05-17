@@ -34,18 +34,13 @@ export class EventRecordCountTableComponent
     OnChanges,
     IComponent<IModel, EventRecordCountTableModel[]>
 {
-  @Input()
-  eventType = EventType.IllegalDrop;
-  @Input()
-  unit: TimeUnit = TimeUnit.Day;
-  @Input()
-  type: UserResourceType = UserResourceType.Station;
-  @Input()
-  date: Date = new Date();
-  @Input()
-  load?: EventEmitter<void>;
-  @Output()
-  loaded: EventEmitter<EventRecordCountTableModel[]> = new EventEmitter();
+  @Input() eventType = EventType.IllegalDrop;
+  @Input() unit: TimeUnit = TimeUnit.Day;
+  @Input() type: UserResourceType = UserResourceType.Station;
+  @Input() date: Date = new Date();
+  @Input() load?: EventEmitter<void>;
+  @Output() loaded: EventEmitter<EventRecordCountTableModel[]> =
+    new EventEmitter();
 
   constructor(business: EventRecordCountTableBusiness) {
     this.business = business;

@@ -29,18 +29,14 @@ import { GarbageStationWeightTableStationService } from './service/garbage-stati
   ],
 })
 export class GarbageStationWeightTableComponent implements OnInit {
-  @Input()
-  isinit = true;
-  @Input()
-  args: GarbageStationWeightTableArgs = new GarbageStationWeightTableArgs();
-  @Input()
-  load?: EventEmitter<GarbageStationWeightTableArgs>;
-  @Output()
-  loaded: EventEmitter<GarbageStationWeightTableModel[]> = new EventEmitter();
-  @Input()
-  excel?: EventEmitter<string>;
-  @Input()
-  csv?: EventEmitter<string>;
+  @Input() isinit = true;
+  @Input() args: GarbageStationWeightTableArgs =
+    new GarbageStationWeightTableArgs();
+  @Input() load?: EventEmitter<GarbageStationWeightTableArgs>;
+  @Output() loaded: EventEmitter<GarbageStationWeightTableModel[]> =
+    new EventEmitter();
+  @Input() excel?: EventEmitter<string>;
+  @Input() csv?: EventEmitter<string>;
 
   constructor(private business: GarbageStationWeightTableBusiness) {}
 

@@ -28,16 +28,11 @@ import { GarbageVehicleCameraTableBusiness } from './garbage-vehicle-camera-tabl
 export class GarbageVehicleCameraTableComponent
   implements IComponent<IModel, VehicleCamera[]>, OnInit, OnChanges
 {
-  @Input()
-  business: IBusiness<IModel[], VehicleCamera[]>;
-  @Input()
-  condition?: string;
-  @Input()
-  selected: VehicleCamera[] = [];
-  @Output()
-  selectedChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
-  @Input()
-  vehicleId!: string;
+  @Input() business: IBusiness<IModel[], VehicleCamera[]>;
+  @Input() condition?: string;
+  @Input() selected: VehicleCamera[] = [];
+  @Output() selectedChange: EventEmitter<VehicleCamera[]> = new EventEmitter();
+  @Input() vehicleId!: string;
 
   constructor(business: GarbageVehicleCameraTableBusiness) {
     this.business = business;

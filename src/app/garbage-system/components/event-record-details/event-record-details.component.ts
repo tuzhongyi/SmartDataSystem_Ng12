@@ -5,9 +5,9 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { EventType } from 'src/app/enum/event-type.enum';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 
 @Component({
   selector: 'app-event-record-details',
@@ -15,20 +15,16 @@ import { Language } from 'src/app/common/tools/language';
   styleUrls: ['./event-record-details.component.less'],
 })
 export class EventRecordDetailsComponent implements OnInit, OnChanges {
+  @Input() type: EventType = EventType.MixedInto;
+
+  @Input() recordCount: number = 0;
+
+  @Input() index = 0;
+
+  constructor(private storeService: GlobalStorageService) {}
   Language = Language;
 
   title: string = '';
-
-  @Input()
-  type: EventType = EventType.MixedInto;
-
-  @Input()
-  recordCount: number = 0;
-
-  @Input()
-  index = 0;
-
-  constructor(private storeService: GlobalStorageService) {}
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.type) {
       this.title = Language.EventType(this.type);

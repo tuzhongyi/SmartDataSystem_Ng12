@@ -30,29 +30,26 @@ export class CommitteesStatisticComponent
     OnDestroy,
     IComponent<DivisionNumberStatistic, CommitteesStatisticViewModel>
 {
-  Language = Language;
+  @Input() Committees?: Division;
+  @Input() business: IBusiness<
+    DivisionNumberStatistic,
+    CommitteesStatisticViewModel
+  >;
 
-  @Input()
-  Committees?: Division;
-  @Input()
-  business: IBusiness<DivisionNumberStatistic, CommitteesStatisticViewModel>;
-
-  @Output()
-  OnAllDeviceCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnOnlineDeviceCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnOfflineDeviceCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnGarbageStationCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnGarbageDropEventCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnGarbageFullEventCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnIllegalDropEventCountClicked: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnMixedIntoEventCountClicked: EventEmitter<void> = new EventEmitter();
+  @Output() OnAllDeviceCountClicked: EventEmitter<void> = new EventEmitter();
+  @Output() OnOnlineDeviceCountClicked: EventEmitter<void> = new EventEmitter();
+  @Output() OnOfflineDeviceCountClicked: EventEmitter<void> =
+    new EventEmitter();
+  @Output() OnGarbageStationCountClicked: EventEmitter<void> =
+    new EventEmitter();
+  @Output() OnGarbageDropEventCountClicked: EventEmitter<void> =
+    new EventEmitter();
+  @Output() OnGarbageFullEventCountClicked: EventEmitter<void> =
+    new EventEmitter();
+  @Output() OnIllegalDropEventCountClicked: EventEmitter<void> =
+    new EventEmitter();
+  @Output() OnMixedIntoEventCountClicked: EventEmitter<void> =
+    new EventEmitter();
 
   constructor(
     business: CommitteesStatisticBusiness,
@@ -61,6 +58,7 @@ export class CommitteesStatisticComponent
     this.business = business;
   }
 
+  Language = Language;
   view = new CommitteesStatisticViewModel();
   key = 'committees-statistic';
 

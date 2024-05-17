@@ -16,40 +16,34 @@ export class TouchSpinDirective implements AfterViewInit {
   public get options(): TouchSpinOptions {
     return this._options;
   }
-  @Input()
-  public set options(v: TouchSpinOptions) {
+  @Input() public set options(v: TouchSpinOptions) {
     this._options = Object.assign(this._options, v);
   }
 
   public get min(): number | undefined {
     return this.options.min;
   }
-  @Input()
-  public set min(v: number | undefined) {
+  @Input() public set min(v: number | undefined) {
     this.options.min = v;
   }
 
   public get max(): number | undefined {
     return this.options.max;
   }
-  @Input()
-  public set max(v: number | undefined) {
+  @Input() public set max(v: number | undefined) {
     this.options.max = v;
   }
   public get verticalbuttons(): boolean | undefined {
     return this.options.verticalbuttons;
   }
-  @Input()
-  public set verticalbuttons(v: boolean | undefined) {
+  @Input() public set verticalbuttons(v: boolean | undefined) {
     this.options.verticalbuttons = v;
   }
 
   @Output() touchSpinChange = new EventEmitter();
 
-  @Input()
-  number?: number = 1;
-  @Output()
-  numberChange: EventEmitter<number> = new EventEmitter();
+  @Input() number?: number = 1;
+  @Output() numberChange: EventEmitter<number> = new EventEmitter();
 
   constructor(private ele: ElementRef<HTMLInputElement>) {}
   ngAfterViewInit(): void {

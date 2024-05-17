@@ -91,24 +91,21 @@ export class MapControlComponent
   @Input() position?: EventEmitter<GarbageStation>;
   @Input() filting?: boolean;
 
-  @Input()
-  public set showmenu(v: boolean) {
+  @Input() public set showmenu(v: boolean) {
     if (v) {
       this.guide.showmenu();
     } else {
       this.guide.closemenu();
     }
   }
-  @Input()
-  public set showinfo(v: boolean) {
+  @Input() public set showinfo(v: boolean) {
     if (v) {
       this.guide.showpointinfo();
     } else {
       this.guide.closepointinfo();
     }
   }
-  @Input()
-  public set showcameras(v: boolean) {
+  @Input() public set showcameras(v: boolean) {
     if (v) {
       this.guide.station.then((station) => {
         this.onPointDoubleClicked(station);
@@ -117,8 +114,7 @@ export class MapControlComponent
       this.onMapClicked();
     }
   }
-  @Input()
-  public set showvideo(v: boolean) {
+  @Input() public set showvideo(v: boolean) {
     if (v) {
       this.guide.station.then((station) => {
         let camera = station.Cameras![0];

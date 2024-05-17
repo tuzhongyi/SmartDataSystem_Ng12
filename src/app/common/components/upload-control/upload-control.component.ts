@@ -15,20 +15,14 @@ import { FileReadType, FileResult } from './upload-control.model';
   styleUrls: ['./upload-control.component.less'],
 })
 export class UploadControlComponent implements OnInit {
-  @Input()
-  accept: string = '*.png|*.jpg|*.jpeg|*.bmp';
-  @Input()
-  path: string = '';
-  @Output()
-  pathChange: EventEmitter<string> = new EventEmitter();
+  @Input() accept: string = '*.png|*.jpg|*.jpeg|*.bmp';
+  @Input() path: string = '';
+  @Output() pathChange: EventEmitter<string> = new EventEmitter();
 
-  @Input()
-  type: FileReadType = FileReadType.DataURL;
-  @Input()
-  encoding?: string;
+  @Input() type: FileReadType = FileReadType.DataURL;
+  @Input() encoding?: string;
 
-  @Output()
-  upload: EventEmitter<FileResult> = new EventEmitter();
+  @Output() upload: EventEmitter<FileResult> = new EventEmitter();
 
   constructor() {}
   @ViewChild('file')

@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
-import { Color, XAXisComponentOption, YAXisComponentOption } from 'echarts';
+import { XAXisComponentOption, YAXisComponentOption } from 'echarts';
 import {
   BarChart,
   BarSeriesOption,
@@ -47,8 +47,7 @@ import { EventNumberChartBusiness } from './event-number-chart.business';
 export class EventNumberChartComponent implements OnInit, AfterViewInit {
   // 当前区划ID
   private _resourceId: string = '';
-  @Input()
-  set resourceId(id: string) {
+  @Input() set resourceId(id: string) {
     console.log('set resourceId');
     this._resourceId = id;
     this.searchInfo.ResourceId = id;
@@ -56,6 +55,7 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
   get resourceId() {
     return this._resourceId;
   }
+  constructor(private _business: EventNumberChartBusiness) {}
 
   TimeUnit = TimeUnit;
   ChartType = ChartType;
@@ -148,8 +148,6 @@ export class EventNumberChartComponent implements OnInit, AfterViewInit {
   };
 
   @ViewChild('chartContainer') container!: ElementRef<HTMLDivElement>;
-
-  constructor(private _business: EventNumberChartBusiness) {}
 
   ngOnInit(): void {
     this._init();

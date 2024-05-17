@@ -21,14 +21,10 @@ import { EventRecordCountExportConverter } from './event-record-count-export.con
   styleUrls: ['./event-record-count.component.less'],
 })
 export class EventRecordCountComponent implements OnInit {
-  @Input()
-  date: Date = new Date();
-  @Input()
-  unit: TimeUnit = TimeUnit.Day;
-  @Input()
-  userType: UserResourceType = UserResourceType.Station;
-  @Input()
-  eventType: EventType = EventType.IllegalDrop;
+  @Input() date: Date = new Date();
+  @Input() unit: TimeUnit = TimeUnit.Day;
+  @Input() userType: UserResourceType = UserResourceType.Station;
+  @Input() eventType: EventType = EventType.IllegalDrop;
 
   constructor(
     private local: LocalStorageService,

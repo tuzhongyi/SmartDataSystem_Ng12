@@ -20,24 +20,18 @@ export class AIGarbageStationRegionTableComponent
   extends PagedTableAbstractComponent<AIGarbageRegion>
   implements OnInit
 {
-  @Input()
-  args: AIGarbageStationRegionTableArgs = new AIGarbageStationRegionTableArgs();
-  @Input()
-  load?: EventEmitter<AIGarbageStationRegionTableArgs>;
-  @Input()
-  selecteds: AIGarbageRegion[] = [];
-  @Output()
-  selectedsChange: EventEmitter<AIGarbageRegion[]> = new EventEmitter();
-  @Output()
-  loaded: EventEmitter<PagedList<AIGarbageRegion>> = new EventEmitter();
-  @Output()
-  details: EventEmitter<AIGarbageRegion> = new EventEmitter();
-  @Output()
-  delete: EventEmitter<AIGarbageRegion> = new EventEmitter();
-  @Output()
-  building: EventEmitter<AIGarbageRegion> = new EventEmitter();
-  @Output()
-  station: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Input() args: AIGarbageStationRegionTableArgs =
+    new AIGarbageStationRegionTableArgs();
+  @Input() load?: EventEmitter<AIGarbageStationRegionTableArgs>;
+  @Input() selecteds: AIGarbageRegion[] = [];
+  @Output() selectedsChange: EventEmitter<AIGarbageRegion[]> =
+    new EventEmitter();
+  @Output() loaded: EventEmitter<PagedList<AIGarbageRegion>> =
+    new EventEmitter();
+  @Output() details: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output() delete: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output() building: EventEmitter<AIGarbageRegion> = new EventEmitter();
+  @Output() station: EventEmitter<AIGarbageRegion> = new EventEmitter();
 
   constructor(private business: AIGarbageStationRegionTableBusiness) {
     super();

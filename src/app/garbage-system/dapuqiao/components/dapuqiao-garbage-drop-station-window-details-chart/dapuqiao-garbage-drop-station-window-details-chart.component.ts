@@ -36,8 +36,7 @@ export class DapuqiaoGarbageDropStationWindowDetailsChartComponent
     OnInit,
     IComponent<IModel, DapuqiaoGarbageDropStationWindowDetailsChartModel>
 {
-  @Input()
-  business: DapuqiaoGarbageDropStationWindowDetailsChartBusiness;
+  @Input() business: DapuqiaoGarbageDropStationWindowDetailsChartBusiness;
   constructor(
     business: DapuqiaoGarbageDropStationWindowDetailsChartBusiness,
     private local: LocalStorageService

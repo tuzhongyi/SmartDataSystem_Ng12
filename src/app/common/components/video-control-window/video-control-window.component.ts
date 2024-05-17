@@ -31,25 +31,18 @@ export class VideoControlWindowComponent
     this.modechange(v);
   }
   @Input() mask = true;
-  @Input()
-  title: string = '';
-  @Input()
-  _mode: PlayMode = PlayMode.live;
+  @Input() title: string = '';
+  @Input() _mode: PlayMode = PlayMode.live;
 
-  @Input()
-  model?: VideoModel;
+  @Input() model?: VideoModel;
 
+  @Input() window: VideoWindowViewModel = new VideoWindowViewModel();
+  @Input() windowstyle?: any;
+
+  @Output() download: EventEmitter<DurationParams> = new EventEmitter();
+  constructor() {}
   preview?: VideoModel;
   playback?: VideoModel;
-
-  @Input()
-  window: VideoWindowViewModel = new VideoWindowViewModel();
-  @Input()
-  windowstyle?:any
-
-  @Output()
-  download: EventEmitter<DurationParams> = new EventEmitter();
-  constructor() {}
   PlayMode = PlayMode;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.model && this.model) {

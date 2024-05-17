@@ -24,8 +24,7 @@ export class MapControlButtons3Component implements OnInit {
   public get filting(): boolean {
     return this.model.filter.selected;
   }
-  @Input()
-  public set filting(v: boolean | undefined) {
+  @Input() public set filting(v: boolean | undefined) {
     if (v === undefined) return;
     this.model.filter.selected = v;
   }

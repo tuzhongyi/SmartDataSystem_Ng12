@@ -19,12 +19,10 @@ import { GarbageStationWindowRecordFilterModel } from './garbage-station-window-
 export class GarbageStationWindowRecordFilterComponent
   implements IComponent<IModel, GarbageStationWindowRecordFilterModel>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, GarbageStationWindowRecordFilterModel>;
-  @Output()
-  filterChange: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
-  @Input()
-  filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
+  @Input() business: IBusiness<IModel, GarbageStationWindowRecordFilterModel>;
+  @Output() filterChange: EventEmitter<GarbageDropRecordFilter> =
+    new EventEmitter();
+  @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
   constructor(business: GarbageStationWindowRecordFilterBusiness) {
     this.business = business;
   }

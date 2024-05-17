@@ -20,17 +20,14 @@ export class AIGarbageStationDeviceRecordEventTableComponent
   extends PagedTableAbstractComponent<AIGarbageDeviceEventRecord>
   implements OnInit
 {
-  @Input()
-  args: AIGarbageStationDeviceRecordEventTableArgs =
+  @Input() args: AIGarbageStationDeviceRecordEventTableArgs =
     new AIGarbageStationDeviceRecordEventTableArgs();
-  @Input()
-  load?: EventEmitter<AIGarbageStationDeviceRecordEventTableArgs>;
+  @Input() load?: EventEmitter<AIGarbageStationDeviceRecordEventTableArgs>;
 
-  @Output()
-  loaded: EventEmitter<PagedList<AIGarbageDeviceEventRecord>> =
+  @Output() loaded: EventEmitter<PagedList<AIGarbageDeviceEventRecord>> =
     new EventEmitter();
-  @Output()
-  image: EventEmitter<AIGarbageDeviceEventRecord> = new EventEmitter();
+  @Output() image: EventEmitter<AIGarbageDeviceEventRecord> =
+    new EventEmitter();
 
   constructor(
     private business: AIGarbageStationDeviceRecordEventTableBusiness

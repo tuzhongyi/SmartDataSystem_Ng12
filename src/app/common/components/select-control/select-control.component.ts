@@ -21,15 +21,11 @@ import { SelectItem } from './select-control.model';
 export class SelectControlComponent
   implements OnInit, OnChanges, AfterViewChecked
 {
-  @Input()
-  data?: SelectItem[];
-  @Input()
-  cannull: boolean = false;
-  @Input()
-  default: boolean = true;
+  @Input() data?: SelectItem[];
+  @Input() cannull: boolean = false;
+  @Input() default: boolean = true;
 
-  @Input()
-  public set style(v: any) {
+  @Input() public set style(v: any) {
     if (this._style === undefined) {
       this._style = {};
     }
@@ -44,13 +40,11 @@ export class SelectControlComponent
   public get selected(): SelectItem | undefined {
     return this._selected;
   }
-  @Input()
-  public set selected(v: SelectItem | undefined) {
+  @Input() public set selected(v: SelectItem | undefined) {
     this._selected = v;
     this.selectedChange.emit(v);
   }
-  @Output()
-  selectedChange: EventEmitter<SelectItem> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<SelectItem> = new EventEmitter();
 
   constructor(public detector: ChangeDetectorRef) {}
   ngAfterViewChecked(): void {

@@ -25,8 +25,7 @@ import {
 export class GarbageCollectionPointTrashCanManagerComponent
   implements IGarbageCollectionPointTrashCanManagerComponent, OnInit
 {
-  @Input()
-  business: IGarbageCollectionPointTrashCanManagerBusiness;
+  @Input() business: IGarbageCollectionPointTrashCanManagerBusiness;
   constructor(
     business: GarbageCollectionPointTrashCanManagerBusiness,
     private toastr: ToastrService

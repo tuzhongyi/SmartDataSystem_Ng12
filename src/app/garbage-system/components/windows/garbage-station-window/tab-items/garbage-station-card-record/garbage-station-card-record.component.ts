@@ -14,8 +14,7 @@ import { LabelTreeManager } from './garbage-station-card-record.model';
   providers: [GarbageStationCardRecordBusiness],
 })
 export class GarbageStationCardRecordComponent implements OnInit {
-  @Output()
-  video: EventEmitter<AIGarbageRfidCardRecord> = new EventEmitter();
+  @Output() video: EventEmitter<AIGarbageRfidCardRecord> = new EventEmitter();
   constructor(
     public business: GarbageStationCardRecordBusiness,
     global: GlobalStorageService

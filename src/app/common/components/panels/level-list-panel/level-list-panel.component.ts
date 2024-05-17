@@ -13,16 +13,13 @@ import { ILevelListNode } from './level-list-panel.model';
   styleUrls: ['./level-list-panel.component.less'],
 })
 export class LevelListPanelComponent implements OnInit, OnDestroy {
-  @Input()
-  cannull: boolean = true;
+  @Input() cannull: boolean = true;
   @Input() nulllanguage = '请选择';
-  @Input()
-  nodes: ILevelListNode[] = [];
+  @Input() nodes: ILevelListNode[] = [];
   @Input() opened = false;
   @Output() openedChange = new EventEmitter<boolean>();
 
-  @Input()
-  public set selected(v: ILevelListNode | undefined) {
+  @Input() public set selected(v: ILevelListNode | undefined) {
     this._selected = v;
     this.selectedChange.emit(v);
   }
@@ -31,8 +28,8 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
     return this._selected;
   }
 
-  @Output()
-  selectedChange: EventEmitter<ILevelListNode | undefined> = new EventEmitter();
+  @Output() selectedChange: EventEmitter<ILevelListNode | undefined> =
+    new EventEmitter();
 
   constructor() {}
 

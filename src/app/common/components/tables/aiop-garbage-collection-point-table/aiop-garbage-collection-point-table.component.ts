@@ -24,21 +24,16 @@ export class AiopGarbageCollectionPointTableComponent
   extends PagedTableAbstractComponent<CollectionPoint>
   implements IComponent<IModel, PagedList<CollectionPoint>>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<CollectionPoint>>;
+  @Input() business: IBusiness<IModel, PagedList<CollectionPoint>>;
   @Input() init = false;
-  @Input()
-  args = new AIOPGarbageCollectionPointTableArgs();
-  @Input()
-  load?: EventEmitter<AIOPGarbageCollectionPointTableArgs>;
+  @Input() args = new AIOPGarbageCollectionPointTableArgs();
+  @Input() load?: EventEmitter<AIOPGarbageCollectionPointTableArgs>;
 
-  @Output()
-  update: EventEmitter<CollectionPoint> = new EventEmitter();
+  @Output() update: EventEmitter<CollectionPoint> = new EventEmitter();
 
-  @Input()
-  selecteds: CollectionPoint[] = [];
-  @Output()
-  selectedsChange: EventEmitter<CollectionPoint[]> = new EventEmitter();
+  @Input() selecteds: CollectionPoint[] = [];
+  @Output() selectedsChange: EventEmitter<CollectionPoint[]> =
+    new EventEmitter();
 
   constructor(business: AIOPGarbageCollectionPointTableBusiness) {
     super();

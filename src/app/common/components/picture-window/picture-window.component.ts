@@ -8,8 +8,7 @@ import { ImageResult } from '../../../view-model/image-result.model';
   styleUrls: ['./picture-window.component.less'],
 })
 export class PictureWindowComponent extends WindowComponent implements OnInit {
-  @Input()
-  picture?: ImageResult;
+  @Input() picture?: ImageResult;
 
   @Input() title = '';
   constructor() {

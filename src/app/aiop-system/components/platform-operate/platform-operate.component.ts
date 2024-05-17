@@ -14,6 +14,17 @@ import { PlatformOperateBusiness } from './platform-operate.business';
   providers: [PlatformOperateBusiness],
 })
 export class PlatformOperateComponent implements OnInit {
+  @Input() state: FormState = FormState.none;
+
+  @Input() operateId: string = '';
+
+  @Output() closeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private _business: PlatformOperateBusiness,
+    private _toastrService: ToastrService
+  ) {}
+
   private _operateModel?: Platform;
 
   FormState = FormState;
@@ -83,20 +94,6 @@ export class PlatformOperateComponent implements OnInit {
     }
     return '';
   }
-
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  operateId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  constructor(
-    private _business: PlatformOperateBusiness,
-    private _toastrService: ToastrService
-  ) {}
 
   ngOnInit(): void {
     this.init();

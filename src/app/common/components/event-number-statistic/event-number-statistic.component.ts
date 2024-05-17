@@ -29,20 +29,12 @@ import { IllegalDropStatisticConf } from './event-number-statistic.config';
   providers: [EventNumberStatisticExportConverter, IllegalDropTotalBusiness],
 })
 export class EventNumberStatisticComponent implements OnInit {
-  TimeUnit = TimeUnit;
-
-  // 拉取所有数据
-  private _pageSize = 9527e2;
-  private _firstSize = 200;
-
   // 默认展示垃圾落地统计信息
-  @Input()
-  eventType: EventType = EventType.IllegalDrop;
+  @Input() eventType: EventType = EventType.IllegalDrop;
 
   // 当前区划ID
   private _resourceId: string = '';
-  @Input()
-  set resourceId(id: string) {
+  @Input() set resourceId(id: string) {
     console.log('set resourceId');
     this._resourceId = id;
     this.searchInfo.ResourceId = id;
@@ -53,8 +45,7 @@ export class EventNumberStatisticComponent implements OnInit {
 
   // 当前区划等级
   private _resourceType: UserResourceType = UserResourceType.City;
-  @Input()
-  set resourceType(type: UserResourceType) {
+  @Input() set resourceType(type: UserResourceType) {
     console.log('set resourceType');
     this._resourceType = type;
     this.searchInfo.ResourceType = EnumHelper.GetResourceChildType(type);
@@ -67,8 +58,7 @@ export class EventNumberStatisticComponent implements OnInit {
   private _resourceDefault: UserResourceType = EnumHelper.GetResourceChildType(
     this.resourceType
   );
-  @Input()
-  set resourceDefault(type: UserResourceType) {
+  @Input() set resourceDefault(type: UserResourceType) {
     console.log('set default');
     this._resourceDefault = type;
     this.searchInfo.ResourceType = type;
@@ -77,6 +67,16 @@ export class EventNumberStatisticComponent implements OnInit {
     return this._resourceDefault;
   }
 
+  constructor(
+    private _business: IllegalDropTotalBusiness,
+    private exports: ExportBusiness
+  ) {}
+
+  TimeUnit = TimeUnit;
+
+  // 拉取所有数据
+  private _pageSize = 9527e2;
+  private _firstSize = 200;
   get week() {
     return this.searchInfo.TimeUnit == TimeUnit.Week;
   }
@@ -106,12 +106,6 @@ export class EventNumberStatisticComponent implements OnInit {
     ResourceId: this.resourceId,
     TimeUnit: TimeUnit.Day,
   };
-
-  constructor(
-    private _business: IllegalDropTotalBusiness,
-    private exports: ExportBusiness
-  ) {}
-
   ngOnInit(): void {
     // 模版要用 ngValue
     this._initUserResourceType();

@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { SelectItem } from '../select-control/select-control.model';
 
 @Component({
   selector: 'app-tab-title',
@@ -7,8 +6,7 @@ import { SelectItem } from '../select-control/select-control.model';
   styleUrls: ['./tab-title.component.less'],
 })
 export class TabTitleComponent implements OnInit {
-  @Input()
-  title: string = '';
+  @Input() title: string = '';
 
   constructor() {}
 

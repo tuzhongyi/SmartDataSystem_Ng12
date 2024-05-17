@@ -41,21 +41,20 @@ export class StatisticSummaryStationEventChartComponent
     | GarbageStationNumberStatisticV2
     | DivisionNumberStatisticV2
   )[];
-  @Input()
-  EventTrigger?: EventEmitter<void>;
-  @Output()
-  OnTriggerEvent: EventEmitter<StatisticSummaryStationEventChartViewModel[]> =
-    new EventEmitter();
+  @Input() EventTrigger?: EventEmitter<void>;
+  @Output() OnTriggerEvent: EventEmitter<
+    StatisticSummaryStationEventChartViewModel[]
+  > = new EventEmitter();
 
+  constructor(business: StatisticSummaryStationEventChartBusiness) {
+    this.business = business;
+  }
   echart: any;
   @ViewChild('echarts')
   private echartElement?: ElementRef<HTMLDivElement>;
 
   data?: StatisticSummaryStationEventChartViewModel[];
 
-  constructor(business: StatisticSummaryStationEventChartBusiness) {
-    this.business = business;
-  }
   business: IBusiness<
     GarbageStationNumberStatisticV2[],
     StatisticSummaryStationEventChartViewModel[]

@@ -19,24 +19,18 @@ import {
 export class MediaMultipleWindowComponent
   implements OnInit, IComponent<IModel, MediaMultipleWindowModel>
 {
-  @Input()
-  Model: WindowViewModel = new WindowViewModel();
-  @Input()
-  style = {};
-  @Input()
-  args?: MediaMultipleWindowArgs;
-  @Input()
-  business: IBusiness<IModel, MediaMultipleWindowModel>;
-  @Input()
-  date?: Date;
+  @Input() Model: WindowViewModel = new WindowViewModel();
+  @Input() style = {};
+  @Input() args?: MediaMultipleWindowArgs;
+  @Input() business: IBusiness<IModel, MediaMultipleWindowModel>;
+  @Input() date?: Date;
   @Input() fullplay = true;
-
-  model?: MediaMultipleWindowModel;
 
   constructor(business: MediaMultipleWindowBusiness) {
     this.business = business;
   }
 
+  model?: MediaMultipleWindowModel;
   async ngOnInit() {
     let now: Date = new Date();
     if (this.date && this.date >= now) {

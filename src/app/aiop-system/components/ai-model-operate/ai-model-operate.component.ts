@@ -32,6 +32,18 @@ import { AIModelOperateBusiness } from './ai-model-operate.business';
 export class AIModelOperateComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
+  @Input() state: FormState = FormState.none;
+
+  @Input() operateId: string = '';
+
+  @Output() closeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private _business: AIModelOperateBusiness,
+    private _toastrService: ToastrService,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
+
   private _operateModel?: CameraAIModel;
   private _parsedAIModel?: CameraAIModel;
 
@@ -77,22 +89,7 @@ export class AIModelOperateComponent
     return this.iconsMap.get(this.selectedIconKey);
   }
 
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  operateId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
   @ViewChild('fileBtn') fileBtn?: ElementRef<HTMLInputElement>;
-
-  constructor(
-    private _business: AIModelOperateBusiness,
-    private _toastrService: ToastrService,
-    @Inject(DOCUMENT) private document: Document
-  ) {}
 
   async ngOnInit() {
     if (this.state == FormState.edit) {

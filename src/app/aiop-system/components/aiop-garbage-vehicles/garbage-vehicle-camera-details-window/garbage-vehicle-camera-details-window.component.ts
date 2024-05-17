@@ -19,12 +19,9 @@ export class GarbageVehicleCameraDetailsWindowComponent
   extends WindowComponent
   implements OnInit
 {
-  @Input()
-  open?: EventEmitter<VehicleCamera>;
-  @Output()
-  no: EventEmitter<void> = new EventEmitter();
-  @Output()
-  yes: EventEmitter<VehicleCamera> = new EventEmitter();
+  @Input() open?: EventEmitter<VehicleCamera>;
+  @Output() no: EventEmitter<void> = new EventEmitter();
+  @Output() yes: EventEmitter<VehicleCamera> = new EventEmitter();
 
   constructor(
     private business: GarbageVehicleCameraDetailsWindowBusiness,

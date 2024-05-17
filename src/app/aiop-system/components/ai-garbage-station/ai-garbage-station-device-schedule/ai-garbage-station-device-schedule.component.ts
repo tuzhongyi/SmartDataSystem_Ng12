@@ -18,12 +18,9 @@ import {
   providers: [AIGarbageStationDeviceScheduleBusiness],
 })
 export class AIGarbageStationDeviceScheduleComponent implements OnInit {
-  @Input()
-  model?: AIGarbageDevice;
-  @Output()
-  ok: EventEmitter<AIGarbageDevice> = new EventEmitter();
-  @Output()
-  cancel: EventEmitter<void> = new EventEmitter();
+  @Input() model?: AIGarbageDevice;
+  @Output() ok: EventEmitter<AIGarbageDevice> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceScheduleBusiness) {}
 

@@ -18,14 +18,11 @@ import { EncodeDeviceOperateBusiness } from './encode-device-operate.business';
   providers: [EncodeDeviceOperateBusiness],
 })
 export class EncodeDeviceOperateComponent implements OnInit {
-  @Input()
-  state: FormState = FormState.none;
+  @Input() state: FormState = FormState.none;
 
-  @Input()
-  encodeDeviceId?: string;
+  @Input() encodeDeviceId?: string;
 
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
+  @Output() closeEvent = new EventEmitter<boolean>();
 
   constructor(
     private fb: FormBuilder,

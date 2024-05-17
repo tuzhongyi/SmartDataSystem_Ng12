@@ -30,10 +30,8 @@ export class EventRecordDetailsTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  count: number = 0;
-  @Input()
-  type: EventType = EventType.IllegalDrop;
+  @Input() count: number = 0;
+  @Input() type: EventType = EventType.IllegalDrop;
 
   constructor(business: EventRecordDetailsTableBusiness) {
     this.business = business;

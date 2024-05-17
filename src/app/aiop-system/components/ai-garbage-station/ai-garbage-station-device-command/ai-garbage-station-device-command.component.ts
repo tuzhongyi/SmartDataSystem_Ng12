@@ -20,10 +20,8 @@ import { AIGarbageStationDeviceCommandWindow } from './ai-garbage-station-device
   providers: [AIGarbageStationDeviceCommandBusiness],
 })
 export class AIGarbageStationDeviceCommandComponent implements OnInit {
-  @Input()
-  model?: AIGarbageDevice;
-  @Input()
-  power: EventEmitter<AIGarbageDropWindow> = new EventEmitter();
+  @Input() model?: AIGarbageDevice;
+  @Input() power: EventEmitter<AIGarbageDropWindow> = new EventEmitter();
 
   constructor(private business: AIGarbageStationDeviceCommandBusiness) {}
 

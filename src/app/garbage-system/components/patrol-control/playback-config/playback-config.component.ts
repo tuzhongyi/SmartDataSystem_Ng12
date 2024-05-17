@@ -6,7 +6,6 @@ import {
   EventEmitter,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
@@ -21,6 +20,10 @@ declare var $: any;
   styleUrls: ['./playback-config.component.less'],
 })
 export class PlaybackConfigComponent implements OnInit, AfterViewInit {
+  @Output() OnOKClicked: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() OnCancelClicked: EventEmitter<void> = new EventEmitter();
+
+  constructor(private datePipe: DatePipe) {}
   DateTimePickerView = DateTimePickerView;
   endTime: Date = new Date();
   beginTime: Date = new Date();
@@ -39,12 +42,6 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
   // @ViewChild('end')
   // endControl?: ElementRef;
 
-  @Output()
-  OnOKClicked: EventEmitter<DurationParams> = new EventEmitter();
-  @Output()
-  OnCancelClicked: EventEmitter<void> = new EventEmitter();
-
-  constructor(private datePipe: DatePipe) {}
   ngAfterViewInit(): void {
     // let begin = this.initTimepicker(this.endControl, this.endTime);
     // let end = this.initTimepicker(this.beginControl, this.beginTime);

@@ -21,35 +21,25 @@ import { CommonTreeController } from './common-tree.controller';
   styleUrls: ['./common-tree.component.less'],
 })
 export class CommonTreeComponent implements OnInit, OnChanges {
-  @Input()
-  dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
+  @Input() dataSubject = new BehaviorSubject<CommonNestNode[]>([]);
 
   // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
   @Input() holdStatus: boolean = false;
 
-  @Input('selectStrategy')
-  selectStrategy = SelectStrategy.Single; // 单选或多选
+  @Input('selectStrategy') selectStrategy = SelectStrategy.Single; // 单选或多选
 
   // 默认选中列表
-  @Input()
-  defaultIds: string[] = [];
+  @Input() defaultIds: string[] = [];
 
-  @Input()
-  showButtonIcon = false;
+  @Input() showButtonIcon = false;
 
-  @Input()
-  isAsync = true;
-  @Output()
-  loadChildrenEvent = new EventEmitter<CommonFlatNode>();
-  @Output()
-  selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> =
+  @Input() isAsync = true;
+  @Output() loadChildrenEvent = new EventEmitter<CommonFlatNode>();
+  @Output() selectTreeNode: EventEmitter<SelectionChange<CommonFlatNode>> =
     new EventEmitter<SelectionChange<CommonFlatNode>>();
-  @Output()
-  defaultIdsChange = new EventEmitter<string[]>();
-  @Output()
-  buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
-  @Input()
-  inited: EventEmitter<void> = new EventEmitter();
+  @Output() defaultIdsChange = new EventEmitter<string[]>();
+  @Output() buttonIconClickEvent = new EventEmitter<CommonFlatNode>();
+  @Input() inited: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 

@@ -15,12 +15,9 @@ export class GarbageCollectionPointTrashcanDetailsWindowComponent
   extends WindowComponent
   implements OnInit
 {
-  @Input()
-  open?: EventEmitter<CollectionTrashCan>;
-  @Output()
-  no: EventEmitter<void> = new EventEmitter();
-  @Output()
-  yes: EventEmitter<CollectionTrashCan> = new EventEmitter();
+  @Input() open?: EventEmitter<CollectionTrashCan>;
+  @Output() no: EventEmitter<void> = new EventEmitter();
+  @Output() yes: EventEmitter<CollectionTrashCan> = new EventEmitter();
 
   constructor(private toastr: ToastrService) {
     super();

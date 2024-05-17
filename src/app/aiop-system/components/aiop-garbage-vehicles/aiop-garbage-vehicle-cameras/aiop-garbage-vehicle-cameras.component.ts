@@ -10,8 +10,7 @@ import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-cam
   providers: [],
 })
 export class AIOPGarbageVehicleCamerasComponent implements OnInit {
-  @Input()
-  model?: GarbageVehicle;
+  @Input() model?: GarbageVehicle;
 
   selected?: VehicleCamera;
   Language = Language;

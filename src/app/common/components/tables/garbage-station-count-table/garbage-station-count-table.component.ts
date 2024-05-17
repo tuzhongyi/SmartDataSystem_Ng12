@@ -29,11 +29,9 @@ export class GarbageStationCountTableComponent
   extends PagedTableAbstractComponent<DivisionModel>
   implements IComponent<IModel, DivisionModel[]>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, DivisionModel[]>;
+  @Input() business: IBusiness<IModel, DivisionModel[]>;
 
-  @Input()
-  load?: EventEmitter<void>;
+  @Input() load?: EventEmitter<void>;
   constructor(business: GarbageStationCountTableBusiness) {
     super();
     this.business = business;

@@ -45,30 +45,24 @@ export class CollectionMapControlComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
   //#region Output
-  @Output()
-  VideoPlay: EventEmitter<ICamera> = new EventEmitter();
-  @Output()
-  patrol: EventEmitter<void> = new EventEmitter();
+  @Output() VideoPlay: EventEmitter<ICamera> = new EventEmitter();
+  @Output() patrol: EventEmitter<void> = new EventEmitter();
   // 垃圾落地记录
-  @Output()
-  illegalDropClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() illegalDropClicked: EventEmitter<GarbageVehicle> =
+    new EventEmitter();
   // 混合投放记录
-  @Output()
-  mixedIntoClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() mixedIntoClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
   // 小包垃圾滞留
-  @Output()
-  garbageCountClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() garbageCountClicked: EventEmitter<GarbageVehicle> =
+    new EventEmitter();
   // 垃圾滞留投放点
-  @Output()
-  garbageRetentionClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
-  @Output()
-  garbageFullClicked: EventEmitter<GarbageVehicle> = new EventEmitter();
-  @Input()
-  position?: EventEmitter<GarbageVehicle>;
-  @Output()
-  route: EventEmitter<GarbageVehicle> = new EventEmitter();
-  @Output()
-  wakeOnLAN: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() garbageRetentionClicked: EventEmitter<GarbageVehicle> =
+    new EventEmitter();
+  @Output() garbageFullClicked: EventEmitter<GarbageVehicle> =
+    new EventEmitter();
+  @Input() position?: EventEmitter<GarbageVehicle>;
+  @Output() route: EventEmitter<GarbageVehicle> = new EventEmitter();
+  @Output() wakeOnLAN: EventEmitter<GarbageVehicle> = new EventEmitter();
 
   //#endregion
   //#region ViewChild

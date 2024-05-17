@@ -6,7 +6,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { PasswordCheckCodeResult } from 'src/app/network/request/user/user-request.params';
 import { HowellUrl } from 'src/app/view-model/howell-url';
@@ -20,6 +20,10 @@ import { PasswordGetBackService } from '../password-get-back.service';
   providers: [PasswordGetBackService],
 })
 export class PasswordCheckNameComponent implements OnInit {
+  @Output() CheckMobileNoResult: EventEmitter<PasswordCheckCodeResult> =
+    new EventEmitter();
+
+  constructor(private passwordService: PasswordGetBackService) {}
   form: FormGroup = new FormGroup({
     mobileNo: new FormControl(''),
     checkCode: new FormControl(''),
@@ -27,12 +31,6 @@ export class PasswordCheckNameComponent implements OnInit {
 
   @ViewChild('checkCodeButton')
   checkCodeButton?: ElementRef;
-
-  @Output()
-  CheckMobileNoResult: EventEmitter<PasswordCheckCodeResult> = new EventEmitter();
-
-  constructor(private passwordService: PasswordGetBackService) {}
-
   ngOnInit() {}
 
   get mobileNo() {

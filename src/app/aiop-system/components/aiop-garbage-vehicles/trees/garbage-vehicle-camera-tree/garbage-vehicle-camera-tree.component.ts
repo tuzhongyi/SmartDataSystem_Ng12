@@ -22,27 +22,19 @@ import { GarbageVehicleCameraTreeBusiness } from './business/garbage-vehicle-cam
   ],
 })
 export class GarbageVehicleCameraTreeComponent implements OnInit {
-  @Input()
-  defaultIds: string[] = [];
-  @Input()
-  holdStatus: boolean = false;
-  @Input()
-  selectStrategy: SelectStrategy = SelectStrategy.Single;
+  @Input() defaultIds: string[] = [];
+  @Input() holdStatus: boolean = false;
+  @Input() selectStrategy: SelectStrategy = SelectStrategy.Single;
 
-  @Input()
-  load?: EventEmitter<void>;
+  @Input() load?: EventEmitter<void>;
 
-  @Input()
-  display = [Division, GarbageVehicle, VehicleCamera];
+  @Input() display = [Division, GarbageVehicle, VehicleCamera];
 
-  @Output()
-  loaded: EventEmitter<DivisionTreeSource[]> = new EventEmitter();
+  @Output() loaded: EventEmitter<DivisionTreeSource[]> = new EventEmitter();
 
-  @Output()
-  selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
+  @Output() selectTreeNode: EventEmitter<CommonFlatNode<DivisionTreeSource>[]> =
     new EventEmitter();
-  @Output()
-  holdStatusChange = new EventEmitter();
+  @Output() holdStatusChange = new EventEmitter();
   constructor(public business: GarbageVehicleCameraTreeBusiness) {
     this.business.loaded.subscribe(this.loaded);
   }

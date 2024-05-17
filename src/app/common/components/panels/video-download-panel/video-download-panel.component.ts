@@ -14,16 +14,12 @@ import { VideoDownloader } from './video-downloader.model';
 export class VideoDownloadPanelComponent
   implements IComponent<IModel, VideoDownloader[]>, OnInit
 {
-  @Input()
-  type: EventType = EventType.MixedInto;
-  @Input()
-  business!: IBusiness<IModel, VideoDownloader[]>;
+  @Input() type: EventType = EventType.MixedInto;
+  @Input() business!: IBusiness<IModel, VideoDownloader[]>;
 
-  @Output()
-  download: EventEmitter<VideoDownloader> = new EventEmitter();
+  @Output() download: EventEmitter<VideoDownloader> = new EventEmitter();
 
-  @Output()
-  cancel: EventEmitter<void> = new EventEmitter();
+  @Output() cancel: EventEmitter<void> = new EventEmitter();
 
   constructor() {}
 

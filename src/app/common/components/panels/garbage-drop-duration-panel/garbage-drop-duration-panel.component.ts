@@ -7,8 +7,7 @@ import { GarbageDropDurationPanelModel } from './garbage-drop-duration-panel.mod
   styleUrls: ['./garbage-drop-duration-panel.component.less'],
 })
 export class GarbageDropDurationPanelComponent implements OnInit {
-  @Input()
-  model = new GarbageDropDurationPanelModel();
+  @Input() model = new GarbageDropDurationPanelModel();
 
   constructor() {}
 

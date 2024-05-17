@@ -43,7 +43,11 @@ export class GarbageStationWindowDetailsBusiness
     params.BeginTime = duration.begin;
     params.EndTime = duration.end;
     params.GarbageStationIds = opts.stationIds;
-    params.TimeUnit = TimeUnit.Day;
+    if (opts.unit === TimeUnit.Year) {
+      params.TimeUnit = TimeUnit.Month;
+    } else {
+      params.TimeUnit = TimeUnit.Day;
+    }
     return this.stationService.statistic.number.history.list(params);
   }
 

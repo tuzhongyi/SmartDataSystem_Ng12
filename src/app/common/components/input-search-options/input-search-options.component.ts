@@ -22,6 +22,14 @@ import { Language } from '../../tools/language';
   styleUrls: ['./input-search-options.component.less'],
 })
 export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
+  @Input() placeholder = '';
+
+  @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
+
+  @Input() focusToSelectContent = false;
+
+  constructor() {}
+
   searchInput = new FormControl('');
 
   @ViewChild('searchBtn')
@@ -29,13 +37,6 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input')
   input?: ElementRef;
-
-  @Input() placeholder = '';
-
-  @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
-
-  @Input()
-  focusToSelectContent = false;
 
   /**
    * pmx 20211-08-18
@@ -47,9 +48,6 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
 
   Key = SearchOptionKey;
   Language = Language;
-
-  constructor() {}
-
   focus(event: Event) {
     if (this.focusToSelectContent) {
       if (this.input) {

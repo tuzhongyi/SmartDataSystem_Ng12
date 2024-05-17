@@ -11,20 +11,15 @@ import {
   styleUrls: ['./message-bar.component.less'],
 })
 export class CommitteesMessageBarComponent implements OnInit {
+  @Input() Committees?: Division;
+
+  @Input() Notify?: CommitteesMessageBarNotifyViewModel;
+
+  @Output() OnChangePasswordClick = new EventEmitter();
+  @Output() OnChangeMobileClick = new EventEmitter();
   constructor() {}
 
   NotifyStatus = NotifyStatus;
-
-  @Input()
-  Committees?: Division;
-
-  @Input()
-  Notify?: CommitteesMessageBarNotifyViewModel;
-
-  @Output()
-  OnChangePasswordClick = new EventEmitter();
-  @Output()
-  OnChangeMobileClick = new EventEmitter();
 
   onChangePasswordClick() {
     this.OnChangePasswordClick.emit();

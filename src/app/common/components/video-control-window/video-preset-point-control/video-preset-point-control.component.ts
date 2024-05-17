@@ -7,12 +7,8 @@ import { VideoPresetPointControlModel } from './video-preset-point-control.model
   styleUrls: ['./video-preset-point-control.component.less'],
 })
 export class VideoPresetPointControlComponent implements OnInit {
+  @Input() datas: VideoPresetPointControlModel[] = [];
   constructor() {}
-
-  ngOnInit(): void {}
-
-  @Input()
-  datas: VideoPresetPointControlModel[] = [];
 
   select: EventEmitter<VideoPresetPointControlModel> = new EventEmitter();
   goto: EventEmitter<VideoPresetPointControlModel> = new EventEmitter();
@@ -20,6 +16,7 @@ export class VideoPresetPointControlComponent implements OnInit {
 
   selected?: VideoPresetPointControlModel;
 
+  ngOnInit(): void {}
   onitemclicked(item: VideoPresetPointControlModel) {
     this.selected = item;
     this.select.emit(item);

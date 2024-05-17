@@ -30,23 +30,21 @@ import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 export class DivisionTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy, OnChanges
 {
-  @Input()
-  type: DivisionType = DivisionType.City;
+  @Input() type: DivisionType = DivisionType.City;
 
-  resourceType = UserResourceType.County;
+  @Output() select: EventEmitter<Division> = new EventEmitter();
 
-  @Output()
-  select: EventEmitter<Division> = new EventEmitter();
+  @Input() division?: Division;
+  @Input() align: HorizontalAlign = HorizontalAlign.right;
 
-  @Input()
-  division?: Division;
+  constructor(private store: GlobalStorageService) {
+    this.type = store.defaultDivisionType;
+  }
 
   @ViewChild('selected')
   input?: ElementRef<HTMLLabelElement>;
 
-  @Input()
-  align: HorizontalAlign = HorizontalAlign.right;
-
+  resourceType = UserResourceType.County;
   treeServiceModel = DistrictTreeEnum.Division;
   treeSelectModel = SelectStrategy.Single;
 
@@ -61,9 +59,6 @@ export class DivisionTreeFilterComponent
 
   HorizontalAlign = HorizontalAlign;
 
-  constructor(private store: GlobalStorageService) {
-    this.type = store.defaultDivisionType;
-  }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.division && this.division) {
       this.current = new CommonFlatNode();

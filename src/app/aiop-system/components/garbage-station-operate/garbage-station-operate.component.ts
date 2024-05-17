@@ -49,8 +49,22 @@ import { AiopCameraConf, StationCameraConf } from './garbage-station.config';
 export class GarbageStationOperateComponent
   implements IGarbageStationOperateComponent, OnInit
 {
-  @Input()
-  business: IGarbageStationOperateBusiness;
+  @Input() business: IGarbageStationOperateBusiness;
+
+  @Input() state: FormState = FormState.none;
+
+  @Input() stationId: string = '';
+
+  @Input() divisionId: string = '';
+
+  @Output() closeEvent = new EventEmitter<boolean>();
+  constructor(
+    business: GarbageStationOperateBusiness,
+    private _fb: FormBuilder,
+    private _toastrService: ToastrService
+  ) {
+    this.business = business;
+  }
 
   private _garbageStation?: GarbageStation;
   private _aiopDataSource: AICameraManageModel[] = [];
@@ -105,26 +119,6 @@ export class GarbageStationOperateComponent
 
   @ViewChild('addTable') addTable?: CommonTableComponent;
   @ViewChild('editTable') editTable?: CommonTableComponent;
-
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  stationId: string = '';
-
-  @Input()
-  divisionId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  constructor(
-    business: GarbageStationOperateBusiness,
-    private _fb: FormBuilder,
-    private _toastrService: ToastrService
-  ) {
-    this.business = business;
-  }
 
   async ngOnInit() {
     let res = await this.business.type.load();

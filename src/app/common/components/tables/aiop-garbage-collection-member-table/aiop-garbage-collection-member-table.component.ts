@@ -21,19 +21,16 @@ export class AIOPGarbageCollectionMemberTableComponent
   extends PagedTableAbstractComponent<CollectionMember>
   implements IComponent<IModel, PagedList<CollectionMember>>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<CollectionMember>>;
+  @Input() business: IBusiness<IModel, PagedList<CollectionMember>>;
   @Input() init = false;
   @Input() args = new AiopGarbageCollectionMemberTableArgs();
   @Input() load?: EventEmitter<AiopGarbageCollectionMemberTableArgs>;
 
-  @Output()
-  update: EventEmitter<CollectionMember> = new EventEmitter();
+  @Output() update: EventEmitter<CollectionMember> = new EventEmitter();
 
-  @Input()
-  selected?: CollectionMember[];
-  @Output()
-  selectedChange: EventEmitter<CollectionMember[]> = new EventEmitter();
+  @Input() selected?: CollectionMember[];
+  @Output() selectedChange: EventEmitter<CollectionMember[]> =
+    new EventEmitter();
 
   constructor(business: AIOPGarbageCollectionMemberTableBusiness) {
     super();

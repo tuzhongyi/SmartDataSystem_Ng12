@@ -1,8 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageBar } from 'src/app/common/tools/message-bar';
-import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { MessageBar } from 'src/app/common/tools/message-bar';
 
 import { PasswordChangeService } from './password-change.service';
 
@@ -13,10 +13,8 @@ import { PasswordChangeService } from './password-change.service';
   providers: [PasswordChangeService],
 })
 export class PasswordChangeComponent implements OnInit {
-  @Output()
-  OnChanged: EventEmitter<void> = new EventEmitter();
-  @Output()
-  OnCancel: EventEmitter<void> = new EventEmitter();
+  @Output() OnChanged: EventEmitter<void> = new EventEmitter();
+  @Output() OnCancel: EventEmitter<void> = new EventEmitter();
   constructor(
     private service: PasswordChangeService,
     private local: LocalStorageService,

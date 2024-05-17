@@ -38,9 +38,8 @@ export class DaPuQiaoGarbageStationEventRecordVisionTableComponent
   @Output() loaded: EventEmitter<
     DaPuQiaoGarbageStationEventRecordVisionModel[]
   > = new EventEmitter();
-  @Output()
-  details: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
-    new EventEmitter();
+  @Output() details =
+    new EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel>();
   @Output() select: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =
     new EventEmitter();
   @Output() image: EventEmitter<DaPuQiaoGarbageStationEventRecordVisionModel> =

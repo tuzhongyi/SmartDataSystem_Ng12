@@ -20,21 +20,16 @@ export class AIGarbageStationRfidCardTableComponent
   extends PagedTableAbstractComponent<AIGarbageRfidCard>
   implements OnInit
 {
-  @Input()
-  args: AIGarbageStationRfidCardTableArgs =
+  @Input() args: AIGarbageStationRfidCardTableArgs =
     new AIGarbageStationRfidCardTableArgs();
-  @Input()
-  load?: EventEmitter<AIGarbageStationRfidCardTableArgs>;
-  @Input()
-  selecteds: AIGarbageRfidCard[] = [];
-  @Output()
-  selectedsChange: EventEmitter<AIGarbageRfidCard[]> = new EventEmitter();
-  @Output()
-  loaded: EventEmitter<PagedList<AIGarbageRfidCard>> = new EventEmitter();
-  @Output()
-  details: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
-  @Output()
-  delete: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
+  @Input() load?: EventEmitter<AIGarbageStationRfidCardTableArgs>;
+  @Input() selecteds: AIGarbageRfidCard[] = [];
+  @Output() selectedsChange: EventEmitter<AIGarbageRfidCard[]> =
+    new EventEmitter();
+  @Output() loaded: EventEmitter<PagedList<AIGarbageRfidCard>> =
+    new EventEmitter();
+  @Output() details: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
+  @Output() delete: EventEmitter<AIGarbageRfidCard> = new EventEmitter();
 
   constructor(private business: AIGarbageStationRfidCardTableBusiness) {
     super();

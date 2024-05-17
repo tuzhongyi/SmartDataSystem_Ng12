@@ -13,12 +13,9 @@ export class AIOPGarbageCollectionPointDetailsWindowComponent
   extends WindowComponent
   implements OnInit
 {
-  @Input()
-  open?: EventEmitter<CollectionPoint>;
-  @Output()
-  no: EventEmitter<void> = new EventEmitter();
-  @Output()
-  yes: EventEmitter<CollectionPoint> = new EventEmitter();
+  @Input() open?: EventEmitter<CollectionPoint>;
+  @Output() no: EventEmitter<void> = new EventEmitter();
+  @Output() yes: EventEmitter<CollectionPoint> = new EventEmitter();
 
   constructor() {
     super();

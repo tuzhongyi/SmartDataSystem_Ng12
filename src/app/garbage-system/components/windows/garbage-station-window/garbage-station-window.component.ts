@@ -25,14 +25,10 @@ export class GarbageStationWindowComponent
 {
   @Input() dapuqiao_level?: number;
 
-  @Input()
-  index = GarbageStationWindowIndex.station;
-  @Input()
-  stationId?: string;
-  @Input()
-  divisionId?: string;
-  @Input()
-  taskStatus?: GarbageTaskStatus;
+  @Input() index = GarbageStationWindowIndex.station;
+  @Input() stationId?: string;
+  @Input() divisionId?: string;
+  @Input() taskStatus?: GarbageTaskStatus;
 
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =

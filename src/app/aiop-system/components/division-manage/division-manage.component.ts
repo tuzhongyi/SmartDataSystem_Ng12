@@ -39,10 +39,16 @@ import { DivisionNode } from 'src/app/network/model/garbage-station/division-tre
 export class DivisionManageComponent
   implements IDivisionManageComponent, OnInit, AfterViewInit
 {
-  @Input()
-  business: TDivisionManageBusiness;
-  @Input()
-  treeBusiness?: IDivisionTreeBusiness;
+  @Input() business: TDivisionManageBusiness;
+  @Input() treeBusiness?: IDivisionTreeBusiness;
+
+  constructor(
+    business: DivisionManageBusiness,
+    private _toastrService: ToastrService,
+    private _converter: DivisionTreeConverter
+  ) {
+    this.business = business;
+  }
 
   private _currentNode?: CommonFlatNode<DivisionTreeSource>;
 
@@ -129,14 +135,6 @@ export class DivisionManageComponent
   }
   get Description() {
     return this.myForm.get('Description') as FormControl;
-  }
-
-  constructor(
-    business: DivisionManageBusiness,
-    private _toastrService: ToastrService,
-    private _converter: DivisionTreeConverter
-  ) {
-    this.business = business;
   }
 
   ngOnInit(): void {

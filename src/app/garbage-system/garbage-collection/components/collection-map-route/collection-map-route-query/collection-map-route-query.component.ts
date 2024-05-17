@@ -22,19 +22,15 @@ import {
 export class CollectionMapRouteQueryComponent
   implements IComponent<IModel, CollectionMapRouteDevice[]>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, CollectionMapRouteDevice<IdNameModel>[]>;
+  @Input() business: IBusiness<IModel, CollectionMapRouteDevice<IdNameModel>[]>;
 
-  @Input()
-  config: CollectionMapRouteConfig = new CollectionMapRouteConfig();
+  @Input() config: CollectionMapRouteConfig = new CollectionMapRouteConfig();
 
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+  @Output() close: EventEmitter<void> = new EventEmitter();
 
-  @Input()
-  args: CollectionMapRouteQueryArgs = new CollectionMapRouteQueryArgs();
-  @Output()
-  query: EventEmitter<CollectionMapRouteQuery> = new EventEmitter();
+  @Input() args: CollectionMapRouteQueryArgs =
+    new CollectionMapRouteQueryArgs();
+  @Output() query: EventEmitter<CollectionMapRouteQuery> = new EventEmitter();
 
   constructor(business: CollectionMapRouteQueryBusiness) {
     this.business = business;

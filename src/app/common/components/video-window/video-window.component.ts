@@ -12,8 +12,7 @@ import { VideoWindowViewModel } from './video-window.model';
 export class VideoWindowComponent implements OnInit {
   PlayMode = PlayMode;
 
-  @Input()
-  title: string = '';
+  @Input() title: string = '';
   @Input() mask = true;
   @Input() zindex?: number;
   @Input() model?: VideoModel;

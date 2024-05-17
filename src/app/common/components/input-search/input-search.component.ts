@@ -1,22 +1,35 @@
 import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  Input,
-  Output,
-  EventEmitter,
   AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
 } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-input-search',
   templateUrl: './input-search.component.html',
   styleUrls: ['./input-search.component.less'],
 })
 export class InputSearchComponent implements OnInit, AfterViewInit {
+  @Input() placeholder = '';
+
+  @Output() search: EventEmitter<string> = new EventEmitter();
+
+  @Input() focusToSelectContent = false;
+
+  constructor() {}
+
+  /**
+   * pmx 20211-08-18
+   */
+  // 双向绑定抛出内容
+  searctText: string = '';
   searchInput = new FormControl('');
 
   @ViewChild('searchBtn')
@@ -24,22 +37,6 @@ export class InputSearchComponent implements OnInit, AfterViewInit {
 
   @ViewChild('input')
   input?: ElementRef;
-
-  @Input() placeholder = '';
-
-  @Output() search: EventEmitter<string> = new EventEmitter();
-
-  @Input()
-  focusToSelectContent = false;
-
-  /**
-   * pmx 20211-08-18
-   */
-  // 双向绑定抛出内容
-  searctText: string = '';
-
-  constructor() {}
-
   focus(event: Event) {
     if (this.focusToSelectContent) {
       if (this.input) {

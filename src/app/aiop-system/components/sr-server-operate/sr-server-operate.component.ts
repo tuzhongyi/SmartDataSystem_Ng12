@@ -29,6 +29,18 @@ import { SRServerOperateBusiness } from './sr-server-operate.business';
   providers: [SRServerOperateBusiness],
 })
 export class SRServerOperateComponent implements OnInit, AfterViewInit {
+  @Input() state: FormState = FormState.none;
+
+  @Input() operateId: string = '';
+
+  @Output() closeEvent = new EventEmitter<boolean>();
+
+  constructor(
+    private _business: SRServerOperateBusiness,
+    private _toastrService: ToastrService,
+    private _fb: FormBuilder
+  ) {}
+
   private _operateModel?: SRServer;
 
   myForm = this._fb.group({
@@ -60,21 +72,6 @@ export class SRServerOperateComponent implements OnInit, AfterViewInit {
     }
     return '';
   }
-
-  @Input()
-  state: FormState = FormState.none;
-
-  @Input()
-  operateId: string = '';
-
-  @Output()
-  closeEvent = new EventEmitter<boolean>();
-
-  constructor(
-    private _business: SRServerOperateBusiness,
-    private _toastrService: ToastrService,
-    private _fb: FormBuilder
-  ) {}
 
   ngOnInit(): void {
     this.init();

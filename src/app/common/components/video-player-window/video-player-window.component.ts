@@ -21,9 +21,6 @@ import {
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { WindowComponent } from '../window-control/window.component';
 import { VideoPlayerWindowBusiness } from './video-player-window.business';
-import videoConfig from 'src/assets/configs/config.json';
-import { plainToInstance } from 'class-transformer';
-import { VideoConfig } from '../../models/video.config';
 
 // console.log(videoConfig);
 // console.log(plainToInstance(ViedeoConfigModel, videoConfig));
@@ -38,18 +35,12 @@ export class VideoPlayerWindowComponent
   extends WindowComponent
   implements IComponent<IModel, VideoModel>, OnInit, OnChanges, OnDestroy
 {
-  @Input()
-  business: IBusiness<IModel, VideoModel>;
-  @Input()
-  cameraId?: string;
-  @Input()
-  mode: PlayMode = PlayMode.live;
-  @Input()
-  time?: Date;
-  @Input()
-  autoplay: boolean = false;
-  @Input()
-  title: string = '';
+  @Input() business: IBusiness<IModel, VideoModel>;
+  @Input() cameraId?: string;
+  @Input() mode: PlayMode = PlayMode.live;
+  @Input() time?: Date;
+  @Input() autoplay: boolean = false;
+  @Input() title: string = '';
 
   constructor(
     business: VideoPlayerWindowBusiness,

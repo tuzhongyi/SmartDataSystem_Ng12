@@ -27,10 +27,8 @@ import { CollectionMapRouteBusiness } from './collection-map-route.business';
   providers: [CollectionMapRouteBusiness, CollectionMapControlConverter],
 })
 export class CollectionMapRouteComponent implements OnInit {
-  @Input()
-  model?: GarbageVehicle;
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+  @Input() model?: GarbageVehicle;
+  @Output() close: EventEmitter<void> = new EventEmitter();
 
   constructor(
     private sanitizer: DomSanitizer,

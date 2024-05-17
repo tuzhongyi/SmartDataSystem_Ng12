@@ -17,12 +17,10 @@ export class WindowConfirmComponent implements OnInit {
   public get style(): any {
     return this._style;
   }
-  @Input()
-  public set style(v: any) {
+  @Input() public set style(v: any) {
     this._style = Object.assign(this._style, v);
   }
-  @Input()
-  model: WindowViewModel = new WindowViewModel();
+  @Input() model: WindowViewModel = new WindowViewModel();
   @Input() title: string = '提示';
   @Input() content: string = '';
 

@@ -31,6 +31,16 @@ import { StatisticSummaryService } from './statistic-summary.service';
 export class StatisticSummaryComponent
   implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
+  @Input() Committees?: Division;
+  @Input() Stations: GarbageStation[] = [];
+
+  @Input() Date: Date = new Date();
+  constructor(
+    private datePipe: DatePipe,
+    private service: StatisticSummaryService,
+    private store: GlobalStorageService
+  ) {}
+
   private _unit: TimeUnit = TimeUnit.Hour;
 
   title = '汇总信息';
@@ -51,14 +61,6 @@ export class StatisticSummaryComponent
   display = {
     timeunit: false,
   };
-
-  @Input()
-  Committees?: Division;
-  @Input()
-  Stations: GarbageStation[] = [];
-
-  @Input()
-  Date: Date = new Date();
 
   public set unit(v: TimeUnit) {
     this._unit = v;
@@ -96,12 +98,6 @@ export class StatisticSummaryComponent
     this.Date = date;
     this.onLoaded();
   };
-
-  constructor(
-    private datePipe: DatePipe,
-    private service: StatisticSummaryService,
-    private store: GlobalStorageService
-  ) {}
 
   ngAfterViewInit(): void {}
   ngOnChanges(changes: SimpleChanges): void {

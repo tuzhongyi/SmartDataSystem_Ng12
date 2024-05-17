@@ -40,8 +40,7 @@ export class PaginatorComponent
   extends _MatPaginatorBase<MatPaginatorDefaultOptions>
   implements AfterViewInit, OnChanges
 {
-  @Input()
-  override get pageIndex() {
+  @Input() override get pageIndex() {
     return super.pageIndex;
   }
   override set pageIndex(value: number) {
@@ -50,8 +49,7 @@ export class PaginatorComponent
     super.pageIndex = value;
     this._updatePageRange(this.pageIndex);
   }
-  @Input()
-  get pagerCount(): number {
+  @Input() get pagerCount(): number {
     return this._pagerCount;
   }
   set pagerCount(value: number) {
@@ -59,20 +57,8 @@ export class PaginatorComponent
       value <= 0 ? this.getNumberOfPages() : value < 3 ? 3 : value;
   }
 
-  @Input()
-  public showJumpTo: boolean = true;
-  @Input()
-  align: 'right' | 'center' | 'left' = 'left';
-
-  /***************** private ************************/
-  // 显示几个分页按钮
-  private _pagerCount = 4; // 不能小于等于0，但可以超出 max pager count
-
-  /***************** public ************************/
-  public pagers: number[] = [];
-  public showFirst: boolean = false;
-  public showLast: boolean = false;
-  public jumpToIndex: string = '';
+  @Input() public showJumpTo: boolean = true;
+  @Input() align: 'right' | 'center' | 'left' = 'left';
 
   constructor(
     private _toastrService: ToastrService,
@@ -84,6 +70,16 @@ export class PaginatorComponent
   ) {
     super(intl, changeDetectorRef, defaults);
   }
+
+  /***************** private ************************/
+  // 显示几个分页按钮
+  private _pagerCount = 4; // 不能小于等于0，但可以超出 max pager count
+
+  /***************** public ************************/
+  public pagers: number[] = [];
+  public showFirst: boolean = false;
+  public showLast: boolean = false;
+  public jumpToIndex: string = '';
   override ngOnInit(): void {
     super.ngOnInit();
   }

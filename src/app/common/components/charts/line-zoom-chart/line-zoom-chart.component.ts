@@ -38,23 +38,20 @@ import { option } from './line-zoom-chart.option';
 export class LineZoomChartComponent
   implements OnInit, AfterViewInit, IComponent<IModel, LineZoomChartModel>
 {
-  @Input()
-  stationId?: string;
-  @Input()
-  date: Date = new Date();
-  @Input()
-  unit: TimeUnit = TimeUnit.Hour;
-  @Input()
-  business: IBusiness<IModel, LineZoomChartModel>;
+  @Input() stationId?: string;
+  @Input() date: Date = new Date();
+  @Input() unit: TimeUnit = TimeUnit.Hour;
+  @Input() business: IBusiness<IModel, LineZoomChartModel>;
 
-  @Input()
-  load?: EventEmitter<string>;
+  @Input() load?: EventEmitter<string>;
 
-  @Output()
-  image: EventEmitter<ImageControlModel> = new EventEmitter();
+  @Output() image: EventEmitter<ImageControlModel> = new EventEmitter();
 
-  @Output()
-  ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
+  @Output() ondblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
+
+  constructor(business: LineZoomChartBusiness) {
+    this.business = business;
+  }
 
   @ViewChild('echarts')
   echarts?: ElementRef<HTMLDivElement>;
@@ -65,10 +62,6 @@ export class LineZoomChartComponent
     line: new LineZoomLinePanel(),
     scatter: new LineZoomScatterPanel(),
   };
-
-  constructor(business: LineZoomChartBusiness) {
-    this.business = business;
-  }
 
   data?: LineZoomChartModel;
   xAxisData: Array<TimeString> = [];

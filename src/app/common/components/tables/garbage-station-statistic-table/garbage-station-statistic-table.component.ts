@@ -47,17 +47,13 @@ export class GarbageStationStatisticTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  unit: TimeUnit = TimeUnit.Day;
+  @Input() unit: TimeUnit = TimeUnit.Day;
 
-  @Input()
-  date: Date = new Date();
-  @Input()
-  divisionId?: string;
-  @Input()
-  load?: EventEmitter<void>;
-  @Output()
-  loaded: EventEmitter<GarbageStationStatisticModel[]> = new EventEmitter();
+  @Input() date: Date = new Date();
+  @Input() divisionId?: string;
+  @Input() load?: EventEmitter<void>;
+  @Output() loaded: EventEmitter<GarbageStationStatisticModel[]> =
+    new EventEmitter();
 
   constructor(business: GarbageStationStatisticTableBusiness) {
     this.business = business;

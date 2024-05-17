@@ -40,16 +40,12 @@ export class GarbageDropStationCountTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  business: IBusiness<IModel, GarbageDropStationCountTableModel[]>;
+  @Input() business: IBusiness<IModel, GarbageDropStationCountTableModel[]>;
 
-  @Input()
-  args = new GarbageDropStationCountTableArgs();
+  @Input() args = new GarbageDropStationCountTableArgs();
 
-  @Input()
-  load?: EventEmitter<GarbageDropStationCountTableArgs>;
-  @Output()
-  loaded: EventEmitter<GarbageDropStationCountTableModel[]> =
+  @Input() load?: EventEmitter<GarbageDropStationCountTableArgs>;
+  @Output() loaded: EventEmitter<GarbageDropStationCountTableModel[]> =
     new EventEmitter();
 
   constructor(business: GarbageDropStationCountTableBusiness) {

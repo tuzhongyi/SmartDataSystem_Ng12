@@ -15,11 +15,9 @@ import { Member } from 'src/app/network/model/garbage-station/member.model';
   styleUrls: ['./station-information.component.css'],
 })
 export class DivisionInformationComponent implements OnInit, OnChanges {
-  @Input()
-  Division?: Division;
+  @Input() Division?: Division;
 
-  @Input()
-  Station?: GarbageStation;
+  @Input() Station?: GarbageStation;
 
   constructor() {}
   ngOnChanges(changes: SimpleChanges): void {

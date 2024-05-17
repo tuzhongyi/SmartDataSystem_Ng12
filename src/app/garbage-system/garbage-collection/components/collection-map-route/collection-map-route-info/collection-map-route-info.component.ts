@@ -10,10 +10,8 @@ import { GarbageVehicleModel } from 'src/app/network/view-model/garbage-vehicle.
   styleUrls: ['./collection-map-route-info.component.less'],
 })
 export class CollectionMapRouteInfoComponent implements OnInit {
-  @Input()
-  source?: GarbageVehicle;
-  @Output()
-  close: EventEmitter<void> = new EventEmitter();
+  @Input() source?: GarbageVehicle;
+  @Output() close: EventEmitter<void> = new EventEmitter();
 
   constructor(private converter: GarbageVehicleModelConverter) {}
 

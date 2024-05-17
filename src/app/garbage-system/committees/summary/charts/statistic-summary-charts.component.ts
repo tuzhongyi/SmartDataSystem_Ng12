@@ -24,20 +24,15 @@ import { StatisticSummaryTaskChartViewModel } from './task-statistic/statistic-s
 export class StatisticSummaryChartsComponent implements AfterViewInit, OnInit {
   EventType = EventType;
 
-  @Input()
-  DivisonStatistic?: StatisticSummaryViewModel[];
+  @Input() DivisonStatistic?: StatisticSummaryViewModel[];
 
-  @Input()
-  StationStatistic: GarbageStationNumberStatisticV2[] = [];
+  @Input() StationStatistic: GarbageStationNumberStatisticV2[] = [];
 
-  @Input()
-  DivisionHistory: EventNumberStatistic[] = [];
+  @Input() DivisionHistory: EventNumberStatistic[] = [];
 
-  @Input()
-  EventTrigger?: EventEmitter<void>;
+  @Input() EventTrigger?: EventEmitter<void>;
 
-  @Output()
-  OnTriggerEvent: EventEmitter<
+  @Output() OnTriggerEvent: EventEmitter<
     | StatisticSummaryTaskChartViewModel
     | StatisticSummaryEventRatioChartViewModel
     | StatisticSummaryLineChartViewModel
@@ -54,8 +49,7 @@ export class StatisticSummaryChartsComponent implements AfterViewInit, OnInit {
     this.OnTriggerEvent.emit(data);
   }
 
-  @Input()
-  TimeUnit?: TimeUnit;
+  @Input() TimeUnit?: TimeUnit;
 
   constructor() {}
   ngAfterViewInit(): void {}

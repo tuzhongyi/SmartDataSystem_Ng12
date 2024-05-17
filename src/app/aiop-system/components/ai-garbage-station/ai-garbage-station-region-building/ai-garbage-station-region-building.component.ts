@@ -11,8 +11,7 @@ import { AIGarbageRoom } from 'src/app/network/model/ai-garbage/room.model';
   providers: [],
 })
 export class AIGarbageStationRegionBuildingComponent implements OnInit {
-  @Input()
-  model?: AIGarbageRegion;
+  @Input() model?: AIGarbageRegion;
   ngOnInit(): void {
     if (this.model) {
       if (this.debug) {

@@ -28,8 +28,7 @@ import {
 export class AIOPGarbageCollectionPointManagerComponent
   implements IGarbageCollectionPointComponent, OnInit
 {
-  @Input()
-  business: IGarbageCollectionPointBusiness;
+  @Input() business: IGarbageCollectionPointBusiness;
   constructor(
     business: AIOPGarbageCollectionPointManagerBusiness,
     private toastr: ToastrService

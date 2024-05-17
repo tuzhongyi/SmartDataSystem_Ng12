@@ -14,18 +14,13 @@ import { GarbageVehicleCameraBindingAICameraBusiness } from './garbage-vehicle-c
 export class GarbageVehicleCameraBindingAICameraComponent
   implements IComponent<IModel, AICamera[]>, OnInit
 {
-  @Input()
-  business: IBusiness<IModel, AICamera[]>;
-  @Input()
-  canselect: boolean = true;
+  @Input() business: IBusiness<IModel, AICamera[]>;
+  @Input() canselect: boolean = true;
 
-  @Input()
-  selected: AICamera[] = [];
-  @Output()
-  selectedChange: EventEmitter<AICamera[]> = new EventEmitter();
+  @Input() selected: AICamera[] = [];
+  @Output() selectedChange: EventEmitter<AICamera[]> = new EventEmitter();
 
-  @Input()
-  load?: EventEmitter<string[]> = new EventEmitter();
+  @Input() load?: EventEmitter<string[]> = new EventEmitter();
 
   constructor(business: GarbageVehicleCameraBindingAICameraBusiness) {
     this.business = business;

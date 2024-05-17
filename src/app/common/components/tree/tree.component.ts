@@ -7,18 +7,18 @@ import {
 } from '@angular/material/tree';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject } from 'rxjs';
+import { Deduplication } from 'src/app/common/tools/deduplication';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
-import { Deduplication } from 'src/app/common/tools/deduplication';
 import { FlatTreeNode } from 'src/app/view-model/flat-tree-node.model';
 import { NestTreeNode } from 'src/app/view-model/nest-tree-node.model';
 
+import { ClassConstructor } from 'class-transformer';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TreeBusinessFactory } from './business/tree-business.factory';
 import { TreeBusinessInterface } from './interface/tree-business.interface';
 import { TreeBusinessProviders } from './tokens/tree-business.token';
-import { ClassConstructor } from 'class-transformer';
-import { DivisionType } from 'src/app/enum/division-type.enum';
 
 @Component({
   selector: 'howell-tree',
@@ -27,6 +27,105 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
   providers: [TreeBusinessFactory, ...TreeBusinessProviders],
 })
 export class TreeComponent implements OnInit {
+  @Input('treeServiceModel') serviceModel = DistrictTreeEnum.Division; // 区划树或厢房树
+
+  @Input('treeSelectModel') selectModel = SelectStrategy.Single; // 单选或多选
+
+  @Input('treeBusinessProvider') businessProvider = TreeBusinessEnum.District;
+
+  // 请求数据的深度
+  private _depth: number = 0;
+
+  @Input() set depth(val: number) {
+    if (val < 0) {
+      val = 0;
+    }
+    this._depth = val;
+  }
+  get depth() {
+    return this._depth;
+  }
+
+  // 展示数据的深度，一般等于 depth
+  private _showDepth: number = -1;
+  @Input() set showDepth(val: number) {
+    if (val < 0) {
+      val = 0;
+    }
+    this._showDepth = val;
+  }
+  get showDepth() {
+    return this._showDepth;
+  }
+  // 强制最大深度节点为叶节点
+  @Input() depthIsEnd = false;
+
+  // 最高区划等级
+  private _divisionType: DivisionType = DivisionType.County;
+  @Input() set resourceType(type: DivisionType) {
+    if (type !== DivisionType.None) {
+      this._divisionType = type;
+    }
+  }
+  get resourceType() {
+    return this._divisionType;
+  }
+
+  // 默认选中列表
+  private _defaultIds: string[] = [];
+  @Input() set defaultIds(ids: string[]) {
+    // 排除空字符串
+    this._defaultIds = ids.filter((id) => id);
+  }
+  get defaultIds() {
+    return this._defaultIds;
+  }
+  // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
+  @Input() holdStatus: boolean = false;
+
+  // 指定类型的节点会被选中
+  @Input() filterTypes: ClassConstructor<any>[] = [];
+
+  @Input() showSearchBar = true;
+
+  @Output() holdStatusChange = new EventEmitter<boolean>();
+
+  @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<
+    FlatTreeNode[]
+  >();
+
+  @Output() defaultIdsChange = new EventEmitter<string[]>();
+
+  constructor(
+    private _businessFactory: TreeBusinessFactory,
+    private _toastrService: ToastrService
+  ) {
+    this._treeFlattener = new MatTreeFlattener(
+      this._transformer,
+      this._getLevel,
+      this._isExpandable,
+      this._getChildren
+    );
+
+    this.treeControl = new FlatTreeControl<FlatTreeNode>(
+      this._getLevel,
+      this._isExpandable
+    );
+
+    this.dataSource = new MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>(
+      this.treeControl,
+      this._treeFlattener
+    );
+
+    this.dataChange.subscribe((data) => {
+      this.dataSource.data = data;
+    });
+
+    this._excludeGuards = Deduplication.generateExcludeArray(
+      this._searchGuards
+    );
+  }
+
   private _flatNodeMap = new Map<string, FlatTreeNode>();
   private _transformer = (nestNode: NestTreeNode, level: number) => {
     const existingNode = this._flatNodeMap.get(nestNode.id);
@@ -98,113 +197,6 @@ export class TreeComponent implements OnInit {
     }
     return false;
   };
-
-  @Input('treeServiceModel')
-  serviceModel = DistrictTreeEnum.Division; // 区划树或厢房树
-
-  @Input('treeSelectModel')
-  selectModel = SelectStrategy.Single; // 单选或多选
-
-  @Input('treeBusinessProvider')
-  businessProvider = TreeBusinessEnum.District;
-
-  // 请求数据的深度
-  private _depth: number = 0;
-
-  @Input()
-  set depth(val: number) {
-    if (val < 0) {
-      val = 0;
-    }
-    this._depth = val;
-  }
-  get depth() {
-    return this._depth;
-  }
-
-  // 展示数据的深度，一般等于 depth
-  private _showDepth: number = -1;
-  @Input()
-  set showDepth(val: number) {
-    if (val < 0) {
-      val = 0;
-    }
-    this._showDepth = val;
-  }
-  get showDepth() {
-    return this._showDepth;
-  }
-  // 强制最大深度节点为叶节点
-  @Input()
-  depthIsEnd = false;
-
-  // 最高区划等级
-  private _divisionType: DivisionType = DivisionType.County;
-  @Input()
-  set resourceType(type: DivisionType) {
-    if (type !== DivisionType.None) {
-      this._divisionType = type;
-    }
-  }
-  get resourceType() {
-    return this._divisionType;
-  }
-
-  // 默认选中列表
-  private _defaultIds: string[] = [];
-  @Input()
-  set defaultIds(ids: string[]) {
-    // 排除空字符串
-    this._defaultIds = ids.filter((id) => id);
-  }
-  get defaultIds() {
-    return this._defaultIds;
-  }
-  // 当前节点选中后，再次点击不会取消选中，但是点击其他节点会取消当前节点选中
-  @Input() holdStatus: boolean = false;
-
-  // 指定类型的节点会被选中
-  @Input() filterTypes: ClassConstructor<any>[] = [];
-
-  @Input() showSearchBar = true;
-
-  @Output() holdStatusChange = new EventEmitter<boolean>();
-
-  @Output() selectTreeNode: EventEmitter<FlatTreeNode[]> = new EventEmitter<
-    FlatTreeNode[]
-  >();
-
-  @Output() defaultIdsChange = new EventEmitter<string[]>();
-
-  constructor(
-    private _businessFactory: TreeBusinessFactory,
-    private _toastrService: ToastrService
-  ) {
-    this._treeFlattener = new MatTreeFlattener(
-      this._transformer,
-      this._getLevel,
-      this._isExpandable,
-      this._getChildren
-    );
-
-    this.treeControl = new FlatTreeControl<FlatTreeNode>(
-      this._getLevel,
-      this._isExpandable
-    );
-
-    this.dataSource = new MatTreeFlatDataSource<NestTreeNode, FlatTreeNode>(
-      this.treeControl,
-      this._treeFlattener
-    );
-
-    this.dataChange.subscribe((data) => {
-      this.dataSource.data = data;
-    });
-
-    this._excludeGuards = Deduplication.generateExcludeArray(
-      this._searchGuards
-    );
-  }
   ngOnInit() {
     this._business = this._businessFactory.createBusiness(
       this.businessProvider

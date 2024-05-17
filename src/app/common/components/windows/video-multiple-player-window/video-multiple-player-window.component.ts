@@ -32,18 +32,12 @@ export class VideoMultiplePlayerWindowComponent
   extends WindowComponent
   implements IComponent<IModel, VideoModel>, OnInit, OnChanges, OnDestroy
 {
-  @Input()
-  business: IBusiness<IModel, VideoModel>;
-  @Input()
-  models: IdNameModel[] = [];
-  @Input()
-  mode: PlayMode = PlayMode.live;
-  @Input()
-  time?: Date;
-  @Input()
-  autoplay: boolean = false;
-  @Input()
-  title: string = '';
+  @Input() business: IBusiness<IModel, VideoModel>;
+  @Input() models: IdNameModel[] = [];
+  @Input() mode: PlayMode = PlayMode.live;
+  @Input() time?: Date;
+  @Input() autoplay: boolean = false;
+  @Input() title: string = '';
 
   constructor(
     business: VideoPlayerWindowBusiness,

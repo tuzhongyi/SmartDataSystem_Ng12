@@ -28,10 +28,10 @@ type rawDataType = CameraAIModelDTOLabel | EnumValue;
   providers: [AIModelTreeBusiness, AIModelTreeConverter],
 })
 export class AIModelTreeComponent implements OnInit {
-  @Input()
-  modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>([]);
-  @Output()
-  nodeChange: EventEmitter<NodeChangeArgs> = new EventEmitter();
+  @Input() modelLabelsSubject = new BehaviorSubject<CameraAIModelDTOLabel[]>(
+    []
+  );
+  @Output() nodeChange: EventEmitter<NodeChangeArgs> = new EventEmitter();
 
   constructor(
     private _business: AIModelTreeBusiness,

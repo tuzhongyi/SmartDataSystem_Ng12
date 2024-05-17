@@ -12,12 +12,9 @@ export class GarbageCollectionMemberDetailsWindowComponent
   extends WindowComponent
   implements OnInit
 {
-  @Input()
-  open?: EventEmitter<CollectionMember>;
-  @Output()
-  no: EventEmitter<void> = new EventEmitter();
-  @Output()
-  yes: EventEmitter<CollectionMember> = new EventEmitter();
+  @Input() open?: EventEmitter<CollectionMember>;
+  @Output() no: EventEmitter<void> = new EventEmitter();
+  @Output() yes: EventEmitter<CollectionMember> = new EventEmitter();
 
   constructor(private toastr: ToastrService) {
     super();

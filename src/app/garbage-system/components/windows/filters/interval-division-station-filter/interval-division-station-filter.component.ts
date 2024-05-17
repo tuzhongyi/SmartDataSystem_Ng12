@@ -36,20 +36,16 @@ export class EventRecordFilterComponent
     OnDestroy
 {
   @Input() date_sync = false;
-  @Input()
-  filter: EventRecordFilter;
-  @Output()
-  filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
-  @Input()
-  divisionId?: string;
+  @Input() filter: EventRecordFilter;
+  @Output() filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
+  @Input() divisionId?: string;
 
-  DateTimePickerView = DateTimePickerView;
   constructor(business: EventRecordFilterBusiness) {
     this.business = business;
 
     this.filter = new EventRecordFilter();
   }
-
+  DateTimePickerView = DateTimePickerView;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionId) {
       if (this.divisionId) {

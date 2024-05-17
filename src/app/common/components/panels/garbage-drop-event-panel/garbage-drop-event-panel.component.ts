@@ -16,13 +16,11 @@ import { ImageControlModel } from '../../../../view-model/image-control.model';
   styleUrls: ['./garbage-drop-event-panel.component.less'],
 })
 export class GarbageDropEventPanelComponent implements OnInit, OnChanges {
-  @Input()
-  model?: ImageControlModel;
+  @Input() model?: ImageControlModel;
 
-  @Output()
-  onclick: EventEmitter<ImageControlModel> = new EventEmitter();
+  @Output() onclick: EventEmitter<ImageControlModel> = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
   ngOnChanges(changes: SimpleChanges): void {
     if (this.model) {
     }
