@@ -49,6 +49,9 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
     this.units.push(
       new SelectItem(TimeUnit.Month.toString(), TimeUnit.Month, '月报表')
     );
+    this.units.push(
+      new SelectItem(TimeUnit.Year.toString(), TimeUnit.Year, '年报表')
+    );
     this.unit = TimeUnit.Hour;
   }
 
@@ -66,6 +69,11 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
       case TimeUnit.Month:
         this.dateTimePickerConfig.view = DateTimePickerView.year;
         this.dateTimePickerConfig.format = 'yyyy年MM月';
+        this.dateTimePickerConfig.week = false;
+        break;
+      case TimeUnit.Year:
+        this.dateTimePickerConfig.view = DateTimePickerView.decade;
+        this.dateTimePickerConfig.format = 'yyyy年';
         this.dateTimePickerConfig.week = false;
         break;
       case TimeUnit.Hour:

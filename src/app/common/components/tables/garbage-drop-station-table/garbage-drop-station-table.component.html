@@ -15,7 +15,7 @@
           <th>滞留时间</th>
           <th>总滞留时长</th>
           <th>人员</th>
-          <th>操作</th>
+          <th class="center">操作</th>
         </tr>
       </thead>
     </table>
@@ -92,9 +92,11 @@
                 <i class="howell-icon-user-anonymous"></i>
               </div>
             </td>
-            <td class="operation">
-              <div style="width: 16px" (click)="onPositionClicked(item)">
-                <i class="glyphicon glyphicon-map-marker"></i>
+            <td>
+              <div class="operation center">
+                <div style="width: 16px" (click)="onPositionClicked(item)">
+                  <i class="glyphicon glyphicon-map-marker"></i>
+                </div>
               </div>
             </td>
           </tr>

@@ -12,13 +12,14 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
-import { GarbageDropStationCountTableBusiness } from './garbage-drop-station-count-table.business';
-import { GarbageDropStationCountTableConverter } from './garbage-drop-station-count-table.converter';
+import {
+  GarbageDropStationCountTableBusiness,
+  GarbageDropStationCountTableBusinessProviders,
+} from './garbage-drop-station-count-table.business';
 import {
   GarbageDropStationCountTableArgs,
   GarbageDropStationCountTableModel,
 } from './garbage-drop-station-count-table.model';
-import { GarbageDropStationCountTableService } from './garbage-drop-station-count-table.service';
 
 @Component({
   selector: 'howell-garbage-drop-station-count-table',
@@ -27,11 +28,7 @@ import { GarbageDropStationCountTableService } from './garbage-drop-station-coun
     '../table.less',
     './garbage-drop-station-count-table.component.less',
   ],
-  providers: [
-    GarbageDropStationCountTableService,
-    GarbageDropStationCountTableConverter,
-    GarbageDropStationCountTableBusiness,
-  ],
+  providers: [...GarbageDropStationCountTableBusinessProviders],
 })
 export class GarbageDropStationCountTableComponent
   extends PagedTableAbstractComponent<GarbageDropStationCountTableModel>

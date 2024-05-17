@@ -22,6 +22,8 @@ export class DurationParams {
     switch (unit) {
       case TimeUnit.Month:
         return DurationParams.allMonth(date);
+      case TimeUnit.Year:
+        return DurationParams.allYear(date);
       case TimeUnit.Week:
         return DurationParams.allWeek(date, firstDay);
       case TimeUnit.Hour:

@@ -5,7 +5,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-table.model';
-import { GarbageDropStationCountTableService } from './garbage-drop-station-count-table.service';
+import { GarbageDropStationCountTableService } from './service/garbage-drop-station-count-table.service';
 
 @Injectable()
 export class GarbageDropStationCountTableConverter
@@ -88,14 +88,14 @@ export class GarbageDropStationCountTableItemConverter
   async GetParentByStation(stationId: string) {
     let station = await this.service.station.get(stationId);
     if (station.DivisionId) {
-      return this.service.division.cache.get(station.DivisionId!);
+      return this.service.division.get(station.DivisionId!);
     }
     return undefined;
   }
   async GetParentByDivision(divisionId: string) {
-    let current = await this.service.division.cache.get(divisionId);
+    let current = await this.service.division.get(divisionId);
     if (current.ParentId) {
-      return this.service.division.cache.get(current.ParentId);
+      return this.service.division.get(current.ParentId);
     }
     return undefined;
   }

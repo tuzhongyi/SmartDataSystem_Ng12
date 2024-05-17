@@ -96,22 +96,26 @@ table {
         &.operation,
         .operation {
           color: #7586e0;
+          height: 100%;
           display: flex;
+          align-items: center;
+          gap: 10px;
 
           &>* {
-            margin-right: 10px;
+
+            height: 100%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             flex-shrink: 0;
+            vertical-align: middle;
+            display: flex;
+            align-items: center;
 
             &:hover {
               color: white;
             }
 
-            &:last-child {
-              margin-right: 0;
-            }
           }
 
           &.center {

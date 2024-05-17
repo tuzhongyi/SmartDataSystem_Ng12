@@ -1,6 +1,5 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationStatisticTableService } from './garbage-station-statistic-table.service';
@@ -24,8 +23,6 @@ export class GarbageStationStatisticTableBusiness
     private converter: GarbageStationStatisticArrayConverter
   ) {}
 
-  subscription?: ISubscription | undefined;
-  loading?: EventEmitter<void> | undefined;
   async load(
     date: Date,
     unit: TimeUnit,
@@ -45,6 +42,8 @@ export class GarbageStationStatisticTableBusiness
     unit: TimeUnit
   ): Promise<GarbageStationStatisticTableSource> {
     switch (unit) {
+      case TimeUnit.Year:
+        return this.service.getDataByYear(divisionId, date);
       case TimeUnit.Month:
         return this.service.getDataByMonth(divisionId, date);
       case TimeUnit.Week:

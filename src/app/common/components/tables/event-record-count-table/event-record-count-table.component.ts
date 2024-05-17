@@ -11,12 +11,11 @@ import { Sort } from '@angular/material/sort';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { EventRecordCountTableBusiness } from './event-record-count-table.business';
+import {
+  EventRecordCountTableBusiness,
+  EventRecordCountTableBusinessProviders,
+} from './event-record-count-table.business';
 import {
   EventRecordCountTableModel,
   EventRecordCountTableOptions,
@@ -26,7 +25,7 @@ import {
   selector: 'howell-event-record-count-table',
   templateUrl: './event-record-count-table.component.html',
   styleUrls: ['../table.less', './event-record-count-table.component.less'],
-  providers: [EventRecordCountTableBusiness],
+  providers: [...EventRecordCountTableBusinessProviders],
 })
 export class EventRecordCountTableComponent
   implements
@@ -34,62 +33,38 @@ export class EventRecordCountTableComponent
     OnChanges,
     IComponent<IModel, EventRecordCountTableModel[]>
 {
-  @Input() eventType = EventType.IllegalDrop;
-  @Input() unit: TimeUnit = TimeUnit.Day;
-  @Input() type: UserResourceType = UserResourceType.Station;
-  @Input() date: Date = new Date();
-  @Input() load?: EventEmitter<void>;
+  @Input() opts = new EventRecordCountTableOptions();
+  @Input() load?: EventEmitter<EventRecordCountTableOptions>;
   @Output() loaded: EventEmitter<EventRecordCountTableModel[]> =
     new EventEmitter();
 
   constructor(business: EventRecordCountTableBusiness) {
     this.business = business;
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && this.load) {
-      this.load.subscribe((x) => {
-        this.loadData();
-      });
-    }
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
   widths = ['10%', '30%', '30%', '40%'];
   business: IBusiness<IModel, EventRecordCountTableModel[]>;
   datas: EventRecordCountTableModel[] = [];
   loading = false;
   Language = Language;
   ngOnInit(): void {
+    if (this.load) {
+      this.load.subscribe((x) => {
+        this.opts = x;
+        this.loadData();
+      });
+    }
     this.loadData();
   }
 
   async loadData() {
     this.loading = true;
-    let interval = new DurationParams();
-    switch (this.unit) {
-      case TimeUnit.Day:
-        interval = DurationParams.allDay(this.date);
-        break;
-      case TimeUnit.Week:
-        interval = DurationParams.allWeek(this.date);
-        break;
-      case TimeUnit.Month:
-        interval = DurationParams.allMonth(this.date);
-        break;
-      default:
-        break;
-    }
 
-    let opts: EventRecordCountTableOptions = {
-      unit: this.unit,
-      eventType: this.eventType,
-      type: this.type,
-      ...interval,
-    };
-    this.business.load(opts).then((datas) => {
+    this.business.load(this.opts).then((datas) => {
       this.datas = datas;
       this.loading = false;
       this.loaded.emit(datas);
     });
-    console.log(this.datas);
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

@@ -10,12 +10,12 @@
           [startView]="config.dateTimePicker.view"
           [minView]="config.dateTimePicker.view"
           [week]="config.dateTimePicker.week"
-          [(date)]="date"
+          [(date)]="opts.date"
         />
       </div>
       <div class="filter-item">
         <span>行政区</span>
-        <select class="list-type-select" [(ngModel)]="userType">
+        <select class="list-type-select" [(ngModel)]="opts.type">
           <option
             [ngValue]="UserResourceType.County"
             *ngIf="global.defaultResourceType === UserResourceType.City"
@@ -48,7 +48,7 @@
     <div class="selection">
       <select
         class="list-type-select"
-        [(ngModel)]="unit"
+        [(ngModel)]="this.opts.unit"
         (change)="ontimeunit()"
       >
         <option [ngValue]="TimeUnit.Day">
@@ -60,15 +60,15 @@
         <option [ngValue]="TimeUnit.Month">
           {{ Language.TimeUnit(TimeUnit.Month) }}
         </option>
+        <option [ngValue]="TimeUnit.Year">
+          {{ Language.TimeUnit(TimeUnit.Year) }}
+        </option>
       </select>
     </div>
   </div>
   <div class="event-record-count-content">
     <howell-event-record-count-table
-      [unit]="unit"
-      [eventType]="eventType"
-      [date]="date"
-      [type]="userType"
+      [opts]="opts"
       [load]="load"
       (loaded)="onloaded($event)"
     >

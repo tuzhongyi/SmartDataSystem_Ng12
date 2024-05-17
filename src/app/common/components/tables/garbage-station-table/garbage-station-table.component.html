@@ -16,7 +16,7 @@
           <td>干垃圾重量</td>
           <td>湿垃圾重量</td>
           <td class="center">状态</td>
-          <td class="operation"><div>操作</div></td>
+          <td class="center"><div>操作</div></td>
         </tr>
       </thead>
     </table>
@@ -93,9 +93,11 @@
                 </span>
               </ng-container>
             </td>
-            <td class="operation">
-              <div (click)="onPositionClicked(item)">
-                <i class="glyphicon glyphicon-map-marker"></i>
+            <td>
+              <div class="operation center">
+                <div (click)="onPositionClicked(item)">
+                  <i class="glyphicon glyphicon-map-marker"></i>
+                </div>
               </div>
             </td>
           </tr>

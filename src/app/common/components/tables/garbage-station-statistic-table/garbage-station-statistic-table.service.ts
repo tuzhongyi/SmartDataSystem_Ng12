@@ -70,6 +70,22 @@ export class GarbageStationStatisticTableService {
     return source;
   }
 
+  async getDataByYear(divisionId: string, date: Date) {
+    let source = new GarbageStationStatisticTableSource();
+    let duration: DurationParams = DurationParams.allYear(date);
+    let unit = TimeUnit.Year;
+    source.current = await this.getHistory(divisionId, duration, unit);
+    let end = new Date(duration.BeginTime.getTime());
+    end.setMilliseconds(-1);
+    let begin = new Date(end.getFullYear(), end.getMonth(), 1);
+    let before: DurationParams = {
+      BeginTime: begin,
+      EndTime: end,
+    };
+    source.before = await this.getHistory(divisionId, before, unit);
+    return source;
+  }
+
   async getHistory(
     divisionId: string,
     duration: DurationParams,

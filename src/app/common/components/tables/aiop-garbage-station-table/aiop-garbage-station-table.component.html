@@ -11,7 +11,7 @@
           <td>街道</td>
           <td>居委会</td>
           <td>类型</td>
-          <td class="operation"><div>操作</div></td>
+          <td class="center"><div>操作</div></td>
         </tr>
       </thead>
     </table>
@@ -50,9 +50,11 @@
             <td>
               {{ Language.StationType(item.StationType) }}
             </td>
-            <td class="operation">
-              <div (click)="ondetails($event, item)">
-                <i class="howell-icon-modification"></i>
+            <td>
+              <div class="operation center">
+                <div (click)="ondetails($event, item)">
+                  <i class="howell-icon-modification"></i>
+                </div>
               </div>
             </td>
           </tr>

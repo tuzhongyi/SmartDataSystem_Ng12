@@ -1,7 +1,10 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
 import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
-import { EventRecordCountTableModel } from 'src/app/common/components/tables/event-record-count-table/event-record-count-table.model';
+import {
+  EventRecordCountTableModel,
+  EventRecordCountTableOptions,
+} from 'src/app/common/components/tables/event-record-count-table/event-record-count-table.model';
 import {
   DateTimePickerConfig,
   DateTimePickerView,
@@ -21,33 +24,50 @@ import { EventRecordCountExportConverter } from './event-record-count-export.con
   styleUrls: ['./event-record-count.component.less'],
 })
 export class EventRecordCountComponent implements OnInit {
-  @Input() date: Date = new Date();
-  @Input() unit: TimeUnit = TimeUnit.Day;
-  @Input() userType: UserResourceType = UserResourceType.Station;
-  @Input() eventType: EventType = EventType.IllegalDrop;
+  @Input('date') input_date?: Date;
+  @Input('unit') input_unit?: TimeUnit;
+  @Input('userType') input_userType?: UserResourceType;
+  @Input('eventType') input_eventType?: EventType;
 
   constructor(
     private local: LocalStorageService,
     public global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    this.userType = EnumHelper.GetResourceChildType(global.defaultResourceType);
+    this.opts.type = EnumHelper.GetResourceChildType(
+      global.defaultResourceType
+    );
   }
+
   config = {
     dateTimePicker: new DateTimePickerConfig({ format: 'yyyy年MM月dd日' }),
   };
   DateTimePickerView = DateTimePickerView;
 
-  load: EventEmitter<void> = new EventEmitter();
+  opts = new EventRecordCountTableOptions();
+  load: EventEmitter<EventRecordCountTableOptions> = new EventEmitter();
   datas: EventRecordCountTableModel[] = [];
   converter = new EventRecordCountExportConverter();
   UserResourceType = UserResourceType;
   TimeUnit = TimeUnit;
   Language = Language;
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.input_date) {
+      this.opts.date = new Date(this.input_date.getTime());
+    }
+    if (this.input_unit) {
+      this.opts.unit = this.input_unit;
+    }
+    if (this.input_userType) {
+      this.opts.type = this.input_userType;
+    }
+    if (this.input_eventType) {
+      this.opts.eventType = this.input_eventType;
+    }
+  }
 
   ontimeunit() {
-    switch (this.unit) {
+    switch (this.opts.unit) {
       case TimeUnit.Week:
         this.config.dateTimePicker.view = DateTimePickerView.month;
         this.config.dateTimePicker.format = 'yyyy年MM月dd日';
@@ -63,23 +83,28 @@ export class EventRecordCountComponent implements OnInit {
         this.config.dateTimePicker.format = 'yyyy年MM月';
         this.config.dateTimePicker.week = false;
         break;
+      case TimeUnit.Year:
+        this.config.dateTimePicker.view = DateTimePickerView.decade;
+        this.config.dateTimePicker.format = 'yyyy年';
+        this.config.dateTimePicker.week = false;
+        break;
       default:
         break;
     }
   }
   onresourcetype(item: SelectItem) {
-    this.userType = item.value;
+    this.opts.type = item.value;
   }
   search() {
-    this.load.emit();
+    this.load.emit(this.opts);
   }
   onloaded(datas: EventRecordCountTableModel[]) {
     this.datas = datas;
   }
   private getTitle() {
-    let eventType = Language.EventType(this.eventType);
-    let date = Language.Date(this.date, this.unit);
-    let userType = Language.UserResourceType(this.userType);
+    let eventType = Language.EventType(this.opts.eventType);
+    let date = Language.Date(this.opts.date, this.opts.unit);
+    let userType = Language.UserResourceType(this.opts.type!);
     return `${date}${userType}${eventType}总数据`;
   }
   exportExcel() {

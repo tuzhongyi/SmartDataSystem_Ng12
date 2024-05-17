@@ -77,6 +77,11 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
         this.dateTimePickerConfig.format = 'yyyy年MM月';
         this.dateTimePickerConfig.week = false;
         break;
+      case TimeUnit.Year:
+        this.dateTimePickerConfig.view = DateTimePickerView.decade;
+        this.dateTimePickerConfig.format = 'yyyy年';
+        this.dateTimePickerConfig.week = false;
+        break;
       case TimeUnit.Hour:
       case TimeUnit.Day:
         this.dateTimePickerConfig.view = DateTimePickerView.month;
