@@ -40,6 +40,15 @@ type EChartOptions = echarts.ComposeOption<
 export class EventStatisticComponent implements OnInit, AfterViewInit {
   @Input() load?: EventEmitter<void>;
 
+  @Input('type') currentType: EventType = EventType.IllegalDrop;
+  @Input() title: string = '';
+
+  constructor(
+    private _storeService: GlobalStorageService,
+    private _business: EventStatisticBusiness,
+    private _converter: EventStatisticConverter
+  ) {}
+
   // 当前区划id
   private divisionId: string = '';
 
@@ -53,15 +62,19 @@ export class EventStatisticComponent implements OnInit, AfterViewInit {
 
   private _seriesStep: number = 4;
 
-  @Input('type') currentType: EventType = EventType.IllegalDrop;
-  @Input() title: string = '';
-
   theme: EChartsTheme = EChartsTheme.adsame;
+
+  count = 0;
 
   options: EChartOptions = {
     legend: {
-      formatter: function () {
-        return '单位(起)';
+      right: 0,
+      formatter: () => {
+        return `共${this.count}起`;
+      },
+      textStyle: {
+        color: '#cfd7ff',
+        fontSize: '16px',
       },
     },
     tooltip: {},
@@ -84,12 +97,6 @@ export class EventStatisticComponent implements OnInit, AfterViewInit {
     },
   };
   merge: EChartOptions = {};
-  constructor(
-    private _storeService: GlobalStorageService,
-    private _business: EventStatisticBusiness,
-    private _converter: EventStatisticConverter
-  ) {}
-
   ngOnInit(): void {
     if (this.load) {
       this.load.subscribe((x) => {
@@ -121,6 +128,10 @@ export class EventStatisticComponent implements OnInit, AfterViewInit {
     );
 
     let res = data.map((v) => {
+      let event = v.EventNumbers.find((x) => x.EventType === this.currentType);
+      if (event) {
+        this.count += event.DeltaNumber ?? 0;
+      }
       return this._converter.Convert(v, this.currentType);
     });
     res.unshift(0);

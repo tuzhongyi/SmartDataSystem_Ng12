@@ -1,15 +1,47 @@
 <div class="app-total-waste">
-  <div class="total-waste-item">
-    <div class="title">今日收湿垃圾总量</div>
+  <div
+    class="total-waste-item"
+    *ngIf="global.system === SystemType.garbage && user.UserType === 3"
+  >
+    <div class="title">垃圾投放点总数</div>
     <div class="content">
-      <div class="count" (click)="todetails(Type.Wet)">{{ model.wet }}</div>
+      <div class="count">{{ model.station }}</div>
+      <div class="unit">(个)</div>
+    </div>
+  </div>
+  <div
+    class="total-waste-item"
+    *ngIf="global.system === SystemType.garbage && user.UserType === 3"
+  >
+    <div class="title">
+      <!-- <div>今</div>
+      <div>日</div>
+      <div>事</div>
+      <div>件</div>
+      <div>总</div>
+      <div>数</div> -->
+      今日事件总数
+    </div>
+    <div class="content">
+      <div class="count">{{ model.event }}</div>
+      <div class="unit">(件/日)</div>
+    </div>
+  </div>
+  <div class="total-waste-item">
+    <div class="title">今日湿垃圾总量</div>
+    <div class="content">
+      <div class="count event" (click)="todetails(Type.Wet)">
+        {{ model.wet }}
+      </div>
       <div class="unit">(吨/日)</div>
     </div>
   </div>
   <div class="total-waste-item">
-    <div class="title">今日收干垃圾总量</div>
+    <div class="title">今日干垃圾总量</div>
     <div class="content">
-      <div class="count" (click)="todetails(Type.Dry)">{{ model.dry }}</div>
+      <div class="count event" (click)="todetails(Type.Dry)">
+        {{ model.dry }}
+      </div>
       <div class="unit">(吨/日)</div>
     </div>
   </div>

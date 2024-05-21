@@ -1,8 +1,8 @@
 /*
  * @Author: pmx 
  * @Date: 2022-11-10 14:57:10 
- * @Last Modified by: pmx
- * @Last Modified time: 2022-11-22 15:51:18
+ * @Last Modified by: zzl
+ * @Last Modified time: 2024-05-21 13:58:35
  */
 
 (function (root, factory) {
@@ -32,6 +32,7 @@
       "left": 15,
       "right": 15,
       "bottom": 0,
+      "top": 70,
       "containLabel": true
     },
     "backgroundColor": "rgba(0,0,0,0)",
@@ -45,7 +46,7 @@
         "overflow": "truncate"
       },
       "subtextStyle": {
-        "color": "inherit"
+        "color": "inherit",
       }
     },
     "line": {
@@ -53,7 +54,7 @@
         "show": true,
         "color": "#cfd7fe",
         "fontSize": "16",
-        "distance": 10
+        "distance": 5
       },
       "itemStyle": {
         "borderWidth": 1

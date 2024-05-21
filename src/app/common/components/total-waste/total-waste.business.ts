@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { TotalWasteModel } from './total-waste.model';
@@ -24,6 +25,21 @@ export class TotalWasteBusiness {
             break;
         }
       }
+    }
+    model.station = data.StationNumber;
+    model.event = 0;
+    if (data.TodayEventNumbers) {
+      data.TodayEventNumbers.forEach((e) => {
+        switch (e.EventType) {
+          case EventType.IllegalDrop:
+          case EventType.MixedInto:
+            model.event += e.DeltaNumber ?? 0;
+            break;
+
+          default:
+            break;
+        }
+      });
     }
     return model;
   }
