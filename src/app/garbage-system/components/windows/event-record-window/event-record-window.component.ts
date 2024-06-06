@@ -62,6 +62,7 @@ export class EventRecordWindowComponent
   }
   Index = EventRecordWindowIndex;
   ListType = ListType;
+  EventType = EventType;
 
   async ngOnChanges(changes: SimpleChanges) {
     if (changes.stationId) {

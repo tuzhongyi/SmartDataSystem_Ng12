@@ -42,6 +42,10 @@ export class EventRecordTableSewageComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
+  constructor() {
+    super();
+  }
+
   widths = [
     undefined,
     undefined,

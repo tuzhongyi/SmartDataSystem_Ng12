@@ -39,6 +39,7 @@ export class EventRecordFilterComponent
   @Input() filter: EventRecordFilter;
   @Output() filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
   @Input() divisionId?: string;
+  @Input() display_handle = true;
 
   constructor(business: EventRecordFilterBusiness) {
     this.business = business;

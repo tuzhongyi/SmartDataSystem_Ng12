@@ -1,5 +1,5 @@
 <div class="event-record-filter">
-  <div class="filter-item">
+  <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">开始时间</div>
     <input
       class="filter-item-value"
@@ -12,7 +12,7 @@
       (dateChange)="changeBegin($event)"
     />
   </div>
-  <div class="filter-item">
+  <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">结束时间</div>
     <input
       class="filter-item-value"
@@ -48,7 +48,7 @@
     >
     </level-division-panel>
   </div>
-  <div class="filter-item">
+  <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">投放点</div>
 
     <hw-select
@@ -73,7 +73,7 @@
       (selectedChange)="onstation($event)"
     ></app-select-control> -->
   </div>
-  <div class="filter-item">
+  <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">摄像机</div>
     <hw-select
       class="filter-item-value"
@@ -89,6 +89,23 @@
         <option [ngValue]="item" *ngFor="let item of model.cameras">
           {{ item.Name }}
         </option>
+      </select>
+    </hw-select>
+  </div>
+  <div class="filter-item hashandle" *ngIf="display_handle">
+    <div class="filter-item-title">处置状态</div>
+    <hw-select
+      class="filter-item-value"
+      [(selected)]="filter.handle"
+      [cannull]="true"
+    >
+      <select
+        hw-select-content
+        class="list-type-select"
+        [(ngModel)]="filter.handle"
+      >
+        <option [ngValue]="true">已处置</option>
+        <option [ngValue]="false">未处置</option>
       </select>
     </hw-select>
   </div>

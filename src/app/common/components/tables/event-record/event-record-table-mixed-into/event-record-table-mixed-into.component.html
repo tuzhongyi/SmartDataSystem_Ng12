@@ -1,27 +1,7 @@
-<div class="event-record-table">
-  <div class="event-record-table-main">
-    <table border="0" cellpadding="0" cellspacing="0">
-      <colgroup>
-        <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
-      </colgroup>
-      <thead>
-        <tr>
-          <th>图片</th>
-          <th>资源名称</th>
-          <th>投放点</th>
-          <th>社区</th>
-          <th>街道</th>
-          <th>居委会</th>
-          <th>上报时间</th>
-          <th>处置人员</th>
-          <th>处置时间</th>
-          <th class="center">操作</th>
-        </tr>
-      </thead>
-    </table>
-    <div class="event-record-table-main-body body">
+<div class="event-record-table vertical-layout">
+  <div class="event-record-table-main vertical-main">
+    <div class="event-record-table-main-table" WheelHorizontalScroll>
       <table
-        *ngIf="datas"
         border="0"
         cellpadding="0"
         cellspacing="0"
@@ -29,9 +9,22 @@
           height: table_height
         }"
       >
-        <colgroup>
-          <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
-        </colgroup>
+        <thead>
+          <tr>
+            <td class="lock left first">图片</td>
+            <td class="lock left second">资源名称</td>
+            <td>投放点</td>
+            <td>社区</td>
+            <td>街道</td>
+            <td>居委会</td>
+            <td>上报时间</td>
+            <td>闭环时间</td>
+            <td>处置状态</td>
+            <td>处置人员</td>
+            <td>处置时间</td>
+            <td class="lock right last center">操作</td>
+          </tr>
+        </thead>
         <tbody>
           <tr
             *ngFor="let item of datas; let i = index"
@@ -40,8 +33,8 @@
             }"
             (click)="onselect(item)"
           >
-            <td>
-              <div class="img-list">
+            <td class="lock left first">
+              <div class="imgs">
                 <div
                   class="img"
                   image
@@ -51,45 +44,84 @@
                 ></div>
               </div>
             </td>
-            <td>
-              {{ item.ResourceName }}
+            <td class="lock left second">
+              <div [style.width]="'calc(' + widths[1] + ' - 24px)'">
+                {{ item.ResourceName }}
+              </div>
             </td>
             <td>
-              {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+              <div [style.width]="'calc(' + widths[2] + ' - 24px)'">
+                {{ item.GarbageStation ? item.GarbageStation.Name : "" }}
+              </div>
             </td>
             <td>
-              {{
-                item.Data
-                  ? item.Data.CommunityName
-                  : item.GarbageStation
-                  ? item.GarbageStation.CommunityName
-                  : ""
-              }}
+              <div [style.width]="'calc(' + widths[3] + ' - 24px)'">
+                {{
+                  item.Data
+                    ? item.Data.CommunityName
+                    : item.GarbageStation
+                    ? item.GarbageStation.CommunityName
+                    : ""
+                }}
+              </div>
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? ((item.GarbageStation.Division | async)?.Parent | async)
-                      ?.Name
-                  : ""
-              }}
+              <div [style.width]="'calc(' + widths[4] + ' - 24px)'">
+                {{
+                  item.GarbageStation
+                    ? ((item.GarbageStation.Division | async)?.Parent | async)
+                        ?.Name
+                    : ""
+                }}
+              </div>
             </td>
             <td>
-              {{
-                item.GarbageStation
-                  ? (item.GarbageStation.Division | async)?.Name
-                  : ""
-              }}
+              <div [style.width]="'calc(' + widths[5] + ' - 24px)'">
+                {{
+                  item.GarbageStation
+                    ? (item.GarbageStation.Division | async)?.Name
+                    : ""
+                }}
+              </div>
             </td>
-            <td>{{ item.DateFormatter }}</td>
-            <td>{{ item.ProcessorName ?? "-" }}</td>
             <td>
-              {{
-                item.ProcessTime ? (item.ProcessTime | date : "HH:mm:ss") : "-"
-              }}
+              <div [style.width]="'calc(' + widths[6] + ' - 24px)'">
+                {{ item.DateFormatter }}
+              </div>
             </td>
-            <td class="center">
-              <div class="operation center">
+
+            <td>
+              <div [style.width]="'calc(' + widths[7] + ' - 24px)'">
+                {{ (item.HandleTime | date : "HH:mm:ss") ?? "-" }}
+              </div>
+            </td>
+            <td>
+              <div
+                [style.width]="'calc(' + widths[8] + ' - 24px)'"
+                [class]="Color.GarbageDropState(item.IsHandle ?? false, false)"
+              >
+                {{ Language.GarbageDropState(item.IsHandle ?? false, false) }}
+              </div>
+            </td>
+            <td>
+              <div [style.width]="'calc(' + widths[9] + ' - 24px)'">
+                {{ item.ProcessorName ?? "-" }}
+              </div>
+            </td>
+            <td>
+              <div [style.width]="'calc(' + widths[10] + ' - 24px)'">
+                {{
+                  item.ProcessTime
+                    ? (item.ProcessTime | date : "HH:mm:ss")
+                    : "-"
+                }}
+              </div>
+            </td>
+            <td class="lock right last">
+              <div
+                class="operation center"
+                [style.width]="'calc(' + widths[11] + ' - 24px)'"
+              >
                 <div
                   class="icon-button"
                   title="事件发生时间视频"
@@ -133,26 +165,25 @@
         </tbody>
       </table>
     </div>
-    <div class="event-record-table-main-footer" *ngIf="page">
-      <div class="footer-item">
-        <div class="footer-info">
-          <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
-          <div class="info-item">
-            总数量: {{ page && page.TotalRecordCount }}
-          </div>
-        </div>
-
-        <!-- MatPaginator 的pageIndex是从0开始-->
-        <app-paginator
-          [length]="page.TotalRecordCount"
-          [pageSize]="page.PageSize"
-          [pagerCount]="5"
-          [pageIndex]="page.PageIndex - 1"
-          [showFirstLastButtons]="true"
-          (page)="pageEvent($event)"
-        >
-        </app-paginator>
+    <div class="lock-border"></div>
+  </div>
+  <div class="event-record-table-main-footer footer" *ngIf="page">
+    <div class="footer-item">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
       </div>
+
+      <!-- MatPaginator 的pageIndex是从0开始-->
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="5"
+        [pageIndex]="page.PageIndex - 1"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
     </div>
   </div>
 

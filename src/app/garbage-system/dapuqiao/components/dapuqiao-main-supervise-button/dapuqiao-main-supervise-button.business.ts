@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
-import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
+import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request-garbage-drop.params';
+
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 
 @Injectable()

@@ -172,6 +172,9 @@ export class EventRecordConverter
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
 
+    model.IsHandle = source.Data.IsHandle;
+    model.HandleTime = source.Data.HandleTime;
+
     return model;
   }
 
@@ -187,6 +190,9 @@ export class EventRecordConverter
     }
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
+
+    model.IsHandle = source.Data.IsHandle;
+    model.HandleTime = source.Data.HandleTime;
     return model;
   }
 
@@ -194,6 +200,9 @@ export class EventRecordConverter
     let model = await this.fromEventRecord(source);
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
+
+    model.IsHandle = source.Data.IsHandle;
+    model.HandleTime = source.Data.HandleTime;
 
     if (source.Data.HandleImageUrl) {
       model.urls.push(Medium.img(source.Data.HandleImageUrl));

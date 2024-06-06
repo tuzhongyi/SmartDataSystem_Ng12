@@ -21,6 +21,7 @@ export class EventRecordFilter {
   divisionId?: string;
   stationId?: string;
   cameraId?: string;
+  handle?: boolean;
 
   private _division?: IIdNameModel;
   public get division(): IIdNameModel | undefined {

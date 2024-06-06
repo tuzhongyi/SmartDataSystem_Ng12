@@ -5,7 +5,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { OrderType } from 'src/app/enum/order-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
+import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request-garbage-drop.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { GarbageDropEventRecordPagedConverter } from './garbage-drop-record-table.converter';
 import {

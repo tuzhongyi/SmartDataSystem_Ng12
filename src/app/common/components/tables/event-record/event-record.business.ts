@@ -4,6 +4,10 @@ import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GetEventRecordGarbageFullParams } from 'src/app/network/request/event/event-request-garbage-full.params';
+import { GetEventRecordIllegalDropParams } from 'src/app/network/request/event/event-request-illegal-drop.params';
+import { GetEventRecordMixedIntoParams } from 'src/app/network/request/event/event-request-mixed-info.params';
+import { GetEventRecordSewageParams } from 'src/app/network/request/event/event-request-sewage.params';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -42,7 +46,7 @@ export class EventRecordBusiness
     opts: EventRecordFilter
   ): Promise<PagedList<EventRecordType>> {
     this.eventService.record.IllegalDrop;
-    let params = this.getParams(page, opts);
+    let params = this.getParams(page, opts, type);
 
     switch (type) {
       case EventType.IllegalDrop:
@@ -88,8 +92,29 @@ export class EventRecordBusiness
     return model;
   }
 
-  getParams(page: PagedParams, opts: EventRecordFilter) {
-    let params = new GetEventRecordsParams();
+  getParams(page: PagedParams, opts: EventRecordFilter, type: EventType) {
+    let params: GetEventRecordsParams;
+    switch (type) {
+      case EventType.MixedInto:
+        params = new GetEventRecordMixedIntoParams();
+        (params as GetEventRecordMixedIntoParams).IsHandle = opts.handle;
+        break;
+      case EventType.IllegalDrop:
+        params = new GetEventRecordIllegalDropParams();
+        break;
+      case EventType.GarbageFull:
+        params = new GetEventRecordGarbageFullParams();
+        (params as GetEventRecordGarbageFullParams).IsHandle = opts.handle;
+        break;
+      case EventType.Sewage:
+        params = new GetEventRecordSewageParams();
+        (params as GetEventRecordSewageParams).IsHandle = opts.handle;
+        break;
+      default:
+        params = new GetEventRecordsParams();
+        break;
+    }
+
     params = Object.assign(params, page);
     params.BeginTime = opts.duration.begin;
     params.EndTime = opts.duration.end;

@@ -6,7 +6,7 @@ import { OrderType } from 'src/app/enum/order-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
-import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request.params';
+import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request-garbage-drop.params';
 import {
   DapuqiaoGarbageDropRecordTableArgs,
   GarbageDropEventRecordModel,

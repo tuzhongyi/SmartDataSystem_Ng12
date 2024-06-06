@@ -14,14 +14,17 @@ import {
   HowellBaseTypeRequestService,
 } from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
+import { GetGarbageDropEventRecordsParams } from './event-request-garbage-drop.params';
+import { GetEventRecordGarbageFullParams } from './event-request-garbage-full.params';
+import { GetEventRecordIllegalDropParams } from './event-request-illegal-drop.params';
+import { GetEventRecordMixedIntoParams } from './event-request-mixed-info.params';
+import { GetEventRecordSewageParams } from './event-request-sewage.params';
 import {
   GarbageDropAcceptParams,
   GarbageDropSuperviseParams,
   GarbageDropSuperviseResultParams,
   GarbageFeedbackParams,
   GetEventInfosParams,
-  GetEventRecordsParams,
-  GetGarbageDropEventRecordsParams,
 } from './event-request.params';
 
 @Injectable({
@@ -125,7 +128,7 @@ class RecordsIllegalDropService {
   type: HowellBaseTypeRequestService<IllegalDropEventRecord>;
 
   list(
-    params: GetEventRecordsParams
+    params: GetEventRecordIllegalDropParams
   ): Promise<PagedList<IllegalDropEventRecord>> {
     let url = EventUrl.record.illegaldrop.list();
     let data = instanceToPlain(params);
@@ -144,7 +147,7 @@ class RecordsMixedIntoService {
   type: HowellBaseTypeRequestService<MixedIntoEventRecord>;
 
   list(
-    params: GetEventRecordsParams
+    params: GetEventRecordMixedIntoParams
   ): Promise<PagedList<MixedIntoEventRecord>> {
     let url = EventUrl.record.mixedinto.list();
     return this.type.paged(url, params);
@@ -162,7 +165,7 @@ class RecordsGarbageFullService {
   type: HowellBaseTypeRequestService<GarbageFullEventRecord>;
 
   list(
-    params: GetEventRecordsParams
+    params: GetEventRecordGarbageFullParams
   ): Promise<PagedList<GarbageFullEventRecord>> {
     let url = EventUrl.record.garbagefull.list();
     return this.type.paged(url, params);
@@ -228,7 +231,9 @@ class RecordsSewageService {
 
   type: HowellBaseTypeRequestService<SewageEventRecord>;
 
-  list(params: GetEventRecordsParams): Promise<PagedList<SewageEventRecord>> {
+  list(
+    params: GetEventRecordSewageParams
+  ): Promise<PagedList<SewageEventRecord>> {
     let url = EventUrl.record.sewage.list();
     return this.type.paged(url, params);
   }

@@ -1,0 +1,132 @@
+.event-record-table {
+  height: 100%;
+  overflow-x: auto;
+
+  @first-width: 155px;
+  @second-width: 250px;
+  @operation-width: 200px;
+
+
+  &-main {
+    display: flex;
+    justify-content: start;
+
+
+    &-table {
+      height: 100%;
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+
+
+    }
+
+  }
+
+
+
+  table {
+    tr {
+      height: auto;
+
+      &.selected {
+        b {
+          &:hover {
+            color: white;
+          }
+        }
+      }
+
+      &.hover {
+        background: rgba(117, 134, 224, 0.5);
+      }
+
+      td {
+        height: auto;
+
+        &.lock {
+          height: auto;
+        }
+
+        .imgs {
+          width: fit-content;
+          height: 100%;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+
+          .img {
+            width: 44px;
+            height: 36px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            margin-right: 5px;
+
+            &:last-child {
+              margin-right: 0;
+            }
+          }
+        }
+
+
+        div {
+          width: min-content;
+
+          b {
+            color: #7586e0;
+          }
+
+        }
+
+        &.first {
+          width: @first-width;
+          min-width: @first-width;
+          max-width: @first-width;
+          left: 0;
+        }
+
+        &.second {
+          width: @second-width;
+          min-width: @second-width;
+          max-width: @second-width;
+          left: @first-width  !important;
+        }
+
+        &.last {
+          width: @operation-width;
+        }
+
+        &>.operation {
+          width: calc(@operation-width - 24px);
+          justify-content: center;
+          align-items: center;
+          display: flex;
+          gap: 10px;
+
+          .icon-button {
+            margin: 0;
+          }
+        }
+      }
+
+
+    }
+
+  }
+
+  &-main {
+    position: relative;
+    overflow: hidden;
+
+    .lock-border {
+      position: absolute;
+      pointer-events: none;
+      left: calc(@first-width + @second-width);
+      right: @operation-width;
+      top: 0;
+      bottom: 0;
+      border-right: 1px dashed #4b5899;
+      border-left: 1px dashed #4b5899;
+    }
+  }
+}

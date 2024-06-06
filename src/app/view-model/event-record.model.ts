@@ -11,6 +11,10 @@ export class EventRecordViewModel<T = any> extends BaseEventRecord {
   DateFormatter: string = '';
   ProcessorName?: string;
   ProcessTime?: Date;
+
   images: ImageControlModel[] = [];
   urls: Promise<string>[] = [];
+
+  HandleTime?: Date;
+  IsHandle?: boolean;
 }

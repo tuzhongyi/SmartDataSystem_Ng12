@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ImagePagedArgs, IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
@@ -14,8 +15,8 @@ import { EventRecordFilter } from '../event-record.model';
   selector: 'event-record-table-mixed-into',
   templateUrl: './event-record-table-mixed-into.component.html',
   styleUrls: [
-    '../../table.less',
-    '../event-record-table/event-record-table.component.less',
+    '../../table-sticky.less',
+    './event-record-table-mixed-into.component.less',
   ],
 })
 export class EventRecordTableMixedIntoComponent
@@ -44,12 +45,28 @@ export class EventRecordTableMixedIntoComponent
     new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
-  widths = new Array(10);
+  constructor() {
+    super(true);
+  }
 
+  widths = [
+    '155px',
+    '250px',
+    '200px',
+    '120px',
+    '120px',
+    '180px',
+    '210px',
+    '120px',
+    '120px',
+    '120px',
+    '120px',
+    '200px',
+  ];
   selected?: EventRecordViewModel;
+  Color = ColorTool;
 
   async ngOnInit() {
-    this.widths[6] = '210px';
     if (this.load) {
       this.load.subscribe((x) => {
         if (x) {

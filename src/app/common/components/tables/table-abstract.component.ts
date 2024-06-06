@@ -8,14 +8,33 @@ import {
 } from '../../interfaces/converter.interface';
 
 export abstract class PagedTableAbstractComponent<T> {
+  constructor(sticky: boolean = false) {
+    this.sticky = sticky;
+  }
   abstract widths: Array<string | undefined>;
   abstract load?: EventEmitter<any>;
   get table_height() {
     if (this.page) {
-      return `${(this.page.RecordCount / this.pageSize) * 100}%`;
+      if (
+        this.page.RecordCount === 0 ||
+        this.page.RecordCount == this.pageSize
+      ) {
+        return '100%';
+      } else {
+        if (this.sticky) {
+          return `calc((100% - ${this.table_head_height}px) * ${
+            this.page.RecordCount / this.page.PageSize
+          } + ${this.table_head_height}px)`;
+        } else {
+          return `calc(100% * ${this.page.RecordCount / this.page.PageSize})`;
+        }
+      }
     }
     return undefined;
   }
+  table_head_height = 60;
+  sticky = false;
+
   Language = Language;
   datas: T[] = [];
   page: Page = new Page();

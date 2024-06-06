@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ImagePagedArgs, IModel } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
@@ -14,8 +15,8 @@ import { EventRecordFilter } from '../event-record.model';
   selector: 'event-record-table-garbage-full',
   templateUrl: './event-record-table-garbage-full.component.html',
   styleUrls: [
-    '../../table.less',
-    '../event-record-table/event-record-table.component.less',
+    '../../table-sticky.less',
+    './event-record-table-garbage-full.component.less',
   ],
 })
 export class EventRecordTableGarbageFullComponent
@@ -39,8 +40,25 @@ export class EventRecordTableGarbageFullComponent
     new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
-  widths = ['15%', undefined, undefined, undefined, undefined, '210px'];
+  constructor() {
+    super(true);
+  }
+
+  widths = [
+    '250px',
+    '200px',
+    '180px',
+    '150px',
+    '230px',
+    '220px',
+    '150px',
+    '150px',
+    '150px',
+    '150px',
+    '150px',
+  ];
   selected?: EventRecordViewModel;
+  Color = ColorTool;
 
   async ngOnInit() {
     if (this.load) {

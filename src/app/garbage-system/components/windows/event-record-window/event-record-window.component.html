@@ -26,6 +26,7 @@
               *ngIf="record.filter.show"
               [date_sync]="true"
               [divisionId]="divisionId"
+              [display_handle]="type != EventType.IllegalDrop"
               [(filter)]="record.filter.filter"
             >
             </interval-division-station-filter>

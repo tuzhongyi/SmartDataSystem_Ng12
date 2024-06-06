@@ -43,6 +43,10 @@ export class EventRecordTableIllegalDropComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
 
+  constructor() {
+    super();
+  }
+
   widths = [
     '150px',
     undefined,
