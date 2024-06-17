@@ -27,21 +27,14 @@ export class VideoSettingControlComponent implements OnInit {
     private userService: UserRequestService
   ) {}
   StreamType = StreamType;
-  stream: StreamType = StreamType.main;
 
-  async loadStream() {
-    try {
-      let result = await this.userService.config.get(
-        this.local.user.Id,
-        UserConfigType.VideoStream
-      );
-      if (result) {
-        this.stream = JSON.parse(result);
-      }
-    } catch (ex) {
-      console.warn('loadSteam error', ex);
-    }
+  public get stream(): StreamType {
+    return this.local.video.stream;
   }
+  public set stream(v: StreamType) {
+    this.local.video.stream = v;
+  }
+
   async saveStream(stream: StreamType) {
     const fault = await this.userService.config.update(
       this.local.user.Id,
@@ -63,7 +56,6 @@ export class VideoSettingControlComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadStream();
     this.loadPreset();
   }
 

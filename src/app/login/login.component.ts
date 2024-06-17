@@ -26,11 +26,13 @@ import { RoutePath } from '../app-routing.path';
 import { GlobalStorageService } from '../common/service/global-storage.service';
 import { LocalStorageService } from '../common/service/local-storage.service';
 import { SessionStorageService } from '../common/service/session-storage.service';
+import { UserConfigType } from '../enum/user-config-type.enum';
 import {
   User,
   UserResource,
 } from '../network/model/garbage-station/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
+import { UserRequestService } from '../network/request/user/user-request.service';
 
 /**
  *  LoginComponent 需要用到 form 指令，
@@ -64,10 +66,11 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     private _authorizationService: AuthorizationService,
     private _toastrService: ToastrService,
     private _router: Router,
-    private _localStorageService: LocalStorageService,
+    private local: LocalStorageService,
     private _sessionStorageService: SessionStorageService,
     private _cookieService: CookieService,
-    private _storeService: GlobalStorageService
+    private _storeService: GlobalStorageService,
+    private userService: UserRequestService
   ) {
     this._titleService.setTitle('用户登录');
   }
@@ -203,7 +206,21 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
       default:
         break;
     }
+
     this._router.navigateByUrl(path);
+  }
+
+  private loadVideoConfig(user: User) {
+    this.userService.config
+      .get(user.Id, UserConfigType.VideoStream)
+      .then((x) => {
+        this.local.video.stream = parseInt(x);
+      });
+    this.userService.config
+      .get(user.Id, UserConfigType.VideoRuleState)
+      .then((x) => {
+        this.local.video.rule = JSON.parse(x);
+      });
   }
   // route(user: User) {
   //   if (user.UIType === UserUIType.dapuqiao) {
@@ -272,6 +289,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         );
         if (user instanceof User) {
           // console.log('登录成功', result);
+          this.loadVideoConfig(user);
           this.route(user);
         }
       } catch (e: any) {
@@ -351,7 +369,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     );
     this._cookieService.set('passWord', passWord, options);
 
-    this._localStorageService.user = user;
+    this.local.user = user;
     this._storeService.password = passWord;
   }
 }

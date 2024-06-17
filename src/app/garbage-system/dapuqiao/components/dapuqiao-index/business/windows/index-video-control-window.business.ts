@@ -7,6 +7,7 @@ import {
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
@@ -36,7 +37,8 @@ export class IndexVideoControlWindowBusiness
   constructor(
     private srService: SRServerRequestService,
     private stationService: GarbageStationRequestService,
-    private download: DownloadBusiness
+    private download: DownloadBusiness,
+    private local: LocalStorageService
   ) {
     super();
   }
@@ -46,7 +48,7 @@ export class IndexVideoControlWindowBusiness
     this.camera = camera;
     this.garbageStation = await this.getGarbageStation(camera.GarbageStationId);
     this.title = this.garbageStation.Name;
-    let url = await this.srService.preview(camera.Id);
+    let url = await this.srService.preview(camera.Id, this.local.video.stream);
     this.webUrl = url.WebUrl;
 
     let model = VideoModel.fromUrl(url.Url, url.Username, url.Password);
@@ -69,7 +71,7 @@ export class IndexVideoControlWindowBusiness
         return this.srService.playback(camera.Id, interval!);
       case PlayMode.live:
       default:
-        return this.srService.preview(camera.Id);
+        return this.srService.preview(camera.Id, this.local.video.stream);
     }
   }
 

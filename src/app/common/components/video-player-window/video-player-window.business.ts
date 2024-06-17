@@ -6,6 +6,7 @@ import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
+import { LocalStorageService } from '../../service/local-storage.service';
 
 import { PlayMode, VideoModel } from '../video-player/video.model';
 
@@ -13,7 +14,10 @@ import { PlayMode, VideoModel } from '../video-player/video.model';
 export class VideoPlayerWindowBusiness
   implements IBusiness<VideoUrl, VideoModel>
 {
-  constructor(private sr: SRServerRequestService) {}
+  constructor(
+    private sr: SRServerRequestService,
+    private local: LocalStorageService
+  ) {}
 
   Converter: IConverter<VideoUrl, VideoModel> = new VideoControlConverter();
   async load(
@@ -32,7 +36,7 @@ export class VideoPlayerWindowBusiness
     duration?: Duration
   ): Promise<VideoUrl> {
     if (mode == PlayMode.live) {
-      return this.sr.preview(cameraId);
+      return this.sr.preview(cameraId, this.local.video.stream);
     } else {
       let params = new DurationParams();
       params.BeginTime = duration!.begin;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
+import { StreamType } from 'src/app/enum/stream-type.enum';
 import { User } from 'src/app/network/model/garbage-station/user.model';
 
 /*
@@ -35,6 +36,11 @@ export class LocalStorageService {
     // localStorage.setItem(key, JSON.stringify(plain));
     localStorage.setItem(key, JSON.stringify(value));
   }
+
+  video = {
+    stream: StreamType.main,
+    rule: false,
+  };
 
   clear(name?: string) {
     if (name) {

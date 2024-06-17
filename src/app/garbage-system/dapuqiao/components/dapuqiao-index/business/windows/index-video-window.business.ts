@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 
 @Injectable()
 export class IndexVideoWindowBusiness extends VideoWindowViewModel {
-  constructor(private sr: SRServerRequestService) {
+  constructor(
+    private sr: SRServerRequestService,
+    private local: LocalStorageService
+  ) {
     super();
   }
   style = {
@@ -35,7 +39,7 @@ export class IndexVideoWindowBusiness extends VideoWindowViewModel {
   }
 
   async preview(id: string) {
-    let url = await this.sr.preview(id);
+    let url = await this.sr.preview(id, this.local.video.stream);
     this.play(url);
   }
 

@@ -14,6 +14,7 @@ import { PatrolControlConverter } from './patrol-control.converter';
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { Paged } from 'src/app/view-model/paged.model';
@@ -26,7 +27,8 @@ export class PatrolControlBusiness
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
-    private srService: SRServerRequestService
+    private srService: SRServerRequestService,
+    private local: LocalStorageService
   ) {}
   converter: IConverter<GarbageStation, PatrolControlModel> =
     new PatrolControlConverter();
@@ -78,7 +80,7 @@ export class PatrolControlBusiness
   }
 
   getPreview(camera: Camera) {
-    return this.srService.preview(camera.Id);
+    return this.srService.preview(camera.Id, this.local.video.stream);
   }
   getPlayback(model: PatrolControlModel, interval: DurationParams) {
     return this.srService.playback(model.id, interval);

@@ -70,9 +70,9 @@ export class VideoPlayerComponent
   src?: SafeResourceUrl;
   isloaded = false;
   playing = false;
-  stream: StreamType = StreamType.main;
+  stream: StreamType = this.local.video.stream;
   registHandle?: NodeJS.Timer;
-  private _ruleState: boolean = false;
+  private _ruleState: boolean = this.local.video.rule;
   private _player?: WSPlayerProxy;
   private get player(): WSPlayerProxy | undefined {
     if (!this.iframe || !this.iframe.nativeElement.contentWindow)
@@ -202,32 +202,16 @@ export class VideoPlayerComponent
   }
 
   onLoad(event: Event) {
-    this.loadRuleState().then(() => {
-      wait(
-        () => {
-          return !!this.player;
-        },
-        () => {
-          this.eventRegist();
-        }
-      );
-    });
-    this.loadStream();
+    wait(
+      () => {
+        return !!this.player;
+      },
+      () => {
+        this.eventRegist();
+      }
+    );
   }
 
-  async loadRuleState() {
-    try {
-      const strRule = await this.userService.config.get(
-        this.local.user.Id,
-        UserConfigType.VideoRuleState
-      );
-      if (strRule) {
-        this._ruleState = JSON.parse(strRule);
-      }
-    } catch (ex) {
-      console.warn('loadRuleState error', ex);
-    }
-  }
   async saveRuleState(state: boolean) {
     const fault = await this.userService.config.update(
       this.local.user.Id,
@@ -238,19 +222,7 @@ export class VideoPlayerComponent
       this._ruleState = state;
     }
   }
-  async loadStream() {
-    try {
-      let result = await this.userService.config.get(
-        this.local.user.Id,
-        UserConfigType.VideoStream
-      );
-      if (result) {
-        this.stream = JSON.parse(result);
-      }
-    } catch (ex) {
-      console.warn('loadSteam error', ex);
-    }
-  }
+
   eventRegist() {
     if (this.player) {
       this.player.getPosition = (index: number = 0, val: any) => {

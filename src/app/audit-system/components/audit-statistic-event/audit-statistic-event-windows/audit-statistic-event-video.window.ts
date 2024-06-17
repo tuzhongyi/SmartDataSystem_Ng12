@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { VideoModel } from 'src/app/common/components/video-player/video.model';
 import { VideoWindowViewModel } from 'src/app/common/components/video-window/video-window.model';
+import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { AuditStatisticEventService } from '../audit-statistic-event.service';
 
 @Injectable()
 export class AuditStatisticEventVideoWindow extends VideoWindowViewModel {
-  constructor(private service: AuditStatisticEventService) {
+  constructor(
+    private service: AuditStatisticEventService,
+    private local: LocalStorageService
+  ) {
     super();
   }
   style = {
@@ -58,7 +62,7 @@ export class AuditStatisticEventVideoWindow extends VideoWindowViewModel {
 
   async preview(id: string) {
     this.isplayback = false;
-    let url = await this.service.sr.preview(id);
+    let url = await this.service.sr.preview(id, this.local.video.stream);
     this.play(url);
   }
 
