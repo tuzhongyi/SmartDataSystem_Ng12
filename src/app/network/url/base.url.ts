@@ -39,6 +39,8 @@ export class HowellUrlNode {
   static device_service = 'device_service';
   static ai_garbage = 'ai_garbage';
   static http2tcp = 'http2tcp';
+  static gcha = 'gcha';
+  static devices = 'devices';
 }
 
 export class BaseUrl {
@@ -69,6 +71,9 @@ export class BaseUrl {
   /** /api/howell/ver10/device_service/http2tcp/  */
   static get http2tcp() {
     return `/${HowellUrlNode.api}/${HowellUrlNode.howell}/${HowellUrlNode.ver10}/${HowellUrlNode.device_service}/${HowellUrlNode.http2tcp}`;
+  }
+  static get gcha() {
+    return `/${HowellUrlNode.gcha}/${HowellUrlNode.devices}`;
   }
 }
 class GarbageBaseUrl {

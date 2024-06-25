@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DisposalCountArgs } from '../disposal-count/disposal-count.model';
 import { StatisticCardGroupBussiness } from './statistic-card-group.business';
-import { StatisticCardItem, StatisticType } from './statistic-card-group.model';
+import { StatisticCardItem } from './statistic-card-group.model';
 
 @Component({
   selector: 'statistic-card-group',
@@ -11,13 +11,6 @@ import { StatisticCardItem, StatisticType } from './statistic-card-group.model';
   providers: [StatisticCardGroupBussiness],
 })
 export class StatisticCardGroupComponent implements OnInit {
-  @Input() types = [
-    StatisticType.stationcount,
-    StatisticType.stationdrop,
-    StatisticType.stationfull,
-    StatisticType.recordillegaldrop,
-    StatisticType.recordmixedinto,
-  ];
   @Output() stationcount = new EventEmitter();
   @Output() stationdrop = new EventEmitter();
   @Output() stationfull = new EventEmitter();
@@ -55,13 +48,13 @@ export class StatisticCardGroupComponent implements OnInit {
       case 0:
         this.stationcount.emit();
         break;
-      case 1:
+      case 2:
         this.stationdrop.emit();
         break;
-      case 2:
+      case 3:
         this.stationfull.emit();
         break;
-      case 3:
+      case 1:
         this.recordillegaldrop.emit();
         break;
       case 4:

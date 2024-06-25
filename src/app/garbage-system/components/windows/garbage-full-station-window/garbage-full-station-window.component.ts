@@ -47,7 +47,7 @@ export class GarbageFullStationWindowComponent
   listType = ListType.table;
   ListType = ListType;
 
-  index = GarbageFullStationWindowIndex.station;
+  index = GarbageFullStationWindowIndex.record;
 
   ngOnInit(): void {}
 
@@ -76,6 +76,6 @@ export class GarbageFullStationWindowComponent
   }
 }
 export enum GarbageFullStationWindowIndex {
-  station = 0,
-  record = 1,
+  record = 0,
+  station = 1,
 }

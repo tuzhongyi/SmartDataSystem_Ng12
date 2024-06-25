@@ -24,13 +24,6 @@
         [selectedIndex]="index"
         (selectedIndexChange)="indexChange($event)"
       >
-        <mat-tab label="列表">
-          <howell-garbage-full-station-table
-            [load]="station.load"
-            (image)="onimage($event)"
-          >
-          </howell-garbage-full-station-table>
-        </mat-tab>
         <mat-tab label="事件">
           <interval-division-station-filter
             *ngIf="record.filter.show"
@@ -64,6 +57,13 @@
               </howell-event-record-list>
             </ng-container>
           </div>
+        </mat-tab>
+        <mat-tab label="列表">
+          <howell-garbage-full-station-table
+            [load]="station.load"
+            (image)="onimage($event)"
+          >
+          </howell-garbage-full-station-table>
         </mat-tab>
       </mat-tab-group>
     </div>

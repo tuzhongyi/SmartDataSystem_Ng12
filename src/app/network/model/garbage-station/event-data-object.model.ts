@@ -1,8 +1,8 @@
-import { IModel } from '../model.interface';
+import { IIdModel } from '../model.interface';
 import { Point } from './point.model';
 
 /** 事件目标 */
-export class EventDataObject implements IModel {
+export class EventDataObject implements IIdModel {
   /**	String	目标ID	M */
   Id!: string;
   /**	Point[]	目标所在的归一化多边形	M */

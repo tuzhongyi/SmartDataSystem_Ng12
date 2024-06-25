@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
-import { AIGarbageSchedule } from 'src/app/network/model/ai-garbage/schedule.model';
-import { AIGarbageDayTimeSegment } from 'src/app/network/model/ai-garbage/time-segment-day.model';
-import { AIGarbageTimeSegment } from 'src/app/network/model/ai-garbage/time-segment.model';
+import { Schedule } from 'src/app/network/model/schedule.model';
+import { DayTimeSegment } from 'src/app/network/model/time-segment-day.model';
+import { TimeSegment } from 'src/app/network/model/time-segment.model';
 import { Time } from 'src/app/network/model/time.model';
 import { AIGarbageRequestService } from 'src/app/network/request/ai-garbage/ai-garbage.service';
 import {
@@ -15,7 +15,7 @@ import {
 @Injectable()
 export class AIGarbageStationDeviceScheduleBusiness {
   constructor(private service: AIGarbageRequestService) {}
-  tomodel(schelule: AIGarbageSchedule) {
+  tomodel(schelule: Schedule) {
     let model = new AIGarbageScheduleModel();
     if (schelule.SprayTimes) {
       model.SprayTimes = schelule.SprayTimes.map((time) => {
@@ -68,7 +68,7 @@ export class AIGarbageStationDeviceScheduleBusiness {
     return model;
   }
   frommodel(model: AIGarbageScheduleModel) {
-    let entity = new AIGarbageSchedule();
+    let entity = new Schedule();
     if (model.SprayTimes) {
       entity.SprayTimes = model.SprayTimes.map((x) => {
         return new Time(x.hour.value, x.minute.value, x.second.value);
@@ -76,7 +76,7 @@ export class AIGarbageStationDeviceScheduleBusiness {
     }
     if (model.ExhaustFanTimeSegments) {
       entity.ExhaustFanTimeSegments = model.ExhaustFanTimeSegments.map((x) => {
-        let segment = new AIGarbageTimeSegment();
+        let segment = new TimeSegment();
         segment.StartTime = new Time(
           x.StartTime.hour.value,
           x.StartTime.minute.value,
@@ -92,11 +92,11 @@ export class AIGarbageStationDeviceScheduleBusiness {
     }
     if (model.DoorOpenTimes) {
       entity.DoorOpenTimes = model.DoorOpenTimes.map((x) => {
-        let day = new AIGarbageDayTimeSegment();
+        let day = new DayTimeSegment();
         day.DayOfWeek = x.Day;
         if (x.Segments) {
           day.Segments = x.Segments.map((y) => {
-            let segment = new AIGarbageTimeSegment();
+            let segment = new TimeSegment();
             segment.StartTime = new Time(
               y.StartTime.hour.value,
               y.StartTime.minute.value,

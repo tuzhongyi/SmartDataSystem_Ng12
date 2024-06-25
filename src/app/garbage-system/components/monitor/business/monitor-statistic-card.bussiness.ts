@@ -1,20 +1,11 @@
 import { Injectable } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { StatisticType } from '../../statistic-card-group/statistic-card-group.model';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 import { MonitorWindowBussiness } from './window.business';
 
 @Injectable()
 export class MonitorStatisticCardBussiness {
   constructor(private window: MonitorWindowBussiness) {}
-
-  types = [
-    StatisticType.stationcount,
-    StatisticType.stationdrop,
-    StatisticType.stationfull,
-    StatisticType.recordillegaldrop,
-    StatisticType.recordmixedinto,
-  ];
 
   onstationcount() {
     this.window.station.stationId = undefined;

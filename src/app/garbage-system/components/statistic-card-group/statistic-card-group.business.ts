@@ -32,6 +32,10 @@ export class StatisticCardGroupBussiness
     array.push(card);
     this.storeService.statistic.station.count = parseInt(card.value);
 
+    card = this.Converter.illegaldrop(data);
+    array.push(card);
+    this.storeService.statistic.illegalDrop = parseInt(card.value);
+
     card = this.Converter.stationdrop(data);
     array.push(card);
     this.storeService.statistic.station.drop = parseInt(card.value);
@@ -39,10 +43,6 @@ export class StatisticCardGroupBussiness
     card = this.Converter.stationfull(data);
     array.push(card);
     this.storeService.statistic.full = parseInt(card.value);
-
-    card = this.Converter.illegaldrop(data);
-    array.push(card);
-    this.storeService.statistic.illegalDrop = parseInt(card.value);
 
     card = this.Converter.mixedinto(data);
     array.push(card);

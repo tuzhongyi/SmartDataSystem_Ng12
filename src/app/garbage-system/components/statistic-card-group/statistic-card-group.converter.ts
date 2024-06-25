@@ -7,8 +7,7 @@ import { StatisticCardItem, StatisticType } from './statistic-card-group.model';
 export class StatisticCardConverter {
   stationcount(count: number) {
     let card = new StatisticCardItem(count, StatisticType.stationcount);
-    card.title =
-      Language.json.garbage + Language.json.station + Language.json.number;
+    card.title = Language.json.garbage + Language.json.station;
     card.value = `${count}`;
     card.class = 'sky-blue-text2';
     return card;
@@ -16,23 +15,28 @@ export class StatisticCardConverter {
 
   stationdrop(input?: DivisionNumberStatistic) {
     let card = new StatisticCardItem(input, StatisticType.stationdrop);
-    card.title =
-      Language.json.garbage + Language.json.stay + Language.json.station;
+    card.title = Language.json.stay + Language.json.station;
     card.value = `${input?.GarbageDropStationNumber ?? 0}`;
     card.class = 'orange-red-text';
     return card;
   }
   stationfull(input?: DivisionNumberStatistic) {
     let card = new StatisticCardItem(input, StatisticType.stationfull);
-    card.title =
-      Language.json.did +
-      Language.json.full +
-      Language.json.station +
-      Language.json.number;
-    card.value = `${
-      (input?.DryFullStationNumber ?? 0) + (input?.WetFullStationNumber ?? 0)
-    }`;
-    card.class = 'orange-text';
+    card.title = Language.json.full + Language.json.station;
+    let stationcount =
+      (input?.DryFullStationNumber ?? 0) + (input?.WetFullStationNumber ?? 0);
+    let eventcount = 0;
+    if (input && input.TodayEventNumbers) {
+      let number = input.TodayEventNumbers.find(
+        (x) => x.EventType === EventType.GarbageFull
+      );
+      if (number) {
+        eventcount = number.DayNumber;
+      }
+    }
+
+    card.value = `<span class="orange-text">${eventcount}</span><span class="light-blue-text split">&nbsp;</span><span class="sky-blue-text2">${stationcount}</span>`;
+    card.class = 'task';
     return card;
   }
   private createEvent(
@@ -58,7 +62,7 @@ export class StatisticCardConverter {
       },
       input
     );
-    card.title = Language.json.EventType.IllegalDrop + Language.json.event;
+    card.title = Language.json.EventType.IllegalDrop;
     card.class = 'powder-red-text';
     return card;
   }
@@ -70,7 +74,7 @@ export class StatisticCardConverter {
       },
       input
     );
-    card.title = Language.json.EventType.MixedInto + Language.json.event;
+    card.title = Language.json.EventType.MixedInto;
     card.class = 'light-purple-text';
     return card;
   }

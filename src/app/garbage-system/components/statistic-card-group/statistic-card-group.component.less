@@ -1,11 +1,28 @@
+@media (min-width:1200px) {
+  .statistic-card-items {
+    max-width: 1140px;
+  }
+}
+
 .statistic-card {
+
+
   &-group {
     display: flex;
     justify-content: center;
+  }
+
+  &-items {
+    display: flex;
+    justify-content: space-between;
     padding: 20px;
     width: calc(100%);
     box-sizing: border-box;
-    gap: 20px;
+    gap: 10px;
+
+    &>* {
+      flex-grow: 1;
+    }
   }
 
   &-item {

@@ -2,7 +2,6 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { StatisticCardHelper } from '../../statistic-card-group/statistic-card-group.helper';
 import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
 import { MonitorPatrolControlBusiness } from './monitor-patrol-control.business';
 import { MonitorStatisticCardBussiness } from './monitor-statistic-card.bussiness';
@@ -27,7 +26,6 @@ export class MonitorMapControlBusiness {
   }
   onfullscreen(fullscreen: boolean) {
     this.fullscreen = fullscreen;
-    this.cards.types = StatisticCardHelper.fullscreen(this.fullscreen);
   }
 
   onvideoplay(camera: Camera) {

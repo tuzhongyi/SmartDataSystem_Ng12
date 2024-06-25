@@ -2,6 +2,7 @@ import { Transform, Type } from 'class-transformer';
 import { IIdModel } from '../model.interface';
 
 import { PagedList } from '../page_list.model';
+import { Schedule } from '../schedule.model';
 import {
   transformArraySort,
   transformDateTime,
@@ -11,7 +12,6 @@ import { AIGarbageCamera } from './camera.model';
 import { AIGarbageDropWindow } from './drop-window.model';
 import { AIGarbageDeviceCapabilities } from './garbage-device-capabilities.model';
 import { AIGarbageDeviceStatus } from './garbage-device-status.model';
-import { AIGarbageSchedule } from './schedule.model';
 
 export class AIGarbageDevice implements IIdModel {
   Id!: string;
@@ -64,8 +64,8 @@ export class AIGarbageDevice implements IIdModel {
   @Type(() => AIGarbageDeviceStatus)
   Status?: AIGarbageDeviceStatus;
   /**	Schedule	工作表	O	*/
-  @Type(() => AIGarbageSchedule)
-  Schedule?: AIGarbageSchedule;
+  @Type(() => Schedule)
+  Schedule?: Schedule;
 
   /**	Int32	心跳间隔，单位：秒	O */
   HeartbeatInterval?: number;

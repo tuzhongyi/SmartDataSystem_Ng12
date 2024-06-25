@@ -1,10 +1,11 @@
 <div class="statistic-card-group">
-  <ng-container *ngFor="let item of cards; let index = index">
-    <app-statistic-card
-      *ngIf="types.includes(item.type)"
-      class="statistic-card-item"
-      [model]="item"
-      (click)="onclick(index)"
-    ></app-statistic-card>
-  </ng-container>
+  <div class="statistic-card-items">
+    <ng-container *ngFor="let item of cards; let index = index">
+      <app-statistic-card
+        class="statistic-card-item"
+        [model]="item"
+        (click)="onclick(index)"
+      ></app-statistic-card>
+    </ng-container>
+  </div>
 </div>
