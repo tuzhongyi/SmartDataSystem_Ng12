@@ -23,6 +23,7 @@ export class GarbageStationWindowRecordFilterComponent
   @Output() filterChange: EventEmitter<GarbageDropRecordFilter> =
     new EventEmitter();
   @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
+  @Input() sameDay: boolean = false;
   constructor(business: GarbageStationWindowRecordFilterBusiness) {
     this.business = business;
   }
@@ -106,9 +107,22 @@ export class GarbageStationWindowRecordFilterComponent
     this.model = await this.business.load(divisionId);
   }
   changeBegin(date: Date) {
+    if (this.sameDay && date.getDate() != this.filter.duration.end.getDate()) {
+      let end = new Date(this.filter.duration.end.getTime());
+      end.setDate(date.getDate());
+      this.filter.duration.end = end;
+    }
     this.filterChange.emit(this.filter);
   }
   changeEnd(date: Date) {
+    if (
+      this.sameDay &&
+      date.getDate() != this.filter.duration.begin.getDate()
+    ) {
+      let begin = new Date(this.filter.duration.begin.getTime());
+      begin.setDate(date.getDate());
+      this.filter.duration.begin = begin;
+    }
     this.filterChange.emit(this.filter);
   }
   ondivision(item?: IIdNameModel) {

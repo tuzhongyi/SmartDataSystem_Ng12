@@ -62,10 +62,16 @@ export class GarbageDropEventRecordConverter
     }
     if (source.Data.TakeMinutes) {
       model.DropDuration = Language.Time(source.Data.TakeMinutes);
+    } else if (source.Data.HandleTime) {
+      let drop = new Date(source.Data.DropTime);
+      let duration = new Date(
+        source.Data.HandleTime.getTime() - drop.getTime()
+      );
+      model.DropDuration = Language.Time(duration);
     } else {
       let now = new Date();
       let drop = new Date(source.Data.DropTime);
-      let duration = new Date(now.getTime() - drop.getTime());
+      let duration = (now.getTime() - drop.getTime()) / 1000 / 60;
       model.DropDuration = Language.Time(duration);
     }
 

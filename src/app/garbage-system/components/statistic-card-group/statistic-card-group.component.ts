@@ -48,13 +48,13 @@ export class StatisticCardGroupComponent implements OnInit {
       case 0:
         this.stationcount.emit();
         break;
-      case 2:
+      case 1:
         this.stationdrop.emit();
         break;
       case 3:
         this.stationfull.emit();
         break;
-      case 1:
+      case 2:
         this.recordillegaldrop.emit();
         break;
       case 4:

@@ -37,7 +37,8 @@ export class AICameraModelManageConverter extends AbstractCommonModelConverter<
     model.OnlineStatus = item.OnlineStatus ?? OnlineStatus.Offline;
     model.AIModels = [];
     model.Labels = item.Labels ?? [];
-
+    model.AIModels;
+    model.DeviceType = item.DeviceType;
     model.RawData = item;
     return model;
   }

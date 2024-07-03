@@ -69,6 +69,7 @@ export class AIModelDetailsComponent implements OnInit, OnDestroy {
     if (this.upload.data) {
       this.business.parse(this.upload.data).then((x) => {
         this.model = x;
+        this.model.Id = this.id ?? '';
         this.model.ModelName = this.data.ModelName;
         this.model.ModelType = this.data.ModelType;
         this.label.load(this.model.ModelDTO?.Labels);

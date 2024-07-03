@@ -21,22 +21,15 @@ export class StatisticCardConverter {
     return card;
   }
   stationfull(input?: DivisionNumberStatistic) {
-    let card = new StatisticCardItem(input, StatisticType.stationfull);
-    card.title = Language.json.full + Language.json.station;
-    let stationcount =
-      (input?.DryFullStationNumber ?? 0) + (input?.WetFullStationNumber ?? 0);
-    let eventcount = 0;
-    if (input && input.TodayEventNumbers) {
-      let number = input.TodayEventNumbers.find(
-        (x) => x.EventType === EventType.GarbageFull
-      );
-      if (number) {
-        eventcount = number.DayNumber;
-      }
-    }
-
-    card.value = `<span class="orange-text">${eventcount}</span><span class="light-blue-text split">&nbsp;</span><span class="sky-blue-text2">${stationcount}</span>`;
-    card.class = 'task';
+    let card = this.createEvent(
+      {
+        event: EventType.GarbageFull,
+        statistic: StatisticType.stationfull,
+      },
+      input
+    );
+    card.title = Language.json.garbage + Language.json.full;
+    card.class = 'orange-text';
     return card;
   }
   private createEvent(
@@ -97,8 +90,19 @@ export class StatisticCardConverter {
       unhandled = count - handled;
     }
     let card = new StatisticCardItem(input, StatisticType.task);
-    card.title = '任务处置';
-    card.value = `<span class="powder-red-text">${unhandled}</span><span class="light-blue-text split">/</span><span class="sky-blue-text2">${count}</span>`;
+
+    let length = `${unhandled}${count}`.length;
+    let style = '';
+    if (length >= 5) {
+      style = `style="font-size:${20}px;"`;
+    }
+
+    card.title = '垃圾滞留';
+    card.value = `<div class="powder-red-text ${
+      length >= 5 ? 'font22' : ''
+    }">${unhandled}</div><div class="light-blue-text split">/</div><div class="sky-blue-text2 ${
+      length >= 5 ? 'font22' : ''
+    }">${count}</div>`;
     card.class = 'task';
     return card;
   }

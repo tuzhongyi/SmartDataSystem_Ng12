@@ -93,7 +93,7 @@
     </hw-select>
   </div>
   <div class="filter-item hashandle" *ngIf="display_handle">
-    <div class="filter-item-title">处置状态</div>
+    <div class="filter-item-title">闭环状态</div>
     <hw-select
       class="filter-item-value"
       [(selected)]="filter.handle"
@@ -104,8 +104,8 @@
         class="list-type-select"
         [(ngModel)]="filter.handle"
       >
-        <option [ngValue]="true">已处置</option>
-        <option [ngValue]="false">未处置</option>
+        <option [ngValue]="true">{{ Language.IsHandle(true) }}</option>
+        <option [ngValue]="false">{{ Language.IsHandle(false) }}</option>
       </select>
     </hw-select>
   </div>

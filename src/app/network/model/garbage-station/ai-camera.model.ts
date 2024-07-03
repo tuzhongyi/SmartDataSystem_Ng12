@@ -1,4 +1,5 @@
 import { Transform } from 'class-transformer';
+import { CameraDeviceType } from 'src/app/enum/camera-device-type.enum';
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
@@ -44,4 +45,7 @@ export class AICamera extends Resource implements ICamera {
   SRSId?: string;
   /**流媒体服务器ID */
   SRServerId?: string;
+
+  /**	String	设备类型，G3、G5	O */
+  DeviceType?: CameraDeviceType;
 }

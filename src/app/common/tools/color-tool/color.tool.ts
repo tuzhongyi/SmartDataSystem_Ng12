@@ -133,4 +133,11 @@ export class ColorTool {
       return 'green-text';
     }
   }
+
+  static IsHandle(state?: boolean) {
+    if (state) {
+      return 'green-text';
+    }
+    return 'orange-text';
+  }
 }

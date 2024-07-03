@@ -282,6 +282,8 @@ export class ImageControlCreater {
               eventTime: data.EventTime,
               ishandle: false,
               istimeout: false,
+              rules: url.Rules,
+              polygon: url.Objects,
             }
           )
         )
@@ -299,6 +301,8 @@ export class ImageControlCreater {
               eventTime: data.EventTime,
               ishandle: false,
               istimeout: true,
+              rules: url.Rules,
+              polygon: url.Objects,
             }
           )
         )
@@ -316,6 +320,8 @@ export class ImageControlCreater {
               eventTime: data.EventTime,
               ishandle: true,
               istimeout: data.Data.IsSuperTimeout || data.Data.IsTimeout,
+              rules: url.Rules,
+              polygon: url.Objects,
             }
           )
         )

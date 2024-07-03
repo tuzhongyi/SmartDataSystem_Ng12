@@ -46,6 +46,7 @@ export class EventRecordFilterComponent
 
     this.filter = new EventRecordFilter();
   }
+  Language = Language;
   DateTimePickerView = DateTimePickerView;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionId) {

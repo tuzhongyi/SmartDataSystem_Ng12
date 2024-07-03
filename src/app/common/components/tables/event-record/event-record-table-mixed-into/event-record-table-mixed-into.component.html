@@ -19,7 +19,7 @@
             <td>居委会</td>
             <td>上报时间</td>
             <td>闭环时间</td>
-            <td>处置状态</td>
+            <td>闭环状态</td>
             <td>处置人员</td>
             <td>处置时间</td>
             <td class="lock right last center">操作</td>
@@ -98,9 +98,9 @@
             <td>
               <div
                 [style.width]="'calc(' + widths[8] + ' - 24px)'"
-                [class]="Color.GarbageDropState(item.IsHandle ?? false, false)"
+                [class]="Color.IsHandle(item.IsHandle)"
               >
-                {{ Language.GarbageDropState(item.IsHandle ?? false, false) }}
+                {{ Language.IsHandle(item.IsHandle) }}
               </div>
             </td>
             <td>

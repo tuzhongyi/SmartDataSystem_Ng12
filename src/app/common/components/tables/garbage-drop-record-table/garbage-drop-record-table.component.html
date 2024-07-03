@@ -63,33 +63,36 @@
             <td [title]="item.Data.StationName">
               {{ item.Data.StationName }}
             </td>
-            <td [title]="item.Data.DivisionName ?? '-'">
+            <td [title]="item.Data.DivisionName">
               {{ item.Data.DivisionName ?? "-" }}
             </td>
-            <td [title]="item.Data.CommunityName ?? '-'">
+            <td [title]="item.Data.CommunityName">
               {{ item.Data.CommunityName ?? "-" }}
             </td>
             <td [title]="(item.County | async)?.Name">
               {{ (item.County | async)?.Name }}
             </td>
-            <td [ngStyle]="{ width: widths[5], fontSize: '16px' }">
+            <td
+              [title]="item.Data.RecordNo"
+              [ngStyle]="{ width: widths[5], fontSize: '16px' }"
+            >
               {{ item.Data.RecordNo ?? "-" }}
             </td>
-            <td>
+            <td [title]="item.SendTime">
               {{ item.SendTime }}
             </td>
-            <td>
+            <td [title]="item.HandleTime">
               {{ item.HandleTime }}
             </td>
-            <td>
+            <td [title]="item.DropDuration">
               {{ item.DropDuration ?? "-" }}
             </td>
-            <td>
+            <td [title]="item.status">
               <div [class]="item.statusClass">
                 {{ item.status }}
               </div>
             </td>
-            <td [title]="item.Data.ProcessorName ?? '-'">
+            <td [title]="item.Data.ProcessorName">
               {{ item.Data.ProcessorName ?? "-" }}
             </td>
             <td>

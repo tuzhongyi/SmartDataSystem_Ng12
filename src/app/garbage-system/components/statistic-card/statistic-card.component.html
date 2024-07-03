@@ -1,15 +1,4 @@
 <div class="number-card">
-  <!-- <div *ngIf="model" class="number-card-content" (click)="onclick()">
-    <div class="title">
-      {{ model.title }}
-    </div>
-    <div class="value" [ngClass]="model.class" [innerHTML]="model.value"></div>
-  </div> -->
-  <div class="number-card-background">
-    <div class="number-card-background-left"></div>
-    <div class="number-card-background-middle"></div>
-    <div class="number-card-background-right"></div>
-  </div>
   <div class="number-card-content" *ngIf="!!model">
     <div class="number-card-content-title">
       {{ model.title }}

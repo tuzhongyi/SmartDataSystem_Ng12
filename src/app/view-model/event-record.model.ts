@@ -17,4 +17,5 @@ export class EventRecordViewModel<T = any> extends BaseEventRecord {
 
   HandleTime?: Date;
   IsHandle?: boolean;
+  Processed?: boolean;
 }

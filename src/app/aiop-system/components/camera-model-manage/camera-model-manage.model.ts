@@ -10,7 +10,7 @@ export class CameraManageModel<T = any> {
   OnlineStatus!: OnlineStatus;
   AIModels!: CameraAIModelManageModel[];
   Labels!: ResourceLabel[];
-
+  DeviceType?: CameraDeviceType;
   RawData?: T;
 }
 

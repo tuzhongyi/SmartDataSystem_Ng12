@@ -49,7 +49,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   @Output() task: EventEmitter<DisposalCountArgs> = new EventEmitter();
 
   DisposalCountType = DisposalCountType;
-  public title: string = '今日任务处置';
+  public title: string = '今日垃圾滞留任务';
 
   data?: DisposalCountModel;
 

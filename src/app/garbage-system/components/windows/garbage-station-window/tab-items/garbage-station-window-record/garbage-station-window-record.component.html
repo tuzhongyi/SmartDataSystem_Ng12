@@ -10,6 +10,7 @@
   </div>
   <div class="garbage-station-window-record-filter" *ngIf="isfilter">
     <howell-garbage-station-window-record-filter
+      [sameDay]="true"
       [(filter)]="filter"
     ></howell-garbage-station-window-record-filter>
   </div>

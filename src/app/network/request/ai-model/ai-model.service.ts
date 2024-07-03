@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { instanceToPlain } from 'class-transformer';
 import { CameraAIModel } from '../../model/garbage-station/camera-ai.model';
 import { AIModelsUrl } from '../../url/aiop/ai-models/ai-models.url';
 import {
@@ -33,7 +34,9 @@ export class AIModelRequestService {
   }
 
   update(item: CameraAIModel) {
-    return this.type.put(AIModelsUrl.item(item.Id), item);
+    let url = AIModelsUrl.item(item.Id);
+    let plain: any = instanceToPlain(item);
+    return this.type.put(url, plain);
   }
 
   delete(id: string) {

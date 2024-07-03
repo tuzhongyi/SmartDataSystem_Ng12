@@ -201,7 +201,9 @@ export class EventRecordConverter
     model.ProcessorName = source.Data.ProcessorName;
     model.ProcessTime = source.Data.ProcessTime;
 
-    model.IsHandle = source.Data.IsHandle || source.Data.Processed;
+    model.Processed = source.Data.Processed;
+
+    model.IsHandle = source.Data.IsHandle;
     model.HandleTime = source.Data.HandleTime;
 
     if (source.Data.HandleImageUrl) {

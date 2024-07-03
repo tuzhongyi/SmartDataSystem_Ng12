@@ -52,8 +52,8 @@ import { AIGarbageDropWindowType } from 'src/app/network/model/ai-garbage/drop-w
 import { FeedbackResult } from 'src/app/network/model/garbage-station/garbage-drop-feedback.model';
 import {
   GarbageDropSuperVisionLevel,
-  SupervisedState,
   SuperviseResult,
+  SupervisedState,
 } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { DateTimeTool } from './datetime.tool';
@@ -994,6 +994,13 @@ export class Language {
         return '待处置';
       }
     }
+  }
+
+  static IsHandle(state?: boolean) {
+    if (state) {
+      return '已消失';
+    }
+    return '待处置';
   }
 
   static json = language;

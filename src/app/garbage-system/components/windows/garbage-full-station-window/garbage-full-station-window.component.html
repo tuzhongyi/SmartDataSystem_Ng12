@@ -1,6 +1,6 @@
 <app-window [Model]="Model" [style]="style">
   <ng-container *ngIf="Model.show">
-    <app-tab-title [title]="Language.json.station + Language.json.state">
+    <app-tab-title [title]="Language.json.garbage + Language.json.full">
       <div class="garbage-full-station-table-window-header">
         <div class="operation" *ngIf="index === Index.station">
           <app-input-search-options (search)="station.onsearch($event)">
@@ -58,7 +58,7 @@
             </ng-container>
           </div>
         </mat-tab>
-        <mat-tab label="列表">
+        <mat-tab label="投放点列表">
           <howell-garbage-full-station-table
             [load]="station.load"
             (image)="onimage($event)"
