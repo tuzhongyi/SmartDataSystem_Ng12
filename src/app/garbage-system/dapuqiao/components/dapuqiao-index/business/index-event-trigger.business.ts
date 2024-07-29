@@ -4,8 +4,8 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DisposalCountArgs } from 'src/app/garbage-system/components/disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
-import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
-import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
+
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
@@ -20,8 +20,8 @@ export class IndexEventTriggerBusiness {
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window, this.global);
-  risposalCount = new RisposalCountEventTrigger(this.window);
-  risposalRank = new RisposalRankEventTrigger(this.window);
+  disposalCount = new DisposalCountEventTrigger(this.window);
+  disposalRank = new DisposalRankEventTrigger(this.window);
   dapuqiao = new DaPuQiaoEventTrigger(this.window);
 }
 
@@ -71,16 +71,15 @@ class IllegalMixintoRankEventTrigger {
     this.window.record.show = true;
   }
 }
-class RisposalCountEventTrigger {
+class DisposalCountEventTrigger {
   constructor(private window: IndexWindowBussiness) {}
   ontask(args: DisposalCountArgs) {
-    this.window.station.index = GarbageStationWindowIndex.record;
-    this.window.station.divisionId = args.divisionId;
-    this.window.station.status = args.status;
-    this.window.station.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.record;
+    this.window.drop.status = args.status;
+    this.window.drop.show = true;
   }
 }
-class RisposalRankEventTrigger {
+class DisposalRankEventTrigger {
   constructor(private window: IndexWindowBussiness) {}
   onItemClicked(item: RankModel) {
     this.window.record.stationId = item.id;
@@ -96,7 +95,7 @@ class DaPuQiaoPieLevelEventTrigger {
   constructor(private window: IndexWindowBussiness) {}
 
   ondetails(level?: number) {
-    this.window.station.index = GarbageStationWindowIndex.dapuqiao_record;
+    this.window.drop.index = GarbageDropStationWindowIndex.record;
     this.window.station.dapuqiao.level = level;
     this.window.station.show = true;
   }
@@ -104,7 +103,7 @@ class DaPuQiaoPieLevelEventTrigger {
 class DaPuQiaoPieStatisticEventTrigger {
   constructor(private window: IndexWindowBussiness) {}
   ondetails() {
-    this.window.drop.index = GarbageDropStationWindowIndex.dapuqiao_count;
+    this.window.drop.index = GarbageDropStationWindowIndex.count;
     this.window.drop.show = true;
   }
 }

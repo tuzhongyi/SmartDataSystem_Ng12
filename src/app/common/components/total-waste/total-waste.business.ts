@@ -45,6 +45,6 @@ export class TotalWasteBusiness {
   }
 
   get(id: string) {
-    return this.service.statistic.number.get(id);
+    return this.service.statistic.number.cache.get(id);
   }
 }

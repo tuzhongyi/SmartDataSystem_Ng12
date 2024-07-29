@@ -10,7 +10,7 @@ import {
   ImageVideoControlModel,
   PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { DurationParams } from 'src/app/network/request/IParams.interface';

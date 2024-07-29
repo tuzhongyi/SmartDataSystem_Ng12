@@ -159,25 +159,28 @@
 >
 </howell-device-list-window>
 
-<howell-garbage-drop-station-window
+<howell-garbage-drop-window
   *ngIf="window.drop.show"
   [Model]="window.drop"
   [style]="window.drop.style"
   [index]="window.drop.index"
   [args]="window.drop.args"
+  [taskStatus]="window.drop.status"
   (image)="window.drop.onimage($event)"
+  (video)="window.drop.onvideo($event)"
   (position)="map.onposition($event)"
+  (chartdblclick)="window.drop.onchartdblclick($event)"
 >
-</howell-garbage-drop-station-window>
+</howell-garbage-drop-window>
 
-<howell-garbage-full-station-window
+<howell-garbage-full-window
   *ngIf="window.full.show"
   [Model]="window.full"
   [style]="window.full.style"
   (image)="window.full.onimage($event)"
   (video)="window.full.onvideo($event)"
 >
-</howell-garbage-full-station-window>
+</howell-garbage-full-window>
 
 <howell-garbage-station-window
   *ngIf="window.station.show"
@@ -186,16 +189,10 @@
   [index]="window.station.index"
   [stationId]="window.station.stationId"
   [divisionId]="window.station.divisionId"
-  [taskStatus]="window.station.status"
   [dapuqiao_level]="window.station.dapuqiao.level"
   (image)="window.station.onimage($event)"
   (video)="window.station.onvideo($event)"
-  (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
-  (dapuqiao_details)="window.station.dapuqiao.ondetails($event)"
-  (dapuqiao_image)="window.station.dapuqiao.onimage($event)"
-  (dapuqiao_picture)="window.station.dapuqiao.onpicture($event)"
-  (dapuqiao_process)="window.station.dapuqiao.onprocess($event)"
 >
 </howell-garbage-station-window>
 

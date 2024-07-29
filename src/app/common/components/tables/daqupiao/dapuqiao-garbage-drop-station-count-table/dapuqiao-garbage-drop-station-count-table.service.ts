@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -43,7 +43,7 @@ export class DaPuQiaoGarbageDropStationCountTableService {
       return this.service.station.today(ids);
     } else {
       let divisions = await this.service.division.list(
-        EnumHelper.ConvertUserResourceToDivision(args.type),
+        EnumTool.resource.to.division(args.type),
         args.parentId
       );
       ids = divisions.map((item) => item.Id);
@@ -58,7 +58,7 @@ export class DaPuQiaoGarbageDropStationCountTableService {
       return this.service.station.history(ids, args.unit, args.date);
     } else {
       let divisions = await this.service.division.list(
-        EnumHelper.ConvertUserResourceToDivision(args.type),
+        EnumTool.resource.to.division(args.type),
         args.parentId
       );
       ids = divisions.map((item) => item.Id);

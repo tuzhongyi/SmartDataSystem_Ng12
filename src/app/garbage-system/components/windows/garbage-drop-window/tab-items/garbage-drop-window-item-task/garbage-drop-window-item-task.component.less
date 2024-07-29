@@ -1,0 +1,41 @@
+.garbage-drop-window-item-task {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &-head {
+    flex-grow: 0;
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 73px;
+  }
+
+  &-filter {
+    flex-grow: 0;
+    height: 44px;
+
+
+    .filter-items {
+      width: 100%;
+      justify-content: flex-start;
+
+      .division {
+        width: 250px;
+      }
+
+      .station {
+        width: 250px;
+      }
+    }
+  }
+
+  &-table {
+    height: calc(100% - 73px - 44px);
+    flex-grow: 1;
+
+  }
+}

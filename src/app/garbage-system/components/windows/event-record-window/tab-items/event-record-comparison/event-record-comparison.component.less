@@ -2,52 +2,62 @@
   height: 100%;
   width: 100%;
 
-  &-header {
-    height: 35px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .filter-item-value {
-      &.tree {
-        width: 300px;
-      }
-    }
-
-    .selection {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-
-      &>* {
-        margin-left: 10px;
-
-        &:first-child {
-          margin-left: 0;
-        }
-      }
-
-    }
-
-
-    .list-type-select {
-      border: 1px solid #5e6ebf;
-
-      width: 100px;
-      height: 32px;
-
-      ::ng-deep {
-        .select-group {
-          width: calc(100% + 20px);
-          margin: 0 -10px;
-        }
-      }
-    }
-
+  &-head {
+    height: 73px;
+    width: 100%;
   }
 
-  &-content {
-    height: calc(100% - 35px - 10px);
+  &-body {
+    width: 100%;
+    height: calc(100% - 73px);
+
+    &-header {
+      height: 35px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .filter-item-value {
+        &.tree {
+          width: 300px;
+        }
+      }
+
+      .selection {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        &>* {
+          margin-left: 10px;
+
+          &:first-child {
+            margin-left: 0;
+          }
+        }
+
+      }
+
+
+      .list-type-select {
+        border: 1px solid #5e6ebf;
+
+        width: 100px;
+        height: 32px;
+
+        ::ng-deep {
+          .select-group {
+            width: calc(100% + 20px);
+            margin: 0 -10px;
+          }
+        }
+      }
+
+    }
+
+    &-content {
+      height: calc(100% - 35px - 10px);
+    }
   }
 }

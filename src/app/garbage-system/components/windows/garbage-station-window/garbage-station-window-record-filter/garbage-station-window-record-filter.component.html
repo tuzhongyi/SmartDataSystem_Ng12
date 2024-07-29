@@ -69,9 +69,14 @@
         [(ngModel)]="status"
         (change)="onstatus()"
       >
-        <option [ngValue]="item.value" *ngFor="let item of statuses">
-          {{ item.Name }}
+        <option [ngValue]="undefined">全部任务</option>
+        <option [ngValue]="GarbageTaskStatus.unhandled">待处置</option>
+        <option [ngValue]="GarbageTaskStatus.handled">已处置</option>
+        <option [ngValue]="GarbageTaskStatus.timeout">超时任务</option>
+        <option [ngValue]="GarbageTaskStatus.timeout_unhandled">
+          超时待处置
         </option>
+        <option [ngValue]="GarbageTaskStatus.timeout_handled">超时处置</option>
       </select>
     </div>
   </div>

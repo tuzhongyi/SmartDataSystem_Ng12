@@ -23,6 +23,14 @@ export class LocalStorageService {
     return user ? JSON.parse(user) : null;
   }
 
+  public get guide(): boolean {
+    let guide = localStorage.getItem('guide');
+    return guide ? JSON.parse(guide) : false;
+  }
+  public set guide(v: boolean) {
+    localStorage.setItem('guide', JSON.stringify(v));
+  }
+
   static Get<T>(key: string, cls: ClassConstructor<T>): T | undefined {
     let plain = localStorage.getItem(key);
     if (plain) {
@@ -46,7 +54,9 @@ export class LocalStorageService {
     if (name) {
       localStorage.removeItem(name);
     } else {
+      let guide = this.guide;
       localStorage.clear();
+      this.guide = guide;
     }
   }
 }

@@ -1,0 +1,43 @@
+<div class="info-details-division-table">
+  <table>
+    <colgroup>
+      <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><div class="th-center">#</div></th>
+        <th>名称</th>
+        <th>管理员数量</th>
+        <th>管理人员</th>
+        <th>联系方式</th>
+        <th>投放点数量</th>
+        <th><div class="th-center">操作</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of datas; let i = index">
+        <td>
+          <div class="td-center">
+            {{ i + 1 }}
+          </div>
+        </td>
+        <td [title]="item.Name">{{ item.Name }}</td>
+        <td>{{ item.member.count ? item.member.count : "-" }}</td>
+        <td [title]="item.member.default?.Name">
+          {{ item.member.default ? item.member.default.Name : "-" }}
+        </td>
+        <td [title]="item.member.default?.MobileNo">
+          {{ item.member.default ? item.member.default.MobileNo : "-" }}
+        </td>
+        <td>{{ item.StationNumber }}</td>
+        <td>
+          <div class="td-center operation">
+            <div (click)="oninfo(item)">
+              <i class="howell-icon-details"></i>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

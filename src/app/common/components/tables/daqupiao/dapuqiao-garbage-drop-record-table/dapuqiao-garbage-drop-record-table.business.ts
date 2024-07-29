@@ -8,8 +8,8 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request-garbage-drop.params';
 import {
+  DapuqiaoGarbageDropEventRecordModel,
   DapuqiaoGarbageDropRecordTableArgs,
-  GarbageDropEventRecordModel,
 } from './dapuqiao-garbage-drop-record-table.model';
 import { DaPuQiaoGarbageDropRecordTableService } from './dapuqiao-garbage-drop-record-table.service';
 
@@ -18,7 +18,7 @@ export class DaPuQiaoGarbageDropRecordTableBusiness
   implements
     IBusiness<
       PagedList<GarbageDropEventRecord>,
-      PagedList<GarbageDropEventRecordModel>
+      PagedList<DapuqiaoGarbageDropEventRecordModel>
     >
 {
   constructor(private service: DaPuQiaoGarbageDropRecordTableService) {}
@@ -26,9 +26,9 @@ export class DaPuQiaoGarbageDropRecordTableBusiness
     index: number,
     size: number,
     args: DapuqiaoGarbageDropRecordTableArgs
-  ): Promise<PagedList<GarbageDropEventRecordModel>> {
+  ): Promise<PagedList<DapuqiaoGarbageDropEventRecordModel>> {
     let data = await this.getData(index, size, args);
-    let paged = new PagedList<GarbageDropEventRecordModel>();
+    let paged = new PagedList<DapuqiaoGarbageDropEventRecordModel>();
     paged.Page = data.Page;
     paged.Data = data.Data.map((x) => this.convert(x));
     return paged;
@@ -67,7 +67,7 @@ export class DaPuQiaoGarbageDropRecordTableBusiness
 
   convert(input: GarbageDropEventRecord) {
     let plain = instanceToPlain(input);
-    let model = plainToInstance(GarbageDropEventRecordModel, plain);
+    let model = plainToInstance(DapuqiaoGarbageDropEventRecordModel, plain);
     model.GarbageStation = this.service.station.cache.get(input.Data.StationId);
 
     model.LevelTime = input.Data.DropTime;

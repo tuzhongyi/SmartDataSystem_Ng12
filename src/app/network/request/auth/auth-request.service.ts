@@ -90,6 +90,7 @@ export class AuthorizationService implements CanActivate {
     ) {
       return RoutePath.garbage_system;
     } else if (
+      !!role &&
       role.PrivacyData === 1 &&
       role.UserData === 1 &&
       role.StaticData === 1 &&
@@ -97,6 +98,7 @@ export class AuthorizationService implements CanActivate {
     ) {
       return RoutePath.aiop;
     } else if (
+      !!role &&
       role.UserData === 1 &&
       role.StaticData === 1 &&
       role.PictureData === 1

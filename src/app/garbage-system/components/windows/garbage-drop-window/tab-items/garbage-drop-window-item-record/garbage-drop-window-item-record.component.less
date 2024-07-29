@@ -1,0 +1,26 @@
+.garbage-drop-window-item-record {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  &-head {
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-filter {
+    height: 44px;
+  }
+
+  &-table {
+    height: 100%;
+
+    &.filter {
+      height: calc(100% - 44px);
+    }
+  }
+}

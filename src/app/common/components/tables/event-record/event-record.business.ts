@@ -3,6 +3,7 @@ import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
+import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetEventRecordGarbageFullParams } from 'src/app/network/request/event/event-request-garbage-full.params';
 import { GetEventRecordIllegalDropParams } from 'src/app/network/request/event/event-request-illegal-drop.params';
@@ -10,7 +11,6 @@ import { GetEventRecordMixedIntoParams } from 'src/app/network/request/event/eve
 import { GetEventRecordSewageParams } from 'src/app/network/request/event/event-request-sewage.params';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import {
   EventRecordPagedConverter,
@@ -128,7 +128,7 @@ export class EventRecordBusiness
       params.ResourceIds = [opts.cameraId];
     }
     if (opts.opts) {
-      switch (opts.opts.propertyName) {
+      switch (opts.opts.key) {
         case 'Name':
           params.StationName = opts.opts.text;
           break;

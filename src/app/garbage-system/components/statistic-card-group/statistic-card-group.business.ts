@@ -32,9 +32,9 @@ export class StatisticCardGroupBussiness
     array.push(card);
     this.storeService.statistic.station.count = parseInt(card.value);
 
-    card = this.Converter.stationdrop(data);
-    array.push(card);
-    this.storeService.statistic.station.drop = parseInt(card.value);
+    // card = this.Converter.stationdrop(data);
+    // array.push(card);
+    // this.storeService.statistic.station.drop = parseInt(card.value);
 
     card = this.Converter.illegaldrop(data);
     array.push(card);

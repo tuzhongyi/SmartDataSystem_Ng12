@@ -18,7 +18,7 @@ export class AMapService {
   }
 
   async dropCount(divisionId: string) {
-    let statistic = await this.division.statistic.number.get(divisionId);
+    let statistic = await this.division.statistic.number.cache.get(divisionId);
     return statistic.GarbageDropStationNumber ?? 0;
   }
 

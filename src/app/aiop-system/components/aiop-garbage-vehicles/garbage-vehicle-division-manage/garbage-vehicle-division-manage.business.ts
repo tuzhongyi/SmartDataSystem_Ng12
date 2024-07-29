@@ -3,8 +3,8 @@ import {
   DivisionManageModel,
   IDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 
@@ -29,9 +29,7 @@ export class GarbageVehicleDivisionManageBusiness
 
     if (parentId) {
       let parent = await this.service.cache.get(parentId);
-      division.DivisionType = EnumHelper.GetDivisionChildType(
-        parent.DivisionType
-      );
+      division.DivisionType = EnumTool.division.child(parent.DivisionType);
       division.ParentId = parent.Id;
     } else {
       division.DivisionType = DivisionType.City;

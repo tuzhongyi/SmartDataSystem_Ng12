@@ -9,7 +9,7 @@ import { ExportTool } from 'src/app/common/tools/export.tool';
 import { Language } from 'src/app/common/tools/language';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';

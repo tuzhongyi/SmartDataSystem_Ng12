@@ -13,16 +13,6 @@
           </garbage-station-window-list>
         </ng-container>
 
-        <ng-container *ngIf="index == Index.stay">
-          <howell-garbage-station-window-stay
-            [stationId]="stationId"
-            (image)="onimage($event)"
-            (ondblclick)="onstaydblclick($event)"
-          >
-            <ng-container *ngTemplateOutlet="header"></ng-container>
-          </howell-garbage-station-window-stay>
-        </ng-container>
-
         <ng-container *ngIf="index == Index.general">
           <howell-garbage-station-window-general>
             <ng-container *ngTemplateOutlet="header"></ng-container>
@@ -35,35 +25,10 @@
           </howell-garbage-station-window-details>
         </ng-container>
 
-        <ng-container *ngIf="index == Index.record">
-          <howell-garbage-station-window-record
-            [get]="get"
-            (got)="ongot($event)"
-            [status]="taskStatus"
-            [divisionId]="divisionId"
-            (image)="onimage($event)"
-            (video)="onvideo($event)"
-          >
-            <ng-container *ngTemplateOutlet="header"></ng-container>
-          </howell-garbage-station-window-record>
-        </ng-container>
-
         <ng-container *ngIf="index == Index.card">
           <hw-garbage-station-card-record (video)="onvideo($event)">
             <ng-container *ngTemplateOutlet="header"></ng-container>
           </hw-garbage-station-card-record>
-        </ng-container>
-
-        <ng-container *ngIf="index == Index.dapuqiao_record">
-          <dapuqiao-garbage-station-window-record
-            [level]="dapuqiao_level"
-            (details)="ondapuqiaodetails($event)"
-            (picture)="ondapuqiaopicture($event)"
-            (image)="ondapuqiaoimage($event)"
-            (process)="ondapuqiaoprocess($event)"
-          >
-            <ng-container *ngTemplateOutlet="header"></ng-container>
-          </dapuqiao-garbage-station-window-record>
         </ng-container>
         <ng-container *ngIf="index == Index.sewage">
           <garbage-station-window-sewage
@@ -96,13 +61,6 @@
         </div>
         <div
           class="second-menu-btn"
-          [class.selected]="index === Index.stay"
-          (click)="indexChange(Index.stay)"
-        >
-          小包垃圾滞留
-        </div>
-        <div
-          class="second-menu-btn"
           [class.selected]="index === Index.general"
           (click)="indexChange(Index.general)"
         >
@@ -114,22 +72,6 @@
           (click)="indexChange(Index.details)"
         >
           细分图表
-        </div>
-        <div
-          class="second-menu-btn"
-          [class.selected]="index === Index.record"
-          (click)="indexChange(Index.record)"
-          *ngIf="ui !== UserUIType.dapuqiao"
-        >
-          报警事件处置
-        </div>
-        <div
-          class="second-menu-btn"
-          [class.selected]="index === Index.dapuqiao_record"
-          (click)="indexChange(Index.dapuqiao_record)"
-          *ngIf="ui === UserUIType.dapuqiao"
-        >
-          三级事件
         </div>
         <div
           class="second-menu-btn"

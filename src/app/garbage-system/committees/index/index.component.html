@@ -197,23 +197,26 @@
 >
 </howell-device-list-window>
 
-<howell-garbage-drop-station-window
+<howell-garbage-drop-window
   *ngIf="window.drop.show"
   [Model]="window.drop"
   [style]="window.drop.style"
   [args]="window.drop.args"
+  [index]="window.drop.index"
   (image)="window.drop.onimage($event)"
+  (chartdblclick)="window.drop.onchartdblclick($event)"
 >
-</howell-garbage-drop-station-window>
+</howell-garbage-drop-window>
 
-<howell-garbage-full-station-window
+<howell-garbage-full-window
   *ngIf="window.full.show"
   [Model]="window.full"
   [style]="window.full.style"
+  [index]="window.full.index"
   (image)="window.full.onimage($event)"
   (video)="window.full.onvideo($event)"
 >
-</howell-garbage-full-station-window>
+</howell-garbage-full-window>
 
 <howell-garbage-station-window
   *ngIf="window.stationInfo.show"
@@ -223,7 +226,6 @@
   [stationId]="window.stationInfo.stationId"
   (image)="window.stationInfo.onimage($event)"
   (video)="window.stationInfo.onvideo($event)"
-  (chartdblclick)="window.stationInfo.onchartdblclick($event)"
 >
 </howell-garbage-station-window>
 <app-window

@@ -1,8 +1,6 @@
 import {
   Component,
   EventEmitter,
-  Inject,
-  Input,
   OnInit,
   Optional,
   Output,

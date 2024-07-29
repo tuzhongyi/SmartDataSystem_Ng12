@@ -93,6 +93,8 @@ export class GarbageStation extends IdNameModel {
   DropWindows?: DropWindow[];
   /**	GarbageDeviceData	设备数据信息	O */
   GarbageDeviceData?: GarbageDeviceData;
+  /**	Int64	厢房能力，1:GCHA(智能主机)2:DOOR(感应门)	O	*/
+  Capabilities?: number;
 }
 
 /** 垃圾相关参数 */

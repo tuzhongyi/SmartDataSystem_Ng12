@@ -2,6 +2,15 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export class DateTimeTool {
+  static isToday(date: Date) {
+    let today = new Date();
+    return (
+      date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate()
+    );
+  }
+
   static TimeUnit(unit: TimeUnit, date: Date, firstDay = 1): Duration {
     switch (unit) {
       case TimeUnit.Year:

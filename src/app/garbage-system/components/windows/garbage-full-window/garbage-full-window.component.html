@@ -1,0 +1,76 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <div class="garbage-full-window">
+      <div class="garbage-full-window-body">
+        <ng-container *ngIf="index == Index.record">
+          <garbage-full-window-record
+            [divisionId]="divisionId"
+            [stationId]="stationId"
+            [get]="get"
+            (got)="ongot($event)"
+            (image)="onimage($event)"
+            (video)="onvideo($event)"
+            (allvideo)="onallvideo($event)"
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-full-window-record>
+        </ng-container>
+        <ng-container *ngIf="index == Index.station">
+          <garbage-full-window-station (image)="onimage($event)">
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-full-window-station>
+        </ng-container>
+        <ng-container *ngIf="index == Index.count">
+          <garbage-full-window-count>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-full-window-count>
+        </ng-container>
+        <ng-container *ngIf="index === Index.details">
+          <garbage-full-window-details>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-full-window-details>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</app-window>
+
+<ng-template #header>
+  <div class="garbage-full-window-head">
+    <div class="hw-second-title">
+      {{ Language.json.garbage + Language.json.full }}
+    </div>
+    <div class="garbage-full-window-head-content">
+      <div class="garbage-full-window-head-content-list">
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.record"
+          (click)="indexChange(Index.record)"
+        >
+          事件
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.station"
+          (click)="indexChange(Index.station)"
+        >
+          投放点
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.count"
+          (click)="indexChange(Index.count)"
+        >
+          总图表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.details"
+          (click)="indexChange(Index.details)"
+        >
+          细分图表
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

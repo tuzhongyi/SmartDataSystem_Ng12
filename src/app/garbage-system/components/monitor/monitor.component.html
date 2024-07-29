@@ -16,7 +16,9 @@
   <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
     <div class="monitor-body__item monitor-body__item--none">
       <div class="monitor-body__wrapper">
-        <app-division-list></app-division-list>
+        <app-division-list
+          (info)="trigger.divisionList.oninfo($event)"
+        ></app-division-list>
       </div>
     </div>
     <div
@@ -29,11 +31,10 @@
         <statistic-card-group
           [load]="load"
           (stationcount)="statistic.onstationcount()"
-          (stationdrop)="statistic.onstationdrop()"
           (stationfull)="statistic.onstationfull()"
           (recordillegaldrop)="statistic.onrecordillegaldrop()"
           (recordmixedinto)="statistic.onrecordmixedinto()"
-          (task)="trigger.risposalCount.ontask($event)"
+          (stationdrop)="statistic.onstationdrop()"
         >
         </statistic-card-group>
         <!-- <div *ngIf="statistic.cards" class="statistic-card-group">
@@ -98,10 +99,11 @@
               : undefined
           "
           (devicestateclick)="trigger.deviceState.onclick($event)"
+          (divisioninfo)="trigger.divisionList.oninfo($event)"
         ></main-station-count>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <div class="monitor-body__item record-rank">
       <div class="monitor-body__wrapper">
         <app-illegal-mixinto-rank
           [load]="load"
@@ -132,7 +134,7 @@
         ></app-retention-rank>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <!-- <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <app-disposal-rank
           [load]="load"
@@ -143,10 +145,10 @@
               ? 1
               : undefined
           "
-          (itemClickedEvent)="trigger.risposalRank.onItemClicked($event)"
+          (itemClickedEvent)="trigger.disposalRank.onItemClicked($event)"
         ></app-disposal-rank>
       </div>
-    </div>
+    </div> -->
     <div class="monitor-body__item">
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
@@ -173,7 +175,7 @@
       <div class="monitor-body__wrapper">
         <app-disposal-count
           [load]="load"
-          (task)="trigger.risposalCount.ontask($event)"
+          (task)="trigger.disposalCount.ontask($event)"
         ></app-disposal-count>
       </div>
     </div>
@@ -232,18 +234,23 @@
 >
 </howell-device-list-window>
 
-<howell-garbage-drop-station-window
+<howell-garbage-drop-window
   *ngIf="window.drop.show"
   [Model]="window.drop"
   [style]="window.drop.style"
   [index]="window.drop.index"
   [args]="window.drop.args"
+  [taskStatus]="window.drop.status"
   (image)="window.drop.onimage($event)"
   (position)="map.onposition($event)"
+  (chartdblclick)="window.drop.onchartdblclick($event)"
+  (video)="window.drop.onvideo($event)"
+  [get]="window.image.getData"
+  (got)="window.image.gotData($event)"
 >
-</howell-garbage-drop-station-window>
+</howell-garbage-drop-window>
 
-<howell-garbage-full-station-window
+<howell-garbage-full-window
   *ngIf="window.full.show"
   [Model]="window.full"
   [style]="window.full.style"
@@ -253,7 +260,7 @@
   [get]="window.image.getData"
   (got)="window.image.gotData($event)"
 >
-</howell-garbage-full-station-window>
+</howell-garbage-full-window>
 
 <howell-garbage-station-window
   *ngIf="window.station.show"
@@ -262,10 +269,8 @@
   [index]="window.station.index"
   [stationId]="window.station.stationId"
   [divisionId]="window.station.divisionId"
-  [taskStatus]="window.station.status"
   (image)="window.station.onimage($event)"
   (video)="window.station.onvideo($event)"
-  (chartdblclick)="window.station.onchartdblclick($event)"
   (position)="map.onposition($event)"
   [get]="window.image.getData"
   (got)="window.image.gotData($event)"
@@ -365,6 +370,37 @@
 >
   <garbage-station-weight-index [type]="window.weight.type">
   </garbage-station-weight-index>
+</app-window>
+<app-window
+  [Model]="window.details.city"
+  *ngIf="window.details.city.show"
+  [style]="window.details.city.style"
+>
+  <info-details-division-county
+    [divisionId]="window.details.city.divisionId"
+    (info)="trigger.divisionList.oninfo($event)"
+  ></info-details-division-county>
+</app-window>
+<app-window
+  [Model]="window.details.county"
+  *ngIf="window.details.county.show"
+  [style]="window.details.county.style"
+  [mask]="!window.details.city.show"
+>
+  <info-details-division-county
+    [divisionId]="window.details.county.divisionId"
+    (info)="trigger.divisionList.oninfo($event)"
+  ></info-details-division-county>
+</app-window>
+<app-window
+  [Model]="window.details.committees"
+  *ngIf="window.details.committees.show"
+  [style]="window.details.committees.style"
+  [mask]="!window.details.city.show && !window.details.county.show"
+>
+  <info-details-division-committees
+    [divisionId]="window.details.committees.divisionId"
+  ></info-details-division-committees>
 </app-window>
 
 <div class="guide" *ngIf="guide.show">

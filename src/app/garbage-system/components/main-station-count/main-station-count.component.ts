@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { DaPuQiaoMainStationCountIndex as MainStationCountIndex } from './main-station-count.model';
 
@@ -26,6 +27,7 @@ export class MainStationCountComponent implements OnInit {
 
   @Output() devicestateclick: EventEmitter<IDeviceStateDes> =
     new EventEmitter();
+  @Output() divisioninfo = new EventEmitter<Division>();
   constructor() {}
 
   Index = MainStationCountIndex;
@@ -34,5 +36,8 @@ export class MainStationCountComponent implements OnInit {
 
   ondevicestateclick(args: IDeviceStateDes) {
     this.devicestateclick.emit(args);
+  }
+  ondivisioninfo(item: Division) {
+    this.divisioninfo.emit(item);
   }
 }

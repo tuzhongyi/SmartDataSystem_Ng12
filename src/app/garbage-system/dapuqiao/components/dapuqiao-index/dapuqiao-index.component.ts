@@ -6,7 +6,7 @@ import {
   SystemType,
 } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { IndexEventTriggerBusiness } from './business/index-event-trigger.business';
@@ -103,8 +103,7 @@ export class DaPuQiaoIndexComponent implements OnInit, OnDestroy {
     if (user.Resources && user.Resources.length > 0) {
       let userDivisionId = user.Resources[0].Id;
       let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType =
-        EnumHelper.ConvertUserResourceToDivision(resourceType);
+      let userDivisionType = EnumTool.resource.to.division(resourceType);
 
       this.global.divisionId = userDivisionId;
       this.global.divisionType = userDivisionType;

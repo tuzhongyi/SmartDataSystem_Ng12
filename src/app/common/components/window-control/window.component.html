@@ -5,10 +5,11 @@
     none: !mask
   }"
   [ngStyle]="{
-    zIndex: zindex
+    zIndex: content.style.zIndex
   }"
 >
   <div
+    #content
     class="window-content"
     [ngClass]="{ 'custom-form-wrap': Background }"
     [ngStyle]="style"

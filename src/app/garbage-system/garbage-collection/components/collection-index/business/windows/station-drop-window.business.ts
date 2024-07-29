@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-station-window/garbage-drop-station-window.component';
+
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
 import { ImageControlModelArray } from 'src/app/view-model/image-control.model';
 import { MediaWindowBusiness } from './media-window.business';
 
@@ -11,7 +12,7 @@ export class GarbageStationDropWindowBusiness extends WindowViewModel {
   }
   divisionId?: string;
 
-  index = GarbageDropStationWindowIndex.list;
+  index = GarbageDropStationWindowIndex.station;
 
   style = {
     height: '83.5%',

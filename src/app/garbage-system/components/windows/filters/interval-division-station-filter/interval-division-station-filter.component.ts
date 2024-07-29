@@ -15,6 +15,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
@@ -35,6 +36,7 @@ export class EventRecordFilterComponent
     OnChanges,
     OnDestroy
 {
+  @Input() type?: EventType;
   @Input() date_sync = false;
   @Input() filter: EventRecordFilter;
   @Output() filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
@@ -47,6 +49,7 @@ export class EventRecordFilterComponent
     this.filter = new EventRecordFilter();
   }
   Language = Language;
+
   DateTimePickerView = DateTimePickerView;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.divisionId) {

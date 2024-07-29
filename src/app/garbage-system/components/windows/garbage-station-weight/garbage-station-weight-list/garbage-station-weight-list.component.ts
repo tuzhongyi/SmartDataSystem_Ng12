@@ -2,8 +2,8 @@ import { AfterViewInit, Component, EventEmitter, OnInit } from '@angular/core';
 import { GarbageStationWeightTableArgs } from 'src/app/common/components/tables/garbage-station-weight-table/garbage-station-weight-table.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Language } from 'src/app/common/tools/language';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IdNameModel } from 'src/app/network/model/model.interface';
@@ -37,14 +37,14 @@ export class GarbageStationWeightListComponent
     public global: GlobalStorageService
   ) {
     this.selected.typeChange.subscribe((x) => {
-      this.args.type = EnumHelper.ConvertUserResourceToDivision(x);
+      this.args.type = EnumTool.resource.to.division(x);
     });
-    this.selected.child = EnumHelper.GetResourceChildType(this.resourceType);
+    this.selected.child = EnumTool.resource.child(this.resourceType);
     this.selected.type = this.selected.child;
   }
 
   get resourceType() {
-    return EnumHelper.ConvertDivisionToUserResource(this.global.divisionType);
+    return EnumTool.resource.from.division(this.global.divisionType);
   }
 
   args: GarbageStationWeightTableArgs = new GarbageStationWeightTableArgs();

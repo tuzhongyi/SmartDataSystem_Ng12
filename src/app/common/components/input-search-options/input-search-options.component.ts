@@ -67,7 +67,7 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
         result.subscribe((x) => {
           let opts: SearchOptions = {
             text: this.searctText,
-            propertyName: this.key,
+            key: this.key,
           };
           this.search.emit(opts);
         });
@@ -75,7 +75,7 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
           if (x.key.toLocaleLowerCase() == 'enter') {
             let opts = {
               text: this.searctText,
-              propertyName: this.key,
+              key: this.key,
             };
             this.search.emit(opts);
           }

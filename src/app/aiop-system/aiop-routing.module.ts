@@ -315,7 +315,7 @@ const routes: Routes = [
                 },
               },
               {
-                path: 'gcha',
+                path: 'gcha-manager',
                 component: AIGarbageStationDeviceSessionManagerComponent,
                 data: {
                   breadcrumb: 'GCHA管理',

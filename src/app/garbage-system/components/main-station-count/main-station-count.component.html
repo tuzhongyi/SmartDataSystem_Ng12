@@ -16,7 +16,9 @@
   <div class="index-station-count-body">
     <div class="station-count" *ngIf="index === Index.station_count">
       <div class="station-count-content">
-        <garbage-station-count-table></garbage-station-count-table>
+        <garbage-station-count-table
+          (info)="ondivisioninfo($event)"
+        ></garbage-station-count-table>
       </div>
     </div>
     <app-device-state

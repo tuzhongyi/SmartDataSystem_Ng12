@@ -1,0 +1,105 @@
+<app-window [Model]="Model" [style]="style">
+  <ng-container *ngIf="Model.show">
+    <div class="garbage-drop-window">
+      <div class="garbage-drop-window-body">
+        <ng-container *ngIf="index == Index.record">
+          <garbage-drop-window-item-record
+            [status]="taskStatus"
+            [get]="get"
+            (got)="ongot($event)"
+            (image)="onimage($event)"
+            (video)="onvideo($event)"
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-record>
+        </ng-container>
+        <ng-container *ngIf="index == Index.station">
+          <garbage-drop-window-item-station
+            [args]="args"
+            (image)="onimage($event)"
+            (position)="onposition($event)"
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-station>
+        </ng-container>
+        <ng-container *ngIf="index == Index.count">
+          <garbage-drop-window-item-count>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-count>
+        </ng-container>
+        <ng-container *ngIf="index === Index.details">
+          <garbage-drop-window-item-details>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-details>
+        </ng-container>
+        <ng-container *ngIf="index === Index.duration">
+          <garbage-drop-window-item-duration
+            (image)="onimage($event)"
+            (ondblclick)="onstaydblclick($event)"
+          >
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-duration>
+        </ng-container>
+        <ng-container *ngIf="index === Index.task">
+          <garbage-drop-window-item-task>
+            <ng-container *ngTemplateOutlet="header"></ng-container>
+          </garbage-drop-window-item-task>
+        </ng-container>
+      </div>
+    </div>
+  </ng-container>
+</app-window>
+
+<ng-template #header>
+  <div class="garbage-drop-window-head">
+    <div class="hw-second-title">
+      {{ Language.json.garbage + Language.json.stay }}
+    </div>
+    <div class="garbage-drop-window-head-content">
+      <div class="garbage-drop-window-head-content-list">
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.record"
+          (click)="indexChange(Index.record)"
+        >
+          事件
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.station"
+          (click)="indexChange(Index.station)"
+        >
+          投放点
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.count"
+          (click)="indexChange(Index.count)"
+        >
+          总图表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.details"
+          (click)="indexChange(Index.details)"
+        >
+          细分图表
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.duration"
+          (click)="indexChange(Index.duration)"
+        >
+          滞留详情
+        </div>
+        <div
+          class="second-menu-btn"
+          [class.selected]="index === Index.task"
+          (click)="indexChange(Index.task)"
+        >
+          任务统计
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

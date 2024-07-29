@@ -3,7 +3,6 @@
     <ng-content></ng-content>
     <howell-garbage-station-window-record-operation
       (search)="onsearch($event)"
-      [(table)]="table"
       [(isfilter)]="isfilter"
     >
     </howell-garbage-station-window-record-operation>
@@ -16,7 +15,6 @@
   </div>
   <div class="garbage-station-window-record-table" [class.filter]="isfilter">
     <howell-garbage-drop-record-table
-      *ngIf="table === TableType.table"
       [filter]="filter"
       [load]="load"
       (image)="onimage($event)"
@@ -25,12 +23,7 @@
       (got)="ongot($event)"
     >
     </howell-garbage-drop-record-table>
-    <garbage-drop-record-task-table
-      #task
-      *ngIf="table === TableType.card"
-      [args]="filter"
-      [load]="load"
-    >
+    <garbage-drop-record-task-table #task [args]="filter" [load]="load">
     </garbage-drop-record-task-table>
   </div>
 </div>

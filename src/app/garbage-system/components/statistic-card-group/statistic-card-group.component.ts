@@ -49,22 +49,16 @@ export class StatisticCardGroupComponent implements OnInit {
         this.stationcount.emit();
         break;
       case 1:
-        this.stationdrop.emit();
-        break;
-      case 3:
-        this.stationfull.emit();
-        break;
-      case 2:
         this.recordillegaldrop.emit();
         break;
-      case 4:
+      case 2:
+        this.stationfull.emit();
+        break;
+      case 3:
         this.recordmixedinto.emit();
         break;
-      case 5:
-        let args: DisposalCountArgs = {
-          divisionId: this.global.divisionId,
-        };
-        this.task.emit(args);
+      case 4:
+        this.stationdrop.emit();
         break;
       default:
         break;

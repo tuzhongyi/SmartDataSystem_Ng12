@@ -9,7 +9,9 @@ import { SelectItem } from 'src/app/common/components/select-control/select-cont
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { Enum, EnumHelper } from 'src/app/enum/enum-helper';
+
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
+import { Enum } from 'src/app/enum/enum.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { RankEventType, RankModel } from 'src/app/view-model/rank.model';
@@ -45,8 +47,8 @@ export class NegativeCommentRankComponent implements OnInit {
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
   ngOnInit(): void {
-    let child = EnumHelper.GetResourceChildTypeByDivisionType(
-      this.storeService.divisionType
+    let child = EnumTool.resource.child(
+      EnumTool.resource.from.division(this.storeService.divisionType)
     );
     this.resourceTypes = [
       new SelectItem(child.toString(), child, Language.UserResourceType(child)),

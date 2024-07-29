@@ -76,8 +76,8 @@
         },
         {
           "title": "GCHA管理",
-          "id": "gcha",
-          "path": "/aiop/underwater/system-setting/ai-station/gcha"
+          "id": "gcha-manager",
+          "path": "/aiop/underwater/system-setting/ai-station/gcha-manager"
         },
         {
           "title": "RFID管理",
@@ -110,6 +110,18 @@
           "title": "AI摄像机事件",
           "id": "ai-camera-events",
           "path": "/aiop/underwater/system-setting/ai-events/ai-camera-events"
+        }
+      ]
+    },
+    {
+      "title": "GCHA",
+      "id": "gcha",
+      "path": "/aiop/underwater/system-setting/gcha",
+      "children": [
+        {
+          "title": "接入设备",
+          "id": "device-registrations",
+          "path": "/aiop/underwater/system-setting/gcha/device-registrations"
         }
       ]
     }

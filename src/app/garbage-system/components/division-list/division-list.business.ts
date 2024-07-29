@@ -1,22 +1,47 @@
-import { IService } from 'src/app/business/Ibusiness';
-import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
+import { Injectable } from '@angular/core';
+import { LocaleCompare } from 'src/app/common/tools/locale-compare';
+import {
+  GetDivisionStatisticNumbersParams,
+  GetDivisionsParams,
+} from 'src/app/network/request/division/division-request.params';
+import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { DivisionListModel } from './division-list.model';
 
+@Injectable()
 export class DivisionListBusiness {
-  constructor(private _business: IService<Division>) {}
+  constructor(private service: DivisionRequestService) {}
+
+  async load(divisionId: string) {
+    let model = new DivisionListModel();
+    model.current = await this.get(divisionId);
+    model.children = this.children(divisionId);
+
+    return model;
+  }
 
   async get(id: string) {
-    let data = await this._business.get(id);
-    return data;
+    return this.service.cache.get(id);
   }
+
   /**获得直接子元素 */
-  async listChildDivisions(id: string) {
+  async children(id: string) {
     let params = new GetDivisionsParams();
     params.ParentId = id;
-    let res = await this._business.cache.list(params);
+    let paged = await this.service.cache.list(params);
+    let ids = paged.Data.map((x) => x.Id);
+    return this.statistic(ids);
+  }
 
-    return res.Data.sort((a, b) => {
-      return a.Name.localeCompare(b.Name);
+  async statistic(ids: string[]) {
+    let params = new GetDivisionStatisticNumbersParams();
+    params.Ids = ids;
+    let paged = await this.service.statistic.number.cache.list(params);
+    let data = paged.Data.sort((a, b) => {
+      return (
+        LocaleCompare.compare(!!b.StationNumber, !!a.StationNumber) ||
+        LocaleCompare.compare(a.Name, b.Name)
+      );
     });
+    return data;
   }
 }

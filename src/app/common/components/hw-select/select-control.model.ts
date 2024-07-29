@@ -16,3 +16,7 @@ export class SelectItem<T = any> {
     return new SelectItem(key, t, language(t));
   }
 }
+
+export interface ISelect<T> {
+  selected?: T;
+}

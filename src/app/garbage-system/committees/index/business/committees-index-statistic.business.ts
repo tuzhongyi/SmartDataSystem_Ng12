@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
+import { GarbageFullStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-full-window/garbage-full-window.model';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
@@ -31,12 +33,13 @@ export class CommitteesIndexStatisticBussiness {
 
   OnGarbageDropEventCountClicked() {
     this.window.station = undefined;
-    this.window.stationInfo.index = GarbageStationWindowIndex.record;
-    this.window.stationInfo.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.station;
+    this.window.drop.show = true;
   }
 
   OnGarbageFullEventCountClicked() {
     this.window.station = undefined;
+    this.window.full.index = GarbageFullStationWindowIndex.station;
     this.window.full.show = true;
   }
   OnIllegalDropEventCountClicked() {

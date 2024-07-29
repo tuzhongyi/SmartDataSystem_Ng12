@@ -1,0 +1,87 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {
+  GarbageDropRecordFilter,
+  GarbageDropRecordViewModel,
+} from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
+import { GarbageDropRecordTaskTableComponent } from 'src/app/common/components/tables/garbage-drop-record-task-table/garbage-drop-record-task-table.component';
+import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
+import { PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
+import { SearchOptions } from 'src/app/view-model/search-options.model';
+
+@Component({
+  selector: 'garbage-drop-window-item-record',
+  templateUrl: './garbage-drop-window-item-record.component.html',
+  styleUrls: ['./garbage-drop-window-item-record.component.less'],
+})
+export class GarbageDropStationWindowItemRecordComponent implements OnInit {
+  @Input() status?: GarbageTaskStatus;
+  @Input() divisionId?: string;
+
+  @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
+  @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
+    new EventEmitter();
+  @Output() video: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
+
+  @Input() get?: EventEmitter<Page>;
+  @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
+    new EventEmitter();
+
+  constructor() {}
+  isfilter = false;
+
+  load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
+  @ViewChild('task') task?: GarbageDropRecordTaskTableComponent;
+
+  ngOnInit(): void {
+    if (this.divisionId) {
+      this.filter.divisionId = this.divisionId;
+    }
+    this.filter.IsTimeout = undefined;
+    this.filter.IsHandle = undefined;
+    switch (this.status) {
+      case GarbageTaskStatus.handled:
+        this.filter.IsHandle = true;
+        break;
+
+      case GarbageTaskStatus.unhandled:
+        this.filter.IsHandle = false;
+        break;
+      case GarbageTaskStatus.timeout:
+        this.filter.IsTimeout = true;
+        break;
+      case GarbageTaskStatus.timeout_unhandled:
+        this.filter.IsTimeout = true;
+        this.filter.IsHandle = false;
+        break;
+      case GarbageTaskStatus.timeout_handled:
+        this.filter.IsTimeout = true;
+        this.filter.IsHandle = true;
+        break;
+
+      default:
+        break;
+    }
+  }
+  onimage(item: PagedArgs<GarbageDropRecordViewModel>) {
+    this.image.emit(item);
+  }
+  onvideo(item: GarbageDropRecordViewModel) {
+    this.video.emit(item);
+  }
+  onsearch(opts: SearchOptions) {
+    this.filter.opts = opts;
+    this.load.emit(this.filter);
+  }
+  ongot(args: PagedList<GarbageDropRecordViewModel>) {
+    this.got.emit(args);
+  }
+}

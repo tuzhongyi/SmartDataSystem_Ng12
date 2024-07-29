@@ -1,0 +1,31 @@
+<div class="garbage-drop-window-item-record">
+  <div class="garbage-drop-window-item-record-head">
+    <div class="garbage-drop-window-item-record-head-title">
+      <ng-content></ng-content>
+    </div>
+    <div class="garbage-drop-window-item-record-head-operation">
+      <howell-garbage-station-window-record-operation
+        (search)="onsearch($event)"
+        [(isfilter)]="isfilter"
+      >
+      </howell-garbage-station-window-record-operation>
+    </div>
+  </div>
+  <div class="garbage-drop-window-item-record-filter" *ngIf="isfilter">
+    <howell-garbage-station-window-record-filter
+      [sameDay]="true"
+      [(filter)]="filter"
+    ></howell-garbage-station-window-record-filter>
+  </div>
+  <div class="garbage-drop-window-item-record-table" [class.filter]="isfilter">
+    <howell-garbage-drop-record-table
+      [filter]="filter"
+      [load]="load"
+      (image)="onimage($event)"
+      (video)="onvideo($event)"
+      [get]="get"
+      (got)="ongot($event)"
+    >
+    </howell-garbage-drop-record-table>
+  </div>
+</div>

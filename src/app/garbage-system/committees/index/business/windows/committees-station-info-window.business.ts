@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
-import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
-import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
@@ -13,7 +11,6 @@ import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-c
 import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
 import { CommitteesMediaWindowBusiness } from './committees-media-window.business';
 import { CommitteesVideoWindowBusiness } from './committees-video-window.business';
@@ -36,14 +33,7 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
   ) {
     super();
   }
-  onimage(
-    model: PagedArgs<
-      | GarbageDropRecordViewModel
-      | GarbageStationTableModel
-      | EventRecordViewModel
-      | ImageControlModel
-    >
-  ) {
+  onimage(model: PagedArgs<GarbageStationTableModel | EventRecordViewModel>) {
     this.image.array.manualcapture =
       model.data instanceof GarbageStationTableModel;
     this.image.array.index = model.page.PageIndex;
@@ -55,9 +45,6 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
           ImageControlCreater.Create(x)
         );
       }
-    } else if (model.data instanceof GarbageDropRecordViewModel) {
-      this.image.array.stationId = model.data.Data.StationId;
-      this.image.array.models = ImageControlCreater.Create(model.data);
     } else if (model.data instanceof EventRecordViewModel) {
       this.image.page.page = model.page;
       let data = model.data as SewageEventRecord;
@@ -124,19 +111,5 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
         );
       }
     }
-  }
-  onchartdblclick(args: LineZoomChartArgs) {
-    if (args.statistic) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
-      this.media.multiple.args.stationId = args.statistic.Id;
-      this.media.multiple.args.usage = [CameraUsage.GarbageFull];
-      this.media.multiple.args.time = args.date;
-      this.media.multiple.args.statistic = {
-        GarbageCount: args.statistic.GarbageCount,
-      };
-    }
-    this.media.multiple.date = args.date;
-    this.media.multiple.fullplay = true;
-    this.media.multiple.show = true;
   }
 }

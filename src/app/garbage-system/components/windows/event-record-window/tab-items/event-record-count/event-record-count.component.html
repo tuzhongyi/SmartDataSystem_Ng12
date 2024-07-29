@@ -1,77 +1,80 @@
 <div class="event-record-count">
-  <div class="event-record-count-header">
-    <div class="filter">
-      <div class="filter-item">
-        <span>选择时间</span>
-        <input
-          type="text"
-          DateTimePicker
-          [format]="config.dateTimePicker.format"
-          [startView]="config.dateTimePicker.view"
-          [minView]="config.dateTimePicker.view"
-          [week]="config.dateTimePicker.week"
-          [(date)]="opts.date"
-        />
+  <div class="event-record-count-head">
+    <ng-content></ng-content>
+  </div>
+  <div class="event-record-count-body">
+    <div class="event-record-count-body-header">
+      <div class="filter">
+        <div class="filter-item">
+          <span>选择时间</span>
+          <input
+            type="text"
+            DateTimePicker
+            [format]="config.dateTimePicker.format"
+            [startView]="config.dateTimePicker.view"
+            [minView]="config.dateTimePicker.view"
+            [week]="config.dateTimePicker.week"
+            [(date)]="opts.date"
+          />
+        </div>
+        <div class="filter-item">
+          <span>行政区</span>
+          <select class="list-type-select" [(ngModel)]="opts.type">
+            <option
+              [ngValue]="DivisionType.County"
+              *ngIf="global.defaultDivisionType === DivisionType.City"
+            >
+              {{ Language.DivisionType(DivisionType.County) }}
+            </option>
+            <option
+              [ngValue]="DivisionType.Committees"
+              *ngIf="!(global.defaultDivisionType === DivisionType.Committees)"
+            >
+              {{ Language.DivisionType(DivisionType.Committees) }}
+            </option>
+            <option [ngValue]="DivisionType.None">
+              {{ Language.UserResourceType(UserResourceType.Station) }}
+            </option>
+          </select>
+        </div>
+        <button class="hw-blue-btn search" (click)="search()">
+          <i class="mdi mdi-magnify"></i> 查询
+        </button>
+        <button class="hw-blue-btn excel" (click)="exportExcel()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
+        <button class="hw-blue-btn csv" (click)="exportCSV()">
+          <i class="howell-icon-export"></i> CSV
+        </button>
       </div>
-      <div class="filter-item">
-        <span>行政区</span>
-        <select class="list-type-select" [(ngModel)]="opts.type">
-          <option
-            [ngValue]="UserResourceType.County"
-            *ngIf="global.defaultResourceType === UserResourceType.City"
-          >
-            {{ Language.UserResourceType(UserResourceType.County) }}
+      <div class="selection">
+        <select
+          class="list-type-select"
+          [(ngModel)]="this.opts.unit"
+          (change)="ontimeunit()"
+        >
+          <option [ngValue]="TimeUnit.Day">
+            {{ Language.TimeUnit(TimeUnit.Day) }}
           </option>
-          <option
-            [ngValue]="UserResourceType.Committees"
-            *ngIf="
-              !(global.defaultResourceType === UserResourceType.Committees)
-            "
-          >
-            {{ Language.UserResourceType(UserResourceType.Committees) }}
+          <option [ngValue]="TimeUnit.Week">
+            {{ Language.TimeUnit(TimeUnit.Week) }}
           </option>
-          <option [ngValue]="UserResourceType.Station">
-            {{ Language.UserResourceType(UserResourceType.Station) }}
+          <option [ngValue]="TimeUnit.Month">
+            {{ Language.TimeUnit(TimeUnit.Month) }}
+          </option>
+          <option [ngValue]="TimeUnit.Year">
+            {{ Language.TimeUnit(TimeUnit.Year) }}
           </option>
         </select>
       </div>
-      <button class="hw-blue-btn search" (click)="search()">
-        <i class="mdi mdi-magnify"></i> 查询
-      </button>
-      <button class="hw-blue-btn excel" (click)="exportExcel()">
-        <i class="howell-icon-export"></i> 导出
-      </button>
-      <button class="hw-blue-btn csv" (click)="exportCSV()">
-        <i class="howell-icon-export"></i> CSV
-      </button>
     </div>
-    <div class="selection">
-      <select
-        class="list-type-select"
-        [(ngModel)]="this.opts.unit"
-        (change)="ontimeunit()"
+    <div class="event-record-count-body-content">
+      <howell-event-record-count-table
+        [opts]="opts"
+        [load]="load"
+        (loaded)="onloaded($event)"
       >
-        <option [ngValue]="TimeUnit.Day">
-          {{ Language.TimeUnit(TimeUnit.Day) }}
-        </option>
-        <option [ngValue]="TimeUnit.Week">
-          {{ Language.TimeUnit(TimeUnit.Week) }}
-        </option>
-        <option [ngValue]="TimeUnit.Month">
-          {{ Language.TimeUnit(TimeUnit.Month) }}
-        </option>
-        <option [ngValue]="TimeUnit.Year">
-          {{ Language.TimeUnit(TimeUnit.Year) }}
-        </option>
-      </select>
+      </howell-event-record-count-table>
     </div>
-  </div>
-  <div class="event-record-count-content">
-    <howell-event-record-count-table
-      [opts]="opts"
-      [load]="load"
-      (loaded)="onloaded($event)"
-    >
-    </howell-event-record-count-table>
   </div>
 </div>

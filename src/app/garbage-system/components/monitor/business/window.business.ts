@@ -5,6 +5,10 @@ import { MonitorRecordWindowBusiness } from './windows/monitor-event-record-wind
 import { MonitorImageArrayWindowBusiness } from './windows/monitor-image-array-window.business';
 import { MonitorImagePageWindowBusiness } from './windows/monitor-image-page-window.business';
 import { MonitorImageWindowBusiness } from './windows/monitor-image-window.business';
+import {
+  MonitorInfoDetailsWindowBusiness,
+  MonitorInfoDetailsWindowProviders,
+} from './windows/monitor-info-details-window.business';
 import { MonitorMediaMultipleWindowBusiness } from './windows/monitor-media-multiple-window.business';
 import { MonitorMediaSingleWindowBusiness } from './windows/monitor-media-single-window.business';
 import { MonitorMediaVideoWindowBusiness } from './windows/monitor-media-video-window.business';
@@ -27,7 +31,8 @@ export class MonitorWindowBussiness {
     public card: MonitorCardRecordEpisodeWindow,
     public image: MonitorImageWindowBusiness,
     public video: MonitorVideoWindowBusiness,
-    public weight: MonitorWeightWindowBusiness
+    public weight: MonitorWeightWindowBusiness,
+    public details: MonitorInfoDetailsWindowBusiness
   ) {}
   close() {
     this.record.show = false;
@@ -42,6 +47,7 @@ export class MonitorWindowBussiness {
     this.station.show = false;
     this.card.show = false;
     this.weight.show = false;
+    this.details.close();
   }
 }
 
@@ -65,4 +71,6 @@ export const WindowBusinesses = [
   MonitorGarbageStationInfoWindowBusiness,
   MonitorCardRecordEpisodeWindow,
   MonitorWeightWindowBusiness,
+
+  ...MonitorInfoDetailsWindowProviders,
 ];

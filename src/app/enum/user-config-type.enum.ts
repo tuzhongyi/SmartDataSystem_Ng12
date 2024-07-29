@@ -6,6 +6,5 @@ export enum UserConfigType {
   VideoStream = 4,
   VideoRuleState = 5,
   SupervisePosition = 6,
-  Guide = 7,
   IntervalInspection = 99,
 }

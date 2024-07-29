@@ -1,7 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
 import { CollectionPointClassification } from 'src/app/enum/collection-point-classification.enum';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { AbstractSelectComponent } from './select.component.a';
 
 @Component({

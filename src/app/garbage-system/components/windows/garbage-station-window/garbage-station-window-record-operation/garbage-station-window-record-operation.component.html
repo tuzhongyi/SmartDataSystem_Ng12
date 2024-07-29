@@ -1,10 +1,13 @@
 <div class="event-record-operation">
   <div class="event-record-operation-search">
-    <app-select-control
-      class="search-option-select"
-      [data]="searchOpts"
-      (selectedChange)="onSearchOptionSelect($event)"
-    ></app-select-control>
+    <select [(ngModel)]="searchOption.key">
+      <option [ngValue]="Key.name">
+        {{ Language.SearchOption(Key.name) }}
+      </option>
+      <option [ngValue]="Key.community">
+        {{ Language.SearchOption(Key.community) }}
+      </option>
+    </select>
     <input
       type="text"
       placeholder="输入关键字"
@@ -15,13 +18,6 @@
     <i class="mdi mdi-magnify"></i>
     查询
   </button>
-  <div class="list-type-select">
-    <app-select-control
-      [data]="listTypes"
-      [style]="{ fontFamily: 'HowellFont' }"
-      (selectedChange)="onListTypeSelect($event)"
-    ></app-select-control>
-  </div>
   <button class="hw-cyan-m-btn" (click)="onfilter()">
     <i class="mdi mdi-filter-outline"></i>
   </button>

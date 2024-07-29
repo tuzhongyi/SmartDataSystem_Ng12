@@ -1,0 +1,20 @@
+<div class="garbage-drop-window-item-details">
+  <div class="garbage-drop-window-item-details-head">
+    <ng-content></ng-content>
+  </div>
+  <div class="garbage-drop-window-item-details-body">
+    <ng-container *ngIf="ui != UserUIType.dapuqiao">
+      <howell-details-chart
+        *ngIf="!!howell"
+        [types]="howell.types"
+        [business]="howell.business"
+        [division]="howell.division"
+      >
+      </howell-details-chart>
+    </ng-container>
+    <ng-container *ngIf="ui == UserUIType.dapuqiao">
+      <dapuqiao-garbage-drop-station-window-details-chart>
+      </dapuqiao-garbage-drop-station-window-details-chart>
+    </ng-container>
+  </div>
+</div>

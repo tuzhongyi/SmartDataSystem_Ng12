@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ExportBusiness } from 'src/app/common/business/export.business';
-import { SelectItem } from 'src/app/common/components/select-control/select-control.model';
 import {
   EventRecordCountTableModel,
   EventRecordCountTableOptions,
@@ -12,7 +11,9 @@ import {
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { Language } from 'src/app/common/tools/language';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -26,7 +27,6 @@ import { EventRecordCountExportConverter } from './event-record-count-export.con
 export class EventRecordCountComponent implements OnInit {
   @Input('date') input_date?: Date;
   @Input('unit') input_unit?: TimeUnit;
-  @Input('userType') input_userType?: UserResourceType;
   @Input('eventType') input_eventType?: EventType;
 
   constructor(
@@ -34,9 +34,7 @@ export class EventRecordCountComponent implements OnInit {
     public global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    this.opts.type = EnumHelper.GetResourceChildType(
-      global.defaultResourceType
-    );
+    this.opts.type = EnumTool.division.child(global.divisionType);
   }
 
   config = {
@@ -49,6 +47,7 @@ export class EventRecordCountComponent implements OnInit {
   datas: EventRecordCountTableModel[] = [];
   converter = new EventRecordCountExportConverter();
   UserResourceType = UserResourceType;
+  DivisionType = DivisionType;
   TimeUnit = TimeUnit;
   Language = Language;
   ngOnInit(): void {
@@ -57,9 +56,6 @@ export class EventRecordCountComponent implements OnInit {
     }
     if (this.input_unit) {
       this.opts.unit = this.input_unit;
-    }
-    if (this.input_userType) {
-      this.opts.type = this.input_userType;
     }
     if (this.input_eventType) {
       this.opts.eventType = this.input_eventType;
@@ -92,9 +88,6 @@ export class EventRecordCountComponent implements OnInit {
         break;
     }
   }
-  onresourcetype(item: SelectItem) {
-    this.opts.type = item.value;
-  }
   search() {
     this.load.emit(this.opts);
   }
@@ -104,7 +97,8 @@ export class EventRecordCountComponent implements OnInit {
   private getTitle() {
     let eventType = Language.EventType(this.opts.eventType);
     let date = Language.Date(this.opts.date, this.opts.unit);
-    let userType = Language.UserResourceType(this.opts.type!);
+    let _userType = EnumTool.resource.from.division(this.opts.type!);
+    let userType = Language.UserResourceType(_userType);
     return `${date}${userType}${eventType}总数据`;
   }
   exportExcel() {

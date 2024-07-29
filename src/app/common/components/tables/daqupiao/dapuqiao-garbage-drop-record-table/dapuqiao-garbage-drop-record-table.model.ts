@@ -14,7 +14,7 @@ export class DapuqiaoGarbageDropRecordTableArgs extends PageArgs {
   handle?: boolean;
   supervised?: boolean;
 }
-export class GarbageDropEventRecordModel extends GarbageDropEventRecord {
+export class DapuqiaoGarbageDropEventRecordModel extends GarbageDropEventRecord {
   GarbageStation!: Promise<GarbageStation>;
   Committee!: Promise<Division>;
   County!: Promise<Division>;

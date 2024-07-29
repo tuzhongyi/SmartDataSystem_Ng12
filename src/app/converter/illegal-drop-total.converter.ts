@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EnumHelper } from '../enum/enum-helper';
+import { EnumTool } from '../common/tools/enum-tool/enum.tool';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { Division } from '../network/model/garbage-station/division.model';
 import { GarbageStation } from '../network/model/garbage-station/garbage-station.model';
@@ -31,7 +31,7 @@ export class EventNumberStatisticConverter extends AbstractCommonModelConverter<
     model.ParentId = item.ParentId ? item.ParentId : null;
     model.ParentModel = null;
     model.EventNumber = '-';
-    model.Type = EnumHelper.ConvertDivisionToUserResource(item.DivisionType);
+    model.Type = EnumTool.resource.from.division(item.DivisionType);
     return model;
   }
 

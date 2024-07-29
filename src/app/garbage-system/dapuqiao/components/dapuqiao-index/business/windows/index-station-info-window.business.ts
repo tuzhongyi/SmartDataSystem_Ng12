@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
+
 import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
-import { GarbageDropEventRecordModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
+import { DapuqiaoGarbageDropEventRecordModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
@@ -9,7 +10,6 @@ import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
-import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
@@ -37,13 +37,12 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
   index = GarbageStationWindowIndex.station;
   stationId?: string;
   divisionId?: string;
-  status?: GarbageTaskStatus;
 
   clear() {
     this.index = GarbageStationWindowIndex.station;
     this.stationId = undefined;
     this.divisionId = undefined;
-    this.status = undefined;
+
     this.dapuqiao.clear();
   }
 
@@ -155,11 +154,11 @@ class DaPuQiaoLevelBusiness {
     this.unit = undefined;
   }
 
-  ondetails(item: GarbageDropEventRecordModel) {
+  ondetails(item: DapuqiaoGarbageDropEventRecordModel) {
     this.supervise.detail.eventId = item.EventId;
     this.supervise.detail.show = true;
   }
-  onimage(args: PagedArgs<GarbageDropEventRecordModel>) {
+  onimage(args: PagedArgs<DapuqiaoGarbageDropEventRecordModel>) {
     this.image.array.manualcapture = false;
     this.image.array.index = args.page.PageIndex;
     this.image.array.models = args.data.imgs.map((x, i) => {
@@ -177,7 +176,7 @@ class DaPuQiaoLevelBusiness {
 
     this.image.array.show = true;
   }
-  async onpicture(item: GarbageDropEventRecordModel) {
+  async onpicture(item: DapuqiaoGarbageDropEventRecordModel) {
     let station = await item.GarbageStation;
     if (station.Cameras) {
       this.image.array.manualcapture = true;
@@ -198,7 +197,7 @@ class DaPuQiaoLevelBusiness {
       this.image.array.show = true;
     }
   }
-  onprocess(item: GarbageDropEventRecordModel) {
+  onprocess(item: DapuqiaoGarbageDropEventRecordModel) {
     this.supervise.complete.eventId = item.EventId;
     this.supervise.complete.show = true;
   }

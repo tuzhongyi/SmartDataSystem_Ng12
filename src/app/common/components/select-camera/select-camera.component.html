@@ -1,0 +1,7 @@
+<hw-select [(selected)]="selected" [cannull]="true">
+  <select hw-select-content [(ngModel)]="selected">
+    <option *ngFor="let item of datas; let i = index" [ngValue]="item">
+      {{ item.Name }}
+    </option>
+  </select>
+</hw-select>

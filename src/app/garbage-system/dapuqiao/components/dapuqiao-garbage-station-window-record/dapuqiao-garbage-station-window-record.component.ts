@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  DapuqiaoGarbageDropEventRecordModel,
   DapuqiaoGarbageDropRecordTableArgs,
-  GarbageDropEventRecordModel,
 } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IIdNameModel, PagedArgs } from 'src/app/network/model/model.interface';
@@ -17,13 +17,14 @@ import { DapuqiaoGarbageStationWindowRecordModel } from './dapuqiao-garbage-stat
 export class DapuqiaoGarbageStationWindowRecordComponent implements OnInit {
   @Input() isFilter = true;
   @Input() level?: number;
-  @Output() image: EventEmitter<PagedArgs<GarbageDropEventRecordModel>> =
+  @Output() image: EventEmitter<
+    PagedArgs<DapuqiaoGarbageDropEventRecordModel>
+  > = new EventEmitter();
+  @Output() details: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
-  @Output() details: EventEmitter<GarbageDropEventRecordModel> =
+  @Output() picture: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
-  @Output() picture: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-  @Output() process: EventEmitter<GarbageDropEventRecordModel> =
+  @Output() process: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
 
   constructor(private business: DapuqiaoGarbageStationWindowRecordBusiness) {}
@@ -58,16 +59,16 @@ export class DapuqiaoGarbageStationWindowRecordComponent implements OnInit {
     });
   }
 
-  ondetails(item: GarbageDropEventRecordModel) {
+  ondetails(item: DapuqiaoGarbageDropEventRecordModel) {
     this.details.emit(item);
   }
-  onimage(model: PagedArgs<GarbageDropEventRecordModel>) {
+  onimage(model: PagedArgs<DapuqiaoGarbageDropEventRecordModel>) {
     this.image.emit(model);
   }
-  onpicture(item: GarbageDropEventRecordModel) {
+  onpicture(item: DapuqiaoGarbageDropEventRecordModel) {
     this.picture.emit(item);
   }
-  onprocess(item: GarbageDropEventRecordModel) {
+  onprocess(item: DapuqiaoGarbageDropEventRecordModel) {
     this.process.emit(item);
   }
 }

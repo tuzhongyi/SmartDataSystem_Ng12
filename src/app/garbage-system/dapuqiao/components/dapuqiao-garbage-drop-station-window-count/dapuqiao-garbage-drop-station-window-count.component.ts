@@ -5,8 +5,8 @@ import {
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Language } from 'src/app/common/tools/language';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -39,7 +39,7 @@ export class DapuqiaoGarbageDropStationWindowCountComponent implements OnInit {
   ngOnInit(): void {
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
       this.defaultType = this.local.user.Resources[0].ResourceType;
-      this.args.type = EnumHelper.GetResourceChildType(this.defaultType);
+      this.args.type = EnumTool.resource.child(this.defaultType);
       this.loadData(this.args.type);
     }
   }

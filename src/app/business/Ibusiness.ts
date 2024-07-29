@@ -13,7 +13,7 @@ export interface IService<T extends IData> {
   create?: (data: T) => Promise<T>;
   delete?: (id: string) => Promise<T>;
   list: (args?: IParams) => Promise<PagedList<T>>;
-  all: (params?: PagedParams) => Promise<T[]>;
+  all?: (params?: PagedParams) => Promise<T[]>;
 }
 
 export abstract class AbstractService<T extends IData> implements IService<T> {

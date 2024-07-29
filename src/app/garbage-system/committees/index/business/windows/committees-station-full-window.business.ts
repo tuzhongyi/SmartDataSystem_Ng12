@@ -6,6 +6,7 @@ import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
+import { GarbageFullStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-full-window/garbage-full-window.model';
 import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -14,6 +15,8 @@ import { CommitteesVideoWindowBusiness } from './committees-video-window.busines
 
 @Injectable()
 export class CommitteesGarbageStationFullWindowBusiness extends WindowViewModel {
+  index = GarbageFullStationWindowIndex.record;
+
   constructor(
     private image: CommitteesIndexImageWindowBusiness,
     private video: CommitteesVideoWindowBusiness

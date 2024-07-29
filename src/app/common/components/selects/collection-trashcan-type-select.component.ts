@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { AbstractSelectComponent } from './select.component.a';
 

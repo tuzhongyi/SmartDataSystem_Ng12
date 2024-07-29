@@ -126,6 +126,7 @@ export class EventStatisticComponent implements OnInit, AfterViewInit {
       TimeUnit.Hour,
       this.currentDate
     );
+    this.count = 0;
 
     let res = data.map((v) => {
       let event = v.EventNumbers.find((x) => x.EventType === this.currentType);

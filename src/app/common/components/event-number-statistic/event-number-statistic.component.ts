@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { BehaviorSubject } from 'rxjs';
 
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
@@ -48,14 +48,14 @@ export class EventNumberStatisticComponent implements OnInit {
   @Input() set resourceType(type: UserResourceType) {
     console.log('set resourceType');
     this._resourceType = type;
-    this.searchInfo.ResourceType = EnumHelper.GetResourceChildType(type);
+    this.searchInfo.ResourceType = EnumTool.resource.child(type);
   }
   get resourceType() {
     return this._resourceType;
   }
 
   // 默认筛选项
-  private _resourceDefault: UserResourceType = EnumHelper.GetResourceChildType(
+  private _resourceDefault: UserResourceType = EnumTool.resource.child(
     this.resourceType
   );
   @Input() set resourceDefault(type: UserResourceType) {
@@ -180,7 +180,7 @@ export class EventNumberStatisticComponent implements OnInit {
   private _initUserResourceType() {
     let resourceType: UserResourceType = this.resourceType;
     do {
-      resourceType = EnumHelper.GetResourceChildType(resourceType);
+      resourceType = EnumTool.resource.child(resourceType);
 
       let item = new SelectItem(
         resourceType.toString(),

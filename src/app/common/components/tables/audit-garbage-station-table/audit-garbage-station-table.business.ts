@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationModelConverter } from 'src/app/converter/view-models/garbage-station.model.converter';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -85,7 +85,7 @@ export class AuditGarbageStationTableBusiness
     model.urls = new Promise((resolve) => {
       if (model.Cameras) {
         let all = model.Cameras.filter(
-          (x) => !EnumHelper.CameraIgnore(x.Classification)
+          (x) => !EnumTool.CameraIgnore(x.Classification)
         ).map((x) => Medium.img(x.ImageUrl));
         resolve(Promise.all(all));
       }

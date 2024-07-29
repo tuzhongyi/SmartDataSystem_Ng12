@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
-import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { WindowBussiness } from './window.business';
@@ -13,8 +13,8 @@ export class MonitorEventTriggerBusiness {
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window);
-  risposalCount = new RisposalCountEventTrigger(this.window);
-  risposalRank = new RisposalRankEventTrigger(this.window);
+  disposalCount = new DisposalCountEventTrigger(this.window);
+  disposalRank = new DisposalRankEventTrigger(this.window);
 }
 
 export class DeviceStateEventTrigger {
@@ -54,19 +54,17 @@ class IllegalMixintoRankEventTrigger {
     this.window.record.show = true;
   }
 }
-class RisposalCountEventTrigger {
+class DisposalCountEventTrigger {
   constructor(private window: WindowBussiness) {}
   ontask() {
-    this.window.station.index = GarbageStationWindowIndex.record;
-    this.window.station.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.record;
+    this.window.drop.show = true;
   }
 }
-class RisposalRankEventTrigger {
+class DisposalRankEventTrigger {
   constructor(private window: WindowBussiness) {}
   onItemClicked(item: RankModel) {
-    this.window.station.index = GarbageStationWindowIndex.stay;
-    this.window.station.stationId = item.id;
-    console.log(item.data);
-    this.window.station.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.duration;
+    this.window.drop.show = true;
   }
 }

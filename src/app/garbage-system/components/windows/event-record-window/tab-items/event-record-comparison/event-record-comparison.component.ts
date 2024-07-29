@@ -11,11 +11,11 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Language } from 'src/app/common/tools/language';
 import { TimeDataGroupExportConverter } from 'src/app/converter/exports/time-data-group-exports.converter';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
@@ -25,11 +25,11 @@ import {
   ChartConfig,
   EChartOptions,
 } from '../../../charts/details-chart/details-chart.option';
-import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 import {
   DivisionSelection,
   EventRecordComparisonOptions,
 } from './EventRecordComparison.model';
+import { EventRecordComparisonBusiness } from './event-record-comparison.business';
 
 @Component({
   selector: 'howell-event-record-comparison',
@@ -54,7 +54,7 @@ export class EventRecordComparisonComponent
   ) {
     this.business = business;
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      this.divisionType = EnumHelper.ConvertUserResourceToDivision(
+      this.divisionType = EnumTool.resource.to.division(
         this.local.user.Resources[0].ResourceType
       );
     }
@@ -122,7 +122,7 @@ export class EventRecordComparisonComponent
   }
   initDivisionTypes() {
     if (this.local.user.Resources && this.local.user.Resources.length > 0) {
-      let divisionType = EnumHelper.ConvertUserResourceToDivision(
+      let divisionType = EnumTool.resource.to.division(
         this.local.user.Resources[0].ResourceType
       );
       if (divisionType == DivisionType.City) {

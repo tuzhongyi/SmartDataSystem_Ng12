@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnInit,
+  Output,
 } from '@angular/core';
 
 import { CallbackDataParams } from 'echarts/types/dist/shared';
@@ -50,6 +51,11 @@ export class DetailsChartComponent
   @Input() station?: GarbageStation;
 
   @Input('division') input_division?: IIdNameModel;
+
+  @Output() dateChange: EventEmitter<Date> = new EventEmitter();
+  @Output() divisionChange: EventEmitter<Division> = new EventEmitter();
+  @Output() stationChange: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() unitChange: EventEmitter<TimeUnit> = new EventEmitter();
 
   // private _division?: Division;
   // public get division(): Division | undefined {
@@ -264,6 +270,7 @@ export class DetailsChartComponent
 
   ondivision(item?: IIdNameModel) {
     this.division = item;
+    this.divisionChange.emit(item as Division);
   }
 
   ontimeunit(unit: SelectItem) {

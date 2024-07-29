@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { IllegalDropEventComponent } from 'src/app/aiop-system/components/illegal-drop-event/illegal-drop-event.component';
 import { CommonTabModel } from 'src/app/common/components/common-tab/common-tab.model';
 import { EventNumberChartComponent } from 'src/app/common/components/event-number-chart/event-number-chart.component';
 import { EventNumberStatisticComponent } from 'src/app/common/components/event-number-statistic/event-number-statistic.component';
-import { IllegalDropEventComponent } from 'src/app/aiop-system/components/illegal-drop-event/illegal-drop-event.component';
-import { Enum } from 'src/app/enum/enum-helper';
 
 @Component({
   selector: 'app-illegal-drop-about',

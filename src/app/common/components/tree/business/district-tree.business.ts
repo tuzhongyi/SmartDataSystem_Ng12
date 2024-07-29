@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { TreeConverter } from 'src/app/converter/tree.converter';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { TreeBusinessEnum } from 'src/app/enum/tree-business.enum';
 import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -82,7 +82,7 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
     }
     try {
       let children = await this._getDataRecursively(
-        EnumHelper.GetDivisionChildType(type),
+        EnumTool.division.child(type),
         depth - 1
       );
 
@@ -110,7 +110,7 @@ export class DistrictTreeBusiness implements TreeBusinessInterface {
 
     try {
       let data = await this._loadData(
-        EnumHelper.GetDivisionChildType(node.type),
+        EnumTool.division.child(node.type),
         node.id
       );
       children = this._converter.iterateToNestTreeNode(data);

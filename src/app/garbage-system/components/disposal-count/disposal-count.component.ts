@@ -16,7 +16,7 @@ import {
 } from '@angular/core';
 import { ResizedEvent } from 'angular-resize-event';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { EnumHelper } from 'src/app/enum/enum-helper';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import {
   DisposalCountArgs,
   DisposalCountModel,
@@ -318,9 +318,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
-    let type = EnumHelper.ConvertDivisionToUserResource(
-      this.storeService.divisionType
-    );
+    let type = EnumTool.resource.from.division(this.storeService.divisionType);
 
     this.data = await this.business.load(this.storeService.divisionId, type);
     // this.gaugeOption.data = [
@@ -435,7 +433,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
         args.status = GarbageTaskStatus.unhandled;
         break;
       case DisposalCountType.timeout:
-        args.status = GarbageTaskStatus.timeout_handled;
+        args.status = GarbageTaskStatus.timeout;
         break;
       case DisposalCountType.total:
       default:

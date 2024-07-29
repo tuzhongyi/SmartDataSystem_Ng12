@@ -6,27 +6,24 @@
 
   display: flex;
   flex-direction: column;
+
   .edge-wrapper {
     background-image: linear-gradient(90deg, #5e6ebe, #5e6ebe),
       linear-gradient(180deg, #5e6ebe, #5e6ebe),
-      linear-gradient(
-        135deg,
+      linear-gradient(135deg,
         transparent 0%,
         transparent calc(50% - 1px),
         #5e6ebe 50%,
         transparent calc(50% + 1px),
-        transparent 100%
-      ),
+        transparent 100%),
       linear-gradient(270deg, #5e6ebe, #5e6ebe),
       linear-gradient(0deg, #5e6ebe, #5e6ebe),
-      linear-gradient(
-        135deg,
+      linear-gradient(135deg,
         transparent 0%,
         transparent calc(50% - 1px),
         #5e6ebe 50%,
         transparent calc(50% + 1px),
-        transparent 100%
-      ),
+        transparent 100%),
       linear-gradient(135deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
       linear-gradient(-135deg, transparent 0px, #060d37 0),
       linear-gradient(-45deg, transparent calc(15 / 2 * 1.414px), #060d37 0),
@@ -42,24 +39,20 @@
     &.selected {
       background-image: linear-gradient(90deg, #69aefe, #69aefe),
         linear-gradient(180deg, #69aefe, #69aefe),
-        linear-gradient(
-          135deg,
+        linear-gradient(135deg,
           transparent 0%,
           transparent calc(50% - 1px),
           #69aefe 50%,
           transparent calc(50% + 1px),
-          transparent 100%
-        ),
+          transparent 100%),
         linear-gradient(270deg, #69aefe, #69aefe),
         linear-gradient(0deg, #69aefe, #69aefe),
-        linear-gradient(
-          135deg,
+        linear-gradient(135deg,
           transparent 0%,
           transparent calc(50% - 1px),
           #69aefe 50%,
           transparent calc(50% + 1px),
-          transparent 100%
-        ),
+          transparent 100%),
         linear-gradient(135deg, transparent calc(15 / 2 * 1.414px), #235fa4 0),
         linear-gradient(-135deg, transparent 0px, #235fa4 0),
         linear-gradient(-45deg, transparent calc(15 / 2 * 1.414px), #235fa4 0),
@@ -72,7 +65,7 @@
     line-height: 2.5;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding-left: 30px;
     flex-shrink: 0;
     margin-bottom: 5px;
@@ -80,16 +73,31 @@
 
     color: #cfd7ff;
 
-    i {
-      color: #7586e0;
-      margin-right: 7px;
+    &-name {
+      i {
+        color: #7586e0;
+        margin-right: 7px;
+      }
+
+      span {
+        cursor: pointer;
+      }
+
+      span:hover {
+        text-decoration: underline;
+        color: #6997ff;
+      }
     }
-    span {
-      cursor: pointer;
-    }
-    span:hover {
-      text-decoration: underline;
-      color: #6997ff;
+
+    &-operation {
+      &>* {
+        cursor: pointer;
+        padding: 0 15px;
+
+        &:hover {
+          color: #7586e0;
+        }
+      }
     }
   }
 
@@ -118,22 +126,43 @@
       justify-content: center;
       align-items: center;
       min-width: 0;
+
       &.selected {
         color: white;
       }
+
       &.selected:hover {
         text-decoration: underline;
         color: #cfd7ff;
       }
+
       &:hover {
         text-decoration: underline;
         color: #6997ff;
       }
+
       p {
         margin: 0;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+      }
+
+      &.nochildren {
+        color: #5e6ebe;
+
+        &:hover {
+          color: #6997ff;
+        }
+
+        &.selected {
+          color: white;
+        }
+
+        &.selected:hover {
+          text-decoration: underline;
+          color: #cfd7ff;
+        }
       }
     }
   }

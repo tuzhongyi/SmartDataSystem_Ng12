@@ -12,14 +12,12 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
-import {
-  EventRecordCountTableBusiness,
-  EventRecordCountTableBusinessProviders,
-} from './event-record-count-table.business';
+import { EventRecordCountTableBusiness } from './event-record-count-table.business';
 import {
   EventRecordCountTableModel,
   EventRecordCountTableOptions,
 } from './event-record-count-table.model';
+import { EventRecordCountTableBusinessProviders } from './event-record-count-table.provider';
 
 @Component({
   selector: 'howell-event-record-count-table',

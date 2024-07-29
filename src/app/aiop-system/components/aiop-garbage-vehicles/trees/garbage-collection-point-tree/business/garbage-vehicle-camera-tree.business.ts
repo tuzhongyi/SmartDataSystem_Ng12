@@ -6,8 +6,8 @@ import {
 } from 'src/app/common/components/division-tree/division-tree.model';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
@@ -62,7 +62,7 @@ export class GarbageCollectionPointTreeBusiness
       let type = node.RawData.DivisionType;
 
       let data = await this._division.getByType(
-        EnumHelper.GetDivisionChildType(type),
+        EnumTool.division.child(type),
         node.Id
       );
       children = this._converter.iterateToNestNode(data);
@@ -141,7 +141,7 @@ export class GarbageCollectionPointTreeBusiness
 
     try {
       let children = await this._getDataRecursively(
-        EnumHelper.GetDivisionChildType(type),
+        EnumTool.division.child(type),
         depth - 1
       );
 

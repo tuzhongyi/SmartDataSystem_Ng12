@@ -51,22 +51,12 @@
   <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">投放点</div>
 
-    <hw-select
+    <howell-select-station
       class="filter-item-value"
-      [(selected)]="filter.station"
-      [cannull]="true"
-    >
-      <select
-        hw-select-content
-        class="list-type-select"
-        [(ngModel)]="filter.station"
-        (change)="onstation()"
-      >
-        <option [ngValue]="item" *ngFor="let item of model.stations">
-          {{ item.Name }}
-        </option>
-      </select>
-    </hw-select>
+      [divisionId]="filter.divisionId"
+      [(selectedId)]="filter.stationId"
+    ></howell-select-station>
+
     <!-- <app-select-control
       class="list-type-select"
       [data]="model.stations"
@@ -75,7 +65,7 @@
   </div>
   <div class="filter-item" [ngClass]="{ hashandle: display_handle }">
     <div class="filter-item-title">摄像机</div>
-    <hw-select
+    <!-- <hw-select
       class="filter-item-value"
       [(selected)]="filter.camera"
       [cannull]="true"
@@ -90,7 +80,14 @@
           {{ item.Name }}
         </option>
       </select>
-    </hw-select>
+    </hw-select> -->
+
+    <howell-select-camera
+      class="filter-item-value"
+      [divisionId]="filter.divisionId"
+      [stationId]="filter.stationId"
+      [(selectedId)]="filter.cameraId"
+    ></howell-select-camera>
   </div>
   <div class="filter-item hashandle" *ngIf="display_handle">
     <div class="filter-item-title">闭环状态</div>
@@ -104,8 +101,8 @@
         class="list-type-select"
         [(ngModel)]="filter.handle"
       >
-        <option [ngValue]="true">{{ Language.IsHandle(true) }}</option>
-        <option [ngValue]="false">{{ Language.IsHandle(false) }}</option>
+        <option [ngValue]="true">{{ Language.IsHandle(true, type) }}</option>
+        <option [ngValue]="false">{{ Language.IsHandle(false, type) }}</option>
       </select>
     </hw-select>
   </div>

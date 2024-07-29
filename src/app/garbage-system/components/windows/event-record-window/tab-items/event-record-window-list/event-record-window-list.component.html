@@ -1,0 +1,49 @@
+<div class="event-record-window-list">
+  <div class="event-record-window-list-head">
+    <div class="event-record-window-list-title"><ng-content></ng-content></div>
+    <div class="event-record-window-list-operation">
+      <howell-event-record-operation
+        (filter)="filter.display()"
+        (search)="filter.onsearch($event)"
+        (typeChange)="onTypeChange($event)"
+      >
+      </howell-event-record-operation>
+    </div>
+  </div>
+  <div class="event-record-window-list-filter" *ngIf="filter.show">
+    <interval-division-station-filter
+      *ngIf="filter.show"
+      [date_sync]="true"
+      [divisionId]="divisionId"
+      [display_handle]="type != EventType.IllegalDrop"
+      [(filter)]="filter.filter"
+    >
+    </interval-division-station-filter>
+  </div>
+  <div class="event-record-window-list-table" [class.filter]="filter.show">
+    <ng-container *ngIf="listType === ListType.table">
+      <howell-event-record-table
+        [load]="filter.load"
+        [type]="type"
+        [filter]="filter.filter"
+        [get]="get"
+        (image)="onimage($event)"
+        (video)="onvideo($event)"
+        (got)="ongot($event)"
+        (card)="oncard($event)"
+        (allvideo)="onallvideo($event)"
+      >
+      </howell-event-record-table>
+    </ng-container>
+    <ng-container *ngIf="listType === ListType.card">
+      <howell-event-record-list
+        [type]="type"
+        [load]="filter.load"
+        (image)="onimage($event)"
+        (video)="onvideo($event)"
+        [filter]="filter.filter"
+      >
+      </howell-event-record-list>
+    </ng-container>
+  </div>
+</div>

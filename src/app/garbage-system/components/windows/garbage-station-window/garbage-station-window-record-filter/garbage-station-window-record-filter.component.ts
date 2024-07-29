@@ -29,7 +29,6 @@ export class GarbageStationWindowRecordFilterComponent
   }
 
   durations: SelectItem[] = [];
-  statuses: SelectItem[] = [];
   status?: GarbageTaskStatus;
   HorizontalAlign = HorizontalAlign;
 
@@ -37,9 +36,10 @@ export class GarbageStationWindowRecordFilterComponent
     new GarbageStationWindowRecordFilterModel();
   loadDivision: EventEmitter<string> = new EventEmitter();
   DateTimePickerView = DateTimePickerView;
+  GarbageTaskStatus = GarbageTaskStatus;
   ngOnInit(): void {
     this.initDurations();
-    this.initStatuses();
+    this.initStatuses(this.filter.IsHandle, this.filter.IsTimeout);
     this.loadData();
   }
 
@@ -89,18 +89,20 @@ export class GarbageStationWindowRecordFilterComponent
       )
     );
   }
-  initStatuses() {
-    this.statuses.push(SelectItem.create(undefined, '全部'));
-    this.statuses.push(
-      SelectItem.create(GarbageTaskStatus.unhandled, '待处置')
-    );
-    this.statuses.push(SelectItem.create(GarbageTaskStatus.handled, '已处置'));
-    this.statuses.push(
-      SelectItem.create(GarbageTaskStatus.timeout, '超时待处置')
-    );
-    this.statuses.push(
-      SelectItem.create(GarbageTaskStatus.timeout_handled, '超时处置')
-    );
+  initStatuses(handled?: boolean, timeout?: boolean) {
+    if (handled && timeout) {
+      this.status = GarbageTaskStatus.timeout_handled;
+    } else if (!handled && !timeout) {
+      this.status = GarbageTaskStatus.unhandled;
+    } else if (handled && !timeout) {
+      this.status = GarbageTaskStatus.handled;
+    } else if (handled == undefined && timeout) {
+      this.status = GarbageTaskStatus.timeout;
+    } else if (!handled && timeout) {
+      this.status = GarbageTaskStatus.timeout_unhandled;
+    } else {
+      this.status = undefined;
+    }
   }
 
   async loadData(divisionId?: string) {
@@ -148,6 +150,9 @@ export class GarbageStationWindowRecordFilterComponent
         this.filter.IsHandle = false;
         break;
       case GarbageTaskStatus.timeout:
+        this.filter.IsTimeout = true;
+        break;
+      case GarbageTaskStatus.timeout_unhandled:
         this.filter.IsTimeout = true;
         this.filter.IsHandle = false;
         break;

@@ -7,8 +7,8 @@ import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { DaPuQiaoGarbageDropRecordTableBusiness } from './dapuqiao-garbage-drop-record-table.business';
 import {
+  DapuqiaoGarbageDropEventRecordModel,
   DapuqiaoGarbageDropRecordTableArgs,
-  GarbageDropEventRecordModel,
 } from './dapuqiao-garbage-drop-record-table.model';
 import { DaPuQiaoGarbageDropRecordTableService } from './dapuqiao-garbage-drop-record-table.service';
 
@@ -25,19 +25,24 @@ import { DaPuQiaoGarbageDropRecordTableService } from './dapuqiao-garbage-drop-r
   ],
 })
 export class DapuqiaoGarbageDropRecordTableComponent
-  extends PagedTableAbstractComponent<GarbageDropEventRecordModel>
-  implements OnInit, IComponent<IModel, PagedList<GarbageDropEventRecordModel>>
+  extends PagedTableAbstractComponent<DapuqiaoGarbageDropEventRecordModel>
+  implements
+    OnInit,
+    IComponent<IModel, PagedList<DapuqiaoGarbageDropEventRecordModel>>
 {
-  @Input() business: IBusiness<IModel, PagedList<GarbageDropEventRecordModel>>;
+  @Input() business: IBusiness<
+    IModel,
+    PagedList<DapuqiaoGarbageDropEventRecordModel>
+  >;
   @Input() args = new DapuqiaoGarbageDropRecordTableArgs();
   @Input() load?: EventEmitter<DapuqiaoGarbageDropRecordTableArgs>;
 
-  @Output() process: EventEmitter<GarbageDropEventRecordModel> =
+  @Output() process: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
   @Output() image: EventEmitter<PagedArgs> = new EventEmitter();
-  @Output() details: EventEmitter<GarbageDropEventRecordModel> =
+  @Output() details: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
-  @Output() picture: EventEmitter<GarbageDropEventRecordModel> =
+  @Output() picture: EventEmitter<DapuqiaoGarbageDropEventRecordModel> =
     new EventEmitter();
 
   constructor(business: DaPuQiaoGarbageDropRecordTableBusiness) {
@@ -85,16 +90,16 @@ export class DapuqiaoGarbageDropRecordTableComponent
     });
   }
 
-  onimage(item: GarbageDropEventRecordModel, index: number) {
+  onimage(item: DapuqiaoGarbageDropEventRecordModel, index: number) {
     this.image.emit({ data: item, page: Page.create(index) });
   }
-  ondetails(item: GarbageDropEventRecordModel) {
+  ondetails(item: DapuqiaoGarbageDropEventRecordModel) {
     this.details.emit(item);
   }
-  onprocess(item: GarbageDropEventRecordModel) {
+  onprocess(item: DapuqiaoGarbageDropEventRecordModel) {
     this.process.emit(item);
   }
-  onpicture(item: GarbageDropEventRecordModel) {
+  onpicture(item: DapuqiaoGarbageDropEventRecordModel) {
     this.picture.emit(item);
   }
 }

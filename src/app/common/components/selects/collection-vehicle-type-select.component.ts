@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { AbstractSelectComponent } from './select.component.a';
 

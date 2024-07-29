@@ -17,7 +17,7 @@ export class MapPointInfoPanelService {
 class MapPointInfoPanelStationService {
   constructor(private service: GarbageStationRequestService) {}
   statistic(stationId: string) {
-    return this.service.statistic.number.get(stationId);
+    return this.service.statistic.number.cache.get(stationId);
   }
 
   async drop(stationId: string) {

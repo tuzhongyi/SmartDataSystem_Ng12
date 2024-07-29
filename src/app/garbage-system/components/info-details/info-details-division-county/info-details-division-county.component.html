@@ -1,0 +1,129 @@
+<div class="info-details-division-county">
+  <div class="info-details-division-county-head">
+    <div class="hw-second-title">信息汇总</div>
+  </div>
+  <div
+    class="info-details-division-county-body"
+    *ngIf="!!statistic.data && !!statistic.division"
+  >
+    <div class="info-details-division-county-body-numbers">
+      <div class="details-card">
+        <div class="details-card-icon">
+          <div class="details-card-icon-content">
+            <i class="howell-icon-map5"></i>
+          </div>
+        </div>
+        <div class="details-card-content">
+          <div class="details-card-content-info" [title]="statistic.data.Name">
+            {{ statistic.data.Name }}
+          </div>
+          <div
+            class="details-card-content-sub"
+            [title]="statistic.division.Description"
+          >
+            {{ statistic.division.Description }}
+          </div>
+        </div>
+      </div>
+      <div class="details-card">
+        <div class="details-card-icon">
+          <div class="details-card-icon-content">
+            <i class="howell-icon-neighborhood"></i>
+          </div>
+        </div>
+        <div class="details-card-content">
+          <div class="details-card-content-info">
+            <div class="details-card-content-info-value">
+              {{ statistic.data.ChildDivisionNumber }}
+            </div>
+            <div class="details-card-content-info-unit">个</div>
+          </div>
+          <div class="details-card-content-sub">居委会数量</div>
+        </div>
+      </div>
+      <div class="details-card">
+        <div class="details-card-icon">
+          <div class="details-card-icon-content">
+            <i class="howell-icon-garbage"></i>
+          </div>
+        </div>
+        <div class="details-card-content">
+          <div class="details-card-content-info">
+            <div class="details-card-content-info-value">
+              {{ statistic.data.StationNumber }}
+            </div>
+            <div class="details-card-content-info-unit">个</div>
+          </div>
+          <div class="details-card-content-sub">投放点数量</div>
+        </div>
+      </div>
+      <div class="details-card">
+        <div class="details-card-icon">
+          <div class="details-card-icon-content">
+            <i class="howell-icon-account"></i>
+          </div>
+        </div>
+        <div class="details-card-content">
+          <ng-container *ngIf="!!statistic.member">
+            <div
+              class="details-card-content-info"
+              [title]="statistic.member.Name"
+            >
+              ]>
+              {{ statistic.member.Name }}
+            </div>
+            <div
+              class="details-card-content-sub"
+              [title]="statistic.member.MobileNo"
+            >
+              {{ statistic.member.MobileNo }}
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!statistic.member">
+            <div class="details-card-content-info none">无</div>
+          </ng-container>
+          <div
+            class="details-card-content-page"
+            *ngIf="statistic.members.length > 1"
+          >
+            <div
+              class="details-card-content-page-item"
+              *ngFor="let item of statistic.members; let i = index"
+              [class.selected]="statistic.member === item"
+              (click)="statistic.member = item"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-details-division-county-body-overflow">
+      <div
+        class="details-card info-details-division-county-body-overflow-table"
+      >
+        <div class="info-details-division-county-body-overflow-table-head">
+          <div
+            class="info-details-division-county-body-overflow-table-head-title"
+          >
+            <span *ngIf="!!statistic.childtype">
+              {{ Language.DivisionType(statistic.childtype) }}
+            </span>
+          </div>
+          <div
+            class="info-details-division-county-body-overflow-table-head-operation"
+          >
+            <div (click)="ondownload()">
+              <i class="howell-icon-export"></i> 导出
+            </div>
+          </div>
+        </div>
+        <div class="info-details-division-county-body-overflow-table-body">
+          <info-details-division-table
+            [load]="children.event.load"
+            [download]="children.event.download"
+            (info)="onchildinfo($event)"
+          ></info-details-division-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

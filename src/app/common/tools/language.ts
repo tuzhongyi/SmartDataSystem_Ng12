@@ -412,7 +412,7 @@ export class Language {
       case DisposalCountType.unhandled:
         return '未完成任务';
       case DisposalCountType.timeout:
-        return '超时处置';
+        return '超时任务';
       default:
         return Language.json.Unknow;
     }
@@ -996,9 +996,13 @@ export class Language {
     }
   }
 
-  static IsHandle(state?: boolean) {
+  static IsHandle(state?: boolean, type = EventType.MixedInto) {
     if (state) {
-      return '已消失';
+      if (type === EventType.MixedInto) {
+        return '已消失';
+      } else {
+        return '已处置';
+      }
     }
     return '待处置';
   }

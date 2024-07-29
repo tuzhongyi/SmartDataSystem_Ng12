@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ContentChild,
+  ElementRef,
   EventEmitter,
   Input,
   OnInit,
@@ -46,19 +47,33 @@ export class HowellSelectComponent implements OnInit, AfterViewChecked {
 
   constructor(public detector: ChangeDetectorRef) {}
   ngAfterViewChecked(): void {
-    if (this.element && this.cannull) {
+    if (this.cannull) {
       if (this.selected === undefined) {
-        this.element.nativeElement.value = '';
+        if (this.element) {
+          this.element.value = '';
+        }
       }
     }
   }
 
   @ContentChild(SelectDirective)
-  element?: SelectDirective;
+  element_directive?: SelectDirective;
+  @ContentChild('select')
+  element_select?: ElementRef<HTMLSelectElement>;
+
+  get element() {
+    if (this.element_directive) {
+      return this.element_directive.nativeElement;
+    } else if (this.element_select) {
+      return this.element_select.nativeElement;
+    } else {
+      return undefined;
+    }
+  }
 
   get disabled() {
     if (this.element) {
-      return this.element.nativeElement.disabled;
+      return this.element.disabled;
     }
     return false;
   }

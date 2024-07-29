@@ -1,14 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
-import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationCountTableBusiness } from './garbage-station-count-table.business';
 import { DivisionModel } from './garbage-station-count-table.model';
 import { GarbageStationCountTableService } from './garbage-station-count-table.service';
@@ -16,28 +10,23 @@ import { GarbageStationCountTableService } from './garbage-station-count-table.s
 @Component({
   selector: 'garbage-station-count-table',
   templateUrl: './garbage-station-count-table.component.html',
-  styleUrls: [
-    '../table-vertical.less',
-    './garbage-station-count-table.component.less',
-  ],
+  styleUrls: ['./garbage-station-count-table.component.less'],
   providers: [
     GarbageStationCountTableService,
     GarbageStationCountTableBusiness,
   ],
 })
 export class GarbageStationCountTableComponent
-  extends PagedTableAbstractComponent<DivisionModel>
   implements IComponent<IModel, DivisionModel[]>, OnInit
 {
   @Input() business: IBusiness<IModel, DivisionModel[]>;
 
   @Input() load?: EventEmitter<void>;
+  @Output() info = new EventEmitter<Division>();
   constructor(business: GarbageStationCountTableBusiness) {
-    super();
     this.business = business;
   }
-  bodyElement?: ElementRef<HTMLDivElement>;
-  widths = [undefined, '15%'];
+  datas: DivisionModel[] = [];
 
   ngOnInit(): void {
     this.tosubscribe();
@@ -56,5 +45,9 @@ export class GarbageStationCountTableComponent
     this.business.load().then((datas) => {
       this.datas = datas;
     });
+  }
+
+  oninfo(item: DivisionModel) {
+    this.info.emit(item);
   }
 }

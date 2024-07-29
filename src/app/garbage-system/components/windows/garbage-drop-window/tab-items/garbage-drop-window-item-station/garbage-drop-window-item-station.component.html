@@ -1,0 +1,20 @@
+<div class="garbage-drop-window-item-station">
+  <div class="garbage-drop-window-item-station-head">
+    <div class="garbage-drop-window-item-station-head-tabs">
+      <ng-content></ng-content>
+    </div>
+    <div class="garbage-drop-window-item-station-head-operation">
+      <app-input-search-options (search)="onsearch($event)">
+      </app-input-search-options>
+    </div>
+  </div>
+  <div class="garbage-drop-window-item-station-body">
+    <howell-garbage-drop-station-table
+      [load]="load"
+      [args]="args"
+      (image)="onimage($event)"
+      (position)="onposition($event)"
+    >
+    </howell-garbage-drop-station-table>
+  </div>
+</div>

@@ -38,7 +38,7 @@ export class GarbageDropRecordTaskTableDivisionService {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
     if (opts.text) {
-      switch (opts.propertyName) {
+      switch (opts.key) {
         case SearchOptionKey.name:
           params.Name = opts.text;
           break;

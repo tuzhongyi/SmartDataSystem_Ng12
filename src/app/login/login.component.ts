@@ -54,10 +54,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   autoLogin: boolean = false;
 
   formGroup = new FormGroup({
-    userName: new FormControl('', [
-      Validators.maxLength(15),
-      Validators.required,
-    ]),
+    userName: new FormControl('', [Validators.required]),
     passWord: new FormControl('', [Validators.required]),
   });
 

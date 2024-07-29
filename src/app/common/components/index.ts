@@ -52,6 +52,8 @@ import { VideoDownloadPanelComponent } from './panels/video-download-panel/video
 import { PictureWindowComponent } from './picture-window/picture-window.component';
 import { RankComponent } from './rank/rank.component';
 import { RegionTreeComponent } from './region-tree/region-tree.component';
+import { SelectCameraComponent } from './select-camera/select-camera.component';
+import { SelectStationComponent } from './select-station/select-station.component';
 import { SelectComponents } from './selects/selects.modules';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { SimpleSearchComponent } from './simple-search/simple-search.component';
@@ -151,4 +153,7 @@ export const CUSTOM_COMPONENTS = [
   LevelDivisionPanelComponent,
 
   HowellSelectComponent,
+
+  SelectStationComponent,
+  SelectCameraComponent,
 ];

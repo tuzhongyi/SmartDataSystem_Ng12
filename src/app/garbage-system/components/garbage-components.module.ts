@@ -23,6 +23,7 @@ import { EventRecordDetailsTableComponent } from './event-record-details-table/e
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
+import { InfoDetailsComponents } from './info-details/info-details.module';
 import { MainStationCountComponent } from './main-station-count/main-station-count.component';
 import { MapControlButtonComponent } from './map-control-button/map-control-button.component';
 import { MapControlButtons2Component } from './map-control-buttons-2/map-control-buttons-2.component';
@@ -99,6 +100,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,
     ...DaPuQiaoComponents,
+    ...InfoDetailsComponents,
   ],
   imports: [
     CommonModule,
@@ -145,6 +147,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,
     ...DaPuQiaoComponents,
+    ...InfoDetailsComponents,
   ],
 })
 export class GarbageComponentsModule {}

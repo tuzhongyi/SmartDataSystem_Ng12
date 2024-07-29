@@ -1,6 +1,6 @@
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 
 export class EventRecordCountTableModel {
@@ -13,7 +13,7 @@ export class EventRecordCountTableModel {
 export class EventRecordCountTableOptions {
   date = new Date();
   id?: string;
-  type?: UserResourceType;
+  type?: DivisionType;
   unit: TimeUnit = TimeUnit.Day;
   eventType: EventType = EventType.None;
 }

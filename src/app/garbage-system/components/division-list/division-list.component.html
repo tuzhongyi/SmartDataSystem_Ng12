@@ -1,19 +1,27 @@
 <div class="division-list">
   <div class="edge-wrapper list-title">
-    <i class="howell-icon-map5"></i>
-    <span (click)="itemClick(currentDivision)"
-      >&nbsp;{{ currentDivision?.Name }}&nbsp;</span
-    >
+    <div class="list-title-name">
+      <i class="howell-icon-map5"></i>
+      <span (click)="divisionclick(model.current)"
+        >&nbsp;{{ model.current?.Name }}&nbsp;</span
+      >
+    </div>
+    <div class="list-title-operation blue-text" title="信息汇总">
+      <div (click)="oninfo()"><i class="howell-icon-task_misson"></i></div>
+    </div>
   </div>
   <div class="list-wrapper">
     <div
       class="list-item edge-wrapper"
-      [class.selected]="selectedId == division.Id"
-      *ngFor="let division of childDivisions"
-      title="{{ division?.Name }}"
-      (click)="itemClick(division)"
+      [class.selected]="selectedId == item.Id"
+      [ngClass]="{
+        nochildren: item.StationNumber == 0
+      }"
+      *ngFor="let item of model.children | async"
+      title="{{ item?.Name }}"
+      (click)="statisticclick(item)"
     >
-      <p>{{ division?.Name }}</p>
+      <p>{{ item?.Name }}</p>
     </div>
   </div>
 </div>

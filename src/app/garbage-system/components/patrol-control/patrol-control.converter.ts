@@ -1,9 +1,10 @@
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { ImageControlConverter } from 'src/app/converter/image-control.converter';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
@@ -30,7 +31,7 @@ export class PatrolControlConverter
       let online: OnlineStatus = OnlineStatus.Offline;
       for (let i = 0; i < source.Cameras.length; i++) {
         const camera = source.Cameras[i];
-        if (EnumHelper.CameraIgnore(camera.Classification)) {
+        if (EnumTool.CameraIgnore(camera.Classification)) {
           continue;
         }
         if (online === OnlineStatus.Offline) {
@@ -47,7 +48,9 @@ export class PatrolControlConverter
     model.status.stationState = new ControlClass(source.StationState);
     let flags = new Flags(source.StationState);
     model.status.stationState.language = Language.StationStateFlags(flags);
-    model.status.stationState.class = EnumHelper.GetClass(flags);
+    model.status.stationState.class = ColorTool.StationState(
+      source.StationState
+    );
     if (statistic.TodayEventNumbers) {
       for (let j = 0; j < statistic.TodayEventNumbers.length; j++) {
         const today = statistic.TodayEventNumbers[j];

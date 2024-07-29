@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Sort } from '@angular/material/sort';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Language } from 'src/app/common/tools/language';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { GarbageDropRecordFilter } from '../garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageDropRecordTaskTableDownloadBusiness } from './garbage-drop-record-task-table-download.business';
 import { GarbageDropRecordTaskTableBusiness } from './garbage-drop-record-task-table.business';
@@ -69,9 +69,7 @@ export class GarbageDropRecordTaskTableComponent implements OnInit {
     this.business.load(this.args).then((data) => {
       this.datas = data;
       this.total = this.business.total(data);
-      this.type = EnumHelper.GetDivisionChildType(
-        this.business.division.DivisionType
-      );
+      this.type = EnumTool.division.child(this.business.division.DivisionType);
 
       this.loading = false;
       this.loaded.emit(this.datas);

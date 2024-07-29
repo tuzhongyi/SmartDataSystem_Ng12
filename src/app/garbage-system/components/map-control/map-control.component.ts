@@ -15,10 +15,10 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { wait } from 'src/app/common/tools/tool';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -346,7 +346,7 @@ export class MapControlComponent
     this.images = station.Cameras
       ? this.imageConverter.Convert(
           station.Cameras.filter(
-            (x) => !EnumHelper.CameraIgnore(x.Classification)
+            (x) => !EnumTool.CameraIgnore(x.Classification)
           )
         )
       : [];

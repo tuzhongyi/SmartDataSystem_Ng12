@@ -34,7 +34,7 @@ export class AuditStatisticEventRecordManagerComponent implements OnInit {
   ngOnInit(): void {
     this.args.type = this.type;
     this.args.opts = {
-      propertyName: SearchOptionKey.name,
+      key: SearchOptionKey.name,
       text: '',
     };
     if (this.divisionId) {

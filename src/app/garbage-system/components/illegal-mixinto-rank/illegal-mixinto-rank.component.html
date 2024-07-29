@@ -3,29 +3,6 @@
     <div class="title">{{ title }}</div>
 
     <div class="select-group">
-      <select
-        class="resource-type"
-        [(ngModel)]="resourceType"
-        (change)="onchange()"
-        *ngIf="resourceTypeDisplay"
-      >
-        <option
-          [ngValue]="UserResourceType.County"
-          *ngIf="global.divisionType === DivisionType.City"
-        >
-          {{ Language.UserResourceType(UserResourceType.County) }}
-        </option>
-        <option [ngValue]="UserResourceType.Committees">
-          {{ Language.UserResourceType(UserResourceType.Committees) }}
-        </option>
-        <option
-          [ngValue]="UserResourceType.Station"
-          *ngIf="global.divisionType !== DivisionType.City"
-        >
-          {{ Language.UserResourceType(UserResourceType.Station) }}
-        </option>
-      </select>
-
       <select class="event-type" [(ngModel)]="eventType" (change)="onchange()">
         <option [ngValue]="EventType.IllegalDrop">
           {{ Language.EventType(EventType.IllegalDrop) }}
@@ -33,6 +10,11 @@
         <option [ngValue]="EventType.MixedInto">
           {{ Language.EventType(EventType.MixedInto) }}
         </option>
+      </select>
+      <select class="time-unit" [(ngModel)]="unit" (change)="onchange()">
+        <option [ngValue]="TimeUnit.Day">今日</option>
+        <option [ngValue]="TimeUnit.Week">本周</option>
+        <option [ngValue]="TimeUnit.Month">本月</option>
       </select>
     </div>
   </div>

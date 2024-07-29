@@ -32,8 +32,8 @@
 import { Injectable } from '@angular/core';
 import { DivisionManageModel } from '../aiop-system/components/division-manage/division-manange.model';
 import { IConverter } from '../common/interfaces/converter.interface';
+import { EnumTool } from '../common/tools/enum-tool/enum.tool';
 import { DivisionType } from '../enum/division-type.enum';
-import { EnumHelper } from '../enum/enum-helper';
 import { RegionType } from '../enum/region-type.enum';
 import { UserResourceType } from '../enum/user-resource-type.enum';
 import { DivisionNode } from '../network/model/garbage-station/division-tree.model';
@@ -212,7 +212,7 @@ export class TreeConverter
       item.Nodes.length > 0,
       parentId,
       DivisionNodeIconType.get(
-        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+        EnumTool.resource.from.division(item.DivisionType)
       ),
       true
     );
@@ -229,7 +229,7 @@ export class TreeConverter
       !item.IsLeaf,
       item.ParentId,
       DivisionNodeIconType.get(
-        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+        EnumTool.resource.from.division(item.DivisionType)
       )
     );
     node.rawData = item;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { CommonTreeConverter } from 'src/app/converter/common-tree.converter';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { IconTypeEnum } from 'src/app/enum/icon-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
@@ -68,7 +68,7 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.ParentNode = undefined;
     node.IconClass =
       DivisionNodeIconType.get(
-        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+        EnumTool.resource.from.division(item.DivisionType)
       ) ?? '';
     node.RawData = item;
     return node;
@@ -127,7 +127,7 @@ export class DivisionTreeConverter extends CommonTreeConverter {
     node.ParentNode = undefined;
     node.IconClass =
       DivisionNodeIconType.get(
-        EnumHelper.ConvertDivisionToUserResource(item.DivisionType)
+        EnumTool.resource.from.division(item.DivisionType)
       ) ?? '';
     node.RawData = item;
     return node;

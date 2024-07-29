@@ -1,0 +1,54 @@
+<div class="garbage-drop-window-item-task">
+  <div class="garbage-drop-window-item-task-head">
+    <ng-content></ng-content>
+  </div>
+  <div class="garbage-drop-window-item-task-filter">
+    <div class="filter-items">
+      <div class="filter-item datetime">
+        <div class="filter-item-title">开始时间</div>
+        <input
+          type="text"
+          class="filter-item-value"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日 HH:mm'"
+          [startView]="DateTimePickerView.day"
+          [minView]="DateTimePickerView.hour"
+          [(date)]="filter.duration.begin"
+          (dateChange)="changeBegin($event)"
+        />
+      </div>
+      <div class="filter-item datetime">
+        <div class="filter-item-title">结束时间</div>
+        <input
+          type="text"
+          class="filter-item-value"
+          DateTimePicker
+          [format]="'yyyy年MM月dd日 HH:mm'"
+          [startView]="DateTimePickerView.day"
+          [minView]="DateTimePickerView.hour"
+          [(date)]="filter.duration.end"
+          (dateChange)="changeEnd($event)"
+        />
+      </div>
+      <div class="filter-item select">
+        <div class="filter-item-title">行政区</div>
+        <div class="filter-item-value division">
+          <level-division-panel
+            [cannull]="true"
+            (selectedChange)="ondivision($event)"
+          ></level-division-panel>
+        </div>
+      </div>
+      <div class="filter-item">
+        <button type="button" class="hw-blue-btn search" (click)="onsearch()">
+          <i class="mdi mdi-magnify"></i>
+          查询
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="garbage-drop-window-item-task-table filter">
+    <garbage-drop-record-task-table [args]="filter" [load]="load">
+    </garbage-drop-record-task-table>
+  </div>
+</div>

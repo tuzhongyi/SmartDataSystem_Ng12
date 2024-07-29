@@ -1,0 +1,92 @@
+<div class="garbage-drop-window-item-duration">
+  <div class="garbage-drop-window-item-duration-head">
+    <ng-content></ng-content>
+  </div>
+  <div class="garbage-drop-window-item-duration-body">
+    <div class="garbage-drop-window-item-duration-body-header">
+      <div class="title">小包垃圾滞留</div>
+      <div class="filter">
+        <div class="division-station">
+          <howell-division-station-tree-filter
+            (select)="onstationselect($event)"
+            [stationId]="stationId"
+          ></howell-division-station-tree-filter>
+        </div>
+        <div class="datetime">
+          <input
+            type="text"
+            DateTimePicker
+            [format]="'yyyy年MM月dd日'"
+            [(date)]="date"
+            (dateChange)="changeDate($event)"
+            class="date"
+            readonly="readonly"
+          />
+          <i class="mdi mdi-menu-down arrow-time light-blue-text"></i>
+        </div>
+      </div>
+    </div>
+    <div class="garbage-drop-window-item-duration-body-content">
+      <div class="statistic" *ngIf="!!model">
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">评分</div>
+          <div class="statistic-item-value">
+            <div class="statistic-item-value-number">{{ model.garde }}</div>
+            <div class="blue-text statistic-item-value-unit">分</div>
+          </div>
+        </div>
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">平均滞留时长</div>
+          <div
+            class="statistic-item-value"
+            [innerHTML]="model.avgDropDuration"
+          ></div>
+        </div>
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">最大滞留时长</div>
+          <div
+            class="statistic-item-value"
+            [innerHTML]="model.maxDropDuration"
+          ></div>
+        </div>
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">总滞留时长</div>
+          <div
+            class="statistic-item-value"
+            [innerHTML]="model.countDropDuration"
+          ></div>
+        </div>
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">垃圾落地</div>
+          <div class="statistic-item-value">
+            <div class="statistic-item-value-number">
+              {{ model.eventCount }}
+            </div>
+            <div class="blue-text statistic-item-value-unit">起</div>
+          </div>
+        </div>
+        <div class="statistic-item">
+          <div class="light-blue-text statistic-item-title">任务数量</div>
+          <div class="statistic-item-value">
+            <div class="statistic-item-value-number">{{ model.taskCount }}</div>
+            <div class="blue-text statistic-item-value-unit">起</div>
+          </div>
+        </div>
+      </div>
+      <div class="state">
+        <img src="/assets/img/tooltip-luodi.png" />
+      </div>
+      <div class="chart">
+        <howell-line-zoom-chart
+          [stationId]="stationId"
+          [date]="date"
+          [unit]="unit"
+          [load]="chartLoad"
+          (image)="onimage($event)"
+          (ondblclick)="onchartdblclick($event)"
+        >
+        </howell-line-zoom-chart>
+      </div>
+    </div>
+  </div>
+</div>

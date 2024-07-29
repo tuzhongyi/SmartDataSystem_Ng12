@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { ToastrService } from 'ngx-toastr';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Guid } from 'src/app/common/tools/guid';
 import { Language } from 'src/app/common/tools/language';
 import { RegExpTool } from 'src/app/common/tools/reg-exp/reg-exp.tool';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Gender } from 'src/app/enum/gender.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
@@ -93,7 +93,7 @@ export class AIOPUserDetailsComponent implements OnInit {
     resource.Id = node.Id;
     resource.Name = node.Name;
     if (node.RawData instanceof Division) {
-      resource.ResourceType = EnumHelper.ConvertDivisionToUserResource(
+      resource.ResourceType = EnumTool.resource.from.division(
         node.RawData.DivisionType
       );
     } else if (node.RawData instanceof GarbageStation) {

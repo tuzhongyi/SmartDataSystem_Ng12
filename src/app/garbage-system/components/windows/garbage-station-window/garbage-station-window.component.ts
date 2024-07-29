@@ -1,7 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
-import { GarbageDropEventRecordModel } from 'src/app/common/components/tables/daqupiao/dapuqiao-garbage-drop-record-table/dapuqiao-garbage-drop-record-table.model';
-import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowComponent } from 'src/app/common/components/window-control/window.component';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
@@ -12,7 +9,6 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 @Component({
   selector: 'howell-garbage-station-window',
@@ -34,28 +30,13 @@ export class GarbageStationWindowComponent
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
   @Output() image: EventEmitter<
-    PagedArgs<
-      | GarbageDropRecordViewModel
-      | GarbageStationTableModel
-      | EventRecordViewModel
-      | ImageControlModel
-    >
-  > = new EventEmitter();
-  @Output() chartdblclick: EventEmitter<LineZoomChartArgs> = new EventEmitter();
-  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
-  @Output() video: EventEmitter<
-    GarbageDropRecordViewModel | AIGarbageRfidCardRecord | EventRecordViewModel
+    PagedArgs<GarbageStationTableModel | EventRecordViewModel>
   > = new EventEmitter();
 
-  @Output() dapuqiao_image: EventEmitter<
-    PagedArgs<GarbageDropEventRecordModel>
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() video: EventEmitter<
+    AIGarbageRfidCardRecord | EventRecordViewModel
   > = new EventEmitter();
-  @Output() dapuqiao_details: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-  @Output() dapuqiao_picture: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
-  @Output() dapuqiao_process: EventEmitter<GarbageDropEventRecordModel> =
-    new EventEmitter();
 
   constructor(local: LocalStorageService) {
     super();
@@ -74,63 +55,29 @@ export class GarbageStationWindowComponent
     this.stationId = undefined;
   }
 
-  onimage(
-    item: PagedArgs<
-      | GarbageDropRecordViewModel
-      | GarbageStationTableModel
-      | EventRecordViewModel
-      | ImageControlModel
-    >
-  ) {
+  onimage(item: PagedArgs<GarbageStationTableModel | EventRecordViewModel>) {
     this.image.emit(item);
-  }
-
-  onstaydblclick(item: LineZoomChartArgs) {
-    this.chartdblclick.emit(item);
   }
 
   onposition(item: GarbageStation) {
     this.position.emit(item);
   }
 
-  onvideo(
-    args:
-      | GarbageDropRecordViewModel
-      | AIGarbageRfidCardRecord
-      | EventRecordViewModel
-  ) {
+  onvideo(args: AIGarbageRfidCardRecord | EventRecordViewModel) {
     this.video.emit(args);
   }
   ongot(data: any) {
     this.got.emit(data);
   }
-
-  ondapuqiaodetails(item: GarbageDropEventRecordModel) {
-    this.dapuqiao_details.emit(item);
-  }
-  ondapuqiaopicture(item: GarbageDropEventRecordModel) {
-    this.dapuqiao_picture.emit(item);
-  }
-  ondapuqiaoimage(model: PagedArgs<GarbageDropEventRecordModel>) {
-    this.dapuqiao_image.emit(model);
-  }
-  ondapuqiaoprocess(item: GarbageDropEventRecordModel) {
-    this.dapuqiao_process.emit(item);
-  }
 }
 
 export enum GarbageStationWindowIndex {
   /** 投放点列表 */
-  station = 0,
-  /** 小包垃圾滞留 */
-  stay = 1,
+  station,
   /** 总图表 */
-  general = 2,
+  general,
   /** 细分图表 */
-  details = 3,
-  /** 报警事件处置 */
-  record = 4,
-  card = 5,
-  dapuqiao_record = 6,
-  sewage = 7,
+  details,
+  card,
+  sewage,
 }

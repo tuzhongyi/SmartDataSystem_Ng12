@@ -62,7 +62,7 @@ export class EventRecordFilter {
 
   opts: SearchOptions = {
     text: '',
-    propertyName: SearchOptionKey.name,
+    key: SearchOptionKey.name,
   };
   community?: SelectItem;
 

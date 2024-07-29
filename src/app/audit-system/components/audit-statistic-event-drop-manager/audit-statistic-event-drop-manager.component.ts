@@ -67,18 +67,9 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
   ngOnInit(): void {
     this.args.IsHandle = this.handle;
     this.args.IsTimeout = this.timeout;
-    if (this.handle && this.timeout) {
-      this.status = GarbageTaskStatus.timeout_handled;
-    } else if (this.timeout) {
-      this.status = GarbageTaskStatus.timeout;
-    } else if (this.handle) {
-      this.status = GarbageTaskStatus.handled;
-    } else if (this.handle === false) {
-      this.status = GarbageTaskStatus.unhandled;
-    } else {
-    }
+    this.initStatuses(this.handle, this.timeout);
     this.args.opts = {
-      propertyName: SearchOptionKey.name,
+      key: SearchOptionKey.name,
       text: '',
     };
     if (this.divisionId) {
@@ -88,6 +79,22 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
     this.selection.select.subscribe((x) => {
       this.args.divisionId = x?.Id;
     });
+  }
+
+  initStatuses(handled?: boolean, timeout?: boolean) {
+    if (handled && timeout) {
+      this.status = GarbageTaskStatus.timeout_handled;
+    } else if (!handled && !timeout) {
+      this.status = GarbageTaskStatus.unhandled;
+    } else if (handled && !timeout) {
+      this.status = GarbageTaskStatus.handled;
+    } else if (handled == undefined && timeout) {
+      this.status = GarbageTaskStatus.timeout;
+    } else if (!handled && timeout) {
+      this.status = GarbageTaskStatus.timeout_unhandled;
+    } else {
+      this.status = undefined;
+    }
   }
 
   ondate(date: Date) {
@@ -119,6 +126,10 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
         break;
       case GarbageTaskStatus.timeout:
         this.args.IsTimeout = true;
+        break;
+      case GarbageTaskStatus.timeout_unhandled:
+        this.args.IsTimeout = true;
+        this.args.IsHandle = false;
         break;
       case GarbageTaskStatus.timeout_handled:
         this.args.IsTimeout = true;

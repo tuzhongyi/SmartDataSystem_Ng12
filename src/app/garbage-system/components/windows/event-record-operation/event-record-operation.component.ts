@@ -23,7 +23,7 @@ export class EventRecordOperationComponent implements OnInit {
   searchOpts: SelectItem[] = [];
   searchOption: SearchOptions = {
     text: '',
-    propertyName: SearchOptionKey.name,
+    key: SearchOptionKey.name,
   };
   ListType = ListType;
   ngOnInit(): void {
@@ -50,7 +50,7 @@ export class EventRecordOperationComponent implements OnInit {
     this.typeChange.emit(this.type);
   }
   onSearchOptionSelect(item: SelectItem) {
-    this.searchOption.propertyName = item.value;
+    this.searchOption.key = item.value;
   }
 }
 

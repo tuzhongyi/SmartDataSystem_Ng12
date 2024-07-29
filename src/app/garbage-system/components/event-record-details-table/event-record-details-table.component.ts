@@ -12,7 +12,7 @@ import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/d
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { Enum } from 'src/app/enum/enum-helper';
+import { Enum } from 'src/app/enum/enum.model';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordDetailsTableBusiness } from './event-record-details-table.business';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { EventNumberStatisticConverter } from 'src/app/converter/illegal-drop-total.converter';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -20,9 +20,9 @@ import {
 } from 'src/app/view-model/event-number-statistic.model';
 import { LocaleCompare } from '../../tools/locale-compare';
 
-import { EventNumberStatisticExportConverter } from './event-number-statistic-export.converter';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { ExportTool } from '../../tools/export.tool';
+import { EventNumberStatisticExportConverter } from './event-number-statistic-export.converter';
 
 @Injectable()
 export class IllegalDropTotalBusiness {
@@ -124,7 +124,7 @@ export class IllegalDropTotalBusiness {
       params.PageIndex = pageIndex;
       params.PageSize = pageSize;
       params.AncestorId = searchInfo.ResourceId;
-      params.DivisionType = EnumHelper.ConvertUserResourceToDivision(
+      params.DivisionType = EnumTool.resource.to.division(
         searchInfo.ResourceType
       );
       return this._divisionRequest.list(params);

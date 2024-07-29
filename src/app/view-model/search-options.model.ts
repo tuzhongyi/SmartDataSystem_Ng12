@@ -1,6 +1,6 @@
 export interface SearchOptions {
   text: string;
-  propertyName: SearchOptionKey;
+  key: SearchOptionKey;
 }
 export enum SearchOptionKey {
   name = 'Name',

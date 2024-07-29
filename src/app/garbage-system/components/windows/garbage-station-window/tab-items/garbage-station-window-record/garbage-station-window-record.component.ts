@@ -15,7 +15,6 @@ import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { SearchOptions } from 'src/app/view-model/search-options.model';
-import { ListType } from '../../garbage-station-window-record-operation/garbage-station-window-record-operation.component';
 
 @Component({
   selector: 'howell-garbage-station-window-record',
@@ -38,8 +37,6 @@ export class GarbageStationWindowRecordComponent implements OnInit {
 
   constructor() {}
   isfilter = false;
-  table: ListType = ListType.table;
-  TableType = ListType;
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   @ViewChild('task') task?: GarbageDropRecordTaskTableComponent;
 
@@ -59,6 +56,9 @@ export class GarbageStationWindowRecordComponent implements OnInit {
         break;
       case GarbageTaskStatus.timeout:
         this.filter.IsTimeout = true;
+        break;
+      case GarbageTaskStatus.timeout_unhandled:
+        this.filter.IsTimeout = true;
         this.filter.IsHandle = false;
         break;
       case GarbageTaskStatus.timeout_handled:
@@ -70,9 +70,7 @@ export class GarbageStationWindowRecordComponent implements OnInit {
         break;
     }
   }
-  typeChange(type: ListType) {
-    this.table = type;
-  }
+
   onimage(item: PagedArgs<GarbageDropRecordViewModel>) {
     this.image.emit(item);
   }

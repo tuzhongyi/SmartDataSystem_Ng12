@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { IllegalMixintoRankArgs } from 'src/app/garbage-system/components/illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from 'src/app/garbage-system/components/retention-rank/retention-rank.component';
-import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 
+import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
 import { CommitteesWindowBussiness } from './committees-window.business';
 
 @Injectable()
@@ -18,8 +18,8 @@ export class CommitteesIndexEventTriggerBusiness {
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window, this.global);
-  risposalCount = new RisposalCountEventTrigger(this.window);
-  risposalRank = new RisposalRankEventTrigger(this.window);
+  disposalCount = new DisposalCountEventTrigger(this.window);
+  disposalRank = new DisposalRankEventTrigger(this.window);
 }
 
 export class DeviceStateEventTrigger {
@@ -58,19 +58,17 @@ class IllegalMixintoRankEventTrigger {
     this.window.record.show = true;
   }
 }
-class RisposalCountEventTrigger {
+class DisposalCountEventTrigger {
   constructor(private window: CommitteesWindowBussiness) {}
   ontask() {
-    this.window.stationInfo.index = GarbageStationWindowIndex.record;
-    this.window.stationInfo.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.record;
+    this.window.drop.show = true;
   }
 }
-class RisposalRankEventTrigger {
+class DisposalRankEventTrigger {
   constructor(private window: CommitteesWindowBussiness) {}
   onItemClicked(item: RankModel) {
-    this.window.stationInfo.index = GarbageStationWindowIndex.stay;
-    this.window.stationInfo.stationId = item.id;
-    console.log(item.data);
-    this.window.stationInfo.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.duration;
+    this.window.drop.show = true;
   }
 }

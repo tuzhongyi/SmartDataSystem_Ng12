@@ -1,0 +1,14 @@
+<div class="garbage-drop-window-item-count">
+  <div class="garbage-drop-window-item-count-head">
+    <ng-content></ng-content>
+  </div>
+  <div class="garbage-drop-window-item-count-body">
+    <ng-container *ngIf="ui != UserUIType.dapuqiao">
+      <howell-garbage-drop-window-count> </howell-garbage-drop-window-count>
+    </ng-container>
+    <ng-container *ngIf="ui == UserUIType.dapuqiao">
+      <dapuqiao-garbage-drop-station-window-count>
+      </dapuqiao-garbage-drop-station-window-count>
+    </ng-container>
+  </div>
+</div>

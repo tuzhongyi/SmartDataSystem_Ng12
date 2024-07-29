@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IDeviceStateDes } from 'src/app/view-model/device-state-count.model';
 import { RankModel } from 'src/app/view-model/rank.model';
 import { DisposalCountArgs } from '../../disposal-count/disposal-count.model';
 import { IllegalMixintoRankArgs } from '../../illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { RetentionRankArgs } from '../../retention-rank/retention-rank.component';
-import { GarbageStationWindowIndex } from '../../windows/garbage-station-window/garbage-station-window.component';
+import { GarbageDropStationWindowIndex } from '../../windows/garbage-drop-window/garbage-drop-window.model';
 import { MonitorWindowBussiness } from './window.business';
 
 @Injectable()
@@ -19,11 +21,12 @@ export class MonitorEventTriggerBusiness {
   illegalMixintoRank = new IllegalMixintoRankEventTrigger(this.window);
   deviceState = new DeviceStateEventTrigger(this.window);
   retentionRank = new RetentionRankEventTrigger(this.window, this.global);
-  risposalCount = new RisposalCountEventTrigger(this.window);
-  risposalRank = new RisposalRankEventTrigger(this.window);
+  disposalCount = new DisposalCountEventTrigger(this.window);
+  disposalRank = new DisposalRankEventTrigger(this.window);
+  divisionList = new DivisionListEventTrigger(this.window);
 }
 
-export class DeviceStateEventTrigger {
+class DeviceStateEventTrigger {
   constructor(private window: MonitorWindowBussiness) {}
   onclick(args: IDeviceStateDes) {
     this.window.device.status = args.status;
@@ -31,7 +34,7 @@ export class DeviceStateEventTrigger {
   }
 }
 
-export class RetentionRankEventTrigger {
+class RetentionRankEventTrigger {
   constructor(
     private window: MonitorWindowBussiness,
     private global: GlobalStorageService
@@ -69,19 +72,43 @@ class IllegalMixintoRankEventTrigger {
     this.window.record.show = true;
   }
 }
-class RisposalCountEventTrigger {
+class DisposalCountEventTrigger {
   constructor(private window: MonitorWindowBussiness) {}
   ontask(args: DisposalCountArgs) {
-    this.window.station.index = GarbageStationWindowIndex.record;
-    this.window.station.divisionId = args.divisionId;
-    this.window.station.status = args.status;
-    this.window.station.show = true;
+    this.window.drop.index = GarbageDropStationWindowIndex.record;
+    this.window.drop.status = args.status;
+    this.window.drop.show = true;
   }
 }
-class RisposalRankEventTrigger {
+class DisposalRankEventTrigger {
   constructor(private window: MonitorWindowBussiness) {}
   onItemClicked(item: RankModel) {
     this.window.record.stationId = item.id;
     this.window.record.show = true;
+  }
+}
+
+class DivisionListEventTrigger {
+  constructor(private window: MonitorWindowBussiness) {}
+  oninfo(division?: Division) {
+    if (division) {
+      switch (division.DivisionType) {
+        case DivisionType.City:
+          this.window.details.city.divisionId = division.Id;
+          this.window.details.city.show = true;
+          break;
+        case DivisionType.County:
+          this.window.details.county.divisionId = division.Id;
+          this.window.details.county.show = true;
+          break;
+        case DivisionType.Committees:
+          this.window.details.committees.divisionId = division.Id;
+          this.window.details.committees.show = true;
+          break;
+
+        default:
+          break;
+      }
+    }
   }
 }

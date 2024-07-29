@@ -68,7 +68,7 @@ export class GarbageStationTableBusiness
     params.CommunityName = args.communityName;
     params.Name = args.stationName;
     if (args.opts) {
-      (params as any)[args.opts.propertyName] = args.opts.text;
+      (params as any)[args.opts.key] = args.opts.text;
     }
     return this.stationService.list(params);
   }

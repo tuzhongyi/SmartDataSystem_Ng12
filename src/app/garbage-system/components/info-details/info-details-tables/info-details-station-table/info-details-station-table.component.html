@@ -1,0 +1,61 @@
+<div class="info-details-station-table">
+  <table>
+    <colgroup>
+      <col [ngStyle]="{ width: width }" *ngFor="let width of widths" />
+    </colgroup>
+    <thead>
+      <tr>
+        <th><div class="th-center">#</div></th>
+        <th>名称</th>
+        <th>管理员数量</th>
+        <th>管理人员</th>
+        <th>职位</th>
+        <th>联系方式</th>
+        <th><div class="th-center">垃圾落地</div></th>
+        <th><div class="th-center">垃圾满溢</div></th>
+        <th><div class="th-center">混合投放</div></th>
+        <th><div class="th-center">感应门</div></th>
+        <th><div class="th-center">智能主机</div></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of datas; let i = index">
+        <td>
+          <div class="td-center">
+            {{ i + 1 }}
+          </div>
+        </td>
+        <td [title]="item.Name">{{ item.Name }}</td>
+        <td>{{ item.member.count }}</td>
+        <td [title]="item.member.default?.Name">
+          {{ item.member.default ? item.member.default.Name : "-" }}
+        </td>
+        <td>
+          {{
+            item.member.default
+              ? Language.MemberType(item.member.default.MemberType)
+              : "-"
+          }}
+        </td>
+        <td [title]="item.member.default?.MobileNo">
+          {{ item.member.default ? item.member.default.MobileNo : "-" }}
+        </td>
+        <td>
+          <div class="td-center">{{ item.canIllegalDrop ? "✔" : "-" }}</div>
+        </td>
+        <td>
+          <div class="td-center">{{ item.canGarbageFull ? "✔" : "-" }}</div>
+        </td>
+        <td>
+          <div class="td-center">{{ item.canMixedInto ? "✔" : "-" }}</div>
+        </td>
+        <td>
+          <div class="td-center">{{ item.canDoor ? "✔" : "-" }}</div>
+        </td>
+        <td>
+          <div class="td-center">{{ item.canGCHA ? "✔" : "-" }}</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

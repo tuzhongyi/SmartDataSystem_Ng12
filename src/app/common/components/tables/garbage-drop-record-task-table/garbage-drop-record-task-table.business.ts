@@ -39,9 +39,10 @@ export class GarbageDropRecordTaskTableBusiness
   }
 
   async load(args: GarbageDropRecordFilter) {
-    if (args.divisionId) {
-      this.division = await this.service.division.get(args.divisionId);
-    }
+    let divisionId = args.divisionId ?? this.global.divisionId;
+
+    this.division = await this.service.division.get(divisionId);
+
     let datas = await this.getData(this.division, args);
     let model = datas.map((x) => this.converter.Convert(x));
     return model;

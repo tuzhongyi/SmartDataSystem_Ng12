@@ -9,15 +9,19 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Language } from 'src/app/common/tools/language';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { RankModel } from 'src/app/view-model/rank.model';
-import { IllegalMixintoRankBusiness } from './illegal-mixinto-rank.business';
+import {
+  IllegalMixintoRankBusiness,
+  IllegalMixintoRankBusinessProviders,
+} from './business/illegal-mixinto-rank.business';
 
 @Component({
   selector: 'app-illegal-mixinto-rank',
   templateUrl: './illegal-mixinto-rank.component.html',
   styleUrls: ['./illegal-mixinto-rank.component.less'],
-  providers: [IllegalMixintoRankBusiness],
+  providers: [...IllegalMixintoRankBusinessProviders],
 })
 export class IllegalMixintoRankComponent implements OnInit {
   @Input() load?: EventEmitter<void>;
@@ -49,10 +53,11 @@ export class IllegalMixintoRankComponent implements OnInit {
 
   resourceTypeDisplay: boolean = true;
   EventType = EventType;
-  UserResourceType = UserResourceType;
   DivisionType = DivisionType;
   Language = Language;
   eventType: EventType = EventType.IllegalDrop;
+  unit = TimeUnit.Day;
+  TimeUnit = TimeUnit;
 
   ngOnInit(): void {
     // 区划改变时触发
@@ -75,8 +80,8 @@ export class IllegalMixintoRankComponent implements OnInit {
     this.title = '今日' + Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
       this.global.divisionId,
-      resourceType,
-      this.eventType
+      this.eventType,
+      this.unit
     );
   }
 

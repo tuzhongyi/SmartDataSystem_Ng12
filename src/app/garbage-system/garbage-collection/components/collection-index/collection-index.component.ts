@@ -16,7 +16,7 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { interval, Subscription } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { CommonStatisticCardModel } from 'src/app/common/components/common-statistic-card/common-statistic-card.model';
 import {
   ToastWindowService,
@@ -28,10 +28,10 @@ import {
 } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { TimeService } from 'src/app/common/service/time.service';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TrashCanType } from 'src/app/enum/trashcan-type.enum';
 import { PictureArgs } from 'src/app/network/model/args/picture.args';
@@ -199,8 +199,7 @@ export class GarbageCollectionIndexComponent
     if (user.Resources && user.Resources.length > 0) {
       let userDivisionId = user.Resources[0].Id;
       let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType =
-        EnumHelper.ConvertUserResourceToDivision(resourceType);
+      let userDivisionType = EnumTool.resource.to.division(resourceType);
       this._globalStorage.divisionId = userDivisionId;
       this._globalStorage.divisionType = userDivisionType;
     }

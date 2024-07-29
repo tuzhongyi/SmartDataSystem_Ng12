@@ -44,7 +44,7 @@ export class GarbageDropRecordTaskTableStationService {
     let params = new GetGarbageStationsParams();
     params.DivisionId = divisionId;
     if (opts.text) {
-      switch (opts.propertyName) {
+      switch (opts.key) {
         case SearchOptionKey.name:
           params.Name = opts.text;
           break;

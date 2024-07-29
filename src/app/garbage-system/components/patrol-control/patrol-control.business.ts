@@ -6,10 +6,10 @@ import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 import { Medium } from 'src/app/common/tools/medium';
+import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { PatrolControlConverter } from './patrol-control.converter';
 
 import { instanceToPlain, plainToInstance } from 'class-transformer';
@@ -87,7 +87,7 @@ export class PatrolControlBusiness
   }
 
   async statistic(stationId: string) {
-    return this.stationService.statistic.number.get(stationId);
+    return this.stationService.statistic.number.cache.get(stationId);
   }
 
   async getData(

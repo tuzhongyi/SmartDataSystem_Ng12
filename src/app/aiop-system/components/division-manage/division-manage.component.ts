@@ -12,9 +12,9 @@ import {
   IDivisionManageComponent,
   TDivisionManageBusiness,
 } from 'src/app/aiop-system/components/division-manage/division-manange.model';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Language } from 'src/app/common/tools/language';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -83,7 +83,7 @@ export class DivisionManageComponent
           : Language.DivisionType(this.type);
       return normal + '详情';
     } else if (this.state == FormState.add) {
-      let child = EnumHelper.GetDivisionChildType(this.type);
+      let child = EnumTool.division.child(this.type);
       if (this.type === DivisionType.None) {
         child = DivisionType.City;
       }

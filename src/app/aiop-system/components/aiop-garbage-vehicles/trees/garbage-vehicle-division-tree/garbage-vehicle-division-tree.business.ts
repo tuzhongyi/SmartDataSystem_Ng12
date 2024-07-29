@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DivisionTreeConverter } from 'src/app/common/components/division-tree/division-tree.converter';
 import { IDivisionTreeBusiness } from 'src/app/common/components/division-tree/division-tree.model';
+import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 
 import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -48,10 +48,7 @@ export class GarbageVehicleDivisionTreeBusiness
     try {
       let type = node.RawData.DivisionType;
 
-      let data = await this.getData(
-        EnumHelper.GetDivisionChildType(type),
-        node.Id
-      );
+      let data = await this.getData(EnumTool.division.child(type), node.Id);
       children = this._converter.iterateToNestNode(data);
       children.forEach((child) => (child.ParentNode = node!));
       this._register(children);
@@ -146,7 +143,7 @@ export class GarbageVehicleDivisionTreeBusiness
     }
     try {
       let children = await this._getDataRecursively(
-        EnumHelper.GetDivisionChildType(type),
+        EnumTool.division.child(type),
         depth - 1
       );
 

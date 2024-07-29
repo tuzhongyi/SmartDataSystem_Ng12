@@ -67,13 +67,13 @@ export class GarbageDropRecordTableBusiness
       params.CommunityIds = [opts.community.Id];
     }
     if (opts.opts) {
-      if (opts.opts.propertyName) {
-        switch (opts.opts.propertyName) {
+      if (opts.opts.key) {
+        switch (opts.opts.key) {
           case 'Name':
             params.StationName = opts.opts.text;
             break;
           default:
-            params[opts.opts.propertyName] = opts.opts.text;
+            params[opts.opts.key] = opts.opts.text;
             break;
         }
       } else {

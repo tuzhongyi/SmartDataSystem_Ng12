@@ -1,0 +1,15 @@
+<div class="garbage-full-window-station">
+  <div class="garbage-full-window-station-head">
+    <div class="garbage-full-window-station-head-title">
+      <ng-content></ng-content>
+    </div>
+    <div class="garbage-full-window-station-head-operation">
+      <app-input-search-options (search)="onsearch($event)">
+      </app-input-search-options>
+    </div>
+  </div>
+  <div class="garbage-full-window-station-body">
+    <howell-garbage-full-station-table [load]="load" (image)="onimage($event)">
+    </howell-garbage-full-station-table>
+  </div>
+</div>

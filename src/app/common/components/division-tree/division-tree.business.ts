@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { EnumHelper } from 'src/app/enum/enum-helper';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { DivisionTreeConverter } from './division-tree.converter';
 
+import { EnumTool } from '../../tools/enum-tool/enum.tool';
 import { IDivisionTreeBusiness } from './division-tree.model';
 import { DivisionTreeService } from './division-tree.service';
 
@@ -39,10 +39,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     try {
       let type = node.RawData.DivisionType;
 
-      let data = await this.getData(
-        EnumHelper.GetDivisionChildType(type),
-        node.Id
-      );
+      let data = await this.getData(EnumTool.division.child(type), node.Id);
       children = this._converter.iterateToNestNode(data);
       children.forEach((child) => (child.ParentNode = node!));
       this._register(children);
@@ -146,7 +143,7 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
     }
     try {
       let children = await this._getDataRecursively(
-        EnumHelper.GetDivisionChildType(type),
+        EnumTool.division.child(type),
         depth - 1
       );
 
