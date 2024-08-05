@@ -30,26 +30,34 @@
         </button>
       </div>
       <div class="head-filter">
-        <!-- <div class="head-filter-item">
-          <div class="head-filter-item-title">GCHA状态</div>
+        <div class="head-filter-item">
+          <div class="head-filter-item-title">状态</div>
           <div class="head-filter-item-value">
-            <input type="text" [(ngModel)]="args.name" />
+            <common-label-select
+              [autoclose]="true"
+              [(showDropDown)]="controller.status.show"
+            >
+              <ai-garbage-station-device-status-filter
+                [(status)]="controller.status.value"
+                (statusChange)="controller.status.onchange()"
+              ></ai-garbage-station-device-status-filter>
+            </common-label-select>
           </div>
-        </div> -->
+        </div>
         <div class="head-filter-item">
           <div class="head-filter-item-title">行政区</div>
           <div class="head-filter-item-value">
             <common-label-select
               [single]="true"
               [autoclose]="true"
-              [(showDropDown)]="selection.show"
-              [selectedNodes]="selection.selecteds"
+              [(showDropDown)]="controller.division.show"
+              [selectedNodes]="controller.division.selecteds"
               [height]="'325px'"
             >
               <hw-ai-garbage-station-region-tree
                 #tree
                 [regionNode]="true"
-                (selectTreeNode)="selection.onselect($event)"
+                (selectTreeNode)="controller.division.onselect($event)"
               >
               </hw-ai-garbage-station-region-tree>
               <!-- <howell-division-tree

@@ -1,0 +1,83 @@
+<div class="ai-garbage-station-device-status-filter">
+  <div class="ai-garbage-station-device-status-filter-item">
+    <div class="ai-garbage-station-device-status-filter-item-title">
+      智能设备
+    </div>
+    <div class="ai-garbage-station-device-status-filter-item-content">
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="
+            device.length == 1 && device.includes(OnlineStatus.Online)
+          "
+          [checked]="device.includes(OnlineStatus.Online)"
+          (change)="ondevicechange(OnlineStatus.Online)"
+          >在线</mat-checkbox
+        >
+      </div>
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="
+            device.length == 1 && device.includes(OnlineStatus.Offline)
+          "
+          [checked]="device.includes(OnlineStatus.Offline)"
+          (change)="ondevicechange(OnlineStatus.Offline)"
+          >离线</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-status-filter-item">
+    <div class="ai-garbage-station-device-status-filter-item-title">
+      分析服务
+    </div>
+    <div class="ai-garbage-station-device-status-filter-item-content">
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="
+            analysis.length == 1 && analysis.includes(OnlineStatus.Online)
+          "
+          [checked]="analysis.includes(OnlineStatus.Online)"
+          (change)="onanalysischange(OnlineStatus.Online)"
+          >在线</mat-checkbox
+        >
+      </div>
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="
+            analysis.length == 1 && analysis.includes(OnlineStatus.Offline)
+          "
+          [checked]="analysis.includes(OnlineStatus.Offline)"
+          (change)="onanalysischange(OnlineStatus.Offline)"
+          >离线</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+  <div class="ai-garbage-station-device-status-filter-item">
+    <div class="ai-garbage-station-device-status-filter-item-title">GCHA</div>
+    <div class="ai-garbage-station-device-status-filter-item-content">
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="gcha.length == 1 && gcha.includes(OnlineStatus.Online)"
+          [checked]="gcha.includes(OnlineStatus.Online)"
+          (change)="ongchachange(OnlineStatus.Online)"
+          >在线</mat-checkbox
+        >
+      </div>
+      <div>
+        <mat-checkbox
+          [disableRipple]="true"
+          [disabled]="gcha.length == 1 && gcha.includes(OnlineStatus.Offline)"
+          [checked]="gcha.includes(OnlineStatus.Offline)"
+          (change)="ongchachange(OnlineStatus.Offline)"
+          >离线</mat-checkbox
+        >
+      </div>
+    </div>
+  </div>
+</div>

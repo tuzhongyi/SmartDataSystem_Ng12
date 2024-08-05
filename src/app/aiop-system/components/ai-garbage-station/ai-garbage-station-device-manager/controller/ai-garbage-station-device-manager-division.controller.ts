@@ -1,10 +1,11 @@
-import { EventEmitter } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
-export class AIGarbageStationDeviceSelection {
+@Injectable()
+export class AIGarbageStationDeviceManagerDivisionController {
   show = false;
   selecteds: CommonFlatNode<DivisionTreeSource>[] = [];
   select: EventEmitter<Division | AIGarbageRegion> = new EventEmitter();

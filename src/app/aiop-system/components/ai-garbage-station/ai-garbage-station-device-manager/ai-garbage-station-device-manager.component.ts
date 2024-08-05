@@ -14,7 +14,8 @@ import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { AIGarbageStationDeviceManagerBusiness } from './ai-garbage-station-device-manager.business';
 import { AIGarbageStationDeviceWindow } from './ai-garbage-station-device-manager.model';
-import { AIGarbageStationDeviceSelection } from './ai-garbage-station-device-manager.selection';
+import { AIGarbageStationDeviceManagerProviders } from './ai-garbage-station-device-manager.provider';
+import { AIGarbageStationDeviceManagerController } from './controller/ai-garbage-station-device-manager.controller';
 
 @Component({
   selector: 'app-ai-garbage-station-device-manager',
@@ -23,20 +24,22 @@ import { AIGarbageStationDeviceSelection } from './ai-garbage-station-device-man
     '../../../../../assets/less/confirm.less',
     './ai-garbage-station-device-manager.component.less',
   ],
-  providers: [AIGarbageStationDeviceManagerBusiness],
+  providers: [...AIGarbageStationDeviceManagerProviders],
 })
 export class AIGarbageStationDeviceManagerComponent implements OnInit {
-  constructor(private business: AIGarbageStationDeviceManagerBusiness) {}
+  constructor(
+    private business: AIGarbageStationDeviceManagerBusiness,
+    public controller: AIGarbageStationDeviceManagerController
+  ) {}
 
   title: string = '厢房设备';
   args: AIGarbageStationDeviceTableArgs = new AIGarbageStationDeviceTableArgs();
   load: EventEmitter<AIGarbageStationDeviceTableArgs> = new EventEmitter();
   selecteds: AIGarbageDevice[] = [];
-  selection = new AIGarbageStationDeviceSelection();
   window = new AIGarbageStationDeviceWindow();
 
   ngOnInit(): void {
-    this.selection.select.subscribe((x) => {
+    this.controller.division.select.subscribe((x) => {
       this.args.divisionId = undefined;
       this.args.regionId = undefined;
       if (x instanceof Division) {
@@ -45,6 +48,9 @@ export class AIGarbageStationDeviceManagerComponent implements OnInit {
         this.args.regionId = x.Id;
       } else {
       }
+    });
+    this.controller.status.select.subscribe((x) => {
+      this.args.state = x;
     });
   }
 

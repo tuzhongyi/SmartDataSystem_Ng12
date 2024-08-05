@@ -11,6 +11,7 @@ import { AuditStatisticDataSelection } from '../audit-statistic-data/audit-stati
   styleUrls: ['./audit-statistic-data-device-manager.component.less'],
 })
 export class AuditStatisticDataDeviceManagerComponent implements OnInit {
+  @Input() divisionId?: string;
   @Input() status?: OnlineStatus;
   @Output() image = new EventEmitter<DeviceViewModel>();
 
@@ -23,6 +24,7 @@ export class AuditStatisticDataDeviceManagerComponent implements OnInit {
   Language = Language;
   ngOnInit(): void {
     this.args.status = this.status;
+    this.args.divisionId = this.divisionId;
     this.selection.select.subscribe((x) => {
       this.args.divisionId = x?.Id;
     });

@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetAIGarbageStationDevicesParams } from 'src/app/network/request/ai-garbage/ai-garbage.params';
 import { AIGarbageStationDeviceTableConverter } from './ai-garbage-station-device-table.converter';
-import { AIGarbageStationDeviceTableArgs } from './ai-garbage-station-device-table.model';
+import {
+  AIGarbageStationDeviceTableArgs,
+  AIGarbageStationDeviceTableItem,
+} from './ai-garbage-station-device-table.model';
 import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-table.service';
 
 @Injectable()
@@ -18,9 +20,16 @@ export class AIGarbageStationDeviceTableBusiness {
     args: AIGarbageStationDeviceTableArgs
   ) {
     let data = await this.getData(index, size, args);
-    let paged = new PagedList<Promise<AIGarbageDevice>>();
+    let paged = new PagedList<AIGarbageStationDeviceTableItem>();
     paged.Page = data.Page;
-    paged.Data = data.Data.map((x) => this.converter.device(x));
+
+    let models = [];
+    for (let i = 0; i < data.Data.length; i++) {
+      const item = await this.converter.device(data.Data[i]);
+      models.push(item);
+    }
+    paged.Data = models;
+
     return paged;
   }
 
@@ -42,6 +51,16 @@ export class AIGarbageStationDeviceTableBusiness {
     if (args.regionId) {
       params.RegionIds = [args.regionId];
     }
+    if (args.state.device !== undefined) {
+      params.OnlineState = args.state.device;
+    }
+    if (args.state.analysis !== undefined) {
+      params.AnalysisServerState = args.state.analysis;
+    }
+    if (args.state.gcha !== undefined) {
+      params.GCHAOnlineState = args.state.gcha;
+    }
+
     return this.service.ai.device.list(params);
   }
 }

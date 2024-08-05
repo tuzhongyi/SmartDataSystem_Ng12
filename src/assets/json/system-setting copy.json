@@ -112,6 +112,18 @@
           "path": "/aiop/underwater/system-setting/ai-events/ai-camera-events"
         }
       ]
+    },
+    {
+      "title": "GCHA",
+      "id": "gcha",
+      "path": "/aiop/underwater/system-setting/gcha",
+      "children": [
+        {
+          "title": "接入设备",
+          "id": "device-registrations",
+          "path": "/aiop/underwater/system-setting/gcha/device-registrations"
+        }
+      ]
     }
   ]
 }

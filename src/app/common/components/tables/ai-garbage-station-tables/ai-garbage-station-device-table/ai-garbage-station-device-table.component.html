@@ -54,6 +54,11 @@
                 title="摄像机数量"
                 class="td-icon"
                 (click)="oncamera($event, item)"
+                [class.green-text]="item.state.camera === CameraState.online"
+                [class.powder-red-text]="
+                  item.state.camera === CameraState.offline
+                "
+                [class.orange-text]="item.state.camera === CameraState.warn"
               >
                 【{{ item.Cameras ? item.Cameras.length : 0 }}】
               </div>

@@ -49,6 +49,8 @@ export class AuditStatisticDataComponent implements OnInit, OnDestroy {
 
     this.selection.select.subscribe((x) => {
       let divisionId = x?.Id;
+      this.window.station.divisionId = x?.Id;
+      this.window.device.divisionId = x?.Id;
       this.loadData(divisionId).then((x) => {
         this.load.emit(this.data);
       });

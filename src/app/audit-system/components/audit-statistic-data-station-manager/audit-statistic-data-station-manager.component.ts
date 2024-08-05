@@ -12,6 +12,7 @@ import { AuditStatisticDataSelection } from '../audit-statistic-data/audit-stati
   styleUrls: ['./audit-statistic-data-station-manager.component.less'],
 })
 export class AuditStatisticDataStationManagerComponent implements OnInit {
+  @Input() divisionId?: string;
   @Input() state?: StationState;
   @Input() drop?: boolean;
   @Output() image: EventEmitter<PagedArgs<GarbageStation>> = new EventEmitter();
@@ -24,6 +25,7 @@ export class AuditStatisticDataStationManagerComponent implements OnInit {
   StationState = StationState;
   Language = Language;
   ngOnInit(): void {
+    this.args.divisionId = this.divisionId;
     this.args.state = this.state;
     this.args.drop = this.drop;
     this.selection.select.subscribe((x) => {

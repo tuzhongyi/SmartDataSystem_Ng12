@@ -12,6 +12,7 @@ export class AuditStatisticDataDeviceWindow extends WindowViewModel {
   }
   style = { width: '80%', height: '818px' };
   status?: OnlineStatus;
+  divisionId?: string;
 
   onimage(args: DeviceViewModel) {
     this.image.manualcapture = true;

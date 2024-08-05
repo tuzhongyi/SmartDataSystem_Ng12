@@ -11,6 +11,7 @@ import { AiGarbageStationDeviceScheduleSprayComponent } from './ai-garbage-stati
 import { AIGarbageStationDeviceScheduleComponent } from './ai-garbage-station-device-schedule/ai-garbage-station-device-schedule.component';
 import { AIGarbageStationDeviceSessionListComponent } from './ai-garbage-station-device-session-list/ai-garbage-station-device-session-list.component';
 import { AIGarbageStationDeviceSessionManagerComponent } from './ai-garbage-station-device-session-manager/ai-garbage-station-device-session-manager.component';
+import { AiGarbageStationDeviceStatusFilterComponent } from './ai-garbage-station-device-status-filter/ai-garbage-station-device-status-filter.component';
 import { AiGarbageStationDeviceStatusComponent } from './ai-garbage-station-device-status/ai-garbage-station-device-status.component';
 import { AIGarbageStationDropWindowListComponent } from './ai-garbage-station-drop-window-list/ai-garbage-station-drop-window-list.component';
 import { AIGarbageStationRegionBuildingComponent } from './ai-garbage-station-region-building/ai-garbage-station-region-building.component';
@@ -31,6 +32,7 @@ export const AIGarbageStationComponents = [
   AIGarbageStationDeviceDetailsComponent,
   AIGarbageStationDeviceDropWindowComponent,
   AIGarbageStationDeviceCameraComponent,
+  AiGarbageStationDeviceStatusFilterComponent,
 
   AIGarbageStationDeviceScheduleComponent,
   AiGarbageStationDeviceScheduleDoorComponent,

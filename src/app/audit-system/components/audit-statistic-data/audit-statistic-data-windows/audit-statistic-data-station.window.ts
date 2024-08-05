@@ -14,6 +14,7 @@ export class AuditStatisticDataStationWindow extends WindowViewModel {
   style = { width: '80%', height: '818px' };
   state?: StationState;
   drop?: boolean;
+  divisionId?: string;
 
   onimage(args: PagedArgs<GarbageStation>) {
     this.image.manualcapture = true;

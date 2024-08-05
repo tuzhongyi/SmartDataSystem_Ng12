@@ -11,8 +11,10 @@ import { PagedTableAbstractComponent } from '../../table-abstract.component';
 import { AIGarbageStationDeviceTableBusiness } from './ai-garbage-station-device-table.business';
 import { AIGarbageStationDeviceTableConverter } from './ai-garbage-station-device-table.converter';
 import {
+  AIGarbageDeviceCamerasState,
   AIGarbageDeviceState,
   AIGarbageStationDeviceTableArgs,
+  AIGarbageStationDeviceTableItem,
 } from './ai-garbage-station-device-table.model';
 import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-table.service';
 
@@ -30,7 +32,7 @@ import { AIGarbageStationDeviceTableService } from './ai-garbage-station-device-
   ],
 })
 export class AIGarbageStationDeviceTableComponent
-  extends PagedTableAbstractComponent<AIGarbageDevice>
+  extends PagedTableAbstractComponent<AIGarbageStationDeviceTableItem>
   implements OnInit
 {
   @Input() args: AIGarbageStationDeviceTableArgs =
@@ -39,7 +41,7 @@ export class AIGarbageStationDeviceTableComponent
   @Input() selecteds: AIGarbageDevice[] = [];
   @Output() selectedsChange: EventEmitter<AIGarbageDevice[]> =
     new EventEmitter();
-  @Output() loaded: EventEmitter<PagedList<Promise<AIGarbageDevice>>> =
+  @Output() loaded: EventEmitter<PagedList<AIGarbageDevice>> =
     new EventEmitter();
   @Output() details: EventEmitter<AIGarbageDevice> = new EventEmitter();
   @Output() command: EventEmitter<AIGarbageDevice> = new EventEmitter();
@@ -53,11 +55,14 @@ export class AIGarbageStationDeviceTableComponent
     super();
   }
 
+  widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
+
+  Language = Language;
+  DeviceState = AIGarbageDeviceState;
+  CameraState = AIGarbageDeviceCamerasState;
   Command = AIGarbageDeviceCommandNo;
   Color = ColorTool;
-  Language = Language;
-  widths = ['20%', '15%', '15%', undefined, undefined, undefined, '16%', '12%'];
-  DeviceState = AIGarbageDeviceState;
+
   ngOnInit(): void {
     this.pageSize = 10;
     if (this.load) {
@@ -80,10 +85,8 @@ export class AIGarbageStationDeviceTableComponent
     this.selectedsChange.emit(this.selecteds);
     this.business.load(index, size, this.args).then((x) => {
       this.page = x.Page;
-      Promise.all(x.Data).then((datas) => {
-        this.datas = datas;
-        this.loaded.emit(x);
-      });
+      this.datas = x.Data;
+      this.loaded.emit(x);
     });
   }
   sortData(sort: Sort) {
@@ -98,31 +101,31 @@ export class AIGarbageStationDeviceTableComponent
     this.loadData(this.page.PageIndex);
   }
 
-  ondetails(e: Event, item: AIGarbageDevice) {
+  ondetails(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.details.emit(item);
   }
-  oncommand(e: Event, item: AIGarbageDevice) {
+  oncommand(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.command.emit(item);
   }
-  onremove(e: Event, item: AIGarbageDevice) {
+  onremove(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.delete.emit(item);
   }
-  oncamera(e: Event, item: AIGarbageDevice) {
+  oncamera(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.camera.emit(item);
   }
-  ondropwindow(e: Event, item: AIGarbageDevice) {
+  ondropwindow(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.dropwindow.emit(item);
   }
-  onschedule(e: Event, item: AIGarbageDevice) {
+  onschedule(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.schedule.emit(item);
   }
-  onsession(e: Event, item: AIGarbageDevice) {
+  onsession(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     if (
       !item.Status ||
@@ -133,7 +136,7 @@ export class AIGarbageStationDeviceTableComponent
     }
     this.session.emit(item);
   }
-  onselected(item: AIGarbageDevice) {
+  onselected(item: AIGarbageStationDeviceTableItem) {
     let index = this.selecteds.indexOf(item);
     if (index < 0) {
       this.selecteds.push(item);
@@ -142,7 +145,7 @@ export class AIGarbageStationDeviceTableComponent
     }
     this.selectedsChange.emit(this.selecteds);
   }
-  onstatus(e: Event, item: AIGarbageDevice) {
+  onstatus(e: Event, item: AIGarbageStationDeviceTableItem) {
     e.stopImmediatePropagation();
     this.status.emit(item);
   }

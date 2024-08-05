@@ -15,6 +15,7 @@
             >
               <howell-division-tree
                 #tree
+                [defaultIds]="args.divisionId ? [args.divisionId] : []"
                 (selectTreeNode)="selection.onselect($event)"
               ></howell-division-tree>
             </common-label-select>

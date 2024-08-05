@@ -49,6 +49,7 @@
     *ngIf="window.station.show"
   >
     <audit-statistic-data-station-manager
+      [divisionId]="window.station.divisionId"
       [state]="window.station.state"
       [drop]="window.station.drop"
       (image)="window.station.onimage($event)"
@@ -60,6 +61,7 @@
     *ngIf="window.device.show"
   >
     <audit-statistic-data-device-manager
+      [divisionId]="window.device.divisionId"
       [status]="window.device.status"
       (image)="window.device.onimage($event)"
     ></audit-statistic-data-device-manager>
