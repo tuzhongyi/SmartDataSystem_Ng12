@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';

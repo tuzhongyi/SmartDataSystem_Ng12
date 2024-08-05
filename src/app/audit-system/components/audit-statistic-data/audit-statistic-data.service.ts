@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';

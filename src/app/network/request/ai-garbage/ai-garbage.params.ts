@@ -35,6 +35,10 @@ export class GetAIGarbageStationDevicesParams extends PagedParams {
   Spray?: CloseOpenState;
   /**	Double	"气体检测传感器数值大于的数值"	O	*/
   GasSensor?: number;
+  /** Int32 GCHA在线状态 0:正常、1:异常 O */
+  GCHAOnlineState?: OnlineStatus;
+  /**	Int32	分析服务状态：0:正常、1:异常	O */
+  AnalysisServerState?: OnlineStatus;
   /**	String	升序排列字段	O	*/
   Asc?: string;
   /**	String	降序排列字段	O	*/

@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';

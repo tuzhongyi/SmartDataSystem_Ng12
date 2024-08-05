@@ -11,7 +11,7 @@ export interface IChartPieModel<T extends IChartPieData = any> {
 }
 // export let ChartPieData: IChartPieData[] = [];
 let color = ['#3a93ff'];
-export let ChartPieOption: echarts.EChartsOption = {
+export let ChartPieEventStatisticOption: echarts.EChartsOption = {
   color: ['#3a93ff'],
   backgroundColor: 'transparent',
   series: [

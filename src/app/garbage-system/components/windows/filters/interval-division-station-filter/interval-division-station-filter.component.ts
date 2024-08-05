@@ -13,7 +13,7 @@ import { EventRecordFilter } from 'src/app/common/components/tables/event-record
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';

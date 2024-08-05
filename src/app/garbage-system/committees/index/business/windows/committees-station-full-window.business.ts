@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';

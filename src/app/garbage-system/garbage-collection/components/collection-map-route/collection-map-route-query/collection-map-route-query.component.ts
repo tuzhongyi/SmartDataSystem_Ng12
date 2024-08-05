@@ -3,7 +3,8 @@ import { TimeModel } from 'src/app/common/components/time-control/time-control.m
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { IdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteDeviceListBusiness as CollectionMapRouteQueryBusiness } from './collection-map-route-query.business';
 import {

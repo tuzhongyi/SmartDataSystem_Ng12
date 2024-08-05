@@ -10,9 +10,9 @@ export class MonitorDeviceWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '88%',
+    height: '85%',
     width: '90%',
-    transform: 'translate(-50%, -45%)',
+    transform: 'translate(-50%, -48%)',
   };
   status?: OnlineStatus;
   onimage(model: DeviceViewModel) {

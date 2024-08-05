@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { VideoOperationType } from 'src/app/enum/video-operation-type.enum';
 import { PageArgs } from '../table.interface';
 

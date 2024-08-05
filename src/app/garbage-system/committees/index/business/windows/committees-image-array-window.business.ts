@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { timer } from 'rxjs';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';

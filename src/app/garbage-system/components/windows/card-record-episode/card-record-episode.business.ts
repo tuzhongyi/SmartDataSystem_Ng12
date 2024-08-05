@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { GetAIGarbageStationRfidCardRecordsParams } from 'src/app/network/request/ai-garbage/ai-garbage.params';
 import { GetVodUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';

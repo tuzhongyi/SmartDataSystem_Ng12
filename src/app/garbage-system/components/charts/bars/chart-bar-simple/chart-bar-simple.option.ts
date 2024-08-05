@@ -8,7 +8,7 @@ export interface IChartBarModel<T extends IChartBarData = any> {
   data: T;
 }
 let color = ['#3184e3'];
-export let ChartPieOption: echarts.EChartsOption = {
+export let ChartBarSimpleOption: echarts.EChartsOption = {
   color: color,
   backgroundColor: 'transparent',
   tooltip: {

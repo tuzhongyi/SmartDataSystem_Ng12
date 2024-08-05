@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IChartLineData } from 'src/app/garbage-system/components/charts/lines/chart-line-simple/chart-line-simple.option';

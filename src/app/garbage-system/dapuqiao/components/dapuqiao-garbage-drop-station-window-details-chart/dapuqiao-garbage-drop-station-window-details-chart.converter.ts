@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IChartBarData } from 'src/app/garbage-system/components/charts/bars/chart-bar-simple/chart-bar-simple.option';

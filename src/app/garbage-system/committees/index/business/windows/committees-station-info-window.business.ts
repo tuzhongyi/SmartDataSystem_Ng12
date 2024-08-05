@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';

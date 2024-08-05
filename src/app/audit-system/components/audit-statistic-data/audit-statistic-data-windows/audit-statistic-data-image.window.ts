@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { timer } from 'rxjs';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { AuditStatisticDataService } from '../audit-statistic-data.service';

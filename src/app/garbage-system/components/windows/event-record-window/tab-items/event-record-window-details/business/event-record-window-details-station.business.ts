@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import {
@@ -29,7 +29,7 @@ export class EventRecordWindowDetailsStationBusiness {
     let data = await paged.Data.map((x) =>
       this.converter.statistic(stationId, x)
     );
-    if (DateTimeTool.isToday(duration.EndTime)) {
+    if (DateTimeTool.is.today(duration.EndTime)) {
       let today = await this.today(stationId);
       return data.concat(today);
     }

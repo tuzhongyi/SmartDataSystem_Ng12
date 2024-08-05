@@ -17,7 +17,7 @@ export interface IChartLineEventLevelModel<
 }
 // export let ChartPieData: IChartPieData[] = [];
 let color = ['#3184e3', '#ffba00', '#ef6464'];
-export let ChartPieOption: echarts.EChartsOption = {
+export let ChartLineEventLevelOption: echarts.EChartsOption = {
   color: color,
   backgroundColor: 'transparent',
   tooltip: {

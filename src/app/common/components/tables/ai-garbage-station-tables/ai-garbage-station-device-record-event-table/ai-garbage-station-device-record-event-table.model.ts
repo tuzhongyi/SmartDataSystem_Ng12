@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { AIGarbageDeviceEventType } from 'src/app/network/model/ai-garbage/device-event-record.model';
 import { PageArgs } from '../../table.interface';
 

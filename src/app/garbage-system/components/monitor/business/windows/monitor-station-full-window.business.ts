@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { GarbageFullStationTableModel } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -21,9 +21,9 @@ export class MonitorGarbageStationFullWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '90%',
+    height: '85%',
     width: '90%',
-    transform: 'translate(-50%, -44.5%)',
+    transform: 'translate(-50%, -48%)',
   };
 
   eventCount = 0;

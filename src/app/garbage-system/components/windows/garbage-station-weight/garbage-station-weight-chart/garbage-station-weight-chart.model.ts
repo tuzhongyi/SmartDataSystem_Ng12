@@ -8,7 +8,7 @@ import {
 } from 'echarts';
 import { XAXisOption } from 'echarts/types/dist/shared';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { ChartType } from 'src/app/enum/chart-type.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';

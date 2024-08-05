@@ -1,10 +1,11 @@
-export const EventRecordDetailsChartBarD3Option: echarts.EChartsOption = {
+export const ChartMapHeatOption: any = {
   tooltip: {
     position: 'top',
   },
   grid: {
-    height: '70%',
-    top: '10%',
+    height: '91.5%',
+    top: 50,
+    left: 240,
   },
   xAxis: {
     position: 'top',
@@ -13,10 +14,41 @@ export const EventRecordDetailsChartBarD3Option: echarts.EChartsOption = {
     splitArea: {
       show: true,
     },
+    axisLabel: {
+      interval: 0,
+      rich: {
+        weekend: {
+          color: '#ff0000',
+          fontSize: 14,
+          borderWidth: 0,
+        },
+        weekday: {
+          color: '#ccc',
+          fontSize: 14,
+          borderWidth: 0,
+        },
+      },
+    },
+    axisLine: {
+      lineStyle: {
+        width: 2,
+      },
+    },
   },
   yAxis: {
     type: 'category',
+    inverse: true,
     data: [],
+    axisLabel: {
+      color: '#ccc',
+      fontSize: 14,
+      borderWidth: 0,
+    },
+    axisLine: {
+      lineStyle: {
+        width: 3,
+      },
+    },
     splitArea: {
       show: true,
     },
@@ -25,10 +57,8 @@ export const EventRecordDetailsChartBarD3Option: echarts.EChartsOption = {
     min: 0,
     max: 110,
     calculable: true,
-    orient: 'horizontal',
     left: '0',
-    top: '99%',
-    bottom: '10%',
+    bottom: '0',
     inRange: {
       color: [
         //'#0c1127',

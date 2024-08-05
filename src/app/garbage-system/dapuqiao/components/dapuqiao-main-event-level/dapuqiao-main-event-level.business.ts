@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { EventNumber } from 'src/app/network/model/garbage-station/event-number.model';
 import {

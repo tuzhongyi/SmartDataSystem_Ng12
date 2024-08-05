@@ -11,7 +11,7 @@ import {
 import * as echarts from 'echarts';
 import { AEChartComponent } from '../../echart.abstract';
 import {
-  ChartPieOption,
+  ChartPieEventStatisticOption,
   IChartPieData,
   IChartPieModel,
 } from './chart-pie-event-statistic.option';
@@ -35,7 +35,7 @@ export class ChartPieEventStatisticComponent
   @Output() inited: EventEmitter<echarts.EChartsOption> = new EventEmitter();
   constructor() {
     super();
-    this.option = Object.assign({}, ChartPieOption);
+    this.option = Object.assign({}, ChartPieEventStatisticOption);
   }
 
   @ViewChild('echart')

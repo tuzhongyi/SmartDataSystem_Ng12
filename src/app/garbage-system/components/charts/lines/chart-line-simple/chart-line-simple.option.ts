@@ -10,7 +10,7 @@ export interface IChartLineModel<T extends IChartLineData = any> {
   data: T;
 }
 let color = ['#3184e3'];
-export let ChartPieOption: echarts.EChartsOption = {
+export let ChartLineSimpleOption: echarts.EChartsOption = {
   color: color,
   backgroundColor: 'transparent',
   tooltip: {

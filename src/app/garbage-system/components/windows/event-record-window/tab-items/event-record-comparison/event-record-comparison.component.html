@@ -69,14 +69,14 @@
       <div class="selection">
         <app-select-control
           class="list-type-select"
-          [data]="units"
-          (selectedChange)="ontimeunit($event)"
+          [data]="chartTypes"
+          (selectedChange)="oncharttype($event)"
         >
         </app-select-control>
         <app-select-control
           class="list-type-select"
-          [data]="chartTypes"
-          (selectedChange)="oncharttype($event)"
+          [data]="units"
+          (selectedChange)="ontimeunit($event)"
         >
         </app-select-control>
       </div>

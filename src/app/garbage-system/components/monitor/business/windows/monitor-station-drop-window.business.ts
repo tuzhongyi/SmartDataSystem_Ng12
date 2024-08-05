@@ -8,7 +8,7 @@ import { PagedArgs } from 'src/app/network/model/model.interface';
 
 import { LineZoomChartArgs } from 'src/app/common/components/charts/line-zoom-chart/line-zoom-chart.model';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
@@ -34,9 +34,9 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
   status?: GarbageTaskStatus;
 
   style = {
-    height: '83.5%',
+    height: '85%',
     width: '90%',
-    transform: 'translate(-50%, -44.5%)',
+    transform: 'translate(-50%, -48%)',
   };
 
   async onimage(

@@ -10,7 +10,7 @@ export interface IChartPieModel<T extends IChartPieData = any> {
 }
 // export let ChartPieData: IChartPieData[] = [];
 let color = ['#3184e3', '#ffba00', '#ef6464'];
-export let ChartPieOption: echarts.EChartsOption = {
+export let ChartPieEventLevelOption: echarts.EChartsOption = {
   color: color,
   tooltip: {
     trigger: 'item',

@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ResultState } from 'src/app/enum/ai-garbage/result-state.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { PageArgs } from '../../table.interface';

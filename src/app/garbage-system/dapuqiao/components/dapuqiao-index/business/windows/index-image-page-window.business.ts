@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Medium } from 'src/app/common/tools/medium';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageStationTableModel } from 'src/app/common/components/tables/garbage-station-table/garbage-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -15,9 +15,9 @@ import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
 @Injectable()
 export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
   style = {
-    height: '88%',
-    width: '93%',
-    transform: 'translate(-50%, -44%)',
+    height: '85%',
+    width: '90%',
+    transform: 'translate(-50%, -48%)',
   };
 
   index = GarbageStationWindowIndex.station;

@@ -1,13 +1,11 @@
-import { ChartBarSimpleComponent } from './bars/chart-bar-simple/chart-bar-simple.component';
-import { ChartLineEventLevelComponent } from './lines/chart-line-event-level/chart-line-event-level.component';
-import { ChartLineSimpleComponent } from './lines/chart-line-simple/chart-line-simple.component';
-import { ChartPieEventLevelComponent } from './pies/chart-pie-event-level/chart-pie-event-level.component';
-import { ChartPieEventStatisticComponent } from './pies/chart-pie-event-statistic/chart-pie-event-statistic.component';
+import { ChartBarComponents } from './bars/chart-bar-components.module';
+import { ChartLineComponents } from './lines/chart-line-components.module';
+import { ChartMapComponents } from './maps/chart-map-components.module';
+import { ChartPieComponents } from './pies/chart-pie-components.module';
 
 export const ChartComponents = [
-  ChartBarSimpleComponent,
-  ChartPieEventLevelComponent,
-  ChartPieEventStatisticComponent,
-  ChartLineSimpleComponent,
-  ChartLineEventLevelComponent,
+  ...ChartBarComponents,
+  ...ChartLineComponents,
+  ...ChartPieComponents,
+  ...ChartMapComponents,
 ];

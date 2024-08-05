@@ -12,7 +12,7 @@ import { ConfigRequestService } from 'src/app/network/request/config/config-requ
 import { DateTimePickerView } from '../../directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IComponent } from '../../interfaces/component.interfact';
-import { DateTimeTool } from '../../tools/datetime.tool';
+import { DateTimeTool } from '../../tools/date-time-tool/datetime.tool';
 import {
   TimeDurationModel,
   TimeModel,

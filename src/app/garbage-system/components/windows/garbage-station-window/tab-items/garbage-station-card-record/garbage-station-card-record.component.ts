@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CardRecordTableArgs } from 'src/app/common/components/tables/card-record-table/card-record-table.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 

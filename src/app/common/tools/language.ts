@@ -56,7 +56,7 @@ import {
   SupervisedState,
 } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
-import { DateTimeTool } from './datetime.tool';
+import { DateTimeTool } from './date-time-tool/datetime.tool';
 import language from './language.json';
 
 export class Language {

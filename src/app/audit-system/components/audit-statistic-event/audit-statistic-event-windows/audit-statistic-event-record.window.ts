@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';

@@ -1,15 +1,15 @@
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
+import { DateTimeEqualsTool } from './date-time-equals.tool';
+import { DateTimeDayTool } from './datetime-day.tool';
+import { DateTimeMonthTool } from './datetime-month.tool';
+import { DateTimeWeekTool } from './datetime-week.tool';
 
 export class DateTimeTool {
-  static isToday(date: Date) {
-    let today = new Date();
-    return (
-      date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate()
-    );
-  }
+  static day = new DateTimeDayTool();
+  static week = new DateTimeWeekTool();
+  static month = new DateTimeMonthTool();
+  static is = new DateTimeEqualsTool();
 
   static TimeUnit(unit: TimeUnit, date: Date, firstDay = 1): Duration {
     switch (unit) {

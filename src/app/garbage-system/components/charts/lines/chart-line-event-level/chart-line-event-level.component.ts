@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { AEChartComponent } from '../../echart.abstract';
 import {
-  ChartPieOption,
+  ChartLineEventLevelOption,
   IChartLineEventLevelData,
   IChartLineEventLevelModel,
 } from './chart-line-event-level.option';
@@ -31,7 +31,7 @@ export class ChartLineEventLevelComponent
   @Output() inited: EventEmitter<echarts.EChartsOption> = new EventEmitter();
   constructor() {
     super();
-    this.option = Object.assign({}, ChartPieOption);
+    this.option = Object.assign({}, ChartLineEventLevelOption);
   }
 
   @ViewChild('echart')

@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { AEChartComponent } from '../../echart.abstract';
 import {
-  ChartPieOption,
+  ChartBarSimpleOption,
   IChartBarData,
   IChartBarModel,
 } from './chart-bar-simple.option';
@@ -31,7 +31,7 @@ export class ChartBarSimpleComponent
   @Output() inited: EventEmitter<echarts.EChartsOption> = new EventEmitter();
   constructor() {
     super();
-    this.option = Object.assign({}, ChartPieOption);
+    this.option = Object.assign({}, ChartBarSimpleOption);
   }
 
   @ViewChild('echart')

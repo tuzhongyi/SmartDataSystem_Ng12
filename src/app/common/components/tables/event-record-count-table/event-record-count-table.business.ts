@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';

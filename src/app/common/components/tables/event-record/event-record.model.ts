@@ -1,4 +1,4 @@
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';

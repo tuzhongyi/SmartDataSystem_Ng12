@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';

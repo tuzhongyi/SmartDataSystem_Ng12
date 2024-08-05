@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -21,9 +21,9 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '90%',
+    height: '85%',
     width: '90%',
-    transform: 'translate(-50%, -45%)',
+    transform: 'translate(-50%, -48%)',
   };
 
   type: EventType = EventType.IllegalDrop;

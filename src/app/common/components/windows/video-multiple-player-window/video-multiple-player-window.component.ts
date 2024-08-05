@@ -9,7 +9,7 @@ import {
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { DateTimeTool } from 'src/app/common/tools/datetime.tool';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 
 import { IdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
