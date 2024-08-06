@@ -5,3 +5,8 @@ export class AiGarbageStationDeviceStatusFilterModel {
   gcha?: OnlineStatus;
   analysis?: OnlineStatus;
 }
+export enum AIGarbageStationDeviceStatusType {
+  division = '1',
+  analysis = '2',
+  gcha = '3',
+}

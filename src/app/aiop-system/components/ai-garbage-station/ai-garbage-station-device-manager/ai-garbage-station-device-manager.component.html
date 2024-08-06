@@ -36,8 +36,10 @@
             <common-label-select
               [autoclose]="true"
               [(showDropDown)]="controller.status.show"
+              [selectedNodes]="controller.status.selecteds"
             >
               <ai-garbage-station-device-status-filter
+                #tree
                 [(status)]="controller.status.value"
                 (statusChange)="controller.status.onchange()"
               ></ai-garbage-station-device-status-filter>

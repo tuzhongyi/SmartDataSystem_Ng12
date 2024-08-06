@@ -1,13 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ICommonTree } from 'src/app/common/components/common-tree/common-tree.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { AiGarbageStationDeviceStatusFilterModel } from './ai-garbage-station-device-status-filter.model';
+import {
+  AIGarbageStationDeviceStatusType,
+  AiGarbageStationDeviceStatusFilterModel,
+} from './ai-garbage-station-device-status-filter.model';
 
 @Component({
   selector: 'ai-garbage-station-device-status-filter',
   templateUrl: './ai-garbage-station-device-status-filter.component.html',
   styleUrls: ['./ai-garbage-station-device-status-filter.component.less'],
 })
-export class AiGarbageStationDeviceStatusFilterComponent implements OnInit {
+export class AiGarbageStationDeviceStatusFilterComponent
+  implements OnInit, ICommonTree
+{
   @Input() status = new AiGarbageStationDeviceStatusFilterModel();
   @Output() statusChange =
     new EventEmitter<AiGarbageStationDeviceStatusFilterModel>();
@@ -66,5 +72,34 @@ export class AiGarbageStationDeviceStatusFilterComponent implements OnInit {
       return undefined;
     }
     return array[0];
+  }
+
+  toggleNodes(
+    ids: AIGarbageStationDeviceStatusType[],
+    clear?: boolean | undefined
+  ): void {
+    if (clear) {
+      this.device = [OnlineStatus.Online, OnlineStatus.Offline];
+      this.analysis = [OnlineStatus.Online, OnlineStatus.Offline];
+      this.gcha = [OnlineStatus.Online, OnlineStatus.Offline];
+    } else {
+      for (let i = 0; i < ids.length; i++) {
+        switch (ids[i]) {
+          case AIGarbageStationDeviceStatusType.division:
+            this.device = [OnlineStatus.Online, OnlineStatus.Offline];
+            break;
+          case AIGarbageStationDeviceStatusType.analysis:
+            this.analysis = [OnlineStatus.Online, OnlineStatus.Offline];
+            break;
+          case AIGarbageStationDeviceStatusType.gcha:
+            this.gcha = [OnlineStatus.Online, OnlineStatus.Offline];
+            break;
+        }
+      }
+    }
+    this.status.device = this.convert(this.device);
+    this.status.analysis = this.convert(this.analysis);
+    this.status.gcha = this.convert(this.gcha);
+    this.statusChange.emit(this.status);
   }
 }
