@@ -21,7 +21,7 @@ export class DaPuQiaoMainRecordLevelBusiness
   ) {}
 
   async load(args: DaPuQiaoMainRecordLevelArgs): Promise<RankModel[]> {
-    let divisions = await this.divisions(this.global.divisionId);
+    let divisions = await this.divisions(this.global.division.selected.Id);
     let data = await this.getData(divisions.map((x) => x.Id));
     let result = data.map((x) => {
       return this.convert(x, args.type);

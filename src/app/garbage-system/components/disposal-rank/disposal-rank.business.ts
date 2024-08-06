@@ -32,7 +32,7 @@ export class DisposalRankBusiness
   }
 
   async load(type: DisposalRankType): Promise<RankModel[]> {
-    let data = await this.getData(this.storeService.divisionId);
+    let data = await this.getData(this.storeService.division.selected.Id);
     let result = this.Converter.Convert(data, type);
     result = result.sort((a, b) => {
       return a.value - b.value || LocaleCompare.compare(a.name, b.name);

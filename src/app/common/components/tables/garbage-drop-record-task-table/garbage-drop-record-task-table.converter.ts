@@ -54,7 +54,7 @@ export class GarbageDropRecordTaskTableConverter {
           GarbageDropHandleCount = x.DayNumber;
         } else if (
           x.EventType ==
-          (this.global.defaultDivisionType === DivisionType.City
+          (this.global.division.default.DivisionType === DivisionType.City
             ? EventType.GarbageDropSuperTimeout
             : EventType.GarbageDropTimeout)
         ) {

@@ -25,8 +25,8 @@ export class CollectionPointPieBusiness {
     let params = new GetCollectionPointNumberParams();
     if (searchInfo.DivisionIds) {
       if (
-        (await this._globalStorageService.defaultDivisionId) !==
-        this._globalStorageService.divisionId
+        (await this._globalStorageService.division.promise.default).Id !==
+        this._globalStorageService.division.selected.Id
       ) {
         params.DivisionIds = searchInfo.DivisionIds;
       }

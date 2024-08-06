@@ -34,7 +34,9 @@ export class EventRecordCountComponent implements OnInit {
     public global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    this.opts.type = EnumTool.division.child(global.divisionType);
+    this.opts.type = EnumTool.division.child(
+      global.division.selected.DivisionType
+    );
   }
 
   config = {

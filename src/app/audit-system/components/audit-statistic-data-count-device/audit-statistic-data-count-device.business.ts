@@ -23,7 +23,7 @@ export class AuditStatisticDataCountDeviceBusiness
     data?: DivisionNumberStatistic
   ): Promise<AuditStatisticDataCountDeviceData> {
     if (!data) {
-      data = await this.getData(this.global.divisionId);
+      data = await this.getData(this.global.division.selected.Id);
     }
     let model = this.convert(data);
     return model;

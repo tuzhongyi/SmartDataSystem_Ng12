@@ -29,7 +29,7 @@ export class GarbageDropStationCountTableBusiness
     let data = await this.getData(args);
     let model = await this.converter.Convert(
       data,
-      this.store.defaultDivisionType
+      this.store.division.default.DivisionType
     );
     return model;
   }
@@ -39,7 +39,7 @@ export class GarbageDropStationCountTableBusiness
     let duration = DurationParams.TimeUnit(args.unit, args.date);
     let divisionId = args.parentId;
     if (!divisionId) {
-      divisionId = await this.store.defaultDivisionId;
+      divisionId = (await this.store.division.promise.default).Id;
     }
 
     if (args.type === DivisionType.None) {

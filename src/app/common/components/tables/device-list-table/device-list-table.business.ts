@@ -32,7 +32,7 @@ export class DeviceListTableBusiness
       index,
       size,
       args,
-      args.divisionId || this.storeService.divisionId
+      args.divisionId || this.storeService.division.selected.Id
     );
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {

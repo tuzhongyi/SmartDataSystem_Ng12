@@ -64,7 +64,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
   };
 
   searchInfo: ICollectionVehicleWindowSearchInfo = {
-    DivisionId: this._globalStorage.divisionId,
+    DivisionId: this._globalStorage.division.selected.Id,
     PageIndex: 1,
     PageSize: 9,
     State: CollectionDeviceStateCountType.All,

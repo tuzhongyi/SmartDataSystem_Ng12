@@ -136,10 +136,10 @@ export class GarbageCollectionIndexComponent
     this._titleService.setTitle('垃圾清运平台');
     this._globalStorage.system = SystemType.vehicle;
     this.subscription = interval(1 * 60 * 1000).subscribe(() => {
-      this._globalStorage.collectionStatusChange.emit();
+      this._globalStorage.division.change.emit();
     });
 
-    this.subscription2 = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription2 = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
 
@@ -197,11 +197,12 @@ export class GarbageCollectionIndexComponent
   async ngOnInit() {
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
-      let userDivisionId = user.Resources[0].Id;
-      let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType = EnumTool.resource.to.division(resourceType);
-      this._globalStorage.divisionId = userDivisionId;
-      this._globalStorage.divisionType = userDivisionType;
+      let resource = user.Resources[0];
+      this._globalStorage.division.setSelected({
+        Id: resource.Id,
+        Name: resource.Name,
+        DivisionType: EnumTool.resource.to.division(resource.ResourceType),
+      });
     }
 
     this._init();
@@ -229,7 +230,7 @@ export class GarbageCollectionIndexComponent
   clickDeviceState(data: ICollectionDeviceStateData) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
     this.createToast({
-      divisionId: this._globalStorage.divisionId,
+      divisionId: this._globalStorage.division.selected.Id,
       type: data.type,
     });
   }
@@ -237,7 +238,7 @@ export class GarbageCollectionIndexComponent
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
     this.createToast({
-      divisionId: this._globalStorage.divisionId,
+      divisionId: this._globalStorage.division.selected.Id,
       type: CollectionDeviceStateCountType.All,
     });
   }

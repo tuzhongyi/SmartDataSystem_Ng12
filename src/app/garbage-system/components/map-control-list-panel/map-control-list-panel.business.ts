@@ -24,14 +24,15 @@ export class ListPanelBusiness
   ) {}
 
   async load(args: MapListPanelArgs): Promise<ListItem<ListPanelType>[]> {
-    let divisionId = args.divisionId ?? (await this.global.defaultDivisionId);
+    let divisionId =
+      args.divisionId ?? (await this.global.division.promise.default).Id;
 
     let data = await this.getData(divisionId);
     let model = this.converter.Convert(data);
 
     if (
       args.divisionId &&
-      args.divisionId != (await this.global.defaultDivisionId)
+      args.divisionId != (await this.global.division.promise.default).Id
     ) {
       let current = await this.division.get(divisionId);
       if (current.ParentId) {

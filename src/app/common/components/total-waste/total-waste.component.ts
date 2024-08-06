@@ -32,8 +32,8 @@ export class TotalWasteComponent implements OnInit {
   SystemType = SystemType;
 
   ngOnInit(): void {
-    this.global.defaultDivisionId.then((id) => {
-      this.business.load(id).then((x) => {
+    this.global.division.promise.default.then((division) => {
+      this.business.load(division.Id).then((x) => {
         this.model = x;
       });
     });

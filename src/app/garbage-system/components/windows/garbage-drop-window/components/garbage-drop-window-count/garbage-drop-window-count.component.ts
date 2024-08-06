@@ -58,7 +58,9 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   };
 
   async ngOnInit() {
-    this.args.type = EnumTool.division.child(this.store.defaultDivisionType);
+    this.args.type = EnumTool.division.child(
+      this.store.division.default.DivisionType
+    );
     this.type.default = this.args.type;
     this.divisions = await this.business.getDivisionsByType(this.args.type);
     this.dateTimePickerConfig.format = 'yyyy年MM月dd日';

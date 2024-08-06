@@ -20,7 +20,7 @@ export class CollectionDivisionListBusiness
     private _converter: CommonElementListConverter
   ) {}
   async init(...args: any): Promise<CommonElementListModel<Division>> {
-    let id = this._globalStorage.divisionId;
+    let id = this._globalStorage.division.selected.Id;
     let current = await this.getCurrent(id);
 
     let model = this._converter.Convert(current);
@@ -43,8 +43,6 @@ export class CollectionDivisionListBusiness
     return this._collectionDivisionRequest.list(params);
   }
   notifyMessage(msg: Division) {
-    this._globalStorage.divisionId = msg.Id;
-    this._globalStorage.divisionType = msg.DivisionType;
-    this._globalStorage.collectionStatusChange.emit();
+    this._globalStorage.division.setSelected(msg);
   }
 }

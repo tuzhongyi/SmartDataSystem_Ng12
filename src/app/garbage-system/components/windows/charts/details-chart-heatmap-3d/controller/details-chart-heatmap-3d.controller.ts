@@ -78,11 +78,11 @@ export class DetailsChartHeatmap3DController {
       option.zAxis3D.max = interval * 5;
       option.zAxis3D.splitNumber = 5;
       option.zAxis3D.interval = interval;
-      option.visualMap.max = max;
+      option.visualMap.max = max == 0 ? 1 : max;
 
       let controller = this.getController(unit);
       controller.config(option);
-      option.series[0].data = controller.loadData(datas);
+      option.series[0].data = controller.loadData(datas, max);
 
       this.load.emit(this.option);
       console.log(this.option);

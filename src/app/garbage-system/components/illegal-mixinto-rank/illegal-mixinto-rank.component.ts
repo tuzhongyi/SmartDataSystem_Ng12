@@ -70,7 +70,9 @@ export class IllegalMixintoRankComponent implements OnInit {
   }
   async loadData() {
     let resourceType = this.resourceType;
-    if (this.global.divisionType === DivisionType.Committees) {
+    if (
+      this.global.division.selected.DivisionType === DivisionType.Committees
+    ) {
       this.resourceTypeDisplay = false;
       resourceType = UserResourceType.Station;
     } else {
@@ -79,7 +81,7 @@ export class IllegalMixintoRankComponent implements OnInit {
 
     this.title = '今日' + Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
-      this.global.divisionId,
+      this.global.division.selected.Id,
       this.eventType,
       this.unit
     );
@@ -87,7 +89,9 @@ export class IllegalMixintoRankComponent implements OnInit {
 
   onItemClicked(model: RankModel) {
     let resourceType = this.resourceType;
-    if (this.global.divisionType === DivisionType.Committees) {
+    if (
+      this.global.division.selected.DivisionType === DivisionType.Committees
+    ) {
       resourceType = UserResourceType.Station;
     }
     this.itemClickedEvent.emit({

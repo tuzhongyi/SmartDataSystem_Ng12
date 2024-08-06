@@ -14,7 +14,7 @@ export class AMapDivisionBusiness {
   }
   async select(divisionId: string) {
     let client = await this.amap.client;
-    let defaultId = await this.global.defaultDivisionId;
+    let defaultId = (await this.global.division.promise.default).Id;
     client.Village.Select(divisionId, divisionId === defaultId);
     client.Viewer.Focus(divisionId);
   }

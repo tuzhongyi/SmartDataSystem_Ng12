@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
 
-import { CollectionDeviceStateConverter } from './collection-device-state.converter';
-import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
-import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
+import { CommonGaugeChartConverter } from 'src/app/common/components/common-gauge-chart/common-gauge-chart.converter';
 import { ICommonGaugeCharBusiness } from 'src/app/common/components/common-gauge-chart/common-gauge-chart.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { GetGarbageVehiclesParams } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.params';
+import { GarbageVehicleRequestService } from 'src/app/network/request/garbage_vehicles/garbage-vehicle/garbage-vehicle.service';
 import { ICollectionDeviceStateSearchInfo } from './collection-device-state.model';
-import { CommonGaugeChartConverter } from 'src/app/common/components/common-gauge-chart/common-gauge-chart.converter';
 
 @Injectable()
 export class CollectionDeviceStateInnerBusiness
   implements ICommonGaugeCharBusiness
 {
   searchInfo: ICollectionDeviceStateSearchInfo = {
-    DivisionId: this._globalStorage.divisionId,
+    DivisionId: this._globalStorage.division.selected.Id,
   };
   constructor(
     private _globalStorage: GlobalStorageService,

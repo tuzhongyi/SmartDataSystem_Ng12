@@ -75,17 +75,16 @@ export class GarbageDropEventRecordConverter
       model.DropDuration = Language.Time(duration);
     }
 
-    model.status = Language.GarbageDropEventType(
-      source.EventType,
-      this.global.defaultDivisionType === DivisionType.City
+    let _default = await this.global.division.promise.default;
+    let istimeout =
+      _default.DivisionType === DivisionType.City
         ? source.Data.IsSuperTimeout
-        : source.Data.IsTimeout
-    );
+        : source.Data.IsTimeout;
+
+    model.status = Language.GarbageDropEventType(source.EventType, istimeout);
     model.statusClass = Language.GarbageDropEventTypeClassName(
       source.EventType,
-      this.global.defaultDivisionType === DivisionType.City
-        ? source.Data.IsSuperTimeout
-        : source.Data.IsTimeout
+      istimeout
     );
     let all: Promise<string>[] = [];
     if (source.Data.DropImageUrls) {

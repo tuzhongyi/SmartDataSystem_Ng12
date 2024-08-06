@@ -23,7 +23,7 @@ export class StatisticCardGroupBussiness
   Converter = new StatisticCardConverter();
   subscription?: ISubscription | undefined;
   async load(): Promise<StatisticCardItem[]> {
-    let data = await this.getData(this.storeService.divisionId);
+    let data = await this.getData(this.storeService.division.selected.Id);
 
     let array: StatisticCardItem[] = [];
     let card: StatisticCardItem;
@@ -91,7 +91,7 @@ export class StatisticCardGroupBussiness
   private async stationcount() {
     let params = new GetGarbageStationsParams();
     params.PageSize = 1;
-    params.DivisionId = this.storeService.divisionId;
+    params.DivisionId = this.storeService.division.selected.Id;
     let paged = await this.garbageStationService.cache.list(params);
     return paged.Page.TotalRecordCount;
   }

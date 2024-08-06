@@ -31,15 +31,27 @@ export class DetailsChartHeatmap3DYearController
     };
   }
 
-  loadData(datas: DetailsChartHeatmapModel[]) {
+  loadData(datas: DetailsChartHeatmapModel[], max: number) {
     return datas.map((x) => {
       let day = x.time.getDate();
       let month = x.time.getMonth();
 
-      return {
+      let result: any = {
         data: x,
         value: [day - 1, month, x.value],
       };
+
+      if (max > 0) {
+        result.label = {
+          show: x.value === max,
+          fontSize: 16,
+          textStyle: {
+            color: '#fff',
+          },
+        };
+      }
+
+      return result;
     });
   }
   loadAxisX() {

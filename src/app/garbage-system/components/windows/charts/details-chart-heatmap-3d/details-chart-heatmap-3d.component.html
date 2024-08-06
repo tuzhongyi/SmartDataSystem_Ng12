@@ -1,1 +1,6 @@
-<chart-bar-3d (inited)="init($event)" [load]="controller.load"></chart-bar-3d>
+<div class="details-chart-heatmap-3d">
+  <chart-bar-3d (inited)="init($event)" [load]="controller.load"></chart-bar-3d>
+  <div class="details-chart-heatmap-3d-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

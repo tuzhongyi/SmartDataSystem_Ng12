@@ -3,10 +3,7 @@ import { PageEvent } from '@angular/material/paginator';
 import { ToastWindowService } from 'src/app/common/components/toast-window/toast-window.service';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Gender } from 'src/app/enum/gender.enum';
-import {
-  CollectionMemberType,
-  MemberType,
-} from 'src/app/enum/member-type.enum';
+import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { Page } from 'src/app/network/model/page_list.model';
 import { CollectionMemberWindowBusiness } from './collection-member-window.business';
 import { CollectionMemberWindowConverter } from './collection-member-window.converter';
@@ -39,7 +36,7 @@ export class CollectionMemberWindowComponent implements OnInit {
     PageCount: 0,
   };
   searchInfo: ICollectionMemberWindowSearchInfo = {
-    DivisionId: this._globalStorage.divisionId,
+    DivisionId: this._globalStorage.division.selected.Id,
     PageIndex: 1,
     PageSize: 9,
     Condition: '',

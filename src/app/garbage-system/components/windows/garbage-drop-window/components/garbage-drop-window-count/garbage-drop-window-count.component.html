@@ -20,7 +20,7 @@
         <div class="filter-item-value">
           <div class="select-control">
             <select [(ngModel)]="args.type" (change)="onTypeChange()">
-              <ng-container [ngSwitch]="store.defaultDivisionType">
+              <ng-container [ngSwitch]="store.division.default.DivisionType">
                 <ng-container *ngSwitchCase="DivisionType.City">
                   <option [ngValue]="DivisionType.County">
                     {{ Language.UserResourceType(UserResourceType.County) }}

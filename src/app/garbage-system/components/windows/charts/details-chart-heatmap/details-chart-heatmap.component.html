@@ -1,4 +1,9 @@
-<chart-map-heat
-  (inited)="init($event)"
-  [load]="controller.load"
-></chart-map-heat>
+<div class="details-chart-heatmap">
+  <chart-map-heat
+    (inited)="init($event)"
+    [load]="controller.load"
+  ></chart-map-heat>
+  <div class="details-chart-heatmap-loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

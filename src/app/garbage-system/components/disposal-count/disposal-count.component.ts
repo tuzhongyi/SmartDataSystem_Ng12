@@ -318,9 +318,14 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
-    let type = EnumTool.resource.from.division(this.storeService.divisionType);
+    let type = EnumTool.resource.from.division(
+      this.storeService.division.selected.DivisionType
+    );
 
-    this.data = await this.business.load(this.storeService.divisionId, type);
+    this.data = await this.business.load(
+      this.storeService.division.selected.Id,
+      type
+    );
     // this.gaugeOption.data = [
     //   { name: '处置率', value: this.data.handledPercentage },
     // ];
@@ -426,7 +431,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   }
   taskClick(item: IDisposalCount) {
     let args: DisposalCountArgs = {
-      divisionId: this.storeService.divisionId,
+      divisionId: this.storeService.division.selected.Id,
     };
     switch (item.tag) {
       case DisposalCountType.unhandled:

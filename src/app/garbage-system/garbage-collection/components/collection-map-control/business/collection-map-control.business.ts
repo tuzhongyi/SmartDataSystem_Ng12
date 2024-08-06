@@ -73,7 +73,7 @@ export class CollectionMapControlBusiness {
         this.onMapClicked();
       };
 
-      this.loadDivision(this.global.divisionId);
+      this.loadDivision(this.global.division.selected.Id);
 
       this.setContentMenu();
     };

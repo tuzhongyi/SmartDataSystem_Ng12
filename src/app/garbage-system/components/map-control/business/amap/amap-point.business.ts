@@ -48,7 +48,7 @@ export class AMapPointBusiness {
       this.initConstruction();
       this.status(this.amap.source.all);
 
-      return this.count(this.global.divisionId);
+      return this.count(this.global.division.selected.Id);
     });
   }
 
@@ -93,7 +93,7 @@ export class AMapPointBusiness {
   async loadPoints() {
     let controller = await this.amap.controller;
     let points = controller.Village.Point.All(
-      await this.global.defaultDivisionId
+      (await this.global.division.promise.default).Id
     );
     for (let i = 0; i < points.length; i++) {
       const point = points[i];
@@ -275,7 +275,7 @@ export class AMapPointBusiness {
       this.view.station.keep();
       this.view.rfid.keep();
       this.view.construction.keep();
-      this.count(this.global.divisionId);
+      this.count(this.global.division.selected.Id);
     });
   }
 

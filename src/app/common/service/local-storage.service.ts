@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ClassConstructor, plainToInstance } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/garbage-station/user.model';
 
 /*
@@ -50,7 +51,19 @@ export class LocalStorageService {
     rule: false,
   };
 
+  private _ResourceType: UserResourceType = UserResourceType.None;
+  public get ResourceType() {
+    if (this._ResourceType == UserResourceType.None) {
+      this._ResourceType =
+        this.user.Resources && this.user.Resources.length > 0
+          ? this.user.Resources[0].ResourceType
+          : UserResourceType.None;
+    }
+    return this._ResourceType;
+  }
+
   clear(name?: string) {
+    this._ResourceType = UserResourceType.None;
     if (name) {
       localStorage.removeItem(name);
     } else {

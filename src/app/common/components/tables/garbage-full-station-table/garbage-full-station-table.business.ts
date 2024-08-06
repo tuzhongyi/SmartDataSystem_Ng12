@@ -33,7 +33,7 @@ export class GarbageFullStationTableBusiness
     let data = await this.getData(
       index,
       size,
-      this.storeService.divisionId,
+      this.storeService.division.selected.Id,
       args
     );
     let model = await this.converter.Convert(data);

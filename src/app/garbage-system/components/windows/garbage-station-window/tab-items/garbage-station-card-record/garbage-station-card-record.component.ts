@@ -21,7 +21,9 @@ export class GarbageStationCardRecordComponent implements OnInit {
   ) {
     this.args = new CardRecordTableArgs();
     this.args.duration = DateTimeTool.allDay(new Date());
-    this.divisiontree = new LabelTreeManager(global.defaultDivisionType);
+    this.divisiontree = new LabelTreeManager(
+      global.division.default.DivisionType
+    );
   }
   load: EventEmitter<CardRecordTableArgs> = new EventEmitter();
 

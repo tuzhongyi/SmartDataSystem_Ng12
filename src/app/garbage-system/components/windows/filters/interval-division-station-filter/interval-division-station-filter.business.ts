@@ -38,10 +38,12 @@ export class EventRecordFilterBusiness
     let cameras: Camera[] = [];
 
     if (opts) {
-      divisions = await this.getDivisions(this.storeService.divisionId);
+      divisions = await this.getDivisions(
+        this.storeService.division.selected.Id
+      );
       let divisionId = opts.divisionId;
       if (!divisionId) {
-        divisionId = this.storeService.divisionId;
+        divisionId = this.storeService.division.selected.Id;
       }
       stations = await this.getStation(divisionId);
       if (opts.stationId) {
@@ -57,8 +59,10 @@ export class EventRecordFilterBusiness
         });
       }
     } else {
-      divisions = await this.getDivisions(this.storeService.divisionId);
-      stations = await this.getStation(this.storeService.divisionId);
+      divisions = await this.getDivisions(
+        this.storeService.division.selected.Id
+      );
+      stations = await this.getStation(this.storeService.division.selected.Id);
       stations.forEach((x) => {
         if (x.Cameras) {
           cameras = [...cameras, ...x.Cameras];

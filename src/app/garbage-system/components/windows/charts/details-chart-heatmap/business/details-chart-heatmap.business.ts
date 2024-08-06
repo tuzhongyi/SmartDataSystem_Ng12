@@ -47,7 +47,7 @@ export class DetailsChartHeatmapBusiness {
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      divisionId = this.global.divisionId;
+      divisionId = this.global.division.selected.Id;
     }
     return this.division.month(divisionId, args.duration);
   }
@@ -58,7 +58,7 @@ export class DetailsChartHeatmapBusiness {
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      divisionId = this.global.divisionId;
+      divisionId = this.global.division.selected.Id;
     }
     return this.division.year(divisionId, args.duration);
   }
@@ -70,9 +70,11 @@ export class DetailsChartHeatmapBusiness {
     if (data.EventNumbers) {
       let item = data.EventNumbers.find((x) => x.EventType === type);
       if (item) {
-        let value =
-          unit === TimeUnit.Hour ? item.DeltaNumber ?? 0 : item.DayNumber;
-        model.value = value;
+        if (unit === TimeUnit.Hour) {
+          model.value = item.DeltaNumber ?? 0;
+        } else {
+          model.value = item.DayNumber;
+        }
       }
     }
 

@@ -22,11 +22,12 @@ export class InfoDetailsStationTableComponent implements OnInit {
   @Input('download') input_download?: EventEmitter<Division>;
   @Input() init = false;
   @Output() inited = new EventEmitter<void>();
+  green: any;
 
   constructor(private business: InfoDetailsStationTableBusiness) {}
 
   datas: InfoDetailsStationTableItem[] = [];
-  widths = ['8%', '18%', '8%', '8%', '8%', '10%', '8%', '8%', '8%', '8%', '8%'];
+  widths = ['8%', '22%', '9%', '9%', '12%', '8%', '8%', '8%', '8%', '8%'];
   Language = Language;
 
   ngOnInit(): void {

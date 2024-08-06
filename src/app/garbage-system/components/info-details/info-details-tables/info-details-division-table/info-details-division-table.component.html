@@ -7,7 +7,6 @@
       <tr>
         <th><div class="th-center">#</div></th>
         <th>名称</th>
-        <th>管理员数量</th>
         <th>管理人员</th>
         <th>联系方式</th>
         <th>投放点数量</th>
@@ -22,7 +21,6 @@
           </div>
         </td>
         <td [title]="item.Name">{{ item.Name }}</td>
-        <td>{{ item.member.count ? item.member.count : "-" }}</td>
         <td [title]="item.member.default?.Name">
           {{ item.member.default ? item.member.default.Name : "-" }}
         </td>

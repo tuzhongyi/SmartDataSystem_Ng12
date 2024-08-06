@@ -54,7 +54,7 @@ export class TaskTableConverter
     vm.State = source.EventType;
     vm.StateLanguage = Language.GarbageDropEventType(
       source.EventType,
-      this.global.defaultDivisionType === DivisionType.City
+      this.global.division.default.DivisionType === DivisionType.City
         ? source.Data.IsSuperTimeout
         : source.Data.IsTimeout
     );

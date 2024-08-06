@@ -44,7 +44,7 @@ export class DivisionStationTreeFilterComponent
     private business: DivisionStationTreeFilterBusiness,
     private _divisionRequest: DivisionRequestService
   ) {
-    this.type = store.divisionType;
+    this.type = store.division.selected.DivisionType;
 
     if (this.type === DivisionType.City) {
       this.tree.depth = 3;

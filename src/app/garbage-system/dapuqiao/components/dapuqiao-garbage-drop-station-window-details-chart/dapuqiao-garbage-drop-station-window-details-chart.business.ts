@@ -29,7 +29,7 @@ export class DapuqiaoGarbageDropStationWindowDetailsChartBusiness
     key: DapuqiaoGarbageDropStationWindowDetailsChartItemKey
   ): Promise<DapuqiaoGarbageDropStationWindowDetailsChartModel> {
     if (!args.divisionId) {
-      args.divisionId = await this.global.defaultDivisionId;
+      args.divisionId = (await this.global.division.promise.default).Id;
     }
     let datas = await this.getData(args);
 

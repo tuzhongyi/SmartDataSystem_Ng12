@@ -1,14 +1,12 @@
 import {
   Component,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  Output,
   EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
 } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
-import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionScorePieBusiness } from './collection-score-pie.business';
 import { CollectionScorePieConverter } from './collection-score-pie.converter';
@@ -30,7 +28,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   title = '今日垃圾分类评分';
 
   searchInfo: ICollectionScorePieSearchInfo = {
-    DivisionId: this._globalStorage.divisionId,
+    DivisionId: this._globalStorage.division.selected.Id,
   };
   model?: CollectionScorePieModel;
 
@@ -42,7 +40,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
     private _business: CollectionScorePieBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
   }
@@ -52,7 +50,7 @@ export class CollectionScorePieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
-    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    this.searchInfo.DivisionId = this._globalStorage.division.selected.Id;
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {

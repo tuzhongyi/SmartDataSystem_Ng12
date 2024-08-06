@@ -246,7 +246,7 @@ export class EventRecordComparisonComponent
   }
 
   getdepth(type: DivisionType) {
-    switch (this.global.defaultDivisionType) {
+    switch (this.global.division.default.DivisionType) {
       case DivisionType.City:
         switch (type) {
           case DivisionType.County:

@@ -63,7 +63,7 @@ export class CollectionRecordWindowComponent implements OnInit {
   disableSearch = false;
   today = new Date();
   searchInfo: ICollectionRecordWindowSearchInfo = {
-    DivisionIds: [this._globalStorage.divisionId],
+    DivisionIds: [this._globalStorage.division.selected.Id],
     PageIndex: 1,
     PageSize: 9,
     Condition: '',

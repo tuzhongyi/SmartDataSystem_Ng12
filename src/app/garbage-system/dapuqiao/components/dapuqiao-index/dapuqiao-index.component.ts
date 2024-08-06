@@ -66,7 +66,7 @@ export class DaPuQiaoIndexComponent implements OnInit, OnDestroy {
       this.load.emit();
       this.statistic.loading.emit();
     });
-    this.global.statusChange.subscribe(() => {
+    this.global.division.change.subscribe(() => {
       this.load.emit();
       this.statistic.loading.emit();
     });
@@ -101,12 +101,13 @@ export class DaPuQiaoIndexComponent implements OnInit, OnDestroy {
     this.config(this.activatedRoute);
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
-      let userDivisionId = user.Resources[0].Id;
-      let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType = EnumTool.resource.to.division(resourceType);
+      let resource = user.Resources[0];
 
-      this.global.divisionId = userDivisionId;
-      this.global.divisionType = userDivisionType;
+      this.global.division.setDefault({
+        Id: resource.Id,
+        Name: resource.Name,
+        DivisionType: EnumTool.resource.to.division(resource.ResourceType),
+      });
     }
 
     this.statistic.loading.emit();

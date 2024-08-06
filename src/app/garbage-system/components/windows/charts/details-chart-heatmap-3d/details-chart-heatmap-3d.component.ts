@@ -35,6 +35,7 @@ export class DetailsChartHeatmap3DComponent implements OnInit, OnDestroy {
 
   private inited = false;
   private destroy = false;
+  loading = false;
 
   ngOnInit(): void {
     if (this.input_load) {
@@ -66,10 +67,17 @@ export class DetailsChartHeatmap3DComponent implements OnInit, OnDestroy {
   }
 
   load() {
+    this.loading = true;
     this.controller.loadAxis(this.args.duration, this.args.unit);
     this.controller.loadTooltip(this.args.unit);
-    this.business.load(this.args).then((datas) => {
-      this.controller.loadData(datas, this.args.unit);
-    });
+
+    this.business
+      .load(this.args)
+      .then((datas) => {
+        this.controller.loadData(datas, this.args.unit);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 }

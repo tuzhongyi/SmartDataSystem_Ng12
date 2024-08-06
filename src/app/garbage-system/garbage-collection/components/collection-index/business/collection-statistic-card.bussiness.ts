@@ -55,37 +55,37 @@ export class CollectionStatisticCardBusiness {
   // 获取垃圾清运车数量
   private async _listGarbageVehicle() {
     let params = new GetGarbageVehiclesParams();
-    params.DivisionId = this._globalStorage.divisionId;
+    params.DivisionId = this._globalStorage.division.selected.Id;
     return this._garbageVehicleRequest.list(params);
   }
 
   // 获取垃圾清运数量
   private _listGarbageWeight() {
     return this._collectionDivisionRequest.garbage.weight.get(
-      this._globalStorage.divisionId
+      this._globalStorage.division.selected.Id
     );
   }
 
   // 获取垃圾清运人员数量
   private _listGarbageMember() {
     let params = new GetCollectionMembersParams();
-    params.DivisionId = this._globalStorage.divisionId;
+    params.DivisionId = this._globalStorage.division.selected.Id;
     return this._collectionMemberRequset.list(params);
   }
 
   private async _listGarbagePoints() {
     let params = new GetCollectionPointsParams();
     if (
-      (await this._globalStorage.defaultDivisionId) !==
-      this._globalStorage.divisionId
+      (await this._globalStorage.division.promise.default).Id !==
+      this._globalStorage.division.selected.Id
     )
-      params.DivisionIds = [this._globalStorage.divisionId];
+      params.DivisionIds = [this._globalStorage.division.selected.Id];
     return this._collectionPointsRequest.list(params);
   }
 
   private _listCollectionDivisionStatisticNumber() {
     return this._collectionDivisionRequest.statistic.number(
-      this._globalStorage.divisionId
+      this._globalStorage.division.selected.Id
     );
   }
 }

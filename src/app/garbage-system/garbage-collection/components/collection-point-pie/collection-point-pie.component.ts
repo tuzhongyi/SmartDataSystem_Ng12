@@ -4,11 +4,9 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
 } from '@angular/core';
 import { EChartsOption } from 'echarts';
 import { Subscription } from 'rxjs';
-import { CommonPieChartComponent } from 'src/app/common/components/common-pie-chart/common-pie-chart.component';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { CollectionPointPieBusiness } from './collection-point-pie.business';
 import { CollectionPointPieConverter } from './collection-point-pie.converte';
@@ -30,7 +28,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   title = '垃圾收运点位';
 
   searchInfo: ICollectionPointPieSearchInfo = {
-    DivisionIds: [this._globalStorage.divisionId],
+    DivisionIds: [this._globalStorage.division.selected.Id],
   };
   model?: CollectionPointPieModel;
 
@@ -42,7 +40,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
     private _business: CollectionPointPieBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
   }
@@ -52,7 +50,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
-    this.searchInfo.DivisionIds = [this._globalStorage.divisionId];
+    this.searchInfo.DivisionIds = [this._globalStorage.division.selected.Id];
 
     this.model = await this._business.init(this.searchInfo);
 

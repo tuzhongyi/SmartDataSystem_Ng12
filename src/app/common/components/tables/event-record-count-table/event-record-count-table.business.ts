@@ -40,12 +40,12 @@ export class EventRecordCountTableBusiness
   ): Promise<EventRecordCountTableModel[]> {
     let id = opts.id;
     if (!id) {
-      id = this.global.divisionId;
+      id = this.global.division.selected.Id;
     }
 
     let type = opts.type;
     if (!type) {
-      type = this.global.divisionType;
+      type = this.global.division.selected.DivisionType;
     }
 
     let data = await this.getData(id, type, opts);

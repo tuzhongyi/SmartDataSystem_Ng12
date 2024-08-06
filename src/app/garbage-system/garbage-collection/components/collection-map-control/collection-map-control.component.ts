@@ -182,8 +182,8 @@ export class CollectionMapControlComponent
     this.global.interval.subscribe(this.key, (x) => {
       this.amap.init();
     });
-    this.global.statusChange.subscribe((x) => {
-      this.amap.divisionSelect(this.global.divisionId);
+    this.global.division.change.subscribe((x) => {
+      this.amap.divisionSelect(this.global.division.selected.Id);
     });
     let src = this.amap.getSrc();
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);

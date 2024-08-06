@@ -20,7 +20,7 @@ export class DivisionStationTreeFilterBusiness
   ) {}
 
   load(type: DivisionType, stationId?: string): Promise<DivisionTreeSource[]> {
-    return this.getData(type, stationId, this.global.divisionId);
+    return this.getData(type, stationId, this.global.division.selected.Id);
   }
   async getData(
     type: DivisionType,

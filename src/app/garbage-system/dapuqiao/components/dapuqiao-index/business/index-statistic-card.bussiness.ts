@@ -34,10 +34,10 @@ export class IndexStatisticCardBussiness
   Converter = new StatisticCardConverter();
   subscription?: ISubscription | undefined;
   async load(...args: any): Promise<StatisticCardViewModel[]> {
-    let data = await this.getData(this.storeService.divisionId);
+    let data = await this.getData(this.storeService.division.selected.Id);
     let array = this.Converter.Convert(data);
     let params = new GetGarbageStationsParams();
-    params.DivisionId = this.storeService.divisionId;
+    params.DivisionId = this.storeService.division.selected.Id;
     let { Data: stations } = await this.garbageStationService.cache.list(
       params
     );

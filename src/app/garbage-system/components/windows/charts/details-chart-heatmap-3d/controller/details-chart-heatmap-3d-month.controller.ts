@@ -37,17 +37,28 @@ export class DetailsChartHeatmap3DMonthController
     };
   }
 
-  loadData(datas: DetailsChartHeatmapModel[]) {
+  loadData(datas: DetailsChartHeatmapModel[], max: number) {
     return datas.map((x) => {
       let hour = x.time.getHours();
       let date = x.time.getDate();
       let weekindex = DateTimeTool.month.week.getMonthWeek(x.time) - 1;
       let index = date - 1;
       index += weekindex;
-      return {
+      let result: any = {
         data: x,
         value: [hour, index, x.value],
       };
+      if (max > 0) {
+        result.label = {
+          show: x.value === max,
+          fontSize: 16,
+          textStyle: {
+            color: '#fff',
+          },
+        };
+      }
+
+      return result;
     });
   }
   loadAxisX() {

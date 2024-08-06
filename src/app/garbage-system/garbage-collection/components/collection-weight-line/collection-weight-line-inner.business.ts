@@ -18,7 +18,7 @@ export class CollectionWeightLineInnerBusiness
   searchInfo: ICollectionWeightLineSearchInfo = {
     BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
     EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
-    DivisionIds: [this._globalStorage.divisionId],
+    DivisionIds: [this._globalStorage.division.selected.Id],
     TimeUnit: TimeUnit.Day,
     Type: TrashCanType.Dry,
   };

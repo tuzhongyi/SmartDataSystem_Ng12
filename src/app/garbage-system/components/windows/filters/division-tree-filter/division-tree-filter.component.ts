@@ -38,7 +38,7 @@ export class DivisionTreeFilterComponent
   @Input() align: HorizontalAlign = HorizontalAlign.right;
 
   constructor(private store: GlobalStorageService) {
-    this.type = store.defaultDivisionType;
+    this.type = store.division.default.DivisionType;
   }
 
   @ViewChild('selected')

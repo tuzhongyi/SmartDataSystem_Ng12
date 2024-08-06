@@ -42,7 +42,7 @@ export class GarbageFullWindowRecordComponent implements OnInit {
       this.filter.filter.divisionId = this.divisionId;
     }
     this.filter.filter.divisionId =
-      this.filter.filter.divisionId ?? this.global.divisionId;
+      this.filter.filter.divisionId ?? this.global.division.selected.Id;
   }
 
   onimage(item: PagedArgs<EventRecordViewModel>) {

@@ -34,7 +34,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
   model?: CollectionDeviceStateModel;
 
   searchInfo: ICollectionDeviceStateSearchInfo = {
-    DivisionId: this._globalStorage.divisionId,
+    DivisionId: this._globalStorage.division.selected.Id,
   };
 
   subscription: Subscription;
@@ -48,7 +48,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     private _business: CollectionDeviceStateBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
   }
@@ -57,7 +57,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     this._init();
   }
   private async _init() {
-    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    this.searchInfo.DivisionId = this._globalStorage.division.selected.Id;
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {

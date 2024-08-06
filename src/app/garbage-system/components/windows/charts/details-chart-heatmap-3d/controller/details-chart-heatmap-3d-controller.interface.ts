@@ -6,7 +6,7 @@ export interface IDetailsChartHeatmap3DTimeController {
   loadAxisX(duration?: Duration): string[];
   loadAxisY(duration?: Duration): string[];
   format(item: any): string;
-  loadData(datas: DetailsChartHeatmapModel[]): any;
+  loadData(datas: DetailsChartHeatmapModel[], max: number): any;
 
   config(option: EChartsOption): void;
   tooltip(): any;

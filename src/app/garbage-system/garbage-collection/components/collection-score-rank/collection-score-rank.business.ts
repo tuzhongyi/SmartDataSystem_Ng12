@@ -53,7 +53,7 @@ export class CollectionScoreRankBusiness {
     if (searchInfo.DivisionIds.length == 1) {
       if (
         searchInfo.DivisionIds[0] ==
-        (await this._globalStorageService.defaultDivisionId)
+        (await this._globalStorageService.division.promise.default).Id
       ) {
         params.DivisionIds = [];
       }

@@ -34,7 +34,10 @@ export class PatrolControlBusiness
     new PatrolControlConverter();
 
   async load(index: number): Promise<Paged<PatrolControlModel>> {
-    let paged = await this.getData(this.storeService.divisionId, index);
+    let paged = await this.getData(
+      this.storeService.division.selected.Id,
+      index
+    );
     let station = paged.Data[0];
     let statistic = await this.statistic(station.Id);
     let data = this.converter.Convert(station, statistic);

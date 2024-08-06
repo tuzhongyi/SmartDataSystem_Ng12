@@ -22,13 +22,18 @@
           <select class="list-type-select" [(ngModel)]="opts.type">
             <option
               [ngValue]="DivisionType.County"
-              *ngIf="global.defaultDivisionType === DivisionType.City"
+              *ngIf="global.division.default.DivisionType === DivisionType.City"
             >
               {{ Language.DivisionType(DivisionType.County) }}
             </option>
             <option
               [ngValue]="DivisionType.Committees"
-              *ngIf="!(global.defaultDivisionType === DivisionType.Committees)"
+              *ngIf="
+                !(
+                  global.division.default.DivisionType ===
+                  DivisionType.Committees
+                )
+              "
             >
               {{ Language.DivisionType(DivisionType.Committees) }}
             </option>

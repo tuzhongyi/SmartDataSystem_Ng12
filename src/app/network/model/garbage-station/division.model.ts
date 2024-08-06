@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { DivisionType } from '../../../enum/division-type.enum';
-import { IdNameModel } from '../model.interface';
+import { IIdNameModel, IdNameModel } from '../model.interface';
 import { transformDateTime } from '../transform.model';
 import { GisArea } from './gis-area.model';
 import { GisPoint } from './gis-point.model';
@@ -35,4 +35,7 @@ export class Division extends IdNameModel {
   GisPoint?: GisPoint;
   /**	GisArea	区划GIS点位区域	O */
   GisArea?: GisArea;
+}
+export interface IDivision extends IIdNameModel {
+  DivisionType: DivisionType;
 }

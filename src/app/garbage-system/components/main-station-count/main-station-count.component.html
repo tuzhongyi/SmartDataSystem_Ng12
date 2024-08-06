@@ -7,7 +7,10 @@
       设备运行状态
     </div>
     <div>
-      <select [(ngModel)]="index">
+      <select
+        [(ngModel)]="index"
+        *ngIf="!division || division.DivisionType != DivisionType.Committees"
+      >
         <option [ngValue]="Index.station_count">投放点数量</option>
         <option [ngValue]="Index.device_state">运行状态</option>
       </select>

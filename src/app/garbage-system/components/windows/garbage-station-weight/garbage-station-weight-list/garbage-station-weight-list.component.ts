@@ -44,7 +44,9 @@ export class GarbageStationWeightListComponent
   }
 
   get resourceType() {
-    return EnumTool.resource.from.division(this.global.divisionType);
+    return EnumTool.resource.from.division(
+      this.global.division.selected.DivisionType
+    );
   }
 
   args: GarbageStationWeightTableArgs = new GarbageStationWeightTableArgs();
@@ -66,7 +68,7 @@ export class GarbageStationWeightListComponent
   }
 
   ngAfterViewInit(): void {
-    this.loadData(this.global.divisionId);
+    this.loadData(this.global.division.selected.Id);
   }
 
   loadsource(type: UserResourceType) {

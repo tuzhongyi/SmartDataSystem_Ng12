@@ -4,18 +4,19 @@ export const ChartMapHeatOption: any = {
   },
   grid: {
     height: '91.5%',
-    top: 50,
+    top: 20,
     left: 240,
   },
   xAxis: {
-    position: 'top',
     type: 'category',
     data: [],
     splitArea: {
       show: true,
     },
+    offset: 1,
     axisLabel: {
       interval: 0,
+      offset: 5,
       rich: {
         weekend: {
           color: '#ff0000',
@@ -31,7 +32,7 @@ export const ChartMapHeatOption: any = {
     },
     axisLine: {
       lineStyle: {
-        width: 2,
+        width: 1,
       },
     },
   },

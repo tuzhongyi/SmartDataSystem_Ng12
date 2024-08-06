@@ -65,7 +65,7 @@ export class CollectionScoreRankComponent implements OnInit {
   searchInfo: ICollectionScoreRankSearchInfo = {
     BeginTime: TimeService.curMonth(this.today).beginTime,
     EndTime: DurationParams.allMonth(this.today).EndTime,
-    DivisionIds: [this._globalStorage.divisionId],
+    DivisionIds: [this._globalStorage.division.selected.Id],
     Type: CollectionPointScore.Poor,
   };
   subscription: Subscription;
@@ -74,7 +74,7 @@ export class CollectionScoreRankComponent implements OnInit {
     private _business: CollectionScoreRankBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
   }
@@ -83,7 +83,7 @@ export class CollectionScoreRankComponent implements OnInit {
     this._init();
   }
   private async _init() {
-    this.searchInfo.DivisionIds = [this._globalStorage.divisionId];
+    this.searchInfo.DivisionIds = [this._globalStorage.division.selected.Id];
     this.model = await this._business.init(this.searchInfo);
     this.rankModel = this.model.RankModel;
     this.language = Language.CollectionPointScore(this.searchInfo.Type);

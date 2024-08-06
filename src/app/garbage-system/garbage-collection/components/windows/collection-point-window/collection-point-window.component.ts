@@ -43,7 +43,7 @@ export class CollectionPointWindowComponent implements OnInit {
     PageCount: 0,
   };
   searchInfo: ICollectionPointWindowSearchInfo = {
-    DivisionIds: [this._globalStorage.divisionId],
+    DivisionIds: [this._globalStorage.division.selected.Id],
     PageIndex: 1,
     PageSize: 9,
     Condition: '',

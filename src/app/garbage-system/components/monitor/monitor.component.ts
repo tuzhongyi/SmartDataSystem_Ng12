@@ -26,6 +26,7 @@ import {
   WindowBusinesses,
 } from './business/window.business';
 import { MonitorVideoControlWindowBusiness } from './business/windows/monitor-video-control-window.business';
+import { MonitorBusiness } from './monitor.business';
 
 @Component({
   selector: 'app-waste-monitor',
@@ -40,6 +41,7 @@ import { MonitorVideoControlWindowBusiness } from './business/windows/monitor-vi
     ...WindowBusinesses,
     MonitorWindowBussiness,
     MonitorGuideBusiness,
+    MonitorBusiness,
   ],
 })
 export class MonitorComponent implements OnInit, OnDestroy {
@@ -65,14 +67,15 @@ export class MonitorComponent implements OnInit, OnDestroy {
     public video: MonitorVideoControlWindowBusiness,
     public statistic: MonitorStatisticCardBussiness,
     private activatedRoute: ActivatedRoute,
-    public guide: MonitorGuideBusiness
+    public guide: MonitorGuideBusiness,
+    private business: MonitorBusiness
   ) {
     this._titleService.setTitle('生活垃圾分类全程监管平台');
     this.global.system = SystemType.garbage;
     this.global.interval.subscribe(this.key, () => {
       this.load.emit();
     });
-    this.global.statusChange.subscribe(() => {
+    this.global.division.change.subscribe(() => {
       this.load.emit();
     });
     this.global.interval.run();
@@ -108,12 +111,19 @@ export class MonitorComponent implements OnInit, OnDestroy {
     this.config(this.activatedRoute);
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
-      let userDivisionId = user.Resources[0].Id;
-      let resourceType = user.Resources[0].ResourceType;
-      let userDivisionType = EnumTool.resource.to.division(resourceType);
+      let defaultResource = user.Resources[0];
 
-      this.global.divisionId = userDivisionId;
-      this.global.divisionType = userDivisionType;
+      let resourceType = user.Resources[0].ResourceType;
+      let defaultDivisionType = EnumTool.resource.to.division(resourceType);
+
+      this.global.division.setDefault({
+        Id: defaultResource.Id,
+        Name: defaultResource.Name,
+        DivisionType: defaultDivisionType,
+      });
+      this.business.get(defaultResource.Id).then((x) => {
+        this.global.division.setDefault(x);
+      });
     }
   }
   ngOnDestroy(): void {

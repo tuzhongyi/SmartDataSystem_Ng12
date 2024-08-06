@@ -71,11 +71,10 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     userName = res.groups!['userName'];
 
     this.userName = userName;
-
-    this.display.changePassword =
-      this.global.defaultDivisionType === DivisionType.Committees;
-    this.display.bindMobile =
-      this.global.defaultDivisionType === DivisionType.Committees;
+    this.global.division.promise.default.then((x) => {
+      this.display.changePassword = x.DivisionType === DivisionType.Committees;
+      this.display.bindMobile = x.DivisionType === DivisionType.Committees;
+    });
   }
 
   ngOnDestroy(): void {
@@ -114,7 +113,7 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
   }
   navigateToHelp() {
     let index = 1;
-    if (this.global.defaultResourceType === UserResourceType.Committees) {
+    if (this.local.ResourceType === UserResourceType.Committees) {
       index = 2;
     }
     window.open(`/help/${index}/help.html`);

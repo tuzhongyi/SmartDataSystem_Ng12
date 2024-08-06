@@ -16,7 +16,7 @@ export class SubscriptionService implements ISubscription {
   subscription?: Subscription;
 
   subscribe(fn: () => void) {
-    this.subscription = this.storeService.statusChange.subscribe(() => {
+    this.subscription = this.storeService.division.change.subscribe(() => {
       fn();
     });
   }

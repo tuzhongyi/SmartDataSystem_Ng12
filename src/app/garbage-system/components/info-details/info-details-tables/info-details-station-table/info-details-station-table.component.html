@@ -7,7 +7,6 @@
       <tr>
         <th><div class="th-center">#</div></th>
         <th>名称</th>
-        <th>管理员数量</th>
         <th>管理人员</th>
         <th>职位</th>
         <th>联系方式</th>
@@ -26,7 +25,6 @@
           </div>
         </td>
         <td [title]="item.Name">{{ item.Name }}</td>
-        <td>{{ item.member.count }}</td>
         <td [title]="item.member.default?.Name">
           {{ item.member.default ? item.member.default.Name : "-" }}
         </td>
@@ -41,19 +39,58 @@
           {{ item.member.default ? item.member.default.MobileNo : "-" }}
         </td>
         <td>
-          <div class="td-center">{{ item.canIllegalDrop ? "✔" : "-" }}</div>
+          <div class="td-center">
+            <i
+              *ngIf="item.canIllegalDrop"
+              class="howell-icon-Check green-text"
+            ></i>
+            <i
+              *ngIf="!item.canIllegalDrop"
+              class="howell-icon-Close powder-red-text"
+            ></i>
+          </div>
         </td>
         <td>
-          <div class="td-center">{{ item.canGarbageFull ? "✔" : "-" }}</div>
+          <div class="td-center">
+            <i
+              *ngIf="item.canGarbageFull"
+              class="howell-icon-Check green-text"
+            ></i>
+            <i
+              *ngIf="!item.canGarbageFull"
+              class="howell-icon-Close powder-red-text"
+            ></i>
+          </div>
         </td>
         <td>
-          <div class="td-center">{{ item.canMixedInto ? "✔" : "-" }}</div>
+          <div class="td-center">
+            <i
+              *ngIf="item.canMixedInto"
+              class="howell-icon-Check green-text"
+            ></i>
+            <i
+              *ngIf="!item.canMixedInto"
+              class="howell-icon-Close powder-red-text"
+            ></i>
+          </div>
         </td>
         <td>
-          <div class="td-center">{{ item.canDoor ? "✔" : "-" }}</div>
+          <div class="td-center">
+            <i *ngIf="item.canDoor" class="howell-icon-Check green-text"></i>
+            <i
+              *ngIf="!item.canDoor"
+              class="howell-icon-Close powder-red-text"
+            ></i>
+          </div>
         </td>
         <td>
-          <div class="td-center">{{ item.canGCHA ? "✔" : "-" }}</div>
+          <div class="td-center">
+            <i *ngIf="item.canGCHA" class="howell-icon-Check green-text"></i>
+            <i
+              *ngIf="!item.canGCHA"
+              class="howell-icon-Close powder-red-text"
+            ></i>
+          </div>
         </td>
       </tr>
     </tbody>

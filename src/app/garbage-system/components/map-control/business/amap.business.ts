@@ -14,12 +14,12 @@ export class AMapBusiness {
     public point: AMapPointBusiness,
     public event: AMapEvent
   ) {
-    this.storeService.statusChange.subscribe((x) => {
+    this.storeService.division.change.subscribe((x) => {
       if (this.division) {
-        this.division.select(this.storeService.divisionId);
+        this.division.select(this.storeService.division.selected.Id);
       }
       if (this.point) {
-        let promise = this.point.count(this.storeService.divisionId);
+        let promise = this.point.count(this.storeService.division.selected.Id);
         promise.then((count) => {
           this.event.point.count.emit(count);
         });
@@ -28,7 +28,7 @@ export class AMapBusiness {
     this.amap.loaded.subscribe((x) => {
       this.point.init();
       this.regist();
-      this.division.load(this.storeService.divisionId);
+      this.division.load(this.storeService.division.selected.Id);
     });
   }
 

@@ -45,7 +45,7 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     private _business: CollectionVehicleBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    this.subscription = this._globalStorage.collectionStatusChange.subscribe(
+    this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
   }
@@ -54,7 +54,7 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     this._init();
   }
   private async _init() {
-    this.searchInfo.DivisionId = this._globalStorage.divisionId;
+    this.searchInfo.DivisionId = this._globalStorage.division.selected.Id;
     this.dataSource = await this._business.init(this.searchInfo);
   }
 

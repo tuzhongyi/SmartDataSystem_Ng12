@@ -7,8 +7,8 @@ import { RetentionType } from 'src/app/enum/retention-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import {
-  GetDivisionsParams,
   GetDivisionStatisticNumbersParams,
+  GetDivisionsParams,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
@@ -77,12 +77,15 @@ export class RetentionRankBusiness
     try {
       if (retentionType != undefined) this.retentionType = retentionType;
       let data = await this.getData(
-        this.storeService.divisionId,
-        this.storeService.divisionType
+        this.storeService.division.selected.Id,
+        this.storeService.division.selected.DivisionType
       );
       while (data.length < 6) {
         let item: DivisionNumberStatistic | GarbageStationNumberStatistic;
-        if (this.storeService.divisionType == DivisionType.Committees) {
+        if (
+          this.storeService.division.selected.DivisionType ==
+          DivisionType.Committees
+        ) {
           item = new GarbageStationNumberStatistic();
           item.Name = '-';
           (data as GarbageStationNumberStatistic[]).push(item);
