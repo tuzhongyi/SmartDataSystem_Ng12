@@ -54,7 +54,7 @@ export class CollectionVehicleComponent implements OnInit, OnDestroy {
     this._init();
   }
   private async _init() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     this.searchInfo.DivisionId = division.Id;
     this.dataSource = await this._business.init(this.searchInfo);
   }

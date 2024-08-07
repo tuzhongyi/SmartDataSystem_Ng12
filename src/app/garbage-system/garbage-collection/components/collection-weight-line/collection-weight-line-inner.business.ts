@@ -26,7 +26,7 @@ export class CollectionWeightLineInnerBusiness
     private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CommonLineChartConverter
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionIds = [x.Id];
     });
   }

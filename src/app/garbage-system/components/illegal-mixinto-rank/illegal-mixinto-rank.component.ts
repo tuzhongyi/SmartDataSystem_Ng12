@@ -70,7 +70,7 @@ export class IllegalMixintoRankComponent implements OnInit {
   }
   async loadData() {
     let resourceType = this.resourceType;
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     if (division.DivisionType === DivisionType.Committees) {
       this.resourceTypeDisplay = false;
       resourceType = UserResourceType.Station;
@@ -87,7 +87,7 @@ export class IllegalMixintoRankComponent implements OnInit {
   }
 
   onItemClicked(model: RankModel) {
-    this.global.division.promise.selected.then((x) => {
+    this.global.division.selected.then((x) => {
       let resourceType = this.resourceType;
       if (x.DivisionType === DivisionType.Committees) {
         resourceType = UserResourceType.Station;

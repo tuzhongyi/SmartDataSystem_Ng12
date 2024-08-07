@@ -27,7 +27,7 @@ export class EventRecordWindowDetailsComponent implements OnInit {
   }
 
   async load() {
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     this.division = await this.business.division.get(division.Id);
   }
 }

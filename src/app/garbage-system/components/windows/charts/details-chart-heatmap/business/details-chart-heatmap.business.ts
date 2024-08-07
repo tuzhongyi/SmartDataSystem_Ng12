@@ -47,7 +47,7 @@ export class DetailsChartHeatmapBusiness {
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      let division = await this.global.division.promise.selected;
+      let division = await this.global.division.selected;
       divisionId = division.Id;
     }
     return this.division.month(divisionId, args.duration);
@@ -59,7 +59,7 @@ export class DetailsChartHeatmapBusiness {
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      let division = await this.global.division.promise.selected;
+      let division = await this.global.division.selected;
       divisionId = division.Id;
     }
     return this.division.year(divisionId, args.duration);

@@ -318,7 +318,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let type = EnumTool.resource.from.division(division.DivisionType);
     this.data = await this.business.load(division.Id, type);
     // this.gaugeOption.data = [
@@ -425,7 +425,7 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
     }
   }
   taskClick(item: IDisposalCount) {
-    this.storeService.division.promise.selected.then((division) => {
+    this.storeService.division.selected.then((division) => {
       let args: DisposalCountArgs = {
         divisionId: division.Id,
       };

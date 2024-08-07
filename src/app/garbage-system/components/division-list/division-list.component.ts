@@ -32,7 +32,7 @@ export class DivisionListComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let divisionId = division.Id;
     this.business.load(divisionId).then((model) => {
       this.model = model;

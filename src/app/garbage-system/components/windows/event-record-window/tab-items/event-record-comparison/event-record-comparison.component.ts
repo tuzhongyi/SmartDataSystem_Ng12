@@ -246,7 +246,7 @@ export class EventRecordComparisonComponent
   }
 
   async getdepth(type: DivisionType) {
-    let _default = await this.global.division.promise.default;
+    let _default = await this.global.division.default;
     switch (_default.DivisionType) {
       case DivisionType.City:
         switch (type) {

@@ -45,8 +45,8 @@ export class CollectionScoreRankBusiness {
   }
 
   private async _listScores(searchInfo: ICollectionScoreRankSearchInfo) {
-    let division = await this._globalStorageService.division.promise.selected;
-    let _default = await this._globalStorageService.division.promise.default;
+    let division = await this._globalStorageService.division.selected;
+    let _default = await this._globalStorageService.division.default;
     let divisionIds = searchInfo.DivisionIds ?? [division.Id];
 
     let params = new GetCollectionPointScoreTopListParams();

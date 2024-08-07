@@ -42,7 +42,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
     private changeDetector: ChangeDetectorRef,
     private business: GarbageDropStationWindowCountBusiness
   ) {
-    this.store.division.promise.selected.then((x) => {
+    this.store.division.selected.then((x) => {
       this.default = x;
     });
   }
@@ -67,7 +67,7 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   };
 
   async ngOnInit() {
-    let _default = await this.store.division.promise.default;
+    let _default = await this.store.division.default;
     this.args.type = EnumTool.division.child(_default.DivisionType);
     this.type.default = this.args.type;
     this.divisions = await this.business.getDivisionsByType(this.args.type);

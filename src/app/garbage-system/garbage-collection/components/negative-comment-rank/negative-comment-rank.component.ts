@@ -47,7 +47,7 @@ export class NegativeCommentRankComponent implements OnInit {
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
   async ngOnInit() {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let child = EnumTool.resource.child(
       EnumTool.resource.from.division(division.DivisionType)
     );
@@ -74,7 +74,7 @@ export class NegativeCommentRankComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     this.resourceTypeDisplay =
       division.DivisionType !== DivisionType.Committees;
     this.title = Language.EventType(this.eventType) + '排名';

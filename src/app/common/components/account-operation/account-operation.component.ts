@@ -72,7 +72,7 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
     userName = res.groups!['userName'];
 
     this.userName = userName;
-    this.global.division.promise.default.then((x) => {
+    this.global.division.default.then((x) => {
       this.display.changePassword = x.DivisionType === DivisionType.Committees;
       this.display.bindMobile = x.DivisionType === DivisionType.Committees;
     });

@@ -58,7 +58,7 @@ export class CollectionPointWindowComponent implements OnInit {
     private _business: CollectionPointWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionIds = [x.Id];
 
       let data = this._toastWindowService.data;

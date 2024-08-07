@@ -43,7 +43,7 @@ export class EventRecordWindowListComponent implements OnInit {
       this.filter.filter.divisionId = this.divisionId;
     }
     if (!this.filter.filter.divisionId) {
-      this.global.division.promise.selected.then((x) => {
+      this.global.division.selected.then((x) => {
         this.filter.filter.divisionId = x.Id;
       });
     }

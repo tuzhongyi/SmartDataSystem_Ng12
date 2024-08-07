@@ -84,7 +84,7 @@ export class DivisionStationTreeFilterComponent
   }
 
   async ngOnInit() {
-    let division = await this.store.division.promise.selected;
+    let division = await this.store.division.selected;
     this.type = division.DivisionType;
 
     if (this.type === DivisionType.City) {

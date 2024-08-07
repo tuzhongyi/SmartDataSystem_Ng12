@@ -23,7 +23,7 @@ export class CollectionScorePieBusiness {
     searchInfo: ICollectionScorePieSearchInfo
   ): Promise<DivisionGarbageScore> {
     let divisionId =
-      searchInfo.DivisionId ?? (await this.global.division.promise.selected).Id;
+      searchInfo.DivisionId ?? (await this.global.division.selected).Id;
     return this._collectionDivisionRequest.garbage.score.get(divisionId);
   }
 }

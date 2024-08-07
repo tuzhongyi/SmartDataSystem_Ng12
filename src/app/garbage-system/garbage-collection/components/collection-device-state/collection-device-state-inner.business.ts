@@ -18,7 +18,7 @@ export class CollectionDeviceStateInnerBusiness
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CommonGaugeChartConverter
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionId = x.Id;
     });
   }

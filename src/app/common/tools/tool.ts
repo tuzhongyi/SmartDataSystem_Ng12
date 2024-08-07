@@ -263,7 +263,7 @@ export function wait(
 }
 export function wait2(
   whether: () => boolean,
-  timepoll = 100,
+  timepoll = 10,
   timeout = 1000 * 1 * 60
 ) {
   return new Promise<void>((resolve, reject) => {

@@ -46,7 +46,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     private _business: CollectionDeviceStateBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionId = x.Id;
     });
     this.subscription = this._globalStorage.division.change.subscribe(
@@ -58,7 +58,7 @@ export class GarbageVehiclesDeviceStateComponent implements OnInit, OnDestroy {
     this._init();
   }
   private async _init() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     this.searchInfo.DivisionId = division.Id;
     this.model = await this._business.init(this.searchInfo);
 

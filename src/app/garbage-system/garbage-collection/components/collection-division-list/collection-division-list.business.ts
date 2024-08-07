@@ -20,7 +20,7 @@ export class CollectionDivisionListBusiness
     private _converter: CommonElementListConverter
   ) {}
   async init(...args: any): Promise<CommonElementListModel<Division>> {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     let id = division.Id;
     let current = await this.getCurrent(id);
 

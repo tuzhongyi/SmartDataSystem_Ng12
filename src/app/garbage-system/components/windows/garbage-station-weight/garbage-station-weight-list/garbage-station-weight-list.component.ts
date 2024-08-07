@@ -46,7 +46,7 @@ export class GarbageStationWeightListComponent
   }
 
   get resourceType() {
-    return this.global.division.promise.selected.then((x) => {
+    return this.global.division.selected.then((x) => {
       return EnumTool.resource.from.division(x.DivisionType);
     });
   }
@@ -72,7 +72,7 @@ export class GarbageStationWeightListComponent
   }
 
   ngAfterViewInit(): void {
-    this.global.division.promise.selected.then((x) => {
+    this.global.division.selected.then((x) => {
       this.loadData(x.Id);
     });
   }

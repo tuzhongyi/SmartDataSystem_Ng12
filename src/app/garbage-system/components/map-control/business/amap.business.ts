@@ -15,7 +15,7 @@ export class AMapBusiness {
     public event: AMapEvent
   ) {
     this.global.division.change.subscribe((x) => {
-      this.global.division.promise.selected.then((x) => {
+      this.global.division.selected.then((x) => {
         if (this.division) {
           this.division.select(x.Id);
         }
@@ -29,7 +29,7 @@ export class AMapBusiness {
     this.amap.loaded.subscribe((x) => {
       this.point.init();
       this.regist();
-      this.global.division.promise.selected.then((x) => {
+      this.global.division.selected.then((x) => {
         this.division.load(x.Id);
       });
     });

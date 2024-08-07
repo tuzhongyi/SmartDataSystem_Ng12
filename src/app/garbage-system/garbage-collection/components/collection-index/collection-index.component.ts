@@ -229,7 +229,7 @@ export class GarbageCollectionIndexComponent
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-    this._globalStorage.division.promise.selected.then((x) => {
+    this._globalStorage.division.selected.then((x) => {
       this.createToast({
         divisionId: x.Id,
         type: data.type,
@@ -239,7 +239,7 @@ export class GarbageCollectionIndexComponent
 
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-    this._globalStorage.division.promise.selected.then((x) => {
+    this._globalStorage.division.selected.then((x) => {
       this.createToast({
         divisionId: x.Id,
         type: CollectionDeviceStateCountType.All,

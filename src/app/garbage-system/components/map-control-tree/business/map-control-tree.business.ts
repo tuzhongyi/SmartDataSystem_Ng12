@@ -80,7 +80,7 @@ export class MapControlTreeBusiness {
   // }
 
   async load(args: MapControlTreeArgs) {
-    let _default = await this.global.division.promise.default;
+    let _default = await this.global.division.default;
     let defaultId = _default.Id;
     let defaultType = _default.DivisionType;
     let divisions = await this.division.all();

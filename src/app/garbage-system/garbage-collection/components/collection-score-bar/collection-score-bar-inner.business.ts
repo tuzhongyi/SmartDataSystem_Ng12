@@ -21,7 +21,7 @@ export class CollectionScoreBarInnerBusiness implements ICommonBarCharBusiness {
     private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CommonBarChartConverter
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionIds = [x.Id];
     });
   }

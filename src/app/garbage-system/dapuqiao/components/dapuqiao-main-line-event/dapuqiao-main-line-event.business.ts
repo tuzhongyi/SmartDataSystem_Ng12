@@ -22,7 +22,7 @@ export class DapuqiaoMainEventLineBusiness
   async load(...args: any): Promise<DaPuQiaoMainLineEventModel> {
     let days = 7;
     let duration = DateTimeTool.beforeDay(new Date(), days);
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     let data = await this.getData(division.Id, duration);
     console.log(data);
     let model = this.convert(duration.begin, days, data);

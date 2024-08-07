@@ -32,11 +32,11 @@ export class GarbageDropRecordTaskTableBusiness
     private converter: GarbageDropRecordTaskTableConverter,
     private global: GlobalStorageService
   ) {
-    this.division = this.global.division.promise.selected;
+    this.division = this.global.division.selected;
   }
 
   async load(args: GarbageDropRecordFilter) {
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     let divisionId = args.divisionId ?? division.Id;
     this.division = this.service.division.get(divisionId);
 

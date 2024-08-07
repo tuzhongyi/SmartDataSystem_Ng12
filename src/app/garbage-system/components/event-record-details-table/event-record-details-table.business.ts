@@ -34,7 +34,7 @@ export class EventRecordDetailsTableBusiness
     let stations: GarbageStation[];
     let cameras: Camera[] = [];
 
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     if (opts) {
       divisions = await this.getDivisions(division.Id);
       stations = await this.getStation(opts.divisionId);

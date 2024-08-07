@@ -82,7 +82,7 @@ export class CollectionRecordWindowComponent implements OnInit {
     private _business: CollectionRecordWindowBusiness,
     private _toastWindowService: ToastWindowService
   ) {
-    this._globalStorage.division.promise.selected.then((x) => {
+    this._globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionIds = [x.Id];
 
       let data = this._toastWindowService.data;

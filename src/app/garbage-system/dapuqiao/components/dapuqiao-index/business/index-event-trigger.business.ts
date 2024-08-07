@@ -39,7 +39,7 @@ export class RetentionRankEventTrigger {
     private global: GlobalStorageService
   ) {}
   onclick(args: RetentionRankArgs) {
-    this.global.division.promise.selected.then((x) => {
+    this.global.division.selected.then((x) => {
       let divisionId = x.Id;
       if (args.model.data instanceof DivisionNumberStatistic) {
         divisionId = args.model.id;

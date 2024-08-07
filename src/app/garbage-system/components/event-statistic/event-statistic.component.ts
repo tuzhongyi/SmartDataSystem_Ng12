@@ -111,7 +111,7 @@ export class EventStatisticComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   private _changeData() {
-    this._storeService.division.promise.selected.then((division) => {
+    this._storeService.division.selected.then((division) => {
       this.divisionId = division.Id;
       this.currentDivisionType = division.DivisionType;
       this._loadData();

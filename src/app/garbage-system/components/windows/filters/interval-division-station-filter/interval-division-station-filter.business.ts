@@ -37,7 +37,7 @@ export class EventRecordFilterBusiness
     let stations: GarbageStation[];
     let cameras: Camera[] = [];
 
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     if (opts) {
       divisions = await this.getDivisions(division.Id);
       let divisionId = opts.divisionId;

@@ -37,7 +37,7 @@ export class TaskTableConverter
   }
 
   private async itemConvert(index: number, source: GarbageDropEventRecord) {
-    let _default = await this.global.division.promise.default;
+    let _default = await this.global.division.default;
     let vm = new TaskTableViewModel<GarbageDropEventRecord>();
     vm.StationName = source.Data.StationName;
     vm.Processor = source.Data.ProcessorName ?? '';

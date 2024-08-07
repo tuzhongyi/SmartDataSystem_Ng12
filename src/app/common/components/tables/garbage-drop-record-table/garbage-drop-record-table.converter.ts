@@ -75,7 +75,7 @@ export class GarbageDropEventRecordConverter
       model.DropDuration = Language.Time(duration);
     }
 
-    let _default = await this.global.division.promise.default;
+    let _default = await this.global.division.default;
     let istimeout =
       _default.DivisionType === DivisionType.City
         ? source.Data.IsSuperTimeout

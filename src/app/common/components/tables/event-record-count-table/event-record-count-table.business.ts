@@ -39,7 +39,7 @@ export class EventRecordCountTableBusiness
     opts: EventRecordCountTableOptions
   ): Promise<EventRecordCountTableModel[]> {
     let id = opts.id;
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     if (!id) {
       id = division.Id;
     }

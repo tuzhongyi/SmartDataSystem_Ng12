@@ -28,7 +28,7 @@ export class DeviceListTableBusiness
     size: number,
     args: DeviceListTableArgs
   ): Promise<PagedList<DeviceViewModel>> {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let data = await this.getData(
       index,
       size,

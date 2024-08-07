@@ -30,7 +30,7 @@ export class GarbageFullStationTableBusiness
     size: number,
     args: GarbageFullStationTableArgs
   ): Promise<PagedList<GarbageFullStationTableModel>> {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let data = await this.getData(index, size, division.Id, args);
     let model = await this.converter.Convert(data);
     return model;

@@ -73,7 +73,7 @@ export class CollectionMapControlBusiness {
         this.onMapClicked();
       };
 
-      let division = await this.global.division.promise.selected;
+      let division = await this.global.division.selected;
       this.loadDivision(division.Id);
 
       this.setContentMenu();

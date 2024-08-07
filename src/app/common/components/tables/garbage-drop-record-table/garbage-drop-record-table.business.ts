@@ -49,8 +49,7 @@ export class GarbageDropRecordTableBusiness
     params.IsHandle = opts.IsHandle;
 
     if (
-      (await this.global.division.promise.default).DivisionType ===
-      DivisionType.City
+      (await this.global.division.default).DivisionType === DivisionType.City
     ) {
       params.IsSuperTimeout = opts.IsTimeout;
     } else {

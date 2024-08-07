@@ -23,7 +23,7 @@ export class DivisionStationTreeFilterBusiness
     type: DivisionType,
     stationId?: string
   ): Promise<DivisionTreeSource[]> {
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     return this.getData(type, stationId, division.Id);
   }
   async getData(

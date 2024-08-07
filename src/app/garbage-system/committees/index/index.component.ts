@@ -122,7 +122,7 @@ export class CommitteesIndexComponent implements OnInit {
       });
     }
 
-    this.global.division.promise.selected.then((division) => {
+    this.global.division.selected.then((division) => {
       this.service.getCommittees(division.Id).then((x: Division) => {
         this.navication.committees = x;
         this.global.division.init(x);

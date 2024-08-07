@@ -13,11 +13,7 @@ export class DapuqiaoMainSuperviseButtonBusiness {
   ) {}
 
   async load() {
-    let datas = await this.getData(
-      (
-        await this.global.division.promise.default
-      ).Id
-    );
+    let datas = await this.getData((await this.global.division.default).Id);
     let value = 0;
     for (let i = 0; i < datas.length; i++) {
       const data = datas[i];

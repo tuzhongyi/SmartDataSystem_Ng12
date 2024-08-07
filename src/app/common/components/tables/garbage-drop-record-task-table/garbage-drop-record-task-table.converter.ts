@@ -49,7 +49,7 @@ export class GarbageDropRecordTaskTableConverter {
       let GarbageDropHandleCount = 0;
       let GarbageDropTimeoutCount = 0;
 
-      let _default = await this.global.division.promise.default;
+      let _default = await this.global.division.default;
 
       numbers.forEach((x) => {
         if (x.EventType == EventType.GarbageDrop) {

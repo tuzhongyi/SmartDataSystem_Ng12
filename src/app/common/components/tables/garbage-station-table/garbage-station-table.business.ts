@@ -33,7 +33,7 @@ export class GarbageStationTableBusiness
   ): Promise<PagedList<GarbageStationTableModel>> {
     let divisionId = args.divisionId;
     if (!divisionId) {
-      let division = await this.storeService.division.promise.selected;
+      let division = await this.storeService.division.selected;
       divisionId = division.Id;
     }
     let data = await this.getData(index, size, divisionId, args);

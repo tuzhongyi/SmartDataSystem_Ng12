@@ -32,7 +32,7 @@ export class GarbageDropStationTableBusiness
     page: PagedParams,
     args: GarbageDropStationTableArgs
   ): Promise<PagedList<GarbageDropStationTableModel>> {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let divisionId = args.divisionId ?? division.Id;
 
     let data = await this.getData(divisionId, page, args.opts);

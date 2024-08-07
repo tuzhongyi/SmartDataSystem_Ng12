@@ -32,7 +32,7 @@ export class DisposalRankBusiness
   }
 
   async load(type: DisposalRankType): Promise<RankModel[]> {
-    let division = await this.storeService.division.promise.selected;
+    let division = await this.storeService.division.selected;
     let data = await this.getData(division.Id);
     let result = this.Converter.Convert(data, type);
     result = result.sort((a, b) => {

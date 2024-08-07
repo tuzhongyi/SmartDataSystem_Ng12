@@ -30,7 +30,7 @@ export class GarbageStationCardRecordComponent implements OnInit {
   Language = Language;
 
   ngOnInit() {
-    this.global.division.promise.default.then((x) => {
+    this.global.division.default.then((x) => {
       this.divisiontree = new LabelTreeManager(x.DivisionType);
       this.business.first().then((x) => {
         if (this.divisiontree) {

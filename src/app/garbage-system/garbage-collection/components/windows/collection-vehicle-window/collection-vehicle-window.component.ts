@@ -80,7 +80,7 @@ export class CollectionVehicleWindowComponent implements OnInit {
     @Optional() private _toastWindowService: ToastWindowService
   ) {
     // console.log(this._toastWindowService.data);
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionId = x.Id;
       let data = this._toastWindowService.data;
       if (data) {

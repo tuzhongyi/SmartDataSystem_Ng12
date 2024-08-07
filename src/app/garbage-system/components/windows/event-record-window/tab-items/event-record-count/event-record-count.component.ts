@@ -35,7 +35,7 @@ export class EventRecordCountComponent implements OnInit {
     private global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    this.global.division.promise.default.then((x) => {
+    this.global.division.default.then((x) => {
       this.default = x;
     });
   }
@@ -105,7 +105,7 @@ export class EventRecordCountComponent implements OnInit {
     if (this.opts.type) {
       return this.opts.type;
     }
-    let division = await this.global.division.promise.selected;
+    let division = await this.global.division.selected;
     this.opts.type = EnumTool.division.child(division.DivisionType);
     return this.opts.type;
   }

@@ -73,7 +73,7 @@ export class CollectionScoreRankComponent implements OnInit {
     private _business: CollectionScoreRankBusiness,
     private _globalStorage: GlobalStorageService
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionIds = [x.Id];
     });
     this.subscription = this._globalStorage.division.change.subscribe(
@@ -85,7 +85,7 @@ export class CollectionScoreRankComponent implements OnInit {
     this._init();
   }
   private async _init() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     this.searchInfo.DivisionIds = [division.Id];
     this.model = await this._business.init(this.searchInfo);
     this.rankModel = this.model.RankModel;

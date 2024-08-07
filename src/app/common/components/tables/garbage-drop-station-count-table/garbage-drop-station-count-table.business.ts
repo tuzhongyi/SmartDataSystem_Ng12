@@ -26,7 +26,7 @@ export class GarbageDropStationCountTableBusiness
   async load(
     args: GarbageDropStationCountTableArgs
   ): Promise<GarbageDropStationCountTableModel[]> {
-    let _default = await this.store.division.promise.default;
+    let _default = await this.store.division.default;
     let data = await this.getData(args);
     let model = await this.converter.Convert(data, _default.DivisionType);
     return model;
@@ -37,7 +37,7 @@ export class GarbageDropStationCountTableBusiness
     let duration = DurationParams.TimeUnit(args.unit, args.date);
     let divisionId = args.parentId;
     if (!divisionId) {
-      divisionId = (await this.store.division.promise.default).Id;
+      divisionId = (await this.store.division.default).Id;
     }
 
     if (args.type === DivisionType.None) {

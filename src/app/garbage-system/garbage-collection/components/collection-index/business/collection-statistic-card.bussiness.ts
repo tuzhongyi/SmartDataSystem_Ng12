@@ -54,7 +54,7 @@ export class CollectionStatisticCardBusiness {
 
   // 获取垃圾清运车数量
   private async _listGarbageVehicle() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     let params = new GetGarbageVehiclesParams();
     params.DivisionId = division.Id;
     return this._garbageVehicleRequest.list(params);
@@ -62,21 +62,21 @@ export class CollectionStatisticCardBusiness {
 
   // 获取垃圾清运数量
   private async _listGarbageWeight() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     return this._collectionDivisionRequest.garbage.weight.get(division.Id);
   }
 
   // 获取垃圾清运人员数量
   private async _listGarbageMember() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     let params = new GetCollectionMembersParams();
     params.DivisionId = division.Id;
     return this._collectionMemberRequset.list(params);
   }
 
   private async _listGarbagePoints() {
-    let _default = await this._globalStorage.division.promise.default;
-    let division = await this._globalStorage.division.promise.selected;
+    let _default = await this._globalStorage.division.default;
+    let division = await this._globalStorage.division.selected;
     let params = new GetCollectionPointsParams();
     if (_default.Id !== division.Id) {
       params.DivisionIds = [division.Id];
@@ -85,7 +85,7 @@ export class CollectionStatisticCardBusiness {
   }
 
   private async _listCollectionDivisionStatisticNumber() {
-    let division = await this._globalStorage.division.promise.selected;
+    let division = await this._globalStorage.division.selected;
     return this._collectionDivisionRequest.statistic.number(division.Id);
   }
 }

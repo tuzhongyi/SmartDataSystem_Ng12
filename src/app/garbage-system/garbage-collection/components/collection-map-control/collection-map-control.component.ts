@@ -183,7 +183,7 @@ export class CollectionMapControlComponent
       this.amap.init();
     });
     this.global.division.change.subscribe((x) => {
-      this.global.division.promise.selected.then((x) => {
+      this.global.division.selected.then((x) => {
         this.amap.divisionSelect(x.Id);
       });
     });

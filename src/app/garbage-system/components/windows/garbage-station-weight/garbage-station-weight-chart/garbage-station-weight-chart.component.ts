@@ -61,7 +61,7 @@ export class GarbageStationWeightChartComponent implements OnInit {
   chart?: ChartConfig;
 
   ngOnInit(): void {
-    this.global.division.promise.default.then((division) => {
+    this.global.division.default.then((division) => {
       this.args.id = division.Id;
     });
   }
@@ -120,7 +120,7 @@ export class GarbageStationWeightChartComponent implements OnInit {
       this.args.id = this.selected.division.Id;
       this.args.type.division = this.selected.division.DivisionType;
     } else {
-      let _default = await this.global.division.promise.default;
+      let _default = await this.global.division.default;
       this.args.id = _default.Id;
       this.args.type.division = _default.DivisionType;
     }

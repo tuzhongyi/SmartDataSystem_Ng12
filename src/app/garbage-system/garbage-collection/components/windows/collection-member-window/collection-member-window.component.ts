@@ -47,7 +47,7 @@ export class CollectionMemberWindowComponent implements OnInit {
     private _business: CollectionMemberWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
-    _globalStorage.division.promise.selected.then((x) => {
+    _globalStorage.division.selected.then((x) => {
       this.searchInfo.DivisionId = x.Id;
 
       let data = this._toastWindowService.data;
