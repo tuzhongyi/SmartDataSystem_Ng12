@@ -33,7 +33,7 @@ export class TaskTableBusiness
 
   async load(divisionId: string) {
     let data = await this.getData(divisionId);
-    let model = this.converter.Convert(data);
+    let model = await this.converter.Convert(data);
     return model;
   }
 }

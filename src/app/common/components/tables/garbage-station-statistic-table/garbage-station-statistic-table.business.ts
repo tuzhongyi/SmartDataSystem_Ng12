@@ -29,7 +29,8 @@ export class GarbageStationStatisticTableBusiness
     divisionId?: string
   ): Promise<GarbageStationStatisticModel[]> {
     if (!divisionId) {
-      divisionId = this.storeService.division.selected.Id;
+      let division = await this.storeService.division.promise.selected;
+      divisionId = division.Id;
     }
     let data = await this.getData(divisionId, date, unit);
 

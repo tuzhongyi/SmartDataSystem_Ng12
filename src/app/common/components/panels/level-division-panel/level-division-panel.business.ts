@@ -22,7 +22,8 @@ export class LevelDivisionPanelBusiness
   async load(parent?: ILevelListNode): Promise<ILevelListNode[]> {
     let parentId = parent?.Id;
     if (!parentId) {
-      parentId = this.global.division.selected.Id;
+      let division = await this.global.division.promise.selected;
+      parentId = division.Id;
     }
     let data = await this.getData(parentId);
     let model = this.Converter.Convert(data);

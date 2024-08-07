@@ -24,7 +24,8 @@ export class DeviceStateBusiness
     new DeviceStateConverter();
 
   async load(): Promise<DeviceStateCountModel> {
-    let data = await this.getData(this.storeService.division.selected.Id);
+    let division = await this.storeService.division.promise.selected;
+    let data = await this.getData(division.Id);
     let model = this.Converter.Convert(data);
     return model;
   }

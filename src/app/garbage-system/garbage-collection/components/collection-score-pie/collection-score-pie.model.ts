@@ -1,4 +1,3 @@
-import { EChartsOption } from 'echarts';
 import { CommonPieChartModel } from 'src/app/common/components/common-pie-chart/common-pie-chart.model';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
 
@@ -27,5 +26,5 @@ export interface ICollectionScorePieData<T = any> {
 }
 
 export interface ICollectionScorePieSearchInfo {
-  DivisionId: string;
+  DivisionId?: string;
 }

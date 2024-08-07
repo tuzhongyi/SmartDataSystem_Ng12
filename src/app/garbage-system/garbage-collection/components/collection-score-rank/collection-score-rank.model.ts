@@ -13,7 +13,7 @@ export interface ICollectionScoreRankSearchInfo {
   BeginTime: Date;
   EndTime: Date;
   Type?: CollectionPointScore;
-  DivisionIds: string[];
+  DivisionIds?: string[];
 }
 
 export class CollectionScoreRankArgs {

@@ -41,24 +41,26 @@ export class DetailsChartHeatmapBusiness {
     return models;
   }
 
-  month(args: DetailsChartHeatmapArgs) {
+  async month(args: DetailsChartHeatmapArgs) {
     if (args.stationId) {
       return this.station.month(args.stationId, args.duration);
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      divisionId = this.global.division.selected.Id;
+      let division = await this.global.division.promise.selected;
+      divisionId = division.Id;
     }
     return this.division.month(divisionId, args.duration);
   }
 
-  year(args: DetailsChartHeatmapArgs) {
+  async year(args: DetailsChartHeatmapArgs) {
     if (args.stationId) {
       return this.station.year(args.stationId, args.duration);
     }
     let divisionId = args.divisonId;
     if (!divisionId) {
-      divisionId = this.global.division.selected.Id;
+      let division = await this.global.division.promise.selected;
+      divisionId = division.Id;
     }
     return this.division.year(divisionId, args.duration);
   }

@@ -68,11 +68,18 @@ export class GarbageDropRecordTaskTableComponent implements OnInit {
     this.loading = true;
     this.business.load(this.args).then((data) => {
       this.datas = data;
-      this.total = this.business.total(data);
-      this.type = EnumTool.division.child(this.business.division.DivisionType);
 
-      this.loading = false;
-      this.loaded.emit(this.datas);
+      let promise1 = this.business.total(data).then((x) => {
+        this.total = x;
+      });
+      let promise2 = this.business.division.then((x) => {
+        this.type = EnumTool.division.child(x.DivisionType);
+      });
+
+      Promise.all([promise1, promise2]).finally(() => {
+        this.loading = false;
+        this.loaded.emit(this.datas);
+      });
     });
   }
 

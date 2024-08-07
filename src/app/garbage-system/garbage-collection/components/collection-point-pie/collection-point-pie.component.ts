@@ -27,9 +27,7 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
 
   title = '垃圾收运点位';
 
-  searchInfo: ICollectionPointPieSearchInfo = {
-    DivisionIds: [this._globalStorage.division.selected.Id],
-  };
+  searchInfo: ICollectionPointPieSearchInfo = {};
   model?: CollectionPointPieModel;
 
   subscription: Subscription;
@@ -40,6 +38,9 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
     private _business: CollectionPointPieBusiness,
     private _globalStorage: GlobalStorageService
   ) {
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+    });
     this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
@@ -50,7 +51,8 @@ export class CollectionPointPieComponent implements OnInit, OnDestroy {
   }
 
   private async _init() {
-    this.searchInfo.DivisionIds = [this._globalStorage.division.selected.Id];
+    let division = await this._globalStorage.division.promise.selected;
+    this.searchInfo.DivisionIds = [division.Id];
 
     this.model = await this._business.init(this.searchInfo);
 

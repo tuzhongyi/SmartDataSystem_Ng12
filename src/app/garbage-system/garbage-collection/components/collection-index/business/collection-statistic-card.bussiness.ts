@@ -54,38 +54,38 @@ export class CollectionStatisticCardBusiness {
 
   // 获取垃圾清运车数量
   private async _listGarbageVehicle() {
+    let division = await this._globalStorage.division.promise.selected;
     let params = new GetGarbageVehiclesParams();
-    params.DivisionId = this._globalStorage.division.selected.Id;
+    params.DivisionId = division.Id;
     return this._garbageVehicleRequest.list(params);
   }
 
   // 获取垃圾清运数量
-  private _listGarbageWeight() {
-    return this._collectionDivisionRequest.garbage.weight.get(
-      this._globalStorage.division.selected.Id
-    );
+  private async _listGarbageWeight() {
+    let division = await this._globalStorage.division.promise.selected;
+    return this._collectionDivisionRequest.garbage.weight.get(division.Id);
   }
 
   // 获取垃圾清运人员数量
-  private _listGarbageMember() {
+  private async _listGarbageMember() {
+    let division = await this._globalStorage.division.promise.selected;
     let params = new GetCollectionMembersParams();
-    params.DivisionId = this._globalStorage.division.selected.Id;
+    params.DivisionId = division.Id;
     return this._collectionMemberRequset.list(params);
   }
 
   private async _listGarbagePoints() {
+    let _default = await this._globalStorage.division.promise.default;
+    let division = await this._globalStorage.division.promise.selected;
     let params = new GetCollectionPointsParams();
-    if (
-      (await this._globalStorage.division.promise.default).Id !==
-      this._globalStorage.division.selected.Id
-    )
-      params.DivisionIds = [this._globalStorage.division.selected.Id];
+    if (_default.Id !== division.Id) {
+      params.DivisionIds = [division.Id];
+    }
     return this._collectionPointsRequest.list(params);
   }
 
-  private _listCollectionDivisionStatisticNumber() {
-    return this._collectionDivisionRequest.statistic.number(
-      this._globalStorage.division.selected.Id
-    );
+  private async _listCollectionDivisionStatisticNumber() {
+    let division = await this._globalStorage.division.promise.selected;
+    return this._collectionDivisionRequest.statistic.number(division.Id);
   }
 }

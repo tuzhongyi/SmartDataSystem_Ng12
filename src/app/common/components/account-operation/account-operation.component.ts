@@ -18,6 +18,7 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/garbage-station/user.model';
+import { EnumTool } from '../../tools/enum-tool/enum.tool';
 import { AccountOperationDisplay } from './account-operation.model';
 import { AccountOperationService } from './account-operation.service';
 
@@ -75,6 +76,19 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
       this.display.changePassword = x.DivisionType === DivisionType.Committees;
       this.display.bindMobile = x.DivisionType === DivisionType.Committees;
     });
+
+    if (
+      this.local.user &&
+      this.local.user.Resources &&
+      this.local.user.Resources
+    ) {
+      let resource = this.local.user.Resources[0];
+      this.global.division.init({
+        Id: resource.Id,
+        Name: resource.Name,
+        DivisionType: EnumTool.resource.to.division(resource.ResourceType),
+      });
+    }
   }
 
   ngOnDestroy(): void {

@@ -46,11 +46,10 @@ export class NegativeCommentRankComponent implements OnInit {
   resourceTypeDisplay: boolean = true;
   // 处理后的排行榜数据
   public rankData: RankModel[] = [];
-  ngOnInit(): void {
+  async ngOnInit() {
+    let division = await this.storeService.division.promise.selected;
     let child = EnumTool.resource.child(
-      EnumTool.resource.from.division(
-        this.storeService.division.selected.DivisionType
-      )
+      EnumTool.resource.from.division(division.DivisionType)
     );
     this.resourceTypes = [
       new SelectItem(child.toString(), child, Language.UserResourceType(child)),
@@ -75,14 +74,13 @@ export class NegativeCommentRankComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
+    let division = await this.storeService.division.promise.selected;
     this.resourceTypeDisplay =
-      this.storeService.division.selected.DivisionType !==
-      DivisionType.Committees;
+      division.DivisionType !== DivisionType.Committees;
     this.title = Language.EventType(this.eventType) + '排名';
     this.rankData = await this.business.load(
-      this.storeService.division.selected.Id,
-      this.storeService.division.selected.DivisionType ===
-        DivisionType.Committees
+      division.Id,
+      division.DivisionType === DivisionType.Committees
         ? UserResourceType.Station
         : this.resourceType,
       this.eventType

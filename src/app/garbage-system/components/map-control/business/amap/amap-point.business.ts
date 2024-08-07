@@ -48,7 +48,9 @@ export class AMapPointBusiness {
       this.initConstruction();
       this.status(this.amap.source.all);
 
-      return this.count(this.global.division.selected.Id);
+      return this.global.division.promise.selected.then((x) => {
+        return this.count(x.Id);
+      });
     });
   }
 
@@ -275,7 +277,9 @@ export class AMapPointBusiness {
       this.view.station.keep();
       this.view.rfid.keep();
       this.view.construction.keep();
-      this.count(this.global.division.selected.Id);
+      this.global.division.promise.selected.then((x) => {
+        this.count(x.Id);
+      });
     });
   }
 

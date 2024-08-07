@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
@@ -11,26 +11,20 @@ export class DeployAMapClient {
   }
   public get client(): Promise<CesiumMapClient> {
     return new Promise((resolve) => {
-      wait(
-        () => {
-          return this.isloaded && !!this._client;
-        },
-        () => {
-          resolve(this._client!);
-        }
-      );
+      wait2(() => {
+        return this.isloaded && !!this._client;
+      }).then(() => {
+        resolve(this._client!);
+      });
     });
   }
   public get controller(): Promise<CesiumDataController.Controller> {
     return new Promise((resolve) => {
-      wait(
-        () => {
-          return this.isloaded && !!this._controller;
-        },
-        () => {
-          resolve(this._controller!);
-        }
-      );
+      wait2(() => {
+        return this.isloaded && !!this._controller;
+      }).then(() => {
+        resolve(this._controller!);
+      });
     });
   }
   loaded: EventEmitter<void> = new EventEmitter();

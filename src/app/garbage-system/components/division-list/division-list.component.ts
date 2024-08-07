@@ -32,7 +32,8 @@ export class DivisionListComponent implements OnInit {
     this.loadData();
   }
   async loadData() {
-    let divisionId = this.storeService.division.selected.Id;
+    let division = await this.storeService.division.promise.selected;
+    let divisionId = division.Id;
     this.business.load(divisionId).then((model) => {
       this.model = model;
     });
@@ -41,7 +42,7 @@ export class DivisionListComponent implements OnInit {
   divisionclick(data?: Division) {
     if (data) {
       this.selectedId = data.Id;
-      this.storeService.division.setSelected(data);
+      this.storeService.division.select(data);
     }
   }
 

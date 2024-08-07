@@ -42,8 +42,11 @@ export class EventRecordWindowListComponent implements OnInit {
     if (this.divisionId) {
       this.filter.filter.divisionId = this.divisionId;
     }
-    this.filter.filter.divisionId =
-      this.filter.filter.divisionId ?? this.global.division.selected.Id;
+    if (!this.filter.filter.divisionId) {
+      this.global.division.promise.selected.then((x) => {
+        this.filter.filter.divisionId = x.Id;
+      });
+    }
   }
 
   onimage(model: PagedArgs<EventRecordViewModel>) {

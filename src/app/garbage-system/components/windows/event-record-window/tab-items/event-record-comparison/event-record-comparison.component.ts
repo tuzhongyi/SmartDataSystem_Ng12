@@ -239,14 +239,15 @@ export class EventRecordComparisonComponent
     this.chartType = item.value;
     this.loadData();
   }
-  onusertype(item: SelectItem) {
+  async onusertype(item: SelectItem) {
     this.divisionType = item.value;
-    this.selection.depth = this.getdepth(this.divisionType);
+    this.selection.depth = await this.getdepth(this.divisionType);
     this.selection.selecteds = [];
   }
 
-  getdepth(type: DivisionType) {
-    switch (this.global.division.default.DivisionType) {
+  async getdepth(type: DivisionType) {
+    let _default = await this.global.division.promise.default;
+    switch (_default.DivisionType) {
       case DivisionType.City:
         switch (type) {
           case DivisionType.County:

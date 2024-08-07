@@ -261,7 +261,11 @@ export function wait(
     }
   }, timepoll);
 }
-export function wait2(whether: () => boolean, timepoll = 100, timeout = 0) {
+export function wait2(
+  whether: () => boolean,
+  timepoll = 100,
+  timeout = 1000 * 1 * 60
+) {
   return new Promise<void>((resolve, reject) => {
     let stop = false;
     wait(
@@ -269,14 +273,18 @@ export function wait2(whether: () => boolean, timepoll = 100, timeout = 0) {
         return whether() || stop;
       },
       () => {
-        resolve();
+        if (stop) {
+          console.warn('wait2 timeout');
+          reject();
+        } else {
+          resolve();
+        }
       },
       timepoll
     );
     if (timeout) {
       setTimeout(() => {
         stop = true;
-        reject();
       }, timeout);
     }
   });

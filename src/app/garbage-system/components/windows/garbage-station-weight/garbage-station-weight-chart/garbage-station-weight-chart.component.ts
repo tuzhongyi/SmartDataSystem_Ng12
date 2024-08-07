@@ -120,9 +120,9 @@ export class GarbageStationWeightChartComponent implements OnInit {
       this.args.id = this.selected.division.Id;
       this.args.type.division = this.selected.division.DivisionType;
     } else {
-      this.args.id = (await this.global.division.promise.default).Id;
-
-      this.args.type.division = this.global.division.default.DivisionType;
+      let _default = await this.global.division.promise.default;
+      this.args.id = _default.Id;
+      this.args.type.division = _default.DivisionType;
     }
     this.loadData();
   }

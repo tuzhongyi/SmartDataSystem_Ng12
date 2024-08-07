@@ -36,7 +36,6 @@ export class CollectionMemberWindowComponent implements OnInit {
     PageCount: 0,
   };
   searchInfo: ICollectionMemberWindowSearchInfo = {
-    DivisionId: this._globalStorage.division.selected.Id,
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
@@ -44,14 +43,18 @@ export class CollectionMemberWindowComponent implements OnInit {
     Type: '',
   };
   constructor(
-    private _globalStorage: GlobalStorageService,
+    _globalStorage: GlobalStorageService,
     private _business: CollectionMemberWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
-    let data = this._toastWindowService.data;
-    if (data) {
-      if (data.divisionId) this.searchInfo.DivisionId = data.divisionId;
-    }
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionId = x.Id;
+
+      let data = this._toastWindowService.data;
+      if (data) {
+        if (data.divisionId) this.searchInfo.DivisionId = data.divisionId;
+      }
+    });
   }
 
   ngOnInit(): void {

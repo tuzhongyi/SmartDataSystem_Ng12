@@ -76,16 +76,11 @@ export class RetentionRankBusiness
   async load(retentionType?: RetentionType): Promise<RankModel[]> {
     try {
       if (retentionType != undefined) this.retentionType = retentionType;
-      let data = await this.getData(
-        this.storeService.division.selected.Id,
-        this.storeService.division.selected.DivisionType
-      );
+      let division = await this.storeService.division.promise.selected;
+      let data = await this.getData(division.Id, division.DivisionType);
       while (data.length < 6) {
         let item: DivisionNumberStatistic | GarbageStationNumberStatistic;
-        if (
-          this.storeService.division.selected.DivisionType ==
-          DivisionType.Committees
-        ) {
+        if (division.DivisionType == DivisionType.Committees) {
           item = new GarbageStationNumberStatistic();
           item.Name = '-';
           (data as GarbageStationNumberStatistic[]).push(item);

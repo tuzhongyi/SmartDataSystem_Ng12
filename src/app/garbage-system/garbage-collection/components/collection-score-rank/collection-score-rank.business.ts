@@ -45,16 +45,17 @@ export class CollectionScoreRankBusiness {
   }
 
   private async _listScores(searchInfo: ICollectionScoreRankSearchInfo) {
+    let division = await this._globalStorageService.division.promise.selected;
+    let _default = await this._globalStorageService.division.promise.default;
+    let divisionIds = searchInfo.DivisionIds ?? [division.Id];
+
     let params = new GetCollectionPointScoreTopListParams();
     params.BeginTime = searchInfo.BeginTime;
     params.EndTime = searchInfo.EndTime;
     params.DivisionIds = searchInfo.DivisionIds;
 
-    if (searchInfo.DivisionIds.length == 1) {
-      if (
-        searchInfo.DivisionIds[0] ==
-        (await this._globalStorageService.division.promise.default).Id
-      ) {
+    if (divisionIds.length == 1) {
+      if (divisionIds[0] == _default.Id) {
         params.DivisionIds = [];
       }
     }

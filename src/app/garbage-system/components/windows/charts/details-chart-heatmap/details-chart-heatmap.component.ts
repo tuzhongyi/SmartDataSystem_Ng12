@@ -6,7 +6,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { EChartsOption } from 'echarts';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { DetailsChartHeatmapBusiness } from './business/details-chart-heatmap.business';
 import { DetailsChartHeatmapController } from './controller/details-chart-heatmap.controller';
 import { DetailsChartHeatmapArgs } from './details-chart-heatmap.model';
@@ -34,17 +34,14 @@ export class DetailsChartHeatmapComponent implements OnInit, OnDestroy {
     if (this.input_load) {
       this.input_load.subscribe((args) => {
         this.args = args;
-        wait(
-          () => {
-            return this.inited && !this.destroy;
-          },
-          () => {
-            if (this.destroy) {
-              return;
-            }
-            this.load();
+        wait2(() => {
+          return this.inited && !this.destroy;
+        }).then(() => {
+          if (this.destroy) {
+            return;
           }
-        );
+          this.load();
+        });
       });
     }
   }

@@ -43,7 +43,6 @@ export class CollectionPointWindowComponent implements OnInit {
     PageCount: 0,
   };
   searchInfo: ICollectionPointWindowSearchInfo = {
-    DivisionIds: [this._globalStorage.division.selected.Id],
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
@@ -55,15 +54,19 @@ export class CollectionPointWindowComponent implements OnInit {
   constructor(
     public collectionDivisionTreeBusiness: CollectionDivisionTreeBusiness,
 
-    private _globalStorage: GlobalStorageService,
+    _globalStorage: GlobalStorageService,
     private _business: CollectionPointWindowBusiness,
     @Optional() private _toastWindowService: ToastWindowService
   ) {
-    let data = this._toastWindowService.data;
-    if (data) {
-      if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
-      if ('type' in data) this.searchInfo.Type = data.type;
-    }
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+
+      let data = this._toastWindowService.data;
+      if (data) {
+        if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
+        if ('type' in data) this.searchInfo.Type = data.type;
+      }
+    });
   }
 
   ngOnInit(): void {

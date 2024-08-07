@@ -19,8 +19,12 @@
         <div class="filter-item-title">行政区</div>
         <div class="filter-item-value">
           <div class="select-control">
-            <select [(ngModel)]="args.type" (change)="onTypeChange()">
-              <ng-container [ngSwitch]="store.division.default.DivisionType">
+            <select
+              [(ngModel)]="args.type"
+              (change)="onTypeChange()"
+              *ngIf="!!default"
+            >
+              <ng-container [ngSwitch]="default.DivisionType">
                 <ng-container *ngSwitchCase="DivisionType.City">
                   <option [ngValue]="DivisionType.County">
                     {{ Language.UserResourceType(UserResourceType.County) }}

@@ -27,7 +27,8 @@ export class GarbageStationWindowRecordFilterBusiness
     divisionId?: string
   ): Promise<GarbageStationWindowRecordFilterModel> {
     if (!divisionId) {
-      divisionId = this.store.division.selected.Id;
+      let division = await this.store.division.promise.selected;
+      divisionId = division.Id;
     }
 
     let stations = await this.getData(divisionId);

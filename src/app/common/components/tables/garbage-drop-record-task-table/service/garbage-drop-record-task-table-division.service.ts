@@ -1,4 +1,5 @@
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { IDivision } from 'src/app/network/model/garbage-station/division.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,
@@ -10,7 +11,6 @@ import {
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
 import { GarbageDropRecordFilter } from '../../garbage-drop-record-table/garbage-drop-record.model';
-import { IDivision } from '../garbage-drop-record-task-table.model';
 
 export class GarbageDropRecordTaskTableDivisionService {
   constructor(private service: DivisionRequestService) {}

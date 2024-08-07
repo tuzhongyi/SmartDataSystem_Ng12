@@ -16,7 +16,7 @@ import {
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ISideNavConfig } from '../../models/sidenav-config';
-import { wait } from '../../tools/tool';
+import { wait2 } from '../../tools/tool';
 
 @Component({
   selector: 'howell-sidenav',
@@ -62,26 +62,23 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     this._subscription = this._router.events.subscribe((e) => {
       if (e instanceof NavigationEnd) {
         // console.log('router', e);
-        wait(
-          () => {
-            return this.inited;
-          },
-          () => {
-            let mode = e.urlAfterRedirects.match(this.regExp);
-            // console.log('mode: ', mode);
-            if (mode && mode.groups && mode.groups.first) {
-              Object.assign(this.groups, mode.groups);
-              console.log(mode.groups['first']);
-              import(`src/assets/json/${mode.groups['first']}.json`).then(
-                (config) => {
-                  // console.log('config', config.data);
+        wait2(() => {
+          return this.inited;
+        }).then(() => {
+          let mode = e.urlAfterRedirects.match(this.regExp);
+          // console.log('mode: ', mode);
+          if (mode && mode.groups && mode.groups.first) {
+            Object.assign(this.groups, mode.groups);
+            console.log(mode.groups['first']);
+            import(`src/assets/json/${mode.groups['first']}.json`).then(
+              (config) => {
+                // console.log('config', config.data);
 
-                  this.models = config.data;
-                }
-              );
-            }
+                this.models = config.data;
+              }
+            );
           }
-        );
+        });
       }
     });
   }

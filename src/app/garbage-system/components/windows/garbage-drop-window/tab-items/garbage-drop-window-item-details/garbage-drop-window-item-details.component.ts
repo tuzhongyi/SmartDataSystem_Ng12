@@ -39,9 +39,8 @@ export class GarbageDropStationWindowItemDetailsComponent implements OnInit {
       business: business,
       types: [EventType.GarbageDrop, EventType.GarbageDropTimeout],
     };
-    controller.division = await business.division.get(
-      this.global.division.selected.Id
-    );
+    let division = await this.global.division.promise.selected;
+    controller.division = await business.division.get(division.Id);
     return controller;
   }
 }

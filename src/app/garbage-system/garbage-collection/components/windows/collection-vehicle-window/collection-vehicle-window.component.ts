@@ -64,7 +64,6 @@ export class CollectionVehicleWindowComponent implements OnInit {
   };
 
   searchInfo: ICollectionVehicleWindowSearchInfo = {
-    DivisionId: this._globalStorage.division.selected.Id,
     PageIndex: 1,
     PageSize: 9,
     State: CollectionDeviceStateCountType.All,
@@ -81,11 +80,14 @@ export class CollectionVehicleWindowComponent implements OnInit {
     @Optional() private _toastWindowService: ToastWindowService
   ) {
     // console.log(this._toastWindowService.data);
-    let data = this._toastWindowService.data;
-    if (data) {
-      if (data.type) this.searchInfo.State = data.type;
-      if (data.divisionId) this.searchInfo.DivisionId = data.divisionId;
-    }
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionId = x.Id;
+      let data = this._toastWindowService.data;
+      if (data) {
+        if (data.type) this.searchInfo.State = data.type;
+        if (data.divisionId) this.searchInfo.DivisionId = data.divisionId;
+      }
+    });
   }
 
   ngOnInit(): void {

@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
-import { wait } from '../../tools/tool';
+import { wait2 } from '../../tools/tool';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { VideoWindowViewModel } from './video-window.model';
 
@@ -32,26 +32,23 @@ export class VideoWindowComponent implements OnInit {
   play: EventEmitter<VideoModel> = new EventEmitter();
 
   ngOnInit(): void {
-    wait(
-      () => {
-        return this.loaded || this.window.show;
-      },
-      () => {
-        if (!this.window.show) return;
-        if (this.model) {
-          switch (location.hostname) {
-            case 'localhost':
-            case '127.0.0.1':
-              this.model.web = undefined;
-              break;
-            default:
-              break;
-          }
-
-          this.play.emit(this.model);
+    wait2(() => {
+      return this.loaded || this.window.show;
+    }).then(() => {
+      if (!this.window.show) return;
+      if (this.model) {
+        switch (location.hostname) {
+          case 'localhost':
+          case '127.0.0.1':
+            this.model.web = undefined;
+            break;
+          default:
+            break;
         }
+
+        this.play.emit(this.model);
       }
-    );
+    });
   }
   onclose() {
     this.window.show = false;

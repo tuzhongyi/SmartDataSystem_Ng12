@@ -17,10 +17,10 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserConfigType } from 'src/app/enum/user-config-type.enum';
 import { UserRequestService } from 'src/app/network/request/user/user-request.service';
 import { HowellUrl } from 'src/app/view-model/howell-url.model';
-import { wait } from '../../tools/tool';
+import { wait2 } from '../../tools/tool';
 import { UrlTool } from '../../tools/url-tool/url.tool';
-import { VideoModel, VideoPlayerState } from './video.model';
 import { ButtonName } from './WSPlayerProxyButtonName';
+import { VideoModel, VideoPlayerState } from './video.model';
 
 @Component({
   selector: 'app-video-player',
@@ -202,14 +202,11 @@ export class VideoPlayerComponent
   }
 
   onLoad(event: Event) {
-    wait(
-      () => {
-        return !!this.player;
-      },
-      () => {
-        this.eventRegist();
-      }
-    );
+    wait2(() => {
+      return !!this.player;
+    }).then(() => {
+      this.eventRegist();
+    });
   }
 
   async saveRuleState(state: boolean) {

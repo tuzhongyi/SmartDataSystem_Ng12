@@ -24,7 +24,7 @@
             <select [(ngModel)]="selected.type" (change)="ontype()">
               <option
                 [ngValue]="UserResourceType.County"
-                *ngIf="resourceType === UserResourceType.City"
+                *ngIf="(resourceType | async) === UserResourceType.City"
               >
                 {{ Language.UserResourceType(UserResourceType.County) }}
               </option>

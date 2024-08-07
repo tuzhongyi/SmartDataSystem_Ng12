@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { DivisionGarbageScore } from 'src/app/network/model/garbage-station/division-garbage-score.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import { CollectionScorePieConverter } from './collection-score-pie.converter';
@@ -8,7 +9,8 @@ import { ICollectionScorePieSearchInfo } from './collection-score-pie.model';
 export class CollectionScorePieBusiness {
   constructor(
     private _collectionDivisionRequest: CollectionDivisionRequestService,
-    private _converter: CollectionScorePieConverter
+    private _converter: CollectionScorePieConverter,
+    private global: GlobalStorageService
   ) {}
 
   async init(searchInfo: ICollectionScorePieSearchInfo) {
@@ -17,11 +19,11 @@ export class CollectionScorePieBusiness {
 
     return res;
   }
-  private _getDivisionScore(
+  private async _getDivisionScore(
     searchInfo: ICollectionScorePieSearchInfo
   ): Promise<DivisionGarbageScore> {
-    return this._collectionDivisionRequest.garbage.score.get(
-      searchInfo.DivisionId
-    );
+    let divisionId =
+      searchInfo.DivisionId ?? (await this.global.division.promise.selected).Id;
+    return this._collectionDivisionRequest.garbage.score.get(divisionId);
   }
 }

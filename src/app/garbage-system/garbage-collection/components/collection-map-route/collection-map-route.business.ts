@@ -1,6 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { MathTool } from 'src/app/common/tools/math.tool';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
@@ -55,20 +55,17 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
 
   load(source: GarbageVehicle) {
     return new Promise<boolean>((resolve) => {
-      wait(
-        () => {
-          return !!this.client && this.loaded;
-        },
-        () => {
-          if (this.point) {
-            this.client.Point.Remove(this.point.id);
-          }
-
-          this.client.Village.Basic(source.DivisionId!, false);
-          this.client.Viewer.Focus(source.DivisionId!);
-          this.point = this.converter.GarbageVehicle(source);
+      wait2(() => {
+        return !!this.client && this.loaded;
+      }).then(() => {
+        if (this.point) {
+          this.client.Point.Remove(this.point.id);
         }
-      );
+
+        this.client.Village.Basic(source.DivisionId!, false);
+        this.client.Viewer.Focus(source.DivisionId!);
+        this.point = this.converter.GarbageVehicle(source);
+      });
 
       resolve(true);
       // this.client.Point.Create(this.point);
@@ -77,47 +74,44 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
   }
 
   ready(points: GisRoutePoint[]) {
-    wait(
-      () => {
-        return !!this.client && this.loaded && !!this.point;
-      },
-      () => {
-        if (this.path) {
-          this.client.Draw.Route.Remove(this.path.id);
-        }
-        if (!points || points.length === 0) return;
-        let positions = points.map((x) => this.converter.GisPoint(x));
-        let opts = new CesiumDataController.DrawRouteOptions();
-
-        opts.route = new CesiumDataController.DrawLineOptions();
-        opts.route.img = 'img/route/vehicle_route.png';
-        opts.route.alpha = 1;
-        opts.route.width = 8;
-        opts.route.color = '#666666';
-        opts.route.outline = new CesiumDataController.DrawOutlineOptions();
-        opts.route.outline.enabled = true;
-        opts.route.outline.color = '#888888';
-
-        opts.passed = new CesiumDataController.DrawLineOptions();
-        opts.passed.alpha = 0.5;
-        opts.passed.color = '#23e353';
-        opts.passed.width = 8;
-        opts.passed.outline = new CesiumDataController.DrawOutlineOptions();
-        opts.passed.outline.enabled = true;
-        opts.passed.outline.color = '#adff2f';
-
-        let routeId = this.client.Draw.Route.Create(positions, opts);
-        if (this.point) {
-          this.client.Point.Remove(this.point.id);
-          this.point.position = positions[0];
-          this.client.Point.Create(this.point);
-        }
-        this.path = {
-          id: routeId,
-          points: points,
-        };
+    wait2(() => {
+      return !!this.client && this.loaded && !!this.point;
+    }).then(() => {
+      if (this.path) {
+        this.client.Draw.Route.Remove(this.path.id);
       }
-    );
+      if (!points || points.length === 0) return;
+      let positions = points.map((x) => this.converter.GisPoint(x));
+      let opts = new CesiumDataController.DrawRouteOptions();
+
+      opts.route = new CesiumDataController.DrawLineOptions();
+      opts.route.img = 'img/route/vehicle_route.png';
+      opts.route.alpha = 1;
+      opts.route.width = 8;
+      opts.route.color = '#666666';
+      opts.route.outline = new CesiumDataController.DrawOutlineOptions();
+      opts.route.outline.enabled = true;
+      opts.route.outline.color = '#888888';
+
+      opts.passed = new CesiumDataController.DrawLineOptions();
+      opts.passed.alpha = 0.5;
+      opts.passed.color = '#23e353';
+      opts.passed.width = 8;
+      opts.passed.outline = new CesiumDataController.DrawOutlineOptions();
+      opts.passed.outline.enabled = true;
+      opts.passed.outline.color = '#adff2f';
+
+      let routeId = this.client.Draw.Route.Create(positions, opts);
+      if (this.point) {
+        this.client.Point.Remove(this.point.id);
+        this.point.position = positions[0];
+        this.client.Point.Create(this.point);
+      }
+      this.path = {
+        id: routeId,
+        points: points,
+      };
+    });
   }
 
   route(
@@ -125,25 +119,22 @@ export class CollectionMapRouteBusiness implements ICollectionMapRouteBusiness {
     position?: CesiumDataController.Position,
     focus: boolean = false
   ) {
-    wait(
-      () => {
-        return !!this.client && this.loaded;
-      },
-      () => {
-        if (this.path && this.client && this.point) {
-          let routed = this.path.points.filter(
-            (x) => x.Time.getTime() <= date.getTime()
-          );
-          let positions = routed.map((x) => this.converter.GisPoint(x));
-          if (position) {
-            positions.pop();
-            positions.push(position);
-          }
-          this.point.position = positions[positions.length - 1];
-          this.routing(this.path.id, this.point, positions, focus);
+    wait2(() => {
+      return !!this.client && this.loaded;
+    }).then(() => {
+      if (this.path && this.client && this.point) {
+        let routed = this.path.points.filter(
+          (x) => x.Time.getTime() <= date.getTime()
+        );
+        let positions = routed.map((x) => this.converter.GisPoint(x));
+        if (position) {
+          positions.pop();
+          positions.push(position);
         }
+        this.point.position = positions[positions.length - 1];
+        this.routing(this.path.id, this.point, positions, focus);
       }
-    );
+    });
   }
   private routing(
     pathId: string,

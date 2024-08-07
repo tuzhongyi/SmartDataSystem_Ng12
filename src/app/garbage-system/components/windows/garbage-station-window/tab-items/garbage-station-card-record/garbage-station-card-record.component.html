@@ -29,7 +29,11 @@
         </div>
         <div class="filter-item tree">
           <div class="filter-item-title">投放点</div>
-          <div class="filter-item-value content" style="width: 300px">
+          <div
+            class="filter-item-value content"
+            style="width: 300px"
+            *ngIf="!!divisiontree"
+          >
             <common-label-select
               [selectedNodes]="divisiontree.nodes"
               [autoclose]="true"

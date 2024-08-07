@@ -63,7 +63,6 @@ export class CollectionRecordWindowComponent implements OnInit {
   disableSearch = false;
   today = new Date();
   searchInfo: ICollectionRecordWindowSearchInfo = {
-    DivisionIds: [this._globalStorage.division.selected.Id],
     PageIndex: 1,
     PageSize: 9,
     Condition: '',
@@ -83,21 +82,25 @@ export class CollectionRecordWindowComponent implements OnInit {
     private _business: CollectionRecordWindowBusiness,
     private _toastWindowService: ToastWindowService
   ) {
-    let data = this._toastWindowService.data;
-    if (data) {
-      if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
-      if (data.beginTime) this.searchInfo.BeginTime = data.beginTime;
-      if (data.endTime) this.searchInfo.EndTime = data.endTime;
-      if (data.score) {
-        this.searchInfo.Score = data.score;
+    this._globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+
+      let data = this._toastWindowService.data;
+      if (data) {
+        if (data.divisionIds) this.searchInfo.DivisionIds = data.divisionIds;
+        if (data.beginTime) this.searchInfo.BeginTime = data.beginTime;
+        if (data.endTime) this.searchInfo.EndTime = data.endTime;
+        if (data.score) {
+          this.searchInfo.Score = data.score;
+        }
+        if (data.type) {
+          this.searchInfo.type = data.type;
+        }
+        if (data.name) {
+          this.searchInfo.Condition = data.name;
+        }
       }
-      if (data.type) {
-        this.searchInfo.type = data.type;
-      }
-      if (data.name) {
-        this.searchInfo.Condition = data.name;
-      }
-    }
+    });
   }
   ngOnInit(): void {
     this._init();

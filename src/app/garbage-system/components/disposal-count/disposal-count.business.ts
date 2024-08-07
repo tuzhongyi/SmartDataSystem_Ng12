@@ -27,11 +27,9 @@ export class DisposalCountBusiness
     resourceId: string,
     resourceType: UserResourceType
   ): Promise<DisposalCountModel> {
+    let _default = await this.store.division.promise.default;
     let data = await this.getData(resourceId, resourceType);
-    let result = this.Converter.Convert(
-      data,
-      this.store.division.default.DivisionType
-    );
+    let result = this.Converter.Convert(data, _default.DivisionType);
     return result;
   }
   getData(

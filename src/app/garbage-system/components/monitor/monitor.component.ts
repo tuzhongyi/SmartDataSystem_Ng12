@@ -116,13 +116,13 @@ export class MonitorComponent implements OnInit, OnDestroy {
       let resourceType = user.Resources[0].ResourceType;
       let defaultDivisionType = EnumTool.resource.to.division(resourceType);
 
-      this.global.division.setDefault({
+      this.global.division.init({
         Id: defaultResource.Id,
         Name: defaultResource.Name,
         DivisionType: defaultDivisionType,
       });
       this.business.get(defaultResource.Id).then((x) => {
-        this.global.division.setDefault(x);
+        this.global.division.init(x);
       });
     }
   }

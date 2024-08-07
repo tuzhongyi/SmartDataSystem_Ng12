@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { StationType } from 'src/app/enum/station-type.enum';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
@@ -111,15 +111,12 @@ export class CardRecordEpisodeComponent implements OnInit, OnDestroy {
     if (this.playing) {
       this.stop.emit();
     }
-    wait(
-      () => {
-        return !this.playing;
-      },
-      () => {
-        this.args.video.time = item.Time;
-        this.toplay();
-      }
-    );
+    wait2(() => {
+      return !this.playing;
+    }).then(() => {
+      this.args.video.time = item.Time;
+      this.toplay();
+    });
   }
 }
 let AIGarbageRfidCardRecordData = [

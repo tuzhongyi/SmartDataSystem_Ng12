@@ -40,14 +40,16 @@ class RetentionRankEventTrigger {
     private global: GlobalStorageService
   ) {}
   onclick(args: RetentionRankArgs) {
-    let divisionId = this.global.division.selected.Id;
-    if (args.model.data instanceof DivisionNumberStatistic) {
-      divisionId = args.model.id;
-    }
-    this.window.drop.args = {
-      divisionId: divisionId,
-    };
-    this.window.drop.show = true;
+    this.global.division.promise.selected.then((x) => {
+      let divisionId = x.Id;
+      if (args.model.data instanceof DivisionNumberStatistic) {
+        divisionId = args.model.id;
+      }
+      this.window.drop.args = {
+        divisionId: divisionId,
+      };
+      this.window.drop.show = true;
+    });
   }
 }
 

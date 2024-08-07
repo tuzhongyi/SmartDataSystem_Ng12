@@ -32,7 +32,8 @@ export class EventRecordWindowDetailsBusiness
   ) {}
 
   async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
-    let divisionId = this.store.division.selected.Id;
+    let division = await this.store.division.promise.selected;
+    let divisionId = division.Id;
     let interval = new DurationParams();
     interval.BeginTime = opts.begin;
     interval.EndTime = opts.end;

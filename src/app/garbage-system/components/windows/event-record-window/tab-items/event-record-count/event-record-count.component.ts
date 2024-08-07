@@ -17,6 +17,7 @@ import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
+import { IDivision } from 'src/app/network/model/garbage-station/division.model';
 import { EventRecordCountExportConverter } from './event-record-count-export.converter';
 
 @Component({
@@ -31,18 +32,20 @@ export class EventRecordCountComponent implements OnInit {
 
   constructor(
     private local: LocalStorageService,
-    public global: GlobalStorageService,
+    private global: GlobalStorageService,
     private exports: ExportBusiness
   ) {
-    this.opts.type = EnumTool.division.child(
-      global.division.selected.DivisionType
-    );
+    this.global.division.promise.default.then((x) => {
+      this.default = x;
+    });
   }
 
   config = {
     dateTimePicker: new DateTimePickerConfig({ format: 'yyyy年MM月dd日' }),
   };
   DateTimePickerView = DateTimePickerView;
+
+  default?: IDivision;
 
   opts = new EventRecordCountTableOptions();
   load: EventEmitter<EventRecordCountTableOptions> = new EventEmitter();
@@ -62,6 +65,7 @@ export class EventRecordCountComponent implements OnInit {
     if (this.input_eventType) {
       this.opts.eventType = this.input_eventType;
     }
+    this.getType();
   }
 
   ontimeunit() {
@@ -90,27 +94,37 @@ export class EventRecordCountComponent implements OnInit {
         break;
     }
   }
-  search() {
+  async search() {
     this.load.emit(this.opts);
   }
   onloaded(datas: EventRecordCountTableModel[]) {
     this.datas = datas;
   }
-  private getTitle() {
+
+  async getType() {
+    if (this.opts.type) {
+      return this.opts.type;
+    }
+    let division = await this.global.division.promise.selected;
+    this.opts.type = EnumTool.division.child(division.DivisionType);
+    return this.opts.type;
+  }
+
+  private async getTitle() {
     let eventType = Language.EventType(this.opts.eventType);
     let date = Language.Date(this.opts.date, this.opts.unit);
     let _userType = EnumTool.resource.from.division(this.opts.type!);
     let userType = Language.UserResourceType(_userType);
     return `${date}${userType}${eventType}总数据`;
   }
-  exportExcel() {
-    let title = this.getTitle();
+  async exportExcel() {
+    let title = await this.getTitle();
     let headers = ['序号', '名称', '行政区', '单位（起）'];
     this.exports.excel(title, headers, this.datas, this.converter);
   }
 
-  exportCSV() {
-    let title = this.getTitle();
+  async exportCSV() {
+    let title = await this.getTitle();
     let headers = ['序号', '名称', '行政区', '单位（起）'];
     this.exports.csv(title, headers, this.datas, this.converter);
   }

@@ -15,7 +15,7 @@ import {
   PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
@@ -112,20 +112,17 @@ export class MediaControlComponent
 
   ngAfterViewInit(): void {
     if (this.autoplay) {
-      wait(
-        () => {
-          return !!(this.current && this.current.image);
-        },
-        () => {
-          if (this.current && this.current.image) {
-            if (this.current.image.eventTime) {
-              this.onplayback();
-            } else {
-              this.onpreview();
-            }
+      wait2(() => {
+        return !!(this.current && this.current.image);
+      }).then(() => {
+        if (this.current && this.current.image) {
+          if (this.current.image.eventTime) {
+            this.onplayback();
+          } else {
+            this.onpreview();
           }
         }
-      );
+      });
     }
   }
   ngOnChanges(changes: SimpleChanges): void {

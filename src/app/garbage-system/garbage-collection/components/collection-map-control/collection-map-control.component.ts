@@ -183,7 +183,9 @@ export class CollectionMapControlComponent
       this.amap.init();
     });
     this.global.division.change.subscribe((x) => {
-      this.amap.divisionSelect(this.global.division.selected.Id);
+      this.global.division.promise.selected.then((x) => {
+        this.amap.divisionSelect(x.Id);
+      });
     });
     let src = this.amap.getSrc();
     this.src = this.sanitizer.bypassSecurityTrustResourceUrl(src);

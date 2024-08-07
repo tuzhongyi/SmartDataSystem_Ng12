@@ -39,14 +39,16 @@ export class GarbageStationWeightListComponent
     this.selected.typeChange.subscribe((x) => {
       this.args.type = EnumTool.resource.to.division(x);
     });
-    this.selected.child = EnumTool.resource.child(this.resourceType);
-    this.selected.type = this.selected.child;
+    this.resourceType.then((x) => {
+      this.selected.child = EnumTool.resource.child(x);
+      this.selected.type = this.selected.child;
+    });
   }
 
   get resourceType() {
-    return EnumTool.resource.from.division(
-      this.global.division.selected.DivisionType
-    );
+    return this.global.division.promise.selected.then((x) => {
+      return EnumTool.resource.from.division(x.DivisionType);
+    });
   }
 
   args: GarbageStationWeightTableArgs = new GarbageStationWeightTableArgs();
@@ -64,11 +66,15 @@ export class GarbageStationWeightListComponent
     new GarbageStationWeightListSelected();
 
   ngOnInit(): void {
-    this.loadsource(this.resourceType);
+    this.resourceType.then((x) => {
+      this.loadsource(x);
+    });
   }
 
   ngAfterViewInit(): void {
-    this.loadData(this.global.division.selected.Id);
+    this.global.division.promise.selected.then((x) => {
+      this.loadData(x.Id);
+    });
   }
 
   loadsource(type: UserResourceType) {

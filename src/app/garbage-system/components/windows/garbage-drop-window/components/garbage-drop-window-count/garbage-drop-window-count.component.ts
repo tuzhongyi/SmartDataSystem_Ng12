@@ -21,7 +21,10 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
-import { Division } from 'src/app/network/model/garbage-station/division.model';
+import {
+  Division,
+  IDivision,
+} from 'src/app/network/model/garbage-station/division.model';
 import { GarbageDropStationWindowCountExportConverter } from '../../../garbage-drop-window/components/garbage-drop-window-count/garbage-drop-window-count-export.converter';
 import { GarbageDropStationWindowCountBusiness } from '../../../garbage-drop-window/components/garbage-drop-window-count/garbage-drop-window-count.business';
 
@@ -35,10 +38,14 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   constructor(
     private local: LocalStorageService,
     private exports: ExportBusiness,
-    public store: GlobalStorageService,
+    private store: GlobalStorageService,
     private changeDetector: ChangeDetectorRef,
     private business: GarbageDropStationWindowCountBusiness
-  ) {}
+  ) {
+    this.store.division.promise.selected.then((x) => {
+      this.default = x;
+    });
+  }
 
   dateTimePickerConfig: DateTimePickerConfig = new DateTimePickerConfig();
   args = new GarbageDropStationCountTableArgs();
@@ -52,15 +59,16 @@ export class GarbageDropStationWindowCountComponent implements OnInit {
   TimeUnit = TimeUnit;
   Language = Language;
 
+  default?: IDivision;
+
   type = {
     default: DivisionType.None,
     parent: DivisionType.None,
   };
 
   async ngOnInit() {
-    this.args.type = EnumTool.division.child(
-      this.store.division.default.DivisionType
-    );
+    let _default = await this.store.division.promise.default;
+    this.args.type = EnumTool.division.child(_default.DivisionType);
     this.type.default = this.args.type;
     this.divisions = await this.business.getDivisionsByType(this.args.type);
     this.dateTimePickerConfig.format = 'yyyy年MM月dd日';

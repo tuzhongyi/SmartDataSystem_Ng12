@@ -46,7 +46,8 @@ export class DaPuQiaoMainEventLevelBusiness
   async getData(args: DaPuQiaoMainEventLevelArgs) {
     let divisionId = args.divisionId;
     if (!divisionId) {
-      divisionId = this.global.division.selected.Id;
+      let division = await this.global.division.promise.selected;
+      divisionId = division.Id;
     }
     let divisions = await this.divisions(divisionId);
     let ids = divisions.map((x) => x.Id);

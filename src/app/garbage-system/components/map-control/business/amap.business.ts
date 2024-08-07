@@ -8,27 +8,30 @@ import { AMapEvent } from './amap/amap.event';
 @Injectable()
 export class AMapBusiness {
   constructor(
-    private storeService: GlobalStorageService,
+    private global: GlobalStorageService,
     private amap: AMapClient,
     public division: AMapDivisionBusiness,
     public point: AMapPointBusiness,
     public event: AMapEvent
   ) {
-    this.storeService.division.change.subscribe((x) => {
-      if (this.division) {
-        this.division.select(this.storeService.division.selected.Id);
-      }
-      if (this.point) {
-        let promise = this.point.count(this.storeService.division.selected.Id);
-        promise.then((count) => {
-          this.event.point.count.emit(count);
-        });
-      }
+    this.global.division.change.subscribe((x) => {
+      this.global.division.promise.selected.then((x) => {
+        if (this.division) {
+          this.division.select(x.Id);
+        }
+        if (this.point) {
+          this.point.count(x.Id).then((count) => {
+            this.event.point.count.emit(count);
+          });
+        }
+      });
     });
     this.amap.loaded.subscribe((x) => {
       this.point.init();
       this.regist();
-      this.division.load(this.storeService.division.selected.Id);
+      this.global.division.promise.selected.then((x) => {
+        this.division.load(x.Id);
+      });
     });
   }
 

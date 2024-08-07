@@ -14,7 +14,7 @@ export class GlobalStorageService {
   HideButton: boolean = false;
   HideTitlebar: boolean = false;
 
-  division = new GlobalStorageDivisionController(this.localStorage);
+  division: GlobalStorageDivisionController;
   interval = new GlobalStorageIntervalController();
 
   statistic = {
@@ -32,12 +32,14 @@ export class GlobalStorageService {
     },
   };
 
-  constructor(private localStorage: LocalStorageService) {}
+  constructor(private localStorage: LocalStorageService) {
+    this.division = new GlobalStorageDivisionController(this.localStorage);
+  }
 
   destroy() {
     this.system = undefined;
     this.password = undefined;
-
+    this.division.clear();
     this.division = new GlobalStorageDivisionController(this.localStorage);
     this.interval.clear();
   }

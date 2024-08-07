@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { Member } from 'src/app/network/model/garbage-station/member.model';
@@ -38,14 +38,11 @@ export class InfoDetailsDivisionCountyStatisticController {
         }
         result[2] = true;
       });
-      wait(
-        () => {
-          return result.every((x) => x);
-        },
-        () => {
-          resolve();
-        }
-      );
+      wait2(() => {
+        return result.every((x) => x);
+      }).then(() => {
+        resolve();
+      });
     });
   }
 }

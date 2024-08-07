@@ -14,14 +14,17 @@ export class CollectionScoreBarInnerBusiness implements ICommonBarCharBusiness {
   searchInfo: ICollectionScoreBarSearchInfo = {
     BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
     EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
-    DivisionIds: [this._globalStorage.division.selected.Id],
     TimeUnit: TimeUnit.Day,
   };
   constructor(
     private _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CommonBarChartConverter
-  ) {}
+  ) {
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+    });
+  }
   async init() {
     let Data = await this._listGarbageScore();
 

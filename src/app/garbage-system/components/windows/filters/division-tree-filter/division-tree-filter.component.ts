@@ -12,7 +12,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -38,7 +38,9 @@ export class DivisionTreeFilterComponent
   @Input() align: HorizontalAlign = HorizontalAlign.right;
 
   constructor(private store: GlobalStorageService) {
-    this.type = store.division.default.DivisionType;
+    store.division.promise.default.then((x) => {
+      this.type = x.DivisionType;
+    });
   }
 
   @ViewChild('selected')
@@ -73,14 +75,11 @@ export class DivisionTreeFilterComponent
 
   ngAfterViewInit(): void {
     if (this.input) {
-      wait(
-        () => {
-          return !!this.input && this.input.nativeElement.offsetHeight > 0;
-        },
-        () => {
-          this.style.top = this.input!.nativeElement.offsetHeight + 5 + 'px';
-        }
-      );
+      wait2(() => {
+        return !!this.input && this.input.nativeElement.offsetHeight > 0;
+      }).then(() => {
+        this.style.top = this.input!.nativeElement.offsetHeight + 5 + 'px';
+      });
     }
     window.addEventListener('click', () => {
       this.expand = false;

@@ -13,28 +13,31 @@ export class TaskTableConverter
   implements
     IConverter<
       GarbageDropEventRecord[],
-      TaskTableViewModel<GarbageDropEventRecord>[]
+      Promise<TaskTableViewModel<GarbageDropEventRecord>[]>
     >
 {
   constructor(private global: GlobalStorageService) {}
-  Convert(records: GarbageDropEventRecord[]) {
+  async Convert(records: GarbageDropEventRecord[]) {
     let datas = new Array<TaskTableViewModel<GarbageDropEventRecord>>();
 
     let i = 0;
-    datas = records
-      .sort((a, b) => {
-        return (
-          new Date(b.Data.DropTime).getTime() -
-          new Date(a.Data.DropTime).getTime()
-        );
-      })
-      .map((x) => {
-        return this.itemConvert(++i, x);
-      });
+    records = records.sort((a, b) => {
+      return (
+        new Date(b.Data.DropTime).getTime() -
+        new Date(a.Data.DropTime).getTime()
+      );
+    });
+
+    for (let i = 0; i < records.length; i++) {
+      const item = await this.itemConvert(i + 1, records[i]);
+      datas.push(item);
+    }
+
     return datas;
   }
 
-  private itemConvert(index: number, source: GarbageDropEventRecord) {
+  private async itemConvert(index: number, source: GarbageDropEventRecord) {
+    let _default = await this.global.division.promise.default;
     let vm = new TaskTableViewModel<GarbageDropEventRecord>();
     vm.StationName = source.Data.StationName;
     vm.Processor = source.Data.ProcessorName ?? '';
@@ -54,7 +57,7 @@ export class TaskTableConverter
     vm.State = source.EventType;
     vm.StateLanguage = Language.GarbageDropEventType(
       source.EventType,
-      this.global.division.default.DivisionType === DivisionType.City
+      _default.DivisionType === DivisionType.City
         ? source.Data.IsSuperTimeout
         : source.Data.IsTimeout
     );

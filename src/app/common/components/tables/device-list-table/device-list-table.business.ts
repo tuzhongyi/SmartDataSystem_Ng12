@@ -28,11 +28,12 @@ export class DeviceListTableBusiness
     size: number,
     args: DeviceListTableArgs
   ): Promise<PagedList<DeviceViewModel>> {
+    let division = await this.storeService.division.promise.selected;
     let data = await this.getData(
       index,
       size,
       args,
-      args.divisionId || this.storeService.division.selected.Id
+      args.divisionId || division.Id
     );
     let model = await this.Converter.Convert(data, {
       station: (id: string) => {

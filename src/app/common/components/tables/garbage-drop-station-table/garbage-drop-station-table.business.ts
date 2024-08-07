@@ -32,7 +32,8 @@ export class GarbageDropStationTableBusiness
     page: PagedParams,
     args: GarbageDropStationTableArgs
   ): Promise<PagedList<GarbageDropStationTableModel>> {
-    let divisionId = args.divisionId ?? this.storeService.division.selected.Id;
+    let division = await this.storeService.division.promise.selected;
+    let divisionId = args.divisionId ?? division.Id;
 
     let data = await this.getData(divisionId, page, args.opts);
     let model = await this.Converter.Convert(data);

@@ -19,8 +19,12 @@ export class DivisionStationTreeFilterBusiness
     private global: GlobalStorageService
   ) {}
 
-  load(type: DivisionType, stationId?: string): Promise<DivisionTreeSource[]> {
-    return this.getData(type, stationId, this.global.division.selected.Id);
+  async load(
+    type: DivisionType,
+    stationId?: string
+  ): Promise<DivisionTreeSource[]> {
+    let division = await this.global.division.promise.selected;
+    return this.getData(type, stationId, division.Id);
   }
   async getData(
     type: DivisionType,

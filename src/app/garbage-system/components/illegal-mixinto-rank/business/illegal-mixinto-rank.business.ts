@@ -85,9 +85,8 @@ export class IllegalMixintoRankBusiness {
     eventType: EventType,
     unit: TimeUnit
   ): Promise<RankModel[]> {
-    let type = EnumTool.division.child(
-      this.global.division.selected.DivisionType
-    );
+    let division = await this.global.division.promise.selected;
+    let type = EnumTool.division.child(division.DivisionType);
     let data = await this.getData(divisionId, type, unit);
     while (data.length < 6) {
       let item = new NumberStatisticModel();

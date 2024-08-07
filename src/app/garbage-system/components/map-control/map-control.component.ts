@@ -18,7 +18,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { EnumTool } from 'src/app/common/tools/enum-tool/enum.tool';
 import { Flags } from 'src/app/common/tools/flags';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -327,14 +327,11 @@ export class MapControlComponent
 
   //#region template event
   onLoad(event: Event) {
-    wait(
-      () => {
-        return !!this.iframe;
-      },
-      () => {
-        this.amap.init(this.iframe!);
-      }
-    );
+    wait2(() => {
+      return !!this.iframe;
+    }).then(() => {
+      this.amap.init(this.iframe!);
+    });
   }
   //#endregion
 

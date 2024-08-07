@@ -115,23 +115,21 @@ export class CommitteesIndexComponent implements OnInit {
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
       let resource = user.Resources[0];
-      this.global.division.setDefault({
+      this.global.division.init({
         Id: resource.Id,
         Name: resource.Name,
         DivisionType: EnumTool.resource.to.division(resource.ResourceType),
       });
     }
 
-    this.service
-      .getCommittees(this.global.division.selected.Id)
-      .then((x: Division) => {
+    this.global.division.promise.selected.then((division) => {
+      this.service.getCommittees(division.Id).then((x: Division) => {
         this.navication.committees = x;
-        this.global.division.setDefault(x);
+        this.global.division.init(x);
       });
-    this.service
-      .getStationList(this.global.division.selected.Id)
-      .then((x: GarbageStation[]) => {
+      this.service.getStationList(division.Id).then((x: GarbageStation[]) => {
         this.navication.stations = x;
       });
+    });
   }
 }

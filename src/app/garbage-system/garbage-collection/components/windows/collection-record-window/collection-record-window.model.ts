@@ -24,7 +24,7 @@ export class CollectionRecordWindowModel<T = any> {
 }
 
 export interface ICollectionRecordWindowSearchInfo {
-  DivisionIds: string[];
+  DivisionIds?: string[];
   PageIndex: number;
   PageSize: number;
   BeginTime: Date;

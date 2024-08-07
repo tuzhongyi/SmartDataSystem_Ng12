@@ -17,30 +17,32 @@ export class GarbageStationCardRecordComponent implements OnInit {
   @Output() video: EventEmitter<AIGarbageRfidCardRecord> = new EventEmitter();
   constructor(
     public business: GarbageStationCardRecordBusiness,
-    global: GlobalStorageService
+    private global: GlobalStorageService
   ) {
     this.args = new CardRecordTableArgs();
     this.args.duration = DateTimeTool.allDay(new Date());
-    this.divisiontree = new LabelTreeManager(
-      global.division.default.DivisionType
-    );
   }
   load: EventEmitter<CardRecordTableArgs> = new EventEmitter();
 
-  divisiontree: LabelTreeManager;
+  divisiontree?: LabelTreeManager;
 
   args: CardRecordTableArgs = new CardRecordTableArgs();
   Language = Language;
 
   ngOnInit() {
-    this.business.first().then((x) => {
-      this.divisiontree.ids = [x.Id];
-      this.args.stationId = x.Id;
-      this.args.tofirst = true;
-      this.load.emit(this.args);
-    });
-    this.divisiontree.select.subscribe((x) => {
-      this.args.stationId = x;
+    this.global.division.promise.default.then((x) => {
+      this.divisiontree = new LabelTreeManager(x.DivisionType);
+      this.business.first().then((x) => {
+        if (this.divisiontree) {
+          this.divisiontree.ids = [x.Id];
+          this.args.stationId = x.Id;
+          this.args.tofirst = true;
+          this.load.emit(this.args);
+        }
+      });
+      this.divisiontree.select.subscribe((x) => {
+        this.args.stationId = x;
+      });
     });
   }
 

@@ -17,7 +17,8 @@ export class GarbageStationCountTableBusiness
     private global: GlobalStorageService
   ) {}
   async load(...args: any): Promise<DivisionModel[]> {
-    let data = await this.getData(this.global.division.selected.Id);
+    let division = await this.global.division.promise.selected;
+    let data = await this.getData(division.Id);
     data = data.sort((a, b) => {
       return LocaleCompare.compare(a.Name, b.Name);
     });

@@ -26,11 +26,9 @@ export class GarbageDropStationCountTableBusiness
   async load(
     args: GarbageDropStationCountTableArgs
   ): Promise<GarbageDropStationCountTableModel[]> {
+    let _default = await this.store.division.promise.default;
     let data = await this.getData(args);
-    let model = await this.converter.Convert(
-      data,
-      this.store.division.default.DivisionType
-    );
+    let model = await this.converter.Convert(data, _default.DivisionType);
     return model;
   }
   async getData(

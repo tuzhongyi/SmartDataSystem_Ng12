@@ -198,7 +198,7 @@ export class GarbageCollectionIndexComponent
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
       let resource = user.Resources[0];
-      this._globalStorage.division.setSelected({
+      this._globalStorage.division.select({
         Id: resource.Id,
         Name: resource.Name,
         DivisionType: EnumTool.resource.to.division(resource.ResourceType),
@@ -229,17 +229,21 @@ export class GarbageCollectionIndexComponent
   /*****处理弹窗*****/
   clickDeviceState(data: ICollectionDeviceStateData) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-    this.createToast({
-      divisionId: this._globalStorage.division.selected.Id,
-      type: data.type,
+    this._globalStorage.division.promise.selected.then((x) => {
+      this.createToast({
+        divisionId: x.Id,
+        type: data.type,
+      });
     });
   }
 
   clickVehicle(data: CollectionVehicleModel) {
     this.componentTypeExpression = CollectionVehicleWindowComponent;
-    this.createToast({
-      divisionId: this._globalStorage.division.selected.Id,
-      type: CollectionDeviceStateCountType.All,
+    this._globalStorage.division.promise.selected.then((x) => {
+      this.createToast({
+        divisionId: x.Id,
+        type: CollectionDeviceStateCountType.All,
+      });
     });
   }
   clickScoreRank(data: CollectionScoreRankArgs) {

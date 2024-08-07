@@ -23,7 +23,8 @@ export class DaPuQiaoMainLineFeedbackBusiness
   async load(...args: any): Promise<DaPuQiaoMainLineFeedbackModel> {
     let days = 7;
     let duration = DateTimeTool.beforeDay(new Date(), days);
-    let data = await this.getData(this.global.division.selected.Id, duration);
+    let division = await this.global.division.promise.selected;
+    let data = await this.getData(division.Id, duration);
     console.log(data);
     let model = this.convert(duration.begin, days, data);
     return model;

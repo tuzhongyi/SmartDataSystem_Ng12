@@ -13,7 +13,7 @@ import * as echarts from 'echarts/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { Language } from 'src/app/common/tools/language';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationGarbageCountStatistic } from 'src/app/network/model/garbage-station/garbage-station-sarbage-count-statistic.model';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -81,74 +81,71 @@ export class LineZoomChartComponent
   loaded = false;
   inited = false;
   ngAfterViewInit(): void {
-    wait(
-      () => {
+    wait2(() => {
+      if (this.echarts) {
+        let div = this.echarts.nativeElement as HTMLDivElement;
+        return div.offsetWidth > 0 && div.offsetHeight > 0;
+      }
+      return false;
+    }).then(async () => {
+      if (this.loaded == false) {
+        this.loaded = true;
         if (this.echarts) {
-          let div = this.echarts.nativeElement as HTMLDivElement;
-          return div.offsetWidth > 0 && div.offsetHeight > 0;
-        }
-        return false;
-      },
-      async () => {
-        if (this.loaded == false) {
-          this.loaded = true;
-          if (this.echarts) {
-            this.chart = echarts.init(this.echarts.nativeElement, 'dark');
-            this.chart.on('click', 'series.line', (trigger: any) => {
-              this.showLinePanel(trigger);
-            });
-            this.chart.on('click', 'series.scatter', (trigger: any) => {
-              this.showScatterPanel(trigger);
-            });
+          this.chart = echarts.init(this.echarts.nativeElement, 'dark');
+          this.chart.on('click', 'series.line', (trigger: any) => {
+            this.showLinePanel(trigger);
+          });
+          this.chart.on('click', 'series.scatter', (trigger: any) => {
+            this.showScatterPanel(trigger);
+          });
 
-            this.chart.getZr().on('click', () => {
-              this.panel.line.display = false;
-              this.panel.scatter.display = false;
-            });
-            this.chart.getZr().on('dblclick', (params: any) => {
-              if (this.chart && this.data) {
-                // console.log(params);
-                let pointInPixel = [params.offsetX, params.offsetY];
-                let grid = this.chart.convertFromPixel(
-                  { seriesIndex: 0 },
-                  pointInPixel
-                );
-                let index = grid[0];
-                let data = this.data.count.find((x) => x.index == index);
-                let model: LineZoomChartArgs;
+          this.chart.getZr().on('click', () => {
+            this.panel.line.display = false;
+            this.panel.scatter.display = false;
+          });
+          this.chart.getZr().on('dblclick', (params: any) => {
+            if (this.chart && this.data) {
+              // console.log(params);
+              let pointInPixel = [params.offsetX, params.offsetY];
+              let grid = this.chart.convertFromPixel(
+                { seriesIndex: 0 },
+                pointInPixel
+              );
+              let index = grid[0];
+              let data = this.data.count.find((x) => x.index == index);
+              let model: LineZoomChartArgs;
 
-                if (data) {
-                  model = {
-                    date: data.time,
-                    statistic: data.value,
-                  };
-                } else {
-                  let xData = this.xAxisData[index];
-                  let statistic = new GarbageStationGarbageCountStatistic();
-                  statistic.BeginTime = xData.date;
-                  statistic.GarbageCount = 0;
-                  statistic.Id = this.stationId ?? '';
-                  model = {
-                    date: xData.date,
-                    statistic: statistic,
-                  };
-                }
-
-                this.ondblclick.emit(model);
+              if (data) {
+                model = {
+                  date: data.time,
+                  statistic: data.value,
+                };
+              } else {
+                let xData = this.xAxisData[index];
+                let statistic = new GarbageStationGarbageCountStatistic();
+                statistic.BeginTime = xData.date;
+                statistic.GarbageCount = 0;
+                statistic.Id = this.stationId ?? '';
+                model = {
+                  date: xData.date,
+                  statistic: statistic,
+                };
               }
-            });
-          }
-          if (this.stationId) {
-            this.data = await this.business.load(
-              this.stationId,
-              this.date,
-              this.unit
-            );
-            this.setOption(this.data, option);
-          }
+
+              this.ondblclick.emit(model);
+            }
+          });
+        }
+        if (this.stationId) {
+          this.data = await this.business.load(
+            this.stationId,
+            this.date,
+            this.unit
+          );
+          this.setOption(this.data, option);
         }
       }
-    );
+    });
   }
 
   showLinePanel(trigger: any) {

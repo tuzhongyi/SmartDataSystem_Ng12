@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
@@ -89,14 +89,11 @@ export class CollectionMapRouteComponent implements OnInit {
 
   //#region template event
   onIframeLoad(event: Event) {
-    wait(
-      () => {
-        return !!this.iframe;
-      },
-      () => {
-        this.business.init(this.iframe!);
-      }
-    );
+    wait2(() => {
+      return !!this.iframe;
+    }).then(() => {
+      this.business.init(this.iframe!);
+    });
   }
   //#endregion
   //#region list

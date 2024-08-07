@@ -12,7 +12,7 @@ import {
 import { ClassConstructor } from 'class-transformer';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { DistrictTreeEnum } from 'src/app/enum/district-tree.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
@@ -31,7 +31,7 @@ import { DivisionStationTreeFilterBusiness } from './division-station-tree-filte
 export class DivisionStationTreeFilterComponent
   implements OnInit, AfterViewInit, OnDestroy
 {
-  @Input() type: DivisionType;
+  @Input() type?: DivisionType;
 
   @Output() select: EventEmitter<GarbageStation> = new EventEmitter();
 
@@ -43,13 +43,7 @@ export class DivisionStationTreeFilterComponent
     private store: GlobalStorageService,
     private business: DivisionStationTreeFilterBusiness,
     private _divisionRequest: DivisionRequestService
-  ) {
-    this.type = store.division.selected.DivisionType;
-
-    if (this.type === DivisionType.City) {
-      this.tree.depth = 3;
-    }
-  }
+  ) {}
 
   @ViewChild('selected')
   input?: ElementRef<HTMLLabelElement>;
@@ -78,21 +72,25 @@ export class DivisionStationTreeFilterComponent
 
   ngAfterViewInit(): void {
     if (this.input) {
-      wait(
-        () => {
-          return !!this.input && this.input.nativeElement.offsetHeight > 0;
-        },
-        () => {
-          this.style.top = this.input!.nativeElement.offsetHeight + 5 + 'px';
-        }
-      );
+      wait2(() => {
+        return !!this.input && this.input.nativeElement.offsetHeight > 0;
+      }).then(() => {
+        this.style.top = this.input!.nativeElement.offsetHeight + 5 + 'px';
+      });
     }
 
     this.closetreehandle = this.ontreeclick.bind(this);
     window.addEventListener('click', this.closetreehandle);
   }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    let division = await this.store.division.promise.selected;
+    this.type = division.DivisionType;
+
+    if (this.type === DivisionType.City) {
+      this.tree.depth = 3;
+    }
+
     this.business.load(this.type, this.stationId).then((datas) => {
       this.current = datas;
       this.currentTitle = this.getLocalTitle(this.current);
@@ -110,7 +108,7 @@ export class DivisionStationTreeFilterComponent
       if (station instanceof GarbageStation) {
         this.select.emit(station);
 
-        this.business.load(this.type, station.Id).then((datas) => {
+        this.business.load(this.type!, station.Id).then((datas) => {
           this.current = datas;
           this.currentTitle = this.getLocalTitle(this.current);
         });

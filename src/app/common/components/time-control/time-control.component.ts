@@ -8,7 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { wait } from '../../tools/tool';
+import { wait2 } from '../../tools/tool';
 import { TimeModel } from './time-control.model';
 
 declare let $: any;
@@ -36,60 +36,51 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
   @ViewChild('second')
   second?: ElementRef;
   ngAfterViewInit(): void {
-    wait(
-      () => {
-        return !!this.hour;
-      },
-      () => {
-        this.wheel(this.hour!.nativeElement);
-        (this.hour!.nativeElement as HTMLInputElement).addEventListener(
-          'input',
-          (e: any) => {
-            let value = this.oninput(e);
-            if (value !== undefined) {
-              this.time.hour.value = value;
-              this.time.hour.view = value.toString().padStart(2, '0');
-            }
+    wait2(() => {
+      return !!this.hour;
+    }).then(() => {
+      this.wheel(this.hour!.nativeElement);
+      (this.hour!.nativeElement as HTMLInputElement).addEventListener(
+        'input',
+        (e: any) => {
+          let value = this.oninput(e);
+          if (value !== undefined) {
+            this.time.hour.value = value;
+            this.time.hour.view = value.toString().padStart(2, '0');
           }
-        );
-      }
-    );
-    wait(
-      () => {
-        return !!this.minute;
-      },
-      () => {
-        this.wheel(this.minute!.nativeElement);
-        (this.minute!.nativeElement as HTMLInputElement).addEventListener(
-          'input',
-          (e: any) => {
-            let value = this.oninput(e);
-            if (value !== undefined) {
-              this.time.minute.value = value;
-              this.time.minute.view = value.toString().padStart(2, '0');
-            }
+        }
+      );
+    });
+    wait2(() => {
+      return !!this.minute;
+    }).then(() => {
+      this.wheel(this.minute!.nativeElement);
+      (this.minute!.nativeElement as HTMLInputElement).addEventListener(
+        'input',
+        (e: any) => {
+          let value = this.oninput(e);
+          if (value !== undefined) {
+            this.time.minute.value = value;
+            this.time.minute.view = value.toString().padStart(2, '0');
           }
-        );
-      }
-    );
-    wait(
-      () => {
-        return !!this.second;
-      },
-      () => {
-        this.wheel(this.second!.nativeElement);
-        (this.second!.nativeElement as HTMLInputElement).addEventListener(
-          'input',
-          (e: any) => {
-            let value = this.oninput(e);
-            if (value !== undefined) {
-              this.time.second.value = value;
-              this.time.second.view = value.toString().padStart(2, '0');
-            }
+        }
+      );
+    });
+    wait2(() => {
+      return !!this.second;
+    }).then(() => {
+      this.wheel(this.second!.nativeElement);
+      (this.second!.nativeElement as HTMLInputElement).addEventListener(
+        'input',
+        (e: any) => {
+          let value = this.oninput(e);
+          if (value !== undefined) {
+            this.time.second.value = value;
+            this.time.second.view = value.toString().padStart(2, '0');
           }
-        );
-      }
-    );
+        }
+      );
+    });
   }
 
   ngOnInit(): void {}

@@ -29,7 +29,6 @@ export class CollectionScoreBarComponent implements OnInit {
   searchInfo: ICollectionScoreBarSearchInfo = {
     BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
     EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
-    DivisionIds: [this._globalStorage.division.selected.Id],
     TimeUnit: TimeUnit.Day,
   };
   model?: CollectionScoreBarModel;
@@ -42,6 +41,9 @@ export class CollectionScoreBarComponent implements OnInit {
     private _business: CollectionScoreBarBusiness,
     private _globalStorage: GlobalStorageService
   ) {
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+    });
     this.subscription = this._globalStorage.division.change.subscribe(
       this._init.bind(this)
     );
@@ -52,7 +54,8 @@ export class CollectionScoreBarComponent implements OnInit {
   }
 
   private async _init() {
-    this.searchInfo.DivisionIds = [this._globalStorage.division.selected.Id];
+    let division = await this._globalStorage.division.promise.selected;
+    this.searchInfo.DivisionIds = [division.Id];
     this.model = await this._business.init(this.searchInfo);
 
     this.merge = {

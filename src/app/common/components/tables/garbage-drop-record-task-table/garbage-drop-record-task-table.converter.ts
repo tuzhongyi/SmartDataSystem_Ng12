@@ -19,7 +19,7 @@ export class GarbageDropRecordTaskTableConverter {
       | GarbageStationNumberStatistic
       | DivisionNumberStatisticV2
       | GarbageStationNumberStatisticV2
-  ): GarbageDropRecordTaskTableModel {
+  ): Promise<GarbageDropRecordTaskTableModel> {
     if (
       source instanceof GarbageStationNumberStatisticV2 ||
       source instanceof DivisionNumberStatisticV2
@@ -30,22 +30,26 @@ export class GarbageDropRecordTaskTableConverter {
     }
   }
 
-  history(source: DivisionNumberStatisticV2 | GarbageStationNumberStatisticV2) {
-    let model = this.number(source.EventNumbers);
+  async history(
+    source: DivisionNumberStatisticV2 | GarbageStationNumberStatisticV2
+  ) {
+    let model = await this.number(source.EventNumbers);
     model.name = source.Name;
     return model;
   }
-  today(source: DivisionNumberStatistic | GarbageStationNumberStatistic) {
-    let model = this.number(source.TodayEventNumbers);
+  async today(source: DivisionNumberStatistic | GarbageStationNumberStatistic) {
+    let model = await this.number(source.TodayEventNumbers);
     model.name = source.Name;
     return model;
   }
 
-  number(numbers?: EventNumber[]) {
+  async number(numbers?: EventNumber[]) {
     let model = new GarbageDropRecordTaskTableModel();
     if (numbers) {
       let GarbageDropHandleCount = 0;
       let GarbageDropTimeoutCount = 0;
+
+      let _default = await this.global.division.promise.default;
 
       numbers.forEach((x) => {
         if (x.EventType == EventType.GarbageDrop) {
@@ -54,7 +58,7 @@ export class GarbageDropRecordTaskTableConverter {
           GarbageDropHandleCount = x.DayNumber;
         } else if (
           x.EventType ==
-          (this.global.division.default.DivisionType === DivisionType.City
+          (_default.DivisionType === DivisionType.City
             ? EventType.GarbageDropSuperTimeout
             : EventType.GarbageDropTimeout)
         ) {

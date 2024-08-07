@@ -10,7 +10,7 @@ import { GaugeChart } from 'echarts/charts';
 import * as echarts from 'echarts/core';
 import { UniversalTransition } from 'echarts/features';
 import { CanvasRenderer } from 'echarts/renderers';
-import { wait } from 'src/app/common/tools/tool';
+import { wait2 } from 'src/app/common/tools/tool';
 import { DetailsChartHeatmapBusiness } from '../details-chart-heatmap/business/details-chart-heatmap.business';
 import { DetailsChartHeatmap3DController } from './controller/details-chart-heatmap-3d.controller';
 
@@ -41,17 +41,14 @@ export class DetailsChartHeatmap3DComponent implements OnInit, OnDestroy {
     if (this.input_load) {
       this.input_load.subscribe((args) => {
         this.args = args;
-        wait(
-          () => {
-            return this.inited && !this.destroy;
-          },
-          () => {
-            if (this.destroy) {
-              return;
-            }
-            this.load();
+        wait2(() => {
+          return this.inited && !this.destroy;
+        }).then(() => {
+          if (this.destroy) {
+            return;
           }
-        );
+          this.load();
+        });
       });
     }
   }

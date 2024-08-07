@@ -4,13 +4,13 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { DivisionNumberStatisticV2 } from 'src/app/network/model/garbage-station/division-number-statistic-v2.model';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
+import { IDivision } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { GarbageDropRecordFilter } from '../garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageDropRecordTaskTableConverter } from './garbage-drop-record-task-table.converter';
 import {
   GarbageDropRecordTaskTableModel,
-  IDivision,
   IGarbageDropRecordTaskTableBusiness,
 } from './garbage-drop-record-task-table.model';
 import { GarbageDropRecordTaskTableService } from './garbage-drop-record-task-table.service';
@@ -25,34 +25,36 @@ export class GarbageDropRecordTaskTableBusiness
       GarbageDropRecordTaskTableModel[]
     >
 {
-  division: IDivision;
+  division: Promise<IDivision>;
 
   constructor(
     private service: GarbageDropRecordTaskTableService,
     private converter: GarbageDropRecordTaskTableConverter,
     private global: GlobalStorageService
   ) {
-    this.division = {
-      Id: this.global.division.selected.Id,
-      DivisionType: this.global.division.selected.DivisionType,
-    };
+    this.division = this.global.division.promise.selected;
   }
 
   async load(args: GarbageDropRecordFilter) {
-    let divisionId = args.divisionId ?? this.global.division.selected.Id;
+    let division = await this.global.division.promise.selected;
+    let divisionId = args.divisionId ?? division.Id;
+    this.division = this.service.division.get(divisionId);
 
-    this.division = await this.service.division.get(divisionId);
+    let datas = await this.getData(await this.division, args);
 
-    let datas = await this.getData(this.division, args);
-    let model = datas.map((x) => this.converter.Convert(x));
+    let model = [];
+    for (let i = 0; i < datas.length; i++) {
+      const item = await this.converter.Convert(datas[i]);
+      model.push(item);
+    }
     return model;
   }
 
-  total(datas: GarbageDropRecordTaskTableModel[]) {
+  async total(datas: GarbageDropRecordTaskTableModel[]) {
     let model = new GarbageDropRecordTaskTableModel();
-    model.name = this.division.Name ?? '';
+    model.name = (await this.division).Name ?? '';
     if (!model.name) {
-      this.service.division.get(this.division.Id).then((x) => {
+      this.service.division.get((await this.division).Id).then((x) => {
         model.name = x.Name;
       });
     }

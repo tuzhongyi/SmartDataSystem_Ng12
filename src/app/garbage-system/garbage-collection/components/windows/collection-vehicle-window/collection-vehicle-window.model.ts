@@ -1,5 +1,4 @@
 import { CollectionDeviceStateCountType } from 'src/app/enum/collection-device-state.enum';
-import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 
 export class CollectionVehicleWindowModel<T = any> {
@@ -25,7 +24,7 @@ export class CollectionVehicleWindowModel<T = any> {
 }
 
 export interface ICollectionVehicleWindowSearchInfo {
-  DivisionId: string;
+  DivisionId?: string;
   PageIndex: number;
   PageSize: number;
   State: CollectionDeviceStateCountType;

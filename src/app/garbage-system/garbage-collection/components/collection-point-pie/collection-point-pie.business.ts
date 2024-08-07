@@ -22,12 +22,11 @@ export class CollectionPointPieBusiness {
   private async _listClassificationNumber(
     searchInfo: ICollectionPointPieSearchInfo
   ) {
+    let _default = await this._globalStorageService.division.promise.default;
+    let division = await this._globalStorageService.division.promise.selected;
     let params = new GetCollectionPointNumberParams();
     if (searchInfo.DivisionIds) {
-      if (
-        (await this._globalStorageService.division.promise.default).Id !==
-        this._globalStorageService.division.selected.Id
-      ) {
+      if (_default.Id !== division.Id) {
         params.DivisionIds = searchInfo.DivisionIds;
       }
     }

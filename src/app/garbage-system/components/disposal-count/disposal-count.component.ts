@@ -318,14 +318,9 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
-    let type = EnumTool.resource.from.division(
-      this.storeService.division.selected.DivisionType
-    );
-
-    this.data = await this.business.load(
-      this.storeService.division.selected.Id,
-      type
-    );
+    let division = await this.storeService.division.promise.selected;
+    let type = EnumTool.resource.from.division(division.DivisionType);
+    this.data = await this.business.load(division.Id, type);
     // this.gaugeOption.data = [
     //   { name: '处置率', value: this.data.handledPercentage },
     // ];
@@ -430,20 +425,22 @@ export class DisposalCountComponent implements OnInit, AfterViewInit {
     }
   }
   taskClick(item: IDisposalCount) {
-    let args: DisposalCountArgs = {
-      divisionId: this.storeService.division.selected.Id,
-    };
-    switch (item.tag) {
-      case DisposalCountType.unhandled:
-        args.status = GarbageTaskStatus.unhandled;
-        break;
-      case DisposalCountType.timeout:
-        args.status = GarbageTaskStatus.timeout;
-        break;
-      case DisposalCountType.total:
-      default:
-        break;
-    }
-    this.task.emit(args);
+    this.storeService.division.promise.selected.then((division) => {
+      let args: DisposalCountArgs = {
+        divisionId: division.Id,
+      };
+      switch (item.tag) {
+        case DisposalCountType.unhandled:
+          args.status = GarbageTaskStatus.unhandled;
+          break;
+        case DisposalCountType.timeout:
+          args.status = GarbageTaskStatus.timeout;
+          break;
+        case DisposalCountType.total:
+        default:
+          break;
+      }
+      this.task.emit(args);
+    });
   }
 }

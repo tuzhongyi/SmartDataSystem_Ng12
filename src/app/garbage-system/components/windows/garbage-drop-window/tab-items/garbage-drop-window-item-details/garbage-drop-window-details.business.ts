@@ -82,7 +82,8 @@ export class GarbageDropStationWindowDetailsBusiness
   }
 
   async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
-    let divisionId = this.store.division.selected.Id;
+    let division = await this.store.division.promise.selected;
+    let divisionId = division.Id;
     this.loadDefault(divisionId);
 
     let interval = new DurationParams();

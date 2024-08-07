@@ -11,15 +11,17 @@ import { ICollectionDeviceStateSearchInfo } from './collection-device-state.mode
 export class CollectionDeviceStateInnerBusiness
   implements ICommonGaugeCharBusiness
 {
-  searchInfo: ICollectionDeviceStateSearchInfo = {
-    DivisionId: this._globalStorage.division.selected.Id,
-  };
+  searchInfo: ICollectionDeviceStateSearchInfo = {};
   constructor(
-    private _globalStorage: GlobalStorageService,
+    _globalStorage: GlobalStorageService,
 
     private _garbageVehicleRequest: GarbageVehicleRequestService,
     private _converter: CommonGaugeChartConverter
-  ) {}
+  ) {
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionId = x.Id;
+    });
+  }
 
   async init() {
     let { Data } = await this._listGarbageVehicle();

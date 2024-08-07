@@ -20,6 +20,7 @@
       [filterTypes]="filterTypes"
     ></howell-tree> -->
     <howell-division-tree
+      *ngIf="type != undefined"
       [resourceType]="type"
       [depth]="tree.depth"
       [showStation]="true"

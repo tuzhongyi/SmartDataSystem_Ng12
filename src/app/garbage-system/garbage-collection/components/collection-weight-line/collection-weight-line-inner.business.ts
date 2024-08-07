@@ -18,15 +18,18 @@ export class CollectionWeightLineInnerBusiness
   searchInfo: ICollectionWeightLineSearchInfo = {
     BeginTime: TimeService.beginTime(TimeService.backDate(this.today, 7)),
     EndTime: TimeService.endTime(TimeService.backDate(this.today, 1)),
-    DivisionIds: [this._globalStorage.division.selected.Id],
     TimeUnit: TimeUnit.Day,
     Type: TrashCanType.Dry,
   };
   constructor(
-    private _globalStorage: GlobalStorageService,
+    _globalStorage: GlobalStorageService,
     private _collectionDivisionRequest: CollectionDivisionRequestService,
     private _converter: CommonLineChartConverter
-  ) {}
+  ) {
+    _globalStorage.division.promise.selected.then((x) => {
+      this.searchInfo.DivisionIds = [x.Id];
+    });
+  }
   async init() {
     let Data = await this._listGarbageWeight();
     // console.log(Data);

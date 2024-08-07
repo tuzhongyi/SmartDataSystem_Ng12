@@ -34,10 +34,9 @@ export class EventRecordDetailsTableBusiness
     let stations: GarbageStation[];
     let cameras: Camera[] = [];
 
+    let division = await this.storeService.division.promise.selected;
     if (opts) {
-      divisions = await this.getDivisions(
-        this.storeService.division.selected.Id
-      );
+      divisions = await this.getDivisions(division.Id);
       stations = await this.getStation(opts.divisionId);
       if (opts.stationId) {
         let station = stations.find((x) => x.Id === opts.stationId);
@@ -52,10 +51,8 @@ export class EventRecordDetailsTableBusiness
         });
       }
     } else {
-      divisions = await this.getDivisions(
-        this.storeService.division.selected.Id
-      );
-      stations = await this.getStation(this.storeService.division.selected.Id);
+      divisions = await this.getDivisions(division.Id);
+      stations = await this.getStation(division.Id);
       stations.forEach((x) => {
         if (x.Cameras) {
           cameras = [...cameras, ...x.Cameras];

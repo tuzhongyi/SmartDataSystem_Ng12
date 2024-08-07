@@ -26,7 +26,8 @@ export class DapuqiaoMainEventStatisticBusiness
   async load(
     args: DapuqiaoMainEventStatisticArgs
   ): Promise<DapuqiaoMainEventStatisticModel> {
-    let data = await this.getData(this.global.division.selected.Id, args);
+    let division = await this.global.division.promise.selected;
+    let data = await this.getData(division.Id, args);
     let model = this.convert(data);
     return model;
   }

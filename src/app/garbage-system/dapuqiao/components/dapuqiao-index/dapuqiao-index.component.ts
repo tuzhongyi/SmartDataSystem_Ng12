@@ -103,7 +103,7 @@ export class DaPuQiaoIndexComponent implements OnInit, OnDestroy {
     if (user.Resources && user.Resources.length > 0) {
       let resource = user.Resources[0];
 
-      this.global.division.setDefault({
+      this.global.division.init({
         Id: resource.Id,
         Name: resource.Name,
         DivisionType: EnumTool.resource.to.division(resource.ResourceType),

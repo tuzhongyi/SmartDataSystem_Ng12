@@ -15,7 +15,7 @@ export class CollectionPointWindowModel<T = any> {
 }
 
 export interface ICollectionPointWindowSearchInfo {
-  DivisionIds: string[];
+  DivisionIds?: string[];
   PageIndex: number;
   PageSize: number;
   Condition: string;

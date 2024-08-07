@@ -15,8 +15,7 @@ export interface ICollectionScoreBarSearchInfo {
   BeginTime: Date;
   EndTime: Date;
 
-  //  非空数组类型
-  DivisionIds: [string, ...string[]];
+  DivisionIds?: [string, ...string[]];
 
   TimeUnit?: TimeUnit;
 }

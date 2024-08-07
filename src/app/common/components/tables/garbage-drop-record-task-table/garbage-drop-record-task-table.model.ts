@@ -1,5 +1,5 @@
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { DivisionType } from 'src/app/enum/division-type.enum';
+import { IDivision } from 'src/app/network/model/garbage-station/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 
 export class GarbageDropRecordTaskTableModel {
@@ -15,12 +15,6 @@ export interface IGarbageDropRecordTaskTableBusiness
   extends IBusiness<IModel, GarbageDropRecordTaskTableModel[]> {
   total(
     datas: GarbageDropRecordTaskTableModel[]
-  ): GarbageDropRecordTaskTableModel;
-  division: IDivision;
-}
-
-export interface IDivision {
-  Id: string;
-  DivisionType: DivisionType;
-  Name?: string;
+  ): Promise<GarbageDropRecordTaskTableModel>;
+  division: Promise<IDivision>;
 }
