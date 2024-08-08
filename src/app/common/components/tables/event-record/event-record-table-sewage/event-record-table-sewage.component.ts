@@ -3,7 +3,7 @@ import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { ImagePagedArgs, IModel } from 'src/app/network/model/model.interface';
+import { IModel, ImagePagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -87,12 +87,14 @@ export class EventRecordTableSewageComponent
 
     let promise = this.business.load(EventType.Sewage, params, this.filter);
     this.loading = true;
-    promise.then((paged) => {
-      this.loading = false;
-      this.page = paged.Page;
-
-      this.datas = paged.Data;
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

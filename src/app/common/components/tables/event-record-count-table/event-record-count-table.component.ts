@@ -58,11 +58,15 @@ export class EventRecordCountTableComponent
   async loadData() {
     this.loading = true;
 
-    this.business.load(this.opts).then((datas) => {
-      this.datas = datas;
-      this.loading = false;
-      this.loaded.emit(datas);
-    });
+    this.business
+      .load(this.opts)
+      .then((datas) => {
+        this.datas = datas;
+        this.loaded.emit(datas);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

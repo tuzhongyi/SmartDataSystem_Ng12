@@ -50,11 +50,15 @@ export class AIOPCameraTableComponent
 
   async loadData() {
     this.loading = true;
-    this.business.load(this.args).then((datas) => {
-      this.datas = datas;
-      this.loading = false;
-      this.loaded.emit(this.datas);
-    });
+    this.business
+      .load(this.args)
+      .then((datas) => {
+        this.datas = datas;
+        this.loaded.emit(this.datas);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   onselect(item: AICameraModel) {

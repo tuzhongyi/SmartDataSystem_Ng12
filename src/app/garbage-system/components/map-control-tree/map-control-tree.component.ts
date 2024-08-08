@@ -91,27 +91,35 @@ export class MapControlTreeComponent implements OnInit, OnDestroy {
   loadData() {
     this.loading = true;
     if (this.args.juststation) {
-      this.business.loadstation(this.args).then((x) => {
-        this.datas = x;
-        this.tree.source.data = x;
-        this.loading = false;
-      });
-    } else {
-      this.business.load(this.args).then((x) => {
-        // this.datas = x.children ?? [];
-        // this.tree.source.data = x.children ?? [];
-
-        this.datas = x;
-        this.tree.source.data = x;
-
-        this.expands.forEach((value) => {
-          let node = this.business.find(value, this.datas);
-          if (node) {
-            this.tree.control.expand(node);
-          }
+      this.business
+        .loadstation(this.args)
+        .then((x) => {
+          this.datas = x;
+          this.tree.source.data = x;
+        })
+        .finally(() => {
+          this.loading = false;
         });
-        this.loading = false;
-      });
+    } else {
+      this.business
+        .load(this.args)
+        .then((x) => {
+          // this.datas = x.children ?? [];
+          // this.tree.source.data = x.children ?? [];
+
+          this.datas = x;
+          this.tree.source.data = x;
+
+          this.expands.forEach((value) => {
+            let node = this.business.find(value, this.datas);
+            if (node) {
+              this.tree.control.expand(node);
+            }
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 

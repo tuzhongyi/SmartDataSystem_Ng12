@@ -123,28 +123,32 @@ export class GarbageStationStatisticTableComponent
   }
   loadData() {
     this.loading = true;
-    this.business.load(this.date, this.unit, this.divisionId).then((data) => {
-      this.datas = data.sort((a, b) => {
-        switch (this.order.type) {
-          case OrderType.Asc:
-            return a[this.order.name] - b[this.order.name];
-          case OrderType.Desc:
-            return b[this.order.name] - a[this.order.name];
-          default:
-            return 0;
+    this.business
+      .load(this.date, this.unit, this.divisionId)
+      .then((data) => {
+        this.datas = data.sort((a, b) => {
+          switch (this.order.type) {
+            case OrderType.Asc:
+              return a[this.order.name] - b[this.order.name];
+            case OrderType.Desc:
+              return b[this.order.name] - a[this.order.name];
+            default:
+              return 0;
+          }
+        });
+        if (!this.sort) {
+          this.sort = {
+            active: 'GarbageRatio',
+            direction: 'asc',
+          };
         }
+        this.sortData(this.sort);
+        this.datas = data;
+        this.loaded.emit(this.datas);
+      })
+      .finally(() => {
+        this.loading = false;
       });
-      if (!this.sort) {
-        this.sort = {
-          active: 'GarbageRatio',
-          direction: 'asc',
-        };
-      }
-      this.sortData(this.sort);
-      this.datas = data;
-      this.loading = false;
-      this.loaded.emit(this.datas);
-    });
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

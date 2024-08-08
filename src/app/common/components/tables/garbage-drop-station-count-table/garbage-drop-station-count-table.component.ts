@@ -68,18 +68,22 @@ export class GarbageDropStationCountTableComponent
 
   async loadData() {
     this.loading = true;
-    this.business.load(this.args).then((x) => {
-      this.loading = false;
-      this.datas = x;
-      if (!this.sort) {
-        this.sort = {
-          active: 'EventCount',
-          direction: 'desc',
-        };
-      }
-      this.sortData(this.sort);
-      this.loaded.emit(this.datas);
-    });
+    this.business
+      .load(this.args)
+      .then((x) => {
+        this.datas = x;
+        if (!this.sort) {
+          this.sort = {
+            active: 'EventCount',
+            direction: 'desc',
+          };
+        }
+        this.sortData(this.sort);
+        this.loaded.emit(this.datas);
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   compare(a: number | string, b: number | string, isAsc: boolean) {

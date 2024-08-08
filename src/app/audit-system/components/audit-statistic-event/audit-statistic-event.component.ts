@@ -51,10 +51,14 @@ export class AuditStatisticEventComponent implements OnInit {
 
   loadData(division: Division) {
     this.loading = true;
-    this.business.load(division).then((x) => {
-      this.data = x;
-      this.loading = false;
-    });
+    this.business
+      .load(division)
+      .then((x) => {
+        this.data = x;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   ontask() {

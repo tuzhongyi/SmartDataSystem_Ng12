@@ -84,13 +84,16 @@ export class GarbageDropStationTableComponent
 
     let promise = this.business.load(params, this.args);
     this.loading = true;
-    promise.then((paged) => {
-      this.loading = false;
-      this.page = paged.Page;
-      if (show) {
-        this.datas = paged.Data;
-      }
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        if (show) {
+          this.datas = paged.Data;
+        }
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

@@ -97,12 +97,14 @@ export class EventRecordTableIllegalDropComponent
       this.filter
     );
     this.loading = true;
-    promise.then((paged) => {
-      this.loading = false;
-      this.page = paged.Page;
-
-      this.datas = paged.Data;
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

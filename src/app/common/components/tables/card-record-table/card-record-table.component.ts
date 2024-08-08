@@ -65,11 +65,14 @@ export class CardRecordTableComponent
 
     let promise = this.business.load(index, size, this.args);
     this.loading = true;
-    promise.then((paged) => {
-      this.page = paged.Page;
-      this.datas = paged.Data;
-      this.loading = false;
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

@@ -41,13 +41,17 @@ export class GarbageVehicleCameraBindingAICameraComponent
 
   loadData(name?: string, filter?: string[]) {
     this.loading = true;
-    this.business.load(name).then((datas) => {
-      this.loading = false;
-      if (filter) {
-        datas = datas.filter((x) => !filter.some((id) => x.Id === id));
-      }
-      this.datas = datas;
-    });
+    this.business
+      .load(name)
+      .then((datas) => {
+        if (filter) {
+          datas = datas.filter((x) => !filter.some((id) => x.Id === id));
+        }
+        this.datas = datas;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   onselect(item: AICamera) {

@@ -71,10 +71,14 @@ export class GarbageVehicleCameraTableComponent
 
   async loadData(condition?: string) {
     this.loading = true;
-    this.business.load(this.vehicleId, condition).then((datas) => {
-      this.loading = false;
-      this.datas = datas;
-    });
+    this.business
+      .load(this.vehicleId, condition)
+      .then((datas) => {
+        this.datas = datas;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   onselect(item: VehicleCamera) {

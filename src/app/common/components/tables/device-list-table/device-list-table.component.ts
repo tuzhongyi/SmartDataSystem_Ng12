@@ -62,12 +62,14 @@ export class DeviceListTableComponent
   loadData(index: number, size: number) {
     let promise = this.business.load(index, size, this.args);
     this.loading = true;
-    promise.then((paged) => {
-      this.loading = false;
-      this.page = paged.Page;
-
-      this.datas = paged.Data;
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

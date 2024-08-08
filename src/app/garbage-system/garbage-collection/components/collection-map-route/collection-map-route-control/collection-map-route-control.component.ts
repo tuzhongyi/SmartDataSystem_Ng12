@@ -109,14 +109,18 @@ export class CollectionMapRouteControlComponent
     if (this.container) {
       this.loading = true;
       let dom = this.container.nativeElement as HTMLDivElement;
-      this.business.load(dom, query).then((datas) => {
-        this.loading = false;
-        this.hasdata = datas.points && datas.points.length > 0;
-        if (this.hasdata) {
-          this.time = datas.points[0].Time;
-        }
-        this.loaded.emit(datas);
-      });
+      this.business
+        .load(dom, query)
+        .then((datas) => {
+          this.hasdata = datas.points && datas.points.length > 0;
+          if (this.hasdata) {
+            this.time = datas.points[0].Time;
+          }
+          this.loaded.emit(datas);
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
   }
 

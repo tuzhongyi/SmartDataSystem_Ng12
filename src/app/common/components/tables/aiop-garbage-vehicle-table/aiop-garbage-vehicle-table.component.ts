@@ -59,11 +59,15 @@ export class AIOPGarbageVehicleTableComponent
 
   loadData(index: number, size: number = this.pageSize): void {
     this.loading = true;
-    this.business.load(index, size, this.args).then((x) => {
-      this.page = x.Page;
-      this.datas = x.Data;
-      this.loading = false;
-    });
+    this.business
+      .load(index, size, this.args)
+      .then((x) => {
+        this.page = x.Page;
+        this.datas = x.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
   onselect(item: GarbageVehicle) {
     let index = this.selecteds.indexOf(item);

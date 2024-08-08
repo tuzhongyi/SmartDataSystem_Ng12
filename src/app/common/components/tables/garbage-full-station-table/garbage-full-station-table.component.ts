@@ -70,11 +70,14 @@ export class GarbageFullStationTableComponent
   ) {
     let promise = this.business.load(index, size, args);
     this.loading = true;
-    promise.then((paged) => {
-      this.page = paged.Page;
-      this.datas = paged.Data;
-      this.loading = false;
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 

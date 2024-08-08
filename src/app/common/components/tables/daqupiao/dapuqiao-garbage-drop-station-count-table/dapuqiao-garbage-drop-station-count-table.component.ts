@@ -79,10 +79,14 @@ export class DaPuQiaoGarbageDropStationCountTableComponent
   loadData(): void {
     this.loading = true;
 
-    this.business.load(this.args).then((x) => {
-      this.datas = x;
-      this.loading = false;
-    });
+    this.business
+      .load(this.args)
+      .then((x) => {
+        this.datas = x;
+      })
+      .finally(() => {
+        this.loading = false;
+      });
   }
 
   onselect(item: NumberStatisticModel) {

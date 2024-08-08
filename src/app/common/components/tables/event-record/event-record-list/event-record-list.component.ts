@@ -105,13 +105,17 @@ export class EventRecordListComponent
 
     let promise = this.business.load(this.type, params, filter);
     this.loading = true;
-    promise.then(async (paged) => {
-      this.loading = false;
-      this.page = paged.Page;
-
-      this.datas = paged.Data;
-      this.list = await this.converter.Convert(this.datas);
-    });
+    promise
+      .then((paged) => {
+        this.page = paged.Page;
+        this.datas = paged.Data;
+        this.converter.Convert(this.datas).then((x) => {
+          this.list = x;
+        });
+      })
+      .finally(() => {
+        this.loading = false;
+      });
     return promise;
   }
 
