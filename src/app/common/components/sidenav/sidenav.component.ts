@@ -41,22 +41,10 @@ import { wait2 } from '../../tools/tool';
   ],
 })
 export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
-  state: 'grow' | 'shrink' = 'grow';
-  groups = {
-    first: '',
-    second: '',
-    third: '',
-  };
-
-  private _subscription!: Subscription;
-
   // 后行断言+捕获+量词+非捕获
   @Input() regExp =
     /(?<=\/[\w-]+\/[\w-]+\/)(?<first>[\w-]*)(?:\/(?<second>[\w-]*)(?:\/(?<third>[\w-]*))?)?\/?$/;
-
-  models: Array<ISideNavConfig> = [];
-
-  inited = false;
+  @Input() allopen = false;
 
   constructor(private _router: Router, private _activeRoute: ActivatedRoute) {
     this._subscription = this._router.events.subscribe((e) => {
@@ -83,6 +71,19 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  state: 'grow' | 'shrink' = 'grow';
+  groups = {
+    first: '',
+    second: '',
+    third: '',
+  };
+
+  private _subscription!: Subscription;
+
+  models: Array<ISideNavConfig> = [];
+
+  inited = false;
+
   ngOnInit(): void {
     this.inited = true;
   }
@@ -90,6 +91,7 @@ export class SidenavComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this._subscription.unsubscribe();
   }
+
   toggle() {
     if (this.state == 'grow') {
       this.state = 'shrink';

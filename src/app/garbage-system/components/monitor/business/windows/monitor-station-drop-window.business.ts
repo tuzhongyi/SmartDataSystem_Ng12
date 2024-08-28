@@ -14,7 +14,7 @@ import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-window/garbage-drop-window.model';
-import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -64,7 +64,7 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
 
   onchartdblclick(args: LineZoomChartArgs) {
     if (args.statistic) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = args.statistic.Id;
       this.media.multiple.args.usage = [CameraUsage.GarbageFull];
       this.media.multiple.args.time = args.date;
@@ -72,7 +72,6 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
         GarbageCount: args.statistic.GarbageCount,
       };
     }
-    this.media.multiple.date = args.date;
     this.media.multiple.fullplay = true;
     this.media.multiple.show = true;
   }

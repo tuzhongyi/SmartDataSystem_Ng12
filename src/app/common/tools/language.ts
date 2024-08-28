@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { BatteryState } from 'src/app/enum/ai-garbage/battery-state.enum';
 import { RobotState } from 'src/app/enum/ai-garbage/robot-state.enum';
+import { CameraClassification } from 'src/app/enum/camera-classification.enum';
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
@@ -55,6 +56,7 @@ import {
   SuperviseResult,
   SupervisedState,
 } from 'src/app/network/model/garbage-station/garbage-drop-super-vision-data.model';
+import { Time } from 'src/app/network/model/time.model';
 import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { DateTimeTool } from './date-time-tool/datetime.tool';
 import language from './language.json';
@@ -64,6 +66,7 @@ export class Language {
   static yyyyMMddHHmmss = 'yyyy-MM-dd HH:mm:ss';
   static yyyyMMddHHmm = 'yyyy-MM-dd HH:mm';
   static YearMonthDay = 'yyyy年MM月dd日';
+  static YearMonthDayHHmmss = 'yyyy年MM月dd日 HH:mm:ss';
   static HH_mm = "HH:mm'";
 
   static GarbageType(type: GarbageType): string {
@@ -347,7 +350,7 @@ export class Language {
         return '建筑垃圾投放点';
       case StationType.Smart:
         return '智能垃圾厢房';
-      case StationType.Rfid:
+      case StationType.Plus:
         return '精品厢房';
       default:
         return Language.json.Unknow;
@@ -368,7 +371,7 @@ export class Language {
     }
   }
 
-  static Time(time: Date | number, full = true) {
+  static Time(time: Date | number | Time, full = true) {
     let result = '';
     if (typeof time === 'number') {
       const hours = parseInt((Math.round(time) / 60).toString());
@@ -379,6 +382,11 @@ export class Language {
       if (full || !result) {
         result += minutes ? minutes + Language.json.Time.minute : '';
       }
+    } else if (time instanceof Time) {
+      let hour = time.hour.toString().padStart(2, '0');
+      let minute = time.minute.toString().padStart(2, '0');
+      let second = time.second.toString().padStart(2, '0');
+      return `${hour}:${minute}:${second}`;
     } else {
       let t = new Date(time.getTime());
       let offset = t.getTimezoneOffset() / 60;
@@ -951,16 +959,6 @@ export class Language {
     }
   }
 
-  static OnlineState(value?: number) {
-    switch (value) {
-      case 0:
-        return '在线';
-      case 1:
-      default:
-        return '离线';
-    }
-  }
-
   static YesOrNo(yes: boolean) {
     if (yes) {
       return '是';
@@ -1005,6 +1003,118 @@ export class Language {
       }
     }
     return '待处置';
+  }
+  static SceneChange(value?: number) {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '稍微偏移';
+      case 2:
+        return '严重偏移';
+      default:
+        return '未知';
+    }
+  }
+  static ImageQuality(value?: number): string {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '轻微模糊';
+      case 2:
+        return '严重模糊';
+      default:
+        return '未知';
+    }
+  }
+  static Brightness(value?: number): string {
+    switch (value) {
+      case 0:
+        return '很暗';
+      case 1:
+        return '稍暗';
+      case 2:
+        return '正常';
+      case 3:
+        return '稍亮';
+      case 4:
+        return '很亮';
+      default:
+        return '未知';
+    }
+  }
+  static Aberration(value?: number): string {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '轻微偏色';
+      case 2:
+        return '严重偏色';
+      default:
+        return '未知';
+    }
+  }
+  static Disturbance(value?: number): string {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '条纹干扰';
+      default:
+        return '未知';
+    }
+  }
+  static CameraClassification(value?: CameraClassification): string {
+    switch (value) {
+      case CameraClassification.normal:
+        return '普通摄像机';
+      case CameraClassification.thermal:
+        return '热成像摄像机';
+      case CameraClassification.gcha:
+        return 'GCHA摄像机';
+      default:
+        return '未知';
+    }
+  }
+
+  static NBState(value?: number): string {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '故障';
+      case 2:
+        return '220V故障';
+      default:
+        return '未知';
+    }
+  }
+
+  static RecordState(value?: number) {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '故障';
+      default:
+        return '未知';
+    }
+  }
+  static DumpPointType(value?: number): string {
+    switch (value) {
+      case 1:
+        return '多分类垃圾厢房（干，湿，可回收，有毒有害）';
+      case 2:
+        return '多分类露天垃圾投放点（干，湿，可回收，有毒有害）';
+      case 3:
+        return '二分类垃圾厢房（干，湿）';
+      case 4:
+        return '二分类露天垃圾投放点（干，湿）';
+      default:
+        return '未知';
+    }
   }
 
   static json = language;

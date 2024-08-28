@@ -22,7 +22,7 @@ export class DetailsChartCreater {
   ) {
     let interval = this.Interval(date, unit);
     let args = new DetailsChartDownloadArgs();
-    args.eventType = event;
+    args.eventType = event ?? (types ? types[0] : EventType.None);
     args.time = interval.language;
     args.unit = unit;
     args.datas = datas;

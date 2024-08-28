@@ -3,10 +3,10 @@ import { CollectionMemberType } from 'src/app/enum/member-type.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
 import { CollectionPoint } from 'src/app/network/model/garbage-station/collection-point.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { CollectionMember } from 'src/app/network/model/garbage-station/member.model';
 import { CollectionTrashCan } from 'src/app/network/model/garbage-station/trash-can.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
 import { Guid } from './guid';
 
 export class Creater {

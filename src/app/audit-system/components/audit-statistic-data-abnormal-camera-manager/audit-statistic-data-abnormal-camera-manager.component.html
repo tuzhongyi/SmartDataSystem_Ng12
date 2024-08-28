@@ -1,0 +1,62 @@
+<div class="audit-statistic-data-abnormal-camera-manager">
+  <div class="audit-statistic-data-abnormal-camera-manager-title">
+    <div class="hw-second-title">投放点列表</div>
+  </div>
+  <div class="audit-statistic-data-abnormal-camera-manager-head">
+    <div class="filter-items">
+      <div class="filter-item">
+        <div class="filter-item-title">统计时间：</div>
+        <div class="filter-item-value">
+          <input
+            type="text"
+            [min]="1"
+            [max]="168"
+            [unit]="'小时'"
+            appTouchSpin
+            [(ngModel)]="hour"
+          />
+        </div>
+      </div>
+      <div class="filter-item">
+        <div class="filter-item-title">行政区：</div>
+        <div class="filter-item-value">
+          <common-label-select
+            [single]="true"
+            [autoclose]="true"
+            [(showDropDown)]="controller.division.show"
+            [selectedNodes]="
+              controller.division.selected ? [controller.division.selected] : []
+            "
+            [height]="'325px'"
+          >
+            <howell-division-tree
+              #tree
+              [defaultIds]="args.divisionId ? [args.divisionId] : []"
+              (selectTreeNode)="controller.division.onselect($event)"
+            ></howell-division-tree>
+          </common-label-select>
+        </div>
+      </div>
+      <div class="filter-item search">
+        <button class="hw-blue-btn" (click)="onsearch()">
+          <i class="howell-icon-search"></i> 搜索
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="audit-statistic-data-abnormal-camera-manager-body">
+    <audit-camera-abnormal-table
+      [args]="args"
+      (video)="onvideo($event)"
+    ></audit-camera-abnormal-table>
+  </div>
+</div>
+
+<howell-video-player-window
+  *ngIf="window.video.show"
+  [Model]="window.video"
+  [style]="window.video.style"
+  [cameraId]="window.video.cameraId"
+  [title]="window.video.title"
+  [autoplay]="true"
+></howell-video-player-window>

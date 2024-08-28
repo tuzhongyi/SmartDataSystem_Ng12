@@ -1,0 +1,22 @@
+<div class="audit-list-station-garbage-manager-command" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-command-head">
+    <div class="hw-simple-title">{{ model.Name }}操作命令</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-command-body">
+    <div class="form-groups" *ngIf="hasdevice && data">
+      <audit-list-station-garbage-manager-command-station [model]="data">
+      </audit-list-station-garbage-manager-command-station>
+    </div>
+    <div class="form-groups" *ngIf="hasnbbox || hasgcha">
+      <audit-list-station-garbage-manager-command-nb-box
+        *ngIf="hasnbbox"
+        [model]="model"
+      >
+      </audit-list-station-garbage-manager-command-nb-box>
+      <ai-garbage-station-device-command-gcha
+        *ngIf="hasgcha && data"
+        [model]="data"
+      ></ai-garbage-station-device-command-gcha>
+    </div>
+  </div>
+</div>

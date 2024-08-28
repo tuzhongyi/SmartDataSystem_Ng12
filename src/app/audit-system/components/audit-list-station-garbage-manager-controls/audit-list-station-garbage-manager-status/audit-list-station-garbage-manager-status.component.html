@@ -1,0 +1,31 @@
+<div class="audit-list-station-garbage-manager-status" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-status-head">
+    <div class="hw-simple-title">{{ model.Name }}状态</div>
+  </div>
+  <div #body class="audit-list-station-garbage-manager-status-body">
+    <ai-garbage-station-device-status-device
+      *ngIf="!!device"
+      [model]="device"
+    ></ai-garbage-station-device-status-device>
+
+    <audit-list-station-garbage-manager-status-nb-box
+      *ngIf="!!nb"
+      [nb]="nb"
+    ></audit-list-station-garbage-manager-status-nb-box>
+    <ai-garbage-station-device-status-gcha
+      *ngIf="isgcha"
+      [gcha]="gcha"
+    ></ai-garbage-station-device-status-gcha>
+
+    <audit-list-station-garbage-manager-construction
+      *ngIf="model.ConstructionData"
+      [data]="model.ConstructionData"
+    >
+    </audit-list-station-garbage-manager-construction>
+
+    <ai-garbage-station-device-status-robot
+      *ngIf="isrobot"
+      [models]="robots"
+    ></ai-garbage-station-device-status-robot>
+  </div>
+</div>

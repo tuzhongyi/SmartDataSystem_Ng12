@@ -21,7 +21,7 @@ import {
   PointInfoPanelModelOptionCommand,
 } from 'src/app/garbage-system/components/map-control-point-info-panel/map-point-info-panel.model';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { ChangeControlModel } from 'src/app/view-model/change-control.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';

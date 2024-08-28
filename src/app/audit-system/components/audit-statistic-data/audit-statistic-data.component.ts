@@ -1,39 +1,31 @@
-import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { CameraAbnormalType } from 'src/app/enum/camera-abnormal-type.enum';
+import { GarbageStationAbnormalType } from 'src/app/enum/garbage-station-abnormal-type.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { AuditStatisticDataCountDeviceDetailsArgs } from '../audit-statistic-data-count-device/audit-statistic-data-count-device.model';
 import { AuditStatisticDataCountStationDetailsArgs } from '../audit-statistic-data-count-station/audit-statistic-data-count-station.model';
-import { AuditStatisticPlusTool as AuditStatisticDataPlusTool } from './audit-statistic-data-plus.tool';
-import {
-  AuditStatisticDataWindow,
-  AuditStatisticDataWindows,
-} from './audit-statistic-data-windows/audit-statistic-data.window';
-import { AuditStatisticBusiness as AuditStatisticDataBusiness } from './audit-statistic-data.business';
-import { AuditStatisticDataSelection } from './audit-statistic-data.selection';
-import { AuditStatisticDataService } from './audit-statistic-data.service';
+import { AuditStatisticDataProviders } from './audit-statistic-data.provider';
+import { AuditStatisticDataController } from './controller/audit-statistic-data.controller';
+import { AuditStatisticDataWindow } from './windows/audit-statistic-data.window';
 
 @Component({
   selector: 'audit-statistic-data',
   templateUrl: './audit-statistic-data.component.html',
   styleUrls: ['../audit.less', './audit-statistic-data.component.less'],
-  providers: [
-    AuditStatisticDataPlusTool,
-    AuditStatisticDataService,
-    AuditStatisticDataBusiness,
-    ...AuditStatisticDataWindows,
-  ],
+  providers: [...AuditStatisticDataProviders],
 })
 export class AuditStatisticDataComponent implements OnInit, OnDestroy {
-  load = new EventEmitter();
   key = 'audit-statistic-data';
   constructor(
-    private business: AuditStatisticDataBusiness,
     private global: GlobalStorageService,
-    public window: AuditStatisticDataWindow
+    public window: AuditStatisticDataWindow,
+    public controller: AuditStatisticDataController
   ) {}
 
-  selection = new AuditStatisticDataSelection();
   data?: DivisionNumberStatistic;
+  GarbageStationAbnormalType = GarbageStationAbnormalType;
+  CameraAbnormalType = CameraAbnormalType;
 
   ngOnDestroy(): void {
     this.global.interval.unsubscribe(this.key);
@@ -41,24 +33,17 @@ export class AuditStatisticDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.global.interval.subscribe(this.key, () => {
-      this.loadData().then((x) => {
-        this.load.emit(this.data);
-      });
+      this.controller.load();
     });
     this.global.interval.run();
 
-    this.selection.select.subscribe((x) => {
+    this.controller.filter.selection.select.subscribe((x) => {
       let divisionId = x?.Id;
-      this.window.station.divisionId = x?.Id;
-      this.window.device.divisionId = x?.Id;
-      this.loadData(divisionId).then((x) => {
-        this.load.emit(this.data);
-      });
+      this.window.station.divisionId = divisionId;
+      this.window.device.divisionId = divisionId;
+      this.controller.load();
     });
-  }
-
-  async loadData(divisionId?: string) {
-    this.data = await this.business.load(divisionId);
+    this.controller.load();
   }
 
   onstation(args: AuditStatisticDataCountStationDetailsArgs) {
@@ -70,5 +55,22 @@ export class AuditStatisticDataComponent implements OnInit, OnDestroy {
   ondevice(args: AuditStatisticDataCountDeviceDetailsArgs) {
     this.window.device.status = args.status;
     this.window.device.show = true;
+  }
+  onhour() {
+    this.controller.load();
+  }
+  onabnormalstation(type?: GarbageStationAbnormalType, hour?: number) {
+    this.window.abnormal.station.divisionId =
+      this.controller.filter.selection.selected?.Id;
+    this.window.abnormal.station.hour = hour ?? this.controller.filter.hour;
+    this.window.abnormal.station.type = type;
+    this.window.abnormal.station.show = true;
+  }
+  onabnormalcamera(type?: CameraAbnormalType, hour?: number) {
+    this.window.abnormal.camera.divisionId =
+      this.controller.filter.selection.selected?.Id;
+    this.window.abnormal.camera.hour = hour ?? this.controller.filter.hour;
+    this.window.abnormal.camera.type = type;
+    this.window.abnormal.camera.show = true;
   }
 }

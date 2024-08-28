@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 
 @Injectable()
 export class MonitorMediaMultipleWindowBusiness extends WindowViewModel {
@@ -11,6 +11,5 @@ export class MonitorMediaMultipleWindowBusiness extends WindowViewModel {
     padding: '10px 20px',
   };
   fullplay = true;
-  args?: MediaMultipleWindowArgs;
-  date?: Date;
+  args?: MediaMultipleStatisticWindowArgs;
 }

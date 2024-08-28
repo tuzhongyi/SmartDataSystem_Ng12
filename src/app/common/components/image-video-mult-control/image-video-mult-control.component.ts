@@ -25,6 +25,8 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   @Input() operation: ImageVideoControlOperation =
     new ImageVideoControlOperation();
   @Input() playback?: EventEmitter<PlaybackInterval>;
+  @Input() preview?: EventEmitter<string>;
+
   @Input() is_playback_use_config = true;
   @Input() fullplay = false;
 
@@ -35,6 +37,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   constructor() {}
 
   _playback: EventEmitter<PlaybackInterval>[] = [];
+  _preview: EventEmitter<string>[] = [];
 
   sqrt = 1;
   played?: ImageVideoControlModel;
@@ -76,6 +79,14 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
         );
         if (index >= 0) {
           this._playback[index].emit(x);
+        }
+      });
+    }
+    if (this.preview) {
+      this.preview.subscribe((cameraId) => {
+        let index = this.playing.findIndex((y) => y && y.cameraId === cameraId);
+        if (index >= 0) {
+          this._preview[index].emit(cameraId);
         }
       });
     }

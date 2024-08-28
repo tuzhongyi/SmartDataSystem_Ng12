@@ -29,7 +29,7 @@ export class AuditStatisticDataCountDeviceComponent
   extends AEChartComponent
   implements OnInit, AfterViewInit
 {
-  @Input() data?: DivisionNumberStatistic;
+  @Input() data!: DivisionNumberStatistic;
   @Input() load?: EventEmitter<DivisionNumberStatistic>;
   @Output() details: EventEmitter<AuditStatisticDataCountDeviceDetailsArgs> =
     new EventEmitter();

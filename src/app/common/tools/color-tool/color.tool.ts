@@ -140,4 +140,99 @@ export class ColorTool {
     }
     return 'orange-text';
   }
+
+  static SceneChange(value?: number) {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+        return 'orange-text';
+      case 2:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+  static ImageQuality(value?: number): string {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+        return 'orange-text';
+      case 2:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+  static Brightness(value?: number): string {
+    switch (value) {
+      case 0:
+        return 'powder-red-text';
+      case 1:
+        return 'orange-text';
+      case 2:
+        return 'green-text';
+      case 3:
+        return 'orange-text';
+      case 4:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+  static Aberration(value?: number): string {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+        return 'orange-text';
+      case 2:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+  static Disturbance(value?: number): string {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+
+  static NBState(value?: number): string {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+      case 2:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+
+  static RecordState(value?: number) {
+    switch (value) {
+      case 0:
+        return 'green-text';
+      case 1:
+        return 'powder-red-text';
+      default:
+        return '';
+    }
+  }
+  static Signal(value?: number) {
+    if (!value || value < 20) {
+      return 'powder-red-text';
+    } else if (value >= 20) {
+      return 'orange-text';
+    } else {
+      return 'green-text';
+    }
+  }
 }

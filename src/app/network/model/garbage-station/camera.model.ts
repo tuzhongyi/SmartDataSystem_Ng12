@@ -70,4 +70,13 @@ export class Camera implements ICamera, IModel {
 
   /**	String	编码设备ID	O */
   EncodeDeviceId?: string;
+
+  /**	Int32	录像状态：0-正常，1-故障(暂时无效)	O */
+  RecordState?: number;
+  /**	DateTime	故障时间	O */
+  @Transform(transformDateTime)
+  AbnormalTime?: Date;
+  /**	DateTime	离线时间	O */
+  @Transform(transformDateTime)
+  OfflineTime?: Date;
 }

@@ -1,0 +1,301 @@
+<div class="audit-garbage-station-details-table vertical-layout">
+  <div class="audit-garbage-station-details-table-main vertical-main">
+    <div
+      class="audit-garbage-station-details-table-main-table"
+      WheelHorizontalScroll
+    >
+      <table
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        [ngStyle]="{
+          height: table_height
+        }"
+      >
+        <thead>
+          <tr>
+            <td class="lock left first">投放点</td>
+            <ng-container *ngFor="let col of columns">
+              <td *ngIf="config[col].enabled">
+                {{ ConfigLanguage[col] }}
+              </td>
+            </ng-container>
+
+            <td class="lock right last center">操作</td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            class=""
+            [ngClass]="{
+              selected: selected === item
+            }"
+            (click)="onselect(item)"
+          >
+            <td class="lock left first" [title]="item.Name">
+              {{ item.Name }}
+            </td>
+            <ng-container *ngFor="let col of columns">
+              <td *ngIf="config[col].enabled">
+                <ng-container [ngSwitch]="col">
+                  <ng-container *ngSwitchCase="'StationState'">
+                    <div class="center">
+                      <ng-container
+                        *ngFor="let state of item.States; let i = index"
+                      >
+                        {{ i > 0 ? "/" : "" }}
+                        <span
+                          [ngClass]="{
+                            'green-text': state === StationState.Normal,
+                            'orange-text': state === StationState.Full,
+                            'gray-2-text': state === StationState.Error
+                          }"
+                        >
+                          {{ Language.StationState(state) }}
+                        </span>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'DropWindows'">
+                    <div
+                      class="td-icon"
+                      (click)="ondropwindows($event, item)"
+                      [ngClass]="{
+                        disabled:
+                          !item.DropWindows || item.DropWindows.length == 0
+                      }"
+                    >
+                      {{
+                        item.DropWindows
+                          ? "【" + item.DropWindows.length + "】"
+                          : "-"
+                      }}
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'Cameras'">
+                    <div
+                      class="td-icon"
+                      (click)="oncameras($event, item)"
+                      [ngClass]="{
+                        disabled: !item.Cameras || item.Cameras.length == 0
+                      }"
+                    >
+                      【{{ item.Cameras ? item.Cameras.length : 0 }}】
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'TrashCans'">
+                    <div
+                      class="td-icon"
+                      (click)="ontrashcans($event, item)"
+                      [ngClass]="{
+                        disabled: !item.TrashCans || item.TrashCans.length == 0
+                      }"
+                    >
+                      【{{ item.TrashCans ? item.TrashCans.length : 0 }}】
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'Members'">
+                    <div
+                      class="td-icon"
+                      (click)="onmembers($event, item)"
+                      [ngClass]="{
+                        disabled: !item.Members || item.Members.length == 0
+                      }"
+                    >
+                      【{{ item.Members ? item.Members.length : 0 }}】
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'DisableEventTypes'">
+                    <div
+                      class="td-icon"
+                      (click)="oneventdisabled($event, item)"
+                      [ngClass]="{
+                        disabled:
+                          !item.DisableEventTypes ||
+                          item.DisableEventTypes.length == 0
+                      }"
+                    >
+                      【{{
+                        item.DisableEventTypes
+                          ? item.DisableEventTypes.length
+                          : 0
+                      }}】
+                    </div>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault="">
+                    <span
+                      [class]="item.Datas[col].color"
+                      (click)="onclick($event, col, item)"
+                    >
+                      {{ item.Datas[col].text | async }}
+                    </span>
+                  </ng-container>
+                </ng-container>
+              </td>
+            </ng-container>
+
+            <!-- <td *ngIf="config.Community">
+              <div [style.width]="'calc(' + widths[2] + ' - 24px)'"></div>
+            </td>
+            <td *ngIf="config.County">
+              <div [style.width]="'calc(' + widths[3] + ' - 24px)'">
+                {{ ((item.Division | async)?.Parent | async)?.Name }}
+              </div>
+            </td>
+            <td *ngIf="config.Committees">
+              <div [style.width]="'calc(' + widths[4] + ' - 24px)'">
+                {{ (item.Division | async)?.Name }}
+              </div>
+            </td>
+            <td *ngIf="config.StationType">
+              <div [style.width]="'calc(' + widths[5] + ' - 24px)'">
+                {{ Language.StationType(item.StationType) }}
+              </div>
+            </td>
+            <td *ngIf="config.Address">{{ item.Address }}</td>
+            <td *ngIf="config.StationState">
+              <div class="center">
+                <ng-container *ngFor="let state of item.States; let i = index">
+                  {{ i > 0 ? "/" : "" }}
+                  <span
+                    [ngClass]="{
+                      'green-text': state === StationState.Normal,
+                      'orange-text': state === StationState.Full,
+                      'gray-2-text': state === StationState.Error
+                    }"
+                  >
+                    {{ Language.StationState(state) }}
+                  </span>
+                </ng-container>
+              </div>
+            </td>
+
+            <td *ngIf="config.DropWindows">
+              <div class="td-icon" (click)="ondropwindows($event, item)">
+                【{{ item.DropWindows ? item.DropWindows.length : 0 }}】
+              </div>
+            </td>
+            <td *ngIf="config.Cameras">
+              <div class="td-icon" (click)="oncameras($event, item)">
+                【{{ item.Cameras ? item.Cameras.length : 0 }}】
+              </div>
+            </td>
+            <td *ngIf="config.TrashCans">
+              <div class="td-icon" (click)="ontrashcans($event, item)">
+                【{{ item.TrashCans ? item.TrashCans.length : 0 }}】
+              </div>
+            </td>
+            <td *ngIf="config.Members">
+              <div class="td-icon" (click)="onmembers($event, item)">
+                【{{ item.Members ? item.Members.length : 0 }}】
+              </div>
+            </td>
+
+            <td *ngIf="config.IMEI">{{ item.IMEI ?? "-" }}</td>
+
+            <td *ngIf="config.GisPoint">
+              <ng-container *ngIf="item.GisPoint">
+                {{ item.GisPoint.Longitude }}, {{ item.GisPoint.Latitude }}
+              </ng-container>
+            </td>
+            <td *ngIf="config.CreateTime">
+              {{ item.CreateTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td *ngIf="config.UpdateTime">
+              {{ item.UpdateTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td>
+            <td *ngIf="true">
+              {{
+                item.GarbageDeviceData
+                  ? (item.GarbageDeviceData.ChipTemperature ?? 0) + "℃"
+                  : "-"
+              }}
+            </td>
+            <td *ngIf="config.NBState">{{ item.NBState }}</td>
+            <td *ngIf="config.NBHeartbeatTime">
+              {{ item.NBHeartbeatTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </td> -->
+            <td class="lock right last">
+              <div class="operation center">
+                <div
+                  class="icon-button"
+                  title="视频"
+                  *ngIf="item.Operation.video.show"
+                  [ngClass]="{
+                    disabled: !item.Operation.video.enabled
+                  }"
+                  (click)="onvideomultiple($event, item)"
+                >
+                  <i class="howell-icon-cam-all1"></i>
+                </div>
+                <div
+                  class="icon-button"
+                  title="详细信息"
+                  *ngIf="item.Operation.device.show"
+                  [ngClass]="{
+                    disabled: !item.Operation.device.enabled
+                  }"
+                  (click)="onstatus($event, item)"
+                >
+                  <i class="howell-icon-details"></i>
+                </div>
+                <div
+                  class="icon-button"
+                  title="命令"
+                  *ngIf="item.Operation.command.show"
+                  [ngClass]="{
+                    disabled: !item.Operation.command.enabled
+                  }"
+                  (click)="oncommand($event, item)"
+                >
+                  <i class="mdi mdi-apple-keyboard-command"></i>
+                </div>
+                <div
+                  class="icon-button"
+                  title="工作表"
+                  *ngIf="item.Operation.schedule.show"
+                  [ngClass]="{
+                    disabled: !item.Operation.schedule.enabled
+                  }"
+                  (click)="onschedule($event, item)"
+                >
+                  <i class="mdi mdi-calendar-clock"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="lock-border"></div>
+  </div>
+  <div
+    class="audit-garbage-station-details-table-main-footer footer"
+    *ngIf="page"
+  >
+    <div class="footer-item">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+      </div>
+
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="5"
+        [pageIndex]="page.PageIndex - 1"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<ng-template #nodata>-</ng-template>

@@ -1,7 +1,7 @@
 import { CoordinateTransform } from 'src/app/common/tools/coordinateTransform';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { VehicleType } from 'src/app/enum/vehicle-type.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { GisPoint as GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 
 export class CollectionMapControlConverter {

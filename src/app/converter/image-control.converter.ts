@@ -4,7 +4,7 @@ import { Medium } from '../common/tools/medium';
 import { OnlineStatus } from '../enum/online-status.enum';
 import { ICamera } from '../network/model/garbage-station/camera.interface';
 import { Camera } from '../network/model/garbage-station/camera.model';
-import { VehicleCamera } from '../network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from '../network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { ImageControlModel } from '../view-model/image-control.model';
 
 export class ImageControlConverter

@@ -1,4 +1,5 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
   Directive,
   ElementRef,
@@ -11,7 +12,9 @@ import { HowellTouchSpinOptions } from './touch-spin.class';
 @Directive({
   selector: '[appTouchSpin]',
 })
-export class TouchSpinDirective implements AfterViewInit {
+export class TouchSpinDirective implements AfterViewInit, AfterViewChecked {
+  @Input() unit?: string;
+
   private _options: TouchSpinOptions = new HowellTouchSpinOptions();
   public get options(): TouchSpinOptions {
     return this._options;
@@ -46,12 +49,27 @@ export class TouchSpinDirective implements AfterViewInit {
   @Output() numberChange: EventEmitter<number> = new EventEmitter();
 
   constructor(private ele: ElementRef<HTMLInputElement>) {}
+  ngAfterViewChecked(): void {
+    if (this.unit) {
+      let index = this.ele.nativeElement.value.indexOf(this.unit);
+      if (index < 0) {
+        this.ele.nativeElement.value = this.ele.nativeElement.value + this.unit;
+      }
+    }
+  }
   ngAfterViewInit(): void {
     $(this.ele.nativeElement)
       .TouchSpin(this.options)
       .on('change', (e) => {
-        this.touchSpinChange.emit(this.ele.nativeElement.value);
-        this.numberChange.emit(parseInt(this.ele.nativeElement.value));
+        let value = this.ele.nativeElement.value;
+        if (this.unit) {
+          let index = value.indexOf(this.unit);
+          if (index >= 0) {
+            value = value.substring(0, index);
+          }
+        }
+        this.touchSpinChange.emit(value);
+        this.numberChange.emit(parseInt(value));
       });
 
     $(this.ele.nativeElement).val(this.number ?? 1);

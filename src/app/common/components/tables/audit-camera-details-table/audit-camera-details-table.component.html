@@ -1,0 +1,86 @@
+<div class="audit-camera-details-table vertical-layout">
+  <div class="audit-camera-details-table-main vertical-main">
+    <div class="audit-camera-details-table-main-table" WheelHorizontalScroll>
+      <table
+        border="0"
+        cellpadding="0"
+        cellspacing="0"
+        [ngStyle]="{
+          height: table_height
+        }"
+      >
+        <thead>
+          <tr>
+            <td class="lock left first">摄像机</td>
+            <ng-container *ngFor="let col of columns">
+              <td *ngIf="config[col].enabled">
+                {{ ConfigLanguage[col] }}
+              </td>
+            </ng-container>
+
+            <td class="lock right last center">操作</td>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr
+            *ngFor="let item of datas; let i = index"
+            class=""
+            [ngClass]="{
+              selected: selected === item
+            }"
+            (click)="onselect(item)"
+          >
+            <td class="lock left first" [title]="item.Name">
+              {{ item.Name }}
+            </td>
+            <ng-container *ngFor="let col of columns">
+              <td *ngIf="item.Datas[col] && config[col].enabled">
+                <span [class]="item.Datas[col].color">
+                  {{ item.Datas[col].text | async }}
+                </span>
+              </td>
+            </ng-container>
+
+            <td class="lock right last">
+              <div class="operation center">
+                <div
+                  class="icon-button"
+                  title="视频"
+                  (click)="onvideo($event, item)"
+                >
+                  <i class="howell-icon-video"></i>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="lock-border"></div>
+  </div>
+  <div class="audit-camera-details-table-main-footer footer" *ngIf="page">
+    <div class="footer-item">
+      <div class="footer-info">
+        <div class="info-item">当前数量: {{ page && page.RecordCount }}</div>
+        <div class="info-item">总数量: {{ page && page.TotalRecordCount }}</div>
+      </div>
+
+      <app-paginator
+        [length]="page.TotalRecordCount"
+        [pageSize]="page.PageSize"
+        [pagerCount]="5"
+        [pageIndex]="page.PageIndex - 1"
+        [showFirstLastButtons]="true"
+        (page)="pageEvent($event)"
+      >
+      </app-paginator>
+    </div>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>
+
+<ng-template #nodata>-</ng-template>

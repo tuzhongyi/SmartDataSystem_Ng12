@@ -211,8 +211,8 @@ export class MediaControlComponent
       );
       this.playback.emit({
         CameraId: this.current.cameraId,
-        BeginTime: interval.BeginTime,
-        EndTime: interval.EndTime,
+        begin: interval.BeginTime,
+        end: interval.EndTime,
       });
     }
     this.display.playback = false;

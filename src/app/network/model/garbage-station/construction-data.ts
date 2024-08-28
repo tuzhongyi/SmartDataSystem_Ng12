@@ -1,6 +1,6 @@
 import { Transform } from 'class-transformer';
 import { IModel } from '../model.interface';
-import { transformDateTime } from '../transform.model';
+import { transformDateTime, transformRound } from '../transform.model';
 
 /** 建筑垃圾箱数据 */
 export class ConstructionData implements IModel {
@@ -8,8 +8,10 @@ export class ConstructionData implements IModel {
   MatchGuid?: string;
 
   /**	Double	垃圾容量百分比：[0-100]，目前只有建筑垃圾投放箱有此属性	O */
+  @Transform((value) => transformRound(value, 1))
   PercentageOfCapacity?: number;
   /**	Double	电量百分比：[0-100] ，目前只有建筑垃圾投放箱有此属性	O */
+  @Transform((value) => transformRound(value, 1))
   PercentageOfBattery?: number;
   /**	Double	温度，单位：摄氏度，目前只有建筑垃圾投放箱有此属性	O */
   Temperture?: number;

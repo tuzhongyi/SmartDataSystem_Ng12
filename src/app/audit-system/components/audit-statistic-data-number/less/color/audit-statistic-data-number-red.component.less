@@ -1,0 +1,22 @@
+.audit-statistic-data-number {
+  &.red {
+    border-color: rgba(236, 43, 43, 0.4);
+    background-color: rgba(236, 43, 43, 0.2);
+
+    &:hover {
+
+      border-color: rgba(236, 43, 43, 0.5);
+      background-color: rgba(236, 43, 43, 0.3);
+    }
+  }
+
+  &.red>&-head {
+    .hw-simple-title {
+      color: #ffa7a7;
+    }
+  }
+
+  &.red>&-body {
+    color: rgba(236, 43, 43, 1);
+  }
+}

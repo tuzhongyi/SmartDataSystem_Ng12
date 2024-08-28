@@ -19,19 +19,11 @@
     flex-wrap: nowrap;
   }
 
-  &.wrap {
-    .mat-chip-list-wrapper {
-      flex-wrap: wrap;
-    }
-  }
 
-  .mat-chip-item {
-    display: flex;
-    align-items: center;
-  }
 }
 
-app-root .mat-standard-chip {
+app-root .mat-standard-chip,
+.mat-standard-chip {
   background-color: rgb(69, 75, 112);
   color: #eaedff;
   font-size: 14px;
@@ -44,9 +36,32 @@ app-root .mat-standard-chip {
 .mat-chip.mat-standard-chip {
   background-color: rgb(69, 75, 112);
   color: #eaedff;
-  border-radius: 3px;
 }
 
 .mat-standard-chip.mat-chip-with-trailing-icon {
   border-radius: 0;
+}
+
+.material-chip-list {
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  .mat-chip-item {
+    display: flex;
+    align-items: center;
+
+    // &-title {}
+
+    &-value {
+      color: aqua;
+
+      &.putin {
+        color: #21E452
+      }
+
+      &.putout {
+        color: #ffba00
+      }
+    }
+  }
 }

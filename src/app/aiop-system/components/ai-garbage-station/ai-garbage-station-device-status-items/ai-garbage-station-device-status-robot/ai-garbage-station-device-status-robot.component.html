@@ -1,0 +1,117 @@
+<div class="ai-garbage-station-device-status-robot">
+  <div class="panel form-group" *ngIf="!!robot">
+    <div class="panel-head">
+      <div class="hw-simple-title">机器人状态</div>
+      <div class="panel-head-opts" *ngIf="!!robots && robots.items.length > 1">
+        <div
+          *ngFor="let item of robots.items; let index = index"
+          (click)="robots.onclick(index)"
+          [class.selected]="index === robots.index"
+        >
+          {{ index + 1 }}
+        </div>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">机器人序列号</div>
+      <div class="form-item-value">
+        {{ robot.SerialNumber === undefined ? "-" : robot.SerialNumber }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">机器人型号</div>
+      <div class="form-item-value">
+        {{ robot.Model === undefined ? "-" : robot.Model }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">机器人状态</div>
+      <div class="form-item-value">
+        <ng-container *ngFor="let state of robot.State">
+          <span [class]="Color.RobotState(state)">
+            {{ Language.RobotState(state) }}
+          </span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">电池电量</div>
+      <div
+        class="form-item-value"
+        [class]="Color.BatteryLevel(robot.BatteryLevel)"
+      >
+        {{ robot.BatteryLevel === undefined ? "-" : robot.BatteryLevel }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">电池状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.BatteryState(robot.BatteryState)"
+      >
+        {{
+          robot.BatteryState === undefined
+            ? "-"
+            : Language.BatteryState(robot.BatteryState)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">错误码</div>
+      <div class="form-item-value code">
+        <ng-container *ngIf="!!errors">
+          <div
+            *ngFor="let error of errors.items; let index = index"
+            (click)="errors.onclick(index)"
+          >
+            <span *ngIf="index > 0">, </span
+            ><span
+              class="powder-red-text _code"
+              [class._code]="errors.items.length > 1"
+              [class.selected]="
+                index === errors.index && errors.items.length > 1
+              "
+              >{{ error.Code }}</span
+            >
+          </div>
+        </ng-container>
+        <div *ngIf="!errors || errors.items.length == 0">-</div>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">错误信息</div>
+      <div class="form-item-value message" [title]="error?.Desc">
+        {{ !error ? "-" : error.Desc }}
+      </div>
+    </div>
+
+    <!-- <div
+      class="form-items"
+      *ngIf="!!robot.Errors && robot.Errors.length > 0"
+    >
+      <div
+        class="form-item"
+        *ngFor="let error of robot.Errors; let index = index"
+      >
+        <div class="form-item-title">
+          <span>错误码({{ index + 1 }}/{{ robot.Errors.length }})：</span>
+          <span class="powder-red-text">
+            {{ error.Code }}
+          </span>
+        </div>
+        <div class="form-item-value" [title]="error.Desc">
+          {{ error.Desc }}
+        </div>
+      </div>
+    </div>
+    <div
+      class="form-items"
+      *ngIf="!robot.Errors || robot.Errors.length == 0"
+    >
+      <div class="form-item">
+        <div class="form-item-title">错误码</div>
+        <div class="form-item-value">-</div>
+      </div>
+    </div> -->
+  </div>
+</div>

@@ -4,7 +4,7 @@ import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool'
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { MonitorCardRecordEpisodeWindow } from './monitor-card-record-episode-window.business';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
@@ -65,15 +65,13 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
   async onallvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
       if (item.EventType === EventType.MixedInto) {
-        this.media.multiple.args = new MediaMultipleWindowArgs();
+        this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
         this.media.multiple.args.stationId = item.Data.StationId;
 
         let second = item.EventTime.getSeconds() - 30;
 
         this.media.multiple.args.time = new Date(item.EventTime.getTime());
         this.media.multiple.args.time.setSeconds(second);
-        this.media.multiple.date = new Date(item.EventTime.getTime());
-        this.media.multiple.date.setSeconds(second);
         this.media.multiple.show = true;
       }
     }

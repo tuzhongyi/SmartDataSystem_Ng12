@@ -22,7 +22,8 @@ export class AIGarbageStationDeviceRecordEventTableComponent
 {
   @Input() args: AIGarbageStationDeviceRecordEventTableArgs =
     new AIGarbageStationDeviceRecordEventTableArgs();
-  @Input() load?: EventEmitter<AIGarbageStationDeviceRecordEventTableArgs>;
+  @Input()
+  load?: EventEmitter<AIGarbageStationDeviceRecordEventTableArgs>;
 
   @Output() loaded: EventEmitter<PagedList<AIGarbageDeviceEventRecord>> =
     new EventEmitter();

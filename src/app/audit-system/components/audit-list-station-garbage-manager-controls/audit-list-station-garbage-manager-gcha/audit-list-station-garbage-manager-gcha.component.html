@@ -1,0 +1,15 @@
+<div class="audit-list-station-garbage-manager-gcha" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-gcha-head">
+    <div class="hw-simple-title">{{ model.Name }}GCHA</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-gcha-body">
+    <ai-garbage-station-device-status-gcha
+      *ngIf="has.gcha"
+      [gcha]="gcha"
+    ></ai-garbage-station-device-status-gcha>
+    <ai-garbage-station-device-command-gcha
+      *ngIf="has.device"
+      [model]="data"
+    ></ai-garbage-station-device-command-gcha>
+  </div>
+</div>

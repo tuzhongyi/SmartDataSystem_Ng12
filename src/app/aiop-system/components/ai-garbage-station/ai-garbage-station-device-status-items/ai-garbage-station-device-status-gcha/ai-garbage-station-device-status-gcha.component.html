@@ -1,0 +1,55 @@
+<div class="ai-garbage-station-device-status-gcha">
+  <div class="panel form-group" *ngIf="!!gcha">
+    <div class="hw-simple-title">GCHA状态</div>
+    <div class="form-item">
+      <div class="form-item-title">在线状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.OnlineState(gcha.OnlineState)"
+      >
+        {{
+          gcha.OnlineState === undefined
+            ? "-"
+            : Language.OnlineStatus(gcha.OnlineState)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">分析服务状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.SwitchState(gcha.AnalysisServerState)"
+      >
+        {{
+          gcha.AnalysisServerState === undefined
+            ? "-"
+            : Language.SwitchState(gcha.AnalysisServerState)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">升级服务状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.SwitchState(gcha.UpgradeServerState)"
+      >
+        {{
+          gcha.UpgradeServerState === undefined
+            ? "-"
+            : Language.SwitchState(gcha.UpgradeServerState)
+        }}
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-item-title">最后更新时间</div>
+      <div class="form-item-value" style="width: 150px">
+        {{
+          gcha.LastUpdateTime === undefined
+            ? "-"
+            : (gcha.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
+        }}
+      </div>
+    </div>
+  </div>
+</div>

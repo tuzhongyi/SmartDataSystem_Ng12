@@ -77,12 +77,21 @@ export class AccountOperationComponent implements OnInit, OnDestroy {
       this.display.bindMobile = x.DivisionType === DivisionType.Committees;
     });
 
+    let user = this.local.user;
+
+    let resource =
+      user.Resources && user.Resources.length > 0
+        ? user.Resources[0]
+        : undefined;
+    let role = user.Role && user.Role.length > 0 ? user.Role[0] : undefined;
+
     if (
-      this.local.user &&
-      this.local.user.Resources &&
-      this.local.user.Resources
+      role &&
+      role.UserData === 1 &&
+      role.StaticData === 1 &&
+      role.PictureData === 1
     ) {
-      let resource = this.local.user.Resources[0];
+    } else if (resource) {
       this.global.division.init({
         Id: resource.Id,
         Name: resource.Name,

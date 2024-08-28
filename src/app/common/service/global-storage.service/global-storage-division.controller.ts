@@ -18,10 +18,23 @@ export class GlobalStorageDivisionController {
           return !!this.localStorage.user;
         }).then((x) => {
           let user = this.localStorage.user;
+          let role =
+            user.Role && user.Role.length > 0 ? user.Role[0] : undefined;
           let resource =
             user.Resources && user.Resources.length > 0
               ? user.Resources[0]
               : undefined;
+
+          if (role) {
+            if (
+              role.UserData === 1 &&
+              role.StaticData === 1 &&
+              role.PictureData === 1
+            ) {
+              resolve({} as IDivision);
+              return;
+            }
+          }
 
           if (resource) {
             this._default = {

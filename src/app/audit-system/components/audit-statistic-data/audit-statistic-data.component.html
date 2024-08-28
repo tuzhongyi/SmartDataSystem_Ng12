@@ -4,18 +4,43 @@
     <div class="filter">
       <div class="filter-items">
         <div class="filter-item">
+          <div class="filter-item-title">统计时间：</div>
+          <div class="filter-item-value">
+            <!-- <input
+              type="number"
+              [min]="1"
+              [max]="168"
+              appTouchSpin
+              [(ngModel)]="controller.number.hour"
+            /> -->
+            <select [(ngModel)]="controller.filter.hour" (change)="onhour()">
+              <option [ngValue]="24">24小时</option>
+              <option [ngValue]="48">48小时</option>
+              <option [ngValue]="72">72小时</option>
+              <option [ngValue]="96">96小时</option>
+              <option [ngValue]="120">120小时</option>
+              <option [ngValue]="144">144小时</option>
+              <option [ngValue]="168">168小时</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-item">
           <div class="filter-item-title">行政区：</div>
           <div class="filter-item-value">
             <common-label-select
               [single]="true"
               [autoclose]="true"
-              [(showDropDown)]="selection.show"
-              [selectedNodes]="selection.selecteds"
+              [(showDropDown)]="controller.filter.selection.show"
+              [selectedNodes]="
+                controller.filter.selection.selected
+                  ? [controller.filter.selection.selected]
+                  : []
+              "
               [height]="'325px'"
             >
               <howell-division-tree
                 #tree
-                (selectTreeNode)="selection.onselect($event)"
+                (selectTreeNode)="controller.filter.selection.onselect($event)"
               ></howell-division-tree>
             </common-label-select>
           </div>
@@ -25,20 +50,72 @@
   </div>
   <div class="audit-statistic-body">
     <div class="audit-statistic-body-scroll">
-      <div class="audit-statistic-body-scroll-wrap">
-        <audit-statistic-card style="width: calc(50% - 10px)">
-          <audit-statistic-data-count-station
-            [data]="data"
-            [load]="load"
-            (details)="onstation($event)"
-          ></audit-statistic-data-count-station>
+      <div class="audit-statistic-body-scroll-number">
+        <audit-statistic-data-number
+          [title]="controller.number.station.count.title"
+          [value]="controller.number.station.count.value"
+          [color]="controller.number.station.count.color"
+          (click)="onabnormalstation()"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.station.door.title"
+          [value]="controller.number.station.door.value"
+          [color]="controller.number.station.door.color"
+          (click)="onabnormalstation(GarbageStationAbnormalType.door)"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.station.gcha.title"
+          [value]="controller.number.station.gcha.value"
+          [color]="controller.number.station.gcha.color"
+          (click)="onabnormalstation(GarbageStationAbnormalType.gcha)"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.station.nb.title"
+          [value]="controller.number.station.nb.value"
+          [color]="controller.number.station.nb.color"
+          (click)="onabnormalstation(GarbageStationAbnormalType.nb)"
+        ></audit-statistic-data-number>
+      </div>
+      <div class="audit-statistic-body-scroll-number">
+        <audit-statistic-data-number
+          [title]="controller.number.camera.count.title"
+          [value]="controller.number.camera.count.value"
+          [color]="controller.number.camera.count.color"
+          (click)="onabnormalcamera()"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.camera.offline.title"
+          [value]="controller.number.camera.offline.value"
+          [color]="controller.number.camera.offline.color"
+          (click)="onabnormalcamera(CameraAbnormalType.offline)"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.camera.abnormal.title"
+          [value]="controller.number.camera.abnormal.value"
+          [color]="controller.number.camera.abnormal.color"
+          (click)="onabnormalcamera(CameraAbnormalType.abnormal)"
+        ></audit-statistic-data-number>
+        <audit-statistic-data-number
+          [title]="controller.number.camera.record.title"
+          [value]="controller.number.camera.record.value"
+          [color]="controller.number.camera.record.color"
+          (click)="onabnormalcamera(CameraAbnormalType.record)"
+        ></audit-statistic-data-number>
+      </div>
+      <div class="audit-statistic-body-scroll-chart">
+        <audit-statistic-card>
+          <audit-statistic-data-count-abnormal-station
+            *ngIf="!!controller.statistic.station.data"
+            [data]="controller.statistic.station.data"
+            (item)="onabnormalstation($event, 0)"
+          ></audit-statistic-data-count-abnormal-station>
         </audit-statistic-card>
-        <audit-statistic-card style="width: calc(50% - 10px)">
-          <audit-statistic-data-count-device
-            [data]="data"
-            [load]="load"
-            (details)="ondevice($event)"
-          ></audit-statistic-data-count-device>
+        <audit-statistic-card>
+          <audit-statistic-data-count-abnormal-camera
+            *ngIf="!!controller.statistic.camera.data"
+            [data]="controller.statistic.camera.data"
+            (item)="onabnormalcamera($event, 0)"
+          ></audit-statistic-data-count-abnormal-camera>
         </audit-statistic-card>
       </div>
     </div>
@@ -93,3 +170,37 @@
   >
   </app-video-window>
 </div>
+
+<app-window
+  [Model]="window.abnormal.station"
+  *ngIf="window.abnormal.station.show"
+  [style]="window.abnormal.station.style"
+>
+  <audit-statistic-data-abnormal-station-manager
+    [divisionId]="window.abnormal.station.divisionId"
+    [hour]="window.abnormal.station.hour"
+    [type]="window.abnormal.station.type"
+    (dropwindows)="window.abnormal.station.ondropwindows($event)"
+  ></audit-statistic-data-abnormal-station-manager>
+</app-window>
+<app-window
+  [Model]="window.abnormal.camera"
+  *ngIf="window.abnormal.camera.show"
+  [style]="window.abnormal.camera.style"
+>
+  <audit-statistic-data-abnormal-camera-manager
+    [divisionId]="window.abnormal.camera.divisionId"
+    [hour]="window.abnormal.camera.hour"
+    [type]="window.abnormal.camera.type"
+  ></audit-statistic-data-abnormal-camera-manager>
+</app-window>
+<app-window
+  [Model]="window.dropwindow"
+  *ngIf="window.dropwindow.show"
+  [style]="window.dropwindow.style"
+>
+  <audit-list-station-garbage-manager-tab-drop-window
+    [model]="window.dropwindow.model"
+    (close)="window.dropwindow.show = false"
+  ></audit-list-station-garbage-manager-tab-drop-window>
+</app-window>

@@ -4,7 +4,7 @@ import { Language } from 'src/app/common/tools/language';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
-import { AuditStatisticDataSelection } from '../audit-statistic-data/audit-statistic-data.selection';
+import { AuditStatisticDataStationManagerSelection } from './audit-statistic-data-station-manager.selection';
 
 @Component({
   selector: 'audit-statistic-data-station-manager',
@@ -21,7 +21,7 @@ export class AuditStatisticDataStationManagerComponent implements OnInit {
 
   args = new AuditGarbageStationTableArgs();
   load = new EventEmitter<AuditGarbageStationTableArgs>();
-  selection = new AuditStatisticDataSelection();
+  selection = new AuditStatisticDataStationManagerSelection();
   StationState = StationState;
   Language = Language;
   ngOnInit(): void {

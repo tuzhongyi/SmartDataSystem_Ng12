@@ -6,7 +6,7 @@ import {
   IUpdate,
   IUpload,
 } from 'src/app/common/interfaces/bussiness.interface';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 
 export interface IGarbageVehicleCameraManagerBusiness
   extends IGet<VehicleCamera>,

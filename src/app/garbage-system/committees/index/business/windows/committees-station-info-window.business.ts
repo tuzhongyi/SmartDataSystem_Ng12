@@ -6,7 +6,7 @@ import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool'
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
@@ -95,10 +95,9 @@ export class CommitteesGarbageStationInfoWindowBusiness extends WindowViewModel 
       this.video.mask = true;
       this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
     } else if (item instanceof AIGarbageRfidCardRecord) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = item.GarbageStationId;
       this.media.multiple.args.time = item.Time;
-      this.media.multiple.date = item.Time;
       this.media.multiple.fullplay = true;
       this.media.multiple.show = true;
     } else if (item instanceof EventRecordViewModel) {

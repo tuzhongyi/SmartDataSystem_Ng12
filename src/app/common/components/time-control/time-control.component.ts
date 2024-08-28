@@ -4,8 +4,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { wait2 } from '../../tools/tool';
@@ -18,12 +20,17 @@ declare let $: any;
   templateUrl: './time-control.component.html',
   styleUrls: ['./time-control.component.less'],
 })
-export class TimeControlComponent implements OnInit, AfterViewInit {
+export class TimeControlComponent implements OnChanges, OnInit, AfterViewInit {
   @Input() time: TimeModel = new TimeModel();
   @Output() timeChange: EventEmitter<TimeModel> = new EventEmitter();
   @Input() beginTime?: TimeModel;
 
   @Input() endTime?: TimeModel;
+
+  @Input() date: Date = new Date();
+  @Output() dateChange: EventEmitter<Date> = new EventEmitter();
+  @Input() begin?: Date;
+  @Input() end?: Date;
 
   constructor() {}
 
@@ -35,6 +42,19 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
 
   @ViewChild('second')
   second?: ElementRef;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.date) {
+      this.time = new TimeModel(changes.date.currentValue);
+    }
+    if (changes.begin) {
+      this.beginTime = new TimeModel(changes.begin.currentValue);
+    }
+    if (changes.end) {
+      this.endTime = new TimeModel(changes.end.currentValue);
+    }
+  }
+
   ngAfterViewInit(): void {
     wait2(() => {
       return !!this.hour;
@@ -47,6 +67,7 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
           if (value !== undefined) {
             this.time.hour.value = value;
             this.time.hour.view = value.toString().padStart(2, '0');
+            this.date.setHours(value);
           }
         }
       );
@@ -62,6 +83,7 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
           if (value !== undefined) {
             this.time.minute.value = value;
             this.time.minute.view = value.toString().padStart(2, '0');
+            this.date.setMinutes(value);
           }
         }
       );
@@ -77,6 +99,7 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
           if (value !== undefined) {
             this.time.second.value = value;
             this.time.second.view = value.toString().padStart(2, '0');
+            this.date.setSeconds(value);
           }
         }
       );
@@ -166,6 +189,13 @@ export class TimeControlComponent implements OnInit, AfterViewInit {
               this.time[array[i]].value = value;
               this.time[array[i]].view = view;
               this.timeChange.emit(this.time);
+              let date = new Date(this.date.getTime());
+              date.setHours(
+                this.time.hour.value,
+                this.time.minute.value,
+                this.time.second.value
+              );
+              this.dateChange.emit(date);
               break;
             }
           }

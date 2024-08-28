@@ -1,0 +1,78 @@
+<div class="audit-list-station-garbage-manager-status-nb-box">
+  <div class="panel form-group" *ngIf="!!nb">
+    <div class="hw-simple-title">NB电源箱状态</div>
+    <div class="form-item">
+      <div class="form-item-title">状态</div>
+      <div class="form-item-value" [class]="Color.NBState(nb.State)">
+        <ng-container *ngIf="nb.State != undefined; else nodata">{{
+          Language.NBState(nb.State)
+        }}</ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">信号强度</div>
+      <div
+        class="form-item-value"
+        [class]="Color.Signal(nb.Signal)"
+        [title]="nb.Signal"
+      >
+        <ng-container *ngIf="nb.Signal != undefined; else nodata">
+          <i [class]="Icon.Signal(nb.Signal)"></i>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">温度</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="nb.Temperature != undefined; else nodata">
+          {{ nb.Temperature }}℃
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">12V电压</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="nb.V12 != undefined; else nodata">
+          {{ nb.V12 }}%
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">220V电源状态</div>
+      <div class="form-item-value">
+        <ng-container [ngSwitch]="nb.V220">
+          <ng-container *ngSwitchCase="0">无</ng-container>
+          <ng-container *ngSwitchCase="1">有</ng-container>
+          <ng-container *ngSwitchCase="2">重启测试</ng-container>
+          <ng-container *ngSwitchDefault>-</ng-container>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">重启命令发送时间</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="nb.RestartTime != undefined; else nodata">
+          {{ nb.RestartTime | date : "yyyy-MM-dd HH:mm:ss" }}
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">匹配按钮触发时间</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="nb.PressTime != undefined; else nodata">
+          {{ nb.PressTime | date : "yyyy-MM-dd HH:mm:ss" }}
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <div class="form-item-title">最后一次的心跳时间</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="nb.HeartbeatTime != undefined; else nodata">{{
+          nb.HeartbeatTime | date : "yyyy-MM-dd HH:mm:ss"
+        }}</ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #nodata>-</ng-template>

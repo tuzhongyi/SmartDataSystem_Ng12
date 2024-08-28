@@ -1,0 +1,31 @@
+@import url(./color/audit-statistic-data-number-blue.component.less);
+@import url(./color/audit-statistic-data-number-red.component.less);
+@import url(./color/audit-statistic-data-number-orange.component.less);
+@import url(./color/audit-statistic-data-number-orange-red.component.less);
+
+.audit-statistic-data-number {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(36, 72, 165, 0.05);
+  border: 1px rgba(117, 134, 224, 0.15) solid;
+  padding: 10px;
+  box-sizing: border-box;
+  cursor: pointer;
+
+
+  &-head {
+    flex-grow: 0;
+  }
+
+  &-body {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 50px;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+}

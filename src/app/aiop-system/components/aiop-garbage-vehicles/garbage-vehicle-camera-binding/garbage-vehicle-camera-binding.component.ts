@@ -3,8 +3,8 @@ import { ToastrService } from 'ngx-toastr';
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';
 import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { GarbageVehicleCameraBindingBusiness } from './garbage-vehicle-camera-binding.business';
 import {

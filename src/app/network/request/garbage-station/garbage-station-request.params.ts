@@ -1,4 +1,6 @@
 import { Transform } from 'class-transformer';
+import { CameraClassification } from 'src/app/enum/camera-classification.enum';
+import { CameraEncodeType } from 'src/app/enum/camera-type.enum';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ComparisonType } from 'src/app/enum/comparison-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
@@ -37,6 +39,34 @@ export class GetGarbageStationsParams extends PagedParams implements IParams {
   CommunityName?: string;
   /**	Int32	垃圾房状态,FLAGS	O */
   StationState?: number;
+  /**	String	IMEI串号	O */
+  IMEI?: string;
+  /**	String	小区ID	O */
+  CommunityId?: string;
+  /**
+   * Int64	厢房能力，
+   * 1：GCHA（智能主机）
+   * 2：DOOR（感应门）
+   * O
+   **/
+  Capabilities?: number;
+  /**	String	前端设备接入ID	O */
+  DeviceAccessId?: string;
+  /**
+   * 	Int32
+   * 	NB状态
+   *  0：正常
+   *  1：故障
+   *  2：220V故障
+   * 	O
+   */
+  NBState?: number;
+  /**	Int32	NB心跳超时时长，单位：小时	O */
+  NBHours?: number;
+  /**	Int32	GCHA在线状态 0:正常、1:异常	O */
+  GCHAOnlineStatus?: number;
+  /**	Int32	设备在线状态 0:正常、1:异常 GarbageDeviceData	O */
+  DeviceOnlineStatus?: number;
 }
 
 export class GetGarbageStationCamerasParams
@@ -57,6 +87,33 @@ export class GetGarbageStationCamerasParams
   DivisionIds?: string[];
   /**	String[]	所属网格	O */
   GridCellIds?: string[];
+  /**	String[]	所属小区	O */
+  CommunityIds?: string[];
+  /**	String	摄像机类型，G3、G5、TD	O */
+  CameraType?: CameraEncodeType;
+  /**
+   * 	Int32
+   * 	摄像机分类
+   *  0：普通摄像机
+   *  1：热成像摄像机
+   * 	O
+   */
+  Classification?: CameraClassification;
+
+  /**	String	编码设备ID	O */
+  EncodeDeviceId?: string;
+  /**	Int32	场景变换：0-正常，1-稍微偏移，2-严重偏移	O */
+  SceneChange?: number;
+  /**	Int32	清晰度：0-正常，1-轻微模糊，2-严重模糊	O */
+  ImageQuality?: number;
+  /**	Int32	视频亮度：0-很暗，1-稍暗 ，2-正常，3-稍亮，4-很亮	O */
+  Brightness?: number;
+  /**	Int32	色差/偏色 0-正常，1-轻微偏色，2-严重偏色	O */
+  Aberration?: number;
+  /**	Int32	视频干扰，0-正常，1-条纹干扰	O */
+  Disturbance?: number;
+  /**	Int32	录像状态：0-正常，1-故障(暂时无效)	O */
+  RecordState?: number;
 }
 
 export class GetGarbageStationTrashCansParams

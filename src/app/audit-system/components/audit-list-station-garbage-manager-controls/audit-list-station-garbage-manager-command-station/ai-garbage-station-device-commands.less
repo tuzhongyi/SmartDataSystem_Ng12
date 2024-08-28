@@ -1,0 +1,55 @@
+.command {
+  &-panel {
+    background: rgba(36, 72, 165, 0.05);
+    border: 2px rgba(117, 134, 224, 0.15) solid;
+    padding: 20px;
+    box-sizing: border-box;
+    margin-bottom: 0px;
+    height: 100%;
+
+    &.form {
+      &-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        &s {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+      }
+    }
+
+    .form {
+      &-item {
+        width: 100%;
+        padding: 0 5px;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-between;
+        flex-grow: 1;
+        align-items: center;
+
+        .btn {
+          font-size: 16px;
+        }
+
+        &-title {
+          color: #cfd7ff;
+          display: flex;
+          align-items: center;
+        }
+
+        &-value {
+          display: flex;
+          align-items: center;
+          height: 34px;
+          justify-content: center;
+          width: 76px;
+
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import { LanguagePositionNo } from './languages/language-position-no.pipe';
 import { LanguageTrashCanType } from './languages/language-trashcan-type.pipe';
 import { LanguageVehicleState } from './languages/language-vehicle-state.pipe';
 import { LanguageVehicleTypePipe } from './languages/language-vehicle-type.pipe';
+import { TimePipe } from './time/time.pipe';
 
 export const CUSTOM_PIPES = [
   HowellTimePipe,
@@ -29,4 +30,5 @@ export const CUSTOM_PIPES = [
 
   ClassnameVehicleState,
   CanTypeColorPipe,
+  TimePipe,
 ];

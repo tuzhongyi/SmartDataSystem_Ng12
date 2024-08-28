@@ -6,12 +6,12 @@ import { SRServer } from '../../model/garbage-station/sr-server';
 import { VideoUrl } from '../../model/url.model';
 import { SRServersURL } from '../../url/aiop/sr-servers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
+import { DurationParams } from '../IParams.interface';
 import {
   HowellBaseRequestService,
   HowellBaseTypeRequestService,
 } from '../base-request-howell.service';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
-import { DurationParams } from '../IParams.interface';
 import { GetPreviewUrlParams, GetVodUrlParams } from './sr-server.params';
 
 @Injectable({

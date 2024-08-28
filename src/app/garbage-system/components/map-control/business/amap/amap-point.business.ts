@@ -151,7 +151,7 @@ export class AMapPointBusiness {
                 changed = true;
               }
               break;
-            case StationType.Rfid:
+            case StationType.Plus:
               if (point.type != CesiumDataController.ElementType.Rfid) {
                 point.type = CesiumDataController.ElementType.Rfid;
                 point.url = 'img/rfid.png';

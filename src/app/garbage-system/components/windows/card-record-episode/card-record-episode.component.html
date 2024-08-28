@@ -11,14 +11,14 @@
     <div class="card-record-episode-body-list">
       <div
         class="panel v event nodata"
-        *ngIf="!!station && station.StationType !== StationType.Rfid"
+        *ngIf="!!station && station.StationType !== StationType.Plus"
       >
         <div>非智能厢房</div>
         <div>无记录</div>
       </div>
       <div
         class="panel v event"
-        *ngIf="!!station && station.StationType === StationType.Rfid"
+        *ngIf="!!station && station.StationType === StationType.Plus"
       >
         <div class="event-date">
           <div class="hw-simple-title-sub">

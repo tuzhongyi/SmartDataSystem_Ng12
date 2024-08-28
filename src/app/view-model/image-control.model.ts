@@ -2,6 +2,7 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { EventRule } from 'src/app/network/model/garbage-station/event-rule';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import { ICamera } from '../network/model/garbage-station/camera.interface';
+import { Duration } from '../network/model/garbage-station/duration.model';
 import { EventDataObject } from '../network/model/garbage-station/event-data-object.model';
 import { Page } from '../network/model/page_list.model';
 
@@ -40,6 +41,7 @@ export class ImageControlModel<T extends ICamera | CameraImageUrl = any> {
     }
   }
   eventTime?: Date;
+  division?: Duration;
   stationId?: string;
   camera!: T;
   name!: string;

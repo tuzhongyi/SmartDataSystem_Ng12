@@ -1,6 +1,7 @@
 // export let ChartPieData: IChartPieData[] = [];
-let color = ['#3184e3', '#ef6464', '#fde546'];
+let color = ['#21e452', '#ef6464', '#fde546'];
 export let ChartPieOption: echarts.EChartsOption = {
+  backgroundColor: 'transparent',
   color: color,
   tooltip: {
     trigger: 'item',

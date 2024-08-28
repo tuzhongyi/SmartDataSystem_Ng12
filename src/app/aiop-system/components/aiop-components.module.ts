@@ -94,6 +94,7 @@ import { UnderwaterComponent } from './underwater/underwater.component';
     ReactiveFormsModule,
     FormsModule,
   ],
+  exports: [...AIGarbageStationComponents],
   providers: [],
 })
 export class AiopComponentsModule {

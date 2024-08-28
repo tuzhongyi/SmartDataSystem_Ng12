@@ -1,0 +1,62 @@
+<div class="audit-list-camera-manager-config">
+  <div class="audit-list-camera-manager-config-head">
+    <div class="hw-simple-title">摄像机显示设置</div>
+  </div>
+  <div class="audit-list-camera-manager-config-body">
+    <div class="audit-list-camera-manager-config-body-list" *ngIf="data">
+      <div class="audit-list-camera-manager-config-body-list-all">
+        <div class="audit-list-camera-manager-config-body-list-all-head">
+          <div class="hw-simple-title">需要显示的数据</div>
+          <div
+            class="audit-list-camera-manager-config-body-list-all-head-operation"
+          >
+            <div (click)="onselectall()">全选</div>
+            <div (click)="onselectreverse()">反选</div>
+          </div>
+        </div>
+        <div class="audit-list-camera-manager-config-body-list-all-content">
+          <div
+            class="audit-list-camera-manager-config-body-list-all-content-item"
+            *ngFor="let item of all; let index = index"
+            [ngClass]="{
+              selected: enableds.includes(item)
+            }"
+            (click)="onselect(item)"
+          >
+            {{ ConfigLanguage[item.key] }}
+          </div>
+        </div>
+      </div>
+      <div class="audit-list-camera-manager-config-body-list-enabled">
+        <div><div class="hw-simple-title">显示顺序</div></div>
+        <div
+          class="audit-list-camera-manager-config-body-list-enabled-content"
+          WheelHorizontalScroll
+        >
+          <mat-chip-set
+            class="mat-chip-set"
+            cdkDropList
+            cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="ondrop($event)"
+          >
+            <mat-chip
+              class="mat-chip-item"
+              cdkDrag
+              *ngFor="let item of enableds; let i = index"
+              >{{ i + 1 }}:{{ ConfigLanguage[item.key] }}
+            </mat-chip></mat-chip-set
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-list-camera-manager-config-foot">
+    <button class="hw-blue-btn" (click)="onok()">
+      <i class="howell-icon-save"></i> 保存
+    </button>
+    <button class="hw-blue-btn" (click)="onreset()">
+      <i class="howell-icon-repeat"></i> 重置
+    </button>
+    <button class="hw-red-btn" (click)="onclear()">清除</button>
+  </div>
+</div>

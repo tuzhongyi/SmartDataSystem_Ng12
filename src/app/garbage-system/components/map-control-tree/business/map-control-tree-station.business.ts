@@ -42,7 +42,7 @@ export class MapControlTreeStationBusiness {
       }
       if (!args.isrfid) {
         if (
-          station.StationType === StationType.Rfid ||
+          station.StationType === StationType.Plus ||
           station.StationType === StationType.Smart
         ) {
           return false;

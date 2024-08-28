@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
 
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { MapRouteBusiness } from './map-route.business';
 import { PatrolControlBusiness } from './patrol-control.business';
 import { WindowBussiness } from './window.business';

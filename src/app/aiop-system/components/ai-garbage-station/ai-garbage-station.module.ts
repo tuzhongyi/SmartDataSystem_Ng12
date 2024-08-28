@@ -1,5 +1,6 @@
 import { AIGarbageStationDeviceCameraComponent } from './ai-garbage-station-device-camera/ai-garbage-station-device-camera.component';
 import { AIGarbageStationDeviceCommandComponent } from './ai-garbage-station-device-command/ai-garbage-station-device-command.component';
+import { AiGarbageStationDeviceCommandComponents } from './ai-garbage-station-device-commands/ai-garbage-station-device-commands.module';
 import { AIGarbageStationDeviceDetailsComponent } from './ai-garbage-station-device-details/ai-garbage-station-device-details.component';
 import { AIGarbageStationDeviceDropWindowComponent } from './ai-garbage-station-device-drop-window/ai-garbage-station-device-drop-window.component';
 import { AIGarbageStationDeviceManagerComponent } from './ai-garbage-station-device-manager/ai-garbage-station-device-manager.component';
@@ -12,6 +13,7 @@ import { AIGarbageStationDeviceScheduleComponent } from './ai-garbage-station-de
 import { AIGarbageStationDeviceSessionListComponent } from './ai-garbage-station-device-session-list/ai-garbage-station-device-session-list.component';
 import { AIGarbageStationDeviceSessionManagerComponent } from './ai-garbage-station-device-session-manager/ai-garbage-station-device-session-manager.component';
 import { AiGarbageStationDeviceStatusFilterComponent } from './ai-garbage-station-device-status-filter/ai-garbage-station-device-status-filter.component';
+import { AiGarbageStationDeviceStatusItems } from './ai-garbage-station-device-status-items/ai-garbage-station-device-status-items.module';
 import { AiGarbageStationDeviceStatusComponent } from './ai-garbage-station-device-status/ai-garbage-station-device-status.component';
 import { AIGarbageStationDropWindowListComponent } from './ai-garbage-station-drop-window-list/ai-garbage-station-drop-window-list.component';
 import { AIGarbageStationRegionBuildingComponent } from './ai-garbage-station-region-building/ai-garbage-station-region-building.component';
@@ -29,6 +31,7 @@ export const AIGarbageStationComponents = [
 
   AIGarbageStationDeviceSessionListComponent,
   AIGarbageStationDeviceCommandComponent,
+  ...AiGarbageStationDeviceCommandComponents,
   AIGarbageStationDeviceDetailsComponent,
   AIGarbageStationDeviceDropWindowComponent,
   AIGarbageStationDeviceCameraComponent,
@@ -41,6 +44,7 @@ export const AIGarbageStationComponents = [
   AIGarbageStationDeviceSessionManagerComponent,
 
   AiGarbageStationDeviceStatusComponent,
+  ...AiGarbageStationDeviceStatusItems,
   AIGarbageStationDeviceManagerComponent,
 
   AIGarbageStationDeviceRecordEventManagerComponent,

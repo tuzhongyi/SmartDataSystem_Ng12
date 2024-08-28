@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 
 @Injectable()
 export class MapRouteBusiness {

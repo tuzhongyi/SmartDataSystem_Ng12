@@ -1,0 +1,8 @@
+<div class="audit-list-station-garbage-manager-tab-schedule">
+  <app-ai-garbage-station-device-schedule
+    *ngIf="data"
+    [model]="data"
+    (cancel)="oncancel()"
+    (ok)="onok()"
+  ></app-ai-garbage-station-device-schedule>
+</div>

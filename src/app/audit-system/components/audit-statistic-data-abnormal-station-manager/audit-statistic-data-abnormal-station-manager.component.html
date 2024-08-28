@@ -1,0 +1,97 @@
+<div class="audit-statistic-data-abnormal-station-manager">
+  <div class="audit-statistic-data-abnormal-station-manager-title">
+    <div class="hw-second-title">投放点列表</div>
+  </div>
+  <div class="audit-statistic-data-abnormal-station-manager-head">
+    <div class="filter-items">
+      <div class="filter-item">
+        <div class="filter-item-title">统计时间：</div>
+        <div class="filter-item-value">
+          <input
+            type="text"
+            [min]="1"
+            [max]="168"
+            [unit]="'小时'"
+            appTouchSpin
+            [(ngModel)]="hour"
+          />
+        </div>
+      </div>
+      <div class="filter-item">
+        <div class="filter-item-title">行政区：</div>
+        <div class="filter-item-value">
+          <common-label-select
+            [single]="true"
+            [autoclose]="true"
+            [(showDropDown)]="controller.division.show"
+            [selectedNodes]="
+              controller.division.selected ? [controller.division.selected] : []
+            "
+            [height]="'325px'"
+          >
+            <howell-division-tree
+              #tree
+              [defaultIds]="args.divisionId ? [args.divisionId] : []"
+              (selectTreeNode)="controller.division.onselect($event)"
+            ></howell-division-tree>
+          </common-label-select>
+        </div>
+      </div>
+      <div class="filter-item search">
+        <button class="hw-blue-btn" (click)="onsearch()">
+          <i class="howell-icon-search"></i> 搜索
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="audit-statistic-data-abnormal-station-manager-body">
+    <audit-garbage-station-abnormal-table
+      [args]="args"
+      (schedule)="onschedule($event)"
+      (status)="onstatus($event)"
+      (command)="oncommand($event)"
+      (videomultiple)="onvideomultiple($event)"
+    ></audit-garbage-station-abnormal-table>
+  </div>
+</div>
+
+<app-window
+  [Model]="window.schedule"
+  *ngIf="window.schedule.show"
+  [style]="window.schedule.style"
+>
+  <audit-list-station-garbage-manager-tab-schedule
+    [model]="window.schedule.model"
+  ></audit-list-station-garbage-manager-tab-schedule>
+</app-window>
+<app-window
+  [Model]="window.status"
+  *ngIf="window.status.show"
+  [style]="window.status.style"
+>
+  <audit-list-station-garbage-manager-status
+    [model]="window.status.model"
+  ></audit-list-station-garbage-manager-status>
+</app-window>
+<app-window
+  [Model]="window.command"
+  *ngIf="window.command.show"
+  [style]="window.command.style"
+>
+  <audit-list-station-garbage-manager-command
+    [model]="window.command.model"
+  ></audit-list-station-garbage-manager-command>
+</app-window>
+<app-window
+  [Model]="window.video"
+  *ngIf="window.video.show"
+  [style]="window.video.style"
+>
+  <media-multiple-player
+    [option]="true"
+    [title]="window.video.title"
+    [args]="window.video.args"
+    [fullplay]="window.video.fullplay"
+    [isplayback]="false"
+  ></media-multiple-player>
+</app-window>

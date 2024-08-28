@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { GarbageVehicleManageBusiness as AIOPGarbageVehicleManageBusiness } from './aiop-garbage-vehicle-manager.business';
 
 import { DivisionTreeSource } from 'src/app/common/components/division-tree/division-tree.model';

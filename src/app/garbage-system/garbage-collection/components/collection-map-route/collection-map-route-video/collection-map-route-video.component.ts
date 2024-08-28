@@ -13,8 +13,8 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { CollectionMapRouteVideoBusiness } from './collection-map-route-video.business';
 

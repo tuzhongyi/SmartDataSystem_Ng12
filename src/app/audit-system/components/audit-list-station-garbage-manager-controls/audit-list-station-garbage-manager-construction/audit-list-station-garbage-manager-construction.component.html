@@ -1,0 +1,88 @@
+<div class="audit-list-station-garbage-manager-construction" *ngIf="!!data">
+  <div class="panel form-group">
+    <div class="hw-simple-title">建筑垃圾状态</div>
+    <div class="form-item">
+      <div class="form-item-title">设备编号</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="data.MatchGuid != undefined; else nodata">{{
+          data.MatchGuid
+        }}</ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">制造商</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="data.Manufacturer != undefined; else nodata">
+          {{ data.Manufacturer }}
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">温度</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="data.Temperture != undefined; else nodata">
+          {{ data.Temperture }}℃
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">电量</div>
+      <div class="form-item-value">
+        <ng-container
+          *ngIf="data.PercentageOfBattery != undefined; else nodata"
+        >
+          <span
+            [ngClass]="{
+              'powder-red-text': data.PercentageOfBattery < 20,
+              'orange-text':
+                data.PercentageOfBattery >= 20 && data.PercentageOfBattery < 50,
+              'green-text': data.PercentageOfBattery >= 50
+            }"
+          >
+            {{ data.PercentageOfBattery }}%
+          </span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">容量</div>
+      <div class="form-item-value">
+        <ng-container
+          *ngIf="data.PercentageOfCapacity != undefined; else nodata"
+        >
+          <span
+            [ngClass]="{
+              'green-text': data.PercentageOfCapacity < 70,
+              'orange-text':
+                data.PercentageOfCapacity >= 70 &&
+                data.PercentageOfCapacity < 90,
+              'powder-red-text': data.PercentageOfCapacity >= 90
+            }"
+          >
+            {{ data.PercentageOfCapacity }}%
+          </span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">位置</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="data.Longitude && data.Latitude; else nodata">
+          {{ data.Longitude }}, {{ data.Latitude }}
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">最后更新时间</div>
+      <div class="form-item-value">
+        <ng-container *ngIf="data.UpdateTime; else nodata">
+          {{ data.UpdateTime | date : Language.YearMonthDayHHmmss }}
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #nodata>
+  <ng-container>-</ng-container>
+</ng-template>

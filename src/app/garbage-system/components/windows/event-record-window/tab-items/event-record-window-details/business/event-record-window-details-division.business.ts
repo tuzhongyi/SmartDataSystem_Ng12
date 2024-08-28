@@ -27,7 +27,16 @@ export class EventRecordWindowDetailsDivisionBusiness {
   async history(divisionId: string, interval: DurationParams, unit: TimeUnit) {
     let params = new GetDivisionEventNumbersParams();
     params = Object.assign(params, interval);
-    params.TimeUnit = unit;
+    switch (unit) {
+      case TimeUnit.Day:
+      case TimeUnit.Hour:
+        params.TimeUnit = TimeUnit.Hour;
+        break;
+      case TimeUnit.Week:
+      default:
+        params.TimeUnit = TimeUnit.Day;
+        break;
+    }
     let paged = await this.service.eventNumber.history.list(divisionId, params);
     let data = await paged.Data.map((x) =>
       this.converter.statistic(divisionId, x)

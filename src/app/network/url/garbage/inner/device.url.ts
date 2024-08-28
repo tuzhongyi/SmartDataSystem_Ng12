@@ -7,4 +7,7 @@ export class DeviceInnerUrl extends AbstractUrl {
   command() {
     return `${this.basic()}/Commands`;
   }
+  status() {
+    return `${this.basic()}/Status`;
+  }
 }

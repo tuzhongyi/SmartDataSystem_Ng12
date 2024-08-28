@@ -10,7 +10,7 @@ import {
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { wait2 } from 'src/app/common/tools/tool';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
 import { CollectionMapRouteControlSource } from './collection-map-route-control/collection-map-route-control.model';

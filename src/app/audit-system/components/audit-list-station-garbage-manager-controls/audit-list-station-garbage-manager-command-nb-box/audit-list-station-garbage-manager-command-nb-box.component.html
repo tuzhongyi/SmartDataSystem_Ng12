@@ -1,0 +1,43 @@
+<div class="audit-list-station-garbage-manager-command-nb-box">
+  <div class="command-panel form-group">
+    <div class="hw-simple-title">NB电源箱命令</div>
+    <div class="form-item">
+      <div class="form-item-title">重启5V电源</div>
+      <div class="form-item-value">
+        <button class="hw-blue-btn" (click)="tocommand(1)">
+          <i class="mdi mdi-refresh"></i> 重启
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">重启12V电源</div>
+      <div class="form-item-value">
+        <button class="hw-blue-btn" (click)="tocommand(2)">
+          <i class="mdi mdi-refresh"></i> 重启
+        </button>
+      </div>
+    </div>
+  </div>
+  <app-window
+    [Model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [style]="window.confirm.style"
+  >
+    <div class="confirm">
+      <div class="confirm-head">
+        <div class="hw-simple-title"><i class="mdi mdi-alert"></i> 提示</div>
+      </div>
+      <div class="confirm-body">
+        <div class="hw-simple-title">{{ window.confirm.language }} ?</div>
+      </div>
+      <div class="confirm-foot">
+        <button class="hw-green-btn m-r-10" (click)="oncommand()">
+          <i class="howell-icon-Check"></i> 确定
+        </button>
+        <button class="hw-gray-btn" (click)="window.close()">
+          <i class="howell-icon-Close"></i> 取消
+        </button>
+      </div>
+    </div>
+  </app-window>
+</div>

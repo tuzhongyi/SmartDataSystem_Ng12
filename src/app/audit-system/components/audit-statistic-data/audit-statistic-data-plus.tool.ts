@@ -6,7 +6,7 @@ import { EventNumber } from 'src/app/network/model/garbage-station/event-number.
 import { Level3Statistic } from 'src/app/network/model/garbage-station/level-3-statistic.model';
 
 @Injectable()
-export class AuditStatisticPlusTool {
+export class AuditStatisticDataPlusTool {
   EventNumber(a: EventNumber, b: EventNumber): EventNumber {
     return {
       EventType: a.EventType,

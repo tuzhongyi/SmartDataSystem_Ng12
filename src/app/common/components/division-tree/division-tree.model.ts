@@ -2,8 +2,8 @@ import { CollectionPoint } from 'src/app/network/model/garbage-station/collectio
 import { DivisionNode } from 'src/app/network/model/garbage-station/division-tree.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { IBusiness } from '../../interfaces/bussiness.interface';

@@ -7,7 +7,7 @@ import {
   CollectionDeviceStateRatioType,
 } from 'src/app/enum/collection-device-state.enum';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import ColorPalette from 'src/assets/json/color-palette.json';
 import { CollectionDeviceStateModel } from './collection-device-state.model';
 

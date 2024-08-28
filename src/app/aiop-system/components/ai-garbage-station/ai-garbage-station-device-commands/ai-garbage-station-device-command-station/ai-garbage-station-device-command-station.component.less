@@ -1,0 +1,30 @@
+.ai-garbage-station-device-command-station {
+  width: 100%;
+  height: 100%;
+
+  .form {
+    &-item {
+      &-title {
+
+        .fun {
+          margin-left: 2px;
+
+          &.run {
+            animation: _rotate 2s linear infinite;
+          }
+
+        }
+      }
+    }
+  }
+
+  @keyframes _rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

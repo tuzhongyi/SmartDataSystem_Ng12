@@ -1,4 +1,4 @@
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 
 export interface ICollectionMapRouteBusiness {
   src: string;

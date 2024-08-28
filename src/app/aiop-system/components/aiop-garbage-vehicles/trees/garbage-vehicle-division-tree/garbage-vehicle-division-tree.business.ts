@@ -6,7 +6,7 @@ import { DivisionType } from 'src/app/enum/division-type.enum';
 
 import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import {
   GetDivisionsParams,
   GetDivisionTreeParams,

@@ -34,4 +34,16 @@ export class Flags<T extends number> {
   valueOf(): number {
     return this.value;
   }
+
+  static parse(values: number[]) {
+    let result = 0;
+    values = values.sort((a, b) => {
+      return a - b;
+    });
+    for (let i = 0; i < values.length; i++) {
+      const value = values[i];
+      result += Math.pow(2, value - 1);
+    }
+    return result;
+  }
 }

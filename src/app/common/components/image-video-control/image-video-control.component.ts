@@ -8,8 +8,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { ImageVideoControlBusiness } from './image-video-control.business';
 import {
@@ -101,8 +101,8 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       end.setSeconds(end.getSeconds() + 60);
     }
     return {
-      BeginTime: begin,
-      EndTime: end,
+      begin: begin,
+      end: end,
     };
   }
 
@@ -112,7 +112,9 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
     this.display.video = true;
 
     if (this.model) {
-      if (this.model.image && this.model.image.eventTime) {
+      if (this.model.duration) {
+        this.toplayback(this.model.cameraId, this.model.duration);
+      } else if (this.model.image && this.model.image.eventTime) {
         let duration = await this.getDuration(this.model.image.eventTime);
         this.toplayback(this.model.cameraId, duration);
       } else {
@@ -128,7 +130,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
       this.play(x);
     });
   }
-  toplayback(cameraId: string, interval: DurationParams) {
+  toplayback(cameraId: string, interval: Duration) {
     this.display.image = false;
     this.display.video = true;
     this.business.load(cameraId, PlayMode.vod, interval).then((x) => {

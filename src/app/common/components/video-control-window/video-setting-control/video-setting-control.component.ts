@@ -32,7 +32,9 @@ export class VideoSettingControlComponent implements OnInit {
     return this.local.video.stream;
   }
   public set stream(v: StreamType) {
-    this.local.video.stream = v;
+    if (v) {
+      this.local.video.stream = v;
+    }
   }
 
   async saveStream(stream: StreamType) {

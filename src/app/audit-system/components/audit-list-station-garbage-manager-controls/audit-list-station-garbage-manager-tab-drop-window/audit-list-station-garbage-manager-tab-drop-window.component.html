@@ -1,0 +1,8 @@
+<div class="audit-list-station-garbage-manager-tab-drop-window" *ngIf="!!model">
+  <app-ai-garbage-station-device-drop-window
+    *ngIf="!!data"
+    [model]="data"
+    (close)="onclose()"
+  >
+  </app-ai-garbage-station-device-drop-window>
+</div>

@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { RelayState } from 'src/app/enum/relay-state.enum';
 import { VehicleRelayOperator } from 'src/app/enum/vehicle-relay.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import {
   NBPowerOnParams,
   ResetRelayParams,

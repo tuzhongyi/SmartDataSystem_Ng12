@@ -7,7 +7,8 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { CollectionVehicleBusiness } from './collection-vehicle.business';
 import { CollectionVehicleConverter } from './collection-vehicle.converter';
 import {

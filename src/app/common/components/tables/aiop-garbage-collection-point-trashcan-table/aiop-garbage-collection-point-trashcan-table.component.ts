@@ -25,7 +25,8 @@ export class AiopGarbageCollectionPointTrashCanTableComponent
   @Input() business: IBusiness<IModel, PagedList<CollectionTrashCan>>;
   @Input() init = false;
   @Input() args = new AiopGarbageCollectionPointTrashCanTableArgs();
-  @Input() load?: EventEmitter<AiopGarbageCollectionPointTrashCanTableArgs>;
+  @Input()
+  load?: EventEmitter<AiopGarbageCollectionPointTrashCanTableArgs>;
 
   @Output() update: EventEmitter<CollectionTrashCan> = new EventEmitter();
 

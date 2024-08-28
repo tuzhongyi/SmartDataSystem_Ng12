@@ -1,4 +1,5 @@
 import { AbstractUrl } from '../../abstract.url';
+import { AbnormalInnerUrl } from './abnormals.url';
 import { TrashCanInnerUrl } from './trash_can.url';
 
 export class CameraInnerUrl extends AbstractUrl {
@@ -16,5 +17,9 @@ export class CameraInnerUrl extends AbstractUrl {
   }
   trashcan(id: string) {
     return new TrashCanInnerUrl(this.item(id));
+  }
+
+  abnormal() {
+    return new AbnormalInnerUrl(this.basic());
   }
 }

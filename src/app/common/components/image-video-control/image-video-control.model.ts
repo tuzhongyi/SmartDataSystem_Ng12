@@ -1,5 +1,5 @@
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { ImageControlModel } from '../../../view-model/image-control.model';
 
 export class ImageVideoControlModel<T = any> {
@@ -19,6 +19,7 @@ export class ImageVideoControlModel<T = any> {
   image?: ImageControlModel;
   source?: T;
   cameraId: string;
+  duration?: Duration;
 }
 
 export class ImageVideoControlOperation {
@@ -26,7 +27,9 @@ export class ImageVideoControlOperation {
   fullscreen = true;
 }
 
-export class PlaybackInterval extends DurationParams {
+export class PlaybackInterval implements Duration {
+  begin!: Date;
+  end!: Date;
   CameraId!: string;
 }
 

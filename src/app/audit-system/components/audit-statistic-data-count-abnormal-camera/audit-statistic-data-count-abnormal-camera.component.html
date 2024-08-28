@@ -1,0 +1,36 @@
+<div class="audit-statistic-data-count-station">
+  <div class="audit-statistic-data-count-station-head">
+    <div class="hw-simple-title">摄像机统计</div>
+  </div>
+  <div class="audit-statistic-data-count-station-body">
+    <div class="audit-statistic-data-count-station-body-chart">
+      <div #echart class="echart"></div>
+    </div>
+    <div class="audit-statistic-data-count-station-body-number">
+      <div class="number-item" (click)="onclick(CameraAbnormalType.offline)">
+        <div>摄像机离线</div>
+        <div class="number-item-text offline">
+          {{ data.CameraOfflineNumber }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick(CameraAbnormalType.abnormal)">
+        <div>摄像机故障</div>
+        <div class="number-item-text abnormal">
+          {{ data.CameraAbnormalNumber }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick(CameraAbnormalType.record)">
+        <div>录像故障</div>
+        <div class="number-item-text record">
+          {{ data.CameraRecordAbnormalNumber }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick()">
+        <div>异常总数</div>
+        <div class="number-item-text sky-blue-text2">
+          {{ count }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

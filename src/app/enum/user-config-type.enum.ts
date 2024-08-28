@@ -7,4 +7,6 @@ export enum UserConfigType {
   VideoRuleState = 5,
   SupervisePosition = 6,
   IntervalInspection = 99,
+  audit_station_config = 7, // 运维投放点配置
+  audit_camera_config = 8, // 运维摄像机配置
 }

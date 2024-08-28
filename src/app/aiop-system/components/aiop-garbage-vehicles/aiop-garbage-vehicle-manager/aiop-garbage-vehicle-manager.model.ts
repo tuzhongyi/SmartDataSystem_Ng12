@@ -1,5 +1,5 @@
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 
 export class GarbageVehicleManagerWindow {
   details = new GarbageVehicleManagerDetailsWindow();

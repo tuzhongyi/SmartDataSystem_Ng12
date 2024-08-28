@@ -195,8 +195,8 @@ export class PatrolControlComponent implements OnInit, OnDestroy {
     if (this.playing) {
       this.toPlayback.emit({
         CameraId: this.playing.cameraId,
-        BeginTime: params.BeginTime,
-        EndTime: params.EndTime,
+        begin: params.BeginTime,
+        end: params.EndTime,
       });
     }
   }

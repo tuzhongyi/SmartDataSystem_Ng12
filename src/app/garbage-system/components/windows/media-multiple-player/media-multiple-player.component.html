@@ -1,0 +1,64 @@
+<div class="media-multiple-control" *ngIf="!!model">
+  <div class="media-multiple-control-header">
+    <div class="media-multiple-control-header-title">
+      {{ title }}
+    </div>
+    <div class="media-multiple-control-header-option" *ngIf="option">
+      <div *ngIf="!isplayback" (click)="onoptionchange(true)">
+        <i class="howell-icon-video-playback1" title="回放"></i>
+      </div>
+      <div *ngIf="isplayback" (click)="onoptionchange(false)">
+        <i class="howell-icon-video" title="预览"></i>
+      </div>
+    </div>
+  </div>
+  <div class="media-multiple-control-datetime" *ngIf="option && isplayback">
+    <div class="media-multiple-control-datetime-item">
+      <div class="media-multiple-control-datetime-item-title">日期：</div>
+      <div class="media-multiple-control-datetime-item-value">
+        <input
+          class="input-date"
+          type="text"
+          readonly
+          DateTimePicker
+          [format]="Language.YearMonthDay"
+          [startView]="DateTimePickerView.month"
+          [minView]="DateTimePickerView.month"
+          [(date)]="date"
+        />
+      </div>
+    </div>
+    <div class="media-multiple-control-datetime-item">
+      <div class="media-multiple-control-datetime-item-title">时间：</div>
+      <div class="media-multiple-control-datetime-item-value">
+        <app-time-control
+          [(date)]="duration.begin"
+          [end]="duration.end"
+        ></app-time-control>
+
+        <div class="_">-</div>
+        <app-time-control
+          [begin]="duration.begin"
+          [(date)]="duration.end"
+        ></app-time-control>
+      </div>
+    </div>
+    <div>
+      <button class="hw-blue-btn" (click)="onplayback()">确定</button>
+    </div>
+  </div>
+  <div class="media-multiple-control-content">
+    <app-image-video-mult-control
+      [models]="model.medias"
+      [fullplay]="false"
+      [is_playback_use_config]="false"
+      (onplayed)="onplayed($event)"
+      (onstoped)="onstoped($event)"
+    >
+    </app-image-video-mult-control>
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

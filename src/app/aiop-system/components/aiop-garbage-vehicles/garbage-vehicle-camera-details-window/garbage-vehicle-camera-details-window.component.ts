@@ -4,8 +4,8 @@ import { WindowComponent } from 'src/app/common/components/window-control/window
 import { VehicleCameraModelConverter } from 'src/app/converter/view-models/vehicle-camera.model.converter';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';
 import { GarbageVehicleCameraDetailsWindowBusiness } from './garbage-vehicle-camera-details-window.business';
 

@@ -12,7 +12,8 @@
       </button>
       <ul
         *ngIf="
-          state == 'grow' && model.id == groups.second && !model.hideChildren
+          state == 'grow' &&
+          (allopen || (model.id == groups.second && !model.hideChildren))
         "
       >
         <li

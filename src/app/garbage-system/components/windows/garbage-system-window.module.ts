@@ -20,11 +20,15 @@ import { GarbageStationCardRecordComponent } from './garbage-station-window/tab-
 import { GarbageStationWindowDetailsComponent } from './garbage-station-window/tab-items/garbage-station-window-details/garbage-station-window-details.component';
 import { GarbageStationWindowRecordComponent } from './garbage-station-window/tab-items/garbage-station-window-record/garbage-station-window-record.component';
 import { GarbageStationWindowSewageComponent } from './garbage-station-window/tab-items/garbage-station-window-sewage/garbage-station-window-sewage.component';
-import { MediaMultipleWindowComponent } from './media-multiple-window/media-multiple-window.component';
+import { MediaMultipleControlComponent } from './media-multiple-control/media-multiple-control.component';
+import { MediaMultiplePlayerComponent } from './media-multiple-player/media-multiple-player.component';
+import { MediaMultipleStatisticWindowComponent } from './media-multiple-statistic-window/media-multiple-statistic-window.component';
 
 export const GARBAGE_SYSTEM_WINDOW_COMPONENTS = [
   ...EventRecordWindowComponents,
-  MediaMultipleWindowComponent,
+  MediaMultipleControlComponent,
+  MediaMultiplePlayerComponent,
+  MediaMultipleStatisticWindowComponent,
   DeviceListWindowComponent,
 
   GarbageFullWindowComponent,

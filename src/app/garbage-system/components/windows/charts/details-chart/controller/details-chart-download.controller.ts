@@ -5,6 +5,7 @@ import { IExportConverter } from 'src/app/common/interfaces/converter.interface'
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model';
 import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
@@ -18,7 +19,22 @@ export class DetailsChartDownloadController {
   private converter = new ExportExcelConverter();
 
   private getTitle(args: DetailsChartDownloadArgs) {
-    let _type = Language.EventType(args.eventType);
+    let type = EventType.None;
+    if (args.eventType) {
+      type = args.eventType;
+    } else if (args.types.length > 0) {
+      type = args.types[0];
+    }
+    let _type = Language.EventType(type);
+
+    switch (type) {
+      case EventType.GarbageDrop:
+        _type = `${Language.json.garbage}${Language.json.stay}`;
+        break;
+      default:
+        break;
+    }
+
     let name = this.getName();
 
     return `${args.time} ${name} ${_type}`;

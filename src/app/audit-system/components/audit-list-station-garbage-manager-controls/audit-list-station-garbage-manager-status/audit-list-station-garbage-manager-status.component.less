@@ -1,0 +1,25 @@
+.audit-list-station-garbage-manager-status {
+  width: 100%;
+  height: 600px;
+  color: #cfd7ff;
+
+
+  &-head {
+    margin-bottom: 10px;
+    height: 36px;
+  }
+
+  &-body {
+    height: calc(100% - 36px - 10px);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    &>* {
+      flex-grow: 1;
+      width: 420px;
+    }
+
+  }
+}

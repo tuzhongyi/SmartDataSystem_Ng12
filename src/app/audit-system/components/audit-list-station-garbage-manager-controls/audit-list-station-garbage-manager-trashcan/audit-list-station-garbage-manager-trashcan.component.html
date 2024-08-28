@@ -1,0 +1,17 @@
+<div class="audit-list-station-garbage-manager-trashcan" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-trashcan-head">
+    <div class="hw-simple-title">{{ model.Name }}垃圾桶</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-trashcan-body">
+    <div class="audit-list-station-garbage-manager-trashcan-body-list">
+      <div
+        class="audit-list-station-garbage-manager-trashcan-body-list-item"
+        *ngFor="let item of datas; let index = index"
+      >
+        <audit-list-station-garbage-manager-trashcan-item
+          [model]="item"
+        ></audit-list-station-garbage-manager-trashcan-item>
+      </div>
+    </div>
+  </div>
+</div>

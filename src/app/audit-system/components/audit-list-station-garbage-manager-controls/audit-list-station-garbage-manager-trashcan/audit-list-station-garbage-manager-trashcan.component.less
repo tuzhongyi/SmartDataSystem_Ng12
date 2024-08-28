@@ -1,0 +1,35 @@
+.audit-list-station-garbage-manager-trashcan {
+  width: 100%;
+  height: 100%;
+
+
+  &-head {
+    margin-bottom: 10px;
+  }
+
+  &-body {
+    height: calc(100% - 36px - 10px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: scroll;
+
+    &-list {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px;
+      font-size: 18px;
+      color: #cfd7ff;
+      flex-wrap: wrap;
+
+
+      &-item {
+        height: 150px;
+        width: 150px;
+        background-color: #7586e01a;
+        border-radius: 6px;
+      }
+
+    }
+  }
+}

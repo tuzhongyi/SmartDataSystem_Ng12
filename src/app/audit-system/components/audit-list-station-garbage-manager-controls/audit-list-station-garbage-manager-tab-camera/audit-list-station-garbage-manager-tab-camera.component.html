@@ -1,0 +1,282 @@
+<div class="audit-list-station-garbage-manager-tab-camera" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-tab-camera-head">
+    <div class="title">
+      <div class="hw-simple-title">{{ model.Name }}摄像机</div>
+    </div>
+    <ul class="hw-ul" *ngIf="datas" WheelHorizontalScroll>
+      <li *ngFor="let item of datas; let index = index">
+        <div
+          class="second-menu-btn text"
+          [ngClass]="{
+            selected: selected === item
+          }"
+          (click)="selected = item"
+        >
+          摄像机 {{ item.PositionNo }}
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div
+    class="audit-list-station-garbage-manager-tab-camera-body"
+    *ngIf="selected"
+  >
+    <div class="audit-list-station-garbage-manager-tab-camera-body-info">
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机名称
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          {{ selected.Name ? selected.Name : "无" }}
+        </div>
+      </div>
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机类型
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          {{ selected.CameraType ?? "-" }}
+        </div>
+      </div>
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机分类
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          {{ Language.CameraClassification(selected.Classification) }}
+        </div>
+      </div>
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机用途
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          <ng-container *ngIf="selected.Usages.length == 0">-</ng-container>
+          <ng-container
+            *ngFor="let usage of selected.Usages; let usage_index = index"
+          >
+            <span *ngIf="usage_index > 0">/</span>
+            <span>{{ Language.CameraUsage(usage) }}</span>
+          </ng-container>
+        </div>
+      </div>
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机机位
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          <span>{{ selected.PositionNo ? selected.PositionNo : "无" }}</span
+          ><span *ngIf="selected.PositionNo"
+            >({{ Language.CameraPosition(selected.PositionNo) }})</span
+          >
+        </div>
+      </div>
+      <div class="audit-list-station-garbage-manager-tab-camera-body-info-item">
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-title"
+        >
+          摄像机状态
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-info-item-value"
+        >
+          <span [class]="Color.OnlineState(selected.OnlineStatus)">{{
+            Language.OnlineStatus(selected.OnlineStatus)
+          }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="audit-list-station-garbage-manager-tab-camera-body-status">
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.SceneChange != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          场景变换
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <span
+            [ngClass]="{
+              'green-text': selected.SceneChange === 0,
+              'orange-text': selected.SceneChange === 1,
+              'powder-red-text': selected.SceneChange === 2
+            }"
+          >
+            {{ Language.SceneChange(selected.SceneChange) }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.ImageQuality != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          清晰度
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <span
+            [ngClass]="{
+              'green-text': selected.ImageQuality === 0,
+              'orange-text': selected.ImageQuality === 1,
+              'powder-red-text': selected.ImageQuality === 2
+            }"
+          >
+            {{ Language.ImageQuality(selected.ImageQuality) }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.Brightness != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          视频亮度
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <span
+            [ngClass]="{
+              'green-text': selected.Brightness === 2,
+              'orange-text':
+                selected.Brightness === 1 || selected.Brightness === 3,
+              'powder-red-text':
+                selected.Brightness === 0 || selected.Brightness === 4
+            }"
+          >
+            {{ Language.Brightness(selected.Brightness) }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.Aberration != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          色差/偏色
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <span
+            [ngClass]="{
+              'green-text': selected.Aberration === 0,
+              'orange-text': selected.Aberration === 1,
+              'powder-red-text': selected.Aberration === 2
+            }"
+          >
+            {{ Language.Aberration(selected.Aberration) }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.Disturbance != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          视频干扰
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <span
+            [ngClass]="{
+              'green-text': selected.Disturbance === 0,
+              'orange-text': selected.Disturbance === 1,
+              'powder-red-text': selected.Disturbance === 2
+            }"
+          >
+            {{ Language.Disturbance(selected.Disturbance) }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.IsFull != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          垃圾满溢
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <ng-container *ngIf="selected.IsFull">
+            <span *ngIf="!!selected.GarbageFullTime" class="orange-text">
+              {{ selected.GarbageFullTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </span>
+            <span *ngIf="!selected.GarbageFullTime" class="orange-text">
+              已满溢
+            </span>
+          </ng-container>
+          <span *ngIf="!selected.IsFull" class="green-text"> 未满溢 </span>
+        </div>
+      </div>
+      <div
+        class="audit-list-station-garbage-manager-tab-camera-body-status-item"
+        *ngIf="selected.RecordState != undefined"
+      >
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-title"
+        >
+          录像
+        </div>
+        <div
+          class="audit-list-station-garbage-manager-tab-camera-body-status-item-value"
+        >
+          <ng-container *ngIf="selected.RecordState == 1">
+            <span *ngIf="!!selected.AbnormalTime" class="powder-red-text">
+              {{ selected.AbnormalTime | date : "yyyy-MM-dd HH:mm:ss" }}
+            </span>
+            <span *ngIf="!selected.AbnormalTime" class="powder-red-text">
+              故障
+            </span>
+          </ng-container>
+          <span *ngIf="selected.RecordState == 0" class="green-text">
+            正常
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-list-station-garbage-manager-tab-camera-foot">
+    <button class="hw-green-btn" (click)="onvideo()">
+      <i class="howell-icon-video"></i> 预览
+    </button>
+  </div>
+</div>

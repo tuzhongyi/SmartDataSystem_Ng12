@@ -12,6 +12,7 @@ import { Camera } from './camera.model';
 import { ConstructionData } from './construction-data';
 import { DropWindow } from './drop-window.model';
 import { GarbageDeviceData } from './garbage-device-data.model';
+import { GarbageParameters } from './garbage-parameters.model';
 import { GisPoint } from './gis-point.model';
 import { Member } from './member.model';
 import { TrashCan } from './trash-can.model';
@@ -72,12 +73,14 @@ export class GarbageStation extends IdNameModel {
   /**	Int32	垃圾投放点类型	O */
   DumpPointType?: DumpPointType;
   /**	Int32[]	停用的事件号列表	O */
-  DisableEventTypes?: number;
+  DisableEventTypes?: number[];
   /**	String	所属网格单元ID	O */
   GridCellId?: string;
   /**	GarbageParameters	垃圾相关参数	O */
+  @Type(() => GarbageParameters)
   GarbageParameters?: GarbageParameters;
   /**	Member[]	人员列表	O */
+  @Type(() => Member)
   Members?: Member[];
   /**	String	IMEI串号	O */
   IMEI?: string;
@@ -87,21 +90,31 @@ export class GarbageStation extends IdNameModel {
   /**	String	小区ID	O */
   CommunityId?: string;
   /**	ConstructionData	建筑垃圾箱体数据	O */
+  @Type(() => ConstructionData)
   ConstructionData?: ConstructionData;
   /**	DropWindow[]	投放窗口列表， 只有StationType=2|3, 智能垃圾厢房才有该信息	O */
   @Type(() => DropWindow)
   DropWindows?: DropWindow[];
   /**	GarbageDeviceData	设备数据信息	O */
+  @Type(() => GarbageDeviceData)
   GarbageDeviceData?: GarbageDeviceData;
   /**	Int64	厢房能力，1:GCHA(智能主机)2:DOOR(感应门)	O	*/
   Capabilities?: number;
-}
 
-/** 垃圾相关参数 */
-export interface GarbageParameters {
-  /**	Int32	处置超时时长，单位：分钟，默认：15分钟	O */
-  HandleTimeout?: number;
-  /** */
+  /**	String	前端设备接入ID	O */
+  DeviceAccessId?: string;
+  /**	DateTime	NB电源箱最后一次的心跳上传时间	O */
+  @Transform(transformDateTime)
+  NBHeartbeatTime?: Date;
+  /**
+   * 	Int32
+   *  NB电源箱状态，
+   *  0：正常
+   *  1：故障
+   *  2：220V故障
+   * 	O
+   */
+  NBState?: number;
 }
 
 /** 垃圾房类型 */

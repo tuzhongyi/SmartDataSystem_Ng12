@@ -1,7 +1,11 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { GCHAStatus } from '../ai-garbage/gcha-status.model';
 import { IModel } from '../model.interface';
-import { transformDateTime } from '../transform.model';
+import { transformDateTime, transformRound } from '../transform.model';
+import { GarbageWeightV2 } from './garbage-weight-v2.model';
+import { GarbageStationRobotStatus } from './robot-status.model';
+import { GarbageStationSortationStatus } from './sortation-status.model';
 
 export class GarbageDeviceData implements IModel {
   /**	String	设备ID	M	*/
@@ -27,4 +31,18 @@ export class GarbageDeviceData implements IModel {
   /**	DateTime	最后更新时间	O	*/
   @Transform(transformDateTime)
   LastUpdateTime?: Date;
+  /**	RobotStatus[]	机器人状态	O */
+  @Type(() => GarbageStationRobotStatus)
+  Robots?: GarbageStationRobotStatus[];
+  /**	GCHAStatus	GCHA状态	O */
+  GCHAStatus?: GCHAStatus;
+  /**	GarbageWeightV2[]	垃圾重量	O */
+  Weights?: GarbageWeightV2[];
+  /**	Int32	满溢垃圾桶数量	O */
+  FullCount?: number;
+  /**	Double	CPU芯片温度，单位：摄氏度	O */
+  @Transform((value) => transformRound(value, 1))
+  ChipTemperature?: number;
+  /**	SortationStatus[]	分拣设备状态	O */
+  Sortations?: GarbageStationSortationStatus[];
 }

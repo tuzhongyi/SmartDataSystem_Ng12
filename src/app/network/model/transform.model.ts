@@ -16,6 +16,19 @@ import { SewageEventData } from './garbage-station/event-record/sewage-event-rec
 import { IdNameModel } from './model.interface';
 import { Time } from './time.model';
 
+export function transformRound(params: TransformFnParams, number: number) {
+  if (!params.value) return params.value;
+  if (params.type === TransformationType.PLAIN_TO_CLASS) {
+    let radix = 1;
+    for (let i = 0; i < number; i++) {
+      radix *= 10;
+    }
+    return Math.round(params.value * radix) / radix;
+  } else {
+    return params.value;
+  }
+}
+
 export function transformArraySort(params: TransformFnParams) {
   if (params.value === undefined || params.value === null) return undefined;
   if (params.type === TransformationType.PLAIN_TO_CLASS) {

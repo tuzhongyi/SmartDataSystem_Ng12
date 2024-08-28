@@ -211,7 +211,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userService.config
       .get(user.Id, UserConfigType.VideoStream)
       .then((x) => {
-        this.local.video.stream = parseInt(x);
+        if (x) {
+          this.local.video.stream = parseInt(x);
+        }
       });
     this.userService.config
       .get(user.Id, UserConfigType.VideoRuleState)

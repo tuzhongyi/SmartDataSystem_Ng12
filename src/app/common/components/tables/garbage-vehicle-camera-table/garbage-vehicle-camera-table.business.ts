@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageVehicleCameraConverter } from 'src/app/converter/garbage-vehicle-camera.converter';
 import { AICamera } from 'src/app/network/model/garbage-station/ai-camera.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { GetResourceCamerasParams } from 'src/app/network/request/resources/camera/resource-camera.params';
 import { ResourceRequestService } from 'src/app/network/request/resources/resource.service';
 

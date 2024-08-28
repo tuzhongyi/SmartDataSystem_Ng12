@@ -13,7 +13,7 @@ import { Language } from 'src/app/common/tools/language';
 import { GarbageVehicleCameraConverter } from 'src/app/converter/garbage-vehicle-camera.converter';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { VehiclePositionNo } from 'src/app/enum/position-no.enum';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { SelectItem } from '../../select-control/select-control.model';
 

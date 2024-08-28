@@ -3,7 +3,7 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { TableSelectType } from 'src/app/enum/table-select-type.enum';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { VehicleCameraModel } from 'src/app/network/view-model/vehicle-camera.view-model';

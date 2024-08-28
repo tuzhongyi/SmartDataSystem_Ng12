@@ -1,6 +1,6 @@
 <div class="audit-statistic-data-count-device">
   <div class="audit-statistic-data-count-device-head">
-    <div class="hw-simple-title">设备统计</div>
+    <div class="hw-simple-title">摄像机统计</div>
   </div>
   <div class="audit-statistic-data-count-device-body">
     <div class="audit-statistic-data-count-device-body-chart">
@@ -8,19 +8,19 @@
     </div>
     <div class="audit-statistic-data-count-device-body-number">
       <div class="number-item" (click)="onclick(OnlineStatus.Online)">
-        <div>在线设备</div>
+        <div>摄像机在线</div>
         <div class="number-item-text green-text">
           {{ model ? model.online : 0 }}
         </div>
       </div>
       <div class="number-item" (click)="onclick(OnlineStatus.Offline)">
-        <div>离线设备</div>
+        <div>摄像机异常</div>
         <div class="number-item-text powder-red-text">
           {{ model ? model.offline : 0 }}
         </div>
       </div>
       <div class="number-item" (click)="onclick()">
-        <div>总设备</div>
+        <div>摄像机总数</div>
         <div class="number-item-text sky-blue-text2">
           {{ model ? model.all : 0 }}
         </div>

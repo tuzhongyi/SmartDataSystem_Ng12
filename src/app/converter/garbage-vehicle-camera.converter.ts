@@ -1,6 +1,6 @@
 import { IConverter } from '../common/interfaces/converter.interface';
 import { AICamera } from '../network/model/garbage-station/ai-camera.model';
-import { VehicleCamera } from '../network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from '../network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 
 export class GarbageVehicleCameraConverter
   implements IConverter<AICamera, VehicleCamera>

@@ -14,7 +14,7 @@ import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-station-window/garbage-station-window.component';
-import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-card-record.model';
 import { SewageEventRecord } from 'src/app/network/model/garbage-station/event-record/sewage-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
@@ -108,10 +108,9 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
       this.video.mask = true;
       this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
     } else if (item instanceof AIGarbageRfidCardRecord) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = item.GarbageStationId;
       this.media.multiple.args.time = item.Time;
-      this.media.multiple.date = item.Time;
       this.media.multiple.fullplay = true;
       this.media.multiple.show = true;
     } else if (item instanceof EventRecordViewModel) {
@@ -127,7 +126,7 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
   }
   onchartdblclick(args: LineZoomChartArgs) {
     if (args.statistic) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = args.statistic.Id;
       this.media.multiple.args.usage = [CameraUsage.GarbageFull];
       this.media.multiple.args.time = args.date;
@@ -135,7 +134,6 @@ export class IndexGarbageStationInfoWindowBusiness extends WindowViewModel {
         GarbageCount: args.statistic.GarbageCount,
       };
     }
-    this.media.multiple.date = args.date;
     this.media.multiple.fullplay = true;
     this.media.multiple.show = true;
   }

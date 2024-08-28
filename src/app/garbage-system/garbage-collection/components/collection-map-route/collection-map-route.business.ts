@@ -2,7 +2,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { MathTool } from 'src/app/common/tools/math.tool';
 import { wait2 } from 'src/app/common/tools/tool';
 import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { GisRoutePoint } from 'src/app/network/model/garbage-station/gis-point.model';
 import { CollectionMapControlConverter } from '../collection-map-control/collection-map-control.converter';
 import { ICollectionMapRouteBusiness } from './collection-map-route.model';

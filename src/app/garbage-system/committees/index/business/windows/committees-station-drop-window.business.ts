@@ -10,7 +10,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageDropStationWindowIndex } from 'src/app/garbage-system/components/windows/garbage-drop-window/garbage-drop-window.model';
-import { MediaMultipleWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { CommitteesIndexImageWindowBusiness } from './committees-image-window.business';
@@ -67,7 +67,7 @@ export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel 
 
   onchartdblclick(args: LineZoomChartArgs) {
     if (args.statistic) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = args.statistic.Id;
       this.media.multiple.args.usage = [CameraUsage.GarbageFull];
       this.media.multiple.args.time = args.date;
@@ -75,7 +75,6 @@ export class CommitteesGarbageStationDropWindowBusiness extends WindowViewModel 
         GarbageCount: args.statistic.GarbageCount,
       };
     }
-    this.media.multiple.date = args.date;
     this.media.multiple.fullplay = true;
     this.media.multiple.show = true;
   }

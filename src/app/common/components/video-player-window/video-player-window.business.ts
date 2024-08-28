@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
 import { LocalStorageService } from '../../service/local-storage.service';
@@ -41,7 +41,8 @@ export class VideoPlayerWindowBusiness
       let params = new DurationParams();
       params.BeginTime = duration!.begin;
       params.EndTime = duration!.end;
-      return this.sr.playback(cameraId, params);
+
+      return this.sr.playback(cameraId, params, this.local.video.stream);
     }
   }
 }

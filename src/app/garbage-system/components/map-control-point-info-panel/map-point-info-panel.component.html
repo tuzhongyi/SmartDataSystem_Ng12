@@ -114,13 +114,13 @@
       <i class="howell-icon-phone icon"></i><span>{{ member.MobileNo }}</span>
     </div>
   </div>
-  <ng-container *ngIf="!!model.device && model.type === StationType.Rfid">
+  <ng-container *ngIf="!!model.device && model.type === StationType.Plus">
     <div class="item">
       <div class="icon"><i class="howell-icon-rfid"></i></div>
       <div class="content">
         <span>{{ model.device.DeviceId }}</span>
         <span *ngIf="model.device.OnlineState !== 0" class="powder-red-text">{{
-          Language.OnlineState(model.device.OnlineState)
+          Language.OnlineStatus(model.device.OnlineState)
         }}</span>
       </div>
     </div>

@@ -1,8 +1,10 @@
 import { BaseUrl } from '../base.url';
+import { AbnormalInnerUrl } from './inner/abnormals.url';
 import { CameraInnerUrl } from './inner/camera.url';
 import { DeviceInnerUrl } from './inner/device.url';
 import { EventNumberInnerUrl } from './inner/event_number.url';
 import { MemberInnerUrl } from './inner/member.url';
+import { NBBoxeInnerUrl } from './inner/nb-box.url';
 import { StatisticInnerUrl } from './inner/statistic.url';
 import { TaskInnerUrl } from './inner/task.url';
 import { TrashCanInnerUrl } from './inner/trash_can.url';
@@ -57,5 +59,14 @@ export class GarbageStationUrl {
 
   static device(id: string) {
     return new DeviceInnerUrl(GarbageStationUrl.item(id));
+  }
+  static nb = {
+    box: (id: string) => {
+      return new NBBoxeInnerUrl(GarbageStationUrl.item(id));
+    },
+  };
+
+  static abnormal() {
+    return new AbnormalInnerUrl(this.basic());
   }
 }

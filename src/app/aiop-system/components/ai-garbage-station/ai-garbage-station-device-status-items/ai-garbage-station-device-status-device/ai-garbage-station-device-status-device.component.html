@@ -1,0 +1,119 @@
+<div class="ai-garbage-station-device-status-device">
+  <div class="panel form-group" *ngIf="model && !!model.Status">
+    <div class="panel-head">
+      <div class="hw-simple-title">厢房状态</div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">在线状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.OnlineState(model.Status.OnlineState)"
+      >
+        {{
+          model.Status.OnlineState === undefined
+            ? "-"
+            : Language.OnlineStatus(model.Status.OnlineState)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">排风扇开关状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.OpenState(model.Status.ExhaustFan)"
+      >
+        {{
+          model.Status.ExhaustFan === undefined
+            ? "-"
+            : Language.OpenState(model.Status.ExhaustFan)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">香氛喷洒开关状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.OpenState(model.Status.Spray)"
+      >
+        {{
+          model.Status.Spray === undefined
+            ? "-"
+            : Language.OpenState(model.Status.Spray, true)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">RFID读卡器状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.SwitchState(model.Status.RfidReader)"
+      >
+        {{
+          model.Status.RfidReader === undefined
+            ? "-"
+            : Language.SwitchState(model.Status.RfidReader)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">大门开关状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.OpenState(model.Status.GateState)"
+      >
+        {{
+          model.Status.GateState === undefined
+            ? "-"
+            : Language.OpenState(model.Status.GateState, true)
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">气泵电源状态</div>
+      <div
+        class="form-item-value"
+        [class]="Color.SwitchState(model.Status.AirPumpPower)"
+      >
+        <ng-container [ngSwitch]="model.Status.AirPumpPower">
+          <span *ngSwitchCase="0">断电</span>
+          <span *ngSwitchCase="1">上电</span>
+          <span *ngSwitchDefault>-</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">气泵压强数值，单位：pa</div>
+      <div class="form-item-value">
+        {{
+          model.Status.AirPumpPressure === undefined
+            ? "-"
+            : model.Status.AirPumpPressure
+        }}
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">气体检测传感器数值</div>
+      <div class="form-item-value">
+        {{
+          model.Status.GasSensor === undefined ? "-" : model.Status.GasSensor
+        }}
+      </div>
+    </div>
+    <div class="form-item" *ngFor="let state of model.Status.SwitchStates">
+      <div class="form-item-title">{{ state.Name }}</div>
+      <div class="form-item-value" [class]="Color.YesOrNo(state.State)">
+        {{ Language.YesOrNo(state.State) }}
+      </div>
+    </div>
+    <div class="form-item end" *ngIf="model.Status.LastUpdateTime">
+      <div class="form-item-title">最后更新时间</div>
+      <div class="form-item-value" style="width: 150px">
+        {{
+          model.Status.LastUpdateTime === undefined
+            ? "-"
+            : (model.Status.LastUpdateTime | date : "yyyy-MM-dd HH:mm:ss")
+        }}
+      </div>
+    </div>
+  </div>
+</div>

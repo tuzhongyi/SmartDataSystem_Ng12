@@ -1,0 +1,97 @@
+.audit-list-station-garbage-manager-tab-camera {
+  height: 100%;
+  width: 100%;
+  color: #cfd7ff;
+  @head-height: calc(32px + 48px + 10px);
+  @foot-height: 50px;
+
+  &-head {
+    height: @head-height;
+
+
+    .title {
+      display: flex;
+
+      h3 {
+        color: #cfd7ff;
+      }
+    }
+
+    .hw-ul {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      overflow-x: scroll;
+    }
+  }
+
+  &-body {
+    height: calc(100% - @head-height - @foot-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+    &-info {
+      width: 100%;
+      padding: 5px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+
+      &-item {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        &-title {
+          color: white;
+        }
+      }
+    }
+
+    &-status {
+      padding: 5px 10px;
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      height: 141px;
+      overflow-y: auto;
+      gap: 15px;
+
+      &-item {
+        width: calc((100% - 15px * 2) / 3);
+        background-color: #7586e01a;
+        padding: 5px 10px;
+        height: min-content;
+
+        &-title {
+          color: white;
+        }
+
+        &-value {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        &.colspan {
+          width: calc((100% - 15px) / 2);
+        }
+      }
+
+
+    }
+  }
+
+  &-foot {
+    height: @foot-height;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+  }
+}

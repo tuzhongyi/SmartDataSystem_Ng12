@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { GetVodUrlParams } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
 import { ISubscription } from '../../interfaces/subscribe.interface';
@@ -24,7 +24,7 @@ export class ImageVideoControlBusiness
   async load(
     cameraId: string,
     mode: PlayMode,
-    duration?: DurationParams
+    duration?: Duration
   ): Promise<VideoModel> {
     let stream = this.local.video.stream;
     let url = await this.getData(cameraId, mode, stream, duration);
@@ -35,7 +35,7 @@ export class ImageVideoControlBusiness
     cameraId: string,
     mode: PlayMode,
     stream: StreamType,
-    interval?: DurationParams
+    interval?: Duration
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.vod:
@@ -49,10 +49,10 @@ export class ImageVideoControlBusiness
   getLiveUrl(cameraId: string, stream: StreamType) {
     return this.srService.preview(cameraId, stream);
   }
-  getVodUrl(cameraId: string, stream: StreamType, interval: DurationParams) {
+  getVodUrl(cameraId: string, stream: StreamType, interval: Duration) {
     let params = new GetVodUrlParams();
-    params.BeginTime = interval.BeginTime;
-    params.EndTime = interval.EndTime;
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.CameraId = cameraId;
     params.StreamType = stream;
     return this.srService.playback(params);

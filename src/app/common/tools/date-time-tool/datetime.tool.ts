@@ -6,6 +6,13 @@ import { DateTimeMonthTool } from './datetime-month.tool';
 import { DateTimeWeekTool } from './datetime-week.tool';
 
 export class DateTimeTool {
+  static formatter = {
+    yyyyMMddHHmmss: 'yyyy-MM-dd HH:mm:ss',
+    yyyyMMdd: 'yyyy-MM-dd',
+    HHmmss: 'HH:mm:ss',
+    HHmm: 'HH:mm',
+  };
+
   static day = new DateTimeDayTool();
   static week = new DateTimeWeekTool();
   static month = new DateTimeMonthTool();

@@ -17,6 +17,10 @@ import { AIOPRecordResourceStatusOnlineTableComponent } from './aiop-record-reso
 import { AIOPRoleTableComponent } from './aiop-role-table/aiop-role-table.component';
 import { AIOPUserLogRecordTableComponent } from './aiop-user-log-record-table/aiop-user-log-record-table.component';
 import { AIOPUserTableComponent } from './aiop-user-table/aiop-user-table.component';
+import { AuditCameraAbnormalTableComponent } from './audit-camera-abnormal-table/audit-camera-abnormal-table.component';
+import { AuditCameraDetailsTableComponent } from './audit-camera-details-table/audit-camera-details-table.component';
+import { AuditGarbageStationAbnormalTableComponent } from './audit-garbage-station-abnormal-table/audit-garbage-station-abnormal-table.component';
+import { AuditGarbageStationDetailsTableComponent } from './audit-garbage-station-details-table/audit-garbage-station-details-table.component';
 import { AuditGarbageStationTableComponent } from './audit-garbage-station-table/audit-garbage-station-table.component';
 import { AuditLogVideoTableComponent } from './audit-log-video-table/audit-log-video-table.component';
 import { CardRecordTableComponent } from './card-record-table/card-record-table.component';
@@ -85,4 +89,8 @@ export const Table_COMPONENTS = [
   AIOPRecordCameraEventTableComponent,
   AuditLogVideoTableComponent,
   AuditGarbageStationTableComponent,
+  AuditGarbageStationDetailsTableComponent,
+  AuditGarbageStationAbnormalTableComponent,
+  AuditCameraDetailsTableComponent,
+  AuditCameraAbnormalTableComponent,
 ];

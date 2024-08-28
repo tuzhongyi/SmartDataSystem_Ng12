@@ -3,7 +3,7 @@ import { DeviceListTableArgs } from 'src/app/common/components/tables/device-lis
 import { DeviceViewModel } from 'src/app/common/components/tables/device-list-table/device.model';
 import { Language } from 'src/app/common/tools/language';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
-import { AuditStatisticDataSelection } from '../audit-statistic-data/audit-statistic-data.selection';
+import { AuditStatisticDataDeviceManagerSelection } from './audit-statistic-data-device-manager.selection';
 
 @Component({
   selector: 'audit-statistic-data-device-manager',
@@ -19,7 +19,7 @@ export class AuditStatisticDataDeviceManagerComponent implements OnInit {
 
   args = new DeviceListTableArgs();
   load = new EventEmitter<DeviceListTableArgs>();
-  selection = new AuditStatisticDataSelection();
+  selection = new AuditStatisticDataDeviceManagerSelection();
   OnlineStatus = OnlineStatus;
   Language = Language;
   ngOnInit(): void {

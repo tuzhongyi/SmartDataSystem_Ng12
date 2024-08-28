@@ -1,0 +1,297 @@
+<div class="audit-list-station-garbage-manager">
+  <div class="audit-list-station-garbage-manager-title">
+    <div class="hw-second-title">投放点列表</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-head">
+    <div class="audit-list-station-garbage-manager-head-filter">
+      <div class="filter-items">
+        <div class="filter-item">
+          <div class="filter-item-title">投放点状态：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.state" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.state">
+                <option [ngValue]="StationState.Normal">
+                  {{ Language.StationState(StationState.Normal) }}
+                </option>
+                <option [ngValue]="StationState.Full">
+                  {{ Language.StationState(StationState.Full) }}
+                </option>
+                <option [ngValue]="StationState.Error">
+                  {{ Language.StationState(StationState.Error) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">厢房类型：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.type" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.type">
+                <option [ngValue]="StationType.Garbage">
+                  {{ Language.StationType(StationType.Garbage) }}
+                </option>
+                <option [ngValue]="StationType.Construction">
+                  {{ Language.StationType(StationType.Construction) }}
+                </option>
+
+                <option [ngValue]="StationType.Smart">
+                  {{ Language.StationType(StationType.Smart) }}
+                </option>
+
+                <option [ngValue]="StationType.Plus">
+                  {{ Language.StationType(StationType.Plus) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">GCHA：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.gcha" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.gcha">
+                <option [ngValue]="0">全部</option>
+                <option [ngValue]="1">在线</option>
+                <option [ngValue]="2">离线</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">智能设备：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.door" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.door">
+                <option [ngValue]="0">全部</option>
+                <option [ngValue]="1">在线</option>
+                <option [ngValue]="2">离线</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+
+        <div class="filter-item">
+          <div class="filter-item-title">NB电源箱状态：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.nb.state" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.nb.state">
+                <option [ngValue]="0">
+                  {{ Language.NBState(0) }}
+                </option>
+                <option [ngValue]="1">
+                  {{ Language.NBState(1) }}
+                </option>
+                <option [ngValue]="2">
+                  {{ Language.NBState(2) }}
+                </option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">NB心跳超时时长：</div>
+          <div class="filter-item-value">
+            <input
+              type="text"
+              [min]="1"
+              [max]="168"
+              [unit]="'小时'"
+              [disabled]="args.nb.state == undefined"
+              appTouchSpin
+              [(number)]="args.nb.hour"
+            />
+          </div>
+        </div>
+        <div class="filter-item division">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="controller.division.show"
+              [selectedNodes]="controller.division.selecteds"
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                [defaultIds]="args.divisionId ? [args.divisionId] : []"
+                (selectTreeNode)="controller.division.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
+        <div class="filter-item">
+          <div class="filter-item-title">名称：</div>
+          <div class="filter-item-value">
+            <input type="text" [(ngModel)]="args.name" />
+          </div>
+        </div>
+        <div class="filter-item search">
+          <button class="hw-blue-btn" (click)="onsearch()">
+            <i class="howell-icon-search"></i> 搜索
+          </button>
+          <button class="hw-blue-btn" (click)="onconfig()">
+            <i class="howell-icon-settingoutline"></i> 设置
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="audit-list-station-garbage-manager-body">
+    <audit-garbage-station-details-table
+      [(config)]="window.config.model"
+      [args]="args"
+      [load]="load"
+      (cameras)="oncameras($event)"
+      (members)="onmembers($event)"
+      (trashcans)="ontrashcans($event)"
+      (dropwindows)="ondropwindows($event)"
+      (schedule)="onschedule($event)"
+      (videomultiple)="onvideomultiple($event)"
+      (eventdisabled)="oneventdisabled($event)"
+      (status)="onstatus($event)"
+      (command)="oncommand($event)"
+      (gcha)="ongcha($event)"
+      (nb)="onnbbox($event)"
+      (door)="ondevice($event)"
+    ></audit-garbage-station-details-table>
+  </div>
+</div>
+<app-window
+  [Model]="window.camera"
+  *ngIf="window.camera.show"
+  [style]="window.camera.style"
+>
+  <audit-list-station-garbage-manager-tab-camera
+    [model]="window.camera.model"
+    (video)="window.onvideosingle($event)"
+  ></audit-list-station-garbage-manager-tab-camera>
+</app-window>
+<app-window
+  [Model]="window.member"
+  *ngIf="window.member.show"
+  [style]="window.member.style"
+>
+  <audit-list-station-garbage-manager-tab-member
+    [model]="window.member.model"
+  ></audit-list-station-garbage-manager-tab-member>
+</app-window>
+<app-window
+  [Model]="window.eventdisabled"
+  *ngIf="window.eventdisabled.show"
+  [style]="window.eventdisabled.style"
+>
+  <audit-list-station-garbage-manager-event-disabled
+    [model]="window.eventdisabled.model"
+  ></audit-list-station-garbage-manager-event-disabled>
+</app-window>
+<app-window
+  [Model]="window.trashcan"
+  *ngIf="window.trashcan.show"
+  [style]="window.trashcan.style"
+>
+  <audit-list-station-garbage-manager-trashcan
+    [model]="window.trashcan.model"
+  ></audit-list-station-garbage-manager-trashcan>
+</app-window>
+<app-window
+  [Model]="window.dropwindow"
+  *ngIf="window.dropwindow.show"
+  [style]="window.dropwindow.style"
+>
+  <audit-list-station-garbage-manager-tab-drop-window
+    [model]="window.dropwindow.model"
+    (close)="window.dropwindow.show = false"
+  ></audit-list-station-garbage-manager-tab-drop-window>
+</app-window>
+<app-window
+  [Model]="window.nb"
+  *ngIf="window.nb.show"
+  [style]="window.nb.style"
+>
+  <audit-list-station-garbage-manager-nb-box
+    [model]="window.nb.model"
+    (close)="window.nb.show = false"
+  ></audit-list-station-garbage-manager-nb-box>
+</app-window>
+<app-window
+  [Model]="window.gcha"
+  *ngIf="window.gcha.show"
+  [style]="window.gcha.style"
+>
+  <audit-list-station-garbage-manager-gcha
+    [model]="window.gcha.model"
+    (close)="window.gcha.show = false"
+  ></audit-list-station-garbage-manager-gcha>
+</app-window>
+<app-window
+  [Model]="window.device"
+  *ngIf="window.device.show"
+  [style]="window.device.style"
+>
+  <audit-list-station-garbage-manager-device
+    [model]="window.device.model"
+    (close)="window.device.show = false"
+  ></audit-list-station-garbage-manager-device>
+</app-window>
+<app-window
+  [Model]="window.schedule"
+  *ngIf="window.schedule.show"
+  [style]="window.schedule.style"
+>
+  <audit-list-station-garbage-manager-tab-schedule
+    [model]="window.schedule.model"
+  ></audit-list-station-garbage-manager-tab-schedule>
+</app-window>
+<app-window
+  [Model]="window.status"
+  *ngIf="window.status.show"
+  [style]="window.status.style"
+>
+  <audit-list-station-garbage-manager-status
+    [model]="window.status.model"
+  ></audit-list-station-garbage-manager-status>
+</app-window>
+<app-window
+  [Model]="window.command"
+  *ngIf="window.command.show"
+  [style]="window.command.style"
+>
+  <audit-list-station-garbage-manager-command
+    [model]="window.command.model"
+  ></audit-list-station-garbage-manager-command>
+</app-window>
+
+<app-window
+  [Model]="window.config"
+  *ngIf="window.config.show"
+  [style]="window.config.style"
+>
+  <audit-list-station-garbage-manager-config
+    [(config)]="window.config.model"
+    (close)="window.config.show = false"
+  ></audit-list-station-garbage-manager-config>
+</app-window>
+
+<app-window
+  [Model]="window.video.multiple"
+  *ngIf="window.video.multiple.show"
+  [style]="window.video.multiple.style"
+>
+  <media-multiple-player
+    [option]="true"
+    [title]="window.video.multiple.title"
+    [args]="window.video.multiple.args"
+    [fullplay]="window.video.multiple.fullplay"
+    [isplayback]="false"
+  ></media-multiple-player>
+</app-window>
+<howell-video-player-window
+  *ngIf="window.video.single.show"
+  [Model]="window.video.single"
+  [style]="window.video.single.style"
+  [cameraId]="window.video.single.cameraId"
+  [title]="window.video.single.title"
+  [autoplay]="true"
+></howell-video-player-window>

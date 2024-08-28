@@ -1,0 +1,16 @@
+<div class="audit-list-station-garbage-manager-event-disabled" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-event-disabled-head">
+    <div class="hw-simple-title">{{ model.Name }}停用事件</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-event-disabled-body">
+    <div class="audit-list-station-garbage-manager-event-disabled-body-list">
+      <div
+        class="audit-list-station-garbage-manager-event-disabled-body-list-item"
+        *ngFor="let item of datas; let index = index"
+      >
+        <div><i [class]="Icon.EventType(item)"></i></div>
+        <div>{{ Language.EventType(item) }}</div>
+      </div>
+    </div>
+  </div>
+</div>

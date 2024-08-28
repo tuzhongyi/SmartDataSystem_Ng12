@@ -14,7 +14,7 @@ export class AMapDataSource {
     return (
       this.all.filter(
         (x) =>
-          x.StationType === StationType.Rfid ||
+          x.StationType === StationType.Plus ||
           x.StationType === StationType.Smart
       ) ?? []
     );
@@ -39,7 +39,7 @@ class AMapDataDropSource {
     return (
       this.all.filter(
         (x) =>
-          x.GarbageStation.StationType === StationType.Rfid ||
+          x.GarbageStation.StationType === StationType.Plus ||
           x.GarbageStation.StationType === StationType.Smart
       ) ?? []
     );
@@ -65,7 +65,7 @@ class AMapDataPlugSource {
     return (
       this.all.filter(
         (x) =>
-          x.GarbageStation.StationType === StationType.Rfid ||
+          x.GarbageStation.StationType === StationType.Plus ||
           x.GarbageStation.StationType === StationType.Smart
       ) ?? []
     );

@@ -20,30 +20,48 @@
       ]
     },
     {
+      "title": "信息管理",
+      "id": "list",
+      "path": "/audit/list",
+      "icon": "howell-icon-details",
+      "children": [
+        {
+          "title": "投放点列表",
+          "id": "list-station-garbage",
+          "path": "/audit/list/list-station-garbage"
+        },
+        {
+          "title": "摄像机列表",
+          "id": "list-camera",
+          "path": "/audit/list/list-camera"
+        }
+      ]
+    },
+    {
       "title": "记录审计",
-      "id": "auditor",
-      "path": "/audit/auditor",
+      "id": "record",
+      "path": "/audit/record",
       "icon": "howell-icon-Record",
       "children": [
         {
           "title": "用户操作记录",
           "id": "log-user",
-          "path": "/audit/auditor/log-user"
+          "path": "/audit/record/log-user"
         },
         {
           "title": "视频播放记录",
           "id": "log-video",
-          "path": "/audit/auditor/log-video"
+          "path": "/audit/record/log-video"
         },
         {
           "title": "设备上下线记录",
           "id": "record-online",
-          "path": "/audit/auditor/record-online"
+          "path": "/audit/record/record-online"
         },
         {
           "title": "摄像机报警记录",
           "id": "record-camera",
-          "path": "/audit/auditor/record-camera"
+          "path": "/audit/record/record-camera"
         }
       ]
     }

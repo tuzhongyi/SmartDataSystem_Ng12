@@ -6,7 +6,8 @@ import {
 } from 'src/app/converter/common-model.converter';
 import { VehicleState } from 'src/app/enum/vehicle-state.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
+
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
 import { CollectionDivisionRequestService } from 'src/app/network/request/garbage_vehicles/divisions/collection-division-request.service';
 import ColorPalette from 'src/assets/json/color-palette.json';
 import { CollectionVehicleWindowModel } from './collection-vehicle-window.model';

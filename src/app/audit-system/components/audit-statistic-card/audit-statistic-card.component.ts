@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
       <ng-content></ng-content>
     </div>
   </div>`,
-  styleUrls: ['../audit.less'],
+  styleUrls: ['./audit-statistic-card.component.less'],
 })
 export class AuditStatisticCardComponent {}

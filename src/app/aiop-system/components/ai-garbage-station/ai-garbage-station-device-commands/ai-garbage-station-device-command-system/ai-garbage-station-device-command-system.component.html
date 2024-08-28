@@ -1,0 +1,84 @@
+<div class="ai-garbage-station-device-command-system">
+  <div class="command-panel form-group">
+    <div class="hw-simple-title">系统命令</div>
+
+    <div class="form-item">
+      <div class="form-item-title">同步RFID卡号</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.SyncRfidCard)"
+        >
+          <i class="mdi mdi-twitter-retweet"></i> 同步
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">自动程序升级检测</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.UpgradeCheck)"
+        >
+          <i class="mdi mdi-upload"></i> 检测
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">系统自检，并上报结果</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.SelfCheck)"
+        >
+          <i class="mdi mdi-replay"></i> 自检
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">开启TCP连接</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.TCPConnection)"
+        >
+          <i class="mdi mdi-lan"></i> 连接
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">重启系统</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.Reboot)"
+        >
+          <i class="mdi mdi-refresh"></i> 重启
+        </button>
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">设备信息同步</div>
+      <div class="form-item-value">
+        <button
+          class="hw-blue-btn"
+          (click)="tocommand(AIGarbageDeviceCommand.DeviceInformation)"
+        >
+          <i class="mdi mdi-twitter-retweet"></i> 同步
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-window
+    [Model]="window.confirm"
+    *ngIf="window.confirm.show"
+    [style]="window.confirm.style"
+  >
+    <ai-garbage-station-device-command-confirm
+      [command]="window.confirm.command"
+      (ok)="oncommand($event)"
+      (cancel)="window.close()"
+    ></ai-garbage-station-device-command-confirm>
+  </app-window>
+</div>

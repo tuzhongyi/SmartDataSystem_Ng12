@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Language } from 'src/app/common/tools/language';
-import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { GarbageVehicle } from 'src/app/network/model/garbage-station/garbage-vehicle/garbage-vehicle.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 
 @Component({
   selector: 'aiop-garbage-vehicle-cameras',

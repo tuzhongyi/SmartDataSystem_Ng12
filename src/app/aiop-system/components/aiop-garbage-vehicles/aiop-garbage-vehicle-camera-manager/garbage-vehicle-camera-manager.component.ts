@@ -8,7 +8,7 @@ import { Creater } from 'src/app/common/tools/creater';
 import { DialogEnum } from 'src/app/enum/dialog.enum';
 import { FormState } from 'src/app/enum/form-state.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { VehicleCamera } from 'src/app/network/model/garbage-station/vehicle-camera.model';
+import { VehicleCamera } from 'src/app/network/model/garbage-station/garbage-vehicle/vehicle-camera.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { GarbageVehicleCameraManagerBusiness } from './garbage-vehicle-camera-manager.business';
 import {

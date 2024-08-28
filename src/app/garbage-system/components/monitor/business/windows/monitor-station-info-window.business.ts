@@ -7,7 +7,7 @@ import { AIGarbageRfidCardRecord } from 'src/app/network/model/ai-garbage/rfid-c
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { GarbageStationWindowIndex } from '../../../windows/garbage-station-window/garbage-station-window.component';
-import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -41,10 +41,9 @@ export class MonitorGarbageStationInfoWindowBusiness extends WindowViewModel {
       | EventRecordViewModel
   ) {
     if (item instanceof AIGarbageRfidCardRecord) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = item.GarbageStationId;
       this.media.multiple.args.time = item.Time;
-      this.media.multiple.date = item.Time;
       this.media.multiple.fullplay = true;
       this.media.multiple.show = true;
     } else if (item instanceof EventRecordViewModel) {

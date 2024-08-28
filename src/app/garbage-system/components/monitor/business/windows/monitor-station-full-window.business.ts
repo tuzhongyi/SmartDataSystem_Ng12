@@ -6,7 +6,7 @@ import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool'
 import { GarbageFullEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { MediaMultipleWindowArgs } from '../../../windows/media-multiple-window/media-multiple-window.model';
+import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -48,14 +48,12 @@ export class MonitorGarbageStationFullWindowBusiness extends WindowViewModel {
 
   async onallvideo(item: EventRecordViewModel) {
     if (item.ResourceId) {
-      this.media.multiple.args = new MediaMultipleWindowArgs();
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
       this.media.multiple.args.stationId = item.Data.StationId;
       let second = item.EventTime.getSeconds() - 30;
 
       this.media.multiple.args.time = new Date(item.EventTime.getTime());
       this.media.multiple.args.time.setSeconds(second);
-      this.media.multiple.date = new Date(item.EventTime.getTime());
-      this.media.multiple.date.setSeconds(second);
 
       this.media.multiple.show = true;
     }

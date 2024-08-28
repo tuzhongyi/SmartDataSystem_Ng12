@@ -1,0 +1,18 @@
+<div class="audit-list-station-garbage-manager-tab-member" *ngIf="!!model">
+  <div class="audit-list-station-garbage-manager-tab-member-head">
+    <div class="hw-simple-title">{{ model.Name }}管理人员</div>
+  </div>
+  <div class="audit-list-station-garbage-manager-tab-member-body">
+    <div class="audit-list-station-garbage-manager-tab-member-body-list">
+      <div
+        class="audit-list-station-garbage-manager-tab-member-body-list-item"
+        *ngFor="let item of datas; let index = index"
+      >
+        <div><i class="howell-icon-account"></i></div>
+        <div>{{ Language.MemberType(item.MemberType) }}</div>
+        <div>{{ item.Name }}</div>
+        <div>{{ item.MobileNo }}</div>
+      </div>
+    </div>
+  </div>
+</div>

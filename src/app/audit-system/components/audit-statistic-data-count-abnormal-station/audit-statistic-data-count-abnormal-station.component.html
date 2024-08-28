@@ -1,0 +1,42 @@
+<div class="audit-statistic-data-count-station">
+  <div class="audit-statistic-data-count-station-head">
+    <div class="hw-simple-title">投放点统计</div>
+  </div>
+  <div class="audit-statistic-data-count-station-body">
+    <div class="audit-statistic-data-count-station-body-chart">
+      <div #echart class="echart"></div>
+    </div>
+    <div class="audit-statistic-data-count-station-body-number">
+      <div
+        class="number-item"
+        (click)="onclick(GarbageStationAbnormalType.door)"
+      >
+        <div>智能设备离线</div>
+        <div class="number-item-text door">
+          {{ data.DoorOfflineNumber }}
+        </div>
+      </div>
+      <div
+        class="number-item"
+        (click)="onclick(GarbageStationAbnormalType.gcha)"
+      >
+        <div>GCHA离线</div>
+        <div class="number-item-text gcha">
+          {{ data.GCHAOfflineNumber }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick(GarbageStationAbnormalType.nb)">
+        <div>NB电源箱故障</div>
+        <div class="number-item-text nb">
+          {{ data.NBOfflineNumber }}
+        </div>
+      </div>
+      <div class="number-item" (click)="onclick()">
+        <div>异常总数</div>
+        <div class="number-item-text sky-blue-text2">
+          {{ count }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
