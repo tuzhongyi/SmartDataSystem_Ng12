@@ -26,14 +26,22 @@ export class AuditListStationGarbageManagerComponent implements OnInit {
 
   args = new AuditGarbageStationDetailsTableArgs();
   load = new EventEmitter<IAuditGarbageStationDetailsTableArgs>();
+  download = new EventEmitter<IAuditGarbageStationDetailsTableArgs>();
   StationState = StationState;
   StationType = StationType;
   Language = Language;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.controller.division.select.subscribe((x) => {
+      this.args.divisionId = x?.Id;
+    });
+  }
 
   onsearch() {
     this.load.emit(this.args);
+  }
+  ondownload() {
+    this.download.emit(this.args);
   }
   ondropwindows(data: GarbageStation) {
     if (data.DropWindows && data.DropWindows.length > 0) {

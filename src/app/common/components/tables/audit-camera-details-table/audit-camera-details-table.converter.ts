@@ -121,9 +121,9 @@ class TableItemDataConverter {
     });
     let item = new TableItemData('IsFull', text);
     if (data.IsFull != undefined) {
-      item.color = data.IsFull ? 'yellow-text' : 'green-text';
+      item.class = data.IsFull ? 'yellow-text' : 'green-text';
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
 
     return item;
@@ -140,9 +140,9 @@ class TableItemDataConverter {
     let item = new TableItemData('OnlineStatus', text);
     let color = ColorTool.OnlineState(data.OnlineStatus);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -157,9 +157,9 @@ class TableItemDataConverter {
     let item = new TableItemData('SceneChange', text);
     let color = ColorTool.SceneChange(data.SceneChange);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -174,9 +174,9 @@ class TableItemDataConverter {
     let item = new TableItemData('ImageQuality', text);
     let color = ColorTool.ImageQuality(data.ImageQuality);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -191,9 +191,9 @@ class TableItemDataConverter {
     let item = new TableItemData('Brightness', text);
     let color = ColorTool.Brightness(data.Brightness);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -208,9 +208,9 @@ class TableItemDataConverter {
     let item = new TableItemData('Aberration', text);
     let color = ColorTool.Aberration(data.Aberration);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -225,9 +225,9 @@ class TableItemDataConverter {
     let item = new TableItemData('Disturbance', text);
     let color = ColorTool.Disturbance(data.Disturbance);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }
@@ -264,9 +264,9 @@ class TableItemDataConverter {
     let item = new TableItemData('RecordState', text);
     let color = ColorTool.RecordState(data.RecordState);
     if (color) {
-      item.color = color;
+      item.class = color;
     } else {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     }
     return item;
   }

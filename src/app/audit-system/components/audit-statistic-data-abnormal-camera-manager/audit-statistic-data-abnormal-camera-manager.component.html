@@ -1,6 +1,6 @@
 <div class="audit-statistic-data-abnormal-camera-manager">
   <div class="audit-statistic-data-abnormal-camera-manager-title">
-    <div class="hw-second-title">投放点列表</div>
+    <div class="hw-second-title">摄像机列表</div>
   </div>
   <div class="audit-statistic-data-abnormal-camera-manager-head">
     <div class="filter-items">
@@ -9,14 +9,35 @@
         <div class="filter-item-value">
           <input
             type="text"
-            [min]="1"
+            [min]="0"
             [max]="168"
             [unit]="'小时'"
+            [emptyvalue]="0"
+            [emptyview]="'无限制'"
+            [readOnly]="true"
             appTouchSpin
-            [(ngModel)]="hour"
+            [(number)]="hour"
           />
         </div>
       </div>
+      <!-- <div class="filter-item">
+        <div class="filter-item-title">故障类型：</div>
+        <div class="filter-item-value">
+          <hw-select [(selected)]="args.type" [cannull]="true">
+            <select hw-select-content [(ngModel)]="args.type">
+              <option [ngValue]="CameraAbnormalType.offline">
+                {{ Language.CameraAbnormalType(CameraAbnormalType.offline) }}
+              </option>
+              <option [ngValue]="CameraAbnormalType.abnormal">
+                {{ Language.CameraAbnormalType(CameraAbnormalType.abnormal) }}
+              </option>
+              <option [ngValue]="CameraAbnormalType.record">
+                {{ Language.CameraAbnormalType(CameraAbnormalType.record) }}
+              </option>
+            </select>
+          </hw-select>
+        </div>
+      </div> -->
       <div class="filter-item">
         <div class="filter-item-title">行政区：</div>
         <div class="filter-item-value">
@@ -31,6 +52,8 @@
           >
             <howell-division-tree
               #tree
+              [depth]="1"
+              [showDepth]="0"
               [defaultIds]="args.divisionId ? [args.divisionId] : []"
               (selectTreeNode)="controller.division.onselect($event)"
             ></howell-division-tree>
@@ -41,12 +64,17 @@
         <button class="hw-blue-btn" (click)="onsearch()">
           <i class="howell-icon-search"></i> 搜索
         </button>
+        <button class="hw-blue-btn" (click)="ondownload()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
       </div>
     </div>
   </div>
   <div class="audit-statistic-data-abnormal-camera-manager-body">
     <audit-camera-abnormal-table
       [args]="args"
+      [load]="load"
+      [download]="download"
       (video)="onvideo($event)"
     ></audit-camera-abnormal-table>
   </div>

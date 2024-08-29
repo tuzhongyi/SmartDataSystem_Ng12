@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AuditGarbageStationAbnormalTableArgs } from 'src/app/common/components/tables/audit-garbage-station-abnormal-table/audit-garbage-station-abnormal-table.model';
+import { Language } from 'src/app/common/tools/language';
 import { isEmpty } from 'src/app/common/tools/tool';
 import { GarbageStationAbnormalType } from 'src/app/enum/garbage-station-abnormal-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
@@ -29,15 +30,25 @@ export class AuditStatisticDataAbnormalStationManagerComponent
 
   args = new AuditGarbageStationAbnormalTableArgs();
   load = new EventEmitter<AuditGarbageStationAbnormalTableArgs>();
+  download = new EventEmitter<AuditGarbageStationAbnormalTableArgs>();
+
+  GarbageStationAbnormalType = GarbageStationAbnormalType;
+  Language = Language;
 
   ngOnInit(): void {
     this.args.divisionId = this.divisionId;
     this.args.hour = this.hour;
     this.args.type = this.type;
+    this.controller.division.select.subscribe((x) => {
+      this.args.divisionId = x?.Id;
+    });
   }
 
   onsearch() {
     this.load.emit(this.args);
+  }
+  ondownload() {
+    this.download.emit(this.args);
   }
   ondropwindows(data: GarbageStation) {
     this.dropwindows.emit(data);

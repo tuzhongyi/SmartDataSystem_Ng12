@@ -185,9 +185,11 @@ class TableItemDataConverter {
 
     let item = new TableItemData('NBState', text);
     if (isEmpty(data.NBState)) {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     } else {
-      item.color = data.NBState == 0 ? 'green-text' : 'powder-red-text';
+      item.class = `td-icon ${
+        data.NBState == 0 ? 'green-text' : 'powder-red-text'
+      }`;
       item.event = new EventEmitter<GarbageStation>();
     }
 
@@ -242,9 +244,11 @@ class TableItemDataConverter {
 
     let item = new TableItemData('Device', text);
     if (isEmpty(data.GarbageDeviceData?.OnlineState)) {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     } else {
-      item.color = ColorTool.OnlineState(data.GarbageDeviceData?.OnlineState);
+      item.class = `td-icon ${ColorTool.OnlineState(
+        data.GarbageDeviceData?.OnlineState
+      )}`;
       item.event = new EventEmitter<GarbageStation>();
     }
     return item;
@@ -261,11 +265,11 @@ class TableItemDataConverter {
     });
     let item = new TableItemData('GCHA', text);
     if (isEmpty(data.GarbageDeviceData?.GCHAStatus?.OnlineState)) {
-      item.color = 'gray-text';
+      item.class = 'gray-text';
     } else {
-      item.color = ColorTool.OnlineState(
+      item.class = `td-icon ${ColorTool.OnlineState(
         data.GarbageDeviceData?.GCHAStatus?.OnlineState
-      );
+      )}`;
       item.event = new EventEmitter<GarbageStation>();
     }
     return item;

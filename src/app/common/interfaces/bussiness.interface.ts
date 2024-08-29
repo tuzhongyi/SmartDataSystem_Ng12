@@ -1,6 +1,5 @@
 export interface IBusiness<IModel, IViewModel = IModel> {
   load(...args: any): Promise<IViewModel>;
-  getData(...args: any): Promise<IModel>;
 }
 
 export interface ICreate<T> {

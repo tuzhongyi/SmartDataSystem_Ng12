@@ -31,6 +31,7 @@ export class AuditCameraDetailsTableComponent
   @Input() args: IAuditCameraDetailsTableArgs =
     new AuditCameraDetailsTableArgs();
   @Input() load?: EventEmitter<IAuditCameraDetailsTableArgs>;
+  @Input() download?: EventEmitter<IAuditCameraDetailsTableArgs>;
   @Input() config = new AuditCameraDetailsTableConfig();
   @Output() configChange = new EventEmitter<AuditCameraDetailsTableConfig>();
   @Output() video = new EventEmitter<Camera>();
@@ -49,6 +50,11 @@ export class AuditCameraDetailsTableComponent
       this.load.subscribe((args) => {
         this.args = args;
         this.loadData(1, this.pageSize);
+      });
+    }
+    if (this.download) {
+      this.download.subscribe((args) => {
+        this.business.download(args, this.config);
       });
     }
 
@@ -88,7 +94,9 @@ export class AuditCameraDetailsTableComponent
   }
 
   onvideo(e: Event, item: AuditCameraDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.video.emit(item);
   }
 }

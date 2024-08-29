@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Medium } from 'src/app/common/tools/medium';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedList } from 'src/app/network/model/page_list.model';
@@ -27,6 +28,7 @@ export class EventRecordBusiness
   constructor(
     private eventService: EventRequestService,
     private divisionService: DivisionRequestService,
+    private global: GlobalStorageService,
     public Converter: EventRecordPagedConverter
   ) {}
 
@@ -40,13 +42,13 @@ export class EventRecordBusiness
 
     return models;
   }
-  getData(
+  async getData(
     type: EventType,
     page: PagedParams,
     opts: EventRecordFilter
   ): Promise<PagedList<EventRecordType>> {
     this.eventService.record.IllegalDrop;
-    let params = this.getParams(page, opts, type);
+    let params = await this.getParams(page, opts, type);
 
     switch (type) {
       case EventType.IllegalDrop:
@@ -92,7 +94,7 @@ export class EventRecordBusiness
     return model;
   }
 
-  getParams(page: PagedParams, opts: EventRecordFilter, type: EventType) {
+  async getParams(page: PagedParams, opts: EventRecordFilter, type: EventType) {
     let params: GetEventRecordsParams;
     switch (type) {
       case EventType.MixedInto:
@@ -122,6 +124,8 @@ export class EventRecordBusiness
       params.StationIds = [opts.stationId];
     } else if (opts.divisionId) {
       params.DivisionIds = [opts.divisionId];
+    } else {
+      params.DivisionIds = [(await this.global.division.selected).Id];
     }
 
     if (opts.cameraId) {

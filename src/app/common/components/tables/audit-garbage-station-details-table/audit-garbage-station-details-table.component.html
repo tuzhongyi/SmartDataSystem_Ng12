@@ -126,7 +126,7 @@
                   </ng-container>
                   <ng-container *ngSwitchDefault="">
                     <span
-                      [class]="item.Datas[col].color"
+                      [class]="item.Datas[col].class"
                       (click)="onclick($event, col, item)"
                     >
                       {{ item.Datas[col].text | async }}

@@ -7,13 +7,16 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { MediaMultiplePlayerConverter } from './media-multiple-player.converter';
 import {
+  IManualCaptureBusiness,
   MediaMultiplePlayerArgs,
   MediaMultiplePlayerModel,
 } from './media-multiple-player.model';
 
 @Injectable()
 export class MediaMultiplePlayerBusiness
-  implements IBusiness<MediaMultiplePlayerArgs, MediaMultiplePlayerModel>
+  implements
+    IBusiness<MediaMultiplePlayerArgs, MediaMultiplePlayerModel>,
+    IManualCaptureBusiness
 {
   constructor(private stationService: GarbageStationRequestService) {}
 
@@ -33,10 +36,11 @@ export class MediaMultiplePlayerBusiness
     let model = this.Converter.Convert(args, station);
     return model;
   }
-  getData(stationId: string): Promise<MediaMultiplePlayerArgs> {
-    throw new Error('Method not implemented.');
-  }
   getStation(stationId: string) {
-    return this.stationService.cache.get(stationId);
+    return this.stationService.get(stationId);
+  }
+
+  manualCapture(stationId: string) {
+    return this.stationService.manualCapture(stationId);
   }
 }

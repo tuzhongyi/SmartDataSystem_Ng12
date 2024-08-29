@@ -12,6 +12,10 @@ export interface IAuditGarbageStationDetailsTableBusiness
     PagedList<AuditGarbageStationDetailsTableItem<GarbageStation>>
   > {
   config: IBusiness<AuditGarbageStationDetailsTableConfig>;
+  download(
+    args: IAuditGarbageStationDetailsTableArgs,
+    config: AuditGarbageStationDetailsTableConfig
+  ): void;
 }
 export interface IAuditGarbageStationDetailsTableArgs {
   divisionId?: string;
@@ -30,8 +34,10 @@ export class AuditGarbageStationDetailsTableArgs
 
   nb: {
     state?: number;
-    hour?: number;
-  } = {};
+    hour: number;
+  } = {
+    hour: 0,
+  };
 
   accessId?: string;
 }
@@ -46,9 +52,9 @@ export class AuditGarbageStationDetailsTableItemData<T = GarbageStation> {
   constructor(key: string, text: Promise<string>, color?: string) {
     this.key = key;
     this.text = text;
-    this.color = color;
+    this.class = color;
   }
-  color?: string;
+  class?: string;
   text: Promise<string>;
   key: string;
   event?: EventEmitter<T>;

@@ -1,7 +1,7 @@
+import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Language } from 'src/app/common/tools/language';
 import { PagedList } from 'src/app/network/model/page_list.model';
-import { GetGarbageStationCamerasParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
-import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { AuditCameraDetailsTableConverter } from '../audit-camera-details-table.converter';
 import {
   AuditCameraDetailsTableArgs,
@@ -9,17 +9,30 @@ import {
   AuditCameraDetailsTableItem,
   IAuditCameraDetailsTableBusiness,
 } from '../audit-camera-details-table.model';
+import { AuditCameraDetailsTableCameraBusiness } from './audit-camera-details-table-camera.business';
 import { AuditCameraDetailsTableConfigBusiness } from './audit-camera-details-table-config.business';
+import { AuditCameraDetailsTableDownloadBusiness } from './audit-camera-details-table-download.business';
 
 @Injectable()
 export class AuditCameraDetailsTableBusiness
   implements IAuditCameraDetailsTableBusiness
 {
   constructor(
-    private service: GarbageStationRequestService,
     private converter: AuditCameraDetailsTableConverter,
-    public config: AuditCameraDetailsTableConfigBusiness
-  ) {}
+    public config: AuditCameraDetailsTableConfigBusiness,
+    camera: AuditCameraDetailsTableCameraBusiness,
+    download: AuditCameraDetailsTableDownloadBusiness
+  ) {
+    this.service = {
+      camera,
+      download,
+    };
+  }
+
+  service: {
+    camera: AuditCameraDetailsTableCameraBusiness;
+    download: AuditCameraDetailsTableDownloadBusiness;
+  };
 
   async load(
     index: number,
@@ -27,7 +40,7 @@ export class AuditCameraDetailsTableBusiness
     args: AuditCameraDetailsTableArgs,
     config: AuditCameraDetailsTableConfig
   ) {
-    let datas = await this.getData(index, size, args);
+    let datas = await this.service.camera.load(index, size, args);
     let models = datas.Data.map((x) => {
       return this.converter.convert(x, config);
     });
@@ -37,25 +50,19 @@ export class AuditCameraDetailsTableBusiness
     return paged;
   }
 
-  getData(index: number, size: number, args: AuditCameraDetailsTableArgs) {
-    let params = new GetGarbageStationCamerasParams();
-    params.PageIndex = index;
-    params.PageSize = size;
-    params.Name = args.name;
-    if (args.divisionId) {
-      params.DivisionIds = [args.divisionId];
-    }
-    params.CameraUsage = args.usage;
-    params.CameraType = args.type;
-    params.Classification = args.classification;
-    params.OnlineStatus = args.status.OnlineStatus;
-    params.SceneChange = args.status.SceneChange;
-    params.ImageQuality = args.status.ImageQuality;
-    params.Brightness = args.status.Brightness;
-    params.Aberration = args.status.Aberration;
-    params.Disturbance = args.status.Disturbance;
-    params.RecordState = args.status.RecordState;
-
-    return this.service.camera.list(params);
+  async download(
+    args: AuditCameraDetailsTableArgs,
+    config: AuditCameraDetailsTableConfig
+  ) {
+    let datas = await this.service.camera.all(args);
+    let models = datas.map((x) => {
+      return this.converter.convert(x, config);
+    });
+    let title = `摄像机列表 ${formatDate(
+      new Date(),
+      Language.yyyyMMddHHmmss,
+      'en'
+    )}`;
+    this.service.download.download(title, models, config);
   }
 }

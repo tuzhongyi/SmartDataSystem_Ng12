@@ -15,6 +15,7 @@ export class AuditCameraAbnormalTableComponent implements OnInit {
   @Input() args: IAuditGarbageStationDetailsTableArgs =
     new AuditCameraAbnormalTableArgs();
   @Input() load?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
+  @Input() download?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
   @Output() video = new EventEmitter<Camera>();
   constructor(public business: AuditCameraAbnormalTableBusiness) {}
 

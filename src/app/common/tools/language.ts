@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Flags } from 'src/app/common/tools/flags';
 import { BatteryState } from 'src/app/enum/ai-garbage/battery-state.enum';
 import { RobotState } from 'src/app/enum/ai-garbage/robot-state.enum';
+import { CameraAbnormalType } from 'src/app/enum/camera-abnormal-type.enum';
 import { CameraClassification } from 'src/app/enum/camera-classification.enum';
 import { CameraState } from 'src/app/enum/camera-state.enum';
 import { CameraType } from 'src/app/enum/camera-type.enum';
@@ -19,6 +20,7 @@ import {
 } from 'src/app/enum/device-state-count.enum';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageStationAbnormalType } from 'src/app/enum/garbage-station-abnormal-type.enum';
 import { GarbageType } from 'src/app/enum/garbage-type.enum';
 import { Gender } from 'src/app/enum/gender.enum';
 import {
@@ -755,6 +757,18 @@ export class Language {
         return '其他';
     }
   }
+  static DropWindowState(value?: number) {
+    switch (value) {
+      case 0:
+        return '正常';
+      case 1:
+        return '异常';
+      case 2:
+        return '常开';
+      default:
+        return '其他';
+    }
+  }
 
   static GarbageDropSuperVisionLevel(level?: GarbageDropSuperVisionLevel) {
     switch (level) {
@@ -1117,5 +1131,29 @@ export class Language {
     }
   }
 
+  static CameraAbnormalType(type?: CameraAbnormalType) {
+    switch (type) {
+      case CameraAbnormalType.offline:
+        return '摄像机离线';
+      case CameraAbnormalType.abnormal:
+        return '摄像机故障';
+      case CameraAbnormalType.record:
+        return '摄像机录像故障';
+      default:
+        return '未知';
+    }
+  }
+  static GarbageStationAbnormalType(type?: GarbageStationAbnormalType) {
+    switch (type) {
+      case GarbageStationAbnormalType.door:
+        return '智能设备离线';
+      case GarbageStationAbnormalType.gcha:
+        return 'GCHA离线';
+      case GarbageStationAbnormalType.nb:
+        return 'NB电源箱离线';
+      default:
+        return '未知';
+    }
+  }
   static json = language;
 }

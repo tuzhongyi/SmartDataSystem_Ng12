@@ -41,6 +41,7 @@ export class AuditGarbageStationDetailsTableComponent
   @Input() args: IAuditGarbageStationDetailsTableArgs =
     new AuditGarbageStationDetailsTableArgs();
   @Input() load?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
+  @Input() download?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
   @Input() config = new AuditGarbageStationDetailsTableConfig();
   @Output() configChange =
     new EventEmitter<AuditGarbageStationDetailsTableConfig>();
@@ -84,6 +85,11 @@ export class AuditGarbageStationDetailsTableComponent
       this.load.subscribe((args) => {
         this.args = args;
         this.loadData(1);
+      });
+    }
+    if (this.download) {
+      this.download.subscribe((args) => {
+        this.business.download(args, this.config);
       });
     }
 
@@ -150,47 +156,67 @@ export class AuditGarbageStationDetailsTableComponent
   }
 
   ondropwindows(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.dropwindows.emit(item);
   }
   oncameras(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.cameras.emit(item);
   }
   ontrashcans(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.trashcans.emit(item);
   }
   onmembers(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.members.emit(item);
   }
 
   onschedule(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.schedule.emit(item);
   }
   oncommand(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.command.emit(item);
   }
   onvideomultiple(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.videomultiple.emit(item);
   }
   onstatus(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.status.emit(item);
   }
   oneventdisabled(e: Event, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
+    if (this.selected === item) {
+      e.stopImmediatePropagation();
+    }
     this.eventdisabled.emit(item);
   }
 
   onclick(e: Event, key: string, item: AuditGarbageStationDetailsTableItem) {
-    e.stopImmediatePropagation();
     let event = item.Datas[key].event;
     if (event) {
+      if (this.selected === item) {
+        e.stopImmediatePropagation();
+      }
       event.emit(item);
     }
   }

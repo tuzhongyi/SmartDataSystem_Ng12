@@ -23,6 +23,7 @@ export class AuditListCameraManagerComponent implements OnInit {
 
   args = new AuditCameraDetailsTableArgs();
   load = new EventEmitter<IAuditCameraDetailsTableArgs>();
+  download = new EventEmitter<IAuditCameraDetailsTableArgs>();
 
   Language = Language;
   CameraUsage = CameraUsage;
@@ -38,6 +39,9 @@ export class AuditListCameraManagerComponent implements OnInit {
 
   onsearch() {
     this.load.emit(this.args);
+  }
+  ondownload() {
+    this.download.emit(this.args);
   }
 
   onvideo(camera: Camera) {

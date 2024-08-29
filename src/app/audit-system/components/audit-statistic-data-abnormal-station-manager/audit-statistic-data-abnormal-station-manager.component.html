@@ -9,14 +9,48 @@
         <div class="filter-item-value">
           <input
             type="text"
-            [min]="1"
+            [min]="0"
             [max]="168"
             [unit]="'小时'"
+            [emptyvalue]="0"
+            [emptyview]="'无限制'"
+            [readOnly]="true"
             appTouchSpin
-            [(ngModel)]="hour"
+            [(number)]="hour"
           />
         </div>
       </div>
+
+      <!-- <div class="filter-item">
+        <div class="filter-item-title">故障类型：</div>
+        <div class="filter-item-value">
+          <hw-select [(selected)]="args.type" [cannull]="true">
+            <select hw-select-content [(ngModel)]="args.type">
+              <option [ngValue]="GarbageStationAbnormalType.door">
+                {{
+                  Language.GarbageStationAbnormalType(
+                    GarbageStationAbnormalType.door
+                  )
+                }}
+              </option>
+              <option [ngValue]="GarbageStationAbnormalType.gcha">
+                {{
+                  Language.GarbageStationAbnormalType(
+                    GarbageStationAbnormalType.gcha
+                  )
+                }}
+              </option>
+              <option [ngValue]="GarbageStationAbnormalType.nb">
+                {{
+                  Language.GarbageStationAbnormalType(
+                    GarbageStationAbnormalType.nb
+                  )
+                }}
+              </option>
+            </select>
+          </hw-select>
+        </div>
+      </div> -->
       <div class="filter-item">
         <div class="filter-item-title">行政区：</div>
         <div class="filter-item-value">
@@ -31,6 +65,8 @@
           >
             <howell-division-tree
               #tree
+              [depth]="1"
+              [showDepth]="0"
               [defaultIds]="args.divisionId ? [args.divisionId] : []"
               (selectTreeNode)="controller.division.onselect($event)"
             ></howell-division-tree>
@@ -41,12 +77,17 @@
         <button class="hw-blue-btn" (click)="onsearch()">
           <i class="howell-icon-search"></i> 搜索
         </button>
+        <button class="hw-blue-btn" (click)="ondownload()">
+          <i class="howell-icon-export"></i> 导出
+        </button>
       </div>
     </div>
   </div>
   <div class="audit-statistic-data-abnormal-station-manager-body">
     <audit-garbage-station-abnormal-table
       [args]="args"
+      [load]="load"
+      [download]="download"
       (schedule)="onschedule($event)"
       (status)="onstatus($event)"
       (command)="oncommand($event)"

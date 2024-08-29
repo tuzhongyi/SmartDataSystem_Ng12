@@ -134,28 +134,6 @@
           </div>
         </div>
         <div class="filter-item">
-          <div class="filter-item-title">行政区：</div>
-          <div class="filter-item-value division">
-            <common-label-select
-              [single]="true"
-              [autoclose]="true"
-              [(showDropDown)]="controller.division.show"
-              [selectedNodes]="
-                controller.division.selected
-                  ? [controller.division.selected]
-                  : []
-              "
-              [height]="'325px'"
-            >
-              <howell-division-tree
-                #tree
-                [defaultIds]="args.divisionId ? [args.divisionId] : []"
-                (selectTreeNode)="controller.division.onselect($event)"
-              ></howell-division-tree>
-            </common-label-select>
-          </div>
-        </div>
-        <div class="filter-item">
           <div class="filter-item-title">类型：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.type" [cannull]="true">
@@ -192,6 +170,30 @@
             </hw-select>
           </div>
         </div>
+        <div class="filter-item">
+          <div class="filter-item-title">行政区：</div>
+          <div class="filter-item-value division">
+            <common-label-select
+              [single]="true"
+              [autoclose]="true"
+              [(showDropDown)]="controller.division.show"
+              [selectedNodes]="
+                controller.division.selected
+                  ? [controller.division.selected]
+                  : []
+              "
+              [height]="'325px'"
+            >
+              <howell-division-tree
+                #tree
+                [depth]="2"
+                [showDepth]="0"
+                [defaultIds]="args.divisionId ? [args.divisionId] : []"
+                (selectTreeNode)="controller.division.onselect($event)"
+              ></howell-division-tree>
+            </common-label-select>
+          </div>
+        </div>
 
         <div class="filter-item">
           <div class="filter-item-title">名称：</div>
@@ -202,6 +204,9 @@
         <div class="filter-item search">
           <button class="hw-blue-btn" (click)="onsearch()">
             <i class="howell-icon-search"></i> 搜索
+          </button>
+          <button class="hw-blue-btn" (click)="ondownload()">
+            <i class="howell-icon-export"></i> 导出
           </button>
           <button class="hw-blue-btn" (click)="onconfig()">
             <i class="howell-icon-settingoutline"></i> 设置
@@ -214,6 +219,7 @@
     <audit-camera-details-table
       [args]="args"
       [load]="load"
+      [download]="download"
       (video)="onvideo($event)"
       [(config)]="controller.window.config.model"
     ></audit-camera-details-table>

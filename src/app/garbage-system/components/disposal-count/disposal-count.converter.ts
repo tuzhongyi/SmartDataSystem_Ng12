@@ -64,7 +64,9 @@ export class DisposalCountConverter
         }
       }
     }
+    handledCount = handledCount > totalCount ? totalCount : handledCount;
     unhandledCount = totalCount - handledCount;
+
     model.disposalCountArray = [
       {
         label: Language.DisposalCountType(DisposalCountType.total),

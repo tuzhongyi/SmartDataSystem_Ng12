@@ -10,6 +10,10 @@ import { CameraModel } from 'src/app/view-model/camera-model';
 export interface IAuditCameraDetailsTableBusiness
   extends IBusiness<PagedList<Camera>, PagedList<AuditCameraDetailsTableItem>> {
   config: IBusiness<AuditCameraDetailsTableConfig>;
+  download(
+    args: IAuditCameraDetailsTableArgs,
+    config: AuditCameraDetailsTableConfig
+  ): void;
 }
 export interface IAuditCameraDetailsTableArgs {
   divisionId?: string;
@@ -41,9 +45,9 @@ export class AuditCameraDetailsTableItemData {
   constructor(key: string, text: Promise<string>, color?: string) {
     this.key = key;
     this.text = text;
-    this.color = color;
+    this.class = color;
   }
-  color?: string;
+  class?: string;
   text: Promise<string>;
   key: string;
 }

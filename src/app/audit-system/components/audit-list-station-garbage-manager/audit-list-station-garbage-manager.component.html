@@ -5,7 +5,7 @@
   <div class="audit-list-station-garbage-manager-head">
     <div class="audit-list-station-garbage-manager-head-filter">
       <div class="filter-items">
-        <div class="filter-item">
+        <div class="filter-item status">
           <div class="filter-item-title">投放点状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.state" [cannull]="true">
@@ -23,7 +23,7 @@
             </hw-select>
           </div>
         </div>
-        <div class="filter-item">
+        <div class="filter-item status">
           <div class="filter-item-title">厢房类型：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.type" [cannull]="true">
@@ -46,7 +46,7 @@
             </hw-select>
           </div>
         </div>
-        <div class="filter-item">
+        <div class="filter-item status">
           <div class="filter-item-title">GCHA：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.gcha" [cannull]="true">
@@ -58,7 +58,7 @@
             </hw-select>
           </div>
         </div>
-        <div class="filter-item">
+        <div class="filter-item status">
           <div class="filter-item-title">智能设备：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.door" [cannull]="true">
@@ -94,10 +94,12 @@
           <div class="filter-item-value">
             <input
               type="text"
-              [min]="1"
+              [min]="0"
               [max]="168"
               [unit]="'小时'"
-              [disabled]="args.nb.state == undefined"
+              [emptyvalue]="0"
+              [emptyview]="'无限制'"
+              [readOnly]="true"
               appTouchSpin
               [(number)]="args.nb.hour"
             />
@@ -116,6 +118,8 @@
               <howell-division-tree
                 #tree
                 [defaultIds]="args.divisionId ? [args.divisionId] : []"
+                [depth]="2"
+                [showDepth]="0"
                 (selectTreeNode)="controller.division.onselect($event)"
               ></howell-division-tree>
             </common-label-select>
@@ -131,6 +135,9 @@
           <button class="hw-blue-btn" (click)="onsearch()">
             <i class="howell-icon-search"></i> 搜索
           </button>
+          <button class="hw-blue-btn" (click)="ondownload()">
+            <i class="howell-icon-export"></i> 导出
+          </button>
           <button class="hw-blue-btn" (click)="onconfig()">
             <i class="howell-icon-settingoutline"></i> 设置
           </button>
@@ -143,6 +150,7 @@
       [(config)]="window.config.model"
       [args]="args"
       [load]="load"
+      [download]="download"
       (cameras)="oncameras($event)"
       (members)="onmembers($event)"
       (trashcans)="ontrashcans($event)"

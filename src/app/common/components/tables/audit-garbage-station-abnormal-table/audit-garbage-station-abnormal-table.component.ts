@@ -15,6 +15,7 @@ export class AuditGarbageStationAbnormalTableComponent implements OnInit {
   @Input() args: IAuditGarbageStationDetailsTableArgs =
     new AuditGarbageStationAbnormalTableArgs();
   @Input() load?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
+  @Input() download?: EventEmitter<IAuditGarbageStationDetailsTableArgs>;
   @Output() dropwindows = new EventEmitter<GarbageStation>();
   @Output() command = new EventEmitter<GarbageStation>();
   @Output() videomultiple = new EventEmitter<GarbageStation>();

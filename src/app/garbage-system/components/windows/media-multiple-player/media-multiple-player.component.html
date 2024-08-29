@@ -1,9 +1,19 @@
-<div class="media-multiple-control" *ngIf="!!model">
+<div class="media-multiple-control">
   <div class="media-multiple-control-header">
     <div class="media-multiple-control-header-title">
-      {{ title }}
+      <div>{{ title }}</div>
+      <div
+        class="spinner-border green-text"
+        [ngClass]="{
+          'spinner-border': loading,
+          circle: !loading
+        }"
+      ></div>
     </div>
     <div class="media-multiple-control-header-option" *ngIf="option">
+      <div (click)="onmanualcapture()">
+        <i class="mdi mdi-refresh" title="刷新图片"></i>
+      </div>
       <div *ngIf="!isplayback" (click)="onoptionchange(true)">
         <i class="howell-icon-video-playback1" title="回放"></i>
       </div>
@@ -47,7 +57,7 @@
       <button class="hw-blue-btn" (click)="onplayback()">确定</button>
     </div>
   </div>
-  <div class="media-multiple-control-content">
+  <div class="media-multiple-control-content" *ngIf="!!model">
     <app-image-video-mult-control
       [models]="model.medias"
       [fullplay]="false"
@@ -56,9 +66,5 @@
       (onstoped)="onstoped($event)"
     >
     </app-image-video-mult-control>
-  </div>
-
-  <div class="loading" *ngIf="loading">
-    <mat-spinner></mat-spinner>
   </div>
 </div>

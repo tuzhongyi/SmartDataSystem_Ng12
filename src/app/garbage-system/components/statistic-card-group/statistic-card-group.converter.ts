@@ -87,6 +87,7 @@ export class StatisticCardConverter {
       ).forEach((item) => {
         handled += item.DayNumber;
       });
+      handled = handled > count ? count : handled;
       unhandled = count - handled;
     }
     let card = new StatisticCardItem(input, StatisticType.task);

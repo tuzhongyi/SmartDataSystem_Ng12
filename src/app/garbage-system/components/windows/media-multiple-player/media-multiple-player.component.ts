@@ -10,6 +10,7 @@ import { Language } from 'src/app/common/tools/language';
 import { IModel } from 'src/app/network/model/model.interface';
 import { MediaMultiplePlayerBusiness } from './media-multiple-player.business';
 import {
+  IManualCaptureBusiness,
   MediaMultiplePlayerArgs,
   MediaMultiplePlayerModel,
 } from './media-multiple-player.model';
@@ -25,7 +26,8 @@ export class MediaMultiplePlayerComponent
 {
   @Input() title = '';
   @Input('args') input_args?: MediaMultiplePlayerArgs;
-  @Input() business: IBusiness<IModel, MediaMultiplePlayerModel>;
+  @Input() business: IBusiness<IModel, MediaMultiplePlayerModel> &
+    IManualCaptureBusiness;
   @Input() fullplay = true;
   @Input() option = false;
   @Input() isplayback = true;
@@ -38,9 +40,6 @@ export class MediaMultiplePlayerComponent
 
   model?: MediaMultiplePlayerModel;
 
-  Language = Language;
-  DateTimePickerView = DateTimePickerView;
-
   date = new Date();
   duration = DateTimeTool.before(this.date);
   loading = false;
@@ -49,7 +48,10 @@ export class MediaMultiplePlayerComponent
     return this.playings.some((x) => x);
   }
 
-  async ngOnInit() {
+  Language = Language;
+  DateTimePickerView = DateTimePickerView;
+
+  ngOnInit() {
     if (this.input_args) {
       let plain = instanceToPlain(this.input_args);
       this.args = plainToInstance(MediaMultiplePlayerArgs, plain);
@@ -129,6 +131,19 @@ export class MediaMultiplePlayerComponent
       if (index >= 0) {
         this.playings[index] = false;
       }
+    }
+  }
+
+  onmanualcapture() {
+    this.loading = true;
+    if (this.args && this.args.stationId) {
+      this.business.manualCapture(this.args.stationId).then((urls) => {
+        if (this.isplayback) {
+          this.toplayback();
+        } else {
+          this.topreview();
+        }
+      });
     }
   }
 

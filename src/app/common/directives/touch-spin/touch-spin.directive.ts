@@ -43,6 +43,9 @@ export class TouchSpinDirective implements AfterViewInit, AfterViewChecked {
     this.options.verticalbuttons = v;
   }
 
+  @Input() emptyvalue?: number;
+  @Input() emptyview?: string;
+
   @Output() touchSpinChange = new EventEmitter();
 
   @Input() number?: number = 1;
@@ -55,6 +58,13 @@ export class TouchSpinDirective implements AfterViewInit, AfterViewChecked {
       if (index < 0) {
         this.ele.nativeElement.value = this.ele.nativeElement.value + this.unit;
       }
+    }
+    if (
+      this.emptyvalue != undefined &&
+      this.emptyview != undefined &&
+      this.number == this.emptyvalue
+    ) {
+      this.ele.nativeElement.value = this.emptyview;
     }
   }
   ngAfterViewInit(): void {
