@@ -33,9 +33,6 @@ export class AlarmBusiness
     }
     let duration = DurationParams.before(date, 365);
     let data = await this.getData(divisionId, duration);
-    data = data.sort((a, b) => {
-      return b.EventTime.getTime() - a.EventTime.getTime();
-    });
     let model = this.Converter.Convert(data);
     return model;
   }
@@ -48,6 +45,7 @@ export class AlarmBusiness
     params.EndTime = duration.EndTime;
     params.DivisionIds = [divisionId];
     params.PageSize = 100;
+    params.Desc = true;
     let paged = await this.event.record.Smoke.list(params);
     return paged.Data;
   }

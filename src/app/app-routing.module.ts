@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { LoginComponent } from './login/login.component';
-import { AuthorizationService } from './network/request/auth/auth-request.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoutePath } from './app-routing.path';
 import { WidescreenLoginComponent } from './electric-bike/widescreen/login/widescreen-login.component';
+import { LoginComponent } from './login/login.component';
+import { AuthorizationService } from './network/request/auth/auth-request.service';
 
 const routes: Routes = [
   {
@@ -44,21 +44,21 @@ const routes: Routes = [
       ),
     canActivate: [AuthorizationService],
   },
-  {
-    path: RoutePath.password_get_back,
-    loadChildren: () =>
-      import('./password-get-back/password-get-back.module').then(
-        (mod) => mod.PasswordGetBackModule
-      ),
-  },
-  {
-    path: RoutePath.password_to_change,
-    loadChildren: () =>
-      import('./password-to-change/password-to-change.module').then(
-        (mod) => mod.PasswordToChangeModule
-      ),
-    canActivate: [AuthorizationService],
-  },
+  // {
+  //   path: RoutePath.password_get_back,
+  //   loadChildren: () =>
+  //     import('./password-get-back/password-get-back.module').then(
+  //       (mod) => mod.PasswordGetBackModule
+  //     ),
+  // },
+  // {
+  //   path: RoutePath.password_to_change,
+  //   loadChildren: () =>
+  //     import('./password-to-change/password-to-change.module').then(
+  //       (mod) => mod.PasswordToChangeModule
+  //     ),
+  //   canActivate: [AuthorizationService],
+  // },
   {
     path: RoutePath.electric_bike,
     loadChildren: () =>
