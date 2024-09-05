@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { DurationParams } from 'src/app/network/request/IParams.interface';
 import {
@@ -44,6 +45,19 @@ export class EventRecordWindowDetailsDivisionBusiness {
     if (unit === TimeUnit.Hour) {
       return data;
     }
+    if (unit === TimeUnit.Week) {
+      let thisweek = DateTimeTool.allWeek(new Date());
+      if (interval.BeginTime.getTime() !== thisweek.begin.getTime()) {
+        return data;
+      }
+    }
+    if (unit === TimeUnit.Month) {
+      let thismonth = DateTimeTool.allMonth(new Date());
+      if (interval.BeginTime.getTime() !== thismonth.begin.getTime()) {
+        return data;
+      }
+    }
+
     let today = await this.today(divisionId);
     return data.concat(today);
   }

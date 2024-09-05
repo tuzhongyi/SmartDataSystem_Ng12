@@ -60,21 +60,21 @@ const routes: Routes = [
       ),
     canActivate: [AuthorizationService],
   },
-  {
-    path: RoutePath.password_get_back,
-    loadChildren: () =>
-      import('./password-get-back/password-get-back.module').then(
-        (mod) => mod.PasswordGetBackModule
-      ),
-  },
-  {
-    path: RoutePath.password_to_change,
-    loadChildren: () =>
-      import('./password-to-change/password-to-change.module').then(
-        (mod) => mod.PasswordToChangeModule
-      ),
-    canActivate: [AuthorizationService],
-  },
+  // {
+  //   path: RoutePath.password_get_back,
+  //   loadChildren: () =>
+  //     import('./password-get-back/password-get-back.module').then(
+  //       (mod) => mod.PasswordGetBackModule
+  //     ),
+  // },
+  // {
+  //   path: RoutePath.password_to_change,
+  //   loadChildren: () =>
+  //     import('./password-to-change/password-to-change.module').then(
+  //       (mod) => mod.PasswordToChangeModule
+  //     ),
+  //   canActivate: [AuthorizationService],
+  // },
   {
     path: RoutePath.garbage_vehicle,
     loadChildren: () =>
