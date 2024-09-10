@@ -1,12 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IllegalDropEventRecord } from 'src/app/network/model/garbage-station/event-record/illegal-drop-event-record.model';
 import { MixedIntoEventRecord } from 'src/app/network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CommitteesHistoryTableConverter } from './committees-history-table.converter';
 import { CommitteesHistoryTableViewModel } from './committees-history-table.model';
 
@@ -27,10 +27,10 @@ export class CommitteesHistroyTableService
   subscription?: ISubscription | undefined;
   loading?: EventEmitter<void> | undefined;
   async getData(divisionId: string, eventType: EventType): Promise<any[]> {
-    let day = DurationParams.allDay(new Date());
+    let day = DateTimeTool.allDay(new Date());
     let params = new GetEventRecordsParams();
-    params.BeginTime = day.BeginTime;
-    params.EndTime = day.EndTime;
+    params.BeginTime = day.begin;
+    params.EndTime = day.end;
     params.DivisionIds = [divisionId];
 
     let service = this.getService(eventType);

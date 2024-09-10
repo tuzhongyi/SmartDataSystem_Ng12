@@ -9,7 +9,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { StreamType } from 'src/app/enum/stream-type.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { VideoWindowViewModel } from './video-control-window.model';
 
@@ -39,7 +39,7 @@ export class VideoControlWindowComponent
   @Input() window: VideoWindowViewModel = new VideoWindowViewModel();
   @Input() windowstyle?: any;
 
-  @Output() download: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() download: EventEmitter<Duration> = new EventEmitter();
   constructor() {}
   preview?: VideoModel;
   playback?: VideoModel;
@@ -84,13 +84,13 @@ export class VideoControlWindowComponent
     }
   }
 
-  ondownload(interval: DurationParams) {
+  ondownload(interval: Duration) {
     this.download.emit(interval);
   }
-  onplayback(interval: DurationParams) {
+  onplayback(interval: Duration) {
     if (this.model) {
-      this.model.beginTime = interval.BeginTime;
-      this.model.endTime = interval.EndTime;
+      this.model.beginTime = interval.begin;
+      this.model.endTime = interval.end;
       let url = this.model.toString(StreamType.main);
       let model = VideoModel.fromUrl(url);
       model.web = this.model.web;

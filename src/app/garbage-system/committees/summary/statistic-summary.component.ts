@@ -11,13 +11,13 @@ import {
 } from '@angular/core';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { EventNumberStatistic } from 'src/app/network/model/garbage-station/event-number-statistic.model';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { StatisticSummaryExportExcelBusiness } from './business/statistic-summary-export-excel.business';
 import { StatisticSummaryViewModel } from './statistic-summary.model';
 import { StatisticSummaryService } from './statistic-summary.service';
@@ -133,7 +133,7 @@ export class StatisticSummaryComponent
       if (this.unit == TimeUnit.Day) {
         unit = TimeUnit.Month;
       }
-      let interval = DurationParams.TimeUnit(unit, this.Date);
+      let interval = DateTimeTool.TimeUnit(unit, this.Date);
 
       this.service
         .stationHistory(this.Committees.Id, interval, this.unit)

@@ -15,9 +15,9 @@ import {
   PlaybackInterval,
 } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { wait2 } from 'src/app/common/tools/tool';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { IMediaControlBusiness } from './media-control.model';
 import { MediaVideoControlBussiness } from './media-video-control.business';
@@ -206,13 +206,11 @@ export class MediaControlComponent
   }
   onplayback(event?: Event) {
     if (this.current && this.current.image && this.current.image.eventTime) {
-      let interval = DurationParams.beforeAndAfter(
-        this.current.image.eventTime
-      );
+      let interval = DateTimeTool.beforeOrAfter(this.current.image.eventTime);
       this.playback.emit({
         CameraId: this.current.cameraId,
-        begin: interval.BeginTime,
-        end: interval.EndTime,
+        begin: interval.begin,
+        end: interval.end,
       });
     }
     this.display.playback = false;
@@ -232,9 +230,7 @@ export class MediaControlComponent
   onvideodownload() {
     if (this.current) {
       if (this.current && this.current.image && this.current.image.eventTime) {
-        let interval = DurationParams.beforeAndAfter(
-          this.current.image.eventTime
-        );
+        let interval = DateTimeTool.beforeOrAfter(this.current.image.eventTime);
         if (this.current.source) {
           this.download.video(
             this.current.source,

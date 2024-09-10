@@ -1,31 +1,31 @@
 import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { CameraDownloadFileParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { DateTimeTool } from '../tools/date-time-tool/datetime.tool';
 
 @Injectable()
 export class DownloadBusiness {
   constructor(private stationService: GarbageStationRequestService) {}
-  video(stationId: string, cameraId: string, args: DurationParams): void;
+  video(stationId: string, cameraId: string, args: Duration): void;
   video(stationId: string, cameraId: string, args: Date): void;
-  video(stationId: string, cameraId: string, args: DurationParams | Date) {
-    let duration: DurationParams;
+  video(stationId: string, cameraId: string, args: Duration | Date) {
+    let duration: Duration;
     if (args instanceof Date) {
-      duration = DurationParams.beforeAndAfter(args);
+      duration = DateTimeTool.beforeOrAfter(args);
     } else {
       duration = args;
-      const interval =
-        duration.EndTime.getTime() - duration.BeginTime.getTime();
+      const interval = duration.end.getTime() - duration.begin.getTime();
       if (interval > 5 * 60 * 1000) {
-        duration.EndTime.setTime(duration.BeginTime.getTime() + 5 * 1000 * 60);
+        duration.end.setTime(duration.begin.getTime() + 5 * 1000 * 60);
       }
     }
 
     let params = new CameraDownloadFileParams();
     params.CameraId = cameraId;
-    params.BeginTime = duration.BeginTime;
-    params.EndTime = duration.EndTime;
+    params.BeginTime = duration.begin;
+    params.EndTime = duration.end;
     params.GarbageStationId = stationId;
     const response = this.stationService.camera.file.download(params);
     response.then((data) => {

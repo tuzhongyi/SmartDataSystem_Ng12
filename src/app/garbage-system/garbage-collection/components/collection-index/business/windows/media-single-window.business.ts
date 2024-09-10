@@ -9,13 +9,13 @@ import { MediaVideoControlArrayConverter } from 'src/app/garbage-system/componen
 import { IMediaControlBusiness } from 'src/app/garbage-system/components/media-control/media-control.model';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import {
   GetPreviewUrlParams,
   GetVodUrlParams,
 } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 
 @Injectable()
@@ -81,7 +81,7 @@ export class MediaSingleWindowBusiness
     camera: ICamera,
     mode: PlayMode,
     streamType: StreamType = StreamType.sub,
-    interval?: DurationParams
+    interval?: Duration
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.live:
@@ -91,7 +91,8 @@ export class MediaSingleWindowBusiness
         return this.sr.preview(params1);
       case PlayMode.vod:
         let params2 = new GetVodUrlParams();
-        params2 = Object.assign(params2, interval);
+        params2.BeginTime = interval!.begin;
+        params2.EndTime = interval!.end;
         params2.CameraId = camera.Id;
         params2.StreamType = streamType;
         return this.sr.playback(params2);

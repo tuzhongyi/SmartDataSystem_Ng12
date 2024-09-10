@@ -13,7 +13,7 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GetGarbageStationVolumesParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DetailsChartLoadOptions } from '../../../charts/details-chart/details-chart.model';
@@ -34,7 +34,7 @@ export class GarbageDropStationWindowDetailsBusiness
   async getData(
     id: string,
     type: UserResourceType,
-    interval: DurationParams,
+    interval: Duration,
     unit: TimeUnit
   ): Promise<EventNumberStatistic[]> {
     switch (type) {
@@ -50,11 +50,12 @@ export class GarbageDropStationWindowDetailsBusiness
 
   async getDataByStation(
     stationId: string,
-    interval: DurationParams,
+    interval: Duration,
     unit: TimeUnit
   ) {
     let params = new GetGarbageStationVolumesParams();
-    params = Object.assign(params, interval);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     let paged = await this.stationService.eventNumber.history.list(
       stationId,
@@ -64,11 +65,12 @@ export class GarbageDropStationWindowDetailsBusiness
   }
   async getDataByDivision(
     divisionId: string,
-    interval: DurationParams,
+    interval: Duration,
     unit: TimeUnit
   ) {
     let params = new GetDivisionEventNumbersParams();
-    params = Object.assign(params, interval);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     let paged = await this.divisionService.eventNumber.history.list(
       divisionId,
@@ -86,9 +88,11 @@ export class GarbageDropStationWindowDetailsBusiness
     let divisionId = division.Id;
     this.loadDefault(divisionId);
 
-    let interval = new DurationParams();
-    interval.BeginTime = opts.begin;
-    interval.EndTime = opts.end;
+    let interval: Duration = {
+      begin: opts.begin,
+      end: opts.end,
+    };
+
     let type = opts.stationId
       ? UserResourceType.Station
       : UserResourceType.None;

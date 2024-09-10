@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { IBusiness } from '../../interfaces/bussiness.interface';
 import { IConverter } from '../../interfaces/converter.interface';
@@ -38,11 +37,7 @@ export class VideoPlayerWindowBusiness
     if (mode == PlayMode.live) {
       return this.sr.preview(cameraId, this.local.video.stream);
     } else {
-      let params = new DurationParams();
-      params.BeginTime = duration!.begin;
-      params.EndTime = duration!.end;
-
-      return this.sr.playback(cameraId, params, this.local.video.stream);
+      return this.sr.playback(cameraId, duration!, this.local.video.stream);
     }
   }
 }

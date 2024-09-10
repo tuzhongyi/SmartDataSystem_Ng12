@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { Language } from 'src/app/common/tools/language';
 import { ChartType } from 'src/app/enum/chart-type.enum';
@@ -15,7 +16,6 @@ import { SelectStrategy } from 'src/app/enum/select-strategy.enum';
 import { StatisticType } from 'src/app/enum/statistic-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IModel } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { TimeDataGroupExportConverter } from '../../../../../../converter/exports/time-data-group-exports.converter';
 import {
   ChartConfig,
@@ -252,9 +252,9 @@ export class GarbageStationWindowDetailsComponent
   converter = new TimeDataGroupExportConverter();
 
   getTitle() {
-    let duration = DurationParams.TimeUnit(this.opts.unit, this.opts.date);
-    let begin = formatDate(duration.BeginTime, 'yyyy年MM月dd日', 'en');
-    let end = formatDate(duration.EndTime, 'yyyy年MM月dd日', 'en');
+    let duration = DateTimeTool.TimeUnit(this.opts.unit, this.opts.date);
+    let begin = formatDate(duration.begin, 'yyyy年MM月dd日', 'en');
+    let end = formatDate(duration.end, 'yyyy年MM月dd日', 'en');
     let title = `${begin} 至 ${end}`;
     for (let i = 0; i < this.datas.length; i++) {
       const data = this.datas[i];

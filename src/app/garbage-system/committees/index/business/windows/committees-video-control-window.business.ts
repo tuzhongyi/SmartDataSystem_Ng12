@@ -10,11 +10,11 @@ import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class CommitteesVideoControlWindowBusiness
@@ -63,7 +63,7 @@ export class CommitteesVideoControlWindowBusiness
   getData(
     camera: Camera,
     mode: PlayMode,
-    interval?: DurationParams
+    interval?: Duration
   ): Promise<VideoUrl> {
     this.camera = camera;
     switch (mode) {
@@ -75,7 +75,7 @@ export class CommitteesVideoControlWindowBusiness
     }
   }
 
-  ondownload(args: DurationParams) {
+  ondownload(args: Duration) {
     if (!this.camera || !this.garbageStation) return;
 
     this.download.video(this.garbageStation.Id, this.camera.Id, args);

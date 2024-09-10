@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParamsV2,
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class EventRecordCountTableStationBusiness {
@@ -22,9 +22,10 @@ export class EventRecordCountTableStationBusiness {
     return paged.Data;
   }
 
-  history(stationIds: string[], interval: DurationParams, unit: TimeUnit) {
+  history(stationIds: string[], interval: Duration, unit: TimeUnit) {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
-    params = Object.assign(params, interval);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     params.GarbageStationIds = stationIds;
     return this.service.statistic.number.history.list(params);

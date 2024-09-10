@@ -8,10 +8,11 @@ import {
 } from 'echarts';
 import * as echarts from 'echarts/core';
 import { XAXisOption } from 'echarts/types/dist/shared';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { EChartsTheme } from 'src/app/enum/echarts-theme.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export type EChartOptions = echarts.ComposeOption<
   | TitleComponentOption
@@ -88,7 +89,7 @@ export class ChartConfig {
   merge: EChartOptions;
 
   getX(unit: TimeUnit, date: Date): XAXisOption | undefined {
-    let interval: DurationParams;
+    let interval: Duration;
     switch (unit) {
       case TimeUnit.Hour:
         return {
@@ -103,7 +104,7 @@ export class ChartConfig {
           ],
         };
       case TimeUnit.Month:
-        interval = DurationParams.allMonth(date);
+        interval = DateTimeTool.allMonth(date);
 
         return {
           mainType: 'xAxis',
@@ -112,15 +113,14 @@ export class ChartConfig {
           data: [
             ...Array.from(
               {
-                length:
-                  interval.EndTime.getDate() - interval.BeginTime.getDate() + 1,
+                length: interval.end.getDate() - interval.begin.getDate() + 1,
               },
               (v, i) => (i + 1).toString() + '日'
             ),
           ],
         };
       case TimeUnit.Year:
-        interval = DurationParams.allYear(date);
+        interval = DateTimeTool.allYear(date);
 
         return {
           mainType: 'xAxis',
@@ -129,17 +129,14 @@ export class ChartConfig {
           data: [
             ...Array.from(
               {
-                length:
-                  interval.EndTime.getMonth() -
-                  interval.BeginTime.getMonth() +
-                  1,
+                length: interval.end.getMonth() - interval.begin.getMonth() + 1,
               },
               (v, i) => (i + 1).toString() + '月'
             ),
           ],
         };
       case TimeUnit.Week:
-        interval = DurationParams.allWeek(date);
+        interval = DateTimeTool.allWeek(date);
 
         return {
           mainType: 'xAxis',

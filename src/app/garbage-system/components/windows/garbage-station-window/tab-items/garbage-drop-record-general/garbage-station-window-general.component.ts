@@ -6,13 +6,13 @@ import {
   DateTimePickerConfig,
   DateTimePickerView,
 } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { ExportType } from 'src/app/enum/export-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IIdNameModel } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowGeneralExportConverter } from './garbage-station-window-general-export.converter';
 
 @Component({
@@ -109,8 +109,8 @@ export class GarbageStationWindowGeneralComponent implements OnInit {
         title = Language.Date(this.date);
         break;
       default:
-        let duration = DurationParams.TimeUnit(this.unit, this.date);
-        title = Language.Duration(duration.BeginTime, duration.EndTime);
+        let duration = DateTimeTool.TimeUnit(this.unit, this.date);
+        title = Language.Duration(duration.begin, duration.end);
         break;
     }
 

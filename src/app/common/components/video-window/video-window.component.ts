@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { wait2 } from '../../tools/tool';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { VideoWindowViewModel } from './video-window.model';
@@ -20,7 +20,7 @@ export class VideoWindowComponent implements OnInit {
 
   @Input() window: VideoWindowViewModel = new VideoWindowViewModel();
 
-  @Output() download: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() download: EventEmitter<Duration> = new EventEmitter();
   @Output() position: EventEmitter<number> = new EventEmitter();
   @Output() playing: EventEmitter<number> = new EventEmitter();
   @Output() stoping: EventEmitter<number> = new EventEmitter();

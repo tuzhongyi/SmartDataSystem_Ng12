@@ -13,8 +13,8 @@ import {
 import { Enum } from 'src/app/enum/enum.model';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Page } from 'src/app/network/model/page_list.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { PatrolControlBusiness } from './patrol-control.business';
 import {
   PatrolControlConfig,
@@ -191,12 +191,12 @@ export class PatrolControlComponent implements OnInit, OnDestroy {
     }
   }
 
-  onplayback(params: DurationParams) {
+  onplayback(params: Duration) {
     if (this.playing) {
       this.toPlayback.emit({
         CameraId: this.playing.cameraId,
-        begin: params.BeginTime,
-        end: params.EndTime,
+        begin: params.begin,
+        end: params.end,
       });
     }
   }

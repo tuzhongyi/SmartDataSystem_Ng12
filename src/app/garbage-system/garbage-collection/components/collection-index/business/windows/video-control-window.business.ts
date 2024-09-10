@@ -8,9 +8,9 @@ import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { VideoControlConverter } from 'src/app/converter/video-control.converter';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class VideoControlWindowBusiness
@@ -49,7 +49,7 @@ export class VideoControlWindowBusiness
   getData(
     camera: ICamera,
     mode: PlayMode,
-    interval?: DurationParams
+    interval?: Duration
   ): Promise<VideoUrl> {
     this.camera = camera;
     switch (mode) {

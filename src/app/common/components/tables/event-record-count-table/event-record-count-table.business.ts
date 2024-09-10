@@ -4,7 +4,6 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { EventRecordCountTableDivisionBusiness } from './event-record-count-table-division.business';
 import { EventRecordCountTableStationBusiness } from './event-record-count-table-station.business';
@@ -60,19 +59,17 @@ export class EventRecordCountTableBusiness
     opts: EventRecordCountTableOptions
   ): Promise<NumberStatisticV2Type[]> {
     let duration = DateTimeTool.TimeUnit(opts.unit, opts.date);
-    let interval = new DurationParams();
-    interval.BeginTime = duration.begin;
-    interval.EndTime = duration.end;
+
     if (opts.type === DivisionType.None) {
       let stations = await this.service.station.list(id);
       if (stations.length == 0) return [];
       let ids = stations.map((x) => x.Id);
-      return this.service.station.history(ids, interval, opts.unit);
+      return this.service.station.history(ids, duration, opts.unit);
     } else {
       let divisions = await this.service.division.list(id, type);
       if (divisions.length == 0) return [];
       let ids = divisions.map((x) => x.Id);
-      return this.service.division.history(ids, interval, opts.unit);
+      return this.service.division.history(ids, duration, opts.unit);
     }
   }
 }

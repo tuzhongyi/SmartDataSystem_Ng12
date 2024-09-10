@@ -82,8 +82,8 @@ export class DetailsChartComponent
     let options = {
       stationId: this.station?.Id,
       unit: this.unit,
-      begin: interval.params.BeginTime,
-      end: interval.params.EndTime,
+      begin: interval.params.begin,
+      end: interval.params.end,
       divisionId: this.station ? undefined : this.division?.Id,
       type: types,
     };

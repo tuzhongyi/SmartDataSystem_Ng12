@@ -2,12 +2,12 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { GetGarbageStationStatisticGarbageCountsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { LineZoomChartConverter } from './line-zoom-chart.converter';
 import {
   LineZoomChartModel,
@@ -71,8 +71,9 @@ export class LineZoomChartBusiness
 
   async getRecord(stationId: string, date: Date) {
     let params = new GetEventRecordsParams();
-    let interval = DurationParams.allDay(date);
-    params = Object.assign(params, interval);
+    let interval = DateTimeTool.allDay(date);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.StationIds = [stationId];
     let paged = await this.eventService.record.IllegalDrop.list(params);
 

@@ -2,11 +2,11 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { GarbageStationNumberStatisticV2 } from 'src/app/network/model/garbage-station/garbage-station-number-statistic-v2.model';
 import { GetGarbageStationStatisticNumbersParamsV2 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { GarbageStationWindowStayConverter } from './garbage-station-window-stay.converter';
 import { GarbageStationWindowStayModel } from './garbage-station-window-stay.model';
 
@@ -40,8 +40,9 @@ export class GarbageStationWindowStayBusiness
     date: Date
   ): Promise<GarbageStationNumberStatisticV2> {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
-    let interval = DurationParams.allDay(date);
-    params = Object.assign(params, interval);
+    let interval = DateTimeTool.allDay(date);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.GarbageStationIds = [stationId];
     params.TimeUnit = TimeUnit.Day;
     let datas = await this.stationService.statistic.number.history.list(params);

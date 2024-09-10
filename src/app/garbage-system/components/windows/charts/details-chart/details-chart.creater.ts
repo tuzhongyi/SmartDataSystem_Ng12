@@ -1,4 +1,5 @@
 import { ITimeData } from 'src/app/common/components/charts/chart.model';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
@@ -7,7 +8,6 @@ import {
   IModel,
   IdNameModel,
 } from 'src/app/network/model/model.interface';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { DetailsChartDownloadArgs } from './details-chart.model';
 
 export class DetailsChartCreater {
@@ -33,34 +33,34 @@ export class DetailsChartCreater {
 
   static Interval(date: Date, unit: TimeUnit) {
     let interval = {
-      params: new DurationParams(),
+      params: DateTimeTool.allDay(date),
       language: '',
     };
     switch (unit) {
       case TimeUnit.Hour:
       case TimeUnit.Day:
-        interval.params = DurationParams.allDay(date);
+        interval.params = DateTimeTool.allDay(date);
         interval.language = Language.Date(date);
         break;
       case TimeUnit.Week:
-        interval.params = DurationParams.allWeek(date);
+        interval.params = DateTimeTool.allWeek(date);
         interval.language = Language.Duration(
-          interval.params.BeginTime,
-          interval.params.EndTime
+          interval.params.begin,
+          interval.params.end
         );
         break;
       case TimeUnit.Month:
-        interval.params = DurationParams.allMonth(date);
+        interval.params = DateTimeTool.allMonth(date);
         interval.language = Language.Duration(
-          interval.params.BeginTime,
-          interval.params.EndTime
+          interval.params.begin,
+          interval.params.end
         );
         break;
       case TimeUnit.Year:
-        interval.params = DurationParams.allYear(date);
+        interval.params = DateTimeTool.allYear(date);
         interval.language = Language.Duration(
-          interval.params.BeginTime,
-          interval.params.EndTime
+          interval.params.begin,
+          interval.params.end
         );
         break;
       default:

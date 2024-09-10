@@ -54,10 +54,7 @@ export class MonitorVideoWindowBusiness extends VideoWindowViewModel {
     duration.begin.setSeconds(duration.begin.getSeconds() - this.reserve);
     this.duration = duration;
 
-    let url = await this.sr.playback(id, {
-      BeginTime: duration.begin,
-      EndTime: duration.end,
-    });
+    let url = await this.sr.playback(id, duration);
     this.play(url);
   }
 

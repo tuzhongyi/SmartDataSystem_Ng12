@@ -12,7 +12,6 @@ import { IdNameModel } from 'src/app/network/model/model.interface';
 import { VideoUrl } from 'src/app/network/model/url.model';
 
 import { VehicleSRServerRequestService } from 'src/app/network/request/garbage_vehicles/vehicle-sr-server/sr-server.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 
 @Injectable()
 export class IndexVideoPlayerWindow
@@ -55,10 +54,7 @@ export class IndexVideoPlayerWindow
     if (mode == PlayMode.live) {
       return this.sr.preview(cameraId);
     } else {
-      let params = new DurationParams();
-      params.BeginTime = duration!.begin;
-      params.EndTime = duration!.end;
-      return this.sr.playback(cameraId, params);
+      return this.sr.playback(cameraId, duration);
     }
   }
 }

@@ -6,7 +6,6 @@ import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 import { Medium } from 'src/app/common/tools/medium';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
@@ -15,6 +14,7 @@ import { PatrolControlConverter } from './patrol-control.converter';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { LocalStorageService } from 'src/app/common/service/local-storage.service';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { Paged } from 'src/app/view-model/paged.model';
@@ -83,7 +83,7 @@ export class PatrolControlBusiness
   getPreview(camera: Camera) {
     return this.srService.preview(camera.Id, this.local.video.stream);
   }
-  getPlayback(model: PatrolControlModel, interval: DurationParams) {
+  getPlayback(model: PatrolControlModel, interval: Duration) {
     return this.srService.playback(model.id, interval);
   }
 

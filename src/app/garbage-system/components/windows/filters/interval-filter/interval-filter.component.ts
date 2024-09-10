@@ -6,7 +6,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 @Component({
   selector: 'howell-interval-filter',
@@ -14,14 +15,12 @@ import { DurationParams } from 'src/app/network/request/IParams.interface';
   styleUrls: ['./interval-filter.component.less'],
 })
 export class IntervalFilterComponent implements OnInit, OnChanges {
-  @Input() model: DurationParams = new DurationParams();
-  constructor() {}
-  DateTimePickerView = DateTimePickerView;
-  ngOnChanges(changes: SimpleChanges): void {
-    let interval = DurationParams.allDay(new Date());
-    this.model.BeginTime = interval.BeginTime;
-    this.model.EndTime = interval.EndTime;
+  @Input() model: Duration;
+  constructor() {
+    this.model = DateTimeTool.allDay(new Date());
   }
+  DateTimePickerView = DateTimePickerView;
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {}
 }

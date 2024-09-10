@@ -31,10 +31,7 @@ export class GarbageStationFullWindowBusiness extends WindowViewModel {
   onvideo(model: GarbageFullEventRecord) {
     if (model.ResourceId) {
       let duration = DateTimeTool.beforeOrAfter(model.Data.FullTime);
-      this.sr.playback(model.ResourceId, {
-        BeginTime: duration.begin,
-        EndTime: duration.end,
-      });
+      this.sr.playback(model.ResourceId, duration);
     }
   }
 }

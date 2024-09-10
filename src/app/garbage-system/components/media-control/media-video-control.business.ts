@@ -8,6 +8,7 @@ import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
 import { Medium } from 'src/app/common/tools/medium';
 import { StreamType } from 'src/app/enum/stream-type.enum';
 import { ICamera } from 'src/app/network/model/garbage-station/camera.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import {
   GetPreviewUrlParams,
@@ -15,7 +16,6 @@ import {
 } from 'src/app/network/request/ai-sr-server/sr-server.params';
 import { SRServerRequestService } from 'src/app/network/request/ai-sr-server/sr-server.service';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { MediaVideoControlArrayConverter } from './media-control.converter';
 import { IMediaControlBusiness } from './media-control.model';
@@ -52,7 +52,7 @@ export class MediaVideoControlBussiness implements IMediaControlBusiness {
     camera: ICamera,
     mode: PlayMode,
     streamType: StreamType = StreamType.sub,
-    interval?: DurationParams
+    interval?: Duration
   ): Promise<VideoUrl> {
     switch (mode) {
       case PlayMode.live:
@@ -62,7 +62,8 @@ export class MediaVideoControlBussiness implements IMediaControlBusiness {
         return this.srService.preview(params1);
       case PlayMode.vod:
         let params2 = new GetVodUrlParams();
-        params2 = Object.assign(params2, interval);
+        params2.BeginTime = interval!.begin;
+        params2.EndTime = interval!.end;
         params2.CameraId = camera.Id;
         params2.StreamType = streamType;
         return this.srService.playback(params2);

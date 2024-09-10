@@ -3,15 +3,16 @@ import { ITimeDataGroup } from 'src/app/common/components/charts/chart.model';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { ISubscription } from 'src/app/common/interfaces/subscribe.interface';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { StatisticToTimeDataConverter } from 'src/app/converter/statistic-to-timedata.converter';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GetDivisionEventNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationEventNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { EventNumberStatisticGroup } from 'src/app/view-model/event-number-statistic-group.model';
 import { EventRecordComparisonOptions } from './EventRecordComparison.model';
 
@@ -33,7 +34,7 @@ export class EventRecordComparisonBusiness
   async load(
     opts: EventRecordComparisonOptions
   ): Promise<ITimeDataGroup<number>[]> {
-    let interval = DurationParams.TimeUnit(opts.unit, opts.date);
+    let interval = DateTimeTool.TimeUnit(opts.unit, opts.date);
     let unit = TimeUnit.Day;
     if (opts.unit == TimeUnit.Day || opts.unit === TimeUnit.Hour) {
       unit = TimeUnit.Hour;
@@ -46,7 +47,7 @@ export class EventRecordComparisonBusiness
     type: DivisionType,
     ids: string[],
     unit: TimeUnit,
-    interval: DurationParams
+    interval: Duration
   ) {
     if (type === DivisionType.None) {
       return this.getDataByStation(ids, unit, interval);
@@ -55,14 +56,10 @@ export class EventRecordComparisonBusiness
     }
   }
 
-  async getDataByStation(
-    ids: string[],
-    unit: TimeUnit,
-    interval: DurationParams
-  ) {
+  async getDataByStation(ids: string[], unit: TimeUnit, interval: Duration) {
     let params = new GetGarbageStationEventNumbersParams();
-    params.BeginTime = interval.BeginTime;
-    params.EndTime = interval.EndTime;
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     let result = new Array<EventNumberStatisticGroup>();
     for (let i = 0; i < ids.length; i++) {
@@ -80,14 +77,10 @@ export class EventRecordComparisonBusiness
     }
     return result;
   }
-  async getDataByDivision(
-    ids: string[],
-    unit: TimeUnit,
-    interval: DurationParams
-  ) {
+  async getDataByDivision(ids: string[], unit: TimeUnit, interval: Duration) {
     let params = new GetDivisionEventNumbersParams();
-    params.BeginTime = interval.BeginTime;
-    params.EndTime = interval.EndTime;
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     let result = new Array<EventNumberStatisticGroup>();
     for (let i = 0; i < ids.length; i++) {

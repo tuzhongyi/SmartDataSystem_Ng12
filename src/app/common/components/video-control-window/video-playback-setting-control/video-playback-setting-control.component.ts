@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { TimeModel } from '../../time-control/time-control.model';
 
 @Component({
@@ -22,8 +22,8 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
 
   @Input() date: Date = new Date();
 
-  @Output() playback: EventEmitter<DurationParams> = new EventEmitter();
-  @Output() download: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() playback: EventEmitter<Duration> = new EventEmitter();
+  @Output() download: EventEmitter<Duration> = new EventEmitter();
 
   constructor() {}
   time = {
@@ -45,7 +45,7 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
     this.time.begin = new TimeModel(temp);
   }
 
-  getParams() {
+  getParams(): Duration {
     let begin = new Date(
       this.date.getFullYear(),
       this.date.getMonth(),
@@ -62,10 +62,7 @@ export class VideoPlaybackSettingControlComponent implements OnInit, OnChanges {
       this.time.end.minute.value,
       this.time.end.second.value
     );
-    let params = new DurationParams();
-    params.BeginTime = begin;
-    params.EndTime = end;
-    return params;
+    return { begin, end };
   }
 
   playbackclick() {

@@ -10,7 +10,7 @@ import {
 import { FormGroup } from '@angular/forms';
 import { TimeModel } from 'src/app/common/components/time-control/time-control.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 declare var $: any;
 
@@ -20,7 +20,7 @@ declare var $: any;
   styleUrls: ['./playback-config.component.less'],
 })
 export class PlaybackConfigComponent implements OnInit, AfterViewInit {
-  @Output() OnOKClicked: EventEmitter<DurationParams> = new EventEmitter();
+  @Output() OnOKClicked: EventEmitter<Duration> = new EventEmitter();
   @Output() OnCancelClicked: EventEmitter<void> = new EventEmitter();
 
   constructor(private datePipe: DatePipe) {}
@@ -118,10 +118,7 @@ export class PlaybackConfigComponent implements OnInit, AfterViewInit {
       this.time.end.second.value
     );
 
-    this.OnOKClicked.emit({
-      BeginTime: begin,
-      EndTime: end,
-    });
+    this.OnOKClicked.emit({ begin, end });
   }
 
   cancel() {

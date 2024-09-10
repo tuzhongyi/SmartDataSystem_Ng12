@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import {
   GetGarbageStationStatisticNumbersParamsV2,
   GetGarbageStationVolumesParams,
@@ -21,24 +21,25 @@ export class EventRecordWindowDetailsStationBusiness {
     return this.converter.station(data);
   }
 
-  async history(stationId: string, duration: DurationParams, unit: TimeUnit) {
+  async history(stationId: string, duration: Duration, unit: TimeUnit) {
     let params = new GetGarbageStationVolumesParams();
-    params = Object.assign(params, duration);
+    params.BeginTime = duration.begin;
+    params.EndTime = duration.end;
     params.TimeUnit = unit;
     let paged = await this.service.eventNumber.history.list(stationId, params);
     let data = await paged.Data.map((x) =>
       this.converter.statistic(stationId, x)
     );
-    if (DateTimeTool.is.today(duration.EndTime)) {
+    if (DateTimeTool.is.today(duration.end)) {
       let today = await this.today(stationId);
       return data.concat(today);
     }
     return data;
   }
-  async year(stationId: string, interval: DurationParams) {
+  async year(stationId: string, interval: Duration) {
     let params = new GetGarbageStationStatisticNumbersParamsV2();
-    params.BeginTime = interval.BeginTime;
-    params.EndTime = interval.EndTime;
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = TimeUnit.Month;
     params.GarbageStationIds = [stationId];
     let list = await this.service.statistic.number.history.list(params);

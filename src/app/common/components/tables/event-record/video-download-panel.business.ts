@@ -68,7 +68,7 @@ class VideoDownloaderConverter
               camera.Name,
               camera.Id,
               camera.GarbageStationId,
-              { BeginTime: begin, EndTime: end }
+              { begin, end }
             );
             array.push(item);
           }

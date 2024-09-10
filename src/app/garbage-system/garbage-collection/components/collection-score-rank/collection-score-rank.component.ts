@@ -8,9 +8,9 @@ import {
 } from 'src/app/common/components/common-rank/common-rank.model';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { TimeService } from 'src/app/common/service/time.service';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { CollectionPointScore } from 'src/app/enum/collection-point-score.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { CollectionScoreRankBusiness } from './collection-score-rank.business';
 import { CollectionScoreRankConverter } from './collection-score-rank.converter';
 import {
@@ -64,7 +64,7 @@ export class CollectionScoreRankComponent implements OnInit {
 
   searchInfo: ICollectionScoreRankSearchInfo = {
     BeginTime: TimeService.curMonth(this.today).beginTime,
-    EndTime: DurationParams.allMonth(this.today).EndTime,
+    EndTime: DateTimeTool.allMonth(this.today).end,
     Type: CollectionPointScore.Poor,
   };
   subscription: Subscription;

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { Duration } from '../../model/garbage-station/duration.model';
 import { SRServer } from '../../model/garbage-station/sr-server';
 import { VideoUrl } from '../../model/url.model';
 import { SRServersURL } from '../../url/aiop/sr-servers/sr-servers.url';
 import { SRServiceUrl } from '../../url/garbage/sr-server.url';
-import { DurationParams } from '../IParams.interface';
 import {
   HowellBaseRequestService,
   HowellBaseTypeRequestService,
@@ -49,14 +49,14 @@ export class SRServerRequestService {
 
   playback(
     cameraId: string,
-    interval: DurationParams,
+    interval: Duration,
     stream?: StreamType
   ): Promise<VideoUrl>;
   playback(params: GetVodUrlParams): Promise<VideoUrl>;
 
   playback(
     args: GetVodUrlParams | string,
-    interval?: DurationParams,
+    interval?: Duration,
     stream: StreamType = StreamType.main
   ) {
     let data: any;
@@ -64,8 +64,11 @@ export class SRServerRequestService {
     if (typeof args === 'string') {
       let params = new GetVodUrlParams();
       params.CameraId = args;
-      params.BeginTime = interval!.BeginTime;
-      params.EndTime = interval!.EndTime;
+      if (interval) {
+        params.BeginTime = interval.begin;
+        params.EndTime = interval.end;
+      }
+
       params.StreamType = stream;
       data = instanceToPlain(params);
     } else {

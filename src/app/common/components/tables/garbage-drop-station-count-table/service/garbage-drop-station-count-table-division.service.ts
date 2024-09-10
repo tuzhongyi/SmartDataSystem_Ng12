@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import {
   GetDivisionsParams,
   GetDivisionStatisticNumbersParamsV2,
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 @Injectable()
 export class GarbageDropStationCountTableDivisionService {
   constructor(private service: DivisionRequestService) {}
@@ -25,13 +25,14 @@ export class GarbageDropStationCountTableDivisionService {
   async history(
     parentId: string,
     type: DivisionType,
-    interval: DurationParams,
+    interval: Duration,
     unit: TimeUnit
   ) {
     let divisions = await this.array(parentId, type);
     let divisionIds = divisions.map((x) => x.Id);
     let params = new GetDivisionStatisticNumbersParamsV2();
-    params = Object.assign(params, interval);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = unit;
     params.DivisionIds = divisionIds;
     return this.service.statistic.number.history.list(params);

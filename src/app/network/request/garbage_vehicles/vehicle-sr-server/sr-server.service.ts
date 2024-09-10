@@ -8,11 +8,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { instanceToPlain } from 'class-transformer';
 import { StreamType } from 'src/app/enum/stream-type.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { VideoUrl } from 'src/app/network/model/url.model';
 import { GarbageVehicleSRServerUrl } from 'src/app/network/url/garbage-vehicle/sr-server.url';
 import { HowellBaseRequestService } from '../../base-request-howell.service';
 import { HowellAuthHttpService } from '../../howell-auth-http.service';
-import { DurationParams } from '../../IParams.interface';
 import {
   GetVehiclePreviewUrlParams,
   GetVehicleVodUrlParams,
@@ -47,7 +47,7 @@ export class VehicleSRServerRequestService {
 
   playback(
     args: GetVehicleVodUrlParams | string,
-    interval?: DurationParams,
+    interval?: Duration,
     stream: StreamType = StreamType.main
   ) {
     let data: any;
@@ -55,8 +55,8 @@ export class VehicleSRServerRequestService {
     if (typeof args === 'string') {
       let params = new GetVehicleVodUrlParams();
       params.CameraId = args;
-      params.BeginTime = interval!.BeginTime;
-      params.EndTime = interval!.EndTime;
+      params.BeginTime = interval!.begin;
+      params.EndTime = interval!.end;
       params.StreamType = stream;
       data = instanceToPlain(params);
     } else {

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { DivisionType } from 'src/app/enum/division-type.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
 import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic-v2.type';
 import { GarbageDropStationCountTableConverter } from './garbage-drop-station-count-table.converter';
 import {
@@ -34,7 +34,7 @@ export class GarbageDropStationCountTableBusiness
   async getData(
     args: GarbageDropStationCountTableArgs
   ): Promise<NumberStatisticV2Type[]> {
-    let duration = DurationParams.TimeUnit(args.unit, args.date);
+    let duration = DateTimeTool.TimeUnit(args.unit, args.date);
     let divisionId = args.parentId;
     if (!divisionId) {
       divisionId = (await this.store.division.default).Id;

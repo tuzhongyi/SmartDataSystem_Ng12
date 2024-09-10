@@ -31,10 +31,7 @@ export class IndexVideoWindowBusiness extends VideoWindowViewModel {
   }
 
   async playback(id: string, duration: Duration) {
-    let url = await this.sr.playback(id, {
-      BeginTime: duration.begin,
-      EndTime: duration.end,
-    });
+    let url = await this.sr.playback(id, duration);
     this.play(url);
   }
 

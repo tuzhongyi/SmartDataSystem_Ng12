@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { TimeUnit } from 'src/app/enum/time-unit.enum';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import {
   GetDivisionEventNumbersParams,
   GetDivisionStatisticNumbersParamsV2,
@@ -25,9 +25,10 @@ export class EventRecordWindowDetailsDivisionBusiness {
     return this.converter.division(data);
   }
 
-  async history(divisionId: string, interval: DurationParams, unit: TimeUnit) {
+  async history(divisionId: string, interval: Duration, unit: TimeUnit) {
     let params = new GetDivisionEventNumbersParams();
-    params = Object.assign(params, interval);
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     switch (unit) {
       case TimeUnit.Day:
       case TimeUnit.Hour:
@@ -47,13 +48,13 @@ export class EventRecordWindowDetailsDivisionBusiness {
     }
     if (unit === TimeUnit.Week) {
       let thisweek = DateTimeTool.allWeek(new Date());
-      if (interval.BeginTime.getTime() !== thisweek.begin.getTime()) {
+      if (interval.begin.getTime() !== thisweek.begin.getTime()) {
         return data;
       }
     }
     if (unit === TimeUnit.Month) {
       let thismonth = DateTimeTool.allMonth(new Date());
-      if (interval.BeginTime.getTime() !== thismonth.begin.getTime()) {
+      if (interval.begin.getTime() !== thismonth.begin.getTime()) {
         return data;
       }
     }
@@ -62,10 +63,10 @@ export class EventRecordWindowDetailsDivisionBusiness {
     return data.concat(today);
   }
 
-  async year(divisionId: string, interval: DurationParams) {
+  async year(divisionId: string, interval: Duration) {
     let params = new GetDivisionStatisticNumbersParamsV2();
-    params.BeginTime = interval.BeginTime;
-    params.EndTime = interval.EndTime;
+    params.BeginTime = interval.begin;
+    params.EndTime = interval.end;
     params.TimeUnit = TimeUnit.Month;
     params.DivisionIds = [divisionId];
     let list = await this.service.statistic.number.history.list(params);

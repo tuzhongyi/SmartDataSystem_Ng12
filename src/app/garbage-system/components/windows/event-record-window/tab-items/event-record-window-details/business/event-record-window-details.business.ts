@@ -9,7 +9,7 @@ import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DetailsChartLoadOptions } from '../../../../charts/details-chart/details-chart.model';
 import { EventRecordWindowDetailsConverter } from '../event-record-window-details.converter';
@@ -34,9 +34,10 @@ export class EventRecordWindowDetailsBusiness
   async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
     let division = await this.store.division.selected;
     let divisionId = division.Id;
-    let interval = new DurationParams();
-    interval.BeginTime = opts.begin;
-    interval.EndTime = opts.end;
+    let interval: Duration = {
+      begin: opts.begin,
+      end: opts.end,
+    };
     let type = opts.stationId
       ? UserResourceType.Station
       : UserResourceType.None;
@@ -82,7 +83,7 @@ export class EventRecordWindowDetailsBusiness
   async getData(
     id: string,
     type: UserResourceType,
-    interval: DurationParams,
+    interval: Duration,
     unit: TimeUnit
   ): Promise<EventNumberStatisticModel[]> {
     switch (type) {

@@ -1,6 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
-import { DurationParams } from 'src/app/network/request/IParams.interface';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 
 export class PlaybackConfigWindowViewModel extends WindowViewModel {
   styles = {
@@ -13,7 +13,7 @@ export class PlaybackConfigWindowViewModel extends WindowViewModel {
 
   onOkClicked = new EventEmitter();
 
-  ok(model: DurationParams) {
+  ok(model: Duration) {
     this.onOkClicked.emit(model);
     this.show = false;
   }
