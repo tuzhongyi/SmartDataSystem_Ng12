@@ -4,6 +4,7 @@ import { GarbageDropRecordFilter } from 'src/app/common/components/tables/garbag
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { HorizontalAlign } from 'src/app/enum/direction.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
@@ -24,7 +25,11 @@ export class GarbageStationWindowRecordFilterComponent
     new EventEmitter();
   @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
   @Input() sameDay: boolean = false;
-  constructor(business: GarbageStationWindowRecordFilterBusiness) {
+
+  constructor(
+    business: GarbageStationWindowRecordFilterBusiness,
+    private global: GlobalStorageService
+  ) {
     this.business = business;
   }
 
@@ -38,6 +43,10 @@ export class GarbageStationWindowRecordFilterComponent
   DateTimePickerView = DateTimePickerView;
   GarbageTaskStatus = GarbageTaskStatus;
   ngOnInit(): void {
+    this.global.division.selected.then((division) => {
+      this.filter.divisionId = division.Id;
+      this.filterChange.emit(this.filter);
+    });
     this.initDurations();
     this.initStatuses(this.filter.IsHandle, this.filter.IsTimeout);
     this.loadData();

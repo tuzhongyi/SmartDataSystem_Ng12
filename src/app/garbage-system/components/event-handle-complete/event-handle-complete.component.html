@@ -1,0 +1,83 @@
+<div class="event-handle-complete" *ngIf="!!model">
+  <div class="event-handle-complete-head">
+    <div class="hw-simple-title">
+      {{ model.Record.Data.StationName }} -
+      {{ model.Record.EventTime | date : "yyyy年MM月dd日" }}
+    </div>
+    <div class="operation"></div>
+  </div>
+  <div class="event-handle-complete-body">
+    <div class="hw-simple-title time">
+      {{ model.Duration.begin | date : "HH:mm:ss" }}
+    </div>
+    <mat-accordion multi>
+      <div class="complete">
+        <div *ngFor="let item of model.Items">
+          <event-handle-complete-item
+            class="complete-item"
+            [top]="item.top"
+            [bottom]="item.bottom"
+            [left]="item.left"
+            [note]="item.Minitues | howellTime"
+            [color]="item.TitleColor"
+          >
+            <div class="complete-item-content">
+              <div class="complete-item-content-inner">
+                <mat-expansion-panel
+                  disabled
+                  [expanded]="item.Type === CompleteType.feedback"
+                >
+                  <mat-expansion-panel-header>
+                    <div
+                      class="complete-item-content-head"
+                      [ngStyle]="{ color: item.TitleColor }"
+                    >
+                      {{ item.Title }}
+                    </div>
+                  </mat-expansion-panel-header>
+                  <div class="complete-item-content-body">
+                    <div *ngFor="let info of item.infos">{{ info }}</div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </div>
+            <div
+              class="complete-item-images"
+              [ngClass]="{
+                top: !item.left
+              }"
+            >
+              <!-- <div
+                image
+                *ngFor="let url of item.urls; let i = index"
+                [url]="url.url"
+                (click)="onimage(item, i)"
+              ></div> -->
+              <ng-container *ngFor="let img of item.urls; let i = index">
+                <app-image-control
+                  [model]="img"
+                  [draw]="true"
+                  (click)="onimage(item, i)"
+                ></app-image-control>
+              </ng-container>
+            </div>
+          </event-handle-complete-item>
+        </div>
+      </div>
+    </mat-accordion>
+    <div class="hw-simple-title time">
+      {{ model.Duration.end | date : "HH:mm:ss" }}
+    </div>
+  </div>
+  <div class="event-handle-complete-foot">
+    <div class="buttons">
+      <button (click)="onprev()" [disabled]="first" title="上一条">
+        <i class="howell-icon-arrow2left"></i>
+      </button>
+      <div *ngIf="index">第 {{ index }} 条</div>
+      <button (click)="onnext()" [disabled]="last" title="下一条">
+        <i class="howell-icon-arrow2right"></i>
+      </button>
+    </div>
+  </div>
+</div>

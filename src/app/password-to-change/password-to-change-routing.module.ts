@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { AuthorizationService } from '../network/request/auth/auth-request.service';
+import { RouterModule, Routes } from '@angular/router';
+import { AuthorizationActivate } from '../network/request/auth/authorization.activate';
 import { PasswordIndexComponent } from './index/password-index.component';
 
 const routes: Routes = [
   {
     path: '',
     component: PasswordIndexComponent,
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
 ];
 

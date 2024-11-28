@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { RoutePath } from './app-routing.path';
 import { LoginComponent } from './login/login.component';
-import { AuthorizationService } from './network/request/auth/auth-request.service';
+import { AuthorizationActivate } from './network/request/auth/authorization.activate';
 
 const routes: Routes = [
   {
@@ -21,19 +21,19 @@ const routes: Routes = [
       import('./system-manage/system-manage.module').then(
         (mod) => mod.SystemManageModule
       ),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   {
     path: RoutePath.aiop,
     loadChildren: () =>
       import('./aiop-system/aiop.module').then((mod) => mod.AiopModule),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   {
     path: RoutePath.audit,
     loadChildren: () =>
       import('./audit-system/audit.module').then((mod) => mod.AuditModule),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   {
     path: RoutePath.garbage_system,
@@ -41,7 +41,7 @@ const routes: Routes = [
       import('./garbage-system/garbage.module').then(
         (mod) => mod.GarbageModule
       ),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
 
   {
@@ -50,7 +50,7 @@ const routes: Routes = [
       import('./garbage-system/dapuqiao/garbage-dapuqiao.module').then(
         (mod) => mod.GarbageDaPuQiaoModule
       ),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   {
     path: RoutePath.garbage_system_committees,
@@ -58,7 +58,7 @@ const routes: Routes = [
       import('./garbage-system/committees/garbage-committees.module').then(
         (mod) => mod.GarbageCommitteesModule
       ),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   // {
   //   path: RoutePath.password_get_back,
@@ -73,7 +73,7 @@ const routes: Routes = [
   //     import('./password-to-change/password-to-change.module').then(
   //       (mod) => mod.PasswordToChangeModule
   //     ),
-  //   canActivate: [AuthorizationService],
+  //   canActivate: [AuthorizationActivate],
   // },
   {
     path: RoutePath.garbage_vehicle,
@@ -81,7 +81,7 @@ const routes: Routes = [
       import(
         './garbage-system/garbage-collection/garbage-collection.module'
       ).then((mode) => mode.GarbageCollectionModule),
-    canActivate: [AuthorizationService],
+    canActivate: [AuthorizationActivate],
   },
   {
     path: '**',

@@ -35,6 +35,8 @@ export class EventRecordTableComponent {
     new EventEmitter();
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
 
   EventType = EventType;
 
@@ -69,5 +71,8 @@ export class EventRecordTableComponent {
   }
   onallvideo(model: EventRecordViewModel) {
     this.allvideo.emit(model);
+  }
+  oncomplete(model: PagedArgs<EventRecordViewModel>) {
+    this.complete.emit(model);
   }
 }

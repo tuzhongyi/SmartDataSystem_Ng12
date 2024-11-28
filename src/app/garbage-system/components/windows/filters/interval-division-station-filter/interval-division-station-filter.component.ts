@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -9,18 +8,19 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { EventRecordFilter } from 'src/app/common/components/tables/event-record/event-record.model';
+import { ILevelDivisionNode } from 'src/app/common/components/panels/level-division-panel/level-division-panel.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
+import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { IIdNameModel, IModel } from 'src/app/network/model/model.interface';
 import { EventRecordFilterBusiness } from './interval-division-station-filter.business';
 import {
   DivisionStationFilteModel,
-  DivisionStationFilterOpts,
+  EventRecordFilterSelected,
+  EventRecordFilterSource,
 } from './interval-division-station-filter.model';
 
 @Component({
@@ -30,120 +30,96 @@ import {
   providers: [EventRecordFilterBusiness],
 })
 export class EventRecordFilterComponent
-  implements
-    IComponent<IModel, DivisionStationFilteModel>,
-    OnInit,
-    OnChanges,
-    OnDestroy
+  implements OnInit, OnChanges, OnDestroy
 {
   @Input() type?: EventType;
+
   @Input() date_sync = false;
-  @Input() filter: EventRecordFilter;
-  @Output() filterChange: EventEmitter<EventRecordFilter> = new EventEmitter();
+
+  @Input() duration = DateTimeTool.allDay(new Date());
+  @Output() durationChange = new EventEmitter<Duration>();
+
   @Input() divisionId?: string;
+  @Output() divisionIdChange = new EventEmitter<string>();
+
+  @Input() stationId?: string;
+  @Output() stationIdChange = new EventEmitter<string>();
+
+  @Input() cameraId?: string;
+  @Output() cameraIdChange = new EventEmitter<string>();
+
+  @Input() handle?: boolean;
+  @Output() handleChange = new EventEmitter<boolean>();
+
   @Input() display_handle = true;
 
   constructor(business: EventRecordFilterBusiness) {
     this.business = business;
-
-    this.filter = new EventRecordFilter();
-  }
-  Language = Language;
-
-  DateTimePickerView = DateTimePickerView;
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.divisionId) {
-      if (this.divisionId) {
-        let opts: DivisionStationFilterOpts = {
-          divisionId: this.divisionId,
-        };
-        this.business.load(opts).then((model) => {
-          this.model = model;
-          this.filter.divisionId = this.divisionId;
-          this.filter.camera = undefined;
-          this.filter.station = undefined;
-        });
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.filter.duration = DateTimeTool.allDay(new Date());
-    this.filter.cameraId = undefined;
-    this.filter.community = undefined;
-    this.filter.divisionId = undefined;
-    this.filterChange.emit(this.filter);
   }
   business: IBusiness<IModel, DivisionStationFilteModel>;
+  source = new EventRecordFilterSource();
+  selected = new EventRecordFilterSelected();
 
-  async ngOnInit() {
-    this.model = await this.business.load();
+  Language = Language;
+  DateTimePickerView = DateTimePickerView;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
-  model: DivisionStationFilteModel = new DivisionStationFilteModel();
+  ngOnDestroy(): void {}
+
+  async ngOnInit() {}
 
   changeBegin(date: Date) {
     if (
       this.date_sync &&
-      formatDate(this.filter.duration.begin, Language.yyyyMMdd, 'en') !=
-        formatDate(this.filter.duration.end, Language.yyyyMMdd, 'en')
+      !DateTimeTool.is.day.equals(this.duration.begin, this.duration.end)
     ) {
-      let end = new Date(this.filter.duration.end.getTime());
+      let end = new Date(this.duration.end.getTime());
       end.setFullYear(date.getFullYear());
       end.setMonth(date.getMonth());
       end.setDate(date.getDate());
-      this.filter.duration.end = end;
-    }
-    if (this.filter) {
-      this.filterChange.emit(this.filter);
+      this.duration.end = end;
+      this.durationChange.emit(this.duration);
     }
   }
   changeEnd(date: Date) {
     if (
       this.date_sync &&
-      formatDate(this.filter.duration.begin, Language.yyyyMMdd, 'en') !=
-        formatDate(this.filter.duration.end, Language.yyyyMMdd, 'en')
+      !DateTimeTool.is.day.equals(this.duration.begin, this.duration.end)
     ) {
-      let begin = new Date(this.filter.duration.begin.getTime());
+      let begin = new Date(this.duration.begin.getTime());
       begin.setFullYear(date.getFullYear());
       begin.setMonth(date.getMonth());
       begin.setDate(date.getDate());
-      this.filter.duration.begin = begin;
+      this.duration.begin = begin;
     }
-    if (this.filter) {
-      this.filterChange.emit(this.filter);
-    }
+    this.durationChange.emit(this.duration);
   }
 
   async ondivision(item?: IIdNameModel) {
-    let opts: DivisionStationFilterOpts | undefined = undefined;
-    if (item) {
-      opts = {
-        divisionId: item.Id,
-      };
-    }
-
-    let model = await this.business.load(opts);
-    this.model.stations = model.stations;
-    this.model.cameras = model.cameras;
-    this.filter.division = item;
-    this.filter.camera = undefined;
-    this.filter.station = undefined;
-    this.filterChange.emit(this.filter);
+    this.divisionId = item?.Id;
+    this.divisionIdChange.emit(this.divisionId);
   }
-  async onstation() {
-    if (this.filter.station) {
-      let opts: DivisionStationFilterOpts = {
-        divisionId: this.filter.divisionId,
-        stationId: this.filter.station.Id,
-      };
-      let model = await this.business.load(opts);
-      this.model.cameras = model.cameras;
-      this.filter.camera = undefined;
-      this.filterChange.emit(this.filter);
+  ondivisionloaded(datas: ILevelDivisionNode[]) {
+    this.source.division = datas;
+    if (this.divisionId) {
+      let division = datas.find((item) => item.Id == this.divisionId);
+      if (division?.IsParent) {
+        this.selected.division = undefined;
+      } else {
+        this.selected.division = division;
+      }
     }
+  }
+  onstation() {
+    this.stationIdChange.emit(this.stationId);
   }
   oncamera() {
-    this.filterChange.emit(this.filter);
+    this.cameraIdChange.emit(this.cameraId);
+  }
+  onhandle() {
+    this.handleChange.emit(this.handle);
   }
 }

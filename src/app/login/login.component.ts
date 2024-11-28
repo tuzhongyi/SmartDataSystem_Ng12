@@ -5,7 +5,9 @@
  * @Last Modified time: 2022-11-09 10:03:04
  */
 
+import { HttpErrorResponse } from '@angular/common/http';
 import {
+  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
@@ -13,78 +15,75 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { AxiosError } from 'axios';
-import CryptoJS from 'crypto-js';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { Md5 } from 'ts-md5';
 import videojs, { VideoJsPlayer } from 'video.js';
-import { RoutePath } from '../app-routing.path';
-import { GlobalStorageService } from '../common/service/global-storage.service';
-import { LocalStorageService } from '../common/service/local-storage.service';
-import { SessionStorageService } from '../common/service/session-storage.service';
-import { UserConfigType } from '../enum/user-config-type.enum';
-import {
-  User,
-  UserResource,
-} from '../network/model/garbage-station/user.model';
+import { User } from '../network/model/garbage-station/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
-import { UserRequestService } from '../network/request/user/user-request.service';
+import {
+  LoginController,
+  LoginControllerProvider,
+} from './controller/login.controller';
+import { LoginModel } from './login.model';
 
-/**
- *  LoginComponent 需要用到 form 指令，
- */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.less'],
+  providers: [...LoginControllerProvider],
 })
-export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
-  systemManage = false;
+export class LoginComponent
+  implements OnInit, AfterViewInit, AfterViewChecked, OnDestroy
+{
+  constructor(
+    title: Title,
+    private authorization: AuthorizationService,
+    private toastr: ToastrService,
+    private router: Router,
+    private cookie: CookieService,
+    private controller: LoginController
+  ) {
+    title.setTitle('用户登录');
+  }
 
   @ViewChild('loginVideo')
   video?: ElementRef;
+  @ViewChild('username')
+  username?: ElementRef;
+  @ViewChild('password')
+  password?: ElementRef;
 
   // 在获得服务器返回前,登录按钮不能重复点击
   disableLogin: boolean = false;
-  savePassWord: boolean = false;
-  autoLogin: boolean = false;
-
-  formGroup = new FormGroup({
-    userName: new FormControl('', [Validators.required]),
-    passWord: new FormControl('', [Validators.required]),
-  });
-
-  constructor(
-    private _titleService: Title,
-    private _authorizationService: AuthorizationService,
-    private _toastrService: ToastrService,
-    private _router: Router,
-    private local: LocalStorageService,
-    private _sessionStorageService: SessionStorageService,
-    private _cookieService: CookieService,
-    private _storeService: GlobalStorageService,
-    private userService: UserRequestService
-  ) {
-    this._titleService.setTitle('用户登录');
-  }
+  model = new LoginModel();
+  focus = {
+    username: false,
+    password: false,
+  };
 
   keypressHandle?: (e: KeyboardEvent) => void;
+  private get check() {
+    if (!this.model.username) {
+      this.toastr.warning('请输入账号');
+      return false;
+    }
+    if (!this.model.password) {
+      this.toastr.warning('请输入密码');
+      return false;
+    }
+    return true;
+  }
 
   ngOnInit() {
-    this.fillForm();
+    this.load();
+
     this.keypressHandle = this.onkeypress.bind(this);
     window.addEventListener('keypress', this.keypressHandle);
   }
 
-  ngOnDestroy(): void {
-    if (this.keypressHandle) {
-      window.removeEventListener('keypress', this.keypressHandle);
-    }
-  }
   ngAfterViewInit() {
     const _this = this;
     if (!this.video) return;
@@ -108,67 +107,37 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         // console.log('onPlayerReady', this);
       }
     );
+
+    if (this.username && !this.model.username && !this.focus.username) {
+      this.username.nativeElement.value = '';
+    }
+    if (this.password && !this.model.password && !this.focus.password) {
+      this.password.nativeElement.value = '';
+    }
+  }
+  ngAfterViewChecked(): void {
+    if (this.username && !this.model.username && !this.focus.username) {
+      this.username.nativeElement.value = '';
+    }
+    if (this.password && !this.model.password && !this.focus.password) {
+      this.password.nativeElement.value = '';
+    }
+  }
+  ngOnDestroy(): void {
+    if (this.keypressHandle) {
+      window.removeEventListener('keypress', this.keypressHandle);
+    }
   }
   onkeypress(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       this.login();
     }
   }
-  fillForm() {
-    let autoLogin = false;
-    if (this._cookieService.check('autoLogin')) {
-      autoLogin = JSON.parse(this._cookieService.get('autoLogin'));
+  load() {
+    this.model = this.controller.store.load();
+    if (this.model.auto) {
+      this.login();
     }
-
-    let savePassWord = false;
-    if (this._cookieService.check('savePassWord')) {
-      savePassWord = JSON.parse(this._cookieService.get('savePassWord'));
-    }
-
-    // console.log(autoLogin, savePassWord);
-    this.savePassWord = savePassWord;
-    this.autoLogin = autoLogin;
-    if (savePassWord) {
-      let userName = this._cookieService.get('userName');
-      // console.log(userName);
-      userName = atob(userName);
-      // console.log(userName);
-      let res = userName.match(
-        /[a-zA-Z0-9+/=]{32}(?<userName>[\w.]+)[a-zA-Z0-9+/=]{32}/
-      )!;
-      // console.log(res);
-      userName = res.groups!['userName'];
-
-      let passWord = this._cookieService.get('passWord');
-
-      passWord = atob(passWord);
-
-      let res2 = passWord.match(
-        /[a-zA-Z0-9+/=]{32}(?<passWord>[\w.]+)[a-zA-Z0-9+/=]{32}/
-      )!;
-
-      passWord = res2.groups!['passWord'];
-
-      this.formGroup.patchValue({
-        userName: userName,
-        passWord: passWord,
-      });
-      if (autoLogin) {
-        this.login();
-      }
-    }
-  }
-  onSavePassWordChange(checked: boolean) {
-    this.savePassWord = checked;
-    if (!checked) {
-      this.autoLogin = checked;
-    }
-  }
-  onAutoLoginChange(checked: boolean) {
-    this.savePassWord = this.autoLogin = checked;
-  }
-  forgetPassword() {
-    this._router.navigateByUrl(RoutePath.password_get_back);
   }
 
   test(
@@ -192,83 +161,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     return response;
   }
   route(user: User) {
-    let path = this._authorizationService.getPath(user);
-    switch (path) {
-      case RoutePath.garbage_system:
-      case RoutePath.garbage_system_committees:
-      case RoutePath.garbage_vehicle:
-        this._storeUserInfo(user, user.Id, user.Resources ?? []);
-        break;
-
-      default:
-        break;
-    }
-
-    this._router.navigateByUrl(path);
+    let path = this.authorization.getPath(user);
+    this.router.navigateByUrl(path);
   }
-
-  private loadVideoConfig(user: User) {
-    this.userService.config
-      .get(user.Id, UserConfigType.VideoStream)
-      .then((x) => {
-        if (x) {
-          this.local.video.stream = parseInt(x);
-        }
-      });
-    this.userService.config
-      .get(user.Id, UserConfigType.VideoRuleState)
-      .then((x) => {
-        this.local.video.rule = JSON.parse(x);
-      });
-  }
-  // route(user: User) {
-  //   if (user.UIType === UserUIType.dapuqiao) {
-  //     this._router.navigateByUrl(RoutePath.dapuqiao);
-  //   } else {
-  //     switch (user.UserType) {
-  //       case UserType.station_vehicle:
-  //       case UserType.garbage_vehicle_system:
-  //         // this._router.navigateByUrl(RoutePath.garbage_vehicle);
-  //         this._router.navigateByUrl(RoutePath.garbage_system);
-  //         break;
-
-  //       case UserType.garbage_station_system:
-  //       default:
-  //         this._storeUserInfo(user, user.Id, user.Resources ?? []);
-
-  //         // 区分权限
-  //         if (!this.systemManage) {
-  //           if (user.Role && user.Role.length > 0) {
-  //             if (user.Role[0].StaticData == StaticDataRole.enabled) {
-  //               this._router.navigateByUrl(RoutePath.aiop);
-  //             } else if (user.Role[0].StaticData == StaticDataRole.disabled) {
-  //               if (
-  //                 user.Resources &&
-  //                 user.Resources.length > 0 &&
-  //                 user.Resources[0].ResourceType === UserResourceType.Committees
-  //               ) {
-  //                 this._router.navigateByUrl(
-  //                   RoutePath.garbage_system_committees
-  //                 );
-  //               } else {
-  //                 this._router.navigateByUrl(RoutePath.garbage_system);
-  //               }
-  //             }
-  //           } else if (
-  //             user.Resources &&
-  //             user.Resources.length > 0 &&
-  //             user.Resources[0].ResourceType === UserResourceType.Committees
-  //           ) {
-  //             this._router.navigateByUrl(RoutePath.garbage_system_committees);
-  //           } else {
-  //           }
-  //         } else {
-  //           this._router.navigateByUrl(RoutePath.system_manage);
-  //         }
-  //         break;
-  //     }
-  //   }
-  // }
 
   async login() {
     // let nonce = 'fc5f3c277dba491eaeedd77d25e41dd1'; //'ad2af40c5f244b77afa15b0e62e572c0';
@@ -278,97 +173,26 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     // console.log('response:', request);
     // return;
 
-    if (this._checkForm()) {
+    if (this.check) {
       this.disableLogin = true;
-      try {
-        // console.log(this.formGroup.value);
-        let user: any = await this._authorizationService.login(
-          this.formGroup.get('userName')?.value ?? '',
-          this.formGroup.get('passWord')?.value ?? ''
-        );
-        if (user instanceof User) {
-          // console.log('登录成功', result);
-          this.loadVideoConfig(user);
+
+      this.authorization
+        .login(this.model.username, this.model.password)
+        .then((user) => {
+          this.controller.config.load(user);
+          this.controller.store.save.config(this.model.save, this.model.auto);
           this.route(user);
-        }
-      } catch (e: any) {
-        if (this._isAxiosError(e)) {
-          if (e.response?.status == 403 || e.response?.status == 500) {
-            this._toastrService.error('账号或密码错误');
+        })
+        .catch((e: HttpErrorResponse) => {
+          if (e.status == 403 || e.status == 500) {
+            this.toastr.error('账号或密码错误');
+          } else {
+            this.toastr.error('登录失败');
           }
-        }
-        // this._toastrService.error('账号或密码错误');
-      }
-      this.disableLogin = false;
+        })
+        .finally(() => {
+          this.disableLogin = false;
+        });
     }
-  }
-
-  private _checkForm() {
-    if (this.formGroup.get('userName')?.invalid) {
-      this._toastrService.warning('请输入账号');
-      return;
-    }
-    if (this.formGroup.get('passWord')?.invalid) {
-      this._toastrService.warning('请输入密码');
-      return;
-    }
-    return true;
-  }
-
-  private _isAxiosError(cadidate: any): cadidate is AxiosError {
-    return cadidate.isAxiosError === true;
-  }
-  /**
-   *  保存 cookie,60分钟后过期
-   * @param userId
-   * @param userResource
-   */
-  private _storeUserInfo(
-    user: User,
-    userId: string,
-    userResource: Array<UserResource>
-  ) {
-    let options = {
-      expires: new Date(Date.now() + 60 * 60 * 1000),
-      path: '/',
-      secure: false,
-    };
-    this._cookieService.set(
-      'savePassWord',
-      JSON.stringify(this.savePassWord),
-      options
-    );
-    this._cookieService.set(
-      'autoLogin',
-      JSON.stringify(this.autoLogin),
-      options
-    );
-    // username
-    let prefix = CryptoJS.MD5(
-      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-    ).toString();
-    let suffix = CryptoJS.MD5(
-      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-    ).toString();
-
-    let userName = btoa(
-      prefix + this.formGroup.get('userName')!.value + suffix
-    );
-    this._cookieService.set('userName', userName, options);
-
-    //password
-    prefix = CryptoJS.MD5(
-      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-    ).toString();
-    suffix = CryptoJS.MD5(
-      ((Math.random() * 1e9) | 0).toString(16).padStart(8, '0')
-    ).toString();
-    let passWord = btoa(
-      prefix + this.formGroup.get('passWord')!.value + suffix
-    );
-    this._cookieService.set('passWord', passWord, options);
-
-    this.local.user = user;
-    this._storeService.password = passWord;
   }
 }

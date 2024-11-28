@@ -81,6 +81,8 @@ export class CameraImageUrlModel extends CameraImageUrl {
     this.CameraName = url.CameraName;
     this.ImageUrl = url.ImageUrl;
     this.StationId = stationId;
+    this.Objects = url.Objects;
+    this.Rules = url.Rules;
   }
   StationId: string;
   Camera!: Promise<Camera>;

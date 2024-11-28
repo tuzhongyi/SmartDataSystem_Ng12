@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MonitorCardRecordEpisodeWindow } from './windows/monitor-card-record-episode-window.business';
 import { MonitorDeviceWindowBusiness } from './windows/monitor-device-window.business';
+import { MonitorRecordHandleCompleteWindowBusiness } from './windows/monitor-event-record-handle-complete-window.business';
 import { MonitorRecordWindowBusiness } from './windows/monitor-event-record-window.business';
 import { MonitorImageArrayWindowBusiness } from './windows/monitor-image-array-window.business';
 import { MonitorImagePageWindowBusiness } from './windows/monitor-image-page-window.business';
@@ -32,7 +33,8 @@ export class MonitorWindowBussiness {
     public image: MonitorImageWindowBusiness,
     public video: MonitorVideoWindowBusiness,
     public weight: MonitorWeightWindowBusiness,
-    public details: MonitorInfoDetailsWindowBusiness
+    public details: MonitorInfoDetailsWindowBusiness,
+    public complete: MonitorRecordHandleCompleteWindowBusiness
   ) {}
   close() {
     this.record.show = false;
@@ -71,6 +73,8 @@ export const WindowBusinesses = [
   MonitorGarbageStationInfoWindowBusiness,
   MonitorCardRecordEpisodeWindow,
   MonitorWeightWindowBusiness,
+
+  MonitorRecordHandleCompleteWindowBusiness,
 
   ...MonitorInfoDetailsWindowProviders,
 ];

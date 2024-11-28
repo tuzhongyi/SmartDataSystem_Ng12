@@ -33,28 +33,30 @@ export class MonitorMapControlBusiness {
     this.video.load(camera);
   }
   onIllegalDropClicked(station: GarbageStation) {
-    if (station) {
-      this.window.record.stationId = station.Id;
-    }
-
+    this.window.record.clear();
+    this.window.record.stationId = station.Id;
     this.window.record.type = EventType.IllegalDrop;
     this.window.record.show = true;
   }
   onMixedIntoClicked(station: GarbageStation) {
-    if (station) {
-      this.window.record.stationId = station.Id;
-    }
+    this.window.record.clear();
+    this.window.record.stationId = station.Id;
     this.window.record.type = EventType.MixedInto;
     this.window.record.show = true;
   }
   onGarbageCountClicked(station: GarbageStation) {
     this.window.station.index = GarbageStationWindowIndex.station;
+    this.window.station.stationId = station.Id;
     this.window.station.show = true;
   }
   onGarbageRetentionClicked(station: GarbageStation) {
+    this.window.drop.clear();
+    this.window.drop.args.stationId = station.Id;
     this.window.drop.show = true;
   }
   onGarbageFullClicked(station: GarbageStation) {
+    this.window.full.clear();
+    this.window.full.args.stationId = station.Id;
     this.window.full.show = true;
   }
 

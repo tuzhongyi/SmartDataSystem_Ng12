@@ -27,6 +27,8 @@ export class EventRecordWindowListComponent implements OnInit {
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
   constructor(
     public filter: EventRecordOperationFilterBusiness,
     private global: GlobalStorageService
@@ -47,6 +49,7 @@ export class EventRecordWindowListComponent implements OnInit {
         this.filter.filter.divisionId = x.Id;
       });
     }
+    this.filter.filter.type = this.type;
   }
 
   onimage(model: PagedArgs<EventRecordViewModel>) {
@@ -66,5 +69,8 @@ export class EventRecordWindowListComponent implements OnInit {
   }
   onTypeChange(type: ListType) {
     this.listType = type;
+  }
+  oncomplete(model: PagedArgs<EventRecordViewModel>) {
+    this.complete.emit(model);
   }
 }

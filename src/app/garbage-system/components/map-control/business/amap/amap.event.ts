@@ -20,4 +20,5 @@ class AMapContextMenuEvent {
   garbagedrop: EventEmitter<GarbageStation> = new EventEmitter();
   mixedinto: EventEmitter<GarbageStation> = new EventEmitter();
   illegaldrop: EventEmitter<GarbageStation> = new EventEmitter();
+  garbagefull: EventEmitter<GarbageStation> = new EventEmitter();
 }

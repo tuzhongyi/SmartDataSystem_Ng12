@@ -3,7 +3,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel, ImagePagedArgs } from 'src/app/network/model/model.interface';
+import {
+  IModel,
+  ImagePagedArgs,
+  PagedArgs,
+} from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
@@ -41,6 +45,8 @@ export class GarbageDropRecordTableComponent
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
     new EventEmitter();
+  @Output() complete: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
+    new EventEmitter();
 
   constructor(record: GarbageDropRecordTableBusiness) {
     super();
@@ -57,10 +63,10 @@ export class GarbageDropRecordTableComponent
     '9%',
     '7%',
     '7%',
-    '10%',
+    '8%',
     '7%',
     '7%',
-    '5%',
+    '7%',
   ];
 
   loading = false;
@@ -139,6 +145,20 @@ export class GarbageDropRecordTableComponent
       this.selected = undefined;
     } else {
       this.selected = item;
+    }
+  }
+  oncomplete(e: Event, item: GarbageDropRecordViewModel) {
+    let plain = instanceToPlain(this.page);
+    let page = plainToInstance(Page, plain);
+    page.RecordCount = this.page.TotalRecordCount;
+    page.PageCount = this.page.TotalRecordCount;
+    page.PageSize = 1;
+    let _index = this.datas.indexOf(item);
+    page.PageIndex =
+      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+    this.complete.emit({ page: page, data: item });
+    if (item === this.selected) {
+      e.stopPropagation();
     }
   }
 }

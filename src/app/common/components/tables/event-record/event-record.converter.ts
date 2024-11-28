@@ -162,6 +162,9 @@ export class EventRecordConverter
           let image = this.converter.image.Convert(url, true, source.EventTime);
           image.name = source.Data.StationName;
           image.index = i;
+          image.polygon = url.Objects;
+          image.rules = url.Rules;
+
           model.images.push(image);
         } catch (error) {
           console.error(error, this, source.Data.CameraImageUrls[i]);

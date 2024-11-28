@@ -5,6 +5,7 @@ import { Language } from 'src/app/common/tools/language';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { StationState } from 'src/app/enum/station-state.enum';
+import { GarbageDeviceData } from 'src/app/network/model/garbage-station/garbage-device-data.model';
 import { GarbageStationNumberStatistic } from 'src/app/network/model/garbage-station/garbage-station-number-statistic.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import {
@@ -70,7 +71,7 @@ export class MapPointInfoPanelConverter
       });
 
     model.state = [this.getState(source, false)];
-    model.device = source.GarbageDeviceData;
+    model.device = source.GarbageDeviceData ?? this.device(source);
     if (source.GarbageDeviceData) {
       model.options = [
         {
@@ -83,6 +84,16 @@ export class MapPointInfoPanelConverter
       ];
     }
     return model;
+  }
+
+  device(station: GarbageStation) {
+    if (station.DeviceAccessId) {
+      let device = new GarbageDeviceData();
+      device.DeviceId = station.DeviceAccessId;
+      device.OnlineState = OnlineStatus.Offline;
+      return device;
+    }
+    return undefined;
   }
 
   private getState(station: GarbageStation, drop: boolean) {

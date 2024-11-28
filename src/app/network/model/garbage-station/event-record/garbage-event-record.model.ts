@@ -7,8 +7,18 @@ import {
   transformEventRecordData,
 } from '../../transform.model';
 
-export interface IEventRecord<T> extends IModel {
+export interface IEventRecord<T = any> extends IModel {
   Data: T;
+  EventId: string;
+  EventTime: Date;
+  EventType: EventType;
+  EventDescription?: string;
+  ResourceId?: string;
+  ResourceType?: ResourceType;
+  ResourceName?: string;
+  ImageUrl?: string;
+  RecordUrl?: string;
+  EventIndexes?: string[];
 }
 
 /** 事件基础类型 */

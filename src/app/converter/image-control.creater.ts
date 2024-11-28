@@ -11,6 +11,7 @@ import { IllegalDropEventRecord } from '../network/model/garbage-station/event-r
 import { MixedIntoEventRecord } from '../network/model/garbage-station/event-record/mixed-into-event-record.model';
 import { SewageEventRecord } from '../network/model/garbage-station/event-record/sewage-event-record.model';
 import { EventRule } from '../network/model/garbage-station/event-rule';
+import { CameraImageUrl } from '../network/model/url.model';
 import { EventRecordViewModel } from '../view-model/event-record.model';
 import { ImageControlModel } from '../view-model/image-control.model';
 
@@ -22,7 +23,9 @@ type InputType =
   | MixedIntoEventRecord
   | SewageEventRecord
   | EventRecordViewModel
-  | GarbageDropRecordViewModel;
+  | GarbageDropRecordViewModel
+  | CameraImageUrl
+  | string;
 
 export class ImageControlCreater {
   static Create(model: SewageEventRecord): ImageControlModel[];
@@ -32,15 +35,21 @@ export class ImageControlCreater {
   static Create(
     model: EventRecordViewModel
   ): ImageControlModel | ImageControlModel[];
+  static Create(model: string): ImageControlModel;
   static Create(model: Camera): ImageControlModel;
+  static Create(model: CameraImageUrl): ImageControlModel;
   static Create(model: DeviceViewModel): ImageControlModel;
   static Create(model: IllegalDropEventRecord): ImageControlModel;
 
   static Create(model: InputType) {
-    if (model instanceof DeviceViewModel) {
+    if (typeof model === 'string') {
+      return this.fromString(model);
+    } else if (model instanceof DeviceViewModel) {
       return this.fromDeviceViewModel(model);
     } else if (model instanceof Camera) {
       return this.fromCamera(model);
+    } else if (model instanceof CameraImageUrl) {
+      return this.fromCameraImageUrl(model);
     } else if (model instanceof IllegalDropEventRecord) {
       return this.fromIllegalDropEventRecord(model);
     } else if (model instanceof GarbageFullEventRecord) {
@@ -110,6 +119,26 @@ export class ImageControlCreater {
       }
     }
 
+    return model;
+  }
+
+  private static fromCameraImageUrl(model: CameraImageUrl) {
+    return this.create(
+      model.CameraId,
+      Medium.img(model.ImageUrl),
+      model.CameraName ?? '',
+      {
+        onerror: true,
+        rules: model.Rules,
+        polygon: model.Objects,
+      }
+    );
+  }
+
+  private static fromString(input: string) {
+    let model = new ImageControlModel();
+    model.src = Medium.img(input);
+    model.onerror = '';
     return model;
   }
 
@@ -207,6 +236,8 @@ export class ImageControlCreater {
             eventTime: data.EventTime,
             ishandle: false,
             istimeout: false,
+            rules: x.Rules,
+            polygon: x.Objects,
           }
         );
       });

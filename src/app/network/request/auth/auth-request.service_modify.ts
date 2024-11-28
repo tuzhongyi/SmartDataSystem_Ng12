@@ -16,7 +16,7 @@ import { SessionStorageService } from 'src/app/common/service/session-storage.se
 import { UserUrl } from 'src/app/network/url/garbage/user.url';
 import { Md5 } from 'ts-md5';
 import { User } from '../../model/garbage-station/user.model';
-import { DigestResponse } from './digest-response.class';
+import { DigestResponse } from './digest-response.model';
 
 @Injectable({
   providedIn: 'root',
@@ -212,7 +212,7 @@ export class AuthorizationServiceModify implements CanActivate {
     let len = fields_arr.length;
     for (let i = 0; i < len; i++) {
       var values = /([a-zA-Z]+)=\"?([a-zA-Z0-9.@\/\s]+)\"?/.exec(fields_arr[i]);
-      if (values) challenge[values[1]] = values[2];
+      if (values) (challenge as any)[values[1]] = values[2];
     }
     // console.log(challenge);
     return challenge;

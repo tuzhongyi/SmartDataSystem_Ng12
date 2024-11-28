@@ -1,13 +1,7 @@
-import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
-import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { DivisionType } from 'src/app/enum/division-type.enum';
 import { ILevelListNode } from '../level-list-panel/level-list-panel.model';
 
-export type ILevelDivisionPanelBusiness = IBusiness<
-  Division[],
-  ILevelListNode[]
-> &
-  IGet<Division>;
-
-export interface ILevelDivisionPanelComponent {
-  business: ILevelDivisionPanelBusiness;
+export interface ILevelDivisionNode extends ILevelListNode {
+  DivisionType: DivisionType;
+  IsParent?: boolean;
 }

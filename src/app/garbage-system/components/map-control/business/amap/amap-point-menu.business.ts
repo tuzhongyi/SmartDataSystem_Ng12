@@ -28,6 +28,20 @@ export class AMapPointContextMenuBusiness {
       0
     );
     client.ContextMenu.AddItem(
+      `<i class="howell-icon-fullgarbage" style="font-size: 18px"></i> ${Language.json.EventType.GarbageFull}${Language.json.record}`,
+      async (id: string) => {
+        this.event.menu.click.emit();
+
+        let station = this.amap.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.service.get(id);
+          this.amap.source.all.push(station);
+        }
+        this.event.menu.garbagefull.emit(station);
+      },
+      0
+    );
+    client.ContextMenu.AddItem(
       `<i class="howell-icon-mixlittering" style="font-size: 18px"></i> ${Language.json.EventType.MixedInto}${Language.json.record}`,
       async (id: string) => {
         this.event.menu.click.emit();

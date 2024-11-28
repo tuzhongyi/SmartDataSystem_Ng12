@@ -64,6 +64,8 @@ class ConfigItem {
 export class AuditCameraDetailsTableConfig {
   [key: string]: ConfigItem;
   GarbageStation = new ConfigItem();
+  Committees = new ConfigItem();
+  County = new ConfigItem();
   CameraUsage = new ConfigItem();
   CreateTime = new ConfigItem();
   UpdateTime = new ConfigItem();
@@ -86,6 +88,8 @@ export const AuditCameraDetailsTableConfigLanguage: {
   [key: keyof AuditCameraDetailsTableConfig]: string;
 } = {
   Name: '摄像机名称',
+  Committees: '居委会',
+  County: '街道',
   CameraUsage: '摄像机用途',
   CreateTime: '创建时间',
   UpdateTime: '更新事件',

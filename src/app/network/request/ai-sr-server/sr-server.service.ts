@@ -44,7 +44,12 @@ export class SRServerRequestService {
     }
 
     let url = SRServiceUrl.preview();
-    return this.basic.post(url, VideoUrl, data);
+    return this.basic.post(url, VideoUrl, data).then((x: VideoUrl) => {
+      if (!x.Url) {
+        throw new Error('preview failed');
+      }
+      return x;
+    });
   }
 
   playback(
@@ -76,7 +81,12 @@ export class SRServerRequestService {
     }
 
     let url = SRServiceUrl.vod();
-    return this.basic.post(url, VideoUrl, data);
+    return this.basic.post(url, VideoUrl, data).then((x: VideoUrl) => {
+      if (!x.Url) {
+        throw new Error('playback failed');
+      }
+      return x;
+    });
   }
 
   list() {

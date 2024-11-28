@@ -16,7 +16,12 @@
     <div class="garbage-full-window-record-body-filter" *ngIf="filter.show">
       <interval-division-station-filter
         [type]="type"
-        [(filter)]="filter.filter"
+        [date_sync]="true"
+        [(duration)]="filter.filter.duration"
+        [(divisionId)]="filter.filter.divisionId"
+        [(stationId)]="filter.filter.stationId"
+        [(cameraId)]="filter.filter.cameraId"
+        [(handle)]="filter.filter.handle"
       >
       </interval-division-station-filter>
     </div>
@@ -34,6 +39,7 @@
           (allvideo)="onallvideo($event)"
           (got)="ongot($event)"
           [get]="get"
+          (complete)="oncomplete($event)"
         >
         </howell-event-record-table>
       </ng-container>

@@ -96,12 +96,22 @@
               {{ item.Data.ProcessorName ?? "-" }}
             </td>
             <td>
-              <div
-                class="icon-button"
-                title="播放视频"
-                (click)="onvideo($event, item)"
-              >
-                <i class="howell-icon-video"></i>
+              <div class="operation">
+                <div
+                  class="icon-button"
+                  title="播放视频"
+                  (click)="onvideo($event, item)"
+                >
+                  <i class="howell-icon-video"></i>
+                </div>
+
+                <div
+                  class="icon-button"
+                  title="完整经过"
+                  (click)="oncomplete($event, item)"
+                >
+                  <i class="mdi mdi-infinity"></i>
+                </div>
               </div>
             </td>
           </tr>

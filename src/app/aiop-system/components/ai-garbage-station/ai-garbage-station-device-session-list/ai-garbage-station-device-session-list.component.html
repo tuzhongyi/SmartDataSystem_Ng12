@@ -68,7 +68,7 @@
           </td>
           <td
             (click)="onitemclick($event, item)"
-            [title]="item.Name + '(' + item.GarbageStationName + ')'"
+            [title]="item.Name + '\n' + (item.GarbageStationName ?? '')"
           >
             {{ item.Name }}
           </td>

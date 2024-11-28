@@ -37,6 +37,8 @@ export class EventRecordWindowComponent
   @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
     new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
   constructor() {
     super();
   }
@@ -70,5 +72,8 @@ export class EventRecordWindowComponent
   }
   oncard(args: EventRecordViewModel) {
     this.card.emit(args);
+  }
+  oncomplete(args: PagedArgs<EventRecordViewModel>) {
+    this.complete.emit(args);
   }
 }

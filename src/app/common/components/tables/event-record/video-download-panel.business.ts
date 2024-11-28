@@ -59,7 +59,18 @@ class VideoDownloaderConverter
         for (let i = 0; i < source.GarbageStation.Cameras.length; i++) {
           const camera = source.GarbageStation.Cameras[i];
           let flags = new Flags(camera.CameraUsage);
-          if (flags.contains(cameraUsage)) {
+
+          let has = flags.contains(cameraUsage);
+
+          if (
+            !has &&
+            !camera.CameraUsage &&
+            cameraUsage === CameraUsage.IllegalDrop
+          ) {
+            has = true;
+          }
+
+          if (has) {
             let begin = new Date(source.EventTime.getTime());
             begin.setSeconds(begin.getSeconds() - 15);
             let end = new Date(source.EventTime.getTime());

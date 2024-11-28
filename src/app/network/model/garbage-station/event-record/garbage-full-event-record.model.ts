@@ -1,4 +1,4 @@
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import { transformDateTime } from '../../transform.model';
 import { CameraImageUrl } from '../../url.model';
 import { EventRecordData } from './garbage-event-record.model';
@@ -25,6 +25,7 @@ export class GarbageFullEventData {
   /**	String[]	图片ID、图片地址列表	O */
   ImageUrls?: string[];
   /**	CameraImageUrl[]	图片ID、图片地址列表	O */
+  @Type(() => CameraImageUrl)
   CameraImageUrls?: CameraImageUrl[];
   /**	String	网格单元ID	O */
   GridCellId?: string;
@@ -36,6 +37,7 @@ export class GarbageFullEventData {
   /**	Boolean	是否已处置	O	*/
   IsHandle?: boolean;
   /**	String	图片ID、图片地址	O	*/
+  @Type(() => CameraImageUrl)
   HandleImageUrls?: CameraImageUrl[];
   /**	Boolean	处置人员是否已处置	O	*/
   Processed?: boolean;

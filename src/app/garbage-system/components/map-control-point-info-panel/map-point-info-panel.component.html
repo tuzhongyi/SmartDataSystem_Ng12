@@ -114,7 +114,8 @@
       <i class="howell-icon-phone icon"></i><span>{{ member.MobileNo }}</span>
     </div>
   </div>
-  <ng-container *ngIf="!!model.device && model.type === StationType.Plus">
+  <ng-container *ngIf="!!model.device">
+    <!-- <ng-container *ngIf="!!model.device && model.type === StationType.Plus"> -->
     <div class="item">
       <div class="icon"><i class="howell-icon-rfid"></i></div>
       <div class="content">

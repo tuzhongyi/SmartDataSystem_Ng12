@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { MonitorCardRecordEpisodeWindow } from './monitor-card-record-episode-window.business';
+import { MonitorRecordHandleCompleteWindowBusiness } from './monitor-event-record-handle-complete-window.business';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -16,9 +18,16 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
     private image: MonitorImageWindowBusiness,
     private card: MonitorCardRecordEpisodeWindow,
     private video: MonitorVideoWindowBusiness,
-    private media: MonitorMediaWindowBusiness
+    private media: MonitorMediaWindowBusiness,
+    private complete: MonitorRecordHandleCompleteWindowBusiness
   ) {
     super();
+    this.image.getData.subscribe((x) => {
+      this.data.get.emit(x);
+    });
+    this.complete.data.get.subscribe((x) => {
+      this.data.get.emit(x);
+    });
   }
   style = {
     height: '85%',
@@ -32,6 +41,18 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
 
   divisionId?: string;
   stationId?: string;
+
+  data = {
+    get: new EventEmitter<Page>(),
+    got: (paged: PagedList<EventRecordViewModel>) => {
+      if (this.image.show) {
+        this.image.gotData(paged);
+      }
+      if (this.complete.show) {
+        this.complete.data.got(paged);
+      }
+    },
+  };
 
   async onimage(args: PagedArgs<EventRecordViewModel>) {
     this.image.open(args);
@@ -75,5 +96,14 @@ export class MonitorRecordWindowBusiness extends WindowViewModel {
         this.media.multiple.show = true;
       }
     }
+  }
+  clear() {
+    this.stationId = undefined;
+    this.divisionId = undefined;
+  }
+  oncomplete(item: PagedArgs<EventRecordViewModel>) {
+    this.complete.paged.Data = item.data;
+    this.complete.paged.Page = item.page;
+    this.complete.show = true;
   }
 }

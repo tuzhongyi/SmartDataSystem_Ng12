@@ -19,15 +19,7 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
   @Input() opened = false;
   @Output() openedChange = new EventEmitter<boolean>();
 
-  @Input() public set selected(v: ILevelListNode | undefined) {
-    this._selected = v;
-    this.selectedChange.emit(v);
-  }
-  private _selected?: ILevelListNode;
-  public get selected(): ILevelListNode | undefined {
-    return this._selected;
-  }
-
+  @Input() selected?: ILevelListNode;
   @Output() selectedChange: EventEmitter<ILevelListNode | undefined> =
     new EventEmitter();
 
@@ -58,11 +50,13 @@ export class LevelListPanelComponent implements OnInit, OnDestroy {
 
   onselect(e: Event, node: ILevelListNode) {
     this.selected = node;
+    this.selectedChange.emit(this.selected);
     e.stopImmediatePropagation();
   }
 
   onclear(e: Event) {
     this.selected = undefined;
+    this.selectedChange.emit(this.selected);
     this.onclose();
     e.stopImmediatePropagation();
   }

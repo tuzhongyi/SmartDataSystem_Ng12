@@ -14,7 +14,7 @@ export class StatisticSummaryTaskChartConverter
     for (let i = 0; i < input.length; i++) {
       const statistic = input[i];
 
-      let complate = 0;
+      let complete = 0;
       let handle = 0;
       if (statistic.EventNumbers) {
         for (let i = 0; i < statistic.EventNumbers.length; i++) {

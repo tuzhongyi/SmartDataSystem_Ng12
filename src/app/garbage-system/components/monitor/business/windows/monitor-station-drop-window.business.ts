@@ -1,8 +1,5 @@
-import { Injectable } from '@angular/core';
-import {
-  GarbageDropStationTableArgs,
-  GarbageDropStationTableModel,
-} from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
+import { EventEmitter, Injectable } from '@angular/core';
+import { GarbageDropStationTableModel } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 
@@ -12,9 +9,14 @@ import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool'
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { ImageControlModel } from 'src/app/view-model/image-control.model';
-import { GarbageDropStationWindowIndex } from '../../../windows/garbage-drop-window/garbage-drop-window.model';
+import {
+  GarbageDropStationWindowArgs,
+  GarbageDropStationWindowIndex,
+} from '../../../windows/garbage-drop-window/garbage-drop-window.model';
 import { MediaMultipleStatisticWindowArgs } from '../../../windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
+import { MonitorRecordHandleCompleteWindowBusiness } from './monitor-event-record-handle-complete-window.business';
 import { MonitorImageWindowBusiness } from './monitor-image-window.business';
 import { MonitorMediaWindowBusiness } from './monitor-media-window.business';
 import { MonitorVideoWindowBusiness } from './monitor-video-window.business';
@@ -24,11 +26,18 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
   constructor(
     private media: MonitorMediaWindowBusiness,
     private image: MonitorImageWindowBusiness,
-    private video: MonitorVideoWindowBusiness
+    private video: MonitorVideoWindowBusiness,
+    private complete: MonitorRecordHandleCompleteWindowBusiness
   ) {
     super();
+    this.image.getData.subscribe((x) => {
+      this.data.get.emit(x);
+    });
+    this.complete.data.get.subscribe((x) => {
+      this.data.get.emit(x);
+    });
   }
-  args: GarbageDropStationTableArgs = {};
+  args: GarbageDropStationWindowArgs = {};
 
   index = GarbageDropStationWindowIndex.record;
   status?: GarbageTaskStatus;
@@ -37,6 +46,18 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
     height: '85%',
     width: '90%',
     transform: 'translate(-50%, -48%)',
+  };
+
+  data = {
+    get: new EventEmitter<Page>(),
+    got: (paged: PagedList<GarbageDropRecordViewModel>) => {
+      if (this.image.show) {
+        this.image.gotData(paged);
+      }
+      if (this.complete.show) {
+        this.complete.data.got(paged);
+      }
+    },
   };
 
   async onimage(
@@ -74,5 +95,14 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
     }
     this.media.multiple.fullplay = true;
     this.media.multiple.show = true;
+  }
+  clear() {
+    this.args.divisionId = undefined;
+    this.args.stationId = undefined;
+  }
+  oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
+    this.complete.paged.Data = item.data;
+    this.complete.paged.Page = item.page;
+    this.complete.show = true;
   }
 }

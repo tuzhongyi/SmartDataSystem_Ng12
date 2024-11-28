@@ -24,6 +24,7 @@ import { SearchOptions } from 'src/app/view-model/search-options.model';
 export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   @Input() status?: GarbageTaskStatus;
   @Input() divisionId?: string;
+  @Input() stationId?: string;
 
   @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
   @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
@@ -34,8 +35,12 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
     new EventEmitter();
+  @Output() complete = new EventEmitter<
+    PagedArgs<GarbageDropRecordViewModel>
+  >();
 
   constructor() {}
+
   isfilter = false;
 
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
@@ -44,6 +49,9 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   ngOnInit(): void {
     if (this.divisionId) {
       this.filter.divisionId = this.divisionId;
+    }
+    if (this.stationId) {
+      this.filter.stationId = this.stationId;
     }
     this.filter.IsTimeout = undefined;
     this.filter.IsHandle = undefined;
@@ -83,5 +91,8 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   }
   ongot(args: PagedList<GarbageDropRecordViewModel>) {
     this.got.emit(args);
+  }
+  oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
+    this.complete.emit(item);
   }
 }

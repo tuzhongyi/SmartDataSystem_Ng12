@@ -56,11 +56,12 @@ export class GarbageDropRecordTableBusiness
       params.IsTimeout = opts.IsTimeout;
     }
 
-    if (opts.divisionId) {
-      params.DivisionIds = [opts.divisionId];
-    }
     if (opts.stationId) {
       params.StationIds = [opts.stationId];
+    } else {
+      if (opts.divisionId) {
+        params.DivisionIds = [opts.divisionId];
+      }
     }
     if (opts.cameraId) {
       params.ResourceIds = [opts.cameraId];

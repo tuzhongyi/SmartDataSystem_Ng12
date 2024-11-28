@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { ToastrService } from 'ngx-toastr';
 import { GisType } from 'src/app/enum/gis-type.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { GisPoint } from 'src/app/network/model/garbage-station/gis-point.model';
@@ -16,7 +17,7 @@ export class CoordinateManageComponent implements OnInit {
   @Output() ok: EventEmitter<GarbageStation> = new EventEmitter();
   @Output() cancel: EventEmitter<void> = new EventEmitter();
 
-  constructor() {}
+  constructor(private toastr: ToastrService) {}
 
   GisType = GisType;
   station?: GarbageStation;
@@ -36,7 +37,30 @@ export class CoordinateManageComponent implements OnInit {
     return gis;
   }
 
+  private get check() {
+    if (!this.station) {
+      this.toastr.error('请选择厢房');
+      return false;
+    }
+    if (!this.station.GisPoint) {
+      this.station.GisPoint = new GisPoint();
+      this.station.GisPoint.GisType = GisType.GCJ02;
+    }
+    if (Number.isFinite(this.station.GisPoint.Latitude)) {
+      this.toastr.error('纬度坐标数值异常');
+      return false;
+    }
+    if (Number.isFinite(this.station.GisPoint.Longitude)) {
+      this.toastr.error('经度坐标数值异常');
+      return false;
+    }
+    return true;
+  }
+
   onok() {
+    if (!this.check) {
+      return;
+    }
     if (this.station) {
       if (!this.station.GisPoint) {
         this.station.GisPoint = new GisPoint();

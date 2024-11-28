@@ -1,51 +1,33 @@
 import { Injectable } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IConverter } from 'src/app/common/interfaces/converter.interface';
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 
-import { Division } from 'src/app/network/model/garbage-station/division.model';
-import { GetDivisionsParams } from 'src/app/network/request/division/division-request.params';
-import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
-import { ILevelListNode } from '../level-list-panel/level-list-panel.model';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
+import { DivisionType } from 'src/app/enum/division-type.enum';
+import { LevelDivisionPanelCommitteesBusiness } from './business/level-division-panel-committees.business';
+import { LevelDivisionPanelOtherBusiness } from './business/level-division-panel-other.business';
+import { ILevelDivisionNode } from './level-division-panel.model';
+import { LevelDivisionPanelService } from './level-division-panel.service';
 
 @Injectable()
-export class LevelDivisionPanelBusiness
-  implements IBusiness<Division[], ILevelListNode[]>
-{
+export class LevelDivisionPanelBusiness {
   constructor(
-    private service: DivisionRequestService,
+    public committees: LevelDivisionPanelCommitteesBusiness,
+    public other: LevelDivisionPanelOtherBusiness,
+    private service: LevelDivisionPanelService,
     private global: GlobalStorageService
   ) {}
 
-  Converter = new Converter();
-
-  async load(parent?: ILevelListNode): Promise<ILevelListNode[]> {
-    let parentId = parent?.Id;
-    if (!parentId) {
-      let division = await this.global.division.selected;
-      parentId = division.Id;
+  async load(node?: ILevelDivisionNode): Promise<ILevelDivisionNode[]> {
+    if (!node) {
+      node = await this.global.division.selected;
     }
-    let data = await this.getData(parentId);
-    let model = this.Converter.Convert(data);
-    if (parent && parent.ParentId) {
-      model.unshift({
-        Id: parent.ParentId,
-        Name: parent.Name,
-        Language: '上一级',
-      });
+    if (node.IsParent && node.ParentId) {
+      node = await this.service.get(node.ParentId);
     }
-    return model;
-  }
-  async getData(parentId?: string): Promise<Division[]> {
-    let params = new GetDivisionsParams();
-    params.ParentId = parentId;
-    let paged = await this.service.list(params);
-    return paged.Data;
-  }
-}
-
-class Converter implements IConverter<Division[], ILevelListNode[]> {
-  Convert(source: Division[], ...res: any[]): ILevelListNode[] {
-    return source;
+    let _default = await this.global.division.default;
+    if (node.DivisionType === DivisionType.Committees) {
+      return this.committees.load(node, _default.DivisionType);
+    } else {
+      return this.other.load(node, _default.DivisionType);
+    }
   }
 }

@@ -127,13 +127,13 @@ class Converter
           x.CameraType,
           Language.CameraClassification(x.Classification),
           Language.CameraUsageList(x.CameraUsage),
-          `x.PositionNo(${Language.CameraPosition(x.PositionNo)})`,
+          `${x.PositionNo}(${Language.CameraPosition(x.PositionNo)})`,
           Language.OnlineStatus(x.OnlineStatus),
           `场景变换：${Language.SceneChange(x.SceneChange)}`,
           `清晰度：${Language.ImageQuality(x.ImageQuality)}`,
           `视频亮度：${Language.Brightness(x.Brightness)}`,
-          `色差/偏色${Language.Aberration(x.Aberration)}`,
-          `视频干扰${Language.Disturbance(x.Disturbance)}`,
+          `色差/偏色：${Language.Aberration(x.Aberration)}`,
+          `视频干扰：${Language.Disturbance(x.Disturbance)}`,
         ].filter((x) => !!x);
         return values.join('|');
       });

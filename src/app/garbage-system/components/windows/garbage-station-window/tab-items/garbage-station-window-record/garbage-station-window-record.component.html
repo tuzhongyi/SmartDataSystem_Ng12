@@ -21,6 +21,7 @@
       (video)="onvideo($event)"
       [get]="get"
       (got)="ongot($event)"
+      (complete)="oncomplete($event)"
     >
     </howell-garbage-drop-record-table>
     <garbage-drop-record-task-table #task [args]="filter" [load]="load">

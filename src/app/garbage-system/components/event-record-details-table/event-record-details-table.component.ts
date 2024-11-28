@@ -74,6 +74,7 @@ export class EventRecordDetailsTableComponent
   }
 
   async ngOnInit() {
+    this.filter.type = this.type;
     this.model = await this.business.load();
   }
 

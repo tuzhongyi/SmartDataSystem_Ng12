@@ -14,9 +14,12 @@
     <interval-division-station-filter
       *ngIf="filter.show"
       [date_sync]="true"
-      [divisionId]="divisionId"
+      [(duration)]="filter.filter.duration"
+      [(divisionId)]="filter.filter.divisionId"
+      [(stationId)]="filter.filter.stationId"
+      [(cameraId)]="filter.filter.cameraId"
+      [(handle)]="filter.filter.handle"
       [display_handle]="type != EventType.IllegalDrop"
-      [(filter)]="filter.filter"
     >
     </interval-division-station-filter>
   </div>
@@ -32,6 +35,7 @@
         (got)="ongot($event)"
         (card)="oncard($event)"
         (allvideo)="onallvideo($event)"
+        (complete)="oncomplete($event)"
       >
       </howell-event-record-table>
     </ng-container>

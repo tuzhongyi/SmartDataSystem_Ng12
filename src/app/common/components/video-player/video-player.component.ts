@@ -182,6 +182,8 @@ export class VideoPlayerComponent
       clearTimeout(this.registHandle);
     }
     this.destroy.emit(this.model);
+    this.model = undefined;
+    this.url = undefined;
   }
   load() {
     if (!this.isloaded) {

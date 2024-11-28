@@ -284,6 +284,9 @@ export class MapControlComponent
     this.amap.event.menu.illegaldrop.subscribe((x) => {
       this.illegalDropClicked.emit(x);
     });
+    this.amap.event.menu.garbagefull.subscribe((x) => {
+      this.garbageFullClicked.emit(x);
+    });
     this.amap.event.menu.mixedinto.subscribe((x) => {
       this.mixedIntoClicked.emit(x);
     });

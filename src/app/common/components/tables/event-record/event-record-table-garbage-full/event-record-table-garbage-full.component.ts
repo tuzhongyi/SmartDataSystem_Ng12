@@ -4,7 +4,11 @@ import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { ColorTool } from 'src/app/common/tools/color-tool/color.tool';
 import { EventType } from 'src/app/enum/event-type.enum';
-import { IModel, ImagePagedArgs } from 'src/app/network/model/model.interface';
+import {
+  IModel,
+  ImagePagedArgs,
+  PagedArgs,
+} from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -39,6 +43,8 @@ export class EventRecordTableGarbageFullComponent
   @Output() downloadImage: EventEmitter<EventRecordViewModel> =
     new EventEmitter();
   @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
+    new EventEmitter();
 
   constructor() {
     super(true);
@@ -149,6 +155,20 @@ export class EventRecordTableGarbageFullComponent
   onallvideo(e: Event, model: EventRecordViewModel) {
     this.allvideo.emit(model);
     if (model === this.selected) {
+      e.stopPropagation();
+    }
+  }
+  oncomplete(e: Event, item: EventRecordViewModel) {
+    let plain = instanceToPlain(this.page);
+    let page = plainToInstance(Page, plain);
+    page.RecordCount = this.page.TotalRecordCount;
+    page.PageCount = this.page.TotalRecordCount;
+    page.PageSize = 1;
+    let _index = this.datas.indexOf(item);
+    page.PageIndex =
+      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+    this.complete.emit({ page: page, data: item });
+    if (item === this.selected) {
       e.stopPropagation();
     }
   }

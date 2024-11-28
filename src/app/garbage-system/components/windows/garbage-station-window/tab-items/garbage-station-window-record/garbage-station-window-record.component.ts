@@ -34,6 +34,9 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<GarbageDropRecordViewModel>> =
     new EventEmitter();
+  @Output() complete = new EventEmitter<
+    PagedArgs<GarbageDropRecordViewModel>
+  >();
 
   constructor() {}
   isfilter = false;
@@ -83,5 +86,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   }
   ongot(args: PagedList<GarbageDropRecordViewModel>) {
     this.got.emit(args);
+  }
+  oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
+    this.complete.emit(item);
   }
 }

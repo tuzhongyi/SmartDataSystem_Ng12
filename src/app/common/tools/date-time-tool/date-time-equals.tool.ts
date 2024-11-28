@@ -1,10 +1,16 @@
 export class DateTimeEqualsTool {
   today(date: Date): boolean {
-    let today = new Date();
+    return this.day.equals(date, new Date());
+  }
+  day = new DateEqualsTool();
+}
+
+class DateEqualsTool {
+  equals(date1: Date, date2: Date): boolean {
     return (
-      date.getFullYear() === today.getFullYear() &&
-      date.getMonth() === today.getMonth() &&
-      date.getDate() === today.getDate()
+      date1.getFullYear() === date2.getFullYear() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getDate() === date2.getDate()
     );
   }
 }

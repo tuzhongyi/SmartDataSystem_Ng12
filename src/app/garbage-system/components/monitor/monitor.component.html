@@ -187,7 +187,6 @@
   [model]="video.model"
   [window]="video"
   [title]="video.title"
-  fullstyle="{"
   [windowstyle]="map.fullscreen ? video.fullstyle : video.style"
   [mode]="
     guide.index === guide.Index.map_video_preview
@@ -218,10 +217,11 @@
   [divisionId]="window.record.divisionId"
   (image)="window.record.onimage($event)"
   (video)="window.record.onvideo($event)"
-  [get]="window.image.getData"
-  (got)="window.image.gotData($event)"
+  [get]="window.record.data.get"
+  (got)="window.record.data.got($event)"
   (card)="window.record.oncard($event)"
   (allvideo)="window.record.onallvideo($event)"
+  (complete)="window.record.oncomplete($event)"
 >
 </howell-event-record-window>
 
@@ -245,20 +245,24 @@
   (position)="map.onposition($event)"
   (chartdblclick)="window.drop.onchartdblclick($event)"
   (video)="window.drop.onvideo($event)"
-  [get]="window.image.getData"
-  (got)="window.image.gotData($event)"
+  [get]="window.drop.data.get"
+  (got)="window.drop.data.got($event)"
+  (complete)="window.drop.oncomplete($event)"
 >
 </howell-garbage-drop-window>
 
 <howell-garbage-full-window
   *ngIf="window.full.show"
   [Model]="window.full"
+  [divisionId]="window.full.args.divisionId"
+  [stationId]="window.full.args.stationId"
   [style]="window.full.style"
   (image)="window.full.onimage($event)"
   (video)="window.full.onvideo($event)"
   (allvideo)="window.full.onallvideo($event)"
-  [get]="window.image.getData"
-  (got)="window.image.gotData($event)"
+  [get]="window.full.data.get"
+  (got)="window.full.data.got($event)"
+  (complete)="window.full.oncomplete($event)"
 >
 </howell-garbage-full-window>
 
@@ -403,6 +407,20 @@
   <info-details-division-committees
     [divisionId]="window.details.committees.divisionId"
   ></info-details-division-committees>
+</app-window>
+<app-window
+  [Model]="window.complete"
+  *ngIf="window.complete.show"
+  [style]="window.complete.style"
+>
+  <event-handle-complete
+    [data]="window.complete.paged.Data"
+    [first]="window.complete.first"
+    [last]="window.complete.last"
+    [index]="window.complete.paged.Page.PageIndex"
+    (prev)="window.complete.onprev()"
+    (next)="window.complete.onnext()"
+  ></event-handle-complete>
 </app-window>
 
 <div class="guide" *ngIf="guide.show">

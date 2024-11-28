@@ -24,6 +24,7 @@ export class GarbageFullWindowRecordComponent implements OnInit {
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
+  @Output() complete = new EventEmitter<PagedArgs<EventRecordViewModel>>();
 
   constructor(
     public filter: EventRecordOperationFilterBusiness,
@@ -46,6 +47,7 @@ export class GarbageFullWindowRecordComponent implements OnInit {
         this.filter.filter.divisionId = x.Id;
       });
     }
+    this.filter.filter.type = this.type;
   }
 
   onimage(item: PagedArgs<EventRecordViewModel>) {
@@ -62,5 +64,8 @@ export class GarbageFullWindowRecordComponent implements OnInit {
   }
   ongot(data: any) {
     this.got.emit(data);
+  }
+  oncomplete(item: PagedArgs<EventRecordViewModel>) {
+    this.complete.emit(item);
   }
 }

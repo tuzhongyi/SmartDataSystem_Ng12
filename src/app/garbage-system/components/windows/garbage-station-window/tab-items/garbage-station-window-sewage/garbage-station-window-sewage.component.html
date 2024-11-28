@@ -11,7 +11,10 @@
   <div class="garbage-station-window-sewage-filter" *ngIf="isfilter">
     <interval-division-station-filter
       [date_sync]="true"
-      [(filter)]="filter"
+      [(duration)]="filter.duration"
+      [(divisionId)]="filter.divisionId"
+      [(stationId)]="filter.stationId"
+      [(cameraId)]="filter.cameraId"
       [display_handle]="false"
     ></interval-division-station-filter>
   </div>

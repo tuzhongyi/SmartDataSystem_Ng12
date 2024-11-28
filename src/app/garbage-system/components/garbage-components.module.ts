@@ -19,6 +19,8 @@ import { DeviceStateComponent } from './device-state/device-state.component';
 import { DisposalCountComponent } from './disposal-count/disposal-count.component';
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
 import { DivisionListComponent } from './division-list/division-list.component';
+import { EventHandleCompleteItemComponent } from './event-handle-complete-item/event-handle-complete-item.component';
+import { EventHandleCompleteComponent } from './event-handle-complete/event-handle-complete.component';
 import { EventRecordDetailsTableComponent } from './event-record-details-table/event-record-details-table.component';
 import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
@@ -96,6 +98,10 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     GarbageStationWindowStayComponent,
 
     IntervalFilterComponent,
+
+    EventHandleCompleteComponent,
+    EventHandleCompleteItemComponent,
+
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,
@@ -143,6 +149,10 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     GarbageStationWindowGeneralComponent,
     GarbageStationWindowStayComponent,
     IntervalFilterComponent,
+
+    EventHandleCompleteComponent,
+    EventHandleCompleteItemComponent,
+
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
     ...ChartComponents,

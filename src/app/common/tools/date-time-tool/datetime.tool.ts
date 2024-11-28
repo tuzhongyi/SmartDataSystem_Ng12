@@ -56,7 +56,7 @@ export class DateTimeTool {
     duration.end = next;
     return duration;
   }
-  static allDay(date: Date): Duration {
+  static allDay(date: Date = new Date()): Duration {
     let duration = {
       begin: new Date(),
       end: new Date(),

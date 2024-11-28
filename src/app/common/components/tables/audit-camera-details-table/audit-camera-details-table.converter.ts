@@ -87,6 +87,42 @@ class TableItemDataConverter {
     let item = new TableItemData('GarbageStation', text);
     return item;
   }
+  Committees(data: CameraModel): TableItemData {
+    let text = new Promise<string>((resolve) => {
+      data.GarbageStation.then((station) => {
+        if (station.Division) {
+          station.Division.then((division) => {
+            resolve(division.Name);
+          });
+        } else {
+          resolve('-');
+        }
+      });
+    });
+    let item = new TableItemData('Committees', text);
+    return item;
+  }
+  County(data: CameraModel): TableItemData {
+    let text = new Promise<string>((resolve) => {
+      data.GarbageStation.then((station) => {
+        if (station.Division) {
+          station.Division.then((committees) => {
+            if (committees.Parent) {
+              committees.Parent.then((county) => {
+                resolve(county.Name);
+              });
+            } else {
+              resolve('-');
+            }
+          });
+        } else {
+          resolve('-');
+        }
+      });
+    });
+    let item = new TableItemData('County', text);
+    return item;
+  }
   PositionNo(data: CameraModel): TableItemData {
     let text = new Promise<string>((resolve) => {
       if (data.PositionNo) {

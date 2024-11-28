@@ -53,7 +53,10 @@ export class DetailsChartComponent
 
   get has() {
     return {
-      heatmap: this.eventType === EventType.IllegalDrop,
+      heatmap:
+        this.eventType === EventType.IllegalDrop ||
+        this.eventType === EventType.MixedInto ||
+        this.eventType === EventType.GarbageFull,
     };
   }
 

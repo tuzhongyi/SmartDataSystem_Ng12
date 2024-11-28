@@ -4,12 +4,6 @@ import { StreamType } from 'src/app/enum/stream-type.enum';
 import { UserResourceType } from 'src/app/enum/user-resource-type.enum';
 import { User } from 'src/app/network/model/garbage-station/user.model';
 
-/*
- * @Author: pmx
- * @Date: 2021-09-14 14:59:21
- * @Last Modified by: zzl
- * @Last Modified time: 2024-08-21 16:34:10
- */
 @Injectable({
   providedIn: 'root',
 })

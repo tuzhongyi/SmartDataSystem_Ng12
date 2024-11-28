@@ -7,19 +7,20 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { plainToClass } from 'class-transformer';
 import { Observable } from 'rxjs';
+import { SessionStorageService } from 'src/app/common/service/session-storage.service';
 import { HowellResponse } from '../model/howell-response.model';
-import { AuthorizationService } from './auth/auth-request.service';
+import { DigestResponse } from './auth/digest-response.model';
 import { Digest } from './digest';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HowellAuthHttpService {
-  nc = 0;
   constructor(
-    private _http: HttpClient,
-    private _authorizationService: AuthorizationService
+    private http: HttpClient,
+    private session: SessionStorageService
   ) {}
 
   public postBase64String(
@@ -27,16 +28,13 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<Blob> {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
+    const myHeaders = this.generateHttpHeader('POST', url);
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
-    return this._http.post(url, base64, {
+    return this.http.post(url, base64, {
       headers: head,
       params: params,
       responseType: 'blob',
@@ -48,13 +46,13 @@ export class HowellAuthHttpService {
     base64: string,
     params?: HttpParams
   ): Observable<T> {
-    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
+    const myHeaders = this.generateHttpHeader('PUT', url);
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'text/plain',
       Accept: 'text/plain',
     });
-    return this._http.put<T>(url, base64, {
+    return this.http.put<T>(url, base64, {
       headers: head,
       params: params,
       responseType: 'json',
@@ -62,13 +60,13 @@ export class HowellAuthHttpService {
   }
 
   public getStream(url: string, params?: HttpParams): Observable<Blob> {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
+    const myHeaders = this.generateHttpHeader('GET', url);
     const head = new HttpHeaders({
       Authorization: myHeaders.get('Authorization') || '',
       'Content-Type': 'application/json',
       Accept: 'text/plain',
     });
-    return this._http.get(url, {
+    return this.http.get(url, {
       headers: head,
       params: params,
       responseType: 'blob',
@@ -83,21 +81,21 @@ export class HowellAuthHttpService {
   }
 
   public get<R>(url: string, params?: HttpParams) {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
+    const myHeaders = this.generateHttpHeader('GET', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
     };
-    return this._http.get<R>(url, httpOptions);
+    return this.http.get<R>(url, httpOptions);
   }
 
   public getString(url: string, params?: HttpParams): Observable<string> {
-    const myHeaders = this._authorizationService.generateHttpHeader('GET', url);
+    const myHeaders = this.generateHttpHeader('GET', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
     };
-    return this._http.get<string>(url, httpOptions);
+    return this.http.get<string>(url, httpOptions);
   }
 
   public getCache<T = any, R = T>(url: string, params?: HttpParams) {
@@ -107,7 +105,7 @@ export class HowellAuthHttpService {
       headers: myHeaders,
       params: params,
     };
-    return this._http.get<R>(url, httpOptions);
+    return this.http.get<R>(url, httpOptions);
   }
 
   post<T = any, R = any>(
@@ -115,15 +113,12 @@ export class HowellAuthHttpService {
     model?: T,
     params?: HttpParams
   ): Observable<R> {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
+    const myHeaders = this.generateHttpHeader('POST', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
     };
-    return this._http.post<R>(url, model, httpOptions);
+    return this.http.post<R>(url, model, httpOptions);
   }
 
   public howellPost<T = any, R = HowellResponse<T>>(
@@ -135,15 +130,12 @@ export class HowellAuthHttpService {
   }
 
   public postBinaryData<T>(url: string, data: BinaryData) {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
+    const myHeaders = this.generateHttpHeader('POST', url);
     myHeaders.set('Content-Type', 'application/octet-stream');
     const httpOptions = {
       headers: myHeaders,
     };
-    return this._http.post<T>(url, data, httpOptions);
+    return this.http.post<T>(url, data, httpOptions);
   }
 
   public postReturnString<T = any>(
@@ -152,15 +144,12 @@ export class HowellAuthHttpService {
     params?: HttpParams
   ): Observable<string> {
     // const myHeaders = this.getHttpHeaders('POST', url);
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'POST',
-      url
-    );
+    const myHeaders = this.generateHttpHeader('POST', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
     };
-    return this._http.post<string>(url, model, httpOptions);
+    return this.http.post<string>(url, model, httpOptions);
   }
 
   public postString<T = any, R = HowellResponse<T>>(
@@ -175,16 +164,16 @@ export class HowellAuthHttpService {
       params: params,
       'Content-Type': 'text/plain',
     };
-    return this._http.post<R>(url, base64, httpOptions);
+    return this.http.post<R>(url, base64, httpOptions);
   }
 
   public put<T = any, R = any>(url: string, model: T, params?: HttpParams) {
-    const myHeaders = this._authorizationService.generateHttpHeader('PUT', url);
+    const myHeaders = this.generateHttpHeader('PUT', url);
     const httpOptions = {
       headers: myHeaders,
       params: params,
     };
-    return this._http.put<R>(url, model, httpOptions);
+    return this.http.put<R>(url, model, httpOptions);
   }
 
   public howellPut<T = any, R = HowellResponse<T>>(
@@ -196,14 +185,11 @@ export class HowellAuthHttpService {
   }
 
   delete<R = any>(url: string): Observable<R> {
-    const myHeaders = this._authorizationService.generateHttpHeader(
-      'DELETE',
-      url
-    );
+    const myHeaders = this.generateHttpHeader('DELETE', url);
     const httpOptions = {
       headers: myHeaders,
     };
-    return this._http.delete<R>(url, httpOptions);
+    return this.http.delete<R>(url, httpOptions);
   }
 
   public howellDelete<T = any, R = HowellResponse<T>>(
@@ -219,7 +205,7 @@ export class HowellAuthHttpService {
     const httpOptions = {
       headers: httpHeaders,
     };
-    return this._http.get<any>(url, httpOptions);
+    return this.http.get<any>(url, httpOptions);
   }
 
   downloadFile(
@@ -231,7 +217,7 @@ export class HowellAuthHttpService {
       reportProgress: true,
     });
 
-    this._http.request(req).subscribe((event: any) => {
+    this.http.request(req).subscribe((event: any) => {
       // Via this API, you get access to the raw event stream.
       // Look for download progress events.
       if (event.type === HttpEventType.DownloadProgress) {
@@ -251,14 +237,31 @@ export class HowellAuthHttpService {
     let digest = new Digest();
     // user = new SessionUser();
     var challenge = digest.parseServerChallenge();
-    this.nc += 1;
+
     return digest.generateRequestHeader(
-      this.nc,
+      this.session.nc,
       challenge,
       '1',
       '1',
       method,
       uri
     );
+  }
+
+  generateHttpHeader(method: string, uri: string) {
+    let challenge = plainToClass(DigestResponse, this.session.challenge);
+    let username = this.session.username;
+    let password = this.session.password;
+    let authHeader = challenge.ToString(
+      method,
+      uri,
+      username,
+      password,
+      this.session.nc
+    );
+    return new HttpHeaders({
+      Authorization: authHeader,
+      'X-WebBrowser-Authentication': 'Forbidden',
+    });
   }
 }

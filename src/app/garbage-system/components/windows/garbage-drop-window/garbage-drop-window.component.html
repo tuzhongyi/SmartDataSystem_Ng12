@@ -2,20 +2,23 @@
   <ng-container *ngIf="Model.show">
     <div class="garbage-drop-window">
       <div class="garbage-drop-window-body">
-        <ng-container *ngIf="index == Index.record">
+        <ng-container *ngIf="index == Index.record && divisionId">
           <garbage-drop-window-item-record
+            [divisionId]="divisionId"
+            [stationId]="stationId"
             [status]="taskStatus"
             [get]="get"
             (got)="ongot($event)"
             (image)="onimage($event)"
             (video)="onvideo($event)"
+            (complete)="oncomplete($event)"
           >
             <ng-container *ngTemplateOutlet="header"></ng-container>
           </garbage-drop-window-item-record>
         </ng-container>
         <ng-container *ngIf="index == Index.station">
           <garbage-drop-window-item-station
-            [args]="args"
+            [args]="stationArgs"
             (image)="onimage($event)"
             (position)="onposition($event)"
           >

@@ -27,6 +27,7 @@ export class GarbageFullWindowComponent
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
+  @Output() complete = new EventEmitter<PagedArgs<EventRecordViewModel>>();
 
   constructor() {
     super();
@@ -55,5 +56,8 @@ export class GarbageFullWindowComponent
   }
   ongot(data: any) {
     this.got.emit(data);
+  }
+  oncomplete(model: PagedArgs<EventRecordViewModel>) {
+    this.complete.emit(model);
   }
 }

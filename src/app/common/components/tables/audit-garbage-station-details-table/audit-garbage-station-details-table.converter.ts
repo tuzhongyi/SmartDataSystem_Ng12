@@ -75,6 +75,15 @@ export class AuditGarbageStationDetailsTableConverter {
 
 class TableItemDataConverter {
   [key: keyof TableConfig]: (data: GarbageStationModel) => TableItemData;
+
+  DeviceAccessId(data: GarbageStationModel): TableItemData {
+    let text = new Promise<string>((resolve) => {
+      resolve(data.DeviceAccessId ?? '-');
+    });
+    let item = new TableItemData('DeviceAccessId', text);
+    return item;
+  }
+
   Community(data: GarbageStationModel): TableItemData {
     let text = new Promise<string>((resolve) => {
       resolve(data.CommunityName ?? '-');
@@ -327,6 +336,17 @@ class TableItemDataConverter {
     });
 
     let item = new TableItemData('DisableEventTypes', text);
+    return item;
+  }
+  GisPoint(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GisPoint) {
+        resolve(`${data.GisPoint.Longitude},${data.GisPoint.Latitude}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('GisPoint', text);
     return item;
   }
 }

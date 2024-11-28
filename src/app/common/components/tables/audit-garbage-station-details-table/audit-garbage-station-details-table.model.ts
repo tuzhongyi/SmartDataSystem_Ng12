@@ -98,6 +98,8 @@ export class AuditGarbageStationDetailsTableConfig {
   CreateTime = new ConfigItem();
   UpdateTime = new ConfigItem();
 
+  GisPoint = new ConfigItem();
+
   Device = new ConfigItem();
   GCHA = new ConfigItem();
   CountSchedule = new ConfigItem();
@@ -105,6 +107,7 @@ export class AuditGarbageStationDetailsTableConfig {
 
   DumpPointType = new ConfigItem();
   DisableEventTypes = new ConfigItem();
+  DeviceAccessId = new ConfigItem();
 }
 export const AuditGarbageStationDetailsTableConfigLanguage: {
   [key: keyof AuditGarbageStationDetailsTableConfig]: string;
@@ -132,4 +135,6 @@ export const AuditGarbageStationDetailsTableConfigLanguage: {
   ChipTemperature: 'CPU温度',
   DumpPointType: '投放点类型',
   DisableEventTypes: '停用事件',
+  GisPoint: '坐标',
+  DeviceAccessId: '设备接入编号',
 };

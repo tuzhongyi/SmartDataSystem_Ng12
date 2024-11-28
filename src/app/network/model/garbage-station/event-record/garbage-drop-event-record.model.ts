@@ -40,10 +40,13 @@ export class GarbageDropEventData {
   /**	Boolean	是否滞留	M */
   IsTimeout!: boolean;
   /**	CameraImageUrl[]	垃圾落地的图片ID、图片地址列表	O */
+  @Type(() => CameraImageUrl)
   DropImageUrls?: CameraImageUrl[];
   /**	CameraImageUrl[]	垃圾处置的图片ID、图片地址列表	O */
+  @Type(() => CameraImageUrl)
   HandleImageUrls?: CameraImageUrl[];
   /**	CameraImageUrl[]	滞留的图片ID、图片地址列表	O */
+  @Type(() => CameraImageUrl)
   TimeoutImageUrls?: CameraImageUrl[];
   /**	Boolean	处置人员是否已处置	O */
   Processed?: boolean;
