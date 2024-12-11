@@ -17,11 +17,11 @@
       <interval-division-station-filter
         [type]="type"
         [date_sync]="true"
-        [(duration)]="filter.filter.duration"
-        [(divisionId)]="filter.filter.divisionId"
-        [(stationId)]="filter.filter.stationId"
-        [(cameraId)]="filter.filter.cameraId"
-        [(handle)]="filter.filter.handle"
+        [(duration)]="filter.duration"
+        [(divisionId)]="filter.divisionId"
+        [(stationId)]="filter.stationId"
+        [(cameraId)]="filter.cameraId"
+        [(handle)]="filter.handle"
       >
       </interval-division-station-filter>
     </div>
@@ -33,7 +33,7 @@
         <howell-event-record-table
           [load]="filter.load"
           [type]="type"
-          [filter]="filter.filter"
+          [filter]="filter"
           (image)="onimage($event)"
           (video)="onvideo($event)"
           (allvideo)="onallvideo($event)"
@@ -49,7 +49,7 @@
           [load]="filter.load"
           (image)="onimage($event)"
           (video)="onvideo($event)"
-          [filter]="filter.filter"
+          [filter]="filter"
           [get]="get"
           (got)="ongot($event)"
         >

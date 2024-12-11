@@ -1,4 +1,5 @@
 import { SearchConditionKey } from 'src/app/enum/search-condition.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 /**垃圾落地事件 */
 export class IllegalDropEventModel<T = any> {
@@ -8,7 +9,7 @@ export class IllegalDropEventModel<T = any> {
   /**资源名称 */
   ResourceName!: string;
   /**投放点 */
-  StationName!: string;
+  Station!: Promise<GarbageStation>;
   /**街道 */
   CountyName!: string;
   /**居委会 */

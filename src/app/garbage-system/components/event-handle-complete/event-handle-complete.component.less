@@ -6,11 +6,21 @@
 
   @head-height: 36px;
   @foot-height: 50px;
+  @line-height: 100px;
+  @info-height: 32px;
+
+
 
   &-head {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
+
+    &-title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-end;
+    }
 
     .operation {
       display: flex;
@@ -38,106 +48,123 @@
     }
   }
 
-  &-body {
-    height: calc(100% - @head-height - @foot-height - 10px);
+  &-info {
     width: 100%;
-    padding: 0 40px;
-    overflow-y: scroll;
+    height: @info-height;
+    margin-bottom: 10px;
 
-    &-left {
-      border-right: 1px solid #3972cd;
-    }
-
-    &-right {
-      border-left: 1px solid #3972cd;
-    }
-
-    .time {
+    &.forms {
       display: flex;
-      justify-content: center;
-      align-items: center;
+      justify-content: flex-start;
+      gap: 50px;
+      flex-wrap: wrap;
+
+      .form-item {
+        width: calc(50% - 10px);
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+        width: auto;
+        align-items: center;
+
+        &-title {
+          flex-grow: 0;
+          color: #cfd7ff;
+          font-size: 18px;
+          white-space: nowrap;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        &-value {
+          flex-grow: 1;
+          color: white;
+          align-items: center;
+        }
+      }
     }
+  }
 
-    ::ng-deep {
-      .complete {
+  .time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 36px;
+  }
 
+  &-line {
+    width: 100%;
+    height: @line-height;
+    // background: rgba(36, 72, 165, 0.05);
+    // border: 2px rgba(117, 134, 224, 0.15) solid;
+    border: 1px solid #5e6ebf;
+    margin-bottom: 10px;
+  }
 
-        &-item {
+  &-body {
+    height: calc(100% - @head-height - @foot-height - @line-height - @info-height - 10px * 3);
+    width: 100%;
 
-          position: relative;
-          width: 100%;
-          display: block;
-
-          &-content {
-            width: 270px;
-            background-color: #3972cd;
-            clip-path: polygon(10px 0%,
-                100% 0%,
-                100% calc(100% - 10px),
-                calc(100% - 10px) 100%,
-                0% 100%,
-                0% 10px);
-
-            &-inner {
-              background-color: #102040;
-              clip-path: polygon(11px 2px,
-                  calc(100% - 2px) 2px,
-                  calc(100% - 2px) calc(100% - 11px),
-                  calc(100% - 11px) calc(100% - 2px),
-                  2px calc(100% - 2px),
-                  2px 11px);
-            }
-
-            &-head {
-              width: 100%;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-            }
-
-            &-body {
-              color: #cfd7ff;
-              display: flex;
-              justify-content: space-between;
-              flex-wrap: wrap;
-
-              &>* {
-                min-width: 50%;
-
-                &:nth-child(even) {
-                  text-align: right;
-                }
-              }
-            }
-          }
+    .complete {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
 
-          &-images {
+      &-item {
+        // background: rgba(36, 72, 165, 0.05);
+        // border: 2px rgba(117, 134, 224, 0.15) solid;
+        border: 1px solid #5e6ebf;
+        padding: 10px 20px;
+        padding-bottom: 0;
+
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+
+        &-head {
+          display: flex;
+          justify-content: flex-start;
+          align-items: baseline;
+          gap: 5px;
+
+          .sub {
+            height: 100%;
             display: flex;
-            margin: 10px 0 20px 0;
+            align-items: flex-end;
+            color: #21e452;
+            gap: 2px;
+          }
+        }
+
+
+        &-images {
+          width: 100%;
+
+          overflow-x: auto;
+          padding-bottom: 20px;
+
+          &-scroll {
+
+            display: flex;
             width: fit-content;
-            flex-direction: column;
             gap: 10px;
-            overflow: visible;
 
             &>* {
               cursor: pointer;
-              width: 400px;
+              width: 360px;
               aspect-ratio: 16/9;
-              background-repeat: repeat;
+              background-repeat: no-repeat;
               background-size: 100% 100%;
 
             }
-
-            &.top {
-              position: absolute;
-              bottom: 50px;
-              right: 1px;
-              margin: 20px 0 10px 0;
-            }
           }
+
         }
       }
+
     }
   }
 

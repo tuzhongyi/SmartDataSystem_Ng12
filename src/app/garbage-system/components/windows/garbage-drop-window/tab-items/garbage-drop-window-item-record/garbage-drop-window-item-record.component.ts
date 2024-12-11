@@ -26,7 +26,6 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   @Input() divisionId?: string;
   @Input() stationId?: string;
 
-  @Input() filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
   @Output() image: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
     new EventEmitter();
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
@@ -42,6 +41,7 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   constructor() {}
 
   isfilter = false;
+  filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
 
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   @ViewChild('task') task?: GarbageDropRecordTaskTableComponent;

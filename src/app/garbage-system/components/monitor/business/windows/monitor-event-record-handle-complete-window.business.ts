@@ -10,8 +10,9 @@ export class MonitorRecordHandleCompleteWindowBusiness extends WindowViewModel {
     super();
   }
   style = {
-    height: '800px',
+    height: '822px',
     width: '60%',
+    padding: '10px 20px',
 
     transform: 'translate(-50%, -48%)',
   };

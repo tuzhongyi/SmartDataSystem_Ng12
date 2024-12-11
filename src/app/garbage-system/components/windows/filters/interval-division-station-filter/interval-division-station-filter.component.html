@@ -57,6 +57,7 @@
       class="filter-item-value"
       [divisionId]="divisionId"
       [(stationId)]="stationId"
+      (stationIdChange)="onstation()"
     ></howell-select-station>
 
     <!-- <app-select-control
@@ -89,6 +90,7 @@
       [divisionId]="this.divisionId"
       [stationId]="this.stationId"
       [(selectedId)]="this.cameraId"
+      (selectedIdChange)="oncamera()"
     ></howell-select-camera>
   </div>
   <div class="filter-item hashandle" *ngIf="display_handle">

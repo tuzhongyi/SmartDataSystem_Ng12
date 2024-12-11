@@ -20,9 +20,8 @@ import { DisposalCountComponent } from './disposal-count/disposal-count.componen
 import { DisposalRankComponent } from './disposal-rank/disposal-rank.component';
 import { DivisionListComponent } from './division-list/division-list.component';
 import { EventHandleCompleteItemComponent } from './event-handle-complete-item/event-handle-complete-item.component';
+import { EventHandleCompleteLineComponent } from './event-handle-complete-line/event-handle-complete-line.component';
 import { EventHandleCompleteComponent } from './event-handle-complete/event-handle-complete.component';
-import { EventRecordDetailsTableComponent } from './event-record-details-table/event-record-details-table.component';
-import { EventRecordDetailsComponent } from './event-record-details/event-record-details.component';
 import { EventStatisticComponent } from './event-statistic/event-statistic.component';
 import { IllegalMixintoRankComponent } from './illegal-mixinto-rank/illegal-mixinto-rank.component';
 import { InfoDetailsComponents } from './info-details/info-details.module';
@@ -65,8 +64,6 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     DisposalRankComponent,
     DeviceStateComponent,
     DisposalCountComponent,
-    EventRecordDetailsTableComponent,
-    EventRecordDetailsComponent,
     StatisticCardComponent,
     StatisticCardGroupComponent,
     MapControlButtonComponent,
@@ -101,6 +98,7 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
 
     EventHandleCompleteComponent,
     EventHandleCompleteItemComponent,
+    EventHandleCompleteLineComponent,
 
     ...GARBAGE_SYSTEM_WINDOW_FILTER_COMPONENTS,
     ...GARBAGE_SYSTEM_WINDOW_COMPONENTS,
@@ -125,8 +123,6 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     DisposalRankComponent,
     DeviceStateComponent,
     DisposalCountComponent,
-    EventRecordDetailsTableComponent,
-    EventRecordDetailsComponent,
     StatisticCardComponent,
     StatisticCardGroupComponent,
     MapControlComponent,

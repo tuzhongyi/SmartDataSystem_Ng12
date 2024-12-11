@@ -15,21 +15,12 @@ export class DateTimeMonthWeekTool {
     return Math.ceil((day + first) / 7);
   }
 
-  getMonthWeek(date: Date) {
-    /**
-     * a = d = 当前日期
-     * b = 6 - w = 当前周的还有几天过完(不算今天)
-     * a + b 的和在除以7 就是当天是当前月份的第几周
-     */
+  getMonthWeek(date: Date): number {
+    const firstDayOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
+    const firstDayOfWeek = firstDayOfMonth.getDay() || 7; // 获取当月第一天是周几，周日视为第7天
+    const dayOfMonth = date.getDate();
 
-    let w = date.getDay();
-    let d = date.getDate();
-    if (w == 0) {
-      w = 7;
-    }
-
-    let week = Math.ceil((d + 6 - w) / 7);
-
-    return week;
+    // 计算当前日期是当月的第几周
+    return Math.ceil((dayOfMonth + firstDayOfWeek - 1) / 7);
   }
 }

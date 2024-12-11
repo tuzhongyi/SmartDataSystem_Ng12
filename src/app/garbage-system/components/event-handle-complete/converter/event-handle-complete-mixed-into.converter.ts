@@ -15,6 +15,7 @@ export class EventHandleCompleteMixedIntoConverter
   constructor(private service: EventHandleCompleteService) {}
   convert(input: MixedIntoEventRecord) {
     let model = new EventRecordCompleteModel();
+    model.RecordNo = input.EventId;
     model.Record = input;
     model.GarbageStation = this.service.station.cache.get(input.Data.StationId);
 
@@ -42,8 +43,8 @@ export class EventHandleCompleteMixedIntoConverter
       return a.Time.getTime() - b.Time.getTime();
     });
     model.Duration = {
-      begin: items[0].Time,
-      end: items[items.length - 1].Time,
+      begin: input.EventTime,
+      end: input.Data.HandleTime,
     };
     for (let i = 0; i < items.length; i++) {
       let first = i === 0;
@@ -69,7 +70,7 @@ export class EventHandleCompleteMixedIntoConverter
     let item = new EventHandleCompleteModel();
     item.Time = data.EventTime;
     item.Type = EventHandleCompleteModelType.event;
-    item.Title = '混合投放';
+    item.Title = '发现混合投放';
     item.TitleColor = '#3184e3';
     item.left = true;
     item.urls = [
@@ -88,6 +89,15 @@ export class EventHandleCompleteMixedIntoConverter
         }
       ),
     ];
+
+    item.urls.forEach((x) => {
+      if (x.polygon) {
+        x.polygon.forEach((y) => {
+          y.Confidence = undefined;
+        });
+      }
+    });
+
     return item;
   }
 
@@ -100,7 +110,7 @@ export class EventHandleCompleteMixedIntoConverter
     let item = new EventHandleCompleteModel();
     item.Type = EventHandleCompleteModelType.handle;
     item.Time = time;
-    item.Title = '处置完成';
+    item.Title = '已消失';
 
     item.TitleColor = '#21e452';
     item.urls = [
@@ -116,6 +126,14 @@ export class EventHandleCompleteMixedIntoConverter
         }
       ),
     ];
+
+    item.urls.forEach((x) => {
+      if (x.polygon) {
+        x.polygon.forEach((y) => {
+          y.Confidence = undefined;
+        });
+      }
+    });
     item.left = false;
     item.top = true;
     return item;

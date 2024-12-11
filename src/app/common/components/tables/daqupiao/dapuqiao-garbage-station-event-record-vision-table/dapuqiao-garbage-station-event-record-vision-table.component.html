@@ -27,7 +27,9 @@
         <ng-container *ngFor="let item of datas; let i = index">
           <tr (click)="onselect($event, item)">
             <td>{{ item.Index }}</td>
-            <td>{{ item.Data.StationName }}</td>
+            <td [title]="(item.GarbageStation | async)?.Name">
+              {{ (item.GarbageStation | async)?.Name }}
+            </td>
             <td>{{ item.Data.DropTime | date : "HH:mm:ss" }}</td>
             <td>{{ item.Minutes | howellTime }}</td>
             <td>

@@ -69,6 +69,7 @@ export class Language {
   static yyyyMMddHHmm = 'yyyy-MM-dd HH:mm';
   static YearMonthDay = 'yyyy年MM月dd日';
   static YearMonthDayHHmmss = 'yyyy年MM月dd日 HH:mm:ss';
+  static MonthDayHHmmss = 'MM月dd日 HH:mm:ss';
   static HH_mm = "HH:mm'";
 
   static GarbageType(type: GarbageType): string {

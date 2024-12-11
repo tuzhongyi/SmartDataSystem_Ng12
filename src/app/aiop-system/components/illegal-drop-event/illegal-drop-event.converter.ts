@@ -6,6 +6,7 @@ import { AbstractCommonModelPromiseConverter } from '../../../converter/common-m
 import { DivisionType } from '../../../enum/division-type.enum';
 import { Division } from '../../../network/model/garbage-station/division.model';
 
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DivisionRequestService } from '../../../network/request/division/division-request.service';
 import { IllegalDropEventModel } from './illegal-drop-event.model';
 
@@ -15,7 +16,10 @@ type IllegalDropEventdSource = IllegalDropEventRecord;
 export class IllegalDropEventConverter extends AbstractCommonModelPromiseConverter<IllegalDropEventModel> {
   private _divisionMap: Map<string, Division> = new Map();
 
-  constructor(private _divisionRequest: DivisionRequestService) {
+  constructor(
+    private _divisionRequest: DivisionRequestService,
+    private _station: GarbageStationRequestService
+  ) {
     super();
   }
   // 街道数量少，一次性得到所有街道信息，减少街道请求次数
@@ -43,7 +47,7 @@ export class IllegalDropEventConverter extends AbstractCommonModelPromiseConvert
     // 居委会信息
     model.CommitteeName = item.Data.DivisionName ?? '';
     // 厢房信息
-    model.StationName = item.Data.StationName;
+    model.Station = this._station.cache.get(item.Data.StationId);
     // 社区信息
     model.CommunityName = item.Data.CommunityName ?? '';
     // 街道信息

@@ -207,7 +207,9 @@
                 />
               </td>
               <td [title]="item.ResourceName">{{ item.ResourceName }}</td>
-              <td [title]="item.StationName">{{ item.StationName }}</td>
+              <td [title]="(item.Station | async)?.Name">
+                {{ (item.Station | async)?.Name }}
+              </td>
               <td>{{ item.CountyName }}</td>
               <td>{{ item.CommitteeName }}</td>
               <td>{{ item.CommunityName }}</td>

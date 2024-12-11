@@ -9,7 +9,7 @@
         [format]="'yyyy年MM月dd日 HH:mm'"
         [startView]="DateTimePickerView.day"
         [minView]="DateTimePickerView.hour"
-        [(date)]="filter.duration.begin"
+        [(date)]="duration.begin"
         (dateChange)="changeBegin($event)"
       />
     </div>
@@ -22,7 +22,7 @@
         [format]="'yyyy年MM月dd日 HH:mm'"
         [startView]="DateTimePickerView.day"
         [minView]="DateTimePickerView.hour"
-        [(date)]="filter.duration.end"
+        [(date)]="duration.end"
         (dateChange)="changeEnd($event)"
       />
     </div>
@@ -37,12 +37,15 @@
     </div>
     <div class="filter-item">
       <div class="filter-item-title">投放点</div>
-      <hw-select [(selected)]="filter.stationId" [cannull]="true">
+      <hw-select
+        [(selected)]="stationId"
+        [cannull]="true"
+        (selectedChange)="onstation()"
+      >
         <select
           class="filter-item-value station"
           hw-select-content
-          [(ngModel)]="filter.stationId"
-          (change)="onchange()"
+          [(ngModel)]="stationId"
         >
           <option [ngValue]="item.Id" *ngFor="let item of model.stations">
             {{ item.Name }}
@@ -54,10 +57,10 @@
       <div class="filter-item-title">滞留时长</div>
       <select
         class="filter-item-value"
-        [(ngModel)]="filter.range"
-        (change)="onchange()"
+        [(ngModel)]="range"
+        (change)="onrange()"
       >
-        <option [ngValue]="item.value" *ngFor="let item of durations">
+        <option [ngValue]="item.value" *ngFor="let item of ranges">
           {{ item.Name }}
         </option>
       </select>

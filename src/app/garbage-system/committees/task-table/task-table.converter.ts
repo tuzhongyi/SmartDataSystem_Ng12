@@ -7,6 +7,7 @@ import { GlobalStorageService } from 'src/app/common/service/global-storage.serv
 import { Language } from 'src/app/common/tools/language';
 import { DivisionType } from 'src/app/enum/division-type.enum';
 import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-drop-event-record.model';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 
 @Injectable()
 export class TaskTableConverter
@@ -16,7 +17,10 @@ export class TaskTableConverter
       Promise<TaskTableViewModel<GarbageDropEventRecord>[]>
     >
 {
-  constructor(private global: GlobalStorageService) {}
+  constructor(
+    private global: GlobalStorageService,
+    private station: GarbageStationRequestService
+  ) {}
   async Convert(records: GarbageDropEventRecord[]) {
     let datas = new Array<TaskTableViewModel<GarbageDropEventRecord>>();
 
@@ -39,7 +43,7 @@ export class TaskTableConverter
   private async itemConvert(index: number, source: GarbageDropEventRecord) {
     let _default = await this.global.division.default;
     let vm = new TaskTableViewModel<GarbageDropEventRecord>();
-    vm.StationName = source.Data.StationName;
+    vm.GarbageStation = this.station.cache.get(source.Data.StationId);
     vm.Processor = source.Data.ProcessorName ?? '';
     vm.Id = source.EventId;
     vm.Index = index;

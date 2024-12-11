@@ -13,6 +13,7 @@ import { GetEventRecordSewageParams } from 'src/app/network/request/event/event-
 import { GetEventRecordsParams } from 'src/app/network/request/event/event-request.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
+import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import {
   EventRecordPagedConverter,
   EventRecordType,
@@ -94,23 +95,23 @@ export class EventRecordBusiness
     return model;
   }
 
-  async getParams(page: PagedParams, opts: EventRecordFilter, type: EventType) {
+  async getParams(page: PagedParams, args: EventRecordFilter, type: EventType) {
     let params: GetEventRecordsParams;
     switch (type) {
       case EventType.MixedInto:
         params = new GetEventRecordMixedIntoParams();
-        (params as GetEventRecordMixedIntoParams).IsHandle = opts.handle;
+        (params as GetEventRecordMixedIntoParams).IsHandle = args.handle;
         break;
       case EventType.IllegalDrop:
         params = new GetEventRecordIllegalDropParams();
         break;
       case EventType.GarbageFull:
         params = new GetEventRecordGarbageFullParams();
-        (params as GetEventRecordGarbageFullParams).IsHandle = opts.handle;
+        (params as GetEventRecordGarbageFullParams).IsHandle = args.handle;
         break;
       case EventType.Sewage:
         params = new GetEventRecordSewageParams();
-        (params as GetEventRecordSewageParams).IsHandle = opts.handle;
+        (params as GetEventRecordSewageParams).IsHandle = args.handle;
         break;
       default:
         params = new GetEventRecordsParams();
@@ -118,26 +119,26 @@ export class EventRecordBusiness
     }
 
     params = Object.assign(params, page);
-    params.BeginTime = opts.duration.begin;
-    params.EndTime = opts.duration.end;
-    if (opts.stationId) {
-      params.StationIds = [opts.stationId];
-    } else if (opts.divisionId) {
-      params.DivisionIds = [opts.divisionId];
+    params.BeginTime = args.duration.begin;
+    params.EndTime = args.duration.end;
+    if (args.stationId) {
+      params.StationIds = [args.stationId];
+    } else if (args.divisionId) {
+      params.DivisionIds = [args.divisionId];
     } else {
       params.DivisionIds = [(await this.global.division.selected).Id];
     }
 
-    if (opts.cameraId) {
-      params.ResourceIds = [opts.cameraId];
+    if (args.cameraId) {
+      params.ResourceIds = [args.cameraId];
     }
-    if (opts.opts) {
-      switch (opts.opts.key) {
-        case 'Name':
-          params.StationName = opts.opts.text;
+    if (args.opts && args.opts.text) {
+      switch (args.opts.key) {
+        case SearchOptionKey.name:
+          params.StationName = args.opts.text;
           break;
-        case 'CommunityName':
-          params.CommunityName = opts.opts.text;
+        case SearchOptionKey.community:
+          params.CommunityName = args.opts.text;
           break;
         default:
           break;

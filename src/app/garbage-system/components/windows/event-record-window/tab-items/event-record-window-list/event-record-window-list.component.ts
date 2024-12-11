@@ -1,18 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { EventRecordOperationFilterBusiness } from '../../../event-record-operation-filter.business';
+import { EventRecordOperationFilter } from '../../../event-record-operation-filter.business';
 import { ListType } from '../../../event-record-operation/event-record-operation.component';
 
 @Component({
   selector: 'event-record-window-list',
   templateUrl: './event-record-window-list.component.html',
   styleUrls: ['./event-record-window-list.component.less'],
-  providers: [EventRecordOperationFilterBusiness],
+  providers: [EventRecordOperationFilter],
 })
 export class EventRecordWindowListComponent implements OnInit {
   @Input() stationId?: string;
@@ -29,27 +28,20 @@ export class EventRecordWindowListComponent implements OnInit {
   @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
   @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
     new EventEmitter();
-  constructor(
-    public filter: EventRecordOperationFilterBusiness,
-    private global: GlobalStorageService
-  ) {}
 
+  constructor() {}
+  filter = new EventRecordOperationFilter();
   EventType = EventType;
   ListType = ListType;
 
   ngOnInit(): void {
     if (this.stationId) {
-      this.filter.filter.stationId = this.stationId;
+      this.filter.stationId = this.stationId;
     }
     if (this.divisionId) {
-      this.filter.filter.divisionId = this.divisionId;
+      this.filter.divisionId = this.divisionId;
     }
-    if (!this.filter.filter.divisionId) {
-      this.global.division.selected.then((x) => {
-        this.filter.filter.divisionId = x.Id;
-      });
-    }
-    this.filter.filter.type = this.type;
+    this.filter.type = this.type;
   }
 
   onimage(model: PagedArgs<EventRecordViewModel>) {

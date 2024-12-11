@@ -18,6 +18,7 @@ export class EventHandleCompleteGarbageFullConverter
   constructor(private service: EventHandleCompleteService) {}
   convert(input: GarbageFullEventRecord) {
     let model = new EventRecordCompleteModel();
+    model.RecordNo = input.EventId;
     model.Record = input;
     model.GarbageStation = this.service.station.cache.get(input.Data.StationId);
 
@@ -37,8 +38,8 @@ export class EventHandleCompleteGarbageFullConverter
       return a.Time.getTime() - b.Time.getTime();
     });
     model.Duration = {
-      begin: items[0].Time,
-      end: items[items.length - 1].Time,
+      begin: input.Data.FullTime,
+      end: input.Data.HandleTime,
     };
     for (let i = 0; i < items.length; i++) {
       let first = i === 0;
@@ -64,7 +65,7 @@ export class EventHandleCompleteGarbageFullConverter
     let item = new EventHandleCompleteModel();
     item.Time = data.FullTime;
     item.Type = EventHandleCompleteModelType.event;
-    item.Title = '垃圾满溢';
+    item.Title = '发现垃圾满溢';
     item.TitleColor = '#3184e3';
     item.left = true;
     if (urls) {
@@ -80,7 +81,7 @@ export class EventHandleCompleteGarbageFullConverter
     let item = new EventHandleCompleteModel();
     item.Type = EventHandleCompleteModelType.handle;
     item.Time = data.HandleTime!;
-    item.Title = '处置完成';
+    item.Title = '已处置';
 
     item.TitleColor = '#21e452';
     if (urls) {
@@ -91,6 +92,14 @@ export class EventHandleCompleteGarbageFullConverter
     }
     item.left = false;
     item.top = true;
+
+    item.urls.forEach((x) => {
+      if (x.polygon) {
+        x.polygon.forEach((y) => {
+          y.Confidence = undefined;
+        });
+      }
+    });
     return item;
   }
 }

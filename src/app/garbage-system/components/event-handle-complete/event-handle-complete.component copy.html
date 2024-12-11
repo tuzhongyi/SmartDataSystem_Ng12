@@ -1,0 +1,126 @@
+<div class="event-handle-complete" *ngIf="!!model">
+  <div class="event-handle-complete-head">
+    <div class="event-handle-complete-head-title">
+      <div class="hw-simple-title">{{ title }}工单</div>
+    </div>
+    <div class="operation"></div>
+  </div>
+  <div class="event-handle-complete-info forms">
+    <div class="form-item">
+      <div class="form-item-title">
+        <span>投</span><span>放</span><span>点：</span>
+      </div>
+      <div class="form-item-value">
+        <input
+          type="text"
+          [value]="(model.GarbageStation | async)?.Name"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">
+        <span>工</span><span>单</span><span>号：</span>
+      </div>
+      <div class="form-item-value">
+        <input type="text" [value]="model.RecordNo" readonly />
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">派单时间：</div>
+      <div class="form-item-value">
+        <input
+          type="text"
+          [value]="model.Duration.begin | date : 'yyyy年MM月dd日 HH:mm:ss'"
+          readonly
+        />
+      </div>
+    </div>
+    <div class="form-item">
+      <div class="form-item-title">自动闭环：</div>
+      <div class="form-item-value">
+        <input
+          type="text"
+          [value]="
+            model.Duration.end
+              ? (model.Duration.end | date : 'yyyy年MM月dd日 HH:mm:ss')
+              : '待处置'
+          "
+          readonly
+        />
+      </div>
+    </div>
+  </div>
+  <!-- <div class="hw-simple-title time">
+    {{ model.Duration.begin | date : "HH:mm:ss" }}
+  </div> -->
+  <div class="event-handle-complete-body">
+    <div *ngFor="let item of model.Items"></div>
+    <mat-accordion multi>
+      <div class="complete">
+        <div
+          *ngFor="let item of model.Items"
+          [ngClass]="{
+            timeout: item.Type === CompleteType.timeout
+          }"
+        >
+          <!-- <event-handle-complete-item
+            class="complete-item"
+            [top]="item.top"
+            [bottom]="item.bottom"
+            [left]="item.left"
+            [note]="item.Minitues | howellTime"
+            [color]="item.TitleColor"
+          >
+            <div class="complete-item-content">
+              <div class="complete-item-content-inner">
+                <mat-expansion-panel disabled>
+                  <mat-expansion-panel-header>
+                    <div
+                      class="complete-item-content-head"
+                      [ngStyle]="{ color: item.TitleColor }"
+                    >
+                      {{ item.Title }}
+                    </div>
+                  </mat-expansion-panel-header>
+                  <div class="complete-item-content-body">
+                    <div *ngFor="let info of item.infos">{{ info }}</div>
+                  </div>
+                </mat-expansion-panel>
+              </div>
+            </div>
+            <div
+              class="complete-item-images"
+              [ngClass]="{
+                top: !item.left
+              }"
+            >
+              <ng-container *ngFor="let img of item.urls; let i = index">
+                <app-image-control
+                  [model]="img"
+                  [draw]="true"
+                  (click)="onimage(item, i)"
+                ></app-image-control>
+              </ng-container>
+            </div>
+          </event-handle-complete-item> -->
+        </div>
+      </div>
+    </mat-accordion>
+  </div>
+
+  <!-- <div class="hw-simple-title time">
+    {{ model.Duration.end | date : "HH:mm:ss" }}
+  </div> -->
+  <div class="event-handle-complete-foot">
+    <div class="buttons">
+      <button (click)="onprev()" [disabled]="first" title="上一条">
+        <i class="howell-icon-arrow2left"></i>
+      </button>
+      <div *ngIf="index">第 {{ index }} 条</div>
+      <button (click)="onnext()" [disabled]="last" title="下一条">
+        <i class="howell-icon-arrow2right"></i>
+      </button>
+    </div>
+  </div>
+</div>

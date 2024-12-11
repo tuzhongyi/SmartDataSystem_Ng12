@@ -1,11 +1,12 @@
 import { EventType } from 'src/app/enum/event-type.enum';
+import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class TaskTableViewModel<T = any> {
   Id: string = '';
   /** 索引 */
   Index: number = 1;
   /** 厢房名称 */
-  StationName: string = '';
+  GarbageStation!: Promise<GarbageStation>;
   /** 处置人 */
   Processor: string = '';
   /** 落地时长 */

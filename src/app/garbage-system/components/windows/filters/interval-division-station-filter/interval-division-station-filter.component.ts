@@ -85,16 +85,16 @@ export class EventRecordFilterComponent
     }
   }
   changeEnd(date: Date) {
-    if (
-      this.date_sync &&
-      !DateTimeTool.is.day.equals(this.duration.begin, this.duration.end)
-    ) {
-      let begin = new Date(this.duration.begin.getTime());
-      begin.setFullYear(date.getFullYear());
-      begin.setMonth(date.getMonth());
-      begin.setDate(date.getDate());
-      this.duration.begin = begin;
-    }
+    // if (
+    //   this.date_sync &&
+    //   !DateTimeTool.is.day.equals(this.duration.begin, this.duration.end)
+    // ) {
+    //   let begin = new Date(this.duration.begin.getTime());
+    //   begin.setFullYear(date.getFullYear());
+    //   begin.setMonth(date.getMonth());
+    //   begin.setDate(date.getDate());
+    //   this.duration.begin = begin;
+    // }
     this.durationChange.emit(this.duration);
   }
 

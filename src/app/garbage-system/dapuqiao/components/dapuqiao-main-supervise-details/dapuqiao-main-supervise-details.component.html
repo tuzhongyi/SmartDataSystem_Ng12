@@ -29,7 +29,7 @@
               <div>点：</div>
             </div>
             <div class="hw-form-list-item-value">
-              {{ model.Data.StationName }}
+              {{ (model.GarbageStation | async)?.Name }}
             </div>
           </div>
           <div class="hw-form-list-item">

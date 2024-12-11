@@ -102,14 +102,16 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
     if (objects) {
       for (let i = 0; i < objects.length; i++) {
         const obj = objects[i];
-        let text = `${obj.Id} ${obj.Confidence}%`;
-        ctx.font = '18px Source Han Sans CN Normal';
-        ctx.fillStyle = 'red';
-        ctx.fillText(
-          text,
-          obj.Polygon[0].X * size.Width,
-          obj.Polygon[0].Y * size.Height
-        );
+        if (obj.Confidence != undefined) {
+          let text = `${obj.Id} ${obj.Confidence}%`;
+          ctx.font = '18px Source Han Sans CN Normal';
+          ctx.fillStyle = 'red';
+          ctx.fillText(
+            text,
+            obj.Polygon[0].X * size.Width,
+            obj.Polygon[0].Y * size.Height
+          );
+        }
         this.drawRectangle(ctx, size, obj.Polygon, 'red');
       }
     }

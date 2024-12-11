@@ -57,6 +57,7 @@ export class GarbageDropEventRecordConverter
     let model = new GarbageDropRecordViewModel();
     model = Object.assign(model, source);
     model.SendTime = formatDate(source.Data.DropTime, 'HH:mm:ss', 'en');
+    model.GarbageStation = this.station.cache.get(source.Data.StationId);
     if (source.Data.HandleTime) {
       model.HandleTime = formatDate(source.Data.HandleTime, 'HH:mm:ss', 'en');
     }

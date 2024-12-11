@@ -60,8 +60,8 @@
                 </div>
               </div>
             </td>
-            <td [title]="item.Data.StationName">
-              {{ item.Data.StationName }}
+            <td [title]="(item.GarbageStation | async)?.Name">
+              {{ (item.GarbageStation | async)?.Name }}
             </td>
             <td [title]="item.Data.DivisionName">
               {{ item.Data.DivisionName ?? "-" }}
@@ -107,10 +107,10 @@
 
                 <div
                   class="icon-button"
-                  title="完整经过"
+                  title="查看工单"
                   (click)="oncomplete($event, item)"
                 >
-                  <i class="mdi mdi-infinity"></i>
+                  <i class="mdi mdi-nfc-tap"></i>
                 </div>
               </div>
             </td>

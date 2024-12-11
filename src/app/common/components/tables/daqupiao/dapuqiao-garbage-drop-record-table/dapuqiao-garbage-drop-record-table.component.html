@@ -49,13 +49,16 @@
                 ></div>
               </div>
             </td>
-            <td class="lock left second">
-              {{ item.Data.StationName }}
+            <td
+              class="lock left second"
+              [title]="(item.GarbageStation | async)?.Name"
+            >
+              {{ (item.GarbageStation | async)?.Name }}
             </td>
-            <td>
+            <td [title]="item.Data.DivisionName">
               {{ item.Data.DivisionName }}
             </td>
-            <td>
+            <td [title]="item.Data.CommunityName">
               {{ item.Data.CommunityName }}
             </td>
             <td>{{ (item.County | async)?.Name }}</td>

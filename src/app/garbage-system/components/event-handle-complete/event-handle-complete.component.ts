@@ -7,6 +7,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
+import { Language } from 'src/app/common/tools/language';
+import { EventType } from 'src/app/enum/event-type.enum';
 import { IEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-event-record.model';
 import { EventHandleCompleteBusiness } from './event-handle-complete.business';
 import {
@@ -38,8 +40,11 @@ export class EventHandleCompleteComponent implements OnInit, OnChanges {
   constructor(private business: EventHandleCompleteBusiness) {}
 
   model?: EventRecordCompleteModel;
+  title = '';
 
   CompleteType = EventHandleCompleteModelType;
+  Language = Language;
+  scroll = 0;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.data && this.data) {
@@ -47,18 +52,36 @@ export class EventHandleCompleteComponent implements OnInit, OnChanges {
     }
   }
 
-  ngOnInit(): void {
-    // if (this.load) {
-    //   this.load.subscribe((x) => {});
-    // }
-    // if (this.data) {
-    //   this.loadData(this.data);
-    // }
+  ngOnInit(): void {}
+
+  onscroll(e: Event) {
+    let target = e.currentTarget as HTMLDivElement;
+
+    let items = document.querySelectorAll('.complete-item-images');
+    for (let i = 0; i < items.length; i++) {
+      let item = items[i];
+      if (item.id === target.id) {
+        continue;
+      }
+      item.scrollLeft = target.scrollLeft;
+    }
   }
 
-  loadData(data: IEventRecord) {
-    this.business.load(data).then((x) => {
+  async loadData(data: IEventRecord) {
+    return this.business.load(data).then((x) => {
       this.model = x;
+      switch (x.Record.EventType) {
+        case EventType.GarbageDrop:
+        case EventType.GarbageDropSuperTimeout:
+        case EventType.GarbageDropTimeoutHandle:
+        case EventType.GarbageDropTimeout:
+        case EventType.GarbageDropHandle:
+          this.title = '垃圾滞留';
+          break;
+        default:
+          this.title = Language.EventType(x.Record.EventType);
+          break;
+      }
     });
   }
 

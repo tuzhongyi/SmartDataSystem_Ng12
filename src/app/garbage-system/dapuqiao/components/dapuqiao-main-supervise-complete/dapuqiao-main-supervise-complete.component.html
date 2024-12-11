@@ -1,7 +1,7 @@
 <div class="dapuqiao-main-supervise-complete" *ngIf="!!model">
   <div class="dapuqiao-main-supervise-complete-head">
     <div class="hw-simple-title">
-      {{ model.Data.StationName }} -
+      {{ (model.GarbageStation | async)?.Name }} -
       {{ model.EventTime | date : "yyyy年MM月dd日" }}
     </div>
     <div class="operation">

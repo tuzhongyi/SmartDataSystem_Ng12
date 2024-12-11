@@ -7,6 +7,7 @@ import { GarbageDropEventRecord } from 'src/app/network/model/garbage-station/ev
 import { PagedList } from 'src/app/network/model/page_list.model';
 import { GetGarbageDropEventRecordsParams } from 'src/app/network/request/event/event-request-garbage-drop.params';
 import { EventRequestService } from 'src/app/network/request/event/event-request.service';
+import { SearchOptionKey } from 'src/app/view-model/search-options.model';
 import { GarbageDropEventRecordPagedConverter } from './garbage-drop-record-table.converter';
 import {
   GarbageDropRecordFilter,
@@ -66,13 +67,10 @@ export class GarbageDropRecordTableBusiness
     if (opts.cameraId) {
       params.ResourceIds = [opts.cameraId];
     }
-    if (opts.community) {
-      params.CommunityIds = [opts.community.Id];
-    }
-    if (opts.opts) {
+    if (opts.opts && opts.opts.text) {
       if (opts.opts.key) {
         switch (opts.opts.key) {
-          case 'Name':
+          case SearchOptionKey.name:
             params.StationName = opts.opts.text;
             break;
           default:

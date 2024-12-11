@@ -19,7 +19,12 @@
         <ng-container *ngFor="let item of views; let i = index">
           <tr (click)="itemClick(item)">
             <td [ngStyle]="{ width: bodyWidths[0] }">{{ item.Index }}</td>
-            <td [ngStyle]="{ width: bodyWidths[1] }">{{ item.StationName }}</td>
+            <td
+              [ngStyle]="{ width: bodyWidths[1] }"
+              [title]="(item.GarbageStation | async)?.Name"
+            >
+              {{ (item.GarbageStation | async)?.Name }}
+            </td>
             <td [ngStyle]="{ width: bodyWidths[2] }">{{ item.Processor }}</td>
             <td [ngStyle]="{ width: bodyWidths[3] }">{{ item.Interval }}</td>
             <td [ngStyle]="{ width: bodyWidths[4] }">{{ item.Time }}</td>

@@ -14,7 +14,12 @@
   <div class="garbage-drop-window-item-record-filter" *ngIf="isfilter">
     <howell-garbage-station-window-record-filter
       [sameDay]="true"
-      [(filter)]="filter"
+      [(duration)]="filter.duration"
+      [(divisionId)]="filter.divisionId"
+      [(stationId)]="filter.stationId"
+      [(range)]="filter.range"
+      [(handle)]="filter.IsHandle"
+      [(timeout)]="filter.IsTimeout"
     ></howell-garbage-station-window-record-filter>
   </div>
   <div class="garbage-drop-window-item-record-table" [class.filter]="isfilter">

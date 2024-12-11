@@ -8,5 +8,5 @@ export class EventDataObject implements IIdModel {
   /**	Point[]	目标所在的归一化多边形	M */
   Polygon!: Point[];
   /**	Double	置信度：0-100	M */
-  Confidence!: number;
+  Confidence?: number;
 }

@@ -1,5 +1,4 @@
 import { EventType } from 'src/app/enum/event-type.enum';
-import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { IEventRecord } from 'src/app/network/model/garbage-station/event-record/garbage-event-record.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { Page } from 'src/app/network/model/page_list.model';
@@ -15,8 +14,8 @@ export class EventRecordCompleteModel<T = any> {
   Record!: IEventRecord<T>;
   GarbageStation!: Promise<GarbageStation>;
   Items: EventHandleCompleteModel[] = [];
-
-  Duration!: Duration;
+  RecordNo!: string;
+  Duration!: { begin: Date; end?: Date };
 }
 export class EventHandleCompleteModel {
   Time!: Date;
@@ -39,7 +38,6 @@ export interface EventHandleCompleteImageArgs {
 
 export enum EventHandleCompleteModelType {
   event,
-  feedback,
-  supervise,
+  timeout,
   handle,
 }

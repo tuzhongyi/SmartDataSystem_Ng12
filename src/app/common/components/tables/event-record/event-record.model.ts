@@ -2,13 +2,11 @@ import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool'
 import { EventType } from 'src/app/enum/event-type.enum';
 import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
-import { IIdNameModel } from 'src/app/network/model/model.interface';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import {
   SearchOptionKey,
   SearchOptions,
 } from 'src/app/view-model/search-options.model';
-import { SelectItem } from '../../select-control/select-control.model';
 
 export class EventRecordFilter {
   constructor() {
@@ -23,54 +21,17 @@ export class EventRecordFilter {
   cameraId?: string;
   handle?: boolean;
 
-  private _division?: IIdNameModel;
-  public get division(): IIdNameModel | undefined {
-    return this._division;
-  }
-  public set division(v: IIdNameModel | undefined) {
-    this._division = v;
-    if (v) {
-      this.divisionId = v.Id;
-    } else {
-      this.divisionId = v;
-    }
-  }
-  private _station?: SelectItem;
-  public get station(): SelectItem | undefined {
-    return this._station;
-  }
-  public set station(v: SelectItem | undefined) {
-    this._station = v;
-    if (v) {
-      this.stationId = v.Id;
-    } else {
-      this.stationId = v;
-    }
-  }
-  private _camera?: SelectItem;
-  public get camera(): SelectItem | undefined {
-    return this._camera;
-  }
-  public set camera(v: SelectItem | undefined) {
-    this._camera = v;
-    if (v) {
-      this.cameraId = v.Id;
-    } else {
-      this.cameraId = v;
-    }
-  }
-
   opts: SearchOptions = {
     text: '',
     key: SearchOptionKey.name,
   };
-  community?: SelectItem;
 
   reset() {
     this.duration = DateTimeTool.allDay(new Date());
-    this.division = undefined;
-    this.station = undefined;
-    this.camera = undefined;
+    this.divisionId = undefined;
+    this.stationId = undefined;
+    this.cameraId = undefined;
+    this.handle = undefined;
   }
 }
 
