@@ -41,6 +41,8 @@
               <howell-division-tree
                 #tree
                 (selectTreeNode)="controller.filter.selection.onselect($event)"
+                [depth]="2"
+                [showDepth]="0"
               ></howell-division-tree>
             </common-label-select>
           </div>

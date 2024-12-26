@@ -45,15 +45,7 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
         let datas = this.load() as GarbageStation[];
         datas = plainToInstance(GarbageStation, datas);
         if (args) {
-          if (args.Ids) {
-            datas = datas.filter((x) => args.Ids?.includes(x.Id));
-          }
-          if (args.Name) {
-            datas = datas.filter((x) => x.Name.includes(args.Name!));
-          }
-          if (args.StationType) {
-            datas = datas.filter((x) => x.StationType === args.StationType);
-          }
+          datas = this.filter(datas, args);
           paged = this.getPaged(datas);
         } else {
           paged = this.getPaged(datas);
@@ -61,5 +53,21 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
         reject(paged);
       });
     });
+  }
+
+  filter(
+    datas: GarbageStation[],
+    args: GetGarbageStationsParams
+  ): GarbageStation[] {
+    if (args.Ids) {
+      datas = datas.filter((x) => args.Ids?.includes(x.Id));
+    }
+    if (args.Name) {
+      datas = datas.filter((x) => x.Name.includes(args.Name!));
+    }
+    if (args.StationType) {
+      datas = datas.filter((x) => x.StationType === args.StationType);
+    }
+    return datas;
   }
 }

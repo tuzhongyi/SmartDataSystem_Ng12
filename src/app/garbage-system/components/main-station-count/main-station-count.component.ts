@@ -22,7 +22,7 @@ export class MainStationCountComponent implements OnInit {
     }
     this._index = v;
   }
-  private _index = MainStationCountIndex.device_state;
+  private _index = MainStationCountIndex.station_count;
   public get index(): MainStationCountIndex {
     return this._index;
   }
@@ -39,13 +39,7 @@ export class MainStationCountComponent implements OnInit {
 
   ngOnInit(): void {
     this.global.division.change.subscribe((x) => {
-      this.division = x as Division;
-      if (
-        this.division &&
-        this.division.DivisionType === DivisionType.Committees
-      ) {
-        this.index = MainStationCountIndex.device_state;
-      }
+      this.load?.emit();
     });
   }
 

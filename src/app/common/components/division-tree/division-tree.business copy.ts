@@ -8,8 +8,7 @@
 
 // import { EnumTool } from '../../tools/enum-tool/enum.tool';
 // import { IDivisionTreeBusiness } from './division-tree.model';
-// import { DivisionTreeService } from './service/division-tree.service';
-// import { DivisionTree } from 'src/app/network/model/garbage-station/division-tree.model';
+// import { DivisionTreeService } from './division-tree.service';
 
 // @Injectable()
 // export class DivisionTreeBusiness implements IDivisionTreeBusiness {
@@ -53,10 +52,6 @@
 //     } catch (e) {}
 //     // console.log('子节点', node)
 //     return node;
-//   }
-
-//   search(name:string, ){
-//     this.service.committees.search
 //   }
 
 //   async searchNode(

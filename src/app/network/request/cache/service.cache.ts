@@ -37,6 +37,9 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     }
     this.cache = new AppCache(timeout);
   }
+  filter(datas: T[], args: IParams): T[] {
+    return datas;
+  }
 
   private doTimeout(time: number) {
     if (time < 0) time = 0;
@@ -138,11 +141,14 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     });
   }
 
-  async all(): Promise<T[]> {
+  async all(params?: IParams): Promise<T[]> {
     this.loading = true;
     let datas = this.load();
     if (datas && datas.length > 0) {
       try {
+        if (params) {
+          return this.filter(datas, params);
+        }
         return datas;
       } finally {
         this.loading = false;

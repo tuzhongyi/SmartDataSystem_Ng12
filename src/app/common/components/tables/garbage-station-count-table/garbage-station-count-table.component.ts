@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { IModel } from 'src/app/network/model/model.interface';
 import { GarbageStationCountTableBusiness } from './garbage-station-count-table.business';
@@ -17,16 +18,17 @@ import { GarbageStationCountTableService } from './garbage-station-count-table.s
   ],
 })
 export class GarbageStationCountTableComponent
-  implements IComponent<IModel, DivisionModel[]>, OnInit
+  implements IComponent<IModel, DivisionNumberStatistic[]>, OnInit
 {
-  @Input() business: IBusiness<IModel, DivisionModel[]>;
+  @Input() business: IBusiness<IModel, DivisionNumberStatistic[]> &
+    IGet<DivisionModel>;
 
   @Input() load?: EventEmitter<void>;
   @Output() info = new EventEmitter<Division>();
   constructor(business: GarbageStationCountTableBusiness) {
     this.business = business;
   }
-  datas: DivisionModel[] = [];
+  datas: DivisionNumberStatistic[] = [];
 
   ngOnInit(): void {
     this.tosubscribe();
@@ -47,7 +49,8 @@ export class GarbageStationCountTableComponent
     });
   }
 
-  oninfo(item: DivisionModel) {
-    this.info.emit(item);
+  async oninfo(item: DivisionNumberStatistic) {
+    let data = await this.business.get(item.Id);
+    this.info.emit(data);
   }
 }

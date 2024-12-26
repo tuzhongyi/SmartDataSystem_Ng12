@@ -45,7 +45,7 @@ export class DeviceStateComponent
   }
   business: IBusiness<IModel, DeviceStateCountModel>;
 
-  public title: string = '设备运行状态';
+  public title: string = '投放点运行状态';
   public model: DeviceStateCountModel = new DeviceStateCountModel();
 
   public get stateRatioColor() {

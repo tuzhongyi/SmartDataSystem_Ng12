@@ -20,19 +20,21 @@ import { CommonNestNode } from 'src/app/view-model/common-nest-node.model';
 import { Deduplication } from '../../tools/deduplication';
 import { CommonTree } from '../common-tree/common-tree';
 import { CommonTreeComponent } from '../common-tree/common-tree.component';
-import { DivisionTreeBusiness } from './division-tree.business';
+
+import { GlobalStorageService } from '../../service/global-storage.service';
+import { DivisionTreeBusiness } from './business/division-tree.business';
 import {
   DivisionTreeSource,
   IDivisionTreeBusiness,
   IDivisionTreeComponent,
 } from './division-tree.model';
-import { DivisionTreeService } from './division-tree.service';
+import { DivisionTreeProviders } from './division-tree.provider';
 
 @Component({
   selector: 'howell-division-tree',
   templateUrl: './division-tree.component.html',
   styleUrls: ['./division-tree.component.less'],
-  providers: [DivisionTreeService, DivisionTreeBusiness],
+  providers: [...DivisionTreeProviders],
 })
 export class DivisionTreeComponent
   extends CommonTree
@@ -91,8 +93,8 @@ export class DivisionTreeComponent
   }
 
   // 最高区划等级
-  private _resourceType: DivisionType = DivisionType.City;
-  @Input() set resourceType(type: DivisionType) {
+  private _resourceType?: DivisionType;
+  @Input() set resourceType(type: DivisionType | undefined) {
     this._resourceType = type;
   }
   get resourceType() {
@@ -114,7 +116,8 @@ export class DivisionTreeComponent
 
   constructor(
     private defaultBusiness: DivisionTreeBusiness,
-    private _toastrService: ToastrService
+    private toastr: ToastrService,
+    private global: GlobalStorageService
   ) {
     super();
     this._excludeGuards = Deduplication.generateExcludeArray(
@@ -161,7 +164,7 @@ export class DivisionTreeComponent
   private async _init() {
     this.nodes = this.business.nestedNodeMap;
 
-    let res = await this.business.load(this.resourceType, this.depth);
+    let res = await this.business.load(this.resourceType, this.showDepth);
     this.loaded.emit(res);
     this.dataSubject.next(res);
     this.treeLoad.emit();
@@ -172,10 +175,9 @@ export class DivisionTreeComponent
   }
 
   async loadChildrenEvent(flat: CommonFlatNode<Division>) {
-    let node = await this.business.loadChildren(flat);
+    let node = await this.business.loadChildren(flat, this.depth);
     if (node) {
       this.dataSubject.next(this.dataSubject.value);
-
       if (this.tree) {
         this.tree.checkAllDescendants(flat);
         // 一定要在check之后设置默认
@@ -211,13 +213,13 @@ export class DivisionTreeComponent
     this.defaultIdsChange.emit(ids);
   }
   async searchEventHandler(condition: string) {
-    console.log('搜索字段', condition);
-    if (this._condition == condition && this._condition != '') {
-      this._toastrService.warning('重复搜索相同字段');
-      return;
-    }
+    // console.log('搜索字段', condition);
+    // if (this._condition == condition && this._condition != '') {
+    //   this._toastrService.warning('重复搜索相同字段');
+    //   return;
+    // }
     if (this._excludeGuards.includes(condition)) {
-      this._toastrService.warning('关键字不能是: ' + condition);
+      this.toastr.warning('关键字不能是: ' + condition);
       return;
     }
 
@@ -226,10 +228,10 @@ export class DivisionTreeComponent
     let res = await this.business.searchNode(
       condition,
       this.resourceType,
-      this.depth
+      condition ? this.depth : this.showDepth
     );
     if (res && res.length) {
-      this._toastrService.success('操作成功');
+      this.toastr.success('操作成功');
       this.dataSubject.next(res);
       if (condition != '') {
         this.tree?.expandAll();
@@ -238,7 +240,7 @@ export class DivisionTreeComponent
         this.tree?.collapseAll();
       }
     } else {
-      this._toastrService.warning('无匹配结果');
+      this.toastr.warning('无匹配结果');
     }
   }
 

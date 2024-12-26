@@ -38,22 +38,7 @@ export class DivisionServiceCache extends ServiceCache<Division> {
         let datas = plainToInstance(Division, x);
         let paged: PagedList<Division>;
         if (args) {
-          if (args.ParentId) {
-            datas = datas.filter((x) => x.ParentId === args.ParentId);
-          }
-          if (args.AncestorId) {
-            datas = this.getAllChildren(args.AncestorId, datas);
-          }
-          if (args.DivisionType) {
-            datas = datas.filter((x) => x.DivisionType === args.DivisionType);
-          }
-          if (args.Name) {
-            datas = datas.filter((x) => x.Name.includes(args.Name!));
-          }
-          if (args.Ids) {
-            datas = datas.filter((x) => args.Ids?.includes(x.Id));
-          } else {
-          }
+          datas = this.filter(datas, args);
           paged = this.getPaged(datas, args);
         } else {
           paged = this.getPaged(datas);
@@ -68,22 +53,7 @@ export class DivisionServiceCache extends ServiceCache<Division> {
       this.wait((x: Division[]) => {
         let datas = plainToInstance(Division, x);
         if (args) {
-          if (args.ParentId) {
-            datas = datas.filter((x) => x.ParentId === args.ParentId);
-          }
-          if (args.AncestorId) {
-            datas = this.getAllChildren(args.AncestorId, datas);
-          }
-          if (args.DivisionType) {
-            datas = datas.filter((x) => x.DivisionType === args.DivisionType);
-          }
-          if (args.Name) {
-            datas = datas.filter((x) => x.Name.includes(args.Name!));
-          }
-          if (args.Ids) {
-            datas = datas.filter((x) => args.Ids?.includes(x.Id));
-          } else {
-          }
+          datas = this.filter(datas, args);
         } else {
         }
         reject(datas);
@@ -113,5 +83,25 @@ export class DivisionServiceCache extends ServiceCache<Division> {
 
   getParent(parentId: string, datas: Division[]) {
     return datas.find((x) => x.Id === parentId);
+  }
+
+  filter(datas: Division[], args: GetDivisionsParams): Division[] {
+    if (args.ParentId) {
+      datas = datas.filter((x) => x.ParentId === args.ParentId);
+    }
+    if (args.AncestorId) {
+      datas = this.getAllChildren(args.AncestorId, datas);
+    }
+    if (args.DivisionType) {
+      datas = datas.filter((x) => x.DivisionType === args.DivisionType);
+    }
+    if (args.Name) {
+      datas = datas.filter((x) => x.Name.includes(args.Name!));
+    }
+    if (args.Ids) {
+      datas = datas.filter((x) => args.Ids?.includes(x.Id));
+    } else {
+    }
+    return datas;
   }
 }

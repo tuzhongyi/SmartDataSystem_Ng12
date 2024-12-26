@@ -10,4 +10,12 @@ export class ArrayTool {
     }, {});
     return Object.values(result);
   }
+  static distinct<T>(datas: T[], cannull = true) {
+    let items: T[] = [...datas];
+    if (!cannull) {
+      items = datas.filter((x) => x !== null && x !== undefined);
+    }
+
+    return Array.from(new Set<T>(items));
+  }
 }

@@ -1,29 +1,27 @@
 import { Injectable } from '@angular/core';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
+import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { Division } from 'src/app/network/model/garbage-station/division.model';
+import { GetDivisionStatisticNumbersParams } from 'src/app/network/request/division/division-request.params';
 import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { DivisionModel } from './garbage-station-count-table.model';
 import { GarbageStationCountTableService } from './garbage-station-count-table.service';
 
 @Injectable()
 export class GarbageStationCountTableBusiness
-  implements IBusiness<Division[], DivisionModel[]>
+  implements IBusiness<DivisionNumberStatistic[]>, IGet<DivisionModel>
 {
   constructor(
     private service: GarbageStationCountTableService,
     private global: GlobalStorageService
   ) {}
-  async load(...args: any): Promise<DivisionModel[]> {
+
+  async load(...args: any): Promise<DivisionNumberStatistic[]> {
     let division = await this.global.division.selected;
-    let data = await this.getData(division.Id);
-    data = data.sort((a, b) => {
-      return LocaleCompare.compare(a.Name, b.Name);
-    });
-    let model = data.map((x) => this.convert(x));
-    return model;
+    return this.getData(division.Id);
   }
 
   convert(source: Division) {
@@ -33,9 +31,19 @@ export class GarbageStationCountTableBusiness
     return model;
   }
 
-  async getData(divisionId: string): Promise<Division[]> {
+  async getData(divisionId: string): Promise<DivisionNumberStatistic[]> {
     let all = await this.service.division.cache.all();
-    return all.filter((x) => x.ParentId === divisionId);
+    let divisions = all.filter((x) => x.ParentId === divisionId);
+    let params = new GetDivisionStatisticNumbersParams();
+    params.Ids = divisions.map((x) => x.Id);
+    let paged = await this.service.division.statistic.number.cache.list(params);
+    let data = paged.Data.sort((a, b) => {
+      return (
+        LocaleCompare.compare(!!b.StationNumber, !!a.StationNumber) ||
+        LocaleCompare.compare(a.Name, b.Name)
+      );
+    });
+    return data;
   }
 
   async stations(divisionId: string) {
@@ -43,5 +51,10 @@ export class GarbageStationCountTableBusiness
     params.AncestorId = divisionId;
     let all = await this.service.station.cache.list(params);
     return all.Data;
+  }
+
+  async get(divisionId: string): Promise<DivisionModel> {
+    let data = await this.service.division.cache.get(divisionId);
+    return this.convert(data);
   }
 }

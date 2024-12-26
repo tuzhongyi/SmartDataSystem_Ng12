@@ -91,13 +91,6 @@
         ></app-device-state> -->
         <main-station-count
           [load]="load"
-          [index]="
-            guide.index === guide.Index.station_count
-              ? 1
-              : guide.index === guide.Index.device_status
-              ? 0
-              : undefined
-          "
           (devicestateclick)="trigger.deviceState.onclick($event)"
           (divisioninfo)="trigger.divisionList.oninfo($event)"
         ></main-station-count>

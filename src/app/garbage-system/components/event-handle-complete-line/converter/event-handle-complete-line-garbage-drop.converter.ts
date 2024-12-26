@@ -37,7 +37,6 @@ export class EventHandleCompleteLineGarbageDropConverter
         Language.MonthDayHHmmss,
         'en'
       );
-      Language.Date;
       return handle;
     } else if (data.Data.IsHandle && data.Data.HandleTime) {
       handle.name = formatDate(

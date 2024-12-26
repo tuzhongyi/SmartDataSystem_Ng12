@@ -15,7 +15,8 @@ export interface IDivisionTreeBusiness
   nestedNodeMap: Map<string, CommonNestNode<DivisionTreeSource>>;
   searchNode(...args: any[]): Promise<CommonNestNode<any>[]>;
   loadChildren(
-    flat: CommonFlatNode<DivisionTreeSource>
+    flat: CommonFlatNode<DivisionTreeSource>,
+    ...args: any[]
   ): Promise<CommonNestNode<DivisionTreeSource> | undefined>;
 }
 

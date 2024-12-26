@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IConverter } from 'src/app/common/interfaces/converter.interface';
+import { IPromiseConverter } from 'src/app/common/interfaces/converter.interface';
 import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import {
@@ -8,8 +8,11 @@ import {
   DeviceStateRatioType,
 } from 'src/app/enum/device-state-count.enum';
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
+import { StationState } from 'src/app/enum/station-state.enum';
 import { DivisionNumberStatistic } from 'src/app/network/model/garbage-station/division-number-statistic.model';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
+import { GetGarbageStationsParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
+import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import { DeviceStateCountModel } from 'src/app/view-model/device-state-count.model';
 
 @Injectable()
@@ -18,15 +21,17 @@ export class DeviceStateBusiness
 {
   constructor(
     private divisionRequest: DivisionRequestService,
-    private storeService: GlobalStorageService
-  ) {}
-  Converter: IConverter<DivisionNumberStatistic, DeviceStateCountModel> =
-    new DeviceStateConverter();
+    private storeService: GlobalStorageService,
+    private stationRequest: GarbageStationRequestService
+  ) {
+    this.Converter = new DeviceStateConverter(this.stationRequest);
+  }
+  Converter: IPromiseConverter<DivisionNumberStatistic, DeviceStateCountModel>;
 
   async load(): Promise<DeviceStateCountModel> {
     let division = await this.storeService.division.selected;
     let data = await this.getData(division.Id);
-    let model = this.Converter.Convert(data);
+    let model = await this.Converter.Convert(data);
     return model;
   }
   getData(divisionId: string): Promise<DivisionNumberStatistic> {
@@ -35,25 +40,44 @@ export class DeviceStateBusiness
 }
 
 export class DeviceStateConverter
-  implements IConverter<DivisionNumberStatistic, DeviceStateCountModel>
+  implements IPromiseConverter<DivisionNumberStatistic, DeviceStateCountModel>
 {
-  Convert(
+  constructor(private station: GarbageStationRequestService) {}
+
+  async station_online(divisionId: string) {
+    let params = new GetGarbageStationsParams();
+    params.DivisionId = divisionId;
+    let stations = await this.station.all(params);
+    let normal = stations.filter((x) => {
+      switch (x.StationState) {
+        case StationState.Error:
+        case StationState.Smoke:
+        case StationState.PanicButton:
+          return false;
+        default:
+          return true;
+      }
+    });
+    return normal.length;
+  }
+
+  async Convert(
     source: DivisionNumberStatistic,
     ...res: any[]
-  ): DeviceStateCountModel {
+  ): Promise<DeviceStateCountModel> {
     let model = new DeviceStateCountModel();
 
-    let totalCameraNum = source.CameraNumber;
-    let offLineCameraNum = source.OfflineCameraNumber;
-    let onLineCameraNum = totalCameraNum - offLineCameraNum;
+    let station_count = source.StationNumber;
+    let station_online = await this.station_online(source.Id);
+    let camera_online = source.CameraNumber - source.OfflineCameraNumber;
 
     let percent = 0;
 
     // 除数不能为0
-    if (totalCameraNum == 0) {
+    if (station_count == 0) {
       percent = 100;
     } else {
-      percent = (onLineCameraNum / totalCameraNum) * 100;
+      percent = (station_online / station_count) * 100;
     }
     model.onlineRatio = percent >> 0;
     if (model.onlineRatio < 80) {
@@ -69,19 +93,19 @@ export class DeviceStateConverter
 
     model.deviceStateArr = [
       {
-        label: Language.DeviceStateCountType(DeviceStateCountType.all),
-        count: totalCameraNum,
+        label: '全部投放点数量',
+        count: station_count,
         tagCls: DeviceStateCountType[DeviceStateCountType.all],
       },
       {
-        label: Language.DeviceStateCountType(DeviceStateCountType.onLine),
-        count: onLineCameraNum,
+        label: '在线投放点数量',
+        count: station_online,
         tagCls: DeviceStateCountType[DeviceStateCountType.onLine],
         status: OnlineStatus.Online,
       },
       {
-        label: Language.DeviceStateCountType(DeviceStateCountType.offLine),
-        count: offLineCameraNum,
+        label: '在线设备数量',
+        count: camera_online,
         tagCls: DeviceStateCountType[DeviceStateCountType.offLine],
         status: OnlineStatus.Offline,
       },
