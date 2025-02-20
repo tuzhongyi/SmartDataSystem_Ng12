@@ -3,7 +3,7 @@
     <div class="hw-simple-title">NB电源箱状态</div>
     <div class="form-item">
       <div class="form-item-title">状态</div>
-      <div class="form-item-value" [class]="Color.NBState(nb.State)">
+      <div class="form-item-value" [class]="Color.class.NBState(nb.State)">
         <ng-container *ngIf="nb.State != undefined; else nodata">{{
           Language.NBState(nb.State)
         }}</ng-container>
@@ -13,7 +13,7 @@
       <div class="form-item-title">信号强度</div>
       <div
         class="form-item-value"
-        [class]="Color.Signal(nb.Signal)"
+        [class]="Color.class.Signal(nb.Signal)"
         [title]="nb.Signal"
       >
         <ng-container *ngIf="nb.Signal != undefined; else nodata">

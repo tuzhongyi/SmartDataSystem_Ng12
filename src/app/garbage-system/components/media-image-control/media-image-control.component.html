@@ -5,7 +5,9 @@
         {{ model.name }}
         <span
           *ngIf="model.ishandle !== undefined && model.istimeout !== undefined"
-          [class]="Color.GarbageDropState(model.ishandle, model.istimeout)"
+          [class]="
+            Color.class.GarbageDropState(model.ishandle, model.istimeout)
+          "
           >{{
             Language.GarbageDropState(model.ishandle, model.istimeout)
           }}</span

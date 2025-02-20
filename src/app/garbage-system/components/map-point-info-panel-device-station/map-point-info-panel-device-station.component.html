@@ -1,0 +1,103 @@
+<div class="panel" *ngIf="data">
+  <div class="panel-item">
+    <div class="hw-simple-title">设备状态</div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">设备编号</div>
+    <div class="panel-item-value">{{ data.DeviceId }}</div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-item-title">在线状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.OnlineState(data.OnlineState)"
+    >
+      {{ Language.OnlineStatus(data.OnlineState, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">排风扇开关状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.OpenState(data.ExhaustFan)"
+    >
+      {{ Language.OpenState(data.ExhaustFan, true, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">香氛喷洒开关状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.OpenState(data.Spray)"
+    >
+      {{ Language.OpenState(data.Spray, true, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">RFID读卡器状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.SwitchState(data.RfidReader)"
+    >
+      {{ Language.OnlineStatus(data.RfidReader, "-") }}
+    </div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-item-title">大门开关状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.class.OpenState(data.GateState)"
+    >
+      {{ Language.OpenState(data.GateState, true, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">气泵电源状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.SwitchState(data.AirPumpPower)"
+    >
+      {{ Language.PowerState(data.AirPumpPower, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">气泵压强数值，单位：pa</div>
+    <div class="panel-item-value">{{ data.AirPumpPressure ?? "-" }}</div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">气体检测传感器数值</div>
+    <div class="panel-item-value">{{ data.GasSensor ?? "-" }}</div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-item-title">CPU芯片温度</div>
+    <div class="panel-item-value">{{ data.ChipTemperature ?? "-" }}</div>
+  </div>
+  <ng-container *ngIf="data.SwitchStates && data.SwitchStates.length > 0">
+    <ng-container *ngFor="let item of data.SwitchStates">
+      <div class="panel-item">
+        <div class="panel-item-title">{{ item.Name }}</div>
+        <div class="panel-item-value">
+          {{ Language.OpenState(item.State ? 1 : 0) }}
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <div class="panel-item">
+    <div class="panel-item-title">满溢垃圾桶数量</div>
+    <div class="panel-item-value">{{ data.FullCount ?? "-" }}</div>
+  </div>
+  <div class="panel-item" *ngIf="data.LastUpdateTime != undefined">
+    <div class="panel-item-title">最后更新时间</div>
+    <div class="panel-item-value">
+      {{ data.LastUpdateTime | date : Language.yyyyMMddHHmmss }}
+    </div>
+  </div>
+  <!-- <div class="panel-item" *ngIf="data.Weights && data.Weights.length > 0">
+    <div class="panel-item-title">垃圾重量</div>
+    <div>{{ data.Weights }}</div>
+  </div> -->
+</div>

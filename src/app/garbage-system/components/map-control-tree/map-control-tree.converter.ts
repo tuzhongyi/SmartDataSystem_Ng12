@@ -96,7 +96,7 @@ export class MapControlTreeConverter {
     } else {
       node.icon = `${IconTool.StationType(
         node.data.StationType
-      )} ${ColorTool.StationState(node.data.StationState)}`;
+      )} ${ColorTool.class.StationState(node.data.StationState)}`;
     }
 
     let flags = new Flags(node.data.StationState);
@@ -213,7 +213,7 @@ export class MapControlTreeConverter {
     } else {
       node.icon = `${IconTool.StationType(
         data.StationType
-      )} ${ColorTool.StationState(data.StationState)}`;
+      )} ${ColorTool.class.StationState(data.StationState)}`;
     }
 
     let flags = new Flags(data.StationState);

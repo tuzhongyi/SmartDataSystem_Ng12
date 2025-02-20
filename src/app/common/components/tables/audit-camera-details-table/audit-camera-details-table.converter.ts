@@ -174,7 +174,7 @@ class TableItemDataConverter {
     });
 
     let item = new TableItemData('OnlineStatus', text);
-    let color = ColorTool.OnlineState(data.OnlineStatus);
+    let color = ColorTool.class.OnlineState(data.OnlineStatus);
     if (color) {
       item.class = color;
     } else {
@@ -191,7 +191,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('SceneChange', text);
-    let color = ColorTool.SceneChange(data.SceneChange);
+    let color = ColorTool.class.SceneChange(data.SceneChange);
     if (color) {
       item.class = color;
     } else {
@@ -208,7 +208,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('ImageQuality', text);
-    let color = ColorTool.ImageQuality(data.ImageQuality);
+    let color = ColorTool.class.ImageQuality(data.ImageQuality);
     if (color) {
       item.class = color;
     } else {
@@ -225,7 +225,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('Brightness', text);
-    let color = ColorTool.Brightness(data.Brightness);
+    let color = ColorTool.class.Brightness(data.Brightness);
     if (color) {
       item.class = color;
     } else {
@@ -242,7 +242,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('Aberration', text);
-    let color = ColorTool.Aberration(data.Aberration);
+    let color = ColorTool.class.Aberration(data.Aberration);
     if (color) {
       item.class = color;
     } else {
@@ -259,7 +259,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('Disturbance', text);
-    let color = ColorTool.Disturbance(data.Disturbance);
+    let color = ColorTool.class.Disturbance(data.Disturbance);
     if (color) {
       item.class = color;
     } else {
@@ -298,7 +298,7 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('RecordState', text);
-    let color = ColorTool.RecordState(data.RecordState);
+    let color = ColorTool.class.RecordState(data.RecordState);
     if (color) {
       item.class = color;
     } else {

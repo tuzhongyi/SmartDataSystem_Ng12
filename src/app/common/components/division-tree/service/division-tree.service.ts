@@ -21,4 +21,7 @@ export class DivisionTreeService {
     params.ParentId = parentId;
     return this.service.cache.all(params);
   }
+  get(id: string) {
+    return this.service.cache.get(id);
+  }
 }

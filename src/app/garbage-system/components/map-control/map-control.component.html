@@ -96,6 +96,19 @@
 (GarbageCountClickedEvent)="onPanelGarbageCountClicked($event)"
 (IllegalDropClickedEvent)="onPanelIllegalDropClicked($event)"
 (MixedIntoClickedEvent)="onPanelMixedIntoClicked($event)" -->
+
+<app-window
+  [Model]="window.device"
+  [style]="window.device.style"
+  *ngIf="window.device.show"
+>
+  <map-point-info-panel-device
+    [data]="window.device.data"
+    [nb]="window.device.nb"
+    [stationId]="window.device.stationId"
+  ></map-point-info-panel-device>
+</app-window>
+
 <app-window
   [Model]="window.confirm"
   [style]="window.confirm.style"

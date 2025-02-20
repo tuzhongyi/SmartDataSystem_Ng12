@@ -48,7 +48,7 @@ export class PatrolControlConverter
     model.status.stationState = new ControlClass(source.StationState);
     let flags = new Flags(source.StationState);
     model.status.stationState.language = Language.StationStateFlags(flags);
-    model.status.stationState.class = ColorTool.StationState(
+    model.status.stationState.class = ColorTool.class.StationState(
       source.StationState
     );
     if (statistic.TodayEventNumbers) {

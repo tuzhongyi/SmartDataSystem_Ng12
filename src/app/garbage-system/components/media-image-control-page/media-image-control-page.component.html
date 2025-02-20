@@ -33,7 +33,7 @@
         *ngIf="
           state && state.ishandle !== undefined && state.istimeout !== undefined
         "
-        [class]="Color.GarbageDropState(state.ishandle, state.istimeout)"
+        [class]="Color.class.GarbageDropState(state.ishandle, state.istimeout)"
       >
         {{ Language.GarbageDropState(state.ishandle, state.istimeout) }}
       </div>

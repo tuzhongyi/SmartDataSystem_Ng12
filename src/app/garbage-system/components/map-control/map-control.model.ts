@@ -1,5 +1,6 @@
 import { EventEmitter } from '@angular/core';
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
+import { GarbageDeviceData } from 'src/app/network/model/garbage-station/garbage-device-data.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
 export class MapControlToolButton {
@@ -68,11 +69,14 @@ export interface MapControlSelected {
 
 export class MapControlWindow {
   confirm = new MapControlConfirmWindow();
+  device = new MapControlDeviceWindow();
   clear() {
     this.confirm.clear();
+    this.device.clear();
   }
   close() {
     this.confirm.show = false;
+    this.device.show = false;
   }
 }
 class MapControlConfirmWindow extends WindowViewModel {
@@ -84,4 +88,22 @@ class MapControlConfirmWindow extends WindowViewModel {
     height: 'auto',
   };
   model?: GarbageStation;
+}
+
+export class MapControlDeviceWindow extends WindowViewModel {
+  clear() {
+    this.data = undefined;
+    this.nb = undefined;
+    this.stationId = undefined;
+  }
+  style = {
+    width: 'auto',
+    height: '656px',
+  };
+  data?: GarbageDeviceData;
+  stationId?: string;
+  nb?: {
+    NBHeartbeatTime?: Date;
+    NBState?: number;
+  };
 }

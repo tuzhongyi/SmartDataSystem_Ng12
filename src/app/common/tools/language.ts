@@ -478,14 +478,14 @@ export class Language {
     }
   }
 
-  static OnlineStatus(status?: OnlineStatus) {
+  static OnlineStatus(status?: OnlineStatus, def = Language.json.Unknow) {
     switch (status) {
       case OnlineStatus.Online:
         return Language.json.OnlineStatus.online;
       case OnlineStatus.Offline:
         return Language.json.OnlineStatus.Offline;
       default:
-        return Language.json.Unknow;
+        return def;
     }
   }
 
@@ -911,7 +911,7 @@ export class Language {
     }
   }
 
-  static RobotState(value?: RobotState) {
+  static RobotState(value?: RobotState, def = Language.json.Unknow) {
     switch (value) {
       case RobotState.None:
         return '正常';
@@ -928,14 +928,14 @@ export class Language {
       case RobotState.Offline:
         return '信号丢失';
       default:
-        return Language.json.Unknow;
+        return def;
     }
   }
   static RobotStates(values: RobotState[]) {
     return values.map((x) => this.RobotState(x)).join(',');
   }
 
-  static BatteryState(value?: BatteryState) {
+  static BatteryState(value?: BatteryState, def = Language.json.Unknow) {
     switch (value) {
       case BatteryState.Normal:
         return '正常';
@@ -946,18 +946,28 @@ export class Language {
       case BatteryState.UnderVoltage:
         return '欠压、亏电';
       default:
-        return Language.json.Unknow;
+        return def;
     }
   }
 
-  static SwitchState(value?: number) {
+  static SwitchState(value?: number, def = Language.json.Unknow) {
     switch (value) {
       case 0:
         return '正常';
       case 1:
         return '异常';
       default:
-        return Language.json.Unknow;
+        return def;
+    }
+  }
+  static PowerState(value?: number, def = Language.json.Unknow) {
+    switch (value) {
+      case 0:
+        return '断电';
+      case 1:
+        return '上电';
+      default:
+        return def;
     }
   }
 
@@ -982,14 +992,19 @@ export class Language {
     }
   }
 
-  static OpenState(value?: number, contrary: boolean = false) {
-    if (value === undefined || value === null) return Language.json.Unknow;
+  static OpenState(
+    value?: number,
+    contrary: boolean = false,
+    def = Language.json.Unknow
+  ) {
+    if (value === undefined || value === null) return def;
     switch (value) {
       case 0:
         return contrary ? '关闭' : '打开';
       case 1:
-      default:
         return contrary ? '打开' : '关闭';
+      default:
+        return def;
     }
   }
 
@@ -1094,7 +1109,7 @@ export class Language {
     }
   }
 
-  static NBState(value?: number): string {
+  static NBState(value?: number, def = Language.json.Unknow): string {
     switch (value) {
       case 0:
         return '正常';
@@ -1103,7 +1118,7 @@ export class Language {
       case 2:
         return '220V故障';
       default:
-        return '未知';
+        return def;
     }
   }
 

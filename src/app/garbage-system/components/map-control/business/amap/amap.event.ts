@@ -16,9 +16,10 @@ class AMapPointEvent {
 class AMapContextMenuEvent {
   click: EventEmitter<void> = new EventEmitter();
   video: EventEmitter<GarbageStation> = new EventEmitter();
-  information: EventEmitter<GarbageStation> = new EventEmitter();
+  stationinfo: EventEmitter<GarbageStation> = new EventEmitter();
   garbagedrop: EventEmitter<GarbageStation> = new EventEmitter();
   mixedinto: EventEmitter<GarbageStation> = new EventEmitter();
   illegaldrop: EventEmitter<GarbageStation> = new EventEmitter();
   garbagefull: EventEmitter<GarbageStation> = new EventEmitter();
+  deviceinfo: EventEmitter<GarbageStation> = new EventEmitter();
 }

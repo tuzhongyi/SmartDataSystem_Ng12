@@ -1,0 +1,41 @@
+<div
+  class="map-point-info-panel-device panel"
+  *ngIf="data && data.OnlineState == 0"
+>
+  <div class="panel-item">
+    <div class="hw-simple-title">GCHA状态</div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">在线状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.OnlineState(data.OnlineState)"
+    >
+      {{ Language.OnlineStatus(data.OnlineState, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">分析服务状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.SwitchState(data.AnalysisServerState)"
+    >
+      {{ Language.SwitchState(data.AnalysisServerState, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">升级服务状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.SwitchState(data.UpgradeServerState)"
+    >
+      {{ Language.SwitchState(data.UpgradeServerState, "-") }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">最后更新时间</div>
+    <div class="panel-item-value">
+      {{ data.LastUpdateTime | date : Language.yyyyMMddHHmmss }}
+    </div>
+  </div>
+</div>

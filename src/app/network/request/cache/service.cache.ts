@@ -157,11 +157,11 @@ export class ServiceCache<T extends IData> implements IServiceCache {
     return this.service.list!().then((x) => {
       try {
         this.save(x.Data);
-        return x.Data;
       } finally {
         this.loaded = true;
         this.loading = false;
       }
+      return this.all(params);
     });
   }
 

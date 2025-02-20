@@ -39,7 +39,7 @@ export class AMapPointContextMenuBusiness {
         }
         this.event.menu.garbagefull.emit(station);
       },
-      0
+      1
     );
     client.ContextMenu.AddItem(
       `<i class="howell-icon-mixlittering" style="font-size: 18px"></i> ${Language.json.EventType.MixedInto}${Language.json.record}`,
@@ -53,7 +53,7 @@ export class AMapPointContextMenuBusiness {
         }
         this.event.menu.mixedinto.emit(station);
       },
-      1
+      2
     );
     client.ContextMenu.AddItem(
       `<i class="howell-icon-garbagebags" style="font-size: 18px"></i> ${Language.json.small}${Language.json.garbage}${Language.json.stay}`,
@@ -67,7 +67,7 @@ export class AMapPointContextMenuBusiness {
         }
         this.event.menu.garbagedrop.emit(station);
       },
-      2
+      3
     );
 
     client.ContextMenu.AddItem(
@@ -85,9 +85,28 @@ export class AMapPointContextMenuBusiness {
           const station = await this.service.get(id);
           this.amap.source.all.push(station);
         }
-        this.event.menu.information.emit(station);
+        this.event.menu.stationinfo.emit(station);
       },
-      3
+      4
+    );
+    client.ContextMenu.AddItem(
+      `<i class="howell-icon-AiEquipment" style="font-size: 18px"></i> 设备信息`,
+      async (id: string) => {
+        this.event.menu.click.emit();
+        const status = document.getElementsByClassName(
+          'map-bar status'
+        )[0] as HTMLElement;
+        if (status) {
+          status['style'].display = 'none';
+        }
+        let station = this.amap.source.all.find((x) => x.Id === id);
+        if (!station) {
+          const station = await this.service.get(id);
+          this.amap.source.all.push(station);
+        }
+        this.event.menu.deviceinfo.emit(station);
+      },
+      5
     );
     client.ContextMenu.AddItem(
       `<i class="howell-icon-video" style="font-size: 18px"></i> ${Language.json.station}${Language.json.video}`,
@@ -99,7 +118,7 @@ export class AMapPointContextMenuBusiness {
         }
         this.event.menu.video.emit(station);
       },
-      4
+      6
     );
 
     client.ContextMenu.Enable();

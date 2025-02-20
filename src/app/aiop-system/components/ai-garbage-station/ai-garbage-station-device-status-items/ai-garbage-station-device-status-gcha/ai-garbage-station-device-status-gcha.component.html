@@ -5,7 +5,7 @@
       <div class="form-item-title">在线状态</div>
       <div
         class="form-item-value"
-        [class]="Color.OnlineState(gcha.OnlineState)"
+        [class]="Color.class.OnlineState(gcha.OnlineState)"
       >
         {{
           gcha.OnlineState === undefined
@@ -18,7 +18,7 @@
       <div class="form-item-title">分析服务状态</div>
       <div
         class="form-item-value"
-        [class]="Color.SwitchState(gcha.AnalysisServerState)"
+        [class]="Color.class.SwitchState(gcha.AnalysisServerState)"
       >
         {{
           gcha.AnalysisServerState === undefined
@@ -31,7 +31,7 @@
       <div class="form-item-title">升级服务状态</div>
       <div
         class="form-item-value"
-        [class]="Color.SwitchState(gcha.UpgradeServerState)"
+        [class]="Color.class.SwitchState(gcha.UpgradeServerState)"
       >
         {{
           gcha.UpgradeServerState === undefined

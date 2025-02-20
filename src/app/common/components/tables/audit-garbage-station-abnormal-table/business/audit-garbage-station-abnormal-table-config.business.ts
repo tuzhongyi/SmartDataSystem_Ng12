@@ -22,6 +22,7 @@ export class AuditGarbageStationAbnormalTableConfigBusiness
     }
     let keys: (keyof AuditGarbageStationDetailsTableConfig)[] = [
       'DeviceAccessId',
+      'IMEI',
       'Committees',
       'County',
     ];

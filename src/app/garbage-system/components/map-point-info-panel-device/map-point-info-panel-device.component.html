@@ -1,0 +1,36 @@
+<div class="nodata" *ngIf="!data">无数据</div>
+<div class="map-point-info-panel-device" *ngIf="data">
+  <div class="map-point-info-panel-device-head">
+    <div class="hw-simple-title">
+      {{ data.DeviceName }}
+    </div>
+  </div>
+  <div class="map-point-info-panel-device-body">
+    <map-point-info-panel-device-station
+      [data]="data"
+    ></map-point-info-panel-device-station>
+    <map-point-info-panel-device-nbbox
+      *ngIf="nb"
+      [data]="nb"
+    ></map-point-info-panel-device-nbbox>
+
+    <map-point-info-panel-device-gcha
+      *ngIf="data.GCHAStatus && data.GCHAStatus.OnlineState == 0"
+      [data]="data.GCHAStatus"
+    ></map-point-info-panel-device-gcha>
+
+    <map-point-info-panel-device-command
+      [stationId]="stationId"
+    ></map-point-info-panel-device-command>
+
+    <map-point-info-panel-device-robot
+      *ngIf="data.Robots && data.Robots.length > 0"
+      [datas]="data.Robots"
+    ></map-point-info-panel-device-robot>
+
+    <map-point-info-panel-device-sortation
+      *ngIf="data.Sortations && data.Sortations.length > 0"
+      [datas]="data.Sortations"
+    ></map-point-info-panel-device-sortation>
+  </div>
+</div>

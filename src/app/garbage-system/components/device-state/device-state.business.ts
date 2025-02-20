@@ -93,18 +93,18 @@ export class DeviceStateConverter
 
     model.deviceStateArr = [
       {
-        label: '全部投放点数量',
+        label: '全部投放点',
         count: station_count,
         tagCls: DeviceStateCountType[DeviceStateCountType.all],
       },
       {
-        label: '在线投放点数量',
+        label: '在线投放点',
         count: station_online,
         tagCls: DeviceStateCountType[DeviceStateCountType.onLine],
         status: OnlineStatus.Online,
       },
       {
-        label: '在线设备数量',
+        label: '在线设备',
         count: camera_online,
         tagCls: DeviceStateCountType[DeviceStateCountType.offLine],
         status: OnlineStatus.Offline,

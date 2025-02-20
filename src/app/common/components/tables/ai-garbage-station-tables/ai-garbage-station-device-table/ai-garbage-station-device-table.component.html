@@ -83,7 +83,7 @@
                   [title]="
                     '厢房' + Language.OnlineStatus(item.Status.OnlineState)
                   "
-                  [class]="Color.OnlineState(item.Status.OnlineState)"
+                  [class]="Color.class.OnlineState(item.Status.OnlineState)"
                 >
                   <ng-container [ngSwitch]="item.Status.OnlineState">
                     <i class="howell-icon-signal2" *ngSwitchCase="0"></i>
@@ -101,7 +101,7 @@
                       [title]="
                         '机器人状态：' + Language.RobotStates(robot.State)
                       "
-                      [class]="Color.RobotStateDefault(robot.State)"
+                      [class]="Color.class.RobotStateDefault(robot.State)"
                     >
                       <i class="howell-icon-robot"></i>
                     </div>
@@ -118,7 +118,7 @@
                     Language.OnlineStatus(item.Status.GCHAStatus.OnlineState)
                   "
                   [class]="
-                    Color.OnlineState(item.Status.GCHAStatus.OnlineState)
+                    Color.class.OnlineState(item.Status.GCHAStatus.OnlineState)
                   "
                 >
                   <i class="mdi mdi-server-network"></i>

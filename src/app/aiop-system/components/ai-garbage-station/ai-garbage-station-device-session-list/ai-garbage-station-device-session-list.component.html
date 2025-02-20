@@ -79,7 +79,10 @@
             <div class="flex">
               <div
                 [class]="
-                  Color.OnlineState(item.Status?.GCHAStatus?.OnlineState, false)
+                  Color.class.OnlineState(
+                    item.Status?.GCHAStatus?.OnlineState,
+                    false
+                  )
                 "
                 [title]="
                   Language.OnlineStatus(item.Status?.GCHAStatus?.OnlineState)
@@ -96,7 +99,7 @@
                 ></i>
               </div>
               <div
-                [class]="Color.YesOrNo(!!item.session)"
+                [class]="Color.class.YesOrNo(!!item.session)"
                 [title]="!!item.session ? 'Session已连接' : 'Session未连接'"
               >
                 <i
@@ -136,7 +139,7 @@
               !isEmpty(item.Status.GCHAStatus)
             "
             class="session"
-            [class]="Color.YesOrNo(!!item.session)"
+            [class]="Color.class.YesOrNo(!!item.session)"
           >
             <i
               [ngClass]="{

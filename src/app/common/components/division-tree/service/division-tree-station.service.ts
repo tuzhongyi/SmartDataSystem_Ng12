@@ -8,7 +8,13 @@ export class DivisionTreeStationService {
 
   async list(divisionId?: string) {
     let params = new GetGarbageStationsParams();
-    if (divisionId) params.DivisionId = divisionId;
+    if (divisionId) {
+      params.DivisionId = divisionId;
+      if (this.service.cache.loaded) {
+        return this.service.cache.all(params);
+      }
+      return this.service.all(params);
+    }
     return this.service.cache.all(params);
   }
   async search(condition: string) {

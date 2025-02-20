@@ -68,6 +68,9 @@ export class GarbageStationServiceCache extends ServiceCache<GarbageStation> {
     if (args.StationType) {
       datas = datas.filter((x) => x.StationType === args.StationType);
     }
+    if (args.DivisionId) {
+      datas = datas.filter((x) => x.DivisionId === args.DivisionId);
+    }
     return datas;
   }
 }

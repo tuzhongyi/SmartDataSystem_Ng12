@@ -78,6 +78,7 @@ export class LoginComponent
   }
 
   ngOnInit() {
+    this.controller.init();
     this.load();
 
     this.keypressHandle = this.onkeypress.bind(this);

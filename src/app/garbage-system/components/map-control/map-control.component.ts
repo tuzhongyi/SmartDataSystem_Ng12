@@ -277,9 +277,21 @@ export class MapControlComponent
     this.amap.event.menu.click.subscribe((x) => {
       this.onMapClicked();
     });
-    this.amap.event.menu.information.subscribe((x) => {
+    this.amap.event.menu.stationinfo.subscribe((x) => {
       this.info.station = x;
       this.display.status = false;
+    });
+    this.amap.event.menu.deviceinfo.subscribe((x) => {
+      this.window.device.clear();
+      this.window.device.stationId = x.Id;
+      this.window.device.data = x.GarbageDeviceData;
+      if (x.NBState != undefined && x.NBHeartbeatTime) {
+        this.window.device.nb = {
+          NBState: x.NBState,
+          NBHeartbeatTime: x.NBHeartbeatTime,
+        };
+      }
+      this.window.device.show = true;
     });
     this.amap.event.menu.illegaldrop.subscribe((x) => {
       this.illegalDropClicked.emit(x);

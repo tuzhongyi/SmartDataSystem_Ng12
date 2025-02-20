@@ -6,6 +6,7 @@ import { transformDateTime, transformRound } from '../transform.model';
 import { GarbageWeightV2 } from './garbage-weight-v2.model';
 import { GarbageStationRobotStatus } from './robot-status.model';
 import { GarbageStationSortationStatus } from './sortation-status.model';
+import { SwitchState } from './switch-state.model';
 
 export class GarbageDeviceData implements IModel {
   /**	String	设备ID	M	*/
@@ -45,4 +46,7 @@ export class GarbageDeviceData implements IModel {
   ChipTemperature?: number;
   /**	SortationStatus[]	分拣设备状态	O */
   Sortations?: GarbageStationSortationStatus[];
+  /**	SwitchState[]	开关状态	O */
+  @Type(() => SwitchState)
+  SwitchStates?: SwitchState[];
 }

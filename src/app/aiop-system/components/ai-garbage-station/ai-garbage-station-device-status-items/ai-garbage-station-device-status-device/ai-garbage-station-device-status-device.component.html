@@ -7,7 +7,7 @@
       <div class="form-item-title">在线状态</div>
       <div
         class="form-item-value"
-        [class]="Color.OnlineState(model.Status.OnlineState)"
+        [class]="Color.class.OnlineState(model.Status.OnlineState)"
       >
         {{
           model.Status.OnlineState === undefined
@@ -20,7 +20,7 @@
       <div class="form-item-title">排风扇开关状态</div>
       <div
         class="form-item-value"
-        [class]="Color.OpenState(model.Status.ExhaustFan)"
+        [class]="Color.class.OpenState(model.Status.ExhaustFan)"
       >
         {{
           model.Status.ExhaustFan === undefined
@@ -33,7 +33,7 @@
       <div class="form-item-title">香氛喷洒开关状态</div>
       <div
         class="form-item-value"
-        [class]="Color.OpenState(model.Status.Spray)"
+        [class]="Color.class.OpenState(model.Status.Spray)"
       >
         {{
           model.Status.Spray === undefined
@@ -43,10 +43,10 @@
       </div>
     </div>
     <div class="form-item">
-      <div class="form-item-title">RFID读卡器状态</div>
+      <div class="form-item-title">读卡器RFID状态</div>
       <div
         class="form-item-value"
-        [class]="Color.SwitchState(model.Status.RfidReader)"
+        [class]="Color.class.SwitchState(model.Status.RfidReader)"
       >
         {{
           model.Status.RfidReader === undefined
@@ -59,7 +59,7 @@
       <div class="form-item-title">大门开关状态</div>
       <div
         class="form-item-value"
-        [class]="Color.OpenState(model.Status.GateState)"
+        [class]="Color.class.OpenState(model.Status.GateState)"
       >
         {{
           model.Status.GateState === undefined
@@ -72,7 +72,7 @@
       <div class="form-item-title">气泵电源状态</div>
       <div
         class="form-item-value"
-        [class]="Color.SwitchState(model.Status.AirPumpPower)"
+        [class]="Color.class.SwitchState(model.Status.AirPumpPower)"
       >
         <ng-container [ngSwitch]="model.Status.AirPumpPower">
           <span *ngSwitchCase="0">断电</span>
@@ -101,7 +101,7 @@
     </div>
     <div class="form-item" *ngFor="let state of model.Status.SwitchStates">
       <div class="form-item-title">{{ state.Name }}</div>
-      <div class="form-item-value" [class]="Color.YesOrNo(state.State)">
+      <div class="form-item-value" [class]="Color.class.YesOrNo(state.State)">
         {{ Language.YesOrNo(state.State) }}
       </div>
     </div>

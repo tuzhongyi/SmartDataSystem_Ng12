@@ -255,7 +255,7 @@ class TableItemDataConverter {
     if (isEmpty(data.GarbageDeviceData?.OnlineState)) {
       item.class = 'gray-text';
     } else {
-      item.class = `td-icon ${ColorTool.OnlineState(
+      item.class = `td-icon ${ColorTool.class.OnlineState(
         data.GarbageDeviceData?.OnlineState
       )}`;
       item.event = new EventEmitter<GarbageStation>();
@@ -276,7 +276,7 @@ class TableItemDataConverter {
     if (isEmpty(data.GarbageDeviceData?.GCHAStatus?.OnlineState)) {
       item.class = 'gray-text';
     } else {
-      item.class = `td-icon ${ColorTool.OnlineState(
+      item.class = `td-icon ${ColorTool.class.OnlineState(
         data.GarbageDeviceData?.GCHAStatus?.OnlineState
       )}`;
       item.event = new EventEmitter<GarbageStation>();

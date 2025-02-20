@@ -90,7 +90,9 @@
             <td>
               <div
                 [style.width]="'calc(' + widths[7] + ' - 24px)'"
-                [class]="Color.GarbageDropState(item.IsHandle ?? false, false)"
+                [class]="
+                  Color.class.GarbageDropState(item.IsHandle ?? false, false)
+                "
               >
                 <span>
                   {{ Language.GarbageDropState(item.IsHandle ?? false, false) }}

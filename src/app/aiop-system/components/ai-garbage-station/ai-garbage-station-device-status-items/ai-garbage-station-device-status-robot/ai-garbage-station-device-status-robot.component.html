@@ -28,7 +28,7 @@
       <div class="form-item-title">机器人状态</div>
       <div class="form-item-value">
         <ng-container *ngFor="let state of robot.State">
-          <span [class]="Color.RobotState(state)">
+          <span [class]="Color.class.RobotState(state)">
             {{ Language.RobotState(state) }}
           </span>
         </ng-container>
@@ -38,7 +38,7 @@
       <div class="form-item-title">电池电量</div>
       <div
         class="form-item-value"
-        [class]="Color.BatteryLevel(robot.BatteryLevel)"
+        [class]="Color.class.BatteryLevel(robot.BatteryLevel)"
       >
         {{ robot.BatteryLevel === undefined ? "-" : robot.BatteryLevel }}
       </div>
@@ -47,7 +47,7 @@
       <div class="form-item-title">电池状态</div>
       <div
         class="form-item-value"
-        [class]="Color.BatteryState(robot.BatteryState)"
+        [class]="Color.class.BatteryState(robot.BatteryState)"
       >
         {{
           robot.BatteryState === undefined

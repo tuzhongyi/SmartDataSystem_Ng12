@@ -1,0 +1,20 @@
+<div class="map-point-info-panel-device panel" *ngIf="data">
+  <div class="panel-item">
+    <div class="hw-simple-title">NB电源箱</div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">在线状态</div>
+    <div
+      class="panel-item-value"
+      [style.color]="Color.style.NBState(data.NBState)"
+    >
+      {{ Language.NBState(data.NBState) }}
+    </div>
+  </div>
+  <div class="panel-item">
+    <div class="panel-item-title">最近心跳时间</div>
+    <div class="panel-item-value">
+      {{ data.NBHeartbeatTime | date : Language.yyyyMMddHHmmss }}
+    </div>
+  </div>
+</div>

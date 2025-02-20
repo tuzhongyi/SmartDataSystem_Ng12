@@ -1,10 +1,3 @@
-/*
- * @Author: pmx
- * @Date: 2021-09-15 14:43:30
- * @Last Modified by: zzl
- * @Last Modified time: 2023-04-20 17:13:46
- */
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -35,6 +28,13 @@ import { MapPointInfoPanelComponent } from './map-control-point-info-panel/map-p
 import { MapControlTreePanelComponent } from './map-control-tree-panel/map-control-tree-panel.component';
 import { MapControlTreeComponent } from './map-control-tree/map-control-tree.component';
 import { MapControlComponent } from './map-control/map-control.component';
+import { MapPointInfoPanelDeviceCommandComponent } from './map-point-info-panel-device-command/map-point-info-panel-device-command.component';
+import { MapPointInfoPanelDeviceGCHAComponent } from './map-point-info-panel-device-gcha/map-point-info-panel-device-gcha.component';
+import { MapPointInfoPanelDeviceNBBoxComponent } from './map-point-info-panel-device-nbbox/map-point-info-panel-device-nbbox.component';
+import { MapPointInfoPanelDeviceRobotComponent } from './map-point-info-panel-device-robot/map-point-info-panel-device-robot.component';
+import { MapPointInfoPanelDeviceSortationComponent } from './map-point-info-panel-device-sortation/map-point-info-panel-device-sortation.component';
+import { MapPointInfoPanelDeviceStationComponent } from './map-point-info-panel-device-station/map-point-info-panel-device-station.component';
+import { MapPointInfoPanelDeviceComponent } from './map-point-info-panel-device/map-point-info-panel-device.component';
 import { MediaControlComponent } from './media-control/media-control.component';
 import { MediaImageControlPageComponent } from './media-image-control-page/media-image-control-page.component';
 import { MediaImageControlComponent } from './media-image-control/media-image-control.component';
@@ -75,11 +75,19 @@ import { GARBAGE_SYSTEM_WINDOW_COMPONENTS } from './windows/garbage-system-windo
     MapListPanelComponent,
     MapControlTreeComponent,
     MapControlTreePanelComponent,
+    MapPointInfoPanelComponent,
+
+    MapPointInfoPanelDeviceCommandComponent,
+    MapPointInfoPanelDeviceGCHAComponent,
+    MapPointInfoPanelDeviceNBBoxComponent,
+    MapPointInfoPanelDeviceRobotComponent,
+    MapPointInfoPanelDeviceSortationComponent,
+    MapPointInfoPanelDeviceStationComponent,
+    MapPointInfoPanelDeviceComponent,
 
     MediaControlComponent,
     MediaImageControlComponent,
     MediaImageControlPageComponent,
-    MapPointInfoPanelComponent,
 
     PatrolControlComponent,
     PlaybackConfigComponent,

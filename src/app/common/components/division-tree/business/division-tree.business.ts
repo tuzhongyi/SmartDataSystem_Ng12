@@ -74,9 +74,12 @@ export class DivisionTreeBusiness implements IDivisionTreeBusiness {
       if (!this.canload(node, depth)) {
         return node;
       }
-
       let children = await this.children(flat.Id);
-      let models = children.map((x) => this.converter.Convert(x));
+      let models = children.map((x) => {
+        let child = this.converter.Convert(x);
+        child.HasChildren = this.canload(child, depth);
+        return child;
+      });
 
       let tree = this.totree([node, ...models]);
       tree[0].ChildrenLoaded = true;

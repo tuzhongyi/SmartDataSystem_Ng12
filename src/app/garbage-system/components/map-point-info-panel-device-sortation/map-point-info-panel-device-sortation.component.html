@@ -1,0 +1,33 @@
+<ng-container *ngIf="datas && datas.length > 0">
+  <div class="panel" *ngFor="let sortation of datas; let index = index">
+    <div class="panel-item">
+      <div class="hw-simple-title">
+        分拣设备
+        <ng-container *ngIf="datas.length > 1">
+          <span *ngIf="datas.length > 0">- {{ index + 1 }}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">分拣设备名称</div>
+      <div class="panel-item-value">
+        {{ sortation.Name }}
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">分拣设备状态</div>
+      <div
+        class="panel-item-value"
+        [style.color]="Color.style.OnlineState(sortation.OnlineState)"
+      >
+        {{ Language.OnlineStatus(sortation.OnlineState, "-") }}
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">气泵压力值，单位：MPa</div>
+      <div class="panel-item-value">
+        {{ sortation.AirPressure ?? "-" }}
+      </div>
+    </div>
+  </div>
+</ng-container>

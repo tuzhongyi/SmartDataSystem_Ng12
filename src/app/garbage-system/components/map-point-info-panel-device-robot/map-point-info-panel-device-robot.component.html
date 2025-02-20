@@ -1,0 +1,63 @@
+<ng-container *ngIf="datas && datas.length > 0">
+  <div class="panel" *ngFor="let robot of datas; let index = index">
+    <div class="panel-item">
+      <div class="hw-simple-title">
+        机器人
+        <ng-container *ngIf="datas.length > 1">
+          <span *ngIf="datas.length > 0">- {{ index + 1 }}</span>
+        </ng-container>
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">机器人编号</div>
+      <div class="panel-item-value">{{ robot.Id }}</div>
+    </div>
+
+    <div class="panel-item">
+      <div class="panel-item-title">机器人状态</div>
+      <div class="panel-item-value">
+        <span
+          *ngFor="let state of robot.State"
+          [style.color]="Color.style.RobotState(state)"
+          >{{ Language.RobotState(state, "-") }}</span
+        >
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">机器人序列号</div>
+      <div class="panel-item-value">{{ robot.SerialNumber }}</div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">机器人型号</div>
+      <div class="panel-item-value">
+        {{ robot.Model }}
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">电池状态</div>
+      <div
+        class="panel-item-value"
+        [style.color]="Color.style.BatteryState(robot.BatteryState)"
+      >
+        {{ Language.BatteryState(robot.BatteryState, "-") }}
+      </div>
+    </div>
+    <div class="panel-item">
+      <div class="panel-item-title">电池电量</div>
+      <div
+        class="panel-item-value"
+        [style.color]="Color.style.BatteryLevel(robot.BatteryLevel)"
+      >
+        {{ robot.BatteryLevel }}%
+      </div>
+    </div>
+    <ng-container *ngIf="robot.Errors && robot.Errors.length > 0">
+      <div class="panel-item" *ngFor="let error of robot.Errors">
+        <div class="panel-item-title">{{ error.Code }}</div>
+        <div class="panel-item-value">
+          {{ error.Desc }}
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
