@@ -5,7 +5,10 @@ import { Language } from 'src/app/common/tools/language';
 @Component({
   selector: 'map-point-info-panel-device-nbbox',
   templateUrl: './map-point-info-panel-device-nbbox.component.html',
-  styleUrls: ['./map-point-info-panel-device-nbbox.component.less'],
+  styleUrls: [
+    '../map-point-info-panel-device/map-point-info-panel-device-panel.less',
+    './map-point-info-panel-device-nbbox.component.less',
+  ],
 })
 export class MapPointInfoPanelDeviceNBBoxComponent implements OnInit {
   @Input() data?: {

@@ -27,7 +27,7 @@ export class MapPointInfoPanelDeviceComponent implements OnInit {
   ngOnInit(): void {
     // console.log(this.data);
     // if (this.data) {
-    //   this.data.Robots = [this.test.robot(), this.test.robot()];
+    //   this.data.Robots = [this.test.robot()];
     //   this.data.Sortations = [this.test.sortation()];
     // }
   }

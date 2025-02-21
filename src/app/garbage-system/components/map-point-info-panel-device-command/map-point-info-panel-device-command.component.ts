@@ -7,7 +7,10 @@ import { MapPointInfoPanelDeviceCommandBusiness } from './map-point-info-panel-d
 @Component({
   selector: 'map-point-info-panel-device-command',
   templateUrl: './map-point-info-panel-device-command.component.html',
-  styleUrls: ['./map-point-info-panel-device-command.component.less'],
+  styleUrls: [
+    '../map-point-info-panel-device/map-point-info-panel-device-panel.less',
+    './map-point-info-panel-device-command.component.less',
+  ],
   providers: [MapPointInfoPanelDeviceCommandBusiness],
 })
 export class MapPointInfoPanelDeviceCommandComponent implements OnInit {

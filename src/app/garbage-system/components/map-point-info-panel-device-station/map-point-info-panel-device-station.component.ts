@@ -6,7 +6,10 @@ import { GarbageDeviceData } from 'src/app/network/model/garbage-station/garbage
 @Component({
   selector: 'map-point-info-panel-device-station',
   templateUrl: './map-point-info-panel-device-station.component.html',
-  styleUrls: ['./map-point-info-panel-device-station.component.less'],
+  styleUrls: [
+    '../map-point-info-panel-device/map-point-info-panel-device-panel.less',
+    './map-point-info-panel-device-station.component.less',
+  ],
 })
 export class MapPointInfoPanelDeviceStationComponent implements OnInit {
   @Input() data?: GarbageDeviceData;

@@ -6,10 +6,15 @@ import { GarbageStationRobotStatus } from 'src/app/network/model/garbage-station
 @Component({
   selector: 'map-point-info-panel-device-robot',
   templateUrl: './map-point-info-panel-device-robot.component.html',
-  styleUrls: ['./map-point-info-panel-device-robot.component.less'],
+  styleUrls: [
+    '../map-point-info-panel-device/map-point-info-panel-device-panel.less',
+    './map-point-info-panel-device-robot.component.less',
+  ],
 })
 export class MapPointInfoPanelDeviceRobotComponent implements OnInit {
-  @Input() datas?: GarbageStationRobotStatus[] = [];
+  @Input() data?: GarbageStationRobotStatus;
+  @Input() index: number = 0;
+  @Input() length: number = 0;
   constructor() {}
   Language = Language;
   Color = ColorTool;

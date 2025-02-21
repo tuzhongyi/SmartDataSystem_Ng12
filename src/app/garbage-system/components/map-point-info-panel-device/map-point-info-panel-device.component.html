@@ -22,15 +22,23 @@
     <map-point-info-panel-device-command
       [stationId]="stationId"
     ></map-point-info-panel-device-command>
-
-    <map-point-info-panel-device-robot
-      *ngIf="data.Robots && data.Robots.length > 0"
-      [datas]="data.Robots"
-    ></map-point-info-panel-device-robot>
-
-    <map-point-info-panel-device-sortation
-      *ngIf="data.Sortations && data.Sortations.length > 0"
-      [datas]="data.Sortations"
-    ></map-point-info-panel-device-sortation>
+    <ng-container *ngIf="data.Robots && data.Robots.length > 0">
+      <ng-container *ngFor="let item of data.Robots; let index = index">
+        <map-point-info-panel-device-robot
+          [data]="item"
+          [index]="index"
+          [length]="data.Robots.length"
+        ></map-point-info-panel-device-robot>
+      </ng-container>
+    </ng-container>
+    <ng-container *ngIf="data.Sortations && data.Sortations.length > 0">
+      <ng-container *ngFor="let item of data.Sortations; let index = index">
+        <map-point-info-panel-device-sortation
+          [data]="item"
+          [index]="index"
+          [length]="data.Sortations.length"
+        ></map-point-info-panel-device-sortation>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
