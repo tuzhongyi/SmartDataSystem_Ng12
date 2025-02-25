@@ -9,7 +9,10 @@ import {
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { DownloadBusiness } from 'src/app/common/business/download.business';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import {
+  IBusiness,
+  IDowanload,
+} from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { IModel } from 'src/app/network/model/model.interface';
@@ -21,6 +24,7 @@ import {
   ImageControlModelArray,
 } from '../../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../../table-abstract.component';
+import { EventRecordDownloadBusiness } from '../event-record-download.business';
 import { EventRecordBusiness } from '../event-record.business';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
@@ -30,6 +34,7 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
   templateUrl: './event-record-table.component.html',
   styleUrls: ['../../table.less', './event-record-table.component.less'],
   providers: [
+    EventRecordDownloadBusiness,
     EventRecordBusiness,
     DownloadBusiness,
     VideoDownloadPanelBusiness,
@@ -42,18 +47,14 @@ export class EventRecordTableComponent
     OnInit,
     OnChanges
 {
-  @Input()
-  business: IBusiness<IModel, PagedList<EventRecordViewModel>>;
-  @Input()
-  type: EventType = EventType.IllegalDrop;
-  @Input()
-  load?: EventEmitter<EventRecordFilter>;
-  @Input()
-  filter: EventRecordFilter;
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
-  @Output()
-  play: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input() business: IBusiness<IModel, PagedList<EventRecordViewModel>> &
+    IDowanload;
+  @Input() type: EventType = EventType.IllegalDrop;
+  @Input() load?: EventEmitter<EventRecordFilter>;
+  @Input() filter: EventRecordFilter;
+  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Output() play: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input('download') downloadevent?: EventEmitter<EventRecordFilter>;
   constructor(
     business: EventRecordBusiness,
     private download: DownloadBusiness,
@@ -100,6 +101,12 @@ export class EventRecordTableComponent
 
   async ngOnInit() {
     this.loadData(1, this.pageSize, this.filter);
+    if (this.downloadevent) {
+      this.downloadevent.subscribe((x) => {
+        let params = new PagedParams();
+        this.business.download(this.type, params, x);
+      });
+    }
   }
 
   async pageEvent(page: PageEvent) {

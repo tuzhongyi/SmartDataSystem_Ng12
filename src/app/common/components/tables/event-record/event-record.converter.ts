@@ -26,8 +26,8 @@ export type EventRecordType =
 export class EventRecordPagedConverter
   implements
     IPromiseConverter<
-      PagedList<EventRecordType>,
-      PagedList<EventRecordViewModel>
+      PagedList<EventRecordType> | EventRecordType[],
+      PagedList<EventRecordViewModel> | EventRecordViewModel[]
     >
 {
   private converter = {
@@ -35,16 +35,31 @@ export class EventRecordPagedConverter
   };
 
   async Convert(
-    source: PagedList<EventRecordType>,
+    source: PagedList<EventRecordType> | EventRecordType[],
     get: {
       station: (id: string) => Promise<GarbageStation>;
       division: (id: string) => Promise<Division>;
       camera: (stationId: string, cameraId: string) => Promise<Camera>;
     }
-  ): Promise<PagedList<EventRecordViewModel>> {
+  ): Promise<PagedList<EventRecordViewModel> | EventRecordViewModel[]> {
+    if (Array.isArray(source)) {
+      return this.array(source, get);
+    } else {
+      return this.paged(source, get);
+    }
+  }
+
+  private async array(
+    source: EventRecordType[],
+    get: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
+    }
+  ) {
     let array: EventRecordViewModel[] = [];
-    for (let i = 0; i < source.Data.length; i++) {
-      const data = source.Data[i];
+    for (let i = 0; i < source.length; i++) {
+      const data = source[i];
       try {
         let model = await this.converter.item.Convert(data, get);
         array.push(model);
@@ -52,10 +67,21 @@ export class EventRecordPagedConverter
         console.error(error, this, data);
       }
     }
-    return {
-      Page: source.Page,
-      Data: array,
-    };
+    return array;
+  }
+  private async paged(
+    source: PagedList<EventRecordType>,
+    get: {
+      station: (id: string) => Promise<GarbageStation>;
+      division: (id: string) => Promise<Division>;
+      camera: (stationId: string, cameraId: string) => Promise<Camera>;
+    }
+  ) {
+    let array = await this.array(source.Data, get);
+    let paged = new PagedList<EventRecordViewModel>();
+    paged.Data = array;
+    paged.Page = source.Page;
+    return paged;
   }
 }
 

@@ -42,6 +42,7 @@ export class EventRecordSmokeWindowComponent
   divisions: SelectItem[] = [];
 
   filter: EventRecordFilter = new EventRecordFilter();
+  download = new EventEmitter<EventRecordFilter>();
   text: string = '';
   async initDivisions() {
     let items = await this.business.division.load();
@@ -82,5 +83,8 @@ export class EventRecordSmokeWindowComponent
     }
     this.filter.opts.text = this.text;
     this.load.emit(this.filter);
+  }
+  ondownload() {
+    this.download.emit(this.filter);
   }
 }

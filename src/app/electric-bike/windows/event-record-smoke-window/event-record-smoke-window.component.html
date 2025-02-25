@@ -70,6 +70,10 @@
           <i class="mdi mdi-magnify"></i>
           查询
         </button>
+        <button type="button" class="hw-blue-btn search" (click)="ondownload()">
+          <i class="howell-icon-export"></i>
+          导出
+        </button>
       </div>
       <div class="event-record-smoke-window-content-table">
         <howell-event-record-table
@@ -78,6 +82,7 @@
           [type]="type"
           [filter]="filter"
           [load]="load"
+          [download]="download"
         >
         </howell-event-record-table>
       </div>

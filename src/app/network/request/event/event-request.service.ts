@@ -128,6 +128,18 @@ class RecordsIllegalDropService {
     let data = classToPlain(params);
     return this.type.paged(url, data);
   }
+  async all(params: GetEventRecordsParams = new GetEventRecordsParams()) {
+    let data: IllegalDropEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<IllegalDropEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
+  }
   get(id: string): Promise<IllegalDropEventRecord> {
     let url = EventUrl.record.illegaldrop.item(id);
     return this.type.get(url);
@@ -145,6 +157,18 @@ class RecordsMixedIntoService {
   ): Promise<PagedList<MixedIntoEventRecord>> {
     let url = EventUrl.record.mixedinto.list();
     return this.type.paged(url, params);
+  }
+  async all(params: GetEventRecordsParams = new GetEventRecordsParams()) {
+    let data: MixedIntoEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<MixedIntoEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
   get(id: string): Promise<MixedIntoEventRecord> {
     let url = EventUrl.record.mixedinto.item(id);
@@ -164,6 +188,18 @@ class RecordsGarbageFullService {
     let url = EventUrl.record.garbagefull.list();
     return this.type.paged(url, params);
   }
+  async all(params: GetEventRecordsParams = new GetEventRecordsParams()) {
+    let data: GarbageFullEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<GarbageFullEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
+  }
   get(id: string): Promise<GarbageFullEventRecord> {
     let url = EventUrl.record.garbagefull.item(id);
     return this.type.get(url);
@@ -182,6 +218,20 @@ class RecordsGarbageDropService {
     let url = EventUrl.record.garbagedrop.list();
     return this.type.paged(url, params);
   }
+  async all(
+    params: GetGarbageDropEventRecordsParams = new GetGarbageDropEventRecordsParams()
+  ) {
+    let data: GarbageDropEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<GarbageDropEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
+  }
   get(id: string): Promise<GarbageDropEventRecord> {
     let url = EventUrl.record.garbagedrop.item(id);
     return this.type.get(url);
@@ -199,6 +249,20 @@ class RecordsSmokeService {
   ): Promise<PagedList<SmokeEventRecord>> {
     let url = EventUrl.record.smoke.list();
     return this.type.paged(url, params);
+  }
+  async all(
+    params: GetGarbageDropEventRecordsParams = new GetGarbageDropEventRecordsParams()
+  ) {
+    let data: SmokeEventRecord[] = [];
+    let index = 1;
+    let paged: PagedList<SmokeEventRecord>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
   get(id: string): Promise<SmokeEventRecord> {
     let url = EventUrl.record.smoke.item(id);
