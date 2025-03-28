@@ -5,7 +5,31 @@
  * @Last Modified time: 2021-12-14 14:36:27
  */
 import { Injectable } from '@angular/core';
-import { PagedList, Page } from 'src/app/network/model/page_list.model';
+import { classToPlain } from 'class-transformer';
+import { AbstractService } from 'src/app/business/Ibusiness';
+import {
+  GarbageStation,
+  GarbageStationType,
+} from 'src/app/network/model/garbage-station.model';
+import { PagedList } from 'src/app/network/model/page_list.model';
+import { Camera } from '../../model/camera.model';
+import { EventNumberStatistic } from '../../model/event-number-statistic.model';
+import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
+import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
+import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
+import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
+import { GarbageTask } from '../../model/garbage-task.model';
+import { GarbageVolume } from '../../model/garbage-volume.model';
+import { Member } from '../../model/member.model';
+import { SumEventNumber } from '../../model/sum-event-number.model';
+import { TrashCan } from '../../model/trash-can.model';
+import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
+import { GarbageStationUrl } from '../../url/garbage/garbage-station.url';
+import {
+  BaseRequestService,
+  BaseTypeRequestService,
+} from '../base-request.service';
+import { Cache } from '../cache/cache';
 import { HowellAuthHttpService } from '../howell-auth-http.service';
 import {
   CameraDownloadFileParams,
@@ -13,7 +37,6 @@ import {
   FinishTaskParams,
   GarbageStationResetStateParams,
   GetGarbageStationCamerasParams,
-  GetGarbageStationsParams,
   GetGarbageStationStatisticComparisonParams,
   GetGarbageStationStatisticGarbageCountsParams,
   GetGarbageStationStatisticNumbersParams,
@@ -21,32 +44,8 @@ import {
   GetGarbageStationSumEventNumberParams,
   GetGarbageStationTrashCansParams,
   GetGarbageStationVolumesParams,
+  GetGarbageStationsParams,
 } from './garbage-station-request.params';
-import { AbstractService, IService } from 'src/app/business/Ibusiness';
-import {
-  GarbageStation,
-  GarbageStationType,
-} from 'src/app/network/model/garbage-station.model';
-import { GarbageStationUrl } from '../../url/garbage/garbage-station.url';
-import {
-  BaseRequestService,
-  BaseTypeRequestService,
-} from '../base-request.service';
-import { Camera } from '../../model/camera.model';
-import { TrashCan } from '../../model/trash-can.model';
-import { GarbageVolume } from '../../model/garbage-volume.model';
-import { EventNumberStatistic } from '../../model/event-number-statistic.model';
-import { GarbageStationNumberStatistic } from '../../model/garbage-station-number-statistic.model';
-import { GarbageStationGarbageCountStatistic } from '../../model/garbage-station-sarbage-count-statistic.model';
-import { classToPlain } from 'class-transformer';
-import { CameraPictureUrl, RecordFileUrl } from '../../model/url.model';
-import { GarbageStationNumberStatisticV2 } from '../../model/garbage-station-number-statistic-v2.model';
-import { Member } from '../../model/member.model';
-import { GarbageTask } from '../../model/garbage-task.model';
-import { GarbageStationNumberStatisticComparison } from '../../model/garbage-station-number-statistic-comparison.model';
-import { SumEventNumber } from '../../model/sum-event-number.model';
-import { Cache } from '../cache/cache';
-import { ServiceHelper } from '../service-helper';
 
 @Injectable({
   providedIn: 'root',
@@ -83,6 +82,19 @@ export class GarbageStationRequestService extends AbstractService<GarbageStation
   ): Promise<PagedList<GarbageStation>> {
     let url = GarbageStationUrl.list();
     return this.typeBasic.paged(url, params);
+  }
+
+  async all(params: GetGarbageStationsParams = new GetGarbageStationsParams()) {
+    let data: GarbageStation[] = [];
+    let index = 1;
+    let paged: PagedList<GarbageStation>;
+    do {
+      params.PageIndex = index;
+      paged = await this.list(params);
+      data = data.concat(paged.Data);
+      index++;
+    } while (index <= paged.Page.PageCount);
+    return data;
   }
 
   manualCapture(stationId: string): Promise<CameraPictureUrl[]> {

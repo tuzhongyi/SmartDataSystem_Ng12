@@ -9,7 +9,6 @@ export interface IBusiness<IModel, IViewModel> {
   subscription?: ISubscription;
   loading?: EventEmitter<void>;
   load(...args: any): Promise<IViewModel>;
-  getData(...args: any): Promise<IModel>;
 }
 export interface IDowanload {
   download(...args: any): Promise<any>;

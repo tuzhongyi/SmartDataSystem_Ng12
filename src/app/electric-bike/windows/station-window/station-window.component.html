@@ -6,6 +6,11 @@
           <app-input-search-options (search)="onsearch($event)">
           </app-input-search-options>
         </div>
+        <div>
+          <button class="hw-blue-btn" (click)="ondownload()">
+            <i class="howell-icon-export"></i> 导出
+          </button>
+        </div>
       </div>
     </app-tab-title>
     <div class="event-record-smoke-window-content">
@@ -14,6 +19,7 @@
         [load]="load"
         (position)="onposition($event)"
         (image)="onimage($event)"
+        [download]="download"
       >
       </howell-garbage-station-table>
     </div>

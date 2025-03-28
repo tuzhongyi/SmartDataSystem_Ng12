@@ -2,13 +2,16 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
+  OnDestroy,
   OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { Subscription } from 'rxjs';
+import {
+  IBusiness,
+  IDowanload,
+} from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station.model';
@@ -21,37 +24,40 @@ import {
   ImageControlModelArray,
 } from '../../../../view-model/image-control.model';
 import { TableAbstractComponent } from '../table-abstract.component';
-import { GarbageStationTableBusiness } from './garbage-station-table.business';
+import { GarbageStationTableDownloadBusiness } from './business/garbage-station-table-download.business';
+import { GarbageStationTableBusiness } from './business/garbage-station-table.business';
+import { GarbageStationPagedConverter } from './business/garbage-station-table.converter';
+import { GarbageStationTableService } from './business/garbage-station-table.service';
 import { GarbageStationTableModel } from './garbage-station-table.model';
 
 @Component({
   selector: 'howell-garbage-station-table',
   templateUrl: './garbage-station-table.component.html',
   styleUrls: ['../table.less', './garbage-station-table.component.less'],
-  providers: [GarbageStationTableBusiness],
+  providers: [
+    GarbageStationTableService,
+    GarbageStationPagedConverter,
+    GarbageStationTableDownloadBusiness,
+    GarbageStationTableBusiness,
+  ],
 })
 export class GarbageStationTableComponent
   extends TableAbstractComponent<GarbageStationTableModel>
   implements
     IComponent<IModel, PagedList<GarbageStationTableModel>>,
     OnInit,
-    OnChanges
+    OnDestroy
 {
-  @Input()
-  load?: EventEmitter<SearchOptions>;
-  @Output()
-  position: EventEmitter<GarbageStation> = new EventEmitter();
-  @Output()
-  image: EventEmitter<ImageControlModelArray> = new EventEmitter();
+  @Input() load?: EventEmitter<SearchOptions>;
+  @Output() position: EventEmitter<GarbageStation> = new EventEmitter();
+  @Output() image: EventEmitter<ImageControlModelArray> = new EventEmitter();
 
-  @Input()
-  business: IBusiness<IModel, PagedList<GarbageStationTableModel>>;
-  @Input()
-  stationId?: string;
-  @Input()
-  divisionId?: string;
-  @Input()
-  state?: StationState;
+  @Input() business: IBusiness<IModel, PagedList<GarbageStationTableModel>> &
+    IDowanload;
+  @Input() stationId?: string;
+  @Input() divisionId?: string;
+  @Input() state?: StationState;
+  @Input() download?: EventEmitter<void>;
 
   constructor(business: GarbageStationTableBusiness) {
     super();
@@ -61,18 +67,35 @@ export class GarbageStationTableComponent
   width = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 
   searchOpts?: SearchOptions;
+  private subscription = new Subscription();
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.load && changes.load.firstChange && this.load) {
-      this.load.subscribe((opts) => {
+  ngOnInit(): void {
+    this.regist();
+    this.loadData(1, this.pageSize, this.state);
+  }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  private regist() {
+    if (this.load) {
+      let sub = this.load.subscribe((opts) => {
         this.searchOpts = opts;
         this.loadData(1, this.pageSize, this.state, opts);
       });
+      this.subscription.add(sub);
     }
-  }
-
-  ngOnInit(): void {
-    this.loadData(1, this.pageSize, this.state);
+    if (this.download) {
+      let sub = this.download.subscribe(() => {
+        this.business.download(
+          this.searchOpts,
+          this.state,
+          this.stationId,
+          this.divisionId
+        );
+      });
+      this.subscription.add(sub);
+    }
   }
 
   async loadData(

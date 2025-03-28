@@ -28,6 +28,7 @@ export class StationWindowComponent extends WindowComponent implements OnInit {
 
   types: SelectItem[] = [];
   type?: SelectItem;
+  download = new EventEmitter();
 
   ngOnInit(): void {
     this.initStationType();
@@ -56,5 +57,8 @@ export class StationWindowComponent extends WindowComponent implements OnInit {
 
   onsearch(text: SearchOptions) {
     this.load.emit(text);
+  }
+  ondownload() {
+    this.download.emit();
   }
 }
