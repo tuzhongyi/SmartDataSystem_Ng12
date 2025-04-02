@@ -60,39 +60,17 @@
       <div class="details-card">
         <div class="details-card-icon">
           <div class="details-card-icon-content">
-            <i class="howell-icon-account"></i>
+            <i class="howell-icon-video"></i>
           </div>
         </div>
         <div class="details-card-content">
-          <ng-container *ngIf="!!statistic.member">
-            <div
-              class="details-card-content-info"
-              [title]="statistic.member.Name"
-            >
-              ]>
-              {{ statistic.member.Name }}
+          <div class="details-card-content-info">
+            <div class="details-card-content-info-value">
+              {{ statistic.data.CameraNumber }}
             </div>
-            <div
-              class="details-card-content-sub"
-              [title]="statistic.member.MobileNo"
-            >
-              {{ statistic.member.MobileNo }}
-            </div>
-          </ng-container>
-          <ng-container *ngIf="!statistic.member">
-            <div class="details-card-content-info none">无</div>
-          </ng-container>
-          <div
-            class="details-card-content-page"
-            *ngIf="statistic.members.length > 1"
-          >
-            <div
-              class="details-card-content-page-item"
-              *ngFor="let item of statistic.members; let i = index"
-              [class.selected]="statistic.member === item"
-              (click)="statistic.member = item"
-            ></div>
+            <div class="details-card-content-info-unit">个</div>
           </div>
+          <div class="details-card-content-sub">摄像机数量</div>
         </div>
       </div>
     </div>

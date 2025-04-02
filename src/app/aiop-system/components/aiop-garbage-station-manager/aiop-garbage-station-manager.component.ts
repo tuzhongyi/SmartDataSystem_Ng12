@@ -10,8 +10,8 @@ import { DivisionTreeSource } from 'src/app/common/components/division-tree/divi
 import { AIOPGarbageStationTableArgs } from 'src/app/common/components/tables/aiop-garbage-station-table/aiop-garbage-station-table.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { GarbageStationModel } from 'src/app/view-model/garbage-station.model';
-import { AIOPGarbageStationManagerBusiness } from './aiop-garbage-station-manager.business';
 import { AIOPGarbageStationManagerWindow } from './aiop-garbage-station-manager.model';
+import { AIOPGarbageStationManagerBusiness } from './business/aiop-garbage-station-manager.business';
 
 @Component({
   selector: 'aiop-garbage-station-manager',

@@ -69,10 +69,17 @@
             </button>
             <button
               class="hw-red-btn"
-              *ngIf="selected.point"
+              *ngIf="button.display.delete()"
               (click)="window.unbind.show = true"
             >
               删除
+            </button>
+            <button
+              class="hw-blue-btn"
+              *ngIf="button.display.sync()"
+              (click)="onsync()"
+            >
+              同步GIS信息
             </button>
 
             <!-- <button class="hw-blue-btn">录入坐标</button> -->

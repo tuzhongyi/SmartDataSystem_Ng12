@@ -26,7 +26,7 @@ export class InfoDetailsDivisionTableComponent implements OnInit {
   constructor(private business: InfoDetailsDivisionTableBusiness) {}
 
   datas: InfoDetailsDivisionTableItem[] = [];
-  widths = ['12%', '25%', '17%', '17%', '17%', '12%'];
+  widths = ['10%', '20%', '15%', '15%', '15%', '15%', '10%'];
 
   ngOnInit(): void {
     if (this.input_load) {

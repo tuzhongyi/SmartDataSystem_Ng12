@@ -10,6 +10,7 @@
         <th>管理人员</th>
         <th>联系方式</th>
         <th>投放点数量</th>
+        <th>摄像机数量</th>
         <th><div class="th-center">操作</div></th>
       </tr>
     </thead>
@@ -28,6 +29,7 @@
           {{ item.member.default ? item.member.default.MobileNo : "-" }}
         </td>
         <td>{{ item.StationNumber }}</td>
+        <td>{{ item.CameraNumber }}</td>
         <td>
           <div class="td-center operation">
             <div (click)="oninfo(item)">

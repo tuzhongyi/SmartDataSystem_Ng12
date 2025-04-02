@@ -13,7 +13,7 @@ import { IBusiness, IGet } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { EventType } from 'src/app/enum/event-type.enum';
 import { GarbageFullEventData } from 'src/app/network/model/garbage-station/event-record/garbage-full-event-record.model';
-import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
+import { IModel, ImagePagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
@@ -54,7 +54,7 @@ export class EventRecordListComponent
   @Input() get?: EventEmitter<Page>;
   @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
     new EventEmitter();
-  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
+  @Output() image: EventEmitter<ImagePagedArgs<EventRecordViewModel>> =
     new EventEmitter();
   @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
 
@@ -150,7 +150,7 @@ export class EventRecordListComponent
       page.PageIndex =
         (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
     }
-    this.image.emit({ page: page, data: item });
+    this.image.emit({ page: page, data: item, index: 0 });
   }
 
   onCardPlayVideo(model: EventRecordCardModel) {

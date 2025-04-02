@@ -55,7 +55,20 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     station?: GarbageStation;
     point?: CesiumDataController.Point;
     node?: CommonFlatNode;
+    division?: Division;
   } = {};
+
+  button = {
+    display: {
+      delete: () => {
+        return !!this.selected.point;
+      },
+      sync: () => {
+        return !!(this.selected.division || this.selected.station);
+      },
+    },
+  };
+
   treetrigger = new EventEmitter<string[]>();
 
   @ViewChild('iframe') iframe!: ElementRef<HTMLIFrameElement>;
@@ -93,11 +106,13 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
     this.selected.station = undefined;
     this.selected.point = undefined;
     this.selected.node = undefined;
+    this.selected.division = undefined;
 
     if (nodes.length) {
       let node = nodes[0];
       if (node.RawData instanceof Division) {
         this.business.amap.selectVillage(node.RawData.Id);
+        this.selected.division = node.RawData;
       } else if (node.RawData instanceof GarbageStation) {
         this.selected.node = node;
         this.selected.station = node.RawData;
@@ -285,6 +300,32 @@ export class DeployMapComponent implements OnInit, AfterViewInit {
         IconTypeEnum.unlink
       );
       this.selected.node.ButtonIconClasses[index] = IconTypeEnum.link;
+    }
+  }
+
+  onsync() {
+    if (this.selected.division) {
+      this.business.station.sync
+        .division(this.selected.division.Id)
+        .then((x) => {
+          this.toastr.success(`成功同步${x}个投放点`);
+        })
+        .catch((e) => {
+          this.toastr.error('操作失败');
+        });
+    } else if (this.selected.station && this.selected.station.DivisionId) {
+      this.business.station.sync
+        .station(this.selected.station.DivisionId, this.selected.station.Id)
+        .then((x) => {
+          if (x) {
+            this.toastr.success('操作成功');
+          } else {
+            this.toastr.error('操作失败');
+          }
+        })
+        .catch((e) => {
+          this.toastr.error('操作失败');
+        });
     }
   }
 }

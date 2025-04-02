@@ -8,6 +8,7 @@ import { WindowViewModel } from 'src/app/common/components/window-control/window
 import { Flags } from 'src/app/common/tools/flags';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
 import { CameraUsage } from 'src/app/enum/camera-usage.enum';
+import { EventType } from 'src/app/enum/event-type.enum';
 import {
   GarbageFullEventData,
   GarbageFullEventRecord,
@@ -168,9 +169,12 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
   set<T>(args: PagedArgs<T> | DeviceViewModel) {
     if (args instanceof DeviceViewModel) {
       this.setFromDeviceViewModel(args);
-    } else if (args.data instanceof EventRecordViewModel) {
+    } else if (
+      args.data instanceof EventRecordViewModel ||
+      'EventType' in (args.data as any)
+    ) {
       this.setFromEventRecordViewModel(
-        args.data,
+        args.data as any,
         args.page,
         (args as ImagePagedArgs<T>).index
       );
@@ -215,15 +219,27 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
   private setFromEventRecordViewModel(
     data: EventRecordViewModel,
     page: Page,
-    index: number
+    index: number = 0
   ) {
-    if (data.Data instanceof GarbageFullEventData) {
+    if (
+      data.Data instanceof GarbageFullEventData ||
+      data.EventType === EventType.GarbageFull
+    ) {
       this.setFromGarbageFullEventRecord(data, page, index);
-    } else if (data.Data instanceof IllegalDropEventData) {
+    } else if (
+      data.Data instanceof IllegalDropEventData ||
+      data.EventType === EventType.IllegalDrop
+    ) {
       this.setFromIllegalDropEventRecord(data, page);
-    } else if (data.Data instanceof MixedIntoEventData) {
+    } else if (
+      data.Data instanceof MixedIntoEventData ||
+      data.EventType === EventType.MixedInto
+    ) {
       this.setFromMixedIntoEventRecord(data, page, index);
-    } else if (data.Data instanceof SewageEventData) {
+    } else if (
+      data.Data instanceof SewageEventData ||
+      data.EventType === EventType.Sewage
+    ) {
       this.setFromSewageEventRecord(data, page, index);
     }
   }
@@ -280,6 +296,7 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
       };
     }
     this.models = ImageControlCreater.Create(data);
+    console.log(this.models);
   }
   private setFromGarbageDropStationTableModel(
     data: GarbageDropStationTableModel,
