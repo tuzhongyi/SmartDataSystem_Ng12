@@ -169,10 +169,7 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
   set<T>(args: PagedArgs<T> | DeviceViewModel) {
     if (args instanceof DeviceViewModel) {
       this.setFromDeviceViewModel(args);
-    } else if (
-      args.data instanceof EventRecordViewModel ||
-      'EventType' in (args.data as any)
-    ) {
+    } else if (args.data instanceof EventRecordViewModel) {
       this.setFromEventRecordViewModel(
         args.data as any,
         args.page,
@@ -212,6 +209,12 @@ export class MonitorImageWindowBusiness extends WindowViewModel {
       );
     } else if (args.data instanceof ImageControlModel) {
       this.models = [args.data];
+    } else if ('EventType' in (args.data as any)) {
+      this.setFromEventRecordViewModel(
+        args.data as any,
+        args.page,
+        (args as ImagePagedArgs<T>).index
+      );
     } else {
     }
   }

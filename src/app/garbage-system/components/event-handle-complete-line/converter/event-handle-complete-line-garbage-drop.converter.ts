@@ -20,7 +20,7 @@ export class EventHandleCompleteLineGarbageDropConverter
 
   private discover(data: GarbageDropEventRecord) {
     let model = new EventHandleCompleteLineModel();
-    model.name = formatDate(data.EventTime, Language.MonthDayHHmmss, 'en');
+    model.name = formatDate(data.Data.DropTime, Language.MonthDayHHmmss, 'en');
     return model;
   }
   private task(data: GarbageDropEventRecord) {
