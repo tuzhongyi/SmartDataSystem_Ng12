@@ -9,6 +9,7 @@
       [models]="model.medias"
       [fullplay]="fullplay"
       [is_playback_use_config]="false"
+      (error)="onerror($event)"
     >
     </app-image-video-mult-control>
   </div>

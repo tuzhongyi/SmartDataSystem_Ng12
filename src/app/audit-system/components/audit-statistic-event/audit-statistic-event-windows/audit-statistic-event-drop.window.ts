@@ -3,16 +3,20 @@ import { GarbageDropRecordViewModel } from 'src/app/common/components/tables/gar
 import { WindowViewModel } from 'src/app/common/components/window-control/window.model';
 import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { ImageControlCreater } from 'src/app/converter/image-control.creater';
+import { CameraUsage } from 'src/app/enum/camera-usage.enum';
 import { ResourceType } from 'src/app/enum/resource-type.enum';
+import { MediaMultipleStatisticWindowArgs } from 'src/app/garbage-system/components/windows/media-multiple-statistic-window/media-multiple-statistic-window.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { AuditStatisticEventImageWindow } from './audit-statistic-event-image.window';
+import { AuditStatisticEventMediaMultipleWindow } from './audit-statistic-event-media-multiple-window';
 import { AuditStatisticEventVideoWindow } from './audit-statistic-event-video.window';
 
 @Injectable()
 export class AuditStatisticEventDropWindow extends WindowViewModel {
   constructor(
     private image: AuditStatisticEventImageWindow,
-    private video: AuditStatisticEventVideoWindow
+    private video: AuditStatisticEventVideoWindow,
+    private media: AuditStatisticEventMediaMultipleWindow
   ) {
     super();
   }
@@ -57,5 +61,18 @@ export class AuditStatisticEventDropWindow extends WindowViewModel {
     this.video.title = name ?? '';
     this.video.mask = true;
     this.video.playback(id, DateTimeTool.beforeOrAfter(item.EventTime));
+  }
+  async onallvideo(item: GarbageDropRecordViewModel) {
+    if (item.ResourceId) {
+      this.media.args = new MediaMultipleStatisticWindowArgs();
+      this.media.args.stationId = item.Data.StationId;
+      this.media.args.usage = [CameraUsage.GarbageFull];
+      let second = item.EventTime.getSeconds() - 30;
+
+      this.media.args.time = new Date(item.EventTime.getTime());
+      this.media.args.time.setSeconds(second);
+
+      this.media.show = true;
+    }
   }
 }

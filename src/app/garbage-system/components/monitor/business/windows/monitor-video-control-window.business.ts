@@ -53,6 +53,7 @@ export class MonitorVideoControlWindowBusiness
   }
 
   Converter: IConverter<VideoUrl, VideoModel> = new VideoControlConverter();
+
   async load(camera: Camera): Promise<VideoModel> {
     this.camera = camera;
     this.garbageStation = await this.getGarbageStation(camera.GarbageStationId);

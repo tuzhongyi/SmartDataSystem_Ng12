@@ -6,6 +6,7 @@
       [nosignal]="
         model.image ? model.image.status == OnlineStatus.Offline : false
       "
+      (error)="onerror($event)"
     ></app-image-control>
   </div>
   <div class="image-video-control-video" *ngIf="display.video">

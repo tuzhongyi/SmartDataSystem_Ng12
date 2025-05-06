@@ -1,19 +1,23 @@
 import { Injectable } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IConverter } from 'src/app/common/interfaces/converter.interface';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 
+import { instanceToPlain, plainToInstance } from 'class-transformer';
+import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
+import { Medium } from 'src/app/common/tools/medium';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { MediaMultipleControlConverter } from './media-multiple-control.converter';
 import {
+  IMediaMultipleControlBusiness,
   MediaMultipleControlArgs,
   MediaMultipleControlModel,
 } from './media-multiple-control.model';
 
 @Injectable()
 export class MediaMultipleControlBusiness
-  implements IBusiness<MediaMultipleControlArgs, MediaMultipleControlModel>
+  implements IMediaMultipleControlBusiness
 {
   constructor(private stationService: GarbageStationRequestService) {}
 
@@ -40,5 +44,31 @@ export class MediaMultipleControlBusiness
   }
   getStation(stationId: string) {
     return this.stationService.cache.get(stationId);
+  }
+
+  manualCapture(
+    id: string,
+    medias: ImageVideoControlModel[]
+  ): Promise<ImageVideoControlModel[]> {
+    return new Promise((resolve) => {
+      return this.stationService.manualCapture(id).then((urls) => {
+        medias.forEach((media) => {
+          urls.forEach((url) => {
+            if (
+              url.CameraId == media.cameraId &&
+              url.Result &&
+              media.image &&
+              url.Id
+            ) {
+              media.fulled = false;
+              let plain = instanceToPlain(media.image);
+              media.image = plainToInstance(ImageControlModel, plain);
+              media.image.src = Medium.img(url.Id);
+            }
+          });
+        });
+        resolve(medias);
+      });
+    });
   }
 }

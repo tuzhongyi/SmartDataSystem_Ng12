@@ -28,6 +28,7 @@ export class AuditGarbageStationDetailsTableArgs
   name?: string;
   type?: StationType;
   state?: StationState;
+  imei?: string;
 
   gcha?: number;
   door?: number;

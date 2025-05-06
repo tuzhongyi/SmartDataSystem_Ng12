@@ -3,6 +3,7 @@ import { AuditStatisticEventDropWindow } from './audit-statistic-event-drop.wind
 import { AuditStatisticEventImageArrayWindow } from './audit-statistic-event-image-array.window';
 import { AuditStatisticEventImagePageWindow } from './audit-statistic-event-image-page.window';
 import { AuditStatisticEventImageWindow } from './audit-statistic-event-image.window';
+import { AuditStatisticEventMediaMultipleWindow } from './audit-statistic-event-media-multiple-window';
 import { AuditStatisticEventRecordWindow } from './audit-statistic-event-record.window';
 import { AuditStatisticEventTaskWindow } from './audit-statistic-event-task.window';
 import { AuditStatisticEventVideoWindow } from './audit-statistic-event-video.window';
@@ -14,7 +15,8 @@ export class AuditStatisticEventWindow {
     public record: AuditStatisticEventRecordWindow,
     public drop: AuditStatisticEventDropWindow,
     public image: AuditStatisticEventImageWindow,
-    public video: AuditStatisticEventVideoWindow
+    public video: AuditStatisticEventVideoWindow,
+    public media: AuditStatisticEventMediaMultipleWindow
   ) {}
 
   clear() {
@@ -33,4 +35,5 @@ export const AuditStatisticEventWindows = [
   AuditStatisticEventImagePageWindow,
   AuditStatisticEventImageWindow,
   AuditStatisticEventVideoWindow,
+  AuditStatisticEventMediaMultipleWindow,
 ];

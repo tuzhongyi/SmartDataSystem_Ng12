@@ -28,6 +28,7 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   @Output() Click: EventEmitter<ImageControlModel> = new EventEmitter();
   @Input('draw') isDraw = false;
   @Input() contain = false;
+  @Output() error = new EventEmitter<ImageControlModel>();
 
   constructor() {}
   OnlineStatus = OnlineStatus;
@@ -41,20 +42,27 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   ngOnChanges(changes: SimpleChanges) {
     if (changes.model) {
       if (this.model) {
-        this.model.src.then((src) => {
-          this.image.backgroundImage = `url(${src})`;
-          let img = document.createElement('img');
-          img.src = src;
-          img.onerror = () => {
-            if (this.model) {
-              this.image.backgroundImage += `, url(${this.model.onerror})`;
-            }
-          };
+        this.model.src
+          .then((src) => {
+            this.image.backgroundImage = `url(${src})`;
+            let img = document.createElement('img');
+            img.src = src;
+            img.onerror = () => {
+              if (this.model) {
+                this.image.backgroundImage += `, url(${this.model.onerror})`;
+                this.error.emit(this.model);
+              }
+            };
 
-          if (this.isDraw) {
-            this.draw();
-          }
-        });
+            if (this.isDraw) {
+              this.draw();
+            }
+          })
+          .catch((e) => {
+            if (this.model) {
+              this.error.emit(this.model);
+            }
+          });
       }
     }
     if (changes.isDraw) {
@@ -157,6 +165,7 @@ export class ImageControlComponent implements OnInit, OnChanges, AfterViewInit {
   onError(event: Event) {
     if (this.model) {
       (event.target as HTMLImageElement).src = this.model.onerror;
+      this.error.emit(this.model);
     }
   }
 

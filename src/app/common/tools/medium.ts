@@ -20,7 +20,7 @@ export class Medium {
   }
 
   static img(url?: string): Promise<string> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       if (!url) {
         resolve('/assets/img/timg-pic.jpg');
         return;
@@ -30,6 +30,7 @@ export class Medium {
       image.src = img;
       image.onerror = () => {
         resolve('/assets/img/timg-pic.jpg');
+        reject(url);
       };
       image.onload = () => {
         resolve(img);
@@ -37,7 +38,7 @@ export class Medium {
     });
   }
   static image(url?: string): Promise<ImageResult> {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       let img = '';
       if (url) {
         if (url.includes('http') || url.includes('/')) {
@@ -60,6 +61,7 @@ export class Medium {
           url: '/assets/img/timg-pic.png',
           error: true,
         });
+        reject(url);
       };
       image.onload = () => {
         resolve({

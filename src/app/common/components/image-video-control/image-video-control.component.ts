@@ -10,6 +10,7 @@ import {
 import { OnlineStatus } from 'src/app/enum/online-status.enum';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
+import { ImageControlModel } from 'src/app/view-model/image-control.model';
 import { PlayMode, VideoModel } from '../video-player/video.model';
 import { ImageVideoControlBusiness } from './image-video-control.business';
 import {
@@ -39,6 +40,7 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   @Output() fulledChange: EventEmitter<boolean> = new EventEmitter();
   @Output() onplay: EventEmitter<ImageVideoControlModel> = new EventEmitter();
   @Output() onstop: EventEmitter<number> = new EventEmitter();
+  @Output() error = new EventEmitter<ImageVideoControlModel>();
 
   constructor(
     private business: ImageVideoControlBusiness,
@@ -163,5 +165,8 @@ export class ImageVideoControlComponent implements OnInit, OnChanges {
   onfull() {
     this.fulled = !this.fulled;
     this.fulledChange.emit(this.fulled);
+  }
+  onerror(model: ImageControlModel) {
+    this.error.emit(this.model);
   }
 }

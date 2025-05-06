@@ -47,6 +47,8 @@ export class GarbageDropRecordTableComponent
     new EventEmitter();
   @Output() complete: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
     new EventEmitter();
+  @Output() allvideo: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
 
   constructor(record: GarbageDropRecordTableBusiness) {
     super();
@@ -115,6 +117,12 @@ export class GarbageDropRecordTableComponent
   onvideo(e: Event, item: GarbageDropRecordViewModel) {
     this.video.emit(item);
     if (this.selected === item) {
+      e.stopPropagation();
+    }
+  }
+  onallvideo(e: Event, model: GarbageDropRecordViewModel) {
+    this.allvideo.emit(model);
+    if (model === this.selected) {
       e.stopPropagation();
     }
   }

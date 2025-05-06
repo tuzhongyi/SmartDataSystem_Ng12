@@ -76,6 +76,18 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
       if (item.Data.HandleImageUrls && item.Data.HandleImageUrls.length > 0) {
         id = item.Data.HandleImageUrls[0].CameraId;
         name = item.Data.HandleImageUrls[0].CameraName;
+      } else if (
+        item.Data.TimeoutImageUrls &&
+        item.Data.TimeoutImageUrls.length > 0
+      ) {
+        id = item.Data.TimeoutImageUrls[0].CameraId;
+        name = item.Data.TimeoutImageUrls[0].CameraName;
+      } else if (
+        item.Data.DropImageUrls &&
+        item.Data.DropImageUrls.length > 0
+      ) {
+        id = item.Data.DropImageUrls[0].CameraId;
+        name = item.Data.DropImageUrls[0].CameraName;
       }
     }
     this.video.title = name ?? '';
@@ -104,5 +116,18 @@ export class MonitorGarbageStationDropWindowBusiness extends WindowViewModel {
     this.complete.paged.Data = item.data;
     this.complete.paged.Page = item.page;
     this.complete.show = true;
+  }
+  async onallvideo(item: GarbageDropRecordViewModel) {
+    if (item.ResourceId) {
+      this.media.multiple.args = new MediaMultipleStatisticWindowArgs();
+      this.media.multiple.args.stationId = item.Data.StationId;
+      this.media.multiple.args.usage = [CameraUsage.GarbageFull];
+      let second = item.EventTime.getSeconds() - 30;
+
+      this.media.multiple.args.time = new Date(item.EventTime.getTime());
+      this.media.multiple.args.time.setSeconds(second);
+
+      this.media.multiple.show = true;
+    }
   }
 }

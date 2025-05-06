@@ -1,10 +1,11 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
+import { ImageVideoControlModel } from 'src/app/common/components/image-video-control/image-video-control.model';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
 import { MediaMultipleControlBusiness } from './media-multiple-control.business';
 import {
+  IMediaMultipleControlBusiness,
   MediaMultipleControlArgs,
   MediaMultipleControlModel,
 } from './media-multiple-control.model';
@@ -19,7 +20,7 @@ export class MediaMultipleControlComponent
   implements OnInit, IComponent<IModel, MediaMultipleControlModel>
 {
   @Input() args?: MediaMultipleControlArgs;
-  @Input() business: IBusiness<IModel, MediaMultipleControlModel>;
+  @Input() business: IMediaMultipleControlBusiness;
   @Input() fullplay = true;
 
   constructor(business: MediaMultipleControlBusiness) {
@@ -36,5 +37,14 @@ export class MediaMultipleControlComponent
 
   formatDate(date: Date, formatter: string) {
     return formatDate(date, formatter, 'en');
+  }
+  onerror(data: ImageVideoControlModel) {
+    if (this.model && this.model.station) {
+      this.business
+        .manualCapture(this.model.station.Id, this.model.medias)
+        .then((x) => {
+          this.model!.medias = x;
+        });
+    }
   }
 }

@@ -127,6 +127,7 @@
       [timeout]="window.drop.timeout"
       (image)="window.drop.onimage($event)"
       (video)="window.drop.onvideo($event)"
+      (allvideo)="window.drop.onallvideo($event)"
     ></audit-statistic-event-drop-manager>
   </app-window>
   <app-window
@@ -157,6 +158,16 @@
       (next)="window.image.array.onnext()"
       (play)="window.image.array.onvideo()"
     ></app-media-image-control>
+  </app-window>
+  <app-window
+    *ngIf="window.media.show"
+    [Model]="window.media"
+    [style]="window.media.style"
+  >
+    <media-multiple-statistic-window
+      [args]="window.media.args"
+      [fullplay]="window.media.fullplay"
+    ></media-multiple-statistic-window>
   </app-window>
   <app-video-window
     [window]="window.video"

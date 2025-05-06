@@ -23,6 +23,8 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
     new EventEmitter();
   @Output() video: EventEmitter<GarbageDropRecordViewModel> =
     new EventEmitter();
+  @Output() allvideo: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
   constructor() {}
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   args: GarbageDropRecordFilter = new GarbageDropRecordFilter();
@@ -145,5 +147,8 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
   }
   onvideo(item: GarbageDropRecordViewModel) {
     this.video.emit(item);
+  }
+  onallvideo(item: GarbageDropRecordViewModel) {
+    this.allvideo.emit(item);
   }
 }

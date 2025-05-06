@@ -1,8 +1,8 @@
 import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
 import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import { IModel } from 'src/app/network/model/model.interface';
+import { IMediaMultipleControlBusiness } from '../media-multiple-control/media-multiple-control.model';
 import { MediaMultipleStatisticWindowBusiness } from './media-multiple-statistic-window.business';
 import {
   MediaMultipleStatisticWindowArgs,
@@ -19,7 +19,7 @@ export class MediaMultipleStatisticWindowComponent
   implements OnInit, IComponent<IModel, MediaMultipleStatisticWindowModel>
 {
   @Input() args?: MediaMultipleStatisticWindowArgs;
-  @Input() business: IBusiness<IModel, MediaMultipleStatisticWindowModel>;
+  @Input() business: IMediaMultipleControlBusiness;
   @Input() fullplay = true;
 
   constructor(business: MediaMultipleStatisticWindowBusiness) {

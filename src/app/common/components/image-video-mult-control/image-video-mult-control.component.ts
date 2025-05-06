@@ -33,6 +33,7 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
   @Output() onplayed: EventEmitter<ImageVideoControlModel> = new EventEmitter();
   @Output() onstoped: EventEmitter<ImageVideoControlModel> = new EventEmitter();
   @Input() change?: EventEmitter<ImageVideoControlModel[]>;
+  @Output() error = new EventEmitter<ImageVideoControlModel>();
 
   constructor() {}
 
@@ -133,5 +134,8 @@ export class ImageVideoMultControlComponent implements OnInit, OnChanges {
       this.onstoped.emit(item);
       this.played = undefined;
     }
+  }
+  onerror(item: ImageVideoControlModel) {
+    this.error.emit(item);
   }
 }

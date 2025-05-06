@@ -37,6 +37,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   @Output() complete = new EventEmitter<
     PagedArgs<GarbageDropRecordViewModel>
   >();
+  @Output() allvideo: EventEmitter<GarbageDropRecordViewModel> =
+    new EventEmitter();
 
   constructor() {}
   isfilter = false;
@@ -89,5 +91,8 @@ export class GarbageStationWindowRecordComponent implements OnInit {
   }
   oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
     this.complete.emit(item);
+  }
+  onallvideo(model: GarbageDropRecordViewModel) {
+    this.allvideo.emit(model);
   }
 }

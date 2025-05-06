@@ -15,7 +15,12 @@ export class AuditGarbageStationDetailsTableStationBusiness {
     params.PageIndex = index;
     params.PageSize = size;
     params.AncestorId = args.divisionId;
-    params.Name = args.name;
+    if (args.name) {
+      params.Name = args.name;
+    }
+    if (args.imei) {
+      params.IMEI = args.imei;
+    }
 
     if (args.type) {
       params.StationType = args.type;
