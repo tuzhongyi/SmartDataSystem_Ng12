@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 
 export class UrlTool {
-  static get(host: string, port: number, path: string = '') {
+  static get(host: string, port: number | string, path: string = '') {
     let protocol = document.location.protocol;
     if (protocol.indexOf(':') < 0) {
       protocol += ':';

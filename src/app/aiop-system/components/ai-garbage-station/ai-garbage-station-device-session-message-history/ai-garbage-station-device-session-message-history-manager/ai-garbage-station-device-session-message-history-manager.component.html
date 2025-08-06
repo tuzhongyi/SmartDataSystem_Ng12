@@ -1,0 +1,47 @@
+<div class="ai-garbage-station-device-session-message-history-manager">
+  <div class="ai-garbage-station-device-session-message-history-manager-head">
+    <div class="hw-simple-title">消息发送记录</div>
+  </div>
+  <div class="ai-garbage-station-device-session-message-history-manager-body">
+    <div
+      class="panel ai-garbage-station-device-session-message-history-manager-body-table"
+    >
+      <div
+        class="ai-garbage-station-device-session-message-history-manager-head"
+      >
+        <div class="hw-simple-title">设备列表</div>
+      </div>
+      <div
+        class="ai-garbage-station-device-session-message-history-manager-content"
+      >
+        <ai-garbage-station-device-session-message-history-table
+          [datas]="devices"
+          [success]="success"
+          [(selected)]="selected.device"
+          (selectedChange)="on.select($event)"
+        ></ai-garbage-station-device-session-message-history-table>
+      </div>
+    </div>
+    <div
+      class="panel ai-garbage-station-device-session-message-history-manager-body-content"
+    >
+      <div
+        class="ai-garbage-station-device-session-message-history-manager-head"
+      >
+        <div class="hw-simple-title">响应消息</div>
+      </div>
+      <div
+        class="ai-garbage-station-device-session-message-history-manager-content message"
+        *ngIf="selected.message"
+      >
+        {{ selected.message.Content }}
+      </div>
+      <div
+        class="ai-garbage-station-device-session-message-history-manager-content message"
+        *ngIf="selected.error"
+      >
+        {{ selected.error.message }}
+      </div>
+    </div>
+  </div>
+</div>

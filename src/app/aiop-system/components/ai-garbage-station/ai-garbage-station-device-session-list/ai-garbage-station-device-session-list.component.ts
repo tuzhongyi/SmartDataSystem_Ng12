@@ -100,6 +100,7 @@ export class AIGarbageStationDeviceSessionListComponent
 
   onitemclick(e: Event, item: AIGarbageDeviceModel) {
     this.selecteds = [item];
+    this.selectedsChange.emit(this.selecteds);
     this.onsession(item);
   }
 

@@ -1,0 +1,32 @@
+<div class="ai-garbage-station-device-session-message-history-table">
+  <table class="table" border="0" cellpadding="0" cellspacing="0">
+    <colgroup>
+      <col style="width: auto" />
+      <col style="width: auto" />
+      <col style="width: 70px" />
+    </colgroup>
+    <tbody>
+      <tr
+        class="table-item"
+        [ngClass]="{ selected: selected === item }"
+        *ngFor="let item of datas"
+        (click)="on.select(item)"
+      >
+        <td [title]="item.Name + '\n' + (item.GarbageStationName ?? '')">
+          {{ item.Name }}
+        </td>
+        <td [title]="item.RegionName ?? ''">
+          {{ item.RegionName }}
+        </td>
+        <td>
+          <div class="green-text" *ngIf="success.includes(item.Id)">
+            <i class="mdi mdi-network"></i>
+          </div>
+          <div class="powder-red-text" *ngIf="!success.includes(item.Id)">
+            <i class="mdi mdi-close-network"></i>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

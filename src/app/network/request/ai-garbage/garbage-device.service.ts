@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { instanceToPlain } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { AIGarbageDeviceCommandRecord } from '../../model/ai-garbage/device-command-record.model';
 import { AIGarbageDeviceEventRecord } from '../../model/ai-garbage/device-event-record.model';
 import { AIGarbageDeviceLogRecord } from '../../model/ai-garbage/device-log-recprd.model';
 import { AIGarbageDeviceCommand } from '../../model/ai-garbage/garbage-device-command.enum';
 import { AIGarbageDevice } from '../../model/ai-garbage/garbage-device.model';
+import { ErrorModel } from '../../model/ai-garbage/message/error.model';
+import { ForwardMessage } from '../../model/ai-garbage/message/forward-message.model';
+import {
+  ResponseMessage,
+  ResponseMessageModel,
+} from '../../model/ai-garbage/message/response-message.model';
 import { PagedList } from '../../model/page_list.model';
 import { AIGarbageUrl } from '../../url/ai-garbage/ai-garbage.url';
 import {
@@ -71,6 +77,28 @@ export class AIGarbageDevicesRequestService {
       .howellPost<AIGarbageDeviceCommand>(url, plain as AIGarbageDeviceCommand)
       .toPromise();
   }
+
+  message = {
+    forward: async (id: string, message: ForwardMessage) => {
+      try {
+        let url = AIGarbageUrl.garbageDevices.message.forward(id);
+        let plain = instanceToPlain(message);
+        let response = await this.http
+          .howellPost<any, ResponseMessage>(url, plain)
+          .toPromise();
+        response = plainToInstance(ResponseMessage, response);
+        let model = new ResponseMessageModel();
+        model = Object.assign(model, response);
+        model.Id = id;
+        return model;
+      } catch (e) {
+        let error = new ErrorModel();
+        error = Object.assign(error, e);
+        error.Id = id;
+        throw error;
+      }
+    },
+  };
   async all(
     params: GetAIGarbageStationDevicesParams = new GetAIGarbageStationDevicesParams()
   ) {

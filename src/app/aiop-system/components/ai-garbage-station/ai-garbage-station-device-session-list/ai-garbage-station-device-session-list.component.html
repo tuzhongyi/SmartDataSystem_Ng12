@@ -72,7 +72,10 @@
           >
             {{ item.Name }}
           </td>
-          <td (click)="onitemclick($event, item)" [title]="item.RegionName">
+          <td
+            (click)="onitemclick($event, item)"
+            [title]="item.RegionName ?? ''"
+          >
             {{ item.RegionName }}
           </td>
           <td (click)="onitemclick($event, item)">

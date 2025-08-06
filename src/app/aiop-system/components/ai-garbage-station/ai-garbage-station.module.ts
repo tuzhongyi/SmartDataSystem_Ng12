@@ -12,6 +12,8 @@ import { AiGarbageStationDeviceScheduleSprayComponent } from './ai-garbage-stati
 import { AIGarbageStationDeviceScheduleComponent } from './ai-garbage-station-device-schedule/ai-garbage-station-device-schedule.component';
 import { AIGarbageStationDeviceSessionListComponent } from './ai-garbage-station-device-session-list/ai-garbage-station-device-session-list.component';
 import { AIGarbageStationDeviceSessionManagerComponent } from './ai-garbage-station-device-session-manager/ai-garbage-station-device-session-manager.component';
+import { AiGarbageStationDeviceSessionMessageHistoryManagerComponent } from './ai-garbage-station-device-session-message-history/ai-garbage-station-device-session-message-history-manager/ai-garbage-station-device-session-message-history-manager.component';
+import { AiGarbageStationDeviceSessionMessageHistoryTableComponent } from './ai-garbage-station-device-session-message-history/ai-garbage-station-device-session-message-history-table/ai-garbage-station-device-session-message-history-table.component';
 import { AiGarbageStationDeviceStatusFilterComponent } from './ai-garbage-station-device-status-filter/ai-garbage-station-device-status-filter.component';
 import { AiGarbageStationDeviceStatusItems } from './ai-garbage-station-device-status-items/ai-garbage-station-device-status-items.module';
 import { AiGarbageStationDeviceStatusComponent } from './ai-garbage-station-device-status/ai-garbage-station-device-status.component';
@@ -56,4 +58,7 @@ export const AIGarbageStationComponents = [
   AIGarbageRegionTreeComponent,
   AIGarbageStationDropWindowListComponent,
   AiGarbageStationWeekListComponent,
+
+  AiGarbageStationDeviceSessionMessageHistoryManagerComponent,
+  AiGarbageStationDeviceSessionMessageHistoryTableComponent,
 ];

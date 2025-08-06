@@ -16,6 +16,35 @@ import { SewageEventData } from './garbage-station/event-record/sewage-event-rec
 import { IdNameModel } from './model.interface';
 import { Time } from './time.model';
 
+export function transformMessageContent(params: TransformFnParams) {
+  if (
+    params.value === undefined ||
+    params.value === null ||
+    params.value === ''
+  ) {
+    return undefined;
+  }
+  if (params.type === TransformationType.PLAIN_TO_CLASS) {
+    let utf8 = base64decode(params.value);
+    let decoder = new TextDecoder();
+    let bytes = new Uint8Array(utf8.length);
+    for (var i = 0; i < utf8.length; ++i) {
+      bytes[i] = utf8.charCodeAt(i);
+    }
+    return decoder.decode(bytes);
+  } else if (params.type === TransformationType.CLASS_TO_PLAIN) {
+    let encoder = new TextEncoder();
+    let bytes = encoder.encode(params.value);
+    let utf8 = '';
+    for (var i = 0; i < bytes.length; ++i) {
+      utf8 += String.fromCharCode(bytes[i]);
+    }
+    return base64encode(utf8);
+  } else {
+    return params.value;
+  }
+}
+
 export function transformRound(params: TransformFnParams, number: number) {
   if (!params.value) return params.value;
   if (params.type === TransformationType.PLAIN_TO_CLASS) {

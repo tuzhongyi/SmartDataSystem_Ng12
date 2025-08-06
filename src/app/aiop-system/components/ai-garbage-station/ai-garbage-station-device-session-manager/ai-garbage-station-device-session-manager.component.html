@@ -6,6 +6,7 @@
     <div class="ai-garbage-station-device-session-manager-body">
       <ai-garbage-station-device-session-list
         (session)="ondevice($event)"
+        [(selecteds)]="selecteds"
       ></ai-garbage-station-device-session-list>
     </div>
   </div>
@@ -17,73 +18,182 @@
 
     </div>
   </div> -->
-
-  <div class="panel ai-garbage-station-device-session-manager-session">
-    <div class="ai-garbage-station-device-session-manager-head">
-      <div class="hw-simple-title">GCHA</div>
-    </div>
-    <div class="ai-garbage-station-device-session-manager-body">
-      <div class="hw-form">
-        <div class="hw-form-group">
-          <div class="hw-form-label">地址</div>
-          <div class="content">
-            <input type="text" [disabled]="true" [(ngModel)]="ele.url" />
+  <div class="ai-garbage-station-device-session-manager-container">
+    <div
+      class="panel ai-garbage-station-device-session-manager-container-session"
+    >
+      <div class="ai-garbage-station-device-session-manager-head">
+        <div class="hw-simple-title">GCHA</div>
+      </div>
+      <div class="ai-garbage-station-device-session-manager-body">
+        <div class="hw-form">
+          <div class="hw-form-group">
+            <div class="hw-form-label">地址</div>
+            <div class="content">
+              <input type="text" [disabled]="true" [(ngModel)]="ele.url" />
+            </div>
           </div>
-        </div>
-        <div class="hw-form-group">
-          <div class="hw-form-label">本地设备</div>
-          <div class="content">
-            <hw-select [(selected)]="selection.selected">
-              <select
-                hw-select-content
-                [(ngModel)]="selection.selected"
+          <div class="hw-form-group">
+            <div class="hw-form-label">本地设备</div>
+            <div class="content">
+              <hw-select [(selected)]="selection.selected">
+                <select
+                  hw-select-content
+                  [(ngModel)]="selection.selected"
+                  [disabled]="!session"
+                  (change)="onselect()"
+                >
+                  <option [ngValue]="item" *ngFor="let item of selection.datas">
+                    {{ item.DeviceName }}
+                  </option>
+                </select>
+              </hw-select>
+            </div>
+          </div>
+          <div class="hw-form-group">
+            <div class="hw-form-label">本地地址</div>
+            <div class="content ipaddress">
+              <input
+                class="ip"
+                type="text"
                 [disabled]="!session"
-                (change)="onselect()"
+                [(ngModel)]="ele.host"
+              />
+              <input
+                class="port"
+                type="text"
+                [disabled]="!session"
+                [(ngModel)]="ele.port"
+              />
+              <button
+                class="hw-green-btn"
+                [disabled]="!session"
+                (click)="onforwarding()"
               >
-                <option [ngValue]="item" *ngFor="let item of selection.datas">
-                  {{ item.DeviceName }}
-                </option>
-              </select>
-            </hw-select>
+                <i class="mdi mdi-lan-connect"></i> 应用
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="hw-form-group">
-          <div class="hw-form-label">本地地址</div>
-          <div class="content ipaddress">
-            <input
-              class="ip"
-              type="text"
-              [disabled]="!session"
-              [(ngModel)]="ele.host"
-            />
-            <input
-              class="port"
-              type="text"
-              [disabled]="!session"
-              [(ngModel)]="ele.port"
-            />
-            <button
-              class="hw-green-btn"
-              [disabled]="!session"
-              (click)="onforwarding()"
-            >
-              <i class="mdi mdi-lan-connect"></i> 应用
-            </button>
-          </div>
-        </div>
 
-        <div class="hw-form-group">
-          <div>
+          <div class="hw-form-group">
+            <div>
+              <button
+                class="hw-blue-btn"
+                [disabled]="!ele.url"
+                (click)="onopen()"
+              >
+                <i class="mdi mdi-newspaper"></i> 打开
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="panel ai-garbage-station-device-session-manager-container-message"
+    >
+      <div class="ai-garbage-station-device-session-manager-head">
+        <div class="hw-simple-title">发送协议</div>
+      </div>
+      <div class="ai-garbage-station-device-session-manager-body">
+        <div
+          class="ai-garbage-station-device-session-manager-container-message-content"
+        >
+          <div
+            class="ai-garbage-station-device-session-manager-container-message-content-url"
+          >
+            <select
+              [(ngModel)]="message.args.method"
+              [disabled]="selecteds.length == 0"
+            >
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input
+              type="text"
+              [(ngModel)]="message.args.url"
+              [disabled]="selecteds.length == 0"
+            />
             <button
               class="hw-blue-btn"
-              [disabled]="!ele.url"
-              (click)="onopen()"
+              [disabled]="selecteds.length == 0 || !message.args.url"
+              (click)="message.send()"
             >
-              <i class="mdi mdi-newspaper"></i> 打开
+              发送
             </button>
+          </div>
+          <div
+            class="ai-garbage-station-device-session-manager-container-message-content-body"
+          >
+            <textarea
+              class="hw-textarea"
+              [(ngModel)]="message.args.body"
+              [disabled]="
+                selecteds.length == 0 ||
+                message.args.method == 'GET' ||
+                message.args.method == 'DELETE'
+              "
+              placeholder="请输入协议内容"
+            ></textarea>
+          </div>
+          <div
+            class="ai-garbage-station-device-session-manager-container-message-content-foot"
+          >
+            <div
+              class="ai-garbage-station-device-session-manager-container-message-content-foot-type"
+            >
+              <div>Content-Type：</div>
+              <div>
+                <select
+                  [(ngModel)]="message.args.type"
+                  [disabled]="
+                    selecteds.length == 0 ||
+                    message.args.method == 'GET' ||
+                    message.args.method == 'DELETE'
+                  "
+                >
+                  <option value="text/json">JSON</option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="ai-garbage-station-device-session-manager-container-message-content-foot-statistic"
+              *ngIf="message.data.sent.length > 0"
+              (click)="message.history.open()"
+            >
+              <div>
+                成功：<span class="green-text">{{
+                  message.data.response.length
+                }}</span>
+              </div>
+              <div>
+                失败：<span class="powder-red-text">{{
+                  message.data.error.length
+                }}</span>
+              </div>
+              <div>
+                发送：<span style="color: white">{{
+                  message.data.sent.length
+                }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <app-window
+    [Model]="window.message.history"
+    *ngIf="window.message.history.show"
+    [style]="window.message.history.style"
+  >
+    <ai-garbage-station-device-session-message-history-manager
+      [devices]="message.data.sent"
+      [messages]="message.data.response"
+      [errors]="message.data.error"
+    ></ai-garbage-station-device-session-message-history-manager>
+  </app-window>
 </div>

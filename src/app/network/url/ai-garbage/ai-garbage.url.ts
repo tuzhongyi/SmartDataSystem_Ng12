@@ -11,6 +11,11 @@ class AIGarbageDevicesUrl extends AbstractUrl {
   command(command: string) {
     return `${this.basic()}/${command}/Commands`;
   }
+  message = {
+    forward: (id: string) => {
+      return `${this.item(id)}/ForwardMessages`;
+    },
+  };
   records = new AIGarbageDevicesRecordsUrl(this.basic());
 }
 

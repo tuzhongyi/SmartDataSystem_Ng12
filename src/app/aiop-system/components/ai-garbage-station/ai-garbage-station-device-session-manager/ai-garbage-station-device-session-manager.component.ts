@@ -2,10 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { UrlTool } from 'src/app/common/tools/url-tool/url.tool';
 import { AIGarbageDevice } from 'src/app/network/model/ai-garbage/garbage-device.model';
+import { ErrorModel } from 'src/app/network/model/ai-garbage/message/error.model';
+import { ResponseMessageModel } from 'src/app/network/model/ai-garbage/message/response-message.model';
 import { DeviceSession } from 'src/app/network/model/html2tcp/device-session.model';
 import { IPEndPoint } from 'src/app/network/model/html2tcp/ip-end-point.model';
 import { AIGarbageDeviceModel } from '../ai-garbage-station-device-session-list/ai-garbage-station-device-session-list.model';
-import { LocalDeviceSelection } from './ai-garbage-station-device-session-manager.model';
+import {
+  CustomPropertyArgs,
+  LocalDeviceSelection,
+} from './ai-garbage-station-device-session-manager.model';
+import { AIGarbageStationDeviceSessionManagerWindow } from './ai-garbage-station-device-session-manager.window';
 import { AIGarbageStationDeviceSessionDeviceBusiness } from './business/ai-garbage-station-device-session-device.business';
 import { AIGarbageStationDeviceSessionManagerBusiness } from './business/ai-garbage-station-device-session-manager.business';
 
@@ -33,7 +39,8 @@ export class AIGarbageStationDeviceSessionManagerComponent implements OnInit {
 
   device?: AIGarbageDevice;
   session?: DeviceSession;
-  window?: Window;
+  window = new AIGarbageStationDeviceSessionManagerWindow();
+  selecteds: AIGarbageDeviceModel[] = [];
 
   ngOnInit(): void {
     this.onloadselection();
@@ -45,6 +52,7 @@ export class AIGarbageStationDeviceSessionManagerComponent implements OnInit {
     if (this.session) {
       this.ele.url = UrlTool.get(this.session.HttpHost, this.session.HttpPort);
       this.onloadselection();
+      this.message.load(this.session);
     } else {
       this.clear();
     }
@@ -105,13 +113,13 @@ export class AIGarbageStationDeviceSessionManagerComponent implements OnInit {
     }
   }
   toopen(url: string, name: string) {
-    if (this.window && this.window.closed == false) {
-      this.window.location.href = url;
-      this.window.focus();
+    if (this.window.html && this.window.html.closed == false) {
+      this.window.html.location.href = url;
+      this.window.html.focus();
     } else {
       var w = screen.availWidth;
       var h = screen.availHeight;
-      this.window =
+      this.window.html =
         window.open(
           url,
           name,
@@ -119,4 +127,65 @@ export class AIGarbageStationDeviceSessionManagerComponent implements OnInit {
         ) ?? undefined;
     }
   }
+
+  message = {
+    args: new CustomPropertyArgs(),
+
+    data: {
+      sent: [] as AIGarbageDevice[],
+      response: [] as ResponseMessageModel[],
+      error: [] as ErrorModel[],
+      clear: () => {
+        this.message.data.sent = [];
+        this.message.data.response = [];
+        this.message.data.error = [];
+      },
+    },
+
+    history: {
+      open: () => {
+        this.window.message.history.show = true;
+      },
+    },
+    load: (data: DeviceSession) => {},
+
+    send: async () => {
+      this.message.data.clear();
+      if (this.selecteds && this.selecteds.length > 0) {
+        this.message.data.sent = [...this.selecteds];
+
+        if (this.message.args.url && this.message.args.method) {
+          for (let i = 0; i < this.selecteds.length; i++) {
+            this.business.device
+              .message(this.selecteds[i].Id, this.message.args)
+              .then((x) => {
+                this.message.data.response.push(x);
+              })
+              .catch((e) => {
+                console.error(e);
+                this.message.data.error.push(e);
+              })
+              .finally(() => {
+                if (
+                  this.message.data.response.length +
+                    this.message.data.error.length ===
+                  this.message.data.sent.length
+                ) {
+                  if (
+                    this.message.data.response.length ===
+                    this.message.data.sent.length
+                  ) {
+                    this.toastr.success('发送成功');
+                  } else if (this.message.data.error.length > 0) {
+                    this.toastr.warning(
+                      `${this.message.data.error.length}个命令发送失败`
+                    );
+                  }
+                }
+              });
+          }
+        }
+      }
+    },
+  };
 }
