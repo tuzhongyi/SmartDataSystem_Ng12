@@ -8,4 +8,5 @@ export enum RoutePath {
   electric_bike = 'electric-bike',
   widescreen_login = 'widescreen-login',
   electric_bike_widescreen = 'electric-bike/widescreen',
+  management = 'bicycle-parking/management',
 }

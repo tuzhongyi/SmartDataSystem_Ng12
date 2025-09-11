@@ -1,8 +1,8 @@
 /*
  * @Author: pmx
  * @Date: 2021-09-06 17:08:43
- * @Last Modified by: pmx
- * @Last Modified time: 2022-08-16 08:53:59
+ * @Last Modified by: zzl
+ * @Last Modified time: 2025-05-20 17:35:16
  */
 
 import {
@@ -155,6 +155,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
     this._router.navigateByUrl(RoutePath.password_get_back);
   }
 
+  auth() {
+    let username = this.formGroup.get('userName')?.value ?? '';
+    let password = this.formGroup.get('passWord')?.value ?? '';
+    let value = `${username}&${password}`;
+
+    let base64 = base64encode(value);
+    let code = encodeURIComponent(base64);
+    // this._localStorageService.auth = code;
+    return code;
+  }
+
   async login() {
     if (this._checkForm()) {
       this.disableLogin = true;
@@ -166,6 +177,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
         );
         if (result instanceof User) {
           // console.log('登录成功', result);
+          let name = this.formGroup.get('userName')?.value ?? '';
 
           this._storeUserInfo(result, result.Id, result.Resources ?? []);
           // 测试
@@ -175,8 +187,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
               return;
             }
           }
+          let electric_bike_accounts: string[] = await fetch(
+            '/assets/config/electric-bike-account.json'
+          ).then((x) => {
+            return x.json().then((json) => {
+              return json;
+            });
+          });
 
-          this._router.navigateByUrl(RoutePath.electric_bike);
+          if (electric_bike_accounts.includes(name)) {
+            let code = this.auth();
+            location.href = `${RoutePath.management}?auth=${code}`;
+            // this._router.navigateByUrl(`${RoutePath.management}?auth=${code}`);
+          } else {
+            this._router.navigateByUrl(RoutePath.electric_bike);
+          }
+
           return;
           // 区分权限
           if (result.Role && result.Role.length > 0) {
