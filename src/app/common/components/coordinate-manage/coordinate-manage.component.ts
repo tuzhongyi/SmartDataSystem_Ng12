@@ -35,10 +35,15 @@ export class CoordinateManageComponent implements OnInit {
     return '';
   }
   public set value(v: string) {
-    let arr = v.trim().split(',');
-    if (arr.length == 2) {
-      this.gis.Longitude = parseFloat(arr[0]);
-      this.gis.Latitude = parseFloat(arr[1]);
+    let keys = [',', '	'];
+    for (let i = 0; i < keys.length; i++) {
+      const key = keys[i];
+      let arr = v.trim().split(key);
+      if (arr.length == 2) {
+        this.gis.Longitude = parseFloat(arr[0]);
+        this.gis.Latitude = parseFloat(arr[1]);
+        return;
+      }
     }
   }
 
@@ -55,7 +60,7 @@ export class CoordinateManageComponent implements OnInit {
     return gis;
   }
 
-  private get check() {
+  get check() {
     if (!this.station) {
       this.toastr.error('请选择厢房');
       return false;
@@ -64,11 +69,17 @@ export class CoordinateManageComponent implements OnInit {
       this.station.GisPoint = new GisPoint();
       this.station.GisPoint.GisType = GisType.GCJ02;
     }
-    if (Number.isFinite(this.station.GisPoint.Latitude)) {
+    if (
+      !this.station.GisPoint.Latitude ||
+      Number.isFinite(this.station.GisPoint.Latitude)
+    ) {
       this.toastr.error('纬度坐标数值异常');
       return false;
     }
-    if (Number.isFinite(this.station.GisPoint.Longitude)) {
+    if (
+      !this.station.GisPoint.Longitude ||
+      Number.isFinite(this.station.GisPoint.Longitude)
+    ) {
       this.toastr.error('经度坐标数值异常');
       return false;
     }
@@ -107,7 +118,6 @@ export class CoordinateManageComponent implements OnInit {
           this.station.GisPoint.Latitude = this.gis.Latitude;
           break;
       }
-
       this.ok.emit(this.station);
     }
   }
