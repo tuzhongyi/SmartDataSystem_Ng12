@@ -24,6 +24,24 @@ export class CoordinateManageComponent implements OnInit {
 
   gis: GisPoint = this.create();
 
+  public get value(): string {
+    if (this.gis) {
+      let lon = parseFloat(`${this.gis.Longitude}`);
+      let lat = parseFloat(`${this.gis.Latitude}`);
+      if (Number.isFinite(lon) && Number.isFinite(lat)) {
+        return `${lon},${lat}`;
+      }
+    }
+    return '';
+  }
+  public set value(v: string) {
+    let arr = v.trim().split(',');
+    if (arr.length == 2) {
+      this.gis.Longitude = parseFloat(arr[0]);
+      this.gis.Latitude = parseFloat(arr[1]);
+    }
+  }
+
   ngOnInit(): void {
     if (this.model) {
       let plain = instanceToPlain(this.model);
@@ -33,7 +51,7 @@ export class CoordinateManageComponent implements OnInit {
 
   private create() {
     let gis = new GisPoint();
-    gis.GisType = GisType.BD09;
+    gis.GisType = GisType.GCJ02;
     return gis;
   }
 

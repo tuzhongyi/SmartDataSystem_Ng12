@@ -21,6 +21,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { Md5 } from 'ts-md5';
 import videojs, { VideoJsPlayer } from 'video.js';
+import { RoutePath } from '../app-routing.path';
+import { UserUIType } from '../enum/user-ui-type.enum';
 import { User } from '../network/model/garbage-station/user.model';
 import { AuthorizationService } from '../network/request/auth/auth-request.service';
 import {
@@ -166,6 +168,14 @@ export class LoginComponent
     this.router.navigateByUrl(path);
   }
 
+  private auth() {
+    let value = `${this.model.username}&${this.model.password}`;
+    let base64 = base64encode(value);
+    let code = encodeURIComponent(base64);
+    // this._localStorageService.auth = code;
+    return code;
+  }
+
   async login() {
     // let nonce = 'fc5f3c277dba491eaeedd77d25e41dd1'; //'ad2af40c5f244b77afa15b0e62e572c0';
     // let nc = '00000001'; //'00000032';
@@ -182,7 +192,14 @@ export class LoginComponent
         .then((user) => {
           this.controller.config.load(user);
           this.controller.store.save.config(this.model.save, this.model.auto);
-          this.route(user);
+
+          if (user.UIType === UserUIType.dapuqiao) {
+            let code = this.auth();
+            let path = `${location.origin}/${RoutePath.dapuqiao}/index?auth=${code}`;
+            location.href = path;
+          } else {
+            this.route(user);
+          }
         })
         .catch((e: HttpErrorResponse) => {
           if (e.status == 403 || e.status == 500) {

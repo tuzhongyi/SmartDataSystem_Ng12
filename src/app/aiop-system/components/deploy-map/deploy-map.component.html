@@ -22,20 +22,18 @@
     </howell-confirm-dialog>
   </ng-container> -->
 
-  <ng-container *ngIf="window.coordinate.show">
-    <app-window
-      [Model]="window.coordinate"
-      *ngIf="window.coordinate.show"
-      [style]="window.coordinate.style"
-      [title]="window.coordinate.station?.Name"
-    >
-      <coordinate-manage
-        [model]="window.coordinate.station"
-        (ok)="onCoordinateDialogOk($event)"
-        (cancel)="window.coordinate.show = false"
-      ></coordinate-manage>
-    </app-window>
-  </ng-container>
+  <app-window
+    [Model]="window.coordinate"
+    *ngIf="window.coordinate.show"
+    [style]="window.coordinate.style"
+    [title]="window.coordinate.station?.Name"
+  >
+    <coordinate-manage
+      [model]="window.coordinate.station"
+      (ok)="onCoordinateDialogOk($event)"
+      (cancel)="window.coordinate.show = false"
+    ></coordinate-manage>
+  </app-window>
 
   <div class="horizontal-left">
     <div class="hw-simple-title">投放点列表</div>
@@ -82,7 +80,9 @@
               同步GIS信息
             </button>
 
-            <!-- <button class="hw-blue-btn">录入坐标</button> -->
+            <!-- <button class="hw-blue-btn" (click)="window.coordinate.show = true">
+              录入坐标
+            </button> -->
           </div>
         </div>
         <div class="right-wrapper">

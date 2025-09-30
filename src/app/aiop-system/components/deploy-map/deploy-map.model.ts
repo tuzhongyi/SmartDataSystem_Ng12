@@ -29,7 +29,7 @@ class DeployMapCoordinateWindow extends WindowViewModel {
   station?: GarbageStation;
   style = {
     width: '400px',
-    height: '300px',
+    height: '378px',
   };
 }
 

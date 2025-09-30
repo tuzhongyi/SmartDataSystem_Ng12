@@ -45,7 +45,7 @@ const routes: Routes = [
   },
 
   {
-    path: RoutePath.dapuqiao,
+    path: 'waste-regulation-1',
     loadChildren: () =>
       import('./garbage-system/dapuqiao/garbage-dapuqiao.module').then(
         (mod) => mod.GarbageDaPuQiaoModule
