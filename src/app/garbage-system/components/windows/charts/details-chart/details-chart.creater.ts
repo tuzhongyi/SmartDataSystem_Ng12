@@ -15,7 +15,7 @@ export class DetailsChartCreater {
     event: EventType,
     date: Date,
     unit: TimeUnit,
-    datas: ITimeData<IModel>[][],
+    datas: ITimeData<IModel | undefined>[][],
     station?: IdNameModel,
     division?: IIdNameModel,
     types?: EventType[]

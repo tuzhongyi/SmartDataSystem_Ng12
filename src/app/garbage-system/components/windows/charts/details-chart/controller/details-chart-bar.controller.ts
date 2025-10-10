@@ -13,7 +13,7 @@ export class DetailsChartBarController {
   load(
     date: Date,
     unit: TimeUnit,
-    datas: ITimeData<IModel>[][],
+    datas: ITimeData<IModel | undefined>[][],
     types: EventType[]
   ) {
     let titles = DetailsChartCreater.Titles(types);

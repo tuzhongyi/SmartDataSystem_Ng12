@@ -8,7 +8,9 @@ export class GarbageDropRecordViewModel extends GarbageDropEventRecord {
   DateFormatter: string = '';
 
   SendTime: string = '';
+  SendFullTime = '';
   HandleTime: string = '-';
+  HandleFullTime = '';
 
   DropDuration?: string = '-';
 

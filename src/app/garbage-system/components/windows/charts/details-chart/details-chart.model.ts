@@ -18,5 +18,5 @@ export class DetailsChartDownloadArgs {
   time: string = '';
   unit: TimeUnit = TimeUnit.Hour;
   types: EventType[] = [];
-  datas: ITimeData<IModel>[][] = [];
+  datas: ITimeData<IModel | undefined>[][] = [];
 }

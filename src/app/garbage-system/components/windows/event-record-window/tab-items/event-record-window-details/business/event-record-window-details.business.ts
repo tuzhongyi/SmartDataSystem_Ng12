@@ -19,7 +19,8 @@ import { EventRecordWindowDetailsStationBusiness } from './event-record-window-d
 
 @Injectable()
 export class EventRecordWindowDetailsBusiness
-  implements IBusiness<EventNumberStatisticModel[], ITimeData<number>[][]>
+  implements
+    IBusiness<EventNumberStatisticModel[], ITimeData<number | undefined>[][]>
 {
   constructor(
     private stationService: GarbageStationRequestService,
@@ -31,7 +32,9 @@ export class EventRecordWindowDetailsBusiness
     private converter: EventRecordWindowDetailsConverter
   ) {}
 
-  async load(opts: DetailsChartLoadOptions): Promise<ITimeData<number>[][]> {
+  async load(
+    opts: DetailsChartLoadOptions
+  ): Promise<ITimeData<number | undefined>[][]> {
     let division = await this.store.division.selected;
     let divisionId = division.Id;
     let interval: Duration = {

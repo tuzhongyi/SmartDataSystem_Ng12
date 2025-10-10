@@ -1,0 +1,74 @@
+import { TimeUnit } from 'src/app/enum/time-unit.enum';
+
+export class DateTimeFullTool {
+  unit(
+    date: Date,
+    unit: TimeUnit,
+    opts?: {
+      week: { first: number };
+    }
+  ): Date[] {
+    switch (unit) {
+      case TimeUnit.Day:
+        return this.day(date);
+      case TimeUnit.Week:
+        return this.week(date, opts?.week.first);
+      case TimeUnit.Month:
+        return this.month(date);
+      case TimeUnit.Year:
+        return this.year(date);
+
+      default:
+        return [];
+    }
+  }
+  day(date: Date): Date[] {
+    let dates: Date[] = [];
+    let day = new Date(date.getTime());
+    for (let i = 0; i < 24; i++) {
+      let d = new Date(day.getTime());
+      d.setHours(i, 0, 0, 0);
+      dates.push(d);
+    }
+    return dates;
+  }
+  week(date: Date, firstDay = 1): Date[] {
+    let dates: Date[] = [];
+    let day = new Date(date.getTime());
+    let weekDay = day.getDay() - firstDay;
+    if (weekDay < 0) {
+      weekDay = weekDay + 7;
+    }
+    day.setDate(day.getDate() - weekDay);
+    day.setHours(0, 0, 0, 0);
+    for (let i = 0; i < 7; i++) {
+      let d = new Date(day.getTime());
+      d.setDate(d.getDate() + i);
+      dates.push(d);
+    }
+    return dates;
+  }
+  month(date: Date): Date[] {
+    let dates: Date[] = [];
+    let year = date.getFullYear();
+    let month = date.getMonth();
+    let d = new Date(year, month + 1, 0);
+    let count = d.getDate();
+    for (let i = 1; i <= count; i++) {
+      let day = new Date(year, month, i);
+      day.setHours(0, 0, 0, 0);
+      dates.push(day);
+    }
+    return dates;
+  }
+  year(date: Date): Date[] {
+    let dates: Date[] = [];
+    let year = date.getFullYear();
+    for (let i = 0; i < 12; i++) {
+      let month = new Date(year, i, 1);
+      month.setHours(0, 0, 0, 0);
+      dates.push(month);
+    }
+    return dates;
+  }
+}

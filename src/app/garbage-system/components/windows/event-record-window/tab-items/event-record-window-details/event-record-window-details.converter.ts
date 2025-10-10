@@ -16,13 +16,13 @@ export class EventRecordWindowDetailsConverter {
     input: EventNumberStatisticModel,
     type: EventType,
     unit: TimeUnit
-  ): ITimeData<number> {
-    let count = 0;
+  ): ITimeData<number | undefined> {
+    let count = undefined;
     if (input.EventNumbers) {
       let event = input.EventNumbers.find((x) => x.EventType === type);
       if (event) {
         if (unit === TimeUnit.Hour) {
-          count = event.DeltaNumber ?? 0;
+          count = event.DeltaNumber;
         } else {
           count = event.DayNumber;
         }
@@ -38,8 +38,8 @@ export class EventRecordWindowDetailsConverter {
     source: EventNumberStatisticModel[],
     types: EventType[],
     unit: TimeUnit
-  ): ITimeData<number>[][] {
-    let array: ITimeData<number>[][] = [];
+  ): ITimeData<number | undefined>[][] {
+    let array: ITimeData<number | undefined>[][] = [];
     for (let i = 0; i < types.length; i++) {
       let item = source.map((x) => {
         return this.convert(x, types[i], unit);
@@ -47,6 +47,7 @@ export class EventRecordWindowDetailsConverter {
 
       array.push(item);
     }
+
     return array;
   }
 
@@ -83,6 +84,12 @@ export class EventRecordWindowDetailsConverter {
     model.Id = id;
     model.EventNumbers = input.EventNumbers;
     model.Time = input.BeginTime;
+    return model;
+  }
+  create(id: string, time: Date) {
+    let model = new EventNumberStatisticModel();
+    model.Id = id;
+    model.Time = time;
     return model;
   }
 }

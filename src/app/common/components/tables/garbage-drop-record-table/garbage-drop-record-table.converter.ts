@@ -57,9 +57,19 @@ export class GarbageDropEventRecordConverter
     let model = new GarbageDropRecordViewModel();
     model = Object.assign(model, source);
     model.SendTime = formatDate(source.Data.DropTime, 'HH:mm:ss', 'en');
+    model.SendFullTime = formatDate(
+      source.Data.DropTime,
+      'yyyy-MM-dd HH:mm:ss',
+      'en'
+    );
     model.GarbageStation = this.station.cache.get(source.Data.StationId);
     if (source.Data.HandleTime) {
       model.HandleTime = formatDate(source.Data.HandleTime, 'HH:mm:ss', 'en');
+      model.HandleFullTime = formatDate(
+        source.Data.HandleTime,
+        'yyyy-MM-dd HH:mm:ss',
+        'en'
+      );
     }
     if (source.Data.TakeMinutes) {
       model.DropDuration = Language.Time(source.Data.TakeMinutes);

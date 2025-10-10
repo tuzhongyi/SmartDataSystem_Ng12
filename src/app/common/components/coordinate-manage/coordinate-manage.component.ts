@@ -65,21 +65,11 @@ export class CoordinateManageComponent implements OnInit {
       this.toastr.error('请选择厢房');
       return false;
     }
-    if (!this.station.GisPoint) {
-      this.station.GisPoint = new GisPoint();
-      this.station.GisPoint.GisType = GisType.GCJ02;
-    }
-    if (
-      !this.station.GisPoint.Latitude ||
-      Number.isFinite(this.station.GisPoint.Latitude)
-    ) {
+    if (!this.gis.Latitude || !Number.isFinite(this.gis.Latitude)) {
       this.toastr.error('纬度坐标数值异常');
       return false;
     }
-    if (
-      !this.station.GisPoint.Longitude ||
-      Number.isFinite(this.station.GisPoint.Longitude)
-    ) {
+    if (!this.gis.Longitude || !Number.isFinite(this.gis.Longitude)) {
       this.toastr.error('经度坐标数值异常');
       return false;
     }

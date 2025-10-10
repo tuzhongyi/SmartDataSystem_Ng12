@@ -27,9 +27,12 @@ import { DetailsChartProviders } from './details-chart.providers';
   providers: [...DetailsChartProviders],
 })
 export class DetailsChartComponent
-  implements OnInit, IComponent<IModel, ITimeData<IModel>[][]>, AfterViewInit
+  implements
+    OnInit,
+    IComponent<IModel, ITimeData<IModel | undefined>[][]>,
+    AfterViewInit
 {
-  @Input() business!: IBusiness<IModel, ITimeData<IModel>[][]>;
+  @Input() business!: IBusiness<IModel, ITimeData<IModel | undefined>[][]>;
   @Input() eventType: EventType = EventType.None;
   @Input() types?: EventType[];
   @Input() station?: GarbageStation;
@@ -49,7 +52,7 @@ export class DetailsChartComponent
   config = {
     dateTimePicker: new DateTimePickerConfig({ format: 'yyyy年MM月dd日' }),
   };
-  data: ITimeData<IModel>[][] = [];
+  data: ITimeData<IModel | undefined>[][] = [];
 
   get has() {
     return {

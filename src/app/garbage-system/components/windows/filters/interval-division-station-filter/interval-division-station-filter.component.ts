@@ -74,7 +74,7 @@ export class EventRecordFilterComponent
   changeBegin(date: Date) {
     if (
       this.date_sync &&
-      !DateTimeTool.is.day.equals(this.duration.begin, this.duration.end)
+      !DateTimeTool.is.equal.day(this.duration.begin, this.duration.end)
     ) {
       let end = new Date(this.duration.end.getTime());
       end.setFullYear(date.getFullYear());
