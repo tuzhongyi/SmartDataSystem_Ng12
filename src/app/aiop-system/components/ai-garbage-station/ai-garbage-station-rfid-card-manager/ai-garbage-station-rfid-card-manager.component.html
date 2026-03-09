@@ -16,7 +16,11 @@
     </div>
     <div class="ai-garbage-station-rfid-card-manager-table-head">
       <div class="hw-btn-group">
-        <button class="hw-blue-btn m-r-10" (click)="onexport()">
+        <button
+          class="hw-blue-btn m-r-10"
+          (click)="onexport()"
+          [disabled]="!(args.regionId || args.divisionId)"
+        >
           <i class="howell-icon-export"></i> 导出
         </button>
         <button class="hw-blue-btn m-r-10" (click)="onimport()">

@@ -38,4 +38,14 @@ export class ConfigRequestService {
       responseType: 'arraybuffer',
     });
   }
+
+  get version() {
+    return new Promise<string>((resolve) => {
+      fetch(`/assets/configs/version.json?t=${new Date().getTime()}`)
+        .then((res) => res.json())
+        .then((data) => {
+          resolve(data.version);
+        });
+    });
+  }
 }

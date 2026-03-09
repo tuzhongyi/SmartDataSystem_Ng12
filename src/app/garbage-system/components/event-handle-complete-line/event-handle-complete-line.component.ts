@@ -4,7 +4,10 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnChanges,
   OnInit,
+  SimpleChange,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import * as echarts from 'echarts';
@@ -20,7 +23,9 @@ import { EventHandleCompleteLineOptions } from './event-handle-complete-line.opt
   styleUrls: ['./event-handle-complete-line.component.less'],
   providers: [EventHandleCompleteLineBusiness],
 })
-export class EventHandleCompleteLineComponent implements OnInit, AfterViewInit {
+export class EventHandleCompleteLineComponent
+  implements OnInit, OnChanges, AfterViewInit
+{
   @Input() data?: IEventRecord;
   @Input('load') _load?: EventEmitter<IEventRecord>;
   constructor(private business: EventHandleCompleteLineBusiness) {}
@@ -29,6 +34,20 @@ export class EventHandleCompleteLineComponent implements OnInit, AfterViewInit {
   private element?: ElementRef<HTMLDivElement>;
   private option: EChartsOption = EventHandleCompleteLineOptions;
   private echarts?: echarts.ECharts;
+
+  private change = {
+    data: (simple: SimpleChange) => {
+      if (simple && !simple.firstChange) {
+        if (this.data) {
+          this.load(this.data);
+        }
+      }
+    },
+  };
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.change.data(changes['data']);
+  }
 
   ngOnInit(): void {
     if (this._load) {

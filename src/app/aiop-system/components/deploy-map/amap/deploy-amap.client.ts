@@ -37,9 +37,13 @@ export class DeployAMapClient {
   init(iframe: HTMLIFrameElement) {
     this._client = new CesiumMapClient(iframe);
     this._client.Events.OnLoaded = () => {
-      this._controller = this._client?.DataController;
-      this.isloaded = true;
-      this.loaded.emit();
+      wait2(() => {
+        return !!this._client?.DataController;
+      }).then(() => {
+        this._controller = this._client?.DataController;
+        this.isloaded = true;
+        this.loaded.emit();
+      });
     };
   }
 

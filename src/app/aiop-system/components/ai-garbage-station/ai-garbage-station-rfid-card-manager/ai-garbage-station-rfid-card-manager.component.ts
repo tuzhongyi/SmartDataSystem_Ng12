@@ -3,6 +3,7 @@ import { AIGarbageStationRfidCardTableArgs } from 'src/app/common/components/tab
 import { MessageBar } from 'src/app/common/tools/message-bar';
 import { AIGarbageRegion } from 'src/app/network/model/ai-garbage/region.model';
 import { AIGarbageRfidCard } from 'src/app/network/model/ai-garbage/rfid-card.model';
+import { Division } from 'src/app/network/model/garbage-station/division.model';
 import { CommonFlatNode } from 'src/app/view-model/common-flat-node.model';
 import { AIGarbageStationRfidCardManagerBusiness } from './ai-garbage-station-rfid-card-manager.business';
 import { AIGarbageStationRfidCardWindow } from './ai-garbage-station-rfid-card-manager.model';
@@ -27,13 +28,18 @@ export class AIGarbageStationRfidCardManagerComponent {
   window = new AIGarbageStationRfidCardWindow();
 
   selectDivisionClick(nodes: CommonFlatNode[]) {
-    for (let i = 0; i < nodes.length; i++) {
-      const node = nodes[i];
-      if (node.RawData instanceof AIGarbageRegion) {
-        this.args.regionId = node.RawData.Id;
-        this.args.tofirst = true;
-        this.load.emit(this.args);
-      }
+    if (nodes.length == 0) return;
+    let node = nodes[0];
+    this.args.regionId = undefined;
+    this.args.divisionId = undefined;
+    if (node.RawData instanceof AIGarbageRegion) {
+      this.args.regionId = node.RawData.Id;
+      this.args.tofirst = true;
+      this.load.emit(this.args);
+    } else if (node.RawData instanceof Division) {
+      this.args.divisionId = node.RawData.Id;
+      this.args.tofirst = true;
+      this.load.emit(this.args);
     }
   }
   todelete(item?: AIGarbageRfidCard) {
@@ -76,8 +82,14 @@ export class AIGarbageStationRfidCardManagerComponent {
   }
   onexport() {
     if (this.args.regionId) {
-      this.business.download(this.title, this.args.regionId).then((x) => {
-        MessageBar.response_success('操作成功');
+      this.business.download
+        .single(this.title, this.args.regionId)
+        .then((x) => {
+          MessageBar.response_success('操作成功');
+        });
+    } else if (this.args.divisionId) {
+      this.business.region.list(this.args.divisionId).then((regions) => {
+        this.business.download.multiple(regions);
       });
     } else {
       MessageBar.response_warning('请选择区域');

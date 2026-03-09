@@ -116,6 +116,7 @@ class Converter
         ];
         return values.join('|');
       });
+      return items.join('\n');
     }
     return '-';
   }

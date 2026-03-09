@@ -44,7 +44,7 @@
             (click)="onselected(item)"
           >
             <td>{{ item.Id }}</td>
-            <td>{{ item.RegionName }}</td>
+            <td [title]="item.RegionName ?? ''">{{ item.RegionName }}</td>
             <td>{{ item.BuildingNo }}</td>
             <td>{{ item.RoomNo }}</td>
             <td>{{ item.CardHolder }}</td>

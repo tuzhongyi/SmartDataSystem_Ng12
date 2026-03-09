@@ -23,30 +23,6 @@ export class EventRecordWindowDetailsStationBusiness {
     let data = await this.service.statistic.number.cache.get(stationId);
     return this.converter.station(data);
   }
-  private stop(time: Date, unit: TimeUnit) {
-    if (unit == TimeUnit.Day) {
-      if (DateTimeTool.is.today(time)) {
-        true;
-      }
-    } else if (unit == TimeUnit.Hour) {
-      if (DateTimeTool.is.equal.hour(time, new Date())) {
-        return true;
-      }
-    } else {
-    }
-
-    switch (unit) {
-      case TimeUnit.Hour:
-        return DateTimeTool.is.equal.hour(time, new Date());
-      case TimeUnit.Day:
-        return DateTimeTool.is.today(time);
-      case TimeUnit.Month:
-        return DateTimeTool.is.equal.month(time, new Date());
-
-      default:
-        return false;
-    }
-  }
 
   async history(stationId: string, duration: Duration, unit: TimeUnit) {
     let params = new GetGarbageStationVolumesParams();

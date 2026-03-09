@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ConfigRequestService } from 'src/app/network/request/config/config-request.service';
 import { GlobalStorageDivisionController } from './global-storage.service/global-storage-division.controller';
 import { GlobalStorageIntervalController } from './global-storage.service/global-storage-interval.controller';
 import { LocalStorageService } from './local-storage.service';
@@ -32,8 +33,24 @@ export class GlobalStorageService {
     },
   };
 
-  constructor(private localStorage: LocalStorageService) {
+  private version = '1.0.0.0';
+
+  constructor(
+    private localStorage: LocalStorageService,
+    private config: ConfigRequestService
+  ) {
     this.division = new GlobalStorageDivisionController(this.localStorage);
+    this.init();
+  }
+
+  private init() {
+    setInterval(() => {
+      this.config.version.then((version) => {
+        if (this.version !== version) {
+          location.replace(window.location.href);
+        }
+      });
+    }, 60 * 1000);
   }
 
   destroy() {
