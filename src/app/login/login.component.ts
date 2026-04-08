@@ -62,7 +62,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private _sessionStorageService: SessionStorageService,
     private _storeService: StoreService
   ) {
-    this._titleService.setTitle('智能车棚管理平台');
+    this._titleService.setTitle('智慧车棚管理平台');
     this._storeService.loginPath = '/login';
   }
 
@@ -188,7 +188,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             }
           }
           let electric_bike_accounts: string[] = await fetch(
-            '/assets/config/electric-bike-account.json'
+            `/assets/config/electric-bike-account.json?v=${new Date().getTime()}`
           ).then((x) => {
             return x.json().then((json) => {
               return json;

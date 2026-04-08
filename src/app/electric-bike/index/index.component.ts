@@ -52,7 +52,7 @@ export class ElectricBikeIndexComponent implements OnInit {
     public statistic: ElectricBikeIndexDeviceStatisticBusiness,
     private activatedRoute: ActivatedRoute
   ) {
-    titleService.setTitle('智能车棚管理平台');
+    titleService.setTitle('智慧车棚管理平台');
   }
 
   converter = {

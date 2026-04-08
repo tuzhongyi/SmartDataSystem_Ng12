@@ -1,23 +1,23 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { StoreService } from 'src/app/common/service/store.service';
+import { EventType } from 'src/app/enum/event-type.enum';
+import { Division } from 'src/app/network/model/division.model';
 import { MQTTEventService } from 'src/app/network/request/mqtt-event/mqtt-event.service';
+import { CommitteesNavicationConverter } from '../../navication/navication.component.converter';
 import { ElectricBikeIndexAlarmBusiness } from './business/index-alram.business';
 import { ElectricBikeIndexDeviceStatusBusiness } from './business/index-device-status.business';
+import { ElectricBikeIndexChildBusiness } from './business/index-dvisiion.business';
 import { ElectricBikeIndexDeviceStatisticBusiness } from './business/index-statistic.business';
-import { WindowBussiness } from './business/window/index-window.business';
 import { ElectricBikeIndexBusiness } from './business/index.component.business';
 import { ElectricBikeIndexNavicationBusiness } from './business/index.navication.business';
 import { MapControlBusiness } from './business/map-control.business';
 import { PatrolControlBusiness } from './business/patrol-control.business';
 import { VideoControlWindowBusiness } from './business/video-control-window.business';
+import { WindowBussiness } from './business/window/index-window.business';
 import { ElectricBikeWindowBusinesses } from './business/window/window.moudle';
 import { ElectricBikeIndexService } from './widescreen-index.component.service';
-import { Title } from '@angular/platform-browser';
-import { EventType } from 'src/app/enum/event-type.enum';
-import { CommitteesNavicationConverter } from '../../navication/navication.component.converter';
 import { WidescreenIndexDisplay } from './widescreen-index.model';
-import { Division } from 'src/app/network/model/division.model';
-import { ElectricBikeIndexChildBusiness } from './business/index-dvisiion.business';
 
 @Component({
   selector: 'howell-electric-bike-widescreen-index',
@@ -55,7 +55,7 @@ export class ElectricBikeWidescreenIndexComponent implements OnInit {
     public statistic: ElectricBikeIndexDeviceStatisticBusiness,
     public child: ElectricBikeIndexChildBusiness
   ) {
-    titleService.setTitle('智能车棚管理平台');
+    titleService.setTitle('智慧车棚管理平台');
   }
   display: WidescreenIndexDisplay = WidescreenIndexDisplay.status;
   WidescreenIndexDisplay = WidescreenIndexDisplay;

@@ -64,7 +64,7 @@ export class WidescreenLoginComponent implements OnInit, AfterViewInit {
     private _cookieService: CookieService,
     private _storeService: StoreService
   ) {
-    this._titleService.setTitle('智能车棚管理平台');
+    this._titleService.setTitle('智慧车棚管理平台');
     this._storeService.loginPath = '/widescreen-login';
   }
 
