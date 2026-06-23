@@ -26,10 +26,12 @@ export class GarbageDropStationCountTableDivisionService {
     parentId: string,
     type: DivisionType,
     interval: Duration,
-    unit: TimeUnit
+    unit: TimeUnit,
   ) {
     let divisions = await this.array(parentId, type);
-    let divisionIds = divisions.map((x) => x.Id);
+    let divisionIds = divisions
+      .filter((x) => x.GarbageStationNumber ?? 0 > 0)
+      .map((x) => x.Id);
     let params = new GetDivisionStatisticNumbersParamsV2();
     params.BeginTime = interval.begin;
     params.EndTime = interval.end;

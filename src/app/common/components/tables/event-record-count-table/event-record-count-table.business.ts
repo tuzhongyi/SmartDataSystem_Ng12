@@ -69,7 +69,10 @@ export class EventRecordCountTableBusiness implements IBusiness<
     } else {
       let divisions = await this.service.division.list(id, type);
       if (divisions.length == 0) return [];
-      let ids = divisions.map((x) => x.Id);
+
+      let ids = divisions
+        .filter((x) => (x.GarbageStationNumber ?? 0) > 0)
+        .map((x) => x.Id);
       return this.service.division.history(ids, duration, opts.unit);
     }
   }

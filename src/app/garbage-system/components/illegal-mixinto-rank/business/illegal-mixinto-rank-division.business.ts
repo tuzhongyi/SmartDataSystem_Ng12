@@ -50,7 +50,9 @@ export class IllegalMixintoRankDivisionBusiness {
   async today(divisionId: string, type: DivisionType) {
     let children = await this.children(divisionId, type);
     let params = new GetDivisionStatisticNumbersParams();
-    params.Ids = children.map((x) => x.Id);
+    params.Ids = children
+      .filter((x) => x.GarbageStationNumber ?? 0 > 0)
+      .map((x) => x.Id);
     let list = await this.service.statistic.number.cache.list(params);
     return list.Data.map((x) => this.convert(x));
   }
@@ -58,14 +60,16 @@ export class IllegalMixintoRankDivisionBusiness {
     divisionId: string,
     type: DivisionType,
     unit: TimeUnit,
-    duration: Duration
+    duration: Duration,
   ) {
     let children = await this.children(divisionId, type);
     let params = new GetDivisionStatisticNumbersParamsV2();
     params.TimeUnit = unit;
     params.BeginTime = duration.begin;
     params.EndTime = duration.end;
-    params.DivisionIds = children.map((x) => x.Id);
+    params.DivisionIds = children
+      .filter((x) => x.GarbageStationNumber ?? 0 > 0)
+      .map((x) => x.Id);
     let list = await this.service.statistic.number.history.list(params);
     return list.map((x) => this.convert(x));
   }

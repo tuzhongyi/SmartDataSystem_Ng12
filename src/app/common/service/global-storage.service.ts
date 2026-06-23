@@ -34,7 +34,7 @@ export class GlobalStorageService {
     },
   };
 
-  private version = '1.0.0.5';
+  private version = '1.0.1.0';
 
   constructor(
     private localStorage: LocalStorageService,

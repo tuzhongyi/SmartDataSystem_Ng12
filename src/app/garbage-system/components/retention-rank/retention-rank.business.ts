@@ -17,13 +17,10 @@ import { RankModel } from 'src/app/view-model/rank.model';
 import { RetentionRankConverter } from './retention-rank.converter';
 
 @Injectable()
-export class RetentionRankBusiness
-  implements
-    IBusiness<
-      Array<DivisionNumberStatistic | GarbageStationNumberStatistic>,
-      RankModel[]
-    >
-{
+export class RetentionRankBusiness implements IBusiness<
+  Array<DivisionNumberStatistic | GarbageStationNumberStatistic>,
+  RankModel[]
+> {
   retentionType?: RetentionType;
 
   onLoaded: EventEmitter<void> = new EventEmitter();
@@ -31,11 +28,11 @@ export class RetentionRankBusiness
   constructor(
     private divisionRequest: DivisionRequestService,
     private stationRequest: GarbageStationRequestService,
-    private storeService: GlobalStorageService
+    private storeService: GlobalStorageService,
   ) {}
   async getData(
     divisionId: string,
-    divisionType: DivisionType
+    divisionType: DivisionType,
   ): Promise<DivisionNumberStatistic[] | GarbageStationNumberStatistic[]> {
     switch (divisionType) {
       case DivisionType.City:
@@ -53,19 +50,19 @@ export class RetentionRankBusiness
     let divisions = await this.divisionRequest.cache.list(divisionParams);
 
     let params = new GetDivisionStatisticNumbersParams();
-    params.Ids = divisions.Data.map((x) => x.Id);
-    let response = await this.divisionRequest.statistic.number.cache.list(
-      params
-    );
+    params.Ids = divisions.Data.filter(
+      (x) => x.GarbageStationNumber ?? 0 > 0,
+    ).map((x) => x.Id);
+    let response =
+      await this.divisionRequest.statistic.number.cache.list(params);
     return response.Data;
   }
 
   async getByGarbageStation(divisionId: string) {
     let params = new GetGarbageStationStatisticNumbersParams();
     params.DivisionId = divisionId;
-    let response = await this.stationRequest.statistic.number.cache.list(
-      params
-    );
+    let response =
+      await this.stationRequest.statistic.number.cache.list(params);
     return response.Data;
   }
 

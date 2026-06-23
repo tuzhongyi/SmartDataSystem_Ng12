@@ -16,7 +16,7 @@ export class GarbageStationCountTableBusiness
 {
   constructor(
     private service: GarbageStationCountTableService,
-    private global: GlobalStorageService
+    private global: GlobalStorageService,
   ) {}
 
   async load(...args: any): Promise<DivisionNumberStatistic[]> {
@@ -37,7 +37,7 @@ export class GarbageStationCountTableBusiness
     let params = new GetDivisionStatisticNumbersParams();
     params.Ids = divisions.map((x) => x.Id);
     let paged = await this.service.division.statistic.number.cache.list(params);
-    let data = paged.Data.sort((a, b) => {
+    let data = paged.Data.filter((x) => x.StationNumber > 0).sort((a, b) => {
       return (
         LocaleCompare.compare(!!b.StationNumber, !!a.StationNumber) ||
         LocaleCompare.compare(a.Name, b.Name)
