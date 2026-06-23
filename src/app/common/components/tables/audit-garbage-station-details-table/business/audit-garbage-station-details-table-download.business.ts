@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { IExportConverter } from 'src/app/common/interfaces/converter.interface';
 import { ExportTool } from 'src/app/common/tools/export.tool';
 import { HowellExportModel } from 'src/app/common/tools/exports/hw-export.model';
+import { Flags } from 'src/app/common/tools/flags';
 import { Language } from 'src/app/common/tools/language';
 import { LocaleCompare } from 'src/app/common/tools/locale-compare';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
@@ -107,6 +108,17 @@ class Converter
     return [source.Name, ...columns];
   }
   DropWindows(source: AuditGarbageStationDetailsTableItem<GarbageStation>) {
+    let enabled = false;
+    if (source.Capabilities) {
+      let flags = new Flags(source.Capabilities);
+      if (flags.contains(2)) {
+        enabled = true;
+      }
+    }
+    if (!enabled) {
+      return '×';
+    }
+
     if (source.DropWindows && source.DropWindows.length > 0) {
       let items = source.DropWindows.map((x) => {
         let values = [

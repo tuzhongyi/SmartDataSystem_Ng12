@@ -14,6 +14,7 @@ export class GlobalStorageService {
 
   HideButton: boolean = false;
   HideTitlebar: boolean = false;
+  JustMap: boolean = false;
 
   division: GlobalStorageDivisionController;
   interval = new GlobalStorageIntervalController();
@@ -33,24 +34,22 @@ export class GlobalStorageService {
     },
   };
 
-  private version = '1.0.0.0';
+  private version = '1.0.0.5';
 
   constructor(
     private localStorage: LocalStorageService,
-    private config: ConfigRequestService
+    private config: ConfigRequestService,
   ) {
     this.division = new GlobalStorageDivisionController(this.localStorage);
     this.init();
   }
 
   private init() {
-    setInterval(() => {
-      this.config.version.then((version) => {
-        if (this.version !== version) {
-          location.replace(window.location.href);
-        }
-      });
-    }, 60 * 1000);
+    this.config.version.then((version) => {
+      if (this.version !== version) {
+        location.replace(window.location.href);
+      }
+    });
   }
 
   destroy() {

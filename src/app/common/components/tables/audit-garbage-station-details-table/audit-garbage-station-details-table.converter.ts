@@ -45,6 +45,14 @@ export class AuditGarbageStationDetailsTableConverter {
 
     model.Operation = this.operation(model);
 
+    if (model.Capabilities) {
+      let flags = new Flags(model.Capabilities);
+
+      if (flags.contains(2)) {
+        model.doorabled = true;
+      }
+    }
+
     return model;
   }
 
@@ -149,7 +157,18 @@ class TableItemDataConverter {
   }
   DropWindows(data: GarbageStationModel): TableItemData {
     let text = new Promise<string>((resolve) => {
-      resolve(`【${data.DropWindows ? data.DropWindows.length : 0}】`);
+      let enabled = false;
+      if (data.Capabilities) {
+        let flags = new Flags(data.Capabilities);
+        if (flags.contains(2)) {
+          enabled = true;
+        }
+      }
+      if (enabled) {
+        resolve(`【${data.DropWindows ? data.DropWindows.length : 0}】`);
+      } else {
+        resolve('×');
+      }
     });
 
     let item = new TableItemData('DropWindows', text);
@@ -347,6 +366,202 @@ class TableItemDataConverter {
       }
     });
     let item = new TableItemData('GisPoint', text);
+    return item;
+  }
+
+  DeviceName(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData && data.GarbageDeviceData.DeviceName) {
+        resolve(`${data.GarbageDeviceData.DeviceName}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('GisPoint', text);
+    return item;
+  }
+  DeviceOnlineState(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (isEmpty(data.GarbageDeviceData?.OnlineState)) {
+        resolve('-');
+      } else {
+        resolve(Language.OnlineStatus(data.GarbageDeviceData?.OnlineState));
+      }
+    });
+
+    let item = new TableItemData('DeviceOnlineState', text);
+    if (isEmpty(data.GarbageDeviceData?.OnlineState)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OnlineState(
+        data.GarbageDeviceData?.OnlineState
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceExhaustFan(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (
+        data.GarbageDeviceData &&
+        data.GarbageDeviceData.ExhaustFan != undefined
+      ) {
+        resolve(`${Language.OpenState(data.GarbageDeviceData.ExhaustFan)}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceExhaustFan', text);
+    if (isEmpty(data.GarbageDeviceData?.ExhaustFan)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OpenState(
+        data.GarbageDeviceData?.ExhaustFan
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceAirPumpPressure(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.AirPumpPressure != undefined) {
+        resolve(`${data.GarbageDeviceData.AirPumpPressure} pa`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceAirPumpPressure', text);
+    if (isEmpty(data.GarbageDeviceData?.AirPumpPower)) {
+      item.class = 'gray-text';
+    }
+    return item;
+  }
+  DeviceAirPumpPower(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.AirPumpPower != undefined) {
+        resolve(`${Language.PowerState(data.GarbageDeviceData.AirPumpPower)}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceAirPumpPower', text);
+    if (isEmpty(data.GarbageDeviceData?.AirPumpPower)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OpenState(
+        data.GarbageDeviceData?.AirPumpPower,
+        false
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceRfidReader(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.RfidReader != undefined) {
+        resolve(`${Language.SwitchState(data.GarbageDeviceData.RfidReader)}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceRfidReader', text);
+    if (isEmpty(data.GarbageDeviceData?.RfidReader)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OpenState(
+        data.GarbageDeviceData?.RfidReader,
+        false
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceGateState(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.GateState != undefined) {
+        resolve(`${Language.OpenState(data.GarbageDeviceData.GateState)}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('GisPoint', text);
+    if (isEmpty(data.GarbageDeviceData?.GateState)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OpenState(
+        data.GarbageDeviceData?.GateState
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceSpray(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.Spray != undefined) {
+        resolve(`${Language.OpenState(data.GarbageDeviceData.Spray)}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceSpray', text);
+    if (isEmpty(data.GarbageDeviceData?.Spray)) {
+      item.class = 'gray-text';
+    } else {
+      item.class = `td-icon ${ColorTool.class.OpenState(
+        data.GarbageDeviceData?.Spray
+      )}`;
+      item.event = new EventEmitter<GarbageStation>();
+    }
+    return item;
+  }
+  DeviceGasSensor(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.GasSensor != undefined) {
+        resolve(`${data.GarbageDeviceData.GasSensor}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceGasSensor', text);
+    return item;
+  }
+  DeviceLastUpdateTime(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.LastUpdateTime) {
+        resolve(
+          `${formatDate(
+            data.GarbageDeviceData.LastUpdateTime,
+            Language.YearMonthDayHHmmss,
+            'en'
+          )}`
+        );
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceLastUpdateTime', text);
+    return item;
+  }
+  DeviceFullCount(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.FullCount != undefined) {
+        resolve(`${data.GarbageDeviceData.FullCount}`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceFullCount', text);
+    return item;
+  }
+  DeviceChipTemperature(data: GarbageStationModel) {
+    let text = new Promise<string>((resolve) => {
+      if (data.GarbageDeviceData?.ChipTemperature != undefined) {
+        resolve(`${data.GarbageDeviceData.ChipTemperature}℃`);
+      } else {
+        resolve('-');
+      }
+    });
+    let item = new TableItemData('DeviceChipTemperature', text);
     return item;
   }
 }

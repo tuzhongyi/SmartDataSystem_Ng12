@@ -25,7 +25,7 @@
         </div>
         <div class="filter-item">
           <div class="filter-item-title">NB心跳超时时长：</div>
-          <div class="filter-item-value">
+          <div class="filter-item-value input-number">
             <input
               type="text"
               [min]="0"
@@ -39,8 +39,50 @@
             />
           </div>
         </div>
+        <div class="filter-item status">
+          <div class="filter-item-title">功能：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.capabilities" [cannull]="true">
+              <select hw-select-content [(ngModel)]="args.capabilities">
+                <option [ngValue]="1">GCHA</option>
+                <option [ngValue]="2">感应门</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item status">
+          <div class="filter-item-title">GCHA：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.gchaonline" [cannull]="true">
+              <select
+                hw-select-content
+                [(ngModel)]="args.gchaonline"
+                [disabled]="args.capabilities != 1"
+              >
+                <option [ngValue]="true">在线</option>
+                <option [ngValue]="false">离线</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+        <div class="filter-item status">
+          <div class="filter-item-title">感应门：</div>
+          <div class="filter-item-value">
+            <hw-select [(selected)]="args.dooronline" [cannull]="true">
+              <select
+                hw-select-content
+                [(ngModel)]="args.dooronline"
+                [disabled]="args.capabilities != 2"
+              >
+                <option [ngValue]="true">在线</option>
+                <option [ngValue]="false">离线</option>
+              </select>
+            </hw-select>
+          </div>
+        </div>
+
         <div class="filter-item">
-          <div class="filter-item-title">投放点状态：</div>
+          <div class="filter-item-title">状态：</div>
           <div class="filter-item-value">
             <hw-select [(selected)]="args.state" [cannull]="true">
               <select hw-select-content [(ngModel)]="args.state">
@@ -76,30 +118,6 @@
                 <option [ngValue]="StationType.Plus">
                   {{ Language.StationType(StationType.Plus) }}
                 </option>
-              </select>
-            </hw-select>
-          </div>
-        </div>
-        <div class="filter-item status">
-          <div class="filter-item-title">GCHA：</div>
-          <div class="filter-item-value">
-            <hw-select [(selected)]="args.gcha" [cannull]="true">
-              <select hw-select-content [(ngModel)]="args.gcha">
-                <option [ngValue]="0">全部</option>
-                <option [ngValue]="1">在线</option>
-                <option [ngValue]="2">离线</option>
-              </select>
-            </hw-select>
-          </div>
-        </div>
-        <div class="filter-item status">
-          <div class="filter-item-title">智能设备：</div>
-          <div class="filter-item-value">
-            <hw-select [(selected)]="args.door" [cannull]="true">
-              <select hw-select-content [(ngModel)]="args.door">
-                <option [ngValue]="0">全部</option>
-                <option [ngValue]="1">在线</option>
-                <option [ngValue]="2">离线</option>
               </select>
             </hw-select>
           </div>

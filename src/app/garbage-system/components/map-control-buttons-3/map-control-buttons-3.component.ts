@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { GlobalStorageService } from 'src/app/common/service/global-storage.service';
 import { Language } from 'src/app/common/tools/language';
 import { StationType } from 'src/app/enum/station-type.enum';
 import {
+  MapControlButtonFilterType as FilterType,
   MapControlButton3List,
   MapControlButtonFilter,
-  MapControlButtonFilterType as FilterType,
 } from './map-control-buttons-3.model';
 
 @Component({
@@ -29,12 +30,15 @@ export class MapControlButtons3Component implements OnInit {
     this.model.filter.selected = v;
   }
 
-  constructor() {}
+  constructor(private global: GlobalStorageService) {}
 
   model = new MapControlButton3List();
   Language = Language;
   StationType = StationType;
   FilterType = FilterType;
+  get justmap() {
+    return this.global.JustMap;
+  }
 
   ngOnInit(): void {
     this.regist();

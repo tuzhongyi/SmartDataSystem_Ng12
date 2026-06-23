@@ -35,6 +35,8 @@ export class Division extends IdNameModel {
   GisPoint?: GisPoint;
   /**	GisArea	区划GIS点位区域	O */
   GisArea?: GisArea;
+  /**	GarbageStationNumber	厢房数量	O */
+  GarbageStationNumber?: number;
 }
 export interface IDivision extends IIdNameModel {
   DivisionType: DivisionType;

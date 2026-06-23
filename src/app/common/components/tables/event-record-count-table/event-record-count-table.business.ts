@@ -14,9 +14,10 @@ import {
 } from './event-record-count-table.model';
 
 @Injectable()
-export class EventRecordCountTableBusiness
-  implements IBusiness<NumberStatisticV2Type[], EventRecordCountTableModel[]>
-{
+export class EventRecordCountTableBusiness implements IBusiness<
+  NumberStatisticV2Type[],
+  EventRecordCountTableModel[]
+> {
   private service: {
     division: EventRecordCountTableDivisionBusiness;
     station: EventRecordCountTableStationBusiness;
@@ -26,7 +27,7 @@ export class EventRecordCountTableBusiness
     private local: LocalStorageService,
     private converter: EventRecordCountTableConverter,
     division: EventRecordCountTableDivisionBusiness,
-    station: EventRecordCountTableStationBusiness
+    station: EventRecordCountTableStationBusiness,
   ) {
     this.service = {
       division: division,
@@ -35,7 +36,7 @@ export class EventRecordCountTableBusiness
   }
 
   async load(
-    opts: EventRecordCountTableOptions
+    opts: EventRecordCountTableOptions,
   ): Promise<EventRecordCountTableModel[]> {
     let id = opts.id;
     let division = await this.global.division.selected;
@@ -56,7 +57,7 @@ export class EventRecordCountTableBusiness
   async getData(
     id: string,
     type: DivisionType,
-    opts: EventRecordCountTableOptions
+    opts: EventRecordCountTableOptions,
   ): Promise<NumberStatisticV2Type[]> {
     let duration = DateTimeTool.TimeUnit(opts.unit, opts.date);
 

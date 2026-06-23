@@ -65,13 +65,19 @@ export class CoordinateManageComponent implements OnInit {
       this.toastr.error('请选择厢房');
       return false;
     }
-    if (!this.gis.Latitude || !Number.isFinite(this.gis.Latitude)) {
-      this.toastr.error('纬度坐标数值异常');
-      return false;
+    if (!this.gis.Latitude) {
+      let latitude = parseFloat(`${this.gis.Latitude}`);
+      if (!Number.isFinite(latitude)) {
+        this.toastr.error('纬度坐标数值异常');
+        return false;
+      }
     }
     if (!this.gis.Longitude || !Number.isFinite(this.gis.Longitude)) {
-      this.toastr.error('经度坐标数值异常');
-      return false;
+      let longitude = parseFloat(`${this.gis.Longitude}`);
+      if (!Number.isFinite(longitude)) {
+        this.toastr.error('经度坐标数值异常');
+        return false;
+      }
     }
     return true;
   }
@@ -86,26 +92,22 @@ export class CoordinateManageComponent implements OnInit {
         this.station.GisPoint.GisType = GisType.GCJ02;
       }
       let location;
+      let longitude = parseFloat(`${this.gis.Longitude}`);
+      let latitude = parseFloat(`${this.gis.Latitude}`);
       switch (this.gis.GisType) {
         case GisType.BD09:
-          location = CoordinateTransform.bd09togcj02(
-            this.gis.Longitude,
-            this.gis.Latitude
-          );
+          location = CoordinateTransform.bd09togcj02(longitude, latitude);
           this.station.GisPoint.Longitude = location[0];
           this.station.GisPoint.Latitude = location[1];
           break;
         case GisType.WGS84:
-          location = CoordinateTransform.wgs84togcj02(
-            this.gis.Longitude,
-            this.gis.Latitude
-          );
+          location = CoordinateTransform.wgs84togcj02(longitude, latitude);
           this.station.GisPoint.Longitude = location[0];
           this.station.GisPoint.Latitude = location[1];
           break;
         default:
-          this.station.GisPoint.Longitude = this.gis.Longitude;
-          this.station.GisPoint.Latitude = this.gis.Latitude;
+          this.station.GisPoint.Longitude = longitude;
+          this.station.GisPoint.Latitude = latitude;
           break;
       }
       this.ok.emit(this.station);

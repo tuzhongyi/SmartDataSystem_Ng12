@@ -32,33 +32,18 @@ export class AuditGarbageStationDetailsTableStationBusiness {
 
     let capabilities = [];
 
-    switch (args.gcha) {
-      case 0:
+    switch (args.capabilities) {
+      case 1:
         capabilities.push(1);
-        break;
-      case 1:
-        params.GCHAOnlineStatus = 0;
+        if (args.gchaonline != undefined) {
+          params.GCHAOnlineStatus = args.gchaonline ? 0 : 1;
+        }
         break;
       case 2:
-        params.GCHAOnlineStatus = 1;
-        break;
-
-      default:
-        break;
-    }
-
-    switch (args.door) {
-      case 0:
         capabilities.push(2);
-        break;
-      case 1:
-        params.DeviceOnlineStatus = 0;
-        break;
-      case 2:
-        params.DeviceOnlineStatus = 1;
-        break;
-
-      default:
+        if (args.dooronline != undefined) {
+          params.DeviceOnlineStatus = args.dooronline ? 0 : 1;
+        }
         break;
     }
 

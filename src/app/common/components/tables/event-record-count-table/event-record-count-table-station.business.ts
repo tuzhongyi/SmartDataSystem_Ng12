@@ -18,8 +18,7 @@ export class EventRecordCountTableStationBusiness {
   async list(divisionId: string) {
     let params = new GetGarbageStationsParams();
     params.AncestorId = divisionId;
-    let paged = await this.service.list(params);
-    return paged.Data;
+    return this.service.cache.all(params);
   }
 
   history(stationIds: string[], interval: Duration, unit: TimeUnit) {

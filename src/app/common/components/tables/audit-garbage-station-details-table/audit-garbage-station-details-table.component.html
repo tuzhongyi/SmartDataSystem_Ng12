@@ -60,7 +60,8 @@
                   </ng-container>
                   <ng-container *ngSwitchCase="'DropWindows'">
                     <div
-                      class="td-icon"
+                      class="td-icon door"
+                      *ngIf="item.doorabled"
                       (click)="ondropwindows($event, item)"
                       [ngClass]="{
                         disabled:
@@ -72,6 +73,12 @@
                           ? "【" + item.DropWindows.length + "】"
                           : "-"
                       }}
+                    </div>
+                    <div
+                      *ngIf="!item.doorabled"
+                      class="td-icon door red-text event-none"
+                    >
+                      ×
                     </div>
                   </ng-container>
                   <ng-container *ngSwitchCase="'Cameras'">

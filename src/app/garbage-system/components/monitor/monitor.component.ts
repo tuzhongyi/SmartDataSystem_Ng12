@@ -2,7 +2,7 @@
  * @Author: pmx
  * @Date: 2021-10-13 15:02:28
  * @Last Modified by: zzl
- * @Last Modified time: 2022-01-10 16:08:27
+ * @Last Modified time: 2026-04-13 17:26:51
  */
 import { Component, EventEmitter, OnDestroy, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
@@ -53,6 +53,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
   get HideTitlebar(): boolean {
     return this.global.HideTitlebar;
   }
+  get JustMap(): boolean {
+    return this.global.JustMap;
+  }
 
   load: EventEmitter<void> = new EventEmitter();
 
@@ -99,6 +102,9 @@ export class MonitorComponent implements OnInit, OnDestroy {
               break;
             case 'auth':
               break;
+            case 'justmap':
+              this.global.JustMap = value;
+              break;
             default:
               break;
           }
@@ -109,6 +115,7 @@ export class MonitorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.config(this.activatedRoute);
+
     let user = this._localStorageService.user;
     if (user.Resources && user.Resources.length > 0) {
       let defaultResource = user.Resources[0];

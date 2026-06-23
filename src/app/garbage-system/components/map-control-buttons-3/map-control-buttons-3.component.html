@@ -14,6 +14,7 @@
     <i class="howell-icon-refresh"></i>
   </map-control-button>
   <map-control-button
+    *ngIf="!justmap"
     [selectable]="false"
     (click)="onfullscreen()"
     title="满屏"

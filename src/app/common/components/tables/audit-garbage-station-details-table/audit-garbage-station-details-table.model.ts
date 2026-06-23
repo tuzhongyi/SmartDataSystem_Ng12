@@ -30,8 +30,10 @@ export class AuditGarbageStationDetailsTableArgs
   state?: StationState;
   imei?: string;
 
-  gcha?: number;
-  door?: number;
+  capabilities?: number;
+
+  gchaonline?: boolean;
+  dooronline?: boolean;
 
   nb: {
     state?: number;
@@ -48,6 +50,7 @@ export class AuditGarbageStationDetailsTableItem<
   States: StationState[] = [];
   Datas: { [key: string]: AuditGarbageStationDetailsTableItemData<T> } = {};
   Operation = new AuditGarbageStationDetailsTableOperationConfig();
+  doorabled = false;
 }
 export class AuditGarbageStationDetailsTableItemData<T = GarbageStation> {
   constructor(key: string, text: Promise<string>, color?: string) {
@@ -109,6 +112,20 @@ export class AuditGarbageStationDetailsTableConfig {
   DumpPointType = new ConfigItem();
   DisableEventTypes = new ConfigItem();
   DeviceAccessId = new ConfigItem();
+
+  DeviceName = new ConfigItem();
+  DeviceOnlineState = new ConfigItem();
+  DeviceExhaustFan = new ConfigItem();
+  DeviceAirPumpPressure = new ConfigItem();
+  DeviceAirPumpPower = new ConfigItem();
+  DeviceRfidReader = new ConfigItem();
+  DeviceGateState = new ConfigItem();
+  DeviceSpray = new ConfigItem();
+  DeviceGasSensor = new ConfigItem();
+
+  DeviceLastUpdateTime = new ConfigItem();
+  DeviceFullCount = new ConfigItem();
+  DeviceChipTemperature = new ConfigItem();
 }
 export const AuditGarbageStationDetailsTableConfigLanguage: {
   [key: keyof AuditGarbageStationDetailsTableConfig]: string;
@@ -138,4 +155,19 @@ export const AuditGarbageStationDetailsTableConfigLanguage: {
   DisableEventTypes: '停用事件',
   GisPoint: '坐标',
   DeviceAccessId: '设备接入编号',
+
+  DeviceName: '智能设备名称',
+  DeviceOnlineState: '智能设备在线状态',
+  DeviceExhaustFan: '排风扇状态',
+  DeviceAirPumpPressure: '增压泵压力',
+  DeviceAirPumpPower: '增压泵状态',
+  DeviceRfidReader: 'RFID读卡器状态',
+  DeviceGateState: '大门状态',
+  DeviceSpray: '香氛喷洒状态',
+  DeviceGasSensor: '气体检测传感器数值',
+
+  DeviceLastUpdateTime: '智能设备最后更新时间',
+
+  DeviceFullCount: '满溢垃圾桶数量',
+  DeviceChipTemperature: '智能设备CPU芯片温度',
 };

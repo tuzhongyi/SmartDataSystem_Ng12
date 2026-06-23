@@ -13,8 +13,8 @@
       ></app-account-operation>
     </mat-toolbar>
   </div>
-  <div class="monitor-body" [ngClass]="HideTitlebar ? 'hide-titlebar' : ''">
-    <div class="monitor-body__item monitor-body__item--none">
+  <div class="monitor-body" [class.hide-titlebar]="HideTitlebar">
+    <div class="monitor-body__item monitor-body__item--none" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <app-division-list
           (info)="trigger.divisionList.oninfo($event)"
@@ -24,7 +24,7 @@
     <div
       class="monitor-body__item monitor-body__item--map"
       [ngClass]="{
-        fullscreen: map.fullscreen == true
+        fullscreen: map.fullscreen == true || JustMap
       }"
     >
       <div class="monitor-body__wrapper">
@@ -83,7 +83,7 @@
         ></app-patrol-control>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <div class="monitor-body__item" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <!-- <app-device-state
           [load]="load"
@@ -96,7 +96,7 @@
         ></main-station-count>
       </div>
     </div>
-    <div class="monitor-body__item record-rank">
+    <div class="monitor-body__item record-rank" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <app-illegal-mixinto-rank
           [load]="load"
@@ -112,7 +112,7 @@
         </app-illegal-mixinto-rank>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <div class="monitor-body__item" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <app-retention-rank
           [load]="load"
@@ -142,7 +142,7 @@
         ></app-disposal-rank>
       </div>
     </div> -->
-    <div class="monitor-body__item">
+    <div class="monitor-body__item" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts [title]="'乱扔垃圾统计表'"></app-event-statistic-echarts> -->
         <howell-event-statistic
@@ -151,7 +151,7 @@
         ></howell-event-statistic>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <div class="monitor-body__item" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <!-- <app-event-statistic-echarts
           [title]="'混合投放统计表'"
@@ -164,7 +164,7 @@
         ></howell-event-statistic>
       </div>
     </div>
-    <div class="monitor-body__item">
+    <div class="monitor-body__item" *ngIf="!JustMap">
       <div class="monitor-body__wrapper">
         <app-disposal-count
           [load]="load"
