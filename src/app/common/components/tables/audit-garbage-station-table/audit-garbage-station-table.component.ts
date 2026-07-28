@@ -6,19 +6,19 @@ import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { AuditGarbageStationTableBusiness } from './audit-garbage-station-table.business';
 import {
   AuditGarbageStationTableArgs,
-  AuditGarbageStationTableModel,
+  AuditGarbageStationTableModel
 } from './audit-garbage-station-table.model';
 
 @Component({
   selector: 'audit-garbage-station-table',
   templateUrl: './audit-garbage-station-table.component.html',
   styleUrls: ['../table.less', './audit-garbage-station-table.component.less'],
-  providers: [AuditGarbageStationTableBusiness],
+  providers: [AuditGarbageStationTableBusiness]
 })
 export class AuditGarbageStationTableComponent
   extends PagedTableAbstractComponent<AuditGarbageStationTableModel>
@@ -43,7 +43,7 @@ export class AuditGarbageStationTableComponent
   StationState = StationState;
   widths = ['20%', '15%', '15%', '15%', '15%', '10%', '10%'];
 
-  searchOpts?: SearchOptions;
+  searchOpts?: ISearchOptions;
   selected?: GarbageStation;
 
   ngOnInit(): void {
@@ -77,7 +77,7 @@ export class AuditGarbageStationTableComponent
   onimage(e: Event, item: GarbageStation, index: number) {
     this.image.emit({
       page: Page.create(index),
-      data: item,
+      data: item
     });
     if (this.selected === item) {
       e.stopPropagation();

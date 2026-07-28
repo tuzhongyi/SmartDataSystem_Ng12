@@ -52,11 +52,9 @@ export class EventRecordListComponent
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter;
   @Input() get?: EventEmitter<Page>;
-  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() image: EventEmitter<ImagePagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() got = new EventEmitter<PagedList<EventRecordViewModel>>();
+  @Output() image = new EventEmitter<ImagePagedArgs<EventRecordViewModel>>();
+  @Output() video = new EventEmitter<EventRecordViewModel>();
 
   constructor(
     business: EventRecordBusiness,

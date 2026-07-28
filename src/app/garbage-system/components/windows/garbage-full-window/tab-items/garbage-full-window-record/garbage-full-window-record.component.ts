@@ -10,7 +10,7 @@ import { ListType } from '../../../event-record-operation/event-record-operation
   selector: 'garbage-full-window-record',
   templateUrl: './garbage-full-window-record.component.html',
   styleUrls: ['./garbage-full-window-record.component.less'],
-  providers: [EventRecordOperationFilter],
+  providers: [EventRecordOperationFilter]
 })
 export class GarbageFullWindowRecordComponent implements OnInit {
   @Input() stationId?: string;
@@ -41,22 +41,27 @@ export class GarbageFullWindowRecordComponent implements OnInit {
     this.filter.type = this.type;
   }
 
-  onimage(item: PagedArgs<EventRecordViewModel>) {
-    this.image.emit(item);
-  }
-  onvideo(item: EventRecordViewModel) {
-    this.video.emit(item);
-  }
-  onTypeChange(type: ListType) {
-    this.listType = type;
-  }
-  onallvideo(model: EventRecordViewModel) {
-    this.allvideo.emit(model);
-  }
-  ongot(data: any) {
-    this.got.emit(data);
-  }
-  oncomplete(item: PagedArgs<EventRecordViewModel>) {
-    this.complete.emit(item);
-  }
+  on = {
+    image: (item: PagedArgs<EventRecordViewModel>) => {
+      this.image.emit(item);
+    },
+
+    type: (type: ListType) => {
+      this.listType = type;
+    },
+    got: (data: any) => {
+      this.got.emit(data);
+    },
+    complete: (item: PagedArgs<EventRecordViewModel>) => {
+      this.complete.emit(item);
+    },
+    video: {
+      play: (item: EventRecordViewModel) => {
+        this.video.emit(item);
+      },
+      all: (model: EventRecordViewModel) => {
+        this.allvideo.emit(model);
+      }
+    }
+  };
 }

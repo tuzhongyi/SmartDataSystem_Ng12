@@ -6,18 +6,18 @@ import { IComponent } from 'src/app/common/interfaces/component.interfact';
 import {
   IModel,
   ImagePagedArgs,
-  PagedArgs,
+  PagedArgs
 } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropRecordTableBusiness } from './garbage-drop-record-table.business';
 import {
   GarbageDropEventRecordConverter,
-  GarbageDropEventRecordPagedConverter,
+  GarbageDropEventRecordPagedConverter
 } from './garbage-drop-record-table.converter';
 import {
   GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
+  GarbageDropRecordViewModel
 } from './garbage-drop-record.model';
 
 @Component({
@@ -27,8 +27,8 @@ import {
   providers: [
     GarbageDropEventRecordConverter,
     GarbageDropEventRecordPagedConverter,
-    GarbageDropRecordTableBusiness,
-  ],
+    GarbageDropRecordTableBusiness
+  ]
 })
 export class GarbageDropRecordTableComponent
   extends PagedTableAbstractComponent<GarbageDropRecordViewModel>
@@ -47,8 +47,9 @@ export class GarbageDropRecordTableComponent
     new EventEmitter();
   @Output() complete: EventEmitter<PagedArgs<GarbageDropRecordViewModel>> =
     new EventEmitter();
-  @Output() allvideo: EventEmitter<GarbageDropRecordViewModel> =
-    new EventEmitter();
+  @Output() allvideo = new EventEmitter<GarbageDropRecordViewModel>();
+  @Output() find = new EventEmitter<GarbageDropRecordViewModel>();
+  @Input() findable = false;
 
   constructor(record: GarbageDropRecordTableBusiness) {
     super();
@@ -68,7 +69,7 @@ export class GarbageDropRecordTableComponent
     '8%',
     '7%',
     '7%',
-    '7%',
+    '8%'
   ];
 
   loading = false;
@@ -114,59 +115,68 @@ export class GarbageDropRecordTableComponent
     return promise;
   }
 
-  onvideo(e: Event, item: GarbageDropRecordViewModel) {
-    this.video.emit(item);
-    if (this.selected === item) {
-      e.stopPropagation();
-    }
-  }
-  onallvideo(e: Event, model: GarbageDropRecordViewModel) {
-    this.allvideo.emit(model);
-    if (model === this.selected) {
-      e.stopPropagation();
-    }
-  }
+  on = {
+    video: {
+      play: (e: Event, item: GarbageDropRecordViewModel) => {
+        this.video.emit(item);
+        if (this.selected === item) {
+          e.stopPropagation();
+        }
+      },
+      all: (e: Event, model: GarbageDropRecordViewModel) => {
+        this.allvideo.emit(model);
+        if (model === this.selected) {
+          e.stopPropagation();
+        }
+      }
+    },
+    find: (e: Event, model: GarbageDropRecordViewModel) => {
+      this.find.emit(model);
+      if (model === this.selected) {
+        e.stopPropagation();
+      }
+    },
+    image: (e: Event, item: GarbageDropRecordViewModel, index: number) => {
+      let plain = instanceToPlain(this.page);
+      let page = plainToInstance(Page, plain);
 
-  onimage(e: Event, item: GarbageDropRecordViewModel, index: number) {
-    let plain = instanceToPlain(this.page);
-    let page = plainToInstance(Page, plain);
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      let _index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
 
-    page.RecordCount = this.page.TotalRecordCount;
-    page.PageCount = this.page.TotalRecordCount;
-    page.PageSize = 1;
-    let _index = this.datas.indexOf(item);
-    page.PageIndex =
-      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+      this.image.emit({
+        page: page,
+        data: item,
+        index: index
+      });
+      if (this.selected === item) {
+        e.stopPropagation();
+      }
+    },
 
-    this.image.emit({
-      page: page,
-      data: item,
-      index: index,
-    });
-    if (this.selected === item) {
-      e.stopPropagation();
+    select: (item: GarbageDropRecordViewModel) => {
+      if (this.selected === item) {
+        this.selected = undefined;
+      } else {
+        this.selected = item;
+      }
+    },
+    complete: (e: Event, item: GarbageDropRecordViewModel) => {
+      let plain = instanceToPlain(this.page);
+      let page = plainToInstance(Page, plain);
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      let _index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+      this.complete.emit({ page: page, data: item });
+      if (item === this.selected) {
+        e.stopPropagation();
+      }
     }
-  }
-
-  onselect(item: GarbageDropRecordViewModel) {
-    if (this.selected === item) {
-      this.selected = undefined;
-    } else {
-      this.selected = item;
-    }
-  }
-  oncomplete(e: Event, item: GarbageDropRecordViewModel) {
-    let plain = instanceToPlain(this.page);
-    let page = plainToInstance(Page, plain);
-    page.RecordCount = this.page.TotalRecordCount;
-    page.PageCount = this.page.TotalRecordCount;
-    page.PageSize = 1;
-    let _index = this.datas.indexOf(item);
-    page.PageIndex =
-      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
-    this.complete.emit({ page: page, data: item });
-    if (item === this.selected) {
-      e.stopPropagation();
-    }
-  }
+  };
 }

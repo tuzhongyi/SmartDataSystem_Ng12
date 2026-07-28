@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
+  GarbageDropRecordViewModel
 } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
@@ -13,7 +13,7 @@ import { AuditStatisticEventSelection } from '../audit-statistic-event/audit-sta
 @Component({
   selector: 'audit-statistic-event-drop-manager',
   templateUrl: './audit-statistic-event-drop-manager.component.html',
-  styleUrls: ['./audit-statistic-event-drop-manager.component.less'],
+  styleUrls: ['./audit-statistic-event-drop-manager.component.less']
 })
 export class AuditStatisticEventDropManagerComponent implements OnInit {
   @Input() divisionId?: string;
@@ -37,33 +37,33 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
       value: {
         IsEqual: true,
         GreaterThan: 0,
-        LessThan: 30,
+        LessThan: 30
       },
-      key: '30分钟以内',
+      key: '30分钟以内'
     },
     {
       value: {
         IsEqual: true,
         GreaterThan: 30,
-        LessThan: 60,
+        LessThan: 60
       },
-      key: '30分钟-1小时',
+      key: '30分钟-1小时'
     },
     {
       value: {
         IsEqual: true,
         GreaterThan: 60,
-        LessThan: 120,
+        LessThan: 120
       },
-      key: '1小时-2小时',
+      key: '1小时-2小时'
     },
     {
       value: {
         IsEqual: true,
-        GreaterThan: 120,
+        GreaterThan: 120
       },
-      key: '2小时以上',
-    },
+      key: '2小时以上'
+    }
   ];
 
   ngOnInit(): void {
@@ -72,7 +72,7 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
     this.initStatuses(this.handle, this.timeout);
     this.args.opts = {
       key: SearchOptionKey.name,
-      text: '',
+      text: ''
     };
     if (this.divisionId) {
       this.args.divisionId = this.divisionId;
@@ -99,56 +99,60 @@ export class AuditStatisticEventDropManagerComponent implements OnInit {
     }
   }
 
-  ondate(date: Date) {
-    if (this.args.duration.begin.getDate() !== date.getDate()) {
-      let begin = new Date(this.args.duration.begin.getTime());
-      begin.setDate(date.getDate());
-      this.args.duration.begin = begin;
-    }
-    if (this.args.duration.end.getDate() !== date.getDate()) {
-      let end = new Date(this.args.duration.end.getTime());
-      end.setDate(date.getDate());
-      this.args.duration.end = end;
-    }
-  }
-  onsearch() {
-    this.load.emit(this.args);
-  }
-  onstatus(item?: GarbageTaskStatus) {
-    this.args.IsTimeout = undefined;
-    this.args.IsHandle = undefined;
+  on = {
+    date: (date: Date) => {
+      if (this.args.duration.begin.getDate() !== date.getDate()) {
+        let begin = new Date(this.args.duration.begin.getTime());
+        begin.setDate(date.getDate());
+        this.args.duration.begin = begin;
+      }
+      if (this.args.duration.end.getDate() !== date.getDate()) {
+        let end = new Date(this.args.duration.end.getTime());
+        end.setDate(date.getDate());
+        this.args.duration.end = end;
+      }
+    },
+    search: () => {
+      this.load.emit(this.args);
+    },
+    status: (item?: GarbageTaskStatus) => {
+      this.args.IsTimeout = undefined;
+      this.args.IsHandle = undefined;
 
-    switch (item) {
-      case GarbageTaskStatus.handled:
-        this.args.IsHandle = true;
-        break;
+      switch (item) {
+        case GarbageTaskStatus.handled:
+          this.args.IsHandle = true;
+          break;
 
-      case GarbageTaskStatus.unhandled:
-        this.args.IsHandle = false;
-        break;
-      case GarbageTaskStatus.timeout:
-        this.args.IsTimeout = true;
-        break;
-      case GarbageTaskStatus.timeout_unhandled:
-        this.args.IsTimeout = true;
-        this.args.IsHandle = false;
-        break;
-      case GarbageTaskStatus.timeout_handled:
-        this.args.IsTimeout = true;
-        this.args.IsHandle = true;
-        break;
+        case GarbageTaskStatus.unhandled:
+          this.args.IsHandle = false;
+          break;
+        case GarbageTaskStatus.timeout:
+          this.args.IsTimeout = true;
+          break;
+        case GarbageTaskStatus.timeout_unhandled:
+          this.args.IsTimeout = true;
+          this.args.IsHandle = false;
+          break;
+        case GarbageTaskStatus.timeout_handled:
+          this.args.IsTimeout = true;
+          this.args.IsHandle = true;
+          break;
 
-      default:
-        break;
+        default:
+          break;
+      }
+    },
+    image: (args: PagedArgs<GarbageDropRecordViewModel>) => {
+      this.image.emit(args);
+    },
+    video: {
+      play: (item: GarbageDropRecordViewModel) => {
+        this.video.emit(item);
+      },
+      all: (item: GarbageDropRecordViewModel) => {
+        this.allvideo.emit(item);
+      }
     }
-  }
-  onimage(args: PagedArgs<GarbageDropRecordViewModel>) {
-    this.image.emit(args);
-  }
-  onvideo(item: GarbageDropRecordViewModel) {
-    this.video.emit(item);
-  }
-  onallvideo(item: GarbageDropRecordViewModel) {
-    this.allvideo.emit(item);
-  }
+  };
 }

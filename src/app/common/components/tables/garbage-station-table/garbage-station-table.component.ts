@@ -6,16 +6,16 @@ import { StationState } from 'src/app/enum/station-state.enum';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageStationTableBusiness } from './garbage-station-table.business';
 import {
   GarbageStationPagedConverter,
-  GarbageStationTableConverter,
+  GarbageStationTableConverter
 } from './garbage-station-table.converter';
 import {
   GarbageStationTableArgs,
-  GarbageStationTableModel,
+  GarbageStationTableModel
 } from './garbage-station-table.model';
 
 @Component({
@@ -25,8 +25,8 @@ import {
   providers: [
     GarbageStationTableBusiness,
     GarbageStationTableConverter,
-    GarbageStationPagedConverter,
-  ],
+    GarbageStationPagedConverter
+  ]
 })
 export class GarbageStationTableComponent
   extends PagedTableAbstractComponent<GarbageStationTableModel>
@@ -48,7 +48,7 @@ export class GarbageStationTableComponent
   StationState = StationState;
   widths = ['20%', '15%'];
 
-  searchOpts?: SearchOptions;
+  searchOpts?: ISearchOptions;
   selected?: GarbageStationTableModel;
 
   ngOnInit(): void {
@@ -82,7 +82,7 @@ export class GarbageStationTableComponent
   onimage(e: Event, item: GarbageStationTableModel, index: number) {
     this.image.emit({
       page: Page.create(index),
-      data: item,
+      data: item
     });
     if (this.selected === item) {
       e.stopPropagation();

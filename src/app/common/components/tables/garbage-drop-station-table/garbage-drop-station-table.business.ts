@@ -6,21 +6,18 @@ import { PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 import { GarbageDropStationPagedTableConverter } from './garbage-drop-station-table.converter';
 import {
   GarbageDropStationTableArgs,
-  GarbageDropStationTableModel,
+  GarbageDropStationTableModel
 } from './garbage-drop-station-table.model';
 
 @Injectable()
-export class GarbageDropStationTableBusiness
-  implements
-    IBusiness<
-      PagedList<GarbageStationNumberStatistic>,
-      PagedList<GarbageDropStationTableModel>
-    >
-{
+export class GarbageDropStationTableBusiness implements IBusiness<
+  PagedList<GarbageStationNumberStatistic>,
+  PagedList<GarbageDropStationTableModel>
+> {
   constructor(
     private storeService: GlobalStorageService,
     private stationService: GarbageStationRequestService,
@@ -42,7 +39,7 @@ export class GarbageDropStationTableBusiness
   getData(
     divisionId: string,
     page: PagedParams,
-    opts?: SearchOptions
+    opts?: ISearchOptions
   ): Promise<PagedList<GarbageStationNumberStatistic>> {
     let params = new GetGarbageStationStatisticNumbersParams();
     params.DivisionId = divisionId;

@@ -4,8 +4,8 @@ import { Camera } from 'src/app/network/model/garbage-station/camera.model';
 import { Duration } from 'src/app/network/model/garbage-station/duration.model';
 import { CameraImageUrl } from 'src/app/network/model/url.model';
 import {
-  SearchOptionKey,
-  SearchOptions,
+  ISearchOptions,
+  SearchOptionKey
 } from 'src/app/view-model/search-options.model';
 
 export class EventRecordFilter {
@@ -21,9 +21,9 @@ export class EventRecordFilter {
   cameraId?: string;
   handle?: boolean;
 
-  opts: SearchOptions = {
+  opts: ISearchOptions = {
     text: '',
-    key: SearchOptionKey.name,
+    key: SearchOptionKey.name
   };
 
   reset() {

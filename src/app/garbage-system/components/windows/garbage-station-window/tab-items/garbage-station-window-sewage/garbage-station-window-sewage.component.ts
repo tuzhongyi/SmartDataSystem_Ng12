@@ -4,13 +4,13 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 import { ListType } from '../../../event-record-operation/event-record-operation.component';
 
 @Component({
   selector: 'garbage-station-window-sewage',
   templateUrl: './garbage-station-window-sewage.component.html',
-  styleUrls: ['./garbage-station-window-sewage.component.less'],
+  styleUrls: ['./garbage-station-window-sewage.component.less']
 })
 export class GarbageStationWindowSewageComponent implements OnInit {
   @Input() get?: EventEmitter<Page>;
@@ -39,7 +39,7 @@ export class GarbageStationWindowSewageComponent implements OnInit {
   ongot(data: any) {
     this.got.emit(data);
   }
-  onsearch(opts: SearchOptions) {
+  onsearch(opts: ISearchOptions) {
     this.filter.opts = opts;
     this.load.emit(this.filter);
   }

@@ -7,7 +7,7 @@ import { EventRecordViewModel } from 'src/app/view-model/event-record.model';
 import { EventRecordBusiness } from '../event-record.business';
 import {
   EventRecordConverter,
-  EventRecordPagedConverter,
+  EventRecordPagedConverter
 } from '../event-record.converter';
 import { EventRecordFilter } from '../event-record.model';
 import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
@@ -20,23 +20,22 @@ import { VideoDownloadPanelBusiness } from '../video-download-panel.business';
     EventRecordConverter,
     EventRecordPagedConverter,
     DownloadBusiness,
-    VideoDownloadPanelBusiness,
-  ],
+    VideoDownloadPanelBusiness
+  ]
 })
 export class EventRecordTableComponent {
   @Input() type: EventType = EventType.Sewage;
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter = new EventRecordFilter();
   @Input() get?: EventEmitter<Page>;
-  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() card: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
+  @Output() got = new EventEmitter<PagedList<EventRecordViewModel>>();
+  @Output() video = new EventEmitter<EventRecordViewModel>();
+  @Output() image = new EventEmitter<PagedArgs<EventRecordViewModel>>();
+  @Output() card = new EventEmitter<EventRecordViewModel>();
+  @Output() allvideo = new EventEmitter<EventRecordViewModel>();
+  @Output() complete = new EventEmitter<PagedArgs<EventRecordViewModel>>();
+  @Output() find = new EventEmitter<EventRecordViewModel>();
+  @Input() findable = false;
 
   EventType = EventType;
 
@@ -74,5 +73,8 @@ export class EventRecordTableComponent {
   }
   oncomplete(model: PagedArgs<EventRecordViewModel>) {
     this.complete.emit(model);
+  }
+  onfind(data: EventRecordViewModel) {
+    this.find.emit(data);
   }
 }

@@ -8,17 +8,14 @@ import { GarbageDropStationCountTableModel } from './garbage-drop-station-count-
 import { GarbageDropStationCountTableService } from './service/garbage-drop-station-count-table.service';
 
 @Injectable()
-export class GarbageDropStationCountTableConverter
-  implements
-    IPromiseConverter<
-      NumberStatisticV2Type[],
-      GarbageDropStationCountTableModel[]
-    >
-{
+export class GarbageDropStationCountTableConverter implements IPromiseConverter<
+  NumberStatisticV2Type[],
+  GarbageDropStationCountTableModel[]
+> {
   constructor(private service: GarbageDropStationCountTableService) {}
 
   converter = {
-    item: new GarbageDropStationCountTableItemConverter(this.service),
+    item: new GarbageDropStationCountTableItemConverter(this.service)
   };
 
   async Convert(
@@ -35,10 +32,10 @@ export class GarbageDropStationCountTableConverter
   }
 }
 
-export class GarbageDropStationCountTableItemConverter
-  implements
-    IPromiseConverter<NumberStatisticV2Type, GarbageDropStationCountTableModel>
-{
+export class GarbageDropStationCountTableItemConverter implements IPromiseConverter<
+  NumberStatisticV2Type,
+  GarbageDropStationCountTableModel
+> {
   constructor(private service: GarbageDropStationCountTableService) {}
   async Convert(
     source: NumberStatisticV2Type,
@@ -79,10 +76,16 @@ export class GarbageDropStationCountTableItemConverter
 
     if (source instanceof GarbageStationNumberStatisticV2) {
       model.Parent = this.GetParentByStation(source.Id);
+      model.CommunityName = this.CommunityName(source.Id);
     } else {
       model.Parent = this.GetParentByDivision(source.Id);
     }
     return model;
+  }
+
+  async CommunityName(stationId: string) {
+    let station = await this.service.station.get(stationId);
+    return station.CommunityName ?? '';
   }
 
   async GetParentByStation(stationId: string) {

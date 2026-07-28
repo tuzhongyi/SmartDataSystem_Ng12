@@ -1,6 +1,15 @@
 <div class="event-record-operation">
+  <div class="event-record-operation-duration" *ngIf="durationable">
+    <select [(ngModel)]="duration" (change)="on.duration()">
+      <option [ngValue]="undefined">自定义</option>
+      <option [ngValue]="0">今天</option>
+      <option [ngValue]="7">近7天</option>
+      <option [ngValue]="30">近30天</option>
+      <option [ngValue]="60">近60天</option>
+    </select>
+  </div>
   <div class="event-record-operation-search">
-    <select [(ngModel)]="searchOption.key">
+    <select [(ngModel)]="option.key" (change)="on.change()">
       <option [ngValue]="Key.name">
         {{ Language.SearchOption(Key.name) }}
       </option>
@@ -11,14 +20,16 @@
     <input
       type="text"
       placeholder="输入关键字"
-      [(ngModel)]="searchOption.text"
+      [(ngModel)]="option.text"
+      (change)="on.change()"
     />
+    <button type="button" class="hw-blue-btn search" (click)="on.search()">
+      <i class="mdi mdi-magnify"></i>
+      查询
+    </button>
   </div>
-  <button type="button" class="hw-blue-btn search" (click)="onsearch()">
-    <i class="mdi mdi-magnify"></i>
-    查询
-  </button>
-  <button class="hw-cyan-m-btn" (click)="onfilter()">
+
+  <button class="hw-cyan-m-btn" (click)="on.filter()">
     <i class="mdi mdi-filter-outline"></i>
   </button>
 </div>

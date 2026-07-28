@@ -9,17 +9,17 @@ import { EventRecordCountTableStationBusiness } from './event-record-count-table
 import { EventRecordCountTableModel } from './event-record-count-table.model';
 
 @Injectable()
-export class EventRecordCountTableConverter
-  implements
-    IPromiseConverter<NumberStatisticV2Type[], EventRecordCountTableModel[]>
-{
+export class EventRecordCountTableConverter implements IPromiseConverter<
+  NumberStatisticV2Type[],
+  EventRecordCountTableModel[]
+> {
   private service: {
     division: EventRecordCountTableDivisionBusiness;
     station: EventRecordCountTableStationBusiness;
   };
   constructor(
     division: EventRecordCountTableDivisionBusiness,
-    station: EventRecordCountTableStationBusiness
+    station: EventRecordCountTableStationBusiness,
   ) {
     this.service = {
       division: division,
@@ -32,7 +32,7 @@ export class EventRecordCountTableConverter
 
   async Convert(
     source: NumberStatisticV2Type[],
-    eventType: EventType
+    eventType: EventType,
   ): Promise<EventRecordCountTableModel[]> {
     let array: EventRecordCountTableModel[] = [];
     for (let i = 0; i < source.length; i++) {
@@ -47,20 +47,20 @@ export class EventRecordCountTableConverter
   }
 }
 
-export class EventRecordItemCountTableConverter
-  implements
-    IPromiseConverter<NumberStatisticV2Type, EventRecordCountTableModel>
-{
+export class EventRecordItemCountTableConverter implements IPromiseConverter<
+  NumberStatisticV2Type,
+  EventRecordCountTableModel
+> {
   constructor(
     private service: {
       division: EventRecordCountTableDivisionBusiness;
       station: EventRecordCountTableStationBusiness;
-    }
+    },
   ) {}
 
   async Convert(
     source: NumberStatisticV2Type,
-    eventType: EventType
+    eventType: EventType,
   ): Promise<EventRecordCountTableModel> {
     let model = new EventRecordCountTableModel();
     model.id = source.Id;
@@ -68,7 +68,7 @@ export class EventRecordItemCountTableConverter
 
     if (source.EventNumbers) {
       let eventNumber = source.EventNumbers.find(
-        (x) => x.EventType === eventType
+        (x) => x.EventType === eventType,
       );
       if (eventNumber) {
         model.value = eventNumber.DayNumber;
@@ -76,24 +76,34 @@ export class EventRecordItemCountTableConverter
     }
 
     if (source instanceof GarbageStationNumberStatisticV2) {
-      model.parent = await this.GetParentByStation(source.Id);
+      model.parent = await this.get.parent.station(source.Id);
+      model.community = await this.get.community(source.Id);
     } else {
-      model.parent = await this.GetParentByDivision(source.Id);
+      model.parent = await this.get.parent.division(source.Id);
     }
 
     return model;
   }
 
-  async GetParentByStation(stationId: string) {
-    let station = await this.service.station.get(stationId);
-    if (station.DivisionId) {
-      return await this.service.division.get(station.DivisionId);
-    }
-    return undefined;
-  }
-  async GetParentByDivision(divisionId: string) {
-    let current = await this.service.division.get(divisionId);
-    if (current.ParentId) return this.service.division.get(current.ParentId);
-    return undefined;
-  }
+  get = {
+    community: async (stationId: string) => {
+      let station = await this.service.station.get(stationId);
+      return station.CommunityName;
+    },
+    parent: {
+      station: async (stationId: string) => {
+        let station = await this.service.station.get(stationId);
+        if (station.DivisionId) {
+          return await this.service.division.get(station.DivisionId);
+        }
+        return undefined;
+      },
+      division: async (divisionId: string) => {
+        let current = await this.service.division.get(divisionId);
+        if (current.ParentId)
+          return this.service.division.get(current.ParentId);
+        return undefined;
+      },
+    },
+  };
 }

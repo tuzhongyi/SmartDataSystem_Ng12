@@ -4,22 +4,27 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import {
   GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
+  GarbageDropRecordViewModel
 } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageDropRecordTaskTableComponent } from 'src/app/common/components/tables/garbage-drop-record-task-table/garbage-drop-record-task-table.component';
+import { DateTimeTool } from 'src/app/common/tools/date-time-tool/datetime.tool';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import {
+  ISearchOptions,
+  SearchOption,
+  SearchOptionKey
+} from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'garbage-drop-window-item-record',
   templateUrl: './garbage-drop-window-item-record.component.html',
-  styleUrls: ['./garbage-drop-window-item-record.component.less'],
+  styleUrls: ['./garbage-drop-window-item-record.component.less']
 })
 export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   @Input() status?: GarbageTaskStatus;
@@ -43,7 +48,9 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
   constructor() {}
 
   isfilter = false;
+  duration?: number = 0;
   filter: GarbageDropRecordFilter = new GarbageDropRecordFilter();
+  option = new SearchOption();
 
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   @ViewChild('task') task?: GarbageDropRecordTaskTableComponent;
@@ -81,23 +88,53 @@ export class GarbageDropStationWindowItemRecordComponent implements OnInit {
         break;
     }
   }
-  onimage(item: PagedArgs<GarbageDropRecordViewModel>) {
-    this.image.emit(item);
-  }
-  onvideo(item: GarbageDropRecordViewModel) {
-    this.video.emit(item);
-  }
-  onsearch(opts: SearchOptions) {
-    this.filter.opts = opts;
-    this.load.emit(this.filter);
-  }
-  ongot(args: PagedList<GarbageDropRecordViewModel>) {
-    this.got.emit(args);
-  }
-  oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
-    this.complete.emit(item);
-  }
-  onallvideo(model: GarbageDropRecordViewModel) {
-    this.allvideo.emit(model);
-  }
+
+  on = {
+    option: {
+      search: (opts: ISearchOptions) => {
+        this.filter.opts = opts;
+        this.load.emit(this.filter);
+      },
+      duration: (day?: number) => {
+        switch (day) {
+          case 0:
+            this.filter.duration = DateTimeTool.allDay(new Date());
+            break;
+          case undefined:
+            break;
+          default:
+            this.filter.duration = DateTimeTool.beforeDay(new Date(), day);
+            break;
+        }
+      }
+    },
+    filter: {
+      duration: () => {
+        this.duration = undefined;
+      }
+    },
+    find: (data: GarbageDropRecordViewModel) => {
+      this.option.text = data.Data.StationName;
+      this.option.key = SearchOptionKey.name;
+      this.on.option.search(this.option);
+    },
+    image: (item: PagedArgs<GarbageDropRecordViewModel>) => {
+      this.image.emit(item);
+    },
+
+    got: (args: PagedList<GarbageDropRecordViewModel>) => {
+      this.got.emit(args);
+    },
+    complete: (item: PagedArgs<GarbageDropRecordViewModel>) => {
+      this.complete.emit(item);
+    },
+    video: {
+      play: (item: GarbageDropRecordViewModel) => {
+        this.video.emit(item);
+      },
+      all: (model: GarbageDropRecordViewModel) => {
+        this.allvideo.emit(model);
+      }
+    }
+  };
 }

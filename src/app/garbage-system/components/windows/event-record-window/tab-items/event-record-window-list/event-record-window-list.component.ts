@@ -11,7 +11,7 @@ import { ListType } from '../../../event-record-operation/event-record-operation
   selector: 'event-record-window-list',
   templateUrl: './event-record-window-list.component.html',
   styleUrls: ['./event-record-window-list.component.less'],
-  providers: [EventRecordOperationFilter],
+  providers: [EventRecordOperationFilter]
 })
 export class EventRecordWindowListComponent implements OnInit {
   @Input() stationId?: string;
@@ -44,25 +44,29 @@ export class EventRecordWindowListComponent implements OnInit {
     this.filter.type = this.type;
   }
 
-  onimage(model: PagedArgs<EventRecordViewModel>) {
-    this.image.emit(model);
-  }
-  onvideo(model: EventRecordViewModel) {
-    this.video.emit(model);
-  }
-  ongot(data: any) {
-    this.got.emit(data);
-  }
-  oncard(args: EventRecordViewModel) {
-    this.card.emit(args);
-  }
-  onallvideo(model: EventRecordViewModel) {
-    this.allvideo.emit(model);
-  }
-  onTypeChange(type: ListType) {
-    this.listType = type;
-  }
-  oncomplete(model: PagedArgs<EventRecordViewModel>) {
-    this.complete.emit(model);
-  }
+  on = {
+    image: (model: PagedArgs<EventRecordViewModel>) => {
+      this.image.emit(model);
+    },
+    got: (data: any) => {
+      this.got.emit(data);
+    },
+    card: (args: EventRecordViewModel) => {
+      this.card.emit(args);
+    },
+    type: (type: ListType) => {
+      this.listType = type;
+    },
+    complete: (model: PagedArgs<EventRecordViewModel>) => {
+      this.complete.emit(model);
+    },
+    video: {
+      play: (model: EventRecordViewModel) => {
+        this.video.emit(model);
+      },
+      all: (model: EventRecordViewModel) => {
+        this.allvideo.emit(model);
+      }
+    }
+  };
 }

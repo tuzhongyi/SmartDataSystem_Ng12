@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   GarbageDropStationTableArgs,
-  GarbageDropStationTableModel,
+  GarbageDropStationTableModel
 } from 'src/app/common/components/tables/garbage-drop-station-table/garbage-drop-station-table.model';
 import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-station.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'garbage-drop-window-item-station',
   templateUrl: './garbage-drop-window-item-station.component.html',
-  styleUrls: ['./garbage-drop-window-item-station.component.less'],
+  styleUrls: ['./garbage-drop-window-item-station.component.less']
 })
 export class GarbageDropStationWindowItemStationComponent implements OnInit {
   @Input() args: GarbageDropStationTableArgs = {};
@@ -31,7 +31,7 @@ export class GarbageDropStationWindowItemStationComponent implements OnInit {
     this.position.emit(station);
   }
 
-  onsearch(text: SearchOptions) {
+  onsearch(text: ISearchOptions) {
     this.args.opts = text;
     this.load.emit(this.args);
   }

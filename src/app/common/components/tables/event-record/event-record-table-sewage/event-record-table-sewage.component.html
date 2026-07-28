@@ -71,8 +71,8 @@
                 item.Data
                   ? item.Data.CommunityName
                   : item.GarbageStation
-                  ? item.GarbageStation.CommunityName
-                  : ""
+                    ? item.GarbageStation.CommunityName
+                    : ""
               }}
             </td>
             <td>
@@ -94,7 +94,7 @@
             <td>{{ item.ProcessorName ?? "-" }}</td>
             <td>
               {{
-                item.ProcessTime ? (item.ProcessTime | date : "HH:mm:ss") : "-"
+                item.ProcessTime ? (item.ProcessTime | date: "HH:mm:ss") : "-"
               }}
             </td>
             <td class="center">
@@ -105,6 +105,15 @@
                   (click)="playvideo($event, item)"
                 >
                   <i class="howell-icon-video"></i>
+                </div>
+
+                <div
+                  *ngIf="findable"
+                  class="icon-button"
+                  title="查找厢房事件"
+                  (click)="onfind($event, item)"
+                >
+                  <i class="mdi mdi-magnify"></i>
                 </div>
                 <div
                   class="icon-button"

@@ -5,7 +5,11 @@
     </div>
     <div class="garbage-drop-window-item-record-head-operation">
       <howell-garbage-station-window-record-operation
-        (search)="onsearch($event)"
+        [(option)]="option"
+        (search)="on.option.search($event)"
+        [durationable]="true"
+        [(duration)]="duration"
+        (durationChange)="on.option.duration($event)"
         [(isfilter)]="isfilter"
       >
       </howell-garbage-station-window-record-operation>
@@ -15,6 +19,7 @@
     <howell-garbage-station-window-record-filter
       [sameDay]="true"
       [(duration)]="filter.duration"
+      (durationChange)="on.filter.duration()"
       [(divisionId)]="filter.divisionId"
       [(stationId)]="filter.stationId"
       [(range)]="filter.range"
@@ -26,12 +31,14 @@
     <howell-garbage-drop-record-table
       [filter]="filter"
       [load]="load"
-      (image)="onimage($event)"
-      (video)="onvideo($event)"
+      (image)="on.image($event)"
+      (video)="on.video.play($event)"
       [get]="get"
-      (got)="ongot($event)"
-      (complete)="oncomplete($event)"
-      (allvideo)="onallvideo($event)"
+      (got)="on.got($event)"
+      (complete)="on.complete($event)"
+      (allvideo)="on.video.all($event)"
+      (find)="on.find($event)"
+      [findable]="true"
     >
     </howell-garbage-drop-record-table>
   </div>

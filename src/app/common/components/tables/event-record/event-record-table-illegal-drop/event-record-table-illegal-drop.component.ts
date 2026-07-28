@@ -16,8 +16,8 @@ import { EventRecordFilter } from '../event-record.model';
   templateUrl: './event-record-table-illegal-drop.component.html',
   styleUrls: [
     '../../table.less',
-    '../event-record-table/event-record-table.component.less',
-  ],
+    '../event-record-table/event-record-table.component.less'
+  ]
 })
 export class EventRecordTableIllegalDropComponent
   extends PagedTableAbstractComponent<EventRecordViewModel>
@@ -26,23 +26,20 @@ export class EventRecordTableIllegalDropComponent
   @Input() business!: IBusiness<IModel, PagedList<EventRecordViewModel>> &
     IGet<PagedList<EventRecordViewModel>>;
   @Input() load?: EventEmitter<EventRecordFilter>;
-  @Input() filter: EventRecordFilter = new EventRecordFilter();
+  @Input() filter = new EventRecordFilter();
   @Input() get?: EventEmitter<Page>;
-  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
-    new EventEmitter();
+  @Output() got = new EventEmitter<PagedList<EventRecordViewModel>>();
   // @Output() image: EventEmitter<
   //   | ImagePaged<EventRecordViewModel>
   //   | ImageControlModelArray<EventRecordViewModel>
   // > = new EventEmitter();
-  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() video = new EventEmitter<EventRecordViewModel>();
 
-  @Output() image: EventEmitter<PagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() downloadVideo: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
-  @Output() downloadImage: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
-
+  @Output() image = new EventEmitter<PagedArgs<EventRecordViewModel>>();
+  @Output() downloadVideo = new EventEmitter<EventRecordViewModel>();
+  @Output() downloadImage = new EventEmitter<EventRecordViewModel>();
+  @Output() find = new EventEmitter<EventRecordViewModel>();
+  @Input() findable = false;
   constructor() {
     super();
   }
@@ -55,7 +52,7 @@ export class EventRecordTableIllegalDropComponent
     '10%',
     '12%',
     '210px',
-    '150px',
+    '150px'
   ];
   selected?: EventRecordViewModel;
 
@@ -108,43 +105,53 @@ export class EventRecordTableIllegalDropComponent
     return promise;
   }
 
-  onDownloadVideo(model: EventRecordViewModel) {
-    this.downloadVideo.emit(model);
-  }
-  async onDownloadImage(model: EventRecordViewModel) {
-    this.downloadImage.emit(model);
-  }
-  onselect(item: EventRecordViewModel) {
-    if (item === this.selected) {
-      this.selected = undefined;
-    } else {
-      this.selected = item;
-    }
-  }
+  on = {
+    download: {
+      video: (model: EventRecordViewModel) => {
+        this.downloadVideo.emit(model);
+      },
+      image: (model: EventRecordViewModel) => {
+        this.downloadImage.emit(model);
+      }
+    },
+    select: (item: EventRecordViewModel) => {
+      if (item === this.selected) {
+        this.selected = undefined;
+      } else {
+        this.selected = item;
+      }
+    },
+    find: (e: Event, model: EventRecordViewModel) => {
+      this.find.emit(model);
+      if (model === this.selected) {
+        e.stopPropagation();
+      }
+    },
 
-  playvideo(e: Event, model: EventRecordViewModel) {
-    this.video.emit(model);
-    if (model === this.selected) {
-      e.stopPropagation();
-    }
-  }
+    playvideo: (e: Event, model: EventRecordViewModel) => {
+      this.video.emit(model);
+      if (model === this.selected) {
+        e.stopPropagation();
+      }
+    },
 
-  onimage(e: Event, item: EventRecordViewModel, index: number) {
-    let plain = instanceToPlain(this.page);
-    let page = plainToInstance(Page, plain);
-    if (item.Data instanceof GarbageFullEventData) {
-      page = Page.create(index, item.urls.length);
-    } else {
-      page.RecordCount = this.page.TotalRecordCount;
-      page.PageCount = this.page.TotalRecordCount;
-      page.PageSize = 1;
-      index = this.datas.indexOf(item);
-      page.PageIndex =
-        (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
+    image: (e: Event, item: EventRecordViewModel, index: number) => {
+      let plain = instanceToPlain(this.page);
+      let page = plainToInstance(Page, plain);
+      if (item.Data instanceof GarbageFullEventData) {
+        page = Page.create(index, item.urls.length);
+      } else {
+        page.RecordCount = this.page.TotalRecordCount;
+        page.PageCount = this.page.TotalRecordCount;
+        page.PageSize = 1;
+        index = this.datas.indexOf(item);
+        page.PageIndex =
+          (this.page.PageIndex - 1) * this.page.PageSize + index + 1;
+      }
+      this.image.emit({ page: page, data: item });
+      if (this.selected === item) {
+        e.stopPropagation();
+      }
     }
-    this.image.emit({ page: page, data: item });
-    if (this.selected === item) {
-      e.stopPropagation();
-    }
-  }
+  };
 }

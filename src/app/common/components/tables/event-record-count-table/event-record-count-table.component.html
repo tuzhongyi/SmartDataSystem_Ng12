@@ -16,6 +16,14 @@
           <th mat-sort-header="name" [disableClear]="true" [start]="'desc'">
             名称
           </th>
+          <th
+            mat-sort-header="community"
+            [disableClear]="true"
+            [start]="'desc'"
+            [style.display]="is.station ? '' : 'none'"
+          >
+            社区
+          </th>
           <th mat-sort-header="parent" [disableClear]="true" [start]="'desc'">
             行政区
           </th>
@@ -34,6 +42,9 @@
           <tr *ngFor="let item of datas; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ item.name }}</td>
+            <td [style.display]="is.station ? '' : 'none'">
+              {{ item.community || "-" }}
+            </td>
             <td>
               {{ item.parent ? item.parent.Name : "-" }}
             </td>

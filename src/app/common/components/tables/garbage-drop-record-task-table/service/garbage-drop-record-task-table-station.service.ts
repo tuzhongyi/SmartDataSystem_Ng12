@@ -3,12 +3,12 @@ import { IDivision } from 'src/app/network/model/garbage-station/division.model'
 import {
   GetGarbageStationsParams,
   GetGarbageStationStatisticNumbersParams,
-  GetGarbageStationStatisticNumbersParamsV2,
+  GetGarbageStationStatisticNumbersParamsV2
 } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import { GarbageStationRequestService } from 'src/app/network/request/garbage-station/garbage-station-request.service';
 import {
-  SearchOptionKey,
-  SearchOptions,
+  ISearchOptions,
+  SearchOptionKey
 } from 'src/app/view-model/search-options.model';
 import { GarbageDropRecordFilter } from '../../garbage-drop-record-table/garbage-drop-record.model';
 
@@ -40,7 +40,7 @@ export class GarbageDropRecordTaskTableStationService {
     let paged = await this.service.statistic.number.list(params);
     return paged.Data;
   }
-  async list(opts: SearchOptions, divisionId: string) {
+  async list(opts: ISearchOptions, divisionId: string) {
     let params = new GetGarbageStationsParams();
     params.DivisionId = divisionId;
     if (opts.text) {

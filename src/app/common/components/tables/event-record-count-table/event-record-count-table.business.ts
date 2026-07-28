@@ -35,6 +35,10 @@ export class EventRecordCountTableBusiness implements IBusiness<
     };
   }
 
+  is = {
+    station: false,
+  };
+
   async load(
     opts: EventRecordCountTableOptions,
   ): Promise<EventRecordCountTableModel[]> {
@@ -52,6 +56,7 @@ export class EventRecordCountTableBusiness implements IBusiness<
     let data = await this.getData(id, type, opts);
 
     let model = await this.converter.Convert(data, opts.eventType);
+    this.is.station = model.some((x) => !!x.community);
     return model;
   }
   async getData(

@@ -1,0 +1,11 @@
+{
+  "trailingComma": "none",
+  "overrides": [
+    {
+      "files": "*.html",
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

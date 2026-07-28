@@ -1,27 +1,37 @@
 <div class="event-record-operation">
+  <div class="event-record-operation-duration" *ngIf="durationable">
+    <select [(ngModel)]="duration" (change)="on.duration()">
+      <option [ngValue]="undefined">自定义</option>
+      <option [ngValue]="0">今天</option>
+      <option [ngValue]="7">近7天</option>
+      <option [ngValue]="30">近30天</option>
+      <option [ngValue]="60">近60天</option>
+    </select>
+  </div>
   <div class="event-record-operation-search">
     <app-select-control
       class="search-option-select"
       [data]="searchOpts"
-      (selectedChange)="onSearchOptionSelect($event)"
+      (selectedChange)="on.key($event)"
     ></app-select-control>
     <input
       type="text"
       placeholder="输入关键字"
-      [(ngModel)]="searchOption.text"
+      [(ngModel)]="option.text"
+      (change)="on.change()"
     />
+    <button type="button" class="hw-blue-btn search" (click)="on.search()">
+      <i class="mdi mdi-magnify"></i>
+      查询
+    </button>
   </div>
-  <button type="button" class="hw-blue-btn search" (click)="onsearch()">
-    <i class="mdi mdi-magnify"></i>
-    查询
-  </button>
-  <div class="list-type-select" (change)="onListTypeSelect()">
-    <select [(ngModel)]="type" style="font-family: 'HowellFont'">
+  <div class="list-type-select" (change)="on.type()">
+    <select [(ngModel)]="type" style="font-family: &quot;HowellFont&quot;">
       <option [ngValue]="ListType.table">&#xf08b;&nbsp;</option>
       <option [ngValue]="ListType.card">&#xf225;&nbsp;</option>
     </select>
   </div>
-  <button class="hw-cyan-m-btn" (click)="onfilter()">
+  <button class="hw-cyan-m-btn" (click)="on.filter()">
     <i class="mdi mdi-filter-outline"></i>
   </button>
 </div>

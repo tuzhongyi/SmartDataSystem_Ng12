@@ -2,13 +2,13 @@ import { TimeUnit } from 'src/app/enum/time-unit.enum';
 import { IDivision } from 'src/app/network/model/garbage-station/division.model';
 import {
   GetDivisionsParams,
-  GetDivisionStatisticNumbersParamsV2,
+  GetDivisionStatisticNumbersParamsV2
 } from 'src/app/network/request/division/division-request.params';
 import { DivisionRequestService } from 'src/app/network/request/division/division-request.service';
 import { GetGarbageStationStatisticNumbersParams } from 'src/app/network/request/garbage-station/garbage-station-request.params';
 import {
-  SearchOptionKey,
-  SearchOptions,
+  ISearchOptions,
+  SearchOptionKey
 } from 'src/app/view-model/search-options.model';
 import { GarbageDropRecordFilter } from '../../garbage-drop-record-table/garbage-drop-record.model';
 
@@ -34,7 +34,7 @@ export class GarbageDropRecordTaskTableDivisionService {
     return paged.Data;
   }
 
-  async list(opts: SearchOptions, parentId: string) {
+  async list(opts: ISearchOptions, parentId: string) {
     let params = new GetDivisionsParams();
     params.ParentId = parentId;
     if (opts.text) {

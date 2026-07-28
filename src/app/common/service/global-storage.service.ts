@@ -5,7 +5,7 @@ import { GlobalStorageIntervalController } from './global-storage.service/global
 import { LocalStorageService } from './local-storage.service';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class GlobalStorageService {
   system?: SystemType; // 垃圾清运
@@ -25,20 +25,20 @@ export class GlobalStorageService {
     full: 0,
     station: {
       count: 0,
-      drop: 0,
+      drop: 0
     },
     device: {
       count: 0,
       online: 0,
-      offline: 0,
-    },
+      offline: 0
+    }
   };
 
-  private version = '1.0.1.0';
+  private version = '1.0.1.1';
 
   constructor(
     private localStorage: LocalStorageService,
-    private config: ConfigRequestService,
+    private config: ConfigRequestService
   ) {
     this.division = new GlobalStorageDivisionController(this.localStorage);
     this.init();
@@ -64,5 +64,5 @@ export class GlobalStorageService {
 export enum SystemType {
   aiop,
   garbage,
-  vehicle,
+  vehicle
 }

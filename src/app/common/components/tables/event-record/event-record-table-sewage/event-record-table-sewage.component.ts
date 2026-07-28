@@ -15,8 +15,8 @@ import { EventRecordFilter } from '../event-record.model';
   templateUrl: './event-record-table-sewage.component.html',
   styleUrls: [
     '../../table.less',
-    '../event-record-table/event-record-table.component.less',
-  ],
+    '../event-record-table/event-record-table.component.less'
+  ]
 })
 export class EventRecordTableSewageComponent
   extends PagedTableAbstractComponent<EventRecordViewModel>
@@ -27,21 +27,19 @@ export class EventRecordTableSewageComponent
   @Input() load?: EventEmitter<EventRecordFilter>;
   @Input() filter: EventRecordFilter = new EventRecordFilter();
   @Input() get?: EventEmitter<Page>;
-  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
-    new EventEmitter();
+  @Output() got = new EventEmitter<PagedList<EventRecordViewModel>>();
   // @Output() image: EventEmitter<
   //   | ImagePaged<EventRecordViewModel>
   //   | ImageControlModelArray<EventRecordViewModel>
   // > = new EventEmitter();
-  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() video = new EventEmitter<EventRecordViewModel>();
 
-  @Output() image: EventEmitter<ImagePagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() downloadVideo: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
-  @Output() downloadImage: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
+  @Output() image = new EventEmitter<ImagePagedArgs<EventRecordViewModel>>();
+  @Output() downloadVideo = new EventEmitter<EventRecordViewModel>();
+  @Output() downloadImage = new EventEmitter<EventRecordViewModel>();
 
+  @Output() find = new EventEmitter<EventRecordViewModel>();
+  @Input() findable = false;
   constructor() {
     super();
   }
@@ -53,7 +51,7 @@ export class EventRecordTableSewageComponent
     undefined,
     undefined,
     undefined,
-    '210px',
+    '210px'
   ];
   selected?: EventRecordViewModel;
 
@@ -118,7 +116,12 @@ export class EventRecordTableSewageComponent
       e.stopPropagation();
     }
   }
-
+  onfind(e: Event, model: EventRecordViewModel) {
+    this.find.emit(model);
+    if (model === this.selected) {
+      e.stopPropagation();
+    }
+  }
   onimage(e: Event, item: EventRecordViewModel, index: number) {
     let plain = instanceToPlain(this.page);
     let page = plainToInstance(Page, plain);

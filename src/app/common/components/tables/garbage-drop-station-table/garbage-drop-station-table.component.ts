@@ -4,7 +4,7 @@ import {
   Input,
   OnDestroy,
   OnInit,
-  Output,
+  Output
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Sort } from '@angular/material/sort';
@@ -15,16 +15,16 @@ import { GarbageStation } from 'src/app/network/model/garbage-station/garbage-st
 import { IModel, PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import { GarbageDropStationTableBusiness } from './garbage-drop-station-table.business';
 import {
   GarbageDropStationPagedTableConverter,
-  GarbageDropStationTableConverter,
+  GarbageDropStationTableConverter
 } from './garbage-drop-station-table.converter';
 import {
   GarbageDropStationTableArgs,
-  GarbageDropStationTableModel,
+  GarbageDropStationTableModel
 } from './garbage-drop-station-table.model';
 
 @Component({
@@ -34,8 +34,8 @@ import {
   providers: [
     GarbageDropStationTableBusiness,
     GarbageDropStationPagedTableConverter,
-    GarbageDropStationTableConverter,
-  ],
+    GarbageDropStationTableConverter
+  ]
 })
 export class GarbageDropStationTableComponent
   extends PagedTableAbstractComponent<GarbageDropStationTableModel>
@@ -60,7 +60,7 @@ export class GarbageDropStationTableComponent
   }
 
   widths = ['12%', '12%', '10%', '10%', '10%', '8%', '10%', '10%', '5%', '10%'];
-  searchOptions?: SearchOptions;
+  searchOptions?: ISearchOptions;
   selected?: GarbageDropStationTableModel;
 
   ngOnDestroy(): void {
@@ -110,7 +110,7 @@ export class GarbageDropStationTableComponent
   onimage(e: Event, item: GarbageDropStationTableModel, index: number) {
     this.image.emit({
       page: Page.create(index),
-      data: item,
+      data: item
     });
     if (this.selected === item) {
       e.stopPropagation();

@@ -44,7 +44,7 @@
             [ngClass]="{
               selected: selected === item
             }"
-            (click)="onselect(item)"
+            (click)="on.select(item)"
           >
             <td>
               <div class="img-list">
@@ -53,7 +53,7 @@
                   image
                   *ngFor="let url of item.urls; let imgIndex = index"
                   [url]="url | async"
-                  (click)="onimage($event, item, imgIndex)"
+                  (click)="on.image($event, item, imgIndex)"
                 ></div>
               </div>
             </td>
@@ -68,16 +68,16 @@
                 item.Data
                   ? item.Data.CommunityName
                   : item.GarbageStation
-                  ? item.GarbageStation.CommunityName
-                  : ''
+                    ? item.GarbageStation.CommunityName
+                    : ''
               "
             >
               {{
                 item.Data
                   ? item.Data.CommunityName
                   : item.GarbageStation
-                  ? item.GarbageStation.CommunityName
-                  : ""
+                    ? item.GarbageStation.CommunityName
+                    : ""
               }}
             </td>
             <td
@@ -114,21 +114,29 @@
                 <div
                   class="icon-button"
                   title="播放视频"
-                  (click)="playvideo($event, item)"
+                  (click)="on.playvideo($event, item)"
                 >
                   <i class="howell-icon-video"></i>
                 </div>
                 <div
+                  *ngIf="findable"
+                  class="icon-button"
+                  title="查找厢房事件"
+                  (click)="on.find($event, item)"
+                >
+                  <i class="mdi mdi-magnify"></i>
+                </div>
+                <div
                   class="icon-button"
                   title="下载图片"
-                  (click)="onDownloadImage(item)"
+                  (click)="on.download.image(item)"
                 >
                   <i class="howell-icon-picturedownload"></i>
                 </div>
                 <div
                   class="icon-button"
                   title="下载视频"
-                  (click)="onDownloadVideo(item)"
+                  (click)="on.download.video(item)"
                 >
                   <i class="howell-icon-videodownload"></i>
                 </div>

@@ -4,22 +4,26 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import {
   GarbageDropRecordFilter,
-  GarbageDropRecordViewModel,
+  GarbageDropRecordViewModel
 } from 'src/app/common/components/tables/garbage-drop-record-table/garbage-drop-record.model';
 import { GarbageDropRecordTaskTableComponent } from 'src/app/common/components/tables/garbage-drop-record-task-table/garbage-drop-record-task-table.component';
 import { GarbageTaskStatus } from 'src/app/enum/garbage-task-status.enum';
 import { PagedArgs } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import {
+  ISearchOptions,
+  SearchOption,
+  SearchOptionKey
+} from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'howell-garbage-station-window-record',
   templateUrl: './garbage-station-window-record.component.html',
-  styleUrls: ['./garbage-station-window-record.component.less'],
+  styleUrls: ['./garbage-station-window-record.component.less']
 })
 export class GarbageStationWindowRecordComponent implements OnInit {
   @Input() status?: GarbageTaskStatus;
@@ -42,6 +46,7 @@ export class GarbageStationWindowRecordComponent implements OnInit {
 
   constructor() {}
   isfilter = false;
+  option = new SearchOption();
   load: EventEmitter<GarbageDropRecordFilter> = new EventEmitter();
   @ViewChild('task') task?: GarbageDropRecordTaskTableComponent;
 
@@ -76,23 +81,33 @@ export class GarbageStationWindowRecordComponent implements OnInit {
     }
   }
 
-  onimage(item: PagedArgs<GarbageDropRecordViewModel>) {
-    this.image.emit(item);
-  }
-  onvideo(item: GarbageDropRecordViewModel) {
-    this.video.emit(item);
-  }
-  onsearch(opts: SearchOptions) {
-    this.filter.opts = opts;
-    this.load.emit(this.filter);
-  }
-  ongot(args: PagedList<GarbageDropRecordViewModel>) {
-    this.got.emit(args);
-  }
-  oncomplete(item: PagedArgs<GarbageDropRecordViewModel>) {
-    this.complete.emit(item);
-  }
-  onallvideo(model: GarbageDropRecordViewModel) {
-    this.allvideo.emit(model);
-  }
+  on = {
+    find: (data: GarbageDropRecordViewModel) => {
+      this.option.text = data.Data.StationName;
+      this.option.key = SearchOptionKey.name;
+      this.on.search(this.option);
+    },
+    image: (item: PagedArgs<GarbageDropRecordViewModel>) => {
+      this.image.emit(item);
+    },
+
+    search: (opts: ISearchOptions) => {
+      this.filter.opts = opts;
+      this.load.emit(this.filter);
+    },
+    got: (args: PagedList<GarbageDropRecordViewModel>) => {
+      this.got.emit(args);
+    },
+    complete: (item: PagedArgs<GarbageDropRecordViewModel>) => {
+      this.complete.emit(item);
+    },
+    video: {
+      play: (item: GarbageDropRecordViewModel) => {
+        this.video.emit(item);
+      },
+      all: (model: GarbageDropRecordViewModel) => {
+        this.allvideo.emit(model);
+      }
+    }
+  };
 }

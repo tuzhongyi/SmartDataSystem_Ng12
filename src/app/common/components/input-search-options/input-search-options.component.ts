@@ -6,25 +6,25 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import {
-  SearchOptionKey,
-  SearchOptions,
+  ISearchOptions,
+  SearchOptionKey
 } from 'src/app/view-model/search-options.model';
 import { Language } from '../../tools/language';
 @Component({
   selector: 'app-input-search-options',
   templateUrl: './input-search-options.component.html',
-  styleUrls: ['./input-search-options.component.less'],
+  styleUrls: ['./input-search-options.component.less']
 })
 export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
   @Input() placeholder = '';
 
-  @Output() search: EventEmitter<SearchOptions> = new EventEmitter();
+  @Output() search: EventEmitter<ISearchOptions> = new EventEmitter();
 
   @Input() focusToSelectContent = false;
 
@@ -65,9 +65,9 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
         const keyUpEvent = keyUp.pipe(throttleTime(500));
 
         result.subscribe((x) => {
-          let opts: SearchOptions = {
+          let opts: ISearchOptions = {
             text: this.searctText,
-            key: this.key,
+            key: this.key
           };
           this.search.emit(opts);
         });
@@ -75,7 +75,7 @@ export class InputSearchOptionsComponent implements OnInit, AfterViewInit {
           if (x.key.toLocaleLowerCase() == 'enter') {
             let opts = {
               text: this.searctText,
-              key: this.key,
+              key: this.key
             };
             this.search.emit(opts);
           }

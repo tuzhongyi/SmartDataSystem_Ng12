@@ -11,6 +11,7 @@ export class GarbageDropStationCountTableModel {
   TimeoutRatio: number = 0;
   TimeinRatio: number = 0;
   Parent!: Promise<Division | undefined>;
+  CommunityName!: Promise<string>;
 }
 export class GarbageDropStationCountTableArgs {
   date: Date = new Date();

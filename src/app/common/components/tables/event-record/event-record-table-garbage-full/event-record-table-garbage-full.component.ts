@@ -7,7 +7,7 @@ import { EventType } from 'src/app/enum/event-type.enum';
 import {
   IModel,
   ImagePagedArgs,
-  PagedArgs,
+  PagedArgs
 } from 'src/app/network/model/model.interface';
 import { Page, PagedList } from 'src/app/network/model/page_list.model';
 import { PagedParams } from 'src/app/network/request/IParams.interface';
@@ -20,8 +20,8 @@ import { EventRecordFilter } from '../event-record.model';
   templateUrl: './event-record-table-garbage-full.component.html',
   styleUrls: [
     '../../table-sticky.less',
-    './event-record-table-garbage-full.component.less',
-  ],
+    './event-record-table-garbage-full.component.less'
+  ]
 })
 export class EventRecordTableGarbageFullComponent
   extends PagedTableAbstractComponent<EventRecordViewModel>
@@ -30,22 +30,18 @@ export class EventRecordTableGarbageFullComponent
   @Input() business!: IBusiness<IModel, PagedList<EventRecordViewModel>> &
     IGet<PagedList<EventRecordViewModel>>;
   @Input() load?: EventEmitter<EventRecordFilter>;
-  @Input() filter: EventRecordFilter = new EventRecordFilter();
+  @Input() filter = new EventRecordFilter();
   @Input() get?: EventEmitter<Page>;
-  @Output() got: EventEmitter<PagedList<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() video: EventEmitter<EventRecordViewModel> = new EventEmitter();
+  @Output() got = new EventEmitter<PagedList<EventRecordViewModel>>();
+  @Output() video = new EventEmitter<EventRecordViewModel>();
 
-  @Output() image: EventEmitter<ImagePagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-  @Output() downloadVideo: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
-  @Output() downloadImage: EventEmitter<EventRecordViewModel> =
-    new EventEmitter();
-  @Output() allvideo: EventEmitter<EventRecordViewModel> = new EventEmitter();
-  @Output() complete: EventEmitter<PagedArgs<EventRecordViewModel>> =
-    new EventEmitter();
-
+  @Output() image = new EventEmitter<ImagePagedArgs<EventRecordViewModel>>();
+  @Output() downloadVideo = new EventEmitter<EventRecordViewModel>();
+  @Output() downloadImage = new EventEmitter<EventRecordViewModel>();
+  @Output() allvideo = new EventEmitter<EventRecordViewModel>();
+  @Output() complete = new EventEmitter<PagedArgs<EventRecordViewModel>>();
+  @Output() find = new EventEmitter<EventRecordViewModel>();
+  @Input() findable = false;
   constructor() {
     super(true);
   }
@@ -61,7 +57,7 @@ export class EventRecordTableGarbageFullComponent
     '150px',
     '150px',
     '150px',
-    '150px',
+    '150px'
   ];
   selected?: EventRecordViewModel;
   Color = ColorTool;
@@ -114,62 +110,72 @@ export class EventRecordTableGarbageFullComponent
       });
     return promise;
   }
+  on = {
+    download: {
+      video: (model: EventRecordViewModel) => {
+        this.downloadVideo.emit(model);
+      },
+      image: (model: EventRecordViewModel) => {
+        this.downloadImage.emit(model);
+      }
+    },
+    select: (item: EventRecordViewModel) => {
+      if (item === this.selected) {
+        this.selected = undefined;
+      } else {
+        this.selected = item;
+      }
+    },
+    find: (e: Event, model: EventRecordViewModel) => {
+      this.find.emit(model);
+      if (model === this.selected) {
+        e.stopPropagation();
+      }
+    },
+    video: {
+      play: (e: Event, model: EventRecordViewModel) => {
+        this.video.emit(model);
+        if (model === this.selected) {
+          e.stopPropagation();
+        }
+      },
+      all: (e: Event, model: EventRecordViewModel) => {
+        this.allvideo.emit(model);
+        if (model === this.selected) {
+          e.stopPropagation();
+        }
+      }
+    },
 
-  onDownloadVideo(model: EventRecordViewModel) {
-    this.downloadVideo.emit(model);
-  }
-  onDownloadImage(model: EventRecordViewModel) {
-    this.downloadImage.emit(model);
-  }
-  onselect(item: EventRecordViewModel) {
-    if (item === this.selected) {
-      this.selected = undefined;
-    } else {
-      this.selected = item;
-    }
-  }
+    image: (e: Event, item: EventRecordViewModel, index: number) => {
+      let plain = instanceToPlain(this.page);
+      let page = plainToInstance(Page, plain);
 
-  playvideo(e: Event, model: EventRecordViewModel) {
-    this.video.emit(model);
-    if (model === this.selected) {
-      e.stopPropagation();
-    }
-  }
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      let _index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
 
-  onimage(e: Event, item: EventRecordViewModel, index: number) {
-    let plain = instanceToPlain(this.page);
-    let page = plainToInstance(Page, plain);
-
-    page.RecordCount = this.page.TotalRecordCount;
-    page.PageCount = this.page.TotalRecordCount;
-    page.PageSize = 1;
-    let _index = this.datas.indexOf(item);
-    page.PageIndex =
-      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
-
-    this.image.emit({ page: page, data: item, index: index });
-    if (this.selected === item) {
-      e.stopPropagation();
+      this.image.emit({ page: page, data: item, index: index });
+      if (this.selected === item) {
+        e.stopPropagation();
+      }
+    },
+    complete: (e: Event, item: EventRecordViewModel) => {
+      let plain = instanceToPlain(this.page);
+      let page = plainToInstance(Page, plain);
+      page.RecordCount = this.page.TotalRecordCount;
+      page.PageCount = this.page.TotalRecordCount;
+      page.PageSize = 1;
+      let _index = this.datas.indexOf(item);
+      page.PageIndex =
+        (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
+      this.complete.emit({ page: page, data: item });
+      if (item === this.selected) {
+        e.stopPropagation();
+      }
     }
-  }
-  onallvideo(e: Event, model: EventRecordViewModel) {
-    this.allvideo.emit(model);
-    if (model === this.selected) {
-      e.stopPropagation();
-    }
-  }
-  oncomplete(e: Event, item: EventRecordViewModel) {
-    let plain = instanceToPlain(this.page);
-    let page = plainToInstance(Page, plain);
-    page.RecordCount = this.page.TotalRecordCount;
-    page.PageCount = this.page.TotalRecordCount;
-    page.PageSize = 1;
-    let _index = this.datas.indexOf(item);
-    page.PageIndex =
-      (this.page.PageIndex - 1) * this.page.PageSize + _index + 1;
-    this.complete.emit({ page: page, data: item });
-    if (item === this.selected) {
-      e.stopPropagation();
-    }
-  }
+  };
 }

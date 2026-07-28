@@ -2,7 +2,8 @@
   <div class="garbage-station-window-record-head">
     <ng-content></ng-content>
     <howell-garbage-station-window-record-operation
-      (search)="onsearch($event)"
+      (search)="on.search($event)"
+      [(option)]="option"
       [(isfilter)]="isfilter"
     >
     </howell-garbage-station-window-record-operation>
@@ -22,12 +23,14 @@
     <howell-garbage-drop-record-table
       [filter]="filter"
       [load]="load"
-      (image)="onimage($event)"
-      (video)="onvideo($event)"
+      (image)="on.image($event)"
+      (video)="on.video.play($event)"
       [get]="get"
-      (got)="ongot($event)"
-      (complete)="oncomplete($event)"
-      (allvideo)="onallvideo($event)"
+      (got)="on.got($event)"
+      (complete)="on.complete($event)"
+      (allvideo)="on.video.all($event)"
+      [findable]="true"
+      (find)="on.find($event)"
     >
     </howell-garbage-drop-record-table>
     <garbage-drop-record-task-table #task [args]="filter" [load]="load">

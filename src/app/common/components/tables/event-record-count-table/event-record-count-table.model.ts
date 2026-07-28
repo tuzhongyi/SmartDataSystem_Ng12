@@ -6,8 +6,10 @@ import { Division } from 'src/app/network/model/garbage-station/division.model';
 export class EventRecordCountTableModel {
   id: string = '';
   name: string = '';
+
   parent?: Division;
   value: number = 0;
+  community?: string = '';
 }
 
 export class EventRecordCountTableOptions {

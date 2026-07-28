@@ -2,11 +2,9 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
   OnDestroy,
   OnInit,
-  Output,
-  SimpleChanges,
+  Output
 } from '@angular/core';
 import { ILevelDivisionNode } from 'src/app/common/components/panels/level-division-panel/level-division-panel.model';
 import { DateTimePickerView } from 'src/app/common/directives/date-time-picker/date-time-picker.directive';
@@ -20,18 +18,16 @@ import { EventRecordFilterBusiness } from './interval-division-station-filter.bu
 import {
   DivisionStationFilteModel,
   EventRecordFilterSelected,
-  EventRecordFilterSource,
+  EventRecordFilterSource
 } from './interval-division-station-filter.model';
 
 @Component({
   selector: 'interval-division-station-filter',
   templateUrl: './interval-division-station-filter.component.html',
   styleUrls: ['./interval-division-station-filter.component.less'],
-  providers: [EventRecordFilterBusiness],
+  providers: [EventRecordFilterBusiness]
 })
-export class EventRecordFilterComponent
-  implements OnInit, OnChanges, OnDestroy
-{
+export class EventRecordFilterComponent implements OnInit, OnDestroy {
   @Input() type?: EventType;
 
   @Input() date_sync = false;
@@ -62,10 +58,6 @@ export class EventRecordFilterComponent
 
   Language = Language;
   DateTimePickerView = DateTimePickerView;
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-  }
 
   ngOnDestroy(): void {}
 

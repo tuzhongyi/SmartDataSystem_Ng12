@@ -31,7 +31,7 @@
             [ngClass]="{
               selected: selected === item
             }"
-            (click)="onselect(item)"
+            (click)="on.select(item)"
           >
             <td class="lock left first">
               <div class="imgs">
@@ -40,7 +40,7 @@
                   image
                   *ngFor="let url of item.urls; let imgIndex = index"
                   [url]="url | async"
-                  (click)="onimage($event, item, imgIndex)"
+                  (click)="on.image($event, item, imgIndex)"
                 ></div>
               </div>
             </td>
@@ -60,8 +60,8 @@
                   item.Data
                     ? item.Data.CommunityName
                     : item.GarbageStation
-                    ? item.GarbageStation.CommunityName
-                    : ""
+                      ? item.GarbageStation.CommunityName
+                      : ""
                 }}
               </div>
             </td>
@@ -92,7 +92,7 @@
 
             <td>
               <div [style.width]="'calc(' + widths[7] + ' - 24px)'">
-                {{ (item.HandleTime | date : "HH:mm:ss") ?? "-" }}
+                {{ (item.HandleTime | date: "HH:mm:ss") ?? "-" }}
               </div>
             </td>
             <td>
@@ -111,9 +111,7 @@
             <td>
               <div [style.width]="'calc(' + widths[10] + ' - 24px)'">
                 {{
-                  item.ProcessTime
-                    ? (item.ProcessTime | date : "HH:mm:ss")
-                    : "-"
+                  item.ProcessTime ? (item.ProcessTime | date: "HH:mm:ss") : "-"
                 }}
               </div>
             </td>
@@ -125,7 +123,7 @@
                 <div
                   class="icon-button"
                   title="事件发生时间视频"
-                  (click)="playvideo($event, item)"
+                  (click)="on.video.play($event, item)"
                 >
                   <i class="howell-icon-video"></i>
                 </div>
@@ -133,21 +131,30 @@
                 <div
                   class="icon-button"
                   title="事件发生时间厢房摄像机"
-                  (click)="onallvideo($event, item)"
+                  (click)="on.video.all($event, item)"
                 >
                   <i class="howell-icon-cam-all1"></i>
                 </div>
                 <div
+                  *ngIf="findable"
+                  class="icon-button"
+                  title="查找厢房事件"
+                  (click)="on.find($event, item)"
+                >
+                  <i class="mdi mdi-magnify"></i>
+                </div>
+
+                <div
                   class="icon-button"
                   title="下载图片"
-                  (click)="onDownloadImage(item)"
+                  (click)="on.download.image(item)"
                 >
                   <i class="howell-icon-picturedownload"></i>
                 </div>
                 <div
                   class="icon-button"
                   title="下载视频"
-                  (click)="onDownloadVideo(item)"
+                  (click)="on.download.video(item)"
                 >
                   <i class="howell-icon-videodownload"></i>
                 </div>
@@ -155,7 +162,7 @@
                 <div
                   class="icon-button"
                   title="刷卡记录"
-                  (click)="oncardrecord(item)"
+                  (click)="on.cardrecord(item)"
                 >
                   <i class="howell-icon-garbage_card"></i>
                 </div>
@@ -163,7 +170,7 @@
                 <div
                   class="icon-button"
                   title="查看工单"
-                  (click)="oncomplete($event, item)"
+                  (click)="on.complete($event, item)"
                 >
                   <i class="mdi mdi-nfc-tap"></i>
                 </div>

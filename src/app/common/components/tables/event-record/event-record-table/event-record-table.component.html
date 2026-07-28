@@ -12,6 +12,8 @@
     (downloadVideo)="downloadVideo($event)"
     (allvideo)="onallvideo($event)"
     (complete)="oncomplete($event)"
+    [findable]="findable"
+    (find)="onfind($event)"
   >
   </event-record-table-garbage-full>
   <event-record-table-illegal-drop
@@ -25,6 +27,8 @@
     (image)="onimage($event)"
     (downloadImage)="downloadImage($event)"
     (downloadVideo)="downloadVideo($event)"
+    [findable]="findable"
+    (find)="onfind($event)"
   >
   </event-record-table-illegal-drop>
   <event-record-table-mixed-into
@@ -41,6 +45,8 @@
     (downloadVideo)="downloadVideo($event)"
     (allvideo)="onallvideo($event)"
     (complete)="oncomplete($event)"
+    [findable]="findable"
+    (find)="onfind($event)"
   >
   </event-record-table-mixed-into>
   <event-record-table-sewage
@@ -54,6 +60,8 @@
     (image)="onimage($event)"
     (downloadImage)="downloadImage($event)"
     (downloadVideo)="downloadVideo($event)"
+    [findable]="findable"
+    (find)="onfind($event)"
   >
   </event-record-table-sewage>
 </ng-container>

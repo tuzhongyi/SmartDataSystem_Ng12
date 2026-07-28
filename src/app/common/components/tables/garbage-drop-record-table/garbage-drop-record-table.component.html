@@ -24,7 +24,7 @@
           <th>滞留时长</th>
           <th>状态</th>
           <th>处置员</th>
-          <th>操作</th>
+          <th class="center">操作</th>
         </tr>
       </thead>
     </table>
@@ -45,7 +45,7 @@
           <tr
             *ngFor="let item of datas"
             [ngClass]="{ selected: selected === item }"
-            (click)="onselect(item)"
+            (click)="on.select(item)"
           >
             <td [width]="widths[0]">
               <div class="img-list">
@@ -55,7 +55,7 @@
                     [url]="url"
                     class="img"
                     *ngFor="let url of item.urls | async; let index = index"
-                    (click)="onimage($event, item, index)"
+                    (click)="on.image($event, item, index)"
                   ></div>
                 </div>
               </div>
@@ -96,11 +96,11 @@
               {{ item.Data.ProcessorName ?? "-" }}
             </td>
             <td>
-              <div class="operation">
+              <div class="operation center">
                 <div
                   class="icon-button"
                   title="播放视频"
-                  (click)="onvideo($event, item)"
+                  (click)="on.video.play($event, item)"
                 >
                   <i class="howell-icon-video"></i>
                 </div>
@@ -108,15 +108,23 @@
                 <div
                   class="icon-button"
                   title="事件发生时间外摄像机"
-                  (click)="onallvideo($event, item)"
+                  (click)="on.video.all($event, item)"
                 >
                   <i class="howell-icon-cam-all1"></i>
+                </div>
+                <div
+                  *ngIf="findable"
+                  class="icon-button"
+                  title="查找厢房事件"
+                  (click)="on.find($event, item)"
+                >
+                  <i class="mdi mdi-magnify"></i>
                 </div>
 
                 <div
                   class="icon-button"
                   title="查看工单"
-                  (click)="oncomplete($event, item)"
+                  (click)="on.complete($event, item)"
                 >
                   <i class="mdi mdi-nfc-tap"></i>
                 </div>

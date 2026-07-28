@@ -5,20 +5,17 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
+  SimpleChanges
 } from '@angular/core';
 import { Sort } from '@angular/material/sort';
-import { IBusiness } from 'src/app/common/interfaces/bussiness.interface';
-import { IComponent } from 'src/app/common/interfaces/component.interfact';
-import { IModel } from 'src/app/network/model/model.interface';
 import { PagedTableAbstractComponent } from '../table-abstract.component';
 import {
   GarbageDropStationCountTableBusiness,
-  GarbageDropStationCountTableBusinessProviders,
+  GarbageDropStationCountTableBusinessProviders
 } from './garbage-drop-station-count-table.business';
 import {
   GarbageDropStationCountTableArgs,
-  GarbageDropStationCountTableModel,
+  GarbageDropStationCountTableModel
 } from './garbage-drop-station-count-table.model';
 
 @Component({
@@ -26,31 +23,28 @@ import {
   templateUrl: './garbage-drop-station-count-table.component.html',
   styleUrls: [
     '../table.less',
-    './garbage-drop-station-count-table.component.less',
+    './garbage-drop-station-count-table.component.less'
   ],
-  providers: [...GarbageDropStationCountTableBusinessProviders],
+  providers: [...GarbageDropStationCountTableBusinessProviders]
 })
 export class GarbageDropStationCountTableComponent
   extends PagedTableAbstractComponent<GarbageDropStationCountTableModel>
-  implements
-    IComponent<IModel, GarbageDropStationCountTableModel[]>,
-    OnInit,
-    OnChanges
+  implements OnInit, OnChanges
 {
-  @Input() business: IBusiness<IModel, GarbageDropStationCountTableModel[]>;
-
   @Input() args = new GarbageDropStationCountTableArgs();
 
   @Input() load?: EventEmitter<GarbageDropStationCountTableArgs>;
   @Output() loaded: EventEmitter<GarbageDropStationCountTableModel[]> =
     new EventEmitter();
 
-  constructor(business: GarbageDropStationCountTableBusiness) {
+  constructor(private business: GarbageDropStationCountTableBusiness) {
     super();
-    this.business = business;
   }
 
-  widths: string[] = ['10%', '25%', '15%', '15%', '15%'];
+  widths: string[] = ['10%', '25%', '15%', '15%', '15%', '15%'];
+  get is() {
+    return this.business.is;
+  }
   sort?: Sort;
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.load) {
@@ -66,16 +60,26 @@ export class GarbageDropStationCountTableComponent
     this.loadData();
   }
 
+  get = {
+    widths: (isstaiton: boolean) => {
+      if (isstaiton) {
+        return ['10%', '25%', '15%', '15%', '10%', '10%', '15%'];
+      }
+      return ['10%', '25%', '15%', '15%', '15%', '15%'];
+    }
+  };
+
   async loadData() {
     this.loading = true;
     this.business
       .load(this.args)
       .then((x) => {
         this.datas = x;
+        this.widths = this.get.widths(this.business.is.station);
         if (!this.sort) {
           this.sort = {
             active: 'EventCount',
-            direction: 'desc',
+            direction: 'desc'
           };
         }
         this.sortData(this.sort);

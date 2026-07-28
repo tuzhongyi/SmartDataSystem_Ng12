@@ -1,15 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   GarbageFullStationTableArgs,
-  GarbageFullStationTableModel,
+  GarbageFullStationTableModel
 } from 'src/app/common/components/tables/garbage-full-station-table/garbage-full-station-table.model';
 import { PagedArgs } from 'src/app/network/model/model.interface';
-import { SearchOptions } from 'src/app/view-model/search-options.model';
+import { ISearchOptions } from 'src/app/view-model/search-options.model';
 
 @Component({
   selector: 'garbage-full-window-station',
   templateUrl: './garbage-full-window-station.component.html',
-  styleUrls: ['./garbage-full-window-station.component.less'],
+  styleUrls: ['./garbage-full-window-station.component.less']
 })
 export class GarbageFullWindowStationComponent implements OnInit {
   @Output() image: EventEmitter<PagedArgs<GarbageFullStationTableModel>> =
@@ -20,7 +20,7 @@ export class GarbageFullWindowStationComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onsearch(text: SearchOptions) {
+  onsearch(text: ISearchOptions) {
     let args = new GarbageFullStationTableArgs();
     switch (text.key) {
       case 'Name':

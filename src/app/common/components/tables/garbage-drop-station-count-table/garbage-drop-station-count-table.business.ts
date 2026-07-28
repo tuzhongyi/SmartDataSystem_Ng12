@@ -7,22 +7,27 @@ import { NumberStatisticV2Type } from 'src/app/view-model/types/number-statistic
 import { GarbageDropStationCountTableConverter } from './garbage-drop-station-count-table.converter';
 import {
   GarbageDropStationCountTableArgs,
-  GarbageDropStationCountTableModel,
+  GarbageDropStationCountTableModel
 } from './garbage-drop-station-count-table.model';
 import { GarbageDropStationCountTableDivisionService } from './service/garbage-drop-station-count-table-division.service';
 import { GarbageDropStationCountTableStationService } from './service/garbage-drop-station-count-table-station.service';
 import { GarbageDropStationCountTableService } from './service/garbage-drop-station-count-table.service';
 
 @Injectable()
-export class GarbageDropStationCountTableBusiness
-  implements
-    IBusiness<NumberStatisticV2Type[], GarbageDropStationCountTableModel[]>
-{
+export class GarbageDropStationCountTableBusiness implements IBusiness<
+  NumberStatisticV2Type[],
+  GarbageDropStationCountTableModel[]
+> {
   constructor(
     private store: GlobalStorageService,
     private service: GarbageDropStationCountTableService,
     private converter: GarbageDropStationCountTableConverter
   ) {}
+
+  is = {
+    station: false
+  };
+
   async load(
     args: GarbageDropStationCountTableArgs
   ): Promise<GarbageDropStationCountTableModel[]> {
@@ -41,8 +46,10 @@ export class GarbageDropStationCountTableBusiness
     }
 
     if (args.type === DivisionType.None) {
+      this.is.station = true;
       return this.service.station.history(divisionId, duration, args.unit);
     } else {
+      this.is.station = false;
       return this.service.division.history(
         divisionId,
         args.type,
@@ -58,5 +65,5 @@ export const GarbageDropStationCountTableBusinessProviders = [
   GarbageDropStationCountTableStationService,
   GarbageDropStationCountTableDivisionService,
   GarbageDropStationCountTableService,
-  GarbageDropStationCountTableConverter,
+  GarbageDropStationCountTableConverter
 ];

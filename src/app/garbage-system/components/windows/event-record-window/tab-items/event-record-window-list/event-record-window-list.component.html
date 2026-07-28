@@ -5,7 +5,11 @@
       <howell-event-record-operation
         (filter)="filter.display()"
         (search)="filter.onsearch($event)"
-        (typeChange)="onTypeChange($event)"
+        (typeChange)="on.type($event)"
+        [(option)]="filter.opts"
+        [durationable]="filter.findable"
+        [(duration)]="filter.day"
+        (durationChange)="filter.on.day($event)"
       >
       </howell-event-record-operation>
     </div>
@@ -15,6 +19,7 @@
       *ngIf="filter.show"
       [date_sync]="true"
       [(duration)]="filter.duration"
+      (durationChange)="filter.on.duration()"
       [(divisionId)]="filter.divisionId"
       [(stationId)]="filter.stationId"
       [(cameraId)]="filter.cameraId"
@@ -30,12 +35,14 @@
         [type]="type"
         [filter]="filter"
         [get]="get"
-        (image)="onimage($event)"
-        (video)="onvideo($event)"
-        (got)="ongot($event)"
-        (card)="oncard($event)"
-        (allvideo)="onallvideo($event)"
-        (complete)="oncomplete($event)"
+        (image)="on.image($event)"
+        (video)="on.video.play($event)"
+        (got)="on.got($event)"
+        (card)="on.card($event)"
+        (allvideo)="on.video.all($event)"
+        (complete)="on.complete($event)"
+        [findable]="filter.findable"
+        (find)="filter.on.find($event)"
       >
       </howell-event-record-table>
     </ng-container>
@@ -43,8 +50,8 @@
       <howell-event-record-list
         [type]="type"
         [load]="filter.load"
-        (image)="onimage($event)"
-        (video)="onvideo($event)"
+        (image)="on.image($event)"
+        (video)="on.video.play($event)"
         [filter]="filter"
       >
       </howell-event-record-list>
