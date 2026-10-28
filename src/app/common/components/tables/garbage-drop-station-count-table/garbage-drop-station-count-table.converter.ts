@@ -67,11 +67,12 @@ export class GarbageDropStationCountTableItemConverter implements IPromiseConver
     if (model.EventCount > 0) {
       model.TimeoutRatio = (model.TimeoutCount / model.EventCount) * 100;
     }
-    model.TimeinRatio = 100;
+    model.TimeinRatio = '100.00%';
 
     if (model.EventCount > 0) {
-      model.TimeinRatio =
+      let ratio =
         ((model.EventCount - model.TimeoutCount) / model.EventCount) * 100;
+      model.TimeinRatio = `${ratio.toFixed(2)}%`.padStart(7, ' ');
     }
 
     if (source instanceof GarbageStationNumberStatisticV2) {

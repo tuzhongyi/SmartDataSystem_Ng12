@@ -68,10 +68,10 @@ export class GarbageDropRecordTaskTableConverter {
 
       model.timeout = GarbageDropTimeoutCount;
       model.unhandle = model.count - GarbageDropHandleCount;
-      model.ratio = '100%';
+      model.ratio = '100.00%';
       let ratio = (GarbageDropHandleCount / model.count) * 100;
       if (!Number.isNaN(ratio)) {
-        model.ratio = ratio.toFixed(ratio === 100 ? 0 : 2) + '%';
+        model.ratio = (ratio.toFixed(2) + '%').padStart(7, ' ');
       }
     }
     return model;

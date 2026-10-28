@@ -10,7 +10,7 @@ import { GarbageDropRecordTaskTableBusiness } from './garbage-drop-record-task-t
 import { GarbageDropRecordTaskTableConverter } from './garbage-drop-record-task-table.converter';
 import {
   GarbageDropRecordTaskTableModel,
-  IGarbageDropRecordTaskTableBusiness,
+  IGarbageDropRecordTaskTableBusiness
 } from './garbage-drop-record-task-table.model';
 import { GarbageDropRecordTaskTableService } from './garbage-drop-record-task-table.service';
 
@@ -19,14 +19,14 @@ import { GarbageDropRecordTaskTableService } from './garbage-drop-record-task-ta
   templateUrl: './garbage-drop-record-task-table.component.html',
   styleUrls: [
     '../table.less',
-    './garbage-drop-record-task-table.component.less',
+    './garbage-drop-record-task-table.component.less'
   ],
   providers: [
     GarbageDropRecordTaskTableService,
     GarbageDropRecordTaskTableConverter,
     GarbageDropRecordTaskTableBusiness,
-    GarbageDropRecordTaskTableDownloadBusiness,
-  ],
+    GarbageDropRecordTaskTableDownloadBusiness
+  ]
 })
 export class GarbageDropRecordTaskTableComponent implements OnInit {
   @Input() business: IGarbageDropRecordTaskTableBusiness;
@@ -46,7 +46,7 @@ export class GarbageDropRecordTaskTableComponent implements OnInit {
     undefined,
     undefined,
     undefined,
-    '5%',
+    '8%'
   ];
   loading = false;
   datas: GarbageDropRecordTaskTableModel[] = [];

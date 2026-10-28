@@ -9,7 +9,7 @@ export class GarbageDropStationCountTableModel {
   EventCount: number = 0;
   TimeoutCount: number = 0;
   TimeoutRatio: number = 0;
-  TimeinRatio: number = 0;
+  TimeinRatio: string = '';
   Parent!: Promise<Division | undefined>;
   CommunityName!: Promise<string>;
 }

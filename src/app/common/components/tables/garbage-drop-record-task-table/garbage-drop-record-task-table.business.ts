@@ -11,7 +11,7 @@ import { GarbageDropRecordFilter } from '../garbage-drop-record-table/garbage-dr
 import { GarbageDropRecordTaskTableConverter } from './garbage-drop-record-task-table.converter';
 import {
   GarbageDropRecordTaskTableModel,
-  IGarbageDropRecordTaskTableBusiness,
+  IGarbageDropRecordTaskTableBusiness
 } from './garbage-drop-record-task-table.model';
 import { GarbageDropRecordTaskTableService } from './garbage-drop-record-task-table.service';
 
@@ -64,10 +64,8 @@ export class GarbageDropRecordTaskTableBusiness
       model.timeout += datas[i].timeout;
     }
     let complete = model.count - model.unhandle;
-
-    model.ratio = `${
-      model.count > 0 ? ((complete / model.count) * 100).toFixed(2) : 100
-    }%`;
+    let ratio = model.count > 0 ? (complete / model.count) * 100 : 0;
+    model.ratio = (ratio.toFixed(2) + '%').padStart(7, ' ');
     return model;
   }
 

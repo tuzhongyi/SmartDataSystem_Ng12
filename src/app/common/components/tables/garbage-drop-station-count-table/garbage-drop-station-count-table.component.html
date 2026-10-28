@@ -34,6 +34,7 @@
             mat-sort-header="TimeoutRatio"
             [disableClear]="true"
             [start]="'desc'"
+            class="center"
           >
             达标率
           </td>
@@ -73,7 +74,7 @@
             <td>
               {{ item.TimeoutCount }}
             </td>
-            <td>{{ item.TimeinRatio.toFixed(2) }}%</td>
+            <td class="center">{{ item.TimeinRatio || "-" }}</td>
           </tr>
         </tbody>
       </table>

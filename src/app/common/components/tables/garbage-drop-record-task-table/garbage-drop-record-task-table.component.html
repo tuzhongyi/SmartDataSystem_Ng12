@@ -22,7 +22,7 @@
           <td>全部任务</td>
           <td>未完成任务</td>
           <td>超时处置</td>
-          <td>处置率</td>
+          <td class="center">处置率</td>
           <td class="operation right">
             <div (click)="ondownload()" class="download">
               <i class="howell-icon-export"></i> 导出
@@ -48,7 +48,7 @@
             <td>
               <div class="orange-text">{{ item.timeout }}</div>
             </td>
-            <td>
+            <td class="center">
               <div class="sky-blue-text2">{{ item.ratio }}</div>
             </td>
             <td class="operation center"></td>
@@ -71,7 +71,7 @@
             <td>{{ total.count }}</td>
             <td>{{ total.unhandle }}</td>
             <td>{{ total.timeout }}</td>
-            <td>
+            <td class="center">
               <div class="sky-blue-text2">{{ total.ratio }}</div>
             </td>
             <td class="operation center"></td>
